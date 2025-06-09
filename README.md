@@ -13,6 +13,8 @@ But since I am rebuilding so much stuff, why not just wrap everything in my cust
 
 Thus this project: SGEXTN
 
+Note that "SGX" is short for "SGEXTN", the project name, and is used as a prefix for all classes and structs. It does not reference anything else.
+
 ## Built with...
 - Qt (C++ GUI framework)
 - OpenGL (through Qt, for rendering)
@@ -27,7 +29,44 @@ You download the source code.
 Download the source code and open it in Qt and start coding your project, I hope I will have time to write documentation.
 
 ## What to expect...
-Even I do not know
+- [ ] C++ primitives and extensions
+     - [ ] SGXInt (32 bit integer, wraps int32_t)
+	- [ ] SGXFloat (floating point number with custom equality comparator, wraps float)
+	- [ ] SGXBool (boolean, wraps bool)
+	- [ ] SGXChar (Unicode char, wraps QChar)
+	- [ ] SGXString (Unicode string, wraps QString)
+	- [ ] SGXColour (RGBA representation of a colour with 8 bits per channel, wraps uint)
+	- [ ] SGXVector (vector container with inefficient methods disabled, wraps QVector)
+	- [ ] SGXSparseVector (unordered map with inefficient methods disabled, wraps QHash)
+	- [ ] SGXGUID (GUID with automatic registering, wraps QUuid)
+	- [ ] SGXVector2 (a struct of 2 SGXFloats for 2D vectors with custom equality comparator using the SGXFloat one)
+	- [ ] SGXNCL (a string in NCL custom encoding format, wraps QString)
+	- [ ] SGXTime (a long long representing time since 19650809 000000)
+	- [ ] SGXTimer (a timer with repeat and static method for single use, wraps QTimer)
+- [ ] Qt GUI classes with custom drawing and resizing
+     - [ ] SGXWidget (a widget with solid colour that does nothing, inherits QWidget)
+	- [ ] SGXText (a widget that displays text in SingScript, inherits QLabel)
+	- [ ] SGXIcon (a widget that displays text in a special icon font, inherits QLabel)
+	- [ ] SGXTextButton (a button with text display in SingScript, inherits QPushButton)
+	- [ ] SGXIconButton (a button that displays text in a special icon font, inherits QPushButton)
+	- [ ] SGXIntInputField (a input field taking a integer, inherits QLineEdit)
+	- [ ] SGXFloatInputField (a input field taking a floating point number, inherits QLineEdit)
+	- [ ] SGXTextInputField (a multiline input field, inherits QTextEdit)
+	- [ ] SGXLayout (a widget that has custom scripting to manage the layout of other widgets, inherits QWidget)
+	- [ ] SGTouchReceiver (a nondisplaying widget that accepts touch events, inherits QWidget)
+- [ ] OpenGL simplifications
+     - [ ] SGXShaderDisplay (a widget that draws by OpenGL and contains a shader programme as a property, inherits QOpenGLWidget)
+     - [ ] SGXShaderDataGroup (a struct containing a vao, a vbo, and a ebo, all in a group for 2D rendering, also contains methods for drawing and keeps tracks of buffer sizes)
+	- [ ] SGXTransformFeedbackGroup (a struct containing a shader programme and 2 buffers for transform feedback)
+	- [ ] SGXShaderGlobalVariable (a struct containing data to set shader uniforms)
+- [ ] file system usage
+     - [ ] SGXFileReader (struct allowing reading of all SGEXTN primitives from files with index seeking)
+	- [ ] SGXFileWriter (struct allowing writing of all SGEXTN primitives to files with overwriting by index)
+	- [ ] SGXFileSystemManagement (non instantiatable struct with static methods for file system operations)
+	- [ ] SGXCannotLah (logging error messages in a file ".cannotlah")
+- [ ] working application template
+
+potential future extensions include networking stuff and PDF stuff and 3D rendering stuff and bluetooth stuff and more cross platform stuff
 
 ## Contributing...
 The best way to contribute is to complain. To complain refers to informing me of a bug or suggesting a new feature to be included to the software. Pls refer to the "Contact me" section below.
