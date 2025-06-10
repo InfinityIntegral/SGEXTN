@@ -7,6 +7,7 @@ int main(int argc, char** argv){ // NOLINT
     QCoreApplication::setApplicationVersion("1");
     QCoreApplication::setOrganizationName("05524F.sg");
     QApplication app(argc, argv);
-    app.setWindowIcon(QIcon(":/assets/05524Flogo.png"));
-    return app.exec();
+    QIcon temp_appicon(":/assets/05524Flogo.png");
+    QApplication::setWindowIcon(temp_appicon);
+    return QApplication::exec();
 }
