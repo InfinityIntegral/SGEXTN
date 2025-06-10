@@ -5,7 +5,7 @@ This project was never supposed to exist... ok, it did exist, but just as a basi
 
 But I was building an app and had weird behaviour in the UI... Then I realised that I have been using QWidget style sheets wrongly the whole time, they are called **cascading** style sheets for a reason...
 
-Obviously, I would rather have each button maintain its own style and be a separate object, instead of having global stylesheets being kaypoh all the time, and also I would rather have real properties in C++ then trying to parse a particularly blur JSON-ish variant called "CSS". Additionally, colours are uints, not random strings, that by the time it is parsed to change a widget colour, an old auntie could have walked from Tuas to Changi and back...
+Obviously, I would rather have each button maintain its own style and be a separate object, instead of having global stylesheets being kaypoh all the time, and also I would rather have real properties in C++ then trying to parse a particularly blur JSON-ish variant called "CSS". Additionally, colours are unsigned ints, not random strings, that by the time it is parsed to change a widget colour, an old auntie could have walked from Tuas to Changi and back...
 
 And that is incompatible with QWidget drawing, so I have to redo QWidget drawing...
 
@@ -30,8 +30,8 @@ Download the source code and open it in Qt and start coding your project, I hope
 
 ## What to expect...
 - [ ] C++ primitives extensions
-	- [ ] SGXColourRGBA (RGBA representation of a colour with 8 bits per channel, wraps uint)
-	- [ ] SGXColourHSLA (HSLA representation of a colour with 8 bits per channel, wraps uint)
+	- [ ] SGXColourRGBA (RGBA representation of a colour with 8 bits per channel, wraps unsigned int)
+	- [ ] SGXColourHSLA (HSLA representation of a colour with 8 bits per channel, contains 4 floats)
 	- [ ] SGXIdentifier (GUID with automatic registering, wraps QUuid)
 	- [ ] SGXVector2 (a struct of 2 SGXFloats for 2D vectors)
 	- [ ] SGXTimeStamp (a long long representing time since 19650809 120000)
