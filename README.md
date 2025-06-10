@@ -29,21 +29,14 @@ You download the source code.
 Download the source code and open it in Qt and start coding your project, I hope I will have time to write documentation.
 
 ## What to expect...
-- [ ] C++ primitives and extensions
-     - [ ] SGXInt (32 bit integer, wraps int32_t)
-	- [ ] SGXFloat (floating point number with custom equality comparator, wraps float)
-	- [ ] SGXBool (boolean, wraps bool)
-	- [ ] SGXChar (Unicode char, wraps QChar)
-	- [ ] SGXString (Unicode string, wraps QString)
-	- [ ] SGXColour (RGBA representation of a colour with 8 bits per channel, wraps uint)
-	- [ ] SGXVector (vector container with inefficient methods disabled, wraps QVector)
-	- [ ] SGXSparseVector (unordered map with inefficient methods disabled, wraps QHash)
+- [ ] C++ primitives extensions
+	- [ ] SGXColourRGBA (RGBA representation of a colour with 8 bits per channel, wraps uint)
+	- [ ] SGXColourHSLA (HSLA representation of a colour with 8 bits per channel, wraps uint)
 	- [ ] SGXGUID (GUID with automatic registering, wraps QUuid)
-	- [ ] SGXVector2 (a struct of 2 SGXFloats for 2D vectors with custom equality comparator using the SGXFloat one)
-	- [ ] SGXNCL (a string in NCL custom encoding format, wraps QString)
-	- [ ] SGXTime (a long long representing time since 19650809 000000)
-	- [ ] SGXTimer (a timer with repeat and static method for single use, wraps QTimer)
+	- [ ] SGXVector2 (a struct of 2 SGXFloats for 2D vectors)
+	- [ ] SGXTimeStamp (a long long representing time since 19650809 120000)
 - [ ] Qt GUI classes with custom drawing and resizing
+     - [ ] SGXRootWindow (root widget of the application, does nothing, inherits QWidget)
      - [ ] SGXWidget (a widget with solid colour that does nothing, inherits QWidget)
 	- [ ] SGXText (a widget that displays text in SingScript, inherits QLabel)
 	- [ ] SGXIcon (a widget that displays text in a special icon font, inherits QLabel)
