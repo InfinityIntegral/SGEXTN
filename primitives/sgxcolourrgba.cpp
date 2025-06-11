@@ -82,3 +82,27 @@ float SGXColourRGBA::getBlueAsFloat() const {
 float SGXColourRGBA::getTransparencyAsFloat() const {
     return (static_cast<float>(getTransparency()) / 255.0f);
 }
+
+QString SGXColourRGBA::getStringForPrintingRGBHTML() const {
+    return ("rgb(" + QString::number(getRed()) + ", " + QString::number(getGreen()) + ", " + QString::number(getBlue()) + ")");
+}
+
+QString SGXColourRGBA::getStringForPrintingRGBAHTML() const {
+    return ("rgb(" + QString::number(getRed()) + ", " + QString::number(getGreen()) + ", " + QString::number(getBlue()) + ", " + QString::number(getTransparency()) + ")");
+}
+
+QString SGXColourRGBA::getStringForPrintingRGBHex() const{
+    return ("#" + QString::number(getRed(), 16).toUpper() + QString::number(getGreen(), 16).toUpper() + QString::number(getBlue(), 16).toUpper());
+}
+
+QString SGXColourRGBA::getStringForPrintingRGBAHex() const {
+    return ("#" + QString::number(getRed(), 16).toUpper() + QString::number(getGreen(), 16).toUpper() + QString::number(getBlue(), 16).toUpper() + QString::number(getTransparency(), 16).toUpper());
+}
+
+bool SGXColourRGBA::operator==(SGXColourRGBA x) const {
+    return ((*this).x == x.x);
+}
+
+bool SGXColourRGBA::operator!=(SGXColourRGBA x) const {
+    return ((*this).x != x.x);
+}

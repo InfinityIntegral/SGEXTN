@@ -1,6 +1,8 @@
 #ifndef SGXCOLOURRGBA_H
 #define SGXCOLOURRGBA_H
 
+#include <QString>
+
 class SGXColourRGBA // stores unsigned int with each 8 bits being a colour channel in format RGBA
 {
 public:
@@ -18,15 +20,15 @@ public:
     [[nodiscard]] float getRedAsFloat() const; // retrieve red component as float between 0 and 1 inclusive
     [[nodiscard]] float getGreenAsFloat() const; // retrieve green component as float between 0 and 1 inclusive
     [[nodiscard]] float getBlueAsFloat() const; // retrieve blue component as float between 0 and 1 inclusive
-    [[nodiscard]] float getTransparencyAsFloat() const; // retrieve transparency component as float between 0 and 1 inclusive
+    [[nodiscard]] float getTransparencyAsFloat() const; // retrieve transparency component as float between 0    and 1 inclusive
+    [[nodiscard]] QString getStringForPrintingRGBHTML() const; // generate HTML style string for debugging, ignores transparency
+    [[nodiscard]] QString getStringForPrintingRGBAHTML() const; // generate HTML style string for debugging
+    [[nodiscard]] QString getStringForPrintingRGBHex() const; // generate hex code string, ignores transparency
+    [[nodiscard]] QString getStringForPrintingRGBAHex() const; // generate hex code string
+    [[nodiscard]] bool operator==(SGXColourRGBA x) const;
+    [[nodiscard]] bool operator!=(SGXColourRGBA x) const;
     /*
 methods list:
-- to RGB string
-- to RGBA string
-- to RGB hex string
-- to RGBA hex string
-- equality check
-- inequality check
 - add colours (average with gamma)
 - subtract (add inverse)
 - add arithmetic
