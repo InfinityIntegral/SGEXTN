@@ -189,3 +189,15 @@ void SGXColourRGBA::linearTransformTransparency(float m, float c){
     const int a0 = temp_boundFloatIntoInt(a);
     setTransparency(a0);
 }
+
+void SGXColourRGBA::gammaCorrectBegin(float &r, float &g, float &b) const {
+    r = std::pow(getRedAsFloat(), 2.2f);
+    g = std::pow(getGreenAsFloat(), 2.2f);
+    b = std::pow(getBlueAsFloat(), 2.2f);
+}
+
+void SGXColourRGBA::gammaCorrectEnd(float r, float g, float b){
+    setRedUsingFloat(std::pow(r, 1.0f / 2.2f));
+    setGreenUsingFloat(std::pow(g, 1.0f / 2.2f));
+    setBlueUsingFloat(std::pow(b, 1.0f / 2.2f));
+}
