@@ -163,31 +163,27 @@ bool SGXColourRGBA::operator!=(SGXColourRGBA x) const {
 }
 
 void SGXColourRGBA::linearTransformRed(float m, float c){
-    float r = static_cast<float>((*this).x >> 24u);
+    float r = getRedAsFloat();
     r = m * r + c;
-    const int r0 = temp_boundFloatIntoInt(r);
-    setRed(r0);
+    setRedUsingFloat(r);
 }
 
 void SGXColourRGBA::linearTransformGreen(float m, float c){
-    float g = static_cast<float>(((*this).x >> 16u) & 0xFFu);
+    float g = getGreenAsFloat();
     g = m * g + c;
-    const int g0 = temp_boundFloatIntoInt(g);
-    setGreen(g0);
+    setGreenUsingFloat(g);
 }
 
 void SGXColourRGBA::linearTransformBlue(float m, float c){
-    float b = static_cast<float>(((*this).x >> 8u) & 0xFFu);
+    float b = getBlueAsFloat();
     b = m * b + c;
-    const int b0 = temp_boundFloatIntoInt(b);
-    setBlue(b0);
+    setBlueUsingFloat(b);
 }
 
 void SGXColourRGBA::linearTransformTransparency(float m, float c){
-    float a = static_cast<float>((*this).x & 0xFFu);
+    float a = getTransparencyAsFloat();
     a = m * a + c;
-    const int a0 = temp_boundFloatIntoInt(a);
-    setTransparency(a0);
+    setTransparencyUsingFloat(a);
 }
 
 void SGXColourRGBA::gammaCorrectBegin(float &r, float &g, float &b) const {
@@ -200,4 +196,31 @@ void SGXColourRGBA::gammaCorrectEnd(float r, float g, float b){
     setRedUsingFloat(std::pow(r, 1.0f / 2.2f));
     setGreenUsingFloat(std::pow(g, 1.0f / 2.2f));
     setBlueUsingFloat(std::pow(b, 1.0f / 2.2f));
+}
+
+void SGXColourRGBA::linearTransformRedWithGamma(float m, float c){
+    float r = 0;
+    float g = 0;
+    float b = 0;
+    gammaCorrectBegin(r, g, b);
+    r = m * r + c;
+    gammaCorrectEnd(r, g, b);
+}
+
+void SGXColourRGBA::linearTransformGreenWithGamma(float m, float c){
+    float r = 0;
+    float g = 0;
+    float b = 0;
+    gammaCorrectBegin(r, g, b);
+    g = m * g + c;
+    gammaCorrectEnd(r, g, b);
+}
+
+void SGXColourRGBA::linearTransformBlueWithGamma(float m, float c){
+    float r = 0;
+    float g = 0;
+    float b = 0;
+    gammaCorrectBegin(r, g, b);
+    b = m * b + c;
+    gammaCorrectEnd(r, g, b);
 }

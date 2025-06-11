@@ -43,9 +43,11 @@ public:
     void linearTransformTransparency(float m, float c); // do x -> mx + c transform on transparency channel with appropriate bounding
     void gammaCorrectBegin(float& r, float& g, float& b) const; // modifies 3 floats between 0 and 1 passed by reference representing normalised RGB values in linear colour space
     void gammaCorrectEnd(float r, float g, float b); // modifies colour using 3 floats between 0 and 1 representing normalised RGB values in linear colour space
+    void linearTransformRedWithGamma(float m, float c); // do x -> mx + c transform on red channel with appropriate bounding and gamma correction
+    void linearTransformGreenWithGamma(float m, float c); // do x -> mx + c transform on green channel with appropriate bounding and gamma correction
+    void linearTransformBlueWithGamma(float m, float c); // do x -> mx + c transform on blue channel with appropriate bounding and gamma correction
     /*
 methods list:
-- linear transform with gamma for RGB
 - apply tint
 - apply tint with separate transparency
 - linear interpolation
