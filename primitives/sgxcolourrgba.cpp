@@ -326,3 +326,41 @@ void SGXColourRGBA::applyTintNoGammaCorrectionSeparateTransparencyUsingFloat(SGX
     setGreenUsingFloat(g1);
     setBlueUsingFloat(b1);
 }
+
+SGXColourRGBA SGXColourRGBA::linearInterpolate(SGXColourRGBA x, float f) const {
+    const float a1 = f;
+    const float a2 = 1.0f - f;
+    const float r1 = getRedAsFloat();
+    const float g1 = getGreenAsFloat();
+    const float b1 = getBlueAsFloat();
+    float r2 = x.getRedAsFloat();
+    float g2 = x.getGreenAsFloat();
+    float b2 = x.getBlueAsFloat();
+    r2 = r1 * a1 + r2 * a2;
+    g2 = g1 * a1 + g2 * a2;
+    b2 = b1 * a1 + b2 * a2;
+    x.setRedUsingFloat(r2);
+    x.setGreenUsingFloat(g2);
+    x.setBlueUsingFloat(b2);
+    x.setTransparencyUsingFloat(getTransparencyAsFloat());
+    return x;
+}
+
+SGXColourRGBA SGXColourRGBA::linearInterpolateGammaCorrection(SGXColourRGBA x, float f) const {
+    const float a1 = f;
+    const float a2 = 1.0f - f;
+    float r1 = 0.0f;
+    float g1 = 0.0f;
+    float b1 = 0.0f;
+    gammaCorrectBegin(r1, g1, b1);
+    float r2 = 0.0f;
+    float g2 = 0.0f;
+    float b2 = 0.0f;
+    x.gammaCorrectBegin(r2, g2, b2);
+    r2 = r1 * a1 + r2 * a2;
+    g2 = g1 * a1 + g2 * a2;
+    b2 = b1 * a1 + b2 * a2;
+    x.gammaCorrectEnd(r2, g2, b2);
+    x.setTransparencyUsingFloat(getTransparencyAsFloat());
+    return x;
+}

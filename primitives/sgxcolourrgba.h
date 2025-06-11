@@ -51,10 +51,11 @@ public:
     void applyTintSeparateTransparencyUsingFloat(SGXColourRGBA x, float a); // computes appearance of the colour if placed behind x and set it to this colour, the transparency value of x is set to a which is a float between 0 and 1 inclusive
     void applyTintNoGammaCorrection(SGXColourRGBA x); // computes appearance of the colour if placed behind x and set it to this colour, ignores gamma correction
     void applyTintNoGammaCorrectionSeparateTransparency(SGXColourRGBA x, int a); // computes appearance of the colour if placed behind x and set it to this colour, the transparency value of x is set to a which is a int between 0 and 255 inclusive, ignores gamma correction
-    void applyTintNoGammaCorrectionSeparateTransparencyUsingFloat(SGXColourRGBA, float a); // computes appearance of the colour if placed behind x and set it to this colour, the transparency value of x is set to a which is a float between 0 and 1 inclusive, ignores gamma correction
+    void applyTintNoGammaCorrectionSeparateTransparencyUsingFloat(SGXColourRGBA x, float a); // computes appearance of the colour if placed behind x and set it to this colour, the transparency value of x is set to a which is a float between 0 and 1 inclusive, ignores gamma correction
+    [[nodiscard]] SGXColourRGBA linearInterpolate(SGXColourRGBA x, float f) const; // computes the colour formed by mixing f amount of this colour with 1-f amounts of x, the output colour (but not f) is bounded appropriately if a value of f outside the 0 to 1 range is used
+    [[nodiscard]] SGXColourRGBA linearInterpolateGammaCorrection(SGXColourRGBA x, float f) const; // computes the colour formed by mixing f amount of this colour with 1-f amounts of x, the output colour (but not f) is bounded appropriately if a value of f outside the 0 to 1 range is used, gamma correction is used
     /*
 methods list:
-- linear interpolation
 - invert
     */
 };
