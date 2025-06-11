@@ -199,28 +199,130 @@ void SGXColourRGBA::gammaCorrectEnd(float r, float g, float b){
 }
 
 void SGXColourRGBA::linearTransformRedWithGamma(float m, float c){
-    float r = 0;
-    float g = 0;
-    float b = 0;
+    float r = 0.0f;
+    float g = 0.0f;
+    float b = 0.0f;
     gammaCorrectBegin(r, g, b);
     r = m * r + c;
     gammaCorrectEnd(r, g, b);
 }
 
 void SGXColourRGBA::linearTransformGreenWithGamma(float m, float c){
-    float r = 0;
-    float g = 0;
-    float b = 0;
+    float r = 0.0f;
+    float g = 0.0f;
+    float b = 0.0f;
     gammaCorrectBegin(r, g, b);
     g = m * g + c;
     gammaCorrectEnd(r, g, b);
 }
 
 void SGXColourRGBA::linearTransformBlueWithGamma(float m, float c){
-    float r = 0;
-    float g = 0;
-    float b = 0;
+    float r = 0.0f;
+    float g = 0.0f;
+    float b = 0.0f;
     gammaCorrectBegin(r, g, b);
     b = m * b + c;
     gammaCorrectEnd(r, g, b);
+}
+
+void SGXColourRGBA::applyTint(SGXColourRGBA x){
+    float r1 = 0.0f;
+    float g1 = 0.0f;
+    float b1 = 0.0f;
+    float r2 = 0.0f;
+    float g2 = 0.0f;
+    float b2 = 0.0f;
+    gammaCorrectBegin(r1, g1, b1);
+    x.gammaCorrectBegin(r2, g2, b2);
+    const float a2 = x.getTransparencyAsFloat();
+    const float a1 = 1.0f - a2;
+    r1 = r1 * a1 + r2 * a2;
+    g1 = g1 * a1 + g2 * a2;
+    b1 = b1 * a1 + b2 * a2;
+    gammaCorrectEnd(r1, g1, b1);
+}
+
+void SGXColourRGBA::applyTintSeparateTransparency(SGXColourRGBA x, int a){
+    float r1 = 0.0f;
+    float g1 = 0.0f;
+    float b1 = 0.0f;
+    float r2 = 0.0f;
+    float g2 = 0.0f;
+    float b2 = 0.0f;
+    gammaCorrectBegin(r1, g1, b1);
+    x.gammaCorrectBegin(r2, g2, b2);
+    const float a2 = static_cast<float>(a) / 255.0f;
+    const float a1 = 1.0f - a2;
+    r1 = r1 * a1 + r2 * a2;
+    g1 = g1 * a1 + g2 * a2;
+    b1 = b1 * a1 + b2 * a2;
+    gammaCorrectEnd(r1, g1, b1);
+}
+
+void SGXColourRGBA::applyTintSeparateTransparencyUsingFloat(SGXColourRGBA x, float a){
+    float r1 = 0.0f;
+    float g1 = 0.0f;
+    float b1 = 0.0f;
+    float r2 = 0.0f;
+    float g2 = 0.0f;
+    float b2 = 0.0f;
+    gammaCorrectBegin(r1, g1, b1);
+    x.gammaCorrectBegin(r2, g2, b2);
+    const float a2 = a;
+    const float a1 = 1.0f - a2;
+    r1 = r1 * a1 + r2 * a2;
+    g1 = g1 * a1 + g2 * a2;
+    b1 = b1 * a1 + b2 * a2;
+    gammaCorrectEnd(r1, g1, b1);
+}
+
+void SGXColourRGBA::applyTintNoGammaCorrection(SGXColourRGBA x){
+    float r1 = getRedAsFloat();
+    float g1 = getGreenAsFloat();
+    float b1 = getBlueAsFloat();
+    const float r2 = x.getRedAsFloat();
+    const float g2 = x.getGreenAsFloat();
+    const float b2 = x.getBlueAsFloat();
+    const float a2 = x.getTransparencyAsFloat();
+    const float a1 = 1.0f - a2;
+    r1 = r1 * a1 + r2 * a2;
+    g1 = g1 * a1 + g2 * a2;
+    b1 = b1 * a1 + b2 * a2;
+    setRedUsingFloat(r1);
+    setGreenUsingFloat(g1);
+    setBlueUsingFloat(b1);
+}
+
+void SGXColourRGBA::applyTintNoGammaCorrectionSeparateTransparency(SGXColourRGBA x, int a){
+    float r1 = getRedAsFloat();
+    float g1 = getGreenAsFloat();
+    float b1 = getBlueAsFloat();
+    const float r2 = x.getRedAsFloat();
+    const float g2 = x.getGreenAsFloat();
+    const float b2 = x.getBlueAsFloat();
+    const float a2 = static_cast<float>(a) / 255.0f;
+    const float a1 = 1.0f - a2;
+    r1 = r1 * a1 + r2 * a2;
+    g1 = g1 * a1 + g2 * a2;
+    b1 = b1 * a1 + b2 * a2;
+    setRedUsingFloat(r1);
+    setGreenUsingFloat(g1);
+    setBlueUsingFloat(b1);
+}
+
+void SGXColourRGBA::applyTintNoGammaCorrectionSeparateTransparencyUsingFloat(SGXColourRGBA x, float a){
+    float r1 = getRedAsFloat();
+    float g1 = getGreenAsFloat();
+    float b1 = getBlueAsFloat();
+    const float r2 = x.getRedAsFloat();
+    const float g2 = x.getGreenAsFloat();
+    const float b2 = x.getBlueAsFloat();
+    const float a2 = a;
+    const float a1 = 1.0f - a2;
+    r1 = r1 * a1 + r2 * a2;
+    g1 = g1 * a1 + g2 * a2;
+    b1 = b1 * a1 + b2 * a2;
+    setRedUsingFloat(r1);
+    setGreenUsingFloat(g1);
+    setBlueUsingFloat(b1);
 }
