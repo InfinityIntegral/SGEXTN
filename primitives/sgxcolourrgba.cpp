@@ -1,9 +1,16 @@
 #include "sgxcolourrgba.h"
+#include <cmath>
 
 namespace{
 inline void temp_boundInt(int& x){
     if(x < 0){x = 0;}
     else if(x > 255){x = 255;}
+}
+
+inline int temp_boundFloatIntoInt(float x){
+    if(x < 0.0f){x = 0.0f;}
+    else if(x > 255.0f){x = 255.0f;}
+    return static_cast<int>(std::round(x));
 }
 
 inline void temp_boundFloat(float& x){
@@ -12,8 +19,8 @@ inline void temp_boundFloat(float& x){
 }
 
 inline unsigned int temp_floatToUnsignedInt(float x){
-    x = 255.0f * x + 0.5f;
-    return static_cast<unsigned int>(x);
+    const int x0 = static_cast<int>(std::round(255.0f * x));
+    return static_cast<unsigned int>(x0);
 }
 }
 
@@ -105,4 +112,32 @@ bool SGXColourRGBA::operator==(SGXColourRGBA x) const {
 
 bool SGXColourRGBA::operator!=(SGXColourRGBA x) const {
     return ((*this).x != x.x);
+}
+
+void SGXColourRGBA::linearTransformRed(float m, float c){
+    float r = static_cast<float>((*this).x >> 24u);
+    r = m * r + c;
+    const int r0 = temp_boundFloatIntoInt(r);
+    (*this).x = ((*this).x & 0xFFFFFFu) | (static_cast<unsigned int>(r0) << 24u);
+}
+
+void SGXColourRGBA::linearTransformGreen(float m, float c){
+    float g = static_cast<float>(((*this).x >> 16u) & 0xFFu);
+    g = m * g + c;
+    const int g0 = temp_boundFloatIntoInt(g);
+    (*this).x = ((*this).x & 0xFF00FFFFu) | (static_cast<unsigned int>(g0) << 16u);
+}
+
+void SGXColourRGBA::linearTransformBlue(float m, float c){
+    float b = static_cast<float>(((*this).x >> 8u) & 0xFFu);
+    b = m * b + c;
+    const int b0 = temp_boundFloatIntoInt(b);
+    (*this).x = ((*this).x & 0xFFFF00FFu) | (static_cast<unsigned int>(b0) << 8u);
+}
+
+void SGXColourRGBA::linearTransformTransparency(float m, float c){
+    float a = static_cast<float>((*this).x & 0xFFu);
+    a = m * a + c;
+    const int a0 = temp_boundFloatIntoInt(a);
+    (*this).x = ((*this).x & 0xFFFFFF00u) | static_cast<unsigned int>(a0);
 }

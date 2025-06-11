@@ -25,20 +25,14 @@ public:
     [[nodiscard]] QString getStringForPrintingRGBAHTML() const; // generate HTML style string for debugging
     [[nodiscard]] QString getStringForPrintingRGBHex() const; // generate hex code string, ignores transparency
     [[nodiscard]] QString getStringForPrintingRGBAHex() const; // generate hex code string
-    [[nodiscard]] bool operator==(SGXColourRGBA x) const;
-    [[nodiscard]] bool operator!=(SGXColourRGBA x) const;
+    [[nodiscard]] bool operator==(SGXColourRGBA x) const; // equality comparator by comparing colour not struct instance memory location
+    [[nodiscard]] bool operator!=(SGXColourRGBA x) const; // inequality comparator by comparing colour not struct instance memory location
+    void linearTransformRed(float m, float c); // do x -> mx + c transform on red channel with appropriate bounding
+    void linearTransformGreen(float m, float c); // do x -> mx + c transform on green channel with appropriate bounding
+    void linearTransformBlue(float m, float c); // do x -> mx + c transform on blue channel with appropriate bounding
+    void linearTransformTransparency(float m, float c); // do x -> mx + c transform on transparency channel with appropriate bounding
     /*
 methods list:
-- add colours (average with gamma)
-- subtract (add inverse)
-- add arithmetic
-- subtract arithmetic
-- multiply by constant arithmetic
-- multiply by constant
-- linear transform r
-- linear transform g
-- linear transform b
-- linear transform a
 - apply tint
 - apply tint with separate transparency
 - linear interpolation
