@@ -26,7 +26,7 @@ SGXColourRGBA::SGXColourRGBA(int r, int g, int b, int a){
     temp_boundInt(g);
     temp_boundInt(b);
     temp_boundInt(a);
-    (*this).x = (static_cast<unsigned int>(r) << 24U) | (static_cast<unsigned int>(g) << 16U) | (static_cast<unsigned int>(b) << 8U) | (static_cast<unsigned int>(a));
+    (*this).x = (static_cast<unsigned int>(r) << 24u) | (static_cast<unsigned int>(g) << 16u) | (static_cast<unsigned int>(b) << 8u) | (static_cast<unsigned int>(a));
 }
 
 SGXColourRGBA::SGXColourRGBA(int r, int g, int b){
@@ -41,12 +41,44 @@ SGXColourRGBA::SGXColourRGBA(float r, float g, float b, float a){
     temp_boundFloat(g);
     temp_boundFloat(b);
     temp_boundFloat(a);
-    (*this).x = (temp_floatToUnsignedInt(r) << 24U) | (temp_floatToUnsignedInt(g) << 16U) | (temp_floatToUnsignedInt(b) << 8U) | (temp_floatToUnsignedInt(a));
+    (*this).x = (temp_floatToUnsignedInt(r) << 24u) | (temp_floatToUnsignedInt(g) << 16u) | (temp_floatToUnsignedInt(b) << 8u) | (temp_floatToUnsignedInt(a));
 }
 
 SGXColourRGBA::SGXColourRGBA(float r, float g, float b){
     temp_boundFloat(r);
     temp_boundFloat(g);
     temp_boundFloat(b);
-    (*this).x = (temp_floatToUnsignedInt(r) << 24U) | (temp_floatToUnsignedInt(g) << 16U) | (temp_floatToUnsignedInt(b) << 8U) | (0xFFu);
+    (*this).x = (temp_floatToUnsignedInt(r) << 24u) | (temp_floatToUnsignedInt(g) << 16u) | (temp_floatToUnsignedInt(b) << 8u) | (0xFFu);
+}
+
+int SGXColourRGBA::getRed() const {
+    return static_cast<int>((*this).x >> 24u);
+}
+
+int SGXColourRGBA::getGreen() const {
+    return static_cast<int>(0xFFu & ((*this).x >> 16u));
+}
+
+int SGXColourRGBA::getBlue() const {
+    return static_cast<int>(0xFFu & ((*this).x >> 8u));
+}
+
+int SGXColourRGBA::getTransparency() const {
+    return static_cast<int>(0xFFu & ((*this).x));
+}
+
+float SGXColourRGBA::getRedAsFloat() const {
+    return (static_cast<float>(getRed()) / 255.0f);
+}
+
+float SGXColourRGBA::getGreenAsFloat() const {
+    return (static_cast<float>(getGreen()) / 255.0f);
+}
+
+float SGXColourRGBA::getBlueAsFloat() const {
+    return (static_cast<float>(getBlue()) / 255.0f);
+}
+
+float SGXColourRGBA::getTransparencyAsFloat() const {
+    return (static_cast<float>(getTransparency()) / 255.0f);
 }

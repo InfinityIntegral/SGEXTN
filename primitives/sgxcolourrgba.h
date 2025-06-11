@@ -11,12 +11,16 @@ public:
     SGXColourRGBA(float r, float g, float b, float a); // constructs a SGXColourRGBA using float values for channels RGBA between 0 and 1 inclusive
     SGXColourRGBA(float r, float g, float b);
     // MAKE THIS LEH: constructor from SGXColourHSLA
+    [[nodiscard]] int getRed() const; // retrieve red component as int between 0 and 255 inclusive
+    [[nodiscard]] int getGreen() const; // retrieve green component as int between 0 and 255 inclusive
+    [[nodiscard]] int getBlue() const; // retrieve blue component as int between 0 and 255 inclusive
+    [[nodiscard]] int getTransparency() const; // retrieve transparency component as int between 0 and 255 inclusive
+    [[nodiscard]] float getRedAsFloat() const; // retrieve red component as float between 0 and 1 inclusive
+    [[nodiscard]] float getGreenAsFloat() const; // retrieve green component as float between 0 and 1 inclusive
+    [[nodiscard]] float getBlueAsFloat() const; // retrieve blue component as float between 0 and 1 inclusive
+    [[nodiscard]] float getTransparencyAsFloat() const; // retrieve transparency component as float between 0 and 1 inclusive
     /*
 methods list:
-- get r
-- get g
-- get b
-- get a
 - to RGB string
 - to RGBA string
 - to RGB hex string
