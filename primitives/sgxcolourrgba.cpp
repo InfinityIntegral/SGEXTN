@@ -7,12 +7,6 @@ inline void temp_boundInt(int& x){
     else if(x > 255){x = 255;}
 }
 
-inline int temp_boundFloatIntoInt(float x){
-    if(x < 0.0f){x = 0.0f;}
-    else if(x > 255.0f){x = 255.0f;}
-    return static_cast<int>(std::round(x));
-}
-
 inline void temp_boundFloat(float& x){
     if(x < 0.0f){x = 0.0f;}
     else if(x > 1.0f){x = 1.0f;}
@@ -363,4 +357,10 @@ SGXColourRGBA SGXColourRGBA::linearInterpolateGammaCorrection(SGXColourRGBA x, f
     x.gammaCorrectEnd(r2, g2, b2);
     x.setTransparencyUsingFloat(getTransparencyAsFloat());
     return x;
+}
+
+void SGXColourRGBA::toComplementColour(){
+    setRed(255 - getRed());
+    setGreen(255 - getGreen());
+    setBlue(255 - getBlue());
 }
