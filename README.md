@@ -26,7 +26,7 @@ You must have Qt installed on your computer with necessary build tools.
 You download the source code.
 
 ## Using the software...
-Download the source code and open it in Qt and start coding your project, I hope I will have time to write documentation.
+Download the source code and open it in Qt and start coding your project. The documentation is comments in header files, I made them as clear as possible.
 
 ## What to expect...
 - [ ] C++ primitives extensions

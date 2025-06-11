@@ -90,6 +90,46 @@ float SGXColourRGBA::getTransparencyAsFloat() const {
     return (static_cast<float>(getTransparency()) / 255.0f);
 }
 
+void SGXColourRGBA::setRed(int r){
+    temp_boundInt(r);
+    (*this).x = ((*this).x & 0xFFFFFFu) | (static_cast<unsigned int>(r) << 24u);
+}
+
+void SGXColourRGBA::setGreen(int g){
+    temp_boundInt(g);
+    (*this).x = ((*this).x & 0xFF00FFFFu) | (static_cast<unsigned int>(g) << 16u);
+}
+
+void SGXColourRGBA::setBlue(int b){
+    temp_boundInt(b);
+    (*this).x = ((*this).x & 0xFFFF00FFu) | (static_cast<unsigned int>(b) << 8u);
+}
+
+void SGXColourRGBA::setTransparency(int a){
+    temp_boundInt(a);
+    (*this).x = ((*this).x & 0xFFFFFF00u) | static_cast<unsigned int>(a);
+}
+
+void SGXColourRGBA::setRedUsingFloat(float r){
+    temp_boundFloat(r);
+    (*this).x = ((*this).x & 0xFFFFFFu) | (temp_floatToUnsignedInt(r) << 24u);
+}
+
+void SGXColourRGBA::setGreenUsingFloat(float g){
+    temp_boundFloat(g);
+    (*this).x = ((*this).x & 0xFF00FFFFu) | (temp_floatToUnsignedInt(g) << 16u);
+}
+
+void SGXColourRGBA::setBlueUsingFloat(float b){
+    temp_boundFloat(b);
+    (*this).x = ((*this).x & 0xFFFF00FFu) | (temp_floatToUnsignedInt(b) << 8u);
+}
+
+void SGXColourRGBA::setTransparencyUsingFloat(float a){
+    temp_boundFloat(a);
+    (*this).x = ((*this).x & 0xFFFFFF00u) | temp_floatToUnsignedInt(a);
+}
+
 QString SGXColourRGBA::getStringForPrintingRGBHTML() const {
     return ("rgb(" + QString::number(getRed()) + ", " + QString::number(getGreen()) + ", " + QString::number(getBlue()) + ")");
 }
@@ -106,6 +146,14 @@ QString SGXColourRGBA::getStringForPrintingRGBAHex() const {
     return ("#" + QString::number(getRed(), 16).toUpper() + QString::number(getGreen(), 16).toUpper() + QString::number(getBlue(), 16).toUpper() + QString::number(getTransparency(), 16).toUpper());
 }
 
+QString SGXColourRGBA::getStringForPrintingRGBFloatHTML() const {
+    return ("rgb(" + QString::number(getRedAsFloat()) + ", " + QString::number(getGreenAsFloat()) + ", " + QString::number(getBlueAsFloat()) + ")");
+}
+
+QString SGXColourRGBA::getStringForPrintingRGBAFloatHTML() const {
+    return ("rgb(" + QString::number(getRedAsFloat()) + ", " + QString::number(getGreenAsFloat()) + ", " + QString::number(getBlueAsFloat()) + ", " + QString::number(getTransparencyAsFloat()) + ")");
+}
+
 bool SGXColourRGBA::operator==(SGXColourRGBA x) const {
     return ((*this).x == x.x);
 }
@@ -118,26 +166,26 @@ void SGXColourRGBA::linearTransformRed(float m, float c){
     float r = static_cast<float>((*this).x >> 24u);
     r = m * r + c;
     const int r0 = temp_boundFloatIntoInt(r);
-    (*this).x = ((*this).x & 0xFFFFFFu) | (static_cast<unsigned int>(r0) << 24u);
+    setRed(r0);
 }
 
 void SGXColourRGBA::linearTransformGreen(float m, float c){
     float g = static_cast<float>(((*this).x >> 16u) & 0xFFu);
     g = m * g + c;
     const int g0 = temp_boundFloatIntoInt(g);
-    (*this).x = ((*this).x & 0xFF00FFFFu) | (static_cast<unsigned int>(g0) << 16u);
+    setGreen(g0);
 }
 
 void SGXColourRGBA::linearTransformBlue(float m, float c){
     float b = static_cast<float>(((*this).x >> 8u) & 0xFFu);
     b = m * b + c;
     const int b0 = temp_boundFloatIntoInt(b);
-    (*this).x = ((*this).x & 0xFFFF00FFu) | (static_cast<unsigned int>(b0) << 8u);
+    setBlue(b0);
 }
 
 void SGXColourRGBA::linearTransformTransparency(float m, float c){
     float a = static_cast<float>((*this).x & 0xFFu);
     a = m * a + c;
     const int a0 = temp_boundFloatIntoInt(a);
-    (*this).x = ((*this).x & 0xFFFFFF00u) | static_cast<unsigned int>(a0);
+    setTransparency(a0);
 }

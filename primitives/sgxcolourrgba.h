@@ -21,10 +21,20 @@ public:
     [[nodiscard]] float getGreenAsFloat() const; // retrieve green component as float between 0 and 1 inclusive
     [[nodiscard]] float getBlueAsFloat() const; // retrieve blue component as float between 0 and 1 inclusive
     [[nodiscard]] float getTransparencyAsFloat() const; // retrieve transparency component as float between 0    and 1 inclusive
-    [[nodiscard]] QString getStringForPrintingRGBHTML() const; // generate HTML style string for debugging, ignores transparency
-    [[nodiscard]] QString getStringForPrintingRGBAHTML() const; // generate HTML style string for debugging
+    void setRed(int r); // modify red component using int between 0 and 255 inclusive
+    void setGreen(int g); // modify green component using int between 0 and 255 inclusive
+    void setBlue(int b); // modify blue component using int between 0 and 255 inclusive
+    void setTransparency(int a); // modify transparency component using int between 0 and 255 inclusive
+    void setRedUsingFloat(float r); // modify red component using float between 0 and 1 inclusive
+    void setGreenUsingFloat(float g); // modify green component using float between 0 and 1 inclusive
+    void setBlueUsingFloat(float b); // modify blue component using float between 0 and 1 inclusive
+    void setTransparencyUsingFloat(float a); // modify transparency component using float between 0 and 1 inclusive
+    [[nodiscard]] QString getStringForPrintingRGBHTML() const; // generate HTML style string for debugging using int values between 0 and 255 inclusive, ignores transparency
+    [[nodiscard]] QString getStringForPrintingRGBAHTML() const; // generate HTML style string for debugging using int values between 0 and 255 inclusive
     [[nodiscard]] QString getStringForPrintingRGBHex() const; // generate hex code string, ignores transparency
     [[nodiscard]] QString getStringForPrintingRGBAHex() const; // generate hex code string
+    [[nodiscard]] QString getStringForPrintingRGBFloatHTML() const; // generate HTML style string for debugging using float values between 0 and 1 inclusive, ignores transparency
+    [[nodiscard]] QString getStringForPrintingRGBAFloatHTML() const; // generate HTML style string for debugging using float values between 0 and 1 inclusive
     [[nodiscard]] bool operator==(SGXColourRGBA x) const; // equality comparator by comparing colour not struct instance memory location
     [[nodiscard]] bool operator!=(SGXColourRGBA x) const; // inequality comparator by comparing colour not struct instance memory location
     void linearTransformRed(float m, float c); // do x -> mx + c transform on red channel with appropriate bounding
