@@ -62,7 +62,7 @@ SGXColourRGBA::SGXColourRGBA(float r, float g, float b){
     (*this).x = (temp_floatToUnsignedInt(r) << 24u) | (temp_floatToUnsignedInt(g) << 16u) | (temp_floatToUnsignedInt(b) << 8u) | (0xFFu);
 }
 
-SGXColourRGBA::SGXColourRGBA(SGXColourHSLA x){
+SGXColourRGBA::SGXColourRGBA(SGXColourHSLA& x){
     float r = 0.0f;
     float g = 0.0f;
     float b = 0.0f;

@@ -2,8 +2,8 @@
 #define SGXCOLOURRGBA_H
 
 #include <QString>
-#include "sgxcolourhsla.h"
 
+class SGXColourHSLA;
 class SGXColourRGBA // stores unsigned int with each 8 bits being a colour channel in format RGBA
 {
 public:
@@ -13,7 +13,7 @@ public:
     SGXColourRGBA(int r, int g, int b); // constructs a SGXColourRGBA using int values for channels RGB between 0 and 255 inclusive, transparency is set to 255 by default
     SGXColourRGBA(float r, float g, float b, float a); // constructs a SGXColourRGBA using float values for channels RGBA between 0 and 1 inclusive
     SGXColourRGBA(float r, float g, float b); // constructs a SGXColourRGBA using float values for channels RGBA between 0 and 1 inclusive, transparency is set to 255 by default
-    SGXColourRGBA(SGXColourHSLA x); // constructs a SGXColourRGBA using a SGXColourHSLA, this is the only way to use HSLA colours outside of colour computation since HSLA colours do not actually contain GPU-compatible raw data or Qt-compatible methods
+    SGXColourRGBA(SGXColourHSLA& x); // constructs a SGXColourRGBA using a SGXColourHSLA, this is the only way to use HSLA colours outside of colour computation since HSLA colours do not actually contain GPU-compatible raw data or Qt-compatible methods
     [[nodiscard]] int getRed() const; // retrieve red component as int between 0 and 255 inclusive
     [[nodiscard]] int getGreen() const; // retrieve green component as int between 0 and 255 inclusive
     [[nodiscard]] int getBlue() const; // retrieve blue component as int between 0 and 255 inclusive

@@ -1,6 +1,8 @@
 #ifndef SGXCOLOURHSLA_H
 #define SGXCOLOURHSLA_H
 
+#include "sgxcolourrgba.h"
+
 class SGXColourHSLA
 {
 public:
@@ -8,6 +10,7 @@ public:
     float s; // saturation as float between 0 to 100
     float l; // saturation as float between 0 to 100
     float a; // transparency as float between 0 to 100
+    SGXColourHSLA(SGXColourRGBA x); // construct HSLA colour from RGBA colour for colour-based computation
     /*
 methods list:
 - constructor from RGBA
