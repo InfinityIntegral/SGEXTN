@@ -71,3 +71,23 @@ bool SGXColourHSLA::operator==(SGXColourHSLA x) const {
 bool SGXColourHSLA::operator!=(SGXColourHSLA x) const {
     return ((h != x.h) || (s != x.s) || (l != x.l) || (a != x.a));
 }
+
+void SGXColourHSLA::setHue(float h){
+    temp_limitto360(h);
+    (*this).h = h;
+}
+
+void SGXColourHSLA::setSaturation(float s){
+    temp_limitto100(s);
+    (*this).s = s;
+}
+
+void SGXColourHSLA::setLightness(float l){
+    temp_limitto100(l);
+    (*this).l = l;
+}
+
+void SGXColourHSLA::setTransparency(float a){
+    temp_limitto100(a);
+    (*this).a = a;
+}
