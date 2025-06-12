@@ -4,9 +4,14 @@
 class SGXColourHSLA
 {
 public:
+    float h; // hue as float between 0 to 360
+    float s; // saturation as float between 0 to 100
+    float l; // saturation as float between 0 to 100
+    float a; // transparency as float between 0 to 100
     /*
 methods list:
 - constructor from RGBA
+- constructor from HSLA values
 - equality comparator
 - inequality comparator
 - change saturate
