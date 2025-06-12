@@ -1,5 +1,6 @@
 #include "sgxcolourhsla.h"
 #include "sgxcolourrgba.h"
+#include <cmath>
 
 namespace{
 inline float temp_maxof3float(float a, float b, float c){
@@ -12,6 +13,16 @@ inline float temp_minof3float(float a, float b, float c){
     if(a <= b && a <= c){return a;}
     if(b <= c){return b;}
     return c;
+}
+
+inline void temp_limitto100(float& x){
+    if(x < 0.0f){x = 0.0f;}
+    else if(x > 100.0f){x = 100.0f;}
+}
+
+inline void temp_limitto360(float& x){
+    x = std::fmod(x, 360.0f);
+    if(x < 0.0f){x += 360.0f;}
 }
 }
 
@@ -40,4 +51,23 @@ SGXColourHSLA::SGXColourHSLA(SGXColourRGBA x){
     (*this).h *= 360.0f;
     (*this).s *= 100.0f;
     (*this).l *= 100.0f;
+}
+
+SGXColourHSLA::SGXColourHSLA(float h, float s, float l, float a){
+    temp_limitto360(h);
+    temp_limitto100(s);
+    temp_limitto100(l);
+    temp_limitto100(a);
+    (*this).h = h;
+    (*this).s = s;
+    (*this).l = l;
+    (*this).a = a;
+}
+
+bool SGXColourHSLA::operator==(SGXColourHSLA x) const {
+    return ((h == x.h) && (s == x.s) && (l == x.l) && (a == x.a));
+}
+
+bool SGXColourHSLA::operator!=(SGXColourHSLA x) const {
+    return ((h != x.h) || (s != x.s) || (l != x.l) || (a != x.a));
 }
