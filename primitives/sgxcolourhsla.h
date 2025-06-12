@@ -18,17 +18,13 @@ public:
     void setSaturation(float s); // set saturation using float between 0 and 100 inclusive
     void setLightness(float l); // set lightness using float between 0 and 100 inclusive
     void setTransparency(float a); // set transparency using float between 0 and 100 inclusive
-    /*
-methods list:
-- change saturate
-- change lightness
-- invert hue
-- invert saturation
-- invert lightness
-- linear transform saturation
-- linear transform lightness
-- offset hue
-     */
+    void invertHue(); // modify hue to obtain complementary hue
+    void invertSaturation(); // modify saturation to obtain opposite saturation
+    void invertLightness(); // modify lightness to obtain opposite lightness
+    void linearTransformSaturation(float m, float c); // apply x -> mx + c transform to saturation
+    void linearTransformLightness(float m, float c); // apply x -> mx + c transform to lightness
+    void linearTransformTransparency(float m, float c); // apply x -> mx + c transform to transparency
+    void offsetHue(float c); // apply offset of c to the hue, used to get nearby colours
 };
 
 #endif // SGXCOLOURHSLA_H

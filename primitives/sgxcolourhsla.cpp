@@ -91,3 +91,31 @@ void SGXColourHSLA::setTransparency(float a){
     temp_limitto100(a);
     (*this).a = a;
 }
+
+void SGXColourHSLA::invertHue(){
+    setHue(h + 180.0f);
+}
+
+void SGXColourHSLA::invertSaturation(){
+    setSaturation(100.0f - s);
+}
+
+void SGXColourHSLA::invertLightness(){
+    setLightness(100.0f - s);
+}
+
+void SGXColourHSLA::linearTransformSaturation(float m, float c){
+    setSaturation(m * s + c);
+}
+
+void SGXColourHSLA::linearTransformLightness(float m, float c){
+    setLightness(m * l + c);
+}
+
+void SGXColourHSLA::linearTransformTransparency(float m, float c){
+    setTransparency(m * a + c);
+}
+
+void SGXColourHSLA::offsetHue(float c){
+    setHue(h + c);
+}
