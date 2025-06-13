@@ -72,6 +72,13 @@ bool SGXColourHSLA::operator!=(SGXColourHSLA x) const {
     return ((h != x.h) || (s != x.s) || (l != x.l) || (a != x.a));
 }
 
+bool SGXColourHSLA::operator<(SGXColourHSLA x) const {
+    if(h != x.h){return (h < x.h);}
+    if(s != x.s){return (s < x.s);}
+    if(l != x.l){return (l < x.l);}
+    return (a < x.a);
+}
+
 void SGXColourHSLA::setHue(float h){
     temp_limitto360(h);
     (*this).h = h;

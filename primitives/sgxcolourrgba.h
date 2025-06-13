@@ -2,6 +2,7 @@
 #define SGXCOLOURRGBA_H
 
 #include <QString>
+#include <QDebug>
 
 class SGXColourHSLA;
 class SGXColourRGBA // stores unsigned int with each 8 bits being a colour channel in format RGBA
@@ -38,6 +39,7 @@ public:
     [[nodiscard]] QString getStringForPrintingRGBAFloatHTML() const; // generate HTML style string for debugging using float values between 0 and 1 inclusive
     [[nodiscard]] bool operator==(SGXColourRGBA x) const; // equality comparator by comparing colour not struct instance memory location
     [[nodiscard]] bool operator!=(SGXColourRGBA x) const; // inequality comparator by comparing colour not struct instance memory location
+    [[nodiscard]] bool operator<(SGXColourRGBA x) const; // < comparator for use in sorted data structures
     void linearTransformRed(float m, float c); // do x -> mx + c transform on red channel with appropriate bounding
     void linearTransformGreen(float m, float c); // do x -> mx + c transform on green channel with appropriate bounding
     void linearTransformBlue(float m, float c); // do x -> mx + c transform on blue channel with appropriate bounding
@@ -57,5 +59,14 @@ public:
     [[nodiscard]] SGXColourRGBA linearInterpolateGammaCorrection(SGXColourRGBA x, float f) const; // computes the colour formed by mixing f amount of this colour with 1-f amounts of x, the output colour (but not f) is bounded appropriately if a value of f outside the 0 to 1 range is used, gamma correction is used
     void toComplementColour(); // sets colour to its complementary colour
 };
+
+inline unsigned int qHash(SGXColourRGBA x, unsigned int seed = 0){
+    return (x.x ^ seed);
+}
+
+inline QDebug operator<<(QDebug s, SGXColourRGBA x){
+    s << x.getStringForPrintingRGBAHTML();
+    return s;
+}
 
 #endif // SGXCOLOURRGBA_H

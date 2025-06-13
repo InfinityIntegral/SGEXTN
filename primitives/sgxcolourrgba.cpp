@@ -194,6 +194,10 @@ bool SGXColourRGBA::operator!=(SGXColourRGBA x) const {
     return ((*this).x != x.x);
 }
 
+bool SGXColourRGBA::operator<(SGXColourRGBA x) const {
+    return ((*this).x < x.x);
+}
+
 void SGXColourRGBA::linearTransformRed(float m, float c){
     float r = getRedAsFloat();
     r = m * r + c;

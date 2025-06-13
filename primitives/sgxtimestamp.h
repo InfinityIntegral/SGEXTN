@@ -11,6 +11,9 @@ methods list:
 - constructor from QDateTime
 - equality check
 - inequality check
+- < comparator
+- << function
+- qHash
 - get time difference
 - add year, month, day etc
 - subtract year, month, day etc

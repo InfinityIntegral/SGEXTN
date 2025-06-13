@@ -7,6 +7,11 @@ public:
     /*
 method list:
 - constructor from 2 floats
+- equality check
+- inequality check
+- < comparator
+- << function
+- qHash
 - vector addition
 - vector subtraction
 - multiplication by constant
@@ -15,8 +20,6 @@ method list:
 - arithmetic subtraction
 - arithmetic multiplication
 - arithmetic division
-- equality check
-- inequality check
 - get magnitude
 - get squared magnitude
 - normalise
