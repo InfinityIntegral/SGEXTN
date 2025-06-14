@@ -1,4 +1,5 @@
 #include "sgxvector2.h"
+#include <cmath>
 
 SGXVector2::SGXVector2(float x, float y){
     (*this).x = x;
@@ -64,4 +65,28 @@ SGXVector2& SGXVector2::operator/=(float m){
     x /= m;
     y /= m;
     return (*this);
+}
+
+float SGXVector2::getMagnitudeSquare() const {
+    return (x * x + y * y);
+}
+
+float SGXVector2::getMagnitude() const {
+    return std::sqrt(getMagnitudeSquare());
+}
+
+float SGXVector2::getDistanceSquare(SGXVector2 x) const {
+    return (((*this).x - x.x) * ((*this).x - x.x) + ((*this).y - x.y) * ((*this).y - x.y));
+}
+
+float SGXVector2::getDistance(SGXVector2 x) const {
+    return std::sqrt(getDistanceSquare(x));
+}
+
+void SGXVector2::normalise(){
+    (*this) /= getMagnitude();
+}
+
+void SGXVector2::normaliseGivenMagnitude(float m){
+    (*this) /= (getMagnitude() / m);
 }

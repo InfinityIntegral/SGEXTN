@@ -24,49 +24,47 @@ public:
     SGXVector2& operator-=(SGXVector2 x); // vector subtraction followed by assignment to original vector
     SGXVector2& operator*=(float m); // multiplication of vector by constant followed by assignment to original vector
     SGXVector2& operator/=(float m); // division of vector by constant followed by assignment to original vector
+    [[nodiscard]] float getMagnitude() const; // compute magnitude of the vector, or distance from the origin to the endpoint
+    [[nodiscard]] float getMagnitudeSquare() const; // compute the square of the magnitude, which is the distance from the origin to the endpoint, to avoid slow square root function
+    void normalise(); // set the magnitude of the vector to 1 without changing its direction
+    void normaliseGivenMagnitude(float m); // set the magnitude of the vector to m without changing its direction
+    [[nodiscard]] float getDistance(SGXVector2 x) const; // compute distance between endpoints of the 2 vectors
+    [[nodiscard]] float getDistanceSquare(SGXVector2 x) const; // compute squared distance between endpoints of the 2 vectors to avoid slow square root function
     /*
 method list:
-- get magnitude
-- get squared magnitude
-- normalise
-- normalise with given magnitude
 - redirect using argument
 - get argument
-- get distance
-- get squared distance
 - get angle between
+
 - invert
 - rotate 90 clockwise
 - rotate 90 counterclockwise
 - rotate 180
 - rotate clockwise
 - rotate counterclockwise
-- reflect across line
-- reflect across point
-- project to another vector
-- floor function
-- ceiling function
-- round function
-- floor with custom unit
-- ceiling with custom unit
-- round with custom unit
-- distance to line
-- distance to segment
-- distance to circle
-- get nearest point on line
-- get nearest point on segment
-- get nearest point on circle
-- zero vector
-- positive x unit vector
-- positive y unit vector
-- (1/sqrt2, 1/sqrt2)
-- (1, 1)
+
 - is collinear
 - is parallel
 - is perpendicular
 - midpoint
+- linear interpolation
+
 - reflect across x
 - reflect across y
+- reflect across line
+- reflect across point
+
+- project to x
+- project to y
+- project to another vector
+
+- distance to line
+- distance to segment
+- distance to circle
+
+- get nearest point on line
+- get nearest point on segment
+- get nearest point on circle
     */
 };
 
