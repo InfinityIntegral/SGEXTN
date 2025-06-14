@@ -15,16 +15,17 @@ public:
     [[nodiscard]] bool operator!=(SGXVector2 x) const; // inequality comparator by comparing coordinates not struct instance memory location
     [[nodiscard]] bool operator<(SGXVector2 x) const; // < comparator for use in sorted data structures
     [[nodiscard]] QString getStringForPrinting() const; // generate string to print out
+    [[nodiscard]] SGXVector2 operator+(SGXVector2 x) const; // vector addition
+    [[nodiscard]] SGXVector2 operator-(SGXVector2 x) const; // vector subtraction
+    [[nodiscard]] SGXVector2 operator*(float m) const; // multiplication of vector by constant
+    friend SGXVector2 operator*(float m, SGXVector2 x); // multiplication of vector by constant
+    [[nodiscard]] SGXVector2 operator/(float m) const; // division of vector by constant
+    SGXVector2& operator+=(SGXVector2 x); // vector addition followed by assignment to original vector
+    SGXVector2& operator-=(SGXVector2 x); // vector subtraction followed by assignment to original vector
+    SGXVector2& operator*=(float m); // multiplication of vector by constant followed by assignment to original vector
+    SGXVector2& operator/=(float m); // division of vector by constant followed by assignment to original vector
     /*
 method list:
-- vector addition
-- vector subtraction
-- multiplication by constant
-- division by constant
-- arithmetic addition
-- arithmetic subtraction
-- arithmetic multiplication
-- arithmetic division
 - get magnitude
 - get squared magnitude
 - normalise

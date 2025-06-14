@@ -21,3 +21,47 @@ bool SGXVector2::operator<(SGXVector2 x) const {
 QString SGXVector2::getStringForPrinting() const {
     return ("(" + QString::number(x) + ", " + QString::number(y) + ")");
 }
+
+SGXVector2 SGXVector2::operator+(SGXVector2 x) const {
+    return SGXVector2((*this).x + x.x, (*this).y + x.y);
+}
+
+SGXVector2 SGXVector2::operator-(SGXVector2 x) const {
+    return SGXVector2((*this).x - x.x, (*this).y - x.y);
+}
+
+SGXVector2 SGXVector2::operator*(float m) const {
+    return SGXVector2(m * x, m * y);
+}
+
+SGXVector2 operator*(float m, SGXVector2 x){
+    return SGXVector2(m * x.x, m * x.y);
+}
+
+SGXVector2 SGXVector2::operator/(float m) const {
+    return SGXVector2(x / m, y / m);
+}
+
+SGXVector2& SGXVector2::operator+=(SGXVector2 x){
+    (*this).x += x.x;
+    (*this).y += x.y;
+    return (*this);
+}
+
+SGXVector2& SGXVector2::operator-=(SGXVector2 x){
+    (*this).x -= x.x;
+    (*this).y -= x.y;
+    return (*this);
+}
+
+SGXVector2& SGXVector2::operator*=(float m){
+    x *= m;
+    y *= m;
+    return (*this);
+}
+
+SGXVector2& SGXVector2::operator/=(float m){
+    x /= m;
+    y /= m;
+    return (*this);
+}
