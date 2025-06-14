@@ -30,12 +30,11 @@ public:
     void normaliseGivenMagnitude(float m); // set the magnitude of the vector to m without changing its direction
     [[nodiscard]] float getDistance(SGXVector2 x) const; // compute distance between endpoints of the 2 vectors
     [[nodiscard]] float getDistanceSquare(SGXVector2 x) const; // compute squared distance between endpoints of the 2 vectors to avoid slow square root function
+    [[nodiscard]] float getArgument() const; // compute argument of vector, that is the angle to rotate in degrees counterclockwise from the positive x direction to reach the direction in which the vector is pointing at
+    [[nodiscard]] float getAngleBetween(SGXVector2 x) const; // compute the angle to rotate in degrees counterclockwise from this vector to reach the direction in which x is pointing at
+    void redirectUsingArgument(float a); // change the direction of the vector to have argument a without changing its magnitude, where argument is the angle to rotate in degrees counterclockwise from the positive x direction to reach the direction in which the vector is pointing at
     /*
 method list:
-- redirect using argument
-- get argument
-- get angle between
-
 - invert
 - rotate 90 clockwise
 - rotate 90 counterclockwise

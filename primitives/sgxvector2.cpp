@@ -72,7 +72,7 @@ float SGXVector2::getMagnitudeSquare() const {
 }
 
 float SGXVector2::getMagnitude() const {
-    return std::sqrt(getMagnitudeSquare());
+    return std::sqrtf(getMagnitudeSquare());
 }
 
 float SGXVector2::getDistanceSquare(SGXVector2 x) const {
@@ -80,7 +80,7 @@ float SGXVector2::getDistanceSquare(SGXVector2 x) const {
 }
 
 float SGXVector2::getDistance(SGXVector2 x) const {
-    return std::sqrt(getDistanceSquare(x));
+    return std::sqrtf(getDistanceSquare(x));
 }
 
 void SGXVector2::normalise(){
@@ -89,4 +89,23 @@ void SGXVector2::normalise(){
 
 void SGXVector2::normaliseGivenMagnitude(float m){
     (*this) /= (getMagnitude() / m);
+}
+
+float SGXVector2::getArgument() const {
+    return (std::atan2f(y, x) * 180.0f / 3.14159265358979f);
+}
+
+float SGXVector2::getAngleBetween(SGXVector2 x) const {
+    float f = x.getArgument() - getArgument();
+    f = std::fmodf(f, 360.0f);
+    if(f <= -180.0f){f += 360.0f;}
+    else if(f > 180.0f){f -= 360.0f;}
+    return f;
+}
+
+void SGXVector2::redirectUsingArgument(float a){
+    const float m = getMagnitude();
+    x = std::cosf(a);
+    y = std::sinf(a);
+    (*this) *= m;
 }

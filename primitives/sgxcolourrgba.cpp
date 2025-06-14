@@ -14,7 +14,7 @@ inline void temp_boundFloat(float& x){
 }
 
 inline unsigned int temp_floatToUnsignedInt(float x){
-    const int x0 = static_cast<int>(std::round(255.0f * x));
+    const int x0 = static_cast<int>(std::roundf(255.0f * x));
     return static_cast<unsigned int>(x0);
 }
 
@@ -83,10 +83,10 @@ SGXColourRGBA::SGXColourRGBA(SGXColourHSLA& x){
         g = temp_HueIntermediatesToRGB(p, q, x.h);
         b = temp_HueIntermediatesToRGB(p, q, x.h - 1.0f / 3.0f);
     }
-    const int r0 = static_cast<int>(std::round(r * 255.0f));
-    const int g0 = static_cast<int>(std::round(g * 255.0f));
-    const int b0 = static_cast<int>(std::round(b * 255.0f));
-    const int a0 = static_cast<int>(std::round(x.a / 100.0f * 255.0f));
+    const int r0 = static_cast<int>(std::roundf(r * 255.0f));
+    const int g0 = static_cast<int>(std::roundf(g * 255.0f));
+    const int b0 = static_cast<int>(std::roundf(b * 255.0f));
+    const int a0 = static_cast<int>(std::roundf(x.a / 100.0f * 255.0f));
     (*this).x = (static_cast<unsigned int>(r0) << 24u) | (static_cast<unsigned int>(g0) << 16u) | (static_cast<unsigned int>(b0) << 8u) | (static_cast<unsigned int>(a0));
 }
 
@@ -223,15 +223,15 @@ void SGXColourRGBA::linearTransformTransparency(float m, float c){
 }
 
 void SGXColourRGBA::gammaCorrectBegin(float &r, float &g, float &b) const {
-    r = std::pow(getRedAsFloat(), 2.2f);
-    g = std::pow(getGreenAsFloat(), 2.2f);
-    b = std::pow(getBlueAsFloat(), 2.2f);
+    r = std::powf(getRedAsFloat(), 2.2f);
+    g = std::powf(getGreenAsFloat(), 2.2f);
+    b = std::powf(getBlueAsFloat(), 2.2f);
 }
 
 void SGXColourRGBA::gammaCorrectEnd(float r, float g, float b){
-    setRedUsingFloat(std::pow(r, 1.0f / 2.2f));
-    setGreenUsingFloat(std::pow(g, 1.0f / 2.2f));
-    setBlueUsingFloat(std::pow(b, 1.0f / 2.2f));
+    setRedUsingFloat(std::powf(r, 1.0f / 2.2f));
+    setGreenUsingFloat(std::powf(g, 1.0f / 2.2f));
+    setBlueUsingFloat(std::powf(b, 1.0f / 2.2f));
 }
 
 void SGXColourRGBA::linearTransformRedWithGamma(float m, float c){

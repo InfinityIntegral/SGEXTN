@@ -21,7 +21,7 @@ inline void temp_limitto100(float& x){
 }
 
 inline void temp_limitto360(float& x){
-    x = std::fmod(x, 360.0f);
+    x = std::fmodf(x, 360.0f);
     if(x < 0.0f){x += 360.0f;}
 }
 }
