@@ -122,33 +122,21 @@ void SGXVector2::rotate180(){
 }
 
 void SGXVector2::rotateCounterclockwise90(){
-    const float x0 = x;
-    const float y0 = y;
-    x = (-1.0f) * y0;
-    y = x0;
+    (*this) = SGXVector2((-1.0f) * y, x);
 }
 
 void SGXVector2::rotateClockwise90(){
-    const float x0 = x;
-    const float y0 = y;
-    x = y0;
-    y = (-1.0f) * x0;
+    (*this) = SGXVector2(y, (-1.0f) * x);
 }
 
 void SGXVector2::rotateCounterclockwise(float a){
     a *= (3.14159265358979f / 180.0f);
-    const float x0 = x;
-    const float y0 = y;
-    x = x0 * std::cosf(a) - y0 * std::sinf(a);
-    y = x0 * std::sinf(a) + y0 * std::cosf(a);
+    (*this) = SGXVector2(x * std::cosf(a) - y * std::sinf(a), x * std::sinf(a) + y * std::cosf(a));
 }
 
 void SGXVector2::rotateClockwise(float a){
     a *= (3.14159265358979f / 180.0f);
-    const float x0 = x;
-    const float y0 = y;
-    x = x0 * std::cosf(a) + y0 * std::sinf(a);
-    y = (-1.0f) * x0 * std::sinf(a) + y0 * std::cosf(a);
+    (*this) = SGXVector2(x * std::cosf(a) + y * std::sinf(a), (-1.0f) * x * std::sinf(a) + y * std::cosf(a));
 }
 
 bool SGXVector2::isCollinear(SGXVector2 a, SGXVector2 b, float limit) const {
@@ -184,4 +172,20 @@ SGXVector2 SGXVector2::midpoint(SGXVector2 x) const {
 
 SGXVector2 SGXVector2::linearInterpolate(SGXVector2 x, float f) const {
     return (f * (*this) + (1.0f - f) * x);
+}
+
+void SGXVector2::reflectAcrossX(){
+    x *= (-1.0f);
+}
+
+void SGXVector2::reflectAcrossY(){
+    y *= (-1.0f);
+}
+
+void SGXVector2::reflectAcrossPoint(SGXVector2 x){
+    (*this) = 2 * x - (*this);
+}
+
+void SGXVector2::reflectAcrossLine(float m, float c){
+    return reflectAcrossPoint(SGXVector2((m * y + x - m * c) / (m * m + 1.0f), (m * m * y + m * x + c) / (m * m + 1.0f)));
 }

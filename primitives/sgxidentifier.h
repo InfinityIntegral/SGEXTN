@@ -4,7 +4,7 @@
 #include <QSet>
 #include <QDebug>
 
-class SGXIdentifier
+class SGXIdentifier // GUID with registration system to avoid duplicates
 {
 public:
     static QSet<SGXIdentifier> identifiersList; // list of registered identifiers

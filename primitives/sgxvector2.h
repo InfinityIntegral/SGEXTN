@@ -5,7 +5,7 @@
 #include <bit>
 #include <QDebug>
 
-class SGXVector2
+class SGXVector2 // stores 2 dimensional coordinates that can mean the vector from the origin to the point or just the point itself, depending on context
 {
 public:
     float x; // x coordinate
@@ -45,13 +45,12 @@ public:
     [[nodiscard]] bool isPerpendicular(SGXVector2 a, SGXVector2 b, float limit = 1.0f) const; // supposing X is the endpoint of this vector, A is the endpoint of a, and B is the endpoint of b, this function computes if A, X, B are perpendicular, where limit is the maximum number of degrees that angle AXB can deviate from 90
     [[nodiscard]] SGXVector2 midpoint(SGXVector2 x) const; // computes the midpoint between the endpoints of this vector and x
     [[nodiscard]] SGXVector2 linearInterpolate(SGXVector2 x, float f) const; // computes the point f of the way from the endpoint of this vector to the endpoint of x, f can be below 0 or above 1
+    void reflectAcrossX(); // reflects this vector across x axis
+    void reflectAcrossY(); // reflects this vector across y axis
+    void reflectAcrossPoint(SGXVector2 x); // compute position of endpoint of this vector after it has been reflected across the endpoint of x and set it as the new endpoint
+    void reflectAcrossLine(float m, float c); // compute position of endpoint of this vector after it has been reflected across the line y = mx + c and set it as the new endpoint
     /*
 method list:
-- reflect across x
-- reflect across y
-- reflect across line
-- reflect across point
-
 - project to x
 - project to y
 - project to another vector

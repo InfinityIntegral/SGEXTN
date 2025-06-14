@@ -5,7 +5,7 @@
 #include <QDebug>
 #include <bit>
 
-class SGXColourHSLA
+class SGXColourHSLA // stores colour in HSLA with hue as float between 0 to 360, satuation, lightness, transparency all as floats between 0 to 100, must be converted to SGXColourRGBA before being used
 {
 public:
     float h; // hue as float between 0 to 360
