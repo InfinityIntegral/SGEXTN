@@ -11,6 +11,7 @@ public:
     float x; // x coordinate
     float y; // y coordinate
     SGXVector2(float x, float y); // constructs a SGXVector2 from component coordinates
+    static SGXVector2 origin; // zero vector
     [[nodiscard]] bool operator==(SGXVector2 x) const; // equality comparator by comparing coordinates not struct instance memory location
     [[nodiscard]] bool operator!=(SGXVector2 x) const; // inequality comparator by comparing coordinates not struct instance memory location
     [[nodiscard]] bool operator<(SGXVector2 x) const; // < comparator for use in sorted data structures
@@ -39,14 +40,13 @@ public:
     void rotate180(); // rotate vector by 180 degrees in either direction, equivalent to inverting it
     void rotateClockwise(float a); // rotate vector clockwise by a degrees
     void rotateCounterclockwise(float a); // rotate vector counterclockwise by a degrees
+    [[nodiscard]] bool isCollinear(SGXVector2 a, SGXVector2 b, float limit = 1.0f) const; // supposing X is the endpoint of this vector, A is the endpoint of a, and B is the endpoint of b, this function computes if A, X, B are collinear, where limit is the maximum number of degrees that angle AXB can deviate from 0 or 180
+    [[nodiscard]] bool isParallel(SGXVector2 a2, SGXVector2 b1, SGXVector2 b2, float limit = 1.0f) const; // supposing A1 is the endpoint of this vector, A2 is the endpoint of a2, B1 is the endpoint of b1, and B2 is the endpoint of b2, this function computes if A1A1 and B1B2 are parallel, where limit is the maximum number of degrees allowed for the angle between the x axis and each line
+    [[nodiscard]] bool isPerpendicular(SGXVector2 a, SGXVector2 b, float limit = 1.0f) const; // supposing X is the endpoint of this vector, A is the endpoint of a, and B is the endpoint of b, this function computes if A, X, B are perpendicular, where limit is the maximum number of degrees that angle AXB can deviate from 90
+    [[nodiscard]] SGXVector2 midpoint(SGXVector2 x) const; // computes the midpoint between the endpoints of this vector and x
+    [[nodiscard]] SGXVector2 linearInterpolate(SGXVector2 x, float f) const; // computes the point f of the way from the endpoint of this vector to the endpoint of x, f can be below 0 or above 1
     /*
 method list:
-- is collinear
-- is parallel
-- is perpendicular
-- midpoint
-- linear interpolation
-
 - reflect across x
 - reflect across y
 - reflect across line

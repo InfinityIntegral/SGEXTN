@@ -6,6 +6,8 @@ SGXVector2::SGXVector2(float x, float y){
     (*this).y = y;
 }
 
+SGXVector2 SGXVector2::origin = SGXVector2(0.0f, 0.0f);
+
 bool SGXVector2::operator==(SGXVector2 x) const {
     return (((*this).x == x.x) && ((*this).y == x.y));
 }
@@ -147,4 +149,39 @@ void SGXVector2::rotateClockwise(float a){
     const float y0 = y;
     x = x0 * std::cosf(a) + y0 * std::sinf(a);
     y = (-1.0f) * x0 * std::sinf(a) + y0 * std::cosf(a);
+}
+
+bool SGXVector2::isCollinear(SGXVector2 a, SGXVector2 b, float limit) const {
+    float arg = (a - (*this)).getArgument() - (b - (*this)).getArgument();
+    arg = std::fmodf(arg, 180.0f);
+    if(arg < -90.0f){arg += 180.0f;}
+    else if(arg > 90.0f){arg -= 180.0f;}
+    if(arg >= (-1.0f) * limit && arg <= limit){return true;}
+    return false;
+}
+
+bool SGXVector2::isParallel(SGXVector2 a2, SGXVector2 b1, SGXVector2 b2, float limit) const {
+    float arg = (a2 - (*this)).getArgument() - (b2 - b1).getArgument();
+    arg = std::fmodf(arg, 180.0f);
+    if(arg < -90.0f){arg += 180.0f;}
+    else if(arg > 90.0f){arg -= 180.0f;}
+    if(arg >= (-1.0f) * limit && arg <= limit){return true;}
+    return false;
+}
+
+bool SGXVector2::isPerpendicular(SGXVector2 a, SGXVector2 b, float limit) const {
+    float arg = (a - (*this)).getArgument() - (b - (*this)).getArgument() + 90.0f;
+    arg = std::fmodf(arg, 180.0f);
+    if(arg < -90.0f){arg += 180.0f;}
+    else if(arg > 90.0f){arg -= 180.0f;}
+    if(arg >= (-1.0f) * limit && arg <= limit){return true;}
+    return false;
+}
+
+SGXVector2 SGXVector2::midpoint(SGXVector2 x) const {
+    return (0.5f * ((*this) + x));
+}
+
+SGXVector2 SGXVector2::linearInterpolate(SGXVector2 x, float f) const {
+    return (f * (*this) + (1.0f - f) * x);
 }
