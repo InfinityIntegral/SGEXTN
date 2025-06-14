@@ -48,17 +48,15 @@ public:
     void reflectAcrossX(); // reflects this vector across x axis
     void reflectAcrossY(); // reflects this vector across y axis
     void reflectAcrossPoint(SGXVector2 x); // compute position of endpoint of this vector after it has been reflected across the endpoint of x and set it as the new endpoint
-    void reflectAcrossLine(float m, float c); // compute position of endpoint of this vector after it has been reflected across the line y = mx + c and set it as the new endpoint
+    void reflectAcrossLine(float x1, float y1, float x2, float y2); // compute position of endpoint of this vector after it has been reflected across the line passing through (x1, y1) and (x2, y2) and set it as the new endpoint
+    void projectToX(); // compute position of endpoint of this vector when projected onto the x axis and set it as the new endpoint
+    void projectToY(); // compute position of endpoint of this vector when projected onto the y axis and set it as the new endpoint
+    void projectToLine(float x1, float y1, float x2, float y2); // compute position of endpoint of this vector when projected onto the line passing through (x1, y1) and (x2, y2) and set it as the new endpoint
+    [[nodiscard]] float getDistanceToLine(float x1, float y1, float x2, float y2) const; // compute distance from endpoint of this vector to the line passing through (x1, y1) and (x2, y2)
+    [[nodiscard]] float getDistanceToSegment(float x1, float y1, float x2, float y2) const; // compute distance from endpoint of this vector to the segment formed by joining (x1, y1) with (x2, y2)
+    [[nodiscard]] float getDistanceToCircle(float a, float b, float r) const; // compute distance from endpoint of this vector to the circle (x - a)^2 + (y - b)^2 = r^2, returns negative of the distance to the circle's circumference if the endpoint is inside the circle
     /*
 method list:
-- project to x
-- project to y
-- project to another vector
-
-- distance to line
-- distance to segment
-- distance to circle
-
 - get nearest point on line
 - get nearest point on segment
 - get nearest point on circle

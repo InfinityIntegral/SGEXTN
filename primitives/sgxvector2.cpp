@@ -1,5 +1,18 @@
 #include "sgxvector2.h"
 #include <cmath>
+#include <algorithm>
+#include <numbers>
+
+namespace{
+inline bool temp_isBetween(float x, float a, float b){
+    if(a <= b){
+        if(x >= a && x <= b){return true;}
+        return false;
+    }
+    if(x <= a && x >= b){return true;}
+    return false;
+}
+}
 
 SGXVector2::SGXVector2(float x, float y){
     (*this).x = x;
@@ -94,7 +107,7 @@ void SGXVector2::normaliseGivenMagnitude(float m){
 }
 
 float SGXVector2::getArgument() const {
-    return (std::atan2f(y, x) * 180.0f / 3.14159265358979f);
+    return (std::atan2f(y, x) * 180.0f / std::numbers::pi_v<float>);
 }
 
 float SGXVector2::getAngleBetween(SGXVector2 x) const {
@@ -107,7 +120,7 @@ float SGXVector2::getAngleBetween(SGXVector2 x) const {
 
 void SGXVector2::redirectUsingArgument(float a){
     const float m = getMagnitude();
-    a *= (3.14159265358979f / 180.0f);
+    a *= (std::numbers::pi_v<float> / 180.0f);
     x = std::cosf(a);
     y = std::sinf(a);
     (*this) *= m;
@@ -130,12 +143,12 @@ void SGXVector2::rotateClockwise90(){
 }
 
 void SGXVector2::rotateCounterclockwise(float a){
-    a *= (3.14159265358979f / 180.0f);
+    a *= (std::numbers::pi_v<float> / 180.0f);
     (*this) = SGXVector2(x * std::cosf(a) - y * std::sinf(a), x * std::sinf(a) + y * std::cosf(a));
 }
 
 void SGXVector2::rotateClockwise(float a){
-    a *= (3.14159265358979f / 180.0f);
+    a *= (std::numbers::pi_v<float> / 180.0f);
     (*this) = SGXVector2(x * std::cosf(a) + y * std::sinf(a), (-1.0f) * x * std::sinf(a) + y * std::cosf(a));
 }
 
@@ -186,6 +199,40 @@ void SGXVector2::reflectAcrossPoint(SGXVector2 x){
     (*this) = 2 * x - (*this);
 }
 
-void SGXVector2::reflectAcrossLine(float m, float c){
-    return reflectAcrossPoint(SGXVector2((m * y + x - m * c) / (m * m + 1.0f), (m * m * y + m * x + c) / (m * m + 1.0f)));
+void SGXVector2::projectToLine(float x1, float y1, float x2, float y2){
+    const float f = ((x - x1) * (x2 - x1) + (y - y1) * (y2 - y1)) / ((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+    (*this) = SGXVector2(x1 + f * (x2 - x1), y1 + f * (y2 - y1));
+}
+
+void SGXVector2::reflectAcrossLine(float x1, float y1, float x2, float y2){
+    SGXVector2 v = (*this);
+    v.projectToLine(x1, y1, x2, y2);
+    reflectAcrossPoint(v);
+}
+
+void SGXVector2::projectToX(){
+    y = 0;
+}
+
+void SGXVector2::projectToY(){
+    x = 0;
+}
+
+float SGXVector2::getDistanceToLine(float x1, float y1, float x2, float y2) const {
+    SGXVector2 v = (*this);
+    v.projectToLine(x1, y1, x2, y2);
+    return getDistance(v);
+}
+
+float SGXVector2::getDistanceToSegment(float x1, float y1, float x2, float y2) const {
+    SGXVector2 v = (*this);
+    v.projectToLine(x1, y1, x2, y2);
+    if(temp_isBetween(v.x, x1, x2) || temp_isBetween(v.y, y1, y2)){return getDistance(v);}
+    return std::min(getDistance(SGXVector2(x1, y1)), getDistance(SGXVector2(x2, y2)));
+}
+
+float SGXVector2::getDistanceToCircle(float a, float b, float r) const {
+    SGXVector2 v = (*this);
+    v -= SGXVector2(a, b);
+    return v.getMagnitude() - r; 
 }
