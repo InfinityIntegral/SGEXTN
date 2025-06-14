@@ -105,7 +105,46 @@ float SGXVector2::getAngleBetween(SGXVector2 x) const {
 
 void SGXVector2::redirectUsingArgument(float a){
     const float m = getMagnitude();
+    a *= (3.14159265358979f / 180.0f);
     x = std::cosf(a);
     y = std::sinf(a);
     (*this) *= m;
+}
+
+void SGXVector2::invert(){
+    (*this) *= (-1.0f);
+}
+
+void SGXVector2::rotate180(){
+    (*this) *= (-1.0f);
+}
+
+void SGXVector2::rotateCounterclockwise90(){
+    const float x0 = x;
+    const float y0 = y;
+    x = (-1.0f) * y0;
+    y = x0;
+}
+
+void SGXVector2::rotateClockwise90(){
+    const float x0 = x;
+    const float y0 = y;
+    x = y0;
+    y = (-1.0f) * x0;
+}
+
+void SGXVector2::rotateCounterclockwise(float a){
+    a *= (3.14159265358979f / 180.0f);
+    const float x0 = x;
+    const float y0 = y;
+    x = x0 * std::cosf(a) - y0 * std::sinf(a);
+    y = x0 * std::sinf(a) + y0 * std::cosf(a);
+}
+
+void SGXVector2::rotateClockwise(float a){
+    a *= (3.14159265358979f / 180.0f);
+    const float x0 = x;
+    const float y0 = y;
+    x = x0 * std::cosf(a) + y0 * std::sinf(a);
+    y = (-1.0f) * x0 * std::sinf(a) + y0 * std::cosf(a);
 }

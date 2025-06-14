@@ -33,15 +33,14 @@ public:
     [[nodiscard]] float getArgument() const; // compute argument of vector, that is the angle to rotate in degrees counterclockwise from the positive x direction to reach the direction in which the vector is pointing at
     [[nodiscard]] float getAngleBetween(SGXVector2 x) const; // compute the angle to rotate in degrees counterclockwise from this vector to reach the direction in which x is pointing at
     void redirectUsingArgument(float a); // change the direction of the vector to have argument a without changing its magnitude, where argument is the angle to rotate in degrees counterclockwise from the positive x direction to reach the direction in which the vector is pointing at
+    void invert(); // invert the direction of the vector, equivalent to multiplying by -1 or rotating 180 degrees
+    void rotateClockwise90(); // rotate vector clockwise by 90 degrees
+    void rotateCounterclockwise90(); // rotate vector counterclockwise by 90 degrees
+    void rotate180(); // rotate vector by 180 degrees in either direction, equivalent to inverting it
+    void rotateClockwise(float a); // rotate vector clockwise by a degrees
+    void rotateCounterclockwise(float a); // rotate vector counterclockwise by a degrees
     /*
 method list:
-- invert
-- rotate 90 clockwise
-- rotate 90 counterclockwise
-- rotate 180
-- rotate clockwise
-- rotate counterclockwise
-
 - is collinear
 - is parallel
 - is perpendicular
