@@ -11,7 +11,8 @@ SOURCES = misc/main.cpp \
     primitives/sgxidentifier.cpp \
     primitives/sgxtimestamp.cpp \
     primitives/sgxvector2.cpp \
-    userDefinedClasses/sgucentralmanagement.cpp
+    userDefinedClasses/sgucentralmanagement.cpp \
+    userDefinedClasses/sgusignalemitter.cpp
 RESOURCES = assets.qrc
 HEADERS += \
     misc/sgxcentral.h \
@@ -20,4 +21,5 @@ HEADERS += \
     primitives/sgxidentifier.h \
     primitives/sgxtimestamp.h \
     primitives/sgxvector2.h \
-    userDefinedClasses/sgucentralmanagement.h
+    userDefinedClasses/sgucentralmanagement.h \
+    userDefinedClasses/sgusignalemitter.h
