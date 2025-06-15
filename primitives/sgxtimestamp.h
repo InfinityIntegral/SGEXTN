@@ -4,6 +4,8 @@
 #include <QString>
 #include <QDateTime>
 #include <QTimeZone>
+#include <bit>
+#include <QDebug>
 
 class SGXTimeStamp // contains the number of seconds since 19650809 123000
 {
@@ -21,6 +23,9 @@ public:
     [[nodiscard]] QString getStringNoOffset() const; // converts timestamp to string in "yyyyMMdd HHmmss" format without the default year offset of 1965
     [[nodiscard]] QString getStringCustomFormat(const QString& s) const; // converts timestamp to string in custom format
     [[nodiscard]] QString getStringNoOffsetCustomFormat(const QString& s) const; // converts timestamp to string in custom format without the default year offset of 1965
+    [[nodiscard]] bool operator==(SGXTimeStamp x) const; // equality comparator by comparing time not struct instance memory location
+    [[nodiscard]] bool operator!=(SGXTimeStamp x) const; // inequality comparator by comparing time not struct instance memory location
+    [[nodiscard]] bool operator<(SGXTimeStamp x) const; // < comparator for use in sorted data structures
     /*
 methods list:
 - equality check
@@ -39,5 +44,14 @@ methods list:
 - get if National Day period
      */
 };
+
+inline unsigned int qHash(SGXTimeStamp x, unsigned int seed = 0){
+    return static_cast<unsigned int>(std::bit_cast<unsigned long long>(x.t >> 32ll) ^ std::bit_cast<unsigned long long>(x.t & 0xFFFFFFFFll) ^ static_cast<unsigned long long>(seed));
+}
+
+inline QDebug operator<<(QDebug s, SGXTimeStamp x){
+    s << x.getString();
+    return s;
+}
 
 #endif // SGXTIMESTAMP_H
