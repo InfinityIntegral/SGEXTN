@@ -67,3 +67,47 @@ bool SGXTimeStamp::operator<=(SGXTimeStamp x) const {
 bool SGXTimeStamp::operator>=(SGXTimeStamp x) const {
     return (t >= x.t);
 }
+
+float SGXTimeStamp::getSecondsFrom(SGXTimeStamp x) const {
+    return static_cast<float>(t - x.t);
+}
+
+float SGXTimeStamp::getMinutesFrom(SGXTimeStamp x) const {
+    double d = static_cast<double>(t - x.t);
+    d /= 60.0;
+    return static_cast<float>(d);
+}
+
+float SGXTimeStamp::getHoursFrom(SGXTimeStamp x) const {
+    double d = static_cast<double>(t - x.t);
+    d /= 60.0;
+    d /= 60.0;
+    return static_cast<float>(d);
+}
+
+float SGXTimeStamp::getDaysFrom(SGXTimeStamp x) const {
+    double d = static_cast<double>(t - x.t);
+    d /= 60.0;
+    d /= 60.0;
+    d /= 24.0;
+    return static_cast<float>(d);
+}
+
+float SGXTimeStamp::getMonthsFrom(SGXTimeStamp x) const {
+    double d = static_cast<double>(t - x.t);
+    d /= 60.0;
+    d /= 60.0;
+    d /= 24.0;
+    d /= 30.0;
+    return static_cast<float>(d);
+}
+
+float SGXTimeStamp::getYearsFrom(SGXTimeStamp x) const {
+    double d = static_cast<double>(t - x.t);
+    d /= 60.0;
+    d /= 60.0;
+    d /= 24.0;
+    d /= 30.0;
+    d /= 12.175;
+    return static_cast<float>(d);
+}
