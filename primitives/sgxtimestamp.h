@@ -36,16 +36,20 @@ public:
     [[nodiscard]] float getDaysFrom(SGXTimeStamp x) const; // compute time difference in days required to be added to x to get this timestamp
     [[nodiscard]] float getMonthsFrom(SGXTimeStamp x) const; // compute time difference in months required to be added to x to get this timestamp
     [[nodiscard]] float getYearsFrom(SGXTimeStamp x) const; // compute time difference in years required to be added to x to get this timestamp
-    void addSeconds(float x); // add x seconds to this timestamp
+    void addSeconds(long long x); // add x seconds to this timestamp
     void addMinutes(float x); // add x minutes to this timestamp
     void addHours(float x); // add x hours to this timestamp
     void addDays(float x); // add x days to this timestamp
     void addMonths(float x); // add x months to this timestamp
     void addYears(float x); // add x years to this timestamp
+    void subtractSeconds(long long x); // subtract x seconds from this timestamp
+    void subtractMinutes(float x); // subtract x minutes from this timestamp
+    void subtractHours(float x); // subtract x hours from this timestamp
+    void subtractDays(float x); // subtract x days from this timestamp
+    void subtractMonths(float x); // subtract x months from this timestamp
+    void subtractYears(float x); // subtract x years from this timestamp
     /*
 methods list:
-- add year, month, day etc
-- subtract year, month, day etc
 - get now
 - cast to other time zone
 - cast to universal time zone

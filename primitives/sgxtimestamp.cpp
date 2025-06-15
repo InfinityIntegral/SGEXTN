@@ -112,8 +112,8 @@ float SGXTimeStamp::getYearsFrom(SGXTimeStamp x) const {
     return static_cast<float>(d);
 }
 
-void SGXTimeStamp::addSeconds(float x){
-    t += static_cast<long long>(x);
+void SGXTimeStamp::addSeconds(long long x){
+    t += x;
 }
 
 void SGXTimeStamp::addMinutes(float x){
@@ -154,4 +154,48 @@ void SGXTimeStamp::addYears(float x){
     d *= 30.0;
     d *= 12.175;
     t += static_cast<long long>(d);
+}
+
+void SGXTimeStamp::subtractSeconds(long long x){
+    t -= x;
+}
+
+void SGXTimeStamp::subtractMinutes(float x){
+    double d = static_cast<double>(x);
+    d *= 60.0;
+    t -= static_cast<long long>(d);
+}
+
+void SGXTimeStamp::subtractHours(float x){
+    double d = static_cast<double>(x);
+    d *= 60.0;
+    d *= 60.0;
+    t -= static_cast<long long>(d);
+}
+
+void SGXTimeStamp::subtractDays(float x){
+    double d = static_cast<double>(x);
+    d *= 60.0;
+    d *= 60.0;
+    d *= 24.0;
+    t -= static_cast<long long>(d);
+}
+
+void SGXTimeStamp::subtractMonths(float x){
+    double d = static_cast<double>(x);
+    d *= 60.0;
+    d *= 60.0;
+    d *= 24.0;
+    d *= 30.0;
+    t -= static_cast<long long>(d);
+}
+
+void SGXTimeStamp::subtractYears(float x){
+    double d = static_cast<double>(x);
+    d *= 60.0;
+    d *= 60.0;
+    d *= 24.0;
+    d *= 30.0;
+    d *= 12.175;
+    t -= static_cast<long long>(d);
 }
