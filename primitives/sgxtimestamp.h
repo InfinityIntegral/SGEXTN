@@ -16,11 +16,13 @@ public:
     SGXTimeStamp(const QString& t); // constructs timestamp object from time in default calendar as a string in "yyyyMMdd HHmmss" format
     SGXTimeStamp(int year, int month, int day, int hour, int minute, int second); // construct timestamp object from components
     SGXTimeStamp(const QDateTime& dt); // converts QDateTime to SGXTimeStamp
+    [[nodiscard]] QDateTime getQDateTime() const; // converts SGXTimeStamp to QDateTime
+    [[nodiscard]] QString getString() const; // converts timestamp to string in "yyyyMMdd HHmmss" format
+    [[nodiscard]] QString getStringNoOffset() const; // converts timestamp to string in "yyyyMMdd HHmmss" format without the default year offset of 1965
+    [[nodiscard]] QString getStringCustomFormat(const QString& s) const; // converts timestamp to string in custom format
+    [[nodiscard]] QString getStringNoOffsetCustomFormat(const QString& s) const; // converts timestamp to string in custom format without the default year offset of 1965
     /*
 methods list:
-- get QDateTime
-- get string representation
-- get string with custom formatting
 - equality check
 - inequality check
 - < comparator

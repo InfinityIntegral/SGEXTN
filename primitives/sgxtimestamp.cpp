@@ -23,3 +23,23 @@ SGXTimeStamp::SGXTimeStamp(int year, int month, int day, int hour, int minute, i
 SGXTimeStamp::SGXTimeStamp(const QDateTime& dt){
     (*this).t = (SGXTimeStamp::zeroAsQDateTime).secsTo(dt);
 }
+
+QDateTime SGXTimeStamp::getQDateTime() const {
+    return SGXTimeStamp::zeroAsQDateTime.addSecs(t);
+}
+
+QString SGXTimeStamp::getString() const {
+    return getQDateTime().addYears(-1965).toString("yyyyMMdd hhmmss");
+}
+
+QString SGXTimeStamp::getStringNoOffset() const {
+    return getQDateTime().toString("yyyyMMdd hhmmss");
+}
+
+QString SGXTimeStamp::getStringCustomFormat(const QString &s) const {
+    return getQDateTime().addYears(-1965).toString(s);
+}
+
+QString SGXTimeStamp::getStringNoOffsetCustomFormat(const QString &s) const {
+    return getQDateTime().toString(s);
+}
