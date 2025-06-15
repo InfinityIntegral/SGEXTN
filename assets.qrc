@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>assets/05524Flogo.png</file>
+        <file>assets/standard.otf</file>
+        <file>assets/icons.otf</file>
     </qresource>
 </RCC>

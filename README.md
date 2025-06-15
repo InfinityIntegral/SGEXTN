@@ -13,7 +13,7 @@ But since I am rebuilding so much stuff, why not just wrap everything in my cust
 
 Thus this project: SGEXTN
 
-Note that "SGX" is short for "SGEXTN", the project name, and is used as a prefix for all classes and structs. It does not reference anything else.
+Note that "SGX" is short for "SGEXTN", the project name, and is used as a prefix for all classes and structs. It does not reference anything else. "SGU" is short for "SGEXTN User Defined Class", these are classes that the programmer should write code in, unlike the SGX classes which the programmer should not touch. You are strongly recommended to began the name of application-specific classes with "SGC" for "SGEXTN-powered Application Custom Class".
 
 ## Built with...
 - Qt (C++ GUI framework)

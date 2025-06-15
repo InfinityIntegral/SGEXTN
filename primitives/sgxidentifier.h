@@ -12,7 +12,7 @@ public:
     unsigned int b; // second section of identifier
     unsigned int c; // third section of identifier
     unsigned int d; // fourth section of identifier
-    static SGXIdentifier nullIdentifier; // null identifier
+    static const SGXIdentifier nullIdentifier; // null identifier
     SGXIdentifier(bool ifValid); // generate new random non-null identifier with ifValid determining if it cannot be the same as an already registered identifier
     SGXIdentifier(int); // do not use this constructor, its only purpose is to produce the null value at the start of the programme
     SGXIdentifier(unsigned int a, unsigned int b, unsigned int c, unsigned int d, bool ifValid, int& errCode); // generates identifier from data with ifValid determining if it cannot be the same as an already registered identifier, if ifValid is true and the identifier already exists, it is created anyways but errCode is set to 1 instead of 0, errCode is set to 2 instead of 0 if the data produces a null identifier

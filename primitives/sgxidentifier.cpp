@@ -4,7 +4,7 @@
 #include <QString>
 
 QSet<SGXIdentifier> SGXIdentifier::identifiersList = QSet<SGXIdentifier>();
-SGXIdentifier SGXIdentifier::nullIdentifier = SGXIdentifier(0);
+const SGXIdentifier SGXIdentifier::nullIdentifier = SGXIdentifier(0);
 
 SGXIdentifier::SGXIdentifier(bool ifValid){ // NOLINT(misc-no-recursion)
     if(ifValid == false){

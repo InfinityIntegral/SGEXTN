@@ -11,7 +11,7 @@ public:
     float x; // x coordinate
     float y; // y coordinate
     SGXVector2(float x, float y); // constructs a SGXVector2 from component coordinates
-    static SGXVector2 origin; // zero vector
+    static const SGXVector2 origin; // zero vector
     [[nodiscard]] bool operator==(SGXVector2 x) const; // equality comparator by comparing coordinates not struct instance memory location
     [[nodiscard]] bool operator!=(SGXVector2 x) const; // inequality comparator by comparing coordinates not struct instance memory location
     [[nodiscard]] bool operator<(SGXVector2 x) const; // < comparator for use in sorted data structures

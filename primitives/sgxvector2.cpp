@@ -19,7 +19,7 @@ SGXVector2::SGXVector2(float x, float y){
     (*this).y = y;
 }
 
-SGXVector2 SGXVector2::origin = SGXVector2(0.0f, 0.0f);
+const SGXVector2 SGXVector2::origin = SGXVector2(0.0f, 0.0f);
 
 bool SGXVector2::operator==(SGXVector2 x) const {
     return (((*this).x == x.x) && ((*this).y == x.y));
