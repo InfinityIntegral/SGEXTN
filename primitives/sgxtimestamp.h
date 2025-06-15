@@ -15,7 +15,6 @@ public:
     static const SGXTimeStamp zero; // 19650809 123000, the time in current time zone when Prime Minister Lee Kuan Yew announced the separation of our nation from Malaysia
     static const QDateTime zeroAsQDateTime; // time zero as a QDateTime
     SGXTimeStamp(long long t); // constructs timestamp object from the timestamp itself
-    SGXTimeStamp(const QString& t); // constructs timestamp object from time in default calendar as a string in "yyyyMMdd HHmmss" format
     SGXTimeStamp(int year, int month, int day, int hour, int minute, int second); // construct timestamp object from components
     SGXTimeStamp(const QDateTime& dt); // converts QDateTime to SGXTimeStamp
     [[nodiscard]] QDateTime getQDateTime() const; // converts SGXTimeStamp to QDateTime
@@ -58,11 +57,11 @@ public:
     [[nodiscard]] int getMonth() const; // get month of year corresponding to month name in Chinese
     [[nodiscard]] int getYear() const; // get year component
     [[nodiscard]] int getYearNoOffset() const; // get year component without default offset of 1965
-    /*
-methods list:
-- get if any special day (National Day, Total Defence, Racial Harmony etc)
-- get if National Day period
-     */
+    [[nodiscard]] bool isNationalDayPeriod() const; // check if the given timestamp is within the official definition of the National Day period (July, August, September)
+    [[nodiscard]] bool isNationalDay() const; // check if the given timestamp is on National Day
+    [[nodiscard]] bool isDayBeforeNationalDay() const; // check if the given timestamp is on the day before National Day
+    [[nodiscard]] bool isDayAfterNationalDay() const; // check if the given timestamp is on the day after National Day
+    [[nodiscard]] QString getSpecialDay() const; // check if the given timestamp coincides with any special day (Total Defence Day, Youth Day etc), return empty string otherwise
 };
 
 inline unsigned int qHash(SGXTimeStamp x, unsigned int seed = 0){
