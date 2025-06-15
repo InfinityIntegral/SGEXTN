@@ -29,12 +29,12 @@ You download the source code.
 Download the source code and open it in Qt and start coding your project. The documentation is comments in header files, I made them as clear as possible.
 
 ## What to expect...
-- [ ] C++ primitives extensions
+- [x] C++ primitives extensions
 	- [x] SGXColourRGBA (RGBA representation of a colour with 8 bits per channel, wraps unsigned int)
 	- [x] SGXColourHSLA (HSLA representation of a colour with 8 bits per channel, contains 4 floats)
 	- [x] SGXIdentifier (GUID with automatic registering, wraps QUuid)
 	- [x] SGXVector2 (a struct of 2 SGXFloats for 2D vectors)
-	- [ ] SGXTimeStamp (a signed long long representing number of seconds since 19650809 123000)
+	- [x] SGXTimeStamp (a signed long long representing number of seconds since 19650809 123000)
 - [ ] Qt GUI classes with custom drawing and resizing
      - [ ] SGXRootWindow (root widget of the application, does nothing, inherits QWidget)
      - [ ] SGXWidget (a widget with solid colour that does nothing, inherits QWidget)
