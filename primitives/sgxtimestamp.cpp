@@ -199,3 +199,43 @@ void SGXTimeStamp::subtractYears(float x){
     d *= 12.175;
     t -= static_cast<long long>(d);
 }
+
+SGXTimeStamp SGXTimeStamp::now(){
+    return SGXTimeStamp(QDateTime::currentDateTime(SGXTimeStamp::timezone));
+}
+
+int SGXTimeStamp::getDayOfWeek() const {
+    return getQDateTime().date().dayOfWeek();
+}
+
+int SGXTimeStamp::getDayOfYear() const {
+    return getQDateTime().date().dayOfYear();
+}
+
+int SGXTimeStamp::getSecond() const {
+    return getQDateTime().time().second();
+}
+
+int SGXTimeStamp::getMinute() const {
+    return getQDateTime().time().minute();
+}
+
+int SGXTimeStamp::getHour() const {
+    return getQDateTime().time().hour();
+}
+
+int SGXTimeStamp::getDay() const {
+    return getQDateTime().date().day();
+}
+
+int SGXTimeStamp::getMonth() const {
+    return getQDateTime().date().month();
+}
+
+int SGXTimeStamp::getYear() const {
+    return (getQDateTime().date().year() - 1965);
+}
+
+int SGXTimeStamp::getYearNoOffset() const {
+    return getQDateTime().date().year();
+}

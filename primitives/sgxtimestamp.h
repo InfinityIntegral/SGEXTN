@@ -48,12 +48,18 @@ public:
     void subtractDays(float x); // subtract x days from this timestamp
     void subtractMonths(float x); // subtract x months from this timestamp
     void subtractYears(float x); // subtract x years from this timestamp
+    [[nodiscard]] static SGXTimeStamp now(); // get timestamp representing the time now
+    [[nodiscard]] int getDayOfWeek() const; // get day of week corresponding to day name in Chinese (1 = Monday, 2 = Tuesday, 3 = Wednesday, 4 = Thursday, 5 = Friday, 6 = Saturday, 7 = Sunday)
+    [[nodiscard]] int getDayOfYear() const; // get day of year as a number between 1 and 365 (366 on leap years) inclusive
+    [[nodiscard]] int getSecond() const; // extract second component
+    [[nodiscard]] int getMinute() const; // extract minute component
+    [[nodiscard]] int getHour() const; // extract hour component
+    [[nodiscard]] int getDay() const; // get day of month as a number between 1 and 31 inclusive
+    [[nodiscard]] int getMonth() const; // get month of year corresponding to month name in Chinese
+    [[nodiscard]] int getYear() const; // get year component
+    [[nodiscard]] int getYearNoOffset() const; // get year component without default offset of 1965
     /*
 methods list:
-- get now
-- cast to other time zone
-- cast to universal time zone
-- get day of week
 - get if any special day (National Day, Total Defence, Racial Harmony etc)
 - get if National Day period
      */
