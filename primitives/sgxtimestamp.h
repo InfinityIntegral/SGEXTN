@@ -25,14 +25,12 @@ public:
     [[nodiscard]] QString getStringNoOffsetCustomFormat(const QString& s) const; // converts timestamp to string in custom format without the default year offset of 1965
     [[nodiscard]] bool operator==(SGXTimeStamp x) const; // equality comparator by comparing time not struct instance memory location
     [[nodiscard]] bool operator!=(SGXTimeStamp x) const; // inequality comparator by comparing time not struct instance memory location
-    [[nodiscard]] bool operator<(SGXTimeStamp x) const; // < comparator for use in sorted data structures
+    [[nodiscard]] bool operator<(SGXTimeStamp x) const; // less than comparator using time
+    [[nodiscard]] bool operator>(SGXTimeStamp x) const; // more than comparator using time
+    [[nodiscard]] bool operator<=(SGXTimeStamp x) const; // less than or equal to comparator using time
+    [[nodiscard]] bool operator>=(SGXTimeStamp x) const; // more than or equal to comparator using time
     /*
 methods list:
-- equality check
-- inequality check
-- < comparator
-- << function
-- qHash
 - get time difference
 - add year, month, day etc
 - subtract year, month, day etc

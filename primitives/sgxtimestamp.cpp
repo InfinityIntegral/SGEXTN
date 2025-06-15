@@ -55,3 +55,15 @@ bool SGXTimeStamp::operator!=(SGXTimeStamp x) const {
 bool SGXTimeStamp::operator<(SGXTimeStamp x) const {
     return (t < x.t);
 }
+
+bool SGXTimeStamp::operator>(SGXTimeStamp x) const {
+    return (t > x.t);
+}
+
+bool SGXTimeStamp::operator<=(SGXTimeStamp x) const {
+    return (t <= x.t);
+}
+
+bool SGXTimeStamp::operator>=(SGXTimeStamp x) const {
+    return (t >= x.t);
+}
