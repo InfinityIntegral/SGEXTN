@@ -199,15 +199,18 @@ void SGXVector2::reflectAcrossPoint(SGXVector2 x){
     (*this) = 2 * x - (*this);
 }
 
+SGXVector2 SGXVector2::getNearestPointOnLine(float x1, float y1, float x2, float y2) const {
+    const float f = ((x - x1) * (x2 - x1) + (y - y1) * (y2 - y1)) / ((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+    return SGXVector2(x1 + f * (x2 - x1), y1 + f * (y2 - y1));
+}
+
 void SGXVector2::projectToLine(float x1, float y1, float x2, float y2){
     const float f = ((x - x1) * (x2 - x1) + (y - y1) * (y2 - y1)) / ((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
     (*this) = SGXVector2(x1 + f * (x2 - x1), y1 + f * (y2 - y1));
 }
 
 void SGXVector2::reflectAcrossLine(float x1, float y1, float x2, float y2){
-    SGXVector2 v = (*this);
-    v.projectToLine(x1, y1, x2, y2);
-    reflectAcrossPoint(v);
+    reflectAcrossPoint(getNearestPointOnLine(x1, y1, x2, y2));
 }
 
 void SGXVector2::projectToX(){
@@ -219,14 +222,11 @@ void SGXVector2::projectToY(){
 }
 
 float SGXVector2::getDistanceToLine(float x1, float y1, float x2, float y2) const {
-    SGXVector2 v = (*this);
-    v.projectToLine(x1, y1, x2, y2);
-    return getDistance(v);
+    return getDistance(getNearestPointOnLine(x1, y1, x2, y2));
 }
 
 float SGXVector2::getDistanceToSegment(float x1, float y1, float x2, float y2) const {
-    SGXVector2 v = (*this);
-    v.projectToLine(x1, y1, x2, y2);
+    const SGXVector2 v = getNearestPointOnLine(x1, y1, x2, y2);
     if(temp_isBetween(v.x, x1, x2) || temp_isBetween(v.y, y1, y2)){return getDistance(v);}
     return std::min(getDistance(SGXVector2(x1, y1)), getDistance(SGXVector2(x2, y2)));
 }
@@ -235,4 +235,17 @@ float SGXVector2::getDistanceToCircle(float a, float b, float r) const {
     SGXVector2 v = (*this);
     v -= SGXVector2(a, b);
     return v.getMagnitude() - r; 
+}
+
+SGXVector2 SGXVector2::getNearestPointOnSegment(float x1, float y1, float x2, float y2) const {
+    SGXVector2 v = getNearestPointOnLine(x1, y1, x2, y2);
+    if(temp_isBetween(v.x, x1, x2) || temp_isBetween(v.y, y1, y2)){return v;}
+    if(getDistanceSquare(SGXVector2(x1, y1)) <= getDistanceSquare(SGXVector2(x2, y2))){return SGXVector2(x1, y1);}
+    return SGXVector2(x2, y2);
+}
+
+SGXVector2 SGXVector2::getNearestPointOnCircle(float a, float b, float r) const {
+    SGXVector2 v = ((*this) - SGXVector2(a, b));
+    v.normaliseGivenMagnitude(r);
+    return (v + SGXVector2(a, b));
 }

@@ -33,7 +33,7 @@ Download the source code and open it in Qt and start coding your project. The do
 	- [x] SGXColourRGBA (RGBA representation of a colour with 8 bits per channel, wraps unsigned int)
 	- [x] SGXColourHSLA (HSLA representation of a colour with 8 bits per channel, contains 4 floats)
 	- [x] SGXIdentifier (GUID with automatic registering, wraps QUuid)
-	- [ ] SGXVector2 (a struct of 2 SGXFloats for 2D vectors)
+	- [x] SGXVector2 (a struct of 2 SGXFloats for 2D vectors)
 	- [ ] SGXTimeStamp (a long long representing time since 19650809 120000)
 - [ ] Qt GUI classes with custom drawing and resizing
      - [ ] SGXRootWindow (root widget of the application, does nothing, inherits QWidget)

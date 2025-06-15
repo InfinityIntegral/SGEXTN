@@ -55,12 +55,9 @@ public:
     [[nodiscard]] float getDistanceToLine(float x1, float y1, float x2, float y2) const; // compute distance from endpoint of this vector to the line passing through (x1, y1) and (x2, y2)
     [[nodiscard]] float getDistanceToSegment(float x1, float y1, float x2, float y2) const; // compute distance from endpoint of this vector to the segment formed by joining (x1, y1) with (x2, y2)
     [[nodiscard]] float getDistanceToCircle(float a, float b, float r) const; // compute distance from endpoint of this vector to the circle (x - a)^2 + (y - b)^2 = r^2, returns negative of the distance to the circle's circumference if the endpoint is inside the circle
-    /*
-method list:
-- get nearest point on line
-- get nearest point on segment
-- get nearest point on circle
-    */
+    [[nodiscard]] SGXVector2 getNearestPointOnLine(float x1, float y1, float x2, float y2) const; // compute nearest point to endpoint of this vector on the line passing through (x1, y1) and (x2, y2)
+    [[nodiscard]] SGXVector2 getNearestPointOnSegment(float x1, float y1, float x2, float y2) const; // compute nearest point to endpoint of this vector on the line connecting (x1, y1) and (x2, y2)
+    [[nodiscard]] SGXVector2 getNearestPointOnCircle(float a, float b, float r) const; // compute nearest point to endpoint of this vector on the circle (x - a)^2 + (y - b)^2 = r^2
 };
 
 inline unsigned int qHash(SGXVector2 x, unsigned int seed = 0){
