@@ -11,6 +11,11 @@
 std::unique_ptr<QFont> SGXCentral::standardFont = nullptr;
 std::unique_ptr<QFont> SGXCentral::iconsFont = nullptr;
 std::unique_ptr<SGUSignalEmitter> SGXCentral::signalEmitter = nullptr;
+float SGXCentral::applicationWindowWidth = 0.0f;
+float SGXCentral::applicationWindowHeight = 0.0f;
+float SGXCentral::renderAreaWidth = 0.0f;
+float SGXCentral::renderAreaHeight = 0.0f;
+float SGXCentral::sizeUnit = 0.0f;
 
 void SGXCentral::initialise(){
     connect(qApp, &QCoreApplication::aboutToQuit, &SGXCentral::terminate);

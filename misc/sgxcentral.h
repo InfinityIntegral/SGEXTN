@@ -20,6 +20,11 @@ public:
     static std::unique_ptr<QFont> standardFont; // font used for displaying text, recommended to use SingScript.sg, which is default font file
     static std::unique_ptr<QFont> iconsFont; // font containing icons, SingScript.sg is placeholder, icons font should use Unicode private range to avoid confusion, picture icons are not supported by SGEXTN due to performance reasons
     static std::unique_ptr<SGUSignalEmitter> signalEmitter; // signal emitter allowing UI resizing and refreshing
+    static float applicationWindowWidth; // width of application window
+    static float applicationWindowHeight; // height of application window
+    static float renderAreaWidth; // width of area used to render UI
+    static float renderAreaHeight; // height of area used to render UI
+    static float sizeUnit; // unit used to measure UI size, 1 is minimum height of text
 };
 
 #endif // SGXCENTRAL_H
