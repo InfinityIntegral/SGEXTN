@@ -10,6 +10,7 @@ class SGXVector2 // stores 2 dimensional coordinates that can mean the vector fr
 public:
     float x; // x coordinate
     float y; // y coordinate
+    SGXVector2() = default; // default constructor for initialisation purposes
     SGXVector2(float x, float y); // constructs a SGXVector2 from component coordinates
     static const SGXVector2 origin; // zero vector
     [[nodiscard]] bool operator==(SGXVector2 x) const; // equality comparator by comparing coordinates not struct instance memory location

@@ -14,7 +14,8 @@ SOURCES = misc/main.cpp \
     userDefinedClasses/sgucentralmanagement.cpp \
     userDefinedClasses/sgusignalemitter.cpp \
     widgets/sgxparentwidget.cpp \
-    widgets/sgxrootwidget.cpp
+    widgets/sgxrootwidget.cpp \
+    widgets/sgxwidget.cpp
 RESOURCES = assets.qrc
 HEADERS += \
     misc/sgxcentral.h \
@@ -26,4 +27,5 @@ HEADERS += \
     userDefinedClasses/sgucentralmanagement.h \
     userDefinedClasses/sgusignalemitter.h \
     widgets/sgxparentwidget.h \
-    widgets/sgxrootwidget.h
+    widgets/sgxrootwidget.h \
+    widgets/sgxwidget.h

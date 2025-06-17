@@ -27,5 +27,5 @@ void SGXParentWidget::resizeObject(){
 
 void SGXParentWidget::paintEvent(QPaintEvent *){ // NOLINT(readability-named-parameter)
     QPainter p(this);
-    p.fillRect(0, 0, width(), height(), SGUCentralManagement::themeColour4.getQColour());
+    p.fillRect(0, 0, width(), height(), SGUCentralManagement::renderSpaceColour.getQColour());
 }

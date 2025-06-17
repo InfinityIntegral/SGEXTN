@@ -10,9 +10,9 @@ class SGXRootWidget : public QWidget // root widget of application with resize t
 public:
     SGXRootWidget(); // create root widget
     QTimer* t; // timer used to check if the window has been resized
+    void paintEvent(QPaintEvent*) override; // NOLINT(readability-named-parameter)
 public slots: // NOLINT
     void checkScreenSizeUpdate(); // function to check if the window has been resized, run 60 times per second
-    void paintEvent(QPaintEvent*) override; // NOLINT(readability-named-parameter)
 };
 
 #endif // SGXROOTWIDGET_H

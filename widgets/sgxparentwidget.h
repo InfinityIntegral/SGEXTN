@@ -8,9 +8,9 @@ class SGXParentWidget : public QWidget // render space widget, not called SGXRen
     Q_OBJECT // NOLINT
 public:
     SGXParentWidget(); // create render space widget
+    void paintEvent(QPaintEvent*) override; // NOLINT(readability-named-parameter)
 public slots: // NOLINT
     void resizeObject(); // resize to center render space
-    void paintEvent(QPaintEvent*) override; // NOLINT(readability-named-parameter)
 };
 
 #endif // SGXPARENTWIDGET_H

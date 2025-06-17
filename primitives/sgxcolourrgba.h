@@ -10,6 +10,7 @@ class SGXColourRGBA // stores unsigned int with each 8 bits being a colour chann
 {
 public:
     unsigned int x; // raw byte data
+    SGXColourRGBA() = default; // default constructor for initialisation purposes
     SGXColourRGBA(unsigned int x0); // constructs a SGXColourRGBA from raw byte data x
     SGXColourRGBA(int r, int g, int b, int a); // constructs a SGXColourRGBA using int values for channels RGBA between 0 and 255 inclusive
     SGXColourRGBA(int r, int g, int b); // constructs a SGXColourRGBA using int values for channels RGB between 0 and 255 inclusive, transparency is set to 255 by default

@@ -12,6 +12,7 @@ public:
     float s; // saturation as float between 0 to 100
     float l; // saturation as float between 0 to 100
     float a; // transparency as float between 0 to 100
+    SGXColourHSLA() = default; // default constructor for initialisation purposes
     SGXColourHSLA(SGXColourRGBA x); // construct HSLA colour from RGBA colour for colour-based computation
     SGXColourHSLA(float h, float s, float l, float a); // construct HSLA colour from its components, where h is a float between 0 to 360 inclusive, s, l, a are floats between 0 to 100 inclusive
     [[nodiscard]] bool operator==(SGXColourHSLA x) const; // equality comparator by comparing colour not struct instance memory location

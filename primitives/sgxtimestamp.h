@@ -14,6 +14,7 @@ public:
     static const QTimeZone timezone; // default time zone, corresponds to time zone of Singapore
     static const SGXTimeStamp zero; // 19650809 123000, the time in current time zone when Prime Minister Lee Kuan Yew announced the separation of our nation from Malaysia
     static const QDateTime zeroAsQDateTime; // time zero as a QDateTime
+    SGXTimeStamp() = default; // default constructor for initialisation purposes
     SGXTimeStamp(long long t); // constructs timestamp object from the timestamp itself
     SGXTimeStamp(int year, int month, int day, int hour, int minute, int second); // construct timestamp object from components
     SGXTimeStamp(const QDateTime& dt); // converts QDateTime to SGXTimeStamp
