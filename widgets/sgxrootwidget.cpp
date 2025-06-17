@@ -31,9 +31,9 @@ void SGXRootWidget::checkScreenSizeUpdate(){
             SGXCentral::renderAreaWidth = SGXCentral::applicationWindowWidth;
             SGXCentral::renderAreaHeight = SGXCentral::applicationWindowHeight;
         }
+        SGXCentral::sizeUnit = std::max(SGXCentral::renderAreaWidth, SGXCentral::renderAreaHeight) / 24.0f;
         (*SGXCentral::signalEmitter).sendSignals();
     }
-    SGXCentral::sizeUnit = std::max(SGXCentral::renderAreaWidth, SGXCentral::renderAreaHeight) / 24.0f;
 }
 
 void SGXRootWidget::paintEvent(QPaintEvent *){ // NOLINT(readability-named-parameter)

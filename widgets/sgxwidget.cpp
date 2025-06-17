@@ -2,6 +2,11 @@
 #include "../misc/sgxcentral.h"
 #include <QPainter>
 #include "../userDefinedClasses/sgucentralmanagement.h"
+#include <QWidget>
+#include "../userDefinedClasses/sgusignalemitter.h"
+#include "../primitives/sgxcolourrgba.h"
+#include <QPaintEvent>
+#include <QColor>
 
 SGXWidget::SGXWidget(QWidget* parent, void (SGUSignalEmitter::*resizeSignal)(), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0){
     (*this).setParent(parent);
@@ -58,10 +63,10 @@ SGXWidget::SGXWidget(QWidget *parent, void (SGUSignalEmitter::*resizeSignal)(), 
 }
 
 void SGXWidget::resizeObject(){
-    setGeometry(x1 * SGXCentral::renderAreaWidth + x0 * SGXCentral::sizeUnit, y1 * SGXCentral::renderAreaHeight + y0 * SGXCentral::sizeUnit, w1 * SGXCentral::renderAreaWidth + w0 * SGXCentral::sizeUnit, h1 + SGXCentral::renderAreaHeight + h0 * SGXCentral::sizeUnit);
+    setGeometry(static_cast<int>(x1 * SGXCentral::renderAreaWidth + x0 * SGXCentral::sizeUnit), static_cast<int>(y1 * SGXCentral::renderAreaHeight + y0 * SGXCentral::sizeUnit), static_cast<int>(w1 * SGXCentral::renderAreaWidth + w0 * SGXCentral::sizeUnit), static_cast<int>(h1 * SGXCentral::renderAreaHeight + h0 * SGXCentral::sizeUnit));
 }
 
-void SGXWidget::paintEvent(QPaintEvent *){
+void SGXWidget::paintEvent(QPaintEvent *){ // NOLINT(readability-named-parameter)
     QPainter p(this);
     QColor fillColour;
     if(colourMode == 0){fillColour = SGXCentral::noColour.getQColour();}

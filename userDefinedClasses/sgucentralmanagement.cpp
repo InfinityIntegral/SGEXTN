@@ -53,7 +53,7 @@ SGXColourRGBA SGUCentralManagement::scrollBarForegroundPressedColour = SGUCentra
 
 // is run when app opens
 void SGUCentralManagement::initialise(){
-    
+
 }
 
 // is run when app closes
