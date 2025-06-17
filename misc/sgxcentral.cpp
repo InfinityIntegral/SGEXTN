@@ -8,6 +8,7 @@
 #include "../widgets/sgxrootwidget.h"
 #include "../userDefinedClasses/sgusignalemitter.h"
 #include "../primitives/sgxcolourrgba.h"
+#include "../widgets/sgxparentwidget.h"
 
 QFont* SGXCentral::standardFont = nullptr;
 QFont* SGXCentral::iconsFont = nullptr;
@@ -19,6 +20,7 @@ float SGXCentral::renderAreaHeight = 0.0f;
 float SGXCentral::sizeUnit = 0.0f;
 SGXRootWidget* SGXCentral::rootWindow = nullptr;
 SGXColourRGBA SGXCentral::noColour = SGXColourRGBA(255, 255, 255, 0);
+SGXParentWidget* SGXCentral::parentWindow = nullptr;
 
 void SGXCentral::initialise(){
     connect(qApp, &QCoreApplication::aboutToQuit, &SGXCentral::terminate);
@@ -32,6 +34,7 @@ void SGXCentral::initialise(){
     }
     SGXCentral::signalEmitter = new SGUSignalEmitter(); // NOLINT(cppcoreguidelines-owning-memory)
     SGXCentral::rootWindow = new SGXRootWidget(); // NOLINT(cppcoreguidelines-owning-memory)
+    SGXCentral::parentWindow = new SGXParentWidget(); // NOLINT(cppcoreguidelines-owning-memory)
     (*SGXCentral::rootWindow).checkScreenSizeUpdate();
     SGUCentralManagement::initialise();
 }

@@ -5,7 +5,6 @@
 #include <QPainter>
 #include "../userDefinedClasses/sgucentralmanagement.h"
 #include <QPaintEvent>
-#include <QRect>
 
 SGXRootWidget::SGXRootWidget(){
     (*this).show();
@@ -32,12 +31,12 @@ void SGXRootWidget::checkScreenSizeUpdate(){
             SGXCentral::renderAreaWidth = SGXCentral::applicationWindowWidth;
             SGXCentral::renderAreaHeight = SGXCentral::applicationWindowHeight;
         }
+        (*SGXCentral::signalEmitter).sendSignals();
     }
     SGXCentral::sizeUnit = std::max(SGXCentral::renderAreaWidth, SGXCentral::renderAreaHeight) / 24.0f;
-    (*SGXCentral::signalEmitter).sendSignals();
 }
 
 void SGXRootWidget::paintEvent(QPaintEvent *){ // NOLINT(readability-named-parameter)
     QPainter p(this);
-    p.fillRect(QRect(0, 0, width(), height()), SGUCentralManagement::rootWindowColour.getQColour());
+    p.fillRect(0, 0, width(), height(), SGUCentralManagement::rootWindowColour.getQColour());
 }
