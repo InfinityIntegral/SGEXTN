@@ -10,8 +10,8 @@ QString SGUCentralManagement::applicationName = "";
 QString SGUCentralManagement::applicationVersion = "";
 
 // set your theme colours
-// SGXColourRGBA SGUCentralManagement::themeColour0 = SGXColourRGBA(0, 0, 0);
-// SGXColourRGBA SGUCentralManagement::themeColour1 = SGXColourRGBA(64, 0, 50);
+SGXColourRGBA SGUCentralManagement::themeColour0 = SGXColourRGBA(0, 0, 0);
+SGXColourRGBA SGUCentralManagement::themeColour1 = SGXColourRGBA(64, 0, 50);
 SGXColourRGBA SGUCentralManagement::themeColour2 = SGXColourRGBA(128, 0, 100);
 SGXColourRGBA SGUCentralManagement::themeColour3 = SGXColourRGBA(192, 0, 150);
 SGXColourRGBA SGUCentralManagement::themeColour4 = SGXColourRGBA(255, 0, 200);
@@ -21,6 +21,11 @@ SGXColourRGBA SGUCentralManagement::themeColour7 = SGXColourRGBA(255, 192, 242);
 SGXColourRGBA SGUCentralManagement::themeColour8 = SGXColourRGBA(255, 255, 255);
 
 // you are recommended to use the theme colours that you defined to set the below colours
+SGXColourRGBA SGUCentralManagement::rootWindowColour = SGUCentralManagement::themeColour6;
+SGXColourRGBA SGUCentralManagement::renderSpaceColour = SGUCentralManagement::themeColour8;
+SGXColourRGBA SGUCentralManagement::widgetColour1 = SGUCentralManagement::themeColour4;
+SGXColourRGBA SGUCentralManagement::widgetColour2 = SGUCentralManagement::themeColour8;
+SGXColourRGBA SGUCentralManagement::widgetColour3 = SGUCentralManagement::themeColour6;
 SGXColourRGBA SGUCentralManagement::textBackgroundColour = SGUCentralManagement::themeColour8;
 SGXColourRGBA SGUCentralManagement::textForegroundColour = SGUCentralManagement::themeColour4;
 SGXColourRGBA SGUCentralManagement::buttonBackgroundColour = SGUCentralManagement::themeColour4;

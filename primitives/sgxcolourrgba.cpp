@@ -1,6 +1,7 @@
 #include "sgxcolourrgba.h"
 #include <cmath>
 #include "sgxcolourhsla.h"
+#include <QColor>
 
 namespace{
 inline void temp_boundInt(int& x){
@@ -90,6 +91,11 @@ SGXColourRGBA::SGXColourRGBA(SGXColourHSLA& x){
     (*this).x = (static_cast<unsigned int>(r0) << 24u) | (static_cast<unsigned int>(g0) << 16u) | (static_cast<unsigned int>(b0) << 8u) | (static_cast<unsigned int>(a0));
 }
 
+SGXColourRGBA::SGXColourRGBA(QColor x){
+    (*this).x = 0u;
+    (*this) = SGXColourRGBA(x.red(), x.green(), x.blue(), x.alpha());
+}
+
 int SGXColourRGBA::getRed() const {
     return static_cast<int>((*this).x >> 24u);
 }
@@ -100,6 +106,10 @@ int SGXColourRGBA::getGreen() const {
 
 int SGXColourRGBA::getBlue() const {
     return static_cast<int>(0xFFu & ((*this).x >> 8u));
+}
+
+QColor SGXColourRGBA::getQColour() const {
+    return QColor(getRed(), getGreen(), getBlue(), getTransparency());
 }
 
 int SGXColourRGBA::getTransparency() const {

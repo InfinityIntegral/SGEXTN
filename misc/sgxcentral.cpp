@@ -5,17 +5,20 @@
 #include <QFont>
 #include <QtCore/Qt>
 #include <QList>
-#include <memory>
+#include "../widgets/sgxrootwidget.h"
 #include "../userDefinedClasses/sgusignalemitter.h"
+#include "../primitives/sgxcolourrgba.h"
 
-std::unique_ptr<QFont> SGXCentral::standardFont = nullptr;
-std::unique_ptr<QFont> SGXCentral::iconsFont = nullptr;
-std::unique_ptr<SGUSignalEmitter> SGXCentral::signalEmitter = nullptr;
+QFont* SGXCentral::standardFont = nullptr;
+QFont* SGXCentral::iconsFont = nullptr;
+SGUSignalEmitter* SGXCentral::signalEmitter = nullptr;
 float SGXCentral::applicationWindowWidth = 0.0f;
 float SGXCentral::applicationWindowHeight = 0.0f;
 float SGXCentral::renderAreaWidth = 0.0f;
 float SGXCentral::renderAreaHeight = 0.0f;
 float SGXCentral::sizeUnit = 0.0f;
+SGXRootWidget* SGXCentral::rootWindow = nullptr;
+SGXColourRGBA SGXCentral::noColour = SGXColourRGBA(255, 255, 255, 0);
 
 void SGXCentral::initialise(){
     connect(qApp, &QCoreApplication::aboutToQuit, &SGXCentral::terminate);
@@ -23,14 +26,20 @@ void SGXCentral::initialise(){
     QCoreApplication::setAttribute(Qt::AA_SynthesizeTouchForUnhandledMouseEvents);
     {
         QList l = QFontDatabase::applicationFontFamilies(QFontDatabase::addApplicationFont(":/assets/standard.otf"));
-        SGXCentral::standardFont = std::make_unique<QFont>(l.first());
+        SGXCentral::standardFont = new QFont(l.first()); // NOLINT(cppcoreguidelines-owning-memory)
         l = QFontDatabase::applicationFontFamilies(QFontDatabase::addApplicationFont(":/assets/icons.otf"));
-        SGXCentral::iconsFont = std::make_unique<QFont>(l.first());
+        SGXCentral::iconsFont = new QFont(l.first()); // NOLINT(cppcoreguidelines-owning-memory)
     }
-    SGXCentral::signalEmitter = std::make_unique<SGUSignalEmitter>();
+    SGXCentral::signalEmitter = new SGUSignalEmitter(); // NOLINT(cppcoreguidelines-owning-memory)
+    SGXCentral::rootWindow = new SGXRootWidget(); // NOLINT(cppcoreguidelines-owning-memory)
+    (*SGXCentral::rootWindow).checkScreenSizeUpdate();
     SGUCentralManagement::initialise();
 }
 
 void SGXCentral::terminate(){
     SGUCentralManagement::terminate();
+    delete SGXCentral::rootWindow; // NOLINT(cppcoreguidelines-owning-memory)
+    delete SGXCentral::signalEmitter; // NOLINT(cppcoreguidelines-owning-memory)
+    delete SGXCentral::iconsFont; // NOLINT(cppcoreguidelines-owning-memory)
+    delete SGXCentral::standardFont; // NOLINT(cppcoreguidelines-owning-memory)
 }

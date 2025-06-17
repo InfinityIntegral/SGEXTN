@@ -12,6 +12,7 @@ public:
     QTimer* t;
 public slots: // NOLINT
     void checkScreenSizeUpdate();
+    void paintEvent(QPaintEvent*) override; // NOLINT(readability-named-parameter)
 };
 
 #endif // SGXROOTWIDGET_H

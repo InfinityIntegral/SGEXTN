@@ -18,9 +18,8 @@ public:
     static void terminate(); // temination function run when app closes
     static QString applicationName; // name of application displayed
     static QString applicationVersion; // version number of application
-    static SGXColourRGBA rootWindowColour; // colour of root window, can be translucent
-    // static SGXColourRGBA themeColour0; // theme colour 0
-    // static SGXColourRGBA themeColour1; // theme colour 1
+    static SGXColourRGBA themeColour0; // theme colour 0
+    static SGXColourRGBA themeColour1; // theme colour 1
     static SGXColourRGBA themeColour2; // theme colour 2
     static SGXColourRGBA themeColour3; // theme colour 3
     static SGXColourRGBA themeColour4; // theme colour 4
@@ -28,6 +27,11 @@ public:
     static SGXColourRGBA themeColour6; // theme colour 6
     static SGXColourRGBA themeColour7; // theme colour 7
     static SGXColourRGBA themeColour8; // theme colour 8
+    static SGXColourRGBA rootWindowColour; // colour of root window
+    static SGXColourRGBA renderSpaceColour; // background of rendering space for application UI elements, not including status bar and aspect ratio compatibility gap
+    static SGXColourRGBA widgetColour1; // colour of widget (first variation)
+    static SGXColourRGBA widgetColour2; // colour of widget (second variation)
+    static SGXColourRGBA widgetColour3; // colour of widget (third variation)
     static SGXColourRGBA textBackgroundColour; // background colour of text labels
     static SGXColourRGBA textForegroundColour; // foreground colour of text labels
     static SGXColourRGBA buttonBackgroundColour; // background colour of button
