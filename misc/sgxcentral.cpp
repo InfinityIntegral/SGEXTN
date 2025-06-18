@@ -9,6 +9,7 @@
 #include "../userDefinedClasses/sgusignalemitter.h"
 #include "../primitives/sgxcolourrgba.h"
 #include "../widgets/sgxparentwidget.h"
+#include <QColor>
 
 QFont* SGXCentral::standardFont = nullptr;
 QFont* SGXCentral::iconsFont = nullptr;
@@ -45,4 +46,17 @@ void SGXCentral::terminate(){
     delete SGXCentral::signalEmitter; // NOLINT(cppcoreguidelines-owning-memory)
     delete SGXCentral::iconsFont; // NOLINT(cppcoreguidelines-owning-memory)
     delete SGXCentral::standardFont; // NOLINT(cppcoreguidelines-owning-memory)
+}
+
+QColor SGXCentral::getThemeColourAsQColour(int themeColourIndex, SGXColourRGBA defaultColour){
+    if(themeColourIndex == 0){return SGUCentralManagement::themeColour0.getQColour();}
+    if(themeColourIndex == 1){return SGUCentralManagement::themeColour1.getQColour();}
+    if(themeColourIndex == 2){return SGUCentralManagement::themeColour2.getQColour();}
+    if(themeColourIndex == 3){return SGUCentralManagement::themeColour3.getQColour();}
+    if(themeColourIndex == 4){return SGUCentralManagement::themeColour4.getQColour();}
+    if(themeColourIndex == 5){return SGUCentralManagement::themeColour5.getQColour();}
+    if(themeColourIndex == 6){return SGUCentralManagement::themeColour6.getQColour();}
+    if(themeColourIndex == 7){return SGUCentralManagement::themeColour7.getQColour();}
+    if(themeColourIndex == 8){return SGUCentralManagement::themeColour8.getQColour();}
+    return defaultColour.getQColour();
 }

@@ -30,6 +30,7 @@ public:
     static SGXRootWidget* rootWindow; // root window of application
     static SGXColourRGBA noColour; // transparent
     static SGXParentWidget* parentWindow; // render space of application
+    static QColor getThemeColourAsQColour(int themeColourIndex, SGXColourRGBA defaultColour); // get theme colour from index
 };
 
 #endif // SGXCENTRAL_H

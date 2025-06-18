@@ -10,8 +10,7 @@ class SGXWidget : public QWidget // widget to display solid colour, non interact
 {
     Q_OBJECT // NOLINT
 public:
-    SGXWidget(QWidget* parent, void (SGUSignalEmitter::*resizeSignal)(), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0); // create widget using default colour (transparent)
-    SGXWidget(QWidget* parent, void (SGUSignalEmitter::*resizeSignal)(), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, int themeColourIndex); // create widget using a theme colour
+    SGXWidget(QWidget* parent, void (SGUSignalEmitter::*resizeSignal)(), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, int themeColourIndex); // create widget using a theme colour, -1 for transparent
     // the value of each size and location variable is linear factor * width or height of rendering space + constant factor * size unit
     // ensure that x0 + w0 < 13.5 * (1 - x1 - w1) and y0 + h0 < 13.5 * (1 - y1 - h1) to avoid widgets going off screen
     // you are recommended to keep 0.5 * size unit of margin on the 4 sides of the screen

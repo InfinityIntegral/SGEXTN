@@ -50,11 +50,10 @@ SGXColourRGBA SGUCentralManagement::scrollBarBackgroundColour = SGUCentralManage
 SGXColourRGBA SGUCentralManagement::scrollBarForegroundColour = SGUCentralManagement::themeColour4;
 SGXColourRGBA SGUCentralManagement::scrollBarForegroundHoverColour = SGUCentralManagement::themeColour3;
 SGXColourRGBA SGUCentralManagement::scrollBarForegroundPressedColour = SGUCentralManagement::themeColour2;
-#include "../widgets/sgxtext.h"
-#include "../misc/sgxcentral.h"
+
 // is run when app opens
 void SGUCentralManagement::initialise(){
-    new SGXText(SGXCentral::parentWindow, &SGUSignalEmitter::updateScreen, "testing...", 0.0f, 0.5f, 0.0f, 0.5f, 0.0f, 5.0f, 0.0f, 1.0f);
+    
 }
 
 // is run when app closes

@@ -40,16 +40,7 @@ void SGXText::setBackgroundColour(){
 }
 
 void SGXText::setBackgroundColour(int themeColourIndex){
-    if(themeColourIndex == 0){backgroundColour = SGUCentralManagement::themeColour0.getQColour();}
-    else if(themeColourIndex == 1){backgroundColour = SGUCentralManagement::themeColour1.getQColour();}
-    else if(themeColourIndex == 2){backgroundColour = SGUCentralManagement::themeColour2.getQColour();}
-    else if(themeColourIndex == 3){backgroundColour = SGUCentralManagement::themeColour3.getQColour();}
-    else if(themeColourIndex == 4){backgroundColour = SGUCentralManagement::themeColour4.getQColour();}
-    else if(themeColourIndex == 5){backgroundColour = SGUCentralManagement::themeColour5.getQColour();}
-    else if(themeColourIndex == 6){backgroundColour = SGUCentralManagement::themeColour6.getQColour();}
-    else if(themeColourIndex == 7){backgroundColour = SGUCentralManagement::themeColour7.getQColour();}
-    else if(themeColourIndex == 8){backgroundColour = SGUCentralManagement::themeColour8.getQColour();}
-    else{backgroundColour = SGUCentralManagement::textBackgroundColour.getQColour();}
+    backgroundColour = SGXCentral::getThemeColourAsQColour(themeColourIndex, SGUCentralManagement::textBackgroundColour);
     update();
 }
 
@@ -64,16 +55,7 @@ void SGXText::setForegroundColour(){
 }
 
 void SGXText::setForegroundColour(int themeColourIndex){
-    if(themeColourIndex == 0){foregroundColour = SGUCentralManagement::themeColour0.getQColour();}
-    else if(themeColourIndex == 1){foregroundColour = SGUCentralManagement::themeColour1.getQColour();}
-    else if(themeColourIndex == 2){foregroundColour = SGUCentralManagement::themeColour2.getQColour();}
-    else if(themeColourIndex == 3){foregroundColour = SGUCentralManagement::themeColour3.getQColour();}
-    else if(themeColourIndex == 4){foregroundColour = SGUCentralManagement::themeColour4.getQColour();}
-    else if(themeColourIndex == 5){foregroundColour = SGUCentralManagement::themeColour5.getQColour();}
-    else if(themeColourIndex == 6){foregroundColour = SGUCentralManagement::themeColour6.getQColour();}
-    else if(themeColourIndex == 7){foregroundColour = SGUCentralManagement::themeColour7.getQColour();}
-    else if(themeColourIndex == 8){foregroundColour = SGUCentralManagement::themeColour8.getQColour();}
-    else{foregroundColour = SGUCentralManagement::textForegroundColour.getQColour();}
+    foregroundColour = SGXCentral::getThemeColourAsQColour(themeColourIndex, SGUCentralManagement::textForegroundColour);
     update();
 }
 
