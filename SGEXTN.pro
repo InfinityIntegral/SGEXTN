@@ -17,6 +17,7 @@ SOURCES = misc/main.cpp \
     widgets/sgxparentwidget.cpp \
     widgets/sgxrootwidget.cpp \
     widgets/sgxtext.cpp \
+    widgets/sgxtextbutton.cpp \
     widgets/sgxwidget.cpp
 RESOURCES = assets.qrc
 HEADERS += \
@@ -32,4 +33,5 @@ HEADERS += \
     widgets/sgxparentwidget.h \
     widgets/sgxrootwidget.h \
     widgets/sgxtext.h \
+    widgets/sgxtextbutton.h \
     widgets/sgxwidget.h

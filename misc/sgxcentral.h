@@ -31,6 +31,7 @@ public:
     static SGXColourRGBA noColour; // transparent
     static SGXParentWidget* parentWindow; // render space of application
     static QColor getThemeColourAsQColour(int themeColourIndex, SGXColourRGBA defaultColour); // get theme colour from index
+    static void doNothing(); // placeholder do nothing function for passing to button widgets
 };
 
 #endif // SGXCENTRAL_H

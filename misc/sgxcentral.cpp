@@ -22,6 +22,7 @@ float SGXCentral::sizeUnit = 0.0f;
 SGXRootWidget* SGXCentral::rootWindow = nullptr;
 SGXColourRGBA SGXCentral::noColour = SGXColourRGBA(255, 255, 255, 0);
 SGXParentWidget* SGXCentral::parentWindow = nullptr;
+void SGXCentral::doNothing(){}
 
 void SGXCentral::initialise(){
     connect(qApp, &QCoreApplication::aboutToQuit, &SGXCentral::terminate);
