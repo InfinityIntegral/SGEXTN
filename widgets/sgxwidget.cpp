@@ -18,7 +18,7 @@ SGXWidget::SGXWidget(QWidget* parent, void (SGUSignalEmitter::*resizeSignal)(), 
     (*this).w0 = w0;
     (*this).h1 = h1;
     (*this).h0 = h0;
-    (*this).setColour();
+    (*this).fillColour = SGXCentral::noColour.getQColour();
     (*this).show();
     connect(SGXCentral::signalEmitter, resizeSignal, this, &SGXWidget::resizeObject);
     (*this).resizeObject();
@@ -34,7 +34,16 @@ SGXWidget::SGXWidget(QWidget *parent, void (SGUSignalEmitter::*resizeSignal)(), 
     (*this).w0 = w0;
     (*this).h1 = h1;
     (*this).h0 = h0;
-    (*this).setColour(themeColourIndex);
+    if(themeColourIndex == 0){(*this).fillColour = SGUCentralManagement::themeColour0.getQColour();}
+    else if(themeColourIndex == 1){(*this).fillColour = SGUCentralManagement::themeColour1.getQColour();}
+    else if(themeColourIndex == 2){(*this).fillColour = SGUCentralManagement::themeColour2.getQColour();}
+    else if(themeColourIndex == 3){(*this).fillColour = SGUCentralManagement::themeColour3.getQColour();}
+    else if(themeColourIndex == 4){(*this).fillColour = SGUCentralManagement::themeColour4.getQColour();}
+    else if(themeColourIndex == 5){(*this).fillColour = SGUCentralManagement::themeColour5.getQColour();}
+    else if(themeColourIndex == 6){(*this).fillColour = SGUCentralManagement::themeColour6.getQColour();}
+    else if(themeColourIndex == 7){(*this).fillColour = SGUCentralManagement::themeColour7.getQColour();}
+    else if(themeColourIndex == 8){(*this).fillColour = SGUCentralManagement::themeColour8.getQColour();}
+    else{(*this).fillColour = SGXCentral::noColour.getQColour();}
     (*this).show();
     connect(SGXCentral::signalEmitter, resizeSignal, this, &SGXWidget::resizeObject);
     (*this).resizeObject();
