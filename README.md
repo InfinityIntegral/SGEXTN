@@ -35,10 +35,11 @@ Download the source code and open it in Qt and start coding your project. The do
 	- [x] SGXIdentifier (GUID with automatic registering, wraps QUuid)
 	- [x] SGXVector2 (a struct of 2 SGXFloats for 2D vectors)
 	- [x] SGXTimeStamp (a signed long long representing number of seconds since 19650809 123000)
-- [ ] Qt GUI classes with custom drawing and resizing
-     - [ ] SGXRootWindow (root widget of the application, does nothing, inherits QWidget)
-     - [ ] SGXWidget (a widget with solid colour that does nothing, inherits QWidget)
-	- [ ] SGXText (a widget that displays text in SingScript, inherits QLabel)
+- [x] Qt GUI classes with custom drawing and resizing
+	- [x] SGXRootWidget (root widget of the application, does nothing, inherits QWidget)
+	- [x] SGXParentWidget (rendering space of the application, does nothing, inherits QWidget)
+	- [x] SGXWidget (a widget with solid colour that does nothing, inherits QWidget)
+	- [x] SGXText (a widget that displays text in SingScript, inherits QLabel)
 	- [ ] SGXIcon (a widget that displays text in a special icon font, inherits QLabel)
 	- [ ] SGXTextButton (a button with text display in SingScript, inherits QPushButton)
 	- [ ] SGXIconButton (a button that displays text in a special icon font, inherits QPushButton)
@@ -46,7 +47,8 @@ Download the source code and open it in Qt and start coding your project. The do
 	- [ ] SGXFloatInputField (a input field taking a floating point number, inherits QLineEdit)
 	- [ ] SGXTextInputField (a multiline input field, inherits QTextEdit)
 	- [ ] SGXLayout (a widget that has custom scripting to manage the layout of other widgets, inherits QWidget)
-	- [ ] SGTouchReceiver (a nondisplaying widget that accepts touch events, inherits QWidget)
+	- [ ] SGXTouchReceiver (a nondisplaying widget that accepts touch events, inherits QWidget)
+	- [ ] SGXCuteSquishyVesicles (a widget overlay over the render space with visual effects including vesicles and sparkles, transparent to clicks)
 - [ ] OpenGL simplifications
      - [ ] SGXShaderDisplay (a widget that draws by OpenGL and contains a shader programme as a property, inherits QOpenGLWidget)
      - [ ] SGXShaderDataGroup (a struct containing a vao, a vbo, and a ebo, all in a group for 2D rendering, also contains methods for drawing and keeps tracks of buffer sizes)

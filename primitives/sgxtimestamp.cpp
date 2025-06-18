@@ -262,7 +262,7 @@ bool SGXTimeStamp::isNationalDayPeriod() const {
     return false;
 }
 
-QString SGXTimeStamp::getSpecialDay() const { // NOLINT(readability-function-cognitive-complexity)
+QString SGXTimeStamp::getSpecialDay() const {
     const int m = getMonth();
     const int d = getDay();
     if(m == 8 && d == 9){return "National Day";}
