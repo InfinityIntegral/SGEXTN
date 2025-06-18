@@ -13,6 +13,7 @@ SOURCES = misc/main.cpp \
     primitives/sgxvector2.cpp \
     userDefinedClasses/sgucentralmanagement.cpp \
     userDefinedClasses/sgusignalemitter.cpp \
+    widgets/sgxicon.cpp \
     widgets/sgxparentwidget.cpp \
     widgets/sgxrootwidget.cpp \
     widgets/sgxtext.cpp \
@@ -27,6 +28,7 @@ HEADERS += \
     primitives/sgxvector2.h \
     userDefinedClasses/sgucentralmanagement.h \
     userDefinedClasses/sgusignalemitter.h \
+    widgets/sgxicon.h \
     widgets/sgxparentwidget.h \
     widgets/sgxrootwidget.h \
     widgets/sgxtext.h \

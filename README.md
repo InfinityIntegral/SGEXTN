@@ -40,7 +40,7 @@ Download the source code and open it in Qt and start coding your project. The do
 	- [x] SGXParentWidget (rendering space of the application, does nothing, inherits QWidget)
 	- [x] SGXWidget (a widget with solid colour that does nothing, inherits QWidget)
 	- [x] SGXText (a widget that displays text in SingScript, inherits QWidget)
-	- [ ] SGXIcon (a widget that displays text in a special icon font, inherits QWidget)
+	- [x] SGXIcon (a widget that displays text in a special icon font, inherits QWidget)
 	- [ ] SGXTextButton (a button with text display in SingScript, inherits QPushButton)
 	- [ ] SGXIconButton (a button that displays text in a special icon font, inherits QPushButton)
 	- [ ] SGXIntInputField (a input field taking a integer, inherits QLineEdit)

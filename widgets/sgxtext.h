@@ -37,7 +37,7 @@ public:
     void setForegroundColour(SGXColourRGBA customColour); // set text colour to custom colour
     void paintEvent(QPaintEvent*) override; // NOLINT(readability-named-parameter)
 public slots: // NOLINT
-    void resizeObject(); // automatic resizing of widget
+    void resizeObject(); // automatic resizing of text label
 };
 
 #endif // SGXTEXT_H
