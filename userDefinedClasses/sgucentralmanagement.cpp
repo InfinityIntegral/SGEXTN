@@ -20,7 +20,7 @@ SGXColourRGBA SGUCentralManagement::themeColour6 = SGXColourRGBA(255, 128, 228);
 SGXColourRGBA SGUCentralManagement::themeColour7 = SGXColourRGBA(255, 192, 242);
 SGXColourRGBA SGUCentralManagement::themeColour8 = SGXColourRGBA(255, 255, 255);
 
-// you are recommended to use the theme colours that you defined to set the below colours
+// you must use theme colours to set the below colours
 SGXColourRGBA SGUCentralManagement::rootWindowColour = SGUCentralManagement::themeColour6;
 SGXColourRGBA SGUCentralManagement::renderSpaceColour = SGUCentralManagement::themeColour4;
 SGXColourRGBA SGUCentralManagement::widgetColour1 = SGUCentralManagement::themeColour4;
