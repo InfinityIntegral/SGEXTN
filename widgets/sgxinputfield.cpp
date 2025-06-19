@@ -1,4 +1,4 @@
-#include "sgxstandardinputfield.h"
+#include "sgxinputfield.h"
 #include "../userDefinedClasses/sgucentralmanagement.h"
 #include "../misc/sgxcentral.h"
 #include <QPainter>
@@ -13,7 +13,7 @@
 #include <QEvent>
 #include <QTimer>
 
-SGXStandardInputField::SGXStandardInputField(QWidget *parent, void (SGUSignalEmitter::*resizeSignal)(), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0){
+SGXInputField::SGXInputField(QWidget *parent, void (SGUSignalEmitter::*resizeSignal)(), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0){
     (*this).setParent(parent);
     (*this).x1 = x1;
     (*this).x0 = x0;
@@ -42,185 +42,185 @@ SGXStandardInputField::SGXStandardInputField(QWidget *parent, void (SGUSignalEmi
     (*this).cursorPosition = 0;
     (*this).selectionRangeEnd = 0;
     (*this).show();
-    connect(SGXCentral::signalEmitter, resizeSignal, this, &SGXStandardInputField::resizeObject);
+    connect(SGXCentral::signalEmitter, resizeSignal, this, &SGXInputField::resizeObject);
     (*this).resizeObject();
 }
 
-void SGXStandardInputField::setBackgroundColour(){
+void SGXInputField::setBackgroundColour(){
     backgroundColour = SGUCentralManagement::inputFieldBackgroundColour.getQColour();
     update();
 }
 
-void SGXStandardInputField::setBackgroundColour(int themeColourIndex){
+void SGXInputField::setBackgroundColour(int themeColourIndex){
     backgroundColour = SGXCentral::getThemeColourAsQColour(themeColourIndex, SGUCentralManagement::inputFieldBackgroundColour);
     update();
 }
 
-void SGXStandardInputField::setBackgroundColour(SGXColourRGBA customColour){
+void SGXInputField::setBackgroundColour(SGXColourRGBA customColour){
     backgroundColour = customColour.getQColour();
     update();
 }
 
-void SGXStandardInputField::setForegroundColour(){
+void SGXInputField::setForegroundColour(){
     foregroundColour = SGUCentralManagement::inputFieldForegroundColour.getQColour();
     update();
 }
 
-void SGXStandardInputField::setForegroundColour(int themeColourIndex){
+void SGXInputField::setForegroundColour(int themeColourIndex){
     foregroundColour = SGXCentral::getThemeColourAsQColour(themeColourIndex, SGUCentralManagement::inputFieldForegroundColour);
     update();
 }
 
-void SGXStandardInputField::setForegroundColour(SGXColourRGBA customColour){
+void SGXInputField::setForegroundColour(SGXColourRGBA customColour){
     foregroundColour = customColour.getQColour();
     update();
 }
 
-void SGXStandardInputField::setHoverBackgroundColour(){
+void SGXInputField::setHoverBackgroundColour(){
     hoverBackgroundColour = SGUCentralManagement::inputFieldHoverBackgroundColour.getQColour();
     update();
 }
 
-void SGXStandardInputField::setHoverBackgroundColour(int themeColourIndex){
+void SGXInputField::setHoverBackgroundColour(int themeColourIndex){
     hoverBackgroundColour = SGXCentral::getThemeColourAsQColour(themeColourIndex, SGUCentralManagement::inputFieldHoverBackgroundColour);
     update();
 }
 
-void SGXStandardInputField::setHoverBackgroundColour(SGXColourRGBA customColour){
+void SGXInputField::setHoverBackgroundColour(SGXColourRGBA customColour){
     hoverBackgroundColour = customColour.getQColour();
     update();
 }
 
-void SGXStandardInputField::setHoverForegroundColour(){
+void SGXInputField::setHoverForegroundColour(){
     hoverForegroundColour = SGUCentralManagement::inputFieldHoverForegroundColour.getQColour();
     update();
 }
 
-void SGXStandardInputField::setHoverForegroundColour(int themeColourIndex){
+void SGXInputField::setHoverForegroundColour(int themeColourIndex){
     hoverForegroundColour = SGXCentral::getThemeColourAsQColour(themeColourIndex, SGUCentralManagement::inputFieldHoverForegroundColour);
     update();
 }
 
-void SGXStandardInputField::setHoverForegroundColour(SGXColourRGBA customColour){
+void SGXInputField::setHoverForegroundColour(SGXColourRGBA customColour){
     hoverForegroundColour = customColour.getQColour();
     update();
 }
 
-void SGXStandardInputField::setFocusedBackgroundColour(){
+void SGXInputField::setFocusedBackgroundColour(){
     focusedBackgroundColour = SGUCentralManagement::inputFieldFocusedBackgroundColour.getQColour();
     update();
 }
 
-void SGXStandardInputField::setFocusedBackgroundColour(int themeColourIndex){
+void SGXInputField::setFocusedBackgroundColour(int themeColourIndex){
     focusedBackgroundColour = SGXCentral::getThemeColourAsQColour(themeColourIndex, SGUCentralManagement::inputFieldFocusedBackgroundColour);
     update();
 }
 
-void SGXStandardInputField::setFocusedBackgroundColour(SGXColourRGBA customColour){
+void SGXInputField::setFocusedBackgroundColour(SGXColourRGBA customColour){
     focusedBackgroundColour = customColour.getQColour();
     update();
 }
 
-void SGXStandardInputField::setFocusedForegroundColour(){
+void SGXInputField::setFocusedForegroundColour(){
     focusedForegroundColour = SGUCentralManagement::inputFieldFocusedForegroundColour.getQColour();
     update();
 }
 
-void SGXStandardInputField::setFocusedForegroundColour(int themeColourIndex){
+void SGXInputField::setFocusedForegroundColour(int themeColourIndex){
     focusedForegroundColour = SGXCentral::getThemeColourAsQColour(themeColourIndex, SGUCentralManagement::inputFieldFocusedForegroundColour);
     update();
 }
 
-void SGXStandardInputField::setFocusedForegroundColour(SGXColourRGBA customColour){
+void SGXInputField::setFocusedForegroundColour(SGXColourRGBA customColour){
     focusedForegroundColour = customColour.getQColour();
     update();
 }
 
-void SGXStandardInputField::setSelectionHighlightsBackgroundColour(){
+void SGXInputField::setSelectionHighlightsBackgroundColour(){
     selectionHighlightsBackgroundColour = SGUCentralManagement::inputFieldSelectedHighlightBackgroundColour.getQColour();
     update();
 }
 
-void SGXStandardInputField::setSelectionHighlightsBackgroundColour(int themeColourIndex){
+void SGXInputField::setSelectionHighlightsBackgroundColour(int themeColourIndex){
     selectionHighlightsBackgroundColour = SGXCentral::getThemeColourAsQColour(themeColourIndex, SGUCentralManagement::inputFieldSelectedHighlightBackgroundColour);
     update();
 }
 
-void SGXStandardInputField::setSelectionHighlightsBackgroundColour(SGXColourRGBA customColour){
+void SGXInputField::setSelectionHighlightsBackgroundColour(SGXColourRGBA customColour){
     selectionHighlightsBackgroundColour = customColour.getQColour();
     update();
 }
 
-void SGXStandardInputField::setSelectionHighlightsForegroundColour(){
+void SGXInputField::setSelectionHighlightsForegroundColour(){
     selectionHighlightsForegroundColour = SGUCentralManagement::inputFieldSelectedHighlightForegroundColour.getQColour();
     update();
 }
 
-void SGXStandardInputField::setSelectionHighlightsForegroundColour(int themeColourIndex){
+void SGXInputField::setSelectionHighlightsForegroundColour(int themeColourIndex){
     selectionHighlightsForegroundColour = SGXCentral::getThemeColourAsQColour(themeColourIndex, SGUCentralManagement::inputFieldSelectedHighlightForegroundColour);
     update();
 }
 
-void SGXStandardInputField::setSelectionHighlightsForegroundColour(SGXColourRGBA customColour){
+void SGXInputField::setSelectionHighlightsForegroundColour(SGXColourRGBA customColour){
     selectionHighlightsForegroundColour = customColour.getQColour();
     update();
 }
 
-void SGXStandardInputField::setInvalidBackgroundColour(){
+void SGXInputField::setInvalidBackgroundColour(){
     invalidBackgroundColour = SGUCentralManagement::inputFieldInvalidBackgroundColour.getQColour();
     update();
 }
 
-void SGXStandardInputField::setInvalidBackgroundColour(int themeColourIndex){
+void SGXInputField::setInvalidBackgroundColour(int themeColourIndex){
     invalidBackgroundColour = SGXCentral::getThemeColourAsQColour(themeColourIndex, SGUCentralManagement::inputFieldInvalidBackgroundColour);
     update();
 }
 
-void SGXStandardInputField::setInvalidBackgroundColour(SGXColourRGBA customColour){
+void SGXInputField::setInvalidBackgroundColour(SGXColourRGBA customColour){
     invalidBackgroundColour = customColour.getQColour();
     update();
 }
 
-void SGXStandardInputField::setInvalidForegroundColour(){
+void SGXInputField::setInvalidForegroundColour(){
     invalidForegroundColour = SGUCentralManagement::inputFieldInvalidForegroundColour.getQColour();
     update();
 }
 
-void SGXStandardInputField::setInvalidForegroundColour(int themeColourIndex){
+void SGXInputField::setInvalidForegroundColour(int themeColourIndex){
     invalidForegroundColour = SGXCentral::getThemeColourAsQColour(themeColourIndex, SGUCentralManagement::inputFieldInvalidForegroundColour);
     update();
 }
 
-void SGXStandardInputField::setInvalidForegroundColour(SGXColourRGBA customColour){
+void SGXInputField::setInvalidForegroundColour(SGXColourRGBA customColour){
     invalidForegroundColour = customColour.getQColour();
     update();
 }
 
-void SGXStandardInputField::resizeObject(){
+void SGXInputField::resizeObject(){
     font.setPixelSize(static_cast<int>(h1 * SGXCentral::renderAreaHeight + h0 * SGXCentral::sizeUnit));
     setGeometry(static_cast<int>(x1 * SGXCentral::renderAreaWidth + x0 * SGXCentral::sizeUnit), static_cast<int>(y1 * SGXCentral::renderAreaHeight + y0 * SGXCentral::sizeUnit), static_cast<int>(w1 * SGXCentral::renderAreaWidth + w0 * SGXCentral::sizeUnit), static_cast<int>(h1 * SGXCentral::renderAreaHeight + h0 * SGXCentral::sizeUnit));
 }
 
-void SGXStandardInputField::enterEvent(QEnterEvent *){ // NOLINT(readability-named-parameter)
+void SGXInputField::enterEvent(QEnterEvent *){ // NOLINT(readability-named-parameter)
     hovering = true;
 }
 
-void SGXStandardInputField::leaveEvent(QEvent *){ // NOLINT(readability-named-parameter)
+void SGXInputField::leaveEvent(QEvent *){ // NOLINT(readability-named-parameter)
     hovering = false;
 }
 
-void SGXStandardInputField::focusInEvent(QFocusEvent *event){
+void SGXInputField::focusInEvent(QFocusEvent *event){
     focused = true;
     focusJustStarted = true;
     QLineEdit::focusInEvent(event);
 }
 
-void SGXStandardInputField::focusOutEvent(QFocusEvent *event){
+void SGXInputField::focusOutEvent(QFocusEvent *event){
     focused = false;
     QLineEdit::focusOutEvent(event);
 }
 
-void SGXStandardInputField::mousePressEvent(QMouseEvent *event){
+void SGXInputField::mousePressEvent(QMouseEvent *event){
     QLineEdit::mousePressEvent(event);
     if(focusJustStarted == true){
         setCursorPosition(static_cast<int>(text().length()));
@@ -244,7 +244,7 @@ void SGXStandardInputField::mousePressEvent(QMouseEvent *event){
     setSelection(cursorPosition, 0);
 }
 
-void SGXStandardInputField::mouseMoveEvent(QMouseEvent *event){
+void SGXInputField::mouseMoveEvent(QMouseEvent *event){
     if(static_cast<bool>((*event).buttons() & Qt::LeftButton) == false){return;}
     QLineEdit::mouseMoveEvent(event);
     const QString containedText = text();
@@ -264,7 +264,7 @@ void SGXStandardInputField::mouseMoveEvent(QMouseEvent *event){
     else{setSelection(selectionRangeEnd, cursorPosition - selectionRangeEnd);}
 }
 
-void SGXStandardInputField::paintEvent(QPaintEvent *){ // NOLINT(readability-named-parameter)
+void SGXInputField::paintEvent(QPaintEvent *){ // NOLINT(readability-named-parameter)
     QPainter p(this);
     QColor bg;
     QColor fg;
@@ -313,7 +313,7 @@ void SGXStandardInputField::paintEvent(QPaintEvent *){ // NOLINT(readability-nam
     }
 }
 
-void SGXStandardInputField::setInput(const QString &s){
+void SGXInputField::setInput(const QString &s){
     setText(s);
     cursorPosition = static_cast<int>(s.length());
     selectionRangeEnd = static_cast<int>(s.length());
@@ -321,26 +321,26 @@ void SGXStandardInputField::setInput(const QString &s){
     setSelection(static_cast<int>(s.length()), 0);
 }
 
-QString SGXStandardInputField::getInput(){
+QString SGXInputField::getInput(){
     return text();
 }
 
-int SGXStandardInputField::getInputAsInt(bool &can){
+int SGXInputField::getInputAsInt(bool &can){
     return text().toInt(&can);
 }
 
-float SGXStandardInputField::getInputAsFloat(bool &can){
+float SGXInputField::getInputAsFloat(bool &can){
     return text().toFloat(&can);
 }
 
-void SGXStandardInputField::setInvalid(const QString &s){
+void SGXInputField::setInvalid(const QString &s){
     (*this).setText(s);
     invalid = true;
-    QTimer::singleShot(1000, this, &SGXStandardInputField::unsetInvalid);
+    QTimer::singleShot(1000, this, &SGXInputField::unsetInvalid);
     update();
 }
 
-void SGXStandardInputField::unsetInvalid(){
+void SGXInputField::unsetInvalid(){
     invalid = false;
     update();
 }

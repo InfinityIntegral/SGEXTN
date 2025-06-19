@@ -1,5 +1,5 @@
-#ifndef SGXSTANDARDINPUTFIELD_H
-#define SGXSTANDARDINPUTFIELD_H
+#ifndef SGXINPUTFIELD_H
+#define SGXINPUTFIELD_H
 
 #include <QWidget>
 #include <QLineEdit>
@@ -10,11 +10,11 @@
 #include <QColor>
 #include <QEvent>
 
-class SGXStandardInputField : public QLineEdit // single line input field
+class SGXInputField : public QLineEdit // single line input field
 {
     Q_OBJECT // NOLINT
 public:
-    SGXStandardInputField(QWidget* parent, void (SGUSignalEmitter::*resizeSignal)(), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0); // create input field
+    SGXInputField(QWidget* parent, void (SGUSignalEmitter::*resizeSignal)(), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0); // create input field
     // the value of each size and location variable is linear factor * width or height of rendering space + constant factor * size unit
     // ensure that x0 + w0 < 13.5 * (1 - x1 - w1) and y0 + h0 < 13.5 * (1 - y1 - h1) to avoid widgets going off screen
     // you are recommended to keep 0.5 * size unit of margin on the 4 sides of the screen
@@ -90,4 +90,4 @@ public slots: // NOLINT
     void unsetInvalid(); // remove invalid status after warning of 1 second
 };
 
-#endif // SGXSTANDARDINPUTFIELD_H
+#endif // SGXINPUTFIELD_H

@@ -15,9 +15,9 @@ SOURCES = misc/main.cpp \
     userDefinedClasses/sgusignalemitter.cpp \
     widgets/sgxicon.cpp \
     widgets/sgxiconbutton.cpp \
+    widgets/sgxinputfield.cpp \
     widgets/sgxparentwidget.cpp \
     widgets/sgxrootwidget.cpp \
-    widgets/sgxstandardinputfield.cpp \
     widgets/sgxtext.cpp \
     widgets/sgxtextbutton.cpp \
     widgets/sgxwidget.cpp
@@ -33,9 +33,9 @@ HEADERS += \
     userDefinedClasses/sgusignalemitter.h \
     widgets/sgxicon.h \
     widgets/sgxiconbutton.h \
+    widgets/sgxinputfield.h \
     widgets/sgxparentwidget.h \
     widgets/sgxrootwidget.h \
-    widgets/sgxstandardinputfield.h \
     widgets/sgxtext.h \
     widgets/sgxtextbutton.h \
     widgets/sgxwidget.h
