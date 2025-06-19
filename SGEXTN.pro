@@ -14,6 +14,7 @@ SOURCES = misc/main.cpp \
     userDefinedClasses/sgucentralmanagement.cpp \
     userDefinedClasses/sgusignalemitter.cpp \
     widgets/sgxicon.cpp \
+    widgets/sgxiconbutton.cpp \
     widgets/sgxparentwidget.cpp \
     widgets/sgxrootwidget.cpp \
     widgets/sgxtext.cpp \
@@ -30,6 +31,7 @@ HEADERS += \
     userDefinedClasses/sgucentralmanagement.h \
     userDefinedClasses/sgusignalemitter.h \
     widgets/sgxicon.h \
+    widgets/sgxiconbutton.h \
     widgets/sgxparentwidget.h \
     widgets/sgxrootwidget.h \
     widgets/sgxtext.h \
