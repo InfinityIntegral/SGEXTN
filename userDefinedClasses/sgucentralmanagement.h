@@ -52,10 +52,14 @@ public:
     static SGXColourRGBA inputFieldHoverForegroundColour; // foreground colour of input field when hovered over
     static SGXColourRGBA inputFieldFocusedBackgroundColour; // background colour of input field when focused
     static SGXColourRGBA inputFieldFocusedForegroundColour; // foreground colour of input field when focused
+    static SGXColourRGBA inputFieldInvalidBackgroundColour; // background colour of input field when text is invalid
+    static SGXColourRGBA inputFieldInvalidForegroundColour; // foreground colour of input field when text is invalid
     static SGXColourRGBA scrollBarBackgroundColour; // background colour of scroll bar
     static SGXColourRGBA scrollBarForegroundColour; // foreground colour of scroll bar, applied to scroll bar handle
-    static SGXColourRGBA scrollBarForegroundHoverColour; // foreground colour of scroll bar, applied to scroll bar handle when scroll bar is hovered over
-    static SGXColourRGBA scrollBarForegroundPressedColour; // foreground colour of scroll bar, applied to scroll bar handle when scroll bar is pressed
+    static SGXColourRGBA scrollBarHoverBackgroundColour; // background colour of scroll bar when hovered over
+    static SGXColourRGBA scrollBarHoverForegroundColour; // foreground colour of scroll bar, applied to scroll bar handle when scroll bar is hovered over
+    static SGXColourRGBA scrollBarPressedBackgroundColour; // background colour of scroll bar when pressed
+    static SGXColourRGBA scrollBarPressedForegroundColour; // foreground colour of scroll bar, applied to scroll bar handle when scroll bar is pressed
 };
 
 #endif // SGUCENTRALMANAGEMENT_H

@@ -46,10 +46,14 @@ SGXColourRGBA SGUCentralManagement::inputFieldHoverBackgroundColour = SGUCentral
 SGXColourRGBA SGUCentralManagement::inputFieldHoverForegroundColour = SGUCentralManagement::themeColour7;
 SGXColourRGBA SGUCentralManagement::inputFieldFocusedBackgroundColour = SGUCentralManagement::themeColour2;
 SGXColourRGBA SGUCentralManagement::inputFieldFocusedForegroundColour = SGUCentralManagement::themeColour6;
+SGXColourRGBA SGUCentralManagement::inputFieldInvalidBackgroundColour = SGUCentralManagement::themeColour6;
+SGXColourRGBA SGUCentralManagement::inputFieldInvalidForegroundColour = SGUCentralManagement::themeColour8;
 SGXColourRGBA SGUCentralManagement::scrollBarBackgroundColour = SGUCentralManagement::themeColour6;
 SGXColourRGBA SGUCentralManagement::scrollBarForegroundColour = SGUCentralManagement::themeColour4;
-SGXColourRGBA SGUCentralManagement::scrollBarForegroundHoverColour = SGUCentralManagement::themeColour3;
-SGXColourRGBA SGUCentralManagement::scrollBarForegroundPressedColour = SGUCentralManagement::themeColour2;
+SGXColourRGBA SGUCentralManagement::scrollBarHoverBackgroundColour = SGUCentralManagement::themeColour5;
+SGXColourRGBA SGUCentralManagement::scrollBarHoverForegroundColour = SGUCentralManagement::themeColour3;
+SGXColourRGBA SGUCentralManagement::scrollBarPressedBackgroundColour = SGUCentralManagement::themeColour4;
+SGXColourRGBA SGUCentralManagement::scrollBarPressedForegroundColour = SGUCentralManagement::themeColour2;
 
 // is run when app opens
 void SGUCentralManagement::initialise(){
