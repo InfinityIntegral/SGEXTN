@@ -19,6 +19,7 @@ SOURCES = misc/main.cpp \
     widgets/sgxparentwidget.cpp \
     widgets/sgxrootwidget.cpp \
     widgets/sgxscrollbar.cpp \
+    widgets/sgxscrollview.cpp \
     widgets/sgxtext.cpp \
     widgets/sgxtextbutton.cpp \
     widgets/sgxwidget.cpp
@@ -38,6 +39,7 @@ HEADERS += \
     widgets/sgxparentwidget.h \
     widgets/sgxrootwidget.h \
     widgets/sgxscrollbar.h \
+    widgets/sgxscrollview.h \
     widgets/sgxtext.h \
     widgets/sgxtextbutton.h \
     widgets/sgxwidget.h

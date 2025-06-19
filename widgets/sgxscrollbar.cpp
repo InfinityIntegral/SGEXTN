@@ -9,10 +9,8 @@
 #include <QEvent>
 #include <QScrollBar>
 
-SGXScrollBar::SGXScrollBar(QWidget *parent, float w1, float w0){
+SGXScrollBar::SGXScrollBar(QWidget *parent){
     (*this).setParent(parent);
-    (*this).w1 = w1;
-    (*this).w0 = w0;
     (*this).backgroundColour = SGUCentralManagement::scrollBarBackgroundColour.getQColour();
     (*this).foregroundColour = SGUCentralManagement::scrollBarForegroundColour.getQColour();
     (*this).hoverBackgroundColour = SGUCentralManagement::scrollBarHoverBackgroundColour.getQColour();

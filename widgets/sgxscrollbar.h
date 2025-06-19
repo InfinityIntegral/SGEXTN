@@ -11,10 +11,8 @@ class SGXScrollBar : public QScrollBar // scroll bar for SGXEXTN, should not be 
 {
     Q_OBJECT // NOLINT
 public:
-    SGXScrollBar(QWidget* parent, float w1, float w0); // create scroll bar
+    SGXScrollBar(QWidget* parent); // create scroll bar
     // width of scroll bar is w1 * width of rendering space + w0 * size unit;
-    float w1; // linear factor of width
-    float w0; // constant factor of width
     bool hovering; // indicates if scroll bar is hovered over
     bool pressed; // indicates if scroll bar is being pressed
     QColor backgroundColour; // colour used to shade background

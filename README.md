@@ -47,7 +47,7 @@ Download the source code and open it in Qt and start coding your project. The do
 	- [ ] SGXLongText (a multiline text label, inherits QWidget)
 	- [ ] SGXLongInputField (a multiline input field, inherits QTextEdit)
 	- [ ] SGXScrollView (a scroll view container, inherits QScrollArea)
-	- [ ] SGXScrollBar (a scroll bar for the SGXScrollView, inherits QScrollBar)
+	- [x] SGXScrollBar (a scroll bar for the SGXScrollView, inherits QScrollBar)
 	- [ ] SGXLayout (a widget that has custom scripting to manage the layout of other widgets, inherits QWidget)
 	- [ ] SGXTouchReceiver (a nondisplaying widget that accepts touch events, inherits QWidget)
 	- [ ] SGXCuteSquishyVesicles (a widget overlay over the render space with visual effects including vesicles and sparkles, transparent to clicks)
