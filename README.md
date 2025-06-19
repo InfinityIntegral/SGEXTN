@@ -46,7 +46,7 @@ Download the source code and open it in Qt and start coding your project. The do
 	- [x] SGXInputField (a input field taking a string which can be interpreted as a int or float, inherits QLineEdit)
 	- [ ] SGXLongText (a multiline text label, inherits QWidget)
 	- [ ] SGXLongInputField (a multiline input field, inherits QTextEdit)
-	- [ ] SGXScrollView (a scroll view container, inherits QScrollArea)
+	- [x] SGXScrollView (a scroll view container, inherits QScrollArea)
 	- [x] SGXScrollBar (a scroll bar for the SGXScrollView, inherits QScrollBar)
 	- [ ] SGXLayout (a widget that has custom scripting to manage the layout of other widgets, inherits QWidget)
 	- [ ] SGXTouchReceiver (a nondisplaying widget that accepts touch events, inherits QWidget)

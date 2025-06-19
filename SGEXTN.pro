@@ -16,6 +16,7 @@ SOURCES = misc/main.cpp \
     widgets/sgxicon.cpp \
     widgets/sgxiconbutton.cpp \
     widgets/sgxinputfield.cpp \
+    widgets/sgxlayout.cpp \
     widgets/sgxparentwidget.cpp \
     widgets/sgxrootwidget.cpp \
     widgets/sgxscrollbar.cpp \
@@ -36,6 +37,7 @@ HEADERS += \
     widgets/sgxicon.h \
     widgets/sgxiconbutton.h \
     widgets/sgxinputfield.h \
+    widgets/sgxlayout.h \
     widgets/sgxparentwidget.h \
     widgets/sgxrootwidget.h \
     widgets/sgxscrollbar.h \
