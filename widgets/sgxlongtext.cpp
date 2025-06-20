@@ -45,6 +45,7 @@ SGXLongText::SGXLongText(QWidget *parent, void (SGUSignalEmitter::*resizeSignal)
 
 void SGXLongText::setText(const QString& s){
     (*this).s = s;
+    (*this).splitLine();
     (*this).update();
 }
 
