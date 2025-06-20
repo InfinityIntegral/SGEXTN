@@ -17,6 +17,7 @@ SOURCES = misc/main.cpp \
     widgets/sgxiconbutton.cpp \
     widgets/sgxinputfield.cpp \
     widgets/sgxlayout.cpp \
+    widgets/sgxlongtext.cpp \
     widgets/sgxlongtextinternal.cpp \
     widgets/sgxparentwidget.cpp \
     widgets/sgxrootwidget.cpp \
@@ -39,6 +40,7 @@ HEADERS += \
     widgets/sgxiconbutton.h \
     widgets/sgxinputfield.h \
     widgets/sgxlayout.h \
+    widgets/sgxlongtext.h \
     widgets/sgxlongtextinternal.h \
     widgets/sgxparentwidget.h \
     widgets/sgxrootwidget.h \

@@ -10,55 +10,18 @@
 #include <QList>
 #include <QtCore/Qt>
 
-SGXLongTextInternal::SGXLongTextInternal(QWidget *parent){
+SGXLongTextInternal::SGXLongTextInternal(SGXLongText *parent){
     (*this).setParent(parent);
-    (*this).backgroundColour = SGUCentralManagement::textBackgroundColour.getQColour();
-    (*this).foregroundColour = SGUCentralManagement::textForegroundColour.getQColour();
-    (*this).s = s;
-    (*this).font = (*SGXCentral::standardFont);
+    (*this).ref = parent;
     (*this).show();
 }
 
-void SGXLongTextInternal::setText(const QString &s){
-    (*this).s = s;
-    (*this).update();
-}
-
-void SGXLongTextInternal::setBackgroundColour(){
-    backgroundColour = SGUCentralManagement::textBackgroundColour.getQColour();
-    update();
-}
-
-void SGXLongTextInternal::setBackgroundColour(int themeColourIndex){
-    backgroundColour = SGXCentral::getThemeColourAsQColour(themeColourIndex, SGUCentralManagement::textBackgroundColour);
-    update();
-}
-
-void SGXLongTextInternal::setBackgroundColour(SGXColourRGBA customColour){
-    backgroundColour = customColour.getQColour();
-    update();
-}
-
-void SGXLongTextInternal::setForegroundColour(){
-    foregroundColour = SGUCentralManagement::textForegroundColour.getQColour();
-    update();
-}
-
-void SGXLongTextInternal::setForegroundColour(int themeColourIndex){
-    foregroundColour = SGXCentral::getThemeColourAsQColour(themeColourIndex, SGUCentralManagement::textForegroundColour);
-    update();
-}
-
-void SGXLongTextInternal::setForegroundColour(SGXColourRGBA customColour){
-    foregroundColour = customColour.getQColour();
-    update();
-}
-
 void SGXLongTextInternal::paintEvent(QPaintEvent *){ // NOLINT(readability-named-parameter)
-    const QFontMetrics fm(font);
+    const QFontMetrics fm((*ref).font);
     QList<int> lineGaps;
     int ls = 0;
     int lb = 0;
+    const QString& s = (*ref).s;
     for(int i=0; i<s.length(); i++){
         if(s[i] == ' ' || s[i] == '\t'){
             ls = i;
@@ -70,7 +33,7 @@ void SGXLongTextInternal::paintEvent(QPaintEvent *){ // NOLINT(readability-named
             lb = i + 1;
         }
         else{
-            if(fm.horizontalAdvance(s.mid(lb, i - lb + 1)) > width()){
+            if(fm.horizontalAdvance(s.mid(lb, i - lb + 1)) > (*parentWidget()).width()){
                 if(lb < ls){
                     lineGaps.append(lb);
                     lineGaps.append(ls - 1);
@@ -87,13 +50,13 @@ void SGXLongTextInternal::paintEvent(QPaintEvent *){ // NOLINT(readability-named
     }
     lineGaps.append(lb);
     lineGaps.append(static_cast<int>(s.length() - 1));
-    setGeometry(0, 0, width(), static_cast<int>(font.pixelSize() * lineGaps.length() / 2));
+    setGeometry(0, 0, (*parentWidget()).width(), static_cast<int>((*ref).font.pixelSize() * lineGaps.length() / 2));
     QPainter p(this);
-    p.fillRect(0, 0, width(), height(), backgroundColour);
+    p.fillRect(0, 0, width(), height(), (*ref).backgroundColour);
     p.setRenderHint(QPainter::TextAntialiasing);
-    p.setFont(font);
-    p.setPen(foregroundColour);
+    p.setFont((*ref).font);
+    p.setPen((*ref).foregroundColour);
     for(int i=0; i<lineGaps.length()/2; i++){
-        p.drawText(0, font.pixelSize() * i, width(), font.pixelSize(), Qt::AlignLeft | Qt::AlignVCenter, s.mid(lineGaps[2 * static_cast<long long>(i)], lineGaps[2 * static_cast<long long>(i) + 1] - lineGaps[2 * static_cast<long long>(i)] + 1));
+        p.drawText(0, (*ref).font.pixelSize() * i, (*parentWidget()).width(), (*ref).font.pixelSize(), Qt::AlignLeft | Qt::AlignVCenter, s.mid(lineGaps[2 * static_cast<long long>(i)], lineGaps[2 * static_cast<long long>(i) + 1] - lineGaps[2 * static_cast<long long>(i)] + 1));
     }
 }
