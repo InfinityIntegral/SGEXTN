@@ -55,7 +55,6 @@ SGXColourRGBA SGUCentralManagement::scrollBarHoverForegroundColour = SGUCentralM
 SGXColourRGBA SGUCentralManagement::scrollBarPressedBackgroundColour = SGUCentralManagement::themeColour4;
 SGXColourRGBA SGUCentralManagement::scrollBarPressedForegroundColour = SGUCentralManagement::themeColour2;
 
-// is run when app opens
 void SGUCentralManagement::initialise(){
     
 }

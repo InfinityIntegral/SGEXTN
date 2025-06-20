@@ -2,11 +2,6 @@
 #define SGXLONGTEXTINTERNAL_H
 
 #include <QWidget>
-#include "../primitives/sgxcolourrgba.h"
-#include <QColor>
-#include <QString>
-#include <QFont>
-#include "../widgets/sgxlongtext.h"
 
 class SGXLongText;
 class SGXLongTextInternal : public QWidget // internal class for SGXLongText, similar to multiline SGXText with no fixed height

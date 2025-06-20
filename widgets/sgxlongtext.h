@@ -3,12 +3,17 @@
 
 #include <QScrollArea>
 #include "../userDefinedClasses/sgusignalemitter.h"
-#include "../widgets/sgxlongtextinternal.h"
+#include <QWidget>
+#include <QString>
+#include <QColor>
+#include <QFont>
+#include "../primitives/sgxcolourrgba.h"
+#include <QList>
 
 class SGXLongTextInternal;
 class SGXLongText : public QScrollArea // scrollable display of multiline text
 {
-    Q_OBJECT
+    Q_OBJECT // NOLINT
 public:
     SGXLongText(QWidget* parent, void (SGUSignalEmitter::*resizeSignal)(), const QString& s, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float s1, float s0, float f1, float f0); // create long text
     // the value of each size and location variable is linear factor * width or height of rendering space + constant factor * size unit
@@ -38,6 +43,8 @@ public:
     void setForegroundColour(int themeColourIndex); // set text colour to theme colour
     void setForegroundColour(SGXColourRGBA customColour); // set text colour to custom colour
     SGXLongTextInternal* displayInternal; // child widget that actually displays text
+    QList<int> lineGaps; // list of ints, each pair indicating a line
+    void splitLine(); // split string into lines for rendering
 public slots: // NOLINT
     void resizeObject(); // automatic resizing of text label
 };
