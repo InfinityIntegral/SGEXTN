@@ -10,7 +10,6 @@
 SGXLongTextInternal::SGXLongTextInternal(SGXLongText *parent){
     (*this).setParent(parent);
     (*this).ref = parent;
-    setGeometry(0, 0, 500, 5000);
     (*this).show();
 }
 

@@ -45,7 +45,7 @@ Download the source code and open it in Qt and start coding your project. The do
 	- [x] SGXIconButton (a button that displays text in a special icon font, inherits QPushButton)
 	- [x] SGXInputField (a input field taking a string which can be interpreted as a int or float, inherits QLineEdit)
 	- [x] SGXLongText (a multiline text label, inherits QWidget)
-	- [ ] SGXLongInputField (a multiline input field, inherits QTextEdit)
+	- [x] SGXLongInputField (a multiline input field, inherits QTextEdit)
 	- [x] SGXScrollView (a scroll view container, inherits QScrollArea)
 	- [x] SGXScrollBar (a scroll bar for the SGXScrollView, inherits QScrollBar)
 	- [x] SGXLayout (a widget that has custom scripting to manage the layout of other widgets, inherits QWidget)
