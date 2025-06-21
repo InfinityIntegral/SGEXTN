@@ -49,7 +49,7 @@ Download the source code and open it in Qt and start coding your project. The do
 	- [x] SGXScrollView (a scroll view container, inherits QScrollArea)
 	- [x] SGXScrollBar (a scroll bar for the SGXScrollView, inherits QScrollBar)
 	- [x] SGXLayout (a widget that has custom scripting to manage the layout of other widgets, inherits QWidget)
-	- [ ] SGXTouchReceiver (a nondisplaying widget that accepts touch events, inherits QWidget)
+	- [x] SGXTouchReceiver (a nondisplaying widget that accepts touch events, inherits QWidget)
 	- [ ] SGXCuteSquishyVesicles (a widget overlay over the render space with visual effects including vesicles and sparkles, transparent to clicks)
 - [ ] OpenGL simplifications
      - [ ] SGXShaderDisplay (a widget that draws by OpenGL and contains a shader programme as a property, inherits QOpenGLWidget)

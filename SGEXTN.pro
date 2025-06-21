@@ -28,6 +28,7 @@ SOURCES = misc/main.cpp \
     widgets/sgxscrollview.cpp \
     widgets/sgxtext.cpp \
     widgets/sgxtextbutton.cpp \
+    widgets/sgxtouchreceiver.cpp \
     widgets/sgxwidget.cpp
 RESOURCES = assets.qrc
 HEADERS += \
@@ -54,4 +55,5 @@ HEADERS += \
     widgets/sgxscrollview.h \
     widgets/sgxtext.h \
     widgets/sgxtextbutton.h \
+    widgets/sgxtouchreceiver.h \
     widgets/sgxwidget.h
