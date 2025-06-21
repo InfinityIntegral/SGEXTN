@@ -10,6 +10,7 @@ SOURCES = misc/main.cpp \
     primitives/sgxcolourrgba.cpp \
     primitives/sgxidentifier.cpp \
     primitives/sgxtimestamp.cpp \
+    primitives/sgxtouchevent.cpp \
     primitives/sgxvector2.cpp \
     userDefinedClasses/sgucentralmanagement.cpp \
     userDefinedClasses/sgusignalemitter.cpp \
@@ -35,6 +36,7 @@ HEADERS += \
     primitives/sgxcolourrgba.h \
     primitives/sgxidentifier.h \
     primitives/sgxtimestamp.h \
+    primitives/sgxtouchevent.h \
     primitives/sgxvector2.h \
     userDefinedClasses/sgucentralmanagement.h \
     userDefinedClasses/sgusignalemitter.h \

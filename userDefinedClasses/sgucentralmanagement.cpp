@@ -54,10 +54,9 @@ SGXColourRGBA SGUCentralManagement::scrollBarHoverBackgroundColour = SGUCentralM
 SGXColourRGBA SGUCentralManagement::scrollBarHoverForegroundColour = SGUCentralManagement::themeColour3;
 SGXColourRGBA SGUCentralManagement::scrollBarPressedBackgroundColour = SGUCentralManagement::themeColour4;
 SGXColourRGBA SGUCentralManagement::scrollBarPressedForegroundColour = SGUCentralManagement::themeColour2;
-#include "../misc/sgxcentral.h"
-#include "../widgets/sgxlonginputfield.h"
+
 void SGUCentralManagement::initialise(){
-    new SGXLongInputField(SGXCentral::parentWindow, &SGUSignalEmitter::updateScreen, 0.0f, 0.5f, 0.0f, 0.5f, 1.0f, -1.0f, 1.0f, -1.0f, 0.0f, 0.5f, 0.0f, 1.0f);
+    
 }
 
 // is run when app closes
