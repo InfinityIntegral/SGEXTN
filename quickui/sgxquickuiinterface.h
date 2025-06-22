@@ -16,6 +16,8 @@ public:
     static QQmlApplicationEngine* e;
     static SGXQuickResizer* resizerInstance;
     static SGXThemeColourSetting* themeColoursInstance;
+    static void initialise();
+    static void buildTemplate();
     static QQuickItem* rootWindow;
     static QQmlComponent* rootWidgetTemplate;
     static QQuickItem* createRootWidget(QQuickItem* parent);
@@ -23,6 +25,8 @@ public:
     static QQmlComponent* parentWidgetTemplate;
     static QQuickItem* createParentWidget(QQuickItem* parent);
     static QQuickItem* parentWidget;
+    static QQmlComponent* widgetTemplate;
+    static QQuickItem* createWidget(QQuickItem* parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, int bg);
 };
 
 #endif // SGXQUICKUIINTERFACE_H

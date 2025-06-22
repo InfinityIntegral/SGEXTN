@@ -25,7 +25,7 @@ Note that "SGX" is short for "SGEXTN", the project name, and is used as a prefix
 	- [x] SGXQuickUIInterface (contains methods to create and add components)
 		- [x] root widget of application
 		- [x] parent widget of application, where everything is rendered
-		- [ ] non interactive widget displaying a solid colour
+		- [x] non interactive widget displaying a solid colour
 		- [ ] non interactive single line text label, cuts off text if length is exceeded
 		- [ ] non interactive scrollable multi line text label, allows scrolling if height is exceeded
 		- [ ] non interactive icon

@@ -6,5 +6,6 @@
         <file>QML/root.qml</file>
         <file>QML/rootwidget.qml</file>
         <file>QML/parentwidget.qml</file>
+        <file>QML/widget.qml</file>
     </qresource>
 </RCC>

@@ -4,7 +4,6 @@
 #include <QtCore/Qt>
 #include <QList>
 #include "../quickui/sgxthemecoloursetting.h"
-#include <QQmlEngine>
 #include "../quickui/sgxquickuiinterface.h"
 #include "../quickui/sgxquickresizer.h"
 #include <QQuickWindow>
@@ -42,13 +41,8 @@ void SGXCentral::initialise(){
     SGXQuickUIInterface::rootWindow = (*qobject_cast<QQuickWindow*>((*SGXQuickUIInterface::e).rootObjects().first())).contentItem();
     connect(SGXQuickUIInterface::rootWindow, &QQuickItem::widthChanged, SGXQuickUIInterface::resizerInstance, &SGXQuickResizer::updateAppWindowSize);
     connect(SGXQuickUIInterface::rootWindow, &QQuickItem::heightChanged, SGXQuickUIInterface::resizerInstance, &SGXQuickResizer::updateAppWindowSize);
-    
-    SGXQuickUIInterface::rootWidgetTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/QML/rootwidget.qml");
-    SGXQuickUIInterface::parentWidgetTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/QML/parentwidget.qml");
-    
-    SGXQuickUIInterface::rootWidget = SGXQuickUIInterface::createRootWidget(SGXQuickUIInterface::rootWindow);
-    SGXQuickUIInterface::parentWidget = SGXQuickUIInterface::createParentWidget(SGXQuickUIInterface::rootWidget);
-    
+    SGXQuickUIInterface::initialise();
+    SGXQuickUIInterface::buildTemplate();
     (*SGXQuickUIInterface::resizerInstance).updateAppWindowSize();
     SGUCentralManagement::initialise();
 }
