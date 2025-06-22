@@ -21,6 +21,7 @@ class SGXThemeColourSetting : public QObject
     Q_PROPERTY(QColor themeColour7 READ getThemeColour7 WRITE setThemeColour7 NOTIFY changedThemeColour7 FINAL) // NOLINT
     Q_PROPERTY(QColor themeColour8 READ getThemeColour8 WRITE setThemeColour8 NOTIFY changedThemeColour8 FINAL) // NOLINT
     Q_PROPERTY(QColor rootWidgetColour READ getRootWidgetColour WRITE setRootWidgetColour NOTIFY changedRootWidgetColour FINAL) // NOLINT
+    Q_PROPERTY(QColor parentWidgetColour READ getParentWidgetColour WRITE setParentWidgetColour NOTIFY changedParentWidgetColour FINAL) // NOLINT
 public:
     SGXThemeColourSetting();
     static QObject* getObject(QQmlEngine* me, QJSEngine* se);
@@ -56,6 +57,9 @@ public:
     SGXColourRGBA rootWidgetColour = SGXColourRGBA();
     [[nodiscard]] QColor getRootWidgetColour() const;
     void setRootWidgetColour(const QColor& x);
+    SGXColourRGBA parentWidgetColour = SGXColourRGBA();
+    [[nodiscard]] QColor getParentWidgetColour() const;
+    void setParentWidgetColour(const QColor& x);
 signals: // NOLINT
     void changedThemeColour0();
     void changedThemeColour1();
@@ -67,6 +71,7 @@ signals: // NOLINT
     void changedThemeColour7();
     void changedThemeColour8();
     void changedRootWidgetColour();
+    void changedParentWidgetColour();
 };
 
 #endif // SGXTHEMECOLOURSETTING_H

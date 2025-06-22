@@ -17,6 +17,7 @@ SGXThemeColourSetting::SGXThemeColourSetting(){
     (*this).themeColour7 = SGXColourRGBA(255, 192, 242);
     (*this).themeColour8 = SGXColourRGBA(255, 255, 255);
     (*this).rootWidgetColour = (*this).themeColour6;
+    (*this).parentWidgetColour = (*this).themeColour8;
 }
 
 QObject* SGXThemeColourSetting::getObject(QQmlEngine *me, QJSEngine *se){
@@ -117,4 +118,13 @@ QColor SGXThemeColourSetting::getRootWidgetColour() const {
 void SGXThemeColourSetting::setRootWidgetColour(const QColor &x){
     (*this).rootWidgetColour = SGXColourRGBA(x);
     emit (*this).changedRootWidgetColour(); // NOLINT
+}
+
+QColor SGXThemeColourSetting::getParentWidgetColour() const {
+    return parentWidgetColour.getQColour();
+}
+
+void SGXThemeColourSetting::setParentWidgetColour(const QColor &x){
+    (*this).parentWidgetColour = SGXColourRGBA(x);
+    emit (*this).changedParentWidgetColour(); // NOLINT
 }

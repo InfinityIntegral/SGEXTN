@@ -12,9 +12,17 @@ SGXThemeColourSetting* SGXQuickUIInterface::themeColoursInstance = nullptr;
 SGXQuickResizer* SGXQuickUIInterface::resizerInstance = nullptr;
 QQmlComponent* SGXQuickUIInterface::rootWidgetTemplate = nullptr;
 QQuickItem* SGXQuickUIInterface::rootWidget = nullptr;
+QQmlComponent* SGXQuickUIInterface::parentWidgetTemplate = nullptr;
+QQuickItem* SGXQuickUIInterface::parentWidget = nullptr;
 
 QQuickItem* SGXQuickUIInterface::createRootWidget(QQuickItem *parent){
     QQuickItem* thisItem = qobject_cast<QQuickItem*>((*SGXQuickUIInterface::rootWidgetTemplate).create());
+    (*thisItem).setParentItem(parent);
+    return thisItem;
+}
+
+QQuickItem* SGXQuickUIInterface::createParentWidget(QQuickItem *parent){
+    QQuickItem* thisItem = qobject_cast<QQuickItem*>((*SGXQuickUIInterface::parentWidgetTemplate).create());
     (*thisItem).setParentItem(parent);
     return thisItem;
 }

@@ -20,6 +20,9 @@ public:
     static QQmlComponent* rootWidgetTemplate;
     static QQuickItem* createRootWidget(QQuickItem* parent);
     static QQuickItem* rootWidget;
+    static QQmlComponent* parentWidgetTemplate;
+    static QQuickItem* createParentWidget(QQuickItem* parent);
+    static QQuickItem* parentWidget;
 };
 
 #endif // SGXQUICKUIINTERFACE_H
