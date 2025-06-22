@@ -16,8 +16,6 @@ SGXThemeColourSetting::SGXThemeColourSetting(){
     (*this).themeColour6 = SGXColourRGBA(255, 128, 228);
     (*this).themeColour7 = SGXColourRGBA(255, 192, 242);
     (*this).themeColour8 = SGXColourRGBA(255, 255, 255);
-    (*this).rootWidgetColour = (*this).themeColour6;
-    (*this).parentWidgetColour = (*this).themeColour8;
 }
 
 QObject* SGXThemeColourSetting::getObject(QQmlEngine *me, QJSEngine *se){
@@ -28,6 +26,19 @@ QObject* SGXThemeColourSetting::getObject(QQmlEngine *me, QJSEngine *se){
 
 QColor SGXThemeColourSetting::getNoColour() const {
     return noColour.getQColour();
+}
+
+QColor SGXThemeColourSetting::getThemeColour(int x) const {
+    if(x == 0){return getThemeColour0();}
+    if(x == 1){return getThemeColour1();}
+    if(x == 2){return getThemeColour2();}
+    if(x == 3){return getThemeColour3();}
+    if(x == 4){return getThemeColour4();}
+    if(x == 5){return getThemeColour5();}
+    if(x == 6){return getThemeColour6();}
+    if(x == 7){return getThemeColour7();}
+    if(x == 8){return getThemeColour8();}
+    return getNoColour();
 }
 
 QColor SGXThemeColourSetting::getThemeColour0() const {
@@ -109,22 +120,4 @@ QColor SGXThemeColourSetting::getThemeColour8() const {
 void SGXThemeColourSetting::setThemeColour8(const QColor &x){
     (*this).themeColour8 = SGXColourRGBA(x);
     emit (*this).changedThemeColour8(); // NOLINT
-}
-
-QColor SGXThemeColourSetting::getRootWidgetColour() const {
-    return rootWidgetColour.getQColour();
-}
-
-void SGXThemeColourSetting::setRootWidgetColour(const QColor &x){
-    (*this).rootWidgetColour = SGXColourRGBA(x);
-    emit (*this).changedRootWidgetColour(); // NOLINT
-}
-
-QColor SGXThemeColourSetting::getParentWidgetColour() const {
-    return parentWidgetColour.getQColour();
-}
-
-void SGXThemeColourSetting::setParentWidgetColour(const QColor &x){
-    (*this).parentWidgetColour = SGXColourRGBA(x);
-    emit (*this).changedParentWidgetColour(); // NOLINT
 }
