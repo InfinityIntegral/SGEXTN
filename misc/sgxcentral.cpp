@@ -11,9 +11,7 @@
 #include <QObject>
 #include <qqml.h>
 #include <QGuiApplication>
-
-//QFont* SGXCentral::standardFont = nullptr;
-//QFont* SGXCentral::iconsFont = nullptr;
+#include <QFontDatabase>
 
 void SGXCentral::initialise(){
     QCoreApplication::setApplicationName(SGUCentralManagement::applicationName);
@@ -31,12 +29,8 @@ void SGXCentral::initialise(){
     connect(qApp, &QGuiApplication::aboutToQuit, &SGXCentral::terminate); // NOLINT(cppcoreguidelines-pro-type-static-cast-downcast)
     QCoreApplication::setAttribute(Qt::AA_SynthesizeMouseForUnhandledTouchEvents);
     QCoreApplication::setAttribute(Qt::AA_SynthesizeTouchForUnhandledMouseEvents);
-    /*{
-        QList l = QFontDatabase::applicationFontFamilies(QFontDatabase::addApplicationFont(":/assets/standard.otf"));
-        SGXCentral::standardFont = new QFont(l.first()); // NOLINT(cppcoreguidelines-owning-memory)
-        l = QFontDatabase::applicationFontFamilies(QFontDatabase::addApplicationFont(":/assets/icons.otf"));
-        SGXCentral::iconsFont = new QFont(l.first()); // NOLINT(cppcoreguidelines-owning-memory)
-    }*/
+    QFontDatabase::addApplicationFont(":/assets/standard.otf");
+    QFontDatabase::addApplicationFont(":/assets/icons.otf");
     
     SGXQuickUIInterface::rootWindow = (*qobject_cast<QQuickWindow*>((*SGXQuickUIInterface::e).rootObjects().first())).contentItem();
     connect(SGXQuickUIInterface::rootWindow, &QQuickItem::widthChanged, SGXQuickUIInterface::resizerInstance, &SGXQuickResizer::updateAppWindowSize);
@@ -51,6 +45,4 @@ void SGXCentral::terminate(){
     SGUCentralManagement::terminate();
     delete SGXQuickUIInterface::resizerInstance;
     delete SGXQuickUIInterface::themeColoursInstance;
-    //delete SGXCentral::iconsFont; // NOLINT(cppcoreguidelines-owning-memory)
-    //delete SGXCentral::standardFont; // NOLINT(cppcoreguidelines-owning-memory)
 }

@@ -26,7 +26,7 @@ Note that "SGX" is short for "SGEXTN", the project name, and is used as a prefix
 		- [x] root widget of application
 		- [x] parent widget of application, where everything is rendered
 		- [x] non interactive widget displaying a solid colour
-		- [ ] non interactive single line text label, cuts off text if length is exceeded
+		- [x] non interactive single line text label, cuts off text if length is exceeded
 		- [ ] non interactive scrollable multi line text label, allows scrolling if height is exceeded
 		- [ ] non interactive icon
 		- [ ] button with text
@@ -36,6 +36,9 @@ Note that "SGX" is short for "SGEXTN", the project name, and is used as a prefix
 		- [ ] scroll view
 		- [ ] touch receiver
 		- [ ] cute squishy vesicles
+	- [ ] SGEXTN type indicator properties
+	- [ ] function to get lowest child component
+	- [ ] getter and setter methods for properties
 - [ ] file system usage
      - [ ] SGXFileReader (struct allowing reading of all SGEXTN and C++ primitives from files with index seeking)
 	- [ ] SGXFileWriter (struct allowing writing of all SGEXTN and C++ primitives to files with overwriting by index)
