@@ -1,32 +1,15 @@
 # SGEXTN ("SG" Extension for C++, Qt, and OpenGL)
 
 ## About this project...
-This project was never supposed to exist... ok, it did exist, but just as a basic template app that I put on GitHub and just essentially wont touch again...
+This project has not been completed.
 
-But I was building an app and had weird behaviour in the UI... Then I realised that I have been using QWidget style sheets wrongly the whole time, they are called **cascading** style sheets for a reason...
+This is a template application to make building applications in Qt easier. It internally uses Qt Quick but SGEXTN functions are designed for a dynamic UI creation, QWidget style mindset. Shaders are supported through Qt only. There is also a wide variety of primitive structs that allow you to group, store, and use data more easily.
 
-Obviously, I would rather have each button maintain its own style and be a separate object, instead of having global stylesheets being kaypoh all the time, and also I would rather have real properties in C++ then trying to parse a particularly blur JSON-ish variant called "CSS". Additionally, colours are unsigned ints, not random strings, that by the time it is parsed to change a widget colour, an old auntie could have walked from Tuas to Changi and back...
+Documentation is included in the form of comments in header files.
 
-And that is incompatible with QWidget drawing, so I have to redo QWidget drawing...
-
-But since I am rebuilding so much stuff, why not just wrap everything in my custom wrapper to make programming easier in future?
-
-Thus this project: SGEXTN
+SGEXTN v1 uses QWidget, it is fully functional (though without OpenGL support). I switched the rendering method because Qt Quick is newer, faster, and more compatible with mobile platforms.
 
 Note that "SGX" is short for "SGEXTN", the project name, and is used as a prefix for all classes and structs. It does not reference anything else. "SGU" is short for "SGEXTN User Defined Class", these are classes that the programmer should write code in, unlike the SGX classes which the programmer should not touch. You are strongly recommended to began the name of application-specific classes with "SGC" for "SGEXTN-powered Application Custom Class".
-
-## Built with...
-- Qt (C++ GUI framework)
-- OpenGL (through Qt, for rendering)
-
-## Prerequisites
-You must have Qt installed on your computer with necessary build tools.
-
-## Installation
-You download the source code.
-
-## Using the software...
-Download the source code and open it in Qt and start coding your project. The documentation is comments in header files, I made them as clear as possible.
 
 ## What to expect...
 - [x] C++ primitives extensions
@@ -36,32 +19,28 @@ Download the source code and open it in Qt and start coding your project. The do
 	- [x] SGXVector2 (a struct of 2 SGXFloats for 2D vectors)
 	- [x] SGXTimeStamp (a signed long long representing number of seconds since 19650809 123000)
 	- [x] SGXTouchEvent (representation of touch input from the user)
-- [] Qt GUI classes with custom drawing and resizing
-	- [x] SGXRootWidget (root widget of the application, does nothing, inherits QWidget)
-	- [x] SGXParentWidget (rendering space of the application, does nothing, inherits QWidget)
-	- [x] SGXWidget (a widget with solid colour that does nothing, inherits QWidget)
-	- [x] SGXText (a widget that displays text in SingScript, inherits QWidget)
-	- [x] SGXIcon (a widget that displays text in a special icon font, inherits QWidget)
-	- [x] SGXTextButton (a button with text display in SingScript, inherits QPushButton)
-	- [x] SGXIconButton (a button that displays text in a special icon font, inherits QPushButton)
-	- [x] SGXInputField (a input field taking a string which can be interpreted as a int or float, inherits QLineEdit)
-	- [x] SGXLongText (a multiline text label, inherits QWidget)
-	- [x] SGXLongInputField (a multiline input field, inherits QTextEdit)
-	- [x] SGXScrollView (a scroll view container, inherits QScrollArea)
-	- [x] SGXScrollBar (a scroll bar for the SGXScrollView, inherits QScrollBar)
-	- [x] SGXLayout (a widget that has custom scripting to manage the layout of other widgets, inherits QWidget)
-	- [x] SGXTouchReceiver (a nondisplaying widget that accepts touch events, inherits QWidget)
-	- [ ] SGXCuteSquishyVesicles (a widget overlay over the render space with visual effects including vesicles and sparkles, transparent to clicks)
-- [ ] OpenGL simplifications
-     - [ ] SGXShaderDisplay (a widget that draws by OpenGL and contains a shader programme as a property, inherits QOpenGLWidget)
-     - [ ] SGXShaderDataGroup (a struct containing a vao, a vbo, and a ebo, all in a group for 2D rendering, also contains methods for drawing and keeps tracks of buffer sizes)
-	- [ ] SGXTransformFeedbackGroup (a struct containing a shader programme and 2 buffers for transform feedback)
-	- [ ] SGXShaderGlobalVariable (a struct containing data to set shader uniforms)
+- [] Qt Quick components
+	- [x] SGXQuickResizer (manages resizing of app UI based on window size)
+	- [x] SGXThemeColourSetting (manages theme colours of the app)
+	- [x] SGXQuickUIInterface (contains methods to create and add components)
+		- [x] root widget of application
+		- [ ] parent widget of application, where everything is rendered
+		- [ ] non interactive widget displaying a solid colour
+		- [ ] non interactive single line text label, cuts off text if length is exceeded
+		- [ ] non interactive scrollable multi line text label, allows scrolling if height is exceeded
+		- [ ] non interactive icon
+		- [ ] button with text
+		- [ ] button with icon
+		- [ ] single line input field, automatically scrolls horizontally if length exceeded
+		- [ ] multi line input field, scrolls vertically if height exceeded
+		- [ ] scroll view
+		- [ ] touch receiver
+		- [ ] cute squishy vesicles
 - [ ] file system usage
-     - [ ] SGXFileReader (struct allowing reading of all SGEXTN primitives from files with index seeking)
-	- [ ] SGXFileWriter (struct allowing writing of all SGEXTN primitives to files with overwriting by index)
+     - [ ] SGXFileReader (struct allowing reading of all SGEXTN and C++ primitives from files with index seeking)
+	- [ ] SGXFileWriter (struct allowing writing of all SGEXTN and C++ primitives to files with overwriting by index)
 	- [ ] SGXFileSystemManagement (non instantiatable struct with static methods for file system operations)
-	- [ ] SGXCannotLah (logging error messages in a file ".cannotlah")
+	- [ ] SGXCannotLah (logging error messages in a file "cannot.lah")
 - [ ] working application template
 
 potential future extensions include networking stuff and PDF stuff and 3D rendering stuff and bluetooth stuff and more cross platform stuff
