@@ -1,63 +1,55 @@
 #include "sgxcentral.h"
 #include "../userDefinedClasses/sgucentralmanagement.h"
 #include <QCoreApplication>
-#include <QFontDatabase>
-#include <QFont>
 #include <QtCore/Qt>
 #include <QList>
-#include "../widgets/sgxrootwidget.h"
-#include "../userDefinedClasses/sgusignalemitter.h"
-#include "../primitives/sgxcolourrgba.h"
-#include "../widgets/sgxparentwidget.h"
-#include <QColor>
+#include "../quickui/sgxthemecoloursetting.h"
+#include <QQmlEngine>
+#include "../quickui/sgxquickuiinterface.h"
+#include "../quickui/sgxquickresizer.h"
+#include <QQuickWindow>
+#include <QIcon>
+#include <QObject>
+#include <qqml.h>
+#include <QGuiApplication>
 
-QFont* SGXCentral::standardFont = nullptr;
-QFont* SGXCentral::iconsFont = nullptr;
-SGUSignalEmitter* SGXCentral::signalEmitter = nullptr;
-float SGXCentral::applicationWindowWidth = 0.0f;
-float SGXCentral::applicationWindowHeight = 0.0f;
-float SGXCentral::renderAreaWidth = 0.0f;
-float SGXCentral::renderAreaHeight = 0.0f;
-float SGXCentral::sizeUnit = 0.0f;
-SGXRootWidget* SGXCentral::rootWindow = nullptr;
-SGXColourRGBA SGXCentral::noColour = SGXColourRGBA(255, 255, 255, 0);
-SGXParentWidget* SGXCentral::parentWindow = nullptr;
-void SGXCentral::doNothing(){}
+//QFont* SGXCentral::standardFont = nullptr;
+//QFont* SGXCentral::iconsFont = nullptr;
 
 void SGXCentral::initialise(){
-    connect(qApp, &QCoreApplication::aboutToQuit, &SGXCentral::terminate);
+    QCoreApplication::setApplicationName(SGUCentralManagement::applicationName);
+    QCoreApplication::setApplicationVersion(SGUCentralManagement::applicationVersion);
+    QCoreApplication::setOrganizationName("05524F.sg");
+    const QIcon temp_appicon(":/assets/05524Flogo.png");
+    QGuiApplication::setWindowIcon(temp_appicon);
+    SGXQuickUIInterface::themeColoursInstance = new SGXThemeColourSetting();
+    qmlRegisterSingletonInstance("ThemeColours", 0, 0, "ThemeColours", SGXQuickUIInterface::themeColoursInstance);
+    SGXQuickUIInterface::resizerInstance = new SGXQuickResizer();
+    qmlRegisterSingletonInstance("Resizer", 0, 0, "Resizer", SGXQuickUIInterface::resizerInstance);
+    (*SGXQuickUIInterface::e).load(":/QML/root.qml");
+    SGXQuickUIInterface::rootWindow = (*qobject_cast<QQuickWindow*>((*SGXQuickUIInterface::e).rootObjects().first())).contentItem();
+    
+    connect(qApp, &QGuiApplication::aboutToQuit, &SGXCentral::terminate); // NOLINT(cppcoreguidelines-pro-type-static-cast-downcast)
     QCoreApplication::setAttribute(Qt::AA_SynthesizeMouseForUnhandledTouchEvents);
     QCoreApplication::setAttribute(Qt::AA_SynthesizeTouchForUnhandledMouseEvents);
-    {
+    /*{
         QList l = QFontDatabase::applicationFontFamilies(QFontDatabase::addApplicationFont(":/assets/standard.otf"));
         SGXCentral::standardFont = new QFont(l.first()); // NOLINT(cppcoreguidelines-owning-memory)
         l = QFontDatabase::applicationFontFamilies(QFontDatabase::addApplicationFont(":/assets/icons.otf"));
         SGXCentral::iconsFont = new QFont(l.first()); // NOLINT(cppcoreguidelines-owning-memory)
-    }
-    SGXCentral::signalEmitter = new SGUSignalEmitter(); // NOLINT(cppcoreguidelines-owning-memory)
-    SGXCentral::rootWindow = new SGXRootWidget(); // NOLINT(cppcoreguidelines-owning-memory)
-    SGXCentral::parentWindow = new SGXParentWidget(); // NOLINT(cppcoreguidelines-owning-memory)
-    (*SGXCentral::rootWindow).checkScreenSizeUpdate();
+    }*/
+    connect(SGXQuickUIInterface::rootWindow, &QQuickItem::widthChanged, SGXQuickUIInterface::resizerInstance, &SGXQuickResizer::updateAppWindowSize);
+    connect(SGXQuickUIInterface::rootWindow, &QQuickItem::heightChanged, SGXQuickUIInterface::resizerInstance, &SGXQuickResizer::updateAppWindowSize);
+    SGXQuickUIInterface::rootWidgetTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/QML/rootwidget.qml");
+    SGXQuickUIInterface::rootWidget = SGXQuickUIInterface::createRootWidget(SGXQuickUIInterface::rootWindow);
+    (*SGXQuickUIInterface::resizerInstance).updateAppWindowSize();
     SGUCentralManagement::initialise();
 }
 
 void SGXCentral::terminate(){
     SGUCentralManagement::terminate();
-    delete SGXCentral::rootWindow; // NOLINT(cppcoreguidelines-owning-memory)
-    delete SGXCentral::signalEmitter; // NOLINT(cppcoreguidelines-owning-memory)
-    delete SGXCentral::iconsFont; // NOLINT(cppcoreguidelines-owning-memory)
-    delete SGXCentral::standardFont; // NOLINT(cppcoreguidelines-owning-memory)
-}
-
-QColor SGXCentral::getThemeColourAsQColour(int themeColourIndex, SGXColourRGBA defaultColour){
-    if(themeColourIndex == 0){return SGUCentralManagement::themeColour0.getQColour();}
-    if(themeColourIndex == 1){return SGUCentralManagement::themeColour1.getQColour();}
-    if(themeColourIndex == 2){return SGUCentralManagement::themeColour2.getQColour();}
-    if(themeColourIndex == 3){return SGUCentralManagement::themeColour3.getQColour();}
-    if(themeColourIndex == 4){return SGUCentralManagement::themeColour4.getQColour();}
-    if(themeColourIndex == 5){return SGUCentralManagement::themeColour5.getQColour();}
-    if(themeColourIndex == 6){return SGUCentralManagement::themeColour6.getQColour();}
-    if(themeColourIndex == 7){return SGUCentralManagement::themeColour7.getQColour();}
-    if(themeColourIndex == 8){return SGUCentralManagement::themeColour8.getQColour();}
-    return defaultColour.getQColour();
+    delete SGXQuickUIInterface::resizerInstance;
+    delete SGXQuickUIInterface::themeColoursInstance;
+    //delete SGXCentral::iconsFont; // NOLINT(cppcoreguidelines-owning-memory)
+    //delete SGXCentral::standardFont; // NOLINT(cppcoreguidelines-owning-memory)
 }

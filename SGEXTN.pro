@@ -1,4 +1,4 @@
-QT = core gui widgets opengl openglwidgets
+QT = core gui qml quick quickcontrols2
 QMAKE_CXXFLAGS_RELEASE += -O3 -flto -ffunction-sections -fdata-sections -std=c++20
 QMAKE_CXXFLAGS_RELEASE -= -O2
 QMAKE_CXXFLAGS_DEBUG += -std=c++20
@@ -12,24 +12,10 @@ SOURCES = misc/main.cpp \
     primitives/sgxtimestamp.cpp \
     primitives/sgxtouchevent.cpp \
     primitives/sgxvector2.cpp \
-    userDefinedClasses/sgucentralmanagement.cpp \
-    userDefinedClasses/sgusignalemitter.cpp \
-    widgets/sgxicon.cpp \
-    widgets/sgxiconbutton.cpp \
-    widgets/sgxinputfield.cpp \
-    widgets/sgxlayout.cpp \
-    widgets/sgxlonginputfield.cpp \
-    widgets/sgxlonginputfieldinternal.cpp \
-    widgets/sgxlongtext.cpp \
-    widgets/sgxlongtextinternal.cpp \
-    widgets/sgxparentwidget.cpp \
-    widgets/sgxrootwidget.cpp \
-    widgets/sgxscrollbar.cpp \
-    widgets/sgxscrollview.cpp \
-    widgets/sgxtext.cpp \
-    widgets/sgxtextbutton.cpp \
-    widgets/sgxtouchreceiver.cpp \
-    widgets/sgxwidget.cpp
+    quickui/sgxquickresizer.cpp \
+    quickui/sgxquickuiinterface.cpp \
+    quickui/sgxthemecoloursetting.cpp \
+    userDefinedClasses/sgucentralmanagement.cpp
 RESOURCES = assets.qrc
 HEADERS += \
     misc/sgxcentral.h \
@@ -39,21 +25,7 @@ HEADERS += \
     primitives/sgxtimestamp.h \
     primitives/sgxtouchevent.h \
     primitives/sgxvector2.h \
-    userDefinedClasses/sgucentralmanagement.h \
-    userDefinedClasses/sgusignalemitter.h \
-    widgets/sgxicon.h \
-    widgets/sgxiconbutton.h \
-    widgets/sgxinputfield.h \
-    widgets/sgxlayout.h \
-    widgets/sgxlonginputfield.h \
-    widgets/sgxlonginputfieldinternal.h \
-    widgets/sgxlongtext.h \
-    widgets/sgxlongtextinternal.h \
-    widgets/sgxparentwidget.h \
-    widgets/sgxrootwidget.h \
-    widgets/sgxscrollbar.h \
-    widgets/sgxscrollview.h \
-    widgets/sgxtext.h \
-    widgets/sgxtextbutton.h \
-    widgets/sgxtouchreceiver.h \
-    widgets/sgxwidget.h
+    quickui/sgxquickresizer.h \
+    quickui/sgxquickuiinterface.h \
+    quickui/sgxthemecoloursetting.h \
+    userDefinedClasses/sgucentralmanagement.h

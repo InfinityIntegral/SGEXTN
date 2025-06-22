@@ -35,7 +35,8 @@ Download the source code and open it in Qt and start coding your project. The do
 	- [x] SGXIdentifier (GUID with automatic registering, wraps QUuid)
 	- [x] SGXVector2 (a struct of 2 SGXFloats for 2D vectors)
 	- [x] SGXTimeStamp (a signed long long representing number of seconds since 19650809 123000)
-- [x] Qt GUI classes with custom drawing and resizing
+	- [x] SGXTouchEvent (representation of touch input from the user)
+- [] Qt GUI classes with custom drawing and resizing
 	- [x] SGXRootWidget (root widget of the application, does nothing, inherits QWidget)
 	- [x] SGXParentWidget (rendering space of the application, does nothing, inherits QWidget)
 	- [x] SGXWidget (a widget with solid colour that does nothing, inherits QWidget)
