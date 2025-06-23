@@ -8,5 +8,6 @@
         <file>QML/parentwidget.qml</file>
         <file>QML/widget.qml</file>
         <file>QML/text.qml</file>
+        <file>QML/longtext.qml</file>
     </qresource>
 </RCC>

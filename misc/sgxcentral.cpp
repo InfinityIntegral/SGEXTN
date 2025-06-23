@@ -1,7 +1,6 @@
 #include "sgxcentral.h"
 #include "../userDefinedClasses/sgucentralmanagement.h"
 #include <QCoreApplication>
-#include <QtCore/Qt>
 #include <QList>
 #include "../quickui/sgxthemecoloursetting.h"
 #include "../quickui/sgxquickuiinterface.h"
@@ -27,8 +26,6 @@ void SGXCentral::initialise(){
     (*SGXQuickUIInterface::e).load(":/QML/root.qml");
     
     connect(qApp, &QGuiApplication::aboutToQuit, &SGXCentral::terminate); // NOLINT(cppcoreguidelines-pro-type-static-cast-downcast)
-    QCoreApplication::setAttribute(Qt::AA_SynthesizeMouseForUnhandledTouchEvents);
-    QCoreApplication::setAttribute(Qt::AA_SynthesizeTouchForUnhandledMouseEvents);
     QFontDatabase::addApplicationFont(":/assets/standard.otf");
     QFontDatabase::addApplicationFont(":/assets/icons.otf");
     
