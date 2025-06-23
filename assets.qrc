@@ -9,5 +9,6 @@
         <file>QML/widget.qml</file>
         <file>QML/text.qml</file>
         <file>QML/longtext.qml</file>
+        <file>QML/icon.qml</file>
     </qresource>
 </RCC>

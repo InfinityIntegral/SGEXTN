@@ -31,6 +31,8 @@ public:
     static QQuickItem* createText(QQuickItem* parent, const QString& s, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0);
     static QQmlComponent* longTextTemplate;
     static QQuickItem* createLongText(QQuickItem* parent, const QString& s, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float f1, float f0, float s1, float s0);
+    static QQmlComponent* iconTemplate;
+    static QQuickItem* createIcon(QQuickItem* parent, const QChar& s, float x1, float x0, float y1, float y0, float w1, float w0);
 };
 
 #endif // SGXQUICKUIINTERFACE_H

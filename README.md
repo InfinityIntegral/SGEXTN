@@ -33,7 +33,7 @@ SGC - I cannot enforce this, but you are supposed to start your custom classes w
 		- [x] non interactive widget displaying a solid colour
 		- [x] non interactive single line text label, cuts off text if length is exceeded
 		- [x] non interactive scrollable multi line text label, allows scrolling if height is exceeded
-		- [ ] non interactive icon
+		- [x] non interactive icon
 		- [ ] button with text
 		- [ ] button with icon
 		- [ ] single line input field, automatically scrolls horizontally if length exceeded
@@ -49,6 +49,7 @@ SGC - I cannot enforce this, but you are supposed to start your custom classes w
 	- [ ] SGXFileWriter (struct allowing writing of all SGEXTN and C++ primitives to files with overwriting by index)
 	- [ ] SGXFileSystemManagement (non instantiatable struct with static methods for file system operations)
 	- [ ] SGXCannotLah (logging error messages in a file "cannot.lah")
+- [ ] loading of additional font files (font must be called SingScript.sg)
 - [ ] working application template
 
 potential future extensions include networking stuff and PDF stuff and 3D rendering stuff and bluetooth stuff and more cross platform stuff
