@@ -18,6 +18,11 @@ QQmlComponent* SGXQuickUIInterface::widgetTemplate = nullptr;
 QQmlComponent* SGXQuickUIInterface::textTemplate = nullptr;
 QQmlComponent* SGXQuickUIInterface::longTextTemplate = nullptr;
 QQmlComponent* SGXQuickUIInterface::iconTemplate = nullptr;
+QQmlComponent* SGXQuickUIInterface::textButtonTemplate = nullptr;
+
+void SGXQuickUIInterface::testingFunction(){
+    qDebug() << "testing lah";
+}
 
 void SGXQuickUIInterface::initialise(){
     SGXQuickUIInterface::rootWidgetTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/QML/rootwidget.qml");
@@ -26,6 +31,7 @@ void SGXQuickUIInterface::initialise(){
     SGXQuickUIInterface::textTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/QML/text.qml");
     SGXQuickUIInterface::longTextTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/QML/longtext.qml");
     SGXQuickUIInterface::iconTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/QML/icon.qml");
+    SGXQuickUIInterface::textButtonTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/QML/textbutton.qml");
 }
 
 void SGXQuickUIInterface::buildTemplate(){
@@ -104,5 +110,21 @@ QQuickItem* SGXQuickUIInterface::createIcon(QQuickItem *parent, const QChar &s, 
     (*thisItem).setProperty("w1", w1);
     (*thisItem).setProperty("w0", w0);
     (*thisItem).setProperty("s", s);
+    return thisItem;
+}
+
+QQuickItem* SGXQuickUIInterface::createTextButton(QQuickItem *parent, const QString &s, void (*attachedFunction)(), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0){
+    QQuickItem* thisItem = qobject_cast<QQuickItem*>((*SGXQuickUIInterface::textButtonTemplate).create());
+    (*thisItem).setParentItem(parent);
+    (*thisItem).setProperty("x1", x1);
+    (*thisItem).setProperty("x0", x0);
+    (*thisItem).setProperty("y1", y1);
+    (*thisItem).setProperty("y0", y0);
+    (*thisItem).setProperty("w1", w1);
+    (*thisItem).setProperty("w0", w0);
+    (*thisItem).setProperty("h1", h1);
+    (*thisItem).setProperty("h0", h0);
+    (*thisItem).setProperty("s", s);
+    connect(thisItem, &QQuickItem::objectNameChanged, attachedFunction);
     return thisItem;
 }

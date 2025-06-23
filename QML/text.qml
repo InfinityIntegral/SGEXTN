@@ -22,10 +22,10 @@ Rectangle{
 	Text{
 		x: 0
 		y: 0
-		width: w1 * Resizer.renderSpaceWidth + w0 * Resizer.sizeUnit
-		height: h1 * Resizer.renderSpaceHeight + h0 * Resizer.sizeUnit
+		width: parent.width
+		height: parent.height
 		text: s
-		font.pixelSize: h1 * Resizer.renderSpaceHeight + h0 * Resizer.sizeUnit
+		font.pixelSize: parent.height
 		font.family: "SingScript.sg"
 		color: ThemeColours.getThemeColour(fg)
 		clip: true

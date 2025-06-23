@@ -10,5 +10,6 @@
         <file>QML/text.qml</file>
         <file>QML/longtext.qml</file>
         <file>QML/icon.qml</file>
+        <file>QML/textbutton.qml</file>
     </qresource>
 </RCC>

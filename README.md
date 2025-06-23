@@ -9,9 +9,9 @@ Documentation is included in the form of comments in header files.
 
 SGEXTN v1 uses QWidget, it is fully functional (though without OpenGL support). I switched the rendering method because Qt Quick is newer, faster, and more compatible with mobile platforms.
 
-File name prefixes:
-SGX - SGEXTN files, do not touch those
-SGU - kind of SGEXTN files, you can edit the values of properties inside if the comments inside explicitly allows you to. Keep a copy of it so you can revert the file if something internal breaks
+File name prefixes:  
+SGX - SGEXTN files, do not touch those  
+SGU - kind of SGEXTN files, you can edit the values of properties inside if the comments inside explicitly allows you to. Keep a copy of it so you can revert the file if something internal breaks  
 SGC - I cannot enforce this, but you are supposed to start your custom classes with this prefix
 
 "SG" refers to Singapore, my home country. It does not reference the Qt Quick scene graph. SGEXTN is designed to let you not worry about the scene graph and use it like a customised, GPU-accelerated version of QWidget.
@@ -41,8 +41,7 @@ SGC - I cannot enforce this, but you are supposed to start your custom classes w
 		- [ ] scroll view
 		- [ ] touch receiver
 		- [ ] cute squishy vesicles
-	- [ ] SGEXTN type indicator properties
-	- [ ] function to get lowest child component
+	- [ ] SGEXTN set parent and get parent functions
 	- [ ] getter and setter methods for properties
 - [ ] file system usage
      - [ ] SGXFileReader (struct allowing reading of all SGEXTN and C++ primitives from files with index seeking)

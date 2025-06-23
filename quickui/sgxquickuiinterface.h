@@ -13,6 +13,7 @@ class SGXQuickUIInterface : public QObject
     Q_OBJECT // NOLINT
 public:
     SGXQuickUIInterface() = delete;
+    static void testingFunction();
     static QQmlApplicationEngine* e;
     static SGXQuickResizer* resizerInstance;
     static SGXThemeColourSetting* themeColoursInstance;
@@ -33,6 +34,8 @@ public:
     static QQuickItem* createLongText(QQuickItem* parent, const QString& s, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float f1, float f0, float s1, float s0);
     static QQmlComponent* iconTemplate;
     static QQuickItem* createIcon(QQuickItem* parent, const QChar& s, float x1, float x0, float y1, float y0, float w1, float w0);
+    static QQmlComponent* textButtonTemplate;
+    static QQuickItem* createTextButton(QQuickItem* parent, const QString& s, void (*attachedFunction)(), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0);
 };
 
 #endif // SGXQUICKUIINTERFACE_H
