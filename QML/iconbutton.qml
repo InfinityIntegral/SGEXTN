@@ -20,15 +20,13 @@ Button{
 	property real y0: 0.0
 	property real w1: 0.0
 	property real w0: 0.0
-	property real h1: 0.0
-	property real h0: 0.0
 	property string s: ""
 	property bool unselected: false
 	
 	x: x1 * Resizer.renderSpaceWidth + x0 * Resizer.sizeUnit
 	y: y1 * Resizer.renderSpaceHeight + y0 * Resizer.sizeUnit
 	width: w1 * Resizer.renderSpaceWidth + w0 * Resizer.sizeUnit
-    height: h1 * Resizer.renderSpaceHeight + h0 * Resizer.sizeUnit
+	height: w1 * Resizer.renderSpaceHeight + w0 * Resizer.sizeUnit
 	property int bgNow: bg
 	property int fgNow: fg
 	padding: 0
@@ -90,6 +88,5 @@ Button{
 		horizontalAlignment: Text.AlignHCenter
 		color: ThemeColours.getThemeColour(fgNow);
 		clip: true
-		elide: Text.ElideRight
 	}
 }

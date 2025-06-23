@@ -40,7 +40,7 @@ ScrollView{
 		
 		Rectangle{
 			width: parent.width
-			height: 20000
+			height: 0
 			color: ThemeColours.getThemeColour(bgText);
 
 			Text{
@@ -89,12 +89,15 @@ ScrollView{
 		y: 0
 		width: s1 * Resizer.renderSpaceWidth + s0 * Resizer.sizeUnit
 		height: parent.height
+		padding: 0
 		
 		contentItem: Rectangle{
 			color: ThemeColours.getThemeColour(parent.fgNow)
+			width: parent.width
 		}
 		background: Rectangle{
 			color: ThemeColours.getThemeColour(parent.bgNow)
+			width: parent.width
 		}
 	}
 }
