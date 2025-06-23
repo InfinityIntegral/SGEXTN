@@ -34,8 +34,8 @@ SGC - I cannot enforce this, but you are supposed to start your custom classes w
 		- [x] non interactive single line text label, cuts off text if length is exceeded
 		- [x] non interactive scrollable multi line text label, allows scrolling if height is exceeded
 		- [x] non interactive icon
-		- [ ] button with text
-		- [ ] button with icon
+		- [x] button with text
+		- [x] button with icon
 		- [ ] single line input field, automatically scrolls horizontally if length exceeded
 		- [ ] multi line input field, scrolls vertically if height exceeded
 		- [ ] scroll view

@@ -1,0 +1,89 @@
+import QtQuick 6.9
+import QtQuick.Controls 6.9
+import ThemeColours 0.0
+import Resizer 0.0
+
+TextField{
+	property int bg: 4
+	property int fg: 8
+	property int bgHover: 3
+	property int fgHover: 7
+	property int bgFocus: 2
+	property int fgFocus: 6
+	property int bgSelected: 6
+	property int fgSelected: 2
+	property int bgInvalid: 6
+	property int fgInvalid: 8
+	property real x1: 0.0
+	property real x0: 0.0
+	property real y1: 0.0
+	property real y0: 0.0
+	property real w1: 0.0
+	property real w0: 0.0
+	property real h1: 0.0
+	property real h0: 0.0
+	property bool invalid: false
+	
+	x: x1 * Resizer.renderSpaceWidth + x0 * Resizer.sizeUnit
+	y: y1 * Resizer.renderSpaceHeight + y0 * Resizer.sizeUnit
+	width: w1 * Resizer.renderSpaceWidth + w0 * Resizer.sizeUnit
+    height: h1 * Resizer.renderSpaceHeight + h0 * Resizer.sizeUnit
+	property int bgNow: bg
+	property int fgNow: fg
+	padding: 0
+	
+	function updateInteraction(){
+		if(invalid){
+			bgNow = bgInvalid;
+			fgNow = fgInvalid;
+		}
+		else if(focus){
+			bgNow = bgFocus;
+			fgNow = fgFocus;
+		}
+		else if(hovered){
+			bgNow = bgHover;
+			fgNow = fgFocus;
+		}
+		else{
+			bgNow = bg;
+			fgNow = fg;
+		}
+	}
+	
+	property string timerSourceCode: `
+	import QtQuick 6.9
+	
+	Timer{
+		interval: 1000
+		repeat: false
+		running: true
+		onTriggered: {parent.invalid = false; destroy();}
+	}
+	`
+	
+	function resetInvalid(){
+		if(invalid){
+			Qt.createQmlObject(timerSourceCode, this);
+		}
+	}
+	
+	onFocusChanged: updateInteraction();
+	onHoveredChanged: updateInteraction();
+	onInvalidChanged: {updateInteraction(); resetInvalid();}
+	
+	background: Rectangle{
+		x: 0
+		y: 0
+		width: parent.width
+		height: parent.height
+		color: ThemeColours.getThemeColour(bgNow)
+	}
+	
+	font.pixelSize: height
+	font.family: "SingScript.sg"
+	horizontalAlignment: Text.AlignHCenter
+	color: ThemeColours.getThemeColour(fgNow)
+	selectionColor: ThemeColours.getThemeColour(bgSelected);
+	selectedTextColor: ThemeColours.getThemeColour(fgSelected);
+}

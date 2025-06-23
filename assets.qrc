@@ -12,5 +12,6 @@
         <file>QML/icon.qml</file>
         <file>QML/textbutton.qml</file>
         <file>QML/iconbutton.qml</file>
+        <file>QML/inputfield.qml</file>
     </qresource>
 </RCC>

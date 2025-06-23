@@ -20,6 +20,7 @@ QQmlComponent* SGXQuickUIInterface::longTextTemplate = nullptr;
 QQmlComponent* SGXQuickUIInterface::iconTemplate = nullptr;
 QQmlComponent* SGXQuickUIInterface::textButtonTemplate = nullptr;
 QQmlComponent* SGXQuickUIInterface::iconButtonTemplate = nullptr;
+QQmlComponent* SGXQuickUIInterface::inputFieldTemplate = nullptr;
 
 void SGXQuickUIInterface::testingFunction(){
     qDebug() << "testing lah";
@@ -34,6 +35,7 @@ void SGXQuickUIInterface::initialise(){
     SGXQuickUIInterface::iconTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/QML/icon.qml");
     SGXQuickUIInterface::textButtonTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/QML/textbutton.qml");
     SGXQuickUIInterface::iconButtonTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/QML/iconbutton.qml");
+    SGXQuickUIInterface::inputFieldTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/QML/inputfield.qml");
 }
 
 void SGXQuickUIInterface::buildTemplate(){
@@ -142,5 +144,19 @@ QQuickItem* SGXQuickUIInterface::createIconButton(QQuickItem *parent, const QCha
     (*thisItem).setProperty("w0", w0);
     (*thisItem).setProperty("s", s);
     connect(thisItem, &QQuickItem::objectNameChanged, attachedFunction);
+    return thisItem;
+}
+
+QQuickItem* SGXQuickUIInterface::createInputField(QQuickItem *parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0){
+    QQuickItem* thisItem = qobject_cast<QQuickItem*>((*SGXQuickUIInterface::inputFieldTemplate).create());
+    (*thisItem).setParentItem(parent);
+    (*thisItem).setProperty("x1", x1);
+    (*thisItem).setProperty("x0", x0);
+    (*thisItem).setProperty("y1", y1);
+    (*thisItem).setProperty("y0", y0);
+    (*thisItem).setProperty("w1", w1);
+    (*thisItem).setProperty("w0", w0);
+    (*thisItem).setProperty("h1", h1);
+    (*thisItem).setProperty("h0", h0);
     return thisItem;
 }
