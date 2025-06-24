@@ -4,8 +4,16 @@ import ThemeColours 0.0
 import Resizer 0.0
 
 ScrollView{
-	property int bgText: 8
-	property int fgText: 4
+	property int bg: 4
+	property int fg: 8
+	property int bgHover: 3
+	property int fgHover: 7
+	property int bgFocus: 2
+	property int fgFocus: 6
+	property int bgSelected: 6
+	property int fgSelected: 2
+	property int bgInvalid: 6
+	property int fgInvalid: 8
 	property int bgScrollbar: 4
 	property int fgScrollbar: 6
 	property int bgScrollbarHover: 3
@@ -24,7 +32,7 @@ ScrollView{
 	property real f0: 0.0
 	property real s1: 0.0
 	property real s0: 0.0
-	property string s: ""
+	property bool invalid: false
 	
 	x: x1 * Resizer.renderSpaceWidth + x0 * Resizer.sizeUnit
 	y: y1 * Resizer.renderSpaceHeight + y0 * Resizer.sizeUnit
@@ -35,30 +43,74 @@ ScrollView{
 	contentWidth: width
 	clip: true
 	
+	property int bgNow: bg
+	property int fgNow: fg
+	
+	function updateInteraction(){
+		if(invalid){
+			bgNow = bgInvalid;
+			fgNow = fgInvalid;
+		}
+		else if(activeFocus){
+			bgNow = bgFocus;
+			fgNow = fgFocus;
+		}
+		else if(hovered){
+			bgNow = bgHover;
+			fgNow = fgHover;
+		}
+		else{
+			bgNow = bg;
+			fgNow = fg;
+		}
+	}
+
+	property string timerSourceCode: `
+	import QtQuick 6.9
+
+	Timer{
+		interval: 1000
+		repeat: false
+		running: true
+		onTriggered: {parent.invalid = false; destroy();}
+	}
+	`
+
+	function resetInvalid(){
+		if(invalid){
+			Qt.createQmlObject(timerSourceCode, this);
+		}
+	}
+
+	onActiveFocusChanged: updateInteraction();
+	onHoveredChanged: updateInteraction();
+	onInvalidChanged: {updateInteraction(); resetInvalid();}
+	
 	Column{
 		width: parent.width
+		TextArea{
+			x: 0
+			y: 0
+			width: parent.width - (s1 * Resizer.renderSpaceWidth + s0 * Resizer.sizeUnit)
+			height: Math.max(implicitHeight, h1 * Resizer.renderSpaceHeight + h0 * Resizer.sizeUnit)
+			padding: 0
 		
-		Rectangle{
-			width: parent.width
-			height: 0
-			color: ThemeColours.getThemeColour(bgText);
-
-			Text{
+			background: Rectangle{
 				x: 0
 				y: 0
-				width: parent.width - (s1 * Resizer.renderSpaceHeight + s0 * Resizer.sizeUnit)
-				height: Math.max(implicitHeight, h1 * Resizer.renderSpaceHeight + h0 * Resizer.sizeUnit)
-				text: s
-				font.pixelSize: f1 * Resizer.renderSpaceHeight + f0 * Resizer.sizeUnit
-				font.family: "SingScript.sg"
-				color: ThemeColours.getThemeColour(fgText);
-				wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-
-				function updateParentHeight(){
-					parent.height = implicitHeight;
-				}
-				onImplicitHeightChanged: updateParentHeight()
+				width: parent.width
+				height: parent.height
+				color: ThemeColours.getThemeColour(bgNow)
 			}
+		
+			font.pixelSize: f1 * Resizer.renderSpaceHeight + f0 * Resizer.sizeUnit
+			font.family: "SingScript.sg"
+			color: ThemeColours.getThemeColour(fgNow)
+			selectionColor: ThemeColours.getThemeColour(bgSelected);
+			selectedTextColor: ThemeColours.getThemeColour(fgSelected);
+		
+			clip: true
+			wrapMode: Text.WrapAtWordBoundaryOrAnywhere
 		}
 	}
 	

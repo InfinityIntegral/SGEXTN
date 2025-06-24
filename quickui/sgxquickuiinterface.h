@@ -40,6 +40,8 @@ public:
     static QQuickItem* createIconButton(QQuickItem* parent, const QChar& s, void (*attachedFunction)(), float x1, float x0, float y1, float y0, float w1, float w0);
     static QQmlComponent* inputFieldTemplate;
     static QQuickItem* createInputField(QQuickItem* parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0);
+    static QQmlComponent* longInputFieldTemplate;
+    static QQuickItem* createLongInputField(QQuickItem* parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float f1, float f0, float s1, float s0);
 };
 
 #endif // SGXQUICKUIINTERFACE_H

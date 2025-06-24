@@ -21,6 +21,7 @@ QQmlComponent* SGXQuickUIInterface::iconTemplate = nullptr;
 QQmlComponent* SGXQuickUIInterface::textButtonTemplate = nullptr;
 QQmlComponent* SGXQuickUIInterface::iconButtonTemplate = nullptr;
 QQmlComponent* SGXQuickUIInterface::inputFieldTemplate = nullptr;
+QQmlComponent* SGXQuickUIInterface::longInputFieldTemplate = nullptr;
 
 void SGXQuickUIInterface::testingFunction(){
     qDebug() << "testing lah";
@@ -36,6 +37,7 @@ void SGXQuickUIInterface::initialise(){
     SGXQuickUIInterface::textButtonTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/QML/textbutton.qml");
     SGXQuickUIInterface::iconButtonTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/QML/iconbutton.qml");
     SGXQuickUIInterface::inputFieldTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/QML/inputfield.qml");
+    SGXQuickUIInterface::longInputFieldTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/QML/longinputfield.qml");
 }
 
 void SGXQuickUIInterface::buildTemplate(){
@@ -158,5 +160,23 @@ QQuickItem* SGXQuickUIInterface::createInputField(QQuickItem *parent, float x1, 
     (*thisItem).setProperty("w0", w0);
     (*thisItem).setProperty("h1", h1);
     (*thisItem).setProperty("h0", h0);
+    return thisItem;
+}
+
+QQuickItem* SGXQuickUIInterface::createLongInputField(QQuickItem *parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float f1, float f0, float s1, float s0){
+    QQuickItem* thisItem = qobject_cast<QQuickItem*>((*SGXQuickUIInterface::longInputFieldTemplate).create());
+    (*thisItem).setParentItem(parent);
+    (*thisItem).setProperty("x1", x1);
+    (*thisItem).setProperty("x0", x0);
+    (*thisItem).setProperty("y1", y1);
+    (*thisItem).setProperty("y0", y0);
+    (*thisItem).setProperty("w1", w1);
+    (*thisItem).setProperty("w0", w0);
+    (*thisItem).setProperty("h1", h1);
+    (*thisItem).setProperty("h0", h0);
+    (*thisItem).setProperty("f1", f1);
+    (*thisItem).setProperty("f0", f0);
+    (*thisItem).setProperty("s1", s1);
+    (*thisItem).setProperty("s0", s0);
     return thisItem;
 }

@@ -36,8 +36,8 @@ SGC - I cannot enforce this, but you are supposed to start your custom classes w
 		- [x] non interactive icon
 		- [x] button with text
 		- [x] button with icon
-		- [ ] single line input field, automatically scrolls horizontally if length exceeded
-		- [ ] multi line input field, scrolls vertically if height exceeded
+		- [x] single line input field, automatically scrolls horizontally if length exceeded
+		- [x] multi line input field, scrolls vertically if height exceeded
 		- [ ] scroll view
 		- [ ] touch receiver
 		- [ ] cute squishy vesicles

@@ -37,13 +37,13 @@ TextField{
 			bgNow = bgInvalid;
 			fgNow = fgInvalid;
 		}
-		else if(focus){
+		else if(activeFocus){
 			bgNow = bgFocus;
 			fgNow = fgFocus;
 		}
 		else if(hovered){
 			bgNow = bgHover;
-			fgNow = fgFocus;
+			fgNow = fgHover;
 		}
 		else{
 			bgNow = bg;
@@ -68,7 +68,7 @@ TextField{
 		}
 	}
 	
-	onFocusChanged: updateInteraction();
+	onActiveFocusChanged: updateInteraction();
 	onHoveredChanged: updateInteraction();
 	onInvalidChanged: {updateInteraction(); resetInvalid();}
 	
