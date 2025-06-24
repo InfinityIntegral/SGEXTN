@@ -1,7 +1,7 @@
 #ifndef SGXTOUCHEVENT_H
 #define SGXTOUCHEVENT_H
 
-#include <QTouchEvent>
+#include <QDebug>
 #include <bit>
 #include <QString>
 

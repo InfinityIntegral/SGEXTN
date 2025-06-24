@@ -208,7 +208,10 @@ QQuickItem* SGXQuickUIInterface::createScrollView(QQuickItem *parent, float x1, 
 }
 
 void SGXQuickUIInterface::receiveTouch(const QString &s){
-    qDebug() << s;
+    bool ignoreOkOrNot = false;
+    long long iop = (s.mid(1)).toLongLong(&ignoreOkOrNot);
+    QQuickItem* thisItem = std::bit_cast<QQuickItem*>(iop);
+    //qDebug() << (*thisItem).property("color");
 }
 
 QQuickItem* SGXQuickUIInterface::createTouchReceiver(QQuickItem *parent, void (*attachedFunction)(int, SGXTouchEvent *), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0){

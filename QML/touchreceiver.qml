@@ -18,7 +18,6 @@ Rectangle{
     height: h1 * Resizer.renderSpaceHeight + h0 * Resizer.sizeUnit
     color: ThemeColours.getThemeColour(-1)
 	
-	objectName: "0"
 	property bool e1: false // exists
 	property bool e2: false
 	property bool e3: false
