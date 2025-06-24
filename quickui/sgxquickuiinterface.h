@@ -48,6 +48,7 @@ public:
     static QQmlComponent* touchReceiverTemplate;
     static QQuickItem* createTouchReceiver(QQuickItem* parent, void (*attachedFunction)(int, SGXTouchEvent*), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0);
     static void receiveTouch(const QString& s);
+    static QVector<void (*)(int, SGXTouchEvent*)>* touchEventFunctionsList;
 };
 
 #endif // SGXQUICKUIINTERFACE_H

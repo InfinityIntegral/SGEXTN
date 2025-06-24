@@ -24,8 +24,7 @@ Rectangle{
 	property bool e4: false
 	property bool e5: false
 	
-	property int functionPointer1: 0
-	property int functionPointer2: 0
+	property int functionPointer: -1
 	property string thisPointer: ""
 	function emitClickedSignal(){
 		if(state[0] == "0"){state = "1" + thisPointer;}
