@@ -15,5 +15,6 @@
         <file>QML/inputfield.qml</file>
         <file>QML/longinputfield.qml</file>
         <file>QML/scrollview.qml</file>
+        <file>QML/touchreceiver.qml</file>
     </qresource>
 </RCC>

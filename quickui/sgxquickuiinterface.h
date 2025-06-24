@@ -7,13 +7,14 @@
 #include <QQuickItem>
 #include "../quickui/sgxquickresizer.h"
 #include "../quickui/sgxthemecoloursetting.h"
+#include "../primitives/sgxtouchevent.h"
 
 class SGXQuickUIInterface : public QObject
 {
     Q_OBJECT // NOLINT
 public:
     SGXQuickUIInterface() = delete;
-    static void testingFunction();
+    static void testingFunction(int n, SGXTouchEvent* t);
     static QQmlApplicationEngine* e;
     static SGXQuickResizer* resizerInstance;
     static SGXThemeColourSetting* themeColoursInstance;
@@ -44,6 +45,9 @@ public:
     static QQuickItem* createLongInputField(QQuickItem* parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float f1, float f0, float s1, float s0);
     static QQmlComponent* scrollViewTemplate;
     static QQuickItem* createScrollView(QQuickItem* parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float ih1, float ih0, float s1, float s0, int bg);
+    static QQmlComponent* touchReceiverTemplate;
+    static QQuickItem* createTouchReceiver(QQuickItem* parent, void (*attachedFunction)(int, SGXTouchEvent*), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0);
+    static void receiveTouch(const QString& s);
 };
 
 #endif // SGXQUICKUIINTERFACE_H

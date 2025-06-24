@@ -42,6 +42,7 @@ SGC - I cannot enforce this, but you are supposed to start your custom classes w
 		- [ ] touch receiver
 		- [ ] cute squishy vesicles
 	- [ ] SGEXTN set parent and get parent functions
+	- [ ] allow all SGEXTN widgets except cute vesicles to block mouse events and touch events
 	- [ ] getter and setter methods for properties
 	- [ ] user defined theme colours
 	- [ ] HSL interpolated theme colours

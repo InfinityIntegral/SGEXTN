@@ -23,9 +23,11 @@ QQmlComponent* SGXQuickUIInterface::iconButtonTemplate = nullptr;
 QQmlComponent* SGXQuickUIInterface::inputFieldTemplate = nullptr;
 QQmlComponent* SGXQuickUIInterface::longInputFieldTemplate = nullptr;
 QQmlComponent* SGXQuickUIInterface::scrollViewTemplate = nullptr;
+QQmlComponent* SGXQuickUIInterface::touchReceiverTemplate = nullptr;
 
-void SGXQuickUIInterface::testingFunction(){
-    qDebug() << "testing lah";
+void SGXQuickUIInterface::testingFunction(int n, SGXTouchEvent *t){
+    qDebug() << n;
+    for(int i=0; i<n; i++){qDebug() << t[i];}
 }
 
 void SGXQuickUIInterface::initialise(){
@@ -40,11 +42,14 @@ void SGXQuickUIInterface::initialise(){
     SGXQuickUIInterface::inputFieldTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/QML/inputfield.qml");
     SGXQuickUIInterface::longInputFieldTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/QML/longinputfield.qml");
     SGXQuickUIInterface::scrollViewTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/QML/scrollview.qml");
+    SGXQuickUIInterface::touchReceiverTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/QML/touchreceiver.qml");
+    qDebug() << (*SGXQuickUIInterface::touchReceiverTemplate).errors();
 }
 
 void SGXQuickUIInterface::buildTemplate(){
     SGXQuickUIInterface::rootWidget = SGXQuickUIInterface::createRootWidget(SGXQuickUIInterface::rootWindow);
     SGXQuickUIInterface::parentWidget = SGXQuickUIInterface::createParentWidget(SGXQuickUIInterface::rootWidget);
+    SGXQuickUIInterface::createTouchReceiver(SGXQuickUIInterface::parentWidget, &SGXQuickUIInterface::testingFunction, 0.0f, 0.5f, 0.0f, 0.5f, 1.0f, -1.0f, 1.0f, -1.0f);
 }
 
 QQuickItem* SGXQuickUIInterface::createRootWidget(QQuickItem *parent){
@@ -199,5 +204,30 @@ QQuickItem* SGXQuickUIInterface::createScrollView(QQuickItem *parent, float x1, 
     (*thisItem).setProperty("s1", s1);
     (*thisItem).setProperty("s0", s0);
     (*thisItem).setProperty("bg", bg);
+    return thisItem;
+}
+
+void SGXQuickUIInterface::receiveTouch(const QString &s){
+    qDebug() << s;
+}
+
+QQuickItem* SGXQuickUIInterface::createTouchReceiver(QQuickItem *parent, void (*attachedFunction)(int, SGXTouchEvent *), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0){
+    QQuickItem* thisItem = qobject_cast<QQuickItem*>((*SGXQuickUIInterface::touchReceiverTemplate).create());
+    (*thisItem).setParentItem(parent);
+    (*thisItem).setProperty("x1", x1);
+    (*thisItem).setProperty("x0", x0);
+    (*thisItem).setProperty("y1", y1);
+    (*thisItem).setProperty("y0", y0);
+    (*thisItem).setProperty("w1", w1);
+    (*thisItem).setProperty("w0", w0);
+    (*thisItem).setProperty("h1", h1);
+    (*thisItem).setProperty("h0", h0);
+    (*thisItem).setProperty("thisPointer", QString::number(std::bit_cast<long long>(thisItem)));
+    long long fp = std::bit_cast<long long>(attachedFunction);
+    int ifp[2];
+    std::memcpy(ifp, &fp, sizeof(long long));
+    (*thisItem).setProperty("functionPointer1", ifp[0]);
+    (*thisItem).setProperty("functionPointer2", ifp[1]);
+    connect(thisItem, &QQuickItem::stateChanged, &SGXQuickUIInterface::receiveTouch);
     return thisItem;
 }
