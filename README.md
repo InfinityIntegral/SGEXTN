@@ -38,11 +38,13 @@ SGC - I cannot enforce this, but you are supposed to start your custom classes w
 		- [x] button with icon
 		- [x] single line input field, automatically scrolls horizontally if length exceeded
 		- [x] multi line input field, scrolls vertically if height exceeded
-		- [ ] scroll view
+		- [x] scroll view
 		- [ ] touch receiver
 		- [ ] cute squishy vesicles
 	- [ ] SGEXTN set parent and get parent functions
 	- [ ] getter and setter methods for properties
+	- [ ] user defined theme colours
+	- [ ] HSL interpolated theme colours
 - [ ] file system usage
      - [ ] SGXFileReader (struct allowing reading of all SGEXTN and C++ primitives from files with index seeking)
 	- [ ] SGXFileWriter (struct allowing writing of all SGEXTN and C++ primitives to files with overwriting by index)

@@ -42,6 +42,8 @@ public:
     static QQuickItem* createInputField(QQuickItem* parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0);
     static QQmlComponent* longInputFieldTemplate;
     static QQuickItem* createLongInputField(QQuickItem* parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float f1, float f0, float s1, float s0);
+    static QQmlComponent* scrollViewTemplate;
+    static QQuickItem* createScrollView(QQuickItem* parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float ih1, float ih0, float s1, float s0, int bg);
 };
 
 #endif // SGXQUICKUIINTERFACE_H
