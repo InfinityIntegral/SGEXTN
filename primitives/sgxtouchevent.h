@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <bit>
 #include <QString>
+#include <array>
 
 class SGXTouchEvent // struct to represent touch input
 {
@@ -11,14 +12,14 @@ public:
     enum TouchPhase {TouchStart, TouchOngoing, TouchEnd}; // enum representing touch phase (inspired by Unity C#)
     SGXTouchEvent() = default; // default constructor for initialisation
     SGXTouchEvent(int n); // construct touch event with phase as ended
-    SGXTouchEvent(int n, float* data); // construct touch event from data provided by Qt Quick's MultiPointTouchArea, used by SGEXTN touchReceiver
+    SGXTouchEvent(int n, const std::array<float, 11>& data); // construct touch event from data provided by Qt Quick's MultiPointTouchArea, used by SGEXTN touchReceiver
     // built constructors later
     // SGTouchEvent no longer supports QTouchEvent, precise touch interaction must be done through a SGEXTN touchReceiver, an instance of this can be provided using SGXQuickUIInterface::createTouchReceiver
     // for QTouchEvent support, refer to this file in the SGEXTN v1 release, but that version has less features
     float x; // x coordinate of touch event
     float y; // y coordinate of touch event
     SGXTouchEvent::TouchPhase phase; // touch phase
-    float id; // ID of touch event
+    int id; // ID of touch event
     float differenceX; // difference between x coordinates of this touch event and the same touch event on the previous frame, zero if previous touch does not exist
     float differenceY; // difference between y coordinates of this touch event and the same touch event on the previous frame, zero if previous touch does not exist
     float previousX; // x coordinate of touch event on previous frame

@@ -28,7 +28,7 @@ QQmlComponent* SGXQuickUIInterface::inputFieldTemplate = nullptr;
 QQmlComponent* SGXQuickUIInterface::longInputFieldTemplate = nullptr;
 QQmlComponent* SGXQuickUIInterface::scrollViewTemplate = nullptr;
 QQmlComponent* SGXQuickUIInterface::touchReceiverTemplate = nullptr;
-QVector<void (*)(SGXTouchEvent*)>* SGXQuickUIInterface::touchEventFunctionsList = nullptr;
+QVector<void (*)(const std::array<SGXTouchEvent, 5>&)>* SGXQuickUIInterface::touchEventFunctionsList = nullptr;
 
 void SGXQuickUIInterface::initialise(){
     SGXQuickUIInterface::rootWidgetTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/QML/rootwidget.qml");
@@ -225,7 +225,7 @@ void SGXQuickUIInterface::receiveTouch(const QString &s){
         data[8] = (*thisItem).property("e1rx").toFloat();
         data[9] = (*thisItem).property("e1ry").toFloat();
         data[10] = (*thisItem).property("e1f").toFloat();
-        eventsToPass[0] = SGXTouchEvent(1, data.data());
+        eventsToPass[0] = SGXTouchEvent(1, data);
     }
     else{eventsToPass[0] = SGXTouchEvent(1);}
     
@@ -241,7 +241,7 @@ void SGXQuickUIInterface::receiveTouch(const QString &s){
         data[8] = (*thisItem).property("e2rx").toFloat();
         data[9] = (*thisItem).property("e2ry").toFloat();
         data[10] = (*thisItem).property("e2f").toFloat();
-        eventsToPass[1] = SGXTouchEvent(2, data.data());
+        eventsToPass[1] = SGXTouchEvent(2, data);
     }
     else{eventsToPass[1] = SGXTouchEvent(2);}
     
@@ -257,7 +257,7 @@ void SGXQuickUIInterface::receiveTouch(const QString &s){
         data[8] = (*thisItem).property("e3rx").toFloat();
         data[9] = (*thisItem).property("e3ry").toFloat();
         data[10] = (*thisItem).property("e3f").toFloat();
-        eventsToPass[2] = SGXTouchEvent(3, data.data());
+        eventsToPass[2] = SGXTouchEvent(3, data);
     }
     else{eventsToPass[2] = SGXTouchEvent(3);}
     
@@ -273,7 +273,7 @@ void SGXQuickUIInterface::receiveTouch(const QString &s){
         data[8] = (*thisItem).property("e4rx").toFloat();
         data[9] = (*thisItem).property("e4ry").toFloat();
         data[10] = (*thisItem).property("e4f").toFloat();
-        eventsToPass[3] = SGXTouchEvent(4, data.data());
+        eventsToPass[3] = SGXTouchEvent(4, data);
     }
     else{eventsToPass[3] = SGXTouchEvent(4);}
     
@@ -289,16 +289,16 @@ void SGXQuickUIInterface::receiveTouch(const QString &s){
         data[8] = (*thisItem).property("e5rx").toFloat();
         data[9] = (*thisItem).property("e5ry").toFloat();
         data[10] = (*thisItem).property("e5f").toFloat();
-        eventsToPass[4] = SGXTouchEvent(5, data.data());
+        eventsToPass[4] = SGXTouchEvent(5, data);
     }
     else{eventsToPass[4] = SGXTouchEvent(5);}
     
     const int fpi = (*thisItem).property("functionPointer").toInt();
-    void (*functionToRun)(SGXTouchEvent*) = (*SGXQuickUIInterface::touchEventFunctionsList)[fpi];
-    functionToRun(eventsToPass.data());
+    void (*functionToRun)(const std::array<SGXTouchEvent, 5>&) = (*SGXQuickUIInterface::touchEventFunctionsList)[fpi];
+    functionToRun(eventsToPass);
 }
 
-QQuickItem* SGXQuickUIInterface::createTouchReceiver(QQuickItem *parent, void (*attachedFunction)(SGXTouchEvent *), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0){
+QQuickItem* SGXQuickUIInterface::createTouchReceiver(QQuickItem *parent, void (*attachedFunction)(const std::array<SGXTouchEvent, 5> &), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0){
     QQuickItem* thisItem = qobject_cast<QQuickItem*>((*SGXQuickUIInterface::touchReceiverTemplate).create());
     (*thisItem).setParentItem(parent);
     (*thisItem).setProperty("x1", x1);
@@ -311,7 +311,7 @@ QQuickItem* SGXQuickUIInterface::createTouchReceiver(QQuickItem *parent, void (*
     (*thisItem).setProperty("h0", h0);
     (*thisItem).setProperty("thisPointer", QString::number(std::bit_cast<unsigned long long>(thisItem)));
     if(SGXQuickUIInterface::touchEventFunctionsList == nullptr){
-        SGXQuickUIInterface::touchEventFunctionsList = new QVector<void (*)(SGXTouchEvent*)>();
+        SGXQuickUIInterface::touchEventFunctionsList = new QVector<void (*)(const std::array<SGXTouchEvent, 5>&)>();
     }
     (*SGXQuickUIInterface::touchEventFunctionsList).append(attachedFunction);
     (*thisItem).setProperty("functionPointer", (*SGXQuickUIInterface::touchEventFunctionsList).length() - 1);
