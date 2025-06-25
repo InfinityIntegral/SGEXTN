@@ -3,11 +3,13 @@
 ## About this project...
 This project has not been completed.
 
-This is a template application to make building applications in Qt easier. It internally uses Qt Quick but SGEXTN functions are designed for imperative UI, similar to QWidget and different from Qt Quick's declarative UI. Shaders are supported through Qt Quick only, no QOpenGLWidgets. There is also a wide variety of primitive structs that allow you to group, store, and use data more easily.
+This is a template application to make building applications in Qt easier. It internally uses Qt Quick but SGEXTN functions are designed for imperative UI, similar to QWidget and different from Qt Quick's declarative UI. There is also a wide variety of primitive structs that allow you to group, store, and use data more easily in addition to file system usage methods.
+
+For OpenGL support, you should subclass QQuickItem and use QSGGeometryNode for rendering. Since rendering is a highly customised process, SGEXTN does not simplify it and you are expected to use the Qt Quick API without any SGEXTN layer over it. However, SGEXTN is designed to not interfere with any custom rendering. To learn the syntax, you can look at the internal implementation of the cute vesicles. All relevant information can be found in the "vesicles" folder. You are recommended to group files related to each rendering element in the same folder instead of grouping by type.
 
 Documentation is included in the form of comments in header files.
 
-SGEXTN v1 uses QWidget, it is fully functional (though without OpenGL support). I switched the rendering method because Qt Quick is newer, faster, and more compatible with mobile platforms.
+SGEXTN v1 uses QWidget, it is fully functional. I switched the rendering method because Qt Quick is newer, faster, and more compatible with mobile platforms.
 
 File name prefixes:  
 SGX - SGEXTN files, do not touch those  
