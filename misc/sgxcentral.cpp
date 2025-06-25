@@ -42,5 +42,5 @@ void SGXCentral::terminate(){
     SGUCentralManagement::terminate();
     delete SGXQuickUIInterface::resizerInstance;
     delete SGXQuickUIInterface::themeColoursInstance;
-    if(SGXQuickUIInterface::touchEventFunctionsList != nullptr){delete SGXQuickUIInterface::touchEventFunctionsList;}
+    delete SGXQuickUIInterface::touchEventFunctionsList;
 }

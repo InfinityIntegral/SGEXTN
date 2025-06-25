@@ -8,13 +8,14 @@
 #include "../quickui/sgxquickresizer.h"
 #include "../quickui/sgxthemecoloursetting.h"
 #include "../primitives/sgxtouchevent.h"
+#include <qcontainerfwd.h>
 
 class SGXQuickUIInterface : public QObject
 {
     Q_OBJECT // NOLINT
 public:
     SGXQuickUIInterface() = delete;
-    static void testingFunction(int n, SGXTouchEvent* t);
+    static void testingFunction(SGXTouchEvent* t);
     static QQmlApplicationEngine* e;
     static SGXQuickResizer* resizerInstance;
     static SGXThemeColourSetting* themeColoursInstance;
@@ -46,9 +47,9 @@ public:
     static QQmlComponent* scrollViewTemplate;
     static QQuickItem* createScrollView(QQuickItem* parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float ih1, float ih0, float s1, float s0, int bg);
     static QQmlComponent* touchReceiverTemplate;
-    static QQuickItem* createTouchReceiver(QQuickItem* parent, void (*attachedFunction)(int, SGXTouchEvent*), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0);
+    static QQuickItem* createTouchReceiver(QQuickItem* parent, void (*attachedFunction)(SGXTouchEvent*), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0);
     static void receiveTouch(const QString& s);
-    static QVector<void (*)(int, SGXTouchEvent*)>* touchEventFunctionsList;
+    static QVector<void (*)(SGXTouchEvent*)>* touchEventFunctionsList;
 };
 
 #endif // SGXQUICKUIINTERFACE_H
