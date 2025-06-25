@@ -9,10 +9,11 @@
 #include "../quickui/sgxthemecoloursetting.h"
 #include "../primitives/sgxtouchevent.h"
 #include <qcontainerfwd.h>
+#include <qtmetamacros.h>
 
 class SGXQuickUIInterface : public QObject
 {
-    Q_OBJECT // NOLINT
+    Q_OBJECT
 public:
     SGXQuickUIInterface() = delete;
     static void testingFunction(SGXTouchEvent* t);

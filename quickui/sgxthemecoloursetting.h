@@ -6,26 +6,27 @@
 #include "../primitives/sgxcolourrgba.h"
 #include <QQmlEngine>
 #include <QJSEngine>
+#include <qtmetamacros.h>
 
 class SGXThemeColourSetting : public QObject
 {
-    Q_OBJECT // NOLINT
-    Q_PROPERTY(QColor noColour READ getNoColour CONSTANT) // NOLINT
-    Q_PROPERTY(QColor themeColour0 READ getThemeColour0 WRITE setThemeColour0 NOTIFY changedThemeColour0 FINAL) // NOLINT
-    Q_PROPERTY(QColor themeColour1 READ getThemeColour1 WRITE setThemeColour1 NOTIFY changedThemeColour1 FINAL) // NOLINT
-    Q_PROPERTY(QColor themeColour2 READ getThemeColour2 WRITE setThemeColour2 NOTIFY changedThemeColour2 FINAL) // NOLINT
-    Q_PROPERTY(QColor themeColour3 READ getThemeColour3 WRITE setThemeColour3 NOTIFY changedThemeColour3 FINAL) // NOLINT
-    Q_PROPERTY(QColor themeColour4 READ getThemeColour4 WRITE setThemeColour4 NOTIFY changedThemeColour4 FINAL) // NOLINT
-    Q_PROPERTY(QColor themeColour5 READ getThemeColour5 WRITE setThemeColour5 NOTIFY changedThemeColour5 FINAL) // NOLINT
-    Q_PROPERTY(QColor themeColour6 READ getThemeColour6 WRITE setThemeColour6 NOTIFY changedThemeColour6 FINAL) // NOLINT
-    Q_PROPERTY(QColor themeColour7 READ getThemeColour7 WRITE setThemeColour7 NOTIFY changedThemeColour7 FINAL) // NOLINT
-    Q_PROPERTY(QColor themeColour8 READ getThemeColour8 WRITE setThemeColour8 NOTIFY changedThemeColour8 FINAL) // NOLINT
+    Q_OBJECT
+    Q_PROPERTY(QColor noColour READ getNoColour CONSTANT)
+    Q_PROPERTY(QColor themeColour0 READ getThemeColour0 WRITE setThemeColour0 NOTIFY changedThemeColour0 FINAL)
+    Q_PROPERTY(QColor themeColour1 READ getThemeColour1 WRITE setThemeColour1 NOTIFY changedThemeColour1 FINAL)
+    Q_PROPERTY(QColor themeColour2 READ getThemeColour2 WRITE setThemeColour2 NOTIFY changedThemeColour2 FINAL)
+    Q_PROPERTY(QColor themeColour3 READ getThemeColour3 WRITE setThemeColour3 NOTIFY changedThemeColour3 FINAL)
+    Q_PROPERTY(QColor themeColour4 READ getThemeColour4 WRITE setThemeColour4 NOTIFY changedThemeColour4 FINAL)
+    Q_PROPERTY(QColor themeColour5 READ getThemeColour5 WRITE setThemeColour5 NOTIFY changedThemeColour5 FINAL)
+    Q_PROPERTY(QColor themeColour6 READ getThemeColour6 WRITE setThemeColour6 NOTIFY changedThemeColour6 FINAL)
+    Q_PROPERTY(QColor themeColour7 READ getThemeColour7 WRITE setThemeColour7 NOTIFY changedThemeColour7 FINAL)
+    Q_PROPERTY(QColor themeColour8 READ getThemeColour8 WRITE setThemeColour8 NOTIFY changedThemeColour8 FINAL)
 public:
     SGXThemeColourSetting();
     static QObject* getObject(QQmlEngine* me, QJSEngine* se);
     SGXColourRGBA noColour = SGXColourRGBA();
     [[nodiscard]] QColor getNoColour() const;
-    [[nodiscard]] Q_INVOKABLE QColor getThemeColour(int x) const; // NOLINT
+    [[nodiscard]] Q_INVOKABLE QColor getThemeColour(int x) const;
     SGXColourRGBA themeColour0 = SGXColourRGBA();
     [[nodiscard]] QColor getThemeColour0() const;
     void setThemeColour0(const QColor& x);
@@ -53,7 +54,7 @@ public:
     SGXColourRGBA themeColour8 = SGXColourRGBA();
     [[nodiscard]] QColor getThemeColour8() const;
     void setThemeColour8(const QColor& x);
-signals: // NOLINT
+signals:
     void changedThemeColour0();
     void changedThemeColour1();
     void changedThemeColour2();

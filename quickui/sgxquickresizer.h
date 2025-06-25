@@ -4,15 +4,16 @@
 #include <QObject>
 #include <QQmlEngine>
 #include <QJSEngine>
+#include <qtmetamacros.h>
 
 class SGXQuickResizer : public QObject
 {
-    Q_OBJECT // NOLINT
-    Q_PROPERTY(float appWindowWidth READ getAppWindowWidth WRITE setAppWindowWidth NOTIFY changedAppWindowWidth FINAL); // NOLINT
-    Q_PROPERTY(float appWindowHeight READ getAppWindowHeight WRITE setAppWindowHeight NOTIFY changedAppWindowHeight FINAL); // NOLINT
-    Q_PROPERTY(float renderSpaceWidth READ getRenderSpaceWidth WRITE setRenderSpaceWidth NOTIFY changedRenderSpaceWidth FINAL); // NOLINT
-    Q_PROPERTY(float renderSpaceHeight READ getRenderSpaceHeight WRITE setRenderSpaceHeight NOTIFY changedRenderSpaceHeight FINAL); // NOLINT
-    Q_PROPERTY(float sizeUnit READ getSizeUnit WRITE setSizeUnit NOTIFY changedSizeUnit FINAL) // NOLINT
+    Q_OBJECT
+    Q_PROPERTY(float appWindowWidth READ getAppWindowWidth WRITE setAppWindowWidth NOTIFY changedAppWindowWidth FINAL);
+    Q_PROPERTY(float appWindowHeight READ getAppWindowHeight WRITE setAppWindowHeight NOTIFY changedAppWindowHeight FINAL);
+    Q_PROPERTY(float renderSpaceWidth READ getRenderSpaceWidth WRITE setRenderSpaceWidth NOTIFY changedRenderSpaceWidth FINAL);
+    Q_PROPERTY(float renderSpaceHeight READ getRenderSpaceHeight WRITE setRenderSpaceHeight NOTIFY changedRenderSpaceHeight FINAL);
+    Q_PROPERTY(float sizeUnit READ getSizeUnit WRITE setSizeUnit NOTIFY changedSizeUnit FINAL)
 public:
     SGXQuickResizer();
     static QObject* getObject(QQmlEngine* me, QJSEngine* se);
@@ -31,13 +32,13 @@ public:
     float sizeUnit;
     [[nodiscard]] float getSizeUnit() const;
     void setSizeUnit(float x);
-signals: // NOLINT
+signals:
     void changedAppWindowWidth();
     void changedAppWindowHeight();
     void changedRenderSpaceWidth();
     void changedRenderSpaceHeight();
     void changedSizeUnit();
-public slots: // NOLINT
+public slots:
     void updateAppWindowSize();
 };
 

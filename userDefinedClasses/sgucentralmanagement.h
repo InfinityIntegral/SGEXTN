@@ -2,10 +2,11 @@
 #define SGUCENTRALMANAGEMENT_H
 
 #include <QObject>
+#include <qtmetamacros.h>
 
 class SGUCentralManagement : public QObject // non instantiable class for essential application data that should be define by the user, including application name, theme colours, custom initialisation and custom termination
 {
-    Q_OBJECT // NOLINT
+    Q_OBJECT
 public:
     SGUCentralManagement() = delete;
     SGUCentralManagement(const SGUCentralManagement&) = delete;

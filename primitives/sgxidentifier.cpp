@@ -22,7 +22,7 @@ SGXIdentifier::SGXIdentifier(bool ifValid){ // NOLINT(misc-no-recursion)
     }
 }
 
-SGXIdentifier::SGXIdentifier(int){ // NOLINT(readability-named-parameter)
+SGXIdentifier::SGXIdentifier(int /*placeholder*/){
     (*this).a = 0u;
     (*this).b = 0u;
     (*this).c = 0u;

@@ -2,10 +2,11 @@
 #define SGXCENTRAL_H
 
 #include <QObject>
+#include <qtmetamacros.h>
 
 class SGXCentral : public QObject // non instantiable class for essential application data that should not be modified by the user
 {
-    Q_OBJECT // NOLINT
+    Q_OBJECT
 public:
     SGXCentral() = delete;
     SGXCentral(const SGXCentral&) = delete;

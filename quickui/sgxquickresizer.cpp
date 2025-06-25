@@ -4,6 +4,8 @@
 #include <QQmlEngine>
 #include <QJSEngine>
 #include <algorithm>
+#include <qtpreprocessorsupport.h>
+#include <qtmetamacros.h>
 
 SGXQuickResizer::SGXQuickResizer(){
     (*this).appWindowWidth = 0.0f;
@@ -14,8 +16,8 @@ SGXQuickResizer::SGXQuickResizer(){
 }
 
 QObject* SGXQuickResizer::getObject(QQmlEngine *me, QJSEngine *se){
-    Q_UNUSED(me); // NOLINT
-    Q_UNUSED(se); // NOLINT
+    Q_UNUSED(me);
+    Q_UNUSED(se);
     return new SGXQuickResizer();
 }
 
@@ -25,7 +27,7 @@ float SGXQuickResizer::getAppWindowWidth() const {
 
 void SGXQuickResizer::setAppWindowWidth(float x){
     (*this).appWindowWidth = x;
-    emit (*this).changedAppWindowWidth(); // NOLINT
+    emit (*this).changedAppWindowWidth();
 }
 
 float SGXQuickResizer::getAppWindowHeight() const {
@@ -34,7 +36,7 @@ float SGXQuickResizer::getAppWindowHeight() const {
 
 void SGXQuickResizer::setAppWindowHeight(float x){
     (*this).appWindowHeight = x;
-    emit (*this).changedAppWindowHeight(); // NOLINT
+    emit (*this).changedAppWindowHeight();
 }
 
 float SGXQuickResizer::getRenderSpaceWidth() const {
@@ -43,7 +45,7 @@ float SGXQuickResizer::getRenderSpaceWidth() const {
 
 void SGXQuickResizer::setRenderSpaceWidth(float x){
     (*this).renderSpaceWidth = x;
-    emit (*this).changedRenderSpaceWidth(); // NOLINT
+    emit (*this).changedRenderSpaceWidth();
 }
 
 float SGXQuickResizer::getRenderSpaceHeight() const {
@@ -52,7 +54,7 @@ float SGXQuickResizer::getRenderSpaceHeight() const {
 
 void SGXQuickResizer::setRenderSpaceHeight(float x){
     (*this).renderSpaceHeight = x;
-    emit (*this).changedRenderSpaceHeight(); // NOLINT
+    emit (*this).changedRenderSpaceHeight();
 }
 
 float SGXQuickResizer::getSizeUnit() const {
@@ -61,7 +63,7 @@ float SGXQuickResizer::getSizeUnit() const {
 
 void SGXQuickResizer::setSizeUnit(float x){
     (*this).sizeUnit = x;
-    emit (*this).changedSizeUnit(); // NOLINT
+    emit (*this).changedSizeUnit();
 }
 
 void SGXQuickResizer::updateAppWindowSize(){
