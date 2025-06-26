@@ -29,6 +29,7 @@ QQmlComponent* SGXQuickUIInterface::longInputFieldTemplate = nullptr;
 QQmlComponent* SGXQuickUIInterface::scrollViewTemplate = nullptr;
 QQmlComponent* SGXQuickUIInterface::touchReceiverTemplate = nullptr;
 QVector<void (*)(const std::array<SGXTouchEvent, 5>&)>* SGXQuickUIInterface::touchEventFunctionsList = nullptr;
+QQmlComponent* SGXQuickUIInterface::vesiclesTemplate = nullptr;
 
 void SGXQuickUIInterface::initialise(){
     SGXQuickUIInterface::rootWidgetTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/QML/rootwidget.qml");
@@ -43,11 +44,13 @@ void SGXQuickUIInterface::initialise(){
     SGXQuickUIInterface::longInputFieldTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/QML/longinputfield.qml");
     SGXQuickUIInterface::scrollViewTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/QML/scrollview.qml");
     SGXQuickUIInterface::touchReceiverTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/QML/touchreceiver.qml");
+    SGXQuickUIInterface::vesiclesTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/QML/vesicles.qml");
 }
 
 void SGXQuickUIInterface::buildTemplate(){
     SGXQuickUIInterface::rootWidget = SGXQuickUIInterface::createRootWidget(SGXQuickUIInterface::rootWindow);
     SGXQuickUIInterface::parentWidget = SGXQuickUIInterface::createParentWidget(SGXQuickUIInterface::rootWidget);
+    SGXQuickUIInterface::createVesicles(SGXQuickUIInterface::parentWidget);
 }
 
 QQuickItem* SGXQuickUIInterface::createRootWidget(QQuickItem *parent){
@@ -316,5 +319,11 @@ QQuickItem* SGXQuickUIInterface::createTouchReceiver(QQuickItem *parent, void (*
     (*SGXQuickUIInterface::touchEventFunctionsList).append(attachedFunction);
     (*thisItem).setProperty("functionPointer", (*SGXQuickUIInterface::touchEventFunctionsList).length() - 1);
     connect(thisItem, &QQuickItem::stateChanged, &SGXQuickUIInterface::receiveTouch);
+    return thisItem;
+}
+
+QQuickItem* SGXQuickUIInterface::createVesicles(QQuickItem *parent){
+    QQuickItem* thisItem = qobject_cast<QQuickItem*>((*SGXQuickUIInterface::vesiclesTemplate).create());
+    (*thisItem).setParentItem(parent);
     return thisItem;
 }

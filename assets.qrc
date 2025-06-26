@@ -16,5 +16,8 @@
         <file>QML/longinputfield.qml</file>
         <file>QML/scrollview.qml</file>
         <file>QML/touchreceiver.qml</file>
+        <file>QML/vesicles.qml</file>
+        <file>vesicles/vesicles.vert.qsb</file>
+        <file>vesicles/vesicles.frag.qsb</file>
     </qresource>
 </RCC>

@@ -6,21 +6,17 @@ SGXVesiclesShader::SGXVesiclesShader(){
     setShaderFileName(QSGMaterialShader::FragmentStage, ":/vesicles/vesicles.frag.qsb");
 }
 
-bool SGXVesiclesShader::updateUniformData(RenderState &, QSGMaterial *newMaterial, QSGMaterial *){
+bool SGXVesiclesShader::updateUniformData(RenderState& udh, QSGMaterial *newMaterial, QSGMaterial *){
     SGXVesiclesMaterial* material = static_cast<SGXVesiclesMaterial*>(newMaterial);
-    char* ub = (*(*material).uniformData()).data();
-    memcpy(ub, (*material).matrix.constData(), 64);
-    memcpy(ub + 64, &((*material).opacity), 16);
-    memcpy(ub + 80, &((*material).c), 32);
-    memcpy(rb + 112, &((*material).r), 16);
+    char* ub = (*udh.uniformData()).data();
+    memcpy(ub + 68, &((*material).c), 4);
+    memcpy(ub + 72, &((*material).r), 4);
     return true;
 }
 
-bool SGXVesiclesShader::isOpaque() const {
-    return false;
-}
-
-void SGXVesiclesShader::updateGraphicsPipelineState(RenderState &, GraphicsPipelineState *ps, QSGMaterial *, QSGMaterial *){
+bool SGXVesiclesShader::updateGraphicsPipelineState(RenderState &, GraphicsPipelineState *ps, QSGMaterial *, QSGMaterial *){
+    if((*ps).cullMode == QSGMaterialShader::GraphicsPipelineState::CullNone && (*ps).blendEnable == true){return false;}
     (*ps).cullMode = QSGMaterialShader::GraphicsPipelineState::CullNone;
     (*ps).blendEnable = true;
+    return true;
 }

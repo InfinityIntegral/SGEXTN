@@ -4,6 +4,7 @@ QMAKE_CXXFLAGS_RELEASE -= -O2
 QMAKE_CXXFLAGS_DEBUG += -std=c++20
 QMAKE_LFLAGS = -flto -Wl,--gc-sections
 DISTFILES = .gitignore LICENSE.txt README.md \
+    compilecommands.txt \
     vesicles/vesicles.frag \
     vesicles/vesicles.vert
 SOURCES = misc/main.cpp \
