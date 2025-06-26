@@ -12,5 +12,5 @@ layout(location = 1) out vec2 c;
 layout(location = 2) out float r;
 
 void main(){
-	gl_Position = qt_Matrix * vec4(vertex.x, vertex.y, 0.0, 1.0);
+	gl_Position = vec4(vertex.x / 726.0, vertex.y / 695.75, 0.0, 1.0);
 }

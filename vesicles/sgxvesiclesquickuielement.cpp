@@ -2,6 +2,7 @@
 #include <QSGGeometryNode>
 #include <QSGGeometry>
 #include "sgxvesiclesmaterial.h"
+#include <QDebug>
 
 SGXVesiclesQuickUIElement::SGXVesiclesQuickUIElement(){
     (*this).setFlag(QQuickItem::ItemHasContents, true);
@@ -37,5 +38,6 @@ QSGNode* SGXVesiclesQuickUIElement::updatePaintNode(QSGNode *thisNode, UpdatePai
         tg[4] = 2;
         tg[5] = 3;
     }
+    qDebug() << n;
     return n;
 }
