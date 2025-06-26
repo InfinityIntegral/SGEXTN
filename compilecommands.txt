@@ -3,5 +3,6 @@ qsb [file name].vert -o [file name].vert.qsb --batchable --glsl 330 --hlsl 50 --
 qsb [file name].frag -o [file name].frag.qsb --glsl 330 --hlsl 50 --msl 12 --glsl "300 es"
 
 vesicles:
-qsb vesicles.vert -o vesicles.vert.qsb --batchable --glsl 330 --hlsl 50 --msl 12 --glsl "300 es"
-qsb vesicles.frag -o vesicles.frag.qsb --glsl 330 --hlsl 50 --msl 12 --glsl "300 es"
+cd cutevesicles
+qsb cutevesicles.vert -o cutevesicles.vert.qsb --batchable --glsl 330 --hlsl 50 --msl 12 --glsl "300 es"
+qsb cutevesicles.frag -o cutevesicles.frag.qsb --glsl 330 --hlsl 50 --msl 12 --glsl "300 es"

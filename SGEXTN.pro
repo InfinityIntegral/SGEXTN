@@ -5,9 +5,14 @@ QMAKE_CXXFLAGS_DEBUG += -std=c++20
 QMAKE_LFLAGS = -flto -Wl,--gc-sections
 DISTFILES = .gitignore LICENSE.txt README.md \
     compilecommands.txt \
+    cutevesicles/cutevesicles.frag \
+    cutevesicles/cutevesicles.vert \
     vesicles/vesicles.frag \
     vesicles/vesicles.vert
 SOURCES = misc/main.cpp \
+    cutevesicles/sgxrendercutevesiclesmaterial.cpp \
+    cutevesicles/sgxrendercutevesiclesquickuielement.cpp \
+    cutevesicles/sgxrendercutevesiclesshader.cpp \
     misc/sgxcentral.cpp \
     primitives/sgxcolourhsla.cpp \
     primitives/sgxcolourrgba.cpp \
@@ -24,6 +29,9 @@ SOURCES = misc/main.cpp \
     vesicles/sgxvesiclesshader.cpp
 RESOURCES = assets.qrc
 HEADERS += \
+    cutevesicles/sgxrendercutevesiclesmaterial.h \
+    cutevesicles/sgxrendercutevesiclesquickuielement.h \
+    cutevesicles/sgxrendercutevesiclesshader.h \
     misc/sgxcentral.h \
     primitives/sgxcolourhsla.h \
     primitives/sgxcolourrgba.h \

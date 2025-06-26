@@ -11,7 +11,7 @@
 #include <qqml.h>
 #include <QGuiApplication>
 #include <QFontDatabase>
-#include "../vesicles/sgxvesiclesquickuielement.h"
+#include "../cutevesicles/sgxrendercutevesiclesquickuielement.h"
 
 void SGXCentral::initialise(){
     QCoreApplication::setApplicationName(SGUCentralManagement::applicationName);
@@ -24,7 +24,7 @@ void SGXCentral::initialise(){
     qmlRegisterSingletonInstance("ThemeColours", 0, 0, "ThemeColours", SGXQuickUIInterface::themeColoursInstance);
     SGXQuickUIInterface::resizerInstance = new SGXQuickResizer();
     qmlRegisterSingletonInstance("Resizer", 0, 0, "Resizer", SGXQuickUIInterface::resizerInstance);
-    qmlRegisterType<SGXVesiclesQuickUIElement>("Vesicles", 0, 0, "Vesicles");
+    qmlRegisterType<SGXRenderCuteVesiclesQuickUIElement>("CuteVesicles", 0, 0, "CuteVesicles");
     (*SGXQuickUIInterface::e).load(":/QML/root.qml");
     
     connect(qApp, &QGuiApplication::aboutToQuit, &SGXCentral::terminate); // NOLINT(cppcoreguidelines-pro-type-static-cast-downcast)

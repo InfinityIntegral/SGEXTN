@@ -29,7 +29,7 @@ QQmlComponent* SGXQuickUIInterface::longInputFieldTemplate = nullptr;
 QQmlComponent* SGXQuickUIInterface::scrollViewTemplate = nullptr;
 QQmlComponent* SGXQuickUIInterface::touchReceiverTemplate = nullptr;
 QVector<void (*)(const std::array<SGXTouchEvent, 5>&)>* SGXQuickUIInterface::touchEventFunctionsList = nullptr;
-QQmlComponent* SGXQuickUIInterface::vesiclesTemplate = nullptr;
+QQmlComponent* SGXQuickUIInterface::cuteVesiclesTemplate = nullptr;
 
 void SGXQuickUIInterface::initialise(){
     SGXQuickUIInterface::rootWidgetTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/QML/rootwidget.qml");
@@ -44,13 +44,13 @@ void SGXQuickUIInterface::initialise(){
     SGXQuickUIInterface::longInputFieldTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/QML/longinputfield.qml");
     SGXQuickUIInterface::scrollViewTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/QML/scrollview.qml");
     SGXQuickUIInterface::touchReceiverTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/QML/touchreceiver.qml");
-    SGXQuickUIInterface::vesiclesTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/QML/vesicles.qml");
+    SGXQuickUIInterface::cuteVesiclesTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/cutevesicles/cutevesicles.qml");
 }
 
 void SGXQuickUIInterface::buildTemplate(){
     SGXQuickUIInterface::rootWidget = SGXQuickUIInterface::createRootWidget(SGXQuickUIInterface::rootWindow);
     SGXQuickUIInterface::parentWidget = SGXQuickUIInterface::createParentWidget(SGXQuickUIInterface::rootWidget);
-    SGXQuickUIInterface::createVesicles(SGXQuickUIInterface::parentWidget);
+    SGXQuickUIInterface::createCuteVesicles(SGXQuickUIInterface::rootWidget);
 }
 
 QQuickItem* SGXQuickUIInterface::createRootWidget(QQuickItem *parent){
@@ -322,8 +322,8 @@ QQuickItem* SGXQuickUIInterface::createTouchReceiver(QQuickItem *parent, void (*
     return thisItem;
 }
 
-QQuickItem* SGXQuickUIInterface::createVesicles(QQuickItem *parent){
-    QQuickItem* thisItem = qobject_cast<QQuickItem*>((*SGXQuickUIInterface::vesiclesTemplate).create());
+QQuickItem* SGXQuickUIInterface::createCuteVesicles(QQuickItem *parent){
+    QQuickItem* thisItem = qobject_cast<QQuickItem*>((*SGXQuickUIInterface::cuteVesiclesTemplate).create());
     (*thisItem).setParentItem(parent);
     return thisItem;
 }

@@ -2,9 +2,15 @@
 #include "sgxvesiclesshader.h"
 #include <cstdint>
 
-SGXVesiclesMaterial::SGXVesiclesMaterial(SGXVector2 c, float r){
-    (*this).c = c;
+SGXVesiclesMaterial::SGXVesiclesMaterial(float cx, float cy, float r, float x, float y, float w, float h, float s){
+    (*this).cx = cx;
+    (*this).cy = cy;
     (*this).r = r;
+    (*this).x = x;
+    (*this).y = y;
+    (*this).w = w;
+    (*this).h = h;
+    (*this).s = s;
     (*this).setFlag(QSGMaterial::Blending);
 }
 
@@ -23,10 +29,10 @@ int SGXVesiclesMaterial::compare(const QSGMaterial *other) const {
     if(thisType < otherType){return -1;}
     if(thisType > otherType){return 1;}
     const SGXVesiclesMaterial* x = static_cast<const SGXVesiclesMaterial*>(other);
-    if((*this).c.x < (*x).c.x){return -1;}
-    if((*this).c.x > (*x).c.x){return 1;}
-    if((*this).c.y < (*x).c.y){return -1;}
-    if((*this).c.y > (*x).c.y){return -1;}
+    if((*this).cx < (*x).cx){return -1;}
+    if((*this).cx > (*x).cx){return 1;}
+    if((*this).cy < (*x).cy){return -1;}
+    if((*this).cy > (*x).cy){return -1;}
     if((*this).r < (*x).r){return -1;}
     if((*this).r > (*x).r){return 1;}
     return 0;

@@ -5,18 +5,20 @@ This project has not been completed.
 
 This is a template application to make building applications in Qt easier. It internally uses Qt Quick but SGEXTN functions are designed for imperative UI, similar to QWidget and different from Qt Quick's declarative UI. There is also a wide variety of primitive structs that allow you to group, store, and use data more easily in addition to file system usage methods.
 
-For OpenGL support, you should subclass QQuickItem and use QSGGeometryNode for rendering. Since rendering is a highly customised process, SGEXTN does not simplify it and you are expected to use the Qt Quick API without any SGEXTN layer over it. However, SGEXTN is designed to not interfere with any custom rendering. To learn the syntax, you can look at the internal implementation of the cute vesicles. All relevant information can be found in the "vesicles" folder. You are recommended to group files related to each rendering element in the same folder instead of grouping by type.
+"SG" refers to Singapore, my home country. It does not reference the Qt Quick scene graph. SGEXTN is designed to let you not worry about the scene graph and instead use it like a customised, GPU-accelerated version of QWidget.
+
+For OpenGL support, you should subclass QQuickItem and use QSGGeometryNode for rendering. Since rendering is a highly customised process, SGEXTN does not simplify it and you are expected to use the Qt Quick API without any SGEXTN layer over it. SGEXTN does not modify scene graph internals (again, "SG" is Singapore, my home country, not the short form for scene graph) and is fully compatible with custom rendering. You may look at the cutevesicles folder for syntax.
 
 Documentation is included in the form of comments in header files.
 
-SGEXTN v1 uses QWidget, it is fully functional. I switched the rendering method because Qt Quick is newer, faster, and more compatible with mobile platforms.
+SGEXTN v1 uses QWidget, it is fully functional. I switched the rendering method because Qt Quick is newer, faster, and more compatible with mobile platforms. Although the current version uses Qt Quick internally, the SGEXTN wrapper layer allows you to use it as if it is QWidgets.
 
 File name prefixes:  
-SGX - SGEXTN files, do not touch those  
+SGX - SGEXTN files, do not touch those unless you know very well what you are doing
+SGXRender - SGEXTN files used in rendering of builtin cute vesicles, these are useful to look at to learn the structure of custom rendering
 SGU - kind of SGEXTN files, you can edit the values of properties inside if the comments inside explicitly allows you to. Keep a copy of the original so you can revert the file if something internal breaks  
 SGC - I cannot enforce this, but you are supposed to start your custom classes with this prefix
-
-"SG" refers to Singapore, my home country. It does not reference the Qt Quick scene graph. SGEXTN is designed to let you not worry about the scene graph and use it like a customised, GPU-accelerated version of QWidget.
+SGCRender - I cannot enforce this, but you are strongly encouraged tp start custom classes related to custom rendering with this
 
 ## What to expect...
 - [x] C++ primitives extensions
@@ -42,7 +44,7 @@ SGC - I cannot enforce this, but you are supposed to start your custom classes w
 		- [x] multi line input field, scrolls vertically if height exceeded
 		- [x] scroll view
 		- [x] touch receiver
-		- [ ] cute squishy vesicles
+		- [ ] cute vesicles
 	- [ ] SGEXTN set parent and get parent functions
 	- [ ] allow all SGEXTN widgets except cute vesicles to block mouse events and touch events
 	- [ ] getter and setter methods for properties

@@ -8,9 +8,15 @@
 class SGXVesiclesMaterial : public QSGMaterial
 {
 public:
-    SGXVesiclesMaterial(SGXVector2 c, float r);
-    SGXVector2 c;
+    SGXVesiclesMaterial(float cx, float cy, float r, float x, float y, float w, float h, float s);
+    float cx;
+    float cy;
     float r;
+    float x;
+    float y;
+    float w;
+    float h;
+    float s;
     QSGMaterialShader* createShader(QSGRendererInterface::RenderMode) const override;
     QSGMaterialType* type() const override;
     int compare(const QSGMaterial *other) const override;

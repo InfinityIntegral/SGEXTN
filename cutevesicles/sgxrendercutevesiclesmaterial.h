@@ -1,0 +1,44 @@
+#ifndef SGXRENDERCUTEVESICLESMATERIAL_H
+#define SGXRENDERCUTEVESICLESMATERIAL_H
+
+#include <QSGMaterial>
+#include <array>
+#include "../primitives/sgxvector2.h"
+#include "../primitives/sgxcolourrgba.h"
+#include <QImage>
+
+class SGXRenderCuteVesiclesMaterial : public QSGMaterial
+{
+public:
+    SGXRenderCuteVesiclesMaterial();
+    float x;
+    float y;
+    float w;
+    float h;
+    float s;
+    float membraneThickness;
+    std::array<SGXVector2, 10> center;
+    float maxCenter;
+    std::array<SGXVector2, 10> velocity;
+    float maxVelocityAllowed;
+    float maxAccelerationPerSecond;
+    std::array<float, 10> radius;
+    float maxRadiusChangePerSecond;
+    float minRadiusAllowed;
+    float maxRadiusAllowed;
+    std::array<std::array<float, 8>, 10> radiusOffset;
+    float maxRadiusOffsetChangePerSecond;
+    float maxRadiusOffsetAsRadiusPercentage;
+    SGXColourRGBA membraneColour;
+    SGXColourRGBA contentsColour;
+    float centerTransparency;
+    float edgeTransparency;
+    float membraneTransparency;
+    int framesPerSecond;
+    QSGMaterialShader* createShader(QSGRendererInterface::RenderMode) const override;
+    QSGMaterialType* type() const override;
+    int compare(const QSGMaterial *other) const override;
+    QImage uniformImage;
+};
+
+#endif // SGXRENDERCUTEVESICLESMATERIAL_H
