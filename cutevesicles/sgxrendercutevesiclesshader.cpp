@@ -44,17 +44,15 @@ bool SGXRenderCuteVesiclesShader::updateUniformData(RenderState &state, QSGMater
     memcpy(uniformBuffer + 112, &((*mat).centerTransparency), 4);
     memcpy(uniformBuffer + 116, &((*mat).edgeTransparency), 4);
     memcpy(uniformBuffer + 120, &((*mat).membraneTransparency), 4);
-    for(int i=0; i<10; i++){
-        memcpy(uniformBuffer + 124 + 8*i, &((*mat).center[i].x), 4);
-        memcpy(uniformBuffer + 128 + 8*i, &((*mat).center[i].y), 4);
+    memcpy(uniformBuffer + 124, &((*mat).membraneThickness), 4);
+    memcpy(uniformBuffer + 128, &((*mat).center[0].x), 4);
+    memcpy(uniformBuffer + 132, &((*mat).center[0].y), 4);
+    float offsetRadius = 0.0f;
+    for(int i=0; i<8; i++){
+        offsetRadius = (*mat).radius[0] + (*mat).radiusOffset[0][i] * (*mat).radius[0];
+        memcpy(uniformBuffer + 144 + 16 * i, &offsetRadius, 4);
     }
-    for(int i=0; i<10; i++){
-        memcpy(uniformBuffer + 204 + 4*i, &((*mat).radius[i]), 4);
-    }
-    for(int i=0; i<10; i++){
-        for(int j=0; j<8; j++){
-            memcpy(uniformBuffer + 244 + 32*i + 4*j, &((*mat).radiusOffset[i][j]), 4);
-        }
-    }
+    offsetRadius = (*mat).radius[0] + (*mat).radiusOffset[0][0] * (*mat).radius[0];
+    memcpy(uniformBuffer + 272, &offsetRadius, 4);
     return true;
 }

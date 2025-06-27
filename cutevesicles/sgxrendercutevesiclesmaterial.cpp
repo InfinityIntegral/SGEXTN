@@ -16,7 +16,7 @@ SGXRenderCuteVesiclesMaterial::SGXRenderCuteVesiclesMaterial(){
     w = 0.0f;
     h = 0.0f;
     s = 0.0f;
-    membraneThickness = 0.08f;
+    membraneThickness = 0.05f;
     maxCenter = 1.0f;
     center = {
         SGXVector2(randomFloat((-1.0f) * maxCenter, maxCenter), randomFloat((-1.0f) * maxCenter, maxCenter)),
@@ -169,7 +169,6 @@ SGXRenderCuteVesiclesMaterial::SGXRenderCuteVesiclesMaterial(){
     edgeTransparency = 0.05f;
     membraneTransparency = 0.2f;
     framesPerSecond = 10;
-    setFlag(QSGMaterial::Blending);
 }
 
 QSGMaterialShader* SGXRenderCuteVesiclesMaterial::createShader(QSGRendererInterface::RenderMode) const {
