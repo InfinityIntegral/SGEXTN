@@ -4,11 +4,7 @@ QMAKE_CXXFLAGS_RELEASE -= -O2
 QMAKE_CXXFLAGS_DEBUG += -std=c++20
 QMAKE_LFLAGS = -flto -Wl,--gc-sections
 DISTFILES = .gitignore LICENSE.txt README.md \
-    compilecommands.txt \
-    cutevesicles/cutevesicles.frag \
-    cutevesicles/cutevesicles.vert \
-    vesicles/vesicles.frag \
-    vesicles/vesicles.vert
+    compilecommands.txt
 SOURCES = misc/main.cpp \
     cutevesicles/sgxrendercutevesiclesmaterial.cpp \
     cutevesicles/sgxrendercutevesiclesquickuielement.cpp \
@@ -23,10 +19,7 @@ SOURCES = misc/main.cpp \
     quickui/sgxquickresizer.cpp \
     quickui/sgxquickuiinterface.cpp \
     quickui/sgxthemecoloursetting.cpp \
-    userDefinedClasses/sgucentralmanagement.cpp \
-    vesicles/sgxvesiclesmaterial.cpp \
-    vesicles/sgxvesiclesquickuielement.cpp \
-    vesicles/sgxvesiclesshader.cpp
+    userDefinedClasses/sgucentralmanagement.cpp
 RESOURCES = assets.qrc
 HEADERS += \
     cutevesicles/sgxrendercutevesiclesmaterial.h \
@@ -42,7 +35,4 @@ HEADERS += \
     quickui/sgxquickresizer.h \
     quickui/sgxquickuiinterface.h \
     quickui/sgxthemecoloursetting.h \
-    userDefinedClasses/sgucentralmanagement.h \
-    vesicles/sgxvesiclesmaterial.h \
-    vesicles/sgxvesiclesquickuielement.h \
-    vesicles/sgxvesiclesshader.h
+    userDefinedClasses/sgucentralmanagement.h

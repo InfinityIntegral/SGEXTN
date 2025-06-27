@@ -17,8 +17,6 @@
         <file>QML/scrollview.qml</file>
         <file>QML/touchreceiver.qml</file>
         <file>QML/vesicles.qml</file>
-        <file>vesicles/vesicles.vert.qsb</file>
-        <file>vesicles/vesicles.frag.qsb</file>
         <file>cutevesicles/cutevesicles.qml</file>
         <file>cutevesicles/cutevesicles.vert.qsb</file>
         <file>cutevesicles/cutevesicles.frag.qsb</file>
