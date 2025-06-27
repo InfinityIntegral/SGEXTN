@@ -170,7 +170,6 @@ SGXRenderCuteVesiclesMaterial::SGXRenderCuteVesiclesMaterial(){
     membraneTransparency = 0.2f;
     framesPerSecond = 10;
     setFlag(QSGMaterial::Blending);
-    uniformImage = QImage(32, 1, QImage::Format_RGBA32FPx4);
 }
 
 QSGMaterialShader* SGXRenderCuteVesiclesMaterial::createShader(QSGRendererInterface::RenderMode) const {

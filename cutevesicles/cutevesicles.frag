@@ -1,25 +1,146 @@
 #version 310 es
 precision highp float;
 layout(location = 0) out vec4 oc;
-layout(location = 0) in float builtin_opacity;
-layout(location = 1) in float sizeX;
-layout(location = 2) in float sizeY;
-layout(location = 3) in float sizeW;
-layout(location = 4) in float sizeH;
-layout(location = 5) in float sizeS;
-layout(binding = 1) uniform sampler2D vesiclesData;
-
-float getVesiclesData(int n){
-	int r = n % 4;
-	int q = n / 4;
-	if(r == 0){return texelFetch(vesiclesData, ivec2(q, 0), 0).r;}
-	if(r == 1){return texelFetch(vesiclesData, ivec2(q, 0), 0).g;}
-	if(r == 2){return texelFetch(vesiclesData, ivec2(q, 0), 0).b;}
-	if(r == 3){return texelFetch(vesiclesData, ivec2(q, 0), 0).a;}
-}
+layout(std140, binding = 0) uniform uniformBuffer{
+	uniform mat4 builtin_matrix;
+	uniform float builtin_opacity;
+	uniform float sizeX;
+	uniform float sizeY;
+	uniform float sizeW;
+	uniform float sizeH;
+	uniform float sizeS;
+	uniform float membraneColourR;
+	uniform float membraneColourG;
+	uniform float membraneColourB;
+	uniform float contentsColourR;
+	uniform float contentsColourG;
+	uniform float contentsColourB;
+	uniform float centerTransparency;
+	uniform float edgeTransparency;
+	uniform float membraneTransparency;
+	uniform float center0x;
+	uniform float center0y;
+	uniform float center1x;
+	uniform float center1y;
+	uniform float center2x;
+	uniform float center2y;
+	uniform float center3x;
+	uniform float center3y;
+	uniform float center4x;
+	uniform float center4y;
+	uniform float center5x;
+	uniform float center5y;
+	uniform float center6x;
+	uniform float center6y;
+	uniform float center7x;
+	uniform float center7y;
+	uniform float center8x;
+	uniform float center8y;
+	uniform float center9x;
+	uniform float center9y;
+	uniform float radius0;
+	uniform float radius1;
+	uniform float radius2;
+	uniform float radius3;
+	uniform float radius4;
+	uniform float radius5;
+	uniform float radius6;
+	uniform float radius7;
+	uniform float radius8;
+	uniform float radius9;
+	uniform float offset01;
+	uniform float offset02;
+	uniform float offset03;
+	uniform float offset04;
+	uniform float offset05;
+	uniform float offset06;
+	uniform float offset07;
+	uniform float offset08;
+	uniform float offset11;
+	uniform float offset12;
+	uniform float offset13;
+	uniform float offset14;
+	uniform float offset15;
+	uniform float offset16;
+	uniform float offset17;
+	uniform float offset18;
+	uniform float offset21;
+	uniform float offset22;
+	uniform float offset23;
+	uniform float offset24;
+	uniform float offset25;
+	uniform float offset26;
+	uniform float offset27;
+	uniform float offset28;
+	uniform float offset31;
+	uniform float offset32;
+	uniform float offset33;
+	uniform float offset34;
+	uniform float offset35;
+	uniform float offset36;
+	uniform float offset37;
+	uniform float offset38;
+	uniform float offset41;
+	uniform float offset42;
+	uniform float offset43;
+	uniform float offset44;
+	uniform float offset45;
+	uniform float offset46;
+	uniform float offset47;
+	uniform float offset48;
+	uniform float offset51;
+	uniform float offset52;
+	uniform float offset53;
+	uniform float offset54;
+	uniform float offset55;
+	uniform float offset56;
+	uniform float offset57;
+	uniform float offset58;
+	uniform float offset61;
+	uniform float offset62;
+	uniform float offset63;
+	uniform float offset64;
+	uniform float offset65;
+	uniform float offset66;
+	uniform float offset67;
+	uniform float offset68;
+	uniform float offset71;
+	uniform float offset72;
+	uniform float offset73;
+	uniform float offset74;
+	uniform float offset75;
+	uniform float offset76;
+	uniform float offset77;
+	uniform float offset78;
+	uniform float offset81;
+	uniform float offset82;
+	uniform float offset83;
+	uniform float offset84;
+	uniform float offset85;
+	uniform float offset86;
+	uniform float offset87;
+	uniform float offset88;
+	uniform float offset91;
+	uniform float offset92;
+	uniform float offset93;
+	uniform float offset94;
+	uniform float offset95;
+	uniform float offset96;
+	uniform float offset97;
+	uniform float offset98;
+};
+layout(location = 0) in float coordX;
+layout(location = 1) in float coordY;
 
 void main(){
-	//oc = vec4(getVesiclesData(0), getVesiclesData(1), getVesiclesData(2), 0.5 * builtin_opacity);
-	vec4 t = texelFetch(vesiclesData, ivec2(gl_FragCoord.x, 0), 0);
-	oc = vec4(t.r, t.g, t.b, 1.0);
+	float a = ((atan(coordY, coordX) / 3.14159265358979) + 1.0) * 4.0;
+	float mt = 0.05;
+	float r[9] = float[](radius0 + offset01 * radius0, radius0 + offset02 * radius0, radius0 + offset03 * radius0, radius0 + offset04 * radius0, radius0 + offset05 * radius0, radius0 + offset06 * radius0, radius0 + offset07 * radius0, radius0 + offset08 * radius0, radius0 + offset01 * radius0);
+	float rInner = (a - floor(a)) * (r[int(a) + 1] - 0.5 * mt) + (1.0 - (a - floor(a))) * (r[int(a)] - 0.5 * mt);
+	float rOuter = (a - floor(a)) * (r[int(a) + 1] + 0.5 * mt) + (1.0 - (a - floor(a))) * (r[int(a)] + 0.5 * mt);
+	float distSquare = (coordX) * (coordX) + (coordY) * (coordY);
+	if(distSquare < rInner * rInner){oc = vec4(1.0, 0.0, 0.0, 1.0);}
+	else if(distSquare < rOuter * rOuter){oc = vec4(0.0, 1.0, 0.0, 1.0);}
+	else{oc = vec4(0.0, 0.0, 1.0, 1.0);}
+	//oc = vec4(rInner, rOuter, 0.0, 1.0);
 }

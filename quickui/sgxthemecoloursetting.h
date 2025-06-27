@@ -23,7 +23,6 @@ class SGXThemeColourSetting : public QObject
     Q_PROPERTY(QColor themeColour8 READ getThemeColour8 WRITE setThemeColour8 NOTIFY changedThemeColour8 FINAL)
 public:
     SGXThemeColourSetting();
-    static QObject* getObject(QQmlEngine* me, QJSEngine* se);
     SGXColourRGBA noColour = SGXColourRGBA();
     [[nodiscard]] QColor getNoColour() const;
     [[nodiscard]] Q_INVOKABLE QColor getThemeColour(int x) const;

@@ -45,4 +45,17 @@ void SGXCentral::terminate(){
     delete SGXQuickUIInterface::resizerInstance;
     delete SGXQuickUIInterface::themeColoursInstance;
     delete SGXQuickUIInterface::touchEventFunctionsList;
+    delete SGXQuickUIInterface::rootWidgetTemplate;
+    delete SGXQuickUIInterface::parentWidgetTemplate;
+    delete SGXQuickUIInterface::widgetTemplate;
+    delete SGXQuickUIInterface::textTemplate;
+    delete SGXQuickUIInterface::longTextTemplate;
+    delete SGXQuickUIInterface::iconTemplate;
+    delete SGXQuickUIInterface::textButtonTemplate;
+    delete SGXQuickUIInterface::iconButtonTemplate;
+    delete SGXQuickUIInterface::inputFieldTemplate;
+    delete SGXQuickUIInterface::longInputFieldTemplate;
+    delete SGXQuickUIInterface::scrollViewTemplate;
+    delete SGXQuickUIInterface::touchReceiverTemplate;
+    delete SGXQuickUIInterface::cuteVesiclesTemplate;
 }

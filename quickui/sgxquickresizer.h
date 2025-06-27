@@ -16,7 +16,6 @@ class SGXQuickResizer : public QObject
     Q_PROPERTY(float sizeUnit READ getSizeUnit WRITE setSizeUnit NOTIFY changedSizeUnit FINAL)
 public:
     SGXQuickResizer();
-    static QObject* getObject(QQmlEngine* me, QJSEngine* se);
     float appWindowWidth;
     [[nodiscard]] float getAppWindowWidth() const;
     void setAppWindowWidth(float x);

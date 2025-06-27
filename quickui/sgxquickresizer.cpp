@@ -15,12 +15,6 @@ SGXQuickResizer::SGXQuickResizer(){
     (*this).sizeUnit = 0.0f;
 }
 
-QObject* SGXQuickResizer::getObject(QQmlEngine *me, QJSEngine *se){
-    Q_UNUSED(me);
-    Q_UNUSED(se);
-    return new SGXQuickResizer();
-}
-
 float SGXQuickResizer::getAppWindowWidth() const {
     return (*this).appWindowWidth;
 }

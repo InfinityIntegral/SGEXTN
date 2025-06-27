@@ -20,12 +20,6 @@ SGXThemeColourSetting::SGXThemeColourSetting(){
     (*this).themeColour8 = SGXColourRGBA(255, 255, 255);
 }
 
-QObject* SGXThemeColourSetting::getObject(QQmlEngine *me, QJSEngine *se){
-    Q_UNUSED(me);
-    Q_UNUSED(se);
-    return new SGXThemeColourSetting();
-}
-
 QColor SGXThemeColourSetting::getNoColour() const {
     return noColour.getQColour();
 }

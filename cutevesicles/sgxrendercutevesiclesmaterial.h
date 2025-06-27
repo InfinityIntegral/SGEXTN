@@ -38,7 +38,6 @@ public:
     QSGMaterialShader* createShader(QSGRendererInterface::RenderMode) const override;
     QSGMaterialType* type() const override;
     int compare(const QSGMaterial *other) const override;
-    QImage uniformImage;
 };
 
 #endif // SGXRENDERCUTEVESICLESMATERIAL_H
