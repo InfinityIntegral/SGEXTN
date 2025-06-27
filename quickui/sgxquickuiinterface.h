@@ -17,6 +17,21 @@ class SGXQuickUIInterface : public QObject
     Q_OBJECT
 public:
     SGXQuickUIInterface() = delete;
+    enum WidgetType{
+        RootWidget = 10,
+        ParentWidget = 20,
+        Widget = 30,
+        Text = 40,
+        LongText = 41,
+        Icon = 42,
+        TextButton = 50,
+        IconButton = 51,
+        InputField = 60,
+        LongInputField = 61,
+        ScrollView = 70,
+        TouchReceiver = 80,
+        CuteVesicles = 90,
+    };
     static void testingFunction(const std::array<SGXTouchEvent, 5>& t);
     static QQmlApplicationEngine* e;
     static SGXQuickResizer* resizerInstance;

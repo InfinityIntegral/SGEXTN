@@ -4,6 +4,7 @@ import ThemeColours 0.0
 import Resizer 0.0
 
 ScrollView{
+	property int widgetType: 0
 	property int bgText: 8
 	property int fgText: 4
 	property int bgScrollbar: 4

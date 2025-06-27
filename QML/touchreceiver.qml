@@ -3,6 +3,7 @@ import ThemeColours 0.0
 import Resizer 0.0
 
 Rectangle{
+	property int widgetType: 0
 	property real x1: 0.0
 	property real x0: 0.0
 	property real y1: 0.0

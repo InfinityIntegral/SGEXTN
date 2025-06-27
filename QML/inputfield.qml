@@ -4,6 +4,7 @@ import ThemeColours 0.0
 import Resizer 0.0
 
 TextField{
+	property int widgetType: 0
 	property int bg: 4
 	property int fg: 8
 	property int bgHover: 3

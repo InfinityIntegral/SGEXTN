@@ -9,7 +9,11 @@
 class SGXTouchEvent // struct to represent touch input
 {
 public:
-    enum TouchPhase {TouchStart, TouchOngoing, TouchEnd}; // enum representing touch phase (inspired by Unity C#)
+    enum TouchPhase{ // enum representing touch phase (inspired by Unity C#)
+        TouchStart = 1, // first frame of touch event
+        TouchOngoing = 2, // touch event is ongoing, including first frame
+        TouchEnd = 3 // touch event does not exist, is invalid, or has ended, this runs every frame when the touch event is not active
+    };
     SGXTouchEvent() = default; // default constructor for initialisation
     SGXTouchEvent(int n); // construct touch event with phase as ended
     SGXTouchEvent(int n, const std::array<float, 11>& data); // construct touch event from data provided by Qt Quick's MultiPointTouchArea, used by SGEXTN touchReceiver

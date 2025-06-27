@@ -55,12 +55,14 @@ void SGXQuickUIInterface::buildTemplate(){
 QQuickItem* SGXQuickUIInterface::createRootWidget(QQuickItem *parent){
     QQuickItem* thisItem = qobject_cast<QQuickItem*>((*SGXQuickUIInterface::rootWidgetTemplate).create());
     (*thisItem).setParentItem(parent);
+    (*thisItem).setProperty("widgetType", SGXQuickUIInterface::RootWidget);
     return thisItem;
 }
 
 QQuickItem* SGXQuickUIInterface::createParentWidget(QQuickItem *parent){
     QQuickItem* thisItem = qobject_cast<QQuickItem*>((*SGXQuickUIInterface::parentWidgetTemplate).create());
     (*thisItem).setParentItem(parent);
+    (*thisItem).setProperty("widgetType", SGXQuickUIInterface::ParentWidget);
     return thisItem;
 }
 
@@ -76,6 +78,7 @@ QQuickItem* SGXQuickUIInterface::createWidget(QQuickItem *parent, float x1, floa
     (*thisItem).setProperty("h1", h1);
     (*thisItem).setProperty("h0", h0);
     (*thisItem).setProperty("bg", bg);
+    (*thisItem).setProperty("widgetType", SGXQuickUIInterface::Widget);
     return thisItem;
 }
 
@@ -91,6 +94,7 @@ QQuickItem* SGXQuickUIInterface::createText(QQuickItem *parent, const QString &s
     (*thisItem).setProperty("h1", h1);
     (*thisItem).setProperty("h0", h0);
     (*thisItem).setProperty("s", s);
+    (*thisItem).setProperty("widgetType", SGXQuickUIInterface::Text);
     return thisItem;
 }
 
@@ -110,6 +114,7 @@ QQuickItem* SGXQuickUIInterface::createLongText(QQuickItem *parent, const QStrin
     (*thisItem).setProperty("s1", s1);
     (*thisItem).setProperty("s0", s0);
     (*thisItem).setProperty("s", s);
+    (*thisItem).setProperty("widgetType", SGXQuickUIInterface::LongText);
     return thisItem;
 }
 
@@ -123,6 +128,7 @@ QQuickItem* SGXQuickUIInterface::createIcon(QQuickItem *parent, const QChar &s, 
     (*thisItem).setProperty("w1", w1);
     (*thisItem).setProperty("w0", w0);
     (*thisItem).setProperty("s", s);
+    (*thisItem).setProperty("widgetType", SGXQuickUIInterface::Icon);
     return thisItem;
 }
 
@@ -139,6 +145,7 @@ QQuickItem* SGXQuickUIInterface::createTextButton(QQuickItem *parent, const QStr
     (*thisItem).setProperty("h0", h0);
     (*thisItem).setProperty("s", s);
     connect(thisItem, &QQuickItem::objectNameChanged, attachedFunction);
+    (*thisItem).setProperty("widgetType", SGXQuickUIInterface::TextButton);
     return thisItem;
 }
 
@@ -153,6 +160,7 @@ QQuickItem* SGXQuickUIInterface::createIconButton(QQuickItem *parent, const QCha
     (*thisItem).setProperty("w0", w0);
     (*thisItem).setProperty("s", s);
     connect(thisItem, &QQuickItem::objectNameChanged, attachedFunction);
+    (*thisItem).setProperty("widgetType", SGXQuickUIInterface::IconButton);
     return thisItem;
 }
 
@@ -167,6 +175,7 @@ QQuickItem* SGXQuickUIInterface::createInputField(QQuickItem *parent, float x1, 
     (*thisItem).setProperty("w0", w0);
     (*thisItem).setProperty("h1", h1);
     (*thisItem).setProperty("h0", h0);
+    (*thisItem).setProperty("widgetType", SGXQuickUIInterface::InputField);
     return thisItem;
 }
 
@@ -185,6 +194,7 @@ QQuickItem* SGXQuickUIInterface::createLongInputField(QQuickItem *parent, float 
     (*thisItem).setProperty("f0", f0);
     (*thisItem).setProperty("s1", s1);
     (*thisItem).setProperty("s0", s0);
+    (*thisItem).setProperty("widgetType", SGXQuickUIInterface::LongInputField);
     return thisItem;
 }
 
@@ -204,6 +214,7 @@ QQuickItem* SGXQuickUIInterface::createScrollView(QQuickItem *parent, float x1, 
     (*thisItem).setProperty("s1", s1);
     (*thisItem).setProperty("s0", s0);
     (*thisItem).setProperty("bg", bg);
+    (*thisItem).setProperty("widgetType", SGXQuickUIInterface::ScrollView);
     return thisItem;
 }
 
@@ -318,11 +329,13 @@ QQuickItem* SGXQuickUIInterface::createTouchReceiver(QQuickItem *parent, void (*
     (*SGXQuickUIInterface::touchEventFunctionsList).append(attachedFunction);
     (*thisItem).setProperty("functionPointer", (*SGXQuickUIInterface::touchEventFunctionsList).length() - 1);
     connect(thisItem, &QQuickItem::stateChanged, &SGXQuickUIInterface::receiveTouch);
+    (*thisItem).setProperty("widgetType", SGXQuickUIInterface::TouchReceiver);
     return thisItem;
 }
 
 QQuickItem* SGXQuickUIInterface::createCuteVesicles(QQuickItem *parent){
     QQuickItem* thisItem = qobject_cast<QQuickItem*>((*SGXQuickUIInterface::cuteVesiclesTemplate).create());
     (*thisItem).setParentItem(parent);
+    (*thisItem).setProperty("widgetType", SGXQuickUIInterface::CuteVesicles);
     return thisItem;
 }
