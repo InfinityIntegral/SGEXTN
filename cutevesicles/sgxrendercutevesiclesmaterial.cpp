@@ -17,7 +17,7 @@ SGXRenderCuteVesiclesMaterial::SGXRenderCuteVesiclesMaterial(){
     h = 0.0f;
     s = 0.0f;
     membraneThickness = 0.05f;
-    maxCenter = 1.0f;
+    maxCenter = 1.5f;
     center = {
         SGXVector2(randomFloat((-1.0f) * maxCenter, maxCenter), randomFloat((-1.0f) * maxCenter, maxCenter)),
         SGXVector2(randomFloat((-1.0f) * maxCenter, maxCenter), randomFloat((-1.0f) * maxCenter, maxCenter)),
@@ -30,7 +30,7 @@ SGXRenderCuteVesiclesMaterial::SGXRenderCuteVesiclesMaterial(){
         SGXVector2(randomFloat((-1.0f) * maxCenter, maxCenter), randomFloat((-1.0f) * maxCenter, maxCenter)),
         SGXVector2(randomFloat((-1.0f) * maxCenter, maxCenter), randomFloat((-1.0f) * maxCenter, maxCenter))
     };
-    maxVelocityAllowed = 0.05f;
+    maxVelocityAllowed = 0.01f;
     maxAccelerationPerSecond = 0.01f;
     velocity = {
         SGXVector2(randomFloat((-1.0f) * maxVelocityAllowed, maxVelocityAllowed), randomFloat((-1.0f) * maxVelocityAllowed, maxVelocityAllowed)),
@@ -46,7 +46,7 @@ SGXRenderCuteVesiclesMaterial::SGXRenderCuteVesiclesMaterial(){
     };
     minRadiusAllowed = 0.1f;
     maxRadiusAllowed = 0.35f;
-    maxRadiusChangePerSecond = 0.03f;
+    maxRadiusChangePerSecond = 0.01f;
     radius = {
         randomFloat(minRadiusAllowed, maxRadiusAllowed),
         randomFloat(minRadiusAllowed, maxRadiusAllowed),
@@ -168,7 +168,6 @@ SGXRenderCuteVesiclesMaterial::SGXRenderCuteVesiclesMaterial(){
     centerTransparency = 0.1f;
     edgeTransparency = 0.05f;
     membraneTransparency = 0.2f;
-    framesPerSecond = 10;
 }
 
 QSGMaterialShader* SGXRenderCuteVesiclesMaterial::createShader(QSGRendererInterface::RenderMode) const {

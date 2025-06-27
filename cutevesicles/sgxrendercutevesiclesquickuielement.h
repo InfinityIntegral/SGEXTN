@@ -9,6 +9,13 @@ class SGXRenderCuteVesiclesQuickUIElement : public QQuickItem
 public:
     SGXRenderCuteVesiclesQuickUIElement();
     QSGNode* updatePaintNode(QSGNode* thisNode, UpdatePaintNodeData*) override;
+    static float framesPerSecond;
+    static bool animationOngoing;
+    static SGXRenderCuteVesiclesQuickUIElement* animationScreen;
+public slots:
+    static void refreshAnimation();
+    static void startAnimation();
+    static void stopAnimation();
 };
 
 #endif // SGXRENDERCUTEVESICLESQUICKUIELEMENT_H

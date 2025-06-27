@@ -34,7 +34,6 @@ public:
     float centerTransparency;
     float edgeTransparency;
     float membraneTransparency;
-    int framesPerSecond;
     QSGMaterialShader* createShader(QSGRendererInterface::RenderMode) const override;
     QSGMaterialType* type() const override;
     int compare(const QSGMaterial *other) const override;

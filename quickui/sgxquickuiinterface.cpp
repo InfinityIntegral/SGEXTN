@@ -9,6 +9,7 @@
 #include <bit>
 #include <array>
 #include <qcontainerfwd.h>
+#include "../cutevesicles/sgxrendercutevesiclesquickuielement.h"
 
 QQuickItem* SGXQuickUIInterface::rootWindow = nullptr;
 QQmlApplicationEngine* SGXQuickUIInterface::e = nullptr;
@@ -50,7 +51,6 @@ void SGXQuickUIInterface::initialise(){
 void SGXQuickUIInterface::buildTemplate(){
     SGXQuickUIInterface::rootWidget = SGXQuickUIInterface::createRootWidget(SGXQuickUIInterface::rootWindow);
     SGXQuickUIInterface::parentWidget = SGXQuickUIInterface::createParentWidget(SGXQuickUIInterface::rootWidget);
-    SGXQuickUIInterface::createCuteVesicles(SGXQuickUIInterface::rootWidget);
 }
 
 QQuickItem* SGXQuickUIInterface::createRootWidget(QQuickItem *parent){
