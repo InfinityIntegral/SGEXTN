@@ -339,3 +339,22 @@ QQuickItem* SGXQuickUIInterface::createCuteVesicles(QQuickItem *parent){
     (*thisItem).setProperty("widgetType", SGXQuickUIInterface::CuteVesicles);
     return thisItem;
 }
+
+SGXQuickUIInterface::WidgetType SGXQuickUIInterface::getType(QQuickItem *x){
+    int v = (*x).property("widgetType").toInt();
+    if(v == SGXQuickUIInterface::Undefined){return SGXQuickUIInterface::Undefined;}
+    if(v == SGXQuickUIInterface::RootWidget){return SGXQuickUIInterface::RootWidget;}
+    if(v == SGXQuickUIInterface::ParentWidget){return SGXQuickUIInterface::ParentWidget;}
+    if(v == SGXQuickUIInterface::Widget){return SGXQuickUIInterface::Widget;}
+    if(v == SGXQuickUIInterface::Text){return SGXQuickUIInterface::Text;}
+    if(v == SGXQuickUIInterface::LongText){return SGXQuickUIInterface::LongText;}
+    if(v == SGXQuickUIInterface::Icon){return SGXQuickUIInterface::Icon;}
+    if(v == SGXQuickUIInterface::TextButton){return SGXQuickUIInterface::TextButton;}
+    if(v == SGXQuickUIInterface::IconButton){return SGXQuickUIInterface::IconButton;}
+    if(v == SGXQuickUIInterface::InputField){return SGXQuickUIInterface::InputField;}
+    if(v == SGXQuickUIInterface::LongInputField){return SGXQuickUIInterface::LongInputField;}
+    if(v == SGXQuickUIInterface::ScrollView){return SGXQuickUIInterface::ScrollView;}
+    if(v == SGXQuickUIInterface::TouchReceiver){return SGXQuickUIInterface::TouchReceiver;}
+    if(v == SGXQuickUIInterface::CuteVesicles){return SGXQuickUIInterface::CuteVesicles;}
+    return SGXQuickUIInterface::Undefined;
+}

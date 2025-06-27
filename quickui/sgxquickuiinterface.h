@@ -18,6 +18,7 @@ class SGXQuickUIInterface : public QObject
 public:
     SGXQuickUIInterface() = delete;
     enum WidgetType{
+        Undefined = 0,
         RootWidget = 10,
         ParentWidget = 20,
         Widget = 30,
@@ -69,6 +70,7 @@ public:
     static QVector<void (*)(const std::array<SGXTouchEvent, 5>&)>* touchEventFunctionsList;
     static QQmlComponent* cuteVesiclesTemplate;
     static QQuickItem* createCuteVesicles(QQuickItem* parent);
+    static SGXQuickUIInterface::WidgetType getType(QQuickItem* x);
 };
 
 #endif // SGXQUICKUIINTERFACE_H
