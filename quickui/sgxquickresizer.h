@@ -2,8 +2,6 @@
 #define SGXQUICKRESIZER_H
 
 #include <QObject>
-#include <QQmlEngine>
-#include <QJSEngine>
 #include <qtmetamacros.h>
 
 class SGXQuickResizer : public QObject

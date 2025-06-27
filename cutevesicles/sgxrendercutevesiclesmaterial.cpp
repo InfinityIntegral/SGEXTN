@@ -1,6 +1,13 @@
 #include "sgxrendercutevesiclesmaterial.h"
 #include <QRandomGenerator>
 #include "sgxrendercutevesiclesshader.h"
+#include "../primitives/sgxvector2.h"
+#include "../primitives/sgxcolourrgba.h"
+#include <QSGMaterialShader>
+#include <QSGRendererInterface>
+#include <qsgmaterialtype.h>
+#include <QSGMaterial>
+#include <cstdint>
 
 namespace{
 inline float randomFloat(float min, float max){
@@ -170,7 +177,7 @@ SGXRenderCuteVesiclesMaterial::SGXRenderCuteVesiclesMaterial(){
     membraneTransparency = 0.2f;
 }
 
-QSGMaterialShader* SGXRenderCuteVesiclesMaterial::createShader(QSGRendererInterface::RenderMode) const {
+QSGMaterialShader* SGXRenderCuteVesiclesMaterial::createShader(QSGRendererInterface::RenderMode /*unused*/) const {
     return new SGXRenderCuteVesiclesShader();
 }
 
@@ -180,8 +187,8 @@ QSGMaterialType* SGXRenderCuteVesiclesMaterial::type() const {
 }
 
 int SGXRenderCuteVesiclesMaterial::compare(const QSGMaterial *other) const {
-    uintptr_t thisType = reinterpret_cast<uintptr_t>((*this).type());
-    uintptr_t otherType = reinterpret_cast<uintptr_t>((*other).type());
+    const uintptr_t thisType = reinterpret_cast<uintptr_t>((*this).type()); // NOLINT(cppcoreguidelines-pro-type-reinterpret-cast)
+    const uintptr_t otherType = reinterpret_cast<uintptr_t>((*other).type()); // NOLINT(cppcoreguidelines-pro-type-reinterpret-cast)
     if(thisType < otherType){return -1;}
     if(thisType > otherType){return 1;}
     return 0;

@@ -9,7 +9,6 @@
 #include <bit>
 #include <array>
 #include <qcontainerfwd.h>
-#include "../cutevesicles/sgxrendercutevesiclesquickuielement.h"
 
 QQuickItem* SGXQuickUIInterface::rootWindow = nullptr;
 QQmlApplicationEngine* SGXQuickUIInterface::e = nullptr;

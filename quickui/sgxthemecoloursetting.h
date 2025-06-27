@@ -4,8 +4,6 @@
 #include <QObject>
 #include <QColor>
 #include "../primitives/sgxcolourrgba.h"
-#include <QQmlEngine>
-#include <QJSEngine>
 #include <qtmetamacros.h>
 
 class SGXThemeColourSetting : public QObject

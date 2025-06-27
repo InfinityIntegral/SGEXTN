@@ -1,11 +1,8 @@
 #include "sgxthemecoloursetting.h"
-#include <QQmlEngine>
 #include "../primitives/sgxcolourrgba.h"
 #include <QObject>
-#include <QJSEngine>
 #include <QColor>
 #include <qtmetamacros.h>
-#include <qtpreprocessorsupport.h>
 
 SGXThemeColourSetting::SGXThemeColourSetting(){
     (*this).noColour = SGXColourRGBA(255, 255, 255, 0);

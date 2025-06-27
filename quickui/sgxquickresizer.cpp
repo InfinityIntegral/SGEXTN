@@ -1,10 +1,6 @@
 #include "sgxquickresizer.h"
 #include "../quickui/sgxquickuiinterface.h"
-#include <QObject>
-#include <QQmlEngine>
-#include <QJSEngine>
 #include <algorithm>
-#include <qtpreprocessorsupport.h>
 #include <qtmetamacros.h>
 
 SGXQuickResizer::SGXQuickResizer(){

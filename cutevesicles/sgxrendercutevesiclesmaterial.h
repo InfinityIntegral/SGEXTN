@@ -5,7 +5,9 @@
 #include <array>
 #include "../primitives/sgxvector2.h"
 #include "../primitives/sgxcolourrgba.h"
-#include <QImage>
+#include <QSGMaterialShader>
+#include <QSGRendererInterface>
+#include <qsgmaterialtype.h>
 
 class SGXRenderCuteVesiclesMaterial : public QSGMaterial
 {
@@ -17,25 +19,25 @@ public:
     float h;
     float s;
     float membraneThickness;
-    std::array<SGXVector2, 10> center;
+    std::array<SGXVector2, 10> center = {};
     float maxCenter;
-    std::array<SGXVector2, 10> velocity;
+    std::array<SGXVector2, 10> velocity = {};
     float maxVelocityAllowed;
     float maxAccelerationPerSecond;
-    std::array<float, 10> radius;
+    std::array<float, 10> radius = {};
     float maxRadiusChangePerSecond;
     float minRadiusAllowed;
     float maxRadiusAllowed;
-    std::array<std::array<float, 8>, 10> radiusOffset;
+    std::array<std::array<float, 8>, 10> radiusOffset = {};
     float maxRadiusOffsetChangePerSecond;
     float maxRadiusOffsetAsRadiusPercentage;
-    SGXColourRGBA membraneColour;
-    SGXColourRGBA contentsColour;
+    SGXColourRGBA membraneColour = SGXColourRGBA();
+    SGXColourRGBA contentsColour = SGXColourRGBA();
     float centerTransparency;
     float edgeTransparency;
     float membraneTransparency;
-    QSGMaterialShader* createShader(QSGRendererInterface::RenderMode) const override;
-    QSGMaterialType* type() const override;
+    [[nodiscard]] QSGMaterialShader* createShader(QSGRendererInterface::RenderMode /*unused*/) const override;
+    [[nodiscard]] QSGMaterialType* type() const override;
     int compare(const QSGMaterial *other) const override;
 };
 
