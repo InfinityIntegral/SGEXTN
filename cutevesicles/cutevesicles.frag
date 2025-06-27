@@ -19,17 +19,29 @@ layout(std140, binding = 0) uniform uniformBuffer{
 	uniform float edgeTransparency;
 	uniform float membraneTransparency;
 	uniform float membraneThickness;
-	uniform vec2 center;
-	uniform float radius[9];
+	uniform vec2 center[10];
+	uniform float radius[90];
 };
 layout(location = 0) in float coordX;
 layout(location = 1) in float coordY;
 
+vec4 getColour(float x, float y, int n){
+	float a = ((atan(y - center[n].y, x - center[n].x) / 3.14159265358979) + 1.0) * 4.0;
+	float rInner = (a - floor(a)) * (radius[9*n + int(a) + 1] - 0.5 * membraneThickness) + (1.0 - (a - floor(a))) * (radius[9*n + int(a)] - 0.5 * membraneThickness);
+	float rOuter = (a - floor(a)) * (radius[9*n + int(a) + 1] + 0.5 * membraneThickness) + (1.0 - (a - floor(a))) * (radius[9*n + int(a)] + 0.5 * membraneThickness);
+	float distSquare = (x - center[n].x) * (x - center[n].x) + (y - center[n].y) * (y - center[n].y);
+	vec4 returnColour = step(distSquare, rInner * rInner) * vec4(contentsColourR, contentsColourG, contentsColourB, mix(centerTransparency, edgeTransparency, distSquare / (rInner * rInner))) + step(rInner * rInner, distSquare) * step(distSquare, rOuter * rOuter) * vec4(membraneColourR, membraneColourG, membraneColourB, membraneTransparency) + step(rOuter * rOuter, distSquare) * vec4(1.0, 1.0, 1.0, 0.0);
+	returnColour = vec4(returnColour.r * returnColour.a, returnColour.g * returnColour.a, returnColour.b * returnColour.a, returnColour.a);
+	return returnColour;
+}
+
+vec4 blendColours(vec4 ap, vec4 bp){
+	return vec4(bp.r + (1.0 - bp.a) * ap.r, bp.g + (1.0 - bp.a) * ap.g, bp.b + (1.0 - bp.a) * ap.b, bp.a + (1.0 - bp.a) * ap.a);
+}
+
 void main(){
-	float a = ((atan(coordY - center.y, coordX - center.x) / 3.14159265358979) + 1.0) * 4.0;
-	float rInner = (a - floor(a)) * (radius[int(a) + 1] - 0.5 * membraneThickness) + (1.0 - (a - floor(a))) * (radius[int(a)] - 0.5 * membraneThickness);
-	float rOuter = (a - floor(a)) * (radius[int(a) + 1] + 0.5 * membraneThickness) + (1.0 - (a - floor(a))) * (radius[int(a)] + 0.5 * membraneThickness);
-	float distSquare = (coordX - center.x) * (coordX - center.x) + (coordY - center.y) * (coordY - center.y);
-	oc = step(distSquare, rInner * rInner) * vec4(contentsColourR, contentsColourG, contentsColourB, mix(centerTransparency, edgeTransparency, distSquare / (rInner * rInner))) + step(rInner * rInner, distSquare) * step(distSquare, rOuter * rOuter) * vec4(membraneColourR, membraneColourG, membraneColourB, membraneTransparency) + step(rOuter * rOuter, distSquare) * vec4(0.0, 0.0, 0.0, 0.0);
-	oc = vec4(oc.r * oc.a, oc.g * oc.a, oc.b * oc.a, oc.a);
+	oc = vec4(0.0, 0.0, 0.0, 0.0);
+	for(int i=0; i<10; i++){
+		oc = blendColours(oc, getColour(coordX, coordY, i));
+	}
 }
