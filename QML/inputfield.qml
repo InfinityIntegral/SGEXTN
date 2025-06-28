@@ -5,6 +5,7 @@ import Resizer 0.0
 
 TextField{
 	property int widgetType: 0
+	property string fontClass: "SingScript.sg"
 	property int bg: 4
 	property int fg: 8
 	property int bgHover: 3
@@ -82,7 +83,7 @@ TextField{
 	}
 	
 	font.pixelSize: height
-	font.family: "SingScript.sg"
+	font.family: fontClass
 	horizontalAlignment: Text.AlignHCenter
 	color: ThemeColours.getThemeColour(fgNow)
 	selectionColor: ThemeColours.getThemeColour(bgSelected);

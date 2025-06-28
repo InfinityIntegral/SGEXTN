@@ -5,6 +5,7 @@ import Resizer 0.0
 
 ScrollView{
 	property int widgetType: 0
+	property string fontClass: "SingScript.sg"
 	property int bg: 4
 	property int fg: 8
 	property int bgHover: 3
@@ -105,7 +106,7 @@ ScrollView{
 			}
 		
 			font.pixelSize: f1 * Resizer.renderSpaceHeight + f0 * Resizer.sizeUnit
-			font.family: "SingScript.sg"
+			font.family: fontClass
 			color: ThemeColours.getThemeColour(fgNow)
 			selectionColor: ThemeColours.getThemeColour(bgSelected);
 			selectedTextColor: ThemeColours.getThemeColour(fgSelected);

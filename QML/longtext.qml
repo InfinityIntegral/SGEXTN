@@ -5,6 +5,7 @@ import Resizer 0.0
 
 ScrollView{
 	property int widgetType: 0
+	property string fontClass: "SingScript.sg"
 	property int bgText: 8
 	property int fgText: 4
 	property int bgScrollbar: 4
@@ -51,8 +52,8 @@ ScrollView{
 				height: Math.max(implicitHeight, h1 * Resizer.renderSpaceHeight + h0 * Resizer.sizeUnit)
 				text: s
 				font.pixelSize: f1 * Resizer.renderSpaceHeight + f0 * Resizer.sizeUnit
-				font.family: "SingScript.sg"
-				color: ThemeColours.getThemeColour(fgText);
+				font.family: fontClass
+				color: ThemeColours.getThemeColour(fgText)
 				wrapMode: Text.WrapAtWordBoundaryOrAnywhere
 
 				function updateParentHeight(){

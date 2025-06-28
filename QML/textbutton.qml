@@ -5,6 +5,7 @@ import Resizer 0.0
 
 Button{
 	property int widgetType: 0
+	property string fontClass: "SingScript.sg"
 	property int bg: 4
 	property int fg: 8
 	property int bgHover: 3
@@ -87,7 +88,7 @@ Button{
 		height: parent.height
 		text: s
 		font.pixelSize: parent.height
-		font.family: "SingScript.sg"
+		font.family: fontClass
 		horizontalAlignment: Text.AlignHCenter
 		color: ThemeColours.getThemeColour(fgNow);
 		clip: true
