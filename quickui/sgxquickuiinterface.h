@@ -73,7 +73,6 @@ public:
     static SGXQuickUIInterface::WidgetType getType(QQuickItem* x);
     static QQuickItem* getActualParentableObject(QQuickItem* x);
     static void setActualParent(QQuickItem* obj, QQuickItem* x);
-    static void doNothing(){qDebug() << "did nothing";}
 };
 
 #endif // SGXQUICKUIINTERFACE_H

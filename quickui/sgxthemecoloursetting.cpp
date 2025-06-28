@@ -3,18 +3,19 @@
 #include <QObject>
 #include <QColor>
 #include <qtmetamacros.h>
+#include "../userDefinedClasses/sgucentralmanagement.h"
 
 SGXThemeColourSetting::SGXThemeColourSetting(){
     (*this).noColour = SGXColourRGBA(255, 255, 255, 0);
-    (*this).themeColour0 = SGXColourRGBA(0, 0, 0);
-    (*this).themeColour1 = SGXColourRGBA(64, 0, 50);
-    (*this).themeColour2 = SGXColourRGBA(128, 0, 100);
-    (*this).themeColour3 = SGXColourRGBA(192, 0, 150);
-    (*this).themeColour4 = SGXColourRGBA(255, 0, 200);
-    (*this).themeColour5 = SGXColourRGBA(255, 64, 214);
-    (*this).themeColour6 = SGXColourRGBA(255, 128, 228);
-    (*this).themeColour7 = SGXColourRGBA(255, 192, 242);
-    (*this).themeColour8 = SGXColourRGBA(255, 255, 255);
+    (*this).themeColour0 = SGUCentralManagement::themeColour0;
+    (*this).themeColour1 = SGUCentralManagement::themeColour1;
+    (*this).themeColour2 = SGUCentralManagement::themeColour2;
+    (*this).themeColour3 = SGUCentralManagement::themeColour3;
+    (*this).themeColour4 = SGUCentralManagement::themeColour4;
+    (*this).themeColour5 = SGUCentralManagement::themeColour5;
+    (*this).themeColour6 = SGUCentralManagement::themeColour6;
+    (*this).themeColour7 = SGUCentralManagement::themeColour7;
+    (*this).themeColour8 = SGUCentralManagement::themeColour8;
 }
 
 QColor SGXThemeColourSetting::getNoColour() const {

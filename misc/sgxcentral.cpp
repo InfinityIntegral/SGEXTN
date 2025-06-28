@@ -14,6 +14,8 @@
 #include "../cutevesicles/sgxrendercutevesiclesquickuielement.h"
 
 void SGXCentral::initialise(){
+    SGUCentralManagement::earlyInitialise();
+    
     QCoreApplication::setApplicationName(SGUCentralManagement::applicationName);
     QCoreApplication::setApplicationVersion(SGUCentralManagement::applicationVersion);
     QCoreApplication::setOrganizationName("05524F.sg");

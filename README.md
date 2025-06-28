@@ -18,7 +18,7 @@ SGX - SGEXTN files, do not touch those unless you know very well what you are do
 SGXRender - SGEXTN files used in rendering of builtin cute vesicles, these are useful to look at to learn the structure of custom rendering
 SGU - kind of SGEXTN files, you can edit the values of properties inside if the comments inside explicitly allows you to. Keep a copy of the original so you can revert the file if something internal breaks  
 SGC - I cannot enforce this, but you are supposed to start your custom classes with this prefix
-SGCRender - I cannot enforce this, but you are strongly encouraged tp start custom classes related to custom rendering with this
+SGCRender - I cannot enforce this, but you are strongly encouraged to start custom classes related to custom rendering with this
 
 ## What to expect...
 - [x] C++ primitives extensions
@@ -45,8 +45,6 @@ SGCRender - I cannot enforce this, but you are strongly encouraged tp start cust
 		- [x] scroll view
 		- [x] touch receiver
 		- [x] cute vesicles
-	- [ ] getter and setter methods for properties
-	- [ ] user defined theme colours
 	- [ ] user defined vesicle properties
 	- [ ] HSL interpolated theme colours
 	- [ ] documentation

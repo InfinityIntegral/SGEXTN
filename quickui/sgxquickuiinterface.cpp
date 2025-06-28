@@ -10,6 +10,7 @@
 #include <array>
 #include <qcontainerfwd.h>
 #include <QQueue>
+#include <utility>
 
 QQuickItem* SGXQuickUIInterface::rootWindow = nullptr;
 QQmlApplicationEngine* SGXQuickUIInterface::e = nullptr;
@@ -342,7 +343,7 @@ QQuickItem* SGXQuickUIInterface::createCuteVesicles(QQuickItem *parent){
 }
 
 SGXQuickUIInterface::WidgetType SGXQuickUIInterface::getType(QQuickItem *x){
-    int v = (*x).property("widgetType").toInt();
+    const int v = (*x).property("widgetType").toInt();
     if(v == SGXQuickUIInterface::Undefined){return SGXQuickUIInterface::Undefined;}
     if(v == SGXQuickUIInterface::RootWidget){return SGXQuickUIInterface::RootWidget;}
     if(v == SGXQuickUIInterface::ParentWidget){return SGXQuickUIInterface::ParentWidget;}
