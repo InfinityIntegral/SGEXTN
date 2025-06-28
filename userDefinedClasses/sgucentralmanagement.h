@@ -12,32 +12,33 @@ public:
     SGUCentralManagement() = delete;
     static void initialise(); // initialisation function run when app opens
     static void terminate(); // temination function run when app closes
-    static void earlyInitialise();
+    static void earlyInitialise(); // initialisation function run before GUI is created
     static QString applicationName; // name of application displayed
     static QString applicationVersion; // version number of application
-    static SGXColourRGBA themeColour0;
-    static SGXColourRGBA themeColour1;
-    static SGXColourRGBA themeColour2;
-    static SGXColourRGBA themeColour3;
-    static SGXColourRGBA themeColour4;
-    static SGXColourRGBA themeColour5;
-    static SGXColourRGBA themeColour6;
-    static SGXColourRGBA themeColour7;
-    static SGXColourRGBA themeColour8;
-    static float cuteVesiclesMembraneThickness;
-    static float cuteVesiclesMaximumCenterDistance;
-    static float cuteVesiclesMaximumVelocity;
-    static float cuteVesiclesMaximumAcceleration;
-    static float cuteVesiclesMaximumRadiusChange;
-    static float cuteVesiclesMinimumRadius;
-    static float cuteVesiclesMaximumRadius;
-    static float cuteVesiclesMaximumRadiusOffsetChange;
-    static float cuteVesiclesMaximumRadiusOffset;
-    static SGXColourRGBA cuteVesiclesMembraneColour;
-    static SGXColourRGBA cuteVesiclesContentsColour;
-    static float cuteVesiclesCenterTransparency;
-    static float cuteVesiclesEdgeTransparency;
-    static float cuteVesiclesMembraneTransparency;
+    static SGXColourRGBA themeColour0; // theme colour 0, default black
+    static SGXColourRGBA themeColour1; // theme colour 1
+    static SGXColourRGBA themeColour2; // theme colour 2
+    static SGXColourRGBA themeColour3; // theme colour 3
+    static SGXColourRGBA themeColour4; // theme colour 4, default bright pink
+    static SGXColourRGBA themeColour5; // theme colour 5
+    static SGXColourRGBA themeColour6; // theme colour 6
+    static SGXColourRGBA themeColour7; // theme colour 7
+    static SGXColourRGBA themeColour8; // theme colour 8, default white
+    static float cuteVesiclesMembraneThickness; // thickness of vesicle membrane in units, where 1 unit is half the maximum of the parent widget's width and height
+    static float cuteVesiclesMaximumCenterDistance; // maximum possible distance on both axis that a vesicle can be from the center of the screen in units, where 1 unit is half the maximum of the parent widget's width and height
+    static float cuteVesiclesMaximumVelocity; // maximum possible speed on both axis that a vesicle can move at in units per second, where 1 unit is half the maximum of the parent widget's width and height
+    static float cuteVesiclesMaximumAcceleration; // maximum possible acceleration on both axis for vesicles in units per second, where 1 unit is half the maximum of the parent widget's width and height
+    static float cuteVesiclesMaximumRadiusChange; // maximum possible rate of change of a vesicle's radius in units per second, where 1 unit is half the maximum of the parent widget's width and height
+    static float cuteVesiclesMinimumRadius; // minimum vesicle radius in units, where 1 unit is half the maximum of the parent widget's width and height
+    static float cuteVesiclesMaximumRadius; // maximum vesicle radius in units, where 1 unit is half the maximum of the parent widget's width and height
+    static float cuteVesiclesMaximumRadiusOffsetChange; // maximum possible rate of change of the radius offset on vesicles as a ratio to the radius, the radius offset is used to give the vesicles a squishy feel
+    static float cuteVesiclesMaximumRadiusOffset; // maximum possible radius offset in both directions on vesicles as a ratio to the radius, the radius offset is used to give the vesicles a squishy feel
+    static SGXColourRGBA cuteVesiclesMembraneColour; // colour of the membrane (phospholipid bilayer) on vesicles
+    static SGXColourRGBA cuteVesiclesContentsColour; // colour of vesicle contents
+    static float cuteVesiclesCenterTransparency; // transparency of vesicle at its center, here there is most contents
+    static float cuteVesiclesEdgeTransparency; // transparency of vesicle at its edge, here there is least contents
+    static float cuteVesiclesMembraneTransparency; // transparency of vesicle membrane (phospholipid bilayer)
+    static float cuteVesiclesFrameRate; // frame count per second of vesicle animation
 };
 
 #endif // SGUCENTRALMANAGEMENT_H

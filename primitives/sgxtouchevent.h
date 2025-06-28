@@ -17,7 +17,6 @@ public:
     SGXTouchEvent() = default; // default constructor for initialisation
     SGXTouchEvent(int n); // construct touch event with phase as ended
     SGXTouchEvent(int n, const std::array<float, 11>& data); // construct touch event from data provided by Qt Quick's MultiPointTouchArea, used by SGEXTN touchReceiver
-    // built constructors later
     // SGTouchEvent no longer supports QTouchEvent, precise touch interaction must be done through a SGEXTN touchReceiver, an instance of this can be provided using SGXQuickUIInterface::createTouchReceiver
     // for QTouchEvent support, refer to this file in the SGEXTN v1 release, but that version has less features
     float x; // x coordinate of touch event

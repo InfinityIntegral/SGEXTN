@@ -19,7 +19,7 @@ inline float randomFloat(float min, float max){
 }
 }
 
-float SGXRenderCuteVesiclesQuickUIElement::framesPerSecond = 10.0f;
+float SGXRenderCuteVesiclesQuickUIElement::framesPerSecond = 0.0f;
 bool SGXRenderCuteVesiclesQuickUIElement::animationOngoing = false;
 SGXRenderCuteVesiclesQuickUIElement* SGXRenderCuteVesiclesQuickUIElement::animationScreen = nullptr;
 

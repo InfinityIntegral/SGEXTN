@@ -28,6 +28,7 @@ void SGXCentral::initialise(){
     qmlRegisterSingletonInstance("Resizer", 0, 0, "Resizer", SGXQuickUIInterface::resizerInstance);
     qmlRegisterType<SGXRenderCuteVesiclesQuickUIElement>("CuteVesicles", 0, 0, "CuteVesicles");
     (*SGXQuickUIInterface::e).load(":/QML/root.qml");
+    SGXRenderCuteVesiclesQuickUIElement::framesPerSecond = SGUCentralManagement::cuteVesiclesFrameRate;
     
     connect(qApp, &QGuiApplication::aboutToQuit, &SGXCentral::terminate); // NOLINT(cppcoreguidelines-pro-type-static-cast-downcast)
     QFontDatabase::addApplicationFont(":/assets/standard.otf");

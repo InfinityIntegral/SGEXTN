@@ -32,6 +32,7 @@ SGXColourRGBA SGUCentralManagement::cuteVesiclesContentsColour = SGXColourRGBA(2
 float SGUCentralManagement::cuteVesiclesCenterTransparency = 0.1f;
 float SGUCentralManagement::cuteVesiclesEdgeTransparency = 0.05f;
 float SGUCentralManagement::cuteVesiclesMembraneTransparency = 0.2f;
+float SGUCentralManagement::cuteVesiclesFrameRate = 10.0f;
 
 void SGUCentralManagement::initialise(){
     
@@ -41,7 +42,6 @@ void SGUCentralManagement::earlyInitialise(){
     
 }
 
-// is run when app closes
 void SGUCentralManagement::terminate(){
     
 }

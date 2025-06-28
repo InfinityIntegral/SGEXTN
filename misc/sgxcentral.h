@@ -9,11 +9,6 @@ class SGXCentral : public QObject // non instantiable class for essential applic
     Q_OBJECT
 public:
     SGXCentral() = delete;
-    SGXCentral(const SGXCentral&) = delete;
-    SGXCentral(SGXCentral&&) = delete;
-    SGXCentral& operator=(const SGXCentral&) = delete;
-    SGXCentral& operator=(SGXCentral&&) = delete;
-    ~SGXCentral() override = default;
     static void initialise(); // initialisation function run when app opens
     static void terminate(); // termination function run when app closes
 };

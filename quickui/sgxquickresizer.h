@@ -4,7 +4,7 @@
 #include <QObject>
 #include <qtmetamacros.h>
 
-class SGXQuickResizer : public QObject
+class SGXQuickResizer : public QObject // QML compatibility class for package Resizer 0.0
 {
     Q_OBJECT
     Q_PROPERTY(float appWindowWidth READ getAppWindowWidth WRITE setAppWindowWidth NOTIFY changedAppWindowWidth FINAL);
