@@ -9,6 +9,7 @@
 #include <bit>
 #include <array>
 #include <qcontainerfwd.h>
+#include <QQueue>
 
 QQuickItem* SGXQuickUIInterface::rootWindow = nullptr;
 QQmlApplicationEngine* SGXQuickUIInterface::e = nullptr;
@@ -68,7 +69,7 @@ QQuickItem* SGXQuickUIInterface::createParentWidget(QQuickItem *parent){
 
 QQuickItem* SGXQuickUIInterface::createWidget(QQuickItem *parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, int bg){
     QQuickItem* thisItem = qobject_cast<QQuickItem*>((*SGXQuickUIInterface::widgetTemplate).create());
-    (*thisItem).setParentItem(parent);
+    SGXQuickUIInterface::setActualParent(thisItem, parent);
     (*thisItem).setProperty("x1", x1);
     (*thisItem).setProperty("x0", x0);
     (*thisItem).setProperty("y1", y1);
@@ -84,7 +85,7 @@ QQuickItem* SGXQuickUIInterface::createWidget(QQuickItem *parent, float x1, floa
 
 QQuickItem* SGXQuickUIInterface::createText(QQuickItem *parent, const QString &s, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0){
     QQuickItem* thisItem = qobject_cast<QQuickItem*>((*SGXQuickUIInterface::textTemplate).create());
-    (*thisItem).setParentItem(parent);
+    SGXQuickUIInterface::setActualParent(thisItem, parent);
     (*thisItem).setProperty("x1", x1);
     (*thisItem).setProperty("x0", x0);
     (*thisItem).setProperty("y1", y1);
@@ -100,7 +101,7 @@ QQuickItem* SGXQuickUIInterface::createText(QQuickItem *parent, const QString &s
 
 QQuickItem* SGXQuickUIInterface::createLongText(QQuickItem *parent, const QString &s, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float f1, float f0, float s1, float s0){
     QQuickItem* thisItem = qobject_cast<QQuickItem*>((*SGXQuickUIInterface::longTextTemplate).create());
-    (*thisItem).setParentItem(parent);
+    SGXQuickUIInterface::setActualParent(thisItem, parent);
     (*thisItem).setProperty("x1", x1);
     (*thisItem).setProperty("x0", x0);
     (*thisItem).setProperty("y1", y1);
@@ -120,7 +121,7 @@ QQuickItem* SGXQuickUIInterface::createLongText(QQuickItem *parent, const QStrin
 
 QQuickItem* SGXQuickUIInterface::createIcon(QQuickItem *parent, const QChar &s, float x1, float x0, float y1, float y0, float w1, float w0){
     QQuickItem* thisItem = qobject_cast<QQuickItem*>((*SGXQuickUIInterface::iconTemplate).create());
-    (*thisItem).setParentItem(parent);
+    SGXQuickUIInterface::setActualParent(thisItem, parent);
     (*thisItem).setProperty("x1", x1);
     (*thisItem).setProperty("x0", x0);
     (*thisItem).setProperty("y1", y1);
@@ -134,7 +135,7 @@ QQuickItem* SGXQuickUIInterface::createIcon(QQuickItem *parent, const QChar &s, 
 
 QQuickItem* SGXQuickUIInterface::createTextButton(QQuickItem *parent, const QString &s, void (*attachedFunction)(), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0){
     QQuickItem* thisItem = qobject_cast<QQuickItem*>((*SGXQuickUIInterface::textButtonTemplate).create());
-    (*thisItem).setParentItem(parent);
+    SGXQuickUIInterface::setActualParent(thisItem, parent);
     (*thisItem).setProperty("x1", x1);
     (*thisItem).setProperty("x0", x0);
     (*thisItem).setProperty("y1", y1);
@@ -151,7 +152,7 @@ QQuickItem* SGXQuickUIInterface::createTextButton(QQuickItem *parent, const QStr
 
 QQuickItem* SGXQuickUIInterface::createIconButton(QQuickItem *parent, const QChar &s, void (*attachedFunction)(), float x1, float x0, float y1, float y0, float w1, float w0){
     QQuickItem* thisItem = qobject_cast<QQuickItem*>((*SGXQuickUIInterface::iconButtonTemplate).create());
-    (*thisItem).setParentItem(parent);
+    SGXQuickUIInterface::setActualParent(thisItem, parent);
     (*thisItem).setProperty("x1", x1);
     (*thisItem).setProperty("x0", x0);
     (*thisItem).setProperty("y1", y1);
@@ -166,7 +167,7 @@ QQuickItem* SGXQuickUIInterface::createIconButton(QQuickItem *parent, const QCha
 
 QQuickItem* SGXQuickUIInterface::createInputField(QQuickItem *parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0){
     QQuickItem* thisItem = qobject_cast<QQuickItem*>((*SGXQuickUIInterface::inputFieldTemplate).create());
-    (*thisItem).setParentItem(parent);
+    SGXQuickUIInterface::setActualParent(thisItem, parent);
     (*thisItem).setProperty("x1", x1);
     (*thisItem).setProperty("x0", x0);
     (*thisItem).setProperty("y1", y1);
@@ -181,7 +182,7 @@ QQuickItem* SGXQuickUIInterface::createInputField(QQuickItem *parent, float x1, 
 
 QQuickItem* SGXQuickUIInterface::createLongInputField(QQuickItem *parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float f1, float f0, float s1, float s0){
     QQuickItem* thisItem = qobject_cast<QQuickItem*>((*SGXQuickUIInterface::longInputFieldTemplate).create());
-    (*thisItem).setParentItem(parent);
+    SGXQuickUIInterface::setActualParent(thisItem, parent);
     (*thisItem).setProperty("x1", x1);
     (*thisItem).setProperty("x0", x0);
     (*thisItem).setProperty("y1", y1);
@@ -200,7 +201,7 @@ QQuickItem* SGXQuickUIInterface::createLongInputField(QQuickItem *parent, float 
 
 QQuickItem* SGXQuickUIInterface::createScrollView(QQuickItem *parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float ih1, float ih0, float s1, float s0, int bg){
     QQuickItem* thisItem = qobject_cast<QQuickItem*>((*SGXQuickUIInterface::scrollViewTemplate).create());
-    (*thisItem).setParentItem(parent);
+    SGXQuickUIInterface::setActualParent(thisItem, parent);
     (*thisItem).setProperty("x1", x1);
     (*thisItem).setProperty("x0", x0);
     (*thisItem).setProperty("y1", y1);
@@ -313,7 +314,7 @@ void SGXQuickUIInterface::receiveTouch(const QString &s){
 
 QQuickItem* SGXQuickUIInterface::createTouchReceiver(QQuickItem *parent, void (*attachedFunction)(const std::array<SGXTouchEvent, 5> &), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0){
     QQuickItem* thisItem = qobject_cast<QQuickItem*>((*SGXQuickUIInterface::touchReceiverTemplate).create());
-    (*thisItem).setParentItem(parent);
+    SGXQuickUIInterface::setActualParent(thisItem, parent);
     (*thisItem).setProperty("x1", x1);
     (*thisItem).setProperty("x0", x0);
     (*thisItem).setProperty("y1", y1);
@@ -357,4 +358,30 @@ SGXQuickUIInterface::WidgetType SGXQuickUIInterface::getType(QQuickItem *x){
     if(v == SGXQuickUIInterface::TouchReceiver){return SGXQuickUIInterface::TouchReceiver;}
     if(v == SGXQuickUIInterface::CuteVesicles){return SGXQuickUIInterface::CuteVesicles;}
     return SGXQuickUIInterface::Undefined;
+}
+
+QQuickItem* SGXQuickUIInterface::getActualParentableObject(QQuickItem *x){
+    if(SGXQuickUIInterface::getType(x) == SGXQuickUIInterface::RootWidget || SGXQuickUIInterface::getType(x) == SGXQuickUIInterface::ParentWidget || SGXQuickUIInterface::getType(x) == SGXQuickUIInterface::Widget){return x;}
+    if(SGXQuickUIInterface::getType(x) != SGXQuickUIInterface::ScrollView){return nullptr;}
+    QQueue<QQuickItem*> childrenList = QQueue<QQuickItem*>();
+    childrenList.enqueue(x);
+    while(childrenList.length() > 0){
+        QQuickItem* i = childrenList.dequeue();
+        if((*i).property("canParent").toBool() == true){return i;}
+        QList<QQuickItem*> thisChildren = (*i).childItems();
+        for(int idx = 0; idx < thisChildren.length(); idx++){
+            childrenList.enqueue(thisChildren[idx]);
+        }
+    }
+    return nullptr;
+}
+
+void SGXQuickUIInterface::setActualParent(QQuickItem *obj, QQuickItem *x){
+    QQuickItem* actualParent = SGXQuickUIInterface::getActualParentableObject(x);
+    if(actualParent == nullptr){std::abort();}
+    // crashes the app if the parent is not set properly to avoid memory leaks
+    // if your intention is to make another window, SGEXTN does not support it, try using native Qt stuff or making changes to main.cpp and SGXCentral::initialise() or write your own code to make another native window
+    // only widgets and scroll views can take children, it simply does not make sense for anything else
+    // if you really want to get the overlap effect as if a text has a child widget, place them side by side in a shared parent widget with background set to -1
+    (*obj).setParentItem(actualParent);
 }

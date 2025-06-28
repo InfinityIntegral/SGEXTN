@@ -39,6 +39,7 @@ ScrollView{
 		width: parent.width
 		
 		Rectangle{
+			property bool canParent: true
 			width: parent.width
 			height: Math.max(h1 * Resizer.renderSpaceHeight + h0 * Resizer.sizeUnit, ih1 * Resizer.renderSpaceHeight + ih0 * Resizer.sizeUnit)
 			color: ThemeColours.getThemeColour(bg);

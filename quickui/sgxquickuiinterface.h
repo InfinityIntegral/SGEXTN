@@ -71,7 +71,9 @@ public:
     static QQmlComponent* cuteVesiclesTemplate;
     static QQuickItem* createCuteVesicles(QQuickItem* parent);
     static SGXQuickUIInterface::WidgetType getType(QQuickItem* x);
-    static void doNothing(){}
+    static QQuickItem* getActualParentableObject(QQuickItem* x);
+    static void setActualParent(QQuickItem* obj, QQuickItem* x);
+    static void doNothing(){qDebug() << "did nothing";}
 };
 
 #endif // SGXQUICKUIINTERFACE_H
