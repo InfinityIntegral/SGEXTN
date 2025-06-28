@@ -11,7 +11,9 @@
 #include <qcontainerfwd.h>
 #include <QQueue>
 #include <utility>
+#include <QQuickWindow>
 
+QQuickWindow* SGXQuickUIInterface::applicationWindow = nullptr;
 QQuickItem* SGXQuickUIInterface::rootWindow = nullptr;
 QQmlApplicationEngine* SGXQuickUIInterface::e = nullptr;
 SGXThemeColourSetting* SGXQuickUIInterface::themeColoursInstance = nullptr;
@@ -423,4 +425,10 @@ float SGXQuickUIInterface::getInputFieldDataAsFloat(QQuickItem *x, bool &isValid
     const float i = s.toFloat(&isValid);
     if(isValid == false){return 0;}
     return i;
+}
+
+QQuickItem* SGXQuickUIInterface::getActiveObject(){
+    QQuickItem* x = (*SGXQuickUIInterface::applicationWindow).activeFocusItem();
+    while(x != nullptr && SGXQuickUIInterface::getType(x) == SGXQuickUIInterface::Undefined){x = (*x).parentItem();}
+    return x;
 }

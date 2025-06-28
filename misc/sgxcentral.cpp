@@ -18,8 +18,8 @@ void SGXCentral::initialise(){
     
     QCoreApplication::setApplicationName(SGUCentralManagement::applicationName);
     QCoreApplication::setApplicationVersion(SGUCentralManagement::applicationVersion);
-    QCoreApplication::setOrganizationName("05524F.sg");
-    const QIcon temp_appicon(":/assets/05524Flogo.png");
+    QCoreApplication::setOrganizationName(SGUCentralManagement::organisationName);
+    const QIcon temp_appicon(":/assets/appicon.png");
     QGuiApplication::setWindowIcon(temp_appicon);
     
     SGXQuickUIInterface::themeColoursInstance = new SGXThemeColourSetting();
@@ -34,7 +34,8 @@ void SGXCentral::initialise(){
     QFontDatabase::addApplicationFont(":/assets/standard.otf");
     QFontDatabase::addApplicationFont(":/assets/icons.otf");
     
-    SGXQuickUIInterface::rootWindow = (*qobject_cast<QQuickWindow*>((*SGXQuickUIInterface::e).rootObjects().first())).contentItem();
+    SGXQuickUIInterface::applicationWindow = qobject_cast<QQuickWindow*>((*SGXQuickUIInterface::e).rootObjects().first());
+    SGXQuickUIInterface::rootWindow = (*SGXQuickUIInterface::applicationWindow).contentItem();
     connect(SGXQuickUIInterface::rootWindow, &QQuickItem::widthChanged, SGXQuickUIInterface::resizerInstance, &SGXQuickResizer::updateAppWindowSize);
     connect(SGXQuickUIInterface::rootWindow, &QQuickItem::heightChanged, SGXQuickUIInterface::resizerInstance, &SGXQuickResizer::updateAppWindowSize);
     SGXQuickUIInterface::initialise();

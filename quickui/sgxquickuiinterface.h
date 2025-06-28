@@ -38,6 +38,7 @@ public:
     static SGXThemeColourSetting* themeColoursInstance; // instance of QML ThemeColours singleton
     static void initialise(); // prepare QML components for usage
     static void buildTemplate(); // build basic application parts including the status bar, the root widget, and the parent widget
+    static QQuickWindow* applicationWindow; // reference to application window
     static QQuickItem* rootWindow; // reference to application window
     static QQmlComponent* rootWidgetTemplate; // QML template for root widget
     static QQuickItem* createRootWidget(QQuickItem* parent); // function to create a root widget
@@ -57,6 +58,7 @@ public:
     // you can use SGXQuickUIInterface::getClickedButton to determine which button is pressed, if any, since functions attached to buttons do not allow sending back data about which button is it
     // only the parent widgets, widgets, and scroll views can be parents, other widgets such as text widgets, buttons, or input fields cannot, attempting to assign children to a widget that does not accept children would trigger immediate crash of the application to avoid memory leaks and damaging the UI structure
     // to change the parent of a SGEXTN widget, you must use SGXQuickUIInterface::setActualParent and not QObject::setParent or QQuickItem::setParentItem, attempting to use non SGEXTN functions to set parent would damage the UI structure
+    // use SGXQuickUIInterface::getActiveObject to determine which button is pressed in multiple button with same attached function setups such as file system lists
     static QQmlComponent* widgetTemplate; // QML template for widget
     static QQuickItem* createWidget(QQuickItem* parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, int bg); // function to create a widget, bg is the theme colour index for its background colour
     static QQmlComponent* textTemplate; // QML template for text widget
@@ -90,6 +92,7 @@ public:
     static int getInputFieldDataAsInt(QQuickItem* x, bool& isValid); // retrieve input as int from SGEXTN input fields, isValid checks if the input is valid
     static float getInputFieldDataAsFloat(QQuickItem* x, bool& isValid); // retrieve input as float from SGEXTN input fields, isValid checks if the input is valid
     static QString getInputFieldDataAsString(QQuickItem* x, bool& isValid); // retrieve input as string from SGEXTN input fields, isValid checks if the input is valid, the input is invalid if x is not a SGEXTN input field
+    static QQuickItem* getActiveObject(); // get the currently active SGEXTN object, can be used to distinguish which button got pressed when there are multiple buttons
 };
 
 #endif // SGXQUICKUIINTERFACE_H

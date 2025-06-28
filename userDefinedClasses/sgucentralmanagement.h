@@ -5,8 +5,9 @@
 #include <qtmetamacros.h>
 #include "../primitives/sgxcolourrgba.h"
 
-class SGUCentralManagement : public QObject // non instantiable class for essential application data that should be define by the user, including application name, theme colours, custom initialisation and custom termination
+class SGUCentralManagement : public QObject // non instantiable class for essential application data that should be defined by the user, including application name, theme colours, custom initialisation and custom termination
 {
+    // follow the instructions in the corresponding .cpp file pls
     Q_OBJECT
 public:
     SGUCentralManagement() = delete;
@@ -15,6 +16,7 @@ public:
     static void earlyInitialise(); // initialisation function run before GUI is created
     static QString applicationName; // name of application displayed
     static QString applicationVersion; // version number of application
+    static QString organisationName; // name of your organisation
     static SGXColourRGBA themeColour0; // theme colour 0, default black
     static SGXColourRGBA themeColour1; // theme colour 1
     static SGXColourRGBA themeColour2; // theme colour 2
