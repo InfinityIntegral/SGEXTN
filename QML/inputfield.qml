@@ -4,6 +4,7 @@ import ThemeColours 0.0
 import Resizer 0.0
 
 TextField{
+	property bool isInputField: true
 	property int widgetType: 0
 	property string fontClass: "SingScript.sg"
 	property int bg: 4

@@ -87,6 +87,9 @@ public:
     static SGXQuickUIInterface::WidgetType getType(QQuickItem* x); // function to get the type of a SGEXTN widget
     static QQuickItem* getActualParentableObject(QQuickItem* x); // function to get the QQuickItem in a SGEXTN widget that can have children in a way compatible with SGEXTN, returns nullptr if not found
     static void setActualParent(QQuickItem* obj, QQuickItem* x); // function to change the parent of a SGEXTN widget, crashes application if desired parent is not a SGEXTN widget or cannot have children, x is the parent and obj is the child
+    static int getInputFieldDataAsInt(QQuickItem* x, bool& isValid); // retrieve input as int from SGEXTN input fields, isValid checks if the input is valid
+    static float getInputFieldDataAsFloat(QQuickItem* x, bool& isValid); // retrieve input as float from SGEXTN input fields, isValid checks if the input is valid
+    static QString getInputFieldDataAsString(QQuickItem* x, bool& isValid); // retrieve input as string from SGEXTN input fields, isValid checks if the input is valid, the input is invalid if x is not a SGEXTN input field
 };
 
 #endif // SGXQUICKUIINTERFACE_H

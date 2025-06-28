@@ -91,6 +91,7 @@ ScrollView{
 	Column{
 		width: parent.width
 		TextArea{
+			property bool isInputField: true
 			x: 0
 			y: 0
 			width: parent.width - (s1 * Resizer.renderSpaceWidth + s0 * Resizer.sizeUnit)

@@ -386,3 +386,41 @@ void SGXQuickUIInterface::setActualParent(QQuickItem *obj, QQuickItem *x){
     // if you really want to get the overlap effect as if a text has a child widget, place them side by side in a shared parent widget with background set to -1
     (*obj).setParentItem(actualParent);
 }
+
+QString SGXQuickUIInterface::getInputFieldDataAsString(QQuickItem *x, bool &isValid){
+    if(SGXQuickUIInterface::getType(x) != SGXQuickUIInterface::InputField && SGXQuickUIInterface::getType(x) != SGXQuickUIInterface::LongInputField){
+        isValid = false;
+        return "";
+    }
+    QQueue<QQuickItem*> childrenList = QQueue<QQuickItem*>();
+    childrenList.enqueue(x);
+    while(childrenList.length() > 0){
+        QQuickItem* i = childrenList.dequeue();
+        if((*i).property("isInputField").toBool() == true){
+            isValid = true;
+            return (*i).property("text").toString();
+        }
+        QList<QQuickItem*> thisChildren = (*i).childItems();
+        for(int idx = 0; idx < thisChildren.length(); idx++){
+            childrenList.enqueue(thisChildren[idx]);
+        }
+    }
+    isValid = false;
+    return "";
+}
+
+int SGXQuickUIInterface::getInputFieldDataAsInt(QQuickItem *x, bool &isValid){
+    const QString s = SGXQuickUIInterface::getInputFieldDataAsString(x, isValid);
+    if(isValid == false){return 0;}
+    const int i = s.toInt(&isValid);
+    if(isValid == false){return 0;}
+    return i;
+}
+
+float SGXQuickUIInterface::getInputFieldDataAsFloat(QQuickItem *x, bool &isValid){
+    const QString s = SGXQuickUIInterface::getInputFieldDataAsString(x, isValid);
+    if(isValid == false){return 0;}
+    const float i = s.toFloat(&isValid);
+    if(isValid == false){return 0;}
+    return i;
+}

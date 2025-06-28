@@ -45,7 +45,6 @@ SGCRender - I cannot enforce this, but you are strongly encouraged to start cust
 		- [x] scroll view
 		- [x] touch receiver
 		- [x] cute vesicles
-	- [ ] allow retrieving data from input field
 	- [ ] allow getting active button
 - [ ] file system usage
      - [ ] SGXFileReader (struct allowing reading of all SGEXTN and C++ primitives from files with index seeking)
