@@ -8,6 +8,7 @@
 #include <qsgmaterialtype.h>
 #include <QSGMaterial>
 #include <cstdint>
+#include "../userDefinedClasses/sgucentralmanagement.h"
 
 namespace{
 inline float randomFloat(float min, float max){
@@ -23,8 +24,8 @@ SGXRenderCuteVesiclesMaterial::SGXRenderCuteVesiclesMaterial(){
     w = 0.0f;
     h = 0.0f;
     s = 0.0f;
-    membraneThickness = 0.05f;
-    maxCenter = 1.5f;
+    membraneThickness = SGUCentralManagement::cuteVesiclesMembraneThickness;
+    maxCenter = SGUCentralManagement::cuteVesiclesMaximumCenterDistance;
     center = {
         SGXVector2(randomFloat((-1.0f) * maxCenter, maxCenter), randomFloat((-1.0f) * maxCenter, maxCenter)),
         SGXVector2(randomFloat((-1.0f) * maxCenter, maxCenter), randomFloat((-1.0f) * maxCenter, maxCenter)),
@@ -37,8 +38,8 @@ SGXRenderCuteVesiclesMaterial::SGXRenderCuteVesiclesMaterial(){
         SGXVector2(randomFloat((-1.0f) * maxCenter, maxCenter), randomFloat((-1.0f) * maxCenter, maxCenter)),
         SGXVector2(randomFloat((-1.0f) * maxCenter, maxCenter), randomFloat((-1.0f) * maxCenter, maxCenter))
     };
-    maxVelocityAllowed = 0.01f;
-    maxAccelerationPerSecond = 0.01f;
+    maxVelocityAllowed = SGUCentralManagement::cuteVesiclesMaximumVelocity;
+    maxAccelerationPerSecond = SGUCentralManagement::cuteVesiclesMaximumAcceleration;
     velocity = {
         SGXVector2(randomFloat((-1.0f) * maxVelocityAllowed, maxVelocityAllowed), randomFloat((-1.0f) * maxVelocityAllowed, maxVelocityAllowed)),
         SGXVector2(randomFloat((-1.0f) * maxVelocityAllowed, maxVelocityAllowed), randomFloat((-1.0f) * maxVelocityAllowed, maxVelocityAllowed)),
@@ -51,9 +52,9 @@ SGXRenderCuteVesiclesMaterial::SGXRenderCuteVesiclesMaterial(){
         SGXVector2(randomFloat((-1.0f) * maxVelocityAllowed, maxVelocityAllowed), randomFloat((-1.0f) * maxVelocityAllowed, maxVelocityAllowed)),
         SGXVector2(randomFloat((-1.0f) * maxVelocityAllowed, maxVelocityAllowed), randomFloat((-1.0f) * maxVelocityAllowed, maxVelocityAllowed))
     };
-    minRadiusAllowed = 0.1f;
-    maxRadiusAllowed = 0.35f;
-    maxRadiusChangePerSecond = 0.01f;
+    minRadiusAllowed = SGUCentralManagement::cuteVesiclesMinimumRadius;
+    maxRadiusAllowed = SGUCentralManagement::cuteVesiclesMaximumRadius;
+    maxRadiusChangePerSecond = SGUCentralManagement::cuteVesiclesMaximumRadiusChange;
     radius = {
         randomFloat(minRadiusAllowed, maxRadiusAllowed),
         randomFloat(minRadiusAllowed, maxRadiusAllowed),
@@ -66,8 +67,8 @@ SGXRenderCuteVesiclesMaterial::SGXRenderCuteVesiclesMaterial(){
         randomFloat(minRadiusAllowed, maxRadiusAllowed),
         randomFloat(minRadiusAllowed, maxRadiusAllowed)
     };
-    maxRadiusOffsetChangePerSecond = 0.05f;
-    maxRadiusOffsetAsRadiusPercentage = 0.1f;
+    maxRadiusOffsetChangePerSecond = SGUCentralManagement::cuteVesiclesMaximumRadiusOffsetChange;
+    maxRadiusOffsetAsRadiusPercentage = SGUCentralManagement::cuteVesiclesMaximumRadiusOffset;
     radiusOffset = {{
         {
             randomFloat((-1.0f) * maxRadiusOffsetAsRadiusPercentage, maxRadiusOffsetAsRadiusPercentage),
@@ -170,11 +171,11 @@ SGXRenderCuteVesiclesMaterial::SGXRenderCuteVesiclesMaterial(){
             randomFloat((-1.0f) * maxRadiusOffsetAsRadiusPercentage, maxRadiusOffsetAsRadiusPercentage),
         },
     }};
-    membraneColour = SGXColourRGBA(255, 0, 200);
-    contentsColour = SGXColourRGBA(255, 255, 255);
-    centerTransparency = 0.1f;
-    edgeTransparency = 0.05f;
-    membraneTransparency = 0.2f;
+    membraneColour = SGUCentralManagement::cuteVesiclesMembraneColour;
+    contentsColour = SGUCentralManagement::cuteVesiclesContentsColour;
+    centerTransparency = SGUCentralManagement::cuteVesiclesCenterTransparency;
+    edgeTransparency = SGUCentralManagement::cuteVesiclesEdgeTransparency;
+    membraneTransparency = SGUCentralManagement::cuteVesiclesMembraneTransparency;
 }
 
 QSGMaterialShader* SGXRenderCuteVesiclesMaterial::createShader(QSGRendererInterface::RenderMode /*unused*/) const {

@@ -18,6 +18,20 @@ SGXColourRGBA SGUCentralManagement::themeColour5 = SGXColourRGBA(255, 64, 214);
 SGXColourRGBA SGUCentralManagement::themeColour6 = SGXColourRGBA(255, 128, 228);
 SGXColourRGBA SGUCentralManagement::themeColour7 = SGXColourRGBA(255, 192, 242);
 SGXColourRGBA SGUCentralManagement::themeColour8 = SGXColourRGBA(255, 255, 255);
+float SGUCentralManagement::cuteVesiclesMembraneThickness = 0.05f;
+float SGUCentralManagement::cuteVesiclesMaximumCenterDistance = 1.5f;
+float SGUCentralManagement::cuteVesiclesMaximumVelocity = 0.01f;
+float SGUCentralManagement::cuteVesiclesMaximumAcceleration = 0.01f;
+float SGUCentralManagement::cuteVesiclesMaximumRadiusChange = 0.01f;
+float SGUCentralManagement::cuteVesiclesMinimumRadius = 0.1f;
+float SGUCentralManagement::cuteVesiclesMaximumRadius = 0.35f;
+float SGUCentralManagement::cuteVesiclesMaximumRadiusOffsetChange = 0.1f;
+float SGUCentralManagement::cuteVesiclesMaximumRadiusOffset = 0.1f;
+SGXColourRGBA SGUCentralManagement::cuteVesiclesMembraneColour = SGXColourRGBA(255, 0, 200);
+SGXColourRGBA SGUCentralManagement::cuteVesiclesContentsColour = SGXColourRGBA(255, 255, 255);
+float SGUCentralManagement::cuteVesiclesCenterTransparency = 0.1f;
+float SGUCentralManagement::cuteVesiclesEdgeTransparency = 0.05f;
+float SGUCentralManagement::cuteVesiclesMembraneTransparency = 0.2f;
 
 void SGUCentralManagement::initialise(){
     

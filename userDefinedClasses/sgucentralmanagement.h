@@ -24,6 +24,20 @@ public:
     static SGXColourRGBA themeColour6;
     static SGXColourRGBA themeColour7;
     static SGXColourRGBA themeColour8;
+    static float cuteVesiclesMembraneThickness;
+    static float cuteVesiclesMaximumCenterDistance;
+    static float cuteVesiclesMaximumVelocity;
+    static float cuteVesiclesMaximumAcceleration;
+    static float cuteVesiclesMaximumRadiusChange;
+    static float cuteVesiclesMinimumRadius;
+    static float cuteVesiclesMaximumRadius;
+    static float cuteVesiclesMaximumRadiusOffsetChange;
+    static float cuteVesiclesMaximumRadiusOffset;
+    static SGXColourRGBA cuteVesiclesMembraneColour;
+    static SGXColourRGBA cuteVesiclesContentsColour;
+    static float cuteVesiclesCenterTransparency;
+    static float cuteVesiclesEdgeTransparency;
+    static float cuteVesiclesMembraneTransparency;
 };
 
 #endif // SGUCENTRALMANAGEMENT_H

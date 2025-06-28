@@ -45,7 +45,6 @@ SGCRender - I cannot enforce this, but you are strongly encouraged to start cust
 		- [x] scroll view
 		- [x] touch receiver
 		- [x] cute vesicles
-	- [ ] user defined vesicle properties
 	- [ ] HSL interpolated theme colours
 	- [ ] documentation
 - [ ] file system usage
@@ -53,7 +52,6 @@ SGCRender - I cannot enforce this, but you are strongly encouraged to start cust
 	- [ ] SGXFileWriter (struct allowing writing of all SGEXTN and C++ primitives to files with overwriting by index)
 	- [ ] SGXFileSystemManagement (non instantiatable struct with static methods for file system operations)
 	- [ ] SGXCannotLah (logging error messages in a file "cannot.lah")
-- [ ] loading of additional font files (font must be called SingScript.sg)
 - [ ] working application template
 
 potential future extensions include networking stuff and PDF stuff and 3D rendering stuff and bluetooth stuff and more cross platform stuff
