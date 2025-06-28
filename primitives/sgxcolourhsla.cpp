@@ -24,13 +24,23 @@ inline void temp_limitto360(float& x){
     x = std::fmodf(x, 360.0f);
     if(x < 0.0f){x += 360.0f;}
 }
+
+inline float temp_HueIntermediatesToRGB(float p, float q, float t){
+    if(t < 0.0f){t += 1.0f;}
+    else if(t > 1.0f){t -= 1.0f;}
+    if(t < 1.0f / 6.0f){return (p + 6.0f * t * (q - p));}
+    if(t < 0.5f){return q;}
+    if(t < 2.0f / 3.0f){return (p + 6.0f * (2.0f / 3.0f - t) * (q - p));}
+    return p;
+}
 }
 
 SGXColourHSLA::SGXColourHSLA(SGXColourRGBA x){
     (*this).a = x.getTransparencyAsFloat() * 100.0f;
-    const float r = x.getRedAsFloat();
-    const float g = x.getGreenAsFloat();
-    const float b = x.getBlueAsFloat();
+    float r = 0.0f;
+    float g = 0.0f;
+    float b = 0.0f;
+    x.gammaCorrectBegin(r, g, b);
     const float h = temp_maxof3float(r, g, b);
     const float l = temp_minof3float(r, g, b);
     (*this).h = 313.0f;
@@ -125,4 +135,33 @@ void SGXColourHSLA::linearTransformTransparency(float m, float c){
 
 void SGXColourHSLA::offsetHue(float c){
     setHue(h + c);
+}
+
+SGXColourRGBA SGXColourHSLA::toRGBA() const {
+    float r = 0.0f;
+    float g = 0.0f;
+    float b = 0.0f;
+    float xh = (*this).h;
+    float xs = (*this).s;
+    float xl = (*this).l;
+    xh /= 360.0f;
+    xs /= 100.0f;
+    xl /= 100.0f;
+    if(xs == 0.0f){
+        r = xl;
+        g = xl;
+        b = xl;
+    }
+    else{
+        float q = 0.0f;
+        if(xl < 0.5f){q = xl * (1.0f + xs);}
+        else{q = xl + xs - xl * xs;}
+        const float p = 2.0f * xl - q;
+        r = temp_HueIntermediatesToRGB(p, q, xh + 1.0f / 3.0f);
+        g = temp_HueIntermediatesToRGB(p, q, xh);
+        b = temp_HueIntermediatesToRGB(p, q, xh - 1.0f / 3.0f);
+    }
+    SGXColourRGBA x = SGXColourRGBA(255, 255, 255);
+    x.gammaCorrectEnd(r, g, b);
+    return x;
 }

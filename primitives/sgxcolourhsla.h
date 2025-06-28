@@ -29,6 +29,7 @@ public:
     void linearTransformLightness(float m, float c); // apply x -> mx + c transform to lightness
     void linearTransformTransparency(float m, float c); // apply x -> mx + c transform to transparency
     void offsetHue(float c); // apply offset of c to the hue, used to get nearby colours
+    [[nodiscard]] SGXColourRGBA toRGBA() const; // convert HSLA colour to RGBA
 };
 
 inline unsigned int qHash(SGXColourHSLA x, unsigned int seed = 0){

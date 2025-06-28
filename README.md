@@ -28,7 +28,7 @@ SGCRender - I cannot enforce this, but you are strongly encouraged to start cust
 	- [x] SGXVector2 (a struct of 2 SGXFloats for 2D vectors)
 	- [x] SGXTimeStamp (a signed long long representing number of seconds since 19650809 123000)
 	- [x] SGXTouchEvent (representation of touch input from the user)
-- [ ] Qt Quick components
+- [x] Qt Quick components
 	- [x] SGXQuickResizer (manages resizing of app UI based on window size)
 	- [x] SGXThemeColourSetting (manages theme colours of the app)
 	- [x] SGXQuickUIInterface (contains methods to create and add components)
@@ -45,8 +45,6 @@ SGCRender - I cannot enforce this, but you are strongly encouraged to start cust
 		- [x] scroll view
 		- [x] touch receiver
 		- [x] cute vesicles
-	- [ ] HSL interpolated theme colours
-	- [ ] documentation
 - [ ] file system usage
      - [ ] SGXFileReader (struct allowing reading of all SGEXTN and C++ primitives from files with index seeking)
 	- [ ] SGXFileWriter (struct allowing writing of all SGEXTN and C++ primitives to files with overwriting by index)

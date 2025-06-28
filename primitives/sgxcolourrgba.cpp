@@ -1,6 +1,5 @@
 #include "sgxcolourrgba.h"
 #include <cmath>
-#include "sgxcolourhsla.h"
 #include <QColor>
 
 namespace{
@@ -17,15 +16,6 @@ inline void temp_boundFloat(float& x){
 inline unsigned int temp_floatToUnsignedInt(float x){
     const int x0 = static_cast<int>(std::roundf(255.0f * x));
     return static_cast<unsigned int>(x0);
-}
-
-inline float temp_HueIntermediatesToRGB(float p, float q, float t){
-    if(t < 0.0f){t += 1.0f;}
-    else if(t > 1.0f){t -= 1.0f;}
-    if(t < 1.0f / 6.0f){return (p + 6.0f * t * (q - p));}
-    if(t < 0.5f){return q;}
-    if(t < 2.0f / 3.0f){return (p + 6.0f * (2.0f / 3.0f - t) * (q - p));}
-    return p;
 }
 }
 
@@ -61,34 +51,6 @@ SGXColourRGBA::SGXColourRGBA(float r, float g, float b){
     temp_boundFloat(g);
     temp_boundFloat(b);
     (*this).x = (temp_floatToUnsignedInt(r) << 24u) | (temp_floatToUnsignedInt(g) << 16u) | (temp_floatToUnsignedInt(b) << 8u) | (0xFFu);
-}
-
-SGXColourRGBA::SGXColourRGBA(SGXColourHSLA& x){
-    float r = 0.0f;
-    float g = 0.0f;
-    float b = 0.0f;
-    x.h /= 360.0f;
-    x.s /= 100.0f;
-    x.l /= 100.0f;
-    if(x.s == 0.0f){
-        r = x.l;
-        g = x.l;
-        b = x.l;
-    }
-    else{
-        float q = 0.0f;
-        if(x.l < 0.5f){q = x.l * (1.0f + x.s);}
-        else{q = x.l + x.s - x.l * x.s;}
-        const float p = 2.0f * x.l - q;
-        r = temp_HueIntermediatesToRGB(p, q, x.h + 1.0f / 3.0f);
-        g = temp_HueIntermediatesToRGB(p, q, x.h);
-        b = temp_HueIntermediatesToRGB(p, q, x.h - 1.0f / 3.0f);
-    }
-    const int r0 = static_cast<int>(std::roundf(r * 255.0f));
-    const int g0 = static_cast<int>(std::roundf(g * 255.0f));
-    const int b0 = static_cast<int>(std::roundf(b * 255.0f));
-    const int a0 = static_cast<int>(std::roundf(x.a / 100.0f * 255.0f));
-    (*this).x = (static_cast<unsigned int>(r0) << 24u) | (static_cast<unsigned int>(g0) << 16u) | (static_cast<unsigned int>(b0) << 8u) | (static_cast<unsigned int>(a0));
 }
 
 SGXColourRGBA::SGXColourRGBA(QColor x){
