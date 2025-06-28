@@ -17,6 +17,7 @@ public:
     static QString applicationName; // name of application displayed
     static QString applicationVersion; // version number of application
     static QString organisationName; // name of your organisation
+    static QString rootFolderName; // name of root folder of your application
     static SGXColourRGBA themeColour0; // theme colour 0, default black
     static SGXColourRGBA themeColour1; // theme colour 1
     static SGXColourRGBA themeColour2; // theme colour 2

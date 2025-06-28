@@ -12,6 +12,8 @@ QString SGUCentralManagement::applicationName = "SGEXTN";
 QString SGUCentralManagement::applicationVersion = "v2";
 // name of your organisation
 QString SGUCentralManagement::organisationName = "05524F.sg (Singapore)";
+// name of root folder of your application, only use uppercase or lowercase letters, definitely no banned characters, no dots, no spaces, no hyphens, no underscores, avoid numbers, avoid non ASCII characters
+QString SGUCentralManagement::rootFolderName = "SGEXTN";
 
 // theme colours of your application
 SGXColourRGBA SGUCentralManagement::themeColour0 = SGXColourRGBA(0, 0, 0);

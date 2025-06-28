@@ -12,8 +12,15 @@
 #include <QGuiApplication>
 #include <QFontDatabase>
 #include "../cutevesicles/sgxrendercutevesiclesquickuielement.h"
+#include "../filesystem/sgxfilesystem.h"
+#include <QStandardPaths>
 
 void SGXCentral::initialise(){
+    SGXFileSystem::rootFilePath = SGXFileSystem::joinFilePaths(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation), SGUCentralManagement::rootFolderName);
+    SGXFileSystem::userDataFilePath = SGXFileSystem::joinFilePaths(SGXFileSystem::rootFilePath, "yourdata");
+    SGXFileSystem::configFilePath = SGXFileSystem::joinFilePaths(SGXFileSystem::rootFilePath, "settings");
+    SGXFileSystem::binFilePath = SGXFileSystem::joinFilePaths(SGXFileSystem::rootFilePath, "recyclebin");
+    
     SGUCentralManagement::earlyInitialise();
     
     QCoreApplication::setApplicationName(SGUCentralManagement::applicationName);
