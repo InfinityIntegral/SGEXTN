@@ -45,7 +45,6 @@ SGCRender - I cannot enforce this, but you are strongly encouraged tp start cust
 		- [x] scroll view
 		- [x] touch receiver
 		- [x] cute vesicles
-	- [ ] allow all SGEXTN widgets except cute vesicles to block mouse events and touch events
 	- [ ] getter and setter methods for properties
 	- [ ] user defined theme colours
 	- [ ] user defined vesicle properties
