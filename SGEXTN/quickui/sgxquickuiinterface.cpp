@@ -36,19 +36,19 @@ QVector<void (*)(const std::array<SGXTouchEvent, 5>&)>* SGXQuickUIInterface::tou
 QQmlComponent* SGXQuickUIInterface::cuteVesiclesTemplate = nullptr;
 
 void SGXQuickUIInterface::initialise(){
-    SGXQuickUIInterface::rootWidgetTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/QML/rootwidget.qml");
-    SGXQuickUIInterface::parentWidgetTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/QML/parentwidget.qml");
-    SGXQuickUIInterface::widgetTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/QML/widget.qml");
-    SGXQuickUIInterface::textTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/QML/text.qml");
-    SGXQuickUIInterface::longTextTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/QML/longtext.qml");
-    SGXQuickUIInterface::iconTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/QML/icon.qml");
-    SGXQuickUIInterface::textButtonTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/QML/textbutton.qml");
-    SGXQuickUIInterface::iconButtonTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/QML/iconbutton.qml");
-    SGXQuickUIInterface::inputFieldTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/QML/inputfield.qml");
-    SGXQuickUIInterface::longInputFieldTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/QML/longinputfield.qml");
-    SGXQuickUIInterface::scrollViewTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/QML/scrollview.qml");
-    SGXQuickUIInterface::touchReceiverTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/QML/touchreceiver.qml");
-    SGXQuickUIInterface::cuteVesiclesTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/cutevesicles/cutevesicles.qml");
+    SGXQuickUIInterface::rootWidgetTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/SGEXTN/QML/rootwidget.qml");
+    SGXQuickUIInterface::parentWidgetTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/SGEXTN/QML/parentwidget.qml");
+    SGXQuickUIInterface::widgetTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/SGEXTN/QML/widget.qml");
+    SGXQuickUIInterface::textTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/SGEXTN/QML/text.qml");
+    SGXQuickUIInterface::longTextTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/SGEXTN/QML/longtext.qml");
+    SGXQuickUIInterface::iconTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/SGEXTN/QML/icon.qml");
+    SGXQuickUIInterface::textButtonTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/SGEXTN/QML/textbutton.qml");
+    SGXQuickUIInterface::iconButtonTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/SGEXTN/QML/iconbutton.qml");
+    SGXQuickUIInterface::inputFieldTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/SGEXTN/QML/inputfield.qml");
+    SGXQuickUIInterface::longInputFieldTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/SGEXTN/QML/longinputfield.qml");
+    SGXQuickUIInterface::scrollViewTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/SGEXTN/QML/scrollview.qml");
+    SGXQuickUIInterface::touchReceiverTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/SGEXTN/QML/touchreceiver.qml");
+    SGXQuickUIInterface::cuteVesiclesTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/SGEXTN/cutevesicles/cutevesicles.qml");
 }
 
 void SGXQuickUIInterface::buildTemplate(){

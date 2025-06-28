@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/">
+    <qresource prefix="/SGEXTN">
         <file>assets/appicon.png</file>
         <file>assets/standard.otf</file>
         <file>assets/icons.otf</file>
@@ -16,7 +16,6 @@
         <file>QML/longinputfield.qml</file>
         <file>QML/scrollview.qml</file>
         <file>QML/touchreceiver.qml</file>
-        <file>QML/vesicles.qml</file>
         <file>cutevesicles/cutevesicles.qml</file>
         <file>cutevesicles/cutevesicles.vert.qsb</file>
         <file>cutevesicles/cutevesicles.frag.qsb</file>

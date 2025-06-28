@@ -8,8 +8,8 @@
 #include <span>
 
 SGXRenderCuteVesiclesShader::SGXRenderCuteVesiclesShader(){
-    setShaderFileName(QSGMaterialShader::VertexStage, ":/cutevesicles/cutevesicles.vert.qsb");
-    setShaderFileName(QSGMaterialShader::FragmentStage, ":/cutevesicles/cutevesicles.frag.qsb");
+    setShaderFileName(QSGMaterialShader::VertexStage, ":/SGEXTN/cutevesicles/cutevesicles.vert.qsb");
+    setShaderFileName(QSGMaterialShader::FragmentStage, ":/SGEXTN/cutevesicles/cutevesicles.frag.qsb");
 }
 
 bool SGXRenderCuteVesiclesShader::updateGraphicsPipelineState(RenderState &/*unused*/, GraphicsPipelineState *ps, QSGMaterial */*unused*/, QSGMaterial */*unused*/){

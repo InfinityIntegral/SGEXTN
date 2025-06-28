@@ -5,34 +5,34 @@ QMAKE_CXXFLAGS_DEBUG += -std=c++20
 QMAKE_LFLAGS = -flto -Wl,--gc-sections
 DISTFILES = .gitignore LICENSE.txt README.md \
     compilecommands.txt
-SOURCES = misc/main.cpp \
-    cutevesicles/sgxrendercutevesiclesmaterial.cpp \
-    cutevesicles/sgxrendercutevesiclesquickuielement.cpp \
-    cutevesicles/sgxrendercutevesiclesshader.cpp \
-    misc/sgxcentral.cpp \
-    primitives/sgxcolourhsla.cpp \
-    primitives/sgxcolourrgba.cpp \
-    primitives/sgxidentifier.cpp \
-    primitives/sgxtimestamp.cpp \
-    primitives/sgxtouchevent.cpp \
-    primitives/sgxvector2.cpp \
-    quickui/sgxquickresizer.cpp \
-    quickui/sgxquickuiinterface.cpp \
-    quickui/sgxthemecoloursetting.cpp \
-    userDefinedClasses/sgucentralmanagement.cpp
-RESOURCES = assets.qrc
+SOURCES = SGEXTN/misc/main.cpp \
+    SGEXTN/cutevesicles/sgxrendercutevesiclesmaterial.cpp \
+    SGEXTN/cutevesicles/sgxrendercutevesiclesquickuielement.cpp \
+    SGEXTN/cutevesicles/sgxrendercutevesiclesshader.cpp \
+    SGEXTN/misc/sgxcentral.cpp \
+    SGEXTN/primitives/sgxcolourhsla.cpp \
+    SGEXTN/primitives/sgxcolourrgba.cpp \
+    SGEXTN/primitives/sgxidentifier.cpp \
+    SGEXTN/primitives/sgxtimestamp.cpp \
+    SGEXTN/primitives/sgxtouchevent.cpp \
+    SGEXTN/primitives/sgxvector2.cpp \
+    SGEXTN/quickui/sgxquickresizer.cpp \
+    SGEXTN/quickui/sgxquickuiinterface.cpp \
+    SGEXTN/quickui/sgxthemecoloursetting.cpp \
+    SGEXTN/userDefinedClasses/sgucentralmanagement.cpp
+RESOURCES = SGEXTN/assets.qrc
 HEADERS += \
-    cutevesicles/sgxrendercutevesiclesmaterial.h \
-    cutevesicles/sgxrendercutevesiclesquickuielement.h \
-    cutevesicles/sgxrendercutevesiclesshader.h \
-    misc/sgxcentral.h \
-    primitives/sgxcolourhsla.h \
-    primitives/sgxcolourrgba.h \
-    primitives/sgxidentifier.h \
-    primitives/sgxtimestamp.h \
-    primitives/sgxtouchevent.h \
-    primitives/sgxvector2.h \
-    quickui/sgxquickresizer.h \
-    quickui/sgxquickuiinterface.h \
-    quickui/sgxthemecoloursetting.h \
-    userDefinedClasses/sgucentralmanagement.h
+    SGEXTN/cutevesicles/sgxrendercutevesiclesmaterial.h \
+    SGEXTN/cutevesicles/sgxrendercutevesiclesquickuielement.h \
+    SGEXTN/cutevesicles/sgxrendercutevesiclesshader.h \
+    SGEXTN/misc/sgxcentral.h \
+    SGEXTN/primitives/sgxcolourhsla.h \
+    SGEXTN/primitives/sgxcolourrgba.h \
+    SGEXTN/primitives/sgxidentifier.h \
+    SGEXTN/primitives/sgxtimestamp.h \
+    SGEXTN/primitives/sgxtouchevent.h \
+    SGEXTN/primitives/sgxvector2.h \
+    SGEXTN/quickui/sgxquickresizer.h \
+    SGEXTN/quickui/sgxquickuiinterface.h \
+    SGEXTN/quickui/sgxthemecoloursetting.h \
+    SGEXTN/userDefinedClasses/sgucentralmanagement.h
