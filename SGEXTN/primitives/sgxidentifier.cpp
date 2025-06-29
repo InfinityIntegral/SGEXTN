@@ -70,5 +70,5 @@ bool SGXIdentifier::operator!=(SGXIdentifier x) const {
 }
 
 QString SGXIdentifier::getStringForPrinting() const {
-    return (QString::number(a, 16).toUpper() + QString::number(b, 16).toUpper() + QString::number(c, 16).toUpper() + QString::number(d, 16).toUpper());
+    return (QString::number(a, 16).toUpper()  + "-" + QString::number(b, 16).toUpper() + "-" + QString::number(c, 16).toUpper() + "-" + QString::number(d, 16).toUpper());
 }

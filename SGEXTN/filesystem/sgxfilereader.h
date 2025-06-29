@@ -4,6 +4,11 @@
 #include <QObject>
 #include <QFile>
 #include <qtmetamacros.h>
+#include "../primitives/sgxcolourrgba.h"
+#include "../primitives/sgxcolourhsla.h"
+#include "../primitives/sgxidentifier.h"
+#include "../primitives/sgxtimestamp.h"
+#include "../primitives/sgxvector2.h"
 
 class SGXFileReader : public QObject
 {
@@ -26,6 +31,11 @@ public:
     [[nodiscard]] float readFloat() const;
     [[nodiscard]] double readDouble() const;
     [[nodiscard]] QString readString() const;
+    [[nodiscard]] SGXColourRGBA readColourRGBA() const;
+    [[nodiscard]] SGXColourHSLA readColourHSLA() const;
+    [[nodiscard]] SGXTimeStamp readTimeStamp() const;
+    [[nodiscard]] SGXIdentifier readIdentifier() const;
+    [[nodiscard]] SGXVector2 readVector2() const;
 /*
 SGXColourRGBA
 SGXColourHSLA

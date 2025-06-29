@@ -4,6 +4,11 @@
 #include <QObject>
 #include <QFile>
 #include <qtmetamacros.h>
+#include "../primitives/sgxcolourrgba.h"
+#include "../primitives/sgxcolourhsla.h"
+#include "../primitives/sgxidentifier.h"
+#include "../primitives/sgxtimestamp.h"
+#include "../primitives/sgxvector2.h"
 
 class SGXFileWriter : public QObject
 {
@@ -26,6 +31,11 @@ public:
     void writeFloat(float x) const;
     void writeDouble(double x) const;
     void writeString(const QString& x) const;
+    void writeColourRGBA(SGXColourRGBA x) const;
+    void writeColourHSLA(SGXColourHSLA x) const;
+    void writeTimeStamp(SGXTimeStamp x) const;
+    void writeIdentifier(SGXIdentifier x) const;
+    void writeVector2(SGXVector2 x) const;
     /*
 SGXColourRGBA
 SGXColourHSLA

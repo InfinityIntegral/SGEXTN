@@ -4,6 +4,11 @@
 #include <QIODevice>
 #include <QDataStream>
 #include <qnamespace.h>
+#include "../primitives/sgxcolourrgba.h"
+#include "../primitives/sgxcolourhsla.h"
+#include "../primitives/sgxidentifier.h"
+#include "../primitives/sgxtimestamp.h"
+#include "../primitives/sgxvector2.h"
 
 SGXFileReader::SGXFileReader(const QString &s){
     fileControl = new QFile(s);
@@ -71,4 +76,25 @@ QString SGXFileReader::readString() const {
     QByteArray byteSequence(x, Qt::Uninitialized);
     (*(*this).fileData).readRawData(byteSequence.data(), x);
     return QString::fromUtf8(byteSequence);
+}
+
+SGXColourRGBA SGXFileReader::readColourRGBA() const {
+    return SGXColourRGBA(readUnsignedInt());
+}
+
+SGXColourHSLA SGXFileReader::readColourHSLA() const {
+    return SGXColourHSLA(readFloat(), readFloat(), readFloat(), readFloat());
+}
+
+SGXTimeStamp SGXFileReader::readTimeStamp() const {
+    return SGXTimeStamp(readLongLong());
+}
+
+SGXIdentifier SGXFileReader::readIdentifier() const {
+    int errCode = 0;
+    return SGXIdentifier(readUnsignedInt(), readUnsignedInt(), readUnsignedInt(), readUnsignedInt(), false, errCode);
+}
+
+SGXVector2 SGXFileReader::readVector2() const {
+    return SGXVector2(readFloat(), readFloat());
 }

@@ -3,6 +3,11 @@
 #include <QString>
 #include <QIODevice>
 #include <QDataStream>
+#include "../primitives/sgxcolourrgba.h"
+#include "../primitives/sgxcolourhsla.h"
+#include "../primitives/sgxidentifier.h"
+#include "../primitives/sgxtimestamp.h"
+#include "../primitives/sgxvector2.h"
 
 SGXFileWriter::SGXFileWriter(const QString &s){
     fileControl = new QFile(s);
@@ -52,4 +57,31 @@ void SGXFileWriter::writeString(const QString &x) const {
     const QByteArray byteSequence = x.toUtf8();
     (*(*this).fileData) << static_cast<int>(byteSequence.length());
     (*(*this).fileData).writeRawData(byteSequence.constData(), static_cast<int>(byteSequence.length()));
+}
+
+void SGXFileWriter::writeColourRGBA(SGXColourRGBA x) const {
+    writeUnsignedInt(x.x);
+}
+
+void SGXFileWriter::writeColourHSLA(SGXColourHSLA x) const {
+    writeFloat(x.h);
+    writeFloat(x.s);
+    writeFloat(x.l);
+    writeFloat(x.a);
+}
+
+void SGXFileWriter::writeTimeStamp(SGXTimeStamp x) const {
+    writeLongLong(x.t);
+}
+
+void SGXFileWriter::writeIdentifier(SGXIdentifier x) const {
+    writeUnsignedInt(x.a);
+    writeUnsignedInt(x.b);
+    writeUnsignedInt(x.c);
+    writeUnsignedInt(x.d);
+}
+
+void SGXFileWriter::writeVector2(SGXVector2 x) const {
+    writeFloat(x.x);
+    writeFloat(x.y);
 }
