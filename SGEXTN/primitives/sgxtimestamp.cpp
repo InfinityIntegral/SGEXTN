@@ -16,7 +16,8 @@ SGXTimeStamp::SGXTimeStamp(int year, int month, int day, int hour, int minute, i
 }
 
 SGXTimeStamp::SGXTimeStamp(const QDateTime& dt){
-    (*this).t = (SGXTimeStamp::zeroAsQDateTime).secsTo(dt);
+    if(dt.isValid() == false || dt.isNull() == true){(*this).t = 0ll;}
+    else{(*this).t = (SGXTimeStamp::zeroAsQDateTime).secsTo(dt);}
 }
 
 QDateTime SGXTimeStamp::getQDateTime() const {
@@ -24,7 +25,7 @@ QDateTime SGXTimeStamp::getQDateTime() const {
 }
 
 QString SGXTimeStamp::getString() const {
-    return ("SG" + getQDateTime().addYears(-1965).toString("yy MMdd hhmmss"));
+    return ("SG" + getQDateTime().addYears(-1965).toString("yy MMdd hhmmss").replace("-1", "0"));
 }
 
 QString SGXTimeStamp::getStringNoOffset() const {

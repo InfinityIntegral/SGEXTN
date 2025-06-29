@@ -4,6 +4,7 @@
 #include <QObject>
 #include <qtmetamacros.h>
 #include <qcontainerfwd.h>
+#include "../primitives/sgxtimestamp.h"
 
 class SGXFileSystem : public QObject
 {
@@ -35,14 +36,13 @@ public:
     static int duplicateFolder(const QString& startPath, const QString& endPath);
     static int permanentDeleteFile(const QString& s);
     static int permanentDeleteFolder(const QString& s);
+    static long long getFileSize(const QString& s);
+    static long long getFolderSize(const QString& s);
+    static SGXTimeStamp getFileCreationTime(const QString& s);
+    static SGXTimeStamp getFolderCreationTime(const QString& s);
+    static SGXTimeStamp getFileLastEditTime(const QString& s);
+    static SGXTimeStamp getFolderLastEditTime(const QString& s);
     /*
-get file size
-get folder size
-get file date created
-get folder date created
-get file date modified
-get folder date modified
-
 get file extension
 get file name
 get file name without extension

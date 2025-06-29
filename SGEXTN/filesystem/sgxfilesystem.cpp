@@ -8,6 +8,7 @@
 #include <QIODevice>
 #include <QQueue>
 #include <qcontainerfwd.h>
+#include "../primitives/sgxtimestamp.h"
 
 QString SGXFileSystem::rootFilePath = "";
 QString SGXFileSystem::userDataFilePath = "";
@@ -352,4 +353,45 @@ int SGXFileSystem::permanentDeleteFolder(const QString &s){
         }
     }
     return 1;
+}
+
+long long SGXFileSystem::getFileSize(const QString &s){
+    if(SGXFileSystem::pathIsValid(s) == false){return -1ll;}
+    if(SGXFileSystem::fileExists(s) != 1){return -1ll;}
+    return QFileInfo(s).size();
+}
+
+long long SGXFileSystem::getFolderSize(const QString &s){
+    if(SGXFileSystem::pathIsValid(s) == false){return -1ll;}
+    if(SGXFileSystem::folderExists(s) != 1){return -1ll;}
+    long long totalSize = 0ll;
+    QVector<QString> fileList = SGXFileSystem::getFilesListRecursive(s);
+    for(int i=0; i<fileList.length(); i++){
+        totalSize += QFileInfo(fileList[i]).size();
+    }
+    return totalSize;
+}
+
+SGXTimeStamp SGXFileSystem::getFileCreationTime(const QString &s){
+    if(SGXFileSystem::pathIsValid(s) == false){return SGXTimeStamp::zero;}
+    if(SGXFileSystem::fileExists(s) != 1){return SGXTimeStamp::zero;}
+    return SGXTimeStamp(QFileInfo(s).birthTime());
+}
+
+SGXTimeStamp SGXFileSystem::getFolderCreationTime(const QString &s){
+    if(SGXFileSystem::pathIsValid(s) == false){return SGXTimeStamp::zero;}
+    if(SGXFileSystem::folderExists(s) != 1){return SGXTimeStamp::zero;}
+    return SGXTimeStamp(QFileInfo(s).birthTime());
+}
+
+SGXTimeStamp SGXFileSystem::getFileLastEditTime(const QString &s){
+    if(SGXFileSystem::pathIsValid(s) == false){return SGXTimeStamp::zero;}
+    if(SGXFileSystem::fileExists(s) != 1){return SGXTimeStamp::zero;}
+    return SGXTimeStamp(QFileInfo(s).lastModified());
+}
+
+SGXTimeStamp SGXFileSystem::getFolderLastEditTime(const QString &s){
+    if(SGXFileSystem::pathIsValid(s) == false){return SGXTimeStamp::zero;}
+    if(SGXFileSystem::folderExists(s) != 1){return SGXTimeStamp::zero;}
+    return SGXTimeStamp(QFileInfo(s).lastModified());
 }
