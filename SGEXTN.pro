@@ -9,7 +9,9 @@ SOURCES = SGEXTN/misc/main.cpp \
     SGEXTN/cutevesicles/sgxrendercutevesiclesmaterial.cpp \
     SGEXTN/cutevesicles/sgxrendercutevesiclesquickuielement.cpp \
     SGEXTN/cutevesicles/sgxrendercutevesiclesshader.cpp \
+    SGEXTN/filesystem/sgxfilereader.cpp \
     SGEXTN/filesystem/sgxfilesystem.cpp \
+    SGEXTN/filesystem/sgxfilewriter.cpp \
     SGEXTN/misc/sgxcentral.cpp \
     SGEXTN/primitives/sgxcolourhsla.cpp \
     SGEXTN/primitives/sgxcolourrgba.cpp \
@@ -26,7 +28,9 @@ HEADERS += \
     SGEXTN/cutevesicles/sgxrendercutevesiclesmaterial.h \
     SGEXTN/cutevesicles/sgxrendercutevesiclesquickuielement.h \
     SGEXTN/cutevesicles/sgxrendercutevesiclesshader.h \
+    SGEXTN/filesystem/sgxfilereader.h \
     SGEXTN/filesystem/sgxfilesystem.h \
+    SGEXTN/filesystem/sgxfilewriter.h \
     SGEXTN/misc/sgxcentral.h \
     SGEXTN/primitives/sgxcolourhsla.h \
     SGEXTN/primitives/sgxcolourrgba.h \
