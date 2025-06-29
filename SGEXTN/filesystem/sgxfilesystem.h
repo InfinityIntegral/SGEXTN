@@ -42,14 +42,13 @@ public:
     static SGXTimeStamp getFolderCreationTime(const QString& s);
     static SGXTimeStamp getFileLastEditTime(const QString& s);
     static SGXTimeStamp getFolderLastEditTime(const QString& s);
+    static QString getFolderName(const QString& s);
+    static QString getFileName(const QString& s);
+    static QString getFileExtension(const QString& s);
+    static QString getFileNameNoExtension(const QString& s);
     /*
-get file extension
-get file name
-get file name without extension
-
 get files with extension
 get files with extension recursive
-get folders with string in name
 get files with string in name
 get files with string in name recursive
 

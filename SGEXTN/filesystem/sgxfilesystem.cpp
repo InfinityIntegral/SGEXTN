@@ -133,7 +133,11 @@ QString SGXFileSystem::decodeBase16(const QString &str){
 }
 
 bool SGXFileSystem::pathIsValid(const QString &s){
-    return SGXFileSystem::pathIsSubfolder(s, SGXFileSystem::rootFilePath);
+    if(s == SGXFileSystem::configFilePath){return true;}
+    if(s == SGXFileSystem::userDataFilePath){return true;}
+    if(SGXFileSystem::pathIsSubfolder(s, SGXFileSystem::configFilePath)){return true;}
+    if(SGXFileSystem::pathIsSubfolder(s, SGXFileSystem::userDataFilePath)){return true;}
+    return false;
 }
 
 bool SGXFileSystem::pathIsSubfolder(const QString &childPath, const QString &parentPath){
@@ -394,4 +398,28 @@ SGXTimeStamp SGXFileSystem::getFolderLastEditTime(const QString &s){
     if(SGXFileSystem::pathIsValid(s) == false){return SGXTimeStamp::zero;}
     if(SGXFileSystem::folderExists(s) != 1){return SGXTimeStamp::zero;}
     return SGXTimeStamp(QFileInfo(s).lastModified());
+}
+
+QString SGXFileSystem::getFolderName(const QString &s){
+    if(SGXFileSystem::pathIsValid(s) == false){return "";}
+    if(SGXFileSystem::folderExists(s) != 1){return "";}
+    return QFileInfo(s).fileName();
+}
+
+QString SGXFileSystem::getFileName(const QString &s){
+    if(SGXFileSystem::pathIsValid(s) == false){return "";}
+    if(SGXFileSystem::fileExists(s) != 1){return "";}
+    return QFileInfo(s).fileName();
+}
+
+QString SGXFileSystem::getFileExtension(const QString &s){
+    if(SGXFileSystem::pathIsValid(s) == false){return "";}
+    if(SGXFileSystem::fileExists(s) != 1){return "";}
+    return QFileInfo(s).suffix();
+}
+
+QString SGXFileSystem::getFileNameNoExtension(const QString &s){
+    if(SGXFileSystem::pathIsValid(s) == false){return "";}
+    if(SGXFileSystem::fileExists(s) != 1){return "";}
+    return QFileInfo(s).completeBaseName();
 }
