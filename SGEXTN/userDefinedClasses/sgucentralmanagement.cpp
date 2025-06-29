@@ -45,6 +45,7 @@ float SGUCentralManagement::cuteVesiclesFrameRate = 10.0f;
 
 // this is run immediately after GUI is created, use it to initialise the UI
 void SGUCentralManagement::initialise(){
+    
 }
 
 // this is run after the application is created but before the GUI, use it to edit theme colours from configuration files

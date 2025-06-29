@@ -18,6 +18,7 @@ public:
     static QString encodeBase16(const QString& s);
     static QString decodeBase16(const QString& str);
     static bool pathIsValid(const QString& s);
+    static bool pathIsSubfolder(const QString& childPath, const QString& parentPath);
     static int fileExists(const QString& s);
     static int folderExists(const QString& s);
     static QString getFreePath(const QString& prefix, const QString& unencodedName, const QString& postfix);
@@ -28,14 +29,13 @@ public:
     static QVector<QString> getFilesList(const QString& s);
     static QVector<QString> getFilesListRecursive(const QString& s);
     static QVector<QString> getFoldersList(const QString& s);
+    static int moveFile(const QString& startPath, const QString& endPath);
+    static int moveFolder(const QString& startPath, const QString& endPath);
+    static int duplicateFile(const QString& startPath, const QString& endPath);
+    static int duplicateFolder(const QString& startPath, const QString& endPath);
+    static int permanentDeleteFile(const QString& s);
+    static int permanentDeleteFolder(const QString& s);
     /*
-move file
-move folder
-duplicate file
-duplicate folder
-permanent delete file
-permanent delete folder
-
 get file size
 get folder size
 get file date created

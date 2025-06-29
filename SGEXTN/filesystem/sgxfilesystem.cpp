@@ -132,8 +132,11 @@ QString SGXFileSystem::decodeBase16(const QString &str){
 }
 
 bool SGXFileSystem::pathIsValid(const QString &s){
-    const QString root = SGXFileSystem::rootFilePath + '/';
-    if(s.left(root.length()) == root){return true;}
+    return SGXFileSystem::pathIsSubfolder(s, SGXFileSystem::rootFilePath);
+}
+
+bool SGXFileSystem::pathIsSubfolder(const QString &childPath, const QString &parentPath){
+    if(childPath.length() > parentPath.length() + 1 && childPath.left(parentPath.length() + 1) == parentPath + '/'){return true;}
     return false;
 }
 
@@ -184,7 +187,7 @@ QString SGXFileSystem::getFreePath(const QString &prefix, const QString &unencod
 
 int SGXFileSystem::createFile(const QString &s){
     if(SGXFileSystem::pathIsValid(s) == false){return -1;}
-    if(SGXFileSystem::fileExists(s) != 1){return 0;}
+    if(SGXFileSystem::fileExists(s) != 0){return 0;}
     const QDir parentFolder = QFileInfo(s).dir();
     if(parentFolder.exists() == false){QDir().mkpath(parentFolder.absolutePath());}
     QFile f(s);
@@ -197,7 +200,7 @@ int SGXFileSystem::createFile(const QString &s){
 
 int SGXFileSystem::createFolder(const QString& s){
     if(SGXFileSystem::pathIsValid(s) == false){return -1;}
-    if(SGXFileSystem::folderExists(s) != 1){return 0;}
+    if(SGXFileSystem::folderExists(s) != 0){return 0;}
     if(QDir().mkpath(s)){return 1;}
     return -2;
 }
@@ -252,4 +255,101 @@ QVector<QString> SGXFileSystem::getFilesListRecursive(const QString &s){
         }
     }
     return list;
+}
+
+int SGXFileSystem::moveFile(const QString &startPath, const QString &endPath){
+    if(SGXFileSystem::pathIsValid(startPath) == false || SGXFileSystem::pathIsValid(endPath) == false){return -1;}
+    if(SGXFileSystem::fileExists(startPath) != 1 || SGXFileSystem::fileExists(endPath) != 0){return 0;}
+    if(QFile(startPath).rename(endPath) == true){return 1;}
+    return -2;
+}
+
+int SGXFileSystem::moveFolder(const QString &startPath, const QString &endPath){
+    if(SGXFileSystem::pathIsValid(startPath) == false || SGXFileSystem::pathIsValid(endPath) == false){return -1;}
+    if(SGXFileSystem::folderExists(startPath) != 1){return 0;}
+    QVector<QString> startList = SGXFileSystem::getFilesListRecursive(startPath);
+    QVector<QString> endList = QVector<QString>();
+    for(int i=0; i<startList.length(); i++){
+        endList.push_back(endPath + startList[i].mid(startPath.length()));
+        if(SGXFileSystem::fileExists(endList[i]) != 0){return 0;}
+    }
+    for(int i=0; i<startList.length(); i++){
+        const QString parentFolder = SGXFileSystem::getParentPath(endList[i]);
+        if(SGXFileSystem::folderExists(parentFolder) != 1){SGXFileSystem::createFolder(parentFolder);}
+        if(QFile(startList[i]).rename(endList[i]) == false){return -2;}
+    }
+    QQueue<QString> emptyFolders = QQueue<QString>();
+    emptyFolders.enqueue(startPath);
+    while(emptyFolders.length() > 0){
+        const QString path = emptyFolders.dequeue();
+        QVector<QString> foldersInside = SGXFileSystem::getFoldersList(path);
+        if(foldersInside.length() > 0){
+            for(int i=0; i<foldersInside.length(); i++){
+                emptyFolders.enqueue(foldersInside[i]);
+            }
+            emptyFolders.enqueue(path);
+        }
+        else{
+            if(QDir().rmdir(path) == false){return -2;}
+        }
+    }
+    return 1;
+}
+
+int SGXFileSystem::duplicateFile(const QString &startPath, const QString &endPath){
+    if(SGXFileSystem::pathIsValid(startPath) == false || SGXFileSystem::pathIsValid(endPath) == false){return -1;}
+    if(SGXFileSystem::fileExists(startPath) != 1 || SGXFileSystem::fileExists(endPath) != 0){return 0;}
+    if(QFile(startPath).copy(endPath) == true){return 1;}
+    return -2;
+}
+
+int SGXFileSystem::duplicateFolder(const QString &startPath, const QString &endPath){
+    if(SGXFileSystem::pathIsValid(startPath) == false || SGXFileSystem::pathIsValid(endPath) == false){return -1;}
+    if(SGXFileSystem::folderExists(startPath) != 1){return 0;}
+    QVector<QString> startList = SGXFileSystem::getFilesListRecursive(startPath);
+    QVector<QString> endList = QVector<QString>();
+    for(int i=0; i<startList.length(); i++){
+        endList.push_back(endPath + startList[i].mid(startPath.length()));
+        if(SGXFileSystem::fileExists(endList[i]) != 0){return 0;}
+    }
+    for(int i=0; i<startList.length(); i++){
+        const QString parentFolder = SGXFileSystem::getParentPath(endList[i]);
+        if(SGXFileSystem::folderExists(parentFolder) != 1){SGXFileSystem::createFolder(parentFolder);}
+        if(QFile(startList[i]).copy(endList[i]) == false){return -2;}
+    }
+    return 1;
+}
+
+int SGXFileSystem::permanentDeleteFile(const QString &s){
+    if(SGXFileSystem::pathIsValid(s) == false){return -1;}
+    if(SGXFileSystem::fileExists(s) != 1){return 0;}
+    if(SGXFileSystem::pathIsSubfolder(s, SGXFileSystem::configFilePath) == false){return -3;}
+    if(QFile::remove(s) == true){return 1;}
+    return -2;
+}
+
+int SGXFileSystem::permanentDeleteFolder(const QString &s){
+    if(SGXFileSystem::pathIsValid(s) == false){return -1;}
+    if(SGXFileSystem::folderExists(s) != 1){return 0;}
+    if(SGXFileSystem::pathIsSubfolder(s, SGXFileSystem::configFilePath) == false){return -3;}
+    QVector<QString> pathList = SGXFileSystem::getFilesListRecursive(s);
+    for(int i=0; i<pathList.length(); i++){
+        if(QFile::remove(pathList[i]) == false){return -2;}
+    }
+    QQueue<QString> emptyFolders = QQueue<QString>();
+    emptyFolders.enqueue(s);
+    while(emptyFolders.length() > 0){
+        const QString path = emptyFolders.dequeue();
+        QVector<QString> foldersInside = SGXFileSystem::getFoldersList(path);
+        if(foldersInside.length() > 0){
+            for(int i=0; i<foldersInside.length(); i++){
+                emptyFolders.enqueue(foldersInside[i]);
+            }
+            emptyFolders.enqueue(path);
+        }
+        else{
+            if(QDir().rmdir(path) == false){return -2;}
+        }
+    }
+    return 1;
 }
