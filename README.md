@@ -49,7 +49,7 @@ SGCRender - I cannot enforce this, but you are strongly encouraged to start cust
      - [ ] SGXFileReader (struct allowing reading of all SGEXTN and C++ primitives from files with index seeking)
 	- [ ] SGXFileWriter (struct allowing writing of all SGEXTN and C++ primitives to files with overwriting by index)
 	- [ ] SGXFileSystemManagement (non instantiatable struct with static methods for file system operations)
-	- [ ] SGXCannotLah (logging error messages in a file "cannot.lah")
+	- [ ] documentation
 - [ ] working application template
 
 potential future extensions include networking stuff and PDF stuff and 3D rendering stuff and bluetooth stuff and more cross platform stuff

@@ -6,6 +6,8 @@
 #include <QDir>
 #include <QFileInfo>
 #include <QIODevice>
+#include <QQueue>
+#include <qcontainerfwd.h>
 
 QString SGXFileSystem::rootFilePath = "";
 QString SGXFileSystem::userDataFilePath = "";
@@ -198,4 +200,56 @@ int SGXFileSystem::createFolder(const QString& s){
     if(SGXFileSystem::folderExists(s) != 1){return 0;}
     if(QDir().mkpath(s)){return 1;}
     return -2;
+}
+
+QString SGXFileSystem::getParentPath(const QString &s){
+    if(SGXFileSystem::pathIsValid(s) == false){return "";}
+    QString parentPath = QFileInfo(s).absolutePath();
+    if(SGXFileSystem::pathIsValid(parentPath) == false){return "";}
+    return parentPath;
+}
+
+QString SGXFileSystem::getParentName(const QString &s){
+    const QString parentPath = SGXFileSystem::getParentPath(s);
+    if(SGXFileSystem::pathIsValid(parentPath) == false){return "";}
+    return QFileInfo(parentPath).fileName();
+}
+
+QVector<QString> SGXFileSystem::getFilesList(const QString &s){
+    if(SGXFileSystem::pathIsValid(s) == false){return QVector<QString>();}
+    QFileInfoList f = QDir(s).entryInfoList(QDir::Files | QDir::NoSymLinks | QDir::NoDotAndDotDot);
+    QVector<QString> list = QVector<QString>();
+    for(int i=0; i<f.length(); i++){
+        list.push_back(f[i].absoluteFilePath());
+    }
+    return list;
+}
+
+QVector<QString> SGXFileSystem::getFoldersList(const QString &s){
+    if(SGXFileSystem::pathIsValid(s) == false){return QVector<QString>();}
+    QFileInfoList f = QDir(s).entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot);
+    QVector<QString> list = QVector<QString>();
+    for(int i=0; i<f.length(); i++){
+        list.push_back(f[i].absoluteFilePath());
+    }
+    return list;
+}
+
+QVector<QString> SGXFileSystem::getFilesListRecursive(const QString &s){
+    if(SGXFileSystem::pathIsValid(s) == false){return QVector<QString>();}
+    QQueue<QString> pathsToCheck = QQueue<QString>();
+    pathsToCheck.enqueue(s);
+    QVector<QString> list = QVector<QString>();
+    while(pathsToCheck.length() > 0){
+        const QString path = pathsToCheck.dequeue();
+        QFileInfoList f = QDir(path).entryInfoList(QDir::Files | QDir::NoSymLinks | QDir::NoDotAndDotDot);
+        for(int i=0; i<f.length(); i++){
+            list.push_back(f[i].absoluteFilePath());
+        }
+        f = QDir(path).entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot);
+        for(int i=0; i<f.length(); i++){
+            pathsToCheck.enqueue(f[i].absoluteFilePath());
+        }
+    }
+    return list;
 }

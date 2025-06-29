@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <qtmetamacros.h>
+#include <qcontainerfwd.h>
 
 class SGXFileSystem : public QObject
 {
@@ -22,13 +23,16 @@ public:
     static QString getFreePath(const QString& prefix, const QString& unencodedName, const QString& postfix);
     static int createFile(const QString& s);
     static int createFolder(const QString& s);
+    static QString getParentPath(const QString& s);
+    static QString getParentName(const QString& s);
+    static QVector<QString> getFilesList(const QString& s);
+    static QVector<QString> getFilesListRecursive(const QString& s);
+    static QVector<QString> getFoldersList(const QString& s);
     /*
 move file
 move folder
 duplicate file
 duplicate folder
-delete file
-delete folder
 permanent delete file
 permanent delete folder
 
@@ -38,20 +42,22 @@ get file date created
 get folder date created
 get file date modified
 get folder date modified
+
 get file extension
 get file name
 get file name without extension
-get parent folder path
-get parent folder name
 
-get list of files
-get list of folders
-get recursive list of files
 get files with extension
+get files with extension recursive
+get folders with string in name
 get files with string in name
+get files with string in name recursive
+
 get file reader
 get file writer
 
+delete file
+delete folder
 restore file from bin
 restore folder from bin
 delete file from bin
@@ -60,6 +66,7 @@ clear bin
 set bin time
 
 bring in external file
+
 zip folder
 unzip folder
 */
