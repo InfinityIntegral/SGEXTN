@@ -16,12 +16,13 @@ public:
     static QString joinFilePaths(const QString& a, const QString& b);
     static QString encodeBase16(const QString& s);
     static QString decodeBase16(const QString& str);
+    static bool pathIsValid(const QString& s);
+    static int fileExists(const QString& s);
+    static int folderExists(const QString& s);
+    static QString getFreePath(const QString& prefix, const QString& unencodedName, const QString& postfix);
+    static int createFile(const QString& s);
+    static int createFolder(const QString& s);
     /*
-check file exists
-check folder exists
-create file
-create folder
-
 move file
 move folder
 duplicate file
@@ -40,9 +41,8 @@ get folder date modified
 get file extension
 get file name
 get file name without extension
-get nth parent folder path
-get nth parent folder name
-get file full path
+get parent folder path
+get parent folder name
 
 get list of files
 get list of folders

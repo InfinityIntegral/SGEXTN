@@ -2,6 +2,10 @@
 #include <string>
 #include <cstdint>
 #include <QString>
+#include <QFile>
+#include <QDir>
+#include <QFileInfo>
+#include <QIODevice>
 
 QString SGXFileSystem::rootFilePath = "";
 QString SGXFileSystem::userDataFilePath = "";
@@ -123,4 +127,75 @@ QString SGXFileSystem::decodeBase16(const QString &str){
         }
     }
     return s0;
+}
+
+bool SGXFileSystem::pathIsValid(const QString &s){
+    const QString root = SGXFileSystem::rootFilePath + '/';
+    if(s.left(root.length()) == root){return true;}
+    return false;
+}
+
+int SGXFileSystem::fileExists(const QString &s){
+    if(SGXFileSystem::pathIsValid(s) == false){return -1;}
+    if(QFile::exists(s) == true){return 1;}
+    return 0;
+}
+
+int SGXFileSystem::folderExists(const QString &s){
+    if(SGXFileSystem::pathIsValid(s) == false){return -1;}
+    if(QDir(s).exists() == true){return 1;}
+    return 0;
+}
+
+QString SGXFileSystem::getFreePath(const QString &prefix, const QString &unencodedName, const QString &postfix){
+    if(SGXFileSystem::pathIsValid(prefix) == false){return "";}
+    bool endsWithNumber = false;
+    QString cleanedName = unencodedName;
+    int startIndex = 1;
+    {
+        QString reversedNumber = "";
+        for(int i=static_cast<int>(unencodedName.length())-1; i>=0; i--){
+            if(unencodedName[i] >= '0' && unencodedName[i] <= '9'){reversedNumber += unencodedName[i];}
+            else{break;}
+        }
+        QString correctNumber = "";
+        for(int i=static_cast<int>(reversedNumber.length())-1; i>=0; i--){
+            correctNumber += reversedNumber[i];
+        }
+        if(correctNumber != ""){
+            startIndex = correctNumber.toInt();
+            cleanedName = unencodedName.left(unencodedName.length() - correctNumber.length());
+            endsWithNumber = true;
+        }
+    }
+    if(endsWithNumber == false){
+        QString path = SGXFileSystem::joinFilePaths(prefix, SGXFileSystem::encodeBase16(unencodedName) + postfix);
+        if(SGXFileSystem::fileExists(path) == 0 && SGXFileSystem::folderExists(path) == 0){return path;}
+    }
+    int i = startIndex;
+    while(true){
+        QString path = SGXFileSystem::joinFilePaths(prefix, SGXFileSystem::encodeBase16(cleanedName + QString::number(i)) + postfix);
+        if(SGXFileSystem::fileExists(path) == 0 && SGXFileSystem::folderExists(path) == 0){return path;}
+        i++;
+    }
+}
+
+int SGXFileSystem::createFile(const QString &s){
+    if(SGXFileSystem::pathIsValid(s) == false){return -1;}
+    if(SGXFileSystem::fileExists(s) != 1){return 0;}
+    const QDir parentFolder = QFileInfo(s).dir();
+    if(parentFolder.exists() == false){QDir().mkpath(parentFolder.absolutePath());}
+    QFile f(s);
+    if(f.open(QIODevice::WriteOnly)){
+        f.close();
+        return 1;
+    }
+    return -2;
+}
+
+int SGXFileSystem::createFolder(const QString& s){
+    if(SGXFileSystem::pathIsValid(s) == false){return -1;}
+    if(SGXFileSystem::folderExists(s) != 1){return 0;}
+    if(QDir().mkpath(s)){return 1;}
+    return -2;
 }
