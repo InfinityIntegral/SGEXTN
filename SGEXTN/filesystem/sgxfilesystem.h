@@ -46,12 +46,11 @@ public:
     static QString getFileName(const QString& s);
     static QString getFileExtension(const QString& s);
     static QString getFileNameNoExtension(const QString& s);
+    static QVector<QString> getFilesListWithExtension(const QString& s, const QString& ext);
+    static QVector<QString> getFilesListWithExtensionRecursive(const QString& s, const QString& ext);
+    static QVector<QString> getFilesListContainingName(const QString& s, const QString& name);
+    static QVector<QString> getFilesListContainingNameRecursive(const QString& s, const QString& name);
     /*
-get files with extension
-get files with extension recursive
-get files with string in name
-get files with string in name recursive
-
 get file reader
 get file writer
 

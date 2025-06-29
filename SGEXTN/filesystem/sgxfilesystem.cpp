@@ -423,3 +423,47 @@ QString SGXFileSystem::getFileNameNoExtension(const QString &s){
     if(SGXFileSystem::fileExists(s) != 1){return "";}
     return QFileInfo(s).completeBaseName();
 }
+
+QVector<QString> SGXFileSystem::getFilesListWithExtension(const QString &s, const QString &ext){
+    if(SGXFileSystem::pathIsValid(s) == false){return QVector<QString>();}
+    if(SGXFileSystem::folderExists(s) != 1){return QVector<QString>();}
+    QVector<QString> list = SGXFileSystem::getFilesList(s);
+    QVector<QString> finalList = QVector<QString>();
+    for(int i=0; i<list.length(); i++){
+        if(SGXFileSystem::getFileExtension(list[i]) == ext){finalList.push_back(list[i]);}
+    }
+    return finalList;
+}
+
+QVector<QString> SGXFileSystem::getFilesListWithExtensionRecursive(const QString &s, const QString &ext){
+    if(SGXFileSystem::pathIsValid(s) == false){return QVector<QString>();}
+    if(SGXFileSystem::folderExists(s) != 1){return QVector<QString>();}
+    QVector<QString> list = SGXFileSystem::getFilesListRecursive(s);
+    QVector<QString> finalList = QVector<QString>();
+    for(int i=0; i<list.length(); i++){
+        if(SGXFileSystem::getFileExtension(list[i]) == ext){finalList.push_back(list[i]);}
+    }
+    return finalList;
+}
+
+QVector<QString> SGXFileSystem::getFilesListContainingName(const QString &s, const QString &name){
+    if(SGXFileSystem::pathIsValid(s) == false){return QVector<QString>();}
+    if(SGXFileSystem::folderExists(s) != 1){return QVector<QString>();}
+    QVector<QString> list = SGXFileSystem::getFilesList(s);
+    QVector<QString> finalList = QVector<QString>();
+    for(int i=0; i<list.length(); i++){
+        if(SGXFileSystem::getFileNameNoExtension(list[i]).contains(name)){finalList.push_back(list[i]);}
+    }
+    return finalList;
+}
+
+QVector<QString> SGXFileSystem::getFilesListContainingNameRecursive(const QString &s, const QString &name){
+    if(SGXFileSystem::pathIsValid(s) == false){return QVector<QString>();}
+    if(SGXFileSystem::folderExists(s) != 1){return QVector<QString>();}
+    QVector<QString> list = SGXFileSystem::getFilesListRecursive(s);
+    QVector<QString> finalList = QVector<QString>();
+    for(int i=0; i<list.length(); i++){
+        if(SGXFileSystem::getFileNameNoExtension(list[i]).contains(name)){finalList.push_back(list[i]);}
+    }
+    return finalList;
+}
