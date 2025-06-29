@@ -17,17 +17,16 @@ public:
     ~SGXFileReader() override;
     QFile* fileControl;
     QDataStream* fileData;
+    [[nodiscard]] bool readBool() const;
+    [[nodiscard]] char readChar() const;
+    [[nodiscard]] int readInt() const;
+    [[nodiscard]] unsigned int readUnsignedInt() const;
+    [[nodiscard]] long long readLongLong() const;
+    [[nodiscard]] unsigned long long readUnsignedLongLong() const;
+    [[nodiscard]] float readFloat() const;
+    [[nodiscard]] double readDouble() const;
+    [[nodiscard]] QString readString() const;
 /*
-bool
-char
-int
-unsigned int
-long long
-unsigned long long
-float
-double
-QString
-
 SGXColourRGBA
 SGXColourHSLA
 SGXIdentifier

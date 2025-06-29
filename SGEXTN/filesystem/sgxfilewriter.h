@@ -17,17 +17,16 @@ public:
     ~SGXFileWriter() override;
     QFile* fileControl;
     QDataStream* fileData;
+    void writeBool(bool x) const;
+    void writeChar(char x) const;
+    void writeInt(int x) const;
+    void writeUnsignedInt(unsigned int x) const;
+    void writeLongLong(long long x) const;
+    void writeUnsignedLongLong(unsigned long long x) const;
+    void writeFloat(float x) const;
+    void writeDouble(double x) const;
+    void writeString(const QString& x) const;
     /*
-bool
-char
-int
-unsigned int
-long long
-unsigned long long
-float
-double
-QString
-
 SGXColourRGBA
 SGXColourHSLA
 SGXIdentifier
