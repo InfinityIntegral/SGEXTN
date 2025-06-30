@@ -14,6 +14,7 @@
 #include "../cutevesicles/sgxrendercutevesiclesquickuielement.h"
 #include "../filesystem/sgxfilesystem.h"
 #include <QStandardPaths>
+#include "../filesystem/sgxfilebinutilities.h"
 
 void SGXCentral::initialise(){
     SGXFileSystem::rootFilePath = SGXFileSystem::joinFilePaths(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation), SGUCentralManagement::rootFolderName);
@@ -22,6 +23,7 @@ void SGXCentral::initialise(){
     SGXFileSystem::binFilePath = SGXFileSystem::joinFilePaths(SGXFileSystem::rootFilePath, "recyclebin");
     if(SGXFileSystem::folderExists(SGXFileSystem::userDataFilePath) != 1){SGXFileSystem::createFolder(SGXFileSystem::userDataFilePath);}
     if(SGXFileSystem::folderExists(SGXFileSystem::configFilePath) != 1){SGXFileSystem::createFolder(SGXFileSystem::configFilePath);}
+    SGXFileBinUtilities::loadBinData();
     
     SGUCentralManagement::earlyInitialise();
     

@@ -38,6 +38,37 @@ SGXIdentifier::SGXIdentifier(unsigned int a, unsigned int b, unsigned int c, uns
     else if(ifValid == true && (*this).exists() == true){errCode = 1;}
 }
 
+SGXIdentifier::SGXIdentifier(const QString &s, bool ifValid, int &errCode){
+    unsigned int a = 0u;
+    unsigned int b = 0u;
+    unsigned int c = 0u;
+    unsigned int d = 0u;
+    if(s.length() == 32){
+        bool x = true;
+        bool x0 = true;
+        a = s.mid(0, 8).toUInt(&x, 16);
+        if(x == false){x0 = false;}
+        b = s.mid(8, 8).toUInt(&x, 16);
+        if(x == false){x0 = false;}
+        c = s.mid(16, 8).toUInt(&x, 16);
+        if(x == false){x0 = false;}
+        d = s.mid(24, 8).toUInt(&x, 16);
+        if(x == false){x0 = false;}
+        if(x0 == false){
+            a = 0u;
+            b = 0u;
+            c = 0u;
+            d = 0u;
+        }
+    }
+    (*this).a = a;
+    (*this).b = b;
+    (*this).c = c;
+    (*this).d = d;
+    if((*this) == SGXIdentifier::nullIdentifier){errCode = 2;}
+    else if(ifValid == true && (*this).exists() == true){errCode = 1;}
+}
+
 int SGXIdentifier::registerIdentifier() const {
     if(SGXIdentifier::identifiersList.contains((*this))){return 1;}
     SGXIdentifier::identifiersList.insert((*this));
@@ -70,5 +101,5 @@ bool SGXIdentifier::operator!=(SGXIdentifier x) const {
 }
 
 QString SGXIdentifier::getStringForPrinting() const {
-    return (QString::number(a, 16).toUpper()  + "-" + QString::number(b, 16).toUpper() + "-" + QString::number(c, 16).toUpper() + "-" + QString::number(d, 16).toUpper());
+    return (QString::number(a, 16).toUpper().rightJustified(8, '0')  + QString::number(b, 16).toUpper().rightJustified(8, '0') + QString::number(c, 16).toUpper().rightJustified(8, '0') + QString::number(d, 16).toUpper().rightJustified(8, '0'));
 }
