@@ -22,7 +22,6 @@ void SGXCentral::initialise(){
     SGXFileSystem::binFilePath = SGXFileSystem::joinFilePaths(SGXFileSystem::rootFilePath, "recyclebin");
     if(SGXFileSystem::folderExists(SGXFileSystem::userDataFilePath) != 1){SGXFileSystem::createFolder(SGXFileSystem::userDataFilePath);}
     if(SGXFileSystem::folderExists(SGXFileSystem::configFilePath) != 1){SGXFileSystem::createFolder(SGXFileSystem::configFilePath);}
-    if(SGXFileSystem::folderExists(SGXFileSystem::binFilePath) != 1){SGXFileSystem::createFolder(SGXFileSystem::binFilePath);}
     
     SGUCentralManagement::earlyInitialise();
     

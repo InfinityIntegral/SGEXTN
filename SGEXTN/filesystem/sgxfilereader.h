@@ -36,16 +36,9 @@ public:
     [[nodiscard]] SGXTimeStamp readTimeStamp() const;
     [[nodiscard]] SGXIdentifier readIdentifier() const;
     [[nodiscard]] SGXVector2 readVector2() const;
-/*
-SGXColourRGBA
-SGXColourHSLA
-SGXIdentifier
-SGXTimeStamp
-SGXVector2
-
-get location
-set location
-*/
+    [[nodiscard]] long long getPointerLocation() const;
+    void setPointerLocation(long long x) const;
+    [[nodiscard]] bool allDataRead() const;
 };
 
 #endif // SGXFILEREADER_H

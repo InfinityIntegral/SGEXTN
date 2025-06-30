@@ -14,6 +14,9 @@ SGXFileReader::SGXFileReader(const QString &s){
     fileControl = new QFile(s);
     (*fileControl).open(QIODevice::ReadOnly);
     fileData = new QDataStream(fileControl);
+    (*fileData).setByteOrder(QDataStream::LittleEndian);
+    (*fileData).setVersion(QDataStream::Qt_6_9);
+    (*fileData).setFloatingPointPrecision(QDataStream::SinglePrecision);
 }
 
 SGXFileReader::~SGXFileReader(){
@@ -97,4 +100,16 @@ SGXIdentifier SGXFileReader::readIdentifier() const {
 
 SGXVector2 SGXFileReader::readVector2() const {
     return SGXVector2(readFloat(), readFloat());
+}
+
+long long SGXFileReader::getPointerLocation() const {
+    return (*fileControl).pos();
+}
+
+void SGXFileReader::setPointerLocation(long long x) const {
+    (*fileControl).seek(x);
+}
+
+bool SGXFileReader::allDataRead() const {
+    return (*fileControl).atEnd();
 }

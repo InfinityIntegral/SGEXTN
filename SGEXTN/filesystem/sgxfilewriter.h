@@ -36,16 +36,8 @@ public:
     void writeTimeStamp(SGXTimeStamp x) const;
     void writeIdentifier(SGXIdentifier x) const;
     void writeVector2(SGXVector2 x) const;
-    /*
-SGXColourRGBA
-SGXColourHSLA
-SGXIdentifier
-SGXTimeStamp
-SGXVector2
-
-get location
-set location
-*/
+    [[nodiscard]] long long getPointerLocation() const;
+    void setPointerLocation(long long x) const;
 };
 
 #endif // SGXFILEWRITER_H

@@ -13,6 +13,9 @@ SGXFileWriter::SGXFileWriter(const QString &s){
     fileControl = new QFile(s);
     (*fileControl).open(QIODevice::WriteOnly);
     fileData = new QDataStream(fileControl);
+    (*fileData).setByteOrder(QDataStream::LittleEndian);
+    (*fileData).setVersion(QDataStream::Qt_6_9);
+    (*fileData).setFloatingPointPrecision(QDataStream::SinglePrecision);
 }
 
 SGXFileWriter::~SGXFileWriter(){
@@ -84,4 +87,12 @@ void SGXFileWriter::writeIdentifier(SGXIdentifier x) const {
 void SGXFileWriter::writeVector2(SGXVector2 x) const {
     writeFloat(x.x);
     writeFloat(x.y);
+}
+
+long long SGXFileWriter::getPointerLocation() const {
+    return (*fileControl).pos();
+}
+
+void SGXFileWriter::setPointerLocation(long long x) const {
+    (*fileControl).seek(x);
 }
