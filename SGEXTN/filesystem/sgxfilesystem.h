@@ -51,16 +51,6 @@ public:
     static QVector<QString> getFilesListContainingName(const QString& s, const QString& name);
     static QVector<QString> getFilesListContainingNameRecursive(const QString& s, const QString& name);
     /*
-initialise bin
-delete file
-delete folder
-restore file from bin
-restore folder from bin
-delete file from bin
-delete folder from bin
-clear bin
-set bin time
-
 bring in external file
 
 zip folder
