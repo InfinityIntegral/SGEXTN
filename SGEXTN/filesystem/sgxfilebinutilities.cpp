@@ -5,20 +5,20 @@
 #include "sgxfilewriter.h"
 #include "sgxfilereader.h"
 #include <QFileInfo>
-#include <qcontainerfwd.h>
+#include <QHash>
 #include <tuple>
 #include "../primitives/sgxidentifier.h"
 #include <QString>
 #include "../primitives/sgxtimestamp.h"
 
 int SGXFileBinUtilities::deletedFilesLifespan = 1000;
-QVector<std::tuple<SGXIdentifier, QString, SGXTimeStamp>>* SGXFileBinUtilities::deletedFiles = nullptr;
+QHash<SGXIdentifier, std::tuple<QString, SGXTimeStamp>>* SGXFileBinUtilities::deletedFiles = nullptr;
 QString SGXFileBinUtilities::pathToMetadataFile = "";
 
 void SGXFileBinUtilities::loadBinData(){
     SGXFileBinUtilities::pathToMetadataFile = SGXFileSystem::joinFilePaths(SGXFileSystem::binFilePath, "metadata.sg");
     if(QFile::exists(SGXFileBinUtilities::pathToMetadataFile) == false){SGXFileBinUtilities::createEmptyBin();}
-    SGXFileBinUtilities::deletedFiles = new QVector<std::tuple<SGXIdentifier, QString, SGXTimeStamp>>();
+    SGXFileBinUtilities::deletedFiles = new QHash<SGXIdentifier, std::tuple<QString, SGXTimeStamp>>();
     {
         const SGXFileReader fileReader(SGXFileBinUtilities::pathToMetadataFile);
         SGXFileBinUtilities::deletedFilesLifespan = fileReader.readInt();
@@ -26,7 +26,7 @@ void SGXFileBinUtilities::loadBinData(){
         for(int i=0; i<deletedFilesNumber; i++){
             const SGXIdentifier id = fileReader.readIdentifier();
             static_cast<void>(id.registerIdentifier());
-            (*SGXFileBinUtilities::deletedFiles).push_back(std::tuple<SGXIdentifier, QString, SGXTimeStamp>(id, fileReader.readString(), fileReader.readTimeStamp()));
+            (*SGXFileBinUtilities::deletedFiles).insert(id, std::tuple<QString, SGXTimeStamp>(fileReader.readString(), fileReader.readTimeStamp()));
         }
     }
 }
@@ -45,11 +45,11 @@ void SGXFileBinUtilities::syncMetadata(){
     {
         const SGXFileWriter fileWriter(SGXFileBinUtilities::pathToMetadataFile);
         fileWriter.writeInt(SGXFileBinUtilities::deletedFilesLifespan);
-        fileWriter.writeInt(static_cast<int>((*SGXFileBinUtilities::deletedFiles).length()));
-        for(int i=0; i<(*SGXFileBinUtilities::deletedFiles).length(); i++){
-            fileWriter.writeIdentifier(std::get<0>((*SGXFileBinUtilities::deletedFiles)[i]));
-            fileWriter.writeString(std::get<1>((*SGXFileBinUtilities::deletedFiles)[i]));
-            fileWriter.writeTimeStamp(std::get<2>((*SGXFileBinUtilities::deletedFiles)[i]));
+        fileWriter.writeInt(static_cast<int>((*SGXFileBinUtilities::deletedFiles).size()));
+        for(QHash<SGXIdentifier, std::tuple<QString, SGXTimeStamp>>::const_iterator i = (*SGXFileBinUtilities::deletedFiles).constBegin(); i != (*SGXFileBinUtilities::deletedFiles).constEnd(); i++){
+            fileWriter.writeIdentifier(i.key());
+            fileWriter.writeString(std::get<0>(i.value()));
+            fileWriter.writeTimeStamp(std::get<1>(i.value()));
         }
     }
 }
@@ -62,7 +62,7 @@ int SGXFileBinUtilities::deleteFile(const QString &s){
     const QString endPath = SGXFileSystem::joinFilePaths(SGXFileSystem::binFilePath, id.getStringForPrinting() + ".sg");
     if(QFile(s).rename(endPath) == false){return -2;}
     static_cast<void>(id.registerIdentifier());
-    (*SGXFileBinUtilities::deletedFiles).push_back(std::tuple<SGXIdentifier, QString, SGXTimeStamp>(id, s, t));
+    (*SGXFileBinUtilities::deletedFiles).insert(id, std::tuple<QString, SGXTimeStamp>(s, t));
     SGXFileBinUtilities::syncMetadata();
     return 1;
 }
@@ -77,7 +77,7 @@ int SGXFileBinUtilities::deleteFolder(const QString &s){
         const QString endPath = SGXFileSystem::joinFilePaths(SGXFileSystem::binFilePath, id.getStringForPrinting() + ".sg");
         if(QFile(f[i].absoluteFilePath()).rename(endPath) == false){return -2;}
         static_cast<void>(id.registerIdentifier());
-        (*SGXFileBinUtilities::deletedFiles).push_back(std::tuple<SGXIdentifier, QString, SGXTimeStamp>(id, f[i].absoluteFilePath(), t));
+        (*SGXFileBinUtilities::deletedFiles).insert(id, std::tuple<QString, SGXTimeStamp>(f[i].absoluteFilePath(), t));
     }
     QDir(s).removeRecursively();
     SGXFileBinUtilities::syncMetadata();
