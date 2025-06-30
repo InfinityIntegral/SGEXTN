@@ -4,11 +4,13 @@ QMAKE_CXXFLAGS_RELEASE -= -O2
 QMAKE_CXXFLAGS_DEBUG += -std=c++20
 QMAKE_LFLAGS = -flto -Wl,--gc-sections
 DISTFILES = .gitignore LICENSE.txt README.md \
+    SGEXTN/filesystem/bin.sgfile \
     compilecommands.txt
 SOURCES = SGEXTN/misc/main.cpp \
     SGEXTN/cutevesicles/sgxrendercutevesiclesmaterial.cpp \
     SGEXTN/cutevesicles/sgxrendercutevesiclesquickuielement.cpp \
     SGEXTN/cutevesicles/sgxrendercutevesiclesshader.cpp \
+    SGEXTN/filesystem/sgxfilebinutilities.cpp \
     SGEXTN/filesystem/sgxfilereader.cpp \
     SGEXTN/filesystem/sgxfilesystem.cpp \
     SGEXTN/filesystem/sgxfilewriter.cpp \
@@ -28,6 +30,7 @@ HEADERS += \
     SGEXTN/cutevesicles/sgxrendercutevesiclesmaterial.h \
     SGEXTN/cutevesicles/sgxrendercutevesiclesquickuielement.h \
     SGEXTN/cutevesicles/sgxrendercutevesiclesshader.h \
+    SGEXTN/filesystem/sgxfilebinutilities.h \
     SGEXTN/filesystem/sgxfilereader.h \
     SGEXTN/filesystem/sgxfilesystem.h \
     SGEXTN/filesystem/sgxfilewriter.h \
