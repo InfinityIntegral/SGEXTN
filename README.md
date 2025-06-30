@@ -59,6 +59,13 @@ SGCRender - I cannot enforce this, but you are strongly encouraged to start cust
 
 potential future extensions include networking stuff and PDF stuff and 3D rendering stuff and bluetooth stuff and more cross platform stuff
 
+## Credits...
+- Qt (https://www.qt.io/)
+- Git (https://git-scm.com/)
+- GitHub (https://github.com/)
+- LGPL License (https://opensource.org/license/lgpl-3-0)
+- 05524F.sg SGEXTN (https://github.com/InfinityIntegral/SGEXTN) (ownself cite ownself)
+
 ## Contributing...
 The best way to contribute is to complain. To complain refers to informing me of a bug or suggesting a new feature to be included to the software. Pls refer to the "Contact me" section below.
 
