@@ -49,10 +49,9 @@ SGCRender - I cannot enforce this, but you are strongly encouraged to start cust
      - [x] SGXFileReader (struct allowing reading of all SGEXTN and C++ primitives from files with index seeking)
 	- [x] SGXFileWriter (struct allowing writing of all SGEXTN and C++ primitives to files with overwriting by index)
 	- [x] SGXFileSystem (non instantiatable struct with static methods for file system operations)
-	- [ ] SGXFileBinUtilities (non instantiable struct with static methods for usage of the recycling bin)
+	- [x] SGXFileBinUtilities (non instantiable struct with static methods for usage of the recycling bin)
 	- [ ] SGXFileUploadUtilities (non instantiable struct with static methods for bringing in external files
 	- [ ] SGXFileZipUtilities (non instantiable struct with static methods for creating and using zip files)
-	- [ ] documentation
 - [ ] customisable theme colours
 - [ ] customisable vesicle properties
 - [ ] working application template
