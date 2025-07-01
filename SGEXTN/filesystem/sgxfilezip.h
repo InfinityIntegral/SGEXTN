@@ -2,17 +2,20 @@
 #define SGXFILEZIP_H
 
 #include <QObject>
+#include <qtmetamacros.h>
+#include <qcontainerfwd.h>
+#include <tuple>
 
 class SGXFileZip : public QObject // non instantiable class containing functions to make and read SingZip files
 {
     Q_OBJECT
 public:
     SGXFileZip() = delete;
-    // make zip from folder
-    // make zip from list of files
-    // unpack zip into folder
-    // extract specific file from zip
-    // get table of contents of zip with file names and sizes
+    static int makeZip(const QString& path, const QString& zipLocation);
+    static int makeZip(const QVector<QString>& list, const QString& zipLocation);
+    static int unpackZip(const QString& zipLocation, const QString& path);
+    static int unpackSingleFileFromZip(const QString& fileName, const QString& zipLocation, const QString& path);
+    static QVector<std::tuple<QString, long long>> getContentsListFromZip(const QString& zipLocation);
 };
 
 #endif // SGXFILEZIP_H

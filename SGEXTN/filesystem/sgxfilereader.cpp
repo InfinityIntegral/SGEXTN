@@ -113,3 +113,11 @@ void SGXFileReader::setPointerLocation(long long x) const {
 bool SGXFileReader::allDataRead() const {
     return (*fileControl).atEnd();
 }
+
+QByteArray SGXFileReader::readAllBytes() const {
+    return (*fileControl).readAll();
+}
+
+QByteArray SGXFileReader::readBytes(long long n) const {
+    return (*fileControl).read(n);
+}

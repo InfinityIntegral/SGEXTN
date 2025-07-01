@@ -40,6 +40,8 @@ public:
     [[nodiscard]] long long getPointerLocation() const; // get current pointer location
     void setPointerLocation(long long x) const; // set current pointer location
     [[nodiscard]] bool allDataRead() const; // check if all data has been read
+    [[nodiscard]] QByteArray readAllBytes() const; // read all data into a QByteArray
+    [[nodiscard]] QByteArray readBytes(long long n) const; // read n bytes of data
 };
 
 #endif // SGXFILEREADER_H

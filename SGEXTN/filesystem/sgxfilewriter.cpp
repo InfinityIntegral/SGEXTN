@@ -96,3 +96,15 @@ long long SGXFileWriter::getPointerLocation() const {
 void SGXFileWriter::setPointerLocation(long long x) const {
     (*fileControl).seek(x);
 }
+
+QByteArray SGXFileWriter::readAllBytes() const {
+    return (*fileControl).readAll();
+}
+
+QByteArray SGXFileWriter::readBytes(long long n) const {
+    return (*fileControl).read(n);
+}
+
+void SGXFileWriter::writeBytes(const QByteArray &x) const {
+    (*fileControl).write(x);
+}

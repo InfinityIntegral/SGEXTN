@@ -39,6 +39,9 @@ public:
     void writeVector2(SGXVector2 x) const; // write a 2D vector
     [[nodiscard]] long long getPointerLocation() const; // get current pointer location
     void setPointerLocation(long long x) const; // set current pointer location
+    [[nodiscard]] QByteArray readBytes(long long n) const; // read n bytes of data
+    [[nodiscard]] QByteArray readAllBytes() const; // read all data
+    void writeBytes(const QByteArray& x) const; // write a byte array, length must written separately
 };
 
 #endif // SGXFILEWRITER_H

@@ -4,8 +4,8 @@
 
 struct FileAddress{
 	QString filePathRelativeToZipRoot;
-	unsigned long long startPointerOffset;
-	unsigned long long fileLength;
+	long long startPointerOffset;
+	long long fileLength;
 };
 
 main_v1(path = any){
