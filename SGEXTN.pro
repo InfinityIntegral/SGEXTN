@@ -14,6 +14,7 @@ SOURCES = SGEXTN/misc/main.cpp \
     SGEXTN/filesystem/sgxfilebinutilities.cpp \
     SGEXTN/filesystem/sgxfilereader.cpp \
     SGEXTN/filesystem/sgxfilesystem.cpp \
+    SGEXTN/filesystem/sgxfileuploader.cpp \
     SGEXTN/filesystem/sgxfilewriter.cpp \
     SGEXTN/filesystem/sgxfilezip.cpp \
     SGEXTN/misc/sgxcentral.cpp \
@@ -35,6 +36,7 @@ HEADERS += \
     SGEXTN/filesystem/sgxfilebinutilities.h \
     SGEXTN/filesystem/sgxfilereader.h \
     SGEXTN/filesystem/sgxfilesystem.h \
+    SGEXTN/filesystem/sgxfileuploader.h \
     SGEXTN/filesystem/sgxfilewriter.h \
     SGEXTN/filesystem/sgxfilezip.h \
     SGEXTN/misc/sgxcentral.h \
