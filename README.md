@@ -51,7 +51,7 @@ SGCRender - I cannot enforce this, but you are strongly encouraged to start cust
 	- [x] SGXFileSystem (non instantiatable struct with static methods for file system operations)
 	- [x] SGXFileBinUtilities (non instantiable struct with static methods for usage of the recycling bin)
 	- [ ] SGXFileUploadUtilities (non instantiable struct with static methods for bringing in external files
-	- [ ] SGXFileZipUtilities (non instantiable struct with static methods for creating and using zip files)
+	- [x] SGXFileZipUtilities (non instantiable struct with static methods for creating and using zip files)
 - [ ] customisable theme colours
 - [ ] customisable vesicle properties
 - [ ] working application template
