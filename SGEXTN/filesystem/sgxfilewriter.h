@@ -10,7 +10,7 @@
 #include "../primitives/sgxtimestamp.h"
 #include "../primitives/sgxvector2.h"
 
-class SGXFileWriter : public QObject
+class SGXFileWriter : public QObject // object to write into a file
 {
     Q_OBJECT
 public:

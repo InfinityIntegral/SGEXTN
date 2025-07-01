@@ -10,7 +10,7 @@
 #include "../primitives/sgxtimestamp.h"
 #include "../primitives/sgxvector2.h"
 
-class SGXFileReader : public QObject
+class SGXFileReader : public QObject // object to read files
 {
     Q_OBJECT
 public:

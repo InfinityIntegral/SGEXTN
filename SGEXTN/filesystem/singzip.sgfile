@@ -1,0 +1,15 @@
+// SingZip file format
+// SingZip is a folder to file format created specifically for SGEXTN, it is not compatible with ZIP
+// SingZip files are marked with the extension .sgzip
+
+struct FileAddress{
+	QString filePathRelativeToZipRoot;
+	unsigned long long startPointerOffset;
+	unsigned long long fileLength;
+};
+
+main_v1(path = any){
+	int numberOfFiles;
+	FileAddress fileMetadata[numberOfFiles];
+	[@ fileMetadata[index].startPointerOffset -> fileMetadata[index].fileLength] bytes binaryData[numberOfFiles];
+};

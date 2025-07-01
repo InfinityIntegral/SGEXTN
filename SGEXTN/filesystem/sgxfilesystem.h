@@ -6,7 +6,7 @@
 #include <qcontainerfwd.h>
 #include "../primitives/sgxtimestamp.h"
 
-class SGXFileSystem : public QObject
+class SGXFileSystem : public QObject // non instantiable class containing functions to interact with the file system
 {
     Q_OBJECT
 public:

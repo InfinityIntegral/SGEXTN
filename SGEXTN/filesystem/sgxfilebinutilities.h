@@ -8,7 +8,7 @@
 #include <qtmetamacros.h>
 #include <QHash>
 
-class SGXFileBinUtilities : public QObject
+class SGXFileBinUtilities : public QObject // non instantiable class containing functions to manage recycling bin
 {
     Q_OBJECT
 public:

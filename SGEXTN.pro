@@ -5,6 +5,7 @@ QMAKE_CXXFLAGS_DEBUG += -std=c++20
 QMAKE_LFLAGS = -flto -Wl,--gc-sections
 DISTFILES = .gitignore LICENSE.txt README.md \
     SGEXTN/filesystem/bin.sgfile \
+    SGEXTN/filesystem/singzip.sgfile \
     compilecommands.txt
 SOURCES = SGEXTN/misc/main.cpp \
     SGEXTN/cutevesicles/sgxrendercutevesiclesmaterial.cpp \
@@ -14,6 +15,7 @@ SOURCES = SGEXTN/misc/main.cpp \
     SGEXTN/filesystem/sgxfilereader.cpp \
     SGEXTN/filesystem/sgxfilesystem.cpp \
     SGEXTN/filesystem/sgxfilewriter.cpp \
+    SGEXTN/filesystem/sgxfilezip.cpp \
     SGEXTN/misc/sgxcentral.cpp \
     SGEXTN/primitives/sgxcolourhsla.cpp \
     SGEXTN/primitives/sgxcolourrgba.cpp \
@@ -34,6 +36,7 @@ HEADERS += \
     SGEXTN/filesystem/sgxfilereader.h \
     SGEXTN/filesystem/sgxfilesystem.h \
     SGEXTN/filesystem/sgxfilewriter.h \
+    SGEXTN/filesystem/sgxfilezip.h \
     SGEXTN/misc/sgxcentral.h \
     SGEXTN/primitives/sgxcolourhsla.h \
     SGEXTN/primitives/sgxcolourrgba.h \
