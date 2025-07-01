@@ -83,3 +83,23 @@ int SGXFileBinUtilities::deleteFolder(const QString &s){
     SGXFileBinUtilities::syncMetadata();
     return 1;
 }
+
+int SGXFileBinUtilities::restoreFile(SGXIdentifier x){
+    if((*SGXFileBinUtilities::deletedFiles).contains(x) == false){return 0;}
+    const QString filePath = std::get<0>((*SGXFileBinUtilities::deletedFiles)[x]);
+    const QString binPath = SGXFileSystem::joinFilePaths(SGXFileSystem::binFilePath, x.getStringForPrinting() + ".sg");
+    if(QFile::exists(filePath) == true){return -2;}
+    if(QFile(binPath).rename(filePath) == false){return -2;}
+    (*SGXFileBinUtilities::deletedFiles).remove(x);
+    SGXFileBinUtilities::syncMetadata();
+    return 1;
+}
+
+int SGXFileBinUtilities::permanentDeleteFile(SGXIdentifier x){
+    if((*SGXFileBinUtilities::deletedFiles).contains(x) == false){return 0;}
+    const QString binPath = SGXFileSystem::joinFilePaths(SGXFileSystem::binFilePath, x.getStringForPrinting() + ".sg");
+    if(QFile::remove(binPath) == false){return -2;}
+    (*SGXFileBinUtilities::deletedFiles).remove(x);
+    SGXFileBinUtilities::syncMetadata();
+    return 1;
+}
