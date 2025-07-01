@@ -50,7 +50,8 @@ SGCRender - I cannot enforce this, but you are strongly encouraged to start cust
 	- [x] SGXFileWriter (struct allowing writing of all SGEXTN and C++ primitives to files with overwriting by index)
 	- [x] SGXFileSystem (non instantiatable struct with static methods for file system operations)
 	- [x] SGXFileBinUtilities (non instantiable struct with static methods for usage of the recycling bin)
-	- [ ] SGXFileUploadUtilities (non instantiable struct with static methods for bringing in external files
+	- [x] SGXFileUploader (non instantiable struct with static methods for bringing in external files
+	- [ ] SGXFileDownloader (non instantiable struct with static methods for saving application files externally)
 	- [x] SGXFileZipUtilities (non instantiable struct with static methods for creating and using zip files)
 - [ ] customisable theme colours
 - [ ] customisable vesicle properties

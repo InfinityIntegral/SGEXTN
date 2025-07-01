@@ -1,13 +1,14 @@
 #include "sgxfileuploader.h"
 #include "../quickui/sgxquickuiinterface.h"
 #include "sgxfilesystem.h"
-#include <QFile>
 #include <QQmlComponent>
 #include <QObject>
 #include <QString>
 #include <QQuickItem>
 #include <QMetaObject>
 #include <QUrl>
+#include "sgxfilereader.h"
+#include "sgxfilewriter.h"
 
 QQmlComponent* SGXFileUploader::fileUploadTemplate = nullptr;
 QObject* SGXFileUploader::fileUploadInstance = nullptr;
@@ -23,18 +24,21 @@ void SGXFileUploader::uploadFile(void (*attachedFunction)(const QString &)){
 
 void SGXFileUploader::checkUploadedFile(){
     QString urlPath = (*SGXFileUploader::fileUploadInstance).property("selectedFilePath").toString();
-    QString realPath = SGXFileSystem::getFreePath(SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "temp"), "temp", ".sg");
-    if(SGXFileSystem::folderExists(SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "temp")) != 1){SGXFileSystem::createFolder(SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "temp"));}
-#ifdef Q_OS_ANDROID
-    // use the shared container library
-#else
     if(urlPath != ""){
         urlPath = QUrl(urlPath).toLocalFile();
-        QFile(urlPath).copy(realPath);
+        const QString realPath = SGXFileSystem::getFreePath(SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "temp"), "temp", ".sg");
+        if(SGXFileSystem::folderExists(SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "temp")) != 1){SGXFileSystem::createFolder(SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "temp"));}
+        SGXFileSystem::createFile(realPath);
+        {
+            const SGXFileReader fileReader(urlPath);
+            const SGXFileWriter fileWriter(realPath);
+            fileWriter.writeBytes(fileReader.readAllBytes());
+        }
+        SGXFileUploader::fileAcceptor(realPath);
+        SGXFileSystem::permanentDeleteFile(realPath);
     }
-#endif
-    if(urlPath == ""){realPath = "";}
-    SGXFileUploader::fileAcceptor(realPath);
-    if(SGXFileSystem::fileExists(realPath) == 1){SGXFileSystem::permanentDeleteFile(realPath);}
+    else{
+        SGXFileUploader::fileAcceptor("");
+    }
     (*SGXFileUploader::fileUploadInstance).deleteLater();
 }
