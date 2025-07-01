@@ -11,7 +11,7 @@
 
 SGXFileWriter::SGXFileWriter(const QString &s){
     fileControl = new QFile(s);
-    (*fileControl).open(QIODevice::WriteOnly);
+    (*fileControl).open(QIODevice::ReadWrite);
     fileData = new QDataStream(fileControl);
     (*fileData).setByteOrder(QDataStream::LittleEndian);
     (*fileData).setVersion(QDataStream::Qt_6_9);

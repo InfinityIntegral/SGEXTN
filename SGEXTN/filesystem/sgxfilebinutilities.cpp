@@ -29,6 +29,10 @@ void SGXFileBinUtilities::loadBinData(){
             (*SGXFileBinUtilities::deletedFiles).insert(id, std::tuple<QString, SGXTimeStamp>(fileReader.readString(), fileReader.readTimeStamp()));
         }
     }
+    for(QHash<SGXIdentifier, std::tuple<QString, SGXTimeStamp>>::const_iterator i = (*SGXFileBinUtilities::deletedFiles).constBegin(); i != (*SGXFileBinUtilities::deletedFiles).constEnd(); i++){
+        const float f = SGXTimeStamp::now().getDaysFrom(std::get<1>(i.value()));
+        if(static_cast<int>(f) > SGXFileBinUtilities::deletedFilesLifespan){SGXFileBinUtilities::permanentDeleteFile(i.key());}
+    }
 }
 
 void SGXFileBinUtilities::createEmptyBin(){
@@ -102,4 +106,16 @@ int SGXFileBinUtilities::permanentDeleteFile(SGXIdentifier x){
     (*SGXFileBinUtilities::deletedFiles).remove(x);
     SGXFileBinUtilities::syncMetadata();
     return 1;
+}
+
+void SGXFileBinUtilities::permanentClearBin(){
+    SGXFileBinUtilities::createEmptyBin();
+}
+
+void SGXFileBinUtilities::changeFileLifespan(int x){
+    SGXFileBinUtilities::deletedFilesLifespan = x;
+    {
+        const SGXFileWriter fileWriter(SGXFileBinUtilities::pathToMetadataFile);
+        fileWriter.writeInt(SGXFileBinUtilities::deletedFilesLifespan);
+    }
 }

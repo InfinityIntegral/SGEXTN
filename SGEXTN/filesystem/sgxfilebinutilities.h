@@ -23,11 +23,9 @@ public:
     static void syncMetadata();
     static int restoreFile(SGXIdentifier x);
     static int permanentDeleteFile(SGXIdentifier x);
-    // refactor to use QHash for list of deleted files
+    static void permanentClearBin();
+    static void changeFileLifespan(int x);
+    static void deleteByFileLifespan();
 };
-/*
-clear bin
-set bin time
-*/
 
 #endif // SGXFILEBINUTILITIES_H
