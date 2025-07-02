@@ -9,6 +9,7 @@ DISTFILES = .gitignore LICENSE.txt README.md \
     compilecommands.txt
 SOURCES = SGEXTN/misc/main.cpp \
     SGEXTN/customisation/sgxthemecolourscustomisation.cpp \
+    SGEXTN/customisation/sgxvesiclespropertiescustomisation.cpp \
     SGEXTN/cutevesicles/sgxrendercutevesiclesmaterial.cpp \
     SGEXTN/cutevesicles/sgxrendercutevesiclesquickuielement.cpp \
     SGEXTN/cutevesicles/sgxrendercutevesiclesshader.cpp \
@@ -33,6 +34,7 @@ SOURCES = SGEXTN/misc/main.cpp \
 RESOURCES = SGEXTN/assets.qrc
 HEADERS += \
     SGEXTN/customisation/sgxthemecolourscustomisation.h \
+    SGEXTN/customisation/sgxvesiclespropertiescustomisation.h \
     SGEXTN/cutevesicles/sgxrendercutevesiclesmaterial.h \
     SGEXTN/cutevesicles/sgxrendercutevesiclesquickuielement.h \
     SGEXTN/cutevesicles/sgxrendercutevesiclesshader.h \

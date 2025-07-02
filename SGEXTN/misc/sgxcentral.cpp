@@ -16,6 +16,7 @@
 #include <QStandardPaths>
 #include "../filesystem/sgxfilebinutilities.h"
 #include "../customisation/sgxthemecolourscustomisation.h"
+#include "../customisation/sgxvesiclespropertiescustomisation.h"
 
 void SGXCentral::initialise(){
     SGXFileSystem::rootFilePath = SGXFileSystem::joinFilePaths(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation), SGUCentralManagement::rootFolderName);
@@ -35,6 +36,7 @@ void SGXCentral::initialise(){
     QGuiApplication::setWindowIcon(temp_appicon);
     
     SGXThemeColoursCustomisation::loadThemeColours();
+    SGXVesiclesPropertiesCustomisation::loadVesicleProperties();
     
     SGXQuickUIInterface::themeColoursInstance = new SGXThemeColourSetting();
     qmlRegisterSingletonInstance("ThemeColours", 0, 0, "ThemeColours", SGXQuickUIInterface::themeColoursInstance);
