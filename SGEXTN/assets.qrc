@@ -20,5 +20,6 @@
         <file>cutevesicles/cutevesicles.vert.qsb</file>
         <file>cutevesicles/cutevesicles.frag.qsb</file>
         <file>QML/fileupload.qml</file>
+        <file>QML/filedownload.qml</file>
     </qresource>
 </RCC>

@@ -4,7 +4,6 @@
 #include <QQmlComponent>
 #include <QObject>
 #include <QString>
-#include <QQuickItem>
 #include <QMetaObject>
 #include <QUrl>
 #include "sgxfilereader.h"
@@ -17,7 +16,7 @@ void (*SGXFileUploader::fileAcceptor)(const QString&) = nullptr;
 void SGXFileUploader::uploadFile(void (*attachedFunction)(const QString &)){
     if(SGXFileUploader::fileUploadTemplate == nullptr){SGXFileUploader::fileUploadTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/SGEXTN/QML/fileupload.qml");}
     SGXFileUploader::fileUploadInstance = qobject_cast<QObject*>((*SGXFileUploader::fileUploadTemplate).create());
-    connect(SGXFileUploader::fileUploadInstance, &QQuickItem::objectNameChanged, &SGXFileUploader::checkUploadedFile);
+    connect(SGXFileUploader::fileUploadInstance, &QObject::objectNameChanged, &SGXFileUploader::checkUploadedFile);
     QMetaObject::invokeMethod(SGXFileUploader::fileUploadInstance, "open");
     SGXFileUploader::fileAcceptor = attachedFunction;
 }
@@ -37,8 +36,8 @@ void SGXFileUploader::checkUploadedFile(){
         SGXFileUploader::fileAcceptor(realPath);
         SGXFileSystem::permanentDeleteFile(realPath);
     }
-    else{
-        SGXFileUploader::fileAcceptor("");
-    }
+    else{SGXFileUploader::fileAcceptor("");}
     (*SGXFileUploader::fileUploadInstance).deleteLater();
+    SGXFileUploader::fileUploadInstance = nullptr;
+    SGXFileUploader::fileAcceptor = nullptr;
 }

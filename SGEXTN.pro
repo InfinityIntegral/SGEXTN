@@ -12,6 +12,7 @@ SOURCES = SGEXTN/misc/main.cpp \
     SGEXTN/cutevesicles/sgxrendercutevesiclesquickuielement.cpp \
     SGEXTN/cutevesicles/sgxrendercutevesiclesshader.cpp \
     SGEXTN/filesystem/sgxfilebinutilities.cpp \
+    SGEXTN/filesystem/sgxfiledownloader.cpp \
     SGEXTN/filesystem/sgxfilereader.cpp \
     SGEXTN/filesystem/sgxfilesystem.cpp \
     SGEXTN/filesystem/sgxfileuploader.cpp \
@@ -34,6 +35,7 @@ HEADERS += \
     SGEXTN/cutevesicles/sgxrendercutevesiclesquickuielement.h \
     SGEXTN/cutevesicles/sgxrendercutevesiclesshader.h \
     SGEXTN/filesystem/sgxfilebinutilities.h \
+    SGEXTN/filesystem/sgxfiledownloader.h \
     SGEXTN/filesystem/sgxfilereader.h \
     SGEXTN/filesystem/sgxfilesystem.h \
     SGEXTN/filesystem/sgxfileuploader.h \
