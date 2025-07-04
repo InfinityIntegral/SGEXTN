@@ -2,14 +2,12 @@
 #include <QSGGeometryNode>
 #include "sgxrendercutevesiclesmaterial.h"
 #include <QRandomGenerator>
-#include "../quickui/sgxquickuiinterface.h"
-#include <QTimer>
 #include <QQuickItem>
 #include <QSGGeometry>
 #include <algorithm>
 #include "../primitives/sgxvector2.h"
-#include <QObject>
 #include <span>
+#include "../template/sgxcutevesicles.h"
 
 namespace{
 inline float randomFloat(float min, float max){
@@ -17,29 +15,6 @@ inline float randomFloat(float min, float max){
     x = static_cast<double>(min) + x * (static_cast<double>(max) - static_cast<double>(min));
     return static_cast<float>(x);
 }
-}
-
-float SGXRenderCuteVesiclesQuickUIElement::framesPerSecond = 0.0f;
-bool SGXRenderCuteVesiclesQuickUIElement::animationOngoing = false;
-SGXRenderCuteVesiclesQuickUIElement* SGXRenderCuteVesiclesQuickUIElement::animationScreen = nullptr;
-
-void SGXRenderCuteVesiclesQuickUIElement::startAnimation(){
-    SGXRenderCuteVesiclesQuickUIElement::animationOngoing = true;
-    if(SGXRenderCuteVesiclesQuickUIElement::animationScreen == nullptr){SGXRenderCuteVesiclesQuickUIElement::animationScreen = qobject_cast<SGXRenderCuteVesiclesQuickUIElement*>(SGXQuickUIInterface::createCuteVesicles(SGXQuickUIInterface::rootWidget));}
-    (*SGXRenderCuteVesiclesQuickUIElement::animationScreen).setVisible(true);
-    SGXRenderCuteVesiclesQuickUIElement::refreshAnimation();
-}
-
-void SGXRenderCuteVesiclesQuickUIElement::refreshAnimation(){
-    if(SGXRenderCuteVesiclesQuickUIElement::animationOngoing == true){
-        (*SGXRenderCuteVesiclesQuickUIElement::animationScreen).update();
-        QTimer::singleShot(static_cast<int>(1000.0f / SGXRenderCuteVesiclesQuickUIElement::framesPerSecond), &SGXRenderCuteVesiclesQuickUIElement::refreshAnimation);
-    }
-}
-
-void SGXRenderCuteVesiclesQuickUIElement::stopAnimation(){
-    SGXRenderCuteVesiclesQuickUIElement::animationOngoing = false;
-    (*SGXRenderCuteVesiclesQuickUIElement::animationScreen).setVisible(false);
 }
 
 SGXRenderCuteVesiclesQuickUIElement::SGXRenderCuteVesiclesQuickUIElement(){
@@ -84,21 +59,21 @@ QSGNode* SGXRenderCuteVesiclesQuickUIElement::updatePaintNode(QSGNode *thisNode,
     (*mat).h = h;
     (*mat).s = std::max(w, h);
     for(int i=0; i<10; i++){
-        (*mat).velocity.at(i) += (SGXVector2(randomFloat((-1.0f) * (*mat).maxAccelerationPerSecond, (*mat).maxAccelerationPerSecond), randomFloat((-1.0f) * (*mat).maxAccelerationPerSecond, (*mat).maxAccelerationPerSecond)) / SGXRenderCuteVesiclesQuickUIElement::framesPerSecond);
+        (*mat).velocity.at(i) += (SGXVector2(randomFloat((-1.0f) * (*mat).maxAccelerationPerSecond, (*mat).maxAccelerationPerSecond), randomFloat((-1.0f) * (*mat).maxAccelerationPerSecond, (*mat).maxAccelerationPerSecond)) / SGXCuteVesicles::framesPerSecond);
         if((*mat).velocity.at(i).x > (*mat).maxVelocityAllowed){(*mat).velocity.at(i).x = (*mat).maxVelocityAllowed;}
         else if((*mat).velocity.at(i).x < (-1.0f) * (*mat).maxVelocityAllowed){(*mat).velocity.at(i).x = -1.0f * (*mat).maxVelocityAllowed;}
         if((*mat).velocity.at(i).y > (*mat).maxVelocityAllowed){(*mat).velocity.at(i).y = (*mat).maxVelocityAllowed;}
         else if((*mat).velocity.at(i).y < (-1.0f) * (*mat).maxVelocityAllowed){(*mat).velocity.at(i).y = -1.0f * (*mat).maxVelocityAllowed;}
-        (*mat).center.at(i) += (*mat).velocity.at(i) / SGXRenderCuteVesiclesQuickUIElement::framesPerSecond;
+        (*mat).center.at(i) += (*mat).velocity.at(i) / SGXCuteVesicles::framesPerSecond;
         if((*mat).center.at(i).x > (*mat).maxCenter){(*mat).center.at(i).x -= 2.0f * (*mat).maxCenter;}
         else if((*mat).center.at(i).x < (-1.0f) * (*mat).maxCenter){(*mat).center.at(i).x += 2.0f * (*mat).maxCenter;}
         if((*mat).center.at(i).y > (*mat).maxCenter){(*mat).center.at(i).y -= 2.0f * (*mat).maxCenter;}
         else if((*mat).center.at(i).y < (-1.0f) * (*mat).maxCenter){(*mat).center.at(i).y += 2.0f * (*mat).maxCenter;}
-        (*mat).radius.at(i) += randomFloat((-1.0f) * (*mat).maxRadiusChangePerSecond, (*mat).maxRadiusChangePerSecond) / SGXRenderCuteVesiclesQuickUIElement::framesPerSecond;
+        (*mat).radius.at(i) += randomFloat((-1.0f) * (*mat).maxRadiusChangePerSecond, (*mat).maxRadiusChangePerSecond) / SGXCuteVesicles::framesPerSecond;
         if((*mat).radius.at(i) > (*mat).maxRadiusAllowed){(*mat).radius.at(i) = (*mat).maxRadiusAllowed;}
         else if((*mat).radius.at(i) < (*mat).minRadiusAllowed){(*mat).radius.at(i) = (*mat).minRadiusAllowed;}
         for(int j=0; j<8; j++){
-            (*mat).radiusOffset.at(i).at(j) += randomFloat((-1.0f) * (*mat).maxRadiusOffsetChangePerSecond, (*mat).maxRadiusOffsetChangePerSecond) / SGXRenderCuteVesiclesQuickUIElement::framesPerSecond;
+            (*mat).radiusOffset.at(i).at(j) += randomFloat((-1.0f) * (*mat).maxRadiusOffsetChangePerSecond, (*mat).maxRadiusOffsetChangePerSecond) / SGXCuteVesicles::framesPerSecond;
             if((*mat).radiusOffset.at(i).at(j) > (*mat).maxRadiusOffsetAsRadiusPercentage){(*mat).radiusOffset.at(i).at(j) = (*mat).maxRadiusOffsetAsRadiusPercentage;}
             else if((*mat).radiusOffset.at(i).at(j) < (-1.0f) * (*mat).maxRadiusOffsetAsRadiusPercentage){(*mat).radiusOffset.at(i).at(j) = (-1.0f) * (*mat).maxRadiusOffsetAsRadiusPercentage;}
         }

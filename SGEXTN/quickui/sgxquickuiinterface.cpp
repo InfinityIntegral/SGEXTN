@@ -14,6 +14,7 @@
 #include <QQuickWindow>
 #include "../template/sgxstatusbar.h"
 #include <QTimer>
+#include "../template/sgxcutevesicles.h"
 
 QQuickWindow* SGXQuickUIInterface::applicationWindow = nullptr;
 QQuickItem* SGXQuickUIInterface::rootWindow = nullptr;
@@ -79,6 +80,7 @@ void SGXQuickUIInterface::buildTemplate(){
     SGXQuickUIInterface::rootWidget = SGXQuickUIInterface::createRootWidget(SGXQuickUIInterface::rootWindow);
     SGXQuickUIInterface::parentWidget = SGXQuickUIInterface::createParentWidget(SGXQuickUIInterface::rootWidget);
     SGXStatusBar::instance = SGXQuickUIInterface::createStatusBar(SGXQuickUIInterface::rootWidget);
+    connect(SGXStatusBar::instance, &QQuickItem::objectNameChanged, &SGXCuteVesicles::toggleAnimation);
     SGXStatusBar::timer = new QTimer(SGXStatusBar::instance);
     connect(SGXStatusBar::timer, &QTimer::timeout, &SGXStatusBar::updateTime);
     (*SGXStatusBar::timer).start(1000);

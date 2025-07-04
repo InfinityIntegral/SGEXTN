@@ -17,6 +17,7 @@
 #include "../filesystem/sgxfilebinutilities.h"
 #include "../customisation/sgxthemecolourscustomisation.h"
 #include "../customisation/sgxvesiclespropertiescustomisation.h"
+#include "../template/sgxcutevesicles.h"
 
 void SGXCentral::initialise(){
     SGXFileSystem::rootFilePath = SGXFileSystem::joinFilePaths(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation), SGUCentralManagement::rootFolderName);
@@ -44,7 +45,7 @@ void SGXCentral::initialise(){
     qmlRegisterSingletonInstance("Resizer", 0, 0, "Resizer", SGXQuickUIInterface::resizerInstance);
     qmlRegisterType<SGXRenderCuteVesiclesQuickUIElement>("CuteVesicles", 0, 0, "CuteVesicles");
     (*SGXQuickUIInterface::e).load(":/SGEXTN/QML/root.qml");
-    SGXRenderCuteVesiclesQuickUIElement::framesPerSecond = SGUCentralManagement::cuteVesiclesFrameRate;
+    SGXCuteVesicles::framesPerSecond = SGUCentralManagement::cuteVesiclesFrameRate;
     
     connect(qApp, &QGuiApplication::aboutToQuit, &SGXCentral::terminate); // NOLINT(cppcoreguidelines-pro-type-static-cast-downcast)
     QFontDatabase::addApplicationFont(":/SGEXTN/assets/standard.otf");

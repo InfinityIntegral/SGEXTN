@@ -55,7 +55,11 @@ SGCRender - I cannot enforce this, but you are strongly encouraged to start cust
 	- [x] SGXFileZipUtilities (non instantiable struct with static methods for creating and using zip files)
 - [x] customisable theme colours
 - [x] customisable vesicle properties
-- [ ] working application template
+- [x] working application template
+- [ ] hidden theme colours settings page
+- [ ] v2 release
+- [ ] colour picker
+- [ ] specialised input fields
 
 potential future extensions include networking stuff and PDF stuff and 3D rendering stuff and bluetooth stuff and more cross platform stuff
 
