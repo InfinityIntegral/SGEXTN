@@ -78,4 +78,5 @@ void SGXCentral::terminate(){
     delete SGXQuickUIInterface::scrollViewTemplate;
     delete SGXQuickUIInterface::touchReceiverTemplate;
     delete SGXQuickUIInterface::cuteVesiclesTemplate;
+    delete SGXQuickUIInterface::statusBarTemplate;
 }

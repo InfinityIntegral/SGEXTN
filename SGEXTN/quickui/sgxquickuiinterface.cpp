@@ -12,6 +12,8 @@
 #include <QQueue>
 #include <utility>
 #include <QQuickWindow>
+#include "../template/sgxstatusbar.h"
+#include <QTimer>
 
 QQuickWindow* SGXQuickUIInterface::applicationWindow = nullptr;
 QQuickItem* SGXQuickUIInterface::rootWindow = nullptr;
@@ -34,6 +36,7 @@ QQmlComponent* SGXQuickUIInterface::scrollViewTemplate = nullptr;
 QQmlComponent* SGXQuickUIInterface::touchReceiverTemplate = nullptr;
 QVector<void (*)(const std::array<SGXTouchEvent, 5>&)>* SGXQuickUIInterface::touchEventFunctionsList = nullptr;
 QQmlComponent* SGXQuickUIInterface::cuteVesiclesTemplate = nullptr;
+QQmlComponent* SGXQuickUIInterface::statusBarTemplate = nullptr;
 
 void SGXQuickUIInterface::initialise(){
     SGXQuickUIInterface::rootWidgetTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/SGEXTN/QML/rootwidget.qml");
@@ -49,11 +52,17 @@ void SGXQuickUIInterface::initialise(){
     SGXQuickUIInterface::scrollViewTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/SGEXTN/QML/scrollview.qml");
     SGXQuickUIInterface::touchReceiverTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/SGEXTN/QML/touchreceiver.qml");
     SGXQuickUIInterface::cuteVesiclesTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/SGEXTN/cutevesicles/cutevesicles.qml");
+    SGXQuickUIInterface::statusBarTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/SGEXTN/QML/statusbar.qml");
 }
 
 void SGXQuickUIInterface::buildTemplate(){
     SGXQuickUIInterface::rootWidget = SGXQuickUIInterface::createRootWidget(SGXQuickUIInterface::rootWindow);
     SGXQuickUIInterface::parentWidget = SGXQuickUIInterface::createParentWidget(SGXQuickUIInterface::rootWidget);
+    SGXStatusBar::instance = SGXQuickUIInterface::createStatusBar(SGXQuickUIInterface::rootWidget);
+    SGXStatusBar::timer = new QTimer(SGXStatusBar::instance);
+    connect(SGXStatusBar::timer, &QTimer::timeout, &SGXStatusBar::updateTime);
+    (*SGXStatusBar::timer).start(1000);
+    SGXStatusBar::updateTime();
 }
 
 QQuickItem* SGXQuickUIInterface::createRootWidget(QQuickItem *parent){
@@ -360,6 +369,7 @@ SGXQuickUIInterface::WidgetType SGXQuickUIInterface::getType(QQuickItem *x){
     if(v == SGXQuickUIInterface::ScrollView){return SGXQuickUIInterface::ScrollView;}
     if(v == SGXQuickUIInterface::TouchReceiver){return SGXQuickUIInterface::TouchReceiver;}
     if(v == SGXQuickUIInterface::CuteVesicles){return SGXQuickUIInterface::CuteVesicles;}
+    if(v == SGXQuickUIInterface::StatusBar){return SGXQuickUIInterface::StatusBar;}
     return SGXQuickUIInterface::Undefined;
 }
 
@@ -431,4 +441,11 @@ QQuickItem* SGXQuickUIInterface::getActiveObject(){
     QQuickItem* x = (*SGXQuickUIInterface::applicationWindow).activeFocusItem();
     while(x != nullptr && SGXQuickUIInterface::getType(x) == SGXQuickUIInterface::Undefined){x = (*x).parentItem();}
     return x;
+}
+
+QQuickItem* SGXQuickUIInterface::createStatusBar(QQuickItem *parent){
+    QQuickItem* thisItem = qobject_cast<QQuickItem*>((*SGXQuickUIInterface::statusBarTemplate).create());
+    (*thisItem).setParentItem(parent);
+    (*thisItem).setProperty("widgetType", SGXQuickUIInterface::StatusBar);
+    return thisItem;
 }

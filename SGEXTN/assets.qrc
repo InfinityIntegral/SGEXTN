@@ -21,5 +21,6 @@
         <file>cutevesicles/cutevesicles.frag.qsb</file>
         <file>QML/fileupload.qml</file>
         <file>QML/filedownload.qml</file>
+        <file>QML/statusbar.qml</file>
     </qresource>
 </RCC>

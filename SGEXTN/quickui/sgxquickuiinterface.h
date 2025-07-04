@@ -32,6 +32,7 @@ public:
         ScrollView = 70, // scroll view
         TouchReceiver = 80, // widget to receive precise touch
         CuteVesicles = 90, // animation of vesicles
+        StatusBar = 100 // status bar
     };
     static QQmlApplicationEngine* e; // reference to Qt Quick engine
     static SGXQuickResizer* resizerInstance; // instance of QML Resizer singleton
@@ -93,6 +94,8 @@ public:
     static float getInputFieldDataAsFloat(QQuickItem* x, bool& isValid); // retrieve input as float from SGEXTN input fields, isValid checks if the input is valid
     static QString getInputFieldDataAsString(QQuickItem* x, bool& isValid); // retrieve input as string from SGEXTN input fields, isValid checks if the input is valid, the input is invalid if x is not a SGEXTN input field
     static QQuickItem* getActiveObject(); // get the currently active SGEXTN object, can be used to distinguish which button got pressed when there are multiple buttons
+    static QQmlComponent* statusBarTemplate; // QML template for status bar
+    static QQuickItem* createStatusBar(QQuickItem* parent); // function to create status bar
 };
 
 #endif // SGXQUICKUIINTERFACE_H

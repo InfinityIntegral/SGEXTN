@@ -30,6 +30,7 @@ SOURCES = SGEXTN/misc/main.cpp \
     SGEXTN/quickui/sgxquickresizer.cpp \
     SGEXTN/quickui/sgxquickuiinterface.cpp \
     SGEXTN/quickui/sgxthemecoloursetting.cpp \
+    SGEXTN/template/sgxstatusbar.cpp \
     SGEXTN/userDefinedClasses/sgucentralmanagement.cpp
 RESOURCES = SGEXTN/assets.qrc
 HEADERS += \
@@ -55,4 +56,5 @@ HEADERS += \
     SGEXTN/quickui/sgxquickresizer.h \
     SGEXTN/quickui/sgxquickuiinterface.h \
     SGEXTN/quickui/sgxthemecoloursetting.h \
+    SGEXTN/template/sgxstatusbar.h \
     SGEXTN/userDefinedClasses/sgucentralmanagement.h
