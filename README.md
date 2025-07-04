@@ -20,7 +20,7 @@ SGU - kind of SGEXTN files, you can edit the values of properties inside if the 
 SGC - I cannot enforce this, but you are supposed to start your custom classes with this prefix  
 SGCRender - I cannot enforce this, but you are strongly encouraged to start custom classes related to custom rendering with this
 
-## What to expect...
+## Included in latest release...
 - [x] C++ primitives extensions
 	- [x] SGXColourRGBA (RGBA representation of a colour with 8 bits per channel, wraps unsigned int)
 	- [x] SGXColourHSLA (HSLA representation of a colour with 8 bits per channel, contains 4 floats)
@@ -56,12 +56,11 @@ SGCRender - I cannot enforce this, but you are strongly encouraged to start cust
 - [x] customisable theme colours
 - [x] customisable vesicle properties
 - [x] working application template
-- [ ] hidden theme colours settings page
-- [ ] v2 release
+
+## Work in progress...
 - [ ] colour picker
 - [ ] specialised input fields
-
-potential future extensions include networking stuff and PDF stuff and 3D rendering stuff and bluetooth stuff and more cross platform stuff
+- [ ] hidden theme colours settings page
 
 ## Credits...
 - Qt (https://www.qt.io/)
