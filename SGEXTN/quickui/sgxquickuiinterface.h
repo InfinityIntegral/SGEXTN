@@ -38,6 +38,7 @@ public:
     static SGXQuickResizer* resizerInstance; // instance of QML Resizer singleton
     static SGXThemeColourSetting* themeColoursInstance; // instance of QML ThemeColours singleton
     static void initialise(); // prepare QML components for usage
+    static void terminate(); // delete templates
     static void buildTemplate(); // build basic application parts including the status bar, the root widget, and the parent widget
     static QQuickWindow* applicationWindow; // reference to application window
     static QQuickItem* rootWindow; // reference to application window
