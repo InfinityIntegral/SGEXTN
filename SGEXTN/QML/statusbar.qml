@@ -19,6 +19,7 @@ Button{
 	property string s: ""
 	property bool unselected: false
 	
+	layer.enabled: true
 	x: 0.5 * (Resizer.appWindowWidth - Resizer.renderSpaceWidth)
 	y: 0.5 * (Resizer.appWindowHeight - Resizer.renderSpaceHeight)
 	width: Resizer.renderSpaceWidth

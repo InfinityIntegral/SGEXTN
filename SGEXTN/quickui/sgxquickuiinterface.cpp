@@ -253,10 +253,8 @@ QQuickItem* SGXQuickUIInterface::createScrollView(QQuickItem *parent, float x1, 
     return thisItem;
 }
 
-void SGXQuickUIInterface::receiveTouch(const QString &s){
-    const unsigned long long iop = (s.mid(1)).toULongLong();
-    QQuickItem* thisItem = std::bit_cast<QQuickItem*>(iop);
-    
+void SGXQuickUIInterface::receiveTouch(){
+    QQuickItem* thisItem = SGXQuickUIInterface::getActiveObject();
     std::array<float, 11> data = std::array<float, 11>();
     // [x, y, px, py, sx, sy, vx, vy, rx, ry, f]
     std::array<SGXTouchEvent, 5> eventsToPass = std::array<SGXTouchEvent, 5>();
@@ -363,7 +361,7 @@ QQuickItem* SGXQuickUIInterface::createTouchReceiver(QQuickItem *parent, void (*
     }
     (*SGXQuickUIInterface::touchEventFunctionsList).append(attachedFunction);
     (*thisItem).setProperty("functionPointer", (*SGXQuickUIInterface::touchEventFunctionsList).length() - 1);
-    connect(thisItem, &QQuickItem::stateChanged, &SGXQuickUIInterface::receiveTouch);
+    connect(thisItem, &QQuickItem::objectNameChanged, &SGXQuickUIInterface::receiveTouch);
     (*thisItem).setProperty("widgetType", SGXQuickUIInterface::TouchReceiver);
     return thisItem;
 }

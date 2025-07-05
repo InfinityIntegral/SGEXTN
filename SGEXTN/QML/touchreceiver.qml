@@ -12,12 +12,13 @@ Rectangle{
 	property real w0: 0.0
 	property real h1: 0.0
 	property real h0: 0.0
+	focus: true
 	
 	x: x1 * Resizer.renderSpaceWidth + x0 * Resizer.sizeUnit
 	y: y1 * Resizer.renderSpaceHeight + y0 * Resizer.sizeUnit
     width: w1 * Resizer.renderSpaceWidth + w0 * Resizer.sizeUnit
     height: h1 * Resizer.renderSpaceHeight + h0 * Resizer.sizeUnit
-    color: ThemeColours.getThemeColour(-1)
+	color: ThemeColours.getThemeColour(-1)
 	
 	property bool e1: false // exists
 	property real e1x: 0.0 // x coordinate
@@ -81,10 +82,9 @@ Rectangle{
 	property real e5f: 0.0
 	
 	property int functionPointer: -1
-	property string thisPointer: ""
 	function emitClickedSignal(){
-		if(state[0] == "0"){state = "1" + thisPointer;}
-		else{state = "0" + thisPointer;}
+		if(objectName == "0"){objectName = "1";}
+		else{objectName = "0";}
 	}
 	state: "0"
 	
@@ -170,6 +170,7 @@ Rectangle{
 				e5f = tps[4].pressure;
 			}
 			else{e5 = false;}
+			parent.forceActiveFocus();
 			emitClickedSignal();
 		}
 		onTouchUpdated: function(tppm){sendTouch(tppm);}

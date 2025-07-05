@@ -84,7 +84,7 @@ public:
     // note that if a certain touch event slot is not filled, the SGXTouchEvent will have its phase be SGXTouchEvent::TouchEnd
     // if more than 5 touch points are present, only the first 5 will be processed and the rest will be ignored
     // you can choose to process less than 5 touch points in your function
-    static void receiveTouch(const QString& s); // function allowing touch receiver to send out signals
+    static void receiveTouch(); // function allowing touch receiver to send out signals
     static QVector<void (*)(const std::array<SGXTouchEvent, 5>&)>* touchEventFunctionsList; // list of functions attached to touch receivers
     static QQmlComponent* cuteVesiclesTemplate; // QML template for vesicles animation
     static QQuickItem* createCuteVesicles(QQuickItem* parent); // function to create a vesicles animation
