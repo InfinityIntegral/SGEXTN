@@ -4,10 +4,15 @@ QMAKE_CXXFLAGS_RELEASE -= -O2
 QMAKE_CXXFLAGS_DEBUG += -std=c++20
 QMAKE_LFLAGS = -flto -Wl,--gc-sections
 DISTFILES = .gitignore LICENSE.txt README.md \
+    SGEXTN/colourpickerrendering/huechoice/huechoice.frag \
+    SGEXTN/colourpickerrendering/huechoice/huechoice.vert \
     SGEXTN/filesystem/bin.sgfile \
     SGEXTN/filesystem/singzip.sgfile \
     compilecommands.txt
 SOURCES = SGEXTN/misc/main.cpp \
+    SGEXTN/colourpickerrendering/huechoice/sgxrendercolourpickerhuechoicematerial.cpp \
+    SGEXTN/colourpickerrendering/huechoice/sgxrendercolourpickerhuechoicequickuielement.cpp \
+    SGEXTN/colourpickerrendering/huechoice/sgxrendercolourpickerhuechoiceshader.cpp \
     SGEXTN/customisation/sgxthemecolourscustomisation.cpp \
     SGEXTN/customisation/sgxvesiclespropertiescustomisation.cpp \
     SGEXTN/cutevesicles/sgxrendercutevesiclesmaterial.cpp \
@@ -36,6 +41,9 @@ SOURCES = SGEXTN/misc/main.cpp \
     SGEXTN/userDefinedClasses/sgucentralmanagement.cpp
 RESOURCES = SGEXTN/assets.qrc
 HEADERS += \
+    SGEXTN/colourpickerrendering/huechoice/sgxrendercolourpickerhuechoicematerial.h \
+    SGEXTN/colourpickerrendering/huechoice/sgxrendercolourpickerhuechoicequickuielement.h \
+    SGEXTN/colourpickerrendering/huechoice/sgxrendercolourpickerhuechoiceshader.h \
     SGEXTN/customisation/sgxthemecolourscustomisation.h \
     SGEXTN/customisation/sgxvesiclespropertiescustomisation.h \
     SGEXTN/cutevesicles/sgxrendercutevesiclesmaterial.h \

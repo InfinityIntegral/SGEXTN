@@ -18,6 +18,7 @@
 #include "../customisation/sgxthemecolourscustomisation.h"
 #include "../customisation/sgxvesiclespropertiescustomisation.h"
 #include "../template/sgxcutevesicles.h"
+#include "../colourpickerrendering/huechoice/sgxrendercolourpickerhuechoicequickuielement.h"
 
 void SGXCentral::initialise(){
     SGXFileSystem::rootFilePath = SGXFileSystem::joinFilePaths(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation), SGUCentralManagement::rootFolderName);
@@ -44,6 +45,7 @@ void SGXCentral::initialise(){
     SGXQuickUIInterface::resizerInstance = new SGXQuickResizer();
     qmlRegisterSingletonInstance("Resizer", 0, 0, "Resizer", SGXQuickUIInterface::resizerInstance);
     qmlRegisterType<SGXRenderCuteVesiclesQuickUIElement>("CuteVesicles", 0, 0, "CuteVesicles");
+    qmlRegisterType<SGXRenderColourPickerHueChoiceQuickUIElement>("ColourPickerHueChoice", 0, 0, "ColourPickerHueChoice");
     (*SGXQuickUIInterface::e).load(":/SGEXTN/QML/root.qml");
     SGXCuteVesicles::framesPerSecond = SGUCentralManagement::cuteVesiclesFrameRate;
     

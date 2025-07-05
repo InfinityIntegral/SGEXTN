@@ -1,5 +1,5 @@
 #version 310 es
-precision lowp float;
+precision highp float;
 layout(location = 0) in vec2 vertex;
 layout(std140, binding = 0) uniform uniformBuffer{
 	uniform mat4 builtin_matrix;

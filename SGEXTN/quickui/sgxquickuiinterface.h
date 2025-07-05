@@ -11,6 +11,7 @@
 #include <qcontainerfwd.h>
 #include <qtmetamacros.h>
 #include <array>
+#include "../primitives/sgxcolourrgba.h"
 
 class SGXQuickUIInterface : public QObject // non instantiable class used to manage SGEXTN widget components
 {

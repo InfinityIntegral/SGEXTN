@@ -16,6 +16,7 @@
 #include <QTimer>
 #include "../template/sgxcutevesicles.h"
 #include "../template/sgxcolourpicker.h"
+#include "../primitives/sgxcolourrgba.h"
 
 QQuickWindow* SGXQuickUIInterface::applicationWindow = nullptr;
 QQuickItem* SGXQuickUIInterface::rootWindow = nullptr;

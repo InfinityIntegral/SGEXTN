@@ -23,5 +23,8 @@
         <file>QML/filedownload.qml</file>
         <file>QML/statusbar.qml</file>
         <file>QML/colourpicker.qml</file>
+        <file>colourpickerrendering/huechoice/huechoice.qml</file>
+        <file>colourpickerrendering/huechoice/huechoice.vert.qsb</file>
+        <file>colourpickerrendering/huechoice/huechoice.frag.qsb</file>
     </qresource>
 </RCC>

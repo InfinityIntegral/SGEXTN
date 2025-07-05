@@ -3,6 +3,8 @@
 
 #include <QObject>
 #include <QQuickItem>
+#include <QQmlComponent>
+#include <qtmetamacros.h>
 
 class SGXColourPicker : public QObject
 {
@@ -13,6 +15,8 @@ public:
     static void activate();
     static QQuickItem* instance;
     static QQuickItem* targetInput;
+    static QQmlComponent* hueChoiceTemplate;
+    static QQuickItem* createHueChoice(QQuickItem* parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0);
 };
 
 #endif // SGXCOLOURPICKER_H
