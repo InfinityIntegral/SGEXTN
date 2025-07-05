@@ -5,6 +5,8 @@
 #include <QQuickItem>
 #include <QQmlComponent>
 #include <qtmetamacros.h>
+#include <array>
+#include "../primitives/sgxtouchevent.h"
 
 class SGXColourPicker : public QObject
 {
@@ -17,6 +19,12 @@ public:
     static QQuickItem* targetInput;
     static QQmlComponent* hueChoiceTemplate;
     static QQuickItem* createHueChoice(QQuickItem* parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0);
+    static QQuickItem* hueChoice;
+    static QQuickItem* hueChoiceTouchReceiver;
+signals:
+    void doNothing();
+public slots:
+    static void changeHue(const std::array<SGXTouchEvent, 5>& t);
 };
 
 #endif // SGXCOLOURPICKER_H

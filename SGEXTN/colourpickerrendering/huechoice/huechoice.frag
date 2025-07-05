@@ -54,7 +54,7 @@ void main(){
 	float newCoordX = 21.0 / 19.0 * coordX - 0.05;
 	float offsetX = (newCoordX - selectedHue) * sizeW / sizeH * 2.0;
 	float offsetY = (1.0 - coordY);
-	if(abs(offsetX) + abs(offsetY) < 0.75){oc = getRGB(selectedHue);}
+	if(abs(offsetX) + abs(offsetY) < 0.5){oc = getRGB(selectedHue);}
 	else if(coordY > 0.8 || newCoordX < 0.0 || newCoordX > 1.0){oc = vec4(1.0, 1.0, 1.0, 0.0);}
 	else{oc = getRGB(newCoordX);}
 }
