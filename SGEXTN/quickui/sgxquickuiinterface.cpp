@@ -15,6 +15,7 @@
 #include "../template/sgxstatusbar.h"
 #include <QTimer>
 #include "../template/sgxcutevesicles.h"
+#include "../template/sgxcolourpicker.h"
 
 QQuickWindow* SGXQuickUIInterface::applicationWindow = nullptr;
 QQuickItem* SGXQuickUIInterface::rootWindow = nullptr;
@@ -38,6 +39,7 @@ QQmlComponent* SGXQuickUIInterface::touchReceiverTemplate = nullptr;
 QVector<void (*)(const std::array<SGXTouchEvent, 5>&)>* SGXQuickUIInterface::touchEventFunctionsList = nullptr;
 QQmlComponent* SGXQuickUIInterface::cuteVesiclesTemplate = nullptr;
 QQmlComponent* SGXQuickUIInterface::statusBarTemplate = nullptr;
+QQmlComponent* SGXQuickUIInterface::colourPickerTemplate = nullptr;
 
 void SGXQuickUIInterface::initialise(){
     SGXQuickUIInterface::rootWidgetTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/SGEXTN/QML/rootwidget.qml");
@@ -54,6 +56,7 @@ void SGXQuickUIInterface::initialise(){
     SGXQuickUIInterface::touchReceiverTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/SGEXTN/QML/touchreceiver.qml");
     SGXQuickUIInterface::cuteVesiclesTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/SGEXTN/cutevesicles/cutevesicles.qml");
     SGXQuickUIInterface::statusBarTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/SGEXTN/QML/statusbar.qml");
+    SGXQuickUIInterface::colourPickerTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/SGEXTN/QML/colourpicker.qml");
 }
 
 void SGXQuickUIInterface::terminate(){
@@ -74,6 +77,7 @@ void SGXQuickUIInterface::terminate(){
     delete SGXQuickUIInterface::touchReceiverTemplate;
     delete SGXQuickUIInterface::cuteVesiclesTemplate;
     delete SGXQuickUIInterface::statusBarTemplate;
+    delete SGXQuickUIInterface::colourPickerTemplate;
 }
 
 void SGXQuickUIInterface::buildTemplate(){
@@ -85,6 +89,7 @@ void SGXQuickUIInterface::buildTemplate(){
     connect(SGXStatusBar::timer, &QTimer::timeout, &SGXStatusBar::updateTime);
     (*SGXStatusBar::timer).start(1000);
     SGXStatusBar::updateTime();
+    SGXQuickUIInterface::createColourPicker(SGXQuickUIInterface::parentWidget, 0.0f, 0.5f, 0.0f, 0.5f, 0.0f, 5.0f, 0.0f, 1.0f, SGXColourRGBA(255, 0, 200));
 }
 
 QQuickItem* SGXQuickUIInterface::createRootWidget(QQuickItem *parent){
@@ -390,6 +395,7 @@ SGXQuickUIInterface::WidgetType SGXQuickUIInterface::getType(QQuickItem *x){
     if(v == SGXQuickUIInterface::TouchReceiver){return SGXQuickUIInterface::TouchReceiver;}
     if(v == SGXQuickUIInterface::CuteVesicles){return SGXQuickUIInterface::CuteVesicles;}
     if(v == SGXQuickUIInterface::StatusBar){return SGXQuickUIInterface::StatusBar;}
+    if(v == SGXQuickUIInterface::ColourPicker){return SGXQuickUIInterface::ColourPicker;}
     return SGXQuickUIInterface::Undefined;
 }
 
@@ -467,5 +473,22 @@ QQuickItem* SGXQuickUIInterface::createStatusBar(QQuickItem *parent){
     QQuickItem* thisItem = qobject_cast<QQuickItem*>((*SGXQuickUIInterface::statusBarTemplate).create());
     (*thisItem).setParentItem(parent);
     (*thisItem).setProperty("widgetType", SGXQuickUIInterface::StatusBar);
+    return thisItem;
+}
+
+QQuickItem* SGXQuickUIInterface::createColourPicker(QQuickItem *parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, SGXColourRGBA defaultColour){
+    QQuickItem* thisItem = qobject_cast<QQuickItem*>((*SGXQuickUIInterface::colourPickerTemplate).create());
+    SGXQuickUIInterface::setActualParent(thisItem, parent);
+    (*thisItem).setProperty("x1", x1);
+    (*thisItem).setProperty("x0", x0);
+    (*thisItem).setProperty("y1", y1);
+    (*thisItem).setProperty("y0", y0);
+    (*thisItem).setProperty("w1", w1);
+    (*thisItem).setProperty("w0", w0);
+    (*thisItem).setProperty("h1", h1);
+    (*thisItem).setProperty("h0", h0);
+    (*thisItem).setProperty("c", defaultColour.getQColour());
+    (*thisItem).setProperty("widgetType", SGXQuickUIInterface::ColourPicker);
+    connect(thisItem, &QQuickItem::objectNameChanged, &SGXColourPicker::activate);
     return thisItem;
 }

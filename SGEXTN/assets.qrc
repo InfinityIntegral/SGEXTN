@@ -22,5 +22,6 @@
         <file>QML/fileupload.qml</file>
         <file>QML/filedownload.qml</file>
         <file>QML/statusbar.qml</file>
+        <file>QML/colourpicker.qml</file>
     </qresource>
 </RCC>

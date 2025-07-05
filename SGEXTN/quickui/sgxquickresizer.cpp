@@ -71,5 +71,5 @@ void SGXQuickResizer::updateAppWindowSize(){
         setRenderSpaceWidth(appWindowWidth);
         setRenderSpaceHeight(appWindowHeight);
     }
-    setSizeUnit(std::max(renderSpaceWidth, renderSpaceHeight) / 24.0f);
+    setSizeUnit(std::max(renderSpaceWidth / 24.0f, renderSpaceHeight / 25.0f));
 }

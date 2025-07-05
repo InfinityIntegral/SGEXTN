@@ -12,13 +12,6 @@ SGXRenderCuteVesiclesShader::SGXRenderCuteVesiclesShader(){
     setShaderFileName(QSGMaterialShader::FragmentStage, ":/SGEXTN/cutevesicles/cutevesicles.frag.qsb");
 }
 
-bool SGXRenderCuteVesiclesShader::updateGraphicsPipelineState(RenderState &/*unused*/, GraphicsPipelineState *ps, QSGMaterial */*unused*/, QSGMaterial */*unused*/){
-    if((*ps).cullMode == QSGMaterialShader::GraphicsPipelineState::CullNone && (*ps).blendEnable == true){return false;}
-    (*ps).cullMode = QSGMaterialShader::GraphicsPipelineState::CullNone;
-    (*ps).blendEnable = true;
-    return true;
-}
-
 bool SGXRenderCuteVesiclesShader::updateUniformData(RenderState &state, QSGMaterial *newMaterial, QSGMaterial */*unused*/){
     SGXRenderCuteVesiclesMaterial* mat = dynamic_cast<SGXRenderCuteVesiclesMaterial*>(newMaterial);
     char* uniformBuffer = (*state.uniformData()).data();

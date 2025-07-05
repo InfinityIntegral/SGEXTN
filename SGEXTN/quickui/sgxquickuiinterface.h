@@ -32,7 +32,8 @@ public:
         ScrollView = 70, // scroll view
         TouchReceiver = 80, // widget to receive precise touch
         CuteVesicles = 90, // animation of vesicles
-        StatusBar = 100 // status bar
+        StatusBar = 100, // status bar
+        ColourPicker = 110 // colour picker
     };
     static QQmlApplicationEngine* e; // reference to Qt Quick engine
     static SGXQuickResizer* resizerInstance; // instance of QML Resizer singleton
@@ -97,6 +98,8 @@ public:
     static QQuickItem* getActiveObject(); // get the currently active SGEXTN object, can be used to distinguish which button got pressed when there are multiple buttons
     static QQmlComponent* statusBarTemplate; // QML template for status bar
     static QQuickItem* createStatusBar(QQuickItem* parent); // function to create status bar
+    static QQmlComponent* colourPickerTemplate; // QML template for colour picker
+    static QQuickItem* createColourPicker(QQuickItem* parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, SGXColourRGBA defaultColour); // function to create colour picker with colour initialised to defaultColour
 };
 
 #endif // SGXQUICKUIINTERFACE_H
