@@ -40,6 +40,8 @@ public:
     static QQuickItem* transparencyInput;
     static QQmlComponent* colourBackgroundTemplate;
     static QQuickItem* createColourBackground(QQuickItem* parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0);
+    static QQuickItem* colourDisplay;
+    static QQuickItem* hexCodeInput;
 signals:
     void doNothing();
 public slots:
@@ -50,6 +52,7 @@ public slots:
     static void changeGreen();
     static void changeBlue();
     static void changeTransparency();
+    static void changeHexCode();
 };
 
 #endif // SGXCOLOURPICKER_H

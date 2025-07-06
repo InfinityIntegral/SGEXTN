@@ -11,9 +11,18 @@ ColourBackground{
 	property real w0: 0.0
 	property real h1: 0.0
 	property real h0: 0.0
+	property color c: "#FF00C8"
 	
 	x: x1 * Resizer.renderSpaceWidth + x0 * Resizer.sizeUnit
 	y: y1 * Resizer.renderSpaceHeight + y0 * Resizer.sizeUnit
     width: w1 * Resizer.renderSpaceWidth + w0 * Resizer.sizeUnit
     height: h1 * Resizer.renderSpaceHeight + h0 * Resizer.sizeUnit
+	
+	Rectangle{
+		x: 0
+		y: 0
+		width: parent.width
+		height: parent.height
+		color: c
+	}
 }
