@@ -1,3 +1,6 @@
+lines of code:
+git ls-files --exclude-standard | grep -E '\.(cpp|h|qml|vert|frag)$' | xargs wc -l
+
 shader .qsb compilation:
 qsb [file name].vert -o [file name].vert.qsb --batchable --glsl 330 --hlsl 50 --msl 12 --glsl "300 es"
 qsb [file name].frag -o [file name].frag.qsb --glsl 330 --hlsl 50 --msl 12 --glsl "300 es"
@@ -28,6 +31,13 @@ cd colourpickerrendering
 cd lightnesschoice
 qsb lightnesschoice.vert -o lightnesschoice.vert.qsb --batchable --glsl 330 --hlsl 50 --msl 12 --glsl "300 es"
 qsb lightnesschoice.frag -o lightnesschoice.frag.qsb --glsl 330 --hlsl 50 --msl 12 --glsl "300 es"
+
+colour picker transparency choice:
+cd SGEXTN
+cd colourpickerrendering
+cd transparencychoice
+qsb transparencychoice.vert -o transparencychoice.vert.qsb --batchable --glsl 330 --hlsl 50 --msl 12 --glsl "300 es"
+qsb transparencychoice.frag -o transparencychoice.frag.qsb --glsl 330 --hlsl 50 --msl 12 --glsl "300 es"
 
 colour background:
 cd SGEXTN

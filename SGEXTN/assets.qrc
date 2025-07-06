@@ -35,5 +35,8 @@
         <file>colourbackground/colourbackground.qml</file>
         <file>colourbackground/colourbackground.vert.qsb</file>
         <file>colourbackground/colourbackground.frag.qsb</file>
+        <file>colourpickerrendering/transparencychoice/transparencychoice.qml</file>
+        <file>colourpickerrendering/transparencychoice/transparencychoice.vert.qsb</file>
+        <file>colourpickerrendering/transparencychoice/transparencychoice.frag.qsb</file>
     </qresource>
 </RCC>

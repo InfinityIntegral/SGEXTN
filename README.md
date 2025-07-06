@@ -7,7 +7,7 @@ This is a template application to make building applications in Qt easier. It in
 
 "SG" refers to Singapore, my home country. It does not reference the Qt Quick scene graph. SGEXTN is designed to let you not worry about the scene graph and instead use it like a customised, GPU-accelerated version of QWidget.
 
-For OpenGL support, you should subclass QQuickItem and use QSGGeometryNode for rendering. Since rendering is a highly customised process, SGEXTN does not simplify it and you are expected to use the Qt Quick API without any SGEXTN layer over it. SGEXTN does not modify scene graph internals (again, "SG" is Singapore, my home country, not the short form for scene graph) and is fully compatible with custom rendering. You may look at the cutevesicles folder for syntax.
+For OpenGL support, you should subclass QQuickItem and use QSGGeometryNode for rendering. Since rendering is a highly customised process, SGEXTN does not simplify it and you are expected to use the Qt Quick API without any SGEXTN layer over it. SGEXTN does not modify scene graph internals (again, "SG" is Singapore, my home country, not the short form for scene graph) and is fully compatible with custom rendering.
 
 Documentation is included in the form of comments in header files.
 

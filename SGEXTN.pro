@@ -12,6 +12,8 @@ DISTFILES = .gitignore LICENSE.txt README.md \
     SGEXTN/colourpickerrendering/lightnesschoice/lightnesschoice.vert \
     SGEXTN/colourpickerrendering/saturationchoice/saturationchoice.frag \
     SGEXTN/colourpickerrendering/saturationchoice/saturationchoice.vert \
+    SGEXTN/colourpickerrendering/transparencychoice/transparencychoice.frag \
+    SGEXTN/colourpickerrendering/transparencychoice/transparencychoice.vert \
     SGEXTN/filesystem/bin.sgfile \
     SGEXTN/filesystem/singzip.sgfile \
     compilecommands.txt
@@ -28,6 +30,9 @@ SOURCES = SGEXTN/misc/main.cpp \
     SGEXTN/colourpickerrendering/saturationchoice/sgxrendercolourpickersaturationchoicematerial.cpp \
     SGEXTN/colourpickerrendering/saturationchoice/sgxrendercolourpickersaturationchoicequickuielement.cpp \
     SGEXTN/colourpickerrendering/saturationchoice/sgxrendercolourpickersaturationchoiceshader.cpp \
+    SGEXTN/colourpickerrendering/transparencychoice/sgxrendercolourpickertransparencychoicematerial.cpp \
+    SGEXTN/colourpickerrendering/transparencychoice/sgxrendercolourpickertransparencychoicequickuielement.cpp \
+    SGEXTN/colourpickerrendering/transparencychoice/sgxrendercolourpickertransparencychoiceshader.cpp \
     SGEXTN/customisation/sgxthemecolourscustomisation.cpp \
     SGEXTN/customisation/sgxvesiclespropertiescustomisation.cpp \
     SGEXTN/cutevesicles/sgxrendercutevesiclesmaterial.cpp \
@@ -68,6 +73,9 @@ HEADERS += \
     SGEXTN/colourpickerrendering/saturationchoice/sgxrendercolourpickersaturationchoicematerial.h \
     SGEXTN/colourpickerrendering/saturationchoice/sgxrendercolourpickersaturationchoicequickuielement.h \
     SGEXTN/colourpickerrendering/saturationchoice/sgxrendercolourpickersaturationchoiceshader.h \
+    SGEXTN/colourpickerrendering/transparencychoice/sgxrendercolourpickertransparencychoicematerial.h \
+    SGEXTN/colourpickerrendering/transparencychoice/sgxrendercolourpickertransparencychoicequickuielement.h \
+    SGEXTN/colourpickerrendering/transparencychoice/sgxrendercolourpickertransparencychoiceshader.h \
     SGEXTN/customisation/sgxthemecolourscustomisation.h \
     SGEXTN/customisation/sgxvesiclespropertiescustomisation.h \
     SGEXTN/cutevesicles/sgxrendercutevesiclesmaterial.h \
