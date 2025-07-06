@@ -58,6 +58,7 @@ public slots:
     static void changeBlue();
     static void changeTransparency();
     static void changeHexCode();
+    static void doneSelection();
 };
 
 #endif // SGXCOLOURPICKER_H

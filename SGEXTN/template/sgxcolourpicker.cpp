@@ -68,6 +68,7 @@ void SGXColourPicker::initialise(){
     SGXQuickUIInterface::createText(realBg, "hex code:", 0.0f, 0.5f, 0.0f, 9.5f, 0.0f, 3.0f, 0.0f, 1.0f);
     SGXColourPicker::hexCodeInput = SGXQuickUIInterface::createInputField(realBg, 0.0f, 3.5f, 0.0f, 9.5f, 0.0f, 5.0f, 0.0f, 1.0f);
     connect(SGXColourPicker::hexCodeInput, &QQuickItem::objectNameChanged, &SGXColourPicker::changeHexCode);
+    SGXQuickUIInterface::createTextButton(realBg, "ok", &SGXColourPicker::doneSelection, 0.0f, 9.0f, 0.0f, 9.5f, 0.0f, 2.0f, 0.0f, 1.0f);
 }
 
 void SGXColourPicker::activate(){
@@ -286,4 +287,11 @@ void SGXColourPicker::changeHexCode(){
     SGXColourPicker::currentColour.setTransparency(reducedInput.mid(6, 2).toInt(&ignore, 16));
     SGXColourPicker::currentColourHSLA = SGXColourHSLA(SGXColourPicker::currentColour);
     SGXColourPicker::refresh();
+}
+
+void SGXColourPicker::doneSelection(){
+    (*SGXColourPicker::instance).setVisible(false);
+    (*SGXColourPicker::targetInput).setOpacity(0.0f);
+    (*SGXColourPicker::targetInput).setOpacity(1.0f);
+    SGXColourPicker::targetInput = nullptr;
 }
