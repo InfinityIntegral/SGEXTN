@@ -102,6 +102,10 @@ public:
     static QQmlComponent* colourPickerTemplate; // QML template for colour picker
     static QQuickItem* createColourPicker(QQuickItem* parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, SGXColourRGBA defaultColour); // function to create colour picker with colour initialised to defaultColour
     static SGXColourRGBA getColourPickerColour(QQuickItem* x, bool& isValid); // retrieve input as colour from SGEXTN colour picker, isValid checks if the widget is actually a colour picker
+    static bool setInputFieldDataUsingString(QQuickItem* x, const QString& s); // set text in input field, return true if set successfully and false otherwise
+    static bool setInputFieldDataUsingInt(QQuickItem* x, int s); // set text in input field to string representaion of a int, return true if set successfully and false otherwise
+    static bool setInputFieldDataUsingFloat(QQuickItem* x, float s); // set text in input field to string representation of a float, return true if set successfully and false otherwise
+    static bool setColourPickerColour(QQuickItem* x, SGXColourRGBA c); // set colour in a colour picker, return true if set successfully and false otherwise
 };
 
 #endif // SGXQUICKUIINTERFACE_H

@@ -501,3 +501,35 @@ SGXColourRGBA SGXQuickUIInterface::getColourPickerColour(QQuickItem *x, bool &is
     }
     return SGXColourRGBA((*x).property("c").value<QColor>());
 }
+
+bool SGXQuickUIInterface::setInputFieldDataUsingString(QQuickItem *x, const QString &s){
+    if(SGXQuickUIInterface::getType(x) != SGXQuickUIInterface::InputField && SGXQuickUIInterface::getType(x) != SGXQuickUIInterface::LongInputField){return false;}
+    QQueue<QQuickItem*> childrenList = QQueue<QQuickItem*>();
+    childrenList.enqueue(x);
+    while(childrenList.length() > 0){
+        QQuickItem* i = childrenList.dequeue();
+        if((*i).property("isInputField").toBool() == true){
+            (*i).setProperty("text", s);
+            return true;
+        }
+        QList<QQuickItem*> thisChildren = (*i).childItems();
+        for(int idx = 0; idx < thisChildren.length(); idx++){
+            childrenList.enqueue(thisChildren[idx]);
+        }
+    }
+    return false;
+}
+
+bool SGXQuickUIInterface::setInputFieldDataUsingInt(QQuickItem *x, int s){
+    return SGXQuickUIInterface::setInputFieldDataUsingString(x, QString::number(s));
+}
+
+bool SGXQuickUIInterface::setInputFieldDataUsingFloat(QQuickItem *x, float s){
+    return SGXQuickUIInterface::setInputFieldDataUsingString(x, QString::number(s));
+}
+
+bool SGXQuickUIInterface::setColourPickerColour(QQuickItem *x, SGXColourRGBA c){
+    if(SGXQuickUIInterface::getType(x) != SGXQuickUIInterface::ColourPicker){return false;}
+    (*x).setProperty("c", c.getQColour());
+    return true;
+}

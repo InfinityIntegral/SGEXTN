@@ -81,7 +81,7 @@ void SGXColourPicker::activate(){
 }
 
 void SGXColourPicker::refresh(){
-    (*SGXColourPicker::targetInput).setProperty("c", SGXColourPicker::currentColour.getQColour());
+    SGXQuickUIInterface::setColourPickerColour(SGXColourPicker::targetInput, SGXColourPicker::currentColour);
     (*SGXColourPicker::colourDisplay).setProperty("c", SGXColourPicker::currentColour.getQColour());
     SGXRenderColourPickerHueChoiceQuickUIElement* displayHue = qobject_cast<SGXRenderColourPickerHueChoiceQuickUIElement*>(SGXColourPicker::hueChoice);
     (*displayHue).selectedHue = SGXColourPicker::currentColourHSLA.h / 360.0f;
@@ -105,10 +105,10 @@ void SGXColourPicker::refresh(){
     (*SGXColourPicker::greenInput).setProperty("noSendSignal", true);
     (*SGXColourPicker::blueInput).setProperty("noSendSignal", true);
     (*SGXColourPicker::transparencyInput).setProperty("noSendSignal", true);
-    (*SGXColourPicker::redInput).setProperty("text", QString::number(SGXColourPicker::currentColour.getRed()));
-    (*SGXColourPicker::greenInput).setProperty("text", QString::number(SGXColourPicker::currentColour.getGreen()));
-    (*SGXColourPicker::blueInput).setProperty("text", QString::number(SGXColourPicker::currentColour.getBlue()));
-    (*SGXColourPicker::transparencyInput).setProperty("text", QString::number(SGXColourPicker::currentColour.getTransparency()));
+    SGXQuickUIInterface::setInputFieldDataUsingInt(SGXColourPicker::redInput, SGXColourPicker::currentColour.getRed());
+    SGXQuickUIInterface::setInputFieldDataUsingInt(SGXColourPicker::greenInput, SGXColourPicker::currentColour.getGreen());
+    SGXQuickUIInterface::setInputFieldDataUsingInt(SGXColourPicker::blueInput, SGXColourPicker::currentColour.getBlue());
+    SGXQuickUIInterface::setInputFieldDataUsingInt(SGXColourPicker::transparencyInput, SGXColourPicker::currentColour.getTransparency());
     (*SGXColourPicker::redInput).setProperty("noSendSignal", false);
     (*SGXColourPicker::greenInput).setProperty("noSendSignal", false);
     (*SGXColourPicker::blueInput).setProperty("noSendSignal", false);
