@@ -36,6 +36,12 @@ ScrollView{
 	property real s0: 0.0
 	property bool invalid: false
 	
+	function emitClickedSignal(){
+		if(objectName == "0"){objectName = "1";}
+		else{objectName = "0";}
+	}
+	objectName: "0"
+	
 	x: x1 * Resizer.renderSpaceWidth + x0 * Resizer.sizeUnit
 	y: y1 * Resizer.renderSpaceHeight + y0 * Resizer.sizeUnit
 	width: w1 * Resizer.renderSpaceWidth + w0 * Resizer.sizeUnit
@@ -114,6 +120,8 @@ ScrollView{
 		
 			clip: true
 			wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+			
+			onTextChanged: emitClickedSignal()
 		}
 	}
 	

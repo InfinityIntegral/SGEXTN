@@ -35,6 +35,13 @@ TextField{
 	property int fgNow: fg
 	padding: 0
 	
+	function emitClickedSignal(){
+		if(objectName == "0"){objectName = "1";}
+		else{objectName = "0";}
+	}
+	objectName: "0"
+	onTextChanged: emitClickedSignal()
+	
 	function updateInteraction(){
 		if(invalid){
 			bgNow = bgInvalid;
