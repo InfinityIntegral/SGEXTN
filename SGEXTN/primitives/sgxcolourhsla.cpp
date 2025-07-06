@@ -37,10 +37,9 @@ inline float temp_HueIntermediatesToRGB(float p, float q, float t){
 
 SGXColourHSLA::SGXColourHSLA(SGXColourRGBA x){
     (*this).a = x.getTransparencyAsFloat() * 100.0f;
-    float r = 0.0f;
-    float g = 0.0f;
-    float b = 0.0f;
-    x.gammaCorrectBegin(r, g, b);
+    const float r = x.getRedAsFloat();
+    const float g = x.getGreenAsFloat();
+    const float b = x.getBlueAsFloat();
     const float h = temp_maxof3float(r, g, b);
     const float l = temp_minof3float(r, g, b);
     (*this).h = 313.0f;
@@ -162,6 +161,8 @@ SGXColourRGBA SGXColourHSLA::toRGBA() const {
         b = temp_HueIntermediatesToRGB(p, q, xh - 1.0f / 3.0f);
     }
     SGXColourRGBA x = SGXColourRGBA(255, 255, 255);
-    x.gammaCorrectEnd(r, g, b);
+    x.setRedUsingFloat(r);
+    x.setGreenUsingFloat(g);
+    x.setBlueUsingFloat(b);
     return x;
 }

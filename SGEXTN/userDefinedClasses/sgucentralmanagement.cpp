@@ -17,13 +17,13 @@ QString SGUCentralManagement::rootFolderName = "SGEXTN";
 
 // theme colours of your application
 SGXColourRGBA SGUCentralManagement::themeColour0 = SGXColourRGBA(0, 0, 0);
-SGXColourRGBA SGUCentralManagement::themeColour1 = SGXColourRGBA(136, 0, 107);
-SGXColourRGBA SGUCentralManagement::themeColour2 = SGXColourRGBA(186, 0, 146);
-SGXColourRGBA SGUCentralManagement::themeColour3 = SGXColourRGBA(224, 0, 175);
+SGXColourRGBA SGUCentralManagement::themeColour1 = SGXColourRGBA(64, 0, 50);
+SGXColourRGBA SGUCentralManagement::themeColour2 = SGXColourRGBA(128, 0, 100);
+SGXColourRGBA SGUCentralManagement::themeColour3 = SGXColourRGBA(191, 0, 150);
 SGXColourRGBA SGUCentralManagement::themeColour4 = SGXColourRGBA(255, 0, 200);
-SGXColourRGBA SGUCentralManagement::themeColour5 = SGXColourRGBA(255, 136, 215);
-SGXColourRGBA SGUCentralManagement::themeColour6 = SGXColourRGBA(255, 186, 229);
-SGXColourRGBA SGUCentralManagement::themeColour7 = SGXColourRGBA(255, 224, 243);
+SGXColourRGBA SGUCentralManagement::themeColour5 = SGXColourRGBA(255, 64, 214);
+SGXColourRGBA SGUCentralManagement::themeColour6 = SGXColourRGBA(255, 128, 227);
+SGXColourRGBA SGUCentralManagement::themeColour7 = SGXColourRGBA(255, 191, 241);
 SGXColourRGBA SGUCentralManagement::themeColour8 = SGXColourRGBA(255, 255, 255);
 
 // customise vesicle properties for the animation

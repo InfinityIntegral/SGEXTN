@@ -6,6 +6,8 @@ QMAKE_LFLAGS = -flto -Wl,--gc-sections
 DISTFILES = .gitignore LICENSE.txt README.md \
     SGEXTN/colourpickerrendering/huechoice/huechoice.frag \
     SGEXTN/colourpickerrendering/huechoice/huechoice.vert \
+    SGEXTN/colourpickerrendering/saturationchoice/saturationchoice.frag \
+    SGEXTN/colourpickerrendering/saturationchoice/saturationchoice.vert \
     SGEXTN/filesystem/bin.sgfile \
     SGEXTN/filesystem/singzip.sgfile \
     compilecommands.txt
@@ -13,6 +15,9 @@ SOURCES = SGEXTN/misc/main.cpp \
     SGEXTN/colourpickerrendering/huechoice/sgxrendercolourpickerhuechoicematerial.cpp \
     SGEXTN/colourpickerrendering/huechoice/sgxrendercolourpickerhuechoicequickuielement.cpp \
     SGEXTN/colourpickerrendering/huechoice/sgxrendercolourpickerhuechoiceshader.cpp \
+    SGEXTN/colourpickerrendering/saturationchoice/sgxrendercolourpickersaturationchoicematerial.cpp \
+    SGEXTN/colourpickerrendering/saturationchoice/sgxrendercolourpickersaturationchoicequickuielement.cpp \
+    SGEXTN/colourpickerrendering/saturationchoice/sgxrendercolourpickersaturationchoiceshader.cpp \
     SGEXTN/customisation/sgxthemecolourscustomisation.cpp \
     SGEXTN/customisation/sgxvesiclespropertiescustomisation.cpp \
     SGEXTN/cutevesicles/sgxrendercutevesiclesmaterial.cpp \
@@ -44,6 +49,9 @@ HEADERS += \
     SGEXTN/colourpickerrendering/huechoice/sgxrendercolourpickerhuechoicematerial.h \
     SGEXTN/colourpickerrendering/huechoice/sgxrendercolourpickerhuechoicequickuielement.h \
     SGEXTN/colourpickerrendering/huechoice/sgxrendercolourpickerhuechoiceshader.h \
+    SGEXTN/colourpickerrendering/saturationchoice/sgxrendercolourpickersaturationchoicematerial.h \
+    SGEXTN/colourpickerrendering/saturationchoice/sgxrendercolourpickersaturationchoicequickuielement.h \
+    SGEXTN/colourpickerrendering/saturationchoice/sgxrendercolourpickersaturationchoiceshader.h \
     SGEXTN/customisation/sgxthemecolourscustomisation.h \
     SGEXTN/customisation/sgxvesiclespropertiescustomisation.h \
     SGEXTN/cutevesicles/sgxrendercutevesiclesmaterial.h \

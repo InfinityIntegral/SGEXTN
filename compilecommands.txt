@@ -14,3 +14,10 @@ cd colourpickerrendering
 cd huechoice
 qsb huechoice.vert -o huechoice.vert.qsb --batchable --glsl 330 --hlsl 50 --msl 12 --glsl "300 es"
 qsb huechoice.frag -o huechoice.frag.qsb --glsl 330 --hlsl 50 --msl 12 --glsl "300 es"
+
+colour picker saturation choice:
+cd SGEXTN
+cd colourpickerrendering
+cd saturationchoice
+qsb saturationchoice.vert -o saturationchoice.vert.qsb --batchable --glsl 330 --hlsl 50 --msl 12 --glsl "300 es"
+qsb saturationchoice.frag -o saturationchoice.frag.qsb --glsl 330 --hlsl 50 --msl 12 --glsl "300 es"

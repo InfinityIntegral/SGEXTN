@@ -26,5 +26,8 @@
         <file>colourpickerrendering/huechoice/huechoice.qml</file>
         <file>colourpickerrendering/huechoice/huechoice.vert.qsb</file>
         <file>colourpickerrendering/huechoice/huechoice.frag.qsb</file>
+        <file>colourpickerrendering/saturationchoice/saturationchoice.qml</file>
+        <file>colourpickerrendering/saturationchoice/saturationchoice.vert.qsb</file>
+        <file>colourpickerrendering/saturationchoice/saturationchoice.frag.qsb</file>
     </qresource>
 </RCC>

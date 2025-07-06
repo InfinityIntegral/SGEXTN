@@ -10,6 +10,7 @@ layout(std140, binding = 0) uniform uniformBuffer{
 	uniform float sizeW;
 	uniform float sizeH;
 	uniform float selectedHue;
+	uniform float selectedSaturation;
 };
 layout(location = 0) out float coordX;
 layout(location = 1) out float coordY;

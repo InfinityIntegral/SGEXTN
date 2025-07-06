@@ -10,13 +10,13 @@
 void SGXThemeColoursCustomisation::loadThemeColours(){
     if(SGXTimeStamp::now().isNationalDayPeriod()){
         SGUCentralManagement::themeColour0 = SGXColourRGBA(0, 0, 0);
-        SGUCentralManagement::themeColour1 = SGXColourRGBA(135, 21, 31);
-        SGUCentralManagement::themeColour2 = SGXColourRGBA(185, 29, 42);
-        SGUCentralManagement::themeColour3 = SGXColourRGBA(222, 35, 50);
-        SGUCentralManagement::themeColour4 = SGXColourRGBA(253, 39, 57);
-        SGUCentralManagement::themeColour5 = SGXColourRGBA(254, 139, 143);
-        SGUCentralManagement::themeColour6 = SGXColourRGBA(254, 187, 189);
-        SGUCentralManagement::themeColour7 = SGXColourRGBA(255, 224, 225);
+        SGUCentralManagement::themeColour1 = SGXColourRGBA(59, 5, 9);
+        SGUCentralManagement::themeColour2 = SGXColourRGBA(118, 9, 18);
+        SGUCentralManagement::themeColour3 = SGXColourRGBA(177, 14, 28);
+        SGUCentralManagement::themeColour4 = SGXColourRGBA(237, 18, 37);
+        SGUCentralManagement::themeColour5 = SGXColourRGBA(241, 78, 91);
+        SGUCentralManagement::themeColour6 = SGXColourRGBA(246, 137, 146);
+        SGUCentralManagement::themeColour7 = SGXColourRGBA(250, 196, 200);
         SGUCentralManagement::themeColour8 = SGXColourRGBA(255, 255, 255);
         return;
     }
