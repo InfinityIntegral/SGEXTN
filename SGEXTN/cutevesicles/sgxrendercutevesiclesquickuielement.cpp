@@ -25,7 +25,7 @@ QSGNode* SGXRenderCuteVesiclesQuickUIElement::updatePaintNode(QSGNode *thisNode,
     QSGGeometryNode* n = static_cast<QSGGeometryNode*>(thisNode); // NOLINT(cppcoreguidelines-pro-type-static-cast-downcast)
     if(n == nullptr){
         n = new QSGGeometryNode();
-        QSGGeometry* g = new QSGGeometry(QSGGeometry::defaultAttributes_Point2D(), 4, 6);
+        QSGGeometry* g = new QSGGeometry(QSGGeometry::defaultAttributes_TexturedPoint2D(), 4, 6);
         (*g).setDrawingMode(QSGGeometry::DrawTriangles);
         (*n).setGeometry(g);
         (*n).setFlag(QSGNode::OwnsGeometry);
@@ -42,17 +42,17 @@ QSGNode* SGXRenderCuteVesiclesQuickUIElement::updatePaintNode(QSGNode *thisNode,
         tg[4] = 2;
         tg[5] = 3;
     }
-    QSGGeometry::Point2D* vtPointer = (*(*n).geometry()).vertexDataAsPoint2D();
-    const std::span<QSGGeometry::Point2D> vt(vtPointer, 4);
+    QSGGeometry::TexturedPoint2D* vtPointer = (*(*n).geometry()).vertexDataAsTexturedPoint2D();
+    const std::span<QSGGeometry::TexturedPoint2D> vt(vtPointer, 4);
     SGXRenderCuteVesiclesMaterial* mat = static_cast<SGXRenderCuteVesiclesMaterial*>((*n).material()); // NOLINT(cppcoreguidelines-pro-type-static-cast-downcast)
-    const float x = static_cast<float>((*this).x());
-    const float y = static_cast<float>((*this).y());
+    const float x = static_cast<float>((*this).mapToGlobal(0, 0).x());
+    const float y = static_cast<float>((*this).mapToGlobal(0, 0).y());
     const float w = static_cast<float>((*this).width());
     const float h = static_cast<float>((*this).height());
-    vt[0].set(0, 0);
-    vt[1].set(w, 0);
-    vt[2].set(0, h);
-    vt[3].set(w, h);
+    vt[0].set(0, 0, -1.0f, -1.0f);
+    vt[1].set(w, 0, 1.0f, -1.0f);
+    vt[2].set(0, h, -1.0f, 1.0f);
+    vt[3].set(w, h, 1.0f, 1.0f);
     (*mat).x = x;
     (*mat).y = y;
     (*mat).w = w;
