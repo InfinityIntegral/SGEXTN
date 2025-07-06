@@ -13,7 +13,7 @@ SGXRenderCuteVesiclesShader::SGXRenderCuteVesiclesShader(){
 }
 
 bool SGXRenderCuteVesiclesShader::updateUniformData(RenderState &state, QSGMaterial *newMaterial, QSGMaterial */*unused*/){
-    SGXRenderCuteVesiclesMaterial* mat = dynamic_cast<SGXRenderCuteVesiclesMaterial*>(newMaterial);
+    SGXRenderCuteVesiclesMaterial* mat = static_cast<SGXRenderCuteVesiclesMaterial*>(newMaterial); // NOLINT(cppcoreguidelines-pro-type-static-cast-downcast)
     char* uniformBuffer = (*state.uniformData()).data();
     const std::span<char> ubspan(uniformBuffer, 1712);
     QMatrix4x4 builtinMatrix = state.projectionMatrix();

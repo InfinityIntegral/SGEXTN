@@ -21,3 +21,10 @@ cd colourpickerrendering
 cd saturationchoice
 qsb saturationchoice.vert -o saturationchoice.vert.qsb --batchable --glsl 330 --hlsl 50 --msl 12 --glsl "300 es"
 qsb saturationchoice.frag -o saturationchoice.frag.qsb --glsl 330 --hlsl 50 --msl 12 --glsl "300 es"
+
+colour picker lightness choice:
+cd SGEXTN
+cd colourpickerrendering
+cd lightnesschoice
+qsb lightnesschoice.vert -o lightnesschoice.vert.qsb --batchable --glsl 330 --hlsl 50 --msl 12 --glsl "300 es"
+qsb lightnesschoice.frag -o lightnesschoice.frag.qsb --glsl 330 --hlsl 50 --msl 12 --glsl "300 es"

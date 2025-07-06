@@ -1,16 +1,18 @@
-#include "sgxrendercolourpickerhuechoicequickuielement.h"
+#include "sgxrendercolourpickerlightnesschoicequickuielement.h"
 #include <QSGGeometryNode>
-#include "sgxrendercolourpickerhuechoicematerial.h"
+#include "sgxrendercolourpickerlightnesschoicematerial.h"
 #include <span>
 #include <QQuickItem>
 #include <QSGGeometry>
 
-SGXRenderColourPickerHueChoiceQuickUIElement::SGXRenderColourPickerHueChoiceQuickUIElement(){
+SGXRenderColourPickerLightnessChoiceQuickUIElement::SGXRenderColourPickerLightnessChoiceQuickUIElement(){
     (*this).setFlag(QQuickItem::ItemHasContents, true);
     selectedHue = 0.0f;
+    selectedSaturation = 0.0f;
+    selectedLightness = 0.0f;
 }
 
-QSGNode* SGXRenderColourPickerHueChoiceQuickUIElement::updatePaintNode(QSGNode *thisNode, UpdatePaintNodeData * /*unused*/){
+QSGNode* SGXRenderColourPickerLightnessChoiceQuickUIElement::updatePaintNode(QSGNode *thisNode, UpdatePaintNodeData */*unused*/){
     QSGGeometryNode* n = static_cast<QSGGeometryNode*>(thisNode); // NOLINT(cppcoreguidelines-pro-type-static-cast-downcast)
     if(n == nullptr){
         n = new QSGGeometryNode();
@@ -18,7 +20,7 @@ QSGNode* SGXRenderColourPickerHueChoiceQuickUIElement::updatePaintNode(QSGNode *
         (*g).setDrawingMode(QSGGeometry::DrawTriangles);
         (*n).setGeometry(g);
         (*n).setFlag(QSGNode::OwnsGeometry);
-        SGXRenderColourPickerHueChoiceMaterial* m = new SGXRenderColourPickerHueChoiceMaterial();
+        SGXRenderColourPickerLightnessChoiceMaterial* m = new SGXRenderColourPickerLightnessChoiceMaterial();
         (*n).setMaterial(m);
         (*n).setFlag(QSGNode::OwnsMaterial);
         (*g).allocate(4, 6);
@@ -33,7 +35,7 @@ QSGNode* SGXRenderColourPickerHueChoiceQuickUIElement::updatePaintNode(QSGNode *
     }
     QSGGeometry::TexturedPoint2D* vtPointer = (*(*n).geometry()).vertexDataAsTexturedPoint2D();
     const std::span<QSGGeometry::TexturedPoint2D> vt(vtPointer, 4);
-    SGXRenderColourPickerHueChoiceMaterial* mat = static_cast<SGXRenderColourPickerHueChoiceMaterial*>((*n).material()); // NOLINT(cppcoreguidelines-pro-type-static-cast-downcast)
+    SGXRenderColourPickerLightnessChoiceMaterial* mat = static_cast<SGXRenderColourPickerLightnessChoiceMaterial*>((*n).material()); // NOLINT(cppcoreguidelines-pro-type-static-cast-downcast)
     const float x = static_cast<float>((*this).mapToGlobal(0, 0).x());
     const float y = static_cast<float>((*this).mapToGlobal(0, 0).y());
     const float w = static_cast<float>((*this).width());
@@ -47,6 +49,8 @@ QSGNode* SGXRenderColourPickerHueChoiceQuickUIElement::updatePaintNode(QSGNode *
     (*mat).w = w;
     (*mat).h = h;
     (*mat).selectedHue = (*this).selectedHue;
+    (*mat).selectedSaturation = (*this).selectedSaturation;
+    (*mat).selectedLightness = (*this).selectedLightness;
     (*n).markDirty(QSGNode::DirtyMaterial | QSGNode::DirtyGeometry);
     return n;
 }

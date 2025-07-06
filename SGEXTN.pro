@@ -6,6 +6,8 @@ QMAKE_LFLAGS = -flto -Wl,--gc-sections
 DISTFILES = .gitignore LICENSE.txt README.md \
     SGEXTN/colourpickerrendering/huechoice/huechoice.frag \
     SGEXTN/colourpickerrendering/huechoice/huechoice.vert \
+    SGEXTN/colourpickerrendering/lightnesschoice/lightnesschoice.frag \
+    SGEXTN/colourpickerrendering/lightnesschoice/lightnesschoice.vert \
     SGEXTN/colourpickerrendering/saturationchoice/saturationchoice.frag \
     SGEXTN/colourpickerrendering/saturationchoice/saturationchoice.vert \
     SGEXTN/filesystem/bin.sgfile \
@@ -15,6 +17,9 @@ SOURCES = SGEXTN/misc/main.cpp \
     SGEXTN/colourpickerrendering/huechoice/sgxrendercolourpickerhuechoicematerial.cpp \
     SGEXTN/colourpickerrendering/huechoice/sgxrendercolourpickerhuechoicequickuielement.cpp \
     SGEXTN/colourpickerrendering/huechoice/sgxrendercolourpickerhuechoiceshader.cpp \
+    SGEXTN/colourpickerrendering/lightnesschoice/sgxrendercolourpickerlightnesschoicematerial.cpp \
+    SGEXTN/colourpickerrendering/lightnesschoice/sgxrendercolourpickerlightnesschoicequickuielement.cpp \
+    SGEXTN/colourpickerrendering/lightnesschoice/sgxrendercolourpickerlightnesschoiceshader.cpp \
     SGEXTN/colourpickerrendering/saturationchoice/sgxrendercolourpickersaturationchoicematerial.cpp \
     SGEXTN/colourpickerrendering/saturationchoice/sgxrendercolourpickersaturationchoicequickuielement.cpp \
     SGEXTN/colourpickerrendering/saturationchoice/sgxrendercolourpickersaturationchoiceshader.cpp \
@@ -49,6 +54,9 @@ HEADERS += \
     SGEXTN/colourpickerrendering/huechoice/sgxrendercolourpickerhuechoicematerial.h \
     SGEXTN/colourpickerrendering/huechoice/sgxrendercolourpickerhuechoicequickuielement.h \
     SGEXTN/colourpickerrendering/huechoice/sgxrendercolourpickerhuechoiceshader.h \
+    SGEXTN/colourpickerrendering/lightnesschoice/sgxrendercolourpickerlightnesschoicematerial.h \
+    SGEXTN/colourpickerrendering/lightnesschoice/sgxrendercolourpickerlightnesschoicequickuielement.h \
+    SGEXTN/colourpickerrendering/lightnesschoice/sgxrendercolourpickerlightnesschoiceshader.h \
     SGEXTN/colourpickerrendering/saturationchoice/sgxrendercolourpickersaturationchoicematerial.h \
     SGEXTN/colourpickerrendering/saturationchoice/sgxrendercolourpickersaturationchoicequickuielement.h \
     SGEXTN/colourpickerrendering/saturationchoice/sgxrendercolourpickersaturationchoiceshader.h \

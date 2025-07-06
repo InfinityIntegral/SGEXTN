@@ -12,7 +12,7 @@ SGXRenderColourPickerHueChoiceShader::SGXRenderColourPickerHueChoiceShader(){
 }
 
 bool SGXRenderColourPickerHueChoiceShader::updateUniformData(RenderState &state, QSGMaterial *newMaterial, QSGMaterial */*unused*/){
-    SGXRenderColourPickerHueChoiceMaterial* mat = dynamic_cast<SGXRenderColourPickerHueChoiceMaterial*>(newMaterial);
+    SGXRenderColourPickerHueChoiceMaterial* mat = static_cast<SGXRenderColourPickerHueChoiceMaterial*>(newMaterial); // NOLINT(cppcoreguidelines-pro-type-static-cast-downcast)
     char* uniformBuffer = (*state.uniformData()).data();
     const std::span<char> ubspan(uniformBuffer, 88);
     QMatrix4x4 builtinMatrix = state.projectionMatrix();

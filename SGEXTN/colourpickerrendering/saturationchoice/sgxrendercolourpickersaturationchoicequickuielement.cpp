@@ -12,7 +12,7 @@ SGXRenderColourPickerSaturationChoiceQuickUIElement::SGXRenderColourPickerSatura
 }
 
 QSGNode* SGXRenderColourPickerSaturationChoiceQuickUIElement::updatePaintNode(QSGNode *thisNode, UpdatePaintNodeData */*unused*/){
-    QSGGeometryNode* n = dynamic_cast<QSGGeometryNode*>(thisNode);
+    QSGGeometryNode* n = static_cast<QSGGeometryNode*>(thisNode); // NOLINT(cppcoreguidelines-pro-type-static-cast-downcast)
     if(n == nullptr){
         n = new QSGGeometryNode();
         QSGGeometry* g = new QSGGeometry(QSGGeometry::defaultAttributes_TexturedPoint2D(), 4, 6);
@@ -34,7 +34,7 @@ QSGNode* SGXRenderColourPickerSaturationChoiceQuickUIElement::updatePaintNode(QS
     }
     QSGGeometry::TexturedPoint2D* vtPointer = (*(*n).geometry()).vertexDataAsTexturedPoint2D();
     const std::span<QSGGeometry::TexturedPoint2D> vt(vtPointer, 4);
-    SGXRenderColourPickerSaturationChoiceMaterial* mat = dynamic_cast<SGXRenderColourPickerSaturationChoiceMaterial*>((*n).material());
+    SGXRenderColourPickerSaturationChoiceMaterial* mat = static_cast<SGXRenderColourPickerSaturationChoiceMaterial*>((*n).material()); // NOLINT(cppcoreguidelines-pro-type-static-cast-downcast)
     const float x = static_cast<float>((*this).mapToGlobal(0, 0).x());
     const float y = static_cast<float>((*this).mapToGlobal(0, 0).y());
     const float w = static_cast<float>((*this).width());

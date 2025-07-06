@@ -22,7 +22,7 @@ SGXRenderCuteVesiclesQuickUIElement::SGXRenderCuteVesiclesQuickUIElement(){
 }
 
 QSGNode* SGXRenderCuteVesiclesQuickUIElement::updatePaintNode(QSGNode *thisNode, UpdatePaintNodeData */*unused*/){
-    QSGGeometryNode* n = dynamic_cast<QSGGeometryNode*>(thisNode);
+    QSGGeometryNode* n = static_cast<QSGGeometryNode*>(thisNode); // NOLINT(cppcoreguidelines-pro-type-static-cast-downcast)
     if(n == nullptr){
         n = new QSGGeometryNode();
         QSGGeometry* g = new QSGGeometry(QSGGeometry::defaultAttributes_Point2D(), 4, 6);
@@ -44,7 +44,7 @@ QSGNode* SGXRenderCuteVesiclesQuickUIElement::updatePaintNode(QSGNode *thisNode,
     }
     QSGGeometry::Point2D* vtPointer = (*(*n).geometry()).vertexDataAsPoint2D();
     const std::span<QSGGeometry::Point2D> vt(vtPointer, 4);
-    SGXRenderCuteVesiclesMaterial* mat = dynamic_cast<SGXRenderCuteVesiclesMaterial*>((*n).material());
+    SGXRenderCuteVesiclesMaterial* mat = static_cast<SGXRenderCuteVesiclesMaterial*>((*n).material()); // NOLINT(cppcoreguidelines-pro-type-static-cast-downcast)
     const float x = static_cast<float>((*this).x());
     const float y = static_cast<float>((*this).y());
     const float w = static_cast<float>((*this).width());
