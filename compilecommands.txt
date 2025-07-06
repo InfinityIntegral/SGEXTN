@@ -28,3 +28,9 @@ cd colourpickerrendering
 cd lightnesschoice
 qsb lightnesschoice.vert -o lightnesschoice.vert.qsb --batchable --glsl 330 --hlsl 50 --msl 12 --glsl "300 es"
 qsb lightnesschoice.frag -o lightnesschoice.frag.qsb --glsl 330 --hlsl 50 --msl 12 --glsl "300 es"
+
+colour background:
+cd SGEXTN
+cd colourbackground
+qsb colourbackground.vert -o colourbackground.vert.qsb --batchable --glsl 330 --hlsl 50 --msl 12 --glsl "300 es"
+qsb colourbackground.frag -o colourbackground.frag.qsb --glsl 330 --hlsl 50 --msl 12 --glsl "300 es"

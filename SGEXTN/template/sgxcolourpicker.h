@@ -38,6 +38,8 @@ public:
     static QQuickItem* greenInput;
     static QQuickItem* blueInput;
     static QQuickItem* transparencyInput;
+    static QQmlComponent* colourBackgroundTemplate;
+    static QQuickItem* createColourBackground(QQuickItem* parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0);
 signals:
     void doNothing();
 public slots:

@@ -90,7 +90,7 @@ void SGXQuickUIInterface::buildTemplate(){
     connect(SGXStatusBar::timer, &QTimer::timeout, &SGXStatusBar::updateTime);
     (*SGXStatusBar::timer).start(1000);
     SGXStatusBar::updateTime();
-    SGXQuickUIInterface::createColourPicker(SGXQuickUIInterface::parentWidget, 0.0f, 0.5f, 0.0f, 0.5f, 0.0f, 5.0f, 0.0f, 1.0f, SGXColourRGBA(255, 0, 200));
+    SGXQuickUIInterface::createColourPicker(SGXQuickUIInterface::parentWidget, 0.0f, 0.5f, 0.0f, 0.5f, 0.0f, 5.0f, 0.0f, 1.0f, SGXColourRGBA(255, 0, 200, 255));
 }
 
 QQuickItem* SGXQuickUIInterface::createRootWidget(QQuickItem *parent){

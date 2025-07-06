@@ -170,5 +170,6 @@ SGXColourRGBA SGXColourHSLA::toRGBA() const {
     x.setRedUsingFloat(r);
     x.setGreenUsingFloat(g);
     x.setBlueUsingFloat(b);
+    x.setTransparencyUsingFloat((*this).a / 100.0f);
     return x;
 }

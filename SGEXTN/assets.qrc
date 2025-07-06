@@ -32,5 +32,8 @@
         <file>colourpickerrendering/lightnesschoice/lightnesschoice.qml</file>
         <file>colourpickerrendering/lightnesschoice/lightnesschoice.vert.qsb</file>
         <file>colourpickerrendering/lightnesschoice/lightnesschoice.frag.qsb</file>
+        <file>colourbackground/colourbackground.qml</file>
+        <file>colourbackground/colourbackground.vert.qsb</file>
+        <file>colourbackground/colourbackground.frag.qsb</file>
     </qresource>
 </RCC>

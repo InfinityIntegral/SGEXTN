@@ -28,11 +28,13 @@ QQuickItem* SGXColourPicker::redInput = nullptr;
 QQuickItem* SGXColourPicker::greenInput = nullptr;
 QQuickItem* SGXColourPicker::blueInput = nullptr;
 QQuickItem* SGXColourPicker::transparencyInput = nullptr;
+QQmlComponent* SGXColourPicker::colourBackgroundTemplate = nullptr;
 
 void SGXColourPicker::initialise(){
     SGXColourPicker::hueChoiceTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/SGEXTN/colourpickerrendering/huechoice/huechoice.qml");
     SGXColourPicker::saturationChoiceTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/SGEXTN/colourpickerrendering/saturationchoice/saturationchoice.qml");
     SGXColourPicker::lightnessChoiceTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/SGEXTN/colourpickerrendering/lightnesschoice/lightnesschoice.qml");
+    SGXColourPicker::colourBackgroundTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/SGEXTN/colourbackground/colourbackground.qml");
     SGXColourPicker::instance = SGXQuickUIInterface::createWidget(SGXQuickUIInterface::parentWidget, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, -1);
     QQuickItem* bg = SGXQuickUIInterface::createWidget(SGXColourPicker::instance, 0.5f, -6.25f, 0.5f, -6.5f, 0.0f, 12.5f, 0.0f, 12.0f, 6);
     QQuickItem* realBg = SGXQuickUIInterface::createWidget(bg, 0.0f, 0.5f, 0.0f, 0.5f, 0.0f, 11.5f, 0.0f, 11.0f, 8);
@@ -54,6 +56,7 @@ void SGXColourPicker::initialise(){
     SGXQuickUIInterface::createText(realBg, "transparency:", 0.0f, 4.5f, 0.0f, 6.5f, 0.0f, 4.5f, 0.0f, 1.0f);
     SGXColourPicker::transparencyInput = SGXQuickUIInterface::createInputField(realBg, 0.0f, 8.5f, 0.0f, 6.5f, 0.0f, 2.0f, 0.0f, 1.0f);
     connect(SGXColourPicker::transparencyInput, &QQuickItem::objectNameChanged, &SGXColourPicker::changeTransparency);
+    SGXColourPicker::createColourBackground(realBg, 0.0f, 9.0f, 0.0f, 5.0f, 0.0f, 2.0f, 0.0f, 1.0f);
 }
 
 void SGXColourPicker::activate(){
@@ -67,6 +70,7 @@ void SGXColourPicker::activate(){
 }
 
 void SGXColourPicker::refresh(){
+    (*SGXColourPicker::targetInput).setProperty("c", SGXColourPicker::currentColour.getQColour());
     SGXRenderColourPickerHueChoiceQuickUIElement* displayHue = qobject_cast<SGXRenderColourPickerHueChoiceQuickUIElement*>(SGXColourPicker::hueChoice);
     (*displayHue).selectedHue = SGXColourPicker::currentColourHSLA.h / 360.0f;
     (*displayHue).update();
@@ -123,6 +127,20 @@ QQuickItem* SGXColourPicker::createSaturationChoice(QQuickItem *parent, float x1
 
 QQuickItem* SGXColourPicker::createLightnessChoice(QQuickItem *parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0){
     QQuickItem* thisItem = qobject_cast<QQuickItem*>((*SGXColourPicker::lightnessChoiceTemplate).create());
+    SGXQuickUIInterface::setActualParent(thisItem, parent);
+    (*thisItem).setProperty("x1", x1);
+    (*thisItem).setProperty("x0", x0);
+    (*thisItem).setProperty("y1", y1);
+    (*thisItem).setProperty("y0", y0);
+    (*thisItem).setProperty("w1", w1);
+    (*thisItem).setProperty("w0", w0);
+    (*thisItem).setProperty("h1", h1);
+    (*thisItem).setProperty("h0", h0);
+    return thisItem;
+}
+
+QQuickItem* SGXColourPicker::createColourBackground(QQuickItem *parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0){
+    QQuickItem* thisItem = qobject_cast<QQuickItem*>((*SGXColourPicker::colourBackgroundTemplate).create());
     SGXQuickUIInterface::setActualParent(thisItem, parent);
     (*thisItem).setProperty("x1", x1);
     (*thisItem).setProperty("x0", x0);

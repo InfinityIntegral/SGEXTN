@@ -2,6 +2,7 @@ import QtQuick 6.9
 import QtQuick.Controls 6.9
 import ThemeColours 0.0
 import Resizer 0.0
+import ColourBackground 0.0
 
 Button{
 	property int widgetType: 0
@@ -28,11 +29,18 @@ Button{
 	objectName: "0"
 	onClicked: emitClickedSignal()
 	
-	background: Rectangle{
+	background: ColourBackground{
 		x: 0
 		y: 0
 		width: parent.width
 		height: parent.height
-		color: c
+		
+		Rectangle{
+			x: 0
+			y: 0
+			width: parent.width
+			height: parent.height
+			color: c
+		}
 	}
 }
