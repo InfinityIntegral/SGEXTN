@@ -13,40 +13,35 @@ layout(std140, binding = 0) uniform uniformBuffer{
 layout(location = 0) in float coordX;
 layout(location = 1) in float coordY;
 
-vec4 getRGB(float f){
-	float r;
-	float g;
-	float b;
-	if(f < 1.0 / 6.0){ // red to yellow
-		r = 1.0;
-		g = 1.0 - 6.0 * (1.0 / 6.0 - f);
-		b = 0.0;
-	}
-	else if(f < 2.0 / 6.0){ // yellow to green
-		r = 6.0 * (2.0 / 6.0 - f);
-		g = 1.0;
-		b = 0.0;
-	}
-	else if(f < 3.0 / 6.0){ // green to cyan
-		r = 0.0;
-		g = 1.0;
-		b = 1.0 - 6.0 * (3.0 / 6.0 - f);
-	}
-	else if(f < 4.0 / 6.0){ // cyan to blue
-		r = 0.0;
-		g = 6.0 * (4.0 / 6.0 - f);
-		b = 1.0;
-	}
-	else if(f < 5.0 / 6.0){ // blue to purple
-		r = 1.0 - 6.0 * (5.0 / 6.0 - f);
-		g = 0.0;
-		b = 1.0;
-	}
-	else{ // purple to red
-		r = 1.0;
-		g = 0.0;
-		b = 6.0 * (1.0 - f);
-	}
+float computePQT(float p, float q, float t){
+	if(t < 0.0){t += 1.0;}
+    else if(t > 1.0){t -= 1.0;}
+    if(t < 1.0 / 6.0){return (p + 6.0 * t * (q - p));}
+    if(t < 0.5){return q;}
+    if(t < 2.0 / 3.0){return (p + 6.0 * (2.0 / 3.0 - t) * (q - p));}
+    return p;
+}
+
+vec4 getRGB(float xh){
+	float r = 0.0;
+	float g = 0.0;
+	float b = 0.0;
+	float xs = 1.0;
+	float xl = 0.5;
+	if(xs == 0.0){
+        r = xl;
+        g = xl;
+        b = xl;
+    }
+    else{
+        float q = 0.0;
+        if(xl < 0.5){q = xl * (1.0 + xs);}
+        else{q = xl + xs - xl * xs;}
+        float p = 2.0 * xl - q;
+        r = computePQT(p, q, xh + 1.0 / 3.0);
+        g = computePQT(p, q, xh);
+        b = computePQT(p, q, xh - 1.0 / 3.0);
+    }
 	return vec4(r, g, b, 1.0);
 }
 
