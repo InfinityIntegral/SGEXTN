@@ -493,3 +493,11 @@ QQuickItem* SGXQuickUIInterface::createColourPicker(QQuickItem *parent, float x1
     connect(thisItem, &QQuickItem::objectNameChanged, &SGXColourPicker::activate);
     return thisItem;
 }
+
+SGXColourRGBA SGXQuickUIInterface::getColourPickerColour(QQuickItem *x, bool &isValid){
+    if(SGXQuickUIInterface::getType(x) != SGXQuickUIInterface::ColourPicker){
+        isValid = false;
+        return SGXColourRGBA(255, 255, 255, 0);
+    }
+    return SGXColourRGBA((*x).property("c").value<QColor>());
+}

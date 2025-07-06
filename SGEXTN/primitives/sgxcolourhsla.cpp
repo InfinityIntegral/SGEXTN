@@ -60,6 +60,12 @@ SGXColourHSLA::SGXColourHSLA(SGXColourRGBA x){
     (*this).h *= 360.0f;
     (*this).s *= 100.0f;
     (*this).l *= 100.0f;
+    if((*this).h < 0.0f){(*this).h = 0.0f;}
+    else if((*this).h > 360.0f){(*this).h = 360.0f;}
+    if((*this).s < 0.0f){(*this).s = 0.0f;}
+    else if((*this).s > 100.0f){(*this).s = 100.0f;}
+    if((*this).l < 0.0f){(*this).l = 0.0f;}
+    else if((*this).l > 100.0f){(*this).l = 100.0f;}
 }
 
 SGXColourHSLA::SGXColourHSLA(float h, float s, float l, float a){

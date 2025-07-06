@@ -101,6 +101,7 @@ public:
     static QQuickItem* createStatusBar(QQuickItem* parent); // function to create status bar
     static QQmlComponent* colourPickerTemplate; // QML template for colour picker
     static QQuickItem* createColourPicker(QQuickItem* parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, SGXColourRGBA defaultColour); // function to create colour picker with colour initialised to defaultColour
+    static SGXColourRGBA getColourPickerColour(QQuickItem* x, bool& isValid); // retrieve input as colour from SGEXTN colour picker, isValid checks if the widget is actually a colour picker
 };
 
 #endif // SGXQUICKUIINTERFACE_H

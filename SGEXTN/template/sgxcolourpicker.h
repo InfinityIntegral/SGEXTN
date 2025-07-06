@@ -7,6 +7,7 @@
 #include <qtmetamacros.h>
 #include <array>
 #include "../primitives/sgxtouchevent.h"
+#include "../primitives/sgxcolourrgba.h"
 
 class SGXColourPicker : public QObject
 {
@@ -17,6 +18,8 @@ public:
     static void activate();
     static QQuickItem* instance;
     static QQuickItem* targetInput;
+    static SGXColourRGBA currentColour;
+    static void refresh();
     static QQmlComponent* hueChoiceTemplate;
     static QQuickItem* createHueChoice(QQuickItem* parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0);
     static QQuickItem* hueChoice;

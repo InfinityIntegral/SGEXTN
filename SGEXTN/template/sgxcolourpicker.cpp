@@ -8,9 +8,11 @@
 #include <array>
 #include "../primitives/sgxtouchevent.h"
 #include "../colourpickerrendering/saturationchoice/sgxrendercolourpickersaturationchoicequickuielement.h"
+#include "../primitives/sgxcolourhsla.h"
 
 QQuickItem* SGXColourPicker::instance = nullptr;
 QQuickItem* SGXColourPicker::targetInput = nullptr;
+SGXColourRGBA SGXColourPicker::currentColour = SGXColourRGBA(255, 255, 255, 0);
 QQmlComponent* SGXColourPicker::hueChoiceTemplate = nullptr;
 QQuickItem* SGXColourPicker::hueChoice = nullptr;
 QQuickItem* SGXColourPicker::hueChoiceTouchReceiver = nullptr;
@@ -33,8 +35,22 @@ void SGXColourPicker::initialise(){
 void SGXColourPicker::activate(){
     SGXColourPicker::targetInput = SGXQuickUIInterface::getActiveObject();
     if(SGXColourPicker::instance == nullptr){SGXColourPicker::initialise();}
+    bool ignore = false;
+    SGXColourPicker::currentColour = SGXQuickUIInterface::getColourPickerColour(SGXColourPicker::targetInput, ignore);
     (*SGXColourPicker::instance).setVisible(true);
+    SGXColourPicker::refresh();
     (*SGXColourPicker::targetInput).setProperty("c", SGXColourRGBA(0, 0, 0).getQColour());
+}
+
+void SGXColourPicker::refresh(){
+    const SGXColourHSLA col = SGXColourHSLA(SGXColourPicker::currentColour);
+    SGXRenderColourPickerHueChoiceQuickUIElement* displayHue = dynamic_cast<SGXRenderColourPickerHueChoiceQuickUIElement*>(SGXColourPicker::hueChoice);
+    (*displayHue).selectedHue = col.h / 360.0f;
+    (*displayHue).update();
+    SGXRenderColourPickerSaturationChoiceQuickUIElement* displaySaturation = dynamic_cast<SGXRenderColourPickerSaturationChoiceQuickUIElement*>(SGXColourPicker::saturationChoice);
+    (*displaySaturation).selectedHue = col.h / 360.0f;
+    (*displaySaturation).selectedSaturation = col.s / 100.0f;
+    (*displaySaturation).update();
 }
 
 QQuickItem* SGXColourPicker::createHueChoice(QQuickItem *parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0){
@@ -70,12 +86,12 @@ void SGXColourPicker::changeHue(const std::array<SGXTouchEvent, 5> &t){
     float x = 21.0f / 19.0f * static_cast<float>(t[0].x) / static_cast<float>((*SGXColourPicker::hueChoice).width()) - 0.05f;
     if(x < 0.0f){x = 0.0f;}
     else if(x > 1.0f){x = 1.0f;}
-    SGXRenderColourPickerHueChoiceQuickUIElement* displayHue = dynamic_cast<SGXRenderColourPickerHueChoiceQuickUIElement*>(SGXColourPicker::hueChoice);
-    (*displayHue).selectedHue = x;
-    (*displayHue).update();
-    SGXRenderColourPickerSaturationChoiceQuickUIElement* displaySaturation = dynamic_cast<SGXRenderColourPickerSaturationChoiceQuickUIElement*>(SGXColourPicker::saturationChoice);
-    (*displaySaturation).selectedHue = x;
-    (*displaySaturation).update();
+    SGXColourHSLA col = SGXColourHSLA(SGXColourPicker::currentColour);
+    col.h = x * 360.0f;
+    col.s = 100.0f;
+    col.l = 50.0f;
+    SGXColourPicker::currentColour = col.toRGBA();
+    SGXColourPicker::refresh();
 }
 
 void SGXColourPicker::changeSaturation(const std::array<SGXTouchEvent, 5> &t){
@@ -83,7 +99,9 @@ void SGXColourPicker::changeSaturation(const std::array<SGXTouchEvent, 5> &t){
     float x = 21.0f / 19.0f * static_cast<float>(t[0].x) / static_cast<float>((*SGXColourPicker::saturationChoice).width()) - 0.05f;
     if(x < 0.0f){x = 0.0f;}
     else if(x > 1.0f){x = 1.0f;}
-    SGXRenderColourPickerSaturationChoiceQuickUIElement* displaySaturation = dynamic_cast<SGXRenderColourPickerSaturationChoiceQuickUIElement*>(SGXColourPicker::saturationChoice);
-    (*displaySaturation).selectedSaturation = x;
-    (*displaySaturation).update();
+    SGXColourHSLA col = SGXColourHSLA(SGXColourPicker::currentColour);
+    col.s = x * 100.0f;
+    col.l = 50.0f;
+    SGXColourPicker::currentColour = col.toRGBA();
+    SGXColourPicker::refresh();
 }
