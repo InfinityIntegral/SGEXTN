@@ -105,14 +105,19 @@ void SGXColourPicker::refresh(){
     (*SGXColourPicker::greenInput).setProperty("noSendSignal", true);
     (*SGXColourPicker::blueInput).setProperty("noSendSignal", true);
     (*SGXColourPicker::transparencyInput).setProperty("noSendSignal", true);
+    (*SGXColourPicker::hexCodeInput).setProperty("noSendSignal", true);
     SGXQuickUIInterface::setInputFieldDataUsingInt(SGXColourPicker::redInput, SGXColourPicker::currentColour.getRed());
     SGXQuickUIInterface::setInputFieldDataUsingInt(SGXColourPicker::greenInput, SGXColourPicker::currentColour.getGreen());
     SGXQuickUIInterface::setInputFieldDataUsingInt(SGXColourPicker::blueInput, SGXColourPicker::currentColour.getBlue());
     SGXQuickUIInterface::setInputFieldDataUsingInt(SGXColourPicker::transparencyInput, SGXColourPicker::currentColour.getTransparency());
+    QString hexCode = QString::number(SGXColourPicker::currentColour.x, 16).toUpper().rightJustified(8, '0');
+    if(hexCode.mid(6, 2) == "FF"){hexCode = hexCode.mid(0, 6);}
+    SGXQuickUIInterface::setInputFieldDataUsingString(SGXColourPicker::hexCodeInput, hexCode);
     (*SGXColourPicker::redInput).setProperty("noSendSignal", false);
     (*SGXColourPicker::greenInput).setProperty("noSendSignal", false);
     (*SGXColourPicker::blueInput).setProperty("noSendSignal", false);
     (*SGXColourPicker::transparencyInput).setProperty("noSendSignal", false);
+    (*SGXColourPicker::hexCodeInput).setProperty("noSendSignal", false);
 }
 
 QQuickItem* SGXColourPicker::createHueChoice(QQuickItem *parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0){
@@ -266,5 +271,19 @@ void SGXColourPicker::changeTransparency(){
 }
 
 void SGXColourPicker::changeHexCode(){
-    
+    QString reducedInput = "";
+    bool ignore = false;
+    QString originalInput = SGXQuickUIInterface::getInputFieldDataAsString(SGXColourPicker::hexCodeInput, ignore).toUpper();
+    for(int i=0; i<originalInput.length(); i++){
+        if(originalInput[i] >= '0' && originalInput[i] <= '9'){reducedInput += originalInput[i];}
+        if(originalInput[i] >= 'A' && originalInput[i] <= 'F'){reducedInput += originalInput[i];}
+    }
+    if(reducedInput.length() == 6){reducedInput += "FF";}
+    if(reducedInput.length() != 8){return;}
+    SGXColourPicker::currentColour.setRed(reducedInput.mid(0, 2).toInt(&ignore, 16));
+    SGXColourPicker::currentColour.setGreen(reducedInput.mid(2, 2).toInt(&ignore, 16));
+    SGXColourPicker::currentColour.setBlue(reducedInput.mid(4, 2).toInt(&ignore, 16));
+    SGXColourPicker::currentColour.setTransparency(reducedInput.mid(6, 2).toInt(&ignore, 16));
+    SGXColourPicker::currentColourHSLA = SGXColourHSLA(SGXColourPicker::currentColour);
+    SGXColourPicker::refresh();
 }
