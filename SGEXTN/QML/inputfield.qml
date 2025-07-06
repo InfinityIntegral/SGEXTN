@@ -36,10 +36,11 @@ TextField{
 	padding: 0
 	
 	function emitClickedSignal(){
-		if(objectName == "0"){objectName = "1";}
-		else{objectName = "0";}
+		if(noSendSignal == false && objectName == "0"){objectName = "1";}
+		else if(noSendSignal == false){objectName = "0";}
 	}
 	objectName: "0"
+	property bool noSendSignal: false
 	onTextChanged: emitClickedSignal()
 	
 	function updateInteraction(){

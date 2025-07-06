@@ -37,10 +37,11 @@ ScrollView{
 	property bool invalid: false
 	
 	function emitClickedSignal(){
-		if(objectName == "0"){objectName = "1";}
-		else{objectName = "0";}
+		if(noSendSignal == false && objectName == "0"){objectName = "1";}
+		else if(noSendSignal == false){objectName = "0";}
 	}
 	objectName: "0"
+	property bool noSendSignal: false
 	
 	x: x1 * Resizer.renderSpaceWidth + x0 * Resizer.sizeUnit
 	y: y1 * Resizer.renderSpaceHeight + y0 * Resizer.sizeUnit

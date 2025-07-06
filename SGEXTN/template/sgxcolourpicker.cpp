@@ -24,6 +24,10 @@ QQuickItem* SGXColourPicker::saturationChoiceTouchReceiver = nullptr;
 QQmlComponent* SGXColourPicker::lightnessChoiceTemplate = nullptr;
 QQuickItem* SGXColourPicker::lightnessChoice = nullptr;
 QQuickItem* SGXColourPicker::lightnessChoiceTouchReceiver = nullptr;
+QQuickItem* SGXColourPicker::redInput = nullptr;
+QQuickItem* SGXColourPicker::greenInput = nullptr;
+QQuickItem* SGXColourPicker::blueInput = nullptr;
+QQuickItem* SGXColourPicker::transparencyInput = nullptr;
 
 void SGXColourPicker::initialise(){
     SGXColourPicker::hueChoiceTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/SGEXTN/colourpickerrendering/huechoice/huechoice.qml");
@@ -38,6 +42,18 @@ void SGXColourPicker::initialise(){
     SGXColourPicker::saturationChoiceTouchReceiver = SGXQuickUIInterface::createTouchReceiver(realBg, &SGXColourPicker::changeSaturation, 0.0f, 0.5f, 0.0f, 2.0f, 0.0f, 10.5f, 0.0f, 1.25f);
     SGXColourPicker::lightnessChoice = SGXColourPicker::createLightnessChoice(realBg, 0.0f, 0.5f, 0.0f, 3.5f, 0.0f, 10.5f, 0.0f, 1.25f);
     SGXColourPicker::lightnessChoiceTouchReceiver = SGXQuickUIInterface::createTouchReceiver(realBg, &SGXColourPicker::changeLightness, 0.0f, 0.5f, 0.0f, 3.5f, 0.0f, 10.5f, 0.0f, 1.25f);
+    SGXQuickUIInterface::createText(realBg, "red:", 0.0f, 0.5f, 0.0f, 5.0f, 0.0f, 1.5f, 0.0f, 1.0f);
+    SGXColourPicker::redInput = SGXQuickUIInterface::createInputField(realBg, 0.0f, 2.0f, 0.0f, 5.0f, 0.0f, 2.0f, 0.0f, 1.0f);
+    connect(SGXColourPicker::redInput, &QQuickItem::objectNameChanged, &SGXColourPicker::changeRed);
+    SGXQuickUIInterface::createText(realBg, "green:", 0.0f, 4.5f, 0.0f, 5.0f, 0.0f, 2.0f, 0.0f, 1.0f);
+    SGXColourPicker::greenInput = SGXQuickUIInterface::createInputField(realBg, 0.0f, 6.5f, 0.0f, 5.0f, 0.0f, 2.0f, 0.0f, 1.0f);
+    connect(SGXColourPicker::greenInput, &QQuickItem::objectNameChanged, &SGXColourPicker::changeGreen);
+    SGXQuickUIInterface::createText(realBg, "blue:", 0.0f, 0.5f, 0.0f, 6.5f, 0.0f, 1.5f, 0.0f, 1.0f);
+    SGXColourPicker::blueInput = SGXQuickUIInterface::createInputField(realBg, 0.0f, 2.0f, 0.0f, 6.5f, 0.0f, 2.0f, 0.0f, 1.0f);
+    connect(SGXColourPicker::blueInput, &QQuickItem::objectNameChanged, &SGXColourPicker::changeBlue);
+    SGXQuickUIInterface::createText(realBg, "transparency:", 0.0f, 4.5f, 0.0f, 6.5f, 0.0f, 4.5f, 0.0f, 1.0f);
+    SGXColourPicker::transparencyInput = SGXQuickUIInterface::createInputField(realBg, 0.0f, 8.5f, 0.0f, 6.5f, 0.0f, 2.0f, 0.0f, 1.0f);
+    connect(SGXColourPicker::transparencyInput, &QQuickItem::objectNameChanged, &SGXColourPicker::changeTransparency);
 }
 
 void SGXColourPicker::activate(){
@@ -63,6 +79,18 @@ void SGXColourPicker::refresh(){
     (*displayLightness).selectedSaturation = SGXColourPicker::currentColourHSLA.s / 100.0f;
     (*displayLightness).selectedLightness = SGXColourPicker::currentColourHSLA.l / 100.0f;
     (*displayLightness).update();
+    (*SGXColourPicker::redInput).setProperty("noSendSignal", true);
+    (*SGXColourPicker::greenInput).setProperty("noSendSignal", true);
+    (*SGXColourPicker::blueInput).setProperty("noSendSignal", true);
+    (*SGXColourPicker::transparencyInput).setProperty("noSendSignal", true);
+    (*SGXColourPicker::redInput).setProperty("text", QString::number(SGXColourPicker::currentColour.getRed()));
+    (*SGXColourPicker::greenInput).setProperty("text", QString::number(SGXColourPicker::currentColour.getGreen()));
+    (*SGXColourPicker::blueInput).setProperty("text", QString::number(SGXColourPicker::currentColour.getBlue()));
+    (*SGXColourPicker::transparencyInput).setProperty("text", QString::number(SGXColourPicker::currentColour.getTransparency()));
+    (*SGXColourPicker::redInput).setProperty("noSendSignal", false);
+    (*SGXColourPicker::greenInput).setProperty("noSendSignal", false);
+    (*SGXColourPicker::blueInput).setProperty("noSendSignal", false);
+    (*SGXColourPicker::transparencyInput).setProperty("noSendSignal", false);
 }
 
 QQuickItem* SGXColourPicker::createHueChoice(QQuickItem *parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0){
@@ -134,5 +162,45 @@ void SGXColourPicker::changeLightness(const std::array<SGXTouchEvent, 5> &t){
     else if(x > 1.0f){x = 1.0f;}
     SGXColourPicker::currentColourHSLA.l = x * 100.0f;
     SGXColourPicker::currentColour = SGXColourPicker::currentColourHSLA.toRGBA();
+    SGXColourPicker::refresh();
+}
+
+void SGXColourPicker::changeRed(){
+    bool isValid = false;
+    const int r = SGXQuickUIInterface::getInputFieldDataAsInt(SGXColourPicker::redInput, isValid);
+    if(isValid == false){return;}
+    if(r < 0 || r > 255){return;}
+    SGXColourPicker::currentColour.setRed(r);
+    SGXColourPicker::currentColourHSLA = SGXColourHSLA(SGXColourPicker::currentColour);
+    SGXColourPicker::refresh();
+}
+
+void SGXColourPicker::changeGreen(){
+    bool isValid = false;
+    const int g = SGXQuickUIInterface::getInputFieldDataAsInt(SGXColourPicker::greenInput, isValid);
+    if(isValid == false){return;}
+    if(g < 0 || g > 255){return;}
+    SGXColourPicker::currentColour.setGreen(g);
+    SGXColourPicker::currentColourHSLA = SGXColourHSLA(SGXColourPicker::currentColour);
+    SGXColourPicker::refresh();
+}
+
+void SGXColourPicker::changeBlue(){
+    bool isValid = false;
+    const int b = SGXQuickUIInterface::getInputFieldDataAsInt(SGXColourPicker::blueInput, isValid);
+    if(isValid == false){return;}
+    if(b < 0 || b > 255){return;}
+    SGXColourPicker::currentColour.setBlue(b);
+    SGXColourPicker::currentColourHSLA = SGXColourHSLA(SGXColourPicker::currentColour);
+    SGXColourPicker::refresh();
+}
+
+void SGXColourPicker::changeTransparency(){
+    bool isValid = false;
+    const int a = SGXQuickUIInterface::getInputFieldDataAsInt(SGXColourPicker::transparencyInput, isValid);
+    if(isValid == false){return;}
+    if(a < 0 || a > 255){return;}
+    SGXColourPicker::currentColour.setTransparency(a);
+    SGXColourPicker::currentColourHSLA = SGXColourHSLA(SGXColourPicker::currentColour);
     SGXColourPicker::refresh();
 }

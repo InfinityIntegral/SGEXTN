@@ -34,12 +34,20 @@ public:
     static QQuickItem* createLightnessChoice(QQuickItem* parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0);
     static QQuickItem* lightnessChoice;
     static QQuickItem* lightnessChoiceTouchReceiver;
+    static QQuickItem* redInput;
+    static QQuickItem* greenInput;
+    static QQuickItem* blueInput;
+    static QQuickItem* transparencyInput;
 signals:
     void doNothing();
 public slots:
     static void changeHue(const std::array<SGXTouchEvent, 5>& t);
     static void changeSaturation(const std::array<SGXTouchEvent, 5>& t);
     static void changeLightness(const std::array<SGXTouchEvent, 5>& t);
+    static void changeRed();
+    static void changeGreen();
+    static void changeBlue();
+    static void changeTransparency();
 };
 
 #endif // SGXCOLOURPICKER_H
