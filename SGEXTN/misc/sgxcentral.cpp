@@ -54,12 +54,14 @@ void SGXCentral::initialise(){
     qmlRegisterType<SGXRenderColourPickerLightnessChoiceQuickUIElement>("ColourPickerLightnessChoice", 0, 0, "ColourPickerLightnessChoice");
     qmlRegisterType<SGXRenderColourPickerTransparencyChoiceQuickUIElement>("ColourPickerTransparencyChoice", 0, 0, "ColourPickerTransparencyChoice");
     qmlRegisterType<SGXRenderColourBackgroundQuickUIElement>("ColourBackground", 0, 0, "ColourBackground");
+    SGUCentralManagement::initialiseCustomRendering();
     (*SGXQuickUIInterface::e).load(":/SGEXTN/QML/root.qml");
     SGXCuteVesicles::framesPerSecond = SGUCentralManagement::cuteVesiclesFrameRate;
     
     connect(qApp, &QGuiApplication::aboutToQuit, &SGXCentral::terminate); // NOLINT(cppcoreguidelines-pro-type-static-cast-downcast)
     QFontDatabase::addApplicationFont(":/SGEXTN/assets/standard.otf");
     QFontDatabase::addApplicationFont(":/SGEXTN/assets/icons.otf");
+    SGUCentralManagement::initialiseExtraFonts();
     
     SGXQuickUIInterface::applicationWindow = qobject_cast<QQuickWindow*>((*SGXQuickUIInterface::e).rootObjects().first());
     SGXQuickUIInterface::rootWindow = (*SGXQuickUIInterface::applicationWindow).contentItem();

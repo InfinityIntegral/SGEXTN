@@ -54,6 +54,20 @@ void SGUCentralManagement::earlyInitialise(){
     
 }
 
+// this is run after builtin fonts are imported, use it to import other fonts
+// use commands in the format
+// QFontDatabase::addApplicationFont([path to your fonts in your assets folder]);
+void SGUCentralManagement::initialiseExtraFonts(){
+    
+}
+
+// this is run after builtin custom rendered widgets are registered with QML, use it to register your own custom rendering widgets
+// use commands in the format
+// qmlRegisterType<[type of custom widget]>([name of custom widget], 0, 0, [name of custom widget]);
+void SGUCentralManagement::initialiseCustomRendering(){
+    
+}
+
 // this is run before the application terminates, use it to save user data
 void SGUCentralManagement::terminate(){
     

@@ -1,8 +1,6 @@
 # SGEXTN ("SG" Extension for C++, Qt, and OpenGL)
 
-## About this project...
-This project has not been completed.
-
+## About this project
 This is a template application to make building applications in Qt easier. It internally uses Qt Quick but SGEXTN functions are designed for imperative UI, similar to QWidget and different from Qt Quick's declarative UI. There is also a wide variety of primitive structs that allow you to group, store, and use data more easily in addition to file system usage methods.
 
 "SG" refers to Singapore, my home country. It does not reference the Qt Quick scene graph. SGEXTN is designed to let you not worry about the scene graph and instead use it like a customised, GPU-accelerated version of QWidget.
@@ -11,8 +9,6 @@ For OpenGL support, you should subclass QQuickItem and use QSGGeometryNode for r
 
 Documentation is included in the form of comments in header files.
 
-SGEXTN v1 uses QWidget, it is fully functional. I switched the rendering method because Qt Quick is newer, faster, and more compatible with mobile platforms. Although the current version uses Qt Quick internally, the SGEXTN wrapper layer allows you to use it as if it is QWidgets.
-
 File name prefixes:  
 SGX - SGEXTN files, do not touch those unless you know very well what you are doing  
 SGXRender - SGEXTN files used in rendering of builtin cute vesicles, these are useful to look at to learn the structure of custom rendering  
@@ -20,7 +16,7 @@ SGU - kind of SGEXTN files, you can edit the values of properties inside if the 
 SGC - I cannot enforce this, but you are supposed to start your custom classes with this prefix  
 SGCRender - I cannot enforce this, but you are strongly encouraged to start custom classes related to custom rendering with this
 
-## Included in latest release...
+## Completed Features (available in v2)
 - [x] C++ primitives extensions
 	- [x] SGXColourRGBA (RGBA representation of a colour with 8 bits per channel, wraps unsigned int)
 	- [x] SGXColourHSLA (HSLA representation of a colour with 8 bits per channel, contains 4 floats)
@@ -57,27 +53,47 @@ SGCRender - I cannot enforce this, but you are strongly encouraged to start cust
 - [x] customisable vesicle properties
 - [x] working application template
 
-## Work in progress...
-- [ ] colour picker
-- [ ] specialised input fields
+## Work in progress (planned for v3)
+- [x] colour picker
 - [ ] hidden theme colours settings page
 
-## Credits...
+## planned for SGEXTN v4
+- [ ] SingScript.sg extension
+	- [ ] SingScript.sg extension 0 (celebrating Singaporean culture + 05524F.sg icons + selected emojis)
+	- [ ] SingScript.sg extension 1 (basic Mathematics and Science)
+	- [ ] SingScript.sg extension 2 (note organisation and indexing + table mockups + Optical Answer Sheets)
+	- [ ] SingScript.sg extension 3 (exponents and subscripts)
+- [ ] specialised input 
+	- [ ] movable widget with system keyboard option
+	- [ ] integer
+	- [ ] decimal
+	- [ ] numerical
+	- [ ] base16
+	- [ ] lowercase letters
+	- [ ] uppercase letters
+	- [ ] letters
+	- [ ] alphanumeric
+	- [ ] ASCII
+	- [ ] text with math
+		- [ ] sliding region for Math symbols
+		- [ ] shortcut section to scroll to actual symbols
+
+## Credits
 - Qt (https://www.qt.io/)
 - Git (https://git-scm.com/)
 - GitHub (https://github.com/)
 - LGPL License (https://opensource.org/license/lgpl-3-0)
 - 05524F.sg SGEXTN (https://github.com/InfinityIntegral/SGEXTN) (ownself cite ownself)
 
-## Contributing...
+## Contributing
 The best way to contribute is to complain. To complain refers to informing me of a bug or suggesting a new feature to be included to the software. Pls refer to the "Contact me" section below.
 
 If I perceive your suggested feature to be beyond the scope of the software, I will not approve it. However, you can still download the code and build your own feature. As long as you keep the .sg (or "SG" in this case) in your project name, I am ok with it.
 
-## Contact me...
+## Contact me
 Choose one of the following
 - email to infinityintegral333@gmail.com
 - message @05524F.sg on Instagram
 
-## Am I blur...
+## Am I blur
 No.

@@ -14,6 +14,8 @@ public:
     static void initialise(); // initialisation function run when app opens
     static void terminate(); // temination function run when app closes
     static void earlyInitialise(); // initialisation function run before GUI is created
+    static void initialiseExtraFonts(); // initialisation function run immediately after the SingScript.sg font is imported
+    static void initialiseCustomRendering(); // initialisation function run immediately after SGEXTN builtin rendering types are registered with QML
     static QString applicationName; // name of application displayed
     static QString applicationVersion; // version number of application
     static QString organisationName; // name of your organisation
