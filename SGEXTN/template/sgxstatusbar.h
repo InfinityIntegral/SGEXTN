@@ -13,6 +13,8 @@ public:
     SGXStatusBar() = delete;
     static QQuickItem* instance; // instance of status bar
     static QTimer* timer; // instance of recurring timer to manage status bar
+    static int secondsLeft; // number of seconds left in notification
+    static void notify(const QString& notificationMessage, int timeInSeconds); // function to send a notification into the status bar
 signals:
     void nothingChanged();
 public slots:
