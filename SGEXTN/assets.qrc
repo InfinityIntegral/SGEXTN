@@ -38,5 +38,6 @@
         <file>colourpickerrendering/transparencychoice/transparencychoice.qml</file>
         <file>colourpickerrendering/transparencychoice/transparencychoice.vert.qsb</file>
         <file>colourpickerrendering/transparencychoice/transparencychoice.frag.qsb</file>
+        <file>QML/title.qml</file>
     </qresource>
 </RCC>

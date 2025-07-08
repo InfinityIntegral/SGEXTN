@@ -29,6 +29,7 @@ QQmlComponent* SGXQuickUIInterface::parentWidgetTemplate = nullptr;
 QQuickItem* SGXQuickUIInterface::parentWidget = nullptr;
 QQmlComponent* SGXQuickUIInterface::widgetTemplate = nullptr;
 QQmlComponent* SGXQuickUIInterface::textTemplate = nullptr;
+QQmlComponent* SGXQuickUIInterface::titleTemplate = nullptr;
 QQmlComponent* SGXQuickUIInterface::longTextTemplate = nullptr;
 QQmlComponent* SGXQuickUIInterface::iconTemplate = nullptr;
 QQmlComponent* SGXQuickUIInterface::textButtonTemplate = nullptr;
@@ -47,6 +48,7 @@ void SGXQuickUIInterface::initialise(){
     SGXQuickUIInterface::parentWidgetTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/SGEXTN/QML/parentwidget.qml");
     SGXQuickUIInterface::widgetTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/SGEXTN/QML/widget.qml");
     SGXQuickUIInterface::textTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/SGEXTN/QML/text.qml");
+    SGXQuickUIInterface::titleTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/SGEXTN/QML/title.qml");
     SGXQuickUIInterface::longTextTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/SGEXTN/QML/longtext.qml");
     SGXQuickUIInterface::iconTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/SGEXTN/QML/icon.qml");
     SGXQuickUIInterface::textButtonTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/SGEXTN/QML/textbutton.qml");
@@ -68,6 +70,7 @@ void SGXQuickUIInterface::terminate(){
     delete SGXQuickUIInterface::parentWidgetTemplate;
     delete SGXQuickUIInterface::widgetTemplate;
     delete SGXQuickUIInterface::textTemplate;
+    delete SGXQuickUIInterface::titleTemplate;
     delete SGXQuickUIInterface::longTextTemplate;
     delete SGXQuickUIInterface::iconTemplate;
     delete SGXQuickUIInterface::textButtonTemplate;
@@ -135,6 +138,22 @@ QQuickItem* SGXQuickUIInterface::createText(QQuickItem *parent, const QString &s
     (*thisItem).setProperty("h0", h0);
     (*thisItem).setProperty("s", s);
     (*thisItem).setProperty("widgetType", SGXQuickUIInterface::Text);
+    return thisItem;
+}
+
+QQuickItem* SGXQuickUIInterface::createTitle(QQuickItem *parent, const QString &s, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0){
+    QQuickItem* thisItem = qobject_cast<QQuickItem*>((*SGXQuickUIInterface::titleTemplate).create());
+    SGXQuickUIInterface::setActualParent(thisItem, parent);
+    (*thisItem).setProperty("x1", x1);
+    (*thisItem).setProperty("x0", x0);
+    (*thisItem).setProperty("y1", y1);
+    (*thisItem).setProperty("y0", y0);
+    (*thisItem).setProperty("w1", w1);
+    (*thisItem).setProperty("w0", w0);
+    (*thisItem).setProperty("h1", h1);
+    (*thisItem).setProperty("h0", h0);
+    (*thisItem).setProperty("s", s);
+    (*thisItem).setProperty("widgetType", SGXQuickUIInterface::Title);
     return thisItem;
 }
 
@@ -385,6 +404,7 @@ SGXQuickUIInterface::WidgetType SGXQuickUIInterface::getType(QQuickItem *x){
     if(v == SGXQuickUIInterface::ParentWidget){return SGXQuickUIInterface::ParentWidget;}
     if(v == SGXQuickUIInterface::Widget){return SGXQuickUIInterface::Widget;}
     if(v == SGXQuickUIInterface::Text){return SGXQuickUIInterface::Text;}
+    if(v == SGXQuickUIInterface::Title){return SGXQuickUIInterface::Title;}
     if(v == SGXQuickUIInterface::LongText){return SGXQuickUIInterface::LongText;}
     if(v == SGXQuickUIInterface::Icon){return SGXQuickUIInterface::Icon;}
     if(v == SGXQuickUIInterface::TextButton){return SGXQuickUIInterface::TextButton;}
