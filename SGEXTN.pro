@@ -58,6 +58,7 @@ SOURCES = SGEXTN/misc/main.cpp \
     SGEXTN/template/sgxcolourpicker.cpp \
     SGEXTN/template/sgxcutevesicles.cpp \
     SGEXTN/template/sgxstatusbar.cpp \
+    SGEXTN/template/sgxthemecolourspage.cpp \
     SGEXTN/userDefinedClasses/sgucentralmanagement.cpp
 RESOURCES = SGEXTN/assets.qrc
 HEADERS += \
@@ -101,4 +102,5 @@ HEADERS += \
     SGEXTN/template/sgxcolourpicker.h \
     SGEXTN/template/sgxcutevesicles.h \
     SGEXTN/template/sgxstatusbar.h \
+    SGEXTN/template/sgxthemecolourspage.h \
     SGEXTN/userDefinedClasses/sgucentralmanagement.h

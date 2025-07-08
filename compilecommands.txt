@@ -1,5 +1,5 @@
 lines of code:
-git ls-files --exclude-standard | grep -E '\.(cpp|h|qml|vert|frag)$' | xargs wc -l
+git ls-files "*.h" "*.cpp" "*.qml" "*.vert" "*.frag" | xargs cat | wc -l
 
 shader .qsb compilation:
 qsb [file name].vert -o [file name].vert.qsb --batchable --glsl 330 --hlsl 50 --msl 12 --glsl "300 es"
