@@ -25,8 +25,9 @@ public:
         Widget = 30, // non interactive widget with a solid colour that blocks input, can be used as background
         Text = 40, // non interactive text widget
         Title = 41, // title widget, essentially center aligned text
-        LongText = 42, // non interactive text widget with a scroll bar
-        Icon = 43, // non interactive icon widget
+        RightText = 42, // right aligned text widget for centered forms
+        LongText = 43, // non interactive text widget with a scroll bar
+        Icon = 44, // non interactive icon widget
         TextButton = 50, // button with text on it
         IconButton = 51, // button with icon on it
         InputField = 60, // single line input field
@@ -70,6 +71,8 @@ public:
     static QQuickItem* createText(QQuickItem* parent, const QString& s, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0); // function to create a text widget, where s is the text to display
     static QQmlComponent* titleTemplate; // QML template for title widget
     static QQuickItem* createTitle(QQuickItem* parent, const QString& s, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0); // function to create a title widget, where s is the text to display
+    static QQmlComponent* rightTextTemplate; // QML template for right aligned text widget
+    static QQuickItem* createRightText(QQuickItem* parent, const QString& s, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0); // function to create a right aligned text widget, where s is the text to display
     static QQmlComponent* longTextTemplate; // QML template for long text widget
     static QQuickItem* createLongText(QQuickItem* parent, const QString& s, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float f1, float f0, float s1, float s0); // function to create a long text widget, where s is the text to display
     static QQmlComponent* iconTemplate; // QML template for icon
