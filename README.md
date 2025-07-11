@@ -56,9 +56,9 @@ SGCRender - I cannot enforce this, but you are strongly encouraged to start cust
 ## Work in progress (planned for v3)
 - [x] colour picker
 - [ ] hidden theme colours settings page
-	- [ ] Default Light theme (pink and white)
-	- [ ] Default Dark theme (pink and black)
-	- [ ] For Our Nation theme (red and white)
+	- [x] Default Light theme (pink and white)
+	- [x] Default Dark theme (pink and black)
+	- [x] For Our Nation theme (red and white)
 	- [ ] Custom Light
 	- [ ] Custom Dark
 	- [ ] Custom Any

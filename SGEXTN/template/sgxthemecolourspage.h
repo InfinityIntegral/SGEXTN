@@ -16,6 +16,9 @@ signals:
     void doNothing();
 public slots:
     static void activate();
+    static void setThemeDefaultLight();
+    static void setThemeDefaultDark();
+    static void setThemeForOurNation();
 };
 
 #endif // SGXTHEMECOLOURSPAGE_H
