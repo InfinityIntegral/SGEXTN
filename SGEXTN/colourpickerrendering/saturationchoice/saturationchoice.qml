@@ -1,4 +1,4 @@
-import QtQuick 6.9
+import QtQuick
 import Resizer 0.0
 import ColourPickerSaturationChoice 0.0
 

@@ -1,5 +1,5 @@
-import QtQuick 6.9
-import QtQuick.Controls 6.9
+import QtQuick
+import QtQuick.Controls
 import ThemeColours 0.0
 import Resizer 0.0
 
@@ -75,7 +75,7 @@ ScrollView{
 	}
 
 	property string timerSourceCode: `
-	import QtQuick 6.9
+	import QtQuick
 
 	Timer{
 		interval: 1000

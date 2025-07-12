@@ -1,5 +1,5 @@
-import QtQuick 6.9
-import QtQuick.Window 6.9
+import QtQuick
+import QtQuick.Window
 import ThemeColours 0.0
 
 Window{

@@ -1,5 +1,5 @@
-import QtQuick 6.9
-import QtQuick.Dialogs 6.9
+import QtQuick
+import QtQuick.Dialogs
 
 FileDialog{
 	property string selectedFilePath: ""

@@ -1,4 +1,4 @@
-import QtQuick 6.9
+import QtQuick
 import ThemeColours 0.0
 import Resizer 0.0
 
