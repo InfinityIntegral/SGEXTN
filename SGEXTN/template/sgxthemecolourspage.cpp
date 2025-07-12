@@ -3,8 +3,15 @@
 #include <QQuickItem>
 #include <QString>
 #include "../primitives/sgxcolourrgba.h"
+#include <array>
 
 QQuickItem* SGXThemeColoursPage::instance = nullptr;
+std::array<QQuickItem*, 9> SGXThemeColoursPage::customLightColoursDisplay = {nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr};
+QQuickItem* SGXThemeColoursPage::customLightMainColourPicker = nullptr;
+std::array<QQuickItem*, 9> SGXThemeColoursPage::customDarkColoursDisplay = {nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr};
+QQuickItem* SGXThemeColoursPage::customDarkMainColourPicker = nullptr;
+std::array<QQuickItem*, 9> SGXThemeColoursPage::customAnyColoursDisplay = {nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr};
+std::array<QQuickItem*, 9> SGXThemeColoursPage::customAnyColourPicker = {nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr};
 
 void SGXThemeColoursPage::activate(){
     if(SGXThemeColoursPage::instance == nullptr){SGXThemeColoursPage::initialise();}
@@ -12,7 +19,7 @@ void SGXThemeColoursPage::activate(){
 }
 
 void SGXThemeColoursPage::initialise(){
-    SGXThemeColoursPage::instance = SGXQuickUIInterface::createScrollView(SGXQuickUIInterface::parentWidget, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 50.0f, 0.0f, 0.5f, 8);
+    SGXThemeColoursPage::instance = SGXQuickUIInterface::createScrollView(SGXQuickUIInterface::parentWidget, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 108.0f, 0.0f, 0.5f, 8);
     SGXQuickUIInterface::createTitle(SGXThemeColoursPage::instance, "Theme Colours", 0.0f, 0.5f, 0.0f, 0.5f, 1.0f, -1.0f, 0.0f, 2.0f);
     SGXQuickUIInterface::createTextButton(SGXThemeColoursPage::instance, "Be the Light", &SGXThemeColoursPage::setThemeDefaultLight, 0.0f, 0.5f, 0.0f, 2.5f, 1.0f, -1.5f, 0.0f, 1.0f);
     QQuickItem* obj = nullptr;
@@ -79,6 +86,56 @@ void SGXThemeColoursPage::initialise(){
     (*obj).setProperty("color", SGXColourRGBA(255, 255, 255).getQColour());
     s = "For Our Nation is the National Day special theme applied to all SGEXTN apps during the National Day period, overwriting any theme settings defined by the user. The theme features a mix of red and white, both being the exact same colour as the colours on our flag. The name of the theme comes from our pledge.";
     SGXQuickUIInterface::createLongText(SGXThemeColoursPage::instance, s, 0.0f, 0.5f, 0.0f, 35.5f, 1.0f, -1.5f, 0.0f, 10.0f, 0.0f, 1.0f, 0.0f, 0.5f);
+    SGXQuickUIInterface::createTextButton(SGXThemeColoursPage::instance, "Custom Light", &SGXThemeColoursPage::setThemeCustomLight, 0.0f, 0.5f, 0.0f, 46.0f, 1.0f, -1.5f, 0.0f, 1.0f);
+    SGXQuickUIInterface::createRightText(SGXThemeColoursPage::instance, "main theme colour:", 0.0f, 0.5f, 0.0f, 47.5f, 0.5f, -0.6f, 0.0f, 1.0f);
+    SGXThemeColoursPage::customLightMainColourPicker = SGXQuickUIInterface::createColourPicker(SGXThemeColoursPage::instance, 0.5f, 0.1f, 0.0f, 47.5f, 0.0f, 4.0f, 0.0f, 1.0f, SGXColourRGBA(255, 0, 100));
+    connect(SGXThemeColoursPage::customLightMainColourPicker, &QQuickItem::opacityChanged, &SGXThemeColoursPage::updateThemeCustomLight);
+    SGXThemeColoursPage::customLightColoursDisplay[0] = SGXQuickUIInterface::createWidget(SGXThemeColoursPage::instance, 0.0f / 11.1f, 0.5f - 0.0f / 11.f * 1.5f, 0.0f, 49.0f, 0.2f / 11.1f, -1.5f * 0.2f / 11.1f, 0.0f, 2.0f, -1);
+    SGXThemeColoursPage::customLightColoursDisplay[1] = SGXQuickUIInterface::createWidget(SGXThemeColoursPage::instance, 0.2f / 11.1f, 0.5f - 0.2f / 11.f * 1.5f, 0.0f, 49.0f, 0.2f / 11.1f, -1.5f * 0.2f / 11.1f, 0.0f, 2.0f, -1);
+    SGXThemeColoursPage::customLightColoursDisplay[2] = SGXQuickUIInterface::createWidget(SGXThemeColoursPage::instance, 0.4f / 11.1f, 0.5f - 0.4f / 11.f * 1.5f, 0.0f, 49.0f, 0.8f / 11.1f, -1.5f * 0.8f / 11.1f, 0.0f, 2.0f, -1);
+    SGXThemeColoursPage::customLightColoursDisplay[3] = SGXQuickUIInterface::createWidget(SGXThemeColoursPage::instance, 1.2f / 11.1f, 0.5f - 1.2f / 11.f * 1.5f, 0.0f, 49.0f, 0.8f / 11.1f, -1.5f * 0.8f / 11.1f, 0.0f, 2.0f, -1);
+    SGXThemeColoursPage::customLightColoursDisplay[4] = SGXQuickUIInterface::createWidget(SGXThemeColoursPage::instance, 2.0f / 11.1f, 0.5f - 2.0f / 11.f * 1.5f, 0.0f, 49.0f, 2.5f / 11.1f, -1.5f * 2.5f / 11.1f, 0.0f, 2.0f, -1);
+    SGXThemeColoursPage::customLightColoursDisplay[5] = SGXQuickUIInterface::createWidget(SGXThemeColoursPage::instance, 4.5f / 11.1f, 0.5f - 4.5f / 11.f * 1.5f, 0.0f, 49.0f, 0.8f / 11.1f, -1.5f * 0.8f / 11.1f, 0.0f, 2.0f, -1);
+    SGXThemeColoursPage::customLightColoursDisplay[6] = SGXQuickUIInterface::createWidget(SGXThemeColoursPage::instance, 5.3f / 11.1f, 0.5f - 5.3f / 11.f * 1.5f, 0.0f, 49.0f, 2.5f / 11.1f, -1.5f * 2.5f / 11.1f, 0.0f, 2.0f, -1);
+    SGXThemeColoursPage::customLightColoursDisplay[7] = SGXQuickUIInterface::createWidget(SGXThemeColoursPage::instance, 7.8f / 11.1f, 0.5f - 7.8f / 11.f * 1.5f, 0.0f, 49.0f, 0.8f / 11.1f, -1.5f * 0.8f / 11.1f, 0.0f, 2.0f, -1);
+    SGXThemeColoursPage::customLightColoursDisplay[8] = SGXQuickUIInterface::createWidget(SGXThemeColoursPage::instance, 8.6f / 11.1f, 0.5f - 8.6f / 11.f * 1.5f, 0.0f, 49.0f, 2.5f / 11.1f, -1.5f * 2.5f / 11.1f, 0.0f, 2.0f, -1);
+    s = "Custom Light is a custom theme allowing the user to choose any main theme colour. The remaining theme colours will be interpolated from the main theme colour, mostly between white and the main theme colour. Note that Be the Light is equivalent to Custom Light with the main colour being 05524F pink and For Our Nation is equivalent to Custom Light with the main colour being Singapore red.";
+    SGXQuickUIInterface::createLongText(SGXThemeColoursPage::instance, s, 0.0f, 0.5f, 0.0f, 51.5f, 1.0f, -1.5f, 0.0f, 10.0f, 0.0f, 1.0f, 0.0f, 0.5f);
+    SGXThemeColoursPage::updateThemeCustomLight();
+    SGXQuickUIInterface::createTextButton(SGXThemeColoursPage::instance, "Custom Dark", &SGXThemeColoursPage::setThemeCustomDark, 0.0f, 0.5f, 0.0f, 62.0f, 1.0f, -1.5f, 0.0f, 1.0f);
+    SGXQuickUIInterface::createRightText(SGXThemeColoursPage::instance, "main theme colour:", 0.0f, 0.5f, 0.0f, 63.5f, 0.5f, -0.6f, 0.0f, 1.0f);
+    SGXThemeColoursPage::customDarkMainColourPicker = SGXQuickUIInterface::createColourPicker(SGXThemeColoursPage::instance, 0.5f, 0.1f, 0.0f, 63.5f, 0.0f, 4.0f, 0.0f, 1.0f, SGXColourRGBA(255, 0, 100));
+    connect(SGXThemeColoursPage::customDarkMainColourPicker, &QQuickItem::opacityChanged, &SGXThemeColoursPage::updateThemeCustomDark);
+    SGXThemeColoursPage::customDarkColoursDisplay[0] = SGXQuickUIInterface::createWidget(SGXThemeColoursPage::instance, 0.0f / 11.1f, 0.5f - 0.0f / 11.f * 1.5f, 0.0f, 65.0f, 0.2f / 11.1f, -1.5f * 0.2f / 11.1f, 0.0f, 2.0f, -1);
+    SGXThemeColoursPage::customDarkColoursDisplay[1] = SGXQuickUIInterface::createWidget(SGXThemeColoursPage::instance, 0.2f / 11.1f, 0.5f - 0.2f / 11.f * 1.5f, 0.0f, 65.0f, 0.2f / 11.1f, -1.5f * 0.2f / 11.1f, 0.0f, 2.0f, -1);
+    SGXThemeColoursPage::customDarkColoursDisplay[2] = SGXQuickUIInterface::createWidget(SGXThemeColoursPage::instance, 0.4f / 11.1f, 0.5f - 0.4f / 11.f * 1.5f, 0.0f, 65.0f, 0.8f / 11.1f, -1.5f * 0.8f / 11.1f, 0.0f, 2.0f, -1);
+    SGXThemeColoursPage::customDarkColoursDisplay[3] = SGXQuickUIInterface::createWidget(SGXThemeColoursPage::instance, 1.2f / 11.1f, 0.5f - 1.2f / 11.f * 1.5f, 0.0f, 65.0f, 0.8f / 11.1f, -1.5f * 0.8f / 11.1f, 0.0f, 2.0f, -1);
+    SGXThemeColoursPage::customDarkColoursDisplay[4] = SGXQuickUIInterface::createWidget(SGXThemeColoursPage::instance, 2.0f / 11.1f, 0.5f - 2.0f / 11.f * 1.5f, 0.0f, 65.0f, 2.5f / 11.1f, -1.5f * 2.5f / 11.1f, 0.0f, 2.0f, -1);
+    SGXThemeColoursPage::customDarkColoursDisplay[5] = SGXQuickUIInterface::createWidget(SGXThemeColoursPage::instance, 4.5f / 11.1f, 0.5f - 4.5f / 11.f * 1.5f, 0.0f, 65.0f, 0.8f / 11.1f, -1.5f * 0.8f / 11.1f, 0.0f, 2.0f, -1);
+    SGXThemeColoursPage::customDarkColoursDisplay[6] = SGXQuickUIInterface::createWidget(SGXThemeColoursPage::instance, 5.3f / 11.1f, 0.5f - 5.3f / 11.f * 1.5f, 0.0f, 65.0f, 2.5f / 11.1f, -1.5f * 2.5f / 11.1f, 0.0f, 2.0f, -1);
+    SGXThemeColoursPage::customDarkColoursDisplay[7] = SGXQuickUIInterface::createWidget(SGXThemeColoursPage::instance, 7.8f / 11.1f, 0.5f - 7.8f / 11.f * 1.5f, 0.0f, 65.0f, 0.8f / 11.1f, -1.5f * 0.8f / 11.1f, 0.0f, 2.0f, -1);
+    SGXThemeColoursPage::customDarkColoursDisplay[8] = SGXQuickUIInterface::createWidget(SGXThemeColoursPage::instance, 8.6f / 11.1f, 0.5f - 8.6f / 11.f * 1.5f, 0.0f, 65.0f, 2.5f / 11.1f, -1.5f * 2.5f / 11.1f, 0.0f, 2.0f, -1);
+    s = "Custom Dark is a custom theme allowing the user to choose any main theme colour. The remaining theme colours will be interpolated from the main theme colour, mostly between black and the main theme colour. Note that Shine From Within is equivalent to Custom Dark with the main colour being 05524F pink.";
+    SGXQuickUIInterface::createLongText(SGXThemeColoursPage::instance, s, 0.0f, 0.5f, 0.0f, 67.5f, 1.0f, -1.5f, 0.0f, 10.0f, 0.0f, 1.0f, 0.0f, 0.5f);
+    SGXThemeColoursPage::updateThemeCustomDark();
+    SGXQuickUIInterface::createTextButton(SGXThemeColoursPage::instance, "Custom Any", &SGXThemeColoursPage::setThemeCustomDark, 0.0f, 0.5f, 0.0f, 78.0f, 1.0f, -1.5f, 0.0f, 1.0f);
+    for(int i=0; i<=8; i++){
+        SGXQuickUIInterface::createRightText(SGXThemeColoursPage::instance, "theme colour " + QString::number(i) + ":", 0.0f, 0.5f, 0.0f, 79.5f + 1.5f * static_cast<float>(i), 0.5f, -0.6f, 0.0f, 1.0f);
+        SGXThemeColoursPage::customAnyColourPicker.at(i) = SGXQuickUIInterface::createColourPicker(SGXThemeColoursPage::instance, 0.5f, 0.1f, 0.0f, 79.5f + 1.5f * static_cast<float>(i), 0.0f, 4.0f, 0.0f, 1.0f, SGXColourRGBA(1.0f, 0.0f, static_cast<float>(i) / 8.0f));
+        connect(SGXThemeColoursPage::customAnyColourPicker.at(i), &QQuickItem::opacityChanged, &SGXThemeColoursPage::updateThemeCustomAny);
+    }
+    SGXThemeColoursPage::customAnyColoursDisplay[0] = SGXQuickUIInterface::createWidget(SGXThemeColoursPage::instance, 0.0f / 11.1f, 0.5f - 0.0f / 11.f * 1.5f, 0.0f, 93.0f, 0.2f / 11.1f, -1.5f * 0.2f / 11.1f, 0.0f, 2.0f, -1);
+    SGXThemeColoursPage::customAnyColoursDisplay[1] = SGXQuickUIInterface::createWidget(SGXThemeColoursPage::instance, 0.2f / 11.1f, 0.5f - 0.2f / 11.f * 1.5f, 0.0f, 93.0f, 0.2f / 11.1f, -1.5f * 0.2f / 11.1f, 0.0f, 2.0f, -1);
+    SGXThemeColoursPage::customAnyColoursDisplay[2] = SGXQuickUIInterface::createWidget(SGXThemeColoursPage::instance, 0.4f / 11.1f, 0.5f - 0.4f / 11.f * 1.5f, 0.0f, 93.0f, 0.8f / 11.1f, -1.5f * 0.8f / 11.1f, 0.0f, 2.0f, -1);
+    SGXThemeColoursPage::customAnyColoursDisplay[3] = SGXQuickUIInterface::createWidget(SGXThemeColoursPage::instance, 1.2f / 11.1f, 0.5f - 1.2f / 11.f * 1.5f, 0.0f, 93.0f, 0.8f / 11.1f, -1.5f * 0.8f / 11.1f, 0.0f, 2.0f, -1);
+    SGXThemeColoursPage::customAnyColoursDisplay[4] = SGXQuickUIInterface::createWidget(SGXThemeColoursPage::instance, 2.0f / 11.1f, 0.5f - 2.0f / 11.f * 1.5f, 0.0f, 93.0f, 2.5f / 11.1f, -1.5f * 2.5f / 11.1f, 0.0f, 2.0f, -1);
+    SGXThemeColoursPage::customAnyColoursDisplay[5] = SGXQuickUIInterface::createWidget(SGXThemeColoursPage::instance, 4.5f / 11.1f, 0.5f - 4.5f / 11.f * 1.5f, 0.0f, 93.0f, 0.8f / 11.1f, -1.5f * 0.8f / 11.1f, 0.0f, 2.0f, -1);
+    SGXThemeColoursPage::customAnyColoursDisplay[6] = SGXQuickUIInterface::createWidget(SGXThemeColoursPage::instance, 5.3f / 11.1f, 0.5f - 5.3f / 11.f * 1.5f, 0.0f, 93.0f, 2.5f / 11.1f, -1.5f * 2.5f / 11.1f, 0.0f, 2.0f, -1);
+    SGXThemeColoursPage::customAnyColoursDisplay[7] = SGXQuickUIInterface::createWidget(SGXThemeColoursPage::instance, 7.8f / 11.1f, 0.5f - 7.8f / 11.f * 1.5f, 0.0f, 93.0f, 0.8f / 11.1f, -1.5f * 0.8f / 11.1f, 0.0f, 2.0f, -1);
+    SGXThemeColoursPage::customAnyColoursDisplay[8] = SGXQuickUIInterface::createWidget(SGXThemeColoursPage::instance, 8.6f / 11.1f, 0.5f - 8.6f / 11.f * 1.5f, 0.0f, 93.0f, 2.5f / 11.1f, -1.5f * 2.5f / 11.1f, 0.0f, 2.0f, -1);
+    s = "Custom Any gives the user full control over all theme colours by allowing all 9 theme colours to be set directly.";
+    SGXQuickUIInterface::createLongText(SGXThemeColoursPage::instance, s, 0.0f, 0.5f, 0.0f, 95.5f, 1.0f, -1.5f, 0.0f, 10.0f, 0.0f, 1.0f, 0.0f, 0.5f);
+    SGXThemeColoursPage::updateThemeCustomAny();
 }
 
 void SGXThemeColoursPage::setThemeDefaultLight(){
@@ -91,4 +148,55 @@ void SGXThemeColoursPage::setThemeDefaultDark(){
 
 void SGXThemeColoursPage::setThemeForOurNation(){
     
+}
+
+void SGXThemeColoursPage::setThemeCustomLight(){
+    
+}
+
+void SGXThemeColoursPage::setThemeCustomDark(){
+    
+}
+
+void SGXThemeColoursPage::setThemeCustomAny(){
+    
+}
+
+void SGXThemeColoursPage::updateThemeCustomLight(){
+    bool ignore = false;
+    SGXColourRGBA mainColour = SGXQuickUIInterface::getColourPickerColour(SGXThemeColoursPage::customLightMainColourPicker, ignore);
+    mainColour.setTransparency(255);
+    for(int i=0; i<4; i++){
+        const SGXColourRGBA themeColour = mainColour.linearInterpolate(SGXColourRGBA(0, 0, 0), 0.25f * static_cast<float>(i));
+        (*SGXThemeColoursPage::customLightColoursDisplay.at(i)).setProperty("color", themeColour.getQColour());
+    }
+    (*SGXThemeColoursPage::customLightColoursDisplay[4]).setProperty("color", mainColour.getQColour());
+    for(int i=0; i<4; i++){
+        const SGXColourRGBA themeColour = mainColour.linearInterpolate(SGXColourRGBA(255, 255, 255), 0.25f * static_cast<float>(3 - i));
+        (*SGXThemeColoursPage::customLightColoursDisplay.at(5 + i)).setProperty("color", themeColour.getQColour());
+    }
+}
+
+void SGXThemeColoursPage::updateThemeCustomDark(){
+    bool ignore = false;
+    SGXColourRGBA mainColour = SGXQuickUIInterface::getColourPickerColour(SGXThemeColoursPage::customDarkMainColourPicker, ignore);
+    mainColour.setTransparency(255);
+    for(int i=0; i<4; i++){
+        const SGXColourRGBA themeColour = mainColour.linearInterpolate(SGXColourRGBA(255, 255, 255), 0.25f * static_cast<float>(i));
+        (*SGXThemeColoursPage::customDarkColoursDisplay.at(i)).setProperty("color", themeColour.getQColour());
+    }
+    (*SGXThemeColoursPage::customDarkColoursDisplay[4]).setProperty("color", mainColour.getQColour());
+    for(int i=0; i<4; i++){
+        const SGXColourRGBA themeColour = mainColour.linearInterpolate(SGXColourRGBA(0, 0, 0), 0.25f * static_cast<float>(3 - i));
+        (*SGXThemeColoursPage::customDarkColoursDisplay.at(5 + i)).setProperty("color", themeColour.getQColour());
+    }
+}
+
+void SGXThemeColoursPage::updateThemeCustomAny(){
+    bool ignore = false;
+    for(int i=0; i<=8; i++){
+        SGXColourRGBA col = SGXQuickUIInterface::getColourPickerColour(SGXThemeColoursPage::customAnyColourPicker.at(i), ignore);
+        col.setTransparency(255);
+        (*SGXThemeColoursPage::customAnyColoursDisplay.at(i)).setProperty("color", col.getQColour());
+    }
 }

@@ -34,6 +34,7 @@ Button{
 		y: 0
 		width: parent.width
 		height: parent.height
+		layer.enabled: true
 		
 		Rectangle{
 			x: 0
