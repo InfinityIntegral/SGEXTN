@@ -5,6 +5,7 @@
 #include <QQuickItem>
 #include <qtmetamacros.h>
 #include <array>
+#include "../primitives/sgxcolourrgba.h"
 
 class SGXThemeColoursPage : public QObject
 {
@@ -19,6 +20,10 @@ public:
     static QQuickItem* customDarkMainColourPicker;
     static std::array<QQuickItem*, 9> customAnyColoursDisplay;
     static std::array<QQuickItem*, 9> customAnyColourPicker;
+    static std::array<SGXColourRGBA, 9> coloursToSet;
+    static QQuickItem* confirmDialog;
+    static bool includeVesicleInTheme;
+    static void activateConfirmDialog();
 signals:
     void doNothing();
 public slots:
@@ -32,6 +37,8 @@ public slots:
     static void updateThemeCustomLight();
     static void updateThemeCustomDark();
     static void updateThemeCustomAny();
+    static void confirmThemeColourSettings();
+    static void cancelThemeColourSettings();
 };
 
 #endif // SGXTHEMECOLOURSPAGE_H

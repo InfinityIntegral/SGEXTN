@@ -4,14 +4,20 @@
 #include <QString>
 #include "../primitives/sgxcolourrgba.h"
 #include <array>
+#include "../customisation/sgxthemecolourscustomisation.h"
+#include "../customisation/sgxvesiclespropertiescustomisation.h"
+#include "../userDefinedClasses/sgucentralmanagement.h"
 
 QQuickItem* SGXThemeColoursPage::instance = nullptr;
-std::array<QQuickItem*, 9> SGXThemeColoursPage::customLightColoursDisplay = {nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr};
+std::array<QQuickItem*, 9> SGXThemeColoursPage::customLightColoursDisplay = {};
 QQuickItem* SGXThemeColoursPage::customLightMainColourPicker = nullptr;
-std::array<QQuickItem*, 9> SGXThemeColoursPage::customDarkColoursDisplay = {nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr};
+std::array<QQuickItem*, 9> SGXThemeColoursPage::customDarkColoursDisplay = {};
 QQuickItem* SGXThemeColoursPage::customDarkMainColourPicker = nullptr;
-std::array<QQuickItem*, 9> SGXThemeColoursPage::customAnyColoursDisplay = {nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr};
-std::array<QQuickItem*, 9> SGXThemeColoursPage::customAnyColourPicker = {nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr};
+std::array<QQuickItem*, 9> SGXThemeColoursPage::customAnyColoursDisplay = {};
+std::array<QQuickItem*, 9> SGXThemeColoursPage::customAnyColourPicker = {};
+std::array<SGXColourRGBA, 9> SGXThemeColoursPage::coloursToSet = {};
+QQuickItem* SGXThemeColoursPage::confirmDialog = nullptr;
+bool SGXThemeColoursPage::includeVesicleInTheme = false;
 
 void SGXThemeColoursPage::activate(){
     if(SGXThemeColoursPage::instance == nullptr){SGXThemeColoursPage::initialise();}
@@ -139,15 +145,45 @@ void SGXThemeColoursPage::initialise(){
 }
 
 void SGXThemeColoursPage::setThemeDefaultLight(){
-    
+    SGXThemeColoursPage::coloursToSet[0] = SGXColourRGBA(0, 0, 0);
+    SGXThemeColoursPage::coloursToSet[1] = SGXColourRGBA(64, 0, 50);
+    SGXThemeColoursPage::coloursToSet[2] = SGXColourRGBA(128, 0, 100);
+    SGXThemeColoursPage::coloursToSet[3] = SGXColourRGBA(191, 0, 150);
+    SGXThemeColoursPage::coloursToSet[4] = SGXColourRGBA(255, 0, 200);
+    SGXThemeColoursPage::coloursToSet[5] = SGXColourRGBA(255, 64, 214);
+    SGXThemeColoursPage::coloursToSet[6] = SGXColourRGBA(255, 128, 227);
+    SGXThemeColoursPage::coloursToSet[7] = SGXColourRGBA(255, 191, 241);
+    SGXThemeColoursPage::coloursToSet[8] = SGXColourRGBA(255, 255, 255);
+    SGXThemeColoursPage::includeVesicleInTheme = true;
+    SGXThemeColoursPage::activateConfirmDialog();
 }
 
 void SGXThemeColoursPage::setThemeDefaultDark(){
-    
+    SGXThemeColoursPage::coloursToSet[0] = SGXColourRGBA(255, 255, 255);
+    SGXThemeColoursPage::coloursToSet[1] = SGXColourRGBA(255, 191, 241);
+    SGXThemeColoursPage::coloursToSet[2] = SGXColourRGBA(255, 128, 227);
+    SGXThemeColoursPage::coloursToSet[3] = SGXColourRGBA(255, 64, 214);
+    SGXThemeColoursPage::coloursToSet[4] = SGXColourRGBA(255, 0, 200);
+    SGXThemeColoursPage::coloursToSet[5] = SGXColourRGBA(191, 0, 150);
+    SGXThemeColoursPage::coloursToSet[6] = SGXColourRGBA(128, 0, 100);
+    SGXThemeColoursPage::coloursToSet[7] = SGXColourRGBA(64, 0, 50);
+    SGXThemeColoursPage::coloursToSet[8] = SGXColourRGBA(0, 0, 0);
+    SGXThemeColoursPage::includeVesicleInTheme = true;
+    SGXThemeColoursPage::activateConfirmDialog();
 }
 
 void SGXThemeColoursPage::setThemeForOurNation(){
-    
+    SGXThemeColoursPage::coloursToSet[0] = SGXColourRGBA(0, 0, 0);
+    SGXThemeColoursPage::coloursToSet[1] = SGXColourRGBA(60, 9, 14);
+    SGXThemeColoursPage::coloursToSet[2] = SGXColourRGBA(119, 19, 27);
+    SGXThemeColoursPage::coloursToSet[3] = SGXColourRGBA(179, 28, 41);
+    SGXThemeColoursPage::coloursToSet[4] = SGXColourRGBA(238, 37, 54);
+    SGXThemeColoursPage::coloursToSet[5] = SGXColourRGBA(242, 92, 104);
+    SGXThemeColoursPage::coloursToSet[6] = SGXColourRGBA(247, 146, 155);
+    SGXThemeColoursPage::coloursToSet[7] = SGXColourRGBA(251, 201, 205);
+    SGXThemeColoursPage::coloursToSet[8] = SGXColourRGBA(255, 255, 255);
+    SGXThemeColoursPage::includeVesicleInTheme = true;
+    SGXThemeColoursPage::activateConfirmDialog();
 }
 
 void SGXThemeColoursPage::setThemeCustomLight(){
@@ -199,4 +235,38 @@ void SGXThemeColoursPage::updateThemeCustomAny(){
         col.setTransparency(255);
         (*SGXThemeColoursPage::customAnyColoursDisplay.at(i)).setProperty("color", col.getQColour());
     }
+}
+
+void SGXThemeColoursPage::cancelThemeColourSettings(){
+    (*SGXThemeColoursPage::confirmDialog).setVisible(false);
+}
+
+void SGXThemeColoursPage::confirmThemeColourSettings(){
+    SGUCentralManagement::themeColour0 = SGXThemeColoursPage::coloursToSet[0];
+    SGUCentralManagement::themeColour1 = SGXThemeColoursPage::coloursToSet[1];
+    SGUCentralManagement::themeColour2 = SGXThemeColoursPage::coloursToSet[2];
+    SGUCentralManagement::themeColour3 = SGXThemeColoursPage::coloursToSet[3];
+    SGUCentralManagement::themeColour4 = SGXThemeColoursPage::coloursToSet[4];
+    SGUCentralManagement::themeColour5 = SGXThemeColoursPage::coloursToSet[5];
+    SGUCentralManagement::themeColour6 = SGXThemeColoursPage::coloursToSet[6];
+    SGUCentralManagement::themeColour7 = SGXThemeColoursPage::coloursToSet[7];
+    SGUCentralManagement::themeColour8 = SGXThemeColoursPage::coloursToSet[8];
+    SGXThemeColoursCustomisation::syncThemeColours();
+    if(SGXThemeColoursPage::includeVesicleInTheme == true){
+        SGUCentralManagement::cuteVesiclesMembraneColour = SGUCentralManagement::themeColour4;
+        SGUCentralManagement::cuteVesiclesContentsColour = SGUCentralManagement::themeColour8;
+        SGXVesiclesPropertiesCustomisation::syncVesicleProperties();
+    }
+    (*SGXThemeColoursPage::confirmDialog).setVisible(false);
+}
+
+void SGXThemeColoursPage::activateConfirmDialog(){
+    if(SGXThemeColoursPage::confirmDialog == nullptr){
+        SGXThemeColoursPage::confirmDialog = SGXQuickUIInterface::createWidget(SGXQuickUIInterface::parentWidget, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 6);
+        const QString s = "By pressing \"confirm\" below, you will change the theme to the one that you have selected. You will have to restart the application for the new theme to be applied. Also note that the National Day theme change takes priority over custom themes, so your theme is locked at For Our Nation during the National Day period.";
+        SGXQuickUIInterface::createLongText(SGXThemeColoursPage::confirmDialog, s, 0.5f, -5.0f, 0.5f, -5.0f, 0.0f, 10.0f, 0.0f, 9.0f, 0.0f, 1.0f, 0.0f, 0.5f);
+        SGXQuickUIInterface::createTextButton(SGXThemeColoursPage::confirmDialog, "cancel", &SGXThemeColoursPage::cancelThemeColourSettings, 0.5f, -5.0f, 0.5f, 4.0f, 0.0f, 5.0f, 0.0f, 1.0f);
+        SGXQuickUIInterface::createTextButton(SGXThemeColoursPage::confirmDialog, "confirm", &SGXThemeColoursPage::confirmThemeColourSettings, 0.5f, 0.0f, 0.5f, 4.0f, 0.0f, 5.0f, 0.0f, 1.0f);
+    }
+    (*SGXThemeColoursPage::confirmDialog).setVisible(true);
 }
