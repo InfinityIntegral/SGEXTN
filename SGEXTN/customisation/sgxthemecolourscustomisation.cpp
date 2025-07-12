@@ -8,7 +8,6 @@
 #include <QString>
 
 void SGXThemeColoursCustomisation::loadThemeColours(){
-    /*
     if(SGXTimeStamp::now().isNationalDayPeriod()){
         SGUCentralManagement::themeColour0 = SGXColourRGBA(0, 0, 0);
         SGUCentralManagement::themeColour1 = SGXColourRGBA(60, 9, 14);
@@ -21,7 +20,6 @@ void SGXThemeColoursCustomisation::loadThemeColours(){
         SGUCentralManagement::themeColour8 = SGXColourRGBA(255, 255, 255);
         return;
     }
-*/
     const QString path = SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "themecolours.sg");
     if(SGXFileSystem::fileExists(path) == 1){
         {

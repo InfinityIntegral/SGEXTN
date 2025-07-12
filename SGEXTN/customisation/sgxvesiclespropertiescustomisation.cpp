@@ -29,12 +29,10 @@ void SGXVesiclesPropertiesCustomisation::loadVesicleProperties(){
             SGUCentralManagement::cuteVesiclesFrameRate = fileReader.readFloat();
         }
     }
-    /*
     if(SGXTimeStamp::now().isNationalDayPeriod()){
         SGUCentralManagement::cuteVesiclesMembraneColour = SGXColourRGBA(238, 37, 54);
         SGUCentralManagement::cuteVesiclesContentsColour = SGXColourRGBA(255, 255, 255);
     }
-*/
 }
 
 void SGXVesiclesPropertiesCustomisation::syncVesicleProperties(){

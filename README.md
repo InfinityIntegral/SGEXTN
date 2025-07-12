@@ -1,11 +1,11 @@
-# SGEXTN ("SG" Extension for C++, Qt, and OpenGL)
+# SGEXTN ("SG" Extension for C++ and Qt)
 
 ## About this project
 This is a template application to make building applications in Qt easier. It internally uses Qt Quick but SGEXTN functions are designed for imperative UI, similar to QWidget and different from Qt Quick's declarative UI. There is also a wide variety of primitive structs that allow you to group, store, and use data more easily in addition to file system usage methods.
 
 "SG" refers to Singapore, my home country. It does not reference the Qt Quick scene graph. SGEXTN is designed to let you not worry about the scene graph and instead use it like a customised, GPU-accelerated version of QWidget.
 
-For OpenGL support, you should subclass QQuickItem and use QSGGeometryNode for rendering. Since rendering is a highly customised process, SGEXTN does not simplify it and you are expected to use the Qt Quick API without any SGEXTN layer over it. SGEXTN does not modify scene graph internals (again, "SG" is Singapore, my home country, not the short form for scene graph) and is fully compatible with custom rendering.
+For shader support, you should subclass QQuickItem and use QSGGeometryNode for rendering. Since rendering is a highly customised process, SGEXTN does not simplify it and you are expected to use the Qt Quick API without any SGEXTN layer over it. SGEXTN does not modify scene graph internals (again, "SG" is Singapore, my home country, not the short form for scene graph) and is fully compatible with custom rendering. Note that you should use QSB and not raw OpenGL for maximum cross platform ability.
 
 Documentation is included in the form of comments in header files.
 
@@ -16,7 +16,7 @@ SGU - kind of SGEXTN files, you can edit the values of properties inside if the 
 SGC - I cannot enforce this, but you are supposed to start your custom classes with this prefix  
 SGCRender - I cannot enforce this, but you are strongly encouraged to start custom classes related to custom rendering with this
 
-## Completed Features (available in v2)
+## Completed Features (available in v3)
 - [x] C++ primitives extensions
 	- [x] SGXColourRGBA (RGBA representation of a colour with 8 bits per channel, wraps unsigned int)
 	- [x] SGXColourHSLA (HSLA representation of a colour with 8 bits per channel, contains 4 floats)
@@ -32,6 +32,8 @@ SGCRender - I cannot enforce this, but you are strongly encouraged to start cust
 		- [x] parent widget of application, where everything is rendered
 		- [x] non interactive widget displaying a solid colour
 		- [x] non interactive single line text label, cuts off text if length is exceeded
+		- [x] center aligned text label
+		- [x] right aligned text label
 		- [x] non interactive scrollable multi line text label, allows scrolling if height is exceeded
 		- [x] non interactive icon
 		- [x] button with text
@@ -40,6 +42,7 @@ SGCRender - I cannot enforce this, but you are strongly encouraged to start cust
 		- [x] multi line input field, scrolls vertically if height exceeded
 		- [x] scroll view
 		- [x] touch receiver
+		- [x] colour picker
 		- [x] cute vesicles
 - [x] file system usage
      - [x] SGXFileReader (struct allowing reading of all SGEXTN and C++ primitives from files with index seeking)
@@ -52,11 +55,6 @@ SGCRender - I cannot enforce this, but you are strongly encouraged to start cust
 - [x] customisable theme colours
 - [x] customisable vesicle properties
 - [x] working application template
-
-## Work in progress (planned for v3)
-- [x] colour picker
-- [x] hidden theme colours settings page
-- [ ] hidden vesicle properties settings page
 
 ## planned for SGEXTN v4
 - [ ] SingScript.sg extension

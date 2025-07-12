@@ -36,6 +36,7 @@ public slots:
     static void setVesicleProperties();
     static void activateConfirmDialog();
     static void cancelChange();
+    static void exitPage();
 };
 
 #endif // SGXVESICLEPROPERTIESPAGE_H

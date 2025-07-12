@@ -27,6 +27,7 @@ void SGXThemeColoursPage::activate(){
 void SGXThemeColoursPage::initialise(){
     SGXThemeColoursPage::instance = SGXQuickUIInterface::createScrollView(SGXQuickUIInterface::parentWidget, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 108.0f, 0.0f, 0.5f, 8);
     SGXQuickUIInterface::createTitle(SGXThemeColoursPage::instance, "Theme Colours", 0.0f, 0.5f, 0.0f, 0.5f, 1.0f, -1.0f, 0.0f, 2.0f);
+    SGXQuickUIInterface::createTextButton(SGXThemeColoursPage::instance, "exit", &SGXThemeColoursPage::exitPage, 1.0f, -3.0f, 0.0f, 0.5f, 0.0f, 2.0f, 0.0f, 1.0f);
     SGXQuickUIInterface::createTextButton(SGXThemeColoursPage::instance, "Be the Light", &SGXThemeColoursPage::setThemeDefaultLight, 0.0f, 0.5f, 0.0f, 2.5f, 1.0f, -1.5f, 0.0f, 1.0f);
     QQuickItem* obj = nullptr;
     QString s = "";
@@ -287,6 +288,7 @@ void SGXThemeColoursPage::confirmThemeColourSettings(){
         SGXVesiclesPropertiesCustomisation::syncVesicleProperties();
     }
     (*SGXThemeColoursPage::confirmDialog).setVisible(false);
+    (*SGXThemeColoursPage::instance).setVisible(false);
 }
 
 void SGXThemeColoursPage::activateConfirmDialog(){
@@ -298,4 +300,8 @@ void SGXThemeColoursPage::activateConfirmDialog(){
         SGXQuickUIInterface::createTextButton(SGXThemeColoursPage::confirmDialog, "confirm", &SGXThemeColoursPage::confirmThemeColourSettings, 0.5f, 0.0f, 0.5f, 4.0f, 0.0f, 5.0f, 0.0f, 1.0f);
     }
     (*SGXThemeColoursPage::confirmDialog).setVisible(true);
+}
+
+void SGXThemeColoursPage::exitPage(){
+    (*SGXThemeColoursPage::instance).setVisible(false);
 }

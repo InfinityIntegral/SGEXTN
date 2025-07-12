@@ -39,6 +39,7 @@ public slots:
     static void updateThemeCustomAny();
     static void confirmThemeColourSettings();
     static void cancelThemeColourSettings();
+    static void exitPage();
 };
 
 #endif // SGXTHEMECOLOURSPAGE_H

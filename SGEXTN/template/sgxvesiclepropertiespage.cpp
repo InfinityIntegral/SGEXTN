@@ -33,6 +33,7 @@ void SGXVesiclePropertiesPage::activate(){
 void SGXVesiclePropertiesPage::initialise(){
     SGXVesiclePropertiesPage::instance = SGXQuickUIInterface::createScrollView(SGXQuickUIInterface::parentWidget, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 28.0f, 0.0f, 0.5f, 8);
     SGXQuickUIInterface::createTitle(SGXVesiclePropertiesPage::instance, "Vesicle Properties", 0.0f, 0.5f, 0.0f, 0.5f, 1.0f, -1.5f, 0.0f, 2.0f);
+    SGXQuickUIInterface::createTextButton(SGXVesiclePropertiesPage::instance, "exit", &SGXVesiclePropertiesPage::exitPage, 1.0f, -3.0f, 0.0f, 0.5f, 0.0f, 2.0f, 0.0f, 1.0f);
     SGXQuickUIInterface::createRightText(SGXVesiclePropertiesPage::instance, "membrane colour:", 0.0f, 0.5f, 0.0f, 3.0f, 0.5f, -0.6f, 0.0f, 1.0f);
     SGXVesiclePropertiesPage::membraneColourInput = SGXQuickUIInterface::createColourPicker(SGXVesiclePropertiesPage::instance, 0.5f, 0.1f, 0.0f, 3.0f, 0.0f, 4.0f, 0.0f, 1.0f, SGXColourRGBA(255, 0, 200));
     SGXQuickUIInterface::createRightText(SGXVesiclePropertiesPage::instance, "membrane colour:", 0.0f, 0.5f, 0.0f, 4.5f, 0.5f, -0.6f, 0.0f, 1.0f);
@@ -120,6 +121,7 @@ void SGXVesiclePropertiesPage::setVesicleProperties(){
     if(isOk == true){SGUCentralManagement::cuteVesiclesFrameRate = x;}
     SGXVesiclesPropertiesCustomisation::syncVesicleProperties();
     (*SGXVesiclePropertiesPage::confirmDialog).setVisible(false);
+    (*SGXVesiclePropertiesPage::instance).setVisible(false);
 }
 
 void SGXVesiclePropertiesPage::cancelChange(){
@@ -135,4 +137,8 @@ void SGXVesiclePropertiesPage::activateConfirmDialog(){
         SGXQuickUIInterface::createTextButton(SGXVesiclePropertiesPage::confirmDialog, "confirm", &SGXVesiclePropertiesPage::setVesicleProperties, 0.5f, 0.0f, 0.5f, 4.0f, 0.0f, 5.0f, 0.0f, 1.0f);
     }
     (*SGXVesiclePropertiesPage::confirmDialog).setVisible(true);
+}
+
+void SGXVesiclePropertiesPage::exitPage(){
+    (*SGXVesiclePropertiesPage::instance).setVisible(false);
 }
