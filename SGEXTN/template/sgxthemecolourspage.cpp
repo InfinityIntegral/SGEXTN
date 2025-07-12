@@ -124,7 +124,7 @@ void SGXThemeColoursPage::initialise(){
     s = "Custom Dark is a custom theme allowing the user to choose any main theme colour. The remaining theme colours will be interpolated from the main theme colour, mostly between black and the main theme colour. Note that Shine From Within is equivalent to Custom Dark with the main colour being 05524F pink.";
     SGXQuickUIInterface::createLongText(SGXThemeColoursPage::instance, s, 0.0f, 0.5f, 0.0f, 67.5f, 1.0f, -1.5f, 0.0f, 10.0f, 0.0f, 1.0f, 0.0f, 0.5f);
     SGXThemeColoursPage::updateThemeCustomDark();
-    SGXQuickUIInterface::createTextButton(SGXThemeColoursPage::instance, "Custom Any", &SGXThemeColoursPage::setThemeCustomDark, 0.0f, 0.5f, 0.0f, 78.0f, 1.0f, -1.5f, 0.0f, 1.0f);
+    SGXQuickUIInterface::createTextButton(SGXThemeColoursPage::instance, "Custom Any", &SGXThemeColoursPage::setThemeCustomAny, 0.0f, 0.5f, 0.0f, 78.0f, 1.0f, -1.5f, 0.0f, 1.0f);
     for(int i=0; i<=8; i++){
         SGXQuickUIInterface::createRightText(SGXThemeColoursPage::instance, "theme colour " + QString::number(i) + ":", 0.0f, 0.5f, 0.0f, 79.5f + 1.5f * static_cast<float>(i), 0.5f, -0.6f, 0.0f, 1.0f);
         SGXThemeColoursPage::customAnyColourPicker.at(i) = SGXQuickUIInterface::createColourPicker(SGXThemeColoursPage::instance, 0.5f, 0.1f, 0.0f, 79.5f + 1.5f * static_cast<float>(i), 0.0f, 4.0f, 0.0f, 1.0f, SGXColourRGBA(1.0f, 0.0f, static_cast<float>(i) / 8.0f));
@@ -187,15 +187,44 @@ void SGXThemeColoursPage::setThemeForOurNation(){
 }
 
 void SGXThemeColoursPage::setThemeCustomLight(){
-    
+    bool ignore = false;
+    SGXColourRGBA mainColour = SGXQuickUIInterface::getColourPickerColour(SGXThemeColoursPage::customLightMainColourPicker, ignore);
+    mainColour.setTransparency(255);
+    for(int i=0; i<4; i++){
+        SGXThemeColoursPage::coloursToSet.at(i) = mainColour.linearInterpolate(SGXColourRGBA(0, 0, 0), 0.25f * static_cast<float>(i));
+    }
+    SGXThemeColoursPage::coloursToSet.at(4) = mainColour;
+    for(int i=0; i<4; i++){
+        SGXThemeColoursPage::coloursToSet.at(5 + i) = mainColour.linearInterpolate(SGXColourRGBA(255, 255, 255), 0.25f * static_cast<float>(3 - i));
+    }
+    SGXThemeColoursPage::includeVesicleInTheme = false;
+    SGXThemeColoursPage::activateConfirmDialog();
 }
 
 void SGXThemeColoursPage::setThemeCustomDark(){
-    
+    bool ignore = false;
+    SGXColourRGBA mainColour = SGXQuickUIInterface::getColourPickerColour(SGXThemeColoursPage::customDarkMainColourPicker, ignore);
+    mainColour.setTransparency(255);
+    for(int i=0; i<4; i++){
+        SGXThemeColoursPage::coloursToSet.at(i) = mainColour.linearInterpolate(SGXColourRGBA(255, 255, 255), 0.25f * static_cast<float>(i));
+    }
+    SGXThemeColoursPage::coloursToSet.at(4) = mainColour;
+    for(int i=0; i<4; i++){
+        SGXThemeColoursPage::coloursToSet.at(5 + i) = mainColour.linearInterpolate(SGXColourRGBA(0, 0, 0), 0.25f * static_cast<float>(3 - i));
+    }
+    SGXThemeColoursPage::includeVesicleInTheme = false;
+    SGXThemeColoursPage::activateConfirmDialog();
 }
 
 void SGXThemeColoursPage::setThemeCustomAny(){
-    
+    bool ignore = false;
+    for(int i=0; i<=8; i++){
+        SGXColourRGBA col = SGXQuickUIInterface::getColourPickerColour(SGXThemeColoursPage::customAnyColourPicker.at(i), ignore);
+        col.setTransparency(255);
+        SGXThemeColoursPage::coloursToSet.at(i) = col;
+    }
+    SGXThemeColoursPage::includeVesicleInTheme = false;
+    SGXThemeColoursPage::activateConfirmDialog();
 }
 
 void SGXThemeColoursPage::updateThemeCustomLight(){

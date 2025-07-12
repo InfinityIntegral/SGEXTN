@@ -55,13 +55,8 @@ SGCRender - I cannot enforce this, but you are strongly encouraged to start cust
 
 ## Work in progress (planned for v3)
 - [x] colour picker
-- [ ] hidden theme colours settings page
-	- [x] Default Light theme (pink and white)
-	- [x] Default Dark theme (pink and black)
-	- [x] For Our Nation theme (red and white)
-	- [ ] Custom Light
-	- [ ] Custom Dark
-	- [ ] Custom Any
+- [x] hidden theme colours settings page
+- [ ] hidden vesicle properties settings page
 
 ## planned for SGEXTN v4
 - [ ] SingScript.sg extension
