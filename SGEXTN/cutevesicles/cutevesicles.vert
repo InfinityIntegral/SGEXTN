@@ -28,6 +28,6 @@ layout(location = 1) out float coordY;
 
 void main(){
 	coordX = texcoord.x;
-	coordY = texcoord.y;
+	coordY = texcoord.y * sizeH / sizeW;
 	gl_Position = builtin_matrix * vec4(vertex.x, vertex.y, 0.0, 1.0);
 }
