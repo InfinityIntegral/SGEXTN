@@ -27,10 +27,15 @@ public:
     static QQuickItem* centerTransparencyInput;
     static QQuickItem* edgeTransparencyInput;
     static QQuickItem* frameRateInput;
+    static QQuickItem* confirmDialog;
 signals:
     void doNothing();
 public slots:
     static void activate();
+    static void initialiseInputFields();
+    static void setVesicleProperties();
+    static void activateConfirmDialog();
+    static void cancelChange();
 };
 
 #endif // SGXVESICLEPROPERTIESPAGE_H
