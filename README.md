@@ -57,9 +57,11 @@ SGCRender - I cannot enforce this, but you are strongly encouraged to start cust
 - [x] working application template
 
 ## planned for SGEXTN v4
-- [ ] SingScript.sg extension
-	- [x] SingScript.sg basic
-	- [ ] Singapore flag emoji at code 0378
+- [ ] SingScript.sg extension (progress will be tracked on the SingScript repository and will not be updated here)
+	- [ ] ASCII
+	- [ ] Latin A
+	- [ ] punctuation
+	- [ ] .sg emoji at code 0378
 	- [ ] Greek letters used in Sciences
 	- [ ] subscripts and superscripts
 	- [ ] full subscripts and superscripts using Unicode phonetics range
