@@ -57,30 +57,7 @@ SGCRender - I cannot enforce this, but you are strongly encouraged to start cust
 - [x] working application template
 
 ## planned for SGEXTN v4
-- [ ] SingScript.sg extension (progress will be tracked on the SingScript repository and will not be updated here)
-	- [ ] ASCII
-	- [ ] Latin A
-	- [ ] punctuation
-	- [ ] .sg emoji at code 0378
-	- [ ] Greek letters used in Sciences
-	- [ ] subscripts and superscripts
-	- [ ] full subscripts and superscripts using Unicode phonetics range
-	- [ ] letterlike symbols used in Sciences
-	- [ ] arrows
-	- [ ] math symbols
-	- [ ] miscellaneous technical
-	- [ ] enclosed alphanumerics for OAS
-	- [ ] box drawing for tables
-	- [ ] blocks for pixel art, shading, or tables
-	- [ ] geometric shapes relevant in Sciences
-	- [ ] miscancellous symbols used in Sciences
-	- [ ] dingbats for emojis and Science symbols
-	- [ ] miscellaneous math A
-	- [ ] arrows A
-	- [ ] arrows B
-	- [ ] miscellaneous math B
-	- [ ] supplementary math
-	- [ ] miscellaneous symbols used in Sciences
+- [ ] SingScript.sg extension
 - [ ] specialised input 
 	- [ ] movable widget with system keyboard option
 	- [ ] integer
