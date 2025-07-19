@@ -25,8 +25,8 @@ QSGMaterialType* SGXRenderColourPickerSaturationChoiceMaterial::type() const {
 }
 
 int SGXRenderColourPickerSaturationChoiceMaterial::compare(const QSGMaterial *other) const {
-    const uintptr_t thisType = reinterpret_cast<uintptr_t>((*this).type()); // NOLINT(cppcoreguidelines-pro-type-reinterpret-cast)
-    const uintptr_t otherType = reinterpret_cast<uintptr_t>((*other).type()); // NOLINT(cppcoreguidelines-pro-type-reinterpret-cast)
+    const uintptr_t thisType = reinterpret_cast<uintptr_t>((*this).type());
+    const uintptr_t otherType = reinterpret_cast<uintptr_t>((*other).type());
     if(thisType < otherType){return -1;}
     if(thisType > otherType){return 1;}
     return 0;
