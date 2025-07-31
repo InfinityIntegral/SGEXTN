@@ -7,6 +7,8 @@ This is a template application to make building applications in Qt easier. It in
 
 For shader support, you should subclass QQuickItem and use QSGGeometryNode for rendering. Since rendering is a highly customised process, SGEXTN does not simplify it and you are expected to use the Qt Quick API without any SGEXTN layer over it. SGEXTN does not modify scene graph internals (again, "SG" is Singapore, my home country, not the short form for scene graph) and is fully compatible with custom rendering. Note that you should use QSB and not raw OpenGL for maximum cross platform ability.
 
+Plans to build a SGEXTN custom keyboard have been cancelled as that would violate Apple App Store guidelines. To compensate, I am planning autocorrecting LaTeX commands.
+
 Documentation is included in the form of comments in header files.
 
 File name prefixes:  
@@ -58,24 +60,8 @@ SGCRender - I cannot enforce this, but you are strongly encouraged to start cust
 
 ## planned for SGEXTN v4
 - [x] SingScript.sg extension
-- [ ] specialised input 
-	- [ ] movable widget with system keyboard option
-	- [ ] integer with bounds checking
-	- [ ] decimal with bounds checking
-	- [ ] numerical
-	- [ ] base16
-	- [ ] lowercase letters
-	- [ ] uppercase letters
-	- [ ] letters
-	- [ ] alphanumeric
-	- [ ] ASCII
-	- [ ] text with math and Unicode
-		- [ ] sliding region for Math symbols
-		- [ ] shortcut section to scroll to actual symbols
-		- [ ] special Unicode keyboard
-- [ ] validity checks on input fields while entering text
-	- [ ] bounds checking for float and int
-	- [ ] character type checking
+- [ ] autocorrect of LaTeX commands
+- [x] bounds checking for float and int
 
 ## Credits
 - Qt (https://www.qt.io/)

@@ -236,9 +236,8 @@ void SGXColourPicker::changeTransparencyBySlider(const std::array<SGXTouchEvent,
 
 void SGXColourPicker::changeRed(){
     bool isValid = false;
-    const int r = SGXQuickUIInterface::getInputFieldDataAsInt(SGXColourPicker::redInput, isValid);
+    const int r = SGXQuickUIInterface::getInputFieldDataAsInt(SGXColourPicker::redInput, isValid, 0, 255);
     if(isValid == false){return;}
-    if(r < 0 || r > 255){return;}
     SGXColourPicker::currentColour.setRed(r);
     SGXColourPicker::currentColourHSLA = SGXColourHSLA(SGXColourPicker::currentColour);
     SGXColourPicker::refresh();
@@ -246,9 +245,8 @@ void SGXColourPicker::changeRed(){
 
 void SGXColourPicker::changeGreen(){
     bool isValid = false;
-    const int g = SGXQuickUIInterface::getInputFieldDataAsInt(SGXColourPicker::greenInput, isValid);
+    const int g = SGXQuickUIInterface::getInputFieldDataAsInt(SGXColourPicker::greenInput, isValid, 0, 255);
     if(isValid == false){return;}
-    if(g < 0 || g > 255){return;}
     SGXColourPicker::currentColour.setGreen(g);
     SGXColourPicker::currentColourHSLA = SGXColourHSLA(SGXColourPicker::currentColour);
     SGXColourPicker::refresh();
@@ -256,9 +254,8 @@ void SGXColourPicker::changeGreen(){
 
 void SGXColourPicker::changeBlue(){
     bool isValid = false;
-    const int b = SGXQuickUIInterface::getInputFieldDataAsInt(SGXColourPicker::blueInput, isValid);
+    const int b = SGXQuickUIInterface::getInputFieldDataAsInt(SGXColourPicker::blueInput, isValid, 0, 255);
     if(isValid == false){return;}
-    if(b < 0 || b > 255){return;}
     SGXColourPicker::currentColour.setBlue(b);
     SGXColourPicker::currentColourHSLA = SGXColourHSLA(SGXColourPicker::currentColour);
     SGXColourPicker::refresh();
@@ -266,9 +263,8 @@ void SGXColourPicker::changeBlue(){
 
 void SGXColourPicker::changeTransparency(){
     bool isValid = false;
-    const int a = SGXQuickUIInterface::getInputFieldDataAsInt(SGXColourPicker::transparencyInput, isValid);
+    const int a = SGXQuickUIInterface::getInputFieldDataAsInt(SGXColourPicker::transparencyInput, isValid, 0, 255);
     if(isValid == false){return;}
-    if(a < 0 || a > 255){return;}
     SGXColourPicker::currentColour.setTransparency(a);
     SGXColourPicker::currentColourHSLA = SGXColourHSLA(SGXColourPicker::currentColour);
     SGXColourPicker::refresh();

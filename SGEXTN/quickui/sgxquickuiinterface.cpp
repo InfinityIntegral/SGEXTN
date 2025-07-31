@@ -493,19 +493,21 @@ QString SGXQuickUIInterface::getInputFieldDataAsString(QQuickItem *x, bool &isVa
     return "";
 }
 
-int SGXQuickUIInterface::getInputFieldDataAsInt(QQuickItem *x, bool &isValid){
+int SGXQuickUIInterface::getInputFieldDataAsInt(QQuickItem *x, bool &isValid, int l, int h){
     const QString s = SGXQuickUIInterface::getInputFieldDataAsString(x, isValid);
     if(isValid == false){return 0;}
     const int i = s.toInt(&isValid);
     if(isValid == false){return 0;}
+    if(i < l || i > h){isValid = false;}
     return i;
 }
 
-float SGXQuickUIInterface::getInputFieldDataAsFloat(QQuickItem *x, bool &isValid){
+float SGXQuickUIInterface::getInputFieldDataAsFloat(QQuickItem *x, bool &isValid, float l, float h){
     const QString s = SGXQuickUIInterface::getInputFieldDataAsString(x, isValid);
     if(isValid == false){return 0;}
     const float i = s.toFloat(&isValid);
     if(isValid == false){return 0;}
+    if(i < l || i > h){isValid = false;}
     return i;
 }
 
@@ -594,7 +596,7 @@ bool SGXQuickUIInterface::showPage(QQuickItem *&x, QQuickItem *(*initialisationF
 
 bool SGXQuickUIInterface::hidePage(QQuickItem *&x){
     if(SGXQuickUIInterface::getType(x) != SGXQuickUIInterface::Widget && SGXQuickUIInterface::getType(x) != SGXQuickUIInterface::ScrollView){return false;}
-    bool frequentlyUsed = (*x).property("frequentlyUsed").toBool();
+    const bool frequentlyUsed = (*x).property("frequentlyUsed").toBool();
     if(frequentlyUsed == true){(*x).setVisible(false);}
     else{
         (*x).deleteLater();
