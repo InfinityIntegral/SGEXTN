@@ -114,7 +114,7 @@ QQuickItem* SGXQuickUIInterface::createParentWidget(QQuickItem *parent){
     return thisItem;
 }
 
-QQuickItem* SGXQuickUIInterface::createWidget(QQuickItem *parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, int bg){
+QQuickItem* SGXQuickUIInterface::createWidget(QQuickItem *parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, int bg, bool frequentlyUsed){
     QQuickItem* thisItem = qobject_cast<QQuickItem*>((*SGXQuickUIInterface::widgetTemplate).create());
     SGXQuickUIInterface::setActualParent(thisItem, parent);
     (*thisItem).setProperty("x1", x1);
@@ -127,6 +127,7 @@ QQuickItem* SGXQuickUIInterface::createWidget(QQuickItem *parent, float x1, floa
     (*thisItem).setProperty("h0", h0);
     (*thisItem).setProperty("bg", bg);
     (*thisItem).setProperty("widgetType", SGXQuickUIInterface::Widget);
+    (*thisItem).setProperty("frequentlyUsed", frequentlyUsed);
     return thisItem;
 }
 
@@ -278,7 +279,7 @@ QQuickItem* SGXQuickUIInterface::createLongInputField(QQuickItem *parent, float 
     return thisItem;
 }
 
-QQuickItem* SGXQuickUIInterface::createScrollView(QQuickItem *parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float ih1, float ih0, float s1, float s0, int bg){
+QQuickItem* SGXQuickUIInterface::createScrollView(QQuickItem *parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float ih1, float ih0, float s1, float s0, int bg, bool frequentlyUsed){
     QQuickItem* thisItem = qobject_cast<QQuickItem*>((*SGXQuickUIInterface::scrollViewTemplate).create());
     SGXQuickUIInterface::setActualParent(thisItem, parent);
     (*thisItem).setProperty("x1", x1);
@@ -295,6 +296,7 @@ QQuickItem* SGXQuickUIInterface::createScrollView(QQuickItem *parent, float x1, 
     (*thisItem).setProperty("s0", s0);
     (*thisItem).setProperty("bg", bg);
     (*thisItem).setProperty("widgetType", SGXQuickUIInterface::ScrollView);
+    (*thisItem).setProperty("frequentlyUsed", frequentlyUsed);
     return thisItem;
 }
 
@@ -576,4 +578,32 @@ bool SGXQuickUIInterface::setColourPickerColour(QQuickItem *x, SGXColourRGBA c){
     if(SGXQuickUIInterface::getType(x) != SGXQuickUIInterface::ColourPicker){return false;}
     (*x).setProperty("c", c.getQColour());
     return true;
+}
+
+bool SGXQuickUIInterface::showPage(QQuickItem *&x, QQuickItem *(*initialisationFunction)(), void (*resetFunction)()){
+    if(x == nullptr){x = initialisationFunction();}
+    if(SGXQuickUIInterface::getType(x) != SGXQuickUIInterface::Widget && SGXQuickUIInterface::getType(x) != SGXQuickUIInterface::ScrollView){
+        (*x).deleteLater();
+        x = nullptr;
+        return false;
+    }
+    (*x).setVisible(true);
+    resetFunction();
+    return true;
+}
+
+bool SGXQuickUIInterface::hidePage(QQuickItem *&x){
+    if(SGXQuickUIInterface::getType(x) != SGXQuickUIInterface::Widget && SGXQuickUIInterface::getType(x) != SGXQuickUIInterface::ScrollView){return false;}
+    bool frequentlyUsed = (*x).property("frequentlyUsed").toBool();
+    if(frequentlyUsed == true){(*x).setVisible(false);}
+    else{
+        (*x).deleteLater();
+        x = nullptr;
+    }
+    return true;
+}
+
+
+void SGXQuickUIInterface::doNothing(){
+    
 }

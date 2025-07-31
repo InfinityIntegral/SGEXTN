@@ -13,6 +13,7 @@ Rectangle{
 	property real w0: 0.0
 	property real h1: 0.0
 	property real h0: 0.0
+	property bool frequentlyUsed: false
 	
 	x: x1 * Resizer.renderSpaceWidth + x0 * Resizer.sizeUnit
 	y: y1 * Resizer.renderSpaceHeight + y0 * Resizer.sizeUnit

@@ -25,6 +25,7 @@ ScrollView{
 	property real s1: 0.0
 	property real s0: 0.0
 	property string s: ""
+	property bool frequentlyUsed: false
 	
 	x: x1 * Resizer.renderSpaceWidth + x0 * Resizer.sizeUnit
 	y: y1 * Resizer.renderSpaceHeight + y0 * Resizer.sizeUnit

@@ -66,7 +66,7 @@ public:
     // to change the parent of a SGEXTN widget, you must use SGXQuickUIInterface::setActualParent and not QObject::setParent or QQuickItem::setParentItem, attempting to use non SGEXTN functions to set parent would damage the UI structure
     // use SGXQuickUIInterface::getActiveObject to determine which button is pressed in multiple button with same attached function setups such as file system lists
     static QQmlComponent* widgetTemplate; // QML template for widget
-    static QQuickItem* createWidget(QQuickItem* parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, int bg); // function to create a widget, bg is the theme colour index for its background colour
+    static QQuickItem* createWidget(QQuickItem* parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, int bg, bool frequentlyUsed); // function to create a widget, bg is the theme colour index for its background colour
     static QQmlComponent* textTemplate; // QML template for text widget
     static QQuickItem* createText(QQuickItem* parent, const QString& s, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0); // function to create a text widget, where s is the text to display
     static QQmlComponent* titleTemplate; // QML template for title widget
@@ -86,7 +86,7 @@ public:
     static QQmlComponent* longInputFieldTemplate; // QML template for multi line input field
     static QQuickItem* createLongInputField(QQuickItem* parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float f1, float f0, float s1, float s0); // function to create a multi line input field
     static QQmlComponent* scrollViewTemplate; // QML template for scroll view
-    static QQuickItem* createScrollView(QQuickItem* parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float ih1, float ih0, float s1, float s0, int bg); // function to create a scoll view where bg is the theme colour index of the background colour
+    static QQuickItem* createScrollView(QQuickItem* parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float ih1, float ih0, float s1, float s0, int bg, bool frequentlyUsed); // function to create a scoll view where bg is the theme colour index of the background colour
     static QQmlComponent* touchReceiverTemplate; // QML template for touch receiver
     static QQuickItem* createTouchReceiver(QQuickItem* parent, void (*attachedFunction)(const std::array<SGXTouchEvent, 5>&), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0); // function to create a touch receiver, where attachedFunction is the function run when touch events are detected, the function must be static, return void, and take as input by reference a std::array of 5 SGXTouchEvents
     // note that if a certain touch event slot is not filled, the SGXTouchEvent will have its phase be SGXTouchEvent::TouchEnd
@@ -112,6 +112,9 @@ public:
     static bool setInputFieldDataUsingInt(QQuickItem* x, int s); // set text in input field to string representaion of a int, return true if set successfully and false otherwise
     static bool setInputFieldDataUsingFloat(QQuickItem* x, float s); // set text in input field to string representation of a float, return true if set successfully and false otherwise
     static bool setColourPickerColour(QQuickItem* x, SGXColourRGBA c); // set colour in a colour picker, return true if set successfully and false otherwise
+    static bool showPage(QQuickItem*& x, QQuickItem* (*initialisationFunction)(), void (*resetFunction)()); // shows a UI page, if it does not exist, initialisationFunction creates it and assigns it to x, resetFunction is always run to reset input field values regardless if the page previously exist, if the page does not exist, make sure x is nullptr, x can only hold a pointer to a SGEXTN widget or scrollview
+    static bool hidePage(QQuickItem*& x); // hides a existing UI page, x can only hold a pointer to a SGEXTN widget or scrollview, if the UI page is not marked as frequently used, it will be deleted and x will be set to nullptr
+    static void doNothing(); // do nothing, placeholder for if you do not need any function to run but the SGEXTN method expects a function pointer
 };
 
 #endif // SGXQUICKUIINTERFACE_H
