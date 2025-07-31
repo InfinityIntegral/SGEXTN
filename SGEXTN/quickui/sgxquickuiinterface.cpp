@@ -101,6 +101,7 @@ void SGXQuickUIInterface::buildTemplate(){
 QQuickItem* SGXQuickUIInterface::createRootWidget(QQuickItem *parent){
     QQuickItem* thisItem = qobject_cast<QQuickItem*>((*SGXQuickUIInterface::rootWidgetTemplate).create());
     (*thisItem).setParentItem(parent);
+    (*thisItem).setParent(parent);
     (*thisItem).setProperty("widgetType", SGXQuickUIInterface::RootWidget);
     return thisItem;
 }
@@ -108,6 +109,7 @@ QQuickItem* SGXQuickUIInterface::createRootWidget(QQuickItem *parent){
 QQuickItem* SGXQuickUIInterface::createParentWidget(QQuickItem *parent){
     QQuickItem* thisItem = qobject_cast<QQuickItem*>((*SGXQuickUIInterface::parentWidgetTemplate).create());
     (*thisItem).setParentItem(parent);
+    (*thisItem).setParent(parent);
     (*thisItem).setProperty("widgetType", SGXQuickUIInterface::ParentWidget);
     return thisItem;
 }
@@ -412,6 +414,7 @@ QQuickItem* SGXQuickUIInterface::createTouchReceiver(QQuickItem *parent, void (*
 QQuickItem* SGXQuickUIInterface::createCuteVesicles(QQuickItem *parent){
     QQuickItem* thisItem = qobject_cast<QQuickItem*>((*SGXQuickUIInterface::cuteVesiclesTemplate).create());
     (*thisItem).setParentItem(parent);
+    (*thisItem).setParent(parent);
     (*thisItem).setProperty("widgetType", SGXQuickUIInterface::CuteVesicles);
     return thisItem;
 }
@@ -463,6 +466,7 @@ void SGXQuickUIInterface::setActualParent(QQuickItem *obj, QQuickItem *x){
     // only widgets and scroll views can take children, it simply does not make sense for anything else
     // if you really want to get the overlap effect as if a text has a child widget, place them side by side in a shared parent widget with background set to -1
     (*obj).setParentItem(actualParent);
+    (*obj).setParent(actualParent);
 }
 
 QString SGXQuickUIInterface::getInputFieldDataAsString(QQuickItem *x, bool &isValid){
@@ -512,6 +516,7 @@ QQuickItem* SGXQuickUIInterface::getActiveObject(){
 QQuickItem* SGXQuickUIInterface::createStatusBar(QQuickItem *parent){
     QQuickItem* thisItem = qobject_cast<QQuickItem*>((*SGXQuickUIInterface::statusBarTemplate).create());
     (*thisItem).setParentItem(parent);
+    (*thisItem).setParent(parent);
     (*thisItem).setProperty("widgetType", SGXQuickUIInterface::StatusBar);
     return thisItem;
 }

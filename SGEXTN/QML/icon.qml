@@ -27,6 +27,7 @@ Rectangle{
 		text: s
 		font.pixelSize: parent.height
 		font.family: fontClass
+		horizontalAlignment: Text.AlignHCenter
 		color: ThemeColours.getThemeColour(fg)
 		clip: true
 	}
