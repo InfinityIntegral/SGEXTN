@@ -36,7 +36,7 @@ QQmlComponent* SGXColourPicker::colourBackgroundTemplate = nullptr;
 QQuickItem* SGXColourPicker::colourDisplay = nullptr;
 QQuickItem* SGXColourPicker::hexCodeInput = nullptr;
 
-void SGXColourPicker::initialise(){
+QQuickItem* SGXColourPicker::initialise(){
     SGXColourPicker::hueChoiceTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/SGEXTN/colourpickerrendering/huechoice/huechoice.qml");
     SGXColourPicker::saturationChoiceTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/SGEXTN/colourpickerrendering/saturationchoice/saturationchoice.qml");
     SGXColourPicker::lightnessChoiceTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/SGEXTN/colourpickerrendering/lightnesschoice/lightnesschoice.qml");
@@ -69,16 +69,20 @@ void SGXColourPicker::initialise(){
     SGXColourPicker::hexCodeInput = SGXQuickUIInterface::createInputField(realBg, 0.0f, 3.5f, 0.0f, 9.5f, 0.0f, 5.0f, 0.0f, 1.0f);
     connect(SGXColourPicker::hexCodeInput, &QQuickItem::objectNameChanged, &SGXColourPicker::changeHexCode);
     SGXQuickUIInterface::createTextButton(realBg, "ok", &SGXColourPicker::doneSelection, 0.0f, 9.0f, 0.0f, 9.5f, 0.0f, 2.0f, 0.0f, 1.0f);
+    return SGXColourPicker::instance;
 }
 
-void SGXColourPicker::activate(){
+void SGXColourPicker::reset(){
     SGXColourPicker::targetInput = SGXQuickUIInterface::getActiveObject();
-    if(SGXColourPicker::instance == nullptr){SGXColourPicker::initialise();}
     bool ignore = false;
     SGXColourPicker::currentColour = SGXQuickUIInterface::getColourPickerColour(SGXColourPicker::targetInput, ignore);
     SGXColourPicker::currentColourHSLA = SGXColourHSLA(SGXColourPicker::currentColour);
     (*SGXColourPicker::instance).setVisible(true);
     SGXColourPicker::refresh();
+}
+
+void SGXColourPicker::activate(){
+    SGXQuickUIInterface::showPage(SGXColourPicker::instance, &SGXColourPicker::initialise, &SGXColourPicker::reset);
 }
 
 void SGXColourPicker::refresh(){

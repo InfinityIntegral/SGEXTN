@@ -15,7 +15,8 @@ class SGXColourPicker : public QObject
     Q_OBJECT
 public:
     SGXColourPicker() = delete;
-    static void initialise(); // initialise colour picker by creating necessary components
+    static QQuickItem* initialise(); // creates necessary UI components, returns root of UI tree
+    static void reset(); // initialises colour picker window UI before each use
     static void activate(); // show colour picker when a colour picker widget is pressed
     static QQuickItem* instance; // root to colour picker
     static QQuickItem* targetInput; // currently active colour picker widget
