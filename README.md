@@ -60,7 +60,7 @@ SGCRender - I cannot enforce this, but you are strongly encouraged to start cust
 
 ## planned for SGEXTN v4
 - [x] SingScript.sg extension
-- [ ] autocorrect of LaTeX commands
+- [ ] SingCorrect (autocorrect of LaTeX and similar commands)
 - [x] bounds checking for float and int
 
 ## Credits

@@ -23,6 +23,7 @@
 #include "../colourpickerrendering/lightnesschoice/sgxrendercolourpickerlightnesschoicequickuielement.h"
 #include "../colourpickerrendering/transparencychoice/sgxrendercolourpickertransparencychoicequickuielement.h"
 #include "../colourbackground/sgxrendercolourbackgroundquickuielement.h"
+#include "../SingCorrect/sgxsingcorrectcore.h"
 
 void SGXCentral::initialise(){
     SGXFileSystem::rootFilePath = SGXFileSystem::joinFilePaths(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation), SGUCentralManagement::rootFolderName);
@@ -70,10 +71,14 @@ void SGXCentral::initialise(){
     SGXQuickUIInterface::initialise();
     SGXQuickUIInterface::buildTemplate();
     (*SGXQuickUIInterface::resizerInstance).updateAppWindowSize();
+    
+    SGXSingCorrectCore::initialise();
+    
     SGUCentralManagement::initialise();
 }
 
 void SGXCentral::terminate(){
     SGUCentralManagement::terminate();
+    SGXSingCorrectCore::terminate();
     SGXQuickUIInterface::terminate();
 }
