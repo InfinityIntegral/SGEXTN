@@ -77,7 +77,6 @@ void SGXColourPicker::reset(){
     bool ignore = false;
     SGXColourPicker::currentColour = SGXQuickUIInterface::getColourPickerColour(SGXColourPicker::targetInput, ignore);
     SGXColourPicker::currentColourHSLA = SGXColourHSLA(SGXColourPicker::currentColour);
-    (*SGXColourPicker::instance).setVisible(true);
     SGXColourPicker::refresh();
 }
 
@@ -294,7 +293,7 @@ void SGXColourPicker::changeHexCode(){
 }
 
 void SGXColourPicker::doneSelection(){
-    (*SGXColourPicker::instance).setVisible(false);
+    SGXQuickUIInterface::hidePage(SGXColourPicker::instance);
     (*SGXColourPicker::targetInput).setOpacity(0.0f);
     (*SGXColourPicker::targetInput).setOpacity(1.0f);
     SGXColourPicker::targetInput = nullptr;

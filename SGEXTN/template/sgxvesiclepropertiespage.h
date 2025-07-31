@@ -11,7 +11,8 @@ class SGXVesiclePropertiesPage : public QObject
 public:
     SGXVesiclePropertiesPage() = delete;
     static QQuickItem* instance;
-    static void initialise();
+    static QQuickItem* initialise();
+    static QQuickItem* initialiseConfirmDialog();
     static QQuickItem* membraneColourInput;
     static QQuickItem* contentsColourInput;
     static QQuickItem* membraneThicknessInput;

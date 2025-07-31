@@ -25,12 +25,10 @@ QQuickItem* SGXVesiclePropertiesPage::frameRateInput = nullptr;
 QQuickItem* SGXVesiclePropertiesPage::confirmDialog = nullptr;
 
 void SGXVesiclePropertiesPage::activate(){
-    if(SGXVesiclePropertiesPage::instance == nullptr){SGXVesiclePropertiesPage::initialise();}
-    SGXVesiclePropertiesPage::initialiseInputFields();
-    (*SGXVesiclePropertiesPage::instance).setVisible(true);
+    SGXQuickUIInterface::showPage(SGXVesiclePropertiesPage::instance, &SGXVesiclePropertiesPage::initialise, &SGXVesiclePropertiesPage::initialiseInputFields);
 }
 
-void SGXVesiclePropertiesPage::initialise(){
+QQuickItem* SGXVesiclePropertiesPage::initialise(){
     SGXVesiclePropertiesPage::instance = SGXQuickUIInterface::createScrollView(SGXQuickUIInterface::parentWidget, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 28.0f, 0.0f, 0.5f, 8, false);
     SGXQuickUIInterface::createTitle(SGXVesiclePropertiesPage::instance, "Vesicle Properties", 0.0f, 0.5f, 0.0f, 0.5f, 1.0f, -1.5f, 0.0f, 2.0f);
     SGXQuickUIInterface::createTextButton(SGXVesiclePropertiesPage::instance, "exit", &SGXVesiclePropertiesPage::exitPage, 1.0f, -3.0f, 0.0f, 0.5f, 0.0f, 2.0f, 0.0f, 1.0f);
@@ -65,6 +63,7 @@ void SGXVesiclePropertiesPage::initialise(){
     SGXQuickUIInterface::createRightText(SGXVesiclePropertiesPage::instance, "frame rate:", 0.0f, 0.5f, 0.0f, 24.0f, 0.5f, -0.6f, 0.0f, 1.0f);
     SGXVesiclePropertiesPage::frameRateInput =  SGXQuickUIInterface::createInputField(SGXVesiclePropertiesPage::instance, 0.5f, 0.1f, 0.0f, 24.0f, 0.0f, 4.0f, 0.0f, 1.0f);
     SGXQuickUIInterface::createTextButton(SGXVesiclePropertiesPage::instance, "update", &SGXVesiclePropertiesPage::activateConfirmDialog, 0.5f, -2.5f, 0.0f, 25.5f, 0.0f, 5.0f, 0.0f, 1.0f);
+    return SGXVesiclePropertiesPage::instance;
 }
 
 void SGXVesiclePropertiesPage::initialiseInputFields(){
@@ -120,25 +119,27 @@ void SGXVesiclePropertiesPage::setVesicleProperties(){
     x = SGXQuickUIInterface::getInputFieldDataAsFloat(SGXVesiclePropertiesPage::frameRateInput, isOk);
     if(isOk == true){SGUCentralManagement::cuteVesiclesFrameRate = x;}
     SGXVesiclesPropertiesCustomisation::syncVesicleProperties();
-    (*SGXVesiclePropertiesPage::confirmDialog).setVisible(false);
-    (*SGXVesiclePropertiesPage::instance).setVisible(false);
+    SGXQuickUIInterface::hidePage(SGXVesiclePropertiesPage::confirmDialog);
+    SGXQuickUIInterface::hidePage(SGXVesiclePropertiesPage::instance);
 }
 
 void SGXVesiclePropertiesPage::cancelChange(){
-    (*SGXVesiclePropertiesPage::confirmDialog).setVisible(false);
+    SGXQuickUIInterface::hidePage(SGXVesiclePropertiesPage::confirmDialog);
+}
+
+QQuickItem* SGXVesiclePropertiesPage::initialiseConfirmDialog(){
+    SGXVesiclePropertiesPage::confirmDialog =  SGXQuickUIInterface::createWidget(SGXQuickUIInterface::parentWidget, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 6, false);
+    const QString s = "By pressing \"confirm\" below, you will change the vesicle properties to match what you have selected. You will have to restart the application for them to be applied. Also note that the National Day theme change takes priority over custom themes, so vesicle colours is locked at red and white during the National Day period, because vesicles need to wear red and white to celebrate too. Usually, vesicle properties take priority over theme colours, so you can use a builtin theme with different colours for vesicle membrane or contents.";
+    SGXQuickUIInterface::createLongText(SGXVesiclePropertiesPage::confirmDialog, s, 0.5f, -5.0f, 0.5f, -5.0f, 0.0f, 10.0f, 0.0f, 9.0f, 0.0f, 1.0f, 0.0f, 0.5f);
+    SGXQuickUIInterface::createTextButton(SGXVesiclePropertiesPage::confirmDialog, "cancel", &SGXVesiclePropertiesPage::cancelChange, 0.5f, -5.0f, 0.5f, 4.0f, 0.0f, 5.0f, 0.0f, 1.0f);
+    SGXQuickUIInterface::createTextButton(SGXVesiclePropertiesPage::confirmDialog, "confirm", &SGXVesiclePropertiesPage::setVesicleProperties, 0.5f, 0.0f, 0.5f, 4.0f, 0.0f, 5.0f, 0.0f, 1.0f);
+    return SGXVesiclePropertiesPage::confirmDialog;
 }
 
 void SGXVesiclePropertiesPage::activateConfirmDialog(){
-    if(SGXVesiclePropertiesPage::confirmDialog == nullptr){
-        SGXVesiclePropertiesPage::confirmDialog =  SGXQuickUIInterface::createWidget(SGXQuickUIInterface::parentWidget, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 6, false);
-        const QString s = "By pressing \"confirm\" below, you will change the vesicle properties to match what you have selected. You will have to restart the application for them to be applied. Also note that the National Day theme change takes priority over custom themes, so vesicle colours is locked at red and white during the National Day period, because vesicles need to wear red and white to celebrate too. Usually, vesicle properties take priority over theme colours, so you can use a builtin theme with different colours for vesicle membrane or contents.";
-        SGXQuickUIInterface::createLongText(SGXVesiclePropertiesPage::confirmDialog, s, 0.5f, -5.0f, 0.5f, -5.0f, 0.0f, 10.0f, 0.0f, 9.0f, 0.0f, 1.0f, 0.0f, 0.5f);
-        SGXQuickUIInterface::createTextButton(SGXVesiclePropertiesPage::confirmDialog, "cancel", &SGXVesiclePropertiesPage::cancelChange, 0.5f, -5.0f, 0.5f, 4.0f, 0.0f, 5.0f, 0.0f, 1.0f);
-        SGXQuickUIInterface::createTextButton(SGXVesiclePropertiesPage::confirmDialog, "confirm", &SGXVesiclePropertiesPage::setVesicleProperties, 0.5f, 0.0f, 0.5f, 4.0f, 0.0f, 5.0f, 0.0f, 1.0f);
-    }
-    (*SGXVesiclePropertiesPage::confirmDialog).setVisible(true);
+    SGXQuickUIInterface::showPage(SGXVesiclePropertiesPage::confirmDialog, &SGXVesiclePropertiesPage::initialiseConfirmDialog, &SGXQuickUIInterface::doNothing);
 }
 
 void SGXVesiclePropertiesPage::exitPage(){
-    (*SGXVesiclePropertiesPage::instance).setVisible(false);
+    SGXQuickUIInterface::hidePage(SGXVesiclePropertiesPage::instance);
 }

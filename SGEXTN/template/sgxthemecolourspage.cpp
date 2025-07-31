@@ -20,11 +20,10 @@ QQuickItem* SGXThemeColoursPage::confirmDialog = nullptr;
 bool SGXThemeColoursPage::includeVesicleInTheme = false;
 
 void SGXThemeColoursPage::activate(){
-    if(SGXThemeColoursPage::instance == nullptr){SGXThemeColoursPage::initialise();}
-    (*SGXThemeColoursPage::instance).setVisible(true);
+    SGXQuickUIInterface::showPage(SGXThemeColoursPage::instance, &SGXThemeColoursPage::initialise, &SGXQuickUIInterface::doNothing);
 }
 
-void SGXThemeColoursPage::initialise(){
+QQuickItem* SGXThemeColoursPage::initialise(){
     SGXThemeColoursPage::instance = SGXQuickUIInterface::createScrollView(SGXQuickUIInterface::parentWidget, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 108.0f, 0.0f, 0.5f, 8, false);
     SGXQuickUIInterface::createTitle(SGXThemeColoursPage::instance, "Theme Colours", 0.0f, 0.5f, 0.0f, 0.5f, 1.0f, -1.0f, 0.0f, 2.0f);
     SGXQuickUIInterface::createTextButton(SGXThemeColoursPage::instance, "exit", &SGXThemeColoursPage::exitPage, 1.0f, -3.0f, 0.0f, 0.5f, 0.0f, 2.0f, 0.0f, 1.0f);
@@ -143,6 +142,7 @@ void SGXThemeColoursPage::initialise(){
     s = "Custom Any gives the user full control over all theme colours by allowing all 9 theme colours to be set directly.";
     SGXQuickUIInterface::createLongText(SGXThemeColoursPage::instance, s, 0.0f, 0.5f, 0.0f, 95.5f, 1.0f, -1.5f, 0.0f, 10.0f, 0.0f, 1.0f, 0.0f, 0.5f);
     SGXThemeColoursPage::updateThemeCustomAny();
+    return SGXThemeColoursPage::instance;
 }
 
 void SGXThemeColoursPage::setThemeDefaultLight(){
@@ -268,7 +268,7 @@ void SGXThemeColoursPage::updateThemeCustomAny(){
 }
 
 void SGXThemeColoursPage::cancelThemeColourSettings(){
-    (*SGXThemeColoursPage::confirmDialog).setVisible(false);
+    SGXQuickUIInterface::hidePage(SGXThemeColoursPage::confirmDialog);
 }
 
 void SGXThemeColoursPage::confirmThemeColourSettings(){
@@ -287,21 +287,23 @@ void SGXThemeColoursPage::confirmThemeColourSettings(){
         SGUCentralManagement::cuteVesiclesContentsColour = SGUCentralManagement::themeColour8;
         SGXVesiclesPropertiesCustomisation::syncVesicleProperties();
     }
-    (*SGXThemeColoursPage::confirmDialog).setVisible(false);
-    (*SGXThemeColoursPage::instance).setVisible(false);
+    SGXQuickUIInterface::hidePage(SGXThemeColoursPage::confirmDialog);
+    SGXQuickUIInterface::hidePage(SGXThemeColoursPage::instance);
+}
+
+QQuickItem* SGXThemeColoursPage::initialiseConfirmDialog(){
+    SGXThemeColoursPage::confirmDialog = SGXQuickUIInterface::createWidget(SGXQuickUIInterface::parentWidget, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 6, false);
+    const QString s = "By pressing \"confirm\" below, you will change the theme to the one that you have selected. You will have to restart the application for the new theme to be applied. Also note that the National Day theme change takes priority over custom themes, so your theme is locked at For Our Nation during the National Day period.";
+    SGXQuickUIInterface::createLongText(SGXThemeColoursPage::confirmDialog, s, 0.5f, -5.0f, 0.5f, -5.0f, 0.0f, 10.0f, 0.0f, 9.0f, 0.0f, 1.0f, 0.0f, 0.5f);
+    SGXQuickUIInterface::createTextButton(SGXThemeColoursPage::confirmDialog, "cancel", &SGXThemeColoursPage::cancelThemeColourSettings, 0.5f, -5.0f, 0.5f, 4.0f, 0.0f, 5.0f, 0.0f, 1.0f);
+    SGXQuickUIInterface::createTextButton(SGXThemeColoursPage::confirmDialog, "confirm", &SGXThemeColoursPage::confirmThemeColourSettings, 0.5f, 0.0f, 0.5f, 4.0f, 0.0f, 5.0f, 0.0f, 1.0f);
+    return SGXThemeColoursPage::confirmDialog;
 }
 
 void SGXThemeColoursPage::activateConfirmDialog(){
-    if(SGXThemeColoursPage::confirmDialog == nullptr){
-        SGXThemeColoursPage::confirmDialog = SGXQuickUIInterface::createWidget(SGXQuickUIInterface::parentWidget, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 6, false);
-        const QString s = "By pressing \"confirm\" below, you will change the theme to the one that you have selected. You will have to restart the application for the new theme to be applied. Also note that the National Day theme change takes priority over custom themes, so your theme is locked at For Our Nation during the National Day period.";
-        SGXQuickUIInterface::createLongText(SGXThemeColoursPage::confirmDialog, s, 0.5f, -5.0f, 0.5f, -5.0f, 0.0f, 10.0f, 0.0f, 9.0f, 0.0f, 1.0f, 0.0f, 0.5f);
-        SGXQuickUIInterface::createTextButton(SGXThemeColoursPage::confirmDialog, "cancel", &SGXThemeColoursPage::cancelThemeColourSettings, 0.5f, -5.0f, 0.5f, 4.0f, 0.0f, 5.0f, 0.0f, 1.0f);
-        SGXQuickUIInterface::createTextButton(SGXThemeColoursPage::confirmDialog, "confirm", &SGXThemeColoursPage::confirmThemeColourSettings, 0.5f, 0.0f, 0.5f, 4.0f, 0.0f, 5.0f, 0.0f, 1.0f);
-    }
-    (*SGXThemeColoursPage::confirmDialog).setVisible(true);
+    SGXQuickUIInterface::showPage(SGXThemeColoursPage::confirmDialog, &SGXThemeColoursPage::initialiseConfirmDialog, &SGXQuickUIInterface::doNothing);
 }
 
 void SGXThemeColoursPage::exitPage(){
-    (*SGXThemeColoursPage::instance).setVisible(false);
+    SGXQuickUIInterface::hidePage(SGXThemeColoursPage::instance);
 }

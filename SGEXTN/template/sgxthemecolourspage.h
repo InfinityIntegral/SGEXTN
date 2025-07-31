@@ -13,7 +13,7 @@ class SGXThemeColoursPage : public QObject
 public:
     SGXThemeColoursPage() = delete;
     static QQuickItem* instance;
-    static void initialise();
+    static QQuickItem* initialise();
     static std::array<QQuickItem*, 9> customLightColoursDisplay;
     static QQuickItem* customLightMainColourPicker;
     static std::array<QQuickItem*, 9> customDarkColoursDisplay;
@@ -23,6 +23,7 @@ public:
     static std::array<SGXColourRGBA, 9> coloursToSet;
     static QQuickItem* confirmDialog;
     static bool includeVesicleInTheme;
+    static QQuickItem* initialiseConfirmDialog();
     static void activateConfirmDialog();
 signals:
     void doNothing();

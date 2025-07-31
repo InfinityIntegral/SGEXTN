@@ -43,10 +43,14 @@ float SGUCentralManagement::cuteVesiclesCenterTransparency = 0.1f;
 float SGUCentralManagement::cuteVesiclesEdgeTransparency = 0.05f;
 float SGUCentralManagement::cuteVesiclesMembraneTransparency = 0.2f;
 float SGUCentralManagement::cuteVesiclesFrameRate = 10.0f;
-
+#include "../quickui/sgxquickuiinterface.h"
+#include "../template/sgxthemecolourspage.h"
+#include "../template/sgxvesiclepropertiespage.h"
 // this is run immediately after GUI is created, use it to initialise the UI
 void SGUCentralManagement::initialise(){
-    
+    SGXQuickUIInterface::createColourPicker(SGXQuickUIInterface::parentWidget, 0.0f, 0.5f, 0.0f, 0.5f, 0.0f, 4.0f, 0.0f, 1.0f, SGXColourRGBA(255, 0, 200));
+    SGXQuickUIInterface::createTextButton(SGXQuickUIInterface::parentWidget, "theme", &SGXThemeColoursPage::activate, 0.0f, 0.5f, 0.0f, 2.0f, 0.0f, 5.0f, 0.0f, 1.0f);
+    SGXQuickUIInterface::createTextButton(SGXQuickUIInterface::parentWidget, "vesicle", &SGXVesiclePropertiesPage::activate, 0.0f, 0.5f, 0.0f, 3.5f, 0.0f, 5.0f, 0.0f, 1.0f);
 }
 
 // this is run after the application is created but before the GUI, use it to edit theme colours from configuration files
