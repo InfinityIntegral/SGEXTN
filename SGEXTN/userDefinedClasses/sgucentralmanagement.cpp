@@ -5,6 +5,7 @@
 // pls update README and license
 // also change the application name in the .pro
 // do not forget to replace the icons font file and app icon in assets.qrc based on the app, do not change their file paths though
+// the icons font file can be of any type (otf, ttf, etc) that Qt support, but its name must be AppIcons.sg and the internal font family name must be AppIcons.sg
 
 // name of your application
 QString SGUCentralManagement::applicationName = "SGEXTN";

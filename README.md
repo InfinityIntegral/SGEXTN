@@ -57,7 +57,7 @@ SGCRender - I cannot enforce this, but you are strongly encouraged to start cust
 - [x] working application template
 
 ## planned for SGEXTN v4
-- [ ] SingScript.sg extension
+- [x] SingScript.sg extension
 - [ ] specialised input 
 	- [ ] movable widget with system keyboard option
 	- [ ] integer with bounds checking

@@ -5,7 +5,7 @@ import Resizer 0.0
 
 Button{
 	property int widgetType: 0
-	property string fontClass: "SingScript.sg"
+	property string fontClass: "AppIcons.sg"
 	property int bg: 4
 	property int fg: 8
 	property int bgHover: 3

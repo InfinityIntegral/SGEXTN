@@ -25,7 +25,7 @@ QDateTime SGXTimeStamp::getQDateTime() const {
 }
 
 QString SGXTimeStamp::getString() const {
-    return ("SG" + getQDateTime().addYears(-1965).toString("yy MMdd hhmmss").replace("-1", "0"));
+    return ("SG" + getQDateTime().addYears(-1965).toString("yy MMdd hhmmss"));
 }
 
 QString SGXTimeStamp::getStringNoOffset() const {

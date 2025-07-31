@@ -59,8 +59,8 @@ void SGXCentral::initialise(){
     SGXCuteVesicles::framesPerSecond = SGUCentralManagement::cuteVesiclesFrameRate;
     
     connect(qApp, &QGuiApplication::aboutToQuit, &SGXCentral::terminate); // NOLINT(cppcoreguidelines-pro-type-static-cast-downcast)
-    QFontDatabase::addApplicationFont(":/SGEXTN/assets/standard.otf");
-    QFontDatabase::addApplicationFont(":/SGEXTN/assets/icons.otf");
+    QFontDatabase::addApplicationFont(":/SGEXTN/assets/SingScript.sg");
+    QFontDatabase::addApplicationFont(":/SGEXTN/assets/AppIcons.sg");
     SGUCentralManagement::initialiseExtraFonts();
     
     SGXQuickUIInterface::applicationWindow = qobject_cast<QQuickWindow*>((*SGXQuickUIInterface::e).rootObjects().first());

@@ -4,7 +4,7 @@ import Resizer 0.0
 
 Rectangle{
 	property int widgetType: 0
-	property string fontClass: "SingScript.sg"
+	property string fontClass: "AppIcons.sg"
 	property int bg: 8
 	property int fg: 4
 	property real x1: 0.0

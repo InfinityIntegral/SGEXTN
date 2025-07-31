@@ -1,8 +1,6 @@
 <RCC>
     <qresource prefix="/SGEXTN">
         <file>assets/appicon.png</file>
-        <file>assets/standard.otf</file>
-        <file>assets/icons.otf</file>
         <file>QML/root.qml</file>
         <file>QML/rootwidget.qml</file>
         <file>QML/parentwidget.qml</file>
@@ -40,5 +38,7 @@
         <file>colourpickerrendering/transparencychoice/transparencychoice.frag.qsb</file>
         <file>QML/title.qml</file>
         <file>QML/righttext.qml</file>
+        <file>assets/AppIcons.sg</file>
+        <file>assets/SingScript.sg</file>
     </qresource>
 </RCC>
