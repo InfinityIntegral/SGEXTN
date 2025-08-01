@@ -7,6 +7,7 @@
 #include "../customisation/sgxthemecolourscustomisation.h"
 #include "../customisation/sgxvesiclespropertiescustomisation.h"
 #include "../userDefinedClasses/sgucentralmanagement.h"
+#include "sgxstatusbar.h"
 
 QQuickItem* SGXThemeColoursPage::instance = nullptr;
 std::array<QQuickItem*, 9> SGXThemeColoursPage::customLightColoursDisplay = {};
@@ -287,6 +288,7 @@ void SGXThemeColoursPage::confirmThemeColourSettings(){
         SGUCentralManagement::cuteVesiclesContentsColour = SGUCentralManagement::themeColour8;
         SGXVesiclesPropertiesCustomisation::syncVesicleProperties();
     }
+    SGXStatusBar::notify("theme colours updated", 5);
     SGXQuickUIInterface::hidePage(SGXThemeColoursPage::confirmDialog);
     SGXQuickUIInterface::hidePage(SGXThemeColoursPage::instance);
 }
