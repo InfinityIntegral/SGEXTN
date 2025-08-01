@@ -37,7 +37,12 @@ TextField{
 	padding: 0
 	
 	function emitClickedSignal(){
-		text = SingCorrect.correct(text);
+		let pos = cursorPosition;
+		let newText = SingCorrect.correct(text);
+		pos = pos + newText.length - text.length;
+		pos = Math.max(0, pos);
+		text = newText;
+		cursorPosition = Math.min(pos, text.length);
 		if(noSendSignal == false && objectName == "0"){objectName = "1";}
 		else if(noSendSignal == false){objectName = "0";}
 	}

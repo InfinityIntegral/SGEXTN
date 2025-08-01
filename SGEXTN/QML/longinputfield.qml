@@ -108,7 +108,10 @@ ScrollView{
 			
 			function autocorrect(){
 				let pos = cursorPosition;
-				text = SingCorrect.correct(text);
+				let newText = SingCorrect.correct(text);
+				pos = pos + newText.length - text.length;
+				pos = Math.max(0, pos);
+				text = newText;
 				cursorPosition = Math.min(pos, text.length);
 			}
 			onTextChanged: {autocorrect(); emitClickedSignal();}
