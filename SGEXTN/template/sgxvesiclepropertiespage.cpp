@@ -5,6 +5,7 @@
 #include "../userDefinedClasses/sgucentralmanagement.h"
 #include "../customisation/sgxvesiclespropertiescustomisation.h"
 #include <QString>
+#include "sgxstatusbar.h"
 
 QQuickItem* SGXVesiclePropertiesPage::instance = nullptr;
 QQuickItem* SGXVesiclePropertiesPage::membraneColourInput = nullptr;
@@ -119,6 +120,7 @@ void SGXVesiclePropertiesPage::setVesicleProperties(){
     x = SGXQuickUIInterface::getInputFieldDataAsFloat(SGXVesiclePropertiesPage::frameRateInput, isOk);
     if(isOk == true){SGUCentralManagement::cuteVesiclesFrameRate = x;}
     SGXVesiclesPropertiesCustomisation::syncVesicleProperties();
+    SGXStatusBar::notify("vesicle properties updated", 5);
     SGXQuickUIInterface::hidePage(SGXVesiclePropertiesPage::confirmDialog);
     SGXQuickUIInterface::hidePage(SGXVesiclePropertiesPage::instance);
 }

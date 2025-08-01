@@ -46,7 +46,9 @@ QString SGXSingCorrectCore::correct(const QString &s){
 
 void SGXSingCorrectCore::initialise(){
     SGXSingCorrectCore::database = new QHash<QString, QChar>();
+    
     (*SGXSingCorrectCore::database).insert("SGhome", QChar(0x0378));
+    
     (*SGXSingCorrectCore::database).insert("lparen", QChar(0x0028));
     (*SGXSingCorrectCore::database).insert("rparen", QChar(0x0029));
     (*SGXSingCorrectCore::database).insert("lbrack", QChar(0x005B));
@@ -84,6 +86,7 @@ void SGXSingCorrectCore::initialise(){
     (*SGXSingCorrectCore::database).insert("Downarrow", QChar(0x21D3));
     (*SGXSingCorrectCore::database).insert("Updownarrow", QChar(0x21D5));
     (*SGXSingCorrectCore::database).insert("backslash", QChar(0x005C));
+    
     (*SGXSingCorrectCore::database).insert("Alpha", QChar(0x0391));
     (*SGXSingCorrectCore::database).insert("Beta", QChar(0x0392));
     (*SGXSingCorrectCore::database).insert("Gamma", QChar(0x0393));
@@ -132,6 +135,7 @@ void SGXSingCorrectCore::initialise(){
     (*SGXSingCorrectCore::database).insert("chi", QChar(0x03C7));
     (*SGXSingCorrectCore::database).insert("psi", QChar(0x03C8));
     (*SGXSingCorrectCore::database).insert("omega", QChar(0x03C9));
+    
     (*SGXSingCorrectCore::database).insert("aleph", QChar(0x2135));
     (*SGXSingCorrectCore::database).insert("alef", QChar(0x2135));
     (*SGXSingCorrectCore::database).insert("alefsym", QChar(0x2135));
@@ -159,6 +163,7 @@ void SGXSingCorrectCore::initialise(){
     (*SGXSingCorrectCore::database).insert("Z", QChar(0x2124));
     (*SGXSingCorrectCore::database).insert("o", QChar(0x2205));
     (*SGXSingCorrectCore::database).insert("O", QChar(0x2205));
+    
     (*SGXSingCorrectCore::database).insert("forall", QChar(0x2200));
     (*SGXSingCorrectCore::database).insert("exists", QChar(0x2203));
     (*SGXSingCorrectCore::database).insert("exist", QChar(0x2203));
@@ -188,6 +193,7 @@ void SGXSingCorrectCore::initialise(){
     (*SGXSingCorrectCore::database).insert("iff", QChar(0x21D4));
     (*SGXSingCorrectCore::database).insert("neg", QChar(0x00AC));
     (*SGXSingCorrectCore::database).insert("lnot", QChar(0x00AC));
+    
     (*SGXSingCorrectCore::database).insert("sum", QChar(0x2211));
     (*SGXSingCorrectCore::database).insert("int", QChar(0x222B));
     (*SGXSingCorrectCore::database).insert("iint", QChar(0x222C));
@@ -208,6 +214,7 @@ void SGXSingCorrectCore::initialise(){
     (*SGXSingCorrectCore::database).insert("bigcap", QChar(0x22C2));
     (*SGXSingCorrectCore::database).insert("bigcup", QChar(0x22C3));
     (*SGXSingCorrectCore::database).insert("bigsqcup", QChar(0x2294));
+    
     (*SGXSingCorrectCore::database).insert("plus", QChar(0x002B));
     (*SGXSingCorrectCore::database).insert("minus", QChar(0x002D));
     (*SGXSingCorrectCore::database).insert("slash", QChar(0x002F));
@@ -277,6 +284,7 @@ void SGXSingCorrectCore::initialise(){
     (*SGXSingCorrectCore::database).insert("squareroot", QChar(0x221A));
     (*SGXSingCorrectCore::database).insert("cuberoot", QChar(0x221B));
     (*SGXSingCorrectCore::database).insert("fourthroot", QChar(0x221C));
+    
     (*SGXSingCorrectCore::database).insert("equals", QChar(0x003D));
     (*SGXSingCorrectCore::database).insert("less", QChar(0x003C));
     (*SGXSingCorrectCore::database).insert("lessthan", QChar(0x003C));
@@ -400,6 +408,7 @@ void SGXSingCorrectCore::initialise(){
     (*SGXSingCorrectCore::database).insert("vDash", QChar(0x22A8));
     (*SGXSingCorrectCore::database).insert("Vdash", QChar(0x22A9));
     (*SGXSingCorrectCore::database).insert("Vvdash", QChar(0x22AA));
+    
     (*SGXSingCorrectCore::database).insert("notequals", QChar(0x2260));
     (*SGXSingCorrectCore::database).insert("gneqq", QChar(0x2269));
     (*SGXSingCorrectCore::database).insert("gnsim", QChar(0x22E7));
@@ -443,6 +452,7 @@ void SGXSingCorrectCore::initialise(){
     (*SGXSingCorrectCore::database).insert("supsetneq", QChar(0x228B));
     (*SGXSingCorrectCore::database).insert("varsubsetneq", QChar(0x228A));
     (*SGXSingCorrectCore::database).insert("varsupsetneq", QChar(0x228B));
+    
     (*SGXSingCorrectCore::database).insert("circlearrowleft", QChar(0x21BA));
     (*SGXSingCorrectCore::database).insert("circlearrowright", QChar(0x21BB));
     (*SGXSingCorrectCore::database).insert("curvearrowleft", QChar(0x21B6));
@@ -519,6 +529,7 @@ void SGXSingCorrectCore::initialise(){
     (*SGXSingCorrectCore::database).insert("Updownarrow", QChar(0x21D5));
     (*SGXSingCorrectCore::database).insert("upharpoonleft", QChar(0x21BF));
     (*SGXSingCorrectCore::database).insert("upharpoonright", QChar(0x21BE));
+    
     (*SGXSingCorrectCore::database).insert("percent", QChar(0x0025));
     (*SGXSingCorrectCore::database).insert("hashtag", QChar(0x0023));
     (*SGXSingCorrectCore::database).insert("andsign", QChar(0x0026));
@@ -629,6 +640,7 @@ void SGXSingCorrectCore::initialise(){
     (*SGXSingCorrectCore::database).insert("diagdown", QChar(0x27CD));
     (*SGXSingCorrectCore::database).insert("diagup", QChar(0x27CB));
     (*SGXSingCorrectCore::database).insert("heart", QChar(0x2665));
+    
     (*SGXSingCorrectCore::database).insert("SGsupzero", QChar(0x2070));
     (*SGXSingCorrectCore::database).insert("SGsupone", QChar(0x00B9));
     (*SGXSingCorrectCore::database).insert("SGsuptwo", QChar(0x00B2));
@@ -696,6 +708,7 @@ void SGXSingCorrectCore::initialise(){
     (*SGXSingCorrectCore::database).insert("SGsupx", QChar(0x3237));
     (*SGXSingCorrectCore::database).insert("SGsupy", QChar(0x3238));
     (*SGXSingCorrectCore::database).insert("SGsupz", QChar(0x3239));
+    
     (*SGXSingCorrectCore::database).insert("SGsubzero", QChar(0x2080));
     (*SGXSingCorrectCore::database).insert("SGsubone", QChar(0x2081));
     (*SGXSingCorrectCore::database).insert("SGsubtwo", QChar(0x2082));
@@ -763,6 +776,7 @@ void SGXSingCorrectCore::initialise(){
     (*SGXSingCorrectCore::database).insert("SGsubx", QChar(0x3277));
     (*SGXSingCorrectCore::database).insert("SGsuby", QChar(0x3278));
     (*SGXSingCorrectCore::database).insert("SGsubz", QChar(0x3279));
+    
     (*SGXSingCorrectCore::database).insert("SGemojiblank", QChar(0x2610));
     (*SGXSingCorrectCore::database).insert("SGemojicorrect", QChar(0x2611));
     (*SGXSingCorrectCore::database).insert("SGemojiwrong", QChar(0x2612));
@@ -809,6 +823,7 @@ void SGXSingCorrectCore::initialise(){
     (*SGXSingCorrectCore::database).insert("SGemojimark", QChar(0x0378));
     (*SGXSingCorrectCore::database).insert("SGemojiSingaporemark", QChar(0x0378));
     (*SGXSingCorrectCore::database).insert("SGemojiSGmark", QChar(0x0378));
+    
     (*SGXSingCorrectCore::database).insert("SGmathbbC", QChar(0x2102));
     (*SGXSingCorrectCore::database).insert("SGmathbbH", QChar(0x210D));
     (*SGXSingCorrectCore::database).insert("SGmathbbN", QChar(0x2115));
@@ -833,6 +848,7 @@ void SGXSingCorrectCore::initialise(){
     (*SGXSingCorrectCore::database).insert("SGbubblee", QChar(0x2147));
     (*SGXSingCorrectCore::database).insert("SGbubblei", QChar(0x2148));
     (*SGXSingCorrectCore::database).insert("SGbubblej", QChar(0x2149));
+    
     (*SGXSingCorrectCore::database).insert("SGscriptg", QChar(0x210A));
     (*SGXSingCorrectCore::database).insert("SGscriptH", QChar(0x210B));
     (*SGXSingCorrectCore::database).insert("SGscriptI", QChar(0x2110));
@@ -859,6 +875,7 @@ void SGXSingCorrectCore::initialise(){
     (*SGXSingCorrectCore::database).insert("SGcursiveF", QChar(0x2131));
     (*SGXSingCorrectCore::database).insert("SGcursiveM", QChar(0x2133));
     (*SGXSingCorrectCore::database).insert("SGcursiveo", QChar(0x2134));
+    
     (*SGXSingCorrectCore::database).insert("SGfrakturH", QChar(0x210C));
     (*SGXSingCorrectCore::database).insert("SGfrakturI", QChar(0x2111));
     (*SGXSingCorrectCore::database).insert("SGfrakturR", QChar(0x211C));
@@ -869,6 +886,7 @@ void SGXSingCorrectCore::initialise(){
     (*SGXSingCorrectCore::database).insert("SGfrakR", QChar(0x211C));
     (*SGXSingCorrectCore::database).insert("SGfrakZ", QChar(0x2128));
     (*SGXSingCorrectCore::database).insert("SGfrakC", QChar(0x212D));
+    
     (*SGXSingCorrectCore::database).insert("SGcpnul", QChar(0x2400));
     (*SGXSingCorrectCore::database).insert("SGcpsoh", QChar(0x2401));
     (*SGXSingCorrectCore::database).insert("SGcpstx", QChar(0x2402));
@@ -904,6 +922,7 @@ void SGXSingCorrectCore::initialise(){
     (*SGXSingCorrectCore::database).insert("SGcpsp", QChar(0x2420));
     (*SGXSingCorrectCore::database).insert("SGcpdel", QChar(0x2421));
     (*SGXSingCorrectCore::database).insert("SGcpnl", QChar(0x2424));
+    
     (*SGXSingCorrectCore::database).insert("SGtablenone", QChar(0x2003));
     (*SGXSingCorrectCore::database).insert("SGtableup", QChar(0x2575));
     (*SGXSingCorrectCore::database).insert("SGtabledown", QChar(0x2577));
@@ -923,6 +942,7 @@ void SGXSingCorrectCore::initialise(){
     (*SGXSingCorrectCore::database).insert("SGtableallexceptleft", QChar(0x251C));
     (*SGXSingCorrectCore::database).insert("SGtableallexceptright", QChar(0x2524));
     (*SGXSingCorrectCore::database).insert("SGtableall", QChar(0x253C));
+    
     (*SGXSingCorrectCore::database).insert("SGpbleftzero", QChar(0x2003));
     (*SGXSingCorrectCore::database).insert("SGpbleftone", QChar(0x258F));
     (*SGXSingCorrectCore::database).insert("SGpblefttwo", QChar(0x258E));
@@ -950,6 +970,7 @@ void SGXSingCorrectCore::initialise(){
     (*SGXSingCorrectCore::database).insert("SGpbshademedium", QChar(0x2592));
     (*SGXSingCorrectCore::database).insert("SGpbshadedark", QChar(0x2593));
     (*SGXSingCorrectCore::database).insert("SGpbshadefull", QChar(0x2588));
+    
     (*SGXSingCorrectCore::database).insert("SGoaszero", QChar(0x24EA));
     (*SGXSingCorrectCore::database).insert("SGoasone", QChar(0x2460));
     (*SGXSingCorrectCore::database).insert("SGoastwo", QChar(0x2461));
