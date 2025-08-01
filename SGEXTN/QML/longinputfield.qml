@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import ThemeColours 0.0
 import Resizer 0.0
+import SingCorrect 0.0
 
 ScrollView{
 	property int widgetType: 0
@@ -104,6 +105,13 @@ ScrollView{
 			width: parent.width - (s1 * Resizer.renderSpaceWidth + s0 * Resizer.sizeUnit)
 			height: Math.max(implicitHeight, h1 * Resizer.renderSpaceHeight + h0 * Resizer.sizeUnit)
 			padding: 0
+			
+			function autocorrect(){
+				let pos = cursorPosition;
+				text = SingCorrect.correct(text);
+				cursorPosition = Math.min(pos, text.length);
+			}
+			onTextChanged: {autocorrect(); emitClickedSignal();}
 		
 			background: Rectangle{
 				x: 0
@@ -121,8 +129,6 @@ ScrollView{
 		
 			clip: true
 			wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-			
-			onTextChanged: emitClickedSignal()
 		}
 	}
 	

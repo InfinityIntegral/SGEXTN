@@ -2,9 +2,11 @@
 #include <QHash>
 #include <QChar>
 #include <QString>
+#include "sgxsingcorrectquickinterface.h"
 
 QString SGXSingCorrectCore::correctionPrefix = "SG-\\";
 QHash<QString, QChar>* SGXSingCorrectCore::database = nullptr;
+SGXSingCorrectQuickInterface* SGXSingCorrectCore::instance = nullptr;
 
 QString SGXSingCorrectCore::correct(const QString &s){
     if(SGXSingCorrectCore::database == nullptr){return s;}
@@ -44,4 +46,5 @@ void SGXSingCorrectCore::initialise(){
 void SGXSingCorrectCore::terminate(){
     delete SGXSingCorrectCore::database;
     SGXSingCorrectCore::database = nullptr;
+    delete SGXSingCorrectCore::instance;
 }

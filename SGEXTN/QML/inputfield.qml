@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import ThemeColours 0.0
 import Resizer 0.0
+import SingCorrect 0.0
 
 TextField{
 	property bool isInputField: true
@@ -36,6 +37,7 @@ TextField{
 	padding: 0
 	
 	function emitClickedSignal(){
+		text = SingCorrect.correct(text);
 		if(noSendSignal == false && objectName == "0"){objectName = "1";}
 		else if(noSendSignal == false){objectName = "0";}
 	}
