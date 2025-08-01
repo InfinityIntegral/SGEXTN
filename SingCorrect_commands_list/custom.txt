@@ -29,8 +29,6 @@ SGsubequals
 
 Note: letter subscripts and superscripts use "somescript" module not "one" module
 
-SGhomeland (SG mark)
-
 SGemojiblank
 SGemojicorrect
 SGemojiwrong
@@ -85,4 +83,33 @@ SGcpnul
 SGcpsub
 etc
 
+SGtablenone
+SGtableleft
+SGtableright
+SGtabletop
+SGtablebottom
+SGtableleftright
+...
+SGtableleftrightbottom
+SGtableall
+SGtablelightshade
+SGtablemediumshade
+SGtabledarkshade
+
+SGpbleftzero
+SGpbleftone
+SGpblefttwo
+...
+SGpblefteight
+SGpbbottomzero
+SGpbbottomone
+SGpbbottomtwo
+...
+SGpbbottomeight
+SGpbrightfour
+SGpbtopfour
+SGphrightone
+SGpbtopone
+
+SGoas
 SGu...
