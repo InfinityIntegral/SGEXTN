@@ -64,7 +64,9 @@ SOURCES = SGEXTN/misc/main.cpp \
     SGEXTN/template/sgxstatusbar.cpp \
     SGEXTN/template/sgxthemecolourspage.cpp \
     SGEXTN/template/sgxvesiclepropertiespage.cpp \
-    SGEXTN/userDefinedClasses/sgucentralmanagement.cpp
+    SGEXTN/userDefinedClasses/sgucentralmanagement.cpp \
+    SGEXTN/widgets/sgwtype.cpp \
+    SGEXTN/widgets/sgwwidget.cpp
 RESOURCES = SGEXTN/assets.qrc
 HEADERS += \
     SGEXTN/SingCorrect/sgxsingcorrectconfigspage.h \
@@ -113,4 +115,6 @@ HEADERS += \
     SGEXTN/template/sgxstatusbar.h \
     SGEXTN/template/sgxthemecolourspage.h \
     SGEXTN/template/sgxvesiclepropertiespage.h \
-    SGEXTN/userDefinedClasses/sgucentralmanagement.h
+    SGEXTN/userDefinedClasses/sgucentralmanagement.h \
+    SGEXTN/widgets/sgwtype.h \
+    SGEXTN/widgets/sgwwidget.h
