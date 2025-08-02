@@ -25,6 +25,7 @@
 #include "../colourbackground/sgxrendercolourbackgroundquickuielement.h"
 #include "../SingCorrect/sgxsingcorrectcore.h"
 #include "../SingCorrect/sgxsingcorrectquickinterface.h"
+#include "../SingCorrect/sgxsingcorrectcustomisation.h"
 
 void SGXCentral::initialise(){
     SGXFileSystem::rootFilePath = SGXFileSystem::joinFilePaths(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation), SGUCentralManagement::rootFolderName);
@@ -77,6 +78,7 @@ void SGXCentral::initialise(){
     (*SGXQuickUIInterface::resizerInstance).updateAppWindowSize();
     
     SGXSingCorrectCore::initialise();
+    SGXSingCorrectCustomisation::loadFileData();
     
     SGUCentralManagement::initialise();
 }

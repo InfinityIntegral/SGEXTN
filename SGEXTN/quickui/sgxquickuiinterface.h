@@ -113,9 +113,11 @@ public:
     static bool setInputFieldDataUsingInt(QQuickItem* x, int s); // set text in input field to string representaion of a int, return true if set successfully and false otherwise
     static bool setInputFieldDataUsingFloat(QQuickItem* x, float s); // set text in input field to string representation of a float, return true if set successfully and false otherwise
     static bool setColourPickerColour(QQuickItem* x, SGXColourRGBA c); // set colour in a colour picker, return true if set successfully and false otherwise
-    static bool showPage(QQuickItem*& x, QQuickItem* (*initialisationFunction)(), void (*resetFunction)()); // shows a UI page, if it does not exist, initialisationFunction creates it and assigns it to x, resetFunction is always run to reset input field values regardless if the page previously exist, if the page does not exist, make sure x is nullptr, x can only hold a pointer to a SGEXTN widget or scrollview
-    static bool hidePage(QQuickItem*& x); // hides a existing UI page, x can only hold a pointer to a SGEXTN widget or scrollview, if the UI page is not marked as frequently used, it will be deleted and x will be set to nullptr
+    static bool showPage(QQuickItem*& x, QQuickItem* (*initialisationFunction)(), void (*resetFunction)()); // shows a UI page, if it does not exist, initialisationFunction creates it and assigns it to x, resetFunction is always run to reset input field values regardless if the page previously exist, if the page does not exist, make sure x is nullptr, x can only hold a pointer to a SGEXTN widget or scrollview, returns true if successful and false otherwise
+    static bool hidePage(QQuickItem*& x); // hides a existing UI page, x can only hold a pointer to a SGEXTN widget or scrollview, if the UI page is not marked as frequently used, it will be deleted and x will be set to nullptr, returns true if successful and false otherwise
     static void doNothing(); // do nothing, placeholder for if you do not need any function to run but the SGEXTN method expects a function pointer
+    static bool setButtonUnselected(QQuickItem* x); // mark a button as unselected, returns true if successful and false otherwise
+    static bool setButtonSelected(QQuickItem* x); // mark a button as selected, returns true if successful and false otherwise
 };
 
 #endif // SGXQUICKUIINTERFACE_H

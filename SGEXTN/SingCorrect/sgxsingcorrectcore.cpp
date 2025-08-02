@@ -3,12 +3,14 @@
 #include <QChar>
 #include <QString>
 #include "sgxsingcorrectquickinterface.h"
+#include "sgxsingcorrectcustomisation.h"
 
 QString SGXSingCorrectCore::correctionPrefix = "SG-\\";
 QHash<QString, QChar>* SGXSingCorrectCore::database = nullptr;
 SGXSingCorrectQuickInterface* SGXSingCorrectCore::instance = nullptr;
 
 QString SGXSingCorrectCore::correct(const QString &s){
+    if(SGXSingCorrectCustomisation::moduleEnabled == false){return s;}
     if(SGXSingCorrectCore::database == nullptr){return s;}
     QString s0 = "";
     bool maybeCommandActive = false;
@@ -24,6 +26,7 @@ QString SGXSingCorrectCore::correct(const QString &s){
                 }
                 else{
                     if((*SGXSingCorrectCore::database).contains(maybeCommand)){maybeCommand = (*SGXSingCorrectCore::database)[maybeCommand];}
+                    else if(SGXSingCorrectCustomisation::database != nullptr && (*SGXSingCorrectCustomisation::database).contains(maybeCommand)){maybeCommand = (*SGXSingCorrectCustomisation::database)[maybeCommand];}
                     else if(maybeCommand.length() > 7 && maybeCommand.left(7) == "unicode"){
                         int cp = 0x0000;
                         if(maybeCommand.length() == 11 || (maybeCommand.length() == 13 && maybeCommand.mid(7, 2) == "0x")){cp = maybeCommand.right(4).toInt(nullptr, 16);}
@@ -1039,4 +1042,5 @@ void SGXSingCorrectCore::terminate(){
     delete SGXSingCorrectCore::database;
     SGXSingCorrectCore::database = nullptr;
     delete SGXSingCorrectCore::instance;
+    delete SGXSingCorrectCustomisation::database;
 }

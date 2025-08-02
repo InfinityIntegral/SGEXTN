@@ -18,7 +18,9 @@ DISTFILES = .gitignore LICENSE.txt README.md \
     SGEXTN/filesystem/singzip.sgfile \
     compilecommands.txt
 SOURCES = SGEXTN/misc/main.cpp \
+    SGEXTN/SingCorrect/sgxsingcorrectconfigspage.cpp \
     SGEXTN/SingCorrect/sgxsingcorrectcore.cpp \
+    SGEXTN/SingCorrect/sgxsingcorrectcustomisation.cpp \
     SGEXTN/SingCorrect/sgxsingcorrectquickinterface.cpp \
     SGEXTN/colourbackground/sgxrendercolourbackgroundmaterial.cpp \
     SGEXTN/colourbackground/sgxrendercolourbackgroundquickuielement.cpp \
@@ -65,7 +67,9 @@ SOURCES = SGEXTN/misc/main.cpp \
     SGEXTN/userDefinedClasses/sgucentralmanagement.cpp
 RESOURCES = SGEXTN/assets.qrc
 HEADERS += \
+    SGEXTN/SingCorrect/sgxsingcorrectconfigspage.h \
     SGEXTN/SingCorrect/sgxsingcorrectcore.h \
+    SGEXTN/SingCorrect/sgxsingcorrectcustomisation.h \
     SGEXTN/SingCorrect/sgxsingcorrectquickinterface.h \
     SGEXTN/colourbackground/sgxrendercolourbackgroundmaterial.h \
     SGEXTN/colourbackground/sgxrendercolourbackgroundquickuielement.h \

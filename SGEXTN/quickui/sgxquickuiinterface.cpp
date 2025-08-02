@@ -609,3 +609,15 @@ bool SGXQuickUIInterface::hidePage(QQuickItem *&x){
 void SGXQuickUIInterface::doNothing(){
     
 }
+
+bool SGXQuickUIInterface::setButtonSelected(QQuickItem *x){
+    if(SGXQuickUIInterface::getType(x) != SGXQuickUIInterface::IconButton && SGXQuickUIInterface::getType(x) != SGXQuickUIInterface::TextButton){return false;}
+    (*x).setProperty("unselected", false);
+    return true;
+}
+
+bool SGXQuickUIInterface::setButtonUnselected(QQuickItem *x){
+    if(SGXQuickUIInterface::getType(x) != SGXQuickUIInterface::IconButton && SGXQuickUIInterface::getType(x) != SGXQuickUIInterface::TextButton){return false;}
+    (*x).setProperty("unselected", true);
+    return true;
+}
