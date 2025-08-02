@@ -118,6 +118,7 @@ public:
     static void doNothing(); // do nothing, placeholder for if you do not need any function to run but the SGEXTN method expects a function pointer
     static bool setButtonUnselected(QQuickItem* x); // mark a button as unselected, returns true if successful and false otherwise
     static bool setButtonSelected(QQuickItem* x); // mark a button as selected, returns true if successful and false otherwise
+    static bool setInputFieldInvalid(QQuickItem* x); // mark a input field as invalid, returns true if successful and false otherwise
 };
 
 #endif // SGXQUICKUIINTERFACE_H

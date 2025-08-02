@@ -621,3 +621,9 @@ bool SGXQuickUIInterface::setButtonUnselected(QQuickItem *x){
     (*x).setProperty("unselected", true);
     return true;
 }
+
+bool SGXQuickUIInterface::setInputFieldInvalid(QQuickItem *x){
+    if(SGXQuickUIInterface::getType(x) != SGXQuickUIInterface::InputField && SGXQuickUIInterface::getType(x) != SGXQuickUIInterface::LongInputField){return false;}
+    (*x).setProperty("invalid", true);
+    return true;
+}

@@ -15,6 +15,7 @@ public:
     static QQuickItem* instance;
     static QQuickItem* disableButton;
     static QQuickItem* enableButton;
+    static QQuickItem* prefixInput;
 signals:
     void doNothing();
 public slots:
