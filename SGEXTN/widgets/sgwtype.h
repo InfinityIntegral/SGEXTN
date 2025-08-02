@@ -22,7 +22,8 @@ public:
         GraphicsRenderer,
         TouchReceiver,
         FileUpload,
-        FileDownload
+        FileDownload,
+        Undefined
     };
     static bool isDisplayText(SGWType::Type x);
     static bool isButton(SGWType::Type x);

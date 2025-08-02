@@ -57,7 +57,9 @@ SGEXTN v5 (planned): same architecture as v1 but uses Qt Quick (supposed to be s
 		- [ ] SGWRoot
 		- [ ] SGWParent
 		- [ ] SGWStatusBar
-		- [ ] SGWBlankWidget
+		- [ ] SGWBackground
+			- [ ] SGWBlankWidget
+			- [ ] SGWScrollView
 		- [ ] SGWLabel
 			- [ ] SGWTextLabel
 			- [ ] SGWIconLabel
@@ -68,7 +70,6 @@ SGEXTN v5 (planned): same architecture as v1 but uses Qt Quick (supposed to be s
 		- [ ] SGWInput
 			- [ ] SGWTextInput
 			- [ ] SGWLongInput
-		- [ ] SGWScrollView
 		- [ ] SGWColourPicker
 		- [ ] SGWGraphicsRenderer
 		- [ ] SGWTouchReceiver

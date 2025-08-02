@@ -4,52 +4,52 @@
 #include <QObject>
 #include <qtmetamacros.h>
 #include "sgwtype.h"
-#include "../primitives/sgxcolourrgba.h"
 #include <QQuickItem>
+#include <QSet>
+#include <qcontainerfwd.h>
 
 class SGWWidget : public QObject
 {
     Q_OBJECT
 public:
-    SGWWidget(SGWWidget* parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, int themeColour, bool frequentlyUsed);
-    ~SGWWidget();
-    bool frequentlyUsed;
-    SGWType::Type getType();
-    int getThemeColour(bool* isValid);
-    bool setThemeColour(int themeColour);
-    SGXColourRGBA getColour(bool* isValid);
-    bool setColour(SGXColourRGBA colour);
-    SGWWidget* getParent();
-    void setParent(SGWWidget* parent);
-    QVector<SGWWidget*> getChildren();
-    QQuickItem* getTopObject();
-    QQuickItem* getBottomObject();
-    float getX1();
+    SGWWidget(SGWWidget* parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0);
+    SGWWidget(const SGWWidget&) = delete;
+    SGWWidget& operator=(const SGWWidget&) = delete;
+    SGWWidget(SGWWidget&&) = delete;
+    SGWWidget& operator=(SGWWidget&&) = delete;
+    ~SGWWidget() override;
+    [[nodiscard]] SGWType::Type getType() const;
+    [[nodiscard]] SGWWidget* getParent() const;
+    [[nodiscard]] QVector<SGWWidget*> getChildren() const;
+    [[nodiscard]] QQuickItem* getTopObject() const;
+    [[nodiscard]] QQuickItem* getBottomObject() const;
+    [[nodiscard]] float getX1() const;
     void setX1(float x1);
-    float getX0();
+    [[nodiscard]] float getX0() const;
     void setX0(float x0);
-    float getY1();
+    [[nodiscard]] float getY1() const;
     void setY1(float y1);
-    float getY0();
+    [[nodiscard]] float getY0() const;
     void setY0(float y0);
-    float getW1();
+    [[nodiscard]] float getW1() const;
     void setW1(float w1);
-    float getW0();
+    [[nodiscard]] float getW0() const;
     void setW0(float w0);
-    float getH1();
+    [[nodiscard]] float getH1() const;
     void setH1(float h1);
-    float getH0();
+    [[nodiscard]] float getH0() const;
     void setH0(float h0);
-    bool getVisible();
-    void enable(SGWWidget** pointerToThis, SGWWidget* (*initFunction)(), void (*resetFunction)());
-    void disable(SGWWidget** pointerToThis);
+    [[nodiscard]] bool getVisible() const;
+    [[nodiscard]] float getParentW1() const;
+    [[nodiscard]] float getParentW0() const;
+    [[nodiscard]] float getParentH1() const;
+    [[nodiscard]] float getParentH0() const;
+    void updateSizeReferences();
+    void updateParentSize();
 private:
     SGWType::Type type;
-    bool usingThemeColour;
-    int themeColour;
-    SGXColourRGBA colour;
     SGWWidget* parent;
-    QVector<SGWWidget*> children;
+    QSet<SGWWidget*> children;
     QQuickItem* topObject;
     QQuickItem* bottomObject;
     float x1;
@@ -60,6 +60,10 @@ private:
     float w0;
     float h1;
     float h0;
+    float parentW1;
+    float parentW0;
+    float parentH1;
+    float parentH0;
     bool visible;
 };
 
