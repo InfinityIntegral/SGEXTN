@@ -16,6 +16,8 @@ public:
     static QQuickItem* disableButton;
     static QQuickItem* enableButton;
     static QQuickItem* prefixInput;
+    static QQuickItem* customAddCommandInput;
+    static QQuickItem* customAddCharInput;
 signals:
     void doNothing();
 public slots:
@@ -24,6 +26,7 @@ public slots:
     static void disableModule();
     static void cancelChanges();
     static void confirmChanges();
+    static void addCustomCharacter();
 };
 
 #endif // SGXSINGCORRECTCONFIGSPAGE_H
