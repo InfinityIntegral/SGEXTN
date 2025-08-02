@@ -52,33 +52,33 @@ SGEXTN v5 (planned): same architecture as v1 but uses Qt Quick (supposed to be s
 - [x] working application template
 
 ## planned for SGEXTN v5
-- [x] class based GUI set with structure closely mirroring SGEXTN v1
-	- [x] SGWWidget
-		- [x] SGWRoot
-		- [x] SGWParent
-		- [x] SGWStatusBar
-		- [x] SGWBlankWidget
-		- [x] SGWLabel
-			- [x] SGWTextLabel
-			- [x] SGWIconLabel
-			- [x] SGWLongLabel
-		- [x] SGWButton
-			- [x] SGWTextButton
-			- [x] SGWIconButton
-		- [x] SGWInput
-			- [x] SGWTextInput
-			- [x] SGWLongInput
-		- [x] SGWScrollView
-		- [x] SGWColourPicker
-		- [x] SGWGraphicsRenderer
-		- [x] SGWTouchReceiver
-	- [x] SGWFileDialog
-		- [x] SGWFileUpload
-		- [x] SGWFileDownload
-- [x] reimplemented vesicle customisation page
-- [x] reimplemented colour picker
-- [x] improved theme customisation page
-- [x] improved SingCorrect configs page
+- [ ] class based GUI set with structure closely mirroring SGEXTN v1
+	- [ ] SGWWidget
+		- [ ] SGWRoot
+		- [ ] SGWParent
+		- [ ] SGWStatusBar
+		- [ ] SGWBlankWidget
+		- [ ] SGWLabel
+			- [ ] SGWTextLabel
+			- [ ] SGWIconLabel
+			- [ ] SGWLongLabel
+		- [ ] SGWButton
+			- [ ] SGWTextButton
+			- [ ] SGWIconButton
+		- [ ] SGWInput
+			- [ ] SGWTextInput
+			- [ ] SGWLongInput
+		- [ ] SGWScrollView
+		- [ ] SGWColourPicker
+		- [ ] SGWGraphicsRenderer
+		- [ ] SGWTouchReceiver
+	- [ ] SGWFileDialog
+		- [ ] SGWFileUpload
+		- [ ] SGWFileDownload
+- [ ] reimplemented vesicle customisation page
+- [ ] reimplemented colour picker
+- [ ] improved theme customisation page
+- [ ] improved SingCorrect configs page
 
 SGEXTN v5 will cover all functionalities in previous versions, so there would be no reason to use v1 because of missing stuff. 
 
