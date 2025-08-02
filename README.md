@@ -54,9 +54,9 @@ SGEXTN v5 (planned): same architecture as v1 but uses Qt Quick (supposed to be s
 ## planned for SGEXTN v5
 - [ ] class based GUI set with structure closely mirroring SGEXTN v1
 	- [ ] SGWWidget
-		- [ ] SGWRoot
-		- [ ] SGWParent
-		- [ ] SGWStatusBar
+		- [x] SGWRoot
+		- [x] SGWParent
+		- [x] SGWStatusBar
 		- [ ] SGWBackground
 			- [ ] SGWBlankWidget
 			- [ ] SGWScrollView
@@ -80,6 +80,7 @@ SGEXTN v5 (planned): same architecture as v1 but uses Qt Quick (supposed to be s
 - [ ] reimplemented colour picker
 - [ ] improved theme customisation page
 - [ ] improved SingCorrect configs page
+- [ ] SGXTimer (wrapper around QTimer to eliminate need for signal-slot, with single use version)
 
 SGEXTN v5 will cover all functionalities in previous versions, so there would be no reason to use v1 because of missing stuff. 
 

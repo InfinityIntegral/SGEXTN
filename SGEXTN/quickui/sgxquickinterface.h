@@ -25,6 +25,8 @@ public:
     static SGXQuickResizer* resizerSingleton;
     static SGXThemeColourSetting* themeColoursSingleton;
     static QQmlComponent* parentWidget;
+    static QQmlComponent* statusBar;
+    static QQuickItem* getBottomObject(QQuickItem* topObject);
 };
 
 #endif // SGXQUICKINTERFACE_H

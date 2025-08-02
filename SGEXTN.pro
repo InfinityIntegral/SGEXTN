@@ -68,6 +68,7 @@ SOURCES = SGEXTN/misc/main.cpp \
     SGEXTN/userDefinedClasses/sgucentralmanagement.cpp \
     SGEXTN/widgets/sgwparent.cpp \
     SGEXTN/widgets/sgwroot.cpp \
+    SGEXTN/widgets/sgwstatusbar.cpp \
     SGEXTN/widgets/sgwtype.cpp \
     SGEXTN/widgets/sgwwidget.cpp
 RESOURCES = SGEXTN/assets.qrc
@@ -122,5 +123,6 @@ HEADERS += \
     SGEXTN/userDefinedClasses/sgucentralmanagement.h \
     SGEXTN/widgets/sgwparent.h \
     SGEXTN/widgets/sgwroot.h \
+    SGEXTN/widgets/sgwstatusbar.h \
     SGEXTN/widgets/sgwtype.h \
     SGEXTN/widgets/sgwwidget.h

@@ -31,6 +31,7 @@ SGWWidget::SGWWidget(SGWWidget* parent, float x1, float x0, float y1, float y0, 
         (*this).parentH0 = 0.0f;
     }
     else{
+        (*(*this).parent).children.insert(this);
         (*this).parentW1 = (*(*this).parent).w1 * (*(*this).parent).parentW1;
         (*this).parentW0 = (*(*this).parent).w1 * (*(*this).parent).parentW0 + (*(*this).parent).w0;
         (*this).parentH1 = (*(*this).parent).h1 * (*(*this).parent).parentH1;

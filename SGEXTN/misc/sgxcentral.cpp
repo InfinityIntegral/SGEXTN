@@ -26,6 +26,7 @@
 #include "../SingCorrect/sgxsingcorrectquickinterface.h"
 #include "../SingCorrect/sgxsingcorrectcustomisation.h"
 #include "../quickui/sgxquickinterface.h"
+#include "../widgets/sgwstatusbar.h"
 
 void SGXCentral::initialise(){
     SGXFileSystem::rootFilePath = SGXFileSystem::joinFilePaths(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation), SGUCentralManagement::rootFolderName);
@@ -89,6 +90,7 @@ void SGXCentral::terminate(){
     SGXSingCorrectCore::terminate();
     SGXQuickInterface::deleteTemplates();
     SGXQuickInterface::deleteSingletons();
+    SGWStatusBar::terminate();
     (*SGXQuickInterface::applicationWindow).close();
     (*SGXQuickInterface::applicationWindow).deleteLater();
 }

@@ -42,5 +42,6 @@
         <file>assets/SingScript.sg</file>
         <file>QML/sgwroot.qml</file>
         <file>QML/sgwparent.qml</file>
+        <file>QML/sgwstatusbar.qml</file>
     </qresource>
 </RCC>
