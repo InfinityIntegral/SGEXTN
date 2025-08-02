@@ -22,7 +22,6 @@ SGWWidget::SGWWidget(SGWWidget* parent, float x1, float x0, float y1, float y0, 
     (*this).w0 = w0;
     (*this).h1 = h1;
     (*this).h0 = h0;
-    (*this).visible = true;
     (*this).parent = parent;
     if((*this).parent == nullptr){
         (*this).parentW1 = 1.0f;
@@ -150,10 +149,6 @@ void SGWWidget::setH0(float h0){
     updateSizeReferences();
 }
 
-bool SGWWidget::getVisible() const {
-    return visible;
-}
-
 float SGWWidget::getParentW1() const {
     return parentW1;
 }
@@ -196,4 +191,19 @@ void SGWWidget::updateParentSize(){
     (*(*this).topObject).setProperty("pw0", (*this).parentW0);
     (*(*this).topObject).setProperty("ph1", (*this).parentH1);
     (*(*this).topObject).setProperty("ph0", (*this).parentH0);
+}
+
+void SGWWidget::syncQuickProperties(){
+    (*topObject).setProperty("x1", x1);
+    (*topObject).setProperty("x0", x0);
+    (*topObject).setProperty("y1", y1);
+    (*topObject).setProperty("y0", y0);
+    (*topObject).setProperty("w1", w1);
+    (*topObject).setProperty("w0", w0);
+    (*topObject).setProperty("h1", h1);
+    (*topObject).setProperty("h0", h0);
+    (*topObject).setProperty("pw1", parentW1);
+    (*topObject).setProperty("pw0", parentW0);
+    (*topObject).setProperty("ph1", parentH1);
+    (*topObject).setProperty("ph0", parentH0);
 }

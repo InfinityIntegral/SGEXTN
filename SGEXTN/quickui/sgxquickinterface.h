@@ -27,6 +27,7 @@ public:
     static QQmlComponent* parentWidget;
     static QQmlComponent* statusBar;
     static QQuickItem* getBottomObject(QQuickItem* topObject);
+    static QQmlComponent* blankWidget;
 };
 
 #endif // SGXQUICKINTERFACE_H

@@ -19,17 +19,20 @@ SGXQuickResizer* SGXQuickInterface::resizerSingleton = nullptr;
 SGXThemeColourSetting* SGXQuickInterface::themeColoursSingleton = nullptr;
 QQmlComponent* SGXQuickInterface::parentWidget = nullptr;
 QQmlComponent* SGXQuickInterface::statusBar = nullptr;
+QQmlComponent* SGXQuickInterface::blankWidget = nullptr;
 
 void SGXQuickInterface::createTemplates(){
     SGXQuickInterface::root = new QQmlComponent(SGXQuickInterface::e, ":/SGEXTN/QML/sgwroot.qml");
     SGXQuickInterface::parentWidget = new QQmlComponent(SGXQuickInterface::e, ":/SGEXTN/QML/sgwparent.qml");
     SGXQuickInterface::statusBar = new QQmlComponent(SGXQuickInterface::e, ":/SGEXTN/QML/sgwstatusbar.qml");
+    SGXQuickInterface::blankWidget = new QQmlComponent(SGXQuickInterface::e, ":/SGEXTN/QML/sgwblankwidget.qml");
 }
 
 void SGXQuickInterface::deleteTemplates(){
     delete SGXQuickInterface::root;
     delete SGXQuickInterface::parentWidget;
     delete SGXQuickInterface::statusBar;
+    delete SGXQuickInterface::blankWidget;
 }
 
 void SGXQuickInterface::buildBase(){

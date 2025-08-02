@@ -43,10 +43,12 @@ float SGUCentralManagement::cuteVesiclesCenterTransparency = 0.1f;
 float SGUCentralManagement::cuteVesiclesEdgeTransparency = 0.05f;
 float SGUCentralManagement::cuteVesiclesMembraneTransparency = 0.2f;
 float SGUCentralManagement::cuteVesiclesFrameRate = 10.0f;
+#include "../widgets/sgwblankwidget.h"
 
 // this is run immediately after GUI is created, use it to initialise the UI
 void SGUCentralManagement::initialise(){
-    
+    SGWWidget* x = new SGWBlankWidget(SGWWidget::parentWidget, 0.0f, 0.0f, 0.0f, 0.0f, 0.5f, 0.0f, 0.5f, 0.0f, 4, true);
+    new SGWBlankWidget(x, 0.0f, 1.0f, 0.0f, 1.0f, 0.5f, 0.0f, 0.5f, 0.0f, 6, false);
 }
 
 // this is run after the application is created but before the GUI, use it to edit theme colours from configuration files

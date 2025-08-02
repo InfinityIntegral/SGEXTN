@@ -39,13 +39,13 @@ public:
     void setH1(float h1);
     [[nodiscard]] float getH0() const;
     void setH0(float h0);
-    [[nodiscard]] bool getVisible() const;
     [[nodiscard]] float getParentW1() const;
     [[nodiscard]] float getParentW0() const;
     [[nodiscard]] float getParentH1() const;
     [[nodiscard]] float getParentH0() const;
     void updateSizeReferences();
     void updateParentSize();
+    void syncQuickProperties();
     static SGWWidget* rootWidget;
     static SGWWidget* parentWidget;
 protected:
@@ -66,7 +66,6 @@ protected:
     float parentW0;
     float parentH1;
     float parentH0;
-    bool visible;
 };
 
 #endif // SGWWIDGET_H
