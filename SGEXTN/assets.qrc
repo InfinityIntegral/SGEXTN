@@ -41,5 +41,6 @@
         <file>assets/AppIcons.sg</file>
         <file>assets/SingScript.sg</file>
         <file>QML/sgwroot.qml</file>
+        <file>QML/sgwparent.qml</file>
     </qresource>
 </RCC>

@@ -24,6 +24,7 @@ public:
     static void deleteSingletons();
     static SGXQuickResizer* resizerSingleton;
     static SGXThemeColourSetting* themeColoursSingleton;
+    static QQmlComponent* parentWidget;
 };
 
 #endif // SGXQUICKINTERFACE_H

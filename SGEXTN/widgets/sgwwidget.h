@@ -47,6 +47,7 @@ public:
     void updateSizeReferences();
     void updateParentSize();
     static SGWWidget* rootWidget;
+    static SGWWidget* parentWidget;
 protected:
     SGWType::Type type;
     SGWWidget* parent;

@@ -66,6 +66,7 @@ SOURCES = SGEXTN/misc/main.cpp \
     SGEXTN/template/sgxthemecolourspage.cpp \
     SGEXTN/template/sgxvesiclepropertiespage.cpp \
     SGEXTN/userDefinedClasses/sgucentralmanagement.cpp \
+    SGEXTN/widgets/sgwparent.cpp \
     SGEXTN/widgets/sgwroot.cpp \
     SGEXTN/widgets/sgwtype.cpp \
     SGEXTN/widgets/sgwwidget.cpp
@@ -119,6 +120,7 @@ HEADERS += \
     SGEXTN/template/sgxthemecolourspage.h \
     SGEXTN/template/sgxvesiclepropertiespage.h \
     SGEXTN/userDefinedClasses/sgucentralmanagement.h \
+    SGEXTN/widgets/sgwparent.h \
     SGEXTN/widgets/sgwroot.h \
     SGEXTN/widgets/sgwtype.h \
     SGEXTN/widgets/sgwwidget.h
