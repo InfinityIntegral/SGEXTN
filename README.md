@@ -1,24 +1,18 @@
 # SGEXTN ("SG" Extension for C++ and Qt)
 
 ## About this project
-This is a template application to make building applications in Qt easier. It internally uses Qt Quick but SGEXTN functions are designed for imperative UI, similar to QWidget and different from Qt Quick's declarative UI. There is also a wide variety of primitive structs that allow you to group, store, and use data more easily in addition to file system usage methods.
+This project is WORK IN PROGRESS and should not be used for software development. More information will be provided upon completion of SGEXTN v5.
 
-"SG" refers to Singapore, my home country. It does not reference the Qt Quick scene graph. SGEXTN is designed to let you not worry about the scene graph and instead use it like a customised, GPU-accelerated version of QWidget.
+SGEXTN is designed to be a framework + app template built on top of Qt to simplify development of GUI apps.
 
-For shader support, you should subclass QQuickItem and use QSGGeometryNode for rendering. Since rendering is a highly customised process, SGEXTN does not simplify it and you are expected to use the Qt Quick API without any SGEXTN layer over it. SGEXTN does not modify scene graph internals (again, "SG" is Singapore, my home country, not the short form for scene graph) and is fully compatible with custom rendering. Note that you should use QSB and not raw OpenGL for maximum cross platform ability.
+versions list:  
+SGEXTN v1: primitives and rendering based on QWidget (great architecture, but slow because QWidget does not use GPU)  
+SGEXTN v2: added dynamic widget creation based on Qt Quick, file system, basic customisation (less powerful due to loss of classes, QML lookup overhead)  
+SGEXTN v3: added colour picker (same issues as v2)  
+SGEXTN v4: added SingCorrect module (same issues as v2)  
+SGEXTN v5 (planned): same architecture as v1 but uses Qt Quick (supposed to be suitable for development use)
 
-Plans to build a SGEXTN custom keyboard have been cancelled as that would violate Apple App Store guidelines. To compensate, I am planning autocorrecting LaTeX commands.
-
-Documentation is included in the form of comments in header files.
-
-File name prefixes:  
-SGX - SGEXTN files, do not touch those unless you know very well what you are doing  
-SGXRender - SGEXTN files used in rendering of builtin cute vesicles, these are useful to look at to learn the structure of custom rendering  
-SGU - kind of SGEXTN files, you can edit the values of properties inside if the comments inside explicitly allows you to. Keep a copy of the original so you can revert the file if something internal breaks  
-SGC - I cannot enforce this, but you are supposed to start your custom classes with this prefix  
-SGCRender - I cannot enforce this, but you are strongly encouraged to start custom classes related to custom rendering with this
-
-## Completed Features (available in v3)
+## Completed Features (available in v4)
 - [x] C++ primitives extensions
 	- [x] SGXColourRGBA (RGBA representation of a colour with 8 bits per channel, wraps unsigned int)
 	- [x] SGXColourHSLA (HSLA representation of a colour with 8 bits per channel, contains 4 floats)
@@ -54,14 +48,43 @@ SGCRender - I cannot enforce this, but you are strongly encouraged to start cust
 	- [x] SGXFileUploader (non instantiable struct with static methods for bringing in external files
 	- [x] SGXFileDownloader (non instantiable struct with static methods for saving application files externally)
 	- [x] SGXFileZipUtilities (non instantiable struct with static methods for creating and using zip files)
-- [x] customisable theme colours
-- [x] customisable vesicle properties
+- [x] builtin customisation
 - [x] working application template
 
-## planned for SGEXTN v4
-- [x] SingScript.sg extension
-- [ ] SingCorrect (autocorrect of LaTeX and similar commands)
-- [x] bounds checking for float and int
+## planned for SGEXTN v5
+- [x] class based GUI set with structure closely mirroring SGEXTN v1
+	- [x] SGWWidget
+		- [x] SGWRoot
+		- [x] SGWParent
+		- [x] SGWStatusBar
+		- [x] SGWBlankWidget
+		- [x] SGWLabel
+			- [x] SGWTextLabel
+			- [x] SGWIconLabel
+			- [x] SGWLongLabel
+		- [x] SGWButton
+			- [x] SGWTextButton
+			- [x] SGWIconButton
+		- [x] SGWInput
+			- [x] SGWTextInput
+			- [x] SGWLongInput
+		- [x] SGWScrollView
+		- [x] SGWColourPicker
+		- [x] SGWGraphicsRenderer
+		- [x] SGWTouchReceiver
+	- [x] SGWFileDialog
+		- [x] SGWFileUpload
+		- [x] SGWFileDownload
+- [x] reimplemented vesicle customisation page
+- [x] reimplemented colour picker
+- [x] improved theme customisation page
+- [x] improved SingCorrect configs page
+
+SGEXTN v5 will cover all functionalities in previous versions, so there would be no reason to use v1 because of missing stuff. 
+
+SGEXTN v5 would also completely hide any trace of QML usage, so you will not have to use QObject::setProperty yourself or listen to QQuickItem::opacityChanged to get colour picker output.
+
+By design, SGEXTN v5 will be weaker than raw Qt significantly in terms of customisation. However, greater control is provided compared to any previous version.
 
 ## Credits
 - Qt (https://www.qt.io/)
