@@ -18,6 +18,10 @@ public:
     static QQuickItem* prefixInput;
     static QQuickItem* customAddCommandInput;
     static QQuickItem* customAddCharInput;
+    static QQuickItem* customCommandListScrollView;
+    static void refreshCustomCommandList();
+    static QVector<QQuickItem*>* commandButtons;
+    static QQuickItem* bg;
 signals:
     void doNothing();
 public slots:

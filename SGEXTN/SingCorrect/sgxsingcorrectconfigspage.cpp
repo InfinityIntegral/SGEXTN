@@ -12,6 +12,9 @@ QQuickItem* SGXSingCorrectConfigsPage::enableButton = nullptr;
 QQuickItem* SGXSingCorrectConfigsPage::prefixInput = nullptr;
 QQuickItem* SGXSingCorrectConfigsPage::customAddCommandInput = nullptr;
 QQuickItem* SGXSingCorrectConfigsPage::customAddCharInput = nullptr;
+QQuickItem* SGXSingCorrectConfigsPage::customCommandListScrollView = nullptr;
+QVector<QQuickItem*>* SGXSingCorrectConfigsPage::commandButtons = nullptr;
+QQuickItem* SGXSingCorrectConfigsPage::bg = nullptr;
 
 QQuickItem* SGXSingCorrectConfigsPage::initialise(){
     SGXSingCorrectConfigsPage::instance = SGXQuickUIInterface::createWidget(SGXQuickUIInterface::parentWidget, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, -1.0f, 8, false);
@@ -35,6 +38,16 @@ QQuickItem* SGXSingCorrectConfigsPage::initialise(){
     SGXQuickUIInterface::createRightText(bg, "character:", 0.5f, -4.6f, 0.0f, 18.0f, 0.0f, 4.5f, 0.0f, 1.0f);
     SGXSingCorrectConfigsPage::customAddCharInput = SGXQuickUIInterface::createInputField(bg, 0.5f, 0.1f, 0.0f, 18.0f, 0.0f, 2.0f, 0.0f, 1.0f);
     SGXQuickUIInterface::createTextButton(bg, "add", &SGXSingCorrectConfigsPage::addCustomCharacter, 0.5f, 2.6f, 0.0f, 18.0f, 0.0f, 1.5f, 0.0f, 1.0f);
+    if(SGXSingCorrectConfigsPage::commandButtons != nullptr){delete SGXSingCorrectConfigsPage::commandButtons;}
+    SGXSingCorrectConfigsPage::commandButtons = new QVector<QQuickItem*>();
+    SGXSingCorrectConfigsPage::customCommandListScrollView = SGXQuickUIInterface::createScrollView(bg, 0.0f, 0.5f, 0.0f, 19.5f, 1.0f, -1.5f, 0.0f, 7.0f, 0.0f, 1.0f * (*SGXSingCorrectCustomisation::database).size(), 0.0f, 0.5f, 8, false);
+    int idx = 0;
+    for(QHash<QString, QChar>::iterator i = (*SGXSingCorrectCustomisation::database).begin(); i != (*SGXSingCorrectCustomisation::database).end(); i++){
+        QString display = (QString(i.value()) + " | " + i.key());
+        (*SGXSingCorrectConfigsPage::commandButtons).push_back(SGXQuickUIInterface::createText(SGXSingCorrectConfigsPage::customCommandListScrollView, display, 0.0f, 0.5f, 0.0f, 1.0f * static_cast<float>(idx), 1.0f, -2.5f, 0.0f, 1.0f));
+        idx++;
+    }
+    SGXSingCorrectConfigsPage::bg = bg;
     return SGXSingCorrectConfigsPage::instance;
 }
 
@@ -51,6 +64,7 @@ void SGXSingCorrectConfigsPage::reset(){
     SGXQuickUIInterface::setInputFieldDataUsingString(SGXSingCorrectConfigsPage::prefixInput, SGXSingCorrectCore::correctionPrefix);
     SGXQuickUIInterface::setInputFieldDataUsingString(SGXSingCorrectConfigsPage::customAddCommandInput, "");
     SGXQuickUIInterface::setInputFieldDataUsingString(SGXSingCorrectConfigsPage::customAddCharInput, "");
+    SGXSingCorrectConfigsPage::refreshCustomCommandList();
 }
 
 void SGXSingCorrectConfigsPage::activate(){
@@ -115,4 +129,17 @@ void SGXSingCorrectConfigsPage::addCustomCharacter(){
     SGXQuickUIInterface::setInputFieldDataUsingString(SGXSingCorrectConfigsPage::customAddCommandInput, "");
     SGXQuickUIInterface::setInputFieldDataUsingString(SGXSingCorrectConfigsPage::customAddCharInput, "");
     (*SGXSingCorrectCustomisation::database).insert(customCommand, customChar[0]);
+    SGXSingCorrectConfigsPage::refreshCustomCommandList();
+}
+
+
+void SGXSingCorrectConfigsPage::refreshCustomCommandList(){
+    delete SGXSingCorrectConfigsPage::customCommandListScrollView;
+    SGXSingCorrectConfigsPage::customCommandListScrollView = SGXQuickUIInterface::createScrollView(SGXSingCorrectConfigsPage::bg, 0.0f, 0.5f, 0.0f, 19.5f, 1.0f, -1.5f, 0.0f, 7.0f, 0.0f, 1.0f * (*SGXSingCorrectCustomisation::database).size(), 0.0f, 0.5f, 8, false);
+    int idx = 0;
+    for(QHash<QString, QChar>::iterator i = (*SGXSingCorrectCustomisation::database).begin(); i != (*SGXSingCorrectCustomisation::database).end(); i++){
+        QString display = (QString(i.value()) + " | " + i.key());
+        (*SGXSingCorrectConfigsPage::commandButtons).push_back(SGXQuickUIInterface::createText(SGXSingCorrectConfigsPage::customCommandListScrollView, display, 0.0f, 0.5f, 0.0f, 1.0f * static_cast<float>(idx), 1.0f, -2.5f, 0.0f, 1.0f));
+        idx++;
+    }
 }
