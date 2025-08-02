@@ -12,12 +12,8 @@ Button{
 	property int fgHover: 7
 	property int bgPress: 2
 	property int fgPress: 6
-	property int bgUnselected: 5
-	property int fgUnselected: 8
-	property int bgUnselectedHover: 4
-	property int fgUnselectedHover: 7
 	property string s: ""
-	property bool unselected: false
+	property bool notify: false
 	
 	layer.enabled: true
 	x: 0.5 * (Resizer.appWindowWidth - Resizer.renderSpaceWidth)
@@ -30,34 +26,42 @@ Button{
 	
 	function updateInteraction(){
 		if(pressed){
-			bgNow = bgPress;
-			fgNow = fgPress;
-		}
-		else if(unselected){
-			if(hovered){
-				bgNow = bgUnselectedHover;
-				fgNow = fgUnselectedHover;
+			if(notify == false){
+				bgNow = bgPress;
+				fgNow = fgPress;
 			}
 			else{
-				bgNow = bgUnselected;
-				fgNow = fgUnselected;
+				bgNow = fgPress;
+				fgNow = bgPress;
 			}
 		}
 		else{
 			if(hovered){
-				bgNow = bgHover;
-				fgNow = fgHover;
+				if(notify == false){
+					bgNow = bgHover;
+					fgNow = fgHover;
+				}
+				else{
+					bgNow = fgHover;
+					fgNow = bgHover;
+				}
 			}
 			else{
-				bgNow = bg;
-				fgNow = fg;
+				if(notify == false){
+					bgNow = bg;
+					fgNow = fg;
+				}
+				else{
+					bgNow = fg;
+					fgNow = bg;
+				}
 			}
 		}
 	}
 	
 	onPressedChanged: updateInteraction()
 	onHoveredChanged: updateInteraction();
-	onUnselectedChanged: updateInteraction();
+	onNotifyChanged: updateInteraction();
 	
 	function emitClickedSignal(){
 		if(objectName == "0"){objectName = "1";}

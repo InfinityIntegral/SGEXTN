@@ -15,6 +15,7 @@ public:
     static QTimer* timer; // instance of recurring timer to manage status bar
     static int secondsLeft; // number of seconds left in notification
     static void notify(const QString& notificationMessage, int timeInSeconds); // function to send a notification into the status bar
+    static bool isNotifying;
 signals:
     void nothingChanged();
 public slots:
