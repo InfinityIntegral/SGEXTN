@@ -56,6 +56,7 @@ SOURCES = SGEXTN/misc/main.cpp \
     SGEXTN/primitives/sgxtimestamp.cpp \
     SGEXTN/primitives/sgxtouchevent.cpp \
     SGEXTN/primitives/sgxvector2.cpp \
+    SGEXTN/quickui/sgxquickinterface.cpp \
     SGEXTN/quickui/sgxquickresizer.cpp \
     SGEXTN/quickui/sgxquickuiinterface.cpp \
     SGEXTN/quickui/sgxthemecoloursetting.cpp \
@@ -65,6 +66,7 @@ SOURCES = SGEXTN/misc/main.cpp \
     SGEXTN/template/sgxthemecolourspage.cpp \
     SGEXTN/template/sgxvesiclepropertiespage.cpp \
     SGEXTN/userDefinedClasses/sgucentralmanagement.cpp \
+    SGEXTN/widgets/sgwroot.cpp \
     SGEXTN/widgets/sgwtype.cpp \
     SGEXTN/widgets/sgwwidget.cpp
 RESOURCES = SGEXTN/assets.qrc
@@ -107,6 +109,7 @@ HEADERS += \
     SGEXTN/primitives/sgxtimestamp.h \
     SGEXTN/primitives/sgxtouchevent.h \
     SGEXTN/primitives/sgxvector2.h \
+    SGEXTN/quickui/sgxquickinterface.h \
     SGEXTN/quickui/sgxquickresizer.h \
     SGEXTN/quickui/sgxquickuiinterface.h \
     SGEXTN/quickui/sgxthemecoloursetting.h \
@@ -116,5 +119,6 @@ HEADERS += \
     SGEXTN/template/sgxthemecolourspage.h \
     SGEXTN/template/sgxvesiclepropertiespage.h \
     SGEXTN/userDefinedClasses/sgucentralmanagement.h \
+    SGEXTN/widgets/sgwroot.h \
     SGEXTN/widgets/sgwtype.h \
     SGEXTN/widgets/sgwwidget.h

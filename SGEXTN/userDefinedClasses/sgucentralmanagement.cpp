@@ -43,12 +43,10 @@ float SGUCentralManagement::cuteVesiclesCenterTransparency = 0.1f;
 float SGUCentralManagement::cuteVesiclesEdgeTransparency = 0.05f;
 float SGUCentralManagement::cuteVesiclesMembraneTransparency = 0.2f;
 float SGUCentralManagement::cuteVesiclesFrameRate = 10.0f;
-#include "../quickui/sgxquickuiinterface.h"
-#include "../SingCorrect/sgxsingcorrectconfigspage.h"
+
 // this is run immediately after GUI is created, use it to initialise the UI
 void SGUCentralManagement::initialise(){
-    SGXQuickUIInterface::createInputField(SGXQuickUIInterface::parentWidget, 0.0f, 0.5f, 0.0f, 0.5f, 1.0f, -1.0f, 0.0f, 1.0f);
-    SGXQuickUIInterface::createTextButton(SGXQuickUIInterface::parentWidget, "SingCorrect configs", &SGXSingCorrectConfigsPage::activate, 0.0f, 0.5f, 0.0f, 2.0f, 1.0f, -1.0f, 0.0f, 1.0f);
+    
 }
 
 // this is run after the application is created but before the GUI, use it to edit theme colours from configuration files

@@ -46,7 +46,8 @@ public:
     [[nodiscard]] float getParentH0() const;
     void updateSizeReferences();
     void updateParentSize();
-private:
+    static SGWWidget* rootWidget;
+protected:
     SGWType::Type type;
     SGWWidget* parent;
     QSet<SGWWidget*> children;

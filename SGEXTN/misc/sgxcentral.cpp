@@ -3,7 +3,6 @@
 #include <QCoreApplication>
 #include <QList>
 #include "../quickui/sgxthemecoloursetting.h"
-#include "../quickui/sgxquickuiinterface.h"
 #include "../quickui/sgxquickresizer.h"
 #include <QQuickWindow>
 #include <QIcon>
@@ -26,6 +25,7 @@
 #include "../SingCorrect/sgxsingcorrectcore.h"
 #include "../SingCorrect/sgxsingcorrectquickinterface.h"
 #include "../SingCorrect/sgxsingcorrectcustomisation.h"
+#include "../quickui/sgxquickinterface.h"
 
 void SGXCentral::initialise(){
     SGXFileSystem::rootFilePath = SGXFileSystem::joinFilePaths(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation), SGUCentralManagement::rootFolderName);
@@ -47,10 +47,10 @@ void SGXCentral::initialise(){
     SGXThemeColoursCustomisation::loadThemeColours();
     SGXVesiclesPropertiesCustomisation::loadVesicleProperties();
     
-    SGXQuickUIInterface::themeColoursInstance = new SGXThemeColourSetting();
-    qmlRegisterSingletonInstance("ThemeColours", 0, 0, "ThemeColours", SGXQuickUIInterface::themeColoursInstance);
-    SGXQuickUIInterface::resizerInstance = new SGXQuickResizer();
-    qmlRegisterSingletonInstance("Resizer", 0, 0, "Resizer", SGXQuickUIInterface::resizerInstance);
+    SGXQuickInterface::themeColoursSingleton = new SGXThemeColourSetting();
+    qmlRegisterSingletonInstance("ThemeColours", 0, 0, "ThemeColours", SGXQuickInterface::themeColoursSingleton);
+    SGXQuickInterface::resizerSingleton = new SGXQuickResizer();
+    qmlRegisterSingletonInstance("Resizer", 0, 0, "Resizer", SGXQuickInterface::resizerSingleton);
     SGXSingCorrectCore::instance = new SGXSingCorrectQuickInterface();
     qmlRegisterSingletonInstance("SingCorrect", 0, 0, "SingCorrect", SGXSingCorrectCore::instance);
     
@@ -60,8 +60,9 @@ void SGXCentral::initialise(){
     qmlRegisterType<SGXRenderColourPickerLightnessChoiceQuickUIElement>("ColourPickerLightnessChoice", 0, 0, "ColourPickerLightnessChoice");
     qmlRegisterType<SGXRenderColourPickerTransparencyChoiceQuickUIElement>("ColourPickerTransparencyChoice", 0, 0, "ColourPickerTransparencyChoice");
     qmlRegisterType<SGXRenderColourBackgroundQuickUIElement>("ColourBackground", 0, 0, "ColourBackground");
+    
     SGUCentralManagement::initialiseCustomRendering();
-    (*SGXQuickUIInterface::e).load(":/SGEXTN/QML/root.qml");
+    (*SGXQuickInterface::e).load(":/SGEXTN/QML/root.qml");
     SGXCuteVesicles::framesPerSecond = SGUCentralManagement::cuteVesiclesFrameRate;
     
     connect(qApp, &QGuiApplication::aboutToQuit, &SGXCentral::terminate); // NOLINT(cppcoreguidelines-pro-type-static-cast-downcast)
@@ -69,13 +70,13 @@ void SGXCentral::initialise(){
     QFontDatabase::addApplicationFont(":/SGEXTN/assets/AppIcons.sg");
     SGUCentralManagement::initialiseExtraFonts();
     
-    SGXQuickUIInterface::applicationWindow = qobject_cast<QQuickWindow*>((*SGXQuickUIInterface::e).rootObjects().first());
-    SGXQuickUIInterface::rootWindow = (*SGXQuickUIInterface::applicationWindow).contentItem();
-    connect(SGXQuickUIInterface::rootWindow, &QQuickItem::widthChanged, SGXQuickUIInterface::resizerInstance, &SGXQuickResizer::updateAppWindowSize);
-    connect(SGXQuickUIInterface::rootWindow, &QQuickItem::heightChanged, SGXQuickUIInterface::resizerInstance, &SGXQuickResizer::updateAppWindowSize);
-    SGXQuickUIInterface::initialise();
-    SGXQuickUIInterface::buildTemplate();
-    (*SGXQuickUIInterface::resizerInstance).updateAppWindowSize();
+    SGXQuickInterface::applicationWindow = qobject_cast<QQuickWindow*>((*SGXQuickInterface::e).rootObjects().first());
+    SGXQuickInterface::rootWindow = (*SGXQuickInterface::applicationWindow).contentItem();
+    connect(SGXQuickInterface::rootWindow, &QQuickItem::widthChanged, SGXQuickInterface::resizerSingleton, &SGXQuickResizer::updateAppWindowSize);
+    connect(SGXQuickInterface::rootWindow, &QQuickItem::heightChanged, SGXQuickInterface::resizerSingleton, &SGXQuickResizer::updateAppWindowSize);
+    SGXQuickInterface::createTemplates();
+    SGXQuickInterface::buildBase();
+    (*SGXQuickInterface::resizerSingleton).updateAppWindowSize();
     
     SGXSingCorrectCore::initialise();
     SGXSingCorrectCustomisation::loadFileData();
@@ -86,5 +87,8 @@ void SGXCentral::initialise(){
 void SGXCentral::terminate(){
     SGUCentralManagement::terminate();
     SGXSingCorrectCore::terminate();
-    SGXQuickUIInterface::terminate();
+    SGXQuickInterface::deleteTemplates();
+    SGXQuickInterface::deleteSingletons();
+    (*SGXQuickInterface::applicationWindow).close();
+    (*SGXQuickInterface::applicationWindow).deleteLater();
 }

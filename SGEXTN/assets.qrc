@@ -40,5 +40,6 @@
         <file>QML/righttext.qml</file>
         <file>assets/AppIcons.sg</file>
         <file>assets/SingScript.sg</file>
+        <file>QML/sgwroot.qml</file>
     </qresource>
 </RCC>

@@ -1,5 +1,5 @@
 #include "sgxquickresizer.h"
-#include "../quickui/sgxquickuiinterface.h"
+#include "../quickui/sgxquickinterface.h"
 #include <algorithm>
 #include <qtmetamacros.h>
 
@@ -57,8 +57,8 @@ void SGXQuickResizer::setSizeUnit(float x){
 }
 
 void SGXQuickResizer::updateAppWindowSize(){
-    setAppWindowWidth(static_cast<float>((*SGXQuickUIInterface::rootWindow).width()));
-    setAppWindowHeight(static_cast<float>((*SGXQuickUIInterface::rootWindow).height()));
+    setAppWindowWidth(static_cast<float>((*SGXQuickInterface::rootWindow).width()));
+    setAppWindowHeight(static_cast<float>((*SGXQuickInterface::rootWindow).height()));
     if(appWindowWidth > 16.0f / 9.0f * appWindowHeight){
         setRenderSpaceWidth(16.0f / 9.0f * appWindowHeight);
         setRenderSpaceHeight(appWindowHeight);
