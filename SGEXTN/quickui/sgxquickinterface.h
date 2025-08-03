@@ -31,6 +31,7 @@ public:
     static QQmlComponent* scrollView;
     static QQmlComponent* textLabel;
     static QQmlComponent* iconLabel;
+    static QQmlComponent* longLabel;
 };
 
 #endif // SGXQUICKINTERFACE_H

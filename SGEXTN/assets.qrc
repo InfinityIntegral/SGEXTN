@@ -47,5 +47,6 @@
         <file>QML/sgwscrollview.qml</file>
         <file>QML/sgwtextlabel.qml</file>
         <file>QML/sgwiconlabel.qml</file>
+        <file>QML/sgwlonglabel.qml</file>
     </qresource>
 </RCC>
