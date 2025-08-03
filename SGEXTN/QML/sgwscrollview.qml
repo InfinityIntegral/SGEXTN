@@ -81,7 +81,7 @@ ScrollView{
 		
 		Rectangle{
 			property bool canParent: true
-			width: parent.width
+			width: parent.width - (s1 * (ph1 * Resizer.renderSpaceHeight + ph0 * Resizer.sizeUnit) + s0 * Resizer.sizeUnit)
 			height: Math.max(h1 * (ph1 * Resizer.renderSpaceHeight + ph0 * Resizer.sizeUnit) + h0 * Resizer.sizeUnit, i1 * (ph1 * Resizer.renderSpaceHeight + ph0 * Resizer.sizeUnit) + i0 * Resizer.sizeUnit)
 			color: getBg(utc, bg, bgc)
 		}

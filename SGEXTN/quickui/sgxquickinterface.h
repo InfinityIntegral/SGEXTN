@@ -29,6 +29,7 @@ public:
     static QQuickItem* getBottomObject(QQuickItem* topObject);
     static QQmlComponent* blankWidget;
     static QQmlComponent* scrollView;
+    static QQmlComponent* textLabel;
 };
 
 #endif // SGXQUICKINTERFACE_H
