@@ -20,12 +20,14 @@ SGXThemeColourSetting* SGXQuickInterface::themeColoursSingleton = nullptr;
 QQmlComponent* SGXQuickInterface::parentWidget = nullptr;
 QQmlComponent* SGXQuickInterface::statusBar = nullptr;
 QQmlComponent* SGXQuickInterface::blankWidget = nullptr;
+QQmlComponent* SGXQuickInterface::scrollView = nullptr;
 
 void SGXQuickInterface::createTemplates(){
     SGXQuickInterface::root = new QQmlComponent(SGXQuickInterface::e, ":/SGEXTN/QML/sgwroot.qml");
     SGXQuickInterface::parentWidget = new QQmlComponent(SGXQuickInterface::e, ":/SGEXTN/QML/sgwparent.qml");
     SGXQuickInterface::statusBar = new QQmlComponent(SGXQuickInterface::e, ":/SGEXTN/QML/sgwstatusbar.qml");
     SGXQuickInterface::blankWidget = new QQmlComponent(SGXQuickInterface::e, ":/SGEXTN/QML/sgwblankwidget.qml");
+    SGXQuickInterface::scrollView = new QQmlComponent(SGXQuickInterface::e, ":/SGEXTN/QML/sgwscrollview.qml");
 }
 
 void SGXQuickInterface::deleteTemplates(){
@@ -33,6 +35,7 @@ void SGXQuickInterface::deleteTemplates(){
     delete SGXQuickInterface::parentWidget;
     delete SGXQuickInterface::statusBar;
     delete SGXQuickInterface::blankWidget;
+    delete SGXQuickInterface::scrollView;
 }
 
 void SGXQuickInterface::buildBase(){

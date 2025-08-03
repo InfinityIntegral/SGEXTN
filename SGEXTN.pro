@@ -70,6 +70,7 @@ SOURCES = SGEXTN/misc/main.cpp \
     SGEXTN/widgets/sgwblankwidget.cpp \
     SGEXTN/widgets/sgwparent.cpp \
     SGEXTN/widgets/sgwroot.cpp \
+    SGEXTN/widgets/sgwscrollview.cpp \
     SGEXTN/widgets/sgwstatusbar.cpp \
     SGEXTN/widgets/sgwtype.cpp \
     SGEXTN/widgets/sgwwidget.cpp
@@ -127,6 +128,7 @@ HEADERS += \
     SGEXTN/widgets/sgwblankwidget.h \
     SGEXTN/widgets/sgwparent.h \
     SGEXTN/widgets/sgwroot.h \
+    SGEXTN/widgets/sgwscrollview.h \
     SGEXTN/widgets/sgwstatusbar.h \
     SGEXTN/widgets/sgwtype.h \
     SGEXTN/widgets/sgwwidget.h

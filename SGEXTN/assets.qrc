@@ -44,5 +44,6 @@
         <file>QML/sgwparent.qml</file>
         <file>QML/sgwstatusbar.qml</file>
         <file>QML/sgwblankwidget.qml</file>
+        <file>QML/sgwscrollview.qml</file>
     </qresource>
 </RCC>
