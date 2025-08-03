@@ -68,6 +68,7 @@ SOURCES = SGEXTN/misc/main.cpp \
     SGEXTN/userDefinedClasses/sgucentralmanagement.cpp \
     SGEXTN/widgets/sgwbackground.cpp \
     SGEXTN/widgets/sgwblankwidget.cpp \
+    SGEXTN/widgets/sgwiconlabel.cpp \
     SGEXTN/widgets/sgwlabel.cpp \
     SGEXTN/widgets/sgwparent.cpp \
     SGEXTN/widgets/sgwroot.cpp \
@@ -128,6 +129,7 @@ HEADERS += \
     SGEXTN/userDefinedClasses/sgucentralmanagement.h \
     SGEXTN/widgets/sgwbackground.h \
     SGEXTN/widgets/sgwblankwidget.h \
+    SGEXTN/widgets/sgwiconlabel.h \
     SGEXTN/widgets/sgwlabel.h \
     SGEXTN/widgets/sgwparent.h \
     SGEXTN/widgets/sgwroot.h \

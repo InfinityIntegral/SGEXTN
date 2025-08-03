@@ -30,6 +30,7 @@ public:
     static QQmlComponent* blankWidget;
     static QQmlComponent* scrollView;
     static QQmlComponent* textLabel;
+    static QQmlComponent* iconLabel;
 };
 
 #endif // SGXQUICKINTERFACE_H
