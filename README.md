@@ -6,13 +6,13 @@ This project is WORK IN PROGRESS and should not be used for software development
 SGEXTN is designed to be a framework + app template built on top of Qt to simplify development of GUI apps.
 
 versions list:  
-SGEXTN v1: primitives and rendering based on QWidget (great architecture, but slow because QWidget does not use GPU)  
-SGEXTN v2: added dynamic widget creation based on Qt Quick, file system, basic customisation (less powerful due to loss of classes, QML lookup overhead)  
-SGEXTN v3: added colour picker (same issues as v2)  
-SGEXTN v4: added SingCorrect module (same issues as v2)  
-SGEXTN v5 (planned): same architecture as v1 but uses Qt Quick (supposed to be suitable for development use)
+SGEXTN v1.0.0: primitives and rendering based on QWidget (great architecture, but slow because QWidget does not use GPU)  
+SGEXTN v2.0.0: added dynamic widget creation based on Qt Quick, file system, basic customisation (less powerful due to loss of classes, QML lookup overhead)  
+SGEXTN v3.0.0: added colour picker (same issues as v2.0.0)  
+SGEXTN v4.0.0: added SingCorrect module (same issues as v2.0.0)  
+SGEXTN v5.0.0 (planned): same architecture as v1 but uses Qt Quick (supposed to be suitable for development use)
 
-## Completed Features (available in v4)
+## Completed Features (available in v4.0.0)
 - [x] C++ primitives extensions
 	- [x] SGXColourRGBA (RGBA representation of a colour with 8 bits per channel, wraps unsigned int)
 	- [x] SGXColourHSLA (HSLA representation of a colour with 8 bits per channel, contains 4 floats)
@@ -51,7 +51,7 @@ SGEXTN v5 (planned): same architecture as v1 but uses Qt Quick (supposed to be s
 - [x] builtin customisation
 - [x] working application template
 
-## planned for SGEXTN v5
+## planned for SGEXTN v5.0.0
 - [ ] class based GUI set with structure closely mirroring SGEXTN v1
 	- [ ] SGWWidget
 		- [x] SGWRoot
@@ -82,11 +82,11 @@ SGEXTN v5 (planned): same architecture as v1 but uses Qt Quick (supposed to be s
 - [ ] improved SingCorrect configs page
 - [ ] SGXTimer (wrapper around QTimer to eliminate need for signal-slot, with single use version)
 
-SGEXTN v5 will cover all functionalities in previous versions, so there would be no reason to use v1 because of missing stuff. 
+SGEXTN v5.0.0 will cover all functionalities in previous versions, so there would be no reason to use v1 because of missing stuff. 
 
-SGEXTN v5 would also completely hide any trace of QML usage, so you will not have to use QObject::setProperty yourself or listen to QQuickItem::opacityChanged to get colour picker output.
+SGEXTN v5.0.0 would also completely hide any trace of QML usage, so you will not have to use QObject::setProperty yourself or listen to QQuickItem::opacityChanged to get colour picker output.
 
-By design, SGEXTN v5 will be weaker than raw Qt significantly in terms of customisation. However, greater control is provided compared to any previous version.
+By design, SGEXTN v5.0.0 will be weaker than raw Qt significantly in terms of customisation. However, greater control is provided compared to any previous version.
 
 ## Credits
 - Qt (https://www.qt.io/)
