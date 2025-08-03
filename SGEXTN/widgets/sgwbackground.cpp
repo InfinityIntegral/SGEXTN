@@ -11,10 +11,6 @@ SGWBackground::SGWBackground(SGWWidget *parent, float x1, float x0, float y1, fl
     (*this).frequentlyUsed = frequentlyUsed;
 }
 
-bool SGWBackground::isUsingThemeColour() const {
-    return usingTheme;
-}
-
 int SGWBackground::getThemeColour(bool *isUsing) const {
     if(isUsing != nullptr){
         if(usingTheme == true){(*isUsing) = true;}

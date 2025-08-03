@@ -30,18 +30,4 @@ Rectangle{
     width: w1 * (pw1 * Resizer.renderSpaceWidth + pw0 * Resizer.sizeUnit) + w0 * Resizer.sizeUnit
     height: h1 * (ph1 * Resizer.renderSpaceHeight + ph0 * Resizer.sizeUnit) + h0 * Resizer.sizeUnit
     color: getBg(utc, bg, bgc)
-	
-	MultiPointTouchArea{
-		x: 0
-		y: 0
-		width: parent.width
-		height: parent.height
-	}
-	MouseArea{
-		x: 0
-		y: 0
-		width: parent.width
-		height: parent.height
-		hoverEnabled: true
-	}
 }
