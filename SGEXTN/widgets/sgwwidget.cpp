@@ -10,7 +10,6 @@ SGWWidget* SGWWidget::parentWidget = nullptr;
 
 SGWWidget::SGWWidget(SGWWidget* parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0){
     (*this).type = SGWType::Undefined;
-    (*this).parent = nullptr;
     (*this).children = QSet<SGWWidget*>();
     (*this).topObject = nullptr;
     (*this).bottomObject = nullptr;
@@ -40,9 +39,8 @@ SGWWidget::SGWWidget(SGWWidget* parent, float x1, float x0, float y1, float y0, 
 
 SGWWidget::~SGWWidget(){
     if(parent != nullptr){(*parent).children.remove(this);}
-    for(QSet<SGWWidget*>::iterator i = children.begin(); i != children.end(); i++){delete (*i);}
-    delete topObject;
-    QObject::~QObject();
+    for(QSet<SGWWidget*>::iterator i = children.begin(); i != children.end(); i++){(*(*i)).deleteLater();}
+    (*topObject).deleteLater();
 }
 
 SGWType::Type SGWWidget::getType() const {

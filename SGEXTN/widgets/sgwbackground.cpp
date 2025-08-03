@@ -54,3 +54,21 @@ void SGWBackground::syncQuickProperties(){
 bool SGWBackground::getVisible() const {
     return visible;
 }
+
+void SGWBackground::enable(SGWBackground *&thisPointer, SGWBackground *(*initFunction)(), void (*resetFunction)()){
+    if(thisPointer == nullptr){thisPointer = initFunction();}
+    (*(*thisPointer).getTopObject()).setVisible(true);
+    (*thisPointer).visible = true;
+    resetFunction();
+}
+
+void SGWBackground::disable(SGWBackground *&thisPointer){
+    if((*thisPointer).frequentlyUsed == true){
+        (*(*thisPointer).getTopObject()).setVisible(false);
+        (*thisPointer).visible = false;
+    }
+    else{
+        (*thisPointer).deleteLater();
+        thisPointer = nullptr;
+    }
+}

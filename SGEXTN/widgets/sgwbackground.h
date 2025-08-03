@@ -18,6 +18,8 @@ public:
     void syncQuickProperties();
     [[nodiscard]] bool getVisible() const;
     bool frequentlyUsed;
+    static void enable(SGWBackground*& thisPointer, SGWBackground* (*initFunction)(), void (*resetFunction)());
+    static void disable(SGWBackground*& thisPointer);
 protected:
     bool usingTheme;
     int themeColour;

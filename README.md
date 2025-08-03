@@ -58,7 +58,7 @@ SGEXTN v5 (planned): same architecture as v1 but uses Qt Quick (supposed to be s
 		- [x] SGWParent
 		- [x] SGWStatusBar
 		- [ ] SGWBackground
-			- [ ] SGWBlankWidget
+			- [x] SGWBlankWidget
 			- [ ] SGWScrollView
 		- [ ] SGWLabel
 			- [ ] SGWTextLabel
