@@ -1,9 +1,10 @@
-SPDX-License-Identifier: LGPL-3.0-or-later
-
 Copyright (c) 2025 - 05524F.sg (Singapore)
-kinesin walking on microtubules
-I am not blur
-细胞爆炸 (cytolysis)
+
+This project uses the Qt framework under the terms of the GNU Lesser General Public License v3 (LGPL v3).
+See https://doc.qt.io/qt-6/lgpl.html for more information.
+
+This framework or application (depends on how you view it) dynamically links against the Qt framework.
+In compliance with LGPL v3, users may relink or replace the Qt libraries.
 
 GNU LESSER GENERAL PUBLIC LICENSE
 Version 3, 29 June 2007
