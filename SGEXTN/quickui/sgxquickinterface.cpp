@@ -20,6 +20,7 @@ SGXThemeColourSetting* SGXQuickInterface::themeColoursSingleton = nullptr;
 QQmlComponent* SGXQuickInterface::parentWidget = nullptr;
 QQmlComponent* SGXQuickInterface::statusBar = nullptr;
 QQmlComponent* SGXQuickInterface::blankWidget = nullptr;
+QQmlComponent* SGXQuickInterface::pageBackground = nullptr;
 QQmlComponent* SGXQuickInterface::scrollView = nullptr;
 QQmlComponent* SGXQuickInterface::textLabel = nullptr;
 QQmlComponent* SGXQuickInterface::iconLabel = nullptr;
@@ -30,6 +31,7 @@ void SGXQuickInterface::createTemplates(){
     SGXQuickInterface::parentWidget = new QQmlComponent(SGXQuickInterface::e, ":/SGEXTN/QML/sgwparent.qml");
     SGXQuickInterface::statusBar = new QQmlComponent(SGXQuickInterface::e, ":/SGEXTN/QML/sgwstatusbar.qml");
     SGXQuickInterface::blankWidget = new QQmlComponent(SGXQuickInterface::e, ":/SGEXTN/QML/sgwblankwidget.qml");
+    SGXQuickInterface::pageBackground = new QQmlComponent(SGXQuickInterface::e, ":/SGEXTN/QML/sgwpagebackground.qml");
     SGXQuickInterface::scrollView = new QQmlComponent(SGXQuickInterface::e, ":/SGEXTN/QML/sgwscrollview.qml");
     SGXQuickInterface::textLabel = new QQmlComponent(SGXQuickInterface::e, ":/SGEXTN/QML/sgwtextlabel.qml");
     SGXQuickInterface::iconLabel = new QQmlComponent(SGXQuickInterface::e, ":/SGEXTN/QML/sgwiconlabel.qml");
@@ -41,6 +43,7 @@ void SGXQuickInterface::deleteTemplates(){
     delete SGXQuickInterface::parentWidget;
     delete SGXQuickInterface::statusBar;
     delete SGXQuickInterface::blankWidget;
+    delete SGXQuickInterface::pageBackground;
     delete SGXQuickInterface::scrollView;
     delete SGXQuickInterface::textLabel;
     delete SGXQuickInterface::iconLabel;

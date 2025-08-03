@@ -10,6 +10,7 @@ public:
         Parent,
         StatusBar,
         BlankWidget,
+        PageBackground,
         TextLabel,
         IconLabel,
         LongLabel,
