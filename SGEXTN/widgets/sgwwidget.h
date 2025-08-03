@@ -47,6 +47,7 @@ public:
     void updateParentSizeNoPush();
     void updateParentSize();
     void syncQuickProperties();
+    void initialiseQuickItemReferences(QQuickItem* thisItem);
     static SGWWidget* rootWidget;
     static SGWWidget* parentWidget;
 protected:

@@ -5,6 +5,7 @@
 #include <QQuickItem>
 #include <QObject>
 #include "sgwscrollview.h"
+#include "../quickui/sgxquickinterface.h"
 
 SGWWidget* SGWWidget::rootWidget = nullptr;
 SGWWidget* SGWWidget::parentWidget = nullptr;
@@ -35,6 +36,13 @@ SGWWidget::~SGWWidget(){
     for(QSet<SGWWidget*>::iterator i = children.begin(); i != children.end(); i++){delete (*i);}
     delete topObject;
     if(parent != nullptr){(*parent).children.remove(this);}
+}
+
+void SGWWidget::initialiseQuickItemReferences(QQuickItem *thisItem){
+    (*thisItem).setParentItem((*parent).getBottomObject());
+    (*thisItem).setParent((*parent).getBottomObject());
+    (*this).topObject = thisItem;
+    (*this).bottomObject = SGXQuickInterface::getBottomObject(thisItem);
 }
 
 SGWType::Type SGWWidget::getType() const {

@@ -24,11 +24,8 @@ SGWLongLabel::SGWLongLabel(SGWWidget *parent, const QString &s, float x1, float 
     (*this).scrollbarForegroundFocusThemeColour = 4;
     (*this).scrollbarForegroundFocusColour = (*SGXQuickInterface::themeColoursSingleton).getThemeColour((*this).scrollbarForegroundFocusThemeColour);
     QQuickItem* thisItem = qobject_cast<QQuickItem*>((*SGXQuickInterface::longLabel).create());
-    (*thisItem).setParentItem((*parent).getBottomObject());
-    (*thisItem).setParent((*parent).getBottomObject());
+    (*this).initialiseQuickItemReferences(thisItem);
     (*this).type = SGWType::LongLabel;
-    (*this).topObject = thisItem;
-    (*this).bottomObject = SGXQuickInterface::getBottomObject(thisItem);
     SGWWidget::syncQuickProperties();
     SGWLabel::syncQuickProperties();
     SGWLongLabel::syncQuickProperties();

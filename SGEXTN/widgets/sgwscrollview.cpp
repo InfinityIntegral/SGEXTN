@@ -25,11 +25,8 @@ SGWScrollView::SGWScrollView(SGWWidget *parent, float x1, float x0, float y1, fl
     (*this).scrollbarForegroundFocusThemeColour = 4;
     (*this).scrollbarForegroundFocusColour = (*SGXQuickInterface::themeColoursSingleton).getThemeColour((*this).scrollbarForegroundFocusThemeColour);
     QQuickItem* thisItem = qobject_cast<QQuickItem*>((*SGXQuickInterface::scrollView).create());
-    (*thisItem).setParentItem((*parent).getBottomObject());
-    (*thisItem).setParent((*parent).getBottomObject());
+    (*this).initialiseQuickItemReferences(thisItem);
     (*this).type = SGWType::ScrollView;
-    (*this).topObject = thisItem;
-    (*this).bottomObject = SGXQuickInterface::getBottomObject(thisItem);
     SGWWidget::syncQuickProperties();
     SGWBackground::syncQuickProperties();
     SGWScrollView::syncQuickProperties();
