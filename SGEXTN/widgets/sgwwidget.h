@@ -44,6 +44,7 @@ public:
     [[nodiscard]] float getParentH1() const;
     [[nodiscard]] float getParentH0() const;
     void updateSizeReferences();
+    void updateParentSizeNoPush();
     void updateParentSize();
     void syncQuickProperties();
     static SGWWidget* rootWidget;

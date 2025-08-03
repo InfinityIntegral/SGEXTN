@@ -43,14 +43,10 @@ float SGUCentralManagement::cuteVesiclesCenterTransparency = 0.1f;
 float SGUCentralManagement::cuteVesiclesEdgeTransparency = 0.05f;
 float SGUCentralManagement::cuteVesiclesMembraneTransparency = 0.2f;
 float SGUCentralManagement::cuteVesiclesFrameRate = 10.0f;
-#include "../widgets/sgwtextlabel.h"
-#include "../widgets/sgwscrollview.h"
+
 // this is run immediately after GUI is created, use it to initialise the UI
 void SGUCentralManagement::initialise(){
-    SGWWidget* x = new SGWScrollView(SGWWidget::parentWidget, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 5.0f, 0.0f, 0.5f, 4, false);
-    new SGWTextLabel(x, "may the good we achieve", 0.0f, 0.5f, 0.0f, 0.5f, 1.0f, -1.0f, 0.0f, 1.0f, SGWLabel::AlignLeft);
-    new SGWTextLabel(x, "as one nation", 0.0f, 0.5f, 0.0f, 2.0f, 1.0f, -1.0f, 0.0f, 1.0f, SGWLabel::AlignHCenter);
-    new SGWTextLabel(x, "be shared with the world", 0.0f, 0.5f, 0.0f, 3.5f, 1.0f, -1.0f, 0.0f, 1.0f, SGWLabel::AlignRight);
+    
 }
 
 // this is run after the application is created but before the GUI, use it to edit theme colours from configuration files

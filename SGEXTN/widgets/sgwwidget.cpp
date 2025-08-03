@@ -4,6 +4,7 @@
 #include <qcontainerfwd.h>
 #include <QQuickItem>
 #include <QObject>
+#include "sgwscrollview.h"
 
 SGWWidget* SGWWidget::rootWidget = nullptr;
 SGWWidget* SGWWidget::parentWidget = nullptr;
@@ -21,20 +22,13 @@ SGWWidget::SGWWidget(SGWWidget* parent, float x1, float x0, float y1, float y0, 
     (*this).w0 = w0;
     (*this).h1 = h1;
     (*this).h0 = h0;
+    (*this).parentW1 = 0.0f;
+    (*this).parentW0 = 0.0f;
+    (*this).parentH1 = 0.0f;
+    (*this).parentH0 = 0.0f;
     (*this).parent = parent;
-    if((*this).parent == nullptr){
-        (*this).parentW1 = 1.0f;
-        (*this).parentW0 = 0.0f;
-        (*this).parentH1 = 1.0f;
-        (*this).parentH0 = 0.0f;
-    }
-    else{
-        (*(*this).parent).children.insert(this);
-        (*this).parentW1 = (*(*this).parent).w1 * (*(*this).parent).parentW1;
-        (*this).parentW0 = (*(*this).parent).w1 * (*(*this).parent).parentW0 + (*(*this).parent).w0;
-        (*this).parentH1 = (*(*this).parent).h1 * (*(*this).parent).parentH1;
-        (*this).parentH0 = (*(*this).parent).h1 * (*(*this).parent).parentH0 + (*(*this).parent).h0;
-    }
+    if((*this).parent != nullptr){(*(*this).parent).children.insert(this);}
+    updateParentSizeNoPush();
 }
 
 SGWWidget::~SGWWidget(){
@@ -172,7 +166,7 @@ void SGWWidget::updateSizeReferences(){ // NOLINT(misc-no-recursion)
     }
 }
 
-void SGWWidget::updateParentSize(){
+void SGWWidget::updateParentSizeNoPush(){
     if(parent == nullptr){
         (*this).parentW1 = 1.0f;
         (*this).parentW0 = 0.0f;
@@ -180,11 +174,28 @@ void SGWWidget::updateParentSize(){
         (*this).parentH0 = 0.0f;
     }
     else{
-        (*this).parentW1 = (*parent).w1 * (*parent).parentW1;
-        (*this).parentW0 = (*parent).w1 * (*parent).parentW0 + (*parent).w0;
-        (*this).parentH1 = (*parent).h1 * (*parent).parentH1;
-        (*this).parentH0 = (*parent).h1 * (*parent).parentH0 + (*parent).h0;
+        SGWScrollView* parentScrollView = qobject_cast<SGWScrollView*>(parent);
+        if(parentScrollView != nullptr){
+            const float scrollViewW1 = (*parentScrollView).w1 - (*parentScrollView).getS1();
+            const float scrollViewW0 = (*parentScrollView).w0 - (*parentScrollView).getS0();
+            const float scrollViewH1 = (*parentScrollView).getI1();
+            const float scrollViewH0 = (*parentScrollView).getI0();
+            (*this).parentW1 = scrollViewW1 * (*parent).parentW1;
+            (*this).parentW0 = scrollViewW1 * (*parent).parentW0 + scrollViewW0;
+            (*this).parentH1 = scrollViewH1 * (*parent).parentH1;
+            (*this).parentH0 = scrollViewH1 * (*parent).parentH0 + scrollViewH0;
+        }
+        else{
+            (*this).parentW1 = (*parent).w1 * (*parent).parentW1;
+            (*this).parentW0 = (*parent).w1 * (*parent).parentW0 + (*parent).w0;
+            (*this).parentH1 = (*parent).h1 * (*parent).parentH1;
+            (*this).parentH0 = (*parent).h1 * (*parent).parentH0 + (*parent).h0;
+        }
     }
+}
+
+void SGWWidget::updateParentSize(){
+    updateParentSizeNoPush();
     (*(*this).topObject).setProperty("pw1", (*this).parentW1);
     (*(*this).topObject).setProperty("pw0", (*this).parentW0);
     (*(*this).topObject).setProperty("ph1", (*this).parentH1);
