@@ -51,5 +51,6 @@
         <file>QML/sgwpagebackground.qml</file>
         <file>QML/sgwtextbutton.qml</file>
         <file>QML/sgwiconbutton.qml</file>
+        <file>QML/sgwtextinput.qml</file>
     </qresource>
 </RCC>

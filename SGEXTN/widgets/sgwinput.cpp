@@ -75,6 +75,7 @@ void SGWInput::syncQuickProperties(){
 }
 
 void SGWInput::eventReceived(const QString &s){
+    if(s == "textChanged"){(*this).text = (*topObject).property("s").toString();}
     if(textChangedFunction != nullptr && s == "textChanged"){textChangedFunction(this);}
     else if(focusStartFunction != nullptr && s == "focusStart"){focusStartFunction(this);}
     else if(focusEndFunction != nullptr && s == "focusEnd"){focusEndFunction(this);}

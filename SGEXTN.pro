@@ -82,6 +82,7 @@ SOURCES = SGEXTN/misc/main.cpp \
     SGEXTN/widgets/sgwscrollview.cpp \
     SGEXTN/widgets/sgwstatusbar.cpp \
     SGEXTN/widgets/sgwtextbutton.cpp \
+    SGEXTN/widgets/sgwtextinput.cpp \
     SGEXTN/widgets/sgwtextlabel.cpp \
     SGEXTN/widgets/sgwtype.cpp \
     SGEXTN/widgets/sgwverticalalignment.cpp \
@@ -152,6 +153,7 @@ HEADERS += \
     SGEXTN/widgets/sgwscrollview.h \
     SGEXTN/widgets/sgwstatusbar.h \
     SGEXTN/widgets/sgwtextbutton.h \
+    SGEXTN/widgets/sgwtextinput.h \
     SGEXTN/widgets/sgwtextlabel.h \
     SGEXTN/widgets/sgwtype.h \
     SGEXTN/widgets/sgwverticalalignment.h \

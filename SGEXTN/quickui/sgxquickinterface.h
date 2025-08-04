@@ -35,6 +35,7 @@ public:
     static QQmlComponent* longLabel;
     static QQmlComponent* textButton;
     static QQmlComponent* iconButton;
+    static QQmlComponent* textInput;
 };
 
 #endif // SGXQUICKINTERFACE_H
