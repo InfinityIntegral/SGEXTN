@@ -3,10 +3,10 @@
 
 #include <qtmetamacros.h>
 #include "sgwwidget.h"
-#include "sgwlabel.h"
 #include <QString>
 #include "../primitives/sgxcolourrgba.h"
 #include "sgwhorizontalalignment.h"
+#include "sgwverticalalignment.h"
 
 class SGWButton : public SGWWidget
 {
@@ -28,8 +28,8 @@ public:
     void setFont(const QString& font);
     [[nodiscard]] SGWHorizontalAlignment::Flag getHorizontalAlignment() const;
     void setHorizontalAlignment(SGWHorizontalAlignment::Flag alignment);
-    [[nodiscard]] SGWLabel::VerticalAlignment getVerticalAlignment() const;
-    void setVerticalAlignment(SGWLabel::VerticalAlignment alignment);
+    [[nodiscard]] SGWVerticalAlignment::Flag getVerticalAlignment() const;
+    void setVerticalAlignment(SGWVerticalAlignment::Flag alignment);
     [[nodiscard]] bool getSelected() const;
     void setSelected(bool selected);
     [[nodiscard]] void (*getClickFunction() const)(SGWButton*);
@@ -92,7 +92,7 @@ protected:
     QString text;
     QString font;
     SGWHorizontalAlignment::Flag horizontalAlignment;
-    SGWLabel::VerticalAlignment verticalAlignment;
+    SGWVerticalAlignment::Flag verticalAlignment;
     void (*clickFunction)(SGWButton*);
     void (*pressFunction)(SGWButton*);
     void (*releaseFunction)(SGWButton*);

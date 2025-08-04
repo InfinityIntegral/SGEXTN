@@ -80,6 +80,7 @@ SOURCES = SGEXTN/misc/main.cpp \
     SGEXTN/widgets/sgwstatusbar.cpp \
     SGEXTN/widgets/sgwtextlabel.cpp \
     SGEXTN/widgets/sgwtype.cpp \
+    SGEXTN/widgets/sgwverticalalignment.cpp \
     SGEXTN/widgets/sgwwidget.cpp
 RESOURCES = SGEXTN/assets.qrc
 HEADERS += \
@@ -145,4 +146,5 @@ HEADERS += \
     SGEXTN/widgets/sgwstatusbar.h \
     SGEXTN/widgets/sgwtextlabel.h \
     SGEXTN/widgets/sgwtype.h \
+    SGEXTN/widgets/sgwverticalalignment.h \
     SGEXTN/widgets/sgwwidget.h

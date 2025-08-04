@@ -5,23 +5,17 @@
 #include "sgwwidget.h"
 #include "../primitives/sgxcolourrgba.h"
 #include <QString>
-#include <qnamespace.h>
 #include "sgwhorizontalalignment.h"
+#include "sgwverticalalignment.h"
 
 class SGWLabel : public SGWWidget
 {
     Q_OBJECT
 public:
-    enum VerticalAlignment{
-        AlignTop,
-        AlignVCenter,
-        AlignBottom
-    };
-    SGWLabel(SGWWidget* parent, const QString& s, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float f1, float f0, SGWHorizontalAlignment::Flag horizontalAlignment, SGWLabel::VerticalAlignment verticalAlignment, const QString& font);
+    SGWLabel(SGWWidget* parent, const QString& s, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float f1, float f0, SGWHorizontalAlignment::Flag horizontalAlignment, SGWVerticalAlignment::Flag verticalAlignment, const QString& font);
     static QString textFont;
     static QString iconsFont;
     void syncQuickProperties();
-    static Qt::AlignmentFlag verticalAlignmentToQtAlignmentFlag(SGWLabel::VerticalAlignment x);
     [[nodiscard]] float getF1() const;
     void setF1(float f1);
     [[nodiscard]] float getF0() const;
@@ -36,8 +30,8 @@ public:
     void setFont(const QString& font);
     [[nodiscard]] SGWHorizontalAlignment::Flag getHorizontalAlignment() const;
     void setHorizontalAlignment(SGWHorizontalAlignment::Flag alignment);
-    [[nodiscard]] SGWLabel::VerticalAlignment getVerticalAlignment() const;
-    void setVerticalAlignment(SGWLabel::VerticalAlignment alignment);
+    [[nodiscard]] SGWVerticalAlignment::Flag getVerticalAlignment() const;
+    void setVerticalAlignment(SGWVerticalAlignment::Flag alignment);
     [[nodiscard]] int getBackgroundThemeColour(bool* isUsing) const;
     void setBackgroundThemeColour(int themeColour);
     [[nodiscard]] SGXColourRGBA getBackgroundColour(bool* isUsing) const;
@@ -52,7 +46,7 @@ protected:
     QString text;
     QString font;
     SGWHorizontalAlignment::Flag horizontalAlignment;
-    SGWLabel::VerticalAlignment verticalAlignment;
+    SGWVerticalAlignment::Flag verticalAlignment;
     bool usingTheme;
     int backgroundThemeColour;
     SGXColourRGBA backgroundColour = {};
