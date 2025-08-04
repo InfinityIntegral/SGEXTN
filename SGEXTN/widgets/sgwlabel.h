@@ -31,13 +31,13 @@ public:
     void setF1(float f1);
     [[nodiscard]] float getF0() const;
     void setF0(float f0);
-    [[nodiscard]] const QString& getTextAsString() const;
+    [[nodiscard]] QString getTextAsString() const;
     [[nodiscard]] int getTextAsInt(bool* isValid, int minimum, int maximum) const;
     [[nodiscard]] float getTextAsFloat(bool* isValid, float minimum, float maximum) const;
     void setTextFromString(const QString& text);
     void setTextFromInt(int x);
     void setTextFromFloat(float x);
-    [[nodiscard]] const QString& getFont() const;
+    [[nodiscard]] QString getFont() const;
     void setFont(const QString& font);
     [[nodiscard]] SGWLabel::HorizontalAlignment getHorizontalAlignment() const;
     void setHorizontalAlignment(SGWLabel::HorizontalAlignment alignment);

@@ -66,7 +66,7 @@ void SGWLabel::setF0(float f0){
     (*(*this).topObject).setProperty("f0", (*this).f0);
 }
 
-const QString& SGWLabel::getTextAsString() const {
+QString SGWLabel::getTextAsString() const {
     return text;
 }
 
@@ -103,7 +103,7 @@ void SGWLabel::setTextFromFloat(float x){
     (*(*this).topObject).setProperty("s", (*this).text);
 }
 
-const QString& SGWLabel::getFont() const {
+QString SGWLabel::getFont() const {
     return font;
 }
 

@@ -14,16 +14,16 @@ SGEXTN v5.0.0 (planned): same architecture as v1 but uses Qt Quick (supposed to 
 
 ## Completed Features (available in v4.0.0)
 - [x] C++ primitives extensions
-	- [x] SGXColourRGBA (RGBA representation of a colour with 8 bits per channel, wraps unsigned int)
-	- [x] SGXColourHSLA (HSLA representation of a colour with 8 bits per channel, contains 4 floats)
-	- [x] SGXIdentifier (GUID with automatic registering, wraps QUuid)
-	- [x] SGXVector2 (a struct of 2 SGXFloats for 2D vectors)
-	- [x] SGXTimeStamp (a signed long long representing number of seconds since 19650809 123000)
-	- [x] SGXTouchEvent (representation of touch input from the user)
+	- [x] SGXColourRGBA
+	- [x] SGXColourHSLA
+	- [x] SGXIdentifier
+	- [x] SGXVector2
+	- [x] SGXTimeStamp
+	- [x] SGXTouchEvent
 - [x] Qt Quick components
-	- [x] SGXQuickResizer (manages resizing of app UI based on window size)
-	- [x] SGXThemeColourSetting (manages theme colours of the app)
-	- [x] SGXQuickUIInterface (contains methods to create and add components)
+	- [x] SGXQuickResizer
+	- [x] SGXThemeColourSetting
+	- [x] SGXQuickUIInterface
 		- [x] root widget of application
 		- [x] parent widget of application, where everything is rendered
 		- [x] non interactive widget displaying a solid colour
@@ -41,13 +41,13 @@ SGEXTN v5.0.0 (planned): same architecture as v1 but uses Qt Quick (supposed to 
 		- [x] colour picker
 		- [x] cute vesicles
 - [x] file system usage
-     - [x] SGXFileReader (struct allowing reading of all SGEXTN and C++ primitives from files with index seeking)
-	- [x] SGXFileWriter (struct allowing writing of all SGEXTN and C++ primitives to files with overwriting by index)
-	- [x] SGXFileSystem (non instantiatable struct with static methods for file system operations)
-	- [x] SGXFileBinUtilities (non instantiable struct with static methods for usage of the recycling bin)
-	- [x] SGXFileUploader (non instantiable struct with static methods for bringing in external files
-	- [x] SGXFileDownloader (non instantiable struct with static methods for saving application files externally)
-	- [x] SGXFileZipUtilities (non instantiable struct with static methods for creating and using zip files)
+     - [x] SGXFileReader
+	- [x] SGXFileWriter
+	- [x] SGXFileSystem
+	- [x] SGXFileBinUtilities
+	- [x] SGXFileUploader
+	- [x] SGXFileDownloader
+	- [x] SGXFileZipUtilities
 - [x] builtin customisation
 - [x] working application template
 
