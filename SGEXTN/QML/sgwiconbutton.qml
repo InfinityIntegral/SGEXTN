@@ -44,7 +44,7 @@ Button{
 	property real ph1: 0.0
 	property real ph0: 0.0
 	property string s: ""
-	property string f: "SingScript.sg"
+	property string f: "AppIcons.sg"
 	property int ha: 0
 	property int va: 0
 	property bool sel: false
@@ -52,7 +52,7 @@ Button{
 	x: x1 * (pw1 * Resizer.renderSpaceWidth + pw0 * Resizer.sizeUnit) + x0 * Resizer.sizeUnit
 	y: y1 * (ph1 * Resizer.renderSpaceHeight + ph0 * Resizer.sizeUnit) + y0 * Resizer.sizeUnit
 	width: w1 * (pw1 * Resizer.renderSpaceWidth + pw0 * Resizer.sizeUnit) + w0 * Resizer.sizeUnit
-    height: h1 * (ph1 * Resizer.renderSpaceHeight + ph0 * Resizer.sizeUnit) + h0 * Resizer.sizeUnit
+    height: h1 * (pw1 * Resizer.renderSpaceWidth + pw0 * Resizer.sizeUnit) + h0 * Resizer.sizeUnit
 	padding: 0
 	
 	function emitSignal(m){
@@ -145,7 +145,7 @@ Button{
 		width: parent.width
 		height: parent.height
 		text: s
-		font.pixelSize: f1 * (ph1 * Resizer.renderSpaceHeight + ph0 * Resizer.sizeUnit) + f0 * Resizer.sizeUnit
+		font.pixelSize: f1 * (pw1 * Resizer.renderSpaceWidth + pw0 * Resizer.sizeUnit) + f0 * Resizer.sizeUnit
 		font.family: f
 		horizontalAlignment: ha
 		verticalAlignment: va

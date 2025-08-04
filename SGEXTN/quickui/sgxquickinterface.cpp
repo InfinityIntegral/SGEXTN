@@ -26,6 +26,7 @@ QQmlComponent* SGXQuickInterface::textLabel = nullptr;
 QQmlComponent* SGXQuickInterface::iconLabel = nullptr;
 QQmlComponent* SGXQuickInterface::longLabel = nullptr;
 QQmlComponent* SGXQuickInterface::textButton = nullptr;
+QQmlComponent* SGXQuickInterface::iconButton = nullptr;
 
 void SGXQuickInterface::createTemplates(){
     SGXQuickInterface::root = new QQmlComponent(SGXQuickInterface::e, ":/SGEXTN/QML/sgwroot.qml");
@@ -38,6 +39,7 @@ void SGXQuickInterface::createTemplates(){
     SGXQuickInterface::iconLabel = new QQmlComponent(SGXQuickInterface::e, ":/SGEXTN/QML/sgwiconlabel.qml");
     SGXQuickInterface::longLabel = new QQmlComponent(SGXQuickInterface::e, ":/SGEXTN/QML/sgwlonglabel.qml");
     SGXQuickInterface::textButton = new QQmlComponent(SGXQuickInterface::e, ":/SGEXTN/QML/sgwtextbutton.qml");
+    SGXQuickInterface::iconButton = new QQmlComponent(SGXQuickInterface::e, ":/SGEXTN/QML/sgwiconbutton.qml");
 }
 
 void SGXQuickInterface::deleteTemplates(){
@@ -51,6 +53,7 @@ void SGXQuickInterface::deleteTemplates(){
     delete SGXQuickInterface::iconLabel;
     delete SGXQuickInterface::longLabel;
     delete SGXQuickInterface::textButton;
+    delete SGXQuickInterface::iconButton;
 }
 
 void SGXQuickInterface::buildBase(){

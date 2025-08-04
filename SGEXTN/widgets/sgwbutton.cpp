@@ -50,8 +50,8 @@ void SGWButton::syncQuickProperties(){
     (*topObject).setProperty("f0", f0);
     (*topObject).setProperty("s", text);
     (*topObject).setProperty("f", font);
-    (*topObject).setProperty("ha", horizontalAlignment);
-    (*topObject).setProperty("va", verticalAlignment);
+    (*topObject).setProperty("ha", SGWHorizontalAlignment::getQtFlag(horizontalAlignment));
+    (*topObject).setProperty("va", SGWVerticalAlignment::getQtFlag(verticalAlignment));
     (*topObject).setProperty("sel", selected);
     (*topObject).setProperty("utc", usingTheme);
     (*topObject).setProperty("bg", backgroundThemeColour);

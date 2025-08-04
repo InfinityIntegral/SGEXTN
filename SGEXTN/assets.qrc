@@ -50,5 +50,6 @@
         <file>QML/sgwlonglabel.qml</file>
         <file>QML/sgwpagebackground.qml</file>
         <file>QML/sgwtextbutton.qml</file>
+        <file>QML/sgwiconbutton.qml</file>
     </qresource>
 </RCC>
