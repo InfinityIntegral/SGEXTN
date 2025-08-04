@@ -9,8 +9,9 @@
 #include "sgwtype.h"
 #include "sgwhorizontalalignment.h"
 #include "sgwverticalalignment.h"
+#include "sgwdefaultfonts.h"
 
-SGWIconLabel::SGWIconLabel(SGWWidget *parent, const QChar &s, float x1, float x0, float y1, float y0, float w1, float w0) : SGWLabel(parent, QString(s), x1, x0, y1, y0, w1, w0, w1, w0, w1, w0, SGWHorizontalAlignment::Center, SGWVerticalAlignment::Center, SGWLabel::iconsFont){
+SGWIconLabel::SGWIconLabel(SGWWidget *parent, const QChar &s, float x1, float x0, float y1, float y0, float w1, float w0) : SGWLabel(parent, QString(s), x1, x0, y1, y0, w1, w0, w1, w0, w1, w0, SGWHorizontalAlignment::Center, SGWVerticalAlignment::Center, SGWDefaultFonts::iconsFont){
     (*this).textChar = s;
     QQuickItem* thisItem = qobject_cast<QQuickItem*>((*SGXQuickInterface::iconLabel).create());
     (*this).initialiseQuickItemReferences(thisItem);
