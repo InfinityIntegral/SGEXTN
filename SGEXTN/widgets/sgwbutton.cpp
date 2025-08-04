@@ -5,6 +5,7 @@
 #include "../primitives/sgxcolourrgba.h"
 #include "sgwhorizontalalignment.h"
 #include "sgwverticalalignment.h"
+#include <QQuickItem>
 
 SGWButton::SGWButton(SGWWidget *parent, const QString &s, void (*attachedFunction)(SGWButton*), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float f1, float f0, const QString& font) : SGWWidget(parent, x1, x0, y1, y0, w1, w0, h1, h0){
     (*this).f1 = f1;
@@ -77,6 +78,7 @@ void SGWButton::syncQuickProperties(){
     (*topObject).setProperty("bgfsc", backgroundFocusSelectedColour.getQColour());
     (*topObject).setProperty("fgfs", foregroundFocusSelectedThemeColour);
     (*topObject).setProperty("fgfsc", foregroundFocusSelectedColour.getQColour());
+    connect(topObject, &QQuickItem::objectNameChanged, this, &SGWButton::eventReceived);
 }
 
 void SGWButton::eventReceived(const QString &s){

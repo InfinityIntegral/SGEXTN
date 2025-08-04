@@ -33,6 +33,7 @@ public:
     static QQmlComponent* textLabel;
     static QQmlComponent* iconLabel;
     static QQmlComponent* longLabel;
+    static QQmlComponent* textButton;
 };
 
 #endif // SGXQUICKINTERFACE_H
