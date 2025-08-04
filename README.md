@@ -83,6 +83,8 @@ SGEXTN v5.0.0 (planned): same architecture as v1 but uses Qt Quick (supposed to 
 - [ ] improved theme customisation page
 - [ ] improved SingCorrect configs page
 - [ ] SGXTimer (wrapper around QTimer to eliminate need for signal-slot, with single use version)
+- [ ] pull down notification (input invalid)
+- [ ] make notification separate widget
 
 SGEXTN v5.0.0 will cover all functionalities in previous versions, so there would be no reason to use v1 because of missing stuff. 
 

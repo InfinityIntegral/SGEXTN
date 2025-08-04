@@ -4,11 +4,12 @@
 #include "sgwwidget.h"
 #include "../primitives/sgxcolourrgba.h"
 #include <qnamespace.h>
+#include "sgwhorizontalalignment.h"
 
 QString SGWLabel::textFont = "SingScript.sg";
 QString SGWLabel::iconsFont = "AppIcons.sg";
 
-SGWLabel::SGWLabel(SGWWidget *parent, const QString &s, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float f1, float f0, HorizontalAlignment horizontalAlignment, VerticalAlignment verticalAlignment, const QString &font) : SGWWidget(parent, x1, x0, y1, y0, w1, w0, h1, h0){
+SGWLabel::SGWLabel(SGWWidget *parent, const QString &s, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float f1, float f0, SGWHorizontalAlignment::Flag horizontalAlignment, VerticalAlignment verticalAlignment, const QString &font) : SGWWidget(parent, x1, x0, y1, y0, w1, w0, h1, h0){
     (*this).f1 = f1;
     (*this).f0 = f0;
     (*this).text = s;
@@ -27,19 +28,13 @@ void SGWLabel::syncQuickProperties(){
     (*topObject).setProperty("f0", f0);
     (*topObject).setProperty("s", text);
     (*topObject).setProperty("f", font);
-    (*topObject).setProperty("ha", SGWLabel::horizontalAlignmentToQtAlignmentFlag(horizontalAlignment));
+    (*topObject).setProperty("ha", SGWHorizontalAlignment::getQtFlag(horizontalAlignment));
     (*topObject).setProperty("va", SGWLabel::verticalAlignmentToQtAlignmentFlag(verticalAlignment));
     (*topObject).setProperty("utc", usingTheme);
     (*topObject).setProperty("bg", backgroundThemeColour);
     (*topObject).setProperty("bgc", backgroundColour.getQColour());
     (*topObject).setProperty("fg", foregroundThemeColour);
     (*topObject).setProperty("fgc", foregroundColour.getQColour());
-}
-
-Qt::AlignmentFlag SGWLabel::horizontalAlignmentToQtAlignmentFlag(HorizontalAlignment x){
-    if(x == SGWLabel::AlignLeft){return Qt::AlignLeft;}
-    if(x == SGWLabel::AlignRight){return Qt::AlignRight;}
-    return Qt::AlignHCenter;
 }
 
 Qt::AlignmentFlag SGWLabel::verticalAlignmentToQtAlignmentFlag(VerticalAlignment x){
@@ -112,13 +107,13 @@ void SGWLabel::setFont(const QString& font){
     (*(*this).topObject).setProperty("f", (*this).font);
 }
 
-SGWLabel::HorizontalAlignment SGWLabel::getHorizontalAlignment() const {
+SGWHorizontalAlignment::Flag SGWLabel::getHorizontalAlignment() const {
     return horizontalAlignment;
 }
 
-void SGWLabel::setHorizontalAlignment(HorizontalAlignment alignment){
+void SGWLabel::setHorizontalAlignment(SGWHorizontalAlignment::Flag alignment){
     (*this).horizontalAlignment = alignment;
-    (*(*this).topObject).setProperty("ha", SGWLabel::horizontalAlignmentToQtAlignmentFlag(horizontalAlignment));
+    (*(*this).topObject).setProperty("ha", SGWHorizontalAlignment::getQtFlag(horizontalAlignment));
 }
 
 SGWLabel::VerticalAlignment SGWLabel::getVerticalAlignment() const {

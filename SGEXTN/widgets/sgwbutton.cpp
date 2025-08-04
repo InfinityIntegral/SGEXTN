@@ -4,13 +4,14 @@
 #include <QString>
 #include "sgwlabel.h"
 #include "../primitives/sgxcolourrgba.h"
+#include "sgwhorizontalalignment.h"
 
 SGWButton::SGWButton(SGWWidget *parent, const QString &s, void (*attachedFunction)(SGWButton*), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float f1, float f0, const QString& font) : SGWWidget(parent, x1, x0, y1, y0, w1, w0, h1, h0){
     (*this).f1 = f1;
     (*this).f0 = f0;
     (*this).text = s;
     (*this).font = font;
-    (*this).horizontalAlignment = SGWLabel::AlignHCenter;
+    (*this).horizontalAlignment = SGWHorizontalAlignment::Center;
     (*this).verticalAlignment = SGWLabel::AlignVCenter;
     (*this).clickFunction = attachedFunction;
     (*this).pressFunction = nullptr;
@@ -148,13 +149,13 @@ void SGWButton::setFont(const QString& font){
     (*(*this).topObject).setProperty("f", (*this).font);
 }
 
-SGWLabel::HorizontalAlignment SGWButton::getHorizontalAlignment() const {
+SGWHorizontalAlignment::Flag SGWButton::getHorizontalAlignment() const {
     return horizontalAlignment;
 }
 
-void SGWButton::setHorizontalAlignment(SGWLabel::HorizontalAlignment alignment){
+void SGWButton::setHorizontalAlignment(SGWHorizontalAlignment::Flag alignment){
     (*this).horizontalAlignment = alignment;
-    (*(*this).topObject).setProperty("ha", SGWLabel::horizontalAlignmentToQtAlignmentFlag(horizontalAlignment));
+    (*(*this).topObject).setProperty("ha", SGWHorizontalAlignment::getQtFlag(horizontalAlignment));
 }
 
 SGWLabel::VerticalAlignment SGWButton::getVerticalAlignment() const {

@@ -6,6 +6,7 @@
 #include "sgwlabel.h"
 #include <QString>
 #include "../primitives/sgxcolourrgba.h"
+#include "sgwhorizontalalignment.h"
 
 class SGWButton : public SGWWidget
 {
@@ -25,8 +26,8 @@ public:
     void setTextFromFloat(float x);
     [[nodiscard]] QString getFont() const;
     void setFont(const QString& font);
-    [[nodiscard]] SGWLabel::HorizontalAlignment getHorizontalAlignment() const;
-    void setHorizontalAlignment(SGWLabel::HorizontalAlignment alignment);
+    [[nodiscard]] SGWHorizontalAlignment::Flag getHorizontalAlignment() const;
+    void setHorizontalAlignment(SGWHorizontalAlignment::Flag alignment);
     [[nodiscard]] SGWLabel::VerticalAlignment getVerticalAlignment() const;
     void setVerticalAlignment(SGWLabel::VerticalAlignment alignment);
     [[nodiscard]] bool getSelected() const;
@@ -90,7 +91,7 @@ protected:
     float f0;
     QString text;
     QString font;
-    SGWLabel::HorizontalAlignment horizontalAlignment;
+    SGWHorizontalAlignment::Flag horizontalAlignment;
     SGWLabel::VerticalAlignment verticalAlignment;
     void (*clickFunction)(SGWButton*);
     void (*pressFunction)(SGWButton*);

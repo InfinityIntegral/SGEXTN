@@ -69,6 +69,7 @@ SOURCES = SGEXTN/misc/main.cpp \
     SGEXTN/widgets/sgwbackground.cpp \
     SGEXTN/widgets/sgwblankwidget.cpp \
     SGEXTN/widgets/sgwbutton.cpp \
+    SGEXTN/widgets/sgwhorizontalalignment.cpp \
     SGEXTN/widgets/sgwiconlabel.cpp \
     SGEXTN/widgets/sgwlabel.cpp \
     SGEXTN/widgets/sgwlonglabel.cpp \
@@ -133,6 +134,7 @@ HEADERS += \
     SGEXTN/widgets/sgwbackground.h \
     SGEXTN/widgets/sgwblankwidget.h \
     SGEXTN/widgets/sgwbutton.h \
+    SGEXTN/widgets/sgwhorizontalalignment.h \
     SGEXTN/widgets/sgwiconlabel.h \
     SGEXTN/widgets/sgwlabel.h \
     SGEXTN/widgets/sgwlonglabel.h \
