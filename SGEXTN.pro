@@ -60,6 +60,7 @@ SOURCES = SGEXTN/misc/main.cpp \
     SGEXTN/quickui/sgxquickresizer.cpp \
     SGEXTN/quickui/sgxquickuiinterface.cpp \
     SGEXTN/quickui/sgxthemecoloursetting.cpp \
+    SGEXTN/template/sgwcolourpicker.cpp \
     SGEXTN/template/sgxcolourpicker.cpp \
     SGEXTN/template/sgxcutevesicles.cpp \
     SGEXTN/template/sgxstatusbar.cpp \
@@ -134,6 +135,7 @@ HEADERS += \
     SGEXTN/quickui/sgxquickresizer.h \
     SGEXTN/quickui/sgxquickuiinterface.h \
     SGEXTN/quickui/sgxthemecoloursetting.h \
+    SGEXTN/template/sgwcolourpicker.h \
     SGEXTN/template/sgxcolourpicker.h \
     SGEXTN/template/sgxcutevesicles.h \
     SGEXTN/template/sgxstatusbar.h \
