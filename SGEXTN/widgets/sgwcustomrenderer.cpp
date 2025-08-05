@@ -19,3 +19,7 @@ SGWCustomRenderer::SGWCustomRenderer(SGWWidget* parent, const QString& qmlCodeLo
     (*this).bottomObject = (*this).topObject;
     SGWWidget::syncQuickProperties();
 }
+
+void SGWCustomRenderer::redraw(){
+    (*topObject).update();
+}

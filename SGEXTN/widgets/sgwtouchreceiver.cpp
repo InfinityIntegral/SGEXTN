@@ -105,3 +105,11 @@ void SGWTouchReceiver::eventReceived(const QString &s){
     
     (*this).function(this, eventsToPass);
 }
+
+float SGWTouchReceiver::getWidth() const {
+    return static_cast<float>((*topObject).width());
+}
+
+float SGWTouchReceiver::getHeight() const {
+    return static_cast<float>((*topObject).height());
+}

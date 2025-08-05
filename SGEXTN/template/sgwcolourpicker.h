@@ -7,6 +7,9 @@
 #include "../primitives/sgxcolourhsla.h"
 #include <qtmetamacros.h>
 #include "../colourpickerrendering/huechoice/sgxrendercolourpickerhuechoicesgwidget.h"
+#include "../widgets/sgwtouchreceiver.h"
+#include <array>
+#include "../primitives/sgxtouchevent.h"
 
 class SGWColourPicker : public QObject
 {
@@ -20,6 +23,11 @@ public:
     static void reset();
     static void activate();
     static SGXRenderColourPickerHueChoiceSGWidget* hueChoice;
+    static void updateUsingColour();
+    static void updateUsingColourHSLA();
+    static void updateInputs();
+    static SGWTouchReceiver* hueTouchReceiver;
+    static void updateHue(SGWTouchReceiver* /*unused*/, const std::array<SGXTouchEvent, 5>& t);
 };
 
 #endif // SGWCOLOURPICKER_H
