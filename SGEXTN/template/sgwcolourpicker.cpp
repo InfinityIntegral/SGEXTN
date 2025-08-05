@@ -11,6 +11,7 @@
 #include "../primitives/sgxtouchevent.h"
 #include "../colourpickerrendering/saturationchoice/sgxrendercolourpickersaturationchoicesgwidget.h"
 #include "../colourpickerrendering/lightnesschoice/sgxrendercolourpickerlightnesschoicesgwidget.h"
+#include "../colourpickerrendering/transparencychoice/sgxrendercolourpickertransparencychoicesgwidget.h"
 
 SGWBackground* SGWColourPicker::instance = nullptr;
 SGXColourRGBA SGWColourPicker::colour = SGXColourRGBA(255, 0, 200);
@@ -22,6 +23,7 @@ SGWTouchReceiver* SGWColourPicker::saturationTouchReceiver = nullptr;
 SGXRenderColourPickerLightnessChoiceSGWidget* SGWColourPicker::lightnessChoice = nullptr;
 SGWTouchReceiver* SGWColourPicker::lightnessTouchReceiver = nullptr;
 SGXRenderColourPickerTransparencyChoiceSGWidget* SGWColourPicker::transparencyChoice = nullptr;
+SGWTouchReceiver* SGWColourPicker::transparencyTouchReceiver = nullptr;
 
 SGWBackground* SGWColourPicker::initialise(){
     SGWBackground* bg = new SGWPageBackground(SGWWidget::parentWidget, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 6, false);
@@ -33,6 +35,7 @@ SGWBackground* SGWColourPicker::initialise(){
     SGWColourPicker::lightnessChoice = new SGXRenderColourPickerLightnessChoiceSGWidget(realBg, 0.0f, 0.5f, 0.0f, 3.5f, 1.0f, -1.0f, 0.0f, 1.25f);
     SGWColourPicker::lightnessTouchReceiver = new SGWTouchReceiver(SGWColourPicker::lightnessChoice, &SGWColourPicker::updateLightness, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f);
     SGWColourPicker::transparencyChoice = new SGXRenderColourPickerTransparencyChoiceSGWidget(realBg, 0.0f, 0.5f, 0.0f, 5.0f, 1.0f, -1.0f, 0.0f, 1.25f);
+    SGWColourPicker::transparencyTouchReceiver = new SGWTouchReceiver(SGWColourPicker::transparencyChoice, &SGWColourPicker::updateTransparency, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f);
     return bg;
 }
 
@@ -64,6 +67,11 @@ void SGWColourPicker::updateInputs(){
     (*SGWColourPicker::lightnessChoice).setSelectedSaturation(SGWColourPicker::colourHSLA.s / 100.0f);
     (*SGWColourPicker::lightnessChoice).setSelectedLightness(SGWColourPicker::colourHSLA.l / 100.0f);
     (*SGWColourPicker::lightnessChoice).redraw();
+    (*SGWColourPicker::transparencyChoice).setSelectedHue(SGWColourPicker::colourHSLA.h / 360.0f);
+    (*SGWColourPicker::transparencyChoice).setSelectedSaturation(SGWColourPicker::colourHSLA.s / 100.0f);
+    (*SGWColourPicker::transparencyChoice).setSelectedLightness(SGWColourPicker::colourHSLA.l / 100.0f);
+    (*SGWColourPicker::transparencyChoice).setSelectedTransparency(SGWColourPicker::colourHSLA.a / 100.0f);
+    (*SGWColourPicker::transparencyChoice).redraw();
 }
 
 void SGWColourPicker::updateHue(SGWTouchReceiver * /*unused*/, const std::array<SGXTouchEvent, 5> &t){
@@ -90,5 +98,14 @@ void SGWColourPicker::updateLightness(SGWTouchReceiver */*unused*/, const std::a
     if(x < 0.0f){x = 0.0f;}
     else if(x > 1.0f){x = 1.0f;}
     SGWColourPicker::colourHSLA.l = x * 100.0f;
+    SGWColourPicker::updateUsingColourHSLA();
+}
+
+void SGWColourPicker::updateTransparency(SGWTouchReceiver */*unused*/, const std::array<SGXTouchEvent, 5> &t){
+    if(t[0].phase == SGXTouchEvent::TouchEnd){return;}
+    float x = 21.0f / 19.0f * static_cast<float>(t[0].x) / static_cast<float>((*SGWColourPicker::transparencyTouchReceiver).getWidth()) - 0.05f;
+    if(x < 0.0f){x = 0.0f;}
+    else if(x > 1.0f){x = 1.0f;}
+    SGWColourPicker::colourHSLA.a = x * 100.0f;
     SGWColourPicker::updateUsingColourHSLA();
 }
