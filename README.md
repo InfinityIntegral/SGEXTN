@@ -68,12 +68,11 @@ SGEXTN v5.0.0 (planned): same architecture as v1 but uses Qt Quick (supposed to 
 		- [x] SGWButton
 			- [x] SGWTextButton
 			- [x] SGWIconButton
-		- [ ] SGWInput
+		- [x] SGWInput
 			- [x] SGWTextInput
-			- [ ] SGWLongInput
-		- [ ] SGWGraphicsRenderer
-			- [ ] SGWColourPicker
-			- [ ] SGWCustomRenderer
+			- [x] SGWLongInput
+		- [ ] SGWColourPicker
+		- [ ] SGWCustomRenderer
 		- [ ] SGWTouchReceiver
 	- [ ] SGWFileDialog
 		- [ ] SGWFileUpload

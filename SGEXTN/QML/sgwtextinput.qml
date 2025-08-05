@@ -33,9 +33,9 @@ TextField{
 	property real w1: 0.0
 	property real w0: 0.0
 	property real h1: 0.0
+	property real h0: 0.0
 	property real f1: 0.0
 	property real f0: 0.0
-	property real h0: 0.0
 	property real pw1: 0.0
 	property real pw0: 0.0
 	property real ph1: 0.0
@@ -47,6 +47,7 @@ TextField{
 	property bool inv: false
 	property bool vh: hovered
 	property bool vf: activeFocus
+	property bool canParent: true
 	
 	x: x1 * (pw1 * Resizer.renderSpaceWidth + pw0 * Resizer.sizeUnit) + x0 * Resizer.sizeUnit
 	y: y1 * (ph1 * Resizer.renderSpaceHeight + ph0 * Resizer.sizeUnit) + y0 * Resizer.sizeUnit
