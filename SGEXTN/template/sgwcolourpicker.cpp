@@ -10,6 +10,7 @@
 #include <array>
 #include "../primitives/sgxtouchevent.h"
 #include "../colourpickerrendering/saturationchoice/sgxrendercolourpickersaturationchoicesgwidget.h"
+#include "../colourpickerrendering/lightnesschoice/sgxrendercolourpickerlightnesschoicesgwidget.h"
 
 SGWBackground* SGWColourPicker::instance = nullptr;
 SGXColourRGBA SGWColourPicker::colour = SGXColourRGBA(255, 0, 200);
@@ -18,6 +19,7 @@ SGXRenderColourPickerHueChoiceSGWidget* SGWColourPicker::hueChoice = nullptr;
 SGWTouchReceiver* SGWColourPicker::hueTouchReceiver = nullptr;
 SGXRenderColourPickerSaturationChoiceSGWidget* SGWColourPicker::saturationChoice = nullptr;
 SGWTouchReceiver* SGWColourPicker::saturationTouchReceiver = nullptr;
+SGXRenderColourPickerLightnessChoiceSGWidget* SGWColourPicker::lightnessChoice = nullptr;
 
 SGWBackground* SGWColourPicker::initialise(){
     SGWBackground* bg = new SGWPageBackground(SGWWidget::parentWidget, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 6, false);
@@ -26,6 +28,7 @@ SGWBackground* SGWColourPicker::initialise(){
     SGWColourPicker::hueTouchReceiver = new SGWTouchReceiver(SGWColourPicker::hueChoice, &SGWColourPicker::updateHue, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f);
     SGWColourPicker::saturationChoice = new SGXRenderColourPickerSaturationChoiceSGWidget(realBg, 0.0f, 0.5f, 0.0f, 2.0f, 1.0f, -1.0f, 0.0f, 1.25f);
     SGWColourPicker::saturationTouchReceiver = new SGWTouchReceiver(SGWColourPicker::saturationChoice, &SGWColourPicker::updateSaturation, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f);
+    SGWColourPicker::lightnessChoice = new SGXRenderColourPickerLightnessChoiceSGWidget(realBg, 0.0f, 0.5f, 0.0f, 3.5f, 1.0f, -1.0f, 0.0f, 1.25f);
     return bg;
 }
 

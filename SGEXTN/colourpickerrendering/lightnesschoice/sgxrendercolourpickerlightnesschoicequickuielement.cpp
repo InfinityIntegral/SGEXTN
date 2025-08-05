@@ -7,9 +7,6 @@
 
 SGXRenderColourPickerLightnessChoiceQuickUIElement::SGXRenderColourPickerLightnessChoiceQuickUIElement(){
     (*this).setFlag(QQuickItem::ItemHasContents, true);
-    selectedHue = 0.0f;
-    selectedSaturation = 0.0f;
-    selectedLightness = 0.0f;
 }
 
 QSGNode* SGXRenderColourPickerLightnessChoiceQuickUIElement::updatePaintNode(QSGNode *thisNode, UpdatePaintNodeData */*unused*/){
