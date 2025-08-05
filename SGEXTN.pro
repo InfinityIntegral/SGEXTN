@@ -39,6 +39,7 @@ SOURCES = SGEXTN/misc/main.cpp \
     SGEXTN/colourpickerrendering/saturationchoice/sgxrendercolourpickersaturationchoiceshader.cpp \
     SGEXTN/colourpickerrendering/transparencychoice/sgxrendercolourpickertransparencychoicematerial.cpp \
     SGEXTN/colourpickerrendering/transparencychoice/sgxrendercolourpickertransparencychoicequickuielement.cpp \
+    SGEXTN/colourpickerrendering/transparencychoice/sgxrendercolourpickertransparencychoicesgwidget.cpp \
     SGEXTN/colourpickerrendering/transparencychoice/sgxrendercolourpickertransparencychoiceshader.cpp \
     SGEXTN/customisation/sgxthemecolourscustomisation.cpp \
     SGEXTN/customisation/sgxvesiclespropertiescustomisation.cpp \
@@ -117,6 +118,7 @@ HEADERS += \
     SGEXTN/colourpickerrendering/saturationchoice/sgxrendercolourpickersaturationchoiceshader.h \
     SGEXTN/colourpickerrendering/transparencychoice/sgxrendercolourpickertransparencychoicematerial.h \
     SGEXTN/colourpickerrendering/transparencychoice/sgxrendercolourpickertransparencychoicequickuielement.h \
+    SGEXTN/colourpickerrendering/transparencychoice/sgxrendercolourpickertransparencychoicesgwidget.h \
     SGEXTN/colourpickerrendering/transparencychoice/sgxrendercolourpickertransparencychoiceshader.h \
     SGEXTN/customisation/sgxthemecolourscustomisation.h \
     SGEXTN/customisation/sgxvesiclespropertiescustomisation.h \

@@ -12,6 +12,7 @@
 #include "../primitives/sgxtouchevent.h"
 #include "../colourpickerrendering/saturationchoice/sgxrendercolourpickersaturationchoicesgwidget.h"
 #include "../colourpickerrendering/lightnesschoice/sgxrendercolourpickerlightnesschoicesgwidget.h"
+#include "../colourpickerrendering/transparencychoice/sgxrendercolourpickertransparencychoicesgwidget.h"
 
 class SGWColourPicker : public QObject
 {
@@ -36,6 +37,7 @@ public:
     static SGXRenderColourPickerLightnessChoiceSGWidget* lightnessChoice;
     static SGWTouchReceiver* lightnessTouchReceiver;
     static void updateLightness(SGWTouchReceiver* /*unused*/, const std::array<SGXTouchEvent, 5>& t);
+    static SGXRenderColourPickerTransparencyChoiceSGWidget* transparencyChoice;
 };
 
 #endif // SGWCOLOURPICKER_H
