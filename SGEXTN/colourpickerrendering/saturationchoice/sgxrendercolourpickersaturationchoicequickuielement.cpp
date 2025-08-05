@@ -7,8 +7,6 @@
 
 SGXRenderColourPickerSaturationChoiceQuickUIElement::SGXRenderColourPickerSaturationChoiceQuickUIElement(){
     (*this).setFlag(QQuickItem::ItemHasContents, true);
-    selectedHue = 0.0f;
-    selectedSaturation = 0.0f;
 }
 
 QSGNode* SGXRenderColourPickerSaturationChoiceQuickUIElement::updatePaintNode(QSGNode *thisNode, UpdatePaintNodeData */*unused*/){

@@ -10,6 +10,7 @@
 #include "../widgets/sgwtouchreceiver.h"
 #include <array>
 #include "../primitives/sgxtouchevent.h"
+#include "../colourpickerrendering/saturationchoice/sgxrendercolourpickersaturationchoicesgwidget.h"
 
 class SGWColourPicker : public QObject
 {
@@ -28,6 +29,7 @@ public:
     static void updateInputs();
     static SGWTouchReceiver* hueTouchReceiver;
     static void updateHue(SGWTouchReceiver* /*unused*/, const std::array<SGXTouchEvent, 5>& t);
+    static SGXRenderColourPickerSaturationChoiceSGWidget* saturationChoice;
 };
 
 #endif // SGWCOLOURPICKER_H
