@@ -34,6 +34,8 @@ public:
     static SGWTouchReceiver* saturationTouchReceiver;
     static void updateSaturation(SGWTouchReceiver* /*unused*/, const std::array<SGXTouchEvent, 5>& t);
     static SGXRenderColourPickerLightnessChoiceSGWidget* lightnessChoice;
+    static SGWTouchReceiver* lightnessTouchReceiver;
+    static void updateLightness(SGWTouchReceiver* /*unused*/, const std::array<SGXTouchEvent, 5>& t);
 };
 
 #endif // SGWCOLOURPICKER_H
