@@ -37,6 +37,7 @@ public:
     static QQmlComponent* iconButton;
     static QQmlComponent* textInput;
     static QQmlComponent* longInput;
+    static QQmlComponent* touchReceiver;
 };
 
 #endif // SGXQUICKINTERFACE_H

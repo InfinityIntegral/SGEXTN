@@ -53,5 +53,6 @@
         <file>QML/sgwiconbutton.qml</file>
         <file>QML/sgwtextinput.qml</file>
         <file>QML/sgwlonginput.qml</file>
+        <file>QML/sgwtouchreceiver.qml</file>
     </qresource>
 </RCC>

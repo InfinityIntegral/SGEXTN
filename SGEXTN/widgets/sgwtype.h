@@ -22,14 +22,12 @@ public:
         ColourPicker,
         GraphicsRenderer,
         TouchReceiver,
-        FileUpload,
-        FileDownload,
+        CustomRenderer,
         Undefined
     };
     static bool isDisplayText(SGWType::Type x);
     static bool isButton(SGWType::Type x);
     static bool isInputField(SGWType::Type x);
-    static bool isFileDialog(SGWType::Type x);
 };
 
 #endif // SGWTYPE_H

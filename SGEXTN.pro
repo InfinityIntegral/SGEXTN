@@ -69,6 +69,7 @@ SOURCES = SGEXTN/misc/main.cpp \
     SGEXTN/widgets/sgwbackground.cpp \
     SGEXTN/widgets/sgwblankwidget.cpp \
     SGEXTN/widgets/sgwbutton.cpp \
+    SGEXTN/widgets/sgwcustomrenderer.cpp \
     SGEXTN/widgets/sgwdefaultfonts.cpp \
     SGEXTN/widgets/sgwhorizontalalignment.cpp \
     SGEXTN/widgets/sgwiconbutton.cpp \
@@ -85,6 +86,7 @@ SOURCES = SGEXTN/misc/main.cpp \
     SGEXTN/widgets/sgwtextbutton.cpp \
     SGEXTN/widgets/sgwtextinput.cpp \
     SGEXTN/widgets/sgwtextlabel.cpp \
+    SGEXTN/widgets/sgwtouchreceiver.cpp \
     SGEXTN/widgets/sgwtype.cpp \
     SGEXTN/widgets/sgwverticalalignment.cpp \
     SGEXTN/widgets/sgwwidget.cpp
@@ -141,6 +143,7 @@ HEADERS += \
     SGEXTN/widgets/sgwbackground.h \
     SGEXTN/widgets/sgwblankwidget.h \
     SGEXTN/widgets/sgwbutton.h \
+    SGEXTN/widgets/sgwcustomrenderer.h \
     SGEXTN/widgets/sgwdefaultfonts.h \
     SGEXTN/widgets/sgwhorizontalalignment.h \
     SGEXTN/widgets/sgwiconbutton.h \
@@ -157,6 +160,7 @@ HEADERS += \
     SGEXTN/widgets/sgwtextbutton.h \
     SGEXTN/widgets/sgwtextinput.h \
     SGEXTN/widgets/sgwtextlabel.h \
+    SGEXTN/widgets/sgwtouchreceiver.h \
     SGEXTN/widgets/sgwtype.h \
     SGEXTN/widgets/sgwverticalalignment.h \
     SGEXTN/widgets/sgwwidget.h

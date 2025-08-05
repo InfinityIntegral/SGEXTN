@@ -14,8 +14,3 @@ bool SGWType::isInputField(SGWType::Type x){
     if(x == SGWType::TextInput || x == SGWType::LongInput){return true;}
     return false;
 }
-
-bool SGWType::isFileDialog(SGWType::Type x){
-    if(x == SGWType::FileDownload || x == SGWType::FileUpload){return true;}
-    return false;
-}
