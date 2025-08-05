@@ -71,16 +71,13 @@ SGEXTN v5.0.0 (planned): same architecture as v1 but uses Qt Quick (supposed to 
 		- [x] SGWInput
 			- [x] SGWTextInput
 			- [x] SGWLongInput
-		- [ ] SGWColourPicker
-		- [ ] SGWCustomRenderer
 		- [ ] SGWTouchReceiver
-	- [ ] SGWFileDialog
-		- [ ] SGWFileUpload
-		- [ ] SGWFileDownload
-- [ ] reimplemented vesicle customisation page
-- [ ] reimplemented colour picker
-- [ ] improved theme customisation page
-- [ ] improved SingCorrect configs page
+		- [ ] SGWCustomRenderer
+		- [ ] SGWColourPicker
+- [ ] reimplement vesicle customisation page
+- [ ] reimplement colour picker
+- [ ] improve theme customisation page
+- [ ] improve SingCorrect configs page
 - [ ] SGXTimer (wrapper around QTimer to eliminate need for signal-slot, with single use version)
 - [ ] pull down notification (input invalid)
 - [ ] make notification separate widget
