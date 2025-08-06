@@ -12,7 +12,7 @@ class SGWLabel : public SGWWidget
 {
     Q_OBJECT
 public:
-    SGWLabel(SGWWidget* parent, const QString& s, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float f1, float f0, SGWHorizontalAlignment::Flag horizontalAlignment, SGWVerticalAlignment::Flag verticalAlignment, const QString& font);
+    SGWLabel() = delete;
     void syncQuickProperties();
     [[nodiscard]] float getF1() const;
     void setF1(float f1);
@@ -39,6 +39,7 @@ public:
     [[nodiscard]] SGXColourRGBA getForegroundColour(bool* isUsing) const;
     void setForegroundColour(SGXColourRGBA colour);
 protected:
+    SGWLabel(SGWWidget* parent, const QString& s, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float f1, float f0, SGWHorizontalAlignment::Flag horizontalAlignment, SGWVerticalAlignment::Flag verticalAlignment, const QString& font);
     float f1;
     float f0;
     QString text;

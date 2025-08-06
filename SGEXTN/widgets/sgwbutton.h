@@ -12,7 +12,7 @@ class SGWButton : public SGWWidget
 {
     Q_OBJECT
 public:
-    SGWButton(SGWWidget* parent, const QString& s, void (*attachedFunction)(SGWButton*), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float f1, float f0, const QString& font);
+    SGWButton() = delete;
     void syncQuickProperties();
     [[nodiscard]] float getF1() const;
     void setF1(float f1);
@@ -87,6 +87,7 @@ public:
     [[nodiscard]] SGXColourRGBA getForegroundFocusSelectedColour(bool* isUsing) const;
     void setForegroundFocusSelectedColour(SGXColourRGBA colour);
 protected:
+    SGWButton(SGWWidget* parent, const QString& s, void (*attachedFunction)(SGWButton*), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float f1, float f0, const QString& font);
     float f1;
     float f0;
     QString text;
