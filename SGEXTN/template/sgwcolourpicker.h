@@ -13,6 +13,7 @@
 #include "../colourpickerrendering/saturationchoice/sgxrendercolourpickersaturationchoicesgwidget.h"
 #include "../colourpickerrendering/lightnesschoice/sgxrendercolourpickerlightnesschoicesgwidget.h"
 #include "../colourpickerrendering/transparencychoice/sgxrendercolourpickertransparencychoicesgwidget.h"
+#include "../widgets/sgwinput.h"
 
 class SGWColourPicker : public QObject
 {
@@ -40,6 +41,14 @@ public:
     static SGXRenderColourPickerTransparencyChoiceSGWidget* transparencyChoice;
     static SGWTouchReceiver* transparencyTouchReceiver;
     static void updateTransparency(SGWTouchReceiver* /*unused*/, const std::array<SGXTouchEvent, 5>& t);
+    static SGWInput* redInput;
+    static void updateRed(SGWInput* /*unused*/);
+    static SGWInput* greenInput;
+    static void updateGreen(SGWInput* /*unused*/);
+    static SGWInput* blueInput;
+    static void updateBlue(SGWInput* /*unused*/);
+    static SGWInput* transparencyInput;
+    static void updateTransparencyFromInput(SGWInput* /*unused*/);
 };
 
 #endif // SGWCOLOURPICKER_H

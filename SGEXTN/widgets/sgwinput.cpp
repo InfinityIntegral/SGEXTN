@@ -45,7 +45,7 @@ SGWInput::SGWInput(SGWWidget *parent, void (*validationFunction)(SGWInput *), fl
 void SGWInput::syncQuickProperties(){
     (*topObject).setProperty("f1", f1);
     (*topObject).setProperty("f0", f0);
-    (*topObject).setProperty("s", text);
+    (*topObject).setProperty("text", text);
     (*topObject).setProperty("f", font);
     (*topObject).setProperty("ha", SGWHorizontalAlignment::getQtFlag(horizontalAlignment));
     (*topObject).setProperty("va", SGWVerticalAlignment::getQtFlag(verticalAlignment));
@@ -123,17 +123,17 @@ float SGWInput::getTextAsFloat(bool *isValid, float minimum, float maximum) cons
 
 void SGWInput::setTextFromString(const QString& s){
     (*this).text = s;
-    (*(*this).topObject).setProperty("s", (*this).text);
+    (*(*this).topObject).setProperty("text", (*this).text);
 }
 
 void SGWInput::setTextFromInt(int x){
     (*this).text = QString::number(x);
-    (*(*this).topObject).setProperty("s", (*this).text);
+    (*(*this).topObject).setProperty("text", (*this).text);
 }
 
 void SGWInput::setTextFromFloat(float x){
     (*this).text = QString::number(x);
-    (*(*this).topObject).setProperty("s", (*this).text);
+    (*(*this).topObject).setProperty("text", (*this).text);
 }
 
 QString SGWInput::getFont() const {
