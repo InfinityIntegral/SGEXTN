@@ -224,3 +224,11 @@ void SGWWidget::syncQuickProperties(){
     (*topObject).setProperty("ph1", parentH1);
     (*topObject).setProperty("ph0", parentH0);
 }
+
+bool SGWWidget::getItemVisibility() const {
+    return (*topObject).isVisible();
+}
+
+void SGWWidget::setItemVisibility(bool x){
+    (*topObject).setVisible(x);
+}

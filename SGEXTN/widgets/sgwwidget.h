@@ -50,6 +50,8 @@ public:
     void initialiseQuickItemReferences(QQuickItem* thisItem);
     static SGWWidget* rootWidget;
     static SGWWidget* parentWidget;
+    [[nodiscard]] bool getItemVisibility() const;
+    void setItemVisibility(bool x);
 protected:
     SGWType::Type type;
     SGWWidget* parent;
