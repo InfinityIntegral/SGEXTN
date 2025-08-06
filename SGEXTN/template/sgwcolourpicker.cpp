@@ -16,6 +16,7 @@
 #include "../widgets/sgwtextlabel.h"
 #include "../widgets/sgwinput.h"
 #include "../widgets/sgwhorizontalalignment.h"
+#include <QString>
 
 SGWBackground* SGWColourPicker::instance = nullptr;
 SGXColourRGBA SGWColourPicker::colour = SGXColourRGBA(255, 0, 200);
@@ -32,6 +33,7 @@ SGWInput* SGWColourPicker::redInput = nullptr;
 SGWInput* SGWColourPicker::greenInput = nullptr;
 SGWInput* SGWColourPicker::blueInput = nullptr;
 SGWInput* SGWColourPicker::transparencyInput = nullptr;
+SGWInput* SGWColourPicker::hexCodeInput = nullptr;
 
 SGWBackground* SGWColourPicker::initialise(){
     SGWBackground* bg = new SGWPageBackground(SGWWidget::parentWidget, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 6, false);
@@ -56,6 +58,9 @@ SGWBackground* SGWColourPicker::initialise(){
     new SGWTextLabel(realBg, "transparency:", 0.0f, 4.4f, 0.0f, 8.0f, 0.0f, 4.0f, 0.0f, 1.0f, SGWHorizontalAlignment::Right);
     SGWColourPicker::transparencyInput = new SGWTextInput(realBg, nullptr, 0.0f, 8.5f, 0.0f, 8.0f, 0.0f, 1.9f, 0.0f, 1.0f);
     (*SGWColourPicker::transparencyInput).setTextChangedFunction(&SGWColourPicker::updateTransparencyFromInput);
+    new SGWTextLabel(realBg, "hex code:", 0.0f, 0.5f, 0.0f, 9.5f, 0.0f, 2.9f, 0.0f, 1.0f, SGWHorizontalAlignment::Right);
+    SGWColourPicker::hexCodeInput = new SGWTextInput(realBg, nullptr, 0.0f, 3.5f, 0.0f, 9.5f, 0.0f, 5.0f, 0.0f, 1.0f);
+    (*SGWColourPicker::hexCodeInput).setTextChangedFunction(&SGWColourPicker::updateHexCode);
     return bg;
 }
 
@@ -96,6 +101,9 @@ void SGWColourPicker::updateInputs(){
     (*SGWColourPicker::greenInput).setTextFromInt(SGWColourPicker::colour.getGreen());
     (*SGWColourPicker::blueInput).setTextFromInt(SGWColourPicker::colour.getBlue());
     (*SGWColourPicker::transparencyInput).setTextFromInt(SGWColourPicker::colour.getTransparency());
+    QString hexCode = QString::number(SGWColourPicker::colour.x, 16).toUpper().rightJustified(8, '0');
+    if(hexCode.mid(6, 2) == "FF"){hexCode = hexCode.mid(0, 6);}
+    (*SGWColourPicker::hexCodeInput).setTextFromString(hexCode);
 }
 
 void SGWColourPicker::updateHue(SGWTouchReceiver * /*unused*/, const std::array<SGXTouchEvent, 5> &t){
@@ -163,5 +171,20 @@ void SGWColourPicker::updateTransparencyFromInput(SGWInput */*unused*/){
     const int a = (*SGWColourPicker::transparencyInput).getTextAsInt(&isValid, 0, 255);
     if(isValid == false){return;}
     SGWColourPicker::colour.setTransparency(a);
+    SGWColourPicker::updateUsingColour();
+}
+
+void SGWColourPicker::updateHexCode(SGWInput */*unused*/){
+    QString correctedInput = "";
+    QString rawInput = (*SGWColourPicker::hexCodeInput).getTextAsString().toUpper();
+    for(int i=0; i<rawInput.length(); i++){
+        if((rawInput[i] >= '0' && rawInput[i] <= '9') || (rawInput[i] >= 'A' && rawInput[i] <= 'F')){correctedInput += rawInput[i];}
+    }
+    if(correctedInput.length() == 6){correctedInput += "FF";}
+    if(correctedInput.length() != 8){return;}
+    SGWColourPicker::colour.setRed(correctedInput.mid(0, 2).toInt(nullptr, 16));
+    SGWColourPicker::colour.setGreen(correctedInput.mid(2, 2).toInt(nullptr, 16));
+    SGWColourPicker::colour.setBlue(correctedInput.mid(4, 2).toInt(nullptr, 16));
+    SGWColourPicker::colour.setTransparency(correctedInput.mid(6, 2).toInt(nullptr, 16));
     SGWColourPicker::updateUsingColour();
 }

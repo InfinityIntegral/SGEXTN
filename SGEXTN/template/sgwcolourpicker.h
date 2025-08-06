@@ -49,6 +49,8 @@ public:
     static void updateBlue(SGWInput* /*unused*/);
     static SGWInput* transparencyInput;
     static void updateTransparencyFromInput(SGWInput* /*unused*/);
+    static SGWInput* hexCodeInput;
+    static void updateHexCode(SGWInput* /*unused*/);
 };
 
 #endif // SGWCOLOURPICKER_H
