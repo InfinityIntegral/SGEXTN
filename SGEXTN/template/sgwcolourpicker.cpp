@@ -36,6 +36,7 @@ SGWInput* SGWColourPicker::blueInput = nullptr;
 SGWInput* SGWColourPicker::transparencyInput = nullptr;
 SGWInput* SGWColourPicker::hexCodeInput = nullptr;
 SGXRenderColourBackgroundSGWidget* SGWColourPicker::colourDisplay = nullptr;
+bool SGWColourPicker::ignoreInputChanges = false;
 
 SGWBackground* SGWColourPicker::initialise(){
     SGWBackground* bg = new SGWPageBackground(SGWWidget::parentWidget, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 6, false);
@@ -76,16 +77,19 @@ void SGWColourPicker::activate(){
 }
 
 void SGWColourPicker::updateUsingColour(){
+    if(SGWColourPicker::ignoreInputChanges == true){return;}
     SGWColourPicker::colourHSLA = SGXColourHSLA(SGWColourPicker::colour);
     SGWColourPicker::updateInputs();
 }
 
 void SGWColourPicker::updateUsingColourHSLA(){
+    if(SGWColourPicker::ignoreInputChanges == true){return;}
     SGWColourPicker::colour = SGWColourPicker::colourHSLA.toRGBA();
     SGWColourPicker::updateInputs();
 }
 
 void SGWColourPicker::updateInputs(){
+    SGWColourPicker::ignoreInputChanges = true;
     (*SGWColourPicker::hueChoice).setSelectedHue(SGWColourPicker::colourHSLA.h / 360.0f);
     (*SGWColourPicker::hueChoice).redraw();
     (*SGWColourPicker::saturationChoice).setSelectedHue(SGWColourPicker::colourHSLA.h / 360.0f);
@@ -107,6 +111,8 @@ void SGWColourPicker::updateInputs(){
     QString hexCode = QString::number(SGWColourPicker::colour.x, 16).toUpper().rightJustified(8, '0');
     if(hexCode.mid(6, 2) == "FF"){hexCode = hexCode.mid(0, 6);}
     (*SGWColourPicker::hexCodeInput).setTextFromString(hexCode);
+    (*SGWColourPicker::colourDisplay).setColour(SGWColourPicker::colour);
+    SGWColourPicker::ignoreInputChanges = false;
 }
 
 void SGWColourPicker::updateHue(SGWTouchReceiver * /*unused*/, const std::array<SGXTouchEvent, 5> &t){

@@ -53,6 +53,7 @@ public:
     static SGWInput* hexCodeInput;
     static void updateHexCode(SGWInput* /*unused*/);
     static SGXRenderColourBackgroundSGWidget* colourDisplay;
+    static bool ignoreInputChanges;
 };
 
 #endif // SGWCOLOURPICKER_H
