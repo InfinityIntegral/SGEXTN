@@ -17,6 +17,7 @@
 #include "../widgets/sgwinput.h"
 #include "../widgets/sgwhorizontalalignment.h"
 #include <QString>
+#include "../colourbackground/sgxrendercolourbackgroundsgwidget.h"
 
 SGWBackground* SGWColourPicker::instance = nullptr;
 SGXColourRGBA SGWColourPicker::colour = SGXColourRGBA(255, 0, 200);
@@ -34,6 +35,7 @@ SGWInput* SGWColourPicker::greenInput = nullptr;
 SGWInput* SGWColourPicker::blueInput = nullptr;
 SGWInput* SGWColourPicker::transparencyInput = nullptr;
 SGWInput* SGWColourPicker::hexCodeInput = nullptr;
+SGXRenderColourBackgroundSGWidget* SGWColourPicker::colourDisplay = nullptr;
 
 SGWBackground* SGWColourPicker::initialise(){
     SGWBackground* bg = new SGWPageBackground(SGWWidget::parentWidget, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 6, false);
@@ -61,6 +63,7 @@ SGWBackground* SGWColourPicker::initialise(){
     new SGWTextLabel(realBg, "hex code:", 0.0f, 0.5f, 0.0f, 9.5f, 0.0f, 2.9f, 0.0f, 1.0f, SGWHorizontalAlignment::Right);
     SGWColourPicker::hexCodeInput = new SGWTextInput(realBg, nullptr, 0.0f, 3.5f, 0.0f, 9.5f, 0.0f, 5.0f, 0.0f, 1.0f);
     (*SGWColourPicker::hexCodeInput).setTextChangedFunction(&SGWColourPicker::updateHexCode);
+    SGWColourPicker::colourDisplay = new SGXRenderColourBackgroundSGWidget(realBg, 0.0f, 9.0f, 0.0f, 6.5f, 0.0f, 2.0f, 0.0f, 1.0f, SGWColourPicker::colour);
     return bg;
 }
 

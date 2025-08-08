@@ -14,6 +14,7 @@
 #include "../colourpickerrendering/lightnesschoice/sgxrendercolourpickerlightnesschoicesgwidget.h"
 #include "../colourpickerrendering/transparencychoice/sgxrendercolourpickertransparencychoicesgwidget.h"
 #include "../widgets/sgwinput.h"
+#include "../colourbackground/sgxrendercolourbackgroundsgwidget.h"
 
 class SGWColourPicker : public QObject
 {
@@ -51,6 +52,7 @@ public:
     static void updateTransparencyFromInput(SGWInput* /*unused*/);
     static SGWInput* hexCodeInput;
     static void updateHexCode(SGWInput* /*unused*/);
+    static SGXRenderColourBackgroundSGWidget* colourDisplay;
 };
 
 #endif // SGWCOLOURPICKER_H

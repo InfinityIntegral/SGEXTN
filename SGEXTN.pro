@@ -24,6 +24,7 @@ SOURCES = SGEXTN/misc/main.cpp \
     SGEXTN/SingCorrect/sgxsingcorrectquickinterface.cpp \
     SGEXTN/colourbackground/sgxrendercolourbackgroundmaterial.cpp \
     SGEXTN/colourbackground/sgxrendercolourbackgroundquickuielement.cpp \
+    SGEXTN/colourbackground/sgxrendercolourbackgroundsgwidget.cpp \
     SGEXTN/colourbackground/sgxrendercolourbackgroundshader.cpp \
     SGEXTN/colourpickerrendering/huechoice/sgxrendercolourpickerhuechoicematerial.cpp \
     SGEXTN/colourpickerrendering/huechoice/sgxrendercolourpickerhuechoicequickuielement.cpp \
@@ -103,6 +104,7 @@ HEADERS += \
     SGEXTN/SingCorrect/sgxsingcorrectquickinterface.h \
     SGEXTN/colourbackground/sgxrendercolourbackgroundmaterial.h \
     SGEXTN/colourbackground/sgxrendercolourbackgroundquickuielement.h \
+    SGEXTN/colourbackground/sgxrendercolourbackgroundsgwidget.h \
     SGEXTN/colourbackground/sgxrendercolourbackgroundshader.h \
     SGEXTN/colourpickerrendering/huechoice/sgxrendercolourpickerhuechoicematerial.h \
     SGEXTN/colourpickerrendering/huechoice/sgxrendercolourpickerhuechoicequickuielement.h \
