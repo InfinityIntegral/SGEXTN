@@ -84,6 +84,9 @@ SGEXTN v5.0.0 (planned): same architecture as v1 but uses Qt Quick (supposed to 
 - [ ] reimplement status bar
 - [ ] improve standard notification
 - [ ] build pull down notification
+- [ ] clear old unused code
+- [ ] change prefixes SGW to SGX
+- [ ] better file organisation in widgets folder
 
 SGEXTN v5.0.0 will cover all functionalities in previous versions, so there would be no reason to use v1 because of missing stuff. 
 

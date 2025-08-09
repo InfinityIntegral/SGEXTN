@@ -68,6 +68,7 @@ SOURCES = SGEXTN/misc/main.cpp \
     SGEXTN/quickui/sgxthemecoloursetting.cpp \
     SGEXTN/template/sgwcolourpicker.cpp \
     SGEXTN/template/sgwcutevesicles.cpp \
+    SGEXTN/template/sgwvesiclecustomisationpage.cpp \
     SGEXTN/template/sgxcolourpicker.cpp \
     SGEXTN/template/sgxcutevesicles.cpp \
     SGEXTN/template/sgxstatusbar.cpp \
@@ -151,6 +152,7 @@ HEADERS += \
     SGEXTN/quickui/sgxthemecoloursetting.h \
     SGEXTN/template/sgwcolourpicker.h \
     SGEXTN/template/sgwcutevesicles.h \
+    SGEXTN/template/sgwvesiclecustomisationpage.h \
     SGEXTN/template/sgxcolourpicker.h \
     SGEXTN/template/sgxcutevesicles.h \
     SGEXTN/template/sgxstatusbar.h \
