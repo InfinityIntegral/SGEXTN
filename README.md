@@ -52,8 +52,8 @@ SGEXTN v5.0.0 (planned): same architecture as v1 but uses Qt Quick (supposed to 
 - [x] working application template
 
 ## planned for SGEXTN v5.0.0
-- [ ] class based GUI set with structure closely mirroring SGEXTN v1
-	- [ ] SGWWidget
+- [x] class based GUI set with structure closely mirroring SGEXTN v1
+	- [x] SGWWidget
 		- [x] SGWRoot
 		- [x] SGWParent
 		- [x] SGWStatusBar
@@ -74,13 +74,16 @@ SGEXTN v5.0.0 (planned): same architecture as v1 but uses Qt Quick (supposed to 
 		- [x] SGWTouchReceiver
 		- [x] SGWCustomRenderer
 		- [x] SGWColourPicker
+- [x] reimplement vesicles
 - [ ] reimplement vesicle customisation page
-- [ ] reimplement colour picker
+- [x] reimplement colour picker
 - [ ] improve theme customisation page
 - [ ] improve SingCorrect configs page
-- [ ] SGXTimer (wrapper around QTimer to eliminate need for signal-slot, with single use version)
-- [ ] pull down notification (input invalid)
-- [ ] make notification separate widget
+- [ ] build SingCorrect command list page
+- [ ] SGXTimer
+- [ ] reimplement status bar
+- [ ] improve standard notification
+- [ ] build pull down notification
 
 SGEXTN v5.0.0 will cover all functionalities in previous versions, so there would be no reason to use v1 because of missing stuff. 
 

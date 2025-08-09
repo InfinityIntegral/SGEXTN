@@ -16,9 +16,9 @@ public:
     static QTimer* timer;
     static int timeLeft;
     static bool isNotifying;
-    static void (*attachedFunction)();
     static void terminate();
     static void notify(const QString& s);
+    static void toggleVesicles();
 signals:
     void nothingChanged();
 public slots:

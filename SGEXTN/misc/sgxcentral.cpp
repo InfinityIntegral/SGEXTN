@@ -16,7 +16,7 @@
 #include "../filesystem/sgxfilebinutilities.h"
 #include "../customisation/sgxthemecolourscustomisation.h"
 #include "../customisation/sgxvesiclespropertiescustomisation.h"
-#include "../template/sgxcutevesicles.h"
+#include "../template/sgwcutevesicles.h"
 #include "../colourpickerrendering/huechoice/sgxrendercolourpickerhuechoicequickuielement.h"
 #include "../colourpickerrendering/saturationchoice/sgxrendercolourpickersaturationchoicequickuielement.h"
 #include "../colourpickerrendering/lightnesschoice/sgxrendercolourpickerlightnesschoicequickuielement.h"
@@ -64,7 +64,7 @@ void SGXCentral::initialise(){
     
     SGUCentralManagement::initialiseCustomRendering();
     (*SGXQuickInterface::e).load(":/SGEXTN/QML/root.qml");
-    SGXCuteVesicles::framesPerSecond = SGUCentralManagement::cuteVesiclesFrameRate;
+    SGWCuteVesicles::framesPerSecond = SGUCentralManagement::cuteVesiclesFrameRate;
     
     connect(qApp, &QGuiApplication::aboutToQuit, &SGXCentral::terminate); // NOLINT(cppcoreguidelines-pro-type-static-cast-downcast)
     QFontDatabase::addApplicationFont(":/SGEXTN/assets/SingScript.sg");

@@ -7,7 +7,7 @@
 #include <algorithm>
 #include "../primitives/sgxvector2.h"
 #include <span>
-#include "../template/sgxcutevesicles.h"
+#include "../template/sgwcutevesicles.h"
 
 namespace{
 inline float randomFloat(float min, float max){
@@ -59,21 +59,21 @@ QSGNode* SGXRenderCuteVesiclesQuickUIElement::updatePaintNode(QSGNode *thisNode,
     (*mat).h = h;
     (*mat).s = std::max(w, h);
     for(int i=0; i<10; i++){
-        (*mat).velocity.at(i) += (SGXVector2(randomFloat((-1.0f) * (*mat).maxAccelerationPerSecond, (*mat).maxAccelerationPerSecond), randomFloat((-1.0f) * (*mat).maxAccelerationPerSecond, (*mat).maxAccelerationPerSecond)) / SGXCuteVesicles::framesPerSecond);
+        (*mat).velocity.at(i) += (SGXVector2(randomFloat((-1.0f) * (*mat).maxAccelerationPerSecond, (*mat).maxAccelerationPerSecond), randomFloat((-1.0f) * (*mat).maxAccelerationPerSecond, (*mat).maxAccelerationPerSecond)) / SGWCuteVesicles::framesPerSecond);
         if((*mat).velocity.at(i).x > (*mat).maxVelocityAllowed){(*mat).velocity.at(i).x = (*mat).maxVelocityAllowed;}
         else if((*mat).velocity.at(i).x < (-1.0f) * (*mat).maxVelocityAllowed){(*mat).velocity.at(i).x = -1.0f * (*mat).maxVelocityAllowed;}
         if((*mat).velocity.at(i).y > (*mat).maxVelocityAllowed){(*mat).velocity.at(i).y = (*mat).maxVelocityAllowed;}
         else if((*mat).velocity.at(i).y < (-1.0f) * (*mat).maxVelocityAllowed){(*mat).velocity.at(i).y = -1.0f * (*mat).maxVelocityAllowed;}
-        (*mat).center.at(i) += (*mat).velocity.at(i) / SGXCuteVesicles::framesPerSecond;
+        (*mat).center.at(i) += (*mat).velocity.at(i) / SGWCuteVesicles::framesPerSecond;
         if((*mat).center.at(i).x > (*mat).maxCenter){(*mat).center.at(i).x -= 2.0f * (*mat).maxCenter;}
         else if((*mat).center.at(i).x < (-1.0f) * (*mat).maxCenter){(*mat).center.at(i).x += 2.0f * (*mat).maxCenter;}
         if((*mat).center.at(i).y > (*mat).maxCenter){(*mat).center.at(i).y -= 2.0f * (*mat).maxCenter;}
         else if((*mat).center.at(i).y < (-1.0f) * (*mat).maxCenter){(*mat).center.at(i).y += 2.0f * (*mat).maxCenter;}
-        (*mat).radius.at(i) += randomFloat((-1.0f) * (*mat).maxRadiusChangePerSecond, (*mat).maxRadiusChangePerSecond) / SGXCuteVesicles::framesPerSecond;
+        (*mat).radius.at(i) += randomFloat((-1.0f) * (*mat).maxRadiusChangePerSecond, (*mat).maxRadiusChangePerSecond) / SGWCuteVesicles::framesPerSecond;
         if((*mat).radius.at(i) > (*mat).maxRadiusAllowed){(*mat).radius.at(i) = (*mat).maxRadiusAllowed;}
         else if((*mat).radius.at(i) < (*mat).minRadiusAllowed){(*mat).radius.at(i) = (*mat).minRadiusAllowed;}
         for(int j=0; j<8; j++){
-            (*mat).radiusOffset.at(i).at(j) += randomFloat((-1.0f) * (*mat).maxRadiusOffsetChangePerSecond, (*mat).maxRadiusOffsetChangePerSecond) / SGXCuteVesicles::framesPerSecond;
+            (*mat).radiusOffset.at(i).at(j) += randomFloat((-1.0f) * (*mat).maxRadiusOffsetChangePerSecond, (*mat).maxRadiusOffsetChangePerSecond) / SGWCuteVesicles::framesPerSecond;
             if((*mat).radiusOffset.at(i).at(j) > (*mat).maxRadiusOffsetAsRadiusPercentage){(*mat).radiusOffset.at(i).at(j) = (*mat).maxRadiusOffsetAsRadiusPercentage;}
             else if((*mat).radiusOffset.at(i).at(j) < (-1.0f) * (*mat).maxRadiusOffsetAsRadiusPercentage){(*mat).radiusOffset.at(i).at(j) = (-1.0f) * (*mat).maxRadiusOffsetAsRadiusPercentage;}
         }

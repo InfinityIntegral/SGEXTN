@@ -7,13 +7,13 @@
 #include <QQuickItem>
 #include "sgwtype.h"
 #include <QString>
+#include "../template/sgwcutevesicles.h"
 
 int SGWStatusBar::notificationTime = 3;
 SGWStatusBar* SGWStatusBar::instance = nullptr;
 QTimer* SGWStatusBar::timer = nullptr;
 int SGWStatusBar::timeLeft = 0;
 bool SGWStatusBar::isNotifying = false;
-void (*SGWStatusBar::attachedFunction)() = nullptr;
 
 SGWStatusBar::SGWStatusBar() : SGWWidget(SGWWidget::rootWidget, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f){
     QQuickItem* thisItem = qobject_cast<QQuickItem*>((*SGXQuickInterface::statusBar).create());
@@ -45,7 +45,7 @@ void SGWStatusBar::updateTime(){
 }
 
 void SGWStatusBar::eventReceived(const QString& s){
-    if(s == "clicked" && SGWStatusBar::attachedFunction != nullptr){SGWStatusBar::attachedFunction();}
+    if(s == "clicked"){SGWStatusBar::toggleVesicles();}
 }
 
 void SGWStatusBar::notify(const QString &s){
@@ -53,4 +53,8 @@ void SGWStatusBar::notify(const QString &s){
     SGWStatusBar::isNotifying = true;
     (*(*SGWStatusBar::instance).getTopObject()).setProperty("s", s);
     (*(*SGWStatusBar::instance).getTopObject()).setProperty("notify", true);
+}
+
+void SGWStatusBar::toggleVesicles(){
+    SGWCuteVesicles::toggleAnimation();
 }

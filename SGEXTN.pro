@@ -46,6 +46,7 @@ SOURCES = SGEXTN/misc/main.cpp \
     SGEXTN/customisation/sgxvesiclespropertiescustomisation.cpp \
     SGEXTN/cutevesicles/sgxrendercutevesiclesmaterial.cpp \
     SGEXTN/cutevesicles/sgxrendercutevesiclesquickuielement.cpp \
+    SGEXTN/cutevesicles/sgxrendercutevesiclessgwidget.cpp \
     SGEXTN/cutevesicles/sgxrendercutevesiclesshader.cpp \
     SGEXTN/filesystem/sgxfilebinutilities.cpp \
     SGEXTN/filesystem/sgxfiledownloader.cpp \
@@ -66,6 +67,7 @@ SOURCES = SGEXTN/misc/main.cpp \
     SGEXTN/quickui/sgxquickuiinterface.cpp \
     SGEXTN/quickui/sgxthemecoloursetting.cpp \
     SGEXTN/template/sgwcolourpicker.cpp \
+    SGEXTN/template/sgwcutevesicles.cpp \
     SGEXTN/template/sgxcolourpicker.cpp \
     SGEXTN/template/sgxcutevesicles.cpp \
     SGEXTN/template/sgxstatusbar.cpp \
@@ -127,6 +129,7 @@ HEADERS += \
     SGEXTN/customisation/sgxvesiclespropertiescustomisation.h \
     SGEXTN/cutevesicles/sgxrendercutevesiclesmaterial.h \
     SGEXTN/cutevesicles/sgxrendercutevesiclesquickuielement.h \
+    SGEXTN/cutevesicles/sgxrendercutevesiclessgwidget.h \
     SGEXTN/cutevesicles/sgxrendercutevesiclesshader.h \
     SGEXTN/filesystem/sgxfilebinutilities.h \
     SGEXTN/filesystem/sgxfiledownloader.h \
@@ -147,6 +150,7 @@ HEADERS += \
     SGEXTN/quickui/sgxquickuiinterface.h \
     SGEXTN/quickui/sgxthemecoloursetting.h \
     SGEXTN/template/sgwcolourpicker.h \
+    SGEXTN/template/sgwcutevesicles.h \
     SGEXTN/template/sgxcolourpicker.h \
     SGEXTN/template/sgxcutevesicles.h \
     SGEXTN/template/sgxstatusbar.h \
