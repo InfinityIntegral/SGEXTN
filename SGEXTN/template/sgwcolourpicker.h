@@ -16,6 +16,7 @@
 #include "../widgets/sgwinput.h"
 #include "../colourbackground/sgxrendercolourbackgroundsgwidget.h"
 #include "../widgets/sgwcolourpickerwidget.h"
+#include "../widgets/sgwbutton.h"
 
 class SGWColourPicker : public QObject
 {
@@ -57,6 +58,8 @@ public:
     static bool ignoreInputChanges;
     static SGWColourPickerWidget* colourReceiver;
     static void activateColourPicker(SGWColourPickerWidget* x);
+    static void completeColourSelection(SGWButton* /*unused*/);
+    static SGWButton* completeButton;
 };
 
 #endif // SGWCOLOURPICKER_H

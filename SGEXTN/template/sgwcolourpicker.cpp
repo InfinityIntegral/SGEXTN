@@ -19,6 +19,8 @@
 #include <QString>
 #include "../colourbackground/sgxrendercolourbackgroundsgwidget.h"
 #include "../widgets/sgwcolourpickerwidget.h"
+#include "../widgets/sgwtextbutton.h"
+#include "../widgets/sgwbutton.h"
 
 SGWBackground* SGWColourPicker::instance = nullptr;
 SGXColourRGBA SGWColourPicker::colour = SGXColourRGBA(255, 0, 200);
@@ -39,6 +41,7 @@ SGWInput* SGWColourPicker::hexCodeInput = nullptr;
 SGXRenderColourBackgroundSGWidget* SGWColourPicker::colourDisplay = nullptr;
 bool SGWColourPicker::ignoreInputChanges = false;
 SGWColourPickerWidget* SGWColourPicker::colourReceiver = nullptr;
+SGWButton* SGWColourPicker::completeButton = nullptr;
 
 SGWBackground* SGWColourPicker::initialise(){
     SGWBackground* bg = new SGWPageBackground(SGWWidget::parentWidget, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 6, false);
@@ -58,15 +61,16 @@ SGWBackground* SGWColourPicker::initialise(){
     SGWColourPicker::greenInput = new SGWTextInput(realBg, nullptr, 0.0f, 6.5f, 0.0f, 6.5f, 0.0f, 2.0f, 0.0f, 1.0f);
     (*SGWColourPicker::greenInput).setTextChangedFunction(&SGWColourPicker::updateGreen);
     new SGWTextLabel(realBg, "blue:", 0.0f, 0.5f, 0.0f, 8.0f, 0.0f, 1.4f, 0.0f, 1.0f, SGWHorizontalAlignment::Right);
-    SGWColourPicker::blueInput = new SGWTextInput(realBg, nullptr, 0.0f, 2.0f, 0.0f, 8.0f, 0.0f, 1.9f, 0.0f, 1.0f);
+    SGWColourPicker::blueInput = new SGWTextInput(realBg, nullptr, 0.0f, 2.0f, 0.0f, 8.0f, 0.0f, 2.0f, 0.0f, 1.0f);
     (*SGWColourPicker::blueInput).setTextChangedFunction(&SGWColourPicker::updateBlue);
     new SGWTextLabel(realBg, "transparency:", 0.0f, 4.4f, 0.0f, 8.0f, 0.0f, 4.0f, 0.0f, 1.0f, SGWHorizontalAlignment::Right);
-    SGWColourPicker::transparencyInput = new SGWTextInput(realBg, nullptr, 0.0f, 8.5f, 0.0f, 8.0f, 0.0f, 1.9f, 0.0f, 1.0f);
+    SGWColourPicker::transparencyInput = new SGWTextInput(realBg, nullptr, 0.0f, 8.5f, 0.0f, 8.0f, 0.0f, 2.0f, 0.0f, 1.0f);
     (*SGWColourPicker::transparencyInput).setTextChangedFunction(&SGWColourPicker::updateTransparencyFromInput);
     new SGWTextLabel(realBg, "hex code:", 0.0f, 0.5f, 0.0f, 9.5f, 0.0f, 2.9f, 0.0f, 1.0f, SGWHorizontalAlignment::Right);
     SGWColourPicker::hexCodeInput = new SGWTextInput(realBg, nullptr, 0.0f, 3.5f, 0.0f, 9.5f, 0.0f, 5.0f, 0.0f, 1.0f);
     (*SGWColourPicker::hexCodeInput).setTextChangedFunction(&SGWColourPicker::updateHexCode);
     SGWColourPicker::colourDisplay = new SGXRenderColourBackgroundSGWidget(realBg, 0.0f, 9.0f, 0.0f, 6.5f, 0.0f, 2.0f, 0.0f, 1.0f, SGWColourPicker::colour);
+    SGWColourPicker::completeButton = new SGWTextButton(realBg, "ok", &SGWColourPicker::completeColourSelection, 0.0f, 9.0f, 0.0f, 9.5f, 0.0f, 1.5f, 0.0f, 1.0f);
     return bg;
 }
 
@@ -205,4 +209,10 @@ void SGWColourPicker::activateColourPicker(SGWColourPickerWidget *x){
     SGWColourPicker::colour = (*x).getColour();
     SGWColourPicker::colourHSLA = SGXColourHSLA(SGWColourPicker::colour);
     SGWColourPicker::activate();
+}
+
+void SGWColourPicker::completeColourSelection(SGWButton */*unused*/){
+    (*SGWColourPicker::colourReceiver).setColour(SGWColourPicker::colour);
+    SGWColourPicker::colourReceiver = nullptr;
+    SGWBackground::disable(SGWColourPicker::instance);
 }

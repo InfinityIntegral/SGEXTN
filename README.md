@@ -73,7 +73,7 @@ SGEXTN v5.0.0 (planned): same architecture as v1 but uses Qt Quick (supposed to 
 			- [x] SGWLongInput
 		- [x] SGWTouchReceiver
 		- [x] SGWCustomRenderer
-		- [ ] SGWColourPicker
+		- [x] SGWColourPicker
 - [ ] reimplement vesicle customisation page
 - [ ] reimplement colour picker
 - [ ] improve theme customisation page
