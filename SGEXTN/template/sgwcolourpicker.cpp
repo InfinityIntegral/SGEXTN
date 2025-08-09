@@ -18,6 +18,7 @@
 #include "../widgets/sgwhorizontalalignment.h"
 #include <QString>
 #include "../colourbackground/sgxrendercolourbackgroundsgwidget.h"
+#include "../widgets/sgwcolourpickerwidget.h"
 
 SGWBackground* SGWColourPicker::instance = nullptr;
 SGXColourRGBA SGWColourPicker::colour = SGXColourRGBA(255, 0, 200);
@@ -37,6 +38,7 @@ SGWInput* SGWColourPicker::transparencyInput = nullptr;
 SGWInput* SGWColourPicker::hexCodeInput = nullptr;
 SGXRenderColourBackgroundSGWidget* SGWColourPicker::colourDisplay = nullptr;
 bool SGWColourPicker::ignoreInputChanges = false;
+SGWColourPickerWidget* SGWColourPicker::colourReceiver = nullptr;
 
 SGWBackground* SGWColourPicker::initialise(){
     SGWBackground* bg = new SGWPageBackground(SGWWidget::parentWidget, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 6, false);
@@ -196,4 +198,11 @@ void SGWColourPicker::updateHexCode(SGWInput */*unused*/){
     SGWColourPicker::colour.setBlue(correctedInput.mid(4, 2).toInt(nullptr, 16));
     SGWColourPicker::colour.setTransparency(correctedInput.mid(6, 2).toInt(nullptr, 16));
     SGWColourPicker::updateUsingColour();
+}
+
+void SGWColourPicker::activateColourPicker(SGWColourPickerWidget *x){
+    SGWColourPicker::colourReceiver = x;
+    SGWColourPicker::colour = (*x).getColour();
+    SGWColourPicker::colourHSLA = SGXColourHSLA(SGWColourPicker::colour);
+    SGWColourPicker::activate();
 }

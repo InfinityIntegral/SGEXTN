@@ -43,10 +43,11 @@ float SGUCentralManagement::cuteVesiclesCenterTransparency = 0.1f;
 float SGUCentralManagement::cuteVesiclesEdgeTransparency = 0.05f;
 float SGUCentralManagement::cuteVesiclesMembraneTransparency = 0.2f;
 float SGUCentralManagement::cuteVesiclesFrameRate = 10.0f;
-#include "../template/sgwcolourpicker.h"
+#include "../widgets/sgwcolourpickerwidget.h"
+#include "../widgets/sgwwidget.h"
 // this is run immediately after GUI is created, use it to initialise the UI
 void SGUCentralManagement::initialise(){
-    SGWColourPicker::activate();
+    new SGWColourPickerWidget(SGWWidget::parentWidget, 0.0f, 0.5f, 0.0f, 0.5f, 0.0f, 2.0f, 0.0f, 1.0f, SGXColourRGBA(0, 0, 0));
 }
 
 // this is run after the application is created but before the GUI, use it to edit theme colours from configuration files

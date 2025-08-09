@@ -75,6 +75,7 @@ SOURCES = SGEXTN/misc/main.cpp \
     SGEXTN/widgets/sgwbackground.cpp \
     SGEXTN/widgets/sgwblankwidget.cpp \
     SGEXTN/widgets/sgwbutton.cpp \
+    SGEXTN/widgets/sgwcolourpickerwidget.cpp \
     SGEXTN/widgets/sgwcustomrenderer.cpp \
     SGEXTN/widgets/sgwdefaultfonts.cpp \
     SGEXTN/widgets/sgwhorizontalalignment.cpp \
@@ -155,6 +156,7 @@ HEADERS += \
     SGEXTN/widgets/sgwbackground.h \
     SGEXTN/widgets/sgwblankwidget.h \
     SGEXTN/widgets/sgwbutton.h \
+    SGEXTN/widgets/sgwcolourpickerwidget.h \
     SGEXTN/widgets/sgwcustomrenderer.h \
     SGEXTN/widgets/sgwdefaultfonts.h \
     SGEXTN/widgets/sgwhorizontalalignment.h \

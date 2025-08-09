@@ -30,6 +30,7 @@ QQmlComponent* SGXQuickInterface::iconButton = nullptr;
 QQmlComponent* SGXQuickInterface::textInput = nullptr;
 QQmlComponent* SGXQuickInterface::longInput = nullptr;
 QQmlComponent* SGXQuickInterface::touchReceiver = nullptr;
+QQmlComponent* SGXQuickInterface::colourPicker = nullptr;
 
 void SGXQuickInterface::createTemplates(){
     SGXQuickInterface::root = new QQmlComponent(SGXQuickInterface::e, ":/SGEXTN/QML/sgwroot.qml");
@@ -46,6 +47,7 @@ void SGXQuickInterface::createTemplates(){
     SGXQuickInterface::textInput = new QQmlComponent(SGXQuickInterface::e, ":/SGEXTN/QML/sgwtextinput.qml");
     SGXQuickInterface::longInput = new QQmlComponent(SGXQuickInterface::e, ":/SGEXTN/QML/sgwlonginput.qml");
     SGXQuickInterface::touchReceiver = new QQmlComponent(SGXQuickInterface::e, ":/SGEXTN/QML/sgwtouchreceiver.qml");
+    SGXQuickInterface::colourPicker = new QQmlComponent(SGXQuickInterface::e, ":/SGEXTN/QML/sgwcolourpickerwidget.qml");
 }
 
 void SGXQuickInterface::deleteTemplates(){
@@ -63,6 +65,7 @@ void SGXQuickInterface::deleteTemplates(){
     delete SGXQuickInterface::textInput;
     delete SGXQuickInterface::longInput;
     delete SGXQuickInterface::touchReceiver;
+    delete SGXQuickInterface::colourPicker;
 }
 
 void SGXQuickInterface::buildBase(){
