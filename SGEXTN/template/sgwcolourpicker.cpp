@@ -63,8 +63,8 @@ SGWBackground* SGWColourPicker::initialise(){
     new SGWTextLabel(realBg, "blue:", 0.0f, 0.5f, 0.0f, 8.0f, 0.0f, 1.4f, 0.0f, 1.0f, SGWHorizontalAlignment::Right);
     SGWColourPicker::blueInput = new SGWTextInput(realBg, nullptr, 0.0f, 2.0f, 0.0f, 8.0f, 0.0f, 2.0f, 0.0f, 1.0f);
     (*SGWColourPicker::blueInput).setTextChangedFunction(&SGWColourPicker::updateBlue);
-    new SGWTextLabel(realBg, "transparency:", 0.0f, 4.4f, 0.0f, 8.0f, 0.0f, 4.0f, 0.0f, 1.0f, SGWHorizontalAlignment::Right);
-    SGWColourPicker::transparencyInput = new SGWTextInput(realBg, nullptr, 0.0f, 8.5f, 0.0f, 8.0f, 0.0f, 2.0f, 0.0f, 1.0f);
+    new SGWTextLabel(realBg, "transparency:", 0.0f, 4.4f, 0.0f, 8.0f, 0.0f, 4.4f, 0.0f, 1.0f, SGWHorizontalAlignment::Right);
+    SGWColourPicker::transparencyInput = new SGWTextInput(realBg, nullptr, 0.0f, 9.0f, 0.0f, 8.0f, 0.0f, 2.0f, 0.0f, 1.0f);
     (*SGWColourPicker::transparencyInput).setTextChangedFunction(&SGWColourPicker::updateTransparencyFromInput);
     new SGWTextLabel(realBg, "hex code:", 0.0f, 0.5f, 0.0f, 9.5f, 0.0f, 2.9f, 0.0f, 1.0f, SGWHorizontalAlignment::Right);
     SGWColourPicker::hexCodeInput = new SGWTextInput(realBg, nullptr, 0.0f, 3.5f, 0.0f, 9.5f, 0.0f, 5.0f, 0.0f, 1.0f);

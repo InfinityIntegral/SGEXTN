@@ -6,6 +6,7 @@
 #include "../widgets/sgwinput.h"
 #include "../widgets/sgwcolourpickerwidget.h"
 #include <qtmetamacros.h>
+#include "../widgets/sgwbutton.h"
 
 class SGWVesicleCustomisationPage : public QObject
 {
@@ -31,12 +32,8 @@ public:
     static SGWInput* centerTransparencyInput;
     static SGWInput* edgeTransparencyInput;
     static SGWInput* frameRateInput;
-    static SGWBackground* confirmDialogInstance;
-    static SGWBackground* initialiseConfirmDialog();
-    static void confirmChange();
-    static void activateConfirmDialog();
-    static void cancelChange();
-    static void cancelConfirmDialog();
+    static void cancelChange(SGWButton* /*unused*/);
+    static void confirmChange(SGWButton* /*unused*/);
 };
 
 #endif // SGWVESICLECUSTOMISATIONPAGE_H
