@@ -92,6 +92,7 @@ SOURCES = SGEXTN/misc/main.cpp \
     SGEXTN/widgets/sgwparent.cpp \
     SGEXTN/widgets/sgwroot.cpp \
     SGEXTN/widgets/sgwscrollview.cpp \
+    SGEXTN/widgets/sgwsequentiallonglabel.cpp \
     SGEXTN/widgets/sgwsequentialscrollview.cpp \
     SGEXTN/widgets/sgwstatusbar.cpp \
     SGEXTN/widgets/sgwtextbutton.cpp \
@@ -177,6 +178,7 @@ HEADERS += \
     SGEXTN/widgets/sgwparent.h \
     SGEXTN/widgets/sgwroot.h \
     SGEXTN/widgets/sgwscrollview.h \
+    SGEXTN/widgets/sgwsequentiallonglabel.h \
     SGEXTN/widgets/sgwsequentialscrollview.h \
     SGEXTN/widgets/sgwstatusbar.h \
     SGEXTN/widgets/sgwtextbutton.h \
