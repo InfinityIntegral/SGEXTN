@@ -39,6 +39,7 @@ public:
     static QQmlComponent* longInput;
     static QQmlComponent* touchReceiver;
     static QQmlComponent* colourPicker;
+    static QQmlComponent* sequentialScrollView;
 };
 
 #endif // SGXQUICKINTERFACE_H

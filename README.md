@@ -74,6 +74,9 @@ SGEXTN v5.0.0 (planned): same architecture as v1 but uses Qt Quick (supposed to 
 		- [x] SGWTouchReceiver
 		- [x] SGWCustomRenderer
 		- [x] SGWColourPicker
+- [ ] sequential extension to GUI set
+	- [x] SGWSequentialScrollView (child of SGWBackground)
+	- [ ] SGWSequentialLongLabel (child of SGWLabel)
 - [x] reimplement vesicles
 - [ ] reimplement vesicle customisation page
 - [x] reimplement colour picker

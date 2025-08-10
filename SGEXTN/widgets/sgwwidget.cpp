@@ -6,6 +6,7 @@
 #include <QObject>
 #include "sgwscrollview.h"
 #include "../quickui/sgxquickinterface.h"
+#include "sgwsequentialscrollview.h"
 
 SGWWidget* SGWWidget::rootWidget = nullptr;
 SGWWidget* SGWWidget::parentWidget = nullptr;
@@ -182,8 +183,8 @@ void SGWWidget::updateParentSizeNoPush(){
         (*this).parentH0 = 0.0f;
     }
     else{
-        SGWScrollView* parentScrollView = qobject_cast<SGWScrollView*>(parent);
-        if(parentScrollView != nullptr){
+        if((*parent).type == SGWType::ScrollView){
+            SGWScrollView* parentScrollView = qobject_cast<SGWScrollView*>(parent);
             const float scrollViewW1 = (*parentScrollView).w1 - (*parentScrollView).getS1();
             const float scrollViewW0 = (*parentScrollView).w0 - (*parentScrollView).getS0();
             const float scrollViewH1 = (*parentScrollView).getI1();
@@ -192,6 +193,15 @@ void SGWWidget::updateParentSizeNoPush(){
             (*this).parentW0 = scrollViewW1 * (*parent).parentW0 + scrollViewW0;
             (*this).parentH1 = scrollViewH1 * (*parent).parentH1;
             (*this).parentH0 = scrollViewH1 * (*parent).parentH0 + scrollViewH0;
+        }
+        else if((*parent).type == SGWType::SequentialScrollView){
+            SGWSequentialScrollView* parentScrollView = qobject_cast<SGWSequentialScrollView*>(parent);
+            const float scrollViewW1 = (*parentScrollView).w1 - (*parentScrollView).getS1();
+            const float scrollViewW0 = (*parentScrollView).w0 - (*parentScrollView).getS0();
+            (*this).parentW1 = scrollViewW1 * (*parent).parentW1;
+            (*this).parentW0 = scrollViewW1 * (*parent).parentW0 + scrollViewW0;
+            (*this).parentH1 = (*parent).h1 * (*parent).parentH1;
+            (*this).parentH0 = (*parent).h1 * (*parent).parentH0 + (*parent).h0;
         }
         else{
             (*this).parentW1 = (*parent).w1 * (*parent).parentW1;

@@ -55,5 +55,6 @@
         <file>QML/sgwlonginput.qml</file>
         <file>QML/sgwtouchreceiver.qml</file>
         <file>QML/sgwcolourpickerwidget.qml</file>
+        <file>QML/sgwsequentialscrollview.qml</file>
     </qresource>
 </RCC>
