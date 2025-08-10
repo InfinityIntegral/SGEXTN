@@ -3,7 +3,7 @@ import QtQuick.Controls
 import ThemeColours 0.0
 import Resizer 0.0
 
-ScrollView{
+Rectangle{
 	property bool utc: true
 	property int bg: 8
 	property color bgc: "#FF00C8"
@@ -33,15 +33,6 @@ ScrollView{
 	property real pw0: 0.0
 	property real ph1: 0.0
 	property real ph0: 0.0
-	
-	x: x1 * (pw1 * Resizer.renderSpaceWidth + pw0 * Resizer.sizeUnit) + x0 * Resizer.sizeUnit
-	y: y1 * (ph1 * Resizer.renderSpaceHeight + ph0 * Resizer.sizeUnit) + y0 * Resizer.sizeUnit
-	width: w1 * (pw1 * Resizer.renderSpaceWidth + pw0 * Resizer.sizeUnit) + w0 * Resizer.sizeUnit
-	height: h1 * (ph1 * Resizer.renderSpaceHeight + ph0 * Resizer.sizeUnit) + h0 * Resizer.sizeUnit
-	
-	ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
-	contentWidth: width
-	clip: true
 	
 	function getBg(vutc, vbg, vbgc){
 		if(vutc == true){return ThemeColours.getThemeColour(vbg);}
@@ -73,44 +64,48 @@ ScrollView{
 			else{return vfsc;}
 		}
 	}
+
+	x: x1 * (pw1 * Resizer.renderSpaceWidth + pw0 * Resizer.sizeUnit) + x0 * Resizer.sizeUnit
+	y: y1 * (ph1 * Resizer.renderSpaceHeight + ph0 * Resizer.sizeUnit) + y0 * Resizer.sizeUnit
+	width: w1 * (pw1 * Resizer.renderSpaceWidth + pw0 * Resizer.sizeUnit) + w0 * Resizer.sizeUnit
+	height: h1 * (ph1 * Resizer.renderSpaceHeight + ph0 * Resizer.sizeUnit) + h0 * Resizer.sizeUnit
+	color: getBg(utc, bg, bgc)
 	
-	Rectangle{
+	ScrollView{
 		x: 0
 		y: 0
-		width: parent.width - (s1 * (ph1 * Resizer.renderSpaceWidth + ph0 * Resizer.sizeUnit) + s0 * Resizer.sizeUnit)
-		height: 0
-		color: getBg(utc, bg, bgc)
-		
+		width: parent.width
+		height: parent.height
+	
+		ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+		contentWidth: width
+		clip: true
+	
 		Column{
-			width: parent.width
+			width: parent.width - (s1 * (ph1 * Resizer.renderSpaceWidth + ph0 * Resizer.sizeUnit) + s0 * Resizer.sizeUnit)
 			height: implicitHeight
 			property bool canParent: true
-			
-			function updateHeight(){
-				parent.height = Math.max(h1 * (ph1 * Resizer.renderSpaceHeight + ph0 * Resizer.sizeUnit) + h0 * Resizer.sizeUnit, implicitHeight);
-			}
-			onImplicitHeightChanged: updateHeight()
 		}
-	}
 	
-	ScrollBar.vertical: ScrollBar{
-		property bool vf: pressed
-		property bool vh: hovered
+		ScrollBar.vertical: ScrollBar{
+			property bool vf: pressed
+			property bool vh: hovered
 		
-		policy: ScrollBar.AlwaysOn
-		x: parent.width - width
-		y: 0
-		width: s1 * (ph1 * Resizer.renderSpaceWidth + ph0 * Resizer.sizeUnit) + s0 * Resizer.sizeUnit
-		height: parent.height
-		padding: 0
+			policy: ScrollBar.AlwaysOn
+			x: parent.width - width
+			y: 0
+			width: s1 * (ph1 * Resizer.renderSpaceWidth + ph0 * Resizer.sizeUnit) + s0 * Resizer.sizeUnit
+			height: parent.height
+			padding: 0
 		
-		contentItem: Rectangle{
-			color: getFS(utc, parent.vh, parent.vf, fs, fsc, fsh, fshc, fsf, fsfc)
-			width: parent.width
-		}
-		background: Rectangle{
-			color: getBS(utc, parent.vh, parent.vf, bs, bsc, bsh, bshc, bsf, bsfc)
-			width: parent.width
+			contentItem: Rectangle{
+				color: getFS(utc, parent.vh, parent.vf, fs, fsc, fsh, fshc, fsf, fsfc)
+				width: parent.width
+			}
+			background: Rectangle{
+				color: getBS(utc, parent.vh, parent.vf, bs, bsc, bsh, bshc, bsf, bsfc)
+				width: parent.width
+			}
 		}
 	}
 }
