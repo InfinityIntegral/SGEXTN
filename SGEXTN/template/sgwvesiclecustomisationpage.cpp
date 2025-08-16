@@ -13,6 +13,7 @@
 #include "../widgets/sgwhorizontalalignment.h"
 #include "../widgets/sgwbutton.h"
 #include "../widgets/sgwlabel.h"
+#include "../userDefinedClasses/sgucentralmanagement.h"
 
 SGWBackground* SGWVesicleCustomisationPage::instance = nullptr;
 SGWInput* SGWVesicleCustomisationPage::membraneThicknessInput = nullptr;
@@ -173,7 +174,19 @@ SGWBackground* SGWVesicleCustomisationPage::initialise(){
 }
 
 void SGWVesicleCustomisationPage::reset(){
-    
+    (*SGWVesicleCustomisationPage::membraneThicknessInput).setTextFromFloat(SGUCentralManagement::cuteVesiclesMembraneThickness);
+    (*SGWVesicleCustomisationPage::maximumCenterDistanceInput).setTextFromFloat(SGUCentralManagement::cuteVesiclesMaximumCenterDistance);
+    (*SGWVesicleCustomisationPage::maximumVelocityInput).setTextFromFloat(SGUCentralManagement::cuteVesiclesMaximumVelocity);
+    (*SGWVesicleCustomisationPage::maximumAccelerationInput).setTextFromFloat(SGUCentralManagement::cuteVesiclesMaximumAcceleration);
+    (*SGWVesicleCustomisationPage::maximumRadiusChangeInput).setTextFromFloat(SGUCentralManagement::cuteVesiclesMaximumRadiusChange);
+    (*SGWVesicleCustomisationPage::maximumRadiusInput).setTextFromFloat(SGUCentralManagement::cuteVesiclesMaximumRadius);
+    (*SGWVesicleCustomisationPage::minimumRadiusInput).setTextFromFloat(SGUCentralManagement::cuteVesiclesMinimumRadius);
+    (*SGWVesicleCustomisationPage::maximumRadiusOffsetInput).setTextFromFloat(SGUCentralManagement::cuteVesiclesMaximumRadiusOffset);
+    (*SGWVesicleCustomisationPage::maximumRadiusOffsetChangeInput).setTextFromFloat(SGUCentralManagement::cuteVesiclesMaximumRadiusOffsetChange);
+    (*SGWVesicleCustomisationPage::membraneTransparencyInput).setTextFromFloat(SGUCentralManagement::cuteVesiclesMembraneTransparency);
+    (*SGWVesicleCustomisationPage::centerTransparencyInput).setTextFromFloat(SGUCentralManagement::cuteVesiclesCenterTransparency);
+    (*SGWVesicleCustomisationPage::edgeTransparencyInput).setTextFromFloat(SGUCentralManagement::cuteVesiclesEdgeTransparency);
+    (*SGWVesicleCustomisationPage::frameRateInput).setTextFromFloat(SGUCentralManagement::cuteVesiclesFrameRate);
 }
 
 void SGWVesicleCustomisationPage::cancelChange(SGWButton */*unused*/){
