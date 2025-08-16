@@ -46,6 +46,18 @@ public:
     static void cancelChange(SGWButton* /*unused*/);
     static void confirmChange(SGWButton* /*unused*/);
     static void membraneThicknessCheck(SGWInput* /*unused*/);
+    static void maximumCenterDistanceCheck(SGWInput* /*unused*/);
+    static void maximumVelocityCheck(SGWInput* /*unused*/);
+    static void maximumAccelerationCheck(SGWInput* /*unused*/);
+    static void maximumRadiusChangeCheck(SGWInput* /*unused*/);
+    static void maximumRadiusCheck(SGWInput* /*unused*/);
+    static void minimumRadiusCheck(SGWInput* /*unused*/);
+    static void maximumRadiusOffsetCheck(SGWInput* /*unused*/);
+    static void maximumRadiusOffsetChangeCheck(SGWInput* /*unused*/);
+    static void membraneTransparencyCheck(SGWInput* /*unused*/);
+    static void centerTransparencyCheck(SGWInput* /*unused*/);
+    static void edgeTransparencyCheck(SGWInput* /*unused*/);
+    static void frameRateCheck(SGWInput* /*unused*/);
 };
 
 #endif // SGWVESICLECUSTOMISATIONPAGE_H

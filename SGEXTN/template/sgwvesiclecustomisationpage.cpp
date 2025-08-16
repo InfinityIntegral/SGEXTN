@@ -80,7 +80,7 @@ SGWBackground* SGWVesicleCustomisationPage::initialise(){
     new SGWSequentialLongLabel(bg, s, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.0f);
     p = new SGWBlankWidget(bg, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 2.0f, 8);
     new SGWTextLabel(p, "center distance:", 0.0f, 0.5f, 0.0f, 0.0f, 0.5f, -0.6f, 0.0f, 1.0f, SGWHorizontalAlignment::Right);
-    SGWVesicleCustomisationPage::maximumCenterDistanceInput = new SGWTextInput(p, nullptr, 0.5f, 0.1f, 0.0f, 0.0f, 0.0f, 3.0f, 0.0f, 1.0f);
+    SGWVesicleCustomisationPage::maximumCenterDistanceInput = new SGWTextInput(p, &SGWVesicleCustomisationPage::maximumCenterDistanceCheck, 0.5f, 0.1f, 0.0f, 0.0f, 0.0f, 3.0f, 0.0f, 1.0f);
     SGWVesicleCustomisationPage::maximumCenterDistanceError = new SGWTextLabel(p, "nonnegative number", 0.5f, 0.1f, 0.0f, 1.0f, 0.5f, -0.6f, 0.0f, 0.75f, SGWHorizontalAlignment::Left);
     (*SGWVesicleCustomisationPage::maximumCenterDistanceError).setForegroundThemeColour(2);
     (*SGWVesicleCustomisationPage::maximumCenterDistanceError).setItemVisibility(false);
@@ -89,7 +89,7 @@ SGWBackground* SGWVesicleCustomisationPage::initialise(){
     new SGWSequentialLongLabel(bg, s, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.0f);
     p = new SGWBlankWidget(bg, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 2.0f, 8);
     new SGWTextLabel(p, "maximum velocity:", 0.0f, 0.5f, 0.0f, 0.0f, 0.5f, -0.6f, 0.0f, 1.0f, SGWHorizontalAlignment::Right);
-    SGWVesicleCustomisationPage::maximumVelocityInput = new SGWTextInput(p, nullptr, 0.5f, 0.1f, 0.0f, 0.0f, 0.0f, 3.0f, 0.0f, 1.0f);
+    SGWVesicleCustomisationPage::maximumVelocityInput = new SGWTextInput(p, &SGWVesicleCustomisationPage::maximumVelocityCheck, 0.5f, 0.1f, 0.0f, 0.0f, 0.0f, 3.0f, 0.0f, 1.0f);
     SGWVesicleCustomisationPage::maximumVelocityError = new SGWTextLabel(p, "nonnegative number", 0.5f, 0.1f, 0.0f, 1.0f, 0.5f, -0.6f, 0.0f, 0.75f, SGWHorizontalAlignment::Left);
     (*SGWVesicleCustomisationPage::maximumVelocityError).setForegroundThemeColour(2);
     (*SGWVesicleCustomisationPage::maximumVelocityError).setItemVisibility(false);
@@ -98,7 +98,7 @@ SGWBackground* SGWVesicleCustomisationPage::initialise(){
     new SGWSequentialLongLabel(bg, s, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.0f);
     p = new SGWBlankWidget(bg, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 2.0f, 8);
     new SGWTextLabel(p, "max. acceleration:", 0.0f, 0.5f, 0.0f, 0.0f, 0.5f, -0.6f, 0.0f, 1.0f, SGWHorizontalAlignment::Right);
-    SGWVesicleCustomisationPage::maximumAccelerationInput = new SGWTextInput(p, nullptr, 0.5f, 0.1f, 0.0f, 0.0f, 0.0f, 3.0f, 0.0f, 1.0f);
+    SGWVesicleCustomisationPage::maximumAccelerationInput = new SGWTextInput(p, &SGWVesicleCustomisationPage::maximumAccelerationCheck, 0.5f, 0.1f, 0.0f, 0.0f, 0.0f, 3.0f, 0.0f, 1.0f);
     SGWVesicleCustomisationPage::maximumAccelerationError = new SGWTextLabel(p, "nonnegative number", 0.5f, 0.1f, 0.0f, 1.0f, 0.5f, -0.6f, 0.0f, 0.75f, SGWHorizontalAlignment::Left);
     (*SGWVesicleCustomisationPage::maximumAccelerationError).setForegroundThemeColour(2);
     (*SGWVesicleCustomisationPage::maximumAccelerationError).setItemVisibility(false);
@@ -107,7 +107,7 @@ SGWBackground* SGWVesicleCustomisationPage::initialise(){
     new SGWSequentialLongLabel(bg, s, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.0f);
     p = new SGWBlankWidget(bg, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 2.0f, 8);
     new SGWTextLabel(p, "max. radius change:", 0.0f, 0.5f, 0.0f, 0.0f, 0.5f, -0.6f, 0.0f, 1.0f, SGWHorizontalAlignment::Right);
-    SGWVesicleCustomisationPage::maximumRadiusChangeInput = new SGWTextInput(p, nullptr, 0.5f, 0.1f, 0.0f, 0.0f, 0.0f, 3.0f, 0.0f, 1.0f);
+    SGWVesicleCustomisationPage::maximumRadiusChangeInput = new SGWTextInput(p, &SGWVesicleCustomisationPage::maximumRadiusChangeCheck, 0.5f, 0.1f, 0.0f, 0.0f, 0.0f, 3.0f, 0.0f, 1.0f);
     SGWVesicleCustomisationPage::maximumRadiusChangeError = new SGWTextLabel(p, "nonnegative number", 0.5f, 0.1f, 0.0f, 1.0f, 0.5f, -0.6f, 0.0f, 0.75f, SGWHorizontalAlignment::Left);
     (*SGWVesicleCustomisationPage::maximumRadiusChangeError).setForegroundThemeColour(2);
     (*SGWVesicleCustomisationPage::maximumRadiusChangeError).setItemVisibility(false);
@@ -116,7 +116,7 @@ SGWBackground* SGWVesicleCustomisationPage::initialise(){
     new SGWSequentialLongLabel(bg, s, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.0f);
     p = new SGWBlankWidget(bg, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 2.0f, 8);
     new SGWTextLabel(p, "minimum radius:", 0.0f, 0.5f, 0.0f, 0.0f, 0.5f, -0.6f, 0.0f, 1.0f, SGWHorizontalAlignment::Right);
-    SGWVesicleCustomisationPage::minimumRadiusInput = new SGWTextInput(p, nullptr, 0.5f, 0.1f, 0.0f, 0.0f, 0.0f, 3.0f, 0.0f, 1.0f);
+    SGWVesicleCustomisationPage::minimumRadiusInput = new SGWTextInput(p, &SGWVesicleCustomisationPage::minimumRadiusCheck, 0.5f, 0.1f, 0.0f, 0.0f, 0.0f, 3.0f, 0.0f, 1.0f);
     SGWVesicleCustomisationPage::minimumRadiusError = new SGWTextLabel(p, "nonnegative number", 0.5f, 0.1f, 0.0f, 1.0f, 0.5f, -0.6f, 0.0f, 0.75f, SGWHorizontalAlignment::Left);
     (*SGWVesicleCustomisationPage::minimumRadiusError).setForegroundThemeColour(2);
     (*SGWVesicleCustomisationPage::minimumRadiusError).setItemVisibility(false);
@@ -125,7 +125,7 @@ SGWBackground* SGWVesicleCustomisationPage::initialise(){
     new SGWSequentialLongLabel(bg, s, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.0f);
     p = new SGWBlankWidget(bg, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 2.0f, 8);
     new SGWTextLabel(p, "maximum radius:", 0.0f, 0.5f, 0.0f, 0.0f, 0.5f, -0.6f, 0.0f, 1.0f, SGWHorizontalAlignment::Right);
-    SGWVesicleCustomisationPage::maximumRadiusInput = new SGWTextInput(p, nullptr, 0.5f, 0.1f, 0.0f, 0.0f, 0.0f, 3.0f, 0.0f, 1.0f);
+    SGWVesicleCustomisationPage::maximumRadiusInput = new SGWTextInput(p, &SGWVesicleCustomisationPage::maximumRadiusCheck, 0.5f, 0.1f, 0.0f, 0.0f, 0.0f, 3.0f, 0.0f, 1.0f);
     SGWVesicleCustomisationPage::maximumRadiusError = new SGWTextLabel(p, "nonnegative number", 0.5f, 0.1f, 0.0f, 1.0f, 0.5f, -0.6f, 0.0f, 0.75f, SGWHorizontalAlignment::Left);
     (*SGWVesicleCustomisationPage::maximumRadiusError).setForegroundThemeColour(2);
     (*SGWVesicleCustomisationPage::maximumRadiusError).setItemVisibility(false);
@@ -134,7 +134,7 @@ SGWBackground* SGWVesicleCustomisationPage::initialise(){
     new SGWSequentialLongLabel(bg, s, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.0f);
     p = new SGWBlankWidget(bg, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 2.0f, 8);
     new SGWTextLabel(p, "maximum offset:", 0.0f, 0.5f, 0.0f, 0.0f, 0.5f, -0.6f, 0.0f, 1.0f, SGWHorizontalAlignment::Right);
-    SGWVesicleCustomisationPage::maximumRadiusOffsetInput = new SGWTextInput(p, nullptr, 0.5f, 0.1f, 0.0f, 0.0f, 0.0f, 3.0f, 0.0f, 1.0f);
+    SGWVesicleCustomisationPage::maximumRadiusOffsetInput = new SGWTextInput(p, &SGWVesicleCustomisationPage::maximumRadiusOffsetCheck, 0.5f, 0.1f, 0.0f, 0.0f, 0.0f, 3.0f, 0.0f, 1.0f);
     SGWVesicleCustomisationPage::maximumRadiusOffsetError = new SGWTextLabel(p, "nonnegative number", 0.5f, 0.1f, 0.0f, 1.0f, 0.5f, -0.6f, 0.0f, 0.75f, SGWHorizontalAlignment::Left);
     (*SGWVesicleCustomisationPage::maximumRadiusOffsetError).setForegroundThemeColour(2);
     (*SGWVesicleCustomisationPage::maximumRadiusOffsetError).setItemVisibility(false);
@@ -143,7 +143,7 @@ SGWBackground* SGWVesicleCustomisationPage::initialise(){
     new SGWSequentialLongLabel(bg, s, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.0f);
     p = new SGWBlankWidget(bg, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 2.0f, 8);
     new SGWTextLabel(p, "max. offset change:", 0.0f, 0.5f, 0.0f, 0.0f, 0.5f, -0.6f, 0.0f, 1.0f, SGWHorizontalAlignment::Right);
-    SGWVesicleCustomisationPage::maximumRadiusOffsetChangeInput = new SGWTextInput(p, nullptr, 0.5f, 0.1f, 0.0f, 0.0f, 0.0f, 3.0f, 0.0f, 1.0f);
+    SGWVesicleCustomisationPage::maximumRadiusOffsetChangeInput = new SGWTextInput(p, &SGWVesicleCustomisationPage::maximumRadiusOffsetChangeCheck, 0.5f, 0.1f, 0.0f, 0.0f, 0.0f, 3.0f, 0.0f, 1.0f);
     SGWVesicleCustomisationPage::maximumRadiusOffsetChangeError = new SGWTextLabel(p, "nonnegative number", 0.5f, 0.1f, 0.0f, 1.0f, 0.5f, -0.6f, 0.0f, 0.75f, SGWHorizontalAlignment::Left);
     (*SGWVesicleCustomisationPage::maximumRadiusOffsetChangeError).setForegroundThemeColour(2);
     (*SGWVesicleCustomisationPage::maximumRadiusOffsetChangeError).setItemVisibility(false);
@@ -152,7 +152,7 @@ SGWBackground* SGWVesicleCustomisationPage::initialise(){
     new SGWSequentialLongLabel(bg, s, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.0f);
     p = new SGWBlankWidget(bg, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 2.0f, 8);
     new SGWTextLabel(p, "membrane transparency:", 0.0f, 0.5f, 0.0f, 0.0f, 0.5f, -0.6f, 0.0f, 1.0f, SGWHorizontalAlignment::Right);
-    SGWVesicleCustomisationPage::membraneTransparencyInput = new SGWTextInput(p, nullptr, 0.5f, 0.1f, 0.0f, 0.0f, 0.0f, 3.0f, 0.0f, 1.0f);
+    SGWVesicleCustomisationPage::membraneTransparencyInput = new SGWTextInput(p, &SGWVesicleCustomisationPage::membraneTransparencyCheck, 0.5f, 0.1f, 0.0f, 0.0f, 0.0f, 3.0f, 0.0f, 1.0f);
     SGWVesicleCustomisationPage::membraneTransparencyError = new SGWTextLabel(p, "number between 0 and 1", 0.5f, 0.1f, 0.0f, 1.0f, 0.5f, -0.6f, 0.0f, 0.75f, SGWHorizontalAlignment::Left);
     (*SGWVesicleCustomisationPage::membraneTransparencyError).setForegroundThemeColour(2);
     (*SGWVesicleCustomisationPage::membraneTransparencyError).setItemVisibility(false);
@@ -161,7 +161,7 @@ SGWBackground* SGWVesicleCustomisationPage::initialise(){
     new SGWSequentialLongLabel(bg, s, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.0f);
     p = new SGWBlankWidget(bg, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 2.0f, 8);
     new SGWTextLabel(p, "center transparency:", 0.0f, 0.5f, 0.0f, 0.0f, 0.5f, -0.6f, 0.0f, 1.0f, SGWHorizontalAlignment::Right);
-    SGWVesicleCustomisationPage::centerTransparencyInput = new SGWTextInput(p, nullptr, 0.5f, 0.1f, 0.0f, 0.0f, 0.0f, 3.0f, 0.0f, 1.0f);
+    SGWVesicleCustomisationPage::centerTransparencyInput = new SGWTextInput(p, &SGWVesicleCustomisationPage::centerTransparencyCheck, 0.5f, 0.1f, 0.0f, 0.0f, 0.0f, 3.0f, 0.0f, 1.0f);
     SGWVesicleCustomisationPage::centerTransparencyError = new SGWTextLabel(p, "number between 0 and 1", 0.5f, 0.1f, 0.0f, 1.0f, 0.5f, -0.6f, 0.0f, 0.75f, SGWHorizontalAlignment::Left);
     (*SGWVesicleCustomisationPage::centerTransparencyError).setForegroundThemeColour(2);
     (*SGWVesicleCustomisationPage::centerTransparencyError).setItemVisibility(false);
@@ -170,7 +170,7 @@ SGWBackground* SGWVesicleCustomisationPage::initialise(){
     new SGWSequentialLongLabel(bg, s, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.0f);
     p = new SGWBlankWidget(bg, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 2.0f, 8);
     new SGWTextLabel(p, "edge transparency:", 0.0f, 0.5f, 0.0f, 0.0f, 0.5f, -0.6f, 0.0f, 1.0f, SGWHorizontalAlignment::Right);
-    SGWVesicleCustomisationPage::edgeTransparencyInput = new SGWTextInput(p, nullptr, 0.5f, 0.1f, 0.0f, 0.0f, 0.0f, 3.0f, 0.0f, 1.0f);
+    SGWVesicleCustomisationPage::edgeTransparencyInput = new SGWTextInput(p, &SGWVesicleCustomisationPage::edgeTransparencyCheck, 0.5f, 0.1f, 0.0f, 0.0f, 0.0f, 3.0f, 0.0f, 1.0f);
     SGWVesicleCustomisationPage::edgeTransparencyError = new SGWTextLabel(p, "number between 0 and 1", 0.5f, 0.1f, 0.0f, 1.0f, 0.5f, -0.6f, 0.0f, 0.75f, SGWHorizontalAlignment::Left);
     (*SGWVesicleCustomisationPage::edgeTransparencyError).setForegroundThemeColour(2);
     (*SGWVesicleCustomisationPage::edgeTransparencyError).setItemVisibility(false);
@@ -179,7 +179,7 @@ SGWBackground* SGWVesicleCustomisationPage::initialise(){
     new SGWSequentialLongLabel(bg, s, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.0f);
     p = new SGWBlankWidget(bg, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 2.0f, 8);
     new SGWTextLabel(p, "frame rate:", 0.0f, 0.5f, 0.0f, 0.0f, 0.5f, -0.6f, 0.0f, 1.0f, SGWHorizontalAlignment::Right);
-    SGWVesicleCustomisationPage::frameRateInput = new SGWTextInput(p, nullptr, 0.5f, 0.1f, 0.0f, 0.0f, 0.0f, 3.0f, 0.0f, 1.0f);
+    SGWVesicleCustomisationPage::frameRateInput = new SGWTextInput(p, &SGWVesicleCustomisationPage::frameRateCheck, 0.5f, 0.1f, 0.0f, 0.0f, 0.0f, 3.0f, 0.0f, 1.0f);
     SGWVesicleCustomisationPage::frameRateError = new SGWTextLabel(p, "positive number", 0.5f, 0.1f, 0.0f, 1.0f, 0.5f, -0.6f, 0.0f, 0.75f, SGWHorizontalAlignment::Left);
     (*SGWVesicleCustomisationPage::frameRateError).setForegroundThemeColour(2);
     (*SGWVesicleCustomisationPage::frameRateError).setItemVisibility(false);
@@ -221,5 +221,161 @@ void SGWVesicleCustomisationPage::membraneThicknessCheck(SGWInput */*unused*/){
     else{
         (*SGWVesicleCustomisationPage::membraneThicknessInput).setInvalid(false);
         (*SGWVesicleCustomisationPage::membraneThicknessError).setItemVisibility(false);
+    }
+}
+
+void SGWVesicleCustomisationPage::maximumCenterDistanceCheck(SGWInput */*unused*/){
+    bool isValid = false;
+    (void)(*SGWVesicleCustomisationPage::maximumCenterDistanceInput).getTextAsFloat(&isValid, 0.0f, std::numeric_limits<float>::infinity());
+    if(isValid == false){
+        (*SGWVesicleCustomisationPage::maximumCenterDistanceInput).setInvalid(true);
+        (*SGWVesicleCustomisationPage::maximumCenterDistanceError).setItemVisibility(true);
+    }
+    else{
+        (*SGWVesicleCustomisationPage::maximumCenterDistanceInput).setInvalid(false);
+        (*SGWVesicleCustomisationPage::maximumCenterDistanceError).setItemVisibility(false);
+    }
+}
+
+void SGWVesicleCustomisationPage::maximumVelocityCheck(SGWInput */*unused*/){
+    bool isValid = false;
+    (void)(*SGWVesicleCustomisationPage::maximumVelocityInput).getTextAsFloat(&isValid, 0.0f, std::numeric_limits<float>::infinity());
+    if(isValid == false){
+        (*SGWVesicleCustomisationPage::maximumVelocityInput).setInvalid(true);
+        (*SGWVesicleCustomisationPage::maximumVelocityError).setItemVisibility(true);
+    }
+    else{
+        (*SGWVesicleCustomisationPage::maximumVelocityInput).setInvalid(false);
+        (*SGWVesicleCustomisationPage::maximumVelocityError).setItemVisibility(false);
+    }
+}
+
+void SGWVesicleCustomisationPage::maximumAccelerationCheck(SGWInput */*unused*/){
+    bool isValid = false;
+    (void)(*SGWVesicleCustomisationPage::maximumAccelerationInput).getTextAsFloat(&isValid, 0.0f, std::numeric_limits<float>::infinity());
+    if(isValid == false){
+        (*SGWVesicleCustomisationPage::maximumAccelerationInput).setInvalid(true);
+        (*SGWVesicleCustomisationPage::maximumAccelerationError).setItemVisibility(true);
+    }
+    else{
+        (*SGWVesicleCustomisationPage::maximumAccelerationInput).setInvalid(false);
+        (*SGWVesicleCustomisationPage::maximumAccelerationError).setItemVisibility(false);
+    }
+}
+
+void SGWVesicleCustomisationPage::maximumRadiusChangeCheck(SGWInput */*unused*/){
+    bool isValid = false;
+    (void)(*SGWVesicleCustomisationPage::maximumRadiusChangeInput).getTextAsFloat(&isValid, 0.0f, std::numeric_limits<float>::infinity());
+    if(isValid == false){
+        (*SGWVesicleCustomisationPage::maximumRadiusChangeInput).setInvalid(true);
+        (*SGWVesicleCustomisationPage::maximumRadiusChangeError).setItemVisibility(true);
+    }
+    else{
+        (*SGWVesicleCustomisationPage::maximumRadiusChangeInput).setInvalid(false);
+        (*SGWVesicleCustomisationPage::maximumRadiusChangeError).setItemVisibility(false);
+    }
+}
+
+void SGWVesicleCustomisationPage::maximumRadiusCheck(SGWInput */*unused*/){
+    bool isValid = false;
+    (void)(*SGWVesicleCustomisationPage::maximumRadiusInput).getTextAsFloat(&isValid, 0.0f, std::numeric_limits<float>::infinity());
+    if(isValid == false){
+        (*SGWVesicleCustomisationPage::maximumRadiusInput).setInvalid(true);
+        (*SGWVesicleCustomisationPage::maximumRadiusError).setItemVisibility(true);
+    }
+    else{
+        (*SGWVesicleCustomisationPage::maximumRadiusInput).setInvalid(false);
+        (*SGWVesicleCustomisationPage::maximumRadiusError).setItemVisibility(false);
+    }
+}
+
+void SGWVesicleCustomisationPage::minimumRadiusCheck(SGWInput */*unused*/){
+    bool isValid = false;
+    (void)(*SGWVesicleCustomisationPage::minimumRadiusInput).getTextAsFloat(&isValid, 0.0f, std::numeric_limits<float>::infinity());
+    if(isValid == false){
+        (*SGWVesicleCustomisationPage::minimumRadiusInput).setInvalid(true);
+        (*SGWVesicleCustomisationPage::minimumRadiusError).setItemVisibility(true);
+    }
+    else{
+        (*SGWVesicleCustomisationPage::minimumRadiusInput).setInvalid(false);
+        (*SGWVesicleCustomisationPage::minimumRadiusError).setItemVisibility(false);
+    }
+}
+
+void SGWVesicleCustomisationPage::maximumRadiusOffsetCheck(SGWInput */*unused*/){
+    bool isValid = false;
+    (void)(*SGWVesicleCustomisationPage::maximumRadiusOffsetInput).getTextAsFloat(&isValid, 0.0f, std::numeric_limits<float>::infinity());
+    if(isValid == false){
+        (*SGWVesicleCustomisationPage::maximumRadiusOffsetInput).setInvalid(true);
+        (*SGWVesicleCustomisationPage::maximumRadiusOffsetError).setItemVisibility(true);
+    }
+    else{
+        (*SGWVesicleCustomisationPage::maximumRadiusOffsetInput).setInvalid(false);
+        (*SGWVesicleCustomisationPage::maximumRadiusOffsetError).setItemVisibility(false);
+    }
+}
+
+void SGWVesicleCustomisationPage::maximumRadiusOffsetChangeCheck(SGWInput */*unused*/){
+    bool isValid = false;
+    (void)(*SGWVesicleCustomisationPage::maximumRadiusOffsetChangeInput).getTextAsFloat(&isValid, 0.0f, std::numeric_limits<float>::infinity());
+    if(isValid == false){
+        (*SGWVesicleCustomisationPage::maximumRadiusOffsetChangeInput).setInvalid(true);
+        (*SGWVesicleCustomisationPage::maximumRadiusOffsetChangeError).setItemVisibility(true);
+    }
+    else{
+        (*SGWVesicleCustomisationPage::maximumRadiusOffsetChangeInput).setInvalid(false);
+        (*SGWVesicleCustomisationPage::maximumRadiusOffsetChangeError).setItemVisibility(false);
+    }
+}
+
+void SGWVesicleCustomisationPage::membraneTransparencyCheck(SGWInput */*unused*/){
+    bool isValid = false;
+    (void)(*SGWVesicleCustomisationPage::membraneTransparencyInput).getTextAsFloat(&isValid, 0.0f, 1.0f);
+    if(isValid == false){
+        (*SGWVesicleCustomisationPage::membraneTransparencyInput).setInvalid(true);
+        (*SGWVesicleCustomisationPage::membraneTransparencyError).setItemVisibility(true);
+    }
+    else{
+        (*SGWVesicleCustomisationPage::membraneTransparencyInput).setInvalid(false);
+        (*SGWVesicleCustomisationPage::membraneTransparencyError).setItemVisibility(false);
+    }
+}
+
+void SGWVesicleCustomisationPage::centerTransparencyCheck(SGWInput */*unused*/){
+    bool isValid = false;
+    (void)(*SGWVesicleCustomisationPage::centerTransparencyInput).getTextAsFloat(&isValid, 0.0f, 1.0f);
+    if(isValid == false){
+        (*SGWVesicleCustomisationPage::centerTransparencyInput).setInvalid(true);
+        (*SGWVesicleCustomisationPage::centerTransparencyError).setItemVisibility(true);
+    }
+    else{
+        (*SGWVesicleCustomisationPage::centerTransparencyInput).setInvalid(false);
+        (*SGWVesicleCustomisationPage::centerTransparencyError).setItemVisibility(false);
+    }
+}
+
+void SGWVesicleCustomisationPage::edgeTransparencyCheck(SGWInput */*unused*/){
+    bool isValid = false;
+    (void)(*SGWVesicleCustomisationPage::edgeTransparencyInput).getTextAsFloat(&isValid, 0.0f, 1.0f);
+    if(isValid == false){
+        (*SGWVesicleCustomisationPage::edgeTransparencyInput).setInvalid(true);
+        (*SGWVesicleCustomisationPage::edgeTransparencyError).setItemVisibility(true);
+    }
+    else{
+        (*SGWVesicleCustomisationPage::edgeTransparencyInput).setInvalid(false);
+        (*SGWVesicleCustomisationPage::edgeTransparencyError).setItemVisibility(false);
+    }
+}
+
+void SGWVesicleCustomisationPage::frameRateCheck(SGWInput */*unused*/){
+    bool isValid = false;
+    (void)(*SGWVesicleCustomisationPage::frameRateInput).getTextAsFloat(&isValid, std::numeric_limits<float>::denorm_min(), std::numeric_limits<float>::infinity());
+    if(isValid == false){
+        (*SGWVesicleCustomisationPage::frameRateInput).setInvalid(true);
+        (*SGWVesicleCustomisationPage::frameRateError).setItemVisibility(true);
+    }
+    else{
+        (*SGWVesicleCustomisationPage::frameRateInput).setInvalid(false);
+        (*SGWVesicleCustomisationPage::frameRateError).setItemVisibility(false);
     }
 }
