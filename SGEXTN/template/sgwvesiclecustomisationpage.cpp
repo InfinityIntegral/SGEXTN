@@ -15,6 +15,8 @@
 #include "../widgets/sgwlabel.h"
 #include "../userDefinedClasses/sgucentralmanagement.h"
 #include <limits>
+#include "../widgets/sgwstatusbar.h"
+#include "../customisation/sgxvesiclespropertiescustomisation.h"
 
 SGWBackground* SGWVesicleCustomisationPage::instance = nullptr;
 SGWInput* SGWVesicleCustomisationPage::membraneThicknessInput = nullptr;
@@ -204,11 +206,57 @@ void SGWVesicleCustomisationPage::reset(){
 }
 
 void SGWVesicleCustomisationPage::cancelChange(SGWButton */*unused*/){
-    
+    SGWBackground::disable(SGWVesicleCustomisationPage::instance);
 }
 
 void SGWVesicleCustomisationPage::confirmChange(SGWButton */*unused*/){
-    
+    bool isValid = true;
+    bool prevValid = false;
+    (void)(*SGWVesicleCustomisationPage::membraneThicknessInput).getTextAsFloat(&prevValid, 0.0f, std::numeric_limits<float>::infinity());
+    if(prevValid == false){isValid = false;}
+    (void)(*SGWVesicleCustomisationPage::maximumCenterDistanceInput).getTextAsFloat(&prevValid, 0.0f, std::numeric_limits<float>::infinity());
+    if(prevValid == false){isValid = false;}
+    (void)(*SGWVesicleCustomisationPage::maximumVelocityInput).getTextAsFloat(&prevValid, 0.0f, std::numeric_limits<float>::infinity());
+    if(prevValid == false){isValid = false;}
+    (void)(*SGWVesicleCustomisationPage::maximumAccelerationInput).getTextAsFloat(&prevValid, 0.0f, std::numeric_limits<float>::infinity());
+    if(prevValid == false){isValid = false;}
+    (void)(*SGWVesicleCustomisationPage::maximumRadiusChangeInput).getTextAsFloat(&prevValid, 0.0f, std::numeric_limits<float>::infinity());
+    if(prevValid == false){isValid = false;}
+    (void)(*SGWVesicleCustomisationPage::maximumRadiusInput).getTextAsFloat(&prevValid, 0.0f, std::numeric_limits<float>::infinity());
+    if(prevValid == false){isValid = false;}
+    (void)(*SGWVesicleCustomisationPage::minimumRadiusInput).getTextAsFloat(&prevValid, 0.0f, std::numeric_limits<float>::infinity());
+    if(prevValid == false){isValid = false;}
+    (void)(*SGWVesicleCustomisationPage::maximumRadiusOffsetInput).getTextAsFloat(&prevValid, 0.0f, std::numeric_limits<float>::infinity());
+    if(prevValid == false){isValid = false;}
+    (void)(*SGWVesicleCustomisationPage::maximumRadiusOffsetChangeInput).getTextAsFloat(&prevValid, 0.0f, std::numeric_limits<float>::infinity());
+    if(prevValid == false){isValid = false;}
+    (void)(*SGWVesicleCustomisationPage::membraneTransparencyInput).getTextAsFloat(&prevValid, 0.0f, 1.0f);
+    if(prevValid == false){isValid = false;}
+    (void)(*SGWVesicleCustomisationPage::centerTransparencyInput).getTextAsFloat(&prevValid, 0.0f, 1.0f);
+    if(prevValid == false){isValid = false;}
+    (void)(*SGWVesicleCustomisationPage::edgeTransparencyInput).getTextAsFloat(&prevValid, 0.0f, 1.0f);
+    if(prevValid == false){isValid = false;}
+    (void)(*SGWVesicleCustomisationPage::frameRateInput).getTextAsFloat(&prevValid, std::numeric_limits<float>::denorm_min(), std::numeric_limits<float>::infinity());
+    if(prevValid == false){isValid = false;}
+    if(isValid == false){
+        SGWStatusBar::notify("invalid input");
+        return;
+    }
+    SGUCentralManagement::cuteVesiclesMembraneThickness = (*SGWVesicleCustomisationPage::membraneThicknessInput).getTextAsFloat(nullptr, 0.0f, std::numeric_limits<float>::infinity());
+    SGUCentralManagement::cuteVesiclesMaximumCenterDistance = (*SGWVesicleCustomisationPage::maximumCenterDistanceInput).getTextAsFloat(nullptr, 0.0f, std::numeric_limits<float>::infinity());
+    SGUCentralManagement::cuteVesiclesMaximumVelocity = (*SGWVesicleCustomisationPage::maximumVelocityInput).getTextAsFloat(nullptr, 0.0f, std::numeric_limits<float>::infinity());
+    SGUCentralManagement::cuteVesiclesMaximumAcceleration = (*SGWVesicleCustomisationPage::maximumAccelerationInput).getTextAsFloat(nullptr, 0.0f, std::numeric_limits<float>::infinity());
+    SGUCentralManagement::cuteVesiclesMaximumRadiusChange = (*SGWVesicleCustomisationPage::maximumRadiusChangeInput).getTextAsFloat(nullptr, 0.0f, std::numeric_limits<float>::infinity());
+    SGUCentralManagement::cuteVesiclesMaximumRadius = (*SGWVesicleCustomisationPage::maximumRadiusInput).getTextAsFloat(nullptr, 0.0f, std::numeric_limits<float>::infinity());
+    SGUCentralManagement::cuteVesiclesMinimumRadius = (*SGWVesicleCustomisationPage::minimumRadiusInput).getTextAsFloat(nullptr, 0.0f, std::numeric_limits<float>::infinity());
+    SGUCentralManagement::cuteVesiclesMaximumRadiusOffset = (*SGWVesicleCustomisationPage::maximumRadiusOffsetInput).getTextAsFloat(nullptr, 0.0f, std::numeric_limits<float>::infinity());
+    SGUCentralManagement::cuteVesiclesMaximumRadiusOffsetChange = (*SGWVesicleCustomisationPage::maximumRadiusOffsetChangeInput).getTextAsFloat(nullptr, 0.0f, std::numeric_limits<float>::infinity());
+    SGUCentralManagement::cuteVesiclesMembraneTransparency = (*SGWVesicleCustomisationPage::membraneTransparencyInput).getTextAsFloat(nullptr, 0.0f, 1.0f);
+    SGUCentralManagement::cuteVesiclesCenterTransparency = (*SGWVesicleCustomisationPage::centerTransparencyInput).getTextAsFloat(nullptr, 0.0f, 1.0f);
+    SGUCentralManagement::cuteVesiclesEdgeTransparency = (*SGWVesicleCustomisationPage::edgeTransparencyInput).getTextAsFloat(nullptr, 0.0f, 1.0f);
+    SGUCentralManagement::cuteVesiclesFrameRate = (*SGWVesicleCustomisationPage::frameRateInput).getTextAsFloat(nullptr, std::numeric_limits<float>::denorm_min(), std::numeric_limits<float>::infinity());
+    SGXVesiclesPropertiesCustomisation::syncVesicleProperties();
+    SGWBackground::disable(SGWVesicleCustomisationPage::instance);
 }
 
 void SGWVesicleCustomisationPage::membraneThicknessCheck(SGWInput */*unused*/){

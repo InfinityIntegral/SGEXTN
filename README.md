@@ -78,7 +78,7 @@ SGEXTN v5.0.0 (planned): same architecture as v1 but uses Qt Quick (supposed to 
 	- [x] SGWSequentialScrollView (child of SGWBackground)
 	- [x] SGWSequentialLongLabel (child of SGWLabel)
 - [x] reimplement vesicles
-- [ ] reimplement vesicle customisation page
+- [x] reimplement vesicle customisation page
 - [x] reimplement colour picker
 - [ ] improve theme customisation page
 - [ ] improve SingCorrect configs page

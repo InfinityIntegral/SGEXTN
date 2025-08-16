@@ -1,6 +1,7 @@
 #include "sgwcutevesicles.h"
 #include "../cutevesicles/sgxrendercutevesiclessgwidget.h"
 #include <QTimer>
+#include "../userDefinedClasses/sgucentralmanagement.h"
 
 float SGWCuteVesicles::framesPerSecond = 0.0f;
 SGXRenderCuteVesiclesSGWidget* SGWCuteVesicles::instance = nullptr;
@@ -11,6 +12,7 @@ void SGWCuteVesicles::refreshAnimation(){
 }
 
 void SGWCuteVesicles::startAnimation(){
+    SGWCuteVesicles::framesPerSecond = SGUCentralManagement::cuteVesiclesFrameRate;
     SGWCuteVesicles::instance = new SGXRenderCuteVesiclesSGWidget();
     SGWCuteVesicles::timer = new QTimer(SGWCuteVesicles::instance);
     connect(SGWCuteVesicles::timer, &QTimer::timeout, &SGWCuteVesicles::refreshAnimation);
