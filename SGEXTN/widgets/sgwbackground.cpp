@@ -55,7 +55,7 @@ void SGWBackground::enable(SGWBackground *&thisPointer, SGWBackground *(*initFun
     if(thisPointer == nullptr){thisPointer = initFunction();}
     (*(*thisPointer).getTopObject()).setVisible(true);
     (*thisPointer).visible = true;
-    resetFunction();
+    if(resetFunction != nullptr){resetFunction();}
 }
 
 void SGWBackground::disable(SGWBackground *&thisPointer){
