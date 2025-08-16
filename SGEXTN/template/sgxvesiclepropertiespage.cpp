@@ -68,8 +68,6 @@ QQuickItem* SGXVesiclePropertiesPage::initialise(){
 }
 
 void SGXVesiclePropertiesPage::initialiseInputFields(){
-    SGXQuickUIInterface::setColourPickerColour(SGXVesiclePropertiesPage::membraneColourInput, SGUCentralManagement::cuteVesiclesMembraneColour);
-    SGXQuickUIInterface::setColourPickerColour(SGXVesiclePropertiesPage::contentsColourInput, SGUCentralManagement::cuteVesiclesContentsColour);
     SGXQuickUIInterface::setInputFieldDataUsingFloat(SGXVesiclePropertiesPage::membraneThicknessInput, SGUCentralManagement::cuteVesiclesMembraneThickness);
     SGXQuickUIInterface::setInputFieldDataUsingFloat(SGXVesiclePropertiesPage::maximumCenterDistanceInput, SGUCentralManagement::cuteVesiclesMaximumCenterDistance);
     SGXQuickUIInterface::setInputFieldDataUsingFloat(SGXVesiclePropertiesPage::maximumVelocityInput, SGUCentralManagement::cuteVesiclesMaximumVelocity);
@@ -89,10 +87,8 @@ void SGXVesiclePropertiesPage::setVesicleProperties(){
     bool isOk = false;
     SGXColourRGBA col = SGXQuickUIInterface::getColourPickerColour(SGXVesiclePropertiesPage::membraneColourInput, isOk);
     col.setTransparency(255);
-    SGUCentralManagement::cuteVesiclesMembraneColour = col;
     col = SGXQuickUIInterface::getColourPickerColour(SGXVesiclePropertiesPage::contentsColourInput, isOk);
     col.setTransparency(255);
-    SGUCentralManagement::cuteVesiclesContentsColour = col;
     float x = SGXQuickUIInterface::getInputFieldDataAsFloat(SGXVesiclePropertiesPage::membraneThicknessInput, isOk);
     if(isOk == true){SGUCentralManagement::cuteVesiclesMembraneThickness = x;}
     x = SGXQuickUIInterface::getInputFieldDataAsFloat(SGXVesiclePropertiesPage::maximumCenterDistanceInput, isOk);

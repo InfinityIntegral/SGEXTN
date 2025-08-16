@@ -283,11 +283,6 @@ void SGXThemeColoursPage::confirmThemeColourSettings(){
     SGUCentralManagement::themeColour7 = SGXThemeColoursPage::coloursToSet[7];
     SGUCentralManagement::themeColour8 = SGXThemeColoursPage::coloursToSet[8];
     SGXThemeColoursCustomisation::syncThemeColours();
-    if(SGXThemeColoursPage::includeVesicleInTheme == true){
-        SGUCentralManagement::cuteVesiclesMembraneColour = SGUCentralManagement::themeColour4;
-        SGUCentralManagement::cuteVesiclesContentsColour = SGUCentralManagement::themeColour8;
-        SGXVesiclesPropertiesCustomisation::syncVesicleProperties();
-    }
     SGXStatusBar::notify("theme colours updated", 5);
     SGXQuickUIInterface::hidePage(SGXThemeColoursPage::confirmDialog);
     SGXQuickUIInterface::hidePage(SGXThemeColoursPage::instance);

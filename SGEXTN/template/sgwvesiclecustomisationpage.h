@@ -4,9 +4,9 @@
 #include <QObject>
 #include "../widgets/sgwbackground.h"
 #include "../widgets/sgwinput.h"
-#include "../widgets/sgwcolourpickerwidget.h"
 #include <qtmetamacros.h>
 #include "../widgets/sgwbutton.h"
+#include "../widgets/sgwlabel.h"
 
 class SGWVesicleCustomisationPage : public QObject
 {
@@ -17,8 +17,6 @@ public:
     static void activate();
     static SGWBackground* initialise();
     static void reset();
-    static SGWColourPickerWidget* membraneColourInput;
-    static SGWColourPickerWidget* contentsColourInput;
     static SGWInput* membraneThicknessInput;
     static SGWInput* maximumCenterDistanceInput;
     static SGWInput* maximumVelocityInput;
@@ -32,6 +30,19 @@ public:
     static SGWInput* centerTransparencyInput;
     static SGWInput* edgeTransparencyInput;
     static SGWInput* frameRateInput;
+    static SGWLabel* membraneThicknessError;
+    static SGWLabel* maximumCenterDistanceError;
+    static SGWLabel* maximumVelocityError;
+    static SGWLabel* maximumAccelerationError;
+    static SGWLabel* maximumRadiusChangeError;
+    static SGWLabel* maximumRadiusError;
+    static SGWLabel* minimumRadiusError;
+    static SGWLabel* maximumRadiusOffsetError;
+    static SGWLabel* maximumRadiusOffsetChangeError;
+    static SGWLabel* membraneTransparencyError;
+    static SGWLabel* centerTransparencyError;
+    static SGWLabel* edgeTransparencyError;
+    static SGWLabel* frameRateError;
     static void cancelChange(SGWButton* /*unused*/);
     static void confirmChange(SGWButton* /*unused*/);
 };

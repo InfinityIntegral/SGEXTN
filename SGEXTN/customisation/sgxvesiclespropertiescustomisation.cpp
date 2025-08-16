@@ -21,17 +21,11 @@ void SGXVesiclesPropertiesCustomisation::loadVesicleProperties(){
             SGUCentralManagement::cuteVesiclesMaximumRadius = fileReader.readFloat();
             SGUCentralManagement::cuteVesiclesMaximumRadiusOffsetChange = fileReader.readFloat();
             SGUCentralManagement::cuteVesiclesMaximumRadiusOffset = fileReader.readFloat();
-            SGUCentralManagement::cuteVesiclesMembraneColour = fileReader.readColourRGBA();
-            SGUCentralManagement::cuteVesiclesContentsColour = fileReader.readColourRGBA();
             SGUCentralManagement::cuteVesiclesCenterTransparency = fileReader.readFloat();
             SGUCentralManagement::cuteVesiclesEdgeTransparency = fileReader.readFloat();
             SGUCentralManagement::cuteVesiclesMembraneTransparency = fileReader.readFloat();
             SGUCentralManagement::cuteVesiclesFrameRate = fileReader.readFloat();
         }
-    }
-    if(SGXTimeStamp::now().isNationalDayPeriod()){
-        SGUCentralManagement::cuteVesiclesMembraneColour = SGXColourRGBA(238, 37, 54);
-        SGUCentralManagement::cuteVesiclesContentsColour = SGXColourRGBA(255, 255, 255);
     }
 }
 
@@ -50,8 +44,6 @@ void SGXVesiclesPropertiesCustomisation::syncVesicleProperties(){
         fileWriter.writeFloat(SGUCentralManagement::cuteVesiclesMaximumRadius);
         fileWriter.writeFloat(SGUCentralManagement::cuteVesiclesMaximumRadiusOffsetChange);
         fileWriter.writeFloat(SGUCentralManagement::cuteVesiclesMaximumRadiusOffset);
-        fileWriter.writeColourRGBA(SGUCentralManagement::cuteVesiclesMembraneColour);
-        fileWriter.writeColourRGBA(SGUCentralManagement::cuteVesiclesContentsColour);
         fileWriter.writeFloat(SGUCentralManagement::cuteVesiclesCenterTransparency);
         fileWriter.writeFloat(SGUCentralManagement::cuteVesiclesEdgeTransparency);
         fileWriter.writeFloat(SGUCentralManagement::cuteVesiclesMembraneTransparency);

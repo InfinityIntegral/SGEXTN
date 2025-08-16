@@ -171,8 +171,8 @@ SGXRenderCuteVesiclesMaterial::SGXRenderCuteVesiclesMaterial(){
             randomFloat((-1.0f) * maxRadiusOffsetAsRadiusPercentage, maxRadiusOffsetAsRadiusPercentage),
         },
     }};
-    membraneColour = SGUCentralManagement::cuteVesiclesMembraneColour;
-    contentsColour = SGUCentralManagement::cuteVesiclesContentsColour;
+    membraneColour = SGUCentralManagement::themeColour4;
+    contentsColour = SGUCentralManagement::themeColour8;
     centerTransparency = SGUCentralManagement::cuteVesiclesCenterTransparency;
     edgeTransparency = SGUCentralManagement::cuteVesiclesEdgeTransparency;
     membraneTransparency = SGUCentralManagement::cuteVesiclesMembraneTransparency;

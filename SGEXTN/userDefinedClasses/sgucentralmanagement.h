@@ -38,8 +38,6 @@ public:
     static float cuteVesiclesMaximumRadius; // maximum vesicle radius in units, where 1 unit is half the maximum of the parent widget's width and height
     static float cuteVesiclesMaximumRadiusOffsetChange; // maximum possible rate of change of the radius offset on vesicles as a ratio to the radius, the radius offset is used to give the vesicles a squishy feel
     static float cuteVesiclesMaximumRadiusOffset; // maximum possible radius offset in both directions on vesicles as a ratio to the radius, the radius offset is used to give the vesicles a squishy feel
-    static SGXColourRGBA cuteVesiclesMembraneColour; // colour of the membrane (phospholipid bilayer) on vesicles
-    static SGXColourRGBA cuteVesiclesContentsColour; // colour of vesicle contents
     static float cuteVesiclesCenterTransparency; // transparency of vesicle at its center, here there is most contents
     static float cuteVesiclesEdgeTransparency; // transparency of vesicle at its edge, here there is least contents
     static float cuteVesiclesMembraneTransparency; // transparency of vesicle membrane (phospholipid bilayer)
