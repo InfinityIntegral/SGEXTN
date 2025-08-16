@@ -32,13 +32,13 @@ SGWInput::SGWInput(SGWWidget *parent, void (*validationFunction)(SGWInput *), fl
     (*this).backgroundFocusColour = (*SGXQuickInterface::themeColoursSingleton).getThemeColour((*this).backgroundFocusThemeColour);
     (*this).foregroundFocusThemeColour = 6;
     (*this).foregroundFocusColour = (*SGXQuickInterface::themeColoursSingleton).getThemeColour((*this).foregroundFocusThemeColour);
-    (*this).backgroundInvalidThemeColour = 6;
+    (*this).backgroundInvalidThemeColour = 0;
     (*this).backgroundInvalidColour = (*SGXQuickInterface::themeColoursSingleton).getThemeColour((*this).backgroundInvalidThemeColour);
-    (*this).foregroundInvalidThemeColour = 8;
+    (*this).foregroundInvalidThemeColour = 4;
     (*this).foregroundInvalidColour = (*SGXQuickInterface::themeColoursSingleton).getThemeColour((*this).foregroundInvalidThemeColour);
-    (*this).backgroundHoverInvalidThemeColour = 5;
+    (*this).backgroundHoverInvalidThemeColour = 1;
     (*this).backgroundHoverInvalidColour = (*SGXQuickInterface::themeColoursSingleton).getThemeColour((*this).backgroundHoverInvalidThemeColour);
-    (*this).foregroundHoverInvalidThemeColour = 7;
+    (*this).foregroundHoverInvalidThemeColour = 5;
     (*this).foregroundHoverInvalidColour = (*SGXQuickInterface::themeColoursSingleton).getThemeColour((*this).foregroundHoverInvalidThemeColour);
 }
 

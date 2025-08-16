@@ -18,13 +18,13 @@ TextField{
 	property color bgfc: "#FF00C8"
 	property int fgf: 6
 	property color fgfc: "#FF00C8"
-	property int bgi: 6
+	property int bgi: 0
 	property color bgic: "#FF00C8"
-	property int fgi: 8
+	property int fgi: 4
 	property color fgic: "#FF00C8"
-	property int bghi: 5
+	property int bghi: 1
 	property color bghic: "#FF00C8"
-	property int fghi: 7
+	property int fghi: 5
 	property color fghic: "#FF00C8"
 	property real x1: 0.0
 	property real x0: 0.0

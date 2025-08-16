@@ -45,6 +45,7 @@ public:
     static SGWLabel* frameRateError;
     static void cancelChange(SGWButton* /*unused*/);
     static void confirmChange(SGWButton* /*unused*/);
+    static void membraneThicknessCheck(SGWInput* /*unused*/);
 };
 
 #endif // SGWVESICLECUSTOMISATIONPAGE_H
