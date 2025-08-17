@@ -33,6 +33,8 @@ ScrollView{
 	property real f0: 0.0
 	property real s1: 0.0
 	property real s0: 0.0
+	property real p1: 0.0
+	property real p0: 0.0
 	property real pw1: 0.0
 	property real pw0: 0.0
 	property real ph1: 0.0
@@ -97,10 +99,10 @@ ScrollView{
 
 			Text{
 				property bool canParent: true
-				x: 0
-				y: 0
-				width: parent.width
-				height: Math.max(implicitHeight, h1 * (ph1 * Resizer.renderSpaceHeight + ph0 * Resizer.sizeUnit) + h0 * Resizer.sizeUnit)
+				x: p1 * (pw1 * Resizer.renderSpaceWidth + pw0 * Resizer.sizeUnit) + p0 * Resizer.sizeUnit
+				y: p1 * (pw1 * Resizer.renderSpaceWidth + pw0 * Resizer.sizeUnit) + p0 * Resizer.sizeUnit
+				width: parent.width - 2 * (p1 * (pw1 * Resizer.renderSpaceWidth + pw0 * Resizer.sizeUnit) + p0 * Resizer.sizeUnit)
+				height: implicitHeight
 				text: s
 				font.pixelSize: f1 * (ph1 * Resizer.renderSpaceHeight + ph0 * Resizer.sizeUnit) + f0 * Resizer.sizeUnit
 				font.family: f
@@ -110,7 +112,7 @@ ScrollView{
 				wrapMode: Text.WrapAtWordBoundaryOrAnywhere
 
 				function updateParentHeight(){
-					parent.height = height;
+					parent.height = Math.max(implicitHeight + 2 * (p1 * (pw1 * Resizer.renderSpaceWidth + pw0 * Resizer.sizeUnit) + p0 * Resizer.sizeUnit), h1 * (ph1 * Resizer.renderSpaceHeight + ph0 * Resizer.sizeUnit) + h0 * Resizer.sizeUnit)
 				}
 				onHeightChanged: updateParentHeight()
 			}

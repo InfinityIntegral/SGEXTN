@@ -19,6 +19,7 @@
 #include "../primitives/sgxcolourhsla.h"
 #include "../userDefinedClasses/sgucentralmanagement.h"
 #include "../customisation/sgxthemecolourscustomisation.h"
+#include "../widgets/sgwlonglabel.h"
 
 SGWBackground* SGWThemeCustomisationPage::menuInstance = nullptr;
 SGWBackground* SGWThemeCustomisationPage::detailsInstance = nullptr;
@@ -284,7 +285,7 @@ void SGWThemeCustomisationPage::showThemeCustomAny(SGWButton */*unused*/){
     SGWThemeCustomisationPage::infoString = "Custom Any gives the user full control over all theme colours by allowing all 9 theme colours to be set directly.";
     SGWThemeCustomisationPage::isUsingCustomAny = true;
     for(int i=0; i<9; i++){
-        SGWThemeCustomisationPage::themeColours.at(i) = SGXColourHSLA(360.0f * (*QRandomGenerator::global()).generateDouble(), 50.0f, 12.5f * static_cast<float>(i), 100.0f).toRGBA();
+        SGWThemeCustomisationPage::themeColours.at(i) = SGXColourHSLA(360.0f * static_cast<float>((*QRandomGenerator::global()).generateDouble()), 50.0f, 12.5f * static_cast<float>(i), 100.0f).toRGBA();
     }
     SGWBackground::enable(SGWThemeCustomisationPage::detailsInstance, &SGWThemeCustomisationPage::initialiseDetailsPage, &SGWThemeCustomisationPage::updateElements);
 }
@@ -357,6 +358,8 @@ void SGWThemeCustomisationPage::confirmChanges(SGWButton */*unused*/){
 
 SGWBackground* SGWThemeCustomisationPage::notifInitialise(){
     SGWBackground* bg = new SGWPageBackground(SGWWidget::parentWidget, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 8, false);
+    const QString s = "Theme colours are not updated immediately, you must restart the app for changes to take effect.\n\nDuring the National Day period, the theme is locked at For Our Nation to celebrate. Any theme changes applied during that duration will take effect after the period ends.";
+    new SGWLongLabel(bg, s, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.0f, 0.0f, 0.5f, 0.0f, 0.5f);
     new SGWTextButton(bg, "ok", &SGWThemeCustomisationPage::closeNotif, 0.0f, 0.0f, 1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f);
     return bg;
 }

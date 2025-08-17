@@ -11,9 +11,11 @@
 #include "sgwverticalalignment.h"
 #include "sgwdefaultfonts.h"
 
-SGWLongLabel::SGWLongLabel(SGWWidget *parent, const QString &s, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float f1, float f0, float s1, float s0) : SGWLabel(parent, s, x1, x0, y1, y0, w1, w0, h1, h0, f1, f0, SGWHorizontalAlignment::Left, SGWVerticalAlignment::Top, SGWDefaultFonts::textFont){
+SGWLongLabel::SGWLongLabel(SGWWidget *parent, const QString &s, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float f1, float f0, float s1, float s0, float p1, float p0) : SGWLabel(parent, s, x1, x0, y1, y0, w1, w0, h1, h0, f1, f0, SGWHorizontalAlignment::Left, SGWVerticalAlignment::Top, SGWDefaultFonts::textFont){
     (*this).s1 = s1;
     (*this).s0 = s0;
+    (*this).p1 = p1;
+    (*this).p0 = p0;
     (*this).scrollbarBackgroundThemeColour = 4;
     (*this).scrollbarBackgroundColour = (*SGXQuickInterface::themeColoursSingleton).getThemeColour((*this).scrollbarBackgroundThemeColour);
     (*this).scrollbarForegroundThemeColour = 6;
@@ -37,6 +39,8 @@ SGWLongLabel::SGWLongLabel(SGWWidget *parent, const QString &s, float x1, float 
 void SGWLongLabel::syncQuickProperties(){
     (*topObject).setProperty("s1", s1);
     (*topObject).setProperty("s0", s0);
+    (*topObject).setProperty("p1", p1);
+    (*topObject).setProperty("p0", p0);
     (*topObject).setProperty("bs", scrollbarBackgroundThemeColour);
     (*topObject).setProperty("bsc", scrollbarBackgroundColour.getQColour());
     (*topObject).setProperty("fs", scrollbarForegroundThemeColour);
@@ -67,6 +71,24 @@ float SGWLongLabel::getS0() const {
 void SGWLongLabel::setS0(float s0){
     (*this).s0 = s0;
     (*(*this).topObject).setProperty("s0", (*this).s0);
+}
+
+float SGWLongLabel::getP1() const {
+    return p1;
+}
+
+void SGWLongLabel::setP1(float p1){
+    (*this).p1 = p1;
+    (*(*this).topObject).setProperty("p1", (*this).p1);
+}
+
+float SGWLongLabel::getP0() const {
+    return p0;
+}
+
+void SGWLongLabel::setP0(float p0){
+    (*this).p0 = p0;
+    (*(*this).topObject).setProperty("p0", (*this).p0);
 }
 
 int SGWLongLabel::getScrollbarBackgroundThemeColour(bool *isUsing) const {

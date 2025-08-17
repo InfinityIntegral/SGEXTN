@@ -11,12 +11,16 @@ class SGWLongLabel : public SGWLabel
 {
     Q_OBJECT
 public:
-    SGWLongLabel(SGWWidget* parent, const QString& s, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float f1, float f0, float s1, float s0);
+    SGWLongLabel(SGWWidget* parent, const QString& s, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float f1, float f0, float s1, float s0, float p1, float p0);
     void syncQuickProperties();
     [[nodiscard]] float getS1() const;
     void setS1(float s1);
     [[nodiscard]] float getS0() const;
     void setS0(float s0);
+    [[nodiscard]] float getP1() const;
+    void setP1(float p1);
+    [[nodiscard]] float getP0() const;
+    void setP0(float p0);
     [[nodiscard]] int getScrollbarBackgroundThemeColour(bool* isUsing) const;
     void setScrollbarBackgroundThemeColour(int themeColour);
     [[nodiscard]] SGXColourRGBA getScrollbarBackgroundColour(bool* isUsing) const;
@@ -44,6 +48,8 @@ public:
 protected:
     float s1;
     float s0;
+    float p1;
+    float p0;
     int scrollbarBackgroundThemeColour;
     SGXColourRGBA scrollbarBackgroundColour = {};
     int scrollbarForegroundThemeColour;
