@@ -5,8 +5,20 @@
 #include "../widgets/sgwwidget.h"
 #include "../widgets/sgwbutton.h"
 #include "../primitives/sgxcolourrgba.h"
+#include "../widgets/sgwsequentialscrollview.h"
+#include "../widgets/sgwsequentiallonglabel.h"
+#include "../widgets/sgwlabel.h"
+#include <array>
+#include "../widgets/sgwblankwidget.h"
 
 SGWBackground* SGWThemeCustomisationPage::menuInstance = nullptr;
+SGWBackground* SGWThemeCustomisationPage::detailsInstance = nullptr;
+SGWButton* SGWThemeCustomisationPage::cancelButton = nullptr;
+SGWButton* SGWThemeCustomisationPage::confirmButton = nullptr;
+SGWBackground* SGWThemeCustomisationPage::detailsScroll = nullptr;
+SGWLabel* SGWThemeCustomisationPage::detailsInfo = nullptr;
+std::array<SGWBlankWidget*, 9> SGWThemeCustomisationPage::coloursDisplay = {};
+std::array<SGXColourRGBA, 9> SGWThemeCustomisationPage::themeColours = {};
 
 void SGWThemeCustomisationPage::activate(){
     SGWBackground::enable(SGWThemeCustomisationPage::menuInstance, &SGWThemeCustomisationPage::initialise, nullptr);
@@ -60,8 +72,26 @@ SGWBackground* SGWThemeCustomisationPage::initialise(){
     return bg;
 }
 
+SGWBackground* SGWThemeCustomisationPage::initialiseDetailsPage(){
+    SGWBackground* bg = new SGWPageBackground(SGWWidget::parentWidget, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 8, false);
+    SGWThemeCustomisationPage::detailsScroll = new SGWSequentialScrollView(bg, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, -1.0f, 0.0f, 0.5f, 8, false);
+    SGWThemeCustomisationPage::cancelButton = new SGWTextButton(bg, "cancel", nullptr, 0.0f, 0.0f, 1.0f, -1.0f, 0.5f, 0.0f, 0.0f, 1.0f);
+    SGWThemeCustomisationPage::confirmButton = new SGWTextButton(bg, "choose", nullptr, 0.5f, 0.0f, 1.0f, -1.0f, 0.5f, 0.0f, 0.0f, 1.0f);
+    new SGWBlankWidget(SGWThemeCustomisationPage::detailsScroll, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 0.5f, -1);
+    SGWWidget* s = new SGWBlankWidget(SGWThemeCustomisationPage::detailsScroll, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 2.0f, -1);
+    SGWThemeCustomisationPage::detailsInfo = new SGWSequentialLongLabel(SGWThemeCustomisationPage::detailsScroll, "", 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.0f);
+    float x = 0.0f;
+    for(int i=0; i<9; i++){
+        float w = 1.0f;
+        if(i == 4 || i == 6 || i == 8){w = 3.0f;}
+        SGWThemeCustomisationPage::coloursDisplay.at(i) = new SGWBlankWidget(s, x / 15.0f, 0.0f, 0.0f, 0.0f, w / 15.0f, 0.0f, 0.0f, 2.0f, i);
+        x += w;
+    }
+    return bg;
+}
+
 void SGWThemeCustomisationPage::showThemeDefaultLight(SGWButton */*unused*/){
-    
+    SGWBackground::enable(SGWThemeCustomisationPage::detailsInstance, &SGWThemeCustomisationPage::initialiseDetailsPage, nullptr);
 }
 
 void SGWThemeCustomisationPage::showThemeDefaultDark(SGWButton */*unused*/){
