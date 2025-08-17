@@ -17,6 +17,8 @@
 #include <QRandomGenerator>
 #include "../widgets/sgwcolourpickerwidget.h"
 #include "../primitives/sgxcolourhsla.h"
+#include "../userDefinedClasses/sgucentralmanagement.h"
+#include "../customisation/sgxthemecolourscustomisation.h"
 
 SGWBackground* SGWThemeCustomisationPage::menuInstance = nullptr;
 SGWBackground* SGWThemeCustomisationPage::detailsInstance = nullptr;
@@ -92,8 +94,8 @@ SGWBackground* SGWThemeCustomisationPage::initialise(){
 SGWBackground* SGWThemeCustomisationPage::initialiseDetailsPage(){
     SGWBackground* bg = new SGWPageBackground(SGWWidget::parentWidget, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 8, false);
     SGWThemeCustomisationPage::detailsScroll = new SGWSequentialScrollView(bg, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, -1.0f, 0.0f, 0.5f, 8, false);
-    SGWThemeCustomisationPage::cancelButton = new SGWTextButton(bg, "cancel", nullptr, 0.0f, 0.0f, 1.0f, -1.0f, 0.5f, 0.0f, 0.0f, 1.0f);
-    SGWThemeCustomisationPage::confirmButton = new SGWTextButton(bg, "apply theme", nullptr, 0.5f, 0.0f, 1.0f, -1.0f, 0.5f, 0.0f, 0.0f, 1.0f);
+    SGWThemeCustomisationPage::cancelButton = new SGWTextButton(bg, "cancel", &SGWThemeCustomisationPage::cancelChanges, 0.0f, 0.0f, 1.0f, -1.0f, 0.5f, 0.0f, 0.0f, 1.0f);
+    SGWThemeCustomisationPage::confirmButton = new SGWTextButton(bg, "apply theme", &SGWThemeCustomisationPage::confirmChanges, 0.5f, 0.0f, 1.0f, -1.0f, 0.5f, 0.0f, 0.0f, 1.0f);
     new SGWBlankWidget(SGWThemeCustomisationPage::detailsScroll, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 0.5f, -1);
     if(SGWThemeCustomisationPage::isUsingCustomLight == true){
         SGWWidget* p = new SGWBlankWidget(SGWThemeCustomisationPage::detailsScroll, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.5f, -1);
@@ -329,4 +331,24 @@ void SGWThemeCustomisationPage::updateCustomAny(SGWColourPickerWidget *selector)
     baseColour.setTransparency(255);
     SGWThemeCustomisationPage::themeColours.at(n) = baseColour;
     SGWThemeCustomisationPage::updateElements();
+}
+
+void SGWThemeCustomisationPage::cancelChanges(SGWButton */*unused*/){
+    SGWBackground::disable(SGWThemeCustomisationPage::menuInstance);
+    SGWBackground::disable(SGWThemeCustomisationPage::detailsInstance);
+}
+
+void SGWThemeCustomisationPage::confirmChanges(SGWButton */*unused*/){
+    SGUCentralManagement::themeColour0 = SGWThemeCustomisationPage::themeColours.at(0);
+    SGUCentralManagement::themeColour1 = SGWThemeCustomisationPage::themeColours.at(1);
+    SGUCentralManagement::themeColour2 = SGWThemeCustomisationPage::themeColours.at(2);
+    SGUCentralManagement::themeColour3 = SGWThemeCustomisationPage::themeColours.at(3);
+    SGUCentralManagement::themeColour4 = SGWThemeCustomisationPage::themeColours.at(4);
+    SGUCentralManagement::themeColour5 = SGWThemeCustomisationPage::themeColours.at(5);
+    SGUCentralManagement::themeColour6 = SGWThemeCustomisationPage::themeColours.at(6);
+    SGUCentralManagement::themeColour7 = SGWThemeCustomisationPage::themeColours.at(7);
+    SGUCentralManagement::themeColour8 = SGWThemeCustomisationPage::themeColours.at(8);
+    SGXThemeColoursCustomisation::syncThemeColours();
+    SGWBackground::disable(SGWThemeCustomisationPage::menuInstance);
+    SGWBackground::disable(SGWThemeCustomisationPage::detailsInstance);
 }

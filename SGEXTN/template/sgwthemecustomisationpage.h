@@ -47,6 +47,8 @@ public:
     static SGWLabel* customAnyLabel;
     static std::array<SGWColourPickerWidget*, 9> customAnyColourPicker;
     static void updateCustomAny(SGWColourPickerWidget* selector);
+    static void cancelChanges(SGWButton* /*unused*/);
+    static void confirmChanges(SGWButton* /*unused*/);
 };
 
 #endif // SGWTHEMECUSTOMISATIONPAGE_H
