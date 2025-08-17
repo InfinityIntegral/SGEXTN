@@ -9,6 +9,7 @@
 #include "../widgets/sgwlabel.h"
 #include "../widgets/sgwblankwidget.h"
 #include "../primitives/sgxcolourrgba.h"
+#include "../widgets/sgwcolourpickerwidget.h"
 
 class SGWThemeCustomisationPage : public QObject
 {
@@ -34,6 +35,10 @@ public:
     static std::array<SGXColourRGBA, 9> themeColours;
     static QString infoString;
     static void updateElements();
+    static bool isUsingCustomLight;
+    static SGWLabel* customLightLabel;
+    static SGWColourPickerWidget* customLightColourPicker;
+    static void updateCustomLight(SGWColourPickerWidget* selector);
 };
 
 #endif // SGWTHEMECUSTOMISATIONPAGE_H

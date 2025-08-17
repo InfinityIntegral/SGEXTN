@@ -12,6 +12,10 @@
 #include "../widgets/sgwblankwidget.h"
 #include <QString>
 #include <QObject>
+#include "../widgets/sgwtextlabel.h"
+#include "../widgets/sgwhorizontalalignment.h"
+#include <QRandomGenerator>
+#include "../widgets/sgwcolourpickerwidget.h"
 
 SGWBackground* SGWThemeCustomisationPage::menuInstance = nullptr;
 SGWBackground* SGWThemeCustomisationPage::detailsInstance = nullptr;
@@ -22,6 +26,9 @@ SGWLabel* SGWThemeCustomisationPage::detailsInfo = nullptr;
 std::array<SGWBlankWidget*, 9> SGWThemeCustomisationPage::coloursDisplay = {};
 std::array<SGXColourRGBA, 9> SGWThemeCustomisationPage::themeColours = {};
 QString SGWThemeCustomisationPage::infoString = "";
+bool SGWThemeCustomisationPage::isUsingCustomLight = false;
+SGWLabel* SGWThemeCustomisationPage::customLightLabel = nullptr;
+SGWColourPickerWidget* SGWThemeCustomisationPage::customLightColourPicker = nullptr;
 
 void SGWThemeCustomisationPage::activate(){
     SGWBackground::enable(SGWThemeCustomisationPage::menuInstance, &SGWThemeCustomisationPage::initialise, nullptr);
@@ -79,8 +86,19 @@ SGWBackground* SGWThemeCustomisationPage::initialiseDetailsPage(){
     SGWBackground* bg = new SGWPageBackground(SGWWidget::parentWidget, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 8, false);
     SGWThemeCustomisationPage::detailsScroll = new SGWSequentialScrollView(bg, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, -1.0f, 0.0f, 0.5f, 8, false);
     SGWThemeCustomisationPage::cancelButton = new SGWTextButton(bg, "cancel", nullptr, 0.0f, 0.0f, 1.0f, -1.0f, 0.5f, 0.0f, 0.0f, 1.0f);
-    SGWThemeCustomisationPage::confirmButton = new SGWTextButton(bg, "choose", nullptr, 0.5f, 0.0f, 1.0f, -1.0f, 0.5f, 0.0f, 0.0f, 1.0f);
+    SGWThemeCustomisationPage::confirmButton = new SGWTextButton(bg, "apply theme", nullptr, 0.5f, 0.0f, 1.0f, -1.0f, 0.5f, 0.0f, 0.0f, 1.0f);
     new SGWBlankWidget(SGWThemeCustomisationPage::detailsScroll, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 0.5f, -1);
+    if(SGWThemeCustomisationPage::isUsingCustomLight == true){
+        SGWWidget* p = new SGWBlankWidget(SGWThemeCustomisationPage::detailsScroll, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.5f, -1);
+        SGWThemeCustomisationPage::customLightLabel = new SGWTextLabel(p, "base colour:", 0.0f, 0.0f, 0.0f, 0.0f, 0.5f, -0.1f, 0.0f, 1.0f, SGWHorizontalAlignment::Right);
+        (*SGWThemeCustomisationPage::customLightLabel).setBackgroundThemeColour(-1);
+        SGWThemeCustomisationPage::customLightColourPicker = new SGWColourPickerWidget(p, 0.5f, 0.1f, 0.0f, 0.0f, 0.0f, 2.0f, 0.0f, 1.0f, SGWThemeCustomisationPage::themeColours.at(4));
+        (*SGWThemeCustomisationPage::customLightColourPicker).setAttachedFunction(&SGWThemeCustomisationPage::updateCustomLight);
+    }
+    else{
+        SGWThemeCustomisationPage::customLightLabel = nullptr;
+        SGWThemeCustomisationPage::customLightColourPicker = nullptr;
+    }
     SGWWidget* s = new SGWBlankWidget(SGWThemeCustomisationPage::detailsScroll, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 2.5f, -1);
     SGWThemeCustomisationPage::detailsInfo = new SGWSequentialLongLabel(SGWThemeCustomisationPage::detailsScroll, "", 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.0f);
     float x = 0.0f;
@@ -90,6 +108,7 @@ SGWBackground* SGWThemeCustomisationPage::initialiseDetailsPage(){
         SGWThemeCustomisationPage::coloursDisplay.at(i) = new SGWBlankWidget(s, x / 15.0f, 0.0f, 0.0f, 0.0f, w / 15.0f, 0.0f, 0.0f, 2.0f, i);
         x += w;
     }
+    SGWThemeCustomisationPage::isUsingCustomLight = false;
     return bg;
 }
 
@@ -121,6 +140,12 @@ void SGWThemeCustomisationPage::updateElements(){
     (*x).setScrollbarForegroundHoverColour(SGWThemeCustomisationPage::themeColours.at(5));
     (*x).setScrollbarBackgroundFocusColour(SGWThemeCustomisationPage::themeColours.at(2));
     (*x).setScrollbarForegroundFocusColour(SGWThemeCustomisationPage::themeColours.at(4));
+    if(SGWThemeCustomisationPage::customLightColourPicker != nullptr){
+        (*SGWThemeCustomisationPage::customLightLabel).setForegroundColour(SGWThemeCustomisationPage::themeColours.at(4));
+        (*SGWThemeCustomisationPage::customLightColourPicker).setBackgroundColour(SGWThemeCustomisationPage::themeColours.at(4));
+        (*SGWThemeCustomisationPage::customLightColourPicker).setBackgroundHoverColour(SGWThemeCustomisationPage::themeColours.at(3));
+        (*SGWThemeCustomisationPage::customLightColourPicker).setBackgroundFocusColour(SGWThemeCustomisationPage::themeColours.at(2));
+    }
 }
 
 void SGWThemeCustomisationPage::showThemeDefaultLight(SGWButton */*unused*/){
@@ -138,15 +163,49 @@ void SGWThemeCustomisationPage::showThemeDefaultLight(SGWButton */*unused*/){
 }
 
 void SGWThemeCustomisationPage::showThemeDefaultDark(SGWButton */*unused*/){
-    
+    SGWThemeCustomisationPage::infoString = "although life has changed\nwe can lend a helping hand\nthinking back, we'll see\nthe path of light shines from within\n(Be the Light, 2020)\n\nShine From Within is the default dark mode theme of all SGEXTN apps, featuring a black background typical for dark mode themes with the iconic bright pink accent used by SGEXTN. Similar to its light mode equivalent, the theme represents positivity, kindness, and Singaporean values in general, and is inspired by the National Day song Be the Light.";
+    SGWThemeCustomisationPage::themeColours.at(0) = SGXColourRGBA(255, 255, 255);
+    SGWThemeCustomisationPage::themeColours.at(1) = SGXColourRGBA(255, 191, 241);
+    SGWThemeCustomisationPage::themeColours.at(2) = SGXColourRGBA(255, 128, 227);
+    SGWThemeCustomisationPage::themeColours.at(3) = SGXColourRGBA(255, 64, 214);
+    SGWThemeCustomisationPage::themeColours.at(4) = SGXColourRGBA(255, 0, 200);
+    SGWThemeCustomisationPage::themeColours.at(5) = SGXColourRGBA(191, 0, 150);
+    SGWThemeCustomisationPage::themeColours.at(6) = SGXColourRGBA(128, 0, 100);
+    SGWThemeCustomisationPage::themeColours.at(7) = SGXColourRGBA(64, 0, 50);
+    SGWThemeCustomisationPage::themeColours.at(8) = SGXColourRGBA(0, 0, 0);
+    SGWBackground::enable(SGWThemeCustomisationPage::detailsInstance, &SGWThemeCustomisationPage::initialiseDetailsPage, &SGWThemeCustomisationPage::updateElements);
 }
 
 void SGWThemeCustomisationPage::showThemeForOurNation(SGWButton */*unused*/){
-    
+    SGWThemeCustomisationPage::infoString = "You, my people, my home,\nour lives, defend and uphold,\nmay the good we achieve,\nas one nation,\nbe shared with the world\n(My People My Home, 1995)\n\nFor Our Nation is the National Day special theme applied to all SGEXTN apps during the National Day period, overwriting any theme settings defined by the user. The theme features a mix of red and white, both being the exact same colour as the colours on our flag. The name of the theme comes from our pledge.";
+    SGWThemeCustomisationPage::themeColours.at(0) = SGXColourRGBA(0, 0, 0);
+    SGWThemeCustomisationPage::themeColours.at(1) = SGXColourRGBA(60, 9, 14);
+    SGWThemeCustomisationPage::themeColours.at(2) = SGXColourRGBA(119, 19, 27);
+    SGWThemeCustomisationPage::themeColours.at(3) = SGXColourRGBA(179, 28, 41);
+    SGWThemeCustomisationPage::themeColours.at(4) = SGXColourRGBA(238, 37, 54);
+    SGWThemeCustomisationPage::themeColours.at(5) = SGXColourRGBA(242, 92, 104);
+    SGWThemeCustomisationPage::themeColours.at(6) = SGXColourRGBA(247, 146, 155);
+    SGWThemeCustomisationPage::themeColours.at(7) = SGXColourRGBA(251, 201, 205);
+    SGWThemeCustomisationPage::themeColours.at(8) = SGXColourRGBA(255, 255, 255);
+    SGWBackground::enable(SGWThemeCustomisationPage::detailsInstance, &SGWThemeCustomisationPage::initialiseDetailsPage, &SGWThemeCustomisationPage::updateElements);
 }
 
 void SGWThemeCustomisationPage::showThemeCustomLight(SGWButton */*unused*/){
-    
+    SGWThemeCustomisationPage::infoString = "Custom Light is a custom theme allowing the user to choose any main theme colour. The remaining theme colours will be interpolated from the main theme colour, mostly between white and the main theme colour.";
+    SGWThemeCustomisationPage::isUsingCustomLight = true;
+    const SGXColourRGBA baseColour = SGXColourRGBA(static_cast<int>(100.0f * (*QRandomGenerator::global()).generateDouble() + 50.0f), static_cast<int>(100.0f * (*QRandomGenerator::global()).generateDouble() + 50.0f), static_cast<int>(100.0f * (*QRandomGenerator::global()).generateDouble() + 50.0f));
+    const SGXColourRGBA black = SGXColourRGBA(0, 0, 0);
+    const SGXColourRGBA white = SGXColourRGBA(255, 255, 255);
+    SGWThemeCustomisationPage::themeColours.at(0) = black;
+    SGWThemeCustomisationPage::themeColours.at(1) = baseColour.linearInterpolate(black, 0.25f);
+    SGWThemeCustomisationPage::themeColours.at(2) = baseColour.linearInterpolate(black, 0.5f);
+    SGWThemeCustomisationPage::themeColours.at(3) = baseColour.linearInterpolate(black, 0.75f);
+    SGWThemeCustomisationPage::themeColours.at(4) = baseColour;
+    SGWThemeCustomisationPage::themeColours.at(5) = baseColour.linearInterpolate(white, 0.75f);
+    SGWThemeCustomisationPage::themeColours.at(6) = baseColour.linearInterpolate(white, 0.5f);
+    SGWThemeCustomisationPage::themeColours.at(7) = baseColour.linearInterpolate(white, 0.25f);
+    SGWThemeCustomisationPage::themeColours.at(8) = white;
+    SGWBackground::enable(SGWThemeCustomisationPage::detailsInstance, &SGWThemeCustomisationPage::initialiseDetailsPage, &SGWThemeCustomisationPage::updateElements);
 }
 
 void SGWThemeCustomisationPage::showThemeCustomDark(SGWButton */*unused*/){
@@ -155,4 +214,20 @@ void SGWThemeCustomisationPage::showThemeCustomDark(SGWButton */*unused*/){
 
 void SGWThemeCustomisationPage::showThemeCustomAny(SGWButton */*unused*/){
     
+}
+
+void SGWThemeCustomisationPage::updateCustomLight(SGWColourPickerWidget *selector){
+    const SGXColourRGBA baseColour = (*selector).getColour();
+    const SGXColourRGBA black = SGXColourRGBA(0, 0, 0);
+    const SGXColourRGBA white = SGXColourRGBA(255, 255, 255);
+    SGWThemeCustomisationPage::themeColours.at(0) = black;
+    SGWThemeCustomisationPage::themeColours.at(1) = baseColour.linearInterpolate(black, 0.25f);
+    SGWThemeCustomisationPage::themeColours.at(2) = baseColour.linearInterpolate(black, 0.5f);
+    SGWThemeCustomisationPage::themeColours.at(3) = baseColour.linearInterpolate(black, 0.75f);
+    SGWThemeCustomisationPage::themeColours.at(4) = baseColour;
+    SGWThemeCustomisationPage::themeColours.at(5) = baseColour.linearInterpolate(white, 0.75f);
+    SGWThemeCustomisationPage::themeColours.at(6) = baseColour.linearInterpolate(white, 0.5f);
+    SGWThemeCustomisationPage::themeColours.at(7) = baseColour.linearInterpolate(white, 0.25f);
+    SGWThemeCustomisationPage::themeColours.at(8) = white;
+    SGWThemeCustomisationPage::updateElements();
 }
