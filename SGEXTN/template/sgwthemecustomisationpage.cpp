@@ -16,6 +16,7 @@
 #include "../widgets/sgwhorizontalalignment.h"
 #include <QRandomGenerator>
 #include "../widgets/sgwcolourpickerwidget.h"
+#include "../primitives/sgxcolourhsla.h"
 
 SGWBackground* SGWThemeCustomisationPage::menuInstance = nullptr;
 SGWBackground* SGWThemeCustomisationPage::detailsInstance = nullptr;
@@ -32,6 +33,9 @@ SGWColourPickerWidget* SGWThemeCustomisationPage::customLightColourPicker = null
 bool SGWThemeCustomisationPage::isUsingCustomDark = false;
 SGWLabel* SGWThemeCustomisationPage::customDarkLabel = nullptr;
 SGWColourPickerWidget* SGWThemeCustomisationPage::customDarkColourPicker = nullptr;
+bool SGWThemeCustomisationPage::isUsingCustomAny = false;
+SGWLabel* SGWThemeCustomisationPage::customAnyLabel = nullptr;
+std::array<SGWColourPickerWidget*, 9> SGWThemeCustomisationPage::customAnyColourPicker = {};
 
 void SGWThemeCustomisationPage::activate(){
     SGWBackground::enable(SGWThemeCustomisationPage::menuInstance, &SGWThemeCustomisationPage::initialise, nullptr);
@@ -94,7 +98,6 @@ SGWBackground* SGWThemeCustomisationPage::initialiseDetailsPage(){
     if(SGWThemeCustomisationPage::isUsingCustomLight == true){
         SGWWidget* p = new SGWBlankWidget(SGWThemeCustomisationPage::detailsScroll, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.5f, -1);
         SGWThemeCustomisationPage::customLightLabel = new SGWTextLabel(p, "base colour:", 0.0f, 0.0f, 0.0f, 0.0f, 0.5f, -0.1f, 0.0f, 1.0f, SGWHorizontalAlignment::Right);
-        (*SGWThemeCustomisationPage::customLightLabel).setBackgroundColour(SGWThemeCustomisationPage::themeColours.at(8));
         SGWThemeCustomisationPage::customLightColourPicker = new SGWColourPickerWidget(p, 0.5f, 0.1f, 0.0f, 0.0f, 0.0f, 2.0f, 0.0f, 1.0f, SGWThemeCustomisationPage::themeColours.at(4));
         (*SGWThemeCustomisationPage::customLightColourPicker).setAttachedFunction(&SGWThemeCustomisationPage::updateCustomLight);
     }
@@ -105,13 +108,16 @@ SGWBackground* SGWThemeCustomisationPage::initialiseDetailsPage(){
     if(SGWThemeCustomisationPage::isUsingCustomDark == true){
         SGWWidget* p = new SGWBlankWidget(SGWThemeCustomisationPage::detailsScroll, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.5f, -1);
         SGWThemeCustomisationPage::customDarkLabel = new SGWTextLabel(p, "base colour:", 0.0f, 0.0f, 0.0f, 0.0f, 0.5f, -0.1f, 0.0f, 1.0f, SGWHorizontalAlignment::Right);
-        (*SGWThemeCustomisationPage::customDarkLabel).setBackgroundColour(SGWThemeCustomisationPage::themeColours.at(8));
         SGWThemeCustomisationPage::customDarkColourPicker = new SGWColourPickerWidget(p, 0.5f, 0.1f, 0.0f, 0.0f, 0.0f, 2.0f, 0.0f, 1.0f, SGWThemeCustomisationPage::themeColours.at(4));
         (*SGWThemeCustomisationPage::customDarkColourPicker).setAttachedFunction(&SGWThemeCustomisationPage::updateCustomDark);
     }
     else{
         SGWThemeCustomisationPage::customDarkLabel = nullptr;
         SGWThemeCustomisationPage::customDarkColourPicker = nullptr;
+    }
+    if(SGWThemeCustomisationPage::isUsingCustomAny == true){
+        SGWWidget* p = new SGWBlankWidget(SGWThemeCustomisationPage::detailsScroll, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.5f, -1);
+        SGWThemeCustomisationPage::customAnyLabel = new SGWTextLabel(p, "pls adjust colours below", 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, SGWHorizontalAlignment::Center);
     }
     SGWWidget* s = new SGWBlankWidget(SGWThemeCustomisationPage::detailsScroll, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 2.5f, -1);
     SGWThemeCustomisationPage::detailsInfo = new SGWSequentialLongLabel(SGWThemeCustomisationPage::detailsScroll, "", 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.0f);
@@ -122,8 +128,21 @@ SGWBackground* SGWThemeCustomisationPage::initialiseDetailsPage(){
         SGWThemeCustomisationPage::coloursDisplay.at(i) = new SGWBlankWidget(s, x / 15.0f, 0.0f, 0.0f, 0.0f, w / 15.0f, 0.0f, 0.0f, 2.0f, i);
         x += w;
     }
+    if(SGWThemeCustomisationPage::isUsingCustomAny == false){
+        SGWThemeCustomisationPage::customAnyLabel = nullptr;
+        for(int i=0; i<9; i++){
+            SGWThemeCustomisationPage::customAnyColourPicker.at(i) = nullptr;
+        }
+    }
+    else{
+        for(int i=0; i<9; i++){
+            SGWThemeCustomisationPage::customAnyColourPicker.at(i) = new SGWColourPickerWidget(SGWThemeCustomisationPage::coloursDisplay.at(i), 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, SGWThemeCustomisationPage::themeColours.at(i));
+            (*SGWThemeCustomisationPage::customAnyColourPicker.at(i)).setAttachedFunction(&SGWThemeCustomisationPage::updateCustomAny);
+        }
+    }
     SGWThemeCustomisationPage::isUsingCustomLight = false;
     SGWThemeCustomisationPage::isUsingCustomDark = false;
+    SGWThemeCustomisationPage::isUsingCustomAny = false;
     return bg;
 }
 
@@ -157,15 +176,26 @@ void SGWThemeCustomisationPage::updateElements(){
     (*x).setScrollbarForegroundFocusColour(SGWThemeCustomisationPage::themeColours.at(4));
     if(SGWThemeCustomisationPage::customLightColourPicker != nullptr){
         (*SGWThemeCustomisationPage::customLightLabel).setForegroundColour(SGWThemeCustomisationPage::themeColours.at(4));
+        (*SGWThemeCustomisationPage::customLightLabel).setBackgroundColour(SGWThemeCustomisationPage::themeColours.at(8));
         (*SGWThemeCustomisationPage::customLightColourPicker).setBackgroundColour(SGWThemeCustomisationPage::themeColours.at(4));
         (*SGWThemeCustomisationPage::customLightColourPicker).setBackgroundHoverColour(SGWThemeCustomisationPage::themeColours.at(3));
         (*SGWThemeCustomisationPage::customLightColourPicker).setBackgroundFocusColour(SGWThemeCustomisationPage::themeColours.at(2));
     }
     if(SGWThemeCustomisationPage::customDarkColourPicker != nullptr){
         (*SGWThemeCustomisationPage::customDarkLabel).setForegroundColour(SGWThemeCustomisationPage::themeColours.at(4));
+        (*SGWThemeCustomisationPage::customDarkLabel).setBackgroundColour(SGWThemeCustomisationPage::themeColours.at(8));
         (*SGWThemeCustomisationPage::customDarkColourPicker).setBackgroundColour(SGWThemeCustomisationPage::themeColours.at(4));
         (*SGWThemeCustomisationPage::customDarkColourPicker).setBackgroundHoverColour(SGWThemeCustomisationPage::themeColours.at(3));
         (*SGWThemeCustomisationPage::customDarkColourPicker).setBackgroundFocusColour(SGWThemeCustomisationPage::themeColours.at(2));
+    }
+    if(SGWThemeCustomisationPage::customAnyColourPicker.at(0) != nullptr){
+        (*SGWThemeCustomisationPage::customAnyLabel).setForegroundColour(SGWThemeCustomisationPage::themeColours.at(4));
+        (*SGWThemeCustomisationPage::customAnyLabel).setBackgroundColour(SGWThemeCustomisationPage::themeColours.at(8));
+        for(int i=0; i<9; i++){
+            (*SGWThemeCustomisationPage::customAnyColourPicker.at(i)).setBackgroundColour(SGWThemeCustomisationPage::themeColours.at(4));
+            (*SGWThemeCustomisationPage::customAnyColourPicker.at(i)).setBackgroundHoverColour(SGWThemeCustomisationPage::themeColours.at(3));
+            (*SGWThemeCustomisationPage::customAnyColourPicker.at(i)).setBackgroundFocusColour(SGWThemeCustomisationPage::themeColours.at(2));
+        }
     }
 }
 
@@ -248,11 +278,17 @@ void SGWThemeCustomisationPage::showThemeCustomDark(SGWButton */*unused*/){
 }
 
 void SGWThemeCustomisationPage::showThemeCustomAny(SGWButton */*unused*/){
-    
+    SGWThemeCustomisationPage::infoString = "Custom Any gives the user full control over all theme colours by allowing all 9 theme colours to be set directly.";
+    SGWThemeCustomisationPage::isUsingCustomAny = true;
+    for(int i=0; i<9; i++){
+        SGWThemeCustomisationPage::themeColours.at(i) = SGXColourHSLA(360.0f * (*QRandomGenerator::global()).generateDouble(), 50.0f, 12.5f * static_cast<float>(i), 100.0f).toRGBA();
+    }
+    SGWBackground::enable(SGWThemeCustomisationPage::detailsInstance, &SGWThemeCustomisationPage::initialiseDetailsPage, &SGWThemeCustomisationPage::updateElements);
 }
 
 void SGWThemeCustomisationPage::updateCustomLight(SGWColourPickerWidget *selector){
-    const SGXColourRGBA baseColour = (*selector).getColour();
+    SGXColourRGBA baseColour = (*selector).getColour();
+    baseColour.setTransparency(255);
     const SGXColourRGBA black = SGXColourRGBA(0, 0, 0);
     const SGXColourRGBA white = SGXColourRGBA(255, 255, 255);
     SGWThemeCustomisationPage::themeColours.at(0) = black;
@@ -268,7 +304,8 @@ void SGWThemeCustomisationPage::updateCustomLight(SGWColourPickerWidget *selecto
 }
 
 void SGWThemeCustomisationPage::updateCustomDark(SGWColourPickerWidget *selector){
-    const SGXColourRGBA baseColour = (*selector).getColour();
+    SGXColourRGBA baseColour = (*selector).getColour();
+    baseColour.setTransparency(255);
     const SGXColourRGBA black = SGXColourRGBA(0, 0, 0);
     const SGXColourRGBA white = SGXColourRGBA(255, 255, 255);
     SGWThemeCustomisationPage::themeColours.at(0) = white;
@@ -280,5 +317,16 @@ void SGWThemeCustomisationPage::updateCustomDark(SGWColourPickerWidget *selector
     SGWThemeCustomisationPage::themeColours.at(6) = baseColour.linearInterpolate(black, 0.5f);
     SGWThemeCustomisationPage::themeColours.at(7) = baseColour.linearInterpolate(black, 0.25f);
     SGWThemeCustomisationPage::themeColours.at(8) = black;
+    SGWThemeCustomisationPage::updateElements();
+}
+
+void SGWThemeCustomisationPage::updateCustomAny(SGWColourPickerWidget *selector){
+    int n = -1;
+    for(int i=0; i<9; i++){
+        if(SGWThemeCustomisationPage::customAnyColourPicker.at(i) == selector){n = i;}
+    }
+    SGXColourRGBA baseColour = (*selector).getColour();
+    baseColour.setTransparency(255);
+    SGWThemeCustomisationPage::themeColours.at(n) = baseColour;
     SGWThemeCustomisationPage::updateElements();
 }

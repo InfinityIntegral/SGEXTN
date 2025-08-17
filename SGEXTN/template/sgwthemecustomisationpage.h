@@ -43,6 +43,10 @@ public:
     static SGWLabel* customDarkLabel;
     static SGWColourPickerWidget* customDarkColourPicker;
     static void updateCustomDark(SGWColourPickerWidget* selector);
+    static bool isUsingCustomAny;
+    static SGWLabel* customAnyLabel;
+    static std::array<SGWColourPickerWidget*, 9> customAnyColourPicker;
+    static void updateCustomAny(SGWColourPickerWidget* selector);
 };
 
 #endif // SGWTHEMECUSTOMISATIONPAGE_H
