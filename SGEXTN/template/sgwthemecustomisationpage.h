@@ -32,6 +32,8 @@ public:
     static std::array<SGWBlankWidget*, 9> coloursDisplay;
     static SGWBackground* initialiseDetailsPage();
     static std::array<SGXColourRGBA, 9> themeColours;
+    static QString infoString;
+    static void updateElements();
 };
 
 #endif // SGWTHEMECUSTOMISATIONPAGE_H

@@ -173,7 +173,7 @@ SGXColourRGBA SGWScrollView::getScrollbarBackgroundHoverColour(bool *isUsing) co
 void SGWScrollView::setScrollbarBackgroundHoverColour(SGXColourRGBA colour){
     (*this).scrollbarBackgroundHoverColour = colour;
     (*this).usingTheme = false;
-    (*(*this).topObject).setProperty("bsch", (*this).scrollbarBackgroundHoverColour.getQColour());
+    (*(*this).topObject).setProperty("bshc", (*this).scrollbarBackgroundHoverColour.getQColour());
     (*(*this).topObject).setProperty("utc", (*this).usingTheme);
 }
 
@@ -203,7 +203,7 @@ SGXColourRGBA SGWScrollView::getScrollbarForegroundHoverColour(bool *isUsing) co
 void SGWScrollView::setScrollbarForegroundHoverColour(SGXColourRGBA colour){
     (*this).scrollbarForegroundHoverColour = colour;
     (*this).usingTheme = false;
-    (*(*this).topObject).setProperty("fsch", (*this).scrollbarForegroundHoverColour.getQColour());
+    (*(*this).topObject).setProperty("fshc", (*this).scrollbarForegroundHoverColour.getQColour());
     (*(*this).topObject).setProperty("utc", (*this).usingTheme);
 }
 
@@ -233,7 +233,7 @@ SGXColourRGBA SGWScrollView::getScrollbarBackgroundFocusColour(bool *isUsing) co
 void SGWScrollView::setScrollbarBackgroundFocusColour(SGXColourRGBA colour){
     (*this).scrollbarBackgroundFocusColour = colour;
     (*this).usingTheme = false;
-    (*(*this).topObject).setProperty("bscf", (*this).scrollbarBackgroundFocusColour.getQColour());
+    (*(*this).topObject).setProperty("bsfc", (*this).scrollbarBackgroundFocusColour.getQColour());
     (*(*this).topObject).setProperty("utc", (*this).usingTheme);
 }
 
@@ -263,6 +263,6 @@ SGXColourRGBA SGWScrollView::getScrollbarForegroundFocusColour(bool *isUsing) co
 void SGWScrollView::setScrollbarForegroundFocusColour(SGXColourRGBA colour){
     (*this).scrollbarForegroundFocusColour = colour;
     (*this).usingTheme = false;
-    (*(*this).topObject).setProperty("fscf", (*this).scrollbarForegroundFocusColour.getQColour());
+    (*(*this).topObject).setProperty("fsfc", (*this).scrollbarForegroundFocusColour.getQColour());
     (*(*this).topObject).setProperty("utc", (*this).usingTheme);
 }

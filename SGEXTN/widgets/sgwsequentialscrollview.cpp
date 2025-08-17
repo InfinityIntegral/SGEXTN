@@ -151,7 +151,7 @@ SGXColourRGBA SGWSequentialScrollView::getScrollbarBackgroundHoverColour(bool *i
 void SGWSequentialScrollView::setScrollbarBackgroundHoverColour(SGXColourRGBA colour){
     (*this).scrollbarBackgroundHoverColour = colour;
     (*this).usingTheme = false;
-    (*(*this).topObject).setProperty("bsch", (*this).scrollbarBackgroundHoverColour.getQColour());
+    (*(*this).topObject).setProperty("bshc", (*this).scrollbarBackgroundHoverColour.getQColour());
     (*(*this).topObject).setProperty("utc", (*this).usingTheme);
 }
 
@@ -181,7 +181,7 @@ SGXColourRGBA SGWSequentialScrollView::getScrollbarForegroundHoverColour(bool *i
 void SGWSequentialScrollView::setScrollbarForegroundHoverColour(SGXColourRGBA colour){
     (*this).scrollbarForegroundHoverColour = colour;
     (*this).usingTheme = false;
-    (*(*this).topObject).setProperty("fsch", (*this).scrollbarForegroundHoverColour.getQColour());
+    (*(*this).topObject).setProperty("fshc", (*this).scrollbarForegroundHoverColour.getQColour());
     (*(*this).topObject).setProperty("utc", (*this).usingTheme);
 }
 
@@ -211,7 +211,7 @@ SGXColourRGBA SGWSequentialScrollView::getScrollbarBackgroundFocusColour(bool *i
 void SGWSequentialScrollView::setScrollbarBackgroundFocusColour(SGXColourRGBA colour){
     (*this).scrollbarBackgroundFocusColour = colour;
     (*this).usingTheme = false;
-    (*(*this).topObject).setProperty("bscf", (*this).scrollbarBackgroundFocusColour.getQColour());
+    (*(*this).topObject).setProperty("bsfc", (*this).scrollbarBackgroundFocusColour.getQColour());
     (*(*this).topObject).setProperty("utc", (*this).usingTheme);
 }
 
@@ -241,6 +241,6 @@ SGXColourRGBA SGWSequentialScrollView::getScrollbarForegroundFocusColour(bool *i
 void SGWSequentialScrollView::setScrollbarForegroundFocusColour(SGXColourRGBA colour){
     (*this).scrollbarForegroundFocusColour = colour;
     (*this).usingTheme = false;
-    (*(*this).topObject).setProperty("fscf", (*this).scrollbarForegroundFocusColour.getQColour());
+    (*(*this).topObject).setProperty("fsfc", (*this).scrollbarForegroundFocusColour.getQColour());
     (*(*this).topObject).setProperty("utc", (*this).usingTheme);
 }
