@@ -49,6 +49,9 @@ public:
     static void updateCustomAny(SGWColourPickerWidget* selector);
     static void cancelChanges(SGWButton* /*unused*/);
     static void confirmChanges(SGWButton* /*unused*/);
+    static SGWBackground* notifInstance;
+    static SGWBackground* notifInitialise();
+    static void closeNotif(SGWButton* /*unused*/);
 };
 
 #endif // SGWTHEMECUSTOMISATIONPAGE_H

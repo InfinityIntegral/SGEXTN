@@ -38,6 +38,7 @@ SGWColourPickerWidget* SGWThemeCustomisationPage::customDarkColourPicker = nullp
 bool SGWThemeCustomisationPage::isUsingCustomAny = false;
 SGWLabel* SGWThemeCustomisationPage::customAnyLabel = nullptr;
 std::array<SGWColourPickerWidget*, 9> SGWThemeCustomisationPage::customAnyColourPicker = {};
+SGWBackground* SGWThemeCustomisationPage::notifInstance = nullptr;
 
 void SGWThemeCustomisationPage::activate(){
     SGWBackground::enable(SGWThemeCustomisationPage::menuInstance, &SGWThemeCustomisationPage::initialise, nullptr);
@@ -351,4 +352,15 @@ void SGWThemeCustomisationPage::confirmChanges(SGWButton */*unused*/){
     SGXThemeColoursCustomisation::syncThemeColours();
     SGWBackground::disable(SGWThemeCustomisationPage::menuInstance);
     SGWBackground::disable(SGWThemeCustomisationPage::detailsInstance);
+    SGWBackground::enable(SGWThemeCustomisationPage::notifInstance, &SGWThemeCustomisationPage::notifInitialise, nullptr);
+}
+
+SGWBackground* SGWThemeCustomisationPage::notifInitialise(){
+    SGWBackground* bg = new SGWPageBackground(SGWWidget::parentWidget, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 8, false);
+    new SGWTextButton(bg, "ok", &SGWThemeCustomisationPage::closeNotif, 0.0f, 0.0f, 1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f);
+    return bg;
+}
+
+void SGWThemeCustomisationPage::closeNotif(SGWButton */*unused*/){
+    SGWBackground::disable(SGWThemeCustomisationPage::notifInstance);
 }
