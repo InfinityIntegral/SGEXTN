@@ -39,6 +39,10 @@ public:
     static SGWLabel* customLightLabel;
     static SGWColourPickerWidget* customLightColourPicker;
     static void updateCustomLight(SGWColourPickerWidget* selector);
+    static bool isUsingCustomDark;
+    static SGWLabel* customDarkLabel;
+    static SGWColourPickerWidget* customDarkColourPicker;
+    static void updateCustomDark(SGWColourPickerWidget* selector);
 };
 
 #endif // SGWTHEMECUSTOMISATIONPAGE_H
