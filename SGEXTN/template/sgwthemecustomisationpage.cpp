@@ -1,25 +1,25 @@
 #include "sgwthemecustomisationpage.h"
-#include "../widgets/sgwpagebackground.h"
-#include "../widgets/sgwtextbutton.h"
-#include "../widgets/sgwbackground.h"
-#include "../widgets/sgwwidget.h"
-#include "../widgets/sgwbutton.h"
+#include "../widgets/instantiable/sgwpagebackground.h"
+#include "../widgets/instantiable/sgwtextbutton.h"
+#include "../widgets/noninstantiable/sgwbackground.h"
+#include "../widgets/noninstantiable/sgwwidget.h"
+#include "../widgets/noninstantiable/sgwbutton.h"
 #include "../primitives/sgxcolourrgba.h"
-#include "../widgets/sgwsequentialscrollview.h"
-#include "../widgets/sgwsequentiallonglabel.h"
-#include "../widgets/sgwlabel.h"
+#include "../widgets/instantiable/sgwsequentialscrollview.h"
+#include "../widgets/instantiable/sgwsequentiallonglabel.h"
+#include "../widgets/noninstantiable/sgwlabel.h"
 #include <array>
-#include "../widgets/sgwblankwidget.h"
+#include "../widgets/instantiable/sgwblankwidget.h"
 #include <QString>
 #include <QObject>
-#include "../widgets/sgwtextlabel.h"
-#include "../widgets/sgwhorizontalalignment.h"
+#include "../widgets/instantiable/sgwtextlabel.h"
+#include "../widgets/enums/sgwhorizontalalignment.h"
 #include <QRandomGenerator>
-#include "../widgets/sgwcolourpickerwidget.h"
+#include "../widgets/instantiable/sgwcolourpickerwidget.h"
 #include "../primitives/sgxcolourhsla.h"
 #include "../userDefinedClasses/sgucentralmanagement.h"
 #include "../customisation/sgxthemecolourscustomisation.h"
-#include "../widgets/sgwlonglabel.h"
+#include "../widgets/instantiable/sgwlonglabel.h"
 
 SGWBackground* SGWThemeCustomisationPage::menuInstance = nullptr;
 SGWBackground* SGWThemeCustomisationPage::detailsInstance = nullptr;

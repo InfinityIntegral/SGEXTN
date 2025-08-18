@@ -2,14 +2,14 @@
 #define SGWTHEMECUSTOMISATIONPAGE_H
 
 #include <qtmetamacros.h>
-#include "../widgets/sgwbackground.h"
-#include "../widgets/sgwbutton.h"
+#include "../widgets/noninstantiable/sgwbackground.h"
+#include "../widgets/noninstantiable/sgwbutton.h"
 #include <QObject>
 #include <array>
-#include "../widgets/sgwlabel.h"
-#include "../widgets/sgwblankwidget.h"
+#include "../widgets/noninstantiable/sgwlabel.h"
+#include "../widgets/instantiable/sgwblankwidget.h"
 #include "../primitives/sgxcolourrgba.h"
-#include "../widgets/sgwcolourpickerwidget.h"
+#include "../widgets/instantiable/sgwcolourpickerwidget.h"
 
 class SGWThemeCustomisationPage : public QObject
 {

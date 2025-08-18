@@ -2,21 +2,21 @@
 #define SGWCOLOURPICKER_H
 
 #include <QObject>
-#include "../widgets/sgwbackground.h"
+#include "../widgets/noninstantiable/sgwbackground.h"
 #include "../primitives/sgxcolourrgba.h"
 #include "../primitives/sgxcolourhsla.h"
 #include <qtmetamacros.h>
 #include "../colourpickerrendering/huechoice/sgxrendercolourpickerhuechoicesgwidget.h"
-#include "../widgets/sgwtouchreceiver.h"
+#include "../widgets/instantiable/sgwtouchreceiver.h"
 #include <array>
 #include "../primitives/sgxtouchevent.h"
 #include "../colourpickerrendering/saturationchoice/sgxrendercolourpickersaturationchoicesgwidget.h"
 #include "../colourpickerrendering/lightnesschoice/sgxrendercolourpickerlightnesschoicesgwidget.h"
 #include "../colourpickerrendering/transparencychoice/sgxrendercolourpickertransparencychoicesgwidget.h"
-#include "../widgets/sgwinput.h"
+#include "../widgets/noninstantiable/sgwinput.h"
 #include "../colourbackground/sgxrendercolourbackgroundsgwidget.h"
-#include "../widgets/sgwcolourpickerwidget.h"
-#include "../widgets/sgwbutton.h"
+#include "../widgets/instantiable/sgwcolourpickerwidget.h"
+#include "../widgets/noninstantiable/sgwbutton.h"
 
 class SGWColourPicker : public QObject
 {

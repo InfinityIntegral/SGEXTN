@@ -25,7 +25,7 @@
 #include "../SingCorrect/sgxsingcorrectquickinterface.h"
 #include "../SingCorrect/sgxsingcorrectcustomisation.h"
 #include "../quickui/sgxquickinterface.h"
-#include "../widgets/sgwstatusbar.h"
+#include "../widgets/unique/sgwstatusbar.h"
 
 void SGXCentral::initialise(){
     SGXFileSystem::rootFilePath = SGXFileSystem::joinFilePaths(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation), SGUCentralManagement::rootFolderName);

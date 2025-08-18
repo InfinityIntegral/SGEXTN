@@ -2,7 +2,7 @@
 #define SGXRENDERCUTEVESICLESSGWIDGET_H
 
 #include <qtmetamacros.h>
-#include "../widgets/sgwcustomrenderer.h"
+#include "../widgets/instantiable/sgwcustomrenderer.h"
 
 class SGXRenderCuteVesiclesSGWidget : public SGWCustomRenderer
 {

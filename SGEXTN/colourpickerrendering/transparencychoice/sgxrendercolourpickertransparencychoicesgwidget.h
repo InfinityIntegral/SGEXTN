@@ -2,8 +2,8 @@
 #define SGXRENDERCOLOURPICKERTRANSPARENCYCHOICESGWIDGET_H
 
 #include <qtmetamacros.h>
-#include "../../widgets/sgwcustomrenderer.h"
-#include "../../widgets/sgwwidget.h"
+#include "../../widgets/noninstantiable/sgwwidget.h"
+#include "../../widgets/instantiable/sgwcustomrenderer.h"
 
 class SGXRenderColourPickerTransparencyChoiceSGWidget : public SGWCustomRenderer
 {

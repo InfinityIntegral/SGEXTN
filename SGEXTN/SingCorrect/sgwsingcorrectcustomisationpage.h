@@ -3,12 +3,12 @@
 
 #include <QObject>
 #include <qtmetamacros.h>
-#include "../widgets/sgwbackground.h"
-#include "../widgets/sgwbutton.h"
-#include "../widgets/sgwlabel.h"
-#include "../widgets/sgwinput.h"
 #include <QHash>
-#include "../widgets/sgwwidget.h"
+#include "../widgets/noninstantiable/sgwbackground.h"
+#include "../widgets/noninstantiable/sgwbutton.h"
+#include "../widgets/noninstantiable/sgwlabel.h"
+#include "../widgets/noninstantiable/sgwinput.h"
+#include "../widgets/noninstantiable/sgwwidget.h"
 
 class SGWSingCorrectCustomisationPage : public QObject
 {

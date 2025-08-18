@@ -70,33 +70,33 @@ SOURCES = SGEXTN/misc/main.cpp \
     SGEXTN/template/sgwthemecustomisationpage.cpp \
     SGEXTN/template/sgwvesiclecustomisationpage.cpp \
     SGEXTN/userDefinedClasses/sgucentralmanagement.cpp \
-    SGEXTN/widgets/sgwbackground.cpp \
-    SGEXTN/widgets/sgwblankwidget.cpp \
-    SGEXTN/widgets/sgwbutton.cpp \
-    SGEXTN/widgets/sgwcolourpickerwidget.cpp \
-    SGEXTN/widgets/sgwcustomrenderer.cpp \
-    SGEXTN/widgets/sgwdefaultfonts.cpp \
-    SGEXTN/widgets/sgwhorizontalalignment.cpp \
-    SGEXTN/widgets/sgwiconbutton.cpp \
-    SGEXTN/widgets/sgwiconlabel.cpp \
-    SGEXTN/widgets/sgwinput.cpp \
-    SGEXTN/widgets/sgwlabel.cpp \
-    SGEXTN/widgets/sgwlonginput.cpp \
-    SGEXTN/widgets/sgwlonglabel.cpp \
-    SGEXTN/widgets/sgwpagebackground.cpp \
-    SGEXTN/widgets/sgwparent.cpp \
-    SGEXTN/widgets/sgwroot.cpp \
-    SGEXTN/widgets/sgwscrollview.cpp \
-    SGEXTN/widgets/sgwsequentiallonglabel.cpp \
-    SGEXTN/widgets/sgwsequentialscrollview.cpp \
-    SGEXTN/widgets/sgwstatusbar.cpp \
-    SGEXTN/widgets/sgwtextbutton.cpp \
-    SGEXTN/widgets/sgwtextinput.cpp \
-    SGEXTN/widgets/sgwtextlabel.cpp \
-    SGEXTN/widgets/sgwtouchreceiver.cpp \
-    SGEXTN/widgets/sgwtype.cpp \
-    SGEXTN/widgets/sgwverticalalignment.cpp \
-    SGEXTN/widgets/sgwwidget.cpp
+    SGEXTN/widgets/noninstantiable/sgwbackground.cpp \
+    SGEXTN/widgets/instantiable/sgwblankwidget.cpp \
+    SGEXTN/widgets/noninstantiable/sgwbutton.cpp \
+    SGEXTN/widgets/instantiable/sgwcolourpickerwidget.cpp \
+    SGEXTN/widgets/instantiable/sgwcustomrenderer.cpp \
+    SGEXTN/widgets/enums/sgwdefaultfonts.cpp \
+    SGEXTN/widgets/enums/sgwhorizontalalignment.cpp \
+    SGEXTN/widgets/instantiable/sgwiconbutton.cpp \
+    SGEXTN/widgets/instantiable/sgwiconlabel.cpp \
+    SGEXTN/widgets/noninstantiable/sgwinput.cpp \
+    SGEXTN/widgets/noninstantiable/sgwlabel.cpp \
+    SGEXTN/widgets/instantiable/sgwlonginput.cpp \
+    SGEXTN/widgets/instantiable/sgwlonglabel.cpp \
+    SGEXTN/widgets/instantiable/sgwpagebackground.cpp \
+    SGEXTN/widgets/unique/sgwparent.cpp \
+    SGEXTN/widgets/unique/sgwroot.cpp \
+    SGEXTN/widgets/instantiable/sgwscrollview.cpp \
+    SGEXTN/widgets/instantiable/sgwsequentiallonglabel.cpp \
+    SGEXTN/widgets/instantiable/sgwsequentialscrollview.cpp \
+    SGEXTN/widgets/unique/sgwstatusbar.cpp \
+    SGEXTN/widgets/instantiable/sgwtextbutton.cpp \
+    SGEXTN/widgets/instantiable/sgwtextinput.cpp \
+    SGEXTN/widgets/instantiable/sgwtextlabel.cpp \
+    SGEXTN/widgets/instantiable/sgwtouchreceiver.cpp \
+    SGEXTN/widgets/enums/sgwtype.cpp \
+    SGEXTN/widgets/enums/sgwverticalalignment.cpp \
+    SGEXTN/widgets/noninstantiable/sgwwidget.cpp
 RESOURCES = SGEXTN/assets.qrc
 HEADERS += \
     SGEXTN/SingCorrect/sgwsingcorrectcustomisationpage.h \
@@ -151,30 +151,30 @@ HEADERS += \
     SGEXTN/template/sgwthemecustomisationpage.h \
     SGEXTN/template/sgwvesiclecustomisationpage.h \
     SGEXTN/userDefinedClasses/sgucentralmanagement.h \
-    SGEXTN/widgets/sgwbackground.h \
-    SGEXTN/widgets/sgwblankwidget.h \
-    SGEXTN/widgets/sgwbutton.h \
-    SGEXTN/widgets/sgwcolourpickerwidget.h \
-    SGEXTN/widgets/sgwcustomrenderer.h \
-    SGEXTN/widgets/sgwdefaultfonts.h \
-    SGEXTN/widgets/sgwhorizontalalignment.h \
-    SGEXTN/widgets/sgwiconbutton.h \
-    SGEXTN/widgets/sgwiconlabel.h \
-    SGEXTN/widgets/sgwinput.h \
-    SGEXTN/widgets/sgwlabel.h \
-    SGEXTN/widgets/sgwlonginput.h \
-    SGEXTN/widgets/sgwlonglabel.h \
-    SGEXTN/widgets/sgwpagebackground.h \
-    SGEXTN/widgets/sgwparent.h \
-    SGEXTN/widgets/sgwroot.h \
-    SGEXTN/widgets/sgwscrollview.h \
-    SGEXTN/widgets/sgwsequentiallonglabel.h \
-    SGEXTN/widgets/sgwsequentialscrollview.h \
-    SGEXTN/widgets/sgwstatusbar.h \
-    SGEXTN/widgets/sgwtextbutton.h \
-    SGEXTN/widgets/sgwtextinput.h \
-    SGEXTN/widgets/sgwtextlabel.h \
-    SGEXTN/widgets/sgwtouchreceiver.h \
-    SGEXTN/widgets/sgwtype.h \
-    SGEXTN/widgets/sgwverticalalignment.h \
-    SGEXTN/widgets/sgwwidget.h
+    SGEXTN/widgets/noninstantiable/sgwbackground.h \
+    SGEXTN/widgets/instantiable/sgwblankwidget.h \
+    SGEXTN/widgets/noninstantiable/sgwbutton.h \
+    SGEXTN/widgets/instantiable/sgwcolourpickerwidget.h \
+    SGEXTN/widgets/instantiable/sgwcustomrenderer.h \
+    SGEXTN/widgets/enums/sgwdefaultfonts.h \
+    SGEXTN/widgets/enums/sgwhorizontalalignment.h \
+    SGEXTN/widgets/instantiable/sgwiconbutton.h \
+    SGEXTN/widgets/instantiable/sgwiconlabel.h \
+    SGEXTN/widgets/noninstantiable/sgwinput.h \
+    SGEXTN/widgets/noninstantiable/sgwlabel.h \
+    SGEXTN/widgets/instantiable/sgwlonginput.h \
+    SGEXTN/widgets/instantiable/sgwlonglabel.h \
+    SGEXTN/widgets/instantiable/sgwpagebackground.h \
+    SGEXTN/widgets/unique/sgwparent.h \
+    SGEXTN/widgets/unique/sgwroot.h \
+    SGEXTN/widgets/instantiable/sgwscrollview.h \
+    SGEXTN/widgets/instantiable/sgwsequentiallonglabel.h \
+    SGEXTN/widgets/instantiable/sgwsequentialscrollview.h \
+    SGEXTN/widgets/unique/sgwstatusbar.h \
+    SGEXTN/widgets/instantiable/sgwtextbutton.h \
+    SGEXTN/widgets/instantiable/sgwtextinput.h \
+    SGEXTN/widgets/instantiable/sgwtextlabel.h \
+    SGEXTN/widgets/instantiable/sgwtouchreceiver.h \
+    SGEXTN/widgets/enums/sgwtype.h \
+    SGEXTN/widgets/enums/sgwverticalalignment.h \
+    SGEXTN/widgets/noninstantiable/sgwwidget.h

@@ -1,13 +1,13 @@
 #include "sgxquickinterface.h"
-#include "../widgets/sgwwidget.h"
-#include "../widgets/sgwroot.h"
+#include "../widgets/noninstantiable/sgwwidget.h"
+#include "../widgets/unique/sgwroot.h"
 #include <QQmlComponent>
 #include <QQmlApplicationEngine>
 #include <QQuickWindow>
 #include "sgxquickresizer.h"
 #include "sgxthemecoloursetting.h"
-#include "../widgets/sgwparent.h"
-#include "../widgets/sgwstatusbar.h"
+#include "../widgets/unique/sgwparent.h"
+#include "../widgets/unique/sgwstatusbar.h"
 #include <QQueue>
 #include <qcontainerfwd.h>
 
