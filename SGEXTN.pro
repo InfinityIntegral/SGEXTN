@@ -18,6 +18,7 @@ DISTFILES = .gitignore LICENSE.txt README.md \
     SGEXTN/filesystem/singzip.sgfile \
     compilecommands.txt
 SOURCES = SGEXTN/misc/main.cpp \
+    SGEXTN/SingCorrect/sgwsingcorrectcustomisationpage.cpp \
     SGEXTN/SingCorrect/sgxsingcorrectconfigspage.cpp \
     SGEXTN/SingCorrect/sgxsingcorrectcore.cpp \
     SGEXTN/SingCorrect/sgxsingcorrectcustomisation.cpp \
@@ -105,6 +106,7 @@ SOURCES = SGEXTN/misc/main.cpp \
     SGEXTN/widgets/sgwwidget.cpp
 RESOURCES = SGEXTN/assets.qrc
 HEADERS += \
+    SGEXTN/SingCorrect/sgwsingcorrectcustomisationpage.h \
     SGEXTN/SingCorrect/sgxsingcorrectconfigspage.h \
     SGEXTN/SingCorrect/sgxsingcorrectcore.h \
     SGEXTN/SingCorrect/sgxsingcorrectcustomisation.h \
