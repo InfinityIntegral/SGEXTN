@@ -94,6 +94,7 @@ void SGWSingCorrectCustomisationPage::activate(){
 
 void SGWSingCorrectCustomisationPage::exit(SGWButton */*unused*/){
     SGWBackground::disable(SGWSingCorrectCustomisationPage::instance);
+    SGXSingCorrectCustomisation::syncFileData();
 }
 
 void SGWSingCorrectCustomisationPage::enableFunction(SGWButton */*unused*/){
@@ -190,7 +191,12 @@ void SGWSingCorrectCustomisationPage::refreshList(){
         SGWWidget* x = new SGWBlankWidget(SGWSingCorrectCustomisationPage::listParent, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 8);
         new SGWTextLabel(x, QString(i.value()), 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 2.0f, 0.0f, 1.0f, SGWHorizontalAlignment::Center, false);
         new SGWTextLabel(x, i.key(), 0.0f, 2.0f, 0.0f, 0.0f, 1.0f, -3.0f, 0.0f, 1.0f, SGWHorizontalAlignment::Left, false);
-        SGWButton* b = new SGWTextButton(x, "x", nullptr, 1.0f, -1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f);
+        SGWButton* b = new SGWTextButton(x, "x", &SGWSingCorrectCustomisationPage::deleteCommand, 1.0f, -1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f);
         (*SGWSingCorrectCustomisationPage::buttonsList).insert(b, i.key());
     }
+}
+
+void SGWSingCorrectCustomisationPage::deleteCommand(SGWButton *button){
+    (*SGXSingCorrectCustomisation::database).remove((*SGWSingCorrectCustomisationPage::buttonsList)[button]);
+    SGWSingCorrectCustomisationPage::refreshList();
 }

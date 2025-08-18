@@ -39,6 +39,7 @@ public:
     static void refreshList();
     static SGWWidget* listParent;
     static QHash<SGWButton*, QString>* buttonsList;
+    static void deleteCommand(SGWButton* button);
 };
 
 #endif // SGWSINGCORRECTCUSTOMISATIONPAGE_H
