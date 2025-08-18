@@ -18,6 +18,7 @@
 #include "../widgets/sgwstatusbar.h"
 #include <QHash>
 #include <qcontainerfwd.h>
+#include "../widgets/sgwlonglabel.h"
 
 SGWBackground* SGWSingCorrectCustomisationPage::instance = nullptr;
 SGWButton* SGWSingCorrectCustomisationPage::enableButton = nullptr;
@@ -31,6 +32,7 @@ SGWLabel* SGWSingCorrectCustomisationPage::customCharError = nullptr;
 SGWLabel* SGWSingCorrectCustomisationPage::customCommandError = nullptr;
 SGWWidget* SGWSingCorrectCustomisationPage::listParent = nullptr;
 QHash<SGWButton*, QString>* SGWSingCorrectCustomisationPage::buttonsList = nullptr;
+SGWBackground* SGWSingCorrectCustomisationPage::commandListInstance = nullptr;
 
 SGWBackground* SGWSingCorrectCustomisationPage::initialise(){
     SGWBackground* bg = new SGWPageBackground(SGWWidget::parentWidget, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 8);
@@ -42,7 +44,7 @@ SGWBackground* SGWSingCorrectCustomisationPage::initialise(){
     new SGWBlankWidget(x, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 0.5f, 8);
     new SGWTextInput(x, nullptr, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.0f);
     new SGWBlankWidget(x, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.0f, 8);
-    new SGWTextButton(x, "builtin command list", nullptr, 0.5f, -4.0f, 0.0f, 0.0f, 0.0f, 8.0f, 0.0f, 1.0f);
+    new SGWTextButton(x, "builtin command list", &SGWSingCorrectCustomisationPage::showCommandList, 0.5f, -4.0f, 0.0f, 0.0f, 0.0f, 8.0f, 0.0f, 1.0f);
     new SGWBlankWidget(x, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.0f, 8);
     SGWWidget* p = new SGWBlankWidget(x, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.5f, 8);
     new SGWTextLabel(p, "use SingCorrect?", 0.0f, 0.0f, 0.0f, 0.0f, 0.5f, -0.1f, 0.0f, 1.0f, SGWHorizontalAlignment::Right, false);
@@ -199,4 +201,27 @@ void SGWSingCorrectCustomisationPage::refreshList(){
 void SGWSingCorrectCustomisationPage::deleteCommand(SGWButton *button){
     (*SGXSingCorrectCustomisation::database).remove((*SGWSingCorrectCustomisationPage::buttonsList)[button]);
     SGWSingCorrectCustomisationPage::refreshList();
+}
+
+SGWBackground* SGWSingCorrectCustomisationPage::initialiseCommandList(){
+    SGWBackground* bg = new SGWPageBackground(SGWWidget::parentWidget, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 8);
+    SGWWidget* x = new SGWSequentialScrollView(bg, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, -1.0f, 0.0f, 0.5f, 8);
+    new SGWTextButton(bg, "exit", &SGWSingCorrectCustomisationPage::exitCommandList, 0.0f, 0.0f, 1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f);
+    new SGWBlankWidget(x, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 0.5f, 8);
+    QString s = "    This page display builtin SingCorrect commands including those from LaTeX. The commands are arranged in packages (as in LaTeX packages).";
+    new SGWSequentialLongLabel(x, s, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.0f);
+    new SGWBlankWidget(x, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 0.5f, 8);
+    new SGWTextLabel(x, "SG mark package", 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, SGWHorizontalAlignment::Left, false);
+    s = QString(u"\u0378    SGhome");
+    new SGWLongLabel(x, s, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 2.0f, 0.0f, 1.0f, 0.0f, 0.5f, 0.0f, 0.5f);
+    new SGWBlankWidget(x, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 0.5f, 8);
+    return bg;
+}
+
+void SGWSingCorrectCustomisationPage::showCommandList(SGWButton */*unused*/){
+    SGWBackground::enable(SGWSingCorrectCustomisationPage::commandListInstance, &SGWSingCorrectCustomisationPage::initialiseCommandList, nullptr);
+}
+
+void SGWSingCorrectCustomisationPage::exitCommandList(SGWButton */*unused*/){
+    SGWBackground::disable(SGWSingCorrectCustomisationPage::commandListInstance);
 }

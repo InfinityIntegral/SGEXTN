@@ -40,6 +40,10 @@ public:
     static SGWWidget* listParent;
     static QHash<SGWButton*, QString>* buttonsList;
     static void deleteCommand(SGWButton* button);
+    static SGWBackground* commandListInstance;
+    static SGWBackground* initialiseCommandList();
+    static void exitCommandList(SGWButton* /*unused*/);
+    static void showCommandList(SGWButton* /*unused*/);
 };
 
 #endif // SGWSINGCORRECTCUSTOMISATIONPAGE_H
