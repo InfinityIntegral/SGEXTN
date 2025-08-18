@@ -69,6 +69,7 @@ SOURCES = SGEXTN/misc/main.cpp \
     SGEXTN/template/sgwcutevesicles.cpp \
     SGEXTN/template/sgwthemecustomisationpage.cpp \
     SGEXTN/template/sgwvesiclecustomisationpage.cpp \
+    SGEXTN/timer/sgxtimer.cpp \
     SGEXTN/userDefinedClasses/sgucentralmanagement.cpp \
     SGEXTN/widgets/noninstantiable/sgwbackground.cpp \
     SGEXTN/widgets/instantiable/sgwblankwidget.cpp \
@@ -150,6 +151,7 @@ HEADERS += \
     SGEXTN/template/sgwcutevesicles.h \
     SGEXTN/template/sgwthemecustomisationpage.h \
     SGEXTN/template/sgwvesiclecustomisationpage.h \
+    SGEXTN/timer/sgxtimer.h \
     SGEXTN/userDefinedClasses/sgucentralmanagement.h \
     SGEXTN/widgets/noninstantiable/sgwbackground.h \
     SGEXTN/widgets/instantiable/sgwblankwidget.h \
