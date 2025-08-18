@@ -82,7 +82,7 @@ SGEXTN v5.0.0 (planned): same architecture as v1 but uses Qt Quick (supposed to 
 - [x] reimplement colour picker
 - [x] improve theme customisation page
 - [x] improve SingCorrect configs page
-- [ ] build SingCorrect command list page
+- [x] build SingCorrect command list page
 - [ ] clear old unused code
 - [ ] improve file organisation
 - [ ] SGXTimer

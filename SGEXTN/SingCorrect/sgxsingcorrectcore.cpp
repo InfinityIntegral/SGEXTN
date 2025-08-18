@@ -789,7 +789,7 @@ void SGXSingCorrectCore::initialise(){
     (*SGXSingCorrectCore::database).insert("SGemojirotatedfourstar", QChar(0x2BCF));
     (*SGXSingCorrectCore::database).insert("SGemojifilledfourstar", QChar(0x2BCC));
     (*SGXSingCorrectCore::database).insert("SGemojirotatedfilledfourstar", QChar(0x2BCD));
-    (*SGXSingCorrectCore::database).insert("SGemojiqed", QChar(0x25FD));
+    (*SGXSingCorrectCore::database).insert("SGemojiqed", QChar(0x25FB));
     (*SGXSingCorrectCore::database).insert("SGemojirightshade", QChar(0x25A7));
     (*SGXSingCorrectCore::database).insert("SGemojileftshade", QChar(0x25A8));
     (*SGXSingCorrectCore::database).insert("SGemojihorizshade", QChar(0x25A4));
