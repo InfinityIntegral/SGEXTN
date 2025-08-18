@@ -2,7 +2,7 @@
 #include "../noninstantiable/sgwwidget.h"
 #include "../../quickui/sgxquickinterface.h"
 #include "../../primitives/sgxtimestamp.h"
-#include <QTimer>
+#include "../../timer/sgxtimer.h"
 #include <QObject>
 #include <QQuickItem>
 #include "../enums/sgwtype.h"
@@ -11,7 +11,7 @@
 
 int SGWStatusBar::notificationTime = 3;
 SGWStatusBar* SGWStatusBar::instance = nullptr;
-QTimer* SGWStatusBar::timer = nullptr;
+SGXTimer* SGWStatusBar::timer = nullptr;
 int SGWStatusBar::timeLeft = 0;
 bool SGWStatusBar::isNotifying = false;
 
@@ -22,10 +22,8 @@ SGWStatusBar::SGWStatusBar() : SGWWidget(SGWWidget::rootWidget, 0.0f, 0.0f, 0.0f
     (*this).type = SGWType::StatusBar;
     (*this).topObject = thisItem;
     (*this).bottomObject = SGXQuickInterface::getBottomObject(thisItem);
-    SGWStatusBar::timer = new QTimer();
-    QTimer::singleShot(0, &SGWStatusBar::updateTime);
-    connect(SGWStatusBar::timer, &QTimer::timeout, &SGWStatusBar::updateTime);
-    (*SGWStatusBar::timer).start(1000);
+    SGWStatusBar::timer = new SGXTimer(1.0f, &SGWStatusBar::updateTime);
+    SGXTimer::singleCall(0.0f, &SGWStatusBar::updateTime);
     connect(thisItem, &QQuickItem::objectNameChanged, this, &SGWStatusBar::eventReceived);
 }
 

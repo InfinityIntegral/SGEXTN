@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include "../cutevesicles/sgxrendercutevesiclessgwidget.h"
-#include <QTimer>
+#include "../timer/sgxtimer.h"
 #include <qtmetamacros.h>
 
 class SGWCuteVesicles : public QObject
@@ -13,13 +13,10 @@ public:
     SGWCuteVesicles() = delete;
     static float framesPerSecond;
     static SGXRenderCuteVesiclesSGWidget* instance;
-    static QTimer* timer;
+    static SGXTimer* timer;
     static void startAnimation();
     static void stopAnimation();
     static void toggleAnimation();
-signals:
-    void nothingChanged();
-public slots:
     static void refreshAnimation();
 };
 
