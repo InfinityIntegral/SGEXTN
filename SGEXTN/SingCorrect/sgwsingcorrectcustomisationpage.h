@@ -27,6 +27,13 @@ public:
     static SGWLabel* prefixUnsavedMessage;
     static void prefixUpdated(SGWInput* /*unused*/);
     static void prefixSaved(SGWInput* /*unused*/);
+    static SGWInput* customCharInput;
+    static SGWInput* customCommandInput;
+    static SGWLabel* customCharError;
+    static SGWLabel* customCommandError;
+    static void customCharCheck(SGWInput* /*unused*/);
+    static void customCommandCheck(SGWInput* /*unused*/);
+    static void addCustomCommand(SGWButton* /*unused*/);
 };
 
 #endif // SGWSINGCORRECTCUSTOMISATIONPAGE_H

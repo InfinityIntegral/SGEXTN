@@ -12,10 +12,11 @@ bool SGXSingCorrectCustomisation::moduleEnabled = true;
 
 void SGXSingCorrectCustomisation::loadFileData(){
     const QString path = SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "correctionconfigs.sg");
+    if(SGXSingCorrectCustomisation::database != nullptr){delete SGXSingCorrectCustomisation::database;}
+    SGXSingCorrectCustomisation::database = new QHash<QString, QChar>();
     if(SGXFileSystem::fileExists(path) != 1){return;}
     {
         const SGXFileReader fileReader = SGXFileReader(path);
-        SGXSingCorrectCustomisation::database = new QHash<QString, QChar>();
         SGXSingCorrectCustomisation::moduleEnabled = fileReader.readBool();
         SGXSingCorrectCore::correctionPrefix = fileReader.readString();
         const int n = fileReader.readInt();
