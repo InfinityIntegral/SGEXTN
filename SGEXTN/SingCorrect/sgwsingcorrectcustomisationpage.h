@@ -7,6 +7,8 @@
 #include "../widgets/sgwbutton.h"
 #include "../widgets/sgwlabel.h"
 #include "../widgets/sgwinput.h"
+#include <QHash>
+#include "../widgets/sgwwidget.h"
 
 class SGWSingCorrectCustomisationPage : public QObject
 {
@@ -34,6 +36,9 @@ public:
     static void customCharCheck(SGWInput* /*unused*/);
     static void customCommandCheck(SGWInput* /*unused*/);
     static void addCustomCommand(SGWButton* /*unused*/);
+    static void refreshList();
+    static SGWWidget* listParent;
+    static QHash<SGWButton*, QString>* buttonsList;
 };
 
 #endif // SGWSINGCORRECTCUSTOMISATIONPAGE_H
