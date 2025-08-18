@@ -1,5 +1,4 @@
 #include "sgxfileuploader.h"
-#include "../quickui/sgxquickuiinterface.h"
 #include "sgxfilesystem.h"
 #include <QQmlComponent>
 #include <QObject>
@@ -8,13 +7,14 @@
 #include <QUrl>
 #include "sgxfilereader.h"
 #include "sgxfilewriter.h"
+#include "../quickui/sgxquickinterface.h"
 
 QQmlComponent* SGXFileUploader::fileUploadTemplate = nullptr;
 QObject* SGXFileUploader::fileUploadInstance = nullptr;
 void (*SGXFileUploader::fileAcceptor)(const QString&) = nullptr;
 
 void SGXFileUploader::uploadFile(void (*attachedFunction)(const QString &)){
-    if(SGXFileUploader::fileUploadTemplate == nullptr){SGXFileUploader::fileUploadTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/SGEXTN/QML/fileupload.qml");}
+    if(SGXFileUploader::fileUploadTemplate == nullptr){SGXFileUploader::fileUploadTemplate = new QQmlComponent(SGXQuickInterface::e, ":/SGEXTN/QML/fileupload.qml");}
     SGXFileUploader::fileUploadInstance = qobject_cast<QObject*>((*SGXFileUploader::fileUploadTemplate).create());
     connect(SGXFileUploader::fileUploadInstance, &QObject::objectNameChanged, &SGXFileUploader::checkUploadedFile);
     QMetaObject::invokeMethod(SGXFileUploader::fileUploadInstance, "open");

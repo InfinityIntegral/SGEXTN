@@ -12,7 +12,7 @@ bool SGXSingCorrectCustomisation::moduleEnabled = true;
 
 void SGXSingCorrectCustomisation::loadFileData(){
     const QString path = SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "correctionconfigs.sg");
-    if(SGXSingCorrectCustomisation::database != nullptr){delete SGXSingCorrectCustomisation::database;}
+    delete SGXSingCorrectCustomisation::database;
     SGXSingCorrectCustomisation::database = new QHash<QString, QChar>();
     if(SGXFileSystem::fileExists(path) != 1){return;}
     {

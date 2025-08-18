@@ -3,9 +3,7 @@
 #include "../filesystem/sgxfilewriter.h"
 #include "../userDefinedClasses/sgucentralmanagement.h"
 #include "../filesystem/sgxfilereader.h"
-#include "../primitives/sgxcolourrgba.h"
 #include <QString>
-#include "../primitives/sgxtimestamp.h"
 
 void SGXVesiclesPropertiesCustomisation::loadVesicleProperties(){
     const QString path = SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "vesicleproperties.sg");

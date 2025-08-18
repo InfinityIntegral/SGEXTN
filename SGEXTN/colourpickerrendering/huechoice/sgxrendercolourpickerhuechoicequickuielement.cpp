@@ -7,6 +7,7 @@
 
 SGXRenderColourPickerHueChoiceQuickUIElement::SGXRenderColourPickerHueChoiceQuickUIElement(){
     (*this).setFlag(QQuickItem::ItemHasContents, true);
+    (*this).selectedHue = 0.0f;
 }
 
 QSGNode* SGXRenderColourPickerHueChoiceQuickUIElement::updatePaintNode(QSGNode *thisNode, UpdatePaintNodeData * /*unused*/){

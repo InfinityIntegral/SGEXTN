@@ -41,10 +41,10 @@ float SGUCentralManagement::cuteVesiclesCenterTransparency = 0.1f;
 float SGUCentralManagement::cuteVesiclesEdgeTransparency = 0.05f;
 float SGUCentralManagement::cuteVesiclesMembraneTransparency = 0.2f;
 float SGUCentralManagement::cuteVesiclesFrameRate = 10.0f;
-#include "../SingCorrect/sgwsingcorrectcustomisationpage.h"
+
 // this is run immediately after GUI is created, use it to initialise the UI
 void SGUCentralManagement::initialise(){
-    SGWSingCorrectCustomisationPage::activate();
+    
 }
 
 // this is run after the application is created but before the GUI, use it to edit theme colours from configuration files

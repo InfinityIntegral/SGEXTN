@@ -2,25 +2,11 @@
     <qresource prefix="/SGEXTN">
         <file>assets/appicon.png</file>
         <file>QML/root.qml</file>
-        <file>QML/rootwidget.qml</file>
-        <file>QML/parentwidget.qml</file>
-        <file>QML/widget.qml</file>
-        <file>QML/text.qml</file>
-        <file>QML/longtext.qml</file>
-        <file>QML/icon.qml</file>
-        <file>QML/textbutton.qml</file>
-        <file>QML/iconbutton.qml</file>
-        <file>QML/inputfield.qml</file>
-        <file>QML/longinputfield.qml</file>
-        <file>QML/scrollview.qml</file>
-        <file>QML/touchreceiver.qml</file>
         <file>cutevesicles/cutevesicles.qml</file>
         <file>cutevesicles/cutevesicles.vert.qsb</file>
         <file>cutevesicles/cutevesicles.frag.qsb</file>
         <file>QML/fileupload.qml</file>
         <file>QML/filedownload.qml</file>
-        <file>QML/statusbar.qml</file>
-        <file>QML/colourpicker.qml</file>
         <file>colourpickerrendering/huechoice/huechoice.qml</file>
         <file>colourpickerrendering/huechoice/huechoice.vert.qsb</file>
         <file>colourpickerrendering/huechoice/huechoice.frag.qsb</file>
@@ -36,8 +22,6 @@
         <file>colourpickerrendering/transparencychoice/transparencychoice.qml</file>
         <file>colourpickerrendering/transparencychoice/transparencychoice.vert.qsb</file>
         <file>colourpickerrendering/transparencychoice/transparencychoice.frag.qsb</file>
-        <file>QML/title.qml</file>
-        <file>QML/righttext.qml</file>
         <file>assets/AppIcons.sg</file>
         <file>assets/SingScript.sg</file>
         <file>QML/sgwroot.qml</file>

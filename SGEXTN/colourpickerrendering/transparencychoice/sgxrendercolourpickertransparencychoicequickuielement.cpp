@@ -7,6 +7,10 @@
 
 SGXRenderColourPickerTransparencyChoiceQuickUIElement::SGXRenderColourPickerTransparencyChoiceQuickUIElement(){
     (*this).setFlag(QQuickItem::ItemHasContents, true);
+    (*this).selectedHue = 0.0f;
+    (*this).selectedSaturation = 0.0f;
+    (*this).selectedLightness = 0.0f;
+    (*this).selectedTransparency = 0.0f;
 }
 
 QSGNode* SGXRenderColourPickerTransparencyChoiceQuickUIElement::updatePaintNode(QSGNode *thisNode, UpdatePaintNodeData */*unused*/){

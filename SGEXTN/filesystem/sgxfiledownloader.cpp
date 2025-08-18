@@ -1,5 +1,4 @@
 #include "sgxfiledownloader.h"
-#include "../quickui/sgxquickuiinterface.h"
 #include "sgxfilesystem.h"
 #include <QQmlComponent>
 #include <QObject>
@@ -8,6 +7,7 @@
 #include <QUrl>
 #include "sgxfilereader.h"
 #include "sgxfilewriter.h"
+#include "../quickui/sgxquickinterface.h"
 
 QQmlComponent* SGXFileDownloader::fileDownloadTemplate = nullptr;
 QObject* SGXFileDownloader::fileDownloadInstance = nullptr;
@@ -15,7 +15,7 @@ QString SGXFileDownloader::sourcePath = "";
 
 void SGXFileDownloader::downloadFile(const QString &s){
     if(SGXFileSystem::pathIsValid(s) == false || SGXFileSystem::fileExists(s) != 1){return;}
-    if(SGXFileDownloader::fileDownloadTemplate == nullptr){SGXFileDownloader::fileDownloadTemplate = new QQmlComponent(SGXQuickUIInterface::e, ":/SGEXTN/QML/filedownload.qml");}
+    if(SGXFileDownloader::fileDownloadTemplate == nullptr){SGXFileDownloader::fileDownloadTemplate = new QQmlComponent(SGXQuickInterface::e, ":/SGEXTN/QML/filedownload.qml");}
     SGXFileDownloader::fileDownloadInstance = qobject_cast<QObject*>((*SGXFileDownloader::fileDownloadTemplate).create());
     connect(SGXFileDownloader::fileDownloadInstance, &QObject::objectNameChanged, &SGXFileDownloader::checkDownloadedFile);
     QMetaObject::invokeMethod(SGXFileDownloader::fileDownloadInstance, "open");

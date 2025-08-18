@@ -19,7 +19,6 @@ DISTFILES = .gitignore LICENSE.txt README.md \
     compilecommands.txt
 SOURCES = SGEXTN/misc/main.cpp \
     SGEXTN/SingCorrect/sgwsingcorrectcustomisationpage.cpp \
-    SGEXTN/SingCorrect/sgxsingcorrectconfigspage.cpp \
     SGEXTN/SingCorrect/sgxsingcorrectcore.cpp \
     SGEXTN/SingCorrect/sgxsingcorrectcustomisation.cpp \
     SGEXTN/SingCorrect/sgxsingcorrectquickinterface.cpp \
@@ -65,17 +64,11 @@ SOURCES = SGEXTN/misc/main.cpp \
     SGEXTN/primitives/sgxvector2.cpp \
     SGEXTN/quickui/sgxquickinterface.cpp \
     SGEXTN/quickui/sgxquickresizer.cpp \
-    SGEXTN/quickui/sgxquickuiinterface.cpp \
     SGEXTN/quickui/sgxthemecoloursetting.cpp \
     SGEXTN/template/sgwcolourpicker.cpp \
     SGEXTN/template/sgwcutevesicles.cpp \
     SGEXTN/template/sgwthemecustomisationpage.cpp \
     SGEXTN/template/sgwvesiclecustomisationpage.cpp \
-    SGEXTN/template/sgxcolourpicker.cpp \
-    SGEXTN/template/sgxcutevesicles.cpp \
-    SGEXTN/template/sgxstatusbar.cpp \
-    SGEXTN/template/sgxthemecolourspage.cpp \
-    SGEXTN/template/sgxvesiclepropertiespage.cpp \
     SGEXTN/userDefinedClasses/sgucentralmanagement.cpp \
     SGEXTN/widgets/sgwbackground.cpp \
     SGEXTN/widgets/sgwblankwidget.cpp \
@@ -107,7 +100,6 @@ SOURCES = SGEXTN/misc/main.cpp \
 RESOURCES = SGEXTN/assets.qrc
 HEADERS += \
     SGEXTN/SingCorrect/sgwsingcorrectcustomisationpage.h \
-    SGEXTN/SingCorrect/sgxsingcorrectconfigspage.h \
     SGEXTN/SingCorrect/sgxsingcorrectcore.h \
     SGEXTN/SingCorrect/sgxsingcorrectcustomisation.h \
     SGEXTN/SingCorrect/sgxsingcorrectquickinterface.h \
@@ -153,17 +145,11 @@ HEADERS += \
     SGEXTN/primitives/sgxvector2.h \
     SGEXTN/quickui/sgxquickinterface.h \
     SGEXTN/quickui/sgxquickresizer.h \
-    SGEXTN/quickui/sgxquickuiinterface.h \
     SGEXTN/quickui/sgxthemecoloursetting.h \
     SGEXTN/template/sgwcolourpicker.h \
     SGEXTN/template/sgwcutevesicles.h \
     SGEXTN/template/sgwthemecustomisationpage.h \
     SGEXTN/template/sgwvesiclecustomisationpage.h \
-    SGEXTN/template/sgxcolourpicker.h \
-    SGEXTN/template/sgxcutevesicles.h \
-    SGEXTN/template/sgxstatusbar.h \
-    SGEXTN/template/sgxthemecolourspage.h \
-    SGEXTN/template/sgxvesiclepropertiespage.h \
     SGEXTN/userDefinedClasses/sgucentralmanagement.h \
     SGEXTN/widgets/sgwbackground.h \
     SGEXTN/widgets/sgwblankwidget.h \
