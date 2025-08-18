@@ -94,13 +94,19 @@ ScrollView{
 		
 		Rectangle{
 			width: parent.width - (s1 * (pw1 * Resizer.renderSpaceWidth + pw0 * Resizer.sizeUnit) + s0 * Resizer.sizeUnit)
+			height: p1 * (pw1 * Resizer.renderSpaceWidth + pw0 * Resizer.sizeUnit) + p0 * Resizer.sizeUnit
+			color: getBg(utc, bg, bgc)
+		}
+		
+		Rectangle{
+			width: parent.width - (s1 * (pw1 * Resizer.renderSpaceWidth + pw0 * Resizer.sizeUnit) + s0 * Resizer.sizeUnit)
 			height: 0
 			color: getBg(utc, bg, bgc)
 
 			Text{
 				property bool canParent: true
 				x: p1 * (pw1 * Resizer.renderSpaceWidth + pw0 * Resizer.sizeUnit) + p0 * Resizer.sizeUnit
-				y: p1 * (pw1 * Resizer.renderSpaceWidth + pw0 * Resizer.sizeUnit) + p0 * Resizer.sizeUnit
+				y: 0
 				width: parent.width - 2 * (p1 * (pw1 * Resizer.renderSpaceWidth + pw0 * Resizer.sizeUnit) + p0 * Resizer.sizeUnit)
 				height: implicitHeight
 				text: s
@@ -112,10 +118,16 @@ ScrollView{
 				wrapMode: Text.WrapAtWordBoundaryOrAnywhere
 
 				function updateParentHeight(){
-					parent.height = Math.max(implicitHeight + 2 * (p1 * (pw1 * Resizer.renderSpaceWidth + pw0 * Resizer.sizeUnit) + p0 * Resizer.sizeUnit), h1 * (ph1 * Resizer.renderSpaceHeight + ph0 * Resizer.sizeUnit) + h0 * Resizer.sizeUnit)
+					parent.height = Math.max(implicitHeight, h1 * (ph1 * Resizer.renderSpaceHeight + ph0 * Resizer.sizeUnit) + h0 * Resizer.sizeUnit)
 				}
 				onHeightChanged: updateParentHeight()
 			}
+		}
+		
+		Rectangle{
+			width: parent.width - (s1 * (pw1 * Resizer.renderSpaceWidth + pw0 * Resizer.sizeUnit) + s0 * Resizer.sizeUnit)
+			height: p1 * (pw1 * Resizer.renderSpaceWidth + pw0 * Resizer.sizeUnit) + p0 * Resizer.sizeUnit
+			color: getBg(utc, bg, bgc)
 		}
 	}
 	
