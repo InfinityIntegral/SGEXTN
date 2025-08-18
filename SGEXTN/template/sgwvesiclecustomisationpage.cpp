@@ -60,7 +60,7 @@ SGWBackground* SGWVesicleCustomisationPage::initialise(){
     
     new SGWBlankWidget(bg, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.5f, 8);
     p = new SGWBlankWidget(bg, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 3.0f, 8);
-    new SGWTextLabel(p, "customise vesicles", 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 2.0f, SGWHorizontalAlignment::Center);
+    new SGWTextLabel(p, "customise vesicles", 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 2.0f, SGWHorizontalAlignment::Center, false);
     s = "Note: a vesicle is an organelle found inside cells that transport substances.";
     new SGWSequentialLongLabel(bg, s, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.0f);
     new SGWBlankWidget(bg, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.5f, 8);
@@ -72,119 +72,93 @@ SGWBackground* SGWVesicleCustomisationPage::initialise(){
     s = "    The membrane thickness refers to the thickness of the vesicle membrane and has a default value of 0.05";
     new SGWSequentialLongLabel(bg, s, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.0f);
     p = new SGWBlankWidget(bg, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 2.0f, 8);
-    new SGWTextLabel(p, "membrane thickness:", 0.0f, 0.5f, 0.0f, 0.0f, 0.5f, -0.6f, 0.0f, 1.0f, SGWHorizontalAlignment::Right);
+    new SGWTextLabel(p, "membrane thickness:", 0.0f, 0.5f, 0.0f, 0.0f, 0.5f, -0.6f, 0.0f, 1.0f, SGWHorizontalAlignment::Right, false);
     SGWVesicleCustomisationPage::membraneThicknessInput = new SGWTextInput(p, &SGWVesicleCustomisationPage::membraneThicknessCheck, 0.5f, 0.1f, 0.0f, 0.0f, 0.0f, 3.0f, 0.0f, 1.0f);
-    SGWVesicleCustomisationPage::membraneThicknessError = new SGWTextLabel(p, "nonnegative number", 0.5f, 0.1f, 0.0f, 1.0f, 0.5f, -0.6f, 0.0f, 0.75f, SGWHorizontalAlignment::Left);
-    (*SGWVesicleCustomisationPage::membraneThicknessError).setForegroundThemeColour(2);
-    (*SGWVesicleCustomisationPage::membraneThicknessError).setItemVisibility(false);
+    SGWVesicleCustomisationPage::membraneThicknessError = new SGWTextLabel(p, "nonnegative number", 0.5f, 0.1f, 0.0f, 1.0f, 0.5f, -0.6f, 0.0f, 0.75f, SGWHorizontalAlignment::Left, true);
     
     s = "    Center distance is the maximum distance that the center of a vesicle can be from the center of the screen on either the x or the y direction. Once that is exceeded, the vesicle reappears on the other side of the screen, keeping its size and shape. This has a default value of 1.5";
     new SGWSequentialLongLabel(bg, s, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.0f);
     p = new SGWBlankWidget(bg, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 2.0f, 8);
-    new SGWTextLabel(p, "center distance:", 0.0f, 0.5f, 0.0f, 0.0f, 0.5f, -0.6f, 0.0f, 1.0f, SGWHorizontalAlignment::Right);
+    new SGWTextLabel(p, "center distance:", 0.0f, 0.5f, 0.0f, 0.0f, 0.5f, -0.6f, 0.0f, 1.0f, SGWHorizontalAlignment::Right, false);
     SGWVesicleCustomisationPage::maximumCenterDistanceInput = new SGWTextInput(p, &SGWVesicleCustomisationPage::maximumCenterDistanceCheck, 0.5f, 0.1f, 0.0f, 0.0f, 0.0f, 3.0f, 0.0f, 1.0f);
-    SGWVesicleCustomisationPage::maximumCenterDistanceError = new SGWTextLabel(p, "nonnegative number", 0.5f, 0.1f, 0.0f, 1.0f, 0.5f, -0.6f, 0.0f, 0.75f, SGWHorizontalAlignment::Left);
-    (*SGWVesicleCustomisationPage::maximumCenterDistanceError).setForegroundThemeColour(2);
-    (*SGWVesicleCustomisationPage::maximumCenterDistanceError).setItemVisibility(false);
+    SGWVesicleCustomisationPage::maximumCenterDistanceError = new SGWTextLabel(p, "nonnegative number", 0.5f, 0.1f, 0.0f, 1.0f, 0.5f, -0.6f, 0.0f, 0.75f, SGWHorizontalAlignment::Left, true);
     
     s = "    The maximum velocity controls the maximum speed of vesicles in units per second. Setting this too high may be distracting. This has a default value of 0.01";
     new SGWSequentialLongLabel(bg, s, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.0f);
     p = new SGWBlankWidget(bg, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 2.0f, 8);
-    new SGWTextLabel(p, "maximum velocity:", 0.0f, 0.5f, 0.0f, 0.0f, 0.5f, -0.6f, 0.0f, 1.0f, SGWHorizontalAlignment::Right);
+    new SGWTextLabel(p, "maximum velocity:", 0.0f, 0.5f, 0.0f, 0.0f, 0.5f, -0.6f, 0.0f, 1.0f, SGWHorizontalAlignment::Right, false);
     SGWVesicleCustomisationPage::maximumVelocityInput = new SGWTextInput(p, &SGWVesicleCustomisationPage::maximumVelocityCheck, 0.5f, 0.1f, 0.0f, 0.0f, 0.0f, 3.0f, 0.0f, 1.0f);
-    SGWVesicleCustomisationPage::maximumVelocityError = new SGWTextLabel(p, "nonnegative number", 0.5f, 0.1f, 0.0f, 1.0f, 0.5f, -0.6f, 0.0f, 0.75f, SGWHorizontalAlignment::Left);
-    (*SGWVesicleCustomisationPage::maximumVelocityError).setForegroundThemeColour(2);
-    (*SGWVesicleCustomisationPage::maximumVelocityError).setItemVisibility(false);
+    SGWVesicleCustomisationPage::maximumVelocityError = new SGWTextLabel(p, "nonnegative number", 0.5f, 0.1f, 0.0f, 1.0f, 0.5f, -0.6f, 0.0f, 0.75f, SGWHorizontalAlignment::Left, true);
     
     s = "    The maximum acceleration controls the maximum change in speed of vesicles in units per second per second. This has a default value of 0.01";
     new SGWSequentialLongLabel(bg, s, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.0f);
     p = new SGWBlankWidget(bg, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 2.0f, 8);
-    new SGWTextLabel(p, "max. acceleration:", 0.0f, 0.5f, 0.0f, 0.0f, 0.5f, -0.6f, 0.0f, 1.0f, SGWHorizontalAlignment::Right);
+    new SGWTextLabel(p, "max. acceleration:", 0.0f, 0.5f, 0.0f, 0.0f, 0.5f, -0.6f, 0.0f, 1.0f, SGWHorizontalAlignment::Right, false);
     SGWVesicleCustomisationPage::maximumAccelerationInput = new SGWTextInput(p, &SGWVesicleCustomisationPage::maximumAccelerationCheck, 0.5f, 0.1f, 0.0f, 0.0f, 0.0f, 3.0f, 0.0f, 1.0f);
-    SGWVesicleCustomisationPage::maximumAccelerationError = new SGWTextLabel(p, "nonnegative number", 0.5f, 0.1f, 0.0f, 1.0f, 0.5f, -0.6f, 0.0f, 0.75f, SGWHorizontalAlignment::Left);
-    (*SGWVesicleCustomisationPage::maximumAccelerationError).setForegroundThemeColour(2);
-    (*SGWVesicleCustomisationPage::maximumAccelerationError).setItemVisibility(false);
+    SGWVesicleCustomisationPage::maximumAccelerationError = new SGWTextLabel(p, "nonnegative number", 0.5f, 0.1f, 0.0f, 1.0f, 0.5f, -0.6f, 0.0f, 0.75f, SGWHorizontalAlignment::Left, true);
     
     s = "    The maximum radius change controls by how much vesicles can become bigger or smaller in each second. Setting this too high may be distracting. This has a default value of 0.01";
     new SGWSequentialLongLabel(bg, s, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.0f);
     p = new SGWBlankWidget(bg, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 2.0f, 8);
-    new SGWTextLabel(p, "max. radius change:", 0.0f, 0.5f, 0.0f, 0.0f, 0.5f, -0.6f, 0.0f, 1.0f, SGWHorizontalAlignment::Right);
+    new SGWTextLabel(p, "max. radius change:", 0.0f, 0.5f, 0.0f, 0.0f, 0.5f, -0.6f, 0.0f, 1.0f, SGWHorizontalAlignment::Right, false);
     SGWVesicleCustomisationPage::maximumRadiusChangeInput = new SGWTextInput(p, &SGWVesicleCustomisationPage::maximumRadiusChangeCheck, 0.5f, 0.1f, 0.0f, 0.0f, 0.0f, 3.0f, 0.0f, 1.0f);
-    SGWVesicleCustomisationPage::maximumRadiusChangeError = new SGWTextLabel(p, "nonnegative number", 0.5f, 0.1f, 0.0f, 1.0f, 0.5f, -0.6f, 0.0f, 0.75f, SGWHorizontalAlignment::Left);
-    (*SGWVesicleCustomisationPage::maximumRadiusChangeError).setForegroundThemeColour(2);
-    (*SGWVesicleCustomisationPage::maximumRadiusChangeError).setItemVisibility(false);
+    SGWVesicleCustomisationPage::maximumRadiusChangeError = new SGWTextLabel(p, "nonnegative number", 0.5f, 0.1f, 0.0f, 1.0f, 0.5f, -0.6f, 0.0f, 0.75f, SGWHorizontalAlignment::Left, true);
     
     s = "    The minimum radius controls the smallest possible radius that a vesicle can have. Setting this too small will make small vesicles invisible. The default value for this setting is 0.1";
     new SGWSequentialLongLabel(bg, s, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.0f);
     p = new SGWBlankWidget(bg, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 2.0f, 8);
-    new SGWTextLabel(p, "minimum radius:", 0.0f, 0.5f, 0.0f, 0.0f, 0.5f, -0.6f, 0.0f, 1.0f, SGWHorizontalAlignment::Right);
+    new SGWTextLabel(p, "minimum radius:", 0.0f, 0.5f, 0.0f, 0.0f, 0.5f, -0.6f, 0.0f, 1.0f, SGWHorizontalAlignment::Right, false);
     SGWVesicleCustomisationPage::minimumRadiusInput = new SGWTextInput(p, &SGWVesicleCustomisationPage::minimumRadiusCheck, 0.5f, 0.1f, 0.0f, 0.0f, 0.0f, 3.0f, 0.0f, 1.0f);
-    SGWVesicleCustomisationPage::minimumRadiusError = new SGWTextLabel(p, "nonnegative number", 0.5f, 0.1f, 0.0f, 1.0f, 0.5f, -0.6f, 0.0f, 0.75f, SGWHorizontalAlignment::Left);
-    (*SGWVesicleCustomisationPage::minimumRadiusError).setForegroundThemeColour(2);
-    (*SGWVesicleCustomisationPage::minimumRadiusError).setItemVisibility(false);
+    SGWVesicleCustomisationPage::minimumRadiusError = new SGWTextLabel(p, "nonnegative number", 0.5f, 0.1f, 0.0f, 1.0f, 0.5f, -0.6f, 0.0f, 0.75f, SGWHorizontalAlignment::Left, true);
     
     s = "    The maximum radius controls the largest possible radius that a vesicle can have. The default value is 0.35";
     new SGWSequentialLongLabel(bg, s, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.0f);
     p = new SGWBlankWidget(bg, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 2.0f, 8);
-    new SGWTextLabel(p, "maximum radius:", 0.0f, 0.5f, 0.0f, 0.0f, 0.5f, -0.6f, 0.0f, 1.0f, SGWHorizontalAlignment::Right);
+    new SGWTextLabel(p, "maximum radius:", 0.0f, 0.5f, 0.0f, 0.0f, 0.5f, -0.6f, 0.0f, 1.0f, SGWHorizontalAlignment::Right, false);
     SGWVesicleCustomisationPage::maximumRadiusInput = new SGWTextInput(p, &SGWVesicleCustomisationPage::maximumRadiusCheck, 0.5f, 0.1f, 0.0f, 0.0f, 0.0f, 3.0f, 0.0f, 1.0f);
-    SGWVesicleCustomisationPage::maximumRadiusError = new SGWTextLabel(p, "nonnegative number", 0.5f, 0.1f, 0.0f, 1.0f, 0.5f, -0.6f, 0.0f, 0.75f, SGWHorizontalAlignment::Left);
-    (*SGWVesicleCustomisationPage::maximumRadiusError).setForegroundThemeColour(2);
-    (*SGWVesicleCustomisationPage::maximumRadiusError).setItemVisibility(false);
+    SGWVesicleCustomisationPage::maximumRadiusError = new SGWTextLabel(p, "nonnegative number", 0.5f, 0.1f, 0.0f, 1.0f, 0.5f, -0.6f, 0.0f, 0.75f, SGWHorizontalAlignment::Left, true);
     
     s = "    The maximum offset, or maximum radius offset, determines how much the radius of a vesicle at a certain point can deviate from the base radius as a proportion of the base radius. This controls how irregularly shaped the vesicles are. This has a default value of 0.1";
     new SGWSequentialLongLabel(bg, s, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.0f);
     p = new SGWBlankWidget(bg, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 2.0f, 8);
-    new SGWTextLabel(p, "maximum offset:", 0.0f, 0.5f, 0.0f, 0.0f, 0.5f, -0.6f, 0.0f, 1.0f, SGWHorizontalAlignment::Right);
+    new SGWTextLabel(p, "maximum offset:", 0.0f, 0.5f, 0.0f, 0.0f, 0.5f, -0.6f, 0.0f, 1.0f, SGWHorizontalAlignment::Right, false);
     SGWVesicleCustomisationPage::maximumRadiusOffsetInput = new SGWTextInput(p, &SGWVesicleCustomisationPage::maximumRadiusOffsetCheck, 0.5f, 0.1f, 0.0f, 0.0f, 0.0f, 3.0f, 0.0f, 1.0f);
-    SGWVesicleCustomisationPage::maximumRadiusOffsetError = new SGWTextLabel(p, "nonnegative number", 0.5f, 0.1f, 0.0f, 1.0f, 0.5f, -0.6f, 0.0f, 0.75f, SGWHorizontalAlignment::Left);
-    (*SGWVesicleCustomisationPage::maximumRadiusOffsetError).setForegroundThemeColour(2);
-    (*SGWVesicleCustomisationPage::maximumRadiusOffsetError).setItemVisibility(false);
+    SGWVesicleCustomisationPage::maximumRadiusOffsetError = new SGWTextLabel(p, "nonnegative number", 0.5f, 0.1f, 0.0f, 1.0f, 0.5f, -0.6f, 0.0f, 0.75f, SGWHorizontalAlignment::Left, true);
     
     s = "    The maximum offset change controls the maximum change in offset at any point on any vesicle. The default value for this is 0.1";
     new SGWSequentialLongLabel(bg, s, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.0f);
     p = new SGWBlankWidget(bg, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 2.0f, 8);
-    new SGWTextLabel(p, "max. offset change:", 0.0f, 0.5f, 0.0f, 0.0f, 0.5f, -0.6f, 0.0f, 1.0f, SGWHorizontalAlignment::Right);
+    new SGWTextLabel(p, "max. offset change:", 0.0f, 0.5f, 0.0f, 0.0f, 0.5f, -0.6f, 0.0f, 1.0f, SGWHorizontalAlignment::Right, false);
     SGWVesicleCustomisationPage::maximumRadiusOffsetChangeInput = new SGWTextInput(p, &SGWVesicleCustomisationPage::maximumRadiusOffsetChangeCheck, 0.5f, 0.1f, 0.0f, 0.0f, 0.0f, 3.0f, 0.0f, 1.0f);
-    SGWVesicleCustomisationPage::maximumRadiusOffsetChangeError = new SGWTextLabel(p, "nonnegative number", 0.5f, 0.1f, 0.0f, 1.0f, 0.5f, -0.6f, 0.0f, 0.75f, SGWHorizontalAlignment::Left);
-    (*SGWVesicleCustomisationPage::maximumRadiusOffsetChangeError).setForegroundThemeColour(2);
-    (*SGWVesicleCustomisationPage::maximumRadiusOffsetChangeError).setItemVisibility(false);
+    SGWVesicleCustomisationPage::maximumRadiusOffsetChangeError = new SGWTextLabel(p, "nonnegative number", 0.5f, 0.1f, 0.0f, 1.0f, 0.5f, -0.6f, 0.0f, 0.75f, SGWHorizontalAlignment::Left, true);
     
     s = "    The membrane transparency controls the transparency of the vesicle membrane with 0 being fully transparent and 1 being fully opaque. The default value for this is 0.2";
     new SGWSequentialLongLabel(bg, s, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.0f);
     p = new SGWBlankWidget(bg, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 2.0f, 8);
-    new SGWTextLabel(p, "membrane transparency:", 0.0f, 0.5f, 0.0f, 0.0f, 0.5f, -0.6f, 0.0f, 1.0f, SGWHorizontalAlignment::Right);
+    new SGWTextLabel(p, "membrane transparency:", 0.0f, 0.5f, 0.0f, 0.0f, 0.5f, -0.6f, 0.0f, 1.0f, SGWHorizontalAlignment::Right, false);
     SGWVesicleCustomisationPage::membraneTransparencyInput = new SGWTextInput(p, &SGWVesicleCustomisationPage::membraneTransparencyCheck, 0.5f, 0.1f, 0.0f, 0.0f, 0.0f, 3.0f, 0.0f, 1.0f);
-    SGWVesicleCustomisationPage::membraneTransparencyError = new SGWTextLabel(p, "number between 0 and 1", 0.5f, 0.1f, 0.0f, 1.0f, 0.5f, -0.6f, 0.0f, 0.75f, SGWHorizontalAlignment::Left);
-    (*SGWVesicleCustomisationPage::membraneTransparencyError).setForegroundThemeColour(2);
-    (*SGWVesicleCustomisationPage::membraneTransparencyError).setItemVisibility(false);
+    SGWVesicleCustomisationPage::membraneTransparencyError = new SGWTextLabel(p, "number between 0 and 1", 0.5f, 0.1f, 0.0f, 1.0f, 0.5f, -0.6f, 0.0f, 0.75f, SGWHorizontalAlignment::Left, true);
     
     s = "    The center transparency controls the transparency of vesicles at the center. The transparency of vesicle contents forms a gradient from center to edge. The default value of this is 0.1";
     new SGWSequentialLongLabel(bg, s, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.0f);
     p = new SGWBlankWidget(bg, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 2.0f, 8);
-    new SGWTextLabel(p, "center transparency:", 0.0f, 0.5f, 0.0f, 0.0f, 0.5f, -0.6f, 0.0f, 1.0f, SGWHorizontalAlignment::Right);
+    new SGWTextLabel(p, "center transparency:", 0.0f, 0.5f, 0.0f, 0.0f, 0.5f, -0.6f, 0.0f, 1.0f, SGWHorizontalAlignment::Right, false);
     SGWVesicleCustomisationPage::centerTransparencyInput = new SGWTextInput(p, &SGWVesicleCustomisationPage::centerTransparencyCheck, 0.5f, 0.1f, 0.0f, 0.0f, 0.0f, 3.0f, 0.0f, 1.0f);
-    SGWVesicleCustomisationPage::centerTransparencyError = new SGWTextLabel(p, "number between 0 and 1", 0.5f, 0.1f, 0.0f, 1.0f, 0.5f, -0.6f, 0.0f, 0.75f, SGWHorizontalAlignment::Left);
-    (*SGWVesicleCustomisationPage::centerTransparencyError).setForegroundThemeColour(2);
-    (*SGWVesicleCustomisationPage::centerTransparencyError).setItemVisibility(false);
+    SGWVesicleCustomisationPage::centerTransparencyError = new SGWTextLabel(p, "number between 0 and 1", 0.5f, 0.1f, 0.0f, 1.0f, 0.5f, -0.6f, 0.0f, 0.75f, SGWHorizontalAlignment::Left, true);
     
     s = "    The edge transparency controls the transparency of vesicles at the edge of the contents region where it meets the membrane. The transparency of vesicle contents forms a gradient from center to edge. The default value of this is 0.05";
     new SGWSequentialLongLabel(bg, s, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.0f);
     p = new SGWBlankWidget(bg, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 2.0f, 8);
-    new SGWTextLabel(p, "edge transparency:", 0.0f, 0.5f, 0.0f, 0.0f, 0.5f, -0.6f, 0.0f, 1.0f, SGWHorizontalAlignment::Right);
+    new SGWTextLabel(p, "edge transparency:", 0.0f, 0.5f, 0.0f, 0.0f, 0.5f, -0.6f, 0.0f, 1.0f, SGWHorizontalAlignment::Right, false);
     SGWVesicleCustomisationPage::edgeTransparencyInput = new SGWTextInput(p, &SGWVesicleCustomisationPage::edgeTransparencyCheck, 0.5f, 0.1f, 0.0f, 0.0f, 0.0f, 3.0f, 0.0f, 1.0f);
-    SGWVesicleCustomisationPage::edgeTransparencyError = new SGWTextLabel(p, "number between 0 and 1", 0.5f, 0.1f, 0.0f, 1.0f, 0.5f, -0.6f, 0.0f, 0.75f, SGWHorizontalAlignment::Left);
-    (*SGWVesicleCustomisationPage::edgeTransparencyError).setForegroundThemeColour(2);
-    (*SGWVesicleCustomisationPage::edgeTransparencyError).setItemVisibility(false);
+    SGWVesicleCustomisationPage::edgeTransparencyError = new SGWTextLabel(p, "number between 0 and 1", 0.5f, 0.1f, 0.0f, 1.0f, 0.5f, -0.6f, 0.0f, 0.75f, SGWHorizontalAlignment::Left, true);
     
     s = "    This determines the frame rate of the animation in frames per second. Setting the frame rate too high can increase battery usage and setting the frame rate too low can lead to the animation being distracting. You are recommended to set the frame rate around the default frame rate of 10. Note that the frame rate does not need to be an integer.";
     new SGWSequentialLongLabel(bg, s, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.0f);
     p = new SGWBlankWidget(bg, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 2.0f, 8);
-    new SGWTextLabel(p, "frame rate:", 0.0f, 0.5f, 0.0f, 0.0f, 0.5f, -0.6f, 0.0f, 1.0f, SGWHorizontalAlignment::Right);
+    new SGWTextLabel(p, "frame rate:", 0.0f, 0.5f, 0.0f, 0.0f, 0.5f, -0.6f, 0.0f, 1.0f, SGWHorizontalAlignment::Right, false);
     SGWVesicleCustomisationPage::frameRateInput = new SGWTextInput(p, &SGWVesicleCustomisationPage::frameRateCheck, 0.5f, 0.1f, 0.0f, 0.0f, 0.0f, 3.0f, 0.0f, 1.0f);
-    SGWVesicleCustomisationPage::frameRateError = new SGWTextLabel(p, "positive number", 0.5f, 0.1f, 0.0f, 1.0f, 0.5f, -0.6f, 0.0f, 0.75f, SGWHorizontalAlignment::Left);
-    (*SGWVesicleCustomisationPage::frameRateError).setForegroundThemeColour(2);
-    (*SGWVesicleCustomisationPage::frameRateError).setItemVisibility(false);
+    SGWVesicleCustomisationPage::frameRateError = new SGWTextLabel(p, "positive number", 0.5f, 0.1f, 0.0f, 1.0f, 0.5f, -0.6f, 0.0f, 0.75f, SGWHorizontalAlignment::Left, true);
     
     return SGWVesicleCustomisationPage::instance;
 }

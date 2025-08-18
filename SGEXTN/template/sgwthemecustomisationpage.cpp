@@ -101,7 +101,7 @@ SGWBackground* SGWThemeCustomisationPage::initialiseDetailsPage(){
     new SGWBlankWidget(SGWThemeCustomisationPage::detailsScroll, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 0.5f, -1);
     if(SGWThemeCustomisationPage::isUsingCustomLight == true){
         SGWWidget* p = new SGWBlankWidget(SGWThemeCustomisationPage::detailsScroll, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.5f, -1);
-        SGWThemeCustomisationPage::customLightLabel = new SGWTextLabel(p, "base colour:", 0.0f, 0.0f, 0.0f, 0.0f, 0.5f, -0.1f, 0.0f, 1.0f, SGWHorizontalAlignment::Right);
+        SGWThemeCustomisationPage::customLightLabel = new SGWTextLabel(p, "base colour:", 0.0f, 0.0f, 0.0f, 0.0f, 0.5f, -0.1f, 0.0f, 1.0f, SGWHorizontalAlignment::Right, false);
         SGWThemeCustomisationPage::customLightColourPicker = new SGWColourPickerWidget(p, 0.5f, 0.1f, 0.0f, 0.0f, 0.0f, 2.0f, 0.0f, 1.0f, SGWThemeCustomisationPage::themeColours.at(4));
         (*SGWThemeCustomisationPage::customLightColourPicker).setAttachedFunction(&SGWThemeCustomisationPage::updateCustomLight);
     }
@@ -111,7 +111,7 @@ SGWBackground* SGWThemeCustomisationPage::initialiseDetailsPage(){
     }
     if(SGWThemeCustomisationPage::isUsingCustomDark == true){
         SGWWidget* p = new SGWBlankWidget(SGWThemeCustomisationPage::detailsScroll, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.5f, -1);
-        SGWThemeCustomisationPage::customDarkLabel = new SGWTextLabel(p, "base colour:", 0.0f, 0.0f, 0.0f, 0.0f, 0.5f, -0.1f, 0.0f, 1.0f, SGWHorizontalAlignment::Right);
+        SGWThemeCustomisationPage::customDarkLabel = new SGWTextLabel(p, "base colour:", 0.0f, 0.0f, 0.0f, 0.0f, 0.5f, -0.1f, 0.0f, 1.0f, SGWHorizontalAlignment::Right, false);
         SGWThemeCustomisationPage::customDarkColourPicker = new SGWColourPickerWidget(p, 0.5f, 0.1f, 0.0f, 0.0f, 0.0f, 2.0f, 0.0f, 1.0f, SGWThemeCustomisationPage::themeColours.at(4));
         (*SGWThemeCustomisationPage::customDarkColourPicker).setAttachedFunction(&SGWThemeCustomisationPage::updateCustomDark);
     }
@@ -121,7 +121,7 @@ SGWBackground* SGWThemeCustomisationPage::initialiseDetailsPage(){
     }
     if(SGWThemeCustomisationPage::isUsingCustomAny == true){
         SGWWidget* p = new SGWBlankWidget(SGWThemeCustomisationPage::detailsScroll, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.5f, -1);
-        SGWThemeCustomisationPage::customAnyLabel = new SGWTextLabel(p, "pls adjust colours below", 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, SGWHorizontalAlignment::Center);
+        SGWThemeCustomisationPage::customAnyLabel = new SGWTextLabel(p, "pls adjust colours below", 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, SGWHorizontalAlignment::Center, false);
     }
     SGWWidget* s = new SGWBlankWidget(SGWThemeCustomisationPage::detailsScroll, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 2.5f, -1);
     SGWThemeCustomisationPage::detailsInfo = new SGWSequentialLongLabel(SGWThemeCustomisationPage::detailsScroll, "", 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.0f);
