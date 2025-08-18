@@ -51,8 +51,8 @@ void SGWVesicleCustomisationPage::activate(){
 }
 
 SGWBackground* SGWVesicleCustomisationPage::initialise(){
-    SGWVesicleCustomisationPage::instance = new SGWPageBackground(SGWWidget::parentWidget, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0, 0.0f, 8, false);
-    SGWWidget* bg = new SGWSequentialScrollView(SGWVesicleCustomisationPage::instance, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, -1.0f, 0.0f, 0.5f, 8, false);
+    SGWVesicleCustomisationPage::instance = new SGWPageBackground(SGWWidget::parentWidget, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0, 0.0f, 8);
+    SGWWidget* bg = new SGWSequentialScrollView(SGWVesicleCustomisationPage::instance, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, -1.0f, 0.0f, 0.5f, 8);
     new SGWTextButton(SGWVesicleCustomisationPage::instance, "cancel", &SGWVesicleCustomisationPage::cancelChange, 0.0f, 0.0f, 1.0f, -1.0f, 0.5f, 0.0f, 0.0f, 1.0f);
     new SGWTextButton(SGWVesicleCustomisationPage::instance, "confirm", &SGWVesicleCustomisationPage::confirmChange, 0.5f, 0.0f, 1.0f, -1.0f, 0.5f, 0.0f, 0.0f, 1.0f);
     SGWWidget* p = nullptr;

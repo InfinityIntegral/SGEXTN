@@ -10,7 +10,7 @@ class SGWScrollView : public SGWBackground
 {
     Q_OBJECT
 public:
-    SGWScrollView(SGWWidget* parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float i1, float i0, float s1, float s0, int themeColour, bool frequentlyUsed);
+    SGWScrollView(SGWWidget* parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float i1, float i0, float s1, float s0, int themeColour);
     void syncQuickProperties();
     [[nodiscard]] float getI1() const;
     void setI1(float i1);
