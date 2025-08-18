@@ -94,7 +94,12 @@ long long SGXFileWriter::getPointerLocation() const {
 }
 
 void SGXFileWriter::setPointerLocation(long long x) const {
-    (*fileControl).seek(x);
+    if(x <= (*fileControl).size()){(*fileControl).seek(x);}
+    else{
+        const long long d = x - (*fileControl).size();
+        (*fileControl).seek((*fileControl).size());
+        (*fileControl).write(QByteArray(d, '\0'));
+    }
 }
 
 QByteArray SGXFileWriter::readAllBytes() const {

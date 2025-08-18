@@ -83,8 +83,6 @@ SGEXTN v5.0.0 (planned): same architecture as v1 but uses Qt Quick (supposed to 
 - [x] improve theme customisation page
 - [x] improve SingCorrect configs page
 - [x] build SingCorrect command list page
-- [ ] improve file organisation
-- [ ] make SGXFileWriter not leave holes
 - [ ] SGXTimer
 - [ ] improved status bar and notifications
 - [ ] improve standard notification
