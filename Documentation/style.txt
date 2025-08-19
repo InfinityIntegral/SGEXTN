@@ -26,6 +26,13 @@
 	font-size: 3.5em;
 }
 
+halftitle {
+	color: var(--c4);
+	background-color: var(--c8);
+	font-family: "SingScript.sg";
+	font-size: 2.625em;
+}
+
 .label {
 	color: var(--c4);
 	background-color: var(--c8);
