@@ -3,14 +3,13 @@
 #include "../primitives/sgxcolourrgba.h"
 
 // pls update README and license
-// also change the application name in the .pro
 // do not forget to replace the icons font file and app icon in assets.qrc based on the app, do not change their file paths though
 // the icons font file can be of any type (otf, ttf, etc) that Qt support, but its name must be AppIcons.sg and the internal font family name must be AppIcons.sg
 
 // name of your application
 QString SGUCentralManagement::applicationName = "SGEXTN";
 // version number of your application, does not have to be number
-QString SGUCentralManagement::applicationVersion = "v2";
+QString SGUCentralManagement::applicationVersion = "v5.0.0";
 // name of your organisation
 QString SGUCentralManagement::organisationName = "05524F.sg (Singapore)";
 // name of root folder of your application, only use uppercase or lowercase letters, definitely no banned characters, no dots, no spaces, no hyphens, no underscores, avoid numbers, avoid non ASCII characters

@@ -1,5 +1,4 @@
 #include "sgxrendercolourbackgroundsgwidget.h"
-#include <QObject>
 #include "../primitives/sgxcolourrgba.h"
 #include "../widgets/noninstantiable/sgwwidget.h"
 #include "../widgets/instantiable/sgwcustomrenderer.h"
