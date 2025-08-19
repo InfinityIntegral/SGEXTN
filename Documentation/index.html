@@ -15,7 +15,7 @@
 function getTextData(filePath, tagName){
 	const el = document.querySelector(tagName);
 	if(!el)return;
-	fetch(filePath).then(response => response.ok ? response.text() : Promise.reject()).then(data => {el.innerHTML = data;}).catch(() => {el.innerHTML = '<h1>failed to load resources</h1>';});
+	fetch(filePath).then(response => response.ok ? response.text() : Promise.reject()).then(data => {el.innerHTML = data;}).catch(() => {el.innerHTML = '<h1 class="label">failed to load resources</h1>';});
 }
 	
 getTextData("style.txt", "style");
