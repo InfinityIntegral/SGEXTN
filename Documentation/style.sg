@@ -91,6 +91,13 @@
 	font-size: 1.75rem;
 	text-decoration: underline;
 }
+.link::selection {
+	color: var(--c8);
+	background-color: var(--c4);
+	font-family: "SingScript.sg";
+	font-size: 1.75rem;
+	text-decoration: underline;
+}
 
 .button {
 	color: var(--c8);
@@ -109,6 +116,13 @@
 .button:active {
 	color: var(--c6);
 	background-color: var(--c2);
+	font-family: "SingScript.sg";
+	font-size: 1.75rem;
+	border: none;
+}
+.button::selection {
+	color: var(--c4);
+	background-color: var(--c8);
 	font-family: "SingScript.sg";
 	font-size: 1.75rem;
 	border: none;
@@ -135,6 +149,15 @@
 .input:focus {
 	color: var(--c6);
 	background-color: var(--c2);
+	font-family: "SingScript.sg";
+	font-size: 1.75rem;
+	border: none;
+	outline: none;
+	text-align: center;
+}
+.input::selection {
+	color: var(--c4);
+	background-color: var(--c8);
 	font-family: "SingScript.sg";
 	font-size: 1.75rem;
 	border: none;
