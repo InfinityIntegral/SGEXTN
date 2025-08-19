@@ -9,19 +9,62 @@
 <div id="header"></div>
 <div id="contents"></div>
 <div id="footer"></div>
+<script src="./mainpage/site_map_module.js"></script>
 <script>
 // written by ChatGPT
 // void getTextData(const std::string& filePath, const std::string& tagName)
-function getTextData(filePath, tagName){
-	const el = document.querySelector(tagName);
-	if(!el)return;
-	fetch(filePath).then(response => response.ok ? response.text() : Promise.reject()).then(data => {el.outerHTML = data;}).catch(() => {el.outerHTML = '<h1 class="label">failed to load resources</h1>';});
+function getTextData(filePath, tagName) {
+    const el = document.querySelector(tagName);
+    if (!el) return;
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', filePath, false);
+    try {
+        xhr.send();
+        if (xhr.status >= 200 && xhr.status < 300) {
+            el.outerHTML = xhr.responseText;
+        } else {
+            el.outerHTML = '<h1 class="label">failed to load resources</h1>';
+        }
+    } catch {
+        el.outerHTML = '<h1 class="label">failed to load resources</h1>';
+    }
+}
+
+// written by ChatGPT
+// std::string getTextFile(const std::string& path)
+function getTextFile(path) {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', path, false); // false = synchronous
+    try {
+        xhr.send();
+        if (xhr.status >= 200 && xhr.status < 300) {
+            return xhr.responseText;
+        } else {
+            return 'failed to load resources';
+        }
+    } catch {
+        return 'failed to load resources';
+    }
 }
 	
-getTextData("style.txt", "style");
-getTextData("header.txt", "#header");
-getTextData("mainpage/mainpage.txt", "#contents");
-getTextData("footer.txt", "#footer");
+getTextData("style.sg", "style");
+getTextData("header.sg", "#header");
+getTextData("mainpage/mainpage.sg", "#contents");
+getTextData("footer.sg", "#footer");
+
+// written by ChatGPT
+// calls WebASM function and inject generated HTML
+const objp = document.getElementById("WebASM");
+const obj = document.createElement("script");
+obj.type = "module";
+obj.textContent = `
+const modulePromise = SiteMapModule();
+modulePromise.then(module => {
+    const el = document.querySelector("#sitemap");
+    if (el) el.outerHTML = module.genSiteMap(getTextFile("./mainpage/sitemap.sg"));
+});
+`;
+objp.appendChild(obj);
 </script>
 </body>
 </html>
