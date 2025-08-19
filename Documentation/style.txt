@@ -1,3 +1,5 @@
+<style>
+
 @font-face {
 	font-family: "SingScript.sg";
 	src: url("SingScript.sg")format("truetype");
@@ -29,6 +31,7 @@
 	background-color: var(--c8);
 	font-family: "SingScript.sg";
 	font-size: 1.75em;
+	margin: 0;
 }
 
 .link {
@@ -102,3 +105,5 @@
 	outline: none;
 	text-align: center;
 }
+
+</style>

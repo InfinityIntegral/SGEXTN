@@ -1,1 +1,5 @@
-<h1>header</h1>
+<header>
+<button class="button" style="width: 100%;" onclick="location.href='/'">
+SGEXTN Documentation
+</button>
+</header>

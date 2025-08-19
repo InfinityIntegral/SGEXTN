@@ -1,1 +1,6 @@
-<h1>footer</h1>
+<footer>
+<div style="width: 100%; height: 0.5em; background-color: var(--c4);"></div>
+<p class="label">(c) 2025 05524F.sg (Singapore)</p>
+<a class="link" href="./contact">report a bug in SGEXTN or contact 05524F</a>
+<div style="width: 100%; height: 0.5em; background-color: var(--c4);"></div>
+</footer>
