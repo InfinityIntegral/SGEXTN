@@ -87,16 +87,16 @@ To build a renderer, you need the following
 - C++ header (.h) and source (.cpp) files for the SGWidget, this must inherit SGWCustomRenderer and set up the SGWidget appropriately
 - the type must be registered with the QML system, see comments on top of the dedicated function in SGEXTN/userDefinedClasses/sgucentralmanagement.cpp for more information
 
-Refer to the SGEXTN/colourpickerrendering/huechoice folder for more information.
+Refer to the SGEXTN/colourpickerrendering/huechoice folder for an example.
 
 ### File prefixes
 
 SGEXTN uses file prefixes to mean different things.
 
-SGX: SGEXTN classes not using SGWidget in any way
-SGW: SGEXTN classes using SGWidget and the SGWidget module itself
-SGU: customisable part of SGEXTN, can be changed by user
-SGC: user's custom code
+- SGX: SGEXTN classes not using SGWidget in any way
+- SGW: SGEXTN classes using SGWidget and the SGWidget module itself
+- SGU: customisable part of SGEXTN, can be changed by user
+- SGC: user's custom code
 
 Names of all renderer classes should start with the word "Render".
 
