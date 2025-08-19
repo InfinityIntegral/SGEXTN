@@ -5,61 +5,39 @@ import Resizer 0.0
 
 Button{
 	property string s: ""
-	property bool notify: false
 	
 	layer.enabled: true
 	x: 0.5 * (Resizer.appWindowWidth - Resizer.renderSpaceWidth)
 	y: 0.5 * (Resizer.appWindowHeight - Resizer.renderSpaceHeight)
 	width: Resizer.renderSpaceWidth
 	height: Resizer.sizeUnit
-	property int bgNow: 4
-	property int fgNow: 8
+	property int bg: 4
+	property int fg: 8
+	property int bgh: 3
+	property int fgh: 7
+	property int bgf: 2
+	property int fgf: 6
+	property bool vh: hovered
+	property bool vf: pressed
 	padding: 0
 	
-	function updateInteraction(){
-		if(pressed){
-			if(notify == false){
-				bgNow = 2;
-				fgNow = 6;
-			}
-			else{
-				bgNow = 6;
-				fgNow = 2;
-			}
-		}
-		else{
-			if(hovered){
-				if(notify == false){
-					bgNow = 3;
-					fgNow = 7;
-				}
-				else{
-					bgNow = 7;
-					fgNow = 3;
-				}
-			}
-			else{
-				if(notify == false){
-					bgNow = 4;
-					fgNow = 8;
-				}
-				else{
-					bgNow = 8;
-					fgNow = 4;
-				}
-			}
-		}
+	function getBg(vvh, vvf, bg, bgh, bgf){
+		if(vvf == true){return ThemeColours.getThemeColour(bgf);}
+		else if(vvh == true){return ThemeColours.getThemeColour(bgh);}
+		else{return ThemeColours.getThemeColour(bg);}
 	}
 	
-	onPressedChanged: updateInteraction()
-	onHoveredChanged: updateInteraction();
-	onNotifyChanged: updateInteraction();
+	function getFg(vvh, vvf, fg, fgh, fgf){
+		if(vvf == true){return ThemeColours.getThemeColour(fgf);}
+		else if(vvh == true){return ThemeColours.getThemeColour(fgh);}
+		else{return ThemeColours.getThemeColour(fg);}
+	}
 	
 	function emitClickedSignal(){
 		objectName = "clicked";
 		objectName = "";
 	}
-	objectName: "0"
+	objectName: ""
 	onClicked: emitClickedSignal()
 	
 	background: Rectangle{
@@ -67,7 +45,7 @@ Button{
 		y: 0
 		width: parent.width
 		height: parent.height
-		color: ThemeColours.getThemeColour(bgNow)
+		color: getBg(vh, vf, bg, bgh, bgf)
 	}
 	
 	contentItem: Text{
@@ -79,7 +57,7 @@ Button{
 		font.pixelSize: parent.height
 		font.family: "SingScript.sg"
 		horizontalAlignment: Text.AlignHCenter
-		color: ThemeColours.getThemeColour(fgNow);
+		color: getFg(vh, vf, fg, fgh, fgf)
 		clip: true
 		elide: Text.ElideRight
 		property bool canParent: true

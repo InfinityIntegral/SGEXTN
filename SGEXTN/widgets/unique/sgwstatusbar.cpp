@@ -9,11 +9,8 @@
 #include <QString>
 #include "../../template/sgwcutevesicles.h"
 
-int SGWStatusBar::notificationTime = 3;
 SGWStatusBar* SGWStatusBar::instance = nullptr;
 SGXTimer* SGWStatusBar::timer = nullptr;
-int SGWStatusBar::timeLeft = 0;
-bool SGWStatusBar::isNotifying = false;
 
 SGWStatusBar::SGWStatusBar() : SGWWidget(SGWWidget::rootWidget, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f){
     QQuickItem* thisItem = qobject_cast<QQuickItem*>((*SGXQuickInterface::statusBar).create());
@@ -32,25 +29,11 @@ void SGWStatusBar::terminate(){
 }
 
 void SGWStatusBar::updateTime(){
-    if(SGWStatusBar::timeLeft == 0){
-        (*(*SGWStatusBar::instance).getTopObject()).setProperty("s", SGXTimeStamp::now().getString());
-        if(SGWStatusBar::isNotifying == true){
-            SGWStatusBar::isNotifying = false;
-            (*(*SGWStatusBar::instance).getTopObject()).setProperty("notify", false);
-        }
-    }
-    else{SGWStatusBar::timeLeft--;}
+    (*(*SGWStatusBar::instance).getTopObject()).setProperty("s", SGXTimeStamp::now().getString());
 }
 
 void SGWStatusBar::eventReceived(const QString& s){
     if(s == "clicked"){SGWStatusBar::toggleVesicles();}
-}
-
-void SGWStatusBar::notify(const QString &s){
-    SGWStatusBar::timeLeft = SGWStatusBar::notificationTime;
-    SGWStatusBar::isNotifying = true;
-    (*(*SGWStatusBar::instance).getTopObject()).setProperty("s", s);
-    (*(*SGWStatusBar::instance).getTopObject()).setProperty("notify", true);
 }
 
 void SGWStatusBar::toggleVesicles(){

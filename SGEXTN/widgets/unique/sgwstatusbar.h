@@ -11,13 +11,9 @@ class SGWStatusBar : public SGWWidget
     Q_OBJECT
 public:
     SGWStatusBar();
-    static int notificationTime;
     static SGWStatusBar* instance;
     static SGXTimer* timer;
-    static int timeLeft;
-    static bool isNotifying;
     static void terminate();
-    static void notify(const QString& s);
     static void toggleVesicles();
     static void updateTime();
 signals:
