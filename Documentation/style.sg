@@ -27,10 +27,26 @@
 	margin: 0;
 	font-weight: normal;
 }
+.title::selection {
+	color: var(--c8);
+	background-color: var(--c4);
+	font-family: "SingScript.sg";
+	font-size: 3.5rem;
+	margin: 0;
+	font-weight: normal;
+}
 
-halftitle {
+.halftitle {
 	color: var(--c4);
 	background-color: var(--c8);
+	font-family: "SingScript.sg";
+	font-size: 2.625rem;
+	margin: 0;
+	font-weight: normal;
+}
+.halftitle::selection {
+	color: var(--c8);
+	background-color: var(--c4);
 	font-family: "SingScript.sg";
 	font-size: 2.625rem;
 	margin: 0;
@@ -40,6 +56,14 @@ halftitle {
 .label {
 	color: var(--c4);
 	background-color: var(--c8);
+	font-family: "SingScript.sg";
+	font-size: 1.75rem;
+	margin: 0;
+	white-space: pre-wrap;
+}
+.label::selection {
+	color: var(--c8);
+	background-color: var(--c4);
 	font-family: "SingScript.sg";
 	font-size: 1.75rem;
 	margin: 0;
