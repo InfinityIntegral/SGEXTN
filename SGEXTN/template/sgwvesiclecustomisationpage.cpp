@@ -15,7 +15,7 @@
 #include "../widgets/noninstantiable/sgwlabel.h"
 #include "../userDefinedClasses/sgucentralmanagement.h"
 #include <limits>
-#include "../widgets/unique/sgwstatusbar.h"
+#include "../notifications/sgwnotify.h"
 #include "../customisation/sgxvesiclespropertiescustomisation.h"
 
 SGWBackground* SGWVesicleCustomisationPage::instance = nullptr;
@@ -213,7 +213,7 @@ void SGWVesicleCustomisationPage::confirmChange(SGWButton */*unused*/){
     (void)(*SGWVesicleCustomisationPage::frameRateInput).getTextAsFloat(&prevValid, std::numeric_limits<float>::denorm_min(), std::numeric_limits<float>::infinity());
     if(prevValid == false){isValid = false;}
     if(isValid == false){
-        SGWStatusBar::notify("invalid input");
+        SGWNotify::pullDownNotify("invalid input");
         return;
     }
     SGUCentralManagement::cuteVesiclesMembraneThickness = (*SGWVesicleCustomisationPage::membraneThicknessInput).getTextAsFloat(nullptr, 0.0f, std::numeric_limits<float>::infinity());
@@ -231,6 +231,7 @@ void SGWVesicleCustomisationPage::confirmChange(SGWButton */*unused*/){
     SGUCentralManagement::cuteVesiclesFrameRate = (*SGWVesicleCustomisationPage::frameRateInput).getTextAsFloat(nullptr, std::numeric_limits<float>::denorm_min(), std::numeric_limits<float>::infinity());
     SGXVesiclesPropertiesCustomisation::syncVesicleProperties();
     SGWBackground::disable(SGWVesicleCustomisationPage::instance);
+    SGWNotify::notify("vesicle properties updated");
 }
 
 void SGWVesicleCustomisationPage::membraneThicknessCheck(SGWInput */*unused*/){

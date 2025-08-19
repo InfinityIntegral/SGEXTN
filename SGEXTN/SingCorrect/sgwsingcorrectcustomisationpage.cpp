@@ -18,7 +18,7 @@
 #include "../widgets/instantiable/sgwtextinput.h"
 #include "../widgets/noninstantiable/sgwinput.h"
 #include "../widgets/noninstantiable/sgwlabel.h"
-#include "../widgets/unique/sgwstatusbar.h"
+#include "../notifications/sgwnotify.h"
 
 SGWBackground* SGWSingCorrectCustomisationPage::instance = nullptr;
 SGWButton* SGWSingCorrectCustomisationPage::enableButton = nullptr;
@@ -97,6 +97,7 @@ void SGWSingCorrectCustomisationPage::activate(){
 void SGWSingCorrectCustomisationPage::exit(SGWButton */*unused*/){
     SGWBackground::disable(SGWSingCorrectCustomisationPage::instance);
     SGXSingCorrectCustomisation::syncFileData();
+    SGWNotify::notify("all changes saved");
 }
 
 void SGWSingCorrectCustomisationPage::enableFunction(SGWButton */*unused*/){
@@ -169,7 +170,7 @@ void SGWSingCorrectCustomisationPage::addCustomCommand(SGWButton */*unused*/){
     }
     if(s == ""){isValid = false;}
     if(isValid == false){
-        SGWStatusBar::notify("invalid command");
+        SGWNotify::pullDownNotify("invalid command");
         return;
     }
     (*SGXSingCorrectCustomisation::database).insert(s, c[0]);

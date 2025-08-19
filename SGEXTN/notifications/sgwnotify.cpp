@@ -7,6 +7,7 @@
 #include "../widgets/noninstantiable/sgwlabel.h"
 #include <QString>
 #include "../widgets/enums/sgwhorizontalalignment.h"
+#include "../widgets/enums/sgwverticalalignment.h"
 
 float SGWNotify::timeShown = 3.0f;
 std::queue<SGWWidget*>* SGWNotify::instance = nullptr;
@@ -55,5 +56,6 @@ void SGWNotify::pullDownNotify(const QString &s){
     SGWNotify::animationStage = 0;
     SGWNotify::animationState = false;
     SGWNotify::pullDownInstance = new SGWTextLabel(SGWWidget::rootWidget, s, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, SGWHorizontalAlignment::Center, false);
+    (*SGWNotify::pullDownInstance).setVerticalAlignment(SGWVerticalAlignment::Bottom);
     SGWNotify::pullDownTimer = new SGXTimer(SGWNotify::animationLength / 48.0f, &SGWNotify::animate);
 }

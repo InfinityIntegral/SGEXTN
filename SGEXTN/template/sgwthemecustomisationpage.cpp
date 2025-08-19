@@ -20,6 +20,7 @@
 #include "../userDefinedClasses/sgucentralmanagement.h"
 #include "../customisation/sgxthemecolourscustomisation.h"
 #include "../widgets/instantiable/sgwlonglabel.h"
+#include "../notifications/sgwnotify.h"
 
 SGWBackground* SGWThemeCustomisationPage::menuInstance = nullptr;
 SGWBackground* SGWThemeCustomisationPage::detailsInstance = nullptr;
@@ -353,6 +354,7 @@ void SGWThemeCustomisationPage::confirmChanges(SGWButton */*unused*/){
     SGXThemeColoursCustomisation::syncThemeColours();
     SGWBackground::disable(SGWThemeCustomisationPage::menuInstance);
     SGWBackground::disable(SGWThemeCustomisationPage::detailsInstance);
+    SGWNotify::notify("theme updated");
     SGWBackground::enable(SGWThemeCustomisationPage::notifInstance, &SGWThemeCustomisationPage::notifInitialise, nullptr);
 }
 
