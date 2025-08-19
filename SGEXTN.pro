@@ -56,6 +56,7 @@ SOURCES = SGEXTN/misc/main.cpp \
     SGEXTN/filesystem/sgxfilewriter.cpp \
     SGEXTN/filesystem/sgxfilezip.cpp \
     SGEXTN/misc/sgxcentral.cpp \
+    SGEXTN/notifications/sgwnotify.cpp \
     SGEXTN/primitives/sgxcolourhsla.cpp \
     SGEXTN/primitives/sgxcolourrgba.cpp \
     SGEXTN/primitives/sgxidentifier.cpp \
@@ -138,6 +139,7 @@ HEADERS += \
     SGEXTN/filesystem/sgxfilewriter.h \
     SGEXTN/filesystem/sgxfilezip.h \
     SGEXTN/misc/sgxcentral.h \
+    SGEXTN/notifications/sgwnotify.h \
     SGEXTN/primitives/sgxcolourhsla.h \
     SGEXTN/primitives/sgxcolourrgba.h \
     SGEXTN/primitives/sgxidentifier.h \

@@ -84,9 +84,7 @@ SGEXTN v5.0.0 (planned): same architecture as v1 but uses Qt Quick (supposed to 
 - [x] improve SingCorrect configs page
 - [x] build SingCorrect command list page
 - [x] SGXTimer
-- [ ] improved status bar and notifications
-- [ ] improve standard notification
-- [ ] build pull down notification
+- [x] improve status bar and notifications
 - [ ] use of .pri file
 
 SGEXTN v5.0.0 will cover all functionalities in previous versions, so there would be no reason to use v1 because of missing stuff. 
