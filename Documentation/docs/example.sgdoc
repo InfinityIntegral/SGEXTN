@@ -1,0 +1,34 @@
+#c SGXClassName
+This is about SGXClassName.
+#ic folder/sgxclassname.h
+#if SGXParentClass
+#it SGXChildClass1
+#it SGXChildClass2
+#e Enum
+#ef EnumFlag1
+This is about Enum::EnumFlag1.$This is on a new line.
+#ef EnumFlag2
+This is about Enum::EnumFlag2.
+#p bool $property1;
+This is about property1.
+#p int $property2;
+This is about property2.
+#f [[nodiscard]] int $func1(const QString& s) const;
+This is about func1.
+#f void $func2(void (*f)());
+This is about func2.
+#sf int $func3();
+This is about func3.
+#r int $func4() override;
+This is about func4.
+#sp int $property3;
+This is about property3.
+#sr void $func5() override;
+This is about func5.
+#f void $func2();
+This is about an overload of func2.
+#d detailed description$more info.
+#dt detailed description title 1
+detailed description content 1
+#dt detailed description title 2
+detailed description content 2

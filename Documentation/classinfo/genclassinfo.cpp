@@ -123,7 +123,7 @@ void addObjFull(const std::map<std::string, std::string, compareObj>& x, std::st
         s += ("<a class=\"link\" href=\"" + toHtmlTag((*i).first) + "\">" + s2 + "</a>");
         s += s3;
         s += "</h2>\n";
-        s += ("<p class=\"label\">" + formatDescription((*i).second) + "</p>\n");
+        s += ("<p class=\"label\">" + formatDescription((*i).second) + "<br>&nbsp;</p>\n");
     }
 }
 
@@ -217,41 +217,48 @@ std::string genClassInfo(std::string input){
             output += ("<p class=\"label\">&#x9;&#x9;<a class=\"link\" href=\"./classinfo.html?classname=" + toLowerCase(childrenClasses[i]) + "\">" + childrenClasses[i] + "</a></p>\n");
         }
     }
+    output += "<p class=\"label\">&nbsp;</p>";
     
     if(memberProperties.size() > 0){
         output += "<div style=\"width: 100%; height: 0.25em; background-color: var(--c4);\"></div>\n";
         output += "<h2 class=\"halftitle\">Instance Properties</h2>\n";
         addObjList(memberProperties, output);
+        output += "<p class=\"label\">&nbsp;</p>";
     }
     
     if(memberFunctions.size() > 0){
         output += "<div style=\"width: 100%; height: 0.25em; background-color: var(--c4);\"></div>\n";
         output += "<h2 class=\"halftitle\">Instance Methods</h2>\n";
         addObjList(memberFunctions, output);
+        output += "<p class=\"label\">&nbsp;</p>";
     }
     
     if(memberReimplemented.size() > 0){
         output += "<div style=\"width: 100%; height: 0.25em; background-color: var(--c4);\"></div>\n";
         output += "<h2 class=\"halftitle\">Reimplemented Instance Methods</h2>\n";
         addObjList(memberReimplemented, output);
+        output += "<p class=\"label\">&nbsp;</p>";
     }
     
     if(staticProperties.size() > 0){
         output += "<div style=\"width: 100%; height: 0.25em; background-color: var(--c4);\"></div>\n";
         output += "<h2 class=\"halftitle\">Static Properties</h2>\n";
         addObjList(staticProperties, output);
+        output += "<p class=\"label\">&nbsp;</p>";
     }
     
     if(staticFunctions.size() > 0){
         output += "<div style=\"width: 100%; height: 0.25em; background-color: var(--c4);\"></div>\n";
         output += "<h2 class=\"halftitle\">Static Methods</h2>\n";
         addObjList(staticFunctions, output);
+        output += "<p class=\"label\">&nbsp;</p>";
     }
     
     if(staticReimplemented.size() > 0){
         output += "<div style=\"width: 100%; height: 0.25em; background-color: var(--c4);\"></div>\n";
         output += "<h2 class=\"halftitle\">Reimplemented Static Methods</h2>\n";
         addObjList(staticReimplemented, output);
+        output += "<p class=\"label\">&nbsp;</p>";
     }
     
     output += "<div style=\"width: 100%; height: 0.25em; background-color: var(--c4);\"></div>\n";
@@ -261,6 +268,7 @@ std::string genClassInfo(std::string input){
         output += ("<h2 class=\"halftitle\">" + (*i).first + "</h2>\n");
         output += ("<p class=\"label\">" + formatDescription((*i).second) + "</p>\n");
     }
+    output += "<p class=\"label\">&nbsp;</p>";
     output += "<div style=\"width: 100%; height: 0.25em; background-color: var(--c4);\"></div>\n";
     addObjFull(memberProperties, output);
     addObjFull(memberFunctions, output);

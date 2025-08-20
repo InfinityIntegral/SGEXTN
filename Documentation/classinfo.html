@@ -129,7 +129,7 @@ function addObjFull(mapObj, s) {
         const value = mapObj.get(key);
         const [s1, s2, s3] = splitObj(key);
         s += `<h2 class="halftitle" id="${toHtmlTag(key).substring(1)}">&#x9;${s1}<a class="link" href="${toHtmlTag(key)}">${s2}</a>${s3}</h2>\n`;
-        s += `<p class="label">${formatDescription(value)}</p>\n`;
+        s += `<p class="label">${formatDescription(value)}<br>&nbsp;</p>\n`;
     }
     return s;
 }
@@ -187,14 +187,15 @@ function genClassInfo(input) {
             output += `<p class="label">&#x9;&#x9;<a class="link" href="./classinfo.html?classname=${toLowerCase(c)}">${c}</a></p>\n`;
         }
     }
+    output += '<p class="label">&nbsp;</p>';
 
     const addDiv = () => '<div style="width: 100%; height: 0.25em; background-color: var(--c4);"></div>\n';
-    if (memberProperties.size) { output += addDiv(); output += "<h2 class=\"halftitle\">Instance Properties</h2>\n"; output = addObjList(memberProperties, output); }
-    if (memberFunctions.size) { output += addDiv(); output += "<h2 class=\"halftitle\">Instance Methods</h2>\n"; output = addObjList(memberFunctions, output); }
-    if (memberReimplemented.size) { output += addDiv(); output += "<h2 class=\"halftitle\">Reimplemented Instance Methods</h2>\n"; output = addObjList(memberReimplemented, output); }
-    if (staticProperties.size) { output += addDiv(); output += "<h2 class=\"halftitle\">Static Properties</h2>\n"; output = addObjList(staticProperties, output); }
-    if (staticFunctions.size) { output += addDiv(); output += "<h2 class=\"halftitle\">Static Methods</h2>\n"; output = addObjList(staticFunctions, output); }
-    if (staticReimplemented.size) { output += addDiv(); output += "<h2 class=\"halftitle\">Reimplemented Static Methods</h2>\n"; output = addObjList(staticReimplemented, output); }
+    if (memberProperties.size) { output += addDiv(); output += "<h2 class=\"halftitle\">Instance Properties</h2>\n"; output = addObjList(memberProperties, output); output += '<p class="label">&nbsp;</p>';}
+    if (memberFunctions.size) { output += addDiv(); output += "<h2 class=\"halftitle\">Instance Methods</h2>\n"; output = addObjList(memberFunctions, output); output += '<p class="label">&nbsp;</p>';}
+    if (memberReimplemented.size) { output += addDiv(); output += "<h2 class=\"halftitle\">Reimplemented Instance Methods</h2>\n"; output = addObjList(memberReimplemented, output); output += '<p class="label">&nbsp;</p>';}
+    if (staticProperties.size) { output += addDiv(); output += "<h2 class=\"halftitle\">Static Properties</h2>\n"; output = addObjList(staticProperties, output); output += '<p class="label">&nbsp;</p>';}
+    if (staticFunctions.size) { output += addDiv(); output += "<h2 class=\"halftitle\">Static Methods</h2>\n"; output = addObjList(staticFunctions, output); output += '<p class="label">&nbsp;</p>';}
+    if (staticReimplemented.size) { output += addDiv(); output += "<h2 class=\"halftitle\">Reimplemented Static Methods</h2>\n"; output = addObjList(staticReimplemented, output); output += '<p class="label">&nbsp;</p>';}
 
     output += addDiv();
     output += "<h2 class=\"halftitle\">Detailed Description</h2>\n";
@@ -202,6 +203,7 @@ function genClassInfo(input) {
 	for (const [k, v] of detailedDescription) {
 		output += `<h2 class="halftitle">${k}</h2>\n<p class="label">${formatDescription(v)}</p>\n`;
 	}    
+    output += '<p class="label">&nbsp;</p>';
 
     output += addDiv();
     output = addObjFull(memberProperties, output);
