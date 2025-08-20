@@ -1,18 +1,17 @@
-#include <string>
-#include <sstream>
-#include <emscripten/bind.h>
-
-// emcc gensitemap.cpp -O3 -s MODULARIZE=1 -s EXPORT_NAME="SiteMapModule" -o site_map_module.js --bind
-
 std::string genSiteMap(std::string input){
     std::string output = "";
     int indent = 0;
     output += "<p class=\"label\">";
     std::stringstream stream(input);
     std::string s = "";
-    while(stream >> s){
+    while(std::getline(stream, s)){
         if(s == "<"){indent--;}
         else if(s == ">"){indent++;}
+        else if(s.length() > 0 && s[0] == '/'){
+            output += "\n";
+            for(int i=0; i<indent; i++){output += "&#x9;";}
+            output += s.substr(1);
+        }
         else{
             output += "\n";
             for(int i=0; i<indent; i++){output += "&#x9;";}
@@ -28,8 +27,4 @@ std::string genSiteMap(std::string input){
     }
     output += "\n</p>";
     return output;
-}
-
-EMSCRIPTEN_BINDINGS(site_map_module){
-    emscripten::function("genSiteMap", &genSiteMap);
 }

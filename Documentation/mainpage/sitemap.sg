@@ -1,5 +1,87 @@
-test1
+/SGEXTN additional primitives
 >
-test2
+SGXColourRGBA
+SGXColourHSLA
+SGXIdentifier
+SGXTimeStamp
+SGXVector2
+SGXTouchEvent
 <
-test3
+/SGWidget GUI toolkit
+>
+SGWWidget
+>
+SGWRoot
+SGWParent
+SGWStatusBar
+SGWBlankWidget
+SGWBackground
+>
+SGWPageBackground
+SGWScrollView
+SGWSequentialScrollView
+<
+SGWLabel
+>
+SGWTextLabel
+SGWIconLabel
+SGWLongLabel
+SGWSequentialLongLabel
+<
+SGWButton
+>
+SGWTextButton
+SGWIconButton
+<
+SGWInput
+>
+SGWTextInput
+SGWLongInput
+<
+SGWTouchReceiver
+SGWCustomRenderer
+SGWColourPicker
+<
+<
+/file system interaction
+>
+SGXFileReader
+SGXFileWriter
+SGXFileSystem
+SGXFileBinUtilities
+SGXFileZip
+SGXFileDownloader
+SGXFileUploader
+<
+/other userful stuff
+>
+SGWNotify
+SGXTimer
+SGXSingCorrectCore
+<
+/builtin renderers
+>
+SGXRenderColourBackgroundSGWidget
+SGXRenderColourPickerHueChoiceSGWidget
+SGXRenderColourPickerSaturationChoiceSGWidget
+SGXRenderColourPickerLightnessChoiceSGWidget
+SGXRenderColourPickerTransparencyChoiceSGWidget
+<
+/Qt Quick interface on QML side
+>
+SGXQuickInterface
+SGXQuickResizer
+SGXThemeColourSetting
+SGXSingCorrectQuickInterface
+<
+/builtin customisation pages
+>
+SGWThemeCustomisationPage
+SGWVesicleCustomisationPage
+SGWSingCorrectCustomisationPage
+<
+/implement functions in here as needed
+>
+SGUCentralManagement
+<
+/ 
