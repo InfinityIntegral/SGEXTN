@@ -11,6 +11,7 @@
 <div id="footer"></div>
 <div id="script"></div>
 <script> (async () => {
+
 // written by ChatGPT
 // std::string getTextFile(const std::string& path)
 async function getTextFile(path) {
@@ -46,7 +47,7 @@ function genSiteMap(input) {
                                     return c;
                                 }).join("");
             
-            const link = `"./classinfo?classname=${sl}"`;
+            const link = `"./classinfo.html?classname=${sl}"`;
             output += `<a class="link" href=${link}>${s}</a>`;
         }
     }
