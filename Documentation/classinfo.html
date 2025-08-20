@@ -23,10 +23,204 @@ async function getTextFile(path) {
     }
 }
 
+// the functions below are translated from C++ to JS by ChatGPT
+
+function formatDescription(s) {
+    let output = "&#x9;";
+    for (let i = 0; i < s.length; i++) {
+        if (s[i] !== '$') output += s[i];
+        else output += "<br>&#x9;";
+    }
+    return output;
+}
+
+function toLowerCase(s) {
+    let output = "";
+    for (let i = 0; i < s.length; i++) {
+        const c = s[i];
+        if (c >= 'a' && c <= 'z') output += c;
+        else if (c >= 'A' && c <= 'Z') output += c.toLowerCase();
+        else if (c >= '0' && c <= '9') output += c;
+    }
+    return output;
+}
+
+function compareObj(a, b) {
+    let sa = "", sb = "";
+    let started = false;
+
+    for (let i = 0; i < a.length; i++) {
+        const c = a[i];
+        if (c === "_" || (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9')) {
+            if (started) sa += c;
+        } else if (c === '$') {
+            started = true;
+        } else {
+            break;
+        }
+    }
+
+    started = false;
+    for (let i = 0; i < b.length; i++) {
+        const c = b[i];
+        if (c === "_" || (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9')) {
+            if (started) sb += c;
+        } else if (c === '$') {
+            started = true;
+        } else {
+            break;
+        }
+    }
+
+    if (!started) return a < b;
+    return sa < sb;
+}
+
+function splitObj(a) {
+    let o1 = "", o2 = "", o3 = "";
+    let started = 0;
+
+    for (let i = 0; i < a.length; i++) {
+        const c = a[i];
+        if (c === "_" || (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9')) {
+            if (started === 0) o1 += c;
+            else if (started === 1) o2 += c;
+            else o3 += c;
+        } else if (c === '$') {
+            started = 1;
+        } else {
+            if (started === 0) o1 += c;
+            else if (started === 1) { o3 += c; started = 2; }
+            else o3 += c;
+        }
+    }
+
+    return [o1, o2, o3];
+}
+
+function toHtmlTag(s) {
+    let output = "#";
+    let x = false;
+    for (let i = 0; i < s.length; i++) {
+        const c = s[i];
+        if (c >= 'a' && c <= 'z') { output += c; x = false; }
+        else if (c >= 'A' && c <= 'Z') { output += c.toLowerCase(); x = false; }
+        else if (c >= '0' && c <= '9') { output += c; x = false; }
+        else {
+            if (!x) { output += '-'; x = true; }
+        }
+    }
+    return output;
+}
+
+function addObjList(mapObj, s) {
+    let keys = Array.from(mapObj.keys()).sort(compareObj);
+    for (const key of keys) {
+        const value = mapObj.get(key);
+        const [s1, s2, s3] = splitObj(key);
+        s += `<p class="label">&#x9;${s1}<a class="link" href="${toHtmlTag(key)}">${s2}</a>${s3}</p>\n`;
+    }
+    return s;
+}
+
+function addObjFull(mapObj, s) {
+    let keys = Array.from(mapObj.keys()).sort(compareObj);
+    for (const key of keys) {
+        const value = mapObj.get(key);
+        const [s1, s2, s3] = splitObj(key);
+        s += `<h2 class="halftitle" id="${toHtmlTag(key).substring(1)}">&#x9;${s1}<a class="link" href="${toHtmlTag(key)}">${s2}</a>${s3}</h2>\n`;
+        s += `<p class="label">${formatDescription(value)}</p>\n`;
+    }
+    return s;
+}
+
+function genClassInfo(input) {
+    let className = "", classDescription = "", include = "", parentClass = "";
+    let childrenClasses = [];
+    let enumName = "", laterDescription = "";
+    let enumFlags = new Map();
+    let memberProperties = new Map();
+    let memberFunctions = new Map();
+    let staticProperties = new Map();
+    let staticFunctions = new Map();
+    let memberReimplemented = new Map();
+    let staticReimplemented = new Map();
+    let detailedDescription = new Map();
+
+    const lines = input.split('\r\n');
+    for (let i = 0; i < lines.length; i++) {
+        const s = lines[i];
+        if (!s) continue;
+        if (s[0] !== '#') return `invalid syntax: ${s}`;
+
+        let type = '', value = '';
+        let spaceIndex = s.indexOf(' ');
+        if (spaceIndex === -1) { type = s.substr(1); value = ''; }
+        else { type = s.substr(1, spaceIndex-1); value = s.substr(spaceIndex+1); }
+
+        if (type === "c") { className = value; classDescription = lines[++i]; }
+        else if (type === "ic") include = value;
+        else if (type === "if") parentClass = value;
+        else if (type === "it") childrenClasses.push(value);
+        else if (type === "e") enumName = value;
+        else if (type === "ef") enumFlags.set(value, lines[++i]);
+        else if (type === "p") memberProperties.set(value, lines[++i]);
+        else if (type === "f") memberFunctions.set(value, lines[++i]);
+        else if (type === "sp") staticProperties.set(value, lines[++i]);
+        else if (type === "sf") staticFunctions.set(value, lines[++i]);
+        else if (type === "r") memberReimplemented.set(value, lines[++i]);
+        else if (type === "sr") staticReimplemented.set(value, lines[++i]);
+        else if (type === "d") laterDescription = value;
+        else if (type === "dt") detailedDescription.set(value, lines[++i]);
+        else return `invalid type: ${type}`;
+    }
+
+    let output = "";
+    output += `<h1 class="title">${className}</h1>\n`;
+    output += `<p class="label">${formatDescription(classDescription)}</p>\n`;
+    output += `<p class="label">&nbsp;<br>&#x9;header: #include "${include}"</p>\n`;
+    if (!parentClass) output += "<p class=\"label\">&#x9;inherits: none</p>\n";
+    else output += `<p class="label">&#x9;inherits: <a class="link" href="./classinfo.html?classname=${toLowerCase(parentClass)}">${parentClass}</a></p>\n`;
+    if (childrenClasses.length > 0) {
+        output += "<p class=\"label\">&#x9;inherited by:</p>\n";
+        for (const c of childrenClasses) {
+            output += `<p class="label">&#x9;&#x9;<a class="link" href="./classinfo.html?classname=${toLowerCase(c)}">${c}</a></p>\n`;
+        }
+    }
+
+    const addDiv = () => '<div style="width: 100%; height: 0.25em; background-color: var(--c4);"></div>\n';
+    if (memberProperties.size) { output += addDiv(); output += "<h2 class=\"halftitle\">Instance Properties</h2>\n"; output = addObjList(memberProperties, output); }
+    if (memberFunctions.size) { output += addDiv(); output += "<h2 class=\"halftitle\">Instance Methods</h2>\n"; output = addObjList(memberFunctions, output); }
+    if (memberReimplemented.size) { output += addDiv(); output += "<h2 class=\"halftitle\">Reimplemented Instance Methods</h2>\n"; output = addObjList(memberReimplemented, output); }
+    if (staticProperties.size) { output += addDiv(); output += "<h2 class=\"halftitle\">Static Properties</h2>\n"; output = addObjList(staticProperties, output); }
+    if (staticFunctions.size) { output += addDiv(); output += "<h2 class=\"halftitle\">Static Methods</h2>\n"; output = addObjList(staticFunctions, output); }
+    if (staticReimplemented.size) { output += addDiv(); output += "<h2 class=\"halftitle\">Reimplemented Static Methods</h2>\n"; output = addObjList(staticReimplemented, output); }
+
+    output += addDiv();
+    output += "<h2 class=\"halftitle\">Detailed Description</h2>\n";
+    output += `<p class="label">${formatDescription(laterDescription)}</p>\n`;
+	for (const [k, v] of detailedDescription) {
+		output += `<h2 class="halftitle">${k}</h2>\n<p class="label">${formatDescription(v)}</p>\n`;
+	}    
+
+    output += addDiv();
+    output = addObjFull(memberProperties, output);
+    output = addObjFull(memberFunctions, output);
+    output = addObjFull(memberReimplemented, output);
+    output = addObjFull(staticProperties, output);
+    output = addObjFull(staticFunctions, output);
+    output = addObjFull(staticReimplemented, output);
+
+    return output;
+}
+
 document.querySelector("style").outerHTML = await getTextFile("style.sg");
 document.querySelector("#header").outerHTML = await getTextFile("header.sg");
 document.querySelector("#footer").outerHTML = await getTextFile("footer.sg");
-document.querySelector("#contents").outerHTML = await getTextFile("classinfo/classinfo.sg");
+
+const params = new URLSearchParams(window.location.search);
+const s = params.get("classname");
+document.querySelector("#contents").outerHTML = genClassInfo(await getTextFile("docs/" + s + ".sgdoc"));
 
 })(); </script>
 </body>
