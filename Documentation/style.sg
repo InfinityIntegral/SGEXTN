@@ -40,7 +40,7 @@
 	color: var(--c4);
 	background-color: var(--c8);
 	font-family: "SingScript.sg";
-	font-size: 2.625rem;
+	font-size: 2.5rem;
 	margin: 0;
 	font-weight: normal;
 }
@@ -74,28 +74,24 @@
 	color: var(--c2);
 	background-color: var(--c8);
 	font-family: "SingScript.sg";
-	font-size: 1.75rem;
 	text-decoration: underline;
 }
 .link:hover {
 	color: var(--c2);
 	background-color: var(--c7);
 	font-family: "SingScript.sg";
-	font-size: 1.75rem;
 	text-decoration: underline;
 }
 .link:active {
 	color: var(--c2);
 	background-color: var(--c6);
 	font-family: "SingScript.sg";
-	font-size: 1.75rem;
 	text-decoration: underline;
 }
 .link::selection {
 	color: var(--c8);
 	background-color: var(--c4);
 	font-family: "SingScript.sg";
-	font-size: 1.75rem;
 	text-decoration: underline;
 }
 
