@@ -1,7 +1,6 @@
 #c SGXColourHSLA
 struct storing colour in <a class="link" href="https://en.wikipedia.org/wiki/HSL_and_HSV#Color_conversion_formulae">HSLA</a>
 #ic SGEXTN/primitives/sgxcolourhsla.h
-#if
 #d SGXColourHSLA stores a <a class="link" href="https://en.wikipedia.org/wiki/HSL_and_HSV#Color_conversion_formulae">HSLA</a> colour which can be used in computing colour gradients. Unlike SGXColourRGBA which only provides 8 bits per channel, SGXColourHSLA stores each channel as a floating point number. This means that it is possible for a SGXColourHSLA to store an invalid colour. The hue is a number between 0 and 360, while the saturation, lightness, and transparency are all numbers between 0 and 100. SGXColourHSLA is only meant to be used as an intermediate representation during computation and must be converted to SGXColourRGBA before usage in SGEXTN APIs. SGXColourHSLA contains functions to do computation related to colours.
 #p float $h
 This property keeps track of the hue as a number between 0 and 360. Visually, it represents the base colour which the HSLA colour is transformed from. This property can be used directly and it does not have getter and setter functions. No error correction is done if this value is out of range. The developer is responsible for keeping this in range.

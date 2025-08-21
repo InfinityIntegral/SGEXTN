@@ -1,7 +1,6 @@
 #c SGXColourRGBA
 struct storing 8 bit RGBA colour
 #ic SGEXTN/primitives/sgxcolourrgba.h
-#if
 #d The SGXColourRGBA class stores a RGBA colour with 8 bits of precision for each channel. This means that each channel can have a value of between 0 and 255. SGXColourRGBA replaces QColor in SGEXTN APIs. SGXColourRGBA contains functions to mix, gamma correct, and do other computations related to colours.
 #f $SGXColourRGBA()
 This is the default constructor for SGXColourRGBA. You are not supposed to normally use it and it does nothing anyways. The only reason why it exists is so that people can use = {} to initialise SGXColourRGBA variables in class definition header files. That is not really needed, but doing it stops clang-tidy from complaining.

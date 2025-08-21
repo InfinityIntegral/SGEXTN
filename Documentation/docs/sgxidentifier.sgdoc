@@ -1,7 +1,6 @@
 #c SGXIdentifier
 SGEXTN implementation of global unique identifier
 #ic SGEXTN/primitives/sgxidentifier.h
-#if
 #d SGXIdentifier is a global unique identifier consisting of 4 unsigned integers with 32 bits each. This provides 128 bits of precision, which ensures that collisions are essentially impossible. To prevent collisions just in case they happen, SGXIdentifier also provides a builtin registration system which can be used to track which identifiers already exist. SGXIdentifier is designed to replace QUuid entirely and is not compatible with QUuid.
 #sp QSet<SGXIdentifier> $identifiersList
 This property defines the set of all registered identifiers. You may freely read from it or iterate through it using a QSet<SGXIdentifier>::const_iterator but you should not modify it. To check if an identifier exists, use SGXIdentifier::exists(). To add and remove identifiers from the set, use SGXIdentifier::registerIdentifier() and SGXIdentifier::unregisterIdentifier() respectively.

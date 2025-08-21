@@ -1,7 +1,6 @@
 #c SGXVector2
 struct storing a 2D vector
 #ic SGEXTN/primitives/sgxvector2.h
-#if
 #d SGXVector2 stores 2 numbers representing the x and y coordinates for a 2 dimensional vector. It also has builtin functions that handle common 2D geometry computations, such as distance between points, and distance from a point to various geometric shapes such as lines and circles. Note that in different contexts, a SGXVector2 can represent both the vector itself and the endpoint of that vector.
 #p float $x
 This property stores the x coordinate of this SGXVector2. It can be read from and set directly without getter and setter functions.

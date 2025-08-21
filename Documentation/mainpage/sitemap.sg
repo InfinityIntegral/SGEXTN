@@ -11,9 +11,6 @@ SGXTouchEvent
 >
 SGWWidget
 >
-SGWRoot
-SGWParent
-SGWStatusBar
 SGWBlankWidget
 SGWBackground
 >

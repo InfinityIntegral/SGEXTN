@@ -1,7 +1,6 @@
 #c SGXTimeStamp
 timestamp accurate to 1 second
 #ic SGEXTN/primitives/sgxtimestamp.h
-#if
 #d SGXTimeStamp provides a way to represent time accurate to 1 second. Internally, it uses a 64 bit long long to keep track of time, so it will not ever run out or reset until billions of years later. While SGXTimeStamp is designed to replace QDateTime, it uses QDateTime features to perform computations and is compatible with QDateTime. SGXTimeStamp does not support time zones and all computations are done in the Singapore time zone.
 #sp const SGXTimeStamp $zero
 This property represents the start of epoch, or time zero. This corresponds to 19650809 123000, which is the time when PM Lee Kuan Yew announced Singapore's separation from Malaysia. Note that SGXTimeStamp does not follow UNIX epoch.
