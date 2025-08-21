@@ -5,6 +5,7 @@ This is about SGXClassName.
 #it SGXChildClass1
 #it SGXChildClass2
 #e Enum
+This is about the enum.
 #ef EnumFlag1
 This is about Enum::EnumFlag1.$This is on a new line.
 #ef EnumFlag2

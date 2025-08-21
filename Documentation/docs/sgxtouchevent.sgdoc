@@ -1,0 +1,7 @@
+#c SGXTouchEvent
+struct storing a touch event
+#ic SGEXTN/primitives/sgxtouchevent.h
+#if
+#d SGXTouchEvent is a class representing finger touches (for touchscreens) or mouse clicks on a surface with detailed touch enabled, such as a <a class="link" href="./classinfo.html?classname=sgwtouchreceiver">SGWTouchReceiver</a>. The SGXTouchEvent is supplied to you using the function bound on the SGWTouchReceiver and you should not be creating instances of this unless simulating user input.
+#dt Touch IDs
+Each SGXTouchEvent has an identifier attached that distinguish which touch it is during touch input processing. However, the identifier is only meaningful on the frame that the touch event was created. On subsequent frames, the same touch may have moved to somewhere else or even have been let go of entirely.
