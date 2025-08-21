@@ -7,6 +7,7 @@
 </head>
 <body>
 <div id="header"></div>
+<div id="notice"></div>
 <div id="contents"></div>
 <div id="footer"></div>
 <script> (async () => {
@@ -218,6 +219,7 @@ function genClassInfo(input) {
 
 document.querySelector("style").outerHTML = await getTextFile("style.sg");
 document.querySelector("#header").outerHTML = await getTextFile("header.sg");
+document.querySelector("#notice").outerHTML = await getTextFile("classinfo/classinfo.sg");
 document.querySelector("#footer").outerHTML = await getTextFile("footer.sg");
 
 const params = new URLSearchParams(window.location.search);
