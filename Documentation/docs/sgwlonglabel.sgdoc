@@ -1,0 +1,3 @@
+#c SGWLongLabel
+SGWidget displaying non interactive scrollable text
+#ic SGEXTN/widgets/instantiable/sgwlonglabel.h
