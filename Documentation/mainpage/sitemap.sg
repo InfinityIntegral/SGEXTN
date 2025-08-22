@@ -39,6 +39,10 @@ SGWTouchReceiver
 SGWCustomRenderer
 SGWColourPicker
 <
+SGWType
+SGWHorizontalAlignment
+SGWVerticalAlignment
+SGWDefaultFonts
 <
 /file system interaction
 >
