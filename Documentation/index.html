@@ -29,7 +29,7 @@ function genSiteMap(input) {
     let indent = 0;
     output += '<p class="label">';
     
-    const lines = input.split("\r\n");
+    const lines = input.split("\n");
     for (let s of lines) {
         s = s.trim();
         if (s === "<") {

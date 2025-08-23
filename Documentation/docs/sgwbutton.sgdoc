@@ -104,49 +104,50 @@ This function sets the colour used for the foreground of this SGWButton when it 
 #f void $setForegroundFocusColour(SGXColourRGBA colour)
 This function sets the colour used for the foreground of this SGWButton when it is being pressed. It also sets this SGWButton to non theme colour mode.
 #f [[nodiscard]] int $getBackgroundSelectedThemeColour(bool* isUsing) const
-
+This function gets the <a class="link" href="#-c">theme colour</a> used for the background of this SGWButton when it is selected. The boolean isUsing is set to true if this SGWButton is in theme colour mode and false if this SGWButton is in non theme colour mode. If nullptr is passed to this function, no mode checking is done.
 #f void $setBackgroundSelectedThemeColour(int themeColour)
-
+This function sets the <a class="link" href="#-c">theme colour</a> used for the background of this SGWButton when it is selected. It also sets this SGWButton to theme colour mode.
 #f [[nodiscard]] SGXColourRGBA $getBackgroundSelectedColour(bool* isUsing) const
-
+This function sets the colour used for the background of this SGWButton when it is selected. The boolean isUsing is set to false if this SGWButton is in theme colour mode and true if this SGWButton is in non theme colour mode. If nullptr is passed to this function, no mode checking is done.
 #f void $setBackgroundSelectedColour(SGXColourRGBA colour)
-
+This function sets the colour used for the background of this SGWButton when it is selected. It also sets this SGWButton to non theme colour mode.
 #f [[nodiscard]] int $getForegroundSelectedThemeColour(bool* isUsing) const
-
+This function gets the <a class="link" href="#-c">theme colour</a> used for the foreground of this SGWButton when it is selected. The boolean isUsing is set to true if this SGWButton is in theme colour mode and false if this SGWButton is in non theme colour mode. If nullptr is passed to this function, no mode checking is done.
 #f void $setForegroundSelectedThemeColour(int themeColour)
-
+This function sets the <a class="link" href="#-c">theme colour</a> used for the foreground of this SGWButton when it is selected. It also sets this SGWButton to theme colour mode.
 #f [[nodiscard]] SGXColourRGBA $getForegroundSelectedColour(bool* isUsing) const
-
+This function sets the colour used for the foreground of this SGWButton when it is selected. The boolean isUsing is set to false if this SGWButton is in theme colour mode and true if this SGWButton is in non theme colour mode. If nullptr is passed to this function, no mode checking is done.
 #f void $setForegroundSelectedColour(SGXColourRGBA colour)
-
+This function sets the colour used for the foreground of this SGWButton when it is selected. It also sets this SGWButton to non theme colour mode.
 #f [[nodiscard]] int $getBackgroundHoverSelectedThemeColour(bool* isUsing) const
-
+This function gets the <a class="link" href="#-c">theme colour</a> used for the background of this SGWButton when it is selected and being hovered over. The boolean isUsing is set to true if this SGWButton is in theme colour mode and false if this SGWButton is in non theme colour mode. If nullptr is passed to this function, no mode checking is done.
 #f void $setBackgroundHoverSelectedThemeColour(int themeColour)
-
+This function sets the <a class="link" href="#-c">theme colour</a> used for the background of this SGWButton when it is selected and being hovered over. It also sets this SGWButton to theme colour mode.
 #f [[nodiscard]] SGXColourRGBA $getBackgroundHoverSelectedColour(bool* isUsing) const
-
+This function sets the colour used for the background of this SGWButton when it is selected and being hovered over. The boolean isUsing is set to false if this SGWButton is in theme colour mode and true if this SGWButton is in non theme colour mode. If nullptr is passed to this function, no mode checking is done.
 #f void $setBackgroundHoverSelectedColour(SGXColourRGBA colour)
-
+This function sets the colour used for the background of this SGWButton when it is selected and being hovered over. It also sets this SGWButton to non theme colour mode.
 #f [[nodiscard]] int $getForegroundHoverSelectedThemeColour(bool* isUsing) const
-
+This function gets the <a class="link" href="#-c">theme colour</a> used for the foreground of this SGWButton when it is selected and being hovered over. The boolean isUsing is set to true if this SGWButton is in theme colour mode and false if this SGWButton is in non theme colour mode. If nullptr is passed to this function, no mode checking is done.
 #f void $setForegroundHoverSelectedThemeColour(int themeColour)
-
+This function sets the <a class="link" href="#-c">theme colour</a> used for the foreground of this SGWButton when it is selected and being hovered over. It also sets this SGWButton to theme colour mode.
 #f [[nodiscard]] SGXColourRGBA $getForegroundHoverSelectedColour(bool* isUsing) const
-
+This function sets the colour used for the foreground of this SGWButton when it is selected and being hovered over. The boolean isUsing is set to false if this SGWButton is in theme colour mode and true if this SGWButton is in non theme colour mode. If nullptr is passed to this function, no mode checking is done.
 #f void $setForegroundHoverSelectedColour(SGXColourRGBA colour)
-
+This function sets the colour used for the foreground of this SGWButton when it is selected and being hovered over. It also sets this SGWButton to non theme colour mode.
 #f [[nodiscard]] int $getBackgroundFocusSelectedThemeColour(bool* isUsing) const
-
+This function gets the <a class="link" href="#-c">theme colour</a> used for the background of this SGWButton when it is selected and being pressed. The boolean isUsing is set to true if this SGWButton is in theme colour mode and false if this SGWButton is in non theme colour mode. If nullptr is passed to this function, no mode checking is done.
 #f void $setBackgroundFocusSelectedThemeColour(int themeColour)
-
+This function sets the <a class="link" href="#-c">theme colour</a> used for the background of this SGWButton when it is selected and being pressed. It also sets this SGWButton to theme colour mode.
 #f [[nodiscard]] SGXColourRGBA $getBackgroundFocusSelectedColour(bool* isUsing) const
-
+This function sets the colour used for the background of this SGWButton when it is selected and being pressed. The boolean isUsing is set to false if this SGWButton is in theme colour mode and true if this SGWButton is in non theme colour mode. If nullptr is passed to this function, no mode checking is done.
 #f void $setBackgroundFocusSelectedColour(SGXColourRGBA colour)
-
+This function sets the colour used for the background of this SGWButton when it is selected and being pressed. It also sets this SGWButton to non theme colour mode.
 #f [[nodiscard]] int $getForegroundFocusSelectedThemeColour(bool* isUsing) const
-
+This function gets the <a class="link" href="#-c">theme colour</a> used for the foreground of this SGWButton when it is selected and being pressed. The boolean isUsing is set to true if this SGWButton is in theme colour mode and false if this SGWButton is in non theme colour mode. If nullptr is passed to this function, no mode checking is done.
 #f void $setForegroundFocusSelectedThemeColour(int themeColour)
-
+This function sets the <a class="link" href="#-c">theme colour</a> used for the foreground of this SGWButton when it is selected and being pressed. It also sets this SGWButton to theme colour mode.
 #f [[nodiscard]] SGXColourRGBA $getForegroundFocusSelectedColour(bool* isUsing) const
-
+This function sets the colour used for the foreground of this SGWButton when it is selected and being pressed. The boolean isUsing is set to false if this SGWButton is in theme colour mode and true if this SGWButton is in non theme colour mode. If nullptr is passed to this function, no mode checking is done.
 #f void $setForegroundFocusSelectedColour(SGXColourRGBA colour)
+This function sets the colour used for the foreground of this SGWButton when it is selected and being pressed. It also sets this SGWButton to non theme colour mode.

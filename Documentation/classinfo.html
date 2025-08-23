@@ -116,7 +116,7 @@ function genClassInfo(input) {
     let memberReimplemented = new Map(), staticReimplemented = new Map();
     let laterDescription = "", detailedDescription = new Map();
 
-    let lines = input.split('\r\n');
+    let lines = input.split('\n');
     for (let idx = 0; idx < lines.length; idx++) {
         let s = lines[idx];
         if (!s) continue;
