@@ -2,7 +2,7 @@
 SGWidget interactive button
 #ic SGEXTN/widgets/noninstantiable/sgwbutton.h
 #if SGWWidget
-#d SGWButton can be used to create a UI button which the user could click and trigger a callback function stored as a function pointer. Since it has to intercept user input to know when it is triggered, SGWButton blocks SGWidgets below from receiving user input. SGWButton cannot be instantiated directly and its instances can only be created using constructors of its subclasses. SGWButton displays text so that the user knows what the button does.
+#d SGWButton can be used to create a UI button which the user could click and trigger callback functions stored as function pointers. Since it has to intercept user input to know when it is triggered, SGWButton blocks SGWidgets below from receiving user input. SGWButton cannot be instantiated directly and its instances can only be created using constructors of its subclasses. SGWButton displays text so that the user knows what the button does.
 #dt <div id="-w"></div>_w Distance
 The position and size of all SGWidgets are calculated using a <a class="link" href="#-w">_w</a> distance.$A _w distance is made of 2 coordinates, coordinate 1 and coordinate 0, and it is denoted using _w(c1, c0). This is equal to c1 * parent_size + c0 * size_unit pixels, where parent_size is the size of the parent SGWidget and size_unit is 1/24 of the screen width or screen height, whichever is longer.
 #dt <div id="-c"></div> Theme Colours
