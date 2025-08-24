@@ -30,7 +30,7 @@ This function sets this SGWInput to display the number passed into the function.
 #f [[nodiscard]] QString $getFont() const
 This function gets the font currently being used by this SGWInput. The font is a string representing the font family name.
 #f void $setFont(const QString& font)
-This function sets the font for this SGWInput to use. The font should be a string representing the font family name. You may access builtin fonts using the <a class="link" href="./classinfo.html?sgwdefaultfonts">SGWDefaultFonts</a> class.
+This function sets the font for this SGWInput to use. The font should be a string representing the font family name. You may access builtin fonts using the <a class="link" href="./classinfo.html?classname=sgwdefaultfonts">SGWDefaultFonts</a> class.
 #f [[nodiscard]] SGWHorizontalAlignment::Flag $getHorizontalAlignment() const
 This function gets the horizontal text alignment mode currently being used by this SGWInput. Note that SGWidgets do not use Qt alignment flags. Instead, they use <a class="link" href="./classinfo.html?classname=sgwhorizontalalignment">SGWHorizontalAlignment</a> flags.
 #f void $setHorizontalAlignment(SGWHorizontalAlignment::Flag alignment)
