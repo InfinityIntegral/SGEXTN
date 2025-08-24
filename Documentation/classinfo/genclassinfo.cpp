@@ -231,6 +231,7 @@ std::string genClassInfo(std::string input){
         for(std::map<std::string, std::string, StringComparator>::const_iterator i = enumFlags.begin(); i != enumFlags.end(); i++){
             output += ("<p class=\"label\">&#x9;&#x9;<a class=\"link\" href=\"#flag" + toLowerCase((*i).first) + "\">" + (*i).first + "</a></p>\n");
         }
+        output += "<p class=\"label\">&#x9;</p>";
     }
     
     if(memberProperties.size() > 0){
