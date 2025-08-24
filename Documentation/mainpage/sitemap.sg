@@ -37,7 +37,7 @@ SGWLongInput
 <
 SGWTouchReceiver
 SGWCustomRenderer
-SGWColourPicker
+SGWColourPickerWidget
 <
 SGWType
 SGWHorizontalAlignment
