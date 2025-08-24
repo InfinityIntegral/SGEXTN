@@ -1,7 +1,12 @@
 #include "sgwtype.h"
 
+bool SGWType::isBackground(SGWType::Type x){
+    if(x == SGWType::PageBackground || x == SGWType::ScrollView || x == SGWType::SequentialScrollView){return true;}
+    return false;
+}
+
 bool SGWType::isDisplayText(SGWType::Type x){
-    if(x == SGWType::TextLabel || x == SGWType::IconLabel || x == SGWType::LongLabel){return true;}
+    if(x == SGWType::TextLabel || x == SGWType::IconLabel || x == SGWType::LongLabel || x == SGWType::SequentialLongLabel){return true;}
     return false;
 }
 

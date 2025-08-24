@@ -22,11 +22,11 @@ public:
         ScrollView,
         SequentialScrollView,
         ColourPicker,
-        GraphicsRenderer,
         TouchReceiver,
         CustomRenderer,
         Undefined
     };
+    static bool isBackground(SGWType::Type x);
     static bool isDisplayText(SGWType::Type x);
     static bool isButton(SGWType::Type x);
     static bool isInputField(SGWType::Type x);
