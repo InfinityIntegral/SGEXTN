@@ -68,12 +68,6 @@ SGXRenderColourPickerSaturationChoiceSGWidget
 SGXRenderColourPickerLightnessChoiceSGWidget
 SGXRenderColourPickerTransparencyChoiceSGWidget
 <
-/Qt Quick interface on QML side
->
-SGXQuickInterface
-SGXQuickResizer
-SGXThemeColourSetting
-<
 /builtin customisation pages
 >
 SGWThemeCustomisationPage
