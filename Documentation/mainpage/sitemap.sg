@@ -60,14 +60,6 @@ SGWNotify
 SGXTimer
 SGXSingCorrectCore
 <
-/builtin renderers
->
-SGXRenderColourBackgroundSGWidget
-SGXRenderColourPickerHueChoiceSGWidget
-SGXRenderColourPickerSaturationChoiceSGWidget
-SGXRenderColourPickerLightnessChoiceSGWidget
-SGXRenderColourPickerTransparencyChoiceSGWidget
-<
 /builtin customisation pages
 >
 SGWThemeCustomisationPage
