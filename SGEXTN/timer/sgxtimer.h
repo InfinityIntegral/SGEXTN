@@ -20,8 +20,6 @@ public:
     void start() const;
     void (*attachedFunction)();
     QTimer* timer;
-    [[nodiscard]] float getInterval() const;
-    void setInterval(float t);
     static void singleCall(float t, void (*attachedFunction)());
 protected:
     float interval;

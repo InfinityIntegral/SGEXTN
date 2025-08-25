@@ -35,15 +35,6 @@ void SGXTimer::start() const {
     (*(*this).timer).start();
 }
 
-float SGXTimer::getInterval() const {
-    return interval;
-}
-
-void SGXTimer::setInterval(float t){
-    (*this).interval = t;
-    (*(*this).timer).setInterval(static_cast<int>(std::roundf(t * 1000.0f)));
-}
-
 void SGXTimer::runFunction(){
     attachedFunction();
     if(onceOnly == true){(*this).deleteLater();}
