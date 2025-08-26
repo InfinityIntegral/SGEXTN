@@ -4,12 +4,12 @@
 #include <QObject>
 #include <qtmetamacros.h>
 
-class SGXSingCorrectQuickInterface : public QObject // class allowing SingCorrect to be used in QML
+class SGXSingCorrectQuickInterface : public QObject
 {
     Q_OBJECT
 public:
     SGXSingCorrectQuickInterface() = default;
-    [[nodiscard]] Q_INVOKABLE QString correct(const QString& s) const; // wraps corresponding SGXSingCorrectCore static function for use in QML
+    [[nodiscard]] Q_INVOKABLE QString correct(const QString& s) const;
 };
 
 #endif // SGXSINGCORRECTQUICKINTERFACE_H
