@@ -13,9 +13,9 @@ class SGXFileBinUtilities : public QObject
     Q_OBJECT
 public:
     SGXFileBinUtilities() = delete;
+    static QString binFilePath;
     static void createEmptyBin();
     static void loadBinData();
-    static int deletedFilesLifespan;
     static QHash<SGXIdentifier, std::tuple<QString, SGXTimeStamp>>* deletedFiles;
     static QString pathToMetadataFile;
     static int deleteFile(const QString& s);
@@ -24,7 +24,10 @@ public:
     static int restoreFile(SGXIdentifier x);
     static int permanentDeleteFile(SGXIdentifier x);
     static void permanentClearBin();
-    static void changeFileLifespan(int x);
+    static int getLifespan();
+    static void setLifespan(int x);
+protected:
+    static int lifespan;
 };
 
 #endif // SGXFILEBINUTILITIES_H

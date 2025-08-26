@@ -13,7 +13,6 @@ public:
     SGXFileSystem() = delete;
     static QString rootFilePath;
     static QString userDataFilePath;
-    static QString binFilePath;
     static QString configFilePath;
     static QString joinFilePaths(const QString& a, const QString& b);
     static QString encodeBase16(const QString& s);

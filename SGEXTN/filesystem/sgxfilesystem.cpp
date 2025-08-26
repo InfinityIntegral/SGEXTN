@@ -13,7 +13,6 @@
 QString SGXFileSystem::rootFilePath = "";
 QString SGXFileSystem::userDataFilePath = "";
 QString SGXFileSystem::configFilePath = "";
-QString SGXFileSystem::binFilePath = "";
 
 QString SGXFileSystem::joinFilePaths(const QString &a, const QString &b){
     return (a + '/' + b);

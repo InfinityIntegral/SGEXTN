@@ -1,0 +1,12 @@
+Changelog v5.1.0
+
+SGXFileBinUtilities - refactor lifespan with getter and setter functions
+SGXFileBinUtilities, SGXFileSystem - move path to recycling bin from SGXFileSystem to SGXFileBinUtilities
+
+added:
+
+improved:
+SGXFileBinUtilities
+SGXFileSystem
+
+removed:
