@@ -123,7 +123,7 @@ void SGWColourPicker::updateInputs(){
 
 void SGWColourPicker::updateHue(SGWTouchReceiver * /*unused*/, const std::array<SGXTouchEvent, 5> &t){
     if(t[0].phase == SGXTouchEvent::TouchEnd){return;}
-    float x = 21.0f / 19.0f * static_cast<float>(t[0].x) / static_cast<float>((*SGWColourPicker::hueTouchReceiver).getWidth()) - 0.05f;
+    float x = 21.0f / 19.0f * static_cast<float>(t[0].x) / (*SGWColourPicker::hueTouchReceiver).getWidth() - 0.05f;
     if(x < 0.0f){x = 0.0f;}
     else if(x > 1.0f){x = 1.0f;}
     SGWColourPicker::colourHSLA.h = x * 360.0f;
@@ -132,7 +132,7 @@ void SGWColourPicker::updateHue(SGWTouchReceiver * /*unused*/, const std::array<
 
 void SGWColourPicker::updateSaturation(SGWTouchReceiver */*unused*/, const std::array<SGXTouchEvent, 5> &t){
     if(t[0].phase == SGXTouchEvent::TouchEnd){return;}
-    float x = 21.0f / 19.0f * static_cast<float>(t[0].x) / static_cast<float>((*SGWColourPicker::saturationTouchReceiver).getWidth()) - 0.05f;
+    float x = 21.0f / 19.0f * static_cast<float>(t[0].x) / (*SGWColourPicker::saturationTouchReceiver).getWidth() - 0.05f;
     if(x < 0.0f){x = 0.0f;}
     else if(x > 1.0f){x = 1.0f;}
     SGWColourPicker::colourHSLA.s = x * 100.0f;
@@ -141,7 +141,7 @@ void SGWColourPicker::updateSaturation(SGWTouchReceiver */*unused*/, const std::
 
 void SGWColourPicker::updateLightness(SGWTouchReceiver */*unused*/, const std::array<SGXTouchEvent, 5> &t){
     if(t[0].phase == SGXTouchEvent::TouchEnd){return;}
-    float x = 21.0f / 19.0f * static_cast<float>(t[0].x) / static_cast<float>((*SGWColourPicker::lightnessTouchReceiver).getWidth()) - 0.05f;
+    float x = 21.0f / 19.0f * static_cast<float>(t[0].x) / (*SGWColourPicker::lightnessTouchReceiver).getWidth() - 0.05f;
     if(x < 0.0f){x = 0.0f;}
     else if(x > 1.0f){x = 1.0f;}
     SGWColourPicker::colourHSLA.l = x * 100.0f;
@@ -150,7 +150,7 @@ void SGWColourPicker::updateLightness(SGWTouchReceiver */*unused*/, const std::a
 
 void SGWColourPicker::updateTransparency(SGWTouchReceiver */*unused*/, const std::array<SGXTouchEvent, 5> &t){
     if(t[0].phase == SGXTouchEvent::TouchEnd){return;}
-    float x = 21.0f / 19.0f * static_cast<float>(t[0].x) / static_cast<float>((*SGWColourPicker::transparencyTouchReceiver).getWidth()) - 0.05f;
+    float x = 21.0f / 19.0f * static_cast<float>(t[0].x) / (*SGWColourPicker::transparencyTouchReceiver).getWidth() - 0.05f;
     if(x < 0.0f){x = 0.0f;}
     else if(x > 1.0f){x = 1.0f;}
     SGWColourPicker::colourHSLA.a = x * 100.0f;
