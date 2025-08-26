@@ -8,8 +8,8 @@ class SGXRenderCuteVesiclesQuickUIElement : public QQuickItem
 {
     Q_OBJECT
 public:
-    SGXRenderCuteVesiclesQuickUIElement(); // create instance of animation
-    QSGNode* updatePaintNode(QSGNode* thisNode, UpdatePaintNodeData* /*unused*/) override; // function to update animation screen
+    SGXRenderCuteVesiclesQuickUIElement();
+    QSGNode* updatePaintNode(QSGNode* thisNode, UpdatePaintNodeData* /*unused*/) override;
 };
 
 #endif // SGXRENDERCUTEVESICLESQUICKUIELEMENT_H
