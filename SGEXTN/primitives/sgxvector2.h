@@ -49,16 +49,18 @@ public:
     void reflectAcrossX();
     void reflectAcrossY();
     void reflectAcrossPoint(SGXVector2 x);
-    void reflectAcrossLine(float x1, float y1, float x2, float y2);
+    void reflectAcrossLine(SGXVector2 a, SGXVector2 b);
     void projectToX();
     void projectToY();
-    void projectToLine(float x1, float y1, float x2, float y2);
-    [[nodiscard]] float getDistanceToLine(float x1, float y1, float x2, float y2) const;
-    [[nodiscard]] float getDistanceToSegment(float x1, float y1, float x2, float y2) const;
+    void projectToLine(SGXVector2 a, SGXVector2 b);
+    [[nodiscard]] float getDistanceToLine(SGXVector2 a, SGXVector2 b) const;
+    [[nodiscard]] float getDistanceToSegment(SGXVector2 a, SGXVector2 b) const;
     [[nodiscard]] float getDistanceToCircle(float a, float b, float r) const;
-    [[nodiscard]] SGXVector2 getNearestPointOnLine(float x1, float y1, float x2, float y2) const;
-    [[nodiscard]] SGXVector2 getNearestPointOnSegment(float x1, float y1, float x2, float y2) const;
+    [[nodiscard]] SGXVector2 getNearestPointOnLine(SGXVector2 a, SGXVector2 b) const;
+    [[nodiscard]] SGXVector2 getNearestPointOnSegment(SGXVector2 a, SGXVector2 b) const;
     [[nodiscard]] SGXVector2 getNearestPointOnCircle(float a, float b, float r) const;
+    [[nodiscard]] float dotProduct(SGXVector2 x) const;
+    [[nodiscard]] float crossProduct(SGXVector2 x) const;
 };
 
 inline unsigned int qHash(SGXVector2 x, unsigned int seed = 0){

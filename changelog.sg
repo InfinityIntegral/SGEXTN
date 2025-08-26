@@ -2,11 +2,14 @@ Changelog v5.1.0
 
 SGXFileBinUtilities - refactor lifespan with getter and setter functions
 SGXFileBinUtilities, SGXFileSystem - move path to recycling bin from SGXFileSystem to SGXFileBinUtilities
+SGXVector2 - add dot product and cross product
+SGXVector2 - change functions to take 2 vectors instead of 4 numbers
 
 added:
 
 improved:
 SGXFileBinUtilities
 SGXFileSystem
+SGXVector2
 
 removed:
