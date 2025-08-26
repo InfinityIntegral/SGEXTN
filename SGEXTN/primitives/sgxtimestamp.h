@@ -7,62 +7,62 @@
 #include <bit>
 #include <QDebug>
 
-class SGXTimeStamp // contains the number of seconds since 19650809 123000
+class SGXTimeStamp
 {
 public:
-    long long t; // time in number of seconds since 19650809 123000
-    static const QTimeZone timezone; // default time zone, corresponds to time zone of Singapore
-    static const SGXTimeStamp zero; // 19650809 123000, the time in current time zone when Prime Minister Lee Kuan Yew announced the separation of our nation from Malaysia
-    static const QDateTime zeroAsQDateTime; // time zero as a QDateTime
-    SGXTimeStamp() = default; // default constructor for initialisation purposes
-    SGXTimeStamp(long long t); // constructs timestamp object from the timestamp itself
-    SGXTimeStamp(int year, int month, int day, int hour, int minute, int second); // construct timestamp object from components
-    SGXTimeStamp(const QDateTime& dt); // converts QDateTime to SGXTimeStamp
-    [[nodiscard]] QDateTime getQDateTime() const; // converts SGXTimeStamp to QDateTime
-    [[nodiscard]] QString getString() const; // converts timestamp to string in "yyyyMMdd HHmmss" format
-    [[nodiscard]] QString getStringNoOffset() const; // converts timestamp to string in "yyyyMMdd HHmmss" format without the default year offset of 1965
-    [[nodiscard]] QString getStringCustomFormat(const QString& s) const; // converts timestamp to string in custom format
-    [[nodiscard]] QString getStringNoOffsetCustomFormat(const QString& s) const; // converts timestamp to string in custom format without the default year offset of 1965
-    [[nodiscard]] bool operator==(SGXTimeStamp x) const; // equality comparator by comparing time not struct instance memory location
-    [[nodiscard]] bool operator!=(SGXTimeStamp x) const; // inequality comparator by comparing time not struct instance memory location
-    [[nodiscard]] bool operator<(SGXTimeStamp x) const; // less than comparator using time
-    [[nodiscard]] bool operator>(SGXTimeStamp x) const; // more than comparator using time
-    [[nodiscard]] bool operator<=(SGXTimeStamp x) const; // less than or equal to comparator using time
-    [[nodiscard]] bool operator>=(SGXTimeStamp x) const; // more than or equal to comparator using time
-    void getTimeDifference(SGXTimeStamp x, int& year, int& month, int& day, int& hour, int& minute, int& second, bool& isBefore) const; // get time difference between this timestamp and x, isBefore true if this timestamp is before the other timestamp, the time difference outputs nonnegative integers for each field but uses decimals internally to keep accuracy, note that 1 month = 30 days, 1 year = 12.175 months, which are not exact but close enough to actual months and years
-    [[nodiscard]] float getSecondsFrom(SGXTimeStamp x) const; // compute time difference in seconds required to be added to x to get this timestamp
-    [[nodiscard]] float getMinutesFrom(SGXTimeStamp x) const; // compute time difference in minutes required to be added to x to get this timestamp
-    [[nodiscard]] float getHoursFrom(SGXTimeStamp x) const; // compute time difference in hours required to be added to x to get this timestamp
-    [[nodiscard]] float getDaysFrom(SGXTimeStamp x) const; // compute time difference in days required to be added to x to get this timestamp
-    [[nodiscard]] float getMonthsFrom(SGXTimeStamp x) const; // compute time difference in months required to be added to x to get this timestamp
-    [[nodiscard]] float getYearsFrom(SGXTimeStamp x) const; // compute time difference in years required to be added to x to get this timestamp
-    void addSeconds(long long x); // add x seconds to this timestamp
-    void addMinutes(float x); // add x minutes to this timestamp
-    void addHours(float x); // add x hours to this timestamp
-    void addDays(float x); // add x days to this timestamp
-    void addMonths(float x); // add x months to this timestamp
-    void addYears(float x); // add x years to this timestamp
-    void subtractSeconds(long long x); // subtract x seconds from this timestamp
-    void subtractMinutes(float x); // subtract x minutes from this timestamp
-    void subtractHours(float x); // subtract x hours from this timestamp
-    void subtractDays(float x); // subtract x days from this timestamp
-    void subtractMonths(float x); // subtract x months from this timestamp
-    void subtractYears(float x); // subtract x years from this timestamp
-    [[nodiscard]] static SGXTimeStamp now(); // get timestamp representing the time now
-    [[nodiscard]] int getDayOfWeek() const; // get day of week corresponding to day name in Chinese (1 = Monday, 2 = Tuesday, 3 = Wednesday, 4 = Thursday, 5 = Friday, 6 = Saturday, 7 = Sunday)
-    [[nodiscard]] int getDayOfYear() const; // get day of year as a number between 1 and 365 (366 on leap years) inclusive
-    [[nodiscard]] int getSecond() const; // extract second component
-    [[nodiscard]] int getMinute() const; // extract minute component
-    [[nodiscard]] int getHour() const; // extract hour component
-    [[nodiscard]] int getDay() const; // get day of month as a number between 1 and 31 inclusive
-    [[nodiscard]] int getMonth() const; // get month of year corresponding to month name in Chinese
-    [[nodiscard]] int getYear() const; // get year component
-    [[nodiscard]] int getYearNoOffset() const; // get year component without default offset of 1965
-    [[nodiscard]] bool isNationalDayPeriod() const; // check if the given timestamp is within the official definition of the National Day period (July, August, September)
-    [[nodiscard]] bool isNationalDay() const; // check if the given timestamp is on National Day
-    [[nodiscard]] bool isDayBeforeNationalDay() const; // check if the given timestamp is on the day before National Day
-    [[nodiscard]] bool isDayAfterNationalDay() const; // check if the given timestamp is on the day after National Day
-    [[nodiscard]] QString getSpecialDay() const; // check if the given timestamp coincides with any special day (Total Defence Day, Youth Day etc), return empty string otherwise
+    long long t;
+    static const QTimeZone timezone;
+    static const SGXTimeStamp zero;
+    static const QDateTime zeroAsQDateTime;
+    SGXTimeStamp() = default;
+    SGXTimeStamp(long long t);
+    SGXTimeStamp(int year, int month, int day, int hour, int minute, int second);
+    SGXTimeStamp(const QDateTime& dt);
+    [[nodiscard]] QDateTime getQDateTime() const;
+    [[nodiscard]] QString getString() const;
+    [[nodiscard]] QString getStringNoOffset() const;
+    [[nodiscard]] QString getStringCustomFormat(const QString& s) const;
+    [[nodiscard]] QString getStringNoOffsetCustomFormat(const QString& s) const;
+    [[nodiscard]] bool operator==(SGXTimeStamp x) const;
+    [[nodiscard]] bool operator!=(SGXTimeStamp x) const;
+    [[nodiscard]] bool operator<(SGXTimeStamp x) const;
+    [[nodiscard]] bool operator>(SGXTimeStamp x) const;
+    [[nodiscard]] bool operator<=(SGXTimeStamp x) const;
+    [[nodiscard]] bool operator>=(SGXTimeStamp x) const;
+    void getTimeDifference(SGXTimeStamp x, int& year, int& month, int& day, int& hour, int& minute, int& second, bool& isBefore) const;
+    [[nodiscard]] float getSecondsFrom(SGXTimeStamp x) const;
+    [[nodiscard]] float getMinutesFrom(SGXTimeStamp x) const;
+    [[nodiscard]] float getHoursFrom(SGXTimeStamp x) const;
+    [[nodiscard]] float getDaysFrom(SGXTimeStamp x) const;
+    [[nodiscard]] float getMonthsFrom(SGXTimeStamp x) const;
+    [[nodiscard]] float getYearsFrom(SGXTimeStamp x) const;
+    void addSeconds(long long x);
+    void addMinutes(float x);
+    void addHours(float x);
+    void addDays(float x);
+    void addMonths(float x);
+    void addYears(float x);
+    void subtractSeconds(long long x);
+    void subtractMinutes(float x);
+    void subtractHours(float x);
+    void subtractDays(float x);
+    void subtractMonths(float x);
+    void subtractYears(float x);
+    [[nodiscard]] static SGXTimeStamp now();
+    [[nodiscard]] int getDayOfWeek() const;
+    [[nodiscard]] int getDayOfYear() const;
+    [[nodiscard]] int getSecond() const;
+    [[nodiscard]] int getMinute() const;
+    [[nodiscard]] int getHour() const;
+    [[nodiscard]] int getDay() const;
+    [[nodiscard]] int getMonth() const;
+    [[nodiscard]] int getYear() const;
+    [[nodiscard]] int getYearNoOffset() const;
+    [[nodiscard]] bool isNationalDayPeriod() const;
+    [[nodiscard]] bool isNationalDay() const;
+    [[nodiscard]] bool isDayBeforeNationalDay() const;
+    [[nodiscard]] bool isDayAfterNationalDay() const;
+    [[nodiscard]] QString getSpecialDay() const;
 };
 
 inline unsigned int qHash(SGXTimeStamp x, unsigned int seed = 0){
