@@ -5,16 +5,16 @@
 #include <QQmlComponent>
 #include <qtmetamacros.h>
 
-class SGXFileDownloader : public QObject // non instantiable class containing functions to allow user to download files outside the application folder
+class SGXFileDownloader : public QObject
 {
     Q_OBJECT
 public:
     SGXFileDownloader() = delete;
-    static QQmlComponent* fileDownloadTemplate; // QML template for file downloader
-    static QObject* fileDownloadInstance; // instance of file downloader, deleted after each use
-    static void downloadFile(const QString& s); // function to request a file download using the file found at path s
-    static void checkDownloadedFile(); // callback function to write data into download location
-    static QString sourcePath; // contain path to download source
+    static QQmlComponent* fileDownloadTemplate;
+    static QObject* fileDownloadInstance;
+    static void downloadFile(const QString& s);
+    static void checkDownloadedFile();
+    static QString sourcePath;
 };
 
 #endif // SGXFILEDOWNLOADER_H
