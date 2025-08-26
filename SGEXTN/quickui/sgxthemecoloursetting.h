@@ -6,7 +6,7 @@
 #include "../primitives/sgxcolourrgba.h"
 #include <qtmetamacros.h>
 
-class SGXThemeColourSetting : public QObject // QML compatibility class for package ThemeColours 0.0
+class SGXThemeColourSetting : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QColor noColour READ getNoColour CONSTANT)
