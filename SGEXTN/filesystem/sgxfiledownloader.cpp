@@ -15,7 +15,7 @@ QString SGXFileDownloader::sourcePath = "";
 void SGXFileDownloader::downloadFile(const QString &s){
     if(SGXFileSystem::pathIsValid(s) == false || SGXFileSystem::fileExists(s) != 1){return;}
     if(SGXFileDownloader::fileDownloadTemplate == nullptr){SGXFileDownloader::fileDownloadTemplate = new QQmlComponent(SGXQuickInterface::e, ":/SGEXTN/QML/filedownload.qml");}
-    SGXFileDownloader::fileDownloadInstance = qobject_cast<QObject*>((*SGXFileDownloader::fileDownloadTemplate).create());
+    SGXFileDownloader::fileDownloadInstance = static_cast<QObject*>((*SGXFileDownloader::fileDownloadTemplate).create());
     QObject::connect(SGXFileDownloader::fileDownloadInstance, &QObject::objectNameChanged, &SGXFileDownloader::checkDownloadedFile);
     QMetaObject::invokeMethod(SGXFileDownloader::fileDownloadInstance, "open");
     SGXFileDownloader::sourcePath = s;

@@ -69,7 +69,7 @@ void SGXCentral::initialise(){
     QFontDatabase::addApplicationFont(":/SGEXTN/assets/AppIcons.sg");
     SGUCentralManagement::initialiseExtraFonts();
 
-    SGXQuickInterface::applicationWindow = qobject_cast<QQuickWindow*>((*SGXQuickInterface::e).rootObjects().first());
+    SGXQuickInterface::applicationWindow = static_cast<QQuickWindow*>((*SGXQuickInterface::e).rootObjects().first());
     SGXQuickInterface::rootWindow = (*SGXQuickInterface::applicationWindow).contentItem();
     QObject::connect(SGXQuickInterface::rootWindow, &QQuickItem::widthChanged, SGXQuickInterface::resizerSingleton, &SGXQuickResizer::updateAppWindowSize);
     QObject::connect(SGXQuickInterface::rootWindow, &QQuickItem::heightChanged, SGXQuickInterface::resizerSingleton, &SGXQuickResizer::updateAppWindowSize);
