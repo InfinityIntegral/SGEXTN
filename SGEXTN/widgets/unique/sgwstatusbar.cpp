@@ -8,6 +8,7 @@
 #include "../enums/sgwtype.h"
 #include <QString>
 #include "../../template/sgwcutevesicles.h"
+#include "../../quickui/sgwwidgetquickinterface.h"
 
 SGWStatusBar* SGWStatusBar::instance = nullptr;
 SGXTimer* SGWStatusBar::timer = nullptr;
@@ -21,7 +22,11 @@ SGWStatusBar::SGWStatusBar() : SGWWidget(SGWWidget::rootWidget, 0.0f, 0.0f, 0.0f
     (*this).bottomObject = SGXQuickInterface::getBottomObject(thisItem);
     SGWStatusBar::timer = new SGXTimer(1.0f, &SGWStatusBar::updateTime);
     SGXTimer::singleCall(0.0f, &SGWStatusBar::updateTime);
-    connect(thisItem, &QQuickItem::objectNameChanged, this, &SGWStatusBar::eventReceived);
+    (*this).quickInterface = new SGWWidgetQuickInterface(this);
+}
+
+SGWStatusBar::~SGWStatusBar(){
+    (*(*this).quickInterface).deleteLater();
 }
 
 void SGWStatusBar::terminate(){

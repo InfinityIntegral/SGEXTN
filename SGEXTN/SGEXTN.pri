@@ -21,6 +21,7 @@ SOURCES += SGEXTN/misc/main.cpp \
     $$PWD/bypassquickui/sgxresizer.cpp \
     $$PWD/bypassquickui/sgxthemecolours.cpp \
     $$PWD/filesystem/sgxfile.cpp \
+    $$PWD/quickui/sgwwidgetquickinterface.cpp \
     $$PWD/quickui/sgxsingcorrectquickinterface.cpp \
     $$PWD/quickui/sgxtimerquickinterface.cpp \
     SGEXTN/SingCorrect/sgwsingcorrectcustomisationpage.cpp \
@@ -105,6 +106,7 @@ HEADERS += \
     $$PWD/bypassquickui/sgxresizer.h \
     $$PWD/bypassquickui/sgxthemecolours.h \
     $$PWD/filesystem/sgxfile.h \
+    $$PWD/quickui/sgwwidgetquickinterface.h \
     $$PWD/quickui/sgxsingcorrectquickinterface.h \
     $$PWD/quickui/sgxtimerquickinterface.h \
     SGEXTN/SingCorrect/sgwsingcorrectcustomisationpage.h \

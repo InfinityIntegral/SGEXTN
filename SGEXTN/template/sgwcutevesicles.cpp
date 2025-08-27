@@ -8,7 +8,7 @@ SGXRenderCuteVesiclesSGWidget* SGWCuteVesicles::instance = nullptr;
 SGXTimer* SGWCuteVesicles::timer = nullptr;
 
 void SGWCuteVesicles::refreshAnimation(){
-    (*SGWCuteVesicles::instance).redraw();
+    if(SGWCuteVesicles::instance != nullptr){(*SGWCuteVesicles::instance).redraw();}
 }
 
 void SGWCuteVesicles::startAnimation(){
@@ -19,8 +19,8 @@ void SGWCuteVesicles::startAnimation(){
 }
 
 void SGWCuteVesicles::stopAnimation(){
-    (*SGWCuteVesicles::instance).deleteLater();
     delete SGWCuteVesicles::timer;
+    (*SGWCuteVesicles::instance).deleteLater();
     SGWCuteVesicles::instance = nullptr;
 }
 
