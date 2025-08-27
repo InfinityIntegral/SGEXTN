@@ -7,6 +7,9 @@
 #include "../primitives/sgxidentifier.h"
 #include "../primitives/sgxtimestamp.h"
 #include "../primitives/sgxvector2.h"
+#include <QChar>
+#include <string>
+#include <QByteArray>
 
 class SGXFile
 {
@@ -21,12 +24,14 @@ public:
     QDataStream* fileData;
     [[nodiscard]] bool readBool() const;
     [[nodiscard]] char readChar() const;
+    [[nodiscard]] QChar readQChar() const;
     [[nodiscard]] int readInt() const;
     [[nodiscard]] unsigned int readUnsignedInt() const;
     [[nodiscard]] long long readLongLong() const;
     [[nodiscard]] unsigned long long readUnsignedLongLong() const;
     [[nodiscard]] float readFloat() const;
     [[nodiscard]] double readDouble() const;
+    [[nodiscard]] std::string readCppString() const;
     [[nodiscard]] QString readString() const;
     [[nodiscard]] SGXColourRGBA readColourRGBA() const;
     [[nodiscard]] SGXColourHSLA readColourHSLA() const;
@@ -35,12 +40,14 @@ public:
     [[nodiscard]] SGXVector2 readVector2() const;
     void writeBool(bool x) const;
     void writeChar(char x) const;
+    void writeQChar(QChar x) const;
     void writeInt(int x) const;
     void writeUnsignedInt(unsigned int x) const;
     void writeLongLong(long long x) const;
     void writeUnsignedLongLong(unsigned long long x) const;
     void writeFloat(float x) const;
     void writeDouble(double x) const;
+    void writeCppString(const std::string& x) const;
     void writeString(const QString& x) const;
     void writeColourRGBA(SGXColourRGBA x) const;
     void writeColourHSLA(SGXColourHSLA x) const;

@@ -8,6 +8,9 @@
 #include "../primitives/sgxidentifier.h"
 #include "../primitives/sgxtimestamp.h"
 #include "../primitives/sgxvector2.h"
+#include <QChar>
+#include <string>
+#include <qnamespace.h>
 
 SGXFile::SGXFile(const QString &s){
     fileControl = new QFile(s);
@@ -32,6 +35,12 @@ bool SGXFile::readBool() const {
 
 char SGXFile::readChar() const {
     char x = '\0';
+    (*(*this).fileData) >> x;
+    return x;
+}
+
+QChar SGXFile::readQChar() const {
+    QChar x = '\0';
     (*(*this).fileData) >> x;
     return x;
 }
@@ -72,6 +81,14 @@ double SGXFile::readDouble() const {
     return x;
 }
 
+std::string SGXFile::readCppString() const {
+    int x = 0;
+    (*(*this).fileData) >> x;
+    QByteArray byteSequence(x, Qt::Uninitialized);
+    (*(*this).fileData).readRawData(byteSequence.data(), x);
+    return std::string(byteSequence.constData(), byteSequence.size());
+}
+
 QString SGXFile::readString() const {
     int x = 0;
     (*(*this).fileData) >> x;
@@ -109,6 +126,10 @@ void SGXFile::writeChar(char x) const {
     (*(*this).fileData) << x;
 }
 
+void SGXFile::writeQChar(QChar x) const {
+    (*(*this).fileData) << x;
+}
+
 void SGXFile::writeInt(int x) const {
     (*(*this).fileData) << x;
 }
@@ -131,6 +152,12 @@ void SGXFile::writeFloat(float x) const {
 
 void SGXFile::writeDouble(double x) const {
     (*(*this).fileData) << x;
+}
+
+void SGXFile::writeCppString(const std::string &x) const {
+    const QByteArray byteSequence = QByteArray(x.c_str(), static_cast<long long>(x.size()));
+    (*(*this).fileData) << static_cast<int>(byteSequence.length());
+    (*(*this).fileData).writeRawData(byteSequence.constData(), static_cast<int>(byteSequence.length()));
 }
 
 void SGXFile::writeString(const QString &x) const {
