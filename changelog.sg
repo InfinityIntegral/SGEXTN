@@ -8,9 +8,11 @@ SGXFile - replaces SGXFileReader and SGXFileWriter
 SGXFile - add support for QChar and C++ string
 SGXFile - add validity check
 SGXIdentifier - pass error code by pointer to make error checking optional
+SGXResizer - added
 
 added:
 SGXFile
+SGXResizer
 
 improved:
 SGXFileBinUtilities
