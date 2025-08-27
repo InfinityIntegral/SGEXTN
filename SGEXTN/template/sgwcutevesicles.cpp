@@ -20,7 +20,7 @@ void SGWCuteVesicles::startAnimation(){
 
 void SGWCuteVesicles::stopAnimation(){
     (*SGWCuteVesicles::instance).deleteLater();
-    (*SGWCuteVesicles::timer).deleteLater();
+    delete SGWCuteVesicles::timer;
     SGWCuteVesicles::instance = nullptr;
 }
 

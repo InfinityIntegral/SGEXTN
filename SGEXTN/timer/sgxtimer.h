@@ -1,13 +1,11 @@
 #ifndef SGXTIMER_H
 #define SGXTIMER_H
 
-#include <QObject>
 #include <QTimer>
-#include <qtmetamacros.h>
 
-class SGXTimer : public QObject
+class SGXTimerQuickInterface;
+class SGXTimer
 {
-    Q_OBJECT
 public:
     SGXTimer(float t, void (*attachedFunction)());
     SGXTimer(bool x, float t, void (*attachedFunction)());
@@ -15,18 +13,17 @@ public:
     SGXTimer& operator=(const SGXTimer&) = delete;
     SGXTimer(SGXTimer&&) = delete;
     SGXTimer& operator=(SGXTimer&&) = delete;
-    ~SGXTimer() override;
+    ~SGXTimer();
     void stop() const;
     void start() const;
     void (*attachedFunction)();
     QTimer* timer;
     static void singleCall(float t, void (*attachedFunction)());
+    void runFunction();
 protected:
     float interval;
-private:
     bool onceOnly;
-public slots:
-    void runFunction();
+    SGXTimerQuickInterface* quickInterface;
 };
 
 #endif // SGXTIMER_H
