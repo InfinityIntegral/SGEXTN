@@ -7,6 +7,7 @@
 #include <QObject>
 #include "../enums/sgwtype.h"
 #include <QString>
+#include "../../quickui/sgwwidgetquickinterface.h"
 
 SGWColourPickerWidget::SGWColourPickerWidget(SGWWidget *parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, SGXColourRGBA defaultColour) : SGWWidget(parent, x1, x0, y1, y0, w1, w0, h1, h0){
     (*this).colour = defaultColour;
@@ -25,6 +26,7 @@ SGWColourPickerWidget::SGWColourPickerWidget(SGWWidget *parent, float x1, float 
     (*this).type = SGWType::ColourPicker;
     SGWWidget::syncQuickProperties();
     SGWColourPickerWidget::syncQuickProperties();
+    quickInterface = new SGWWidgetQuickInterface(this);
 }
 
 SGXColourRGBA SGWColourPickerWidget::getColour() const {
@@ -47,7 +49,6 @@ void SGWColourPickerWidget::syncQuickProperties(){
     (*topObject).setProperty("bghc", backgroundHoverColour.getQColour());
     (*topObject).setProperty("bgf", backgroundFocusThemeColour);
     (*topObject).setProperty("bgfc", backgroundFocusColour.getQColour());
-    connect(topObject, &QQuickItem::objectNameChanged, this, &SGWColourPickerWidget::eventReceived);
 }
 
 void SGWColourPickerWidget::eventReceived(const QString &s){
@@ -169,4 +170,8 @@ void (*SGWColourPickerWidget::getAttachedFunction() const)(SGWColourPickerWidget
 
 void SGWColourPickerWidget::setAttachedFunction(void (*function)(SGWColourPickerWidget *)){
     attachedFunction = function;
+}
+
+SGWColourPickerWidget::~SGWColourPickerWidget(){
+    (*quickInterface).deleteLater();
 }

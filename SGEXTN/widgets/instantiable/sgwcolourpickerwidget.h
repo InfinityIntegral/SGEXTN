@@ -1,16 +1,16 @@
 #ifndef SGWCOLOURPICKERWIDGET_H
 #define SGWCOLOURPICKERWIDGET_H
 
-#include <qtmetamacros.h>
 #include "../noninstantiable/sgwwidget.h"
 #include "../../primitives/sgxcolourrgba.h"
 #include <QString>
 
+class SGWWidgetQuickInterface;
 class SGWColourPickerWidget : public SGWWidget
 {
-    Q_OBJECT
 public:
     SGWColourPickerWidget(SGWWidget* parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, SGXColourRGBA defaultColour);
+    ~SGWColourPickerWidget() override;
     void syncQuickProperties();
     [[nodiscard]] SGXColourRGBA getColour() const;
     void setColour(SGXColourRGBA colour);
@@ -32,6 +32,7 @@ public:
     void setE0(float e0);
     [[nodiscard]] void (*getAttachedFunction() const)(SGWColourPickerWidget*);
     void setAttachedFunction(void (*function)(SGWColourPickerWidget*));
+    void eventReceived(const QString& s);
 protected:
     float e1;
     float e0;
@@ -44,8 +45,7 @@ protected:
     int backgroundFocusThemeColour;
     SGXColourRGBA backgroundFocusColour = {};
     void (*attachedFunction)(SGWColourPickerWidget*);
-public slots:
-    void eventReceived(const QString& s);
+    SGWWidgetQuickInterface* quickInterface;
 };
 
 #endif // SGWCOLOURPICKERWIDGET_H

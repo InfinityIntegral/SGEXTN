@@ -7,6 +7,7 @@
 #include "../enums/sgwverticalalignment.h"
 #include <QQuickItem>
 #include "../enums/sgwdefaultfonts.h"
+#include "../../quickui/sgwwidgetquickinterface.h"
 
 SGWInput::SGWInput(SGWWidget *parent, void (*validationFunction)(SGWInput *), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float f1, float f0, SGWHorizontalAlignment::Flag horizontalAlignment, SGWVerticalAlignment::Flag verticalAlignment) : SGWWidget(parent, x1, x0, y1, y0, w1, w0, h1, h0){
     (*this).f1 = f1;
@@ -71,7 +72,7 @@ void SGWInput::syncQuickProperties(){
     (*topObject).setProperty("bghic", backgroundHoverInvalidColour.getQColour());
     (*topObject).setProperty("fghi", foregroundHoverInvalidThemeColour);
     (*topObject).setProperty("fghic", foregroundHoverInvalidColour.getQColour());
-    connect(topObject, &QQuickItem::objectNameChanged, this, &SGWInput::eventReceived);
+    quickInterface = new SGWWidgetQuickInterface(this);
 }
 
 void SGWInput::eventReceived(const QString &s){
@@ -494,4 +495,8 @@ void SGWInput::setForegroundHoverInvalidColour(SGXColourRGBA colour){
     (*this).usingTheme = false;
     (*(*this).topObject).setProperty("fghic", (*this).foregroundHoverInvalidColour.getQColour());
     (*(*this).topObject).setProperty("utc", (*this).usingTheme);
+}
+
+SGWInput::~SGWInput(){
+    (*quickInterface).deleteLater();
 }

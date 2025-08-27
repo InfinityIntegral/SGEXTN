@@ -1,18 +1,18 @@
 #ifndef SGWINPUT_H
 #define SGWINPUT_H
 
-#include <qtmetamacros.h>
 #include "sgwwidget.h"
 #include "../enums/sgwhorizontalalignment.h"
 #include "../enums/sgwverticalalignment.h"
 #include "../../primitives/sgxcolourrgba.h"
 #include <QString>
 
+class SGWWidgetQuickInterface;
 class SGWInput : public SGWWidget
 {
-    Q_OBJECT
 public:
     SGWInput() = delete;
+    ~SGWInput() override;
     void syncQuickProperties();
     [[nodiscard]] float getF1() const;
     void setF1(float f1);
@@ -78,6 +78,7 @@ public:
     void setForegroundHoverInvalidThemeColour(int themeColour);
     [[nodiscard]] SGXColourRGBA getForegroundHoverInvalidColour(bool* isUsing) const;
     void setForegroundHoverInvalidColour(SGXColourRGBA colour);
+    void eventReceived(const QString& s);
 protected:
     SGWInput(SGWWidget* parent, void (*validationFunction)(SGWInput*), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float f1, float f0, SGWHorizontalAlignment::Flag horizontalAlignment, SGWVerticalAlignment::Flag verticalAlignment);
     float f1;
@@ -111,8 +112,7 @@ protected:
     SGXColourRGBA backgroundHoverInvalidColour = {};
     int foregroundHoverInvalidThemeColour;
     SGXColourRGBA foregroundHoverInvalidColour = {};
-public slots:
-    void eventReceived(const QString& s);
+    SGWWidgetQuickInterface* quickInterface;
 };
 
 #endif // SGWINPUT_H

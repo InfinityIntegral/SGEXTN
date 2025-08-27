@@ -7,6 +7,7 @@
 #include <QObject>
 #include "../enums/sgwtype.h"
 #include <QString>
+#include "../../quickui/sgwwidgetquickinterface.h"
 
 SGWTouchReceiver::SGWTouchReceiver(SGWWidget *parent, void (*function)(SGWTouchReceiver *, const std::array<SGXTouchEvent, 5> &), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0) : SGWWidget(parent, x1, x0, y1, y0, w1, w0, h1, h0){
     (*this).function = function;
@@ -14,7 +15,7 @@ SGWTouchReceiver::SGWTouchReceiver(SGWWidget *parent, void (*function)(SGWTouchR
     (*this).initialiseQuickItemReferences(thisItem);
     (*this).type = SGWType::TouchReceiver;
     SGWWidget::syncQuickProperties();
-    connect(thisItem, &QQuickItem::objectNameChanged, this, &SGWTouchReceiver::eventReceived);
+    quickInterface = new SGWWidgetQuickInterface(this);
 }
 
 void SGWTouchReceiver::eventReceived(const QString &s){
@@ -22,7 +23,7 @@ void SGWTouchReceiver::eventReceived(const QString &s){
     QQuickItem* thisItem = topObject;
     std::array<float, 11> data = std::array<float, 11>();
     std::array<SGXTouchEvent, 5> eventsToPass = std::array<SGXTouchEvent, 5>();
-    
+
     if((*thisItem).property("e1").toBool() == true){
         data[0] = (*thisItem).property("e1x").toFloat();
         data[1] = (*thisItem).property("e1y").toFloat();
@@ -38,7 +39,7 @@ void SGWTouchReceiver::eventReceived(const QString &s){
         eventsToPass[0] = SGXTouchEvent(1, data);
     }
     else{eventsToPass[0] = SGXTouchEvent(1);}
-    
+
     if((*thisItem).property("e2").toBool() == true){
         data[0] = (*thisItem).property("e2x").toFloat();
         data[1] = (*thisItem).property("e2y").toFloat();
@@ -54,7 +55,7 @@ void SGWTouchReceiver::eventReceived(const QString &s){
         eventsToPass[1] = SGXTouchEvent(2, data);
     }
     else{eventsToPass[1] = SGXTouchEvent(2);}
-    
+
     if((*thisItem).property("e3").toBool() == true){
         data[0] = (*thisItem).property("e3x").toFloat();
         data[1] = (*thisItem).property("e3y").toFloat();
@@ -70,7 +71,7 @@ void SGWTouchReceiver::eventReceived(const QString &s){
         eventsToPass[2] = SGXTouchEvent(3, data);
     }
     else{eventsToPass[2] = SGXTouchEvent(3);}
-    
+
     if((*thisItem).property("e4").toBool() == true){
         data[0] = (*thisItem).property("e4x").toFloat();
         data[1] = (*thisItem).property("e4y").toFloat();
@@ -86,7 +87,7 @@ void SGWTouchReceiver::eventReceived(const QString &s){
         eventsToPass[3] = SGXTouchEvent(4, data);
     }
     else{eventsToPass[3] = SGXTouchEvent(4);}
-    
+
     if((*thisItem).property("e5").toBool() == true){
         data[0] = (*thisItem).property("e5x").toFloat();
         data[1] = (*thisItem).property("e5y").toFloat();
@@ -102,7 +103,7 @@ void SGWTouchReceiver::eventReceived(const QString &s){
         eventsToPass[4] = SGXTouchEvent(5, data);
     }
     else{eventsToPass[4] = SGXTouchEvent(5);}
-    
+
     (*this).function(this, eventsToPass);
 }
 
@@ -112,4 +113,8 @@ float SGWTouchReceiver::getWidth() const {
 
 float SGWTouchReceiver::getHeight() const {
     return static_cast<float>((*topObject).height());
+}
+
+SGWTouchReceiver::~SGWTouchReceiver(){
+    (*quickInterface).deleteLater();
 }
