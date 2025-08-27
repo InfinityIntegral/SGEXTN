@@ -22,7 +22,7 @@
 #include "../colourpickerrendering/transparencychoice/sgxrendercolourpickertransparencychoicequickuielement.h"
 #include "../colourbackground/sgxrendercolourbackgroundquickuielement.h"
 #include "../SingCorrect/sgxsingcorrectcore.h"
-#include "../SingCorrect/sgxsingcorrectquickinterface.h"
+#include "../quickui/sgxsingcorrectquickinterface.h"
 #include "../SingCorrect/sgxsingcorrectcustomisation.h"
 #include "../quickui/sgxquickinterface.h"
 #include "../widgets/unique/sgwstatusbar.h"

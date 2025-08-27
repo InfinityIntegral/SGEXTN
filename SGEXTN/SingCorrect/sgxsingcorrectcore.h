@@ -3,7 +3,7 @@
 
 #include <QString>
 #include <QHash>
-#include "sgxsingcorrectquickinterface.h"
+#include "../quickui/sgxsingcorrectquickinterface.h"
 
 class SGXSingCorrectCore
 {

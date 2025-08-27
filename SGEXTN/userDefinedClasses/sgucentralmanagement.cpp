@@ -42,6 +42,7 @@ float SGUCentralManagement::cuteVesiclesMembraneTransparency = 0.2f;
 float SGUCentralManagement::cuteVesiclesFrameRate = 10.0f;
 #include "../widgets/instantiable/sgwtextbutton.h"
 #include "../bypassquickui/sgxthemecolours.h"
+#include "../widgets/instantiable/sgwtextinput.h"
 #include <QDebug>
 void f(SGWButton*){qDebug() << SGXThemeColours::getThemeColour(4);}
 // this is run immediately after GUI is created, use it to initialise the UI
@@ -51,6 +52,7 @@ void SGUCentralManagement::initialise(){
     (*x).setF0(3.0f);
     (*x).setTextFromString("a");
     (*x).setBackgroundThemeColour(0);
+    new SGWTextInput(SGWWidget::parentWidget, nullptr, 0.0f, 0.5f, 0.0f, 4.0f, 0.0f, 5.0f, 0.0f, 1.0f);
 }
 
 // this is run after the application is created but before the GUI, use it to edit theme colours from configuration files

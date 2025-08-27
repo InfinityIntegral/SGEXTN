@@ -21,10 +21,10 @@ SOURCES += SGEXTN/misc/main.cpp \
     $$PWD/bypassquickui/sgxresizer.cpp \
     $$PWD/bypassquickui/sgxthemecolours.cpp \
     $$PWD/filesystem/sgxfile.cpp \
+    $$PWD/quickui/sgxsingcorrectquickinterface.cpp \
     SGEXTN/SingCorrect/sgwsingcorrectcustomisationpage.cpp \
     SGEXTN/SingCorrect/sgxsingcorrectcore.cpp \
     SGEXTN/SingCorrect/sgxsingcorrectcustomisation.cpp \
-    SGEXTN/SingCorrect/sgxsingcorrectquickinterface.cpp \
     SGEXTN/colourbackground/sgxrendercolourbackgroundmaterial.cpp \
     SGEXTN/colourbackground/sgxrendercolourbackgroundquickuielement.cpp \
     SGEXTN/colourbackground/sgxrendercolourbackgroundsgwidget.cpp \
@@ -104,10 +104,10 @@ HEADERS += \
     $$PWD/bypassquickui/sgxresizer.h \
     $$PWD/bypassquickui/sgxthemecolours.h \
     $$PWD/filesystem/sgxfile.h \
+    $$PWD/quickui/sgxsingcorrectquickinterface.h \
     SGEXTN/SingCorrect/sgwsingcorrectcustomisationpage.h \
     SGEXTN/SingCorrect/sgxsingcorrectcore.h \
     SGEXTN/SingCorrect/sgxsingcorrectcustomisation.h \
-    SGEXTN/SingCorrect/sgxsingcorrectquickinterface.h \
     SGEXTN/colourbackground/sgxrendercolourbackgroundmaterial.h \
     SGEXTN/colourbackground/sgxrendercolourbackgroundquickuielement.h \
     SGEXTN/colourbackground/sgxrendercolourbackgroundsgwidget.h \

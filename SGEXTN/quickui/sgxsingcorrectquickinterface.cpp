@@ -1,5 +1,5 @@
 #include "sgxsingcorrectquickinterface.h"
-#include "sgxsingcorrectcore.h"
+#include "../SingCorrect/sgxsingcorrectcore.h"
 #include <QString>
 
 QString SGXSingCorrectQuickInterface::correct(const QString &s) const { // NOLINT(readability-convert-member-functions-to-static)
