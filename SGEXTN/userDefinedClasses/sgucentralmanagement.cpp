@@ -43,30 +43,30 @@ float SGUCentralManagement::cuteVesiclesFrameRate = 10.0f;
 
 // this is run immediately after GUI is created, use it to initialise the UI
 void SGUCentralManagement::initialise(){
-    
+
 }
 
 // this is run after the application is created but before the GUI, use it to edit theme colours from configuration files
 // do not use anything GUI related in this function, they are not set up yet
 void SGUCentralManagement::earlyInitialise(){
-    
+
 }
 
 // this is run after builtin fonts are imported, use it to import other fonts
 // use commands in the format
 // QFontDatabase::addApplicationFont([path to your fonts in your assets folder]);
 void SGUCentralManagement::initialiseExtraFonts(){
-    
+
 }
 
 // this is run after builtin custom rendered widgets are registered with QML, use it to register your own custom rendering widgets
 // use commands in the format
 // qmlRegisterType<[type of custom widget]>([name of custom widget], 0, 0, [name of custom widget]);
 void SGUCentralManagement::initialiseCustomRendering(){
-    
+
 }
 
 // this is run before the application terminates, use it to save user data
 void SGUCentralManagement::terminate(){
-    
+
 }
