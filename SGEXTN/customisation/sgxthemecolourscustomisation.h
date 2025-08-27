@@ -1,12 +1,8 @@
 #ifndef SGXTHEMECOLOURSCUSTOMISATION_H
 #define SGXTHEMECOLOURSCUSTOMISATION_H
 
-#include <QObject>
-#include <qtmetamacros.h>
-
-class SGXThemeColoursCustomisation : public QObject
+class SGXThemeColoursCustomisation
 {
-    Q_OBJECT
 public:
     SGXThemeColoursCustomisation() = delete;
     static void loadThemeColours();

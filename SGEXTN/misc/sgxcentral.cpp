@@ -64,15 +64,15 @@ void SGXCentral::initialise(){
     SGUCentralManagement::initialiseCustomRendering();
     (*SGXQuickInterface::e).load(":/SGEXTN/QML/root.qml");
 
-    connect(qApp, &QGuiApplication::aboutToQuit, &SGXCentral::terminate); // NOLINT(cppcoreguidelines-pro-type-static-cast-downcast)
+    QObject::connect(qApp, &QGuiApplication::aboutToQuit, &SGXCentral::terminate); // NOLINT(cppcoreguidelines-pro-type-static-cast-downcast)
     QFontDatabase::addApplicationFont(":/SGEXTN/assets/SingScript.sg");
     QFontDatabase::addApplicationFont(":/SGEXTN/assets/AppIcons.sg");
     SGUCentralManagement::initialiseExtraFonts();
 
     SGXQuickInterface::applicationWindow = qobject_cast<QQuickWindow*>((*SGXQuickInterface::e).rootObjects().first());
     SGXQuickInterface::rootWindow = (*SGXQuickInterface::applicationWindow).contentItem();
-    connect(SGXQuickInterface::rootWindow, &QQuickItem::widthChanged, SGXQuickInterface::resizerSingleton, &SGXQuickResizer::updateAppWindowSize);
-    connect(SGXQuickInterface::rootWindow, &QQuickItem::heightChanged, SGXQuickInterface::resizerSingleton, &SGXQuickResizer::updateAppWindowSize);
+    QObject::connect(SGXQuickInterface::rootWindow, &QQuickItem::widthChanged, SGXQuickInterface::resizerSingleton, &SGXQuickResizer::updateAppWindowSize);
+    QObject::connect(SGXQuickInterface::rootWindow, &QQuickItem::heightChanged, SGXQuickInterface::resizerSingleton, &SGXQuickResizer::updateAppWindowSize);
     SGXQuickInterface::createTemplates();
     SGXQuickInterface::buildBase();
     (*SGXQuickInterface::resizerSingleton).updateAppWindowSize();

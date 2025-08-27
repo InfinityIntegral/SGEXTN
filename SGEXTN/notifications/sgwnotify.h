@@ -1,16 +1,13 @@
 #ifndef SGWNOTIFY_H
 #define SGWNOTIFY_H
 
-#include <QObject>
 #include "../widgets/noninstantiable/sgwwidget.h"
 #include "../widgets/noninstantiable/sgwlabel.h"
 #include <queue>
 #include "../timer/sgxtimer.h"
-#include <qtmetamacros.h>
 
-class SGWNotify : public QObject
+class SGWNotify
 {
-    Q_OBJECT
 public:
     SGWNotify() = delete;
     static float timeShown;

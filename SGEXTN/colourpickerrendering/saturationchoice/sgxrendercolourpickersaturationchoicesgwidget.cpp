@@ -7,7 +7,7 @@
 SGXRenderColourPickerSaturationChoiceSGWidget::SGXRenderColourPickerSaturationChoiceSGWidget(SGWWidget *parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0) : SGWCustomRenderer(parent, ":/SGEXTN/colourpickerrendering/saturationchoice/saturationchoice.qml", x1, x0, y1, y0, w1, w0, h1, h0){
     (*this).selectedHue = 0.0f;
     (*this).selectedSaturation = 0.0f;
-    SGXRenderColourPickerSaturationChoiceQuickUIElement* thisItem = qobject_cast<SGXRenderColourPickerSaturationChoiceQuickUIElement*>(topObject);
+    SGXRenderColourPickerSaturationChoiceQuickUIElement* thisItem = static_cast<SGXRenderColourPickerSaturationChoiceQuickUIElement*>(topObject);
     (*thisItem).selectedHue = (*this).selectedHue;
     (*thisItem).selectedSaturation = (*this).selectedSaturation;
 }
@@ -18,7 +18,7 @@ float SGXRenderColourPickerSaturationChoiceSGWidget::getSelectedHue() const {
 
 void SGXRenderColourPickerSaturationChoiceSGWidget::setSelectedHue(float x){
     (*this).selectedHue = x;
-    (*qobject_cast<SGXRenderColourPickerSaturationChoiceQuickUIElement*>(topObject)).selectedHue = (*this).selectedHue;
+    (*static_cast<SGXRenderColourPickerSaturationChoiceQuickUIElement*>(topObject)).selectedHue = (*this).selectedHue;
 }
 
 float SGXRenderColourPickerSaturationChoiceSGWidget::getSelectedSaturation() const {
@@ -27,5 +27,5 @@ float SGXRenderColourPickerSaturationChoiceSGWidget::getSelectedSaturation() con
 
 void SGXRenderColourPickerSaturationChoiceSGWidget::setSelectedSaturation(float x){
     (*this).selectedSaturation = x;
-    (*qobject_cast<SGXRenderColourPickerSaturationChoiceQuickUIElement*>(topObject)).selectedSaturation = (*this).selectedSaturation;
+    (*static_cast<SGXRenderColourPickerSaturationChoiceQuickUIElement*>(topObject)).selectedSaturation = (*this).selectedSaturation;
 }

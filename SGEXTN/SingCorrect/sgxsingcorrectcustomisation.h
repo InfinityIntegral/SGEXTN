@@ -1,15 +1,12 @@
 #ifndef SGXSINGCORRECTCUSTOMISATION_H
 #define SGXSINGCORRECTCUSTOMISATION_H
 
-#include <QObject>
 #include <QHash>
 #include <QString>
 #include <QChar>
-#include <qtmetamacros.h>
 
-class SGXSingCorrectCustomisation : public QObject
+class SGXSingCorrectCustomisation
 {
-    Q_OBJECT
 public:
     SGXSingCorrectCustomisation() = delete;
     static void loadFileData();

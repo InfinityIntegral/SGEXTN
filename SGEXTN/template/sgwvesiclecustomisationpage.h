@@ -1,16 +1,13 @@
 #ifndef SGWVESICLECUSTOMISATIONPAGE_H
 #define SGWVESICLECUSTOMISATIONPAGE_H
 
-#include <QObject>
 #include "../widgets/noninstantiable/sgwbackground.h"
 #include "../widgets/noninstantiable/sgwinput.h"
-#include <qtmetamacros.h>
 #include "../widgets/noninstantiable/sgwbutton.h"
 #include "../widgets/noninstantiable/sgwlabel.h"
 
-class SGWVesicleCustomisationPage : public QObject
+class SGWVesicleCustomisationPage
 {
-    Q_OBJECT
 public:
     SGWVesicleCustomisationPage() = delete;
     static SGWBackground* instance;

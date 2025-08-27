@@ -1,8 +1,6 @@
 #ifndef SGWSINGCORRECTCUSTOMISATIONPAGE_H
 #define SGWSINGCORRECTCUSTOMISATIONPAGE_H
 
-#include <QObject>
-#include <qtmetamacros.h>
 #include <QHash>
 #include "../widgets/noninstantiable/sgwbackground.h"
 #include "../widgets/noninstantiable/sgwbutton.h"
@@ -10,9 +8,8 @@
 #include "../widgets/noninstantiable/sgwinput.h"
 #include "../widgets/noninstantiable/sgwwidget.h"
 
-class SGWSingCorrectCustomisationPage : public QObject
+class SGWSingCorrectCustomisationPage
 {
-    Q_OBJECT
 public:
     SGWSingCorrectCustomisationPage() = delete;
     static SGWBackground* instance;

@@ -1,14 +1,12 @@
 #ifndef SGWLONGINPUT_H
 #define SGWLONGINPUT_H
 
-#include <qtmetamacros.h>
 #include "../noninstantiable/sgwinput.h"
 #include "../noninstantiable/sgwwidget.h"
 #include "../../primitives/sgxcolourrgba.h"
 
 class SGWLongInput : public SGWInput
 {
-    Q_OBJECT
 public:
     SGWLongInput(SGWWidget* parent, void (*validationFunction)(SGWInput*), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float f1, float f0, float s1, float s0);
     void syncQuickProperties();

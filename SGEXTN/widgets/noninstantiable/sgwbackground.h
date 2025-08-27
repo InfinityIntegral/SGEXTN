@@ -1,13 +1,11 @@
 #ifndef SGWBACKGROUND_H
 #define SGWBACKGROUND_H
 
-#include <qtmetamacros.h>
 #include "sgwwidget.h"
 #include "../../primitives/sgxcolourrgba.h"
 
 class SGWBackground : public SGWWidget
 {
-    Q_OBJECT
 public:
     SGWBackground() = delete;
     [[nodiscard]] int getThemeColour(bool* isUsing) const;

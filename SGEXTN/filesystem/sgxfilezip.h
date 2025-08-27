@@ -1,14 +1,11 @@
 #ifndef SGXFILEZIP_H
 #define SGXFILEZIP_H
 
-#include <QObject>
-#include <qtmetamacros.h>
 #include <qcontainerfwd.h>
 #include <tuple>
 
-class SGXFileZip : public QObject
+class SGXFileZip
 {
-    Q_OBJECT
 public:
     SGXFileZip() = delete;
     static int makeZip(const QString& path, const QString& zipLocation);

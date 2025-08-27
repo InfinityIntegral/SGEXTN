@@ -2,7 +2,6 @@
 #define SGWWIDGET_H
 
 #include <QObject>
-#include <qtmetamacros.h>
 #include "../enums/sgwtype.h"
 #include <QQuickItem>
 #include <QSet>
@@ -10,7 +9,6 @@
 
 class SGWWidget : public QObject
 {
-    Q_OBJECT
 public:
     SGWWidget() = delete;
     SGWWidget(const SGWWidget&) = delete;

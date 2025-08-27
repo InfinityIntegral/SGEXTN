@@ -1,7 +1,6 @@
 #ifndef SGWLONGLABEL_H
 #define SGWLONGLABEL_H
 
-#include <qtmetamacros.h>
 #include "../noninstantiable/sgwlabel.h"
 #include "../noninstantiable/sgwwidget.h"
 #include <QString>
@@ -9,7 +8,6 @@
 
 class SGWLongLabel : public SGWLabel
 {
-    Q_OBJECT
 public:
     SGWLongLabel(SGWWidget* parent, const QString& s, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float f1, float f0, float s1, float s0, float p1, float p0);
     void syncQuickProperties();

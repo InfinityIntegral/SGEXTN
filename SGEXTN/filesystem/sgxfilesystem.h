@@ -1,14 +1,11 @@
 #ifndef SGXFILESYSTEM_H
 #define SGXFILESYSTEM_H
 
-#include <QObject>
-#include <qtmetamacros.h>
 #include <qcontainerfwd.h>
 #include "../primitives/sgxtimestamp.h"
 
-class SGXFileSystem : public QObject
+class SGXFileSystem
 {
-    Q_OBJECT
 public:
     SGXFileSystem() = delete;
     static QString rootFilePath;

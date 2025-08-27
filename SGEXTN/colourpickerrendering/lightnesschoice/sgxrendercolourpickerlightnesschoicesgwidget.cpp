@@ -8,7 +8,7 @@ SGXRenderColourPickerLightnessChoiceSGWidget::SGXRenderColourPickerLightnessChoi
     (*this).selectedHue = 0.0f;
     (*this).selectedSaturation = 0.0f;
     (*this).selectedLightness = 0.0f;
-    SGXRenderColourPickerLightnessChoiceQuickUIElement* thisItem = qobject_cast<SGXRenderColourPickerLightnessChoiceQuickUIElement*>(topObject);
+    SGXRenderColourPickerLightnessChoiceQuickUIElement* thisItem = static_cast<SGXRenderColourPickerLightnessChoiceQuickUIElement*>(topObject);
     (*thisItem).selectedHue = (*this).selectedHue;
     (*thisItem).selectedSaturation = (*this).selectedSaturation;
     (*thisItem).selectedLightness = (*this).selectedLightness;
@@ -20,7 +20,7 @@ float SGXRenderColourPickerLightnessChoiceSGWidget::getSelectedHue() const {
 
 void SGXRenderColourPickerLightnessChoiceSGWidget::setSelectedHue(float x){
     (*this).selectedHue = x;
-    (*qobject_cast<SGXRenderColourPickerLightnessChoiceQuickUIElement*>(topObject)).selectedHue = (*this).selectedHue;
+    (*static_cast<SGXRenderColourPickerLightnessChoiceQuickUIElement*>(topObject)).selectedHue = (*this).selectedHue;
 }
 
 float SGXRenderColourPickerLightnessChoiceSGWidget::getSelectedSaturation() const {
@@ -29,7 +29,7 @@ float SGXRenderColourPickerLightnessChoiceSGWidget::getSelectedSaturation() cons
 
 void SGXRenderColourPickerLightnessChoiceSGWidget::setSelectedSaturation(float x){
     (*this).selectedSaturation = x;
-    (*qobject_cast<SGXRenderColourPickerLightnessChoiceQuickUIElement*>(topObject)).selectedSaturation = (*this).selectedSaturation;
+    (*static_cast<SGXRenderColourPickerLightnessChoiceQuickUIElement*>(topObject)).selectedSaturation = (*this).selectedSaturation;
 }
 
 float SGXRenderColourPickerLightnessChoiceSGWidget::getSelectedLightness() const {
@@ -38,5 +38,5 @@ float SGXRenderColourPickerLightnessChoiceSGWidget::getSelectedLightness() const
 
 void SGXRenderColourPickerLightnessChoiceSGWidget::setSelectedLightness(float x){
     (*this).selectedLightness = x;
-    (*qobject_cast<SGXRenderColourPickerLightnessChoiceQuickUIElement*>(topObject)).selectedLightness = (*this).selectedLightness;
+    (*static_cast<SGXRenderColourPickerLightnessChoiceQuickUIElement*>(topObject)).selectedLightness = (*this).selectedLightness;
 }

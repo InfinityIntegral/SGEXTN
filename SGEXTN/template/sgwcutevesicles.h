@@ -1,14 +1,11 @@
 #ifndef SGWCUTEVESICLES_H
 #define SGWCUTEVESICLES_H
 
-#include <QObject>
 #include "../cutevesicles/sgxrendercutevesiclessgwidget.h"
 #include "../timer/sgxtimer.h"
-#include <qtmetamacros.h>
 
-class SGWCuteVesicles : public QObject
+class SGWCuteVesicles
 {
-    Q_OBJECT
 public:
     SGWCuteVesicles() = delete;
     static float framesPerSecond;

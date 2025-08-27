@@ -40,10 +40,16 @@ float SGUCentralManagement::cuteVesiclesCenterTransparency = 0.1f;
 float SGUCentralManagement::cuteVesiclesEdgeTransparency = 0.05f;
 float SGUCentralManagement::cuteVesiclesMembraneTransparency = 0.2f;
 float SGUCentralManagement::cuteVesiclesFrameRate = 10.0f;
-
+#include "../widgets/instantiable/sgwtextbutton.h"
+#include <QDebug>
+void f(SGWButton*){qDebug() << "pressed";}
 // this is run immediately after GUI is created, use it to initialise the UI
 void SGUCentralManagement::initialise(){
-
+    SGWButton* x = new SGWTextButton(SGWWidget::parentWidget, "test", &f, 0.0f, 0.5f, 0.0f, 0.5f, 0.0f, 5.0f, 0.0f, 1.0f);
+    (*x).setH0(2.0f);
+    (*x).setF0(3.0f);
+    (*x).setTextFromString("a");
+    (*x).setBackgroundThemeColour(0);
 }
 
 // this is run after the application is created but before the GUI, use it to edit theme colours from configuration files

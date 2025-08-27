@@ -1,11 +1,9 @@
 #ifndef SGWCOLOURPICKER_H
 #define SGWCOLOURPICKER_H
 
-#include <QObject>
 #include "../widgets/noninstantiable/sgwbackground.h"
 #include "../primitives/sgxcolourrgba.h"
 #include "../primitives/sgxcolourhsla.h"
-#include <qtmetamacros.h>
 #include "../colourpickerrendering/huechoice/sgxrendercolourpickerhuechoicesgwidget.h"
 #include "../widgets/instantiable/sgwtouchreceiver.h"
 #include <array>
@@ -18,9 +16,8 @@
 #include "../widgets/instantiable/sgwcolourpickerwidget.h"
 #include "../widgets/noninstantiable/sgwbutton.h"
 
-class SGWColourPicker : public QObject
+class SGWColourPicker
 {
-    Q_OBJECT
 public:
     SGWColourPicker() = delete;
     static SGWBackground* instance;

@@ -1,17 +1,14 @@
 #ifndef SGXQUICKINTERFACE_H
 #define SGXQUICKINTERFACE_H
 
-#include <QObject>
 #include <QQmlComponent>
 #include <QQmlApplicationEngine>
 #include <QQuickItem>
-#include <qtmetamacros.h>
 #include "sgxquickresizer.h"
 #include "sgxthemecoloursetting.h"
 
-class SGXQuickInterface : public QObject
+class SGXQuickInterface
 {
-    Q_OBJECT
 public:
     SGXQuickInterface() = delete;
     static QQmlApplicationEngine* e;

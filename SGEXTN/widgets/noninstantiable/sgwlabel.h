@@ -1,7 +1,6 @@
 #ifndef SGWLABEL_H
 #define SGWLABEL_H
 
-#include <qtmetamacros.h>
 #include "sgwwidget.h"
 #include "../../primitives/sgxcolourrgba.h"
 #include <QString>
@@ -10,7 +9,6 @@
 
 class SGWLabel : public SGWWidget
 {
-    Q_OBJECT
 public:
     SGWLabel() = delete;
     void syncQuickProperties();

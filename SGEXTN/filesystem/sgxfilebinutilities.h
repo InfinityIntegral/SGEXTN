@@ -1,16 +1,13 @@
 #ifndef SGXFILEBINUTILITIES_H
 #define SGXFILEBINUTILITIES_H
 
-#include <QObject>
 #include <tuple>
 #include "../primitives/sgxidentifier.h"
 #include "../primitives/sgxtimestamp.h"
-#include <qtmetamacros.h>
 #include <QHash>
 
-class SGXFileBinUtilities : public QObject
+class SGXFileBinUtilities
 {
-    Q_OBJECT
 public:
     SGXFileBinUtilities() = delete;
     static QString binFilePath;

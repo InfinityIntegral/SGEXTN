@@ -184,7 +184,7 @@ void SGWWidget::updateParentSizeNoPush(){
     }
     else{
         if((*parent).type == SGWType::ScrollView){
-            SGWScrollView* parentScrollView = qobject_cast<SGWScrollView*>(parent);
+            SGWScrollView* parentScrollView = static_cast<SGWScrollView*>(parent);
             const float scrollViewW1 = (*parentScrollView).w1 - (*parentScrollView).getS1();
             const float scrollViewW0 = (*parentScrollView).w0 - (*parentScrollView).getS0();
             const float scrollViewH1 = (*parentScrollView).getI1();
@@ -195,7 +195,7 @@ void SGWWidget::updateParentSizeNoPush(){
             (*this).parentH0 = scrollViewH1 * (*parent).parentH0 + scrollViewH0;
         }
         else if((*parent).type == SGWType::SequentialScrollView){
-            SGWSequentialScrollView* parentScrollView = qobject_cast<SGWSequentialScrollView*>(parent);
+            SGWSequentialScrollView* parentScrollView = static_cast<SGWSequentialScrollView*>(parent);
             const float scrollViewW1 = (*parentScrollView).w1 - (*parentScrollView).getS1();
             const float scrollViewW0 = (*parentScrollView).w0 - (*parentScrollView).getS0();
             (*this).parentW1 = scrollViewW1 * (*parent).parentW1;

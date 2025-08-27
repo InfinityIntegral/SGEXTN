@@ -1,13 +1,10 @@
 #ifndef SGXFILEDOWNLOADER_H
 #define SGXFILEDOWNLOADER_H
 
-#include <QObject>
 #include <QQmlComponent>
-#include <qtmetamacros.h>
 
-class SGXFileDownloader : public QObject
+class SGXFileDownloader
 {
-    Q_OBJECT
 public:
     SGXFileDownloader() = delete;
     static QQmlComponent* fileDownloadTemplate;

@@ -9,7 +9,7 @@ SGXRenderColourPickerTransparencyChoiceSGWidget::SGXRenderColourPickerTransparen
     (*this).selectedSaturation = 0.0f;
     (*this).selectedLightness = 0.0f;
     (*this).selectedTransparency = 0.0f;
-    SGXRenderColourPickerTransparencyChoiceQuickUIElement* thisItem = qobject_cast<SGXRenderColourPickerTransparencyChoiceQuickUIElement*>(topObject);
+    SGXRenderColourPickerTransparencyChoiceQuickUIElement* thisItem = static_cast<SGXRenderColourPickerTransparencyChoiceQuickUIElement*>(topObject);
     (*thisItem).selectedHue = (*this).selectedHue;
     (*thisItem).selectedSaturation = (*this).selectedSaturation;
     (*thisItem).selectedLightness = (*this).selectedLightness;
@@ -22,7 +22,7 @@ float SGXRenderColourPickerTransparencyChoiceSGWidget::getSelectedHue() const {
 
 void SGXRenderColourPickerTransparencyChoiceSGWidget::setSelectedHue(float x){
     (*this).selectedHue = x;
-    (*qobject_cast<SGXRenderColourPickerTransparencyChoiceQuickUIElement*>(topObject)).selectedHue = (*this).selectedHue;
+    (*static_cast<SGXRenderColourPickerTransparencyChoiceQuickUIElement*>(topObject)).selectedHue = (*this).selectedHue;
 }
 
 float SGXRenderColourPickerTransparencyChoiceSGWidget::getSelectedSaturation() const {
@@ -31,7 +31,7 @@ float SGXRenderColourPickerTransparencyChoiceSGWidget::getSelectedSaturation() c
 
 void SGXRenderColourPickerTransparencyChoiceSGWidget::setSelectedSaturation(float x){
     (*this).selectedSaturation = x;
-    (*qobject_cast<SGXRenderColourPickerTransparencyChoiceQuickUIElement*>(topObject)).selectedSaturation = (*this).selectedSaturation;
+    (*static_cast<SGXRenderColourPickerTransparencyChoiceQuickUIElement*>(topObject)).selectedSaturation = (*this).selectedSaturation;
 }
 
 float SGXRenderColourPickerTransparencyChoiceSGWidget::getSelectedLightness() const {
@@ -40,7 +40,7 @@ float SGXRenderColourPickerTransparencyChoiceSGWidget::getSelectedLightness() co
 
 void SGXRenderColourPickerTransparencyChoiceSGWidget::setSelectedLightness(float x){
     (*this).selectedLightness = x;
-    (*qobject_cast<SGXRenderColourPickerTransparencyChoiceQuickUIElement*>(topObject)).selectedLightness = (*this).selectedLightness;
+    (*static_cast<SGXRenderColourPickerTransparencyChoiceQuickUIElement*>(topObject)).selectedLightness = (*this).selectedLightness;
 }
 
 float SGXRenderColourPickerTransparencyChoiceSGWidget::getSelectedTransparency() const {
@@ -49,5 +49,5 @@ float SGXRenderColourPickerTransparencyChoiceSGWidget::getSelectedTransparency()
 
 void SGXRenderColourPickerTransparencyChoiceSGWidget::setSelectedTransparency(float x){
     (*this).selectedTransparency = x;
-    (*qobject_cast<SGXRenderColourPickerTransparencyChoiceQuickUIElement*>(topObject)).selectedTransparency = (*this).selectedTransparency;
+    (*static_cast<SGXRenderColourPickerTransparencyChoiceQuickUIElement*>(topObject)).selectedTransparency = (*this).selectedTransparency;
 }

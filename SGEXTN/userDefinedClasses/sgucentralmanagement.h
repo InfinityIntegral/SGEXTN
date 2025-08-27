@@ -1,13 +1,10 @@
 #ifndef SGUCENTRALMANAGEMENT_H
 #define SGUCENTRALMANAGEMENT_H
 
-#include <QObject>
-#include <qtmetamacros.h>
 #include "../primitives/sgxcolourrgba.h"
 
-class SGUCentralManagement : public QObject
+class SGUCentralManagement
 {
-    Q_OBJECT
 public:
     SGUCentralManagement() = delete;
     static void initialise();

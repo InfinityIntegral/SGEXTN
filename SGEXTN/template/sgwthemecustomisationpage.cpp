@@ -172,7 +172,7 @@ void SGWThemeCustomisationPage::updateElements(){
     (*SGWThemeCustomisationPage::confirmButton).setBackgroundFocusColour(SGWThemeCustomisationPage::themeColours.at(2));
     (*SGWThemeCustomisationPage::confirmButton).setForegroundFocusColour(SGWThemeCustomisationPage::themeColours.at(6));
     (*SGWThemeCustomisationPage::detailsScroll).setColour(SGWThemeCustomisationPage::themeColours.at(8));
-    SGWSequentialScrollView* x = qobject_cast<SGWSequentialScrollView*>(SGWThemeCustomisationPage::detailsScroll);
+    SGWSequentialScrollView* x = static_cast<SGWSequentialScrollView*>(SGWThemeCustomisationPage::detailsScroll);
     (*x).setScrollbarBackgroundColour(SGWThemeCustomisationPage::themeColours.at(4));
     (*x).setScrollbarForegroundColour(SGWThemeCustomisationPage::themeColours.at(6));
     (*x).setScrollbarBackgroundHoverColour(SGWThemeCustomisationPage::themeColours.at(3));

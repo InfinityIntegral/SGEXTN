@@ -1,15 +1,12 @@
 #ifndef SGXSINGCORRECTCORE_H
 #define SGXSINGCORRECTCORE_H
 
-#include <QObject>
 #include <QString>
 #include <QHash>
-#include "qtmetamacros.h"
 #include "sgxsingcorrectquickinterface.h"
 
-class SGXSingCorrectCore : public QObject
+class SGXSingCorrectCore
 {
-    Q_OBJECT
 public:
     SGXSingCorrectCore() = delete;
     static QString correct(const QString& s);

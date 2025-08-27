@@ -15,7 +15,7 @@ void (*SGXFileUploader::fileAcceptor)(const QString&) = nullptr;
 void SGXFileUploader::uploadFile(void (*attachedFunction)(const QString &)){
     if(SGXFileUploader::fileUploadTemplate == nullptr){SGXFileUploader::fileUploadTemplate = new QQmlComponent(SGXQuickInterface::e, ":/SGEXTN/QML/fileupload.qml");}
     SGXFileUploader::fileUploadInstance = qobject_cast<QObject*>((*SGXFileUploader::fileUploadTemplate).create());
-    connect(SGXFileUploader::fileUploadInstance, &QObject::objectNameChanged, &SGXFileUploader::checkUploadedFile);
+    QObject::connect(SGXFileUploader::fileUploadInstance, &QObject::objectNameChanged, &SGXFileUploader::checkUploadedFile);
     QMetaObject::invokeMethod(SGXFileUploader::fileUploadInstance, "open");
     SGXFileUploader::fileAcceptor = attachedFunction;
 }

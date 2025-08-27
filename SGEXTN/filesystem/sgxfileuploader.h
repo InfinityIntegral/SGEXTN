@@ -1,13 +1,10 @@
 #ifndef SGXFILEUPLOADER_H
 #define SGXFILEUPLOADER_H
 
-#include <QObject>
 #include <QQmlComponent>
-#include <qtmetamacros.h>
 
-class SGXFileUploader : public QObject
+class SGXFileUploader
 {
-    Q_OBJECT
 public:
     SGXFileUploader() = delete;
     static QQmlComponent* fileUploadTemplate;

@@ -1,19 +1,16 @@
 #ifndef SGWTHEMECUSTOMISATIONPAGE_H
 #define SGWTHEMECUSTOMISATIONPAGE_H
 
-#include <qtmetamacros.h>
 #include "../widgets/noninstantiable/sgwbackground.h"
 #include "../widgets/noninstantiable/sgwbutton.h"
-#include <QObject>
 #include <array>
 #include "../widgets/noninstantiable/sgwlabel.h"
 #include "../widgets/instantiable/sgwblankwidget.h"
 #include "../primitives/sgxcolourrgba.h"
 #include "../widgets/instantiable/sgwcolourpickerwidget.h"
 
-class SGWThemeCustomisationPage : public QObject
+class SGWThemeCustomisationPage
 {
-    Q_OBJECT
 public:
     SGWThemeCustomisationPage() = delete;
     static void activate();
