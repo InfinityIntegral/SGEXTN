@@ -1,8 +1,7 @@
 #include "sgxthemecolourscustomisation.h"
 #include "../filesystem/sgxfilesystem.h"
-#include "../filesystem/sgxfilewriter.h"
+#include "../filesystem/sgxfile.h"
 #include "../userDefinedClasses/sgucentralmanagement.h"
-#include "../filesystem/sgxfilereader.h"
 #include "../primitives/sgxtimestamp.h"
 #include "../primitives/sgxcolourrgba.h"
 #include <QString>
@@ -23,7 +22,7 @@ void SGXThemeColoursCustomisation::loadThemeColours(){
     const QString path = SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "themecolours.sg");
     if(SGXFileSystem::fileExists(path) == 1){
         {
-            const SGXFileReader fileReader(path);
+            const SGXFile fileReader(path);
             SGUCentralManagement::themeColour0 = fileReader.readColourRGBA();
             SGUCentralManagement::themeColour1 = fileReader.readColourRGBA();
             SGUCentralManagement::themeColour2 = fileReader.readColourRGBA();
@@ -42,7 +41,7 @@ void SGXThemeColoursCustomisation::syncThemeColours(){
     if(SGXFileSystem::fileExists(path) != 0){SGXFileSystem::permanentDeleteFile(path);}
     SGXFileSystem::createFile(path);
     {
-        const SGXFileWriter fileWriter(path);
+        const SGXFile fileWriter(path);
         fileWriter.writeColourRGBA(SGUCentralManagement::themeColour0);
         fileWriter.writeColourRGBA(SGUCentralManagement::themeColour1);
         fileWriter.writeColourRGBA(SGUCentralManagement::themeColour2);

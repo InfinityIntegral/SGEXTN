@@ -1,15 +1,14 @@
 #include "sgxvesiclespropertiescustomisation.h"
 #include "../filesystem/sgxfilesystem.h"
-#include "../filesystem/sgxfilewriter.h"
+#include "../filesystem/sgxfile.h"
 #include "../userDefinedClasses/sgucentralmanagement.h"
-#include "../filesystem/sgxfilereader.h"
 #include <QString>
 
 void SGXVesiclesPropertiesCustomisation::loadVesicleProperties(){
     const QString path = SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "vesicleproperties.sg");
     if(SGXFileSystem::fileExists(path) == 1){
         {
-            const SGXFileReader fileReader(path);
+            const SGXFile fileReader(path);
             SGUCentralManagement::cuteVesiclesMembraneThickness = fileReader.readFloat();
             SGUCentralManagement::cuteVesiclesMaximumCenterDistance = fileReader.readFloat();
             SGUCentralManagement::cuteVesiclesMaximumVelocity = fileReader.readFloat();
@@ -32,7 +31,7 @@ void SGXVesiclesPropertiesCustomisation::syncVesicleProperties(){
     if(SGXFileSystem::fileExists(path) != 0){SGXFileSystem::permanentDeleteFile(path);}
     SGXFileSystem::createFile(path);
     {
-        const SGXFileWriter fileWriter(path);
+        const SGXFile fileWriter(path);
         fileWriter.writeFloat(SGUCentralManagement::cuteVesiclesMembraneThickness);
         fileWriter.writeFloat(SGUCentralManagement::cuteVesiclesMaximumCenterDistance);
         fileWriter.writeFloat(SGUCentralManagement::cuteVesiclesMaximumVelocity);

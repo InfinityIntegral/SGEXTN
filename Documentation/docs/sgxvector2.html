@@ -13,7 +13,7 @@ This constructor creates a SGXVector2 from its x and y coordinates.
 #sp const SGXVector2 $origin
 This property stores the origin, or the SGXVector2 (0, 0).
 #f [[nodiscard]] QString $getStringForPrinting() const
-This function generates a string representing this SGXVector2 for display to the user. To write it to file, you are strongly encouraged to use a binary file and write the x and y coordinates using SGXFileWriter::writeFloat(float) instead.
+This function generates a string representing this SGXVector2 for display to the user. To write it to file, you are strongly encouraged to use a binary file and write the x and y coordinates using SGXFile::writeFloat(float) instead.
 #f [[nodiscard]] float $getMagnitude() const
 This function computes the magnitude of this SGXVector2.
 #f [[nodiscard]] float $getMagnitudeSquare() const

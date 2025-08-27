@@ -19,4 +19,4 @@ This function unregisters (undo registration) this SGXIdentifier. If it was neve
 #f [[nodiscard]] bool $exists() const
 This function checks if this identifier has already been registered. It returns true if the identifier is already registered and false otherwise.
 #f [[nodiscard]] QString $getStringForPrinting() const
-This function generates the string representation of this SGXIdentifier. The string identifier can be used for display to the user. For writing to a file, you are strongly encouraged to use a binary file format and use SGXFileWriter::writeGUID(SGXIdentifier) to write the identifier.
+This function generates the string representation of this SGXIdentifier. The string identifier can be used for display to the user. For writing to a file, you are strongly encouraged to use a binary file format and use SGXFile::writeGUID(SGXIdentifier) to write the identifier.

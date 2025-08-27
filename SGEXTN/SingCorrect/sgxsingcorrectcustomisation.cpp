@@ -1,7 +1,6 @@
 #include "sgxsingcorrectcustomisation.h"
 #include "../filesystem/sgxfilesystem.h"
-#include "../filesystem/sgxfilereader.h"
-#include "../filesystem/sgxfilewriter.h"
+#include "../filesystem/sgxfile.h"
 #include <QHash>
 #include <QString>
 #include <QChar>
@@ -16,7 +15,7 @@ void SGXSingCorrectCustomisation::loadFileData(){
     SGXSingCorrectCustomisation::database = new QHash<QString, QChar>();
     if(SGXFileSystem::fileExists(path) != 1){return;}
     {
-        const SGXFileReader fileReader = SGXFileReader(path);
+        const SGXFile fileReader = SGXFile(path);
         SGXSingCorrectCustomisation::moduleEnabled = fileReader.readBool();
         SGXSingCorrectCore::correctionPrefix = fileReader.readString();
         const int n = fileReader.readInt();
@@ -33,7 +32,7 @@ void SGXSingCorrectCustomisation::syncFileData(){
     if(SGXFileSystem::fileExists(path) != 0){SGXFileSystem::permanentDeleteFile(path);}
     SGXFileSystem::createFile(path);
     {
-        const SGXFileWriter fileWriter = SGXFileWriter(path);
+        const SGXFile fileWriter = SGXFile(path);
         fileWriter.writeBool(SGXSingCorrectCustomisation::moduleEnabled);
         fileWriter.writeString(SGXSingCorrectCore::correctionPrefix);
         if(SGXSingCorrectCustomisation::database != nullptr){

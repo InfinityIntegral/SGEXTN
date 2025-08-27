@@ -5,8 +5,7 @@
 #include <QString>
 #include <QMetaObject>
 #include <QUrl>
-#include "sgxfilereader.h"
-#include "sgxfilewriter.h"
+#include "sgxfile.h"
 #include "../quickui/sgxquickinterface.h"
 
 QQmlComponent* SGXFileDownloader::fileDownloadTemplate = nullptr;
@@ -27,8 +26,8 @@ void SGXFileDownloader::checkDownloadedFile(){
     if(urlPath != ""){
         urlPath = QUrl(urlPath).toLocalFile();
         {
-            const SGXFileReader fileReader(sourcePath);
-            const SGXFileWriter fileWriter(urlPath);
+            const SGXFile fileReader(sourcePath);
+            const SGXFile fileWriter(urlPath);
             fileWriter.writeBytes(fileReader.readAllBytes());
         }
     }

@@ -5,8 +5,7 @@
 #include <QString>
 #include <QMetaObject>
 #include <QUrl>
-#include "sgxfilereader.h"
-#include "sgxfilewriter.h"
+#include "sgxfile.h"
 #include "../quickui/sgxquickinterface.h"
 
 QQmlComponent* SGXFileUploader::fileUploadTemplate = nullptr;
@@ -29,8 +28,8 @@ void SGXFileUploader::checkUploadedFile(){
         if(SGXFileSystem::folderExists(SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "temp")) != 1){SGXFileSystem::createFolder(SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "temp"));}
         SGXFileSystem::createFile(realPath);
         {
-            const SGXFileReader fileReader(urlPath);
-            const SGXFileWriter fileWriter(realPath);
+            const SGXFile fileReader(urlPath);
+            const SGXFile fileWriter(realPath);
             fileWriter.writeBytes(fileReader.readAllBytes());
         }
         SGXFileUploader::fileAcceptor(realPath);

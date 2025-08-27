@@ -2,8 +2,7 @@
 #include "sgxfilesystem.h"
 #include <QFile>
 #include <QDir>
-#include "sgxfilewriter.h"
-#include "sgxfilereader.h"
+#include "sgxfile.h"
 #include <QFileInfo>
 #include <QHash>
 #include <tuple>
@@ -21,7 +20,7 @@ void SGXFileBinUtilities::loadBinData(){
     if(QFile::exists(SGXFileBinUtilities::pathToMetadataFile) == false){SGXFileBinUtilities::createEmptyBin();}
     SGXFileBinUtilities::deletedFiles = new QHash<SGXIdentifier, std::tuple<QString, SGXTimeStamp>>();
     {
-        const SGXFileReader fileReader(SGXFileBinUtilities::pathToMetadataFile);
+        const SGXFile fileReader(SGXFileBinUtilities::pathToMetadataFile);
         SGXFileBinUtilities::lifespan = fileReader.readInt();
         const int deletedFilesNumber = fileReader.readInt();
         for(int i=0; i<deletedFilesNumber; i++){
@@ -40,7 +39,7 @@ void SGXFileBinUtilities::createEmptyBin(){
     if(QDir(SGXFileBinUtilities::binFilePath).exists() == true){QDir(SGXFileBinUtilities::binFilePath).removeRecursively();}
     QDir().mkpath(SGXFileBinUtilities::binFilePath);
     {
-        const SGXFileWriter fileWriter(SGXFileBinUtilities::pathToMetadataFile);
+        const SGXFile fileWriter(SGXFileBinUtilities::pathToMetadataFile);
         fileWriter.writeInt(SGXFileBinUtilities::lifespan);
         fileWriter.writeInt(0);
     }
@@ -48,7 +47,7 @@ void SGXFileBinUtilities::createEmptyBin(){
 
 void SGXFileBinUtilities::syncMetadata(){
     {
-        const SGXFileWriter fileWriter(SGXFileBinUtilities::pathToMetadataFile);
+        const SGXFile fileWriter(SGXFileBinUtilities::pathToMetadataFile);
         fileWriter.writeInt(SGXFileBinUtilities::lifespan);
         fileWriter.writeInt(static_cast<int>((*SGXFileBinUtilities::deletedFiles).size()));
         for(QHash<SGXIdentifier, std::tuple<QString, SGXTimeStamp>>::const_iterator i = (*SGXFileBinUtilities::deletedFiles).constBegin(); i != (*SGXFileBinUtilities::deletedFiles).constEnd(); i++){
@@ -120,7 +119,7 @@ int SGXFileBinUtilities::getLifespan(){
 void SGXFileBinUtilities::setLifespan(int x){
     SGXFileBinUtilities::lifespan = x;
     {
-        const SGXFileWriter fileWriter(SGXFileBinUtilities::pathToMetadataFile);
+        const SGXFile fileWriter(SGXFileBinUtilities::pathToMetadataFile);
         fileWriter.writeInt(SGXFileBinUtilities::lifespan);
     }
 }
