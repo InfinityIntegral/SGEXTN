@@ -22,6 +22,7 @@ public:
     ~SGXFile();
     QFile* fileControl;
     QDataStream* fileData;
+    bool isValid;
     [[nodiscard]] bool readBool() const;
     [[nodiscard]] char readChar() const;
     [[nodiscard]] QChar readQChar() const;

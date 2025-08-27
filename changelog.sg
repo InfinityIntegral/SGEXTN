@@ -6,6 +6,7 @@ SGXVector2 - add dot product and cross product
 SGXVector2 - change functions to take 2 vectors instead of 4 numbers
 SGXFile - replaces SGXFileReader and SGXFileWriter
 SGXFile - add support for QChar and C++ string
+SGXFile - add validity check
 
 added:
 SGXFile

@@ -11,14 +11,19 @@
 #include <QChar>
 #include <string>
 #include <qnamespace.h>
+#include "sgxfilesystem.h"
 
 SGXFile::SGXFile(const QString &s){
-    fileControl = new QFile(s);
-    (*fileControl).open(QIODevice::ReadWrite);
-    fileData = new QDataStream(fileControl);
-    (*fileData).setByteOrder(QDataStream::LittleEndian);
-    (*fileData).setVersion(QDataStream::Qt_6_9);
-    (*fileData).setFloatingPointPrecision(QDataStream::SinglePrecision);
+    if(SGXFileSystem::pathIsValid(s) == false || SGXFileSystem::fileExists(s) != 1){isValid = false;}
+    else{
+        isValid = true;
+        fileControl = new QFile(s);
+        (*fileControl).open(QIODevice::ReadWrite);
+        fileData = new QDataStream(fileControl);
+        (*fileData).setByteOrder(QDataStream::LittleEndian);
+        (*fileData).setVersion(QDataStream::Qt_6_9);
+        (*fileData).setFloatingPointPrecision(QDataStream::SinglePrecision);
+    }
 }
 
 SGXFile::~SGXFile(){
