@@ -29,16 +29,19 @@ SGXIdentifier::SGXIdentifier(int /*placeholder*/){
     (*this).d = 0u;
 }
 
-SGXIdentifier::SGXIdentifier(unsigned int a, unsigned int b, unsigned int c, unsigned int d, bool ifValid, int &errCode){
+SGXIdentifier::SGXIdentifier(unsigned int a, unsigned int b, unsigned int c, unsigned int d, bool ifValid, int *errCode){
     (*this).a = a;
     (*this).b = b;
     (*this).c = c;
     (*this).d = d;
-    if((*this) == SGXIdentifier::nullIdentifier){errCode = 2;}
-    else if(ifValid == true && (*this).exists() == true){errCode = 1;}
+    if(errCode != nullptr){
+        if((*this) == SGXIdentifier::nullIdentifier){(*errCode) = 2;}
+        else if(ifValid == true && (*this).exists() == true){(*errCode) = 1;}
+        else{(*errCode) = 0;}
+    }
 }
 
-SGXIdentifier::SGXIdentifier(const QString &s, bool ifValid, int &errCode){
+SGXIdentifier::SGXIdentifier(const QString &s, bool ifValid, int *errCode){
     unsigned int a = 0u;
     unsigned int b = 0u;
     unsigned int c = 0u;
@@ -65,8 +68,11 @@ SGXIdentifier::SGXIdentifier(const QString &s, bool ifValid, int &errCode){
     (*this).b = b;
     (*this).c = c;
     (*this).d = d;
-    if((*this) == SGXIdentifier::nullIdentifier){errCode = 2;}
-    else if(ifValid == true && (*this).exists() == true){errCode = 1;}
+    if(errCode != nullptr){
+        if((*this) == SGXIdentifier::nullIdentifier){(*errCode) = 2;}
+        else if(ifValid == true && (*this).exists() == true){(*errCode) = 1;}
+        else{(*errCode) = 0;}
+    }
 }
 
 int SGXIdentifier::registerIdentifier() const {

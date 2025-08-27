@@ -7,6 +7,7 @@ SGXVector2 - change functions to take 2 vectors instead of 4 numbers
 SGXFile - replaces SGXFileReader and SGXFileWriter
 SGXFile - add support for QChar and C++ string
 SGXFile - add validity check
+SGXIdentifier - pass error code by pointer to make error checking optional
 
 added:
 SGXFile
@@ -15,6 +16,7 @@ improved:
 SGXFileBinUtilities
 SGXFileSystem
 SGXVector2
+SGXIdentifier
 
 removed:
 SGXFileReader

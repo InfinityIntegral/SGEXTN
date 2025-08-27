@@ -16,8 +16,8 @@ public:
     SGXIdentifier() = default;
     SGXIdentifier(bool ifValid);
     SGXIdentifier(int);
-    SGXIdentifier(unsigned int a, unsigned int b, unsigned int c, unsigned int d, bool ifValid, int& errCode);
-    SGXIdentifier(const QString& s, bool ifValid, int& errCode);
+    SGXIdentifier(unsigned int a, unsigned int b, unsigned int c, unsigned int d, bool ifValid, int* errCode);
+    SGXIdentifier(const QString& s, bool ifValid, int* errCode);
     [[nodiscard]] int registerIdentifier() const;
     [[nodiscard]] int unregisterIdentifier() const;
     [[nodiscard]] bool exists() const;

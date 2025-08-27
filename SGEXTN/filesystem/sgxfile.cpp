@@ -26,6 +26,16 @@ SGXFile::SGXFile(const QString &s){
     }
 }
 
+SGXFile::SGXFile(const QString &s, bool /*unused*/){
+    isValid = false;
+    fileControl = new QFile(s);
+    (*fileControl).open(QIODevice::ReadWrite);
+    fileData = new QDataStream(fileControl);
+    (*fileData).setByteOrder(QDataStream::LittleEndian);
+    (*fileData).setVersion(QDataStream::Qt_6_9);
+    (*fileData).setFloatingPointPrecision(QDataStream::SinglePrecision);
+}
+
 SGXFile::~SGXFile(){
     (*fileControl).close();
     delete fileData;
@@ -115,8 +125,7 @@ SGXTimeStamp SGXFile::readTimeStamp() const {
 }
 
 SGXIdentifier SGXFile::readIdentifier() const {
-    int errCode = 0;
-    return SGXIdentifier(readUnsignedInt(), readUnsignedInt(), readUnsignedInt(), readUnsignedInt(), false, errCode);
+    return SGXIdentifier(readUnsignedInt(), readUnsignedInt(), readUnsignedInt(), readUnsignedInt(), false, nullptr);
 }
 
 SGXVector2 SGXFile::readVector2() const {

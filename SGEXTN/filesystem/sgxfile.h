@@ -15,6 +15,7 @@ class SGXFile
 {
 public:
     SGXFile(const QString& s);
+    SGXFile(const QString &s, bool /*unused*/);
     SGXFile(const SGXFile&) = delete;
     SGXFile(const SGXFile&&) = delete;
     SGXFile& operator=(const SGXFile&) = delete;

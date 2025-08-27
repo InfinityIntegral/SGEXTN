@@ -29,7 +29,6 @@ public:
     [[nodiscard]] bool operator>(SGXTimeStamp x) const;
     [[nodiscard]] bool operator<=(SGXTimeStamp x) const;
     [[nodiscard]] bool operator>=(SGXTimeStamp x) const;
-    void getTimeDifference(SGXTimeStamp x, int& year, int& month, int& day, int& hour, int& minute, int& second, bool& isBefore) const;
     [[nodiscard]] float getSecondsFrom(SGXTimeStamp x) const;
     [[nodiscard]] float getMinutesFrom(SGXTimeStamp x) const;
     [[nodiscard]] float getHoursFrom(SGXTimeStamp x) const;
