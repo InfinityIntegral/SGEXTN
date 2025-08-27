@@ -2,7 +2,6 @@
 #include "../primitives/sgxcolourrgba.h"
 #include <QObject>
 #include <QColor>
-#include <qtmetamacros.h>
 #include "../userDefinedClasses/sgucentralmanagement.h"
 
 SGXThemeColourSetting::SGXThemeColourSetting(){

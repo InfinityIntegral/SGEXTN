@@ -1,7 +1,6 @@
 #include "sgxquickresizer.h"
 #include "../quickui/sgxquickinterface.h"
 #include <algorithm>
-#include <qtmetamacros.h>
 
 SGXQuickResizer::SGXQuickResizer(){
     (*this).appWindowWidth = 0.0f;

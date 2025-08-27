@@ -3,7 +3,6 @@
 
 #include <QObject>
 #include "../timer/sgxtimer.h"
-#include <qtmetamacros.h>
 
 class SGXTimerQuickInterface : public QObject
 {
@@ -11,9 +10,6 @@ class SGXTimerQuickInterface : public QObject
 public:
     SGXTimerQuickInterface(SGXTimer* x);
     SGXTimer* x;
-signals:
-    void doNothing();
-public slots:
     void runFunction() const;
 };
 
