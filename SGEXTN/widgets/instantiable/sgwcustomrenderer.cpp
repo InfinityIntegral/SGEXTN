@@ -6,7 +6,6 @@
 #include "../noninstantiable/sgwwidget.h"
 #include "../enums/sgwtype.h"
 #include <QQuickItem>
-#include <QObject>
 
 QHash<QString, QQmlComponent*>* SGWCustomRenderer::componentDatabase = nullptr;
 
@@ -14,7 +13,7 @@ SGWCustomRenderer::SGWCustomRenderer(SGWWidget* parent, const QString& qmlCodeLo
     (*this).type = SGWType::CustomRenderer;
     if(SGWCustomRenderer::componentDatabase == nullptr){SGWCustomRenderer::componentDatabase = new QHash<QString, QQmlComponent*>();}
     if((*SGWCustomRenderer::componentDatabase).contains(qmlCodeLocation) == false){(*SGWCustomRenderer::componentDatabase).insert(qmlCodeLocation, new QQmlComponent(SGXQuickInterface::e, qmlCodeLocation));}
-    QQuickItem* thisItem = qobject_cast<QQuickItem*>((*(*SGWCustomRenderer::componentDatabase)[qmlCodeLocation]).create());
+    QQuickItem* thisItem = static_cast<QQuickItem*>((*(*SGWCustomRenderer::componentDatabase)[qmlCodeLocation]).create());
     (*this).initialiseQuickItemReferences(thisItem);
     (*this).bottomObject = (*this).topObject;
     SGWWidget::syncQuickProperties();

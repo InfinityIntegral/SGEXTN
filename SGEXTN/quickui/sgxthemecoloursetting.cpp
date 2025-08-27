@@ -1,6 +1,5 @@
 #include "sgxthemecoloursetting.h"
 #include "../primitives/sgxcolourrgba.h"
-#include <QObject>
 #include <QColor>
 #include "../userDefinedClasses/sgucentralmanagement.h"
 

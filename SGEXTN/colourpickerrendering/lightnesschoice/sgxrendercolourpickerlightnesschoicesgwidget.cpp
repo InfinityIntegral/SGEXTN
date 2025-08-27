@@ -2,7 +2,6 @@
 #include "sgxrendercolourpickerlightnesschoicequickuielement.h"
 #include "../../widgets/noninstantiable/sgwwidget.h"
 #include "../../widgets/instantiable/sgwcustomrenderer.h"
-#include <QObject>
 
 SGXRenderColourPickerLightnessChoiceSGWidget::SGXRenderColourPickerLightnessChoiceSGWidget(SGWWidget *parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0) : SGWCustomRenderer(parent, ":/SGEXTN/colourpickerrendering/lightnesschoice/lightnesschoice.qml", x1, x0, y1, y0, w1, w0, h1, h0){
     (*this).selectedHue = 0.0f;

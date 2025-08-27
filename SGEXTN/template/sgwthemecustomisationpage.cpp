@@ -11,7 +11,6 @@
 #include <array>
 #include "../widgets/instantiable/sgwblankwidget.h"
 #include <QString>
-#include <QObject>
 #include "../widgets/instantiable/sgwtextlabel.h"
 #include "../widgets/enums/sgwhorizontalalignment.h"
 #include <QRandomGenerator>

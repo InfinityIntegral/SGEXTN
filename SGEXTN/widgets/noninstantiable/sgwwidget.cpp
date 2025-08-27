@@ -3,7 +3,6 @@
 #include <QSet>
 #include <qcontainerfwd.h>
 #include <QQuickItem>
-#include <QObject>
 #include "../instantiable/sgwscrollview.h"
 #include "../../quickui/sgxquickinterface.h"
 #include "../instantiable/sgwsequentialscrollview.h"

@@ -5,7 +5,6 @@
 #include "../enums/sgwhorizontalalignment.h"
 #include "../enums/sgwverticalalignment.h"
 #include <QQuickItem>
-#include <QObject>
 #include "../enums/sgwtype.h"
 #include "../../primitives/sgxcolourrgba.h"
 
@@ -24,7 +23,7 @@ SGWLongInput::SGWLongInput(SGWWidget *parent, void (*validationFunction)(SGWInpu
     (*this).scrollbarBackgroundFocusColour = (*SGXQuickInterface::themeColoursSingleton).getThemeColour((*this).scrollbarBackgroundFocusThemeColour);
     (*this).scrollbarForegroundFocusThemeColour = 4;
     (*this).scrollbarForegroundFocusColour = (*SGXQuickInterface::themeColoursSingleton).getThemeColour((*this).scrollbarForegroundFocusThemeColour);
-    QQuickItem* thisItem = qobject_cast<QQuickItem*>((*SGXQuickInterface::longInput).create());
+    QQuickItem* thisItem = static_cast<QQuickItem*>((*SGXQuickInterface::longInput).create());
     (*this).initialiseQuickItemReferences(thisItem);
     (*this).type = SGWType::LongInput;
     SGWWidget::syncQuickProperties();

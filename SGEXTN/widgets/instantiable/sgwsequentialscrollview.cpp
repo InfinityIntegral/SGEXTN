@@ -3,7 +3,6 @@
 #include "../noninstantiable/sgwwidget.h"
 #include "../noninstantiable/sgwbackground.h"
 #include <QQuickItem>
-#include <QObject>
 #include "../enums/sgwtype.h"
 #include "../../primitives/sgxcolourrgba.h"
 
@@ -22,7 +21,7 @@ SGWSequentialScrollView::SGWSequentialScrollView(SGWWidget *parent, float x1, fl
     (*this).scrollbarBackgroundFocusColour = (*SGXQuickInterface::themeColoursSingleton).getThemeColour((*this).scrollbarBackgroundFocusThemeColour);
     (*this).scrollbarForegroundFocusThemeColour = 4;
     (*this).scrollbarForegroundFocusColour = (*SGXQuickInterface::themeColoursSingleton).getThemeColour((*this).scrollbarForegroundFocusThemeColour);
-    QQuickItem* thisItem = qobject_cast<QQuickItem*>((*SGXQuickInterface::sequentialScrollView).create());
+    QQuickItem* thisItem = static_cast<QQuickItem*>((*SGXQuickInterface::sequentialScrollView).create());
     (*this).initialiseQuickItemReferences(thisItem);
     (*this).type = SGWType::SequentialScrollView;
     SGWWidget::syncQuickProperties();

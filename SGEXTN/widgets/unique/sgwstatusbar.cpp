@@ -3,7 +3,6 @@
 #include "../../quickui/sgxquickinterface.h"
 #include "../../primitives/sgxtimestamp.h"
 #include "../../timer/sgxtimer.h"
-#include <QObject>
 #include <QQuickItem>
 #include "../enums/sgwtype.h"
 #include <QString>
@@ -14,7 +13,7 @@ SGWStatusBar* SGWStatusBar::instance = nullptr;
 SGXTimer* SGWStatusBar::timer = nullptr;
 
 SGWStatusBar::SGWStatusBar() : SGWWidget(SGWWidget::rootWidget, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f){
-    QQuickItem* thisItem = qobject_cast<QQuickItem*>((*SGXQuickInterface::statusBar).create());
+    QQuickItem* thisItem = static_cast<QQuickItem*>((*SGXQuickInterface::statusBar).create());
     (*thisItem).setParentItem((*SGWWidget::rootWidget).getBottomObject());
     (*thisItem).setParent((*SGWWidget::rootWidget).getBottomObject());
     (*this).type = SGWType::StatusBar;

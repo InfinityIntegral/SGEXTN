@@ -2,6 +2,7 @@
 #define SGXFILEUPLOADER_H
 
 #include <QQmlComponent>
+#include <QObject>
 
 class SGXFileUploader
 {

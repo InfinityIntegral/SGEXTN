@@ -2,11 +2,10 @@
 #include "../../quickui/sgxquickinterface.h"
 #include "../noninstantiable/sgwwidget.h"
 #include <QQuickItem>
-#include <QObject>
 #include "../enums/sgwtype.h"
 
 SGWParent::SGWParent() : SGWWidget(SGWWidget::rootWidget, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f, -1.0f){
-    QQuickItem* thisItem = qobject_cast<QQuickItem*>((*SGXQuickInterface::parentWidget).create());
+    QQuickItem* thisItem = static_cast<QQuickItem*>((*SGXQuickInterface::parentWidget).create());
     (*thisItem).setParentItem((*SGWWidget::rootWidget).getBottomObject());
     (*thisItem).setParent((*SGWWidget::rootWidget).getBottomObject());
     (*this).type = SGWType::Parent;

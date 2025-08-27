@@ -4,7 +4,6 @@
 #include "../noninstantiable/sgwwidget.h"
 #include "../../primitives/sgxcolourrgba.h"
 #include <QQuickItem>
-#include <QObject>
 #include "../enums/sgwtype.h"
 #include <QString>
 #include "../../quickui/sgwwidgetquickinterface.h"
@@ -21,7 +20,7 @@ SGWColourPickerWidget::SGWColourPickerWidget(SGWWidget *parent, float x1, float 
     (*this).backgroundHoverColour = (*SGXQuickInterface::themeColoursSingleton).getThemeColour((*this).backgroundHoverThemeColour);
     (*this).backgroundFocusThemeColour = 2;
     (*this).backgroundFocusColour = (*SGXQuickInterface::themeColoursSingleton).getThemeColour((*this).backgroundFocusThemeColour);
-    QQuickItem* thisItem = qobject_cast<QQuickItem*>((*SGXQuickInterface::colourPicker).create());
+    QQuickItem* thisItem = static_cast<QQuickItem*>((*SGXQuickInterface::colourPicker).create());
     (*this).initialiseQuickItemReferences(thisItem);
     (*this).type = SGWType::ColourPicker;
     SGWWidget::syncQuickProperties();

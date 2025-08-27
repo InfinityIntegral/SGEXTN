@@ -4,14 +4,13 @@
 #include <array>
 #include "../../primitives/sgxtouchevent.h"
 #include <QQuickItem>
-#include <QObject>
 #include "../enums/sgwtype.h"
 #include <QString>
 #include "../../quickui/sgwwidgetquickinterface.h"
 
 SGWTouchReceiver::SGWTouchReceiver(SGWWidget *parent, void (*function)(SGWTouchReceiver *, const std::array<SGXTouchEvent, 5> &), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0) : SGWWidget(parent, x1, x0, y1, y0, w1, w0, h1, h0){
     (*this).function = function;
-    QQuickItem* thisItem = qobject_cast<QQuickItem*>((*SGXQuickInterface::touchReceiver).create());
+    QQuickItem* thisItem = static_cast<QQuickItem*>((*SGXQuickInterface::touchReceiver).create());
     (*this).initialiseQuickItemReferences(thisItem);
     (*this).type = SGWType::TouchReceiver;
     SGWWidget::syncQuickProperties();

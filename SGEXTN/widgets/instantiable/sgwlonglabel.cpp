@@ -4,7 +4,6 @@
 #include <QString>
 #include "../noninstantiable/sgwlabel.h"
 #include <QQuickItem>
-#include <QObject>
 #include "../enums/sgwtype.h"
 #include "../../primitives/sgxcolourrgba.h"
 #include "../enums/sgwhorizontalalignment.h"
@@ -28,7 +27,7 @@ SGWLongLabel::SGWLongLabel(SGWWidget *parent, const QString &s, float x1, float 
     (*this).scrollbarBackgroundFocusColour = (*SGXQuickInterface::themeColoursSingleton).getThemeColour((*this).scrollbarBackgroundFocusThemeColour);
     (*this).scrollbarForegroundFocusThemeColour = 4;
     (*this).scrollbarForegroundFocusColour = (*SGXQuickInterface::themeColoursSingleton).getThemeColour((*this).scrollbarForegroundFocusThemeColour);
-    QQuickItem* thisItem = qobject_cast<QQuickItem*>((*SGXQuickInterface::longLabel).create());
+    QQuickItem* thisItem = static_cast<QQuickItem*>((*SGXQuickInterface::longLabel).create());
     (*this).initialiseQuickItemReferences(thisItem);
     (*this).type = SGWType::LongLabel;
     SGWWidget::syncQuickProperties();
