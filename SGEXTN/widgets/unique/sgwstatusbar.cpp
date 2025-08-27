@@ -26,7 +26,7 @@ SGWStatusBar::SGWStatusBar() : SGWWidget(SGWWidget::rootWidget, 0.0f, 0.0f, 0.0f
 }
 
 SGWStatusBar::~SGWStatusBar(){
-    (*(*this).quickInterface).deleteLater();
+    (*quickInterface).deleteLater();
 }
 
 void SGWStatusBar::terminate(){

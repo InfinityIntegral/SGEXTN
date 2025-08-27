@@ -188,7 +188,7 @@ void SGWSingCorrectCustomisationPage::refreshList(){
     SGWSingCorrectCustomisationPage::buttonsList = new QHash<SGWButton*, QString>();
     const QVector<SGWWidget*> c = (*SGWSingCorrectCustomisationPage::listParent).getChildren();
     for(int i=0; i<c.length(); i++){
-        (*c.at(i)).deleteLater();
+        delete c.at(i);
     }
     for(QHash<QString, QChar>::iterator i = (*SGXSingCorrectCustomisation::database).begin(); i != (*SGXSingCorrectCustomisation::database).end(); i++){
         SGWWidget* x = new SGWBlankWidget(SGWSingCorrectCustomisationPage::listParent, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 8);

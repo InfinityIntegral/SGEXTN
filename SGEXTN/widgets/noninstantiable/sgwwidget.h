@@ -1,13 +1,12 @@
 #ifndef SGWWIDGET_H
 #define SGWWIDGET_H
 
-#include <QObject>
 #include "../enums/sgwtype.h"
 #include <QQuickItem>
 #include <QSet>
 #include <qcontainerfwd.h>
 
-class SGWWidget : public QObject
+class SGWWidget
 {
 public:
     SGWWidget() = delete;
@@ -15,7 +14,7 @@ public:
     SGWWidget& operator=(const SGWWidget&) = delete;
     SGWWidget(SGWWidget&&) = delete;
     SGWWidget& operator=(SGWWidget&&) = delete;
-    ~SGWWidget() override;
+    virtual ~SGWWidget();
     [[nodiscard]] SGWType::Type getType() const;
     [[nodiscard]] SGWWidget* getParent() const;
     [[nodiscard]] QVector<SGWWidget*> getChildren() const;

@@ -18,7 +18,7 @@ SGWLabel* SGWNotify::pullDownInstance = nullptr;
 SGXTimer* SGWNotify::pullDownTimer = nullptr;
 
 void SGWNotify::terminate(){
-    (*(*SGWNotify::instance).front()).deleteLater();
+    delete (*SGWNotify::instance).front();
     (*SGWNotify::instance).pop();
 }
 

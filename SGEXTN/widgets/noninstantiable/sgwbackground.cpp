@@ -54,6 +54,6 @@ void SGWBackground::enable(SGWBackground *&thisPointer, SGWBackground *(*initFun
 
 void SGWBackground::disable(SGWBackground *&thisPointer){
     if(thisPointer == nullptr){return;}
-    (*thisPointer).deleteLater();
+    delete thisPointer;
     thisPointer = nullptr;
 }
