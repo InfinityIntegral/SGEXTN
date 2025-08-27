@@ -9,10 +9,12 @@ SGXFile - add support for QChar and C++ string
 SGXFile - add validity check
 SGXIdentifier - pass error code by pointer to make error checking optional
 SGXResizer - added
+SGXThemeColours - added
 
 added:
 SGXFile
 SGXResizer
+SGXThemeColours
 
 improved:
 SGXFileBinUtilities

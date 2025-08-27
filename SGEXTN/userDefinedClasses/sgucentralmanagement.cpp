@@ -41,9 +41,9 @@ float SGUCentralManagement::cuteVesiclesEdgeTransparency = 0.05f;
 float SGUCentralManagement::cuteVesiclesMembraneTransparency = 0.2f;
 float SGUCentralManagement::cuteVesiclesFrameRate = 10.0f;
 #include "../widgets/instantiable/sgwtextbutton.h"
-#include "../bypassquickui/sgxresizer.h"
+#include "../bypassquickui/sgxthemecolours.h"
 #include <QDebug>
-void f(SGWButton*){qDebug() << SGXResizer::getSizeUnit();}
+void f(SGWButton*){qDebug() << SGXThemeColours::getThemeColour(4);}
 // this is run immediately after GUI is created, use it to initialise the UI
 void SGUCentralManagement::initialise(){
     SGWButton* x = new SGWTextButton(SGWWidget::parentWidget, "test", &f, 0.0f, 0.5f, 0.0f, 0.5f, 0.0f, 5.0f, 0.0f, 1.0f);

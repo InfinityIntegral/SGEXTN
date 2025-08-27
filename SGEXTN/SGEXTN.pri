@@ -19,6 +19,7 @@ DISTFILES += .gitignore LICENSE.txt README.md \
     compilecommands.txt
 SOURCES += SGEXTN/misc/main.cpp \
     $$PWD/bypassquickui/sgxresizer.cpp \
+    $$PWD/bypassquickui/sgxthemecolours.cpp \
     $$PWD/filesystem/sgxfile.cpp \
     SGEXTN/SingCorrect/sgwsingcorrectcustomisationpage.cpp \
     SGEXTN/SingCorrect/sgxsingcorrectcore.cpp \
@@ -101,6 +102,7 @@ SOURCES += SGEXTN/misc/main.cpp \
 RESOURCES += SGEXTN/assets.qrc
 HEADERS += \
     $$PWD/bypassquickui/sgxresizer.h \
+    $$PWD/bypassquickui/sgxthemecolours.h \
     $$PWD/filesystem/sgxfile.h \
     SGEXTN/SingCorrect/sgwsingcorrectcustomisationpage.h \
     SGEXTN/SingCorrect/sgxsingcorrectcore.h \
