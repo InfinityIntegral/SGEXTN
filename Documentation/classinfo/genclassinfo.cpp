@@ -106,15 +106,15 @@ std::string genClassInfo(std::string input){
     std::vector<std::string> childrenClasses;
     std::pair<std::string, std::string> enumName;
     std::string enumDescription;
-    std::map<std::string, std::string, StringComparator> enumFlags;
-    std::map<std::string, std::string, StringComparator> memberProperties;
-    std::map<std::string, std::string, StringComparator> memberFunctions;
-    std::map<std::string, std::string, StringComparator> staticProperties;
-    std::map<std::string, std::string, StringComparator> staticFunctions;
-    std::map<std::string, std::string, StringComparator> memberReimplemented;
-    std::map<std::string, std::string, StringComparator> staticReimplemented;
+    std::map<std::string, std::string> enumFlags;
+    std::map<std::string, std::string> memberProperties;
+    std::map<std::string, std::string> memberFunctions;
+    std::map<std::string, std::string> staticProperties;
+    std::map<std::string, std::string> staticFunctions;
+    std::map<std::string, std::string> memberReimplemented;
+    std::map<std::string, std::string> staticReimplemented;
     std::string laterDescription;
-    std::map<std::string, std::string, StringComparator> detailedDescription;
+    std::map<std::string, std::string> detailedDescription;
 
     std::stringstream stream(input);
     std::string s;
@@ -194,13 +194,14 @@ std::string genClassInfo(std::string input){
         }
     }
     output += "<p class=\"label\">&#x9;<a class=\"link\" href=\"#moreinfo\">More information...</a></p>";
+    output += "<p class=\"label\">&#x9;<a class=\"link\" href=\"./functionlist.html?classname=" + toLowerCase(className) + "\">List of all including inherited members</a></p>";
     output += "<p class=\"label\">&nbsp;</p>";
 
     if(enumName != ""){
         output += "<div style=\"width: 100%; height: 0.25em; background-color: var(--c4);\"></div>\n";
         output += "<h2 class=\"halftitle\">Attached Enum</h2>\n";
         output += ("<p class=\"label\">&#x9;enum <a class=\"link\" href=\"#enum" + toLowerCase(enumName) + "\">" +  enumName + "</a></p>\n");
-        for(std::map<std::string, std::string, StringComparator>::const_iterator i = enumFlags.begin(); i != enumFlags.end(); i++){
+        for(std::map<std::string, std::string>::const_iterator i = enumFlags.begin(); i != enumFlags.end(); i++){
             output += ("<p class=\"label\">&#x9;&#x9;<a class=\"link\" href=\"#flag" + toLowerCase((*i).first) + "\">" + (*i).first + "</a></p>\n");
         }
         output += "<p class=\"label\">&#x9;</p>";
@@ -261,7 +262,7 @@ std::string genClassInfo(std::string input){
     if(enumName != ""){
         output += ("<h2 class=\"halftitle\" id=\"enum" + toLowerCase(enumName) + "\"><a class=\"link\" href=\"#enum" + toLowerCase(enumName) + "\">" + enumName + "</a></h2>\n");
         output += ("<p class=\"label\">" + formatDescription(enumDescription) + "<br>&nbsp;</p>\n");
-        for(std::map<std::string, std::string, StringComparator>::const_iterator i = enumFlags.begin(); i != enumFlags.end(); i++){
+        for(std::map<std::string, std::string>::const_iterator i = enumFlags.begin(); i != enumFlags.end(); i++){
             output += ("<h2 class=\"halftitle\" id=\"flag" + toLowerCase((*i).first) + "\">" + enumName + " <a class=\"link\" href=\"#flag" + toLowerCase((*i).first) + "\">" + (*i).first + "</a></h2>\n");
             output += ("<p class=\"label\">" + formatDescription((*i).second) + "<br>&nbsp;</p>\n");
         }

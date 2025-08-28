@@ -158,6 +158,7 @@ function genClassInfo(input) {
     }
 
     output.value += `<p class="label">&#x9;<a class="link" href="#moreinfo">More information...</a></p>`;
+    output.value += `<p class="label">&#x9;<a class="link" href="./functionlist.html?classname=${toLowerCase(className)}">List of all including inherited members</a></p>`;
     output.value += `<p class="label">&nbsp;</p>`;
 
     if (enumName) {
@@ -215,6 +216,12 @@ document.querySelector("#footer").outerHTML = await getTextFile("footer.html");
 const params = new URLSearchParams(window.location.search);
 const s = params.get("classname");
 document.querySelector("#contents").outerHTML = genClassInfo(await getTextFile("docs/" + s + ".html"));
+
+const fragment = window.location.hash;
+if (fragment) {
+    const el = document.querySelector(fragment);
+    if (el) el.scrollIntoView();
+}
 
 })(); </script>
 </body>
