@@ -7,6 +7,7 @@
 #include "../enums/sgwtype.h"
 #include <QString>
 #include "../../quickui/sgwwidgetquickinterface.h"
+#include "../../bypassquickui/sgxthemecolours.h"
 
 SGWColourPickerWidget::SGWColourPickerWidget(SGWWidget *parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, SGXColourRGBA defaultColour) : SGWWidget(parent, x1, x0, y1, y0, w1, w0, h1, h0){
     (*this).colour = defaultColour;
@@ -15,11 +16,11 @@ SGWColourPickerWidget::SGWColourPickerWidget(SGWWidget *parent, float x1, float 
     (*this).attachedFunction = nullptr;
     (*this).usingTheme = true;
     (*this).backgroundThemeColour = 4;
-    (*this).backgroundColour = (*SGXQuickInterface::themeColoursSingleton).getThemeColour((*this).backgroundThemeColour);
+    (*this).backgroundColour = SGXThemeColours::getThemeColour((*this).backgroundThemeColour);
     (*this).backgroundHoverThemeColour = 3;
-    (*this).backgroundHoverColour = (*SGXQuickInterface::themeColoursSingleton).getThemeColour((*this).backgroundHoverThemeColour);
+    (*this).backgroundHoverColour = SGXThemeColours::getThemeColour((*this).backgroundHoverThemeColour);
     (*this).backgroundFocusThemeColour = 2;
-    (*this).backgroundFocusColour = (*SGXQuickInterface::themeColoursSingleton).getThemeColour((*this).backgroundFocusThemeColour);
+    (*this).backgroundFocusColour = SGXThemeColours::getThemeColour((*this).backgroundFocusThemeColour);
     QQuickItem* thisItem = static_cast<QQuickItem*>((*SGXQuickInterface::colourPicker).create());
     (*this).initialiseQuickItemReferences(thisItem);
     (*this).type = SGWType::ColourPicker;

@@ -7,6 +7,7 @@
 #include "../enums/sgwverticalalignment.h"
 #include <QQuickItem>
 #include "../../quickui/sgwwidgetquickinterface.h"
+#include "../../bypassquickui/sgxthemecolours.h"
 
 SGWButton::SGWButton(SGWWidget *parent, const QString &s, void (*attachedFunction)(SGWButton*), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float f1, float f0, const QString& font) : SGWWidget(parent, x1, x0, y1, y0, w1, w0, h1, h0){
     (*this).f1 = f1;
@@ -21,29 +22,29 @@ SGWButton::SGWButton(SGWWidget *parent, const QString &s, void (*attachedFunctio
     (*this).selected = false;
     (*this).usingTheme = true;
     (*this).backgroundThemeColour = 4;
-    (*this).backgroundColour = (*SGXQuickInterface::themeColoursSingleton).getThemeColour((*this).backgroundThemeColour);
+    (*this).backgroundColour = SGXThemeColours::getThemeColour((*this).backgroundThemeColour);
     (*this).foregroundThemeColour = 8;
-    (*this).foregroundColour = (*SGXQuickInterface::themeColoursSingleton).getThemeColour((*this).foregroundThemeColour);
+    (*this).foregroundColour = SGXThemeColours::getThemeColour((*this).foregroundThemeColour);
     (*this).backgroundHoverThemeColour = 3;
-    (*this).backgroundHoverColour = (*SGXQuickInterface::themeColoursSingleton).getThemeColour((*this).backgroundHoverThemeColour);
+    (*this).backgroundHoverColour = SGXThemeColours::getThemeColour((*this).backgroundHoverThemeColour);
     (*this).foregroundHoverThemeColour = 7;
-    (*this).foregroundHoverColour = (*SGXQuickInterface::themeColoursSingleton).getThemeColour((*this).foregroundHoverThemeColour);
+    (*this).foregroundHoverColour = SGXThemeColours::getThemeColour((*this).foregroundHoverThemeColour);
     (*this).backgroundFocusThemeColour = 2;
-    (*this).backgroundFocusColour = (*SGXQuickInterface::themeColoursSingleton).getThemeColour((*this).backgroundFocusThemeColour);
+    (*this).backgroundFocusColour = SGXThemeColours::getThemeColour((*this).backgroundFocusThemeColour);
     (*this).foregroundFocusThemeColour = 6;
-    (*this).foregroundFocusColour = (*SGXQuickInterface::themeColoursSingleton).getThemeColour((*this).foregroundFocusThemeColour);
+    (*this).foregroundFocusColour = SGXThemeColours::getThemeColour((*this).foregroundFocusThemeColour);
     (*this).backgroundSelectedThemeColour = 2;
-    (*this).backgroundSelectedColour = (*SGXQuickInterface::themeColoursSingleton).getThemeColour((*this).backgroundSelectedThemeColour);
+    (*this).backgroundSelectedColour = SGXThemeColours::getThemeColour((*this).backgroundSelectedThemeColour);
     (*this).foregroundSelectedThemeColour = 6;
-    (*this).foregroundSelectedColour = (*SGXQuickInterface::themeColoursSingleton).getThemeColour((*this).foregroundSelectedThemeColour);
+    (*this).foregroundSelectedColour = SGXThemeColours::getThemeColour((*this).foregroundSelectedThemeColour);
     (*this).backgroundHoverSelectedThemeColour = 1;
-    (*this).backgroundHoverSelectedColour = (*SGXQuickInterface::themeColoursSingleton).getThemeColour((*this).backgroundHoverSelectedThemeColour);
+    (*this).backgroundHoverSelectedColour = SGXThemeColours::getThemeColour((*this).backgroundHoverSelectedThemeColour);
     (*this).foregroundHoverSelectedThemeColour = 5;
-    (*this).foregroundHoverSelectedColour = (*SGXQuickInterface::themeColoursSingleton).getThemeColour((*this).foregroundHoverSelectedThemeColour);
+    (*this).foregroundHoverSelectedColour = SGXThemeColours::getThemeColour((*this).foregroundHoverSelectedThemeColour);
     (*this).backgroundFocusSelectedThemeColour = 0;
-    (*this).backgroundFocusSelectedColour = (*SGXQuickInterface::themeColoursSingleton).getThemeColour((*this).backgroundFocusSelectedThemeColour);
+    (*this).backgroundFocusSelectedColour = SGXThemeColours::getThemeColour((*this).backgroundFocusSelectedThemeColour);
     (*this).foregroundFocusSelectedThemeColour = 4;
-    (*this).foregroundFocusSelectedColour = (*SGXQuickInterface::themeColoursSingleton).getThemeColour((*this).foregroundFocusSelectedThemeColour);
+    (*this).foregroundFocusSelectedColour = SGXThemeColours::getThemeColour((*this).foregroundFocusSelectedThemeColour);
 }
 
 void SGWButton::syncQuickProperties(){

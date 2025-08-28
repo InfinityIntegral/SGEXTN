@@ -5,6 +5,7 @@
 #include <QQuickItem>
 #include "../enums/sgwtype.h"
 #include "../../primitives/sgxcolourrgba.h"
+#include "../../bypassquickui/sgxthemecolours.h"
 
 SGWScrollView::SGWScrollView(SGWWidget *parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float i1, float i0, float s1, float s0, int themeColour) : SGWBackground(parent, x1, x0, y1, y0, w1, w0, h1, h0, themeColour){
     (*this).i1 = i1;
@@ -12,17 +13,17 @@ SGWScrollView::SGWScrollView(SGWWidget *parent, float x1, float x0, float y1, fl
     (*this).s1 = s1;
     (*this).s0 = s0;
     (*this).scrollbarBackgroundThemeColour = 4;
-    (*this).scrollbarBackgroundColour = (*SGXQuickInterface::themeColoursSingleton).getThemeColour((*this).scrollbarBackgroundThemeColour);
+    (*this).scrollbarBackgroundColour = SGXThemeColours::getThemeColour((*this).scrollbarBackgroundThemeColour);
     (*this).scrollbarForegroundThemeColour = 6;
-    (*this).scrollbarForegroundColour = (*SGXQuickInterface::themeColoursSingleton).getThemeColour((*this).scrollbarForegroundThemeColour);
+    (*this).scrollbarForegroundColour = SGXThemeColours::getThemeColour((*this).scrollbarForegroundThemeColour);
     (*this).scrollbarBackgroundHoverThemeColour = 3;
-    (*this).scrollbarBackgroundHoverColour = (*SGXQuickInterface::themeColoursSingleton).getThemeColour((*this).scrollbarBackgroundHoverThemeColour);
+    (*this).scrollbarBackgroundHoverColour = SGXThemeColours::getThemeColour((*this).scrollbarBackgroundHoverThemeColour);
     (*this).scrollbarForegroundHoverThemeColour = 5;
-    (*this).scrollbarForegroundHoverColour = (*SGXQuickInterface::themeColoursSingleton).getThemeColour((*this).scrollbarForegroundHoverThemeColour);
+    (*this).scrollbarForegroundHoverColour = SGXThemeColours::getThemeColour((*this).scrollbarForegroundHoverThemeColour);
     (*this).scrollbarBackgroundFocusThemeColour = 2;
-    (*this).scrollbarBackgroundFocusColour = (*SGXQuickInterface::themeColoursSingleton).getThemeColour((*this).scrollbarBackgroundFocusThemeColour);
+    (*this).scrollbarBackgroundFocusColour = SGXThemeColours::getThemeColour((*this).scrollbarBackgroundFocusThemeColour);
     (*this).scrollbarForegroundFocusThemeColour = 4;
-    (*this).scrollbarForegroundFocusColour = (*SGXQuickInterface::themeColoursSingleton).getThemeColour((*this).scrollbarForegroundFocusThemeColour);
+    (*this).scrollbarForegroundFocusColour = SGXThemeColours::getThemeColour((*this).scrollbarForegroundFocusThemeColour);
     QQuickItem* thisItem = static_cast<QQuickItem*>((*SGXQuickInterface::scrollView).create());
     (*this).initialiseQuickItemReferences(thisItem);
     (*this).type = SGWType::ScrollView;

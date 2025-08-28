@@ -8,6 +8,7 @@
 #include <QQuickItem>
 #include "../enums/sgwdefaultfonts.h"
 #include "../../quickui/sgwwidgetquickinterface.h"
+#include "../../bypassquickui/sgxthemecolours.h"
 
 SGWInput::SGWInput(SGWWidget *parent, void (*validationFunction)(SGWInput *), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float f1, float f0, SGWHorizontalAlignment::Flag horizontalAlignment, SGWVerticalAlignment::Flag verticalAlignment) : SGWWidget(parent, x1, x0, y1, y0, w1, w0, h1, h0){
     (*this).f1 = f1;
@@ -22,25 +23,25 @@ SGWInput::SGWInput(SGWWidget *parent, void (*validationFunction)(SGWInput *), fl
     (*this).invalid = false;
     (*this).usingTheme = true;
     (*this).backgroundThemeColour = 4;
-    (*this).backgroundColour = (*SGXQuickInterface::themeColoursSingleton).getThemeColour((*this).backgroundThemeColour);
+    (*this).backgroundColour = SGXThemeColours::getThemeColour((*this).backgroundThemeColour);
     (*this).foregroundThemeColour = 8;
-    (*this).foregroundColour = (*SGXQuickInterface::themeColoursSingleton).getThemeColour((*this).foregroundThemeColour);
+    (*this).foregroundColour = SGXThemeColours::getThemeColour((*this).foregroundThemeColour);
     (*this).backgroundHoverThemeColour = 3;
-    (*this).backgroundHoverColour = (*SGXQuickInterface::themeColoursSingleton).getThemeColour((*this).backgroundHoverThemeColour);
+    (*this).backgroundHoverColour = SGXThemeColours::getThemeColour((*this).backgroundHoverThemeColour);
     (*this).foregroundHoverThemeColour = 7;
-    (*this).foregroundHoverColour = (*SGXQuickInterface::themeColoursSingleton).getThemeColour((*this).foregroundHoverThemeColour);
+    (*this).foregroundHoverColour = SGXThemeColours::getThemeColour((*this).foregroundHoverThemeColour);
     (*this).backgroundFocusThemeColour = 2;
-    (*this).backgroundFocusColour = (*SGXQuickInterface::themeColoursSingleton).getThemeColour((*this).backgroundFocusThemeColour);
+    (*this).backgroundFocusColour = SGXThemeColours::getThemeColour((*this).backgroundFocusThemeColour);
     (*this).foregroundFocusThemeColour = 6;
-    (*this).foregroundFocusColour = (*SGXQuickInterface::themeColoursSingleton).getThemeColour((*this).foregroundFocusThemeColour);
+    (*this).foregroundFocusColour = SGXThemeColours::getThemeColour((*this).foregroundFocusThemeColour);
     (*this).backgroundInvalidThemeColour = 0;
-    (*this).backgroundInvalidColour = (*SGXQuickInterface::themeColoursSingleton).getThemeColour((*this).backgroundInvalidThemeColour);
+    (*this).backgroundInvalidColour = SGXThemeColours::getThemeColour((*this).backgroundInvalidThemeColour);
     (*this).foregroundInvalidThemeColour = 4;
-    (*this).foregroundInvalidColour = (*SGXQuickInterface::themeColoursSingleton).getThemeColour((*this).foregroundInvalidThemeColour);
+    (*this).foregroundInvalidColour = SGXThemeColours::getThemeColour((*this).foregroundInvalidThemeColour);
     (*this).backgroundHoverInvalidThemeColour = 1;
-    (*this).backgroundHoverInvalidColour = (*SGXQuickInterface::themeColoursSingleton).getThemeColour((*this).backgroundHoverInvalidThemeColour);
+    (*this).backgroundHoverInvalidColour = SGXThemeColours::getThemeColour((*this).backgroundHoverInvalidThemeColour);
     (*this).foregroundHoverInvalidThemeColour = 5;
-    (*this).foregroundHoverInvalidColour = (*SGXQuickInterface::themeColoursSingleton).getThemeColour((*this).foregroundHoverInvalidThemeColour);
+    (*this).foregroundHoverInvalidColour = SGXThemeColours::getThemeColour((*this).foregroundHoverInvalidThemeColour);
 }
 
 void SGWInput::syncQuickProperties(){
