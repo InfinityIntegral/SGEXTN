@@ -11,15 +11,15 @@ Note that SGEXTN can also be referred to as "SG Extension" or "The Singaporean E
 ### Contents
 
 - [About this project](#about-this-project)
-	- [Contents](#contents)
+- [Contents](#contents)
 	- [UIB-DINB philosophy](#uib-dinb-philosophy)
 	- [Why SGEXTN?](#why-sgextn)
-	- [Documentation WORK IN PROGRESS](#documentation)
+	- [Documentation](#documentation)
 	- [Demo app WORK IN PROGRESS](#demo-app)
 	- [Setting up SGEXTN](#setting-up-sgextn)
 	- [Extending SGEXTN](#extending-sgextn)
 	- [File prefixes](#file-prefixes)
-- [Completed Features](#completed-features-available-in-v500)
+- [Completed Features](#completed-features)
 - [Credits](#credits)
 - [Contributing](#contributing)
 - [Contact me](#contact-me)
@@ -55,7 +55,7 @@ SGEXTN abstracts Qt stuff without disabling them. So if you really want to use Q
 
 ### Documentation
 
-The SGEXTN Documentation site is WORK IN PROGRESS.
+The SGEXTN Documentation site can be viewed [here](https://infinityintegral.github.io) on my GitHub Pages. On the documentation site, you can find more information related to various public API that SGEXTN offers. The site is made to resemble the layout of the Qt Documentation as much as possible.
 
 ### Demo app
 
@@ -71,7 +71,7 @@ include(SGEXTN/SGEXTN.pri)
 ```
 at the top of your project file (.pro). After that, go to the file SGEXTN/userDefinedClasses/sgucentralmanagement.cpp, read through the comments in the file and customise whatever is needed. Do not change anything not specified in the SGEXTN folder.
 
-Your custom code should be outside the SGEXTN folder. Classes in your custom code should have the prefix SGC. The first word in the names of renderer classes should be "Render".
+Your custom code should be outside the SGEXTN folder. Classes in your custom code should have the prefix SGC if you are not planning for it to be reusable or SG followed by your app name if you want it to be reusable (in which case it should be in its own folder). The first word in the names of renderer classes should be "Render".
 
 ### Extending SGEXTN
 
@@ -100,56 +100,59 @@ SGEXTN uses file prefixes to mean different things.
 
 Names of all renderer classes should start with the word "Render".
 
-## Completed Features (available in v5.0.0)
-- [x] C++ primitives extensions
-	- [x] SGXColourRGBA
-	- [x] SGXColourHSLA
-	- [x] SGXIdentifier
-	- [x] SGXVector2
-	- [x] SGXTimeStamp
-	- [x] SGXTouchEvent
-- [x] SGWidget GUI toolkit
-	- [x] SGWWidget
-		- [x] SGWRoot
-		- [x] SGWParent
-		- [x] SGWStatusBar
-		- [x] SGWBlankWidget
-		- [x] SGWBackground
-			- [x] SGWPageBackground
-			- [x] SGWScrollView
-			- [x] SGWSequentialScrollView
-		- [x] SGWLabel
-			- [x] SGWTextLabel
-			- [x] SGWIconLabel
-			- [x] SGWLongLabel
-			- [x] SGWSequentialLongLabel
-		- [x] SGWButton
-			- [x] SGWTextButton
-			- [x] SGWIconButton
-		- [x] SGWInput
-			- [x] SGWTextInput
-			- [x] SGWLongInput
-		- [x] SGWTouchReceiver
-		- [x] SGWCustomRenderer
-		- [x] SGWColourPicker
-	- [x] builtin pages
-		- [x] vesicles animation
-		- [x] theme colours page
-		- [x] vesicle properties page
-		- [x] SingCorrect configs page
-		- [x] SingCorrect commands list
-		- [x] colour picker page
-- [x] file system usage
-     - [x] SGXFileReader
-	- [x] SGXFileWriter
-	- [x] SGXFileSystem
-	- [x] SGXFileBinUtilities
-	- [x] SGXFileUploader
-	- [x] SGXFileDownloader
-	- [x] SGXFileZipUtilities
-- [x] SGXTimer
-- [x] SGWNotify
-- [x] working application template
+## Completed Features
+Note that this only includes public API available in SGEXTN version 5.1.0.
+- additional primitives
+	- SGXColourRGBA
+	- SGXColourHSLA
+	- SGXIdentifier
+	- SGXTimeStamp
+	- SGXVector2
+	- SGXTouchEvent
+- SGWidget GUI toolkit
+	- SGWWidget
+		- SGWBlankWidget
+		- SGWBackground
+			- SGWPageBackground
+			- SGWScrollView
+			- SGWSequentialScrollView
+		- SGWLabel
+			- SGWTextLabel
+			- SGWIconLabel
+			- SGWLongLabel
+			- SGWSequentialLongLabel
+		- SGWButton
+			- SGWTextButton
+			- SGWIconButton
+		- SGWInput
+			- SGWTextInput
+			- SGWLongInput
+		- SGWTouchReceiver
+		- SGWCustomRenderer
+		- SGWColourPickerWidget
+	- SGWType
+	- SGWHorizontalAlignment
+	- SGWVerticalAlignment
+	- SGWDefaultFonts
+- file system interaction
+	- SGXFile
+	- SGXFileSystem
+	- SGXFileBinUtilities
+	- SGXFileZip
+	- SGXFileDownloader
+	- SGXFileUploader
+- other userful stuff
+	- SGWNotify
+	- SGXTimer
+	- SGXSingCorrectCore
+	- SGXResizer
+	- SGXThemeColours
+- builtin customisation pages
+	- SGWThemeCustomisationPage
+	- SGWVesicleCustomisationPage
+	- SGWSingCorrectCustomisationPage
+- implement functions in here as needed
+	- SGUCentralManagement
 
 ## Credits
 - Qt (https://www.qt.io/)
