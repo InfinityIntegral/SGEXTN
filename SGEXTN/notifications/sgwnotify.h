@@ -1,11 +1,12 @@
 #ifndef SGWNOTIFY_H
 #define SGWNOTIFY_H
 
-#include "../widgets/noninstantiable/sgwwidget.h"
-#include "../widgets/noninstantiable/sgwlabel.h"
 #include <queue>
-#include "../timer/sgxtimer.h"
 
+class SGWWidget;
+class SGWLabel;
+class SGXTimer;
+class QString;
 class SGWNotify
 {
 public:

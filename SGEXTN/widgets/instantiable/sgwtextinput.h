@@ -2,8 +2,8 @@
 #define SGWTEXTINPUT_H
 
 #include "../noninstantiable/sgwinput.h"
-#include "../noninstantiable/sgwwidget.h"
 
+class SGWWidget;
 class SGWTextInput : public SGWInput
 {
 public:

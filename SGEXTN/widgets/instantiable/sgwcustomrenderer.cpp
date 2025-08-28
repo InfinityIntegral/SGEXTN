@@ -6,6 +6,7 @@
 #include "../noninstantiable/sgwwidget.h"
 #include "../enums/sgwtype.h"
 #include <QQuickItem>
+#include <QQmlApplicationEngine>
 
 QHash<QString, QQmlComponent*>* SGWCustomRenderer::componentDatabase = nullptr;
 

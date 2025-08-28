@@ -1,11 +1,10 @@
 #ifndef SGWVESICLECUSTOMISATIONPAGE_H
 #define SGWVESICLECUSTOMISATIONPAGE_H
 
-#include "../widgets/noninstantiable/sgwbackground.h"
-#include "../widgets/noninstantiable/sgwinput.h"
-#include "../widgets/noninstantiable/sgwbutton.h"
-#include "../widgets/noninstantiable/sgwlabel.h"
-
+class SGWBackground;
+class SGWInput;
+class SGWButton;
+class SGWLabel;
 class SGWVesicleCustomisationPage
 {
 public:

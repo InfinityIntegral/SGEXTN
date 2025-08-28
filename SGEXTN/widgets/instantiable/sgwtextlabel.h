@@ -2,10 +2,10 @@
 #define SGWTEXTLABEL_H
 
 #include "../noninstantiable/sgwlabel.h"
-#include "../noninstantiable/sgwwidget.h"
-#include <QString>
 #include "../enums/sgwhorizontalalignment.h"
 
+class QString;
+class SGWWidget;
 class SGWTextLabel : public SGWLabel
 {
 public:

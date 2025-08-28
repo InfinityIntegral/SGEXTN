@@ -1,7 +1,6 @@
 #ifndef SGXFILE_H
 #define SGXFILE_H
 
-#include <QFile>
 #include "../primitives/sgxcolourrgba.h"
 #include "../primitives/sgxcolourhsla.h"
 #include "../primitives/sgxidentifier.h"
@@ -11,6 +10,7 @@
 #include <string>
 #include <QByteArray>
 
+class QFile;
 class SGXFile
 {
 public:

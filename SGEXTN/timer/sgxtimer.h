@@ -1,9 +1,8 @@
 #ifndef SGXTIMER_H
 #define SGXTIMER_H
 
-#include <QTimer>
-
 class SGXTimerQuickInterface;
+class QTimer;
 class SGXTimer
 {
 public:

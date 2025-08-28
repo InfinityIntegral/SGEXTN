@@ -2,11 +2,11 @@
 #define SGWTOUCHRECEIVER_H
 
 #include "../noninstantiable/sgwwidget.h"
-#include "../../primitives/sgxtouchevent.h"
 #include <array>
-#include <QString>
 
 class SGWWidgetQuickInterface;
+class QString;
+class SGXTouchEvent;
 class SGWTouchReceiver : public SGWWidget
 {
 public:

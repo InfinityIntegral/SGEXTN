@@ -2,9 +2,9 @@
 #define SGWSEQUENTIALLONGLABEL_H
 
 #include "../noninstantiable/sgwlabel.h"
-#include "../noninstantiable/sgwwidget.h"
-#include <QString>
 
+class SGWWidget;
+class QString;
 class SGWSequentialLongLabel : public SGWLabel
 {
 public:

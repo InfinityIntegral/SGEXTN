@@ -3,8 +3,8 @@
 
 #include "../noninstantiable/sgwbackground.h"
 #include "../../primitives/sgxcolourrgba.h"
-#include "../noninstantiable/sgwwidget.h"
 
+class SGWWidget;
 class SGWSequentialScrollView : public SGWBackground
 {
 public:

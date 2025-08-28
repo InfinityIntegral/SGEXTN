@@ -2,10 +2,10 @@
 #define SGWWIDGET_H
 
 #include "../enums/sgwtype.h"
-#include <QQuickItem>
 #include <QSet>
 #include <qcontainerfwd.h>
 
+class QQuickItem;
 class SGWWidget
 {
 public:

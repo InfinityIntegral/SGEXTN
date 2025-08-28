@@ -3,8 +3,8 @@
 
 #include "../noninstantiable/sgwlabel.h"
 #include <QChar>
-#include "../noninstantiable/sgwwidget.h"
 
+class SGWWidget;
 class SGWIconLabel : public SGWLabel
 {
 public:

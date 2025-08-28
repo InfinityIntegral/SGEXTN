@@ -2,10 +2,10 @@
 #define SGWCUSTOMRENDERER_H
 
 #include "../noninstantiable/sgwwidget.h"
-#include <QString>
-#include <QHash>
-#include <QQmlComponent>
 
+class QString;
+template <typename T1, typename T2> class QHash;
+class QQmlComponent;
 class SGWCustomRenderer : public SGWWidget
 {
 public:

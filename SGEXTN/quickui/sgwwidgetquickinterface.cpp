@@ -6,6 +6,7 @@
 #include "../widgets/noninstantiable/sgwinput.h"
 #include "../widgets/unique/sgwstatusbar.h"
 #include "../widgets/instantiable/sgwtouchreceiver.h"
+#include <QQuickItem>
 
 SGWWidgetQuickInterface::SGWWidgetQuickInterface(SGWWidget *x){
     (*this).x = x;

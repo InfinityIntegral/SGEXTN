@@ -1,10 +1,9 @@
 #ifndef SGXSINGCORRECTCUSTOMISATION_H
 #define SGXSINGCORRECTCUSTOMISATION_H
 
-#include <QHash>
-#include <QString>
-#include <QChar>
-
+class QChar;
+class QString;
+template <typename T1, typename T2> class QHash;
 class SGXSingCorrectCustomisation
 {
 public:

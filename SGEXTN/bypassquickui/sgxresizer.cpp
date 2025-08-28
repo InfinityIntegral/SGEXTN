@@ -1,5 +1,6 @@
 #include "sgxresizer.h"
 #include "../quickui/sgxquickinterface.h"
+#include "../quickui/sgxquickresizer.h"
 
 float SGXResizer::getAppWindowWidth(){
     return (*SGXQuickInterface::resizerSingleton).appWindowWidth;

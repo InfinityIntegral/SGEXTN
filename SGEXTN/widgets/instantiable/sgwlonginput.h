@@ -2,9 +2,9 @@
 #define SGWLONGINPUT_H
 
 #include "../noninstantiable/sgwinput.h"
-#include "../noninstantiable/sgwwidget.h"
 #include "../../primitives/sgxcolourrgba.h"
 
+class SGWWidget;
 class SGWLongInput : public SGWInput
 {
 public:

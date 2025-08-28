@@ -2,9 +2,9 @@
 #define SGXSINGCORRECTCORE_H
 
 #include <QString>
-#include <QHash>
-#include "../quickui/sgxsingcorrectquickinterface.h"
 
+template <typename T1, typename T2> class QHash;
+class SGXSingCorrectQuickInterface;
 class SGXSingCorrectCore
 {
 public:

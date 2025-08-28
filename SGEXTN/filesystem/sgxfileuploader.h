@@ -1,9 +1,9 @@
 #ifndef SGXFILEUPLOADER_H
 #define SGXFILEUPLOADER_H
 
-#include <QQmlComponent>
-#include <QObject>
-
+class QObject;
+class QQmlComponent;
+class QString;
 class SGXFileUploader
 {
 public:

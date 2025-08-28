@@ -2,8 +2,8 @@
 #define SGWPAGEBACKGROUND_H
 
 #include "../noninstantiable/sgwbackground.h"
-#include "../noninstantiable/sgwwidget.h"
 
+class SGWWidget;
 class SGWPageBackground : public SGWBackground
 {
 public:

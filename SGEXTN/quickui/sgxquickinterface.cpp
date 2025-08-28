@@ -10,6 +10,7 @@
 #include "../widgets/unique/sgwstatusbar.h"
 #include <QQueue>
 #include <qcontainerfwd.h>
+#include <QQuickItem>
 
 QQmlComponent* SGXQuickInterface::root = nullptr;
 QQmlApplicationEngine* SGXQuickInterface::e = nullptr;

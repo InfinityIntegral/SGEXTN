@@ -1,10 +1,10 @@
 #ifndef SGWSTATUSBAR_H
 #define SGWSTATUSBAR_H
 
-#include "../../timer/sgxtimer.h"
 #include "../noninstantiable/sgwwidget.h"
 
 class SGWWidgetQuickInterface;
+class SGXTimer;
 class SGWStatusBar : public SGWWidget
 {
 public:

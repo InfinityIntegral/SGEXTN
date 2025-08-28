@@ -1,12 +1,12 @@
 #ifndef SGXQUICKINTERFACE_H
 #define SGXQUICKINTERFACE_H
 
-#include <QQmlComponent>
-#include <QQmlApplicationEngine>
-#include <QQuickItem>
-#include "sgxquickresizer.h"
-#include "sgxthemecoloursetting.h"
-
+class QQmlComponent;
+class QQmlApplicationEngine;
+class QQuickItem;
+class SGXQuickResizer;
+class SGXThemeColourSetting;
+class QQuickWindow;
 class SGXQuickInterface
 {
 public:

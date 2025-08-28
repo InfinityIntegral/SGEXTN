@@ -1,11 +1,11 @@
 #ifndef SGXFILEBINUTILITIES_H
 #define SGXFILEBINUTILITIES_H
 
-#include <tuple>
 #include "../primitives/sgxidentifier.h"
-#include "../primitives/sgxtimestamp.h"
-#include <QHash>
+#include <tuple>
 
+template <typename T1, typename T2> class QHash;
+class SGXTimeStamp;
 class SGXFileBinUtilities
 {
 public:

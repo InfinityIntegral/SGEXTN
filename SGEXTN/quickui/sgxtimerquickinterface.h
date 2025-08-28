@@ -2,8 +2,8 @@
 #define SGXTIMERQUICKINTERFACE_H
 
 #include <QObject>
-#include "../timer/sgxtimer.h"
 
+class SGXTimer;
 class SGXTimerQuickInterface : public QObject
 {
     Q_OBJECT

@@ -3,8 +3,8 @@
 
 #include "../noninstantiable/sgwwidget.h"
 #include "../../primitives/sgxcolourrgba.h"
-#include <QString>
 
+class QString;
 class SGWWidgetQuickInterface;
 class SGWColourPickerWidget : public SGWWidget
 {

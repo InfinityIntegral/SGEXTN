@@ -2,9 +2,9 @@
 #define SGWTEXTBUTTON_H
 
 #include "../noninstantiable/sgwbutton.h"
-#include "../noninstantiable/sgwwidget.h"
-#include <QString>
 
+class QString;
+class SGWWidget;
 class SGWTextButton : public SGWButton
 {
 public:

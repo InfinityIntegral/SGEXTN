@@ -7,6 +7,7 @@
 #include <QUrl>
 #include "sgxfile.h"
 #include "../quickui/sgxquickinterface.h"
+#include <QQmlApplicationEngine>
 
 QQmlComponent* SGXFileUploader::fileUploadTemplate = nullptr;
 QObject* SGXFileUploader::fileUploadInstance = nullptr;

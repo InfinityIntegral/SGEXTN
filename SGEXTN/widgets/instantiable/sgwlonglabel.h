@@ -2,10 +2,10 @@
 #define SGWLONGLABEL_H
 
 #include "../noninstantiable/sgwlabel.h"
-#include "../noninstantiable/sgwwidget.h"
-#include <QString>
 #include "../../primitives/sgxcolourrgba.h"
 
+class QString;
+class SGWWidget;
 class SGWLongLabel : public SGWLabel
 {
 public:

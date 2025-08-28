@@ -1,13 +1,13 @@
 #ifndef SGWSINGCORRECTCUSTOMISATIONPAGE_H
 #define SGWSINGCORRECTCUSTOMISATIONPAGE_H
 
-#include <QHash>
-#include "../widgets/noninstantiable/sgwbackground.h"
-#include "../widgets/noninstantiable/sgwbutton.h"
-#include "../widgets/noninstantiable/sgwlabel.h"
-#include "../widgets/noninstantiable/sgwinput.h"
-#include "../widgets/noninstantiable/sgwwidget.h"
-
+template <typename T1, typename T2> class QHash;
+class SGWBackground;
+class SGWButton;
+class SGWLabel;
+class SGWInput;
+class SGWWidget;
+class QString;
 class SGWSingCorrectCustomisationPage
 {
 public:

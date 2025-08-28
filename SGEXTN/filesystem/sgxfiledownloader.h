@@ -1,9 +1,10 @@
 #ifndef SGXFILEDOWNLOADER_H
 #define SGXFILEDOWNLOADER_H
 
-#include <QQmlComponent>
-#include <QObject>
+#include <QString>
 
+class QObject;
+class QQmlComponent;
 class SGXFileDownloader
 {
 public:

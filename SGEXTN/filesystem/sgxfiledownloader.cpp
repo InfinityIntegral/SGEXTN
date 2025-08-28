@@ -7,6 +7,7 @@
 #include <QUrl>
 #include "sgxfile.h"
 #include "../quickui/sgxquickinterface.h"
+#include <QQmlApplicationEngine>
 
 QQmlComponent* SGXFileDownloader::fileDownloadTemplate = nullptr;
 QObject* SGXFileDownloader::fileDownloadInstance = nullptr;

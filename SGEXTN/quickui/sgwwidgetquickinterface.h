@@ -2,8 +2,8 @@
 #define SGWWIDGETQUICKINTERFACE_H
 
 #include <QObject>
-#include "../widgets/noninstantiable/sgwwidget.h"
 
+class SGWWidget;
 class SGWWidgetQuickInterface : public QObject
 {
 public:

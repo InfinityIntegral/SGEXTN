@@ -2,9 +2,9 @@
 #define SGWICONBUTTON_H
 
 #include "../noninstantiable/sgwbutton.h"
-#include "../noninstantiable/sgwwidget.h"
 #include <QChar>
 
+class SGWWidget;
 class SGWIconButton : public SGWButton
 {
 public:

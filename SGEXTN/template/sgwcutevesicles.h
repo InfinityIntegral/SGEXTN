@@ -1,9 +1,8 @@
 #ifndef SGWCUTEVESICLES_H
 #define SGWCUTEVESICLES_H
 
-#include "../cutevesicles/sgxrendercutevesiclessgwidget.h"
-#include "../timer/sgxtimer.h"
-
+class SGXTimer;
+class SGXRenderCuteVesiclesSGWidget;
 class SGWCuteVesicles
 {
 public:

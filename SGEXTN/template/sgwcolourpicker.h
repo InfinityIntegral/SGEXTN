@@ -1,21 +1,21 @@
 #ifndef SGWCOLOURPICKER_H
 #define SGWCOLOURPICKER_H
 
-#include "../widgets/noninstantiable/sgwbackground.h"
 #include "../primitives/sgxcolourrgba.h"
 #include "../primitives/sgxcolourhsla.h"
-#include "../colourpickerrendering/huechoice/sgxrendercolourpickerhuechoicesgwidget.h"
-#include "../widgets/instantiable/sgwtouchreceiver.h"
 #include <array>
-#include "../primitives/sgxtouchevent.h"
-#include "../colourpickerrendering/saturationchoice/sgxrendercolourpickersaturationchoicesgwidget.h"
-#include "../colourpickerrendering/lightnesschoice/sgxrendercolourpickerlightnesschoicesgwidget.h"
-#include "../colourpickerrendering/transparencychoice/sgxrendercolourpickertransparencychoicesgwidget.h"
-#include "../widgets/noninstantiable/sgwinput.h"
-#include "../colourbackground/sgxrendercolourbackgroundsgwidget.h"
-#include "../widgets/instantiable/sgwcolourpickerwidget.h"
-#include "../widgets/noninstantiable/sgwbutton.h"
 
+class SGWBackground;
+class SGXRenderColourPickerHueChoiceSGWidget;
+class SGXRenderColourPickerSaturationChoiceSGWidget;
+class SGXRenderColourPickerLightnessChoiceSGWidget;
+class SGXRenderColourPickerTransparencyChoiceSGWidget;
+class SGXRenderColourBackgroundSGWidget;
+class SGWTouchReceiver;
+class SGWInput;
+class SGWColourPickerWidget;
+class SGWButton;
+class SGXTouchEvent;
 class SGWColourPicker
 {
 public:
