@@ -2,8 +2,6 @@
 #define SGXVECTOR2_H
 
 #include <QString>
-#include <bit>
-#include <QDebug>
 
 class SGXVector2
 {
@@ -64,12 +62,7 @@ public:
 };
 
 inline unsigned int qHash(SGXVector2 x, unsigned int seed = 0){
-    return (std::bit_cast<unsigned int>(x.x) ^ std::bit_cast<unsigned int>(x.y) ^ seed);
-}
-
-inline QDebug operator<<(QDebug s, SGXVector2 x){
-    s << x.getStringForPrinting();
-    return s;
+    return (static_cast<unsigned int>(x.x) ^ static_cast<unsigned int>(x.y) ^ seed);
 }
 
 #endif // SGXVECTOR2_H

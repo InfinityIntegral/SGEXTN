@@ -4,8 +4,6 @@
 #include <QString>
 #include <QDateTime>
 #include <QTimeZone>
-#include <bit>
-#include <QDebug>
 
 class SGXTimeStamp
 {
@@ -65,12 +63,7 @@ public:
 };
 
 inline unsigned int qHash(SGXTimeStamp x, unsigned int seed = 0){
-    return static_cast<unsigned int>(std::bit_cast<unsigned long long>(x.t >> 32ll) ^ std::bit_cast<unsigned long long>(x.t & 0xFFFFFFFFll) ^ static_cast<unsigned long long>(seed));
-}
-
-inline QDebug operator<<(QDebug s, SGXTimeStamp x){
-    s << x.getString();
-    return s;
+    return static_cast<unsigned int>(static_cast<unsigned long long>(x.t >> 32ll) ^ static_cast<unsigned long long>(x.t & 0xFFFFFFFFll) ^ static_cast<unsigned long long>(seed));
 }
 
 #endif // SGXTIMESTAMP_H

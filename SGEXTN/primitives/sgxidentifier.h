@@ -2,7 +2,6 @@
 #define SGXIDENTIFIER_H
 
 #include <QSet>
-#include <QDebug>
 
 class SGXIdentifier
 {
@@ -29,11 +28,6 @@ public:
 
 inline unsigned int qHash(SGXIdentifier x, unsigned int seed = 0){
     return (x.a ^ x.b ^ x.c ^ x.d ^ seed);
-}
-
-inline QDebug operator<<(QDebug s, SGXIdentifier x){
-    s << x.getStringForPrinting();
-    return s;
 }
 
 #endif // SGXIDENTIFIER_H

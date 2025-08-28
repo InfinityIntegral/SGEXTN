@@ -1,8 +1,6 @@
 #ifndef SGXTOUCHEVENT_H
 #define SGXTOUCHEVENT_H
 
-#include <QDebug>
-#include <bit>
 #include <QString>
 #include <array>
 
@@ -37,24 +35,7 @@ public:
 };
 
 inline unsigned int qHash(SGXTouchEvent x, unsigned int seed = 0){
-    return seed ^ std::bit_cast<unsigned int>(x.id);
-}
-
-inline QDebug operator<<(QDebug s, SGXTouchEvent x){
-    if(x.phase == SGXTouchEvent::TouchStart){
-        s << ("touch event with id = " + QString::number(x.id) + ", phase = starting, position = (" + QString::number(x.x) + ", " + QString::number(x.y) + ")");
-        return s;
-    }
-    if(x.phase == SGXTouchEvent::TouchEnd){
-        s << ("touch event with id = " + QString::number(x.id) + ", phase = ending");
-        return s;
-    }
-    if(x.phase == SGXTouchEvent::TouchOngoing){
-        s << ("touch event with id = " + QString::number(x.id) + ", phase = ongoing, position = (" + QString::number(x.x) + ", " + QString::number(x.y) + ")");
-        return s;
-    }
-    s << "touch event with invalid phase";
-    return s;
+    return seed ^ static_cast<unsigned int>(x.id);
 }
 
 #endif // SGXTOUCHEVENT_H

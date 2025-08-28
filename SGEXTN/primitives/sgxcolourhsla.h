@@ -2,8 +2,6 @@
 #define SGXCOLOURHSLA_H
 
 #include "sgxcolourrgba.h"
-#include <QDebug>
-#include <bit>
 
 class SGXColourHSLA
 {
@@ -33,12 +31,7 @@ public:
 };
 
 inline unsigned int qHash(SGXColourHSLA x, unsigned int seed = 0){
-    return (seed ^ std::bit_cast<unsigned int>(x.h) ^ std::bit_cast<unsigned int>(x.s) ^ std::bit_cast<unsigned int>(x.l) ^ std::bit_cast<unsigned int>(x.a));
-}
-
-inline QDebug operator<<(QDebug s, SGXColourHSLA x){
-    s << ("HSLA colour with h = " + QString::number(x.h) + ", s = " + QString::number(x.s) + ", l = " + QString::number(x.l) + ", a = " + QString::number(x.a));
-    return s;
+    return (seed ^ static_cast<unsigned int>(x.h) ^ static_cast<unsigned int>(x.s) ^ static_cast<unsigned int>(x.l) ^ static_cast<unsigned int>(x.a));
 }
 
 #endif // SGXCOLOURHSLA_H

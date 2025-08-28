@@ -2,7 +2,6 @@
 #define SGXCOLOURRGBA_H
 
 #include <QString>
-#include <QDebug>
 #include <QColor>
 
 class SGXColourRGBA
@@ -64,11 +63,6 @@ public:
 
 inline unsigned int qHash(SGXColourRGBA x, unsigned int seed = 0){
     return (x.x ^ seed);
-}
-
-inline QDebug operator<<(QDebug s, SGXColourRGBA x){
-    s << x.getStringForPrintingRGBAHTML();
-    return s;
 }
 
 #endif // SGXCOLOURRGBA_H
