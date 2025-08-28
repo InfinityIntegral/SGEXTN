@@ -1,15 +1,17 @@
 Changelog v5.1.0
 
-SGXFileBinUtilities - refactor lifespan with getter and setter functions
-SGXFileBinUtilities, SGXFileSystem - move path to recycling bin from SGXFileSystem to SGXFileBinUtilities
-SGXVector2 - add dot product and cross product
-SGXVector2 - change functions to take 2 vectors instead of 4 numbers
-SGXFile - replaces SGXFileReader and SGXFileWriter
-SGXFile - add support for QChar and C++ string
-SGXFile - add validity check
+SGXFileBinUtilities - refactored lifespan with getter and setter functions
+SGXFileBinUtilities, SGXFileSystem - moved path to recycling bin from SGXFileSystem to SGXFileBinUtilities
+SGXVector2 - added dot product and cross product
+SGXVector2 - changed functions to take 2 vectors instead of 4 numbers
+SGXFile - replaced SGXFileReader and SGXFileWriter
+SGXFile - added support for QChar and C++ string
+SGXFile - added validity check
 SGXIdentifier - pass error code by pointer to make error checking optional
 SGXResizer - added
 SGXThemeColours - added
+SGXFileSystem - removed path validity checks, now can write anywhere
+SGXFileSystem - improved error checking
 
 added:
 SGXFile
