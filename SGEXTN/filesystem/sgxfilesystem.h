@@ -14,7 +14,6 @@ public:
     static QString joinFilePaths(const QString& a, const QString& b);
     static QString encodeBase16(const QString& s);
     static QString decodeBase16(const QString& str);
-    static bool pathIsValid(const QString& s);
     static bool pathIsSubfolder(const QString& childPath, const QString& parentPath);
     static int fileExists(const QString& s);
     static int folderExists(const QString& s);
