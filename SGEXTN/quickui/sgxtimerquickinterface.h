@@ -6,7 +6,6 @@
 class SGXTimer;
 class SGXTimerQuickInterface : public QObject
 {
-    Q_OBJECT
 public:
     SGXTimerQuickInterface(SGXTimer* x);
     SGXTimer* x;

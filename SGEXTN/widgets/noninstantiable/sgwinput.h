@@ -12,6 +12,10 @@ class SGWInput : public SGWWidget
 {
 public:
     SGWInput() = delete;
+    SGWInput(const SGWInput&) = delete;
+    SGWInput& operator=(const SGWInput&) = delete;
+    SGWInput(SGWInput&&) = delete;
+    SGWInput& operator=(SGWInput&&) = delete;
     ~SGWInput() override;
     void syncQuickProperties();
     [[nodiscard]] float getF1() const;

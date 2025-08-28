@@ -5,10 +5,15 @@
 
 class SGWWidgetQuickInterface;
 class SGXTimer;
+class QString;
 class SGWStatusBar : public SGWWidget
 {
 public:
     SGWStatusBar();
+    SGWStatusBar(const SGWStatusBar&) = delete;
+    SGWStatusBar& operator=(const SGWStatusBar&) = delete;
+    SGWStatusBar(SGWStatusBar&&) = delete;
+    SGWStatusBar& operator=(SGWStatusBar&&) = delete;
     ~SGWStatusBar() override;
     static SGWStatusBar* instance;
     static SGXTimer* timer;

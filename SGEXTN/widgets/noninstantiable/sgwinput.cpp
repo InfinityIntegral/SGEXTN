@@ -42,6 +42,7 @@ SGWInput::SGWInput(SGWWidget *parent, void (*validationFunction)(SGWInput *), fl
     (*this).backgroundHoverInvalidColour = SGXThemeColours::getThemeColour((*this).backgroundHoverInvalidThemeColour);
     (*this).foregroundHoverInvalidThemeColour = 5;
     (*this).foregroundHoverInvalidColour = SGXThemeColours::getThemeColour((*this).foregroundHoverInvalidThemeColour);
+    (*this).quickInterface = nullptr;
 }
 
 void SGWInput::syncQuickProperties(){

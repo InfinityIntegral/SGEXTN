@@ -45,6 +45,7 @@ SGWButton::SGWButton(SGWWidget *parent, const QString &s, void (*attachedFunctio
     (*this).backgroundFocusSelectedColour = SGXThemeColours::getThemeColour((*this).backgroundFocusSelectedThemeColour);
     (*this).foregroundFocusSelectedThemeColour = 4;
     (*this).foregroundFocusSelectedColour = SGXThemeColours::getThemeColour((*this).foregroundFocusSelectedThemeColour);
+    (*this).quickInterface = nullptr;
 }
 
 void SGWButton::syncQuickProperties(){

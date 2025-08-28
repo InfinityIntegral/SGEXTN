@@ -9,7 +9,7 @@
 // name of your application
 QString SGUCentralManagement::applicationName = "SGEXTN";
 // version number of your application, does not have to be number
-QString SGUCentralManagement::applicationVersion = "v5.0.0";
+QString SGUCentralManagement::applicationVersion = "v5.1.0";
 // name of your organisation
 QString SGUCentralManagement::organisationName = "05524F.sg (Singapore)";
 // name of root folder of your application, only use uppercase or lowercase letters, definitely no banned characters, no dots, no spaces, no hyphens, no underscores, avoid numbers, avoid non ASCII characters

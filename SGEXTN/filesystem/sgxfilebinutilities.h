@@ -3,6 +3,7 @@
 
 #include "../primitives/sgxidentifier.h"
 #include <tuple>
+#include <QString>
 
 template <typename T1, typename T2> class QHash;
 class SGXTimeStamp;

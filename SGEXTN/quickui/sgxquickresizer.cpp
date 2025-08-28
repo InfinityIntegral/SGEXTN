@@ -17,7 +17,7 @@ float SGXQuickResizer::getAppWindowWidth() const {
 
 void SGXQuickResizer::setAppWindowWidth(float x){
     (*this).appWindowWidth = x;
-    emit (*this).changedAppWindowWidth();
+    (*this).changedAppWindowWidth();
 }
 
 float SGXQuickResizer::getAppWindowHeight() const {
@@ -26,7 +26,7 @@ float SGXQuickResizer::getAppWindowHeight() const {
 
 void SGXQuickResizer::setAppWindowHeight(float x){
     (*this).appWindowHeight = x;
-    emit (*this).changedAppWindowHeight();
+    (*this).changedAppWindowHeight();
 }
 
 float SGXQuickResizer::getRenderSpaceWidth() const {
@@ -35,7 +35,7 @@ float SGXQuickResizer::getRenderSpaceWidth() const {
 
 void SGXQuickResizer::setRenderSpaceWidth(float x){
     (*this).renderSpaceWidth = x;
-    emit (*this).changedRenderSpaceWidth();
+    (*this).changedRenderSpaceWidth();
 }
 
 float SGXQuickResizer::getRenderSpaceHeight() const {
@@ -44,7 +44,7 @@ float SGXQuickResizer::getRenderSpaceHeight() const {
 
 void SGXQuickResizer::setRenderSpaceHeight(float x){
     (*this).renderSpaceHeight = x;
-    emit (*this).changedRenderSpaceHeight();
+    (*this).changedRenderSpaceHeight();
 }
 
 float SGXQuickResizer::getSizeUnit() const {
@@ -53,7 +53,7 @@ float SGXQuickResizer::getSizeUnit() const {
 
 void SGXQuickResizer::setSizeUnit(float x){
     (*this).sizeUnit = x;
-    emit (*this).changedSizeUnit();
+    (*this).changedSizeUnit();
 }
 
 void SGXQuickResizer::updateAppWindowSize(){

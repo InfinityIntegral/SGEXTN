@@ -2,6 +2,7 @@
 #define SGXIDENTIFIER_H
 
 #include <QSet>
+#include <QString>
 
 class SGXIdentifier
 {

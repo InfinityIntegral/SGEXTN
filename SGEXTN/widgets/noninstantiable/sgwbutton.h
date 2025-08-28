@@ -12,6 +12,10 @@ class SGWButton : public SGWWidget
 {
 public:
     SGWButton() = delete;
+    SGWButton(const SGWButton&) = delete;
+    SGWButton& operator=(const SGWButton&) = delete;
+    SGWButton(SGWButton&&) = delete;
+    SGWButton& operator=(SGWButton&&) = delete;
     ~SGWButton() override;
     void syncQuickProperties();
     [[nodiscard]] float getF1() const;

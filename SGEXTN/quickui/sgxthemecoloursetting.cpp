@@ -39,7 +39,7 @@ QColor SGXThemeColourSetting::getThemeColour0() const {
 
 void SGXThemeColourSetting::setThemeColour0(const QColor &x){
     (*this).themeColour0 = SGXColourRGBA(x);
-    emit (*this).changedThemeColour0();
+    (*this).changedThemeColour0();
 }
 
 QColor SGXThemeColourSetting::getThemeColour1() const {
@@ -48,7 +48,7 @@ QColor SGXThemeColourSetting::getThemeColour1() const {
 
 void SGXThemeColourSetting::setThemeColour1(const QColor &x){
     (*this).themeColour1 = SGXColourRGBA(x);
-    emit (*this).changedThemeColour1();
+    (*this).changedThemeColour1();
 }
 
 QColor SGXThemeColourSetting::getThemeColour2() const {
@@ -57,7 +57,7 @@ QColor SGXThemeColourSetting::getThemeColour2() const {
 
 void SGXThemeColourSetting::setThemeColour2(const QColor &x){
     (*this).themeColour2 = SGXColourRGBA(x);
-    emit (*this).changedThemeColour2();
+    (*this).changedThemeColour2();
 }
 
 QColor SGXThemeColourSetting::getThemeColour3() const {
@@ -66,7 +66,7 @@ QColor SGXThemeColourSetting::getThemeColour3() const {
 
 void SGXThemeColourSetting::setThemeColour3(const QColor &x){
     (*this).themeColour3 = SGXColourRGBA(x);
-    emit (*this).changedThemeColour3();
+    (*this).changedThemeColour3();
 }
 
 QColor SGXThemeColourSetting::getThemeColour4() const {
@@ -75,7 +75,7 @@ QColor SGXThemeColourSetting::getThemeColour4() const {
 
 void SGXThemeColourSetting::setThemeColour4(const QColor &x){
     (*this).themeColour4 = SGXColourRGBA(x);
-    emit (*this).changedThemeColour4();
+    (*this).changedThemeColour4();
 }
 
 QColor SGXThemeColourSetting::getThemeColour5() const {
@@ -84,7 +84,7 @@ QColor SGXThemeColourSetting::getThemeColour5() const {
 
 void SGXThemeColourSetting::setThemeColour5(const QColor &x){
     (*this).themeColour5 = SGXColourRGBA(x);
-    emit (*this).changedThemeColour5();
+    (*this).changedThemeColour5();
 }
 
 QColor SGXThemeColourSetting::getThemeColour6() const {
@@ -93,7 +93,7 @@ QColor SGXThemeColourSetting::getThemeColour6() const {
 
 void SGXThemeColourSetting::setThemeColour6(const QColor &x){
     (*this).themeColour6 = SGXColourRGBA(x);
-    emit (*this).changedThemeColour6();
+    (*this).changedThemeColour6();
 }
 
 QColor SGXThemeColourSetting::getThemeColour7() const {
@@ -102,7 +102,7 @@ QColor SGXThemeColourSetting::getThemeColour7() const {
 
 void SGXThemeColourSetting::setThemeColour7(const QColor &x){
     (*this).themeColour7 = SGXColourRGBA(x);
-    emit (*this).changedThemeColour7();
+    (*this).changedThemeColour7();
 }
 
 QColor SGXThemeColourSetting::getThemeColour8() const {
@@ -111,5 +111,5 @@ QColor SGXThemeColourSetting::getThemeColour8() const {
 
 void SGXThemeColourSetting::setThemeColour8(const QColor &x){
     (*this).themeColour8 = SGXColourRGBA(x);
-    emit (*this).changedThemeColour8();
+    (*this).changedThemeColour8();
 }
