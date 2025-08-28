@@ -23,35 +23,6 @@ std::string toLowerCase(std::string s){
     return output;
 }
 
-bool compareObj(std::string a, std::string b){
-    std::string sa = "";
-    std::string sb = "";
-    bool started = false;
-    for(int i=0; i<a.length(); i++){
-        if(a[i] == "_" || (a[i] >= 'a' && a[i] <= 'z') || (a[i] >= 'A' && a[i] <= 'Z') || (a[i] >= '0' && a[i] <= '9')){
-            if(started == true){sa += a[i];}
-        }
-        else if(a[i] == '$'){started = true;}
-        else{break;}
-    }
-    started = false;
-    for(int i=0; i<b.length(); i++){
-        if(b[i] == "_" || (b[i] >= 'a' && b[i] <= 'z') || (b[i] >= 'A' && b[i] <= 'Z') || (a[i] >= '0' && a[i] <= '9')){
-            if(started == true){sb += b[i];}
-        }
-        else if(b[i] == '$'){started = true;}
-        else{break;}
-    }
-    if(started == false){return (a < b);}
-    return sa < sb;
-}
-
-struct StringComparator{
-    bool operator()(const std::string& a, const std::string& b) const {
-        return compareObj(a, b);
-    }
-};
-
 void splitObj(std::string a, std::string& o1, std::string& o2, std::string& o3){
     int started = 0;
     o1 = "";
@@ -98,8 +69,8 @@ std::string toHtmlTag(std::string s){
     return output;
 }
 
-void addObjList(const std::map<std::string, std::string, compareObj>& x, std::string& s){
-    for(std::map<std::string, std::string, compareObj>::const_iterator i = x.begin(); i != x.end(); i++){
+void addObjList(const std::map<std::string, std::string>& x, std::string& s){
+    for(std::map<std::string, std::string>::const_iterator i = x.begin(); i != x.end(); i++){
         std::string s1;
         std::string s2;
         std::string s3;
@@ -112,8 +83,8 @@ void addObjList(const std::map<std::string, std::string, compareObj>& x, std::st
     }
 }
 
-void addObjFull(const std::map<std::string, std::string, compareObj>& x, std::string& s){
-    for(std::map<std::string, std::string, compareObj>::const_iterator i = x.begin(); i != x.end(); i++){
+void addObjFull(const std::map<std::string, std::string>& x, std::string& s){
+    for(std::map<std::string, std::string>::const_iterator i = x.begin(); i != x.end(); i++){
         std::string s1;
         std::string s2;
         std::string s3;
@@ -280,7 +251,7 @@ std::string genClassInfo(std::string input){
     output += "<div style=\"width: 100%; height: 0.25em; background-color: var(--c4);\"></div>\n";
     output += "<h2 class=\"halftitle\" id=\"moreinfo\">Detailed Description</h2>\n";
     output += ("<p class=\"label\">" + formatDescription(laterDescription) + "</p>\n");
-    for(std::map<std::string, std::string, compareObj>::const_iterator i = detailedDescription.begin(); i != detailedDescription.end(); i++){
+    for(std::map<std::string, std::string>::const_iterator i = detailedDescription.begin(); i != detailedDescription.end(); i++){
         output += ("<h2 class=\"halftitle\">" + (*i).first + "</h2>\n");
         output += ("<p class=\"label\">" + formatDescription((*i).second) + "</p>\n");
     }
