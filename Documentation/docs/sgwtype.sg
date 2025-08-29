@@ -5,42 +5,42 @@ enum used to indicate type of SGWidget
 #e Type
 This is the type of the enum that gives information about the type of a SGWidget.
 #ef BlankWidget
-This type indicates that the SGWidget is of class <a class="link" href="./classinfo.html?classname=sgwblankwidget">SGWBlankWidget</a>.
+This type indicates that the SGWidget is of class <a class="link" href="./classinfo/sgwblankwidget">SGWBlankWidget</a>.
 #ef PageBackground
-This type indicates that the SGWidget is of class <a class="link" href="./classinfo.html?classname=sgwpagebackground">SGWPageBackground</a>.
+This type indicates that the SGWidget is of class <a class="link" href="./classinfo/sgwpagebackground">SGWPageBackground</a>.
 #ef TextLabel
-This type indicates that the SGWidget is of class <a class="link" href="./classinfo.html?classname=sgwtextlabel">SGWTextLabel</a>.
+This type indicates that the SGWidget is of class <a class="link" href="./classinfo/sgwtextlabel">SGWTextLabel</a>.
 #ef IconLabel
-This type indicates that the SGWidget is of class <a class="link" href="./classinfo.html?classname=sgwiconlabel">SGWIconLabel</a>.
+This type indicates that the SGWidget is of class <a class="link" href="./classinfo/sgwiconlabel">SGWIconLabel</a>.
 #ef LongLabel
-This type indicates that the SGWidget is of class <a class="link" href="./classinfo.html?classname=sgwlonglabel">SGWLongLabel</a>.
+This type indicates that the SGWidget is of class <a class="link" href="./classinfo/sgwlonglabel">SGWLongLabel</a>.
 #ef SequentialLongLabel
-This type indicates that the SGWidget is of class <a class="link" href="./classinfo.html?classname=sgwsequentiallonglabel">SGWSequentialLongLabel</a>.
+This type indicates that the SGWidget is of class <a class="link" href="./classinfo/sgwsequentiallonglabel">SGWSequentialLongLabel</a>.
 #ef TextButton
-This type indicates that the SGWidget is of class <a class="link" href="./classinfo.html?classname=sgwtextbutton">SGWTextButton</a>.
+This type indicates that the SGWidget is of class <a class="link" href="./classinfo/sgwtextbutton">SGWTextButton</a>.
 #ef IconButton
-This type indicates that the SGWidget is of class <a class="link" href="./classinfo.html?classname=sgwiconbutton">SGWIconButton</a>.
+This type indicates that the SGWidget is of class <a class="link" href="./classinfo/sgwiconbutton">SGWIconButton</a>.
 #ef TextInput
-This type indicates that the SGWidget is of class <a class="link" href="./classinfo.html?classname=sgwtextinput">SGWTextInput</a>.
+This type indicates that the SGWidget is of class <a class="link" href="./classinfo/sgwtextinput">SGWTextInput</a>.
 #ef LongInput
-This type indicates that the SGWidget is of class <a class="link" href="./classinfo.html?classname=sgwlonginput">SGWLongInput</a>.
+This type indicates that the SGWidget is of class <a class="link" href="./classinfo/sgwlonginput">SGWLongInput</a>.
 #ef ScrollView
-This type indicates that the SGWidget is of class <a class="link" href="./classinfo.html?classname=sgwscrollview">SGWScrollView</a>.
+This type indicates that the SGWidget is of class <a class="link" href="./classinfo/sgwscrollview">SGWScrollView</a>.
 #ef SequentialScrollView
-This type indicates that the SGWidget is of class <a class="link" href="./classinfo.html?classname=sgwsequentialscrollview">SGWSequentialScrollView</a>.
+This type indicates that the SGWidget is of class <a class="link" href="./classinfo/sgwsequentialscrollview">SGWSequentialScrollView</a>.
 #ef ColourPicker
-This type indicates that the SGWidget is of class <a class="link" href="./classinfo.html?classname=sgwcolourpickerwidget">SGWColourPickerWidget</a>.
+This type indicates that the SGWidget is of class <a class="link" href="./classinfo/sgwcolourpickerwidget">SGWColourPickerWidget</a>.
 #ef TouchReceiver
-This type indicates that the SGWidget is of class <a class="link" href="./classinfo.html?classname=sgwtouchreceiver">SGWTouchReceiver</a>.
+This type indicates that the SGWidget is of class <a class="link" href="./classinfo/sgwtouchreceiver">SGWTouchReceiver</a>.
 #ef CustomRenderer
-This type indicates that the SGWidget is of class <a class="link" href="./classinfo.html?classname=sgwcustomrenderer">SGWCustomRenderer</a>.
+This type indicates that the SGWidget is of class <a class="link" href="./classinfo/sgwcustomrenderer">SGWCustomRenderer</a>.
 #ef Undefined
-This type should never be seen on any SGWidget. If you see it, it means that there is a bug in the SGEXTN code where the type of a SGWidget is not set. If that is the case, <a class="link" href="./contact.html">contact 05524F</a> immediately to report about the bug.
+This type should never be seen on any SGWidget. If you see it, it means that there is a bug in the SGEXTN code where the type of a SGWidget is not set. If that is the case, <a class="link" href="./contact">contact 05524F</a> immediately to report about the bug.
 #sf bool isBackground(SGWType::Type x)
-This function checks if the SGWidget is a subclass of <a class="link" href="./classinfo.html?classname=sgwbackground">SGWBackground</a>.
+This function checks if the SGWidget is a subclass of <a class="link" href="./classinfo/sgwbackground">SGWBackground</a>.
 #sf bool isDisplayText(SGWType::Type x)
-This function checks if the SGWidget is a subclass of <a class="link" href="./classinfo.html?classname=sgwlabel">SGWLabel</a>.
+This function checks if the SGWidget is a subclass of <a class="link" href="./classinfo/sgwlabel">SGWLabel</a>.
 #sf bool isButton(SGWType::Type x)
-This function checks if the SGWidget is a subclass of <a class="link" href="./classinfo.html?classname=sgwbutton">SGWButton</a>.
+This function checks if the SGWidget is a subclass of <a class="link" href="./classinfo/sgwbutton">SGWButton</a>.
 #sf bool isInputField(SGWType::Type x)
-This function checks if the SGWidget is a subclass of <a class="link" href="./classinfo.html?classname=sgwinput">SGWInput</a>.
+This function checks if the SGWidget is a subclass of <a class="link" href="./classinfo/sgwinput">SGWInput</a>.

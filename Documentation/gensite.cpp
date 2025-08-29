@@ -4,6 +4,7 @@
 #include <vector>
 #include <pair>
 #include <fstream>
+#include <filesystem>
 
 void init();
 std::string header;
@@ -20,9 +21,12 @@ std::string genSiteMap(const std::string& input); // full sitemap document
 std::string genClassInfo(const std::string& input); // full class info document
 std::string genFunctionList(const std::string& input); // class name
 std::string readWholeFile(const std::string& path); // file path
+std::string genXML(const std::string& input); // full sitemap document
 
 int main(){
     init();
+    std::filesystem::create_directories("classinfo");
+    std::filesystem::create_directories("functionlist");
 }
 
 void init(){
@@ -471,11 +475,11 @@ std::string genClassInfo(const std::string& input){
     output += ("<p class=\"label\">" + formatDescription(classDescription) + "</p>\n");
     output += ("<p class=\"label\">&nbsp;<br>&#x9;header: #include\" " + include + "\"</p>\n");
     if(parentClass == ""){output += "<p class=\"label\">&#x9;inherits: none</p>\n";}
-    else{output += ("<p class=\"label\">&#x9;inherits: <a class=\"link\" href=\"./classinfo.html?classname=" + toLowerCase(parentClass) + "\">" + parentClass + "</a></p>\n");}
+    else{output += ("<p class=\"label\">&#x9;inherits: <a class=\"link\" href=\"./classinfo/" + toLowerCase(parentClass) + "\">" + parentClass + "</a></p>\n");}
     if(childrenClasses.size() > 0){
         output += "<p class=\"label\">&#x9;inherited by:</p>\n";
         for(int i=0; i<childrenClasses.size(); i++){
-            output += ("<p class=\"label\">&#x9;&#x9;<a class=\"link\" href=\"./classinfo.html?classname=" + toLowerCase(childrenClasses[i]) + "\">" + childrenClasses[i] + "</a></p>\n");
+            output += ("<p class=\"label\">&#x9;&#x9;<a class=\"link\" href=\"./classinfo/" + toLowerCase(childrenClasses[i]) + "\">" + childrenClasses[i] + "</a></p>\n");
         }
     }
     output += "<p class=\"label\">&#x9;<a class=\"link\" href=\"#moreinfo\">More information...</a></p>";
@@ -693,9 +697,9 @@ std::string genFunctionList(const std::string& input){
         
         if(currentClass.enumName != ""){
             enumUsed = true;
-            output += ("<p class=\"label\">&#x9;enum <a class=\"link\" href=\"./classinfo.html?classname=" + toLowerCase(currentClass.className) + "#enum" + toLowerCase(currentClass.enumName) + "\">" + currentClass.className + "::" +  currentClass.enumName + "</a></p>\n");
+            output += ("<p class=\"label\">&#x9;enum <a class=\"link\" href=\"./classinfo/" + toLowerCase(currentClass.className) + "#enum" + toLowerCase(currentClass.enumName) + "\">" + currentClass.className + "::" +  currentClass.enumName + "</a></p>\n");
             for(int i=0; i<currentClass.enumFlags.size(); i++){
-                output += ("<p class=\"label\">&#x9;&#x9;<a class=\"link\" href=\"./classinfo.html?classname=" + toLowerCase(currentClass.className) + "#flag" + toLowerCase(currentClass.enumFlags.at(i)) + "\">" + currentClass.className + "::" + currentClass.enumFlags.at(i) + "</a></p>\n");
+                output += ("<p class=\"label\">&#x9;&#x9;<a class=\"link\" href=\"./classinfo/" + toLowerCase(currentClass.className) + "#flag" + toLowerCase(currentClass.enumFlags.at(i)) + "\">" + currentClass.className + "::" + currentClass.enumFlags.at(i) + "</a></p>\n");
             }
         }
         
@@ -760,56 +764,21 @@ std::string genFunctionList(const std::string& input){
     return output;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+std::string genXML(const std::string& input){
+    std::stringstream s(input);
+    std::string output;
+    output += "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+    output += "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n";
+    output += "<url><loc>https://infinityintegral.github.io/</loc><priority>1.0</priority></url>\n";
+    output += "<url><loc>https://infinityintegral.github.io/setup.html</loc><priority>1.0</priority></url>\n";
+    output += "<url><loc>https://infinityintegral.github.io/contact.html</loc><priority>0.3</priority></url>\n";
+    std::string currentClass;
+    while(s >> currentClass){
+        if(currentClass.length() < 2 || currentClass.substr(0, 2) != "SG"){continue;}
+        currentClass = toLowerCase(currentClass);
+        output += ("<url><loc>https://infinityintegral.github.io/classinfo/" + currentClass + "</loc><priority>0.8</priority></url>\n");
+        output += ("<url><loc>https://infinityintegral.github.io/functionlist.html?classname=" + currentClass + "</loc><priority>0.5</priority></url>\n");
+    }
+    output += "</urlset>";
+    return output;
+}
