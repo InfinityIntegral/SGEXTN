@@ -15,40 +15,78 @@ std::string pageContact;
 std::string pageSetup;
 std::string pageClassInfo;
 std::string pageHome;
-std::array<std::string, 4> pageTemplate;
+std::array<std::string, 4> pageTemplate; // 0 title 1 style 2 contents 3
 
 std::string genSiteMap(const std::string& input); // full sitemap document
 std::string genClassInfo(const std::string& input); // full class info document
 std::string genFunctionList(const std::string& input); // class name
 std::string readWholeFile(const std::string& path); // file path
 std::string genXML(const std::string& input); // full sitemap document
+void getClassList();
+std::string toLowerCase(const std::string& s);
+std::vector<std::string> classes;
+void fillPage(const std::string& path, const std::string& title, const std::string& contents);
 
 int main(){
     init();
+    getClassList();
     std::filesystem::create_directories("classinfo");
     std::filesystem::create_directories("functionlist");
+    {
+        std::ofstream f("sitemap.xml");
+        f << genXML(readWholeFile("docs/sitemap.sg"));
+    }
+    fillPage("index.html", "SGEXTN Docs", pageHome);
+    fillPage("404.html", "Error liao", page404);
+    fillPage("contact.html", "Contact 05524F.sg", pageContact);
+    fillPage("setup.html", "Set up SGEXTN", pageSetup);
+    for(int i=0; i<classes.size(); i++){
+        std::string& currentClass = classes.at(i);
+        fillPage("classinfo/" + toLowerCase(currentClass) + ".html", currentClass + " Docs", genClassInfo(readWholeFile("docs/" + toLowerCase(currentClass) + ".sg")));
+        fillPage("functionlist/" + toLowerCase(currentClass) + ".html", currentClass + " Functions", genFunctionList(currentClass));
+    }
+}
+
+void fillPage(const std::string& path, const std::string& title, const std::string& contents){
+    std::ofstream f(path);
+    f << pageTemplate.at(0);
+    f << title;
+    f << pageTemplate.at(1);
+    f << style;
+    f << pageTemplate.at(2);
+    f << contents;
+    f << pageTemplate.at(3);
+}
+
+void getClassList(){
+    std::stringstream s(readWholeFile("docs/sitemap.sg"));
+    std::string currentClass;
+    while(s >> currentClass){
+        if(currentClass.length() < 2 || currentClass.substr(0, 2) != "SG"){continue;}
+        classes.push_back(currentClass);
+    }
 }
 
 void init(){
     
-    header = R"(
+    header = R"DELIM(
 <div>
 <button class="button" style="width: 100%;" onclick="location.href='/'">
 <img src="https://raw.githubusercontent.com/InfinityIntegral/InfinityIntegral/main/flagemoji.png" style="vertical-align: middle; height: 1.5rem; image-rendering: auto;"> SGEXTN Documentation <img src="https://raw.githubusercontent.com/InfinityIntegral/InfinityIntegral/main/flagemoji.png" style="vertical-align: middle; height: 1.5rem; image-rendering: auto;">
 </button>
 </div>
-)";
+)DELIM";
     
-    footer = R"(
+    footer = R"DELIM(
 <div>
 <div style="width: 100%; height: 0.25em; background-color: var(--c4);"></div>
 <p class="label">©2025 05524F.sg (Singapore)</p>
 <p class="label"><a class="link" href="./contact">report a bug in SGEXTN or contact 05524F</a></p>
 <div style="width: 100%; height: 0.25em; background-color: var(--c4);"></div>
 </div>
-)";
+)DELIM";
     
-    style = R"(
+    style = R"DELIM(
 <link rel="icon" href="icon.png" type="image/png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
@@ -205,9 +243,9 @@ void init(){
 }
 
 </style>
-)";
+)DELIM";
     
-    pageContact = R"(
+    pageContact = R"DELIM(
 <h1 class="title">Contact 05524F</h1>
 <p class="label">&#x9;You should contact 05524F immediately if anything in SGEXTN is not working as expected according to the documentation or if there are errors in the documentation. You can also suggest features to be added to SGEXTN, but 05524F is unlikely to accept your request unless it is really good. SGEXTN is licensed under LGPL, so you may change the internals or add new components if you want as long as you open source your changes or write to 05524F to apply for exemption from the license (more info below).<br>&#x9;You may contact 05524F by email or by Instagram. Note that your Instagram friend request will only be accepted if you know Student 05524F personally, otherwise, only email contact is allowed.</p>
 <p class="label">email: <a class="link" href="mailto:infinityintegral333@gmail.com">infinityintegral333@gmail.com</a></p>
@@ -218,9 +256,9 @@ void init(){
 <div style="width: 100%; height: 0.25em; background-color: var(--c4);"></div>
 <h1 class="title">Legal info</h1>
 <p class="label">&#x9;SGEXTN is licensed under <a class="link" href="https://opensource.org/license/lgpl-3-0">LGPL v3</a> (Lesser General Public License). This essentially means that you do not have to open source your work if using SGEXTN normally but should do so if you changed SGEXTN internals. Note that the SGUCentralManagement class is not considered SGEXTN internals and can be freely edited.<br>&#x9;Qt's license is completely separate from the SGEXTN license. You must follow their license strictly and 05524F cannot exempt you from the Qt license.<br>&#x9;If you changed SGEXTN but do not want to open source your work, you must get an exemption from 05524F first. 05524F is likely to grant license exemptions to residents and citizens of Singapore but the exemption is revoked automatically if you move to somewhere else or change your citizenship. 05524F can also grant license exemptions to projects that prominently feature the letters "SG" or "sg" in their names, but the exemption is revoked automatically if the project is renamed. In any case, 05524F must explicitly authorise exemptions and it only applies to the SGEXTN license, not the Qt license.<br>&nbsp;</p>
-)";
+)DELIM";
     
-    pageSetup = R"(
+    pageSetup = R"DELIM(
 <h1 class="title">Setting up SGEXTN</h1>
 <p class="label">&#x9;SGEXTN uses <a class="link" href="https://www.qt.io/">Qt</a> Quick extensively and can only be used in a Qt project. Qt version 6.9 and above is recommended.<br>&#x9;To use SGEXTN, copy the entire SGEXTN folder from the <a class="link" href="https://github.com/InfinityIntegral/SGEXTN">GitHub repository</a> into the root folder of your project which should contain your project file (.pro). To include it, write the line<br><br>&#x9;include(SGEXTN/SGEXTN.pri)<br><br> at the top of your project file (.pro). After that, go to the file SGEXTN/userDefinedClasses/sgucentralmanagement.cpp, read through the comments in the file and customise whatever is needed. Do not change anything in the SGEXTN folder unless specified by the file.<br>&#x9;Your custom code should be outside the SGEXTN folder. Classes in your custom code should have the prefix SGC. The first word in the names of renderer classes should be "Render".<br>&nbsp;</p>
 <div style="width: 100%; height: 0.25em; background-color: var(--c4);"></div>
@@ -241,14 +279,14 @@ void init(){
 <p class="label">&#x9;Signal-slot is Qt's system for building callback functions. In Qt 6, they are essentially function pointers, which is good. However, using them requires the Q_OBJECT macro and MetaObject Compiler (MOC) processing, which increases compile time. SGEXTN abstracts that away by using raw function pointers for callbacks attached to timers (SGXTimer) and interactive UI elements including buttons (SGWButton subclasses) and input fields (SGWInput subclasses).</p>
 <h2 class="halftitle">What if I want Qt stuff?</h2>
 <p class="label">&#x9;SGEXTN abstracts Qt stuff without disabling them. So if you really want to use Qt stuff, you can do that normally.<br>&nbsp;</p>
-)";
+)DELIM";
     
-    pageClassInfo = R"(
+    pageClassInfo = R"DELIM(
 <div style="width: 100%; height: 0.25em; background-color: var(--c4);"></div>
 <p class="label">&#x9;Only properties, functions, and classes intended for public use have documentation. Your code autocompletion tool may provide suggestions that are not documented. You are discouraged from using these undocumented properties, functions, and classes unless you have read the source code and understand what they do.<br>&#x9;All information on this documentation page are only valid for SGEXTN version 5.1.0, future versions may have new features added or removed. For documentation of past versions, pls see the documentation bundled with the release.<br>&nbsp;</p>
-)";
+)DELIM";
     
-    pageHome = R"(
+    pageHome = R"DELIM(
 <h1 class="title">What is SGEXTN?</h1>
 <p class="label">&#x9;SGEXTN is a framework built on top of <a class="link" href="https://www.qt.io/">Qt</a> Quick. It provides essential functionality for building apps, such as a colour struct and file system access. The SGWidget module provides a full GUI toolkit to build UI without writing a single line of QML. SGEXTN also does not use signal-slot, instead callback functions are implemented using function pointers.<br>&#x9;Note that documentation is only provided for the latest version. For earlier documentation, pls host the Documentation folder of your release yourself on <a class="link" href="https://www.apachefriends.org/">XAMPP Apache</a>.<br>Below is the full list of all SGEXTN classes with links to their documentation pages.</p>
 <p class="label"><a class="link" href="./setup">how to set up SGEXTN</a></p>
@@ -256,7 +294,7 @@ void init(){
 <div style="width: 100%; height: 0.25em; background-color: var(--c4);"></div>
 <p class="label">list of all classes that you can use inside SGEXTN 5.1.0:</p>
 <p class="label" id="sitemap"></p>
-)";
+)DELIM";
     
     pageTemplate = {"\n<!DOCTYPE html>\n<html lang=\"en-SG\">\n<head>\n<meta charset=\"UTF-8\">\n<title>", "</title>\n", "\n</head>\n<body>\n", "\n</body>\n</html>\n"};
     
