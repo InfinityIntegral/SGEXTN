@@ -29,15 +29,15 @@ This function reads a C++ string from the current location of the file pointer a
 #f [[nodiscard]] QString $readString() const
 This function reads a QString from the current location of the file pointer and returns it. This moves the file pointer forwards.
 #f [[nodiscard]] SGXColourRGBA $readColourRGBA() const
-This function reads a <a class="link" href="./classinfo/sgxcolourrgba">SGXColourRGBA</a> representing a 8 bit RGBA colour from the current location of the file pointer and returns it. This moves the file pointer forwards.
+This function reads a <a class="link" href="/classinfo/sgxcolourrgba">SGXColourRGBA</a> representing a 8 bit RGBA colour from the current location of the file pointer and returns it. This moves the file pointer forwards.
 #f [[nodiscard]] SGXColourHSLA $readColourHSLA() const
-This function reads a <a class="link" href="./classinfo/sgxcolourhsla">SGXColourHSLA</a> representing a colour in HSLA format from the current location of the file pointer and returns it. This moves the file pointer forwards.
+This function reads a <a class="link" href="/classinfo/sgxcolourhsla">SGXColourHSLA</a> representing a colour in HSLA format from the current location of the file pointer and returns it. This moves the file pointer forwards.
 #f [[nodiscard]] SGXTimeStamp $readTimeStamp() const
-This function reads a <a class="link" href="./classinfo/sgxtimestamp">SGXTimeStamp</a> representing a time accurate to the nearest second from the current location of the file pointer and returns it. This moves the file pointer forwards.
+This function reads a <a class="link" href="/classinfo/sgxtimestamp">SGXTimeStamp</a> representing a time accurate to the nearest second from the current location of the file pointer and returns it. This moves the file pointer forwards.
 #f [[nodiscard]] SGXIdentifier $readIdentifier() const
-This function reads a <a class="link" href="./classinfo/sgxidentifier">SGXIdentifier</a> representing a global unique identifier (GUID) from the current location of the file pointer and returns it. This moves the file pointer forwards.
+This function reads a <a class="link" href="/classinfo/sgxidentifier">SGXIdentifier</a> representing a global unique identifier (GUID) from the current location of the file pointer and returns it. This moves the file pointer forwards.
 #f [[nodiscard]] SGXVector2 $readVector2() const
-This function reads a <a class="link" href="./classinfo/sgxvector2">SGXVector2</a> representing a 2 dimensional vector from the current location of the file pointer and returns it. This moves the file pointer forwards.
+This function reads a <a class="link" href="/classinfo/sgxvector2">SGXVector2</a> representing a 2 dimensional vector from the current location of the file pointer and returns it. This moves the file pointer forwards.
 #f void $writeBool(bool x) const
 This function writes a boolean to the current location of the file pointer. This moves the file pointer forwards.
 #f void $writeChar(char x) const
@@ -61,15 +61,15 @@ This function writes a C++ string to the current location of the file pointer. T
 #f void $writeString(const QString& x) const
 This function writes a QString to the current location of the file pointer. This moves the file pointer forwards.
 #f void $writeColourRGBA(SGXColourRGBA x) const
-This function writes a <a class="link" href="./classinfo/sgxcolourrgba">SGXColourRGBA</a> representing a 8 bit RGBA colour to the current location of the file pointer. This moves the file pointer forwards.
+This function writes a <a class="link" href="/classinfo/sgxcolourrgba">SGXColourRGBA</a> representing a 8 bit RGBA colour to the current location of the file pointer. This moves the file pointer forwards.
 #f void $writeColourHSLA(SGXColourHSLA x) const
-This function writes a <a class="link" href="./classinfo/sgxcolourhsla">SGXColourHSLA</a> representing a colour in HSLA format to the current location of the file pointer. This moves the file pointer forwards.
+This function writes a <a class="link" href="/classinfo/sgxcolourhsla">SGXColourHSLA</a> representing a colour in HSLA format to the current location of the file pointer. This moves the file pointer forwards.
 #f void $writeTimeStamp(SGXTimeStamp x) const
-This function writes a <a class="link" href="./classinfo/sgxtimestamp">SGXTimeStamp</a> representing a time accurate to the nearest second to the current location of the file pointer. This moves the file pointer forwards.
+This function writes a <a class="link" href="/classinfo/sgxtimestamp">SGXTimeStamp</a> representing a time accurate to the nearest second to the current location of the file pointer. This moves the file pointer forwards.
 #f void $writeIdentifier(SGXIdentifier x) const
-This function writes a <a class="link" href="./classinfo/sgxidentifier">SGXIdentifier</a> representing a global unique identifier (GUID) to the current location of the file pointer. This moves the file pointer forwards.
+This function writes a <a class="link" href="/classinfo/sgxidentifier">SGXIdentifier</a> representing a global unique identifier (GUID) to the current location of the file pointer. This moves the file pointer forwards.
 #f void $writeVector2(SGXVector2 x) const
-This function writes a <a class="link" href="./classinfo/sgxvector2">SGXVector2</a> representing a 2 dimensional vector to the current location of the file pointer. This moves the file pointer forwards.
+This function writes a <a class="link" href="/classinfo/sgxvector2">SGXVector2</a> representing a 2 dimensional vector to the current location of the file pointer. This moves the file pointer forwards.
 #f [[nodiscard]] long long $getPointerLocation() const
 This function gets the current location of the file pointer as a number of bytes from the start of the file.
 #f void $setPointerLocation(long long x) const

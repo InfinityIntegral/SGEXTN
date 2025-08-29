@@ -5,7 +5,7 @@ base class of all SGWidgets
 #dt <div id="-w"></div>_w Distance
 The position and size of all SGWidgets are calculated using a <a class="link" href="#-w">_w</a> distance.$A _w distance is made of 2 coordinates, coordinate 1 and coordinate 0, and it is denoted using _w(c1, c0). This is equal to c1 * parent_size + c0 * size_unit pixels, where parent_size is the size of the parent SGWidget and size_unit is 1/24 of the screen width or screen height, whichever is longer.
 #f [[nodiscard]] SGWType::Type $getType() const
-This function returns the type of this SGWWidget which is a <a class="link" href="./classinfo/sgwtype">SGWType</a>. This can be used to conditionally cast the SGWWidget to subclasses. However, you may achieve the same effect but with a slight performance cost if you use qobject_cast and check if the result is nullptr.
+This function returns the type of this SGWWidget which is a <a class="link" href="/classinfo/sgwtype">SGWType</a>. This can be used to conditionally cast the SGWWidget to subclasses. However, you may achieve the same effect but with a slight performance cost if you use qobject_cast and check if the result is nullptr.
 #f [[nodiscard]] SGWWidget* $getParent() const
 This function returns the parent SGWidget of this SGWWidget. The returned SGWidget is both parent of this SGWWidget in terms of visual hierarchy and memory ownership. The parent of SGWidgets cannot be changed after creation.
 #f [[nodiscard]] QVector<SGWWidget*> $getChildren() const

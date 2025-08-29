@@ -2,9 +2,10 @@
 #include <array>
 #include <sstream>
 #include <vector>
-#include <pair>
+#include <utility>
 #include <fstream>
 #include <filesystem>
+#include <iostream>
 
 void init();
 std::string header;
@@ -36,14 +37,14 @@ int main(){
         std::ofstream f("sitemap.xml");
         f << genXML(readWholeFile("docs/sitemap.sg"));
     }
-    fillPage("index.html", "SGEXTN Docs", pageHome);
+    fillPage("index.html", "SGEXTN Docs", pageHome + genSiteMap(readWholeFile("docs/sitemap.sg")));
     fillPage("404.html", "Error liao", page404);
     fillPage("contact.html", "Contact 05524F.sg", pageContact);
     fillPage("setup.html", "Set up SGEXTN", pageSetup);
     for(int i=0; i<classes.size(); i++){
         std::string& currentClass = classes.at(i);
-        fillPage("classinfo/" + toLowerCase(currentClass) + ".html", currentClass + " Docs", genClassInfo(readWholeFile("docs/" + toLowerCase(currentClass) + ".sg")));
-        fillPage("functionlist/" + toLowerCase(currentClass) + ".html", currentClass + " Functions", genFunctionList(currentClass));
+        fillPage("classinfo/" + toLowerCase(currentClass) + ".html", currentClass + " Docs", genClassInfo(readWholeFile("docs/" + toLowerCase(currentClass) + ".sg")) + pageClassInfo);
+        fillPage("functionlist/" + toLowerCase(currentClass) + ".html", currentClass + " Functions", genFunctionList(currentClass) + pageClassInfo);
     }
 }
 
@@ -54,7 +55,9 @@ void fillPage(const std::string& path, const std::string& title, const std::stri
     f << pageTemplate.at(1);
     f << style;
     f << pageTemplate.at(2);
+    f << header;
     f << contents;
+    f << footer;
     f << pageTemplate.at(3);
 }
 
@@ -69,6 +72,11 @@ void getClassList(){
 
 void init(){
     
+    page404 = R"DELIM(
+<h1 class="title" style="text-align: center;">Cannot find page leh</h1>
+<p class="label" style="text-align: center;">Go check the link correct or not</p>
+)DELIM";
+    
     header = R"DELIM(
 <div>
 <button class="button" style="width: 100%;" onclick="location.href='/'">
@@ -81,7 +89,7 @@ void init(){
 <div>
 <div style="width: 100%; height: 0.25em; background-color: var(--c4);"></div>
 <p class="label">©2025 05524F.sg (Singapore)</p>
-<p class="label"><a class="link" href="./contact">report a bug in SGEXTN or contact 05524F</a></p>
+<p class="label"><a class="link" href="/contact">report a bug in SGEXTN or contact 05524F</a></p>
 <div style="width: 100%; height: 0.25em; background-color: var(--c4);"></div>
 </div>
 )DELIM";
@@ -93,7 +101,7 @@ void init(){
 
 @font-face {
 	font-family: "SingScript.sg";
-	src: url("SingScript.sg")format("truetype");
+	src: url("/SingScript.sg")format("truetype");
 	font-weight: normal;
 	font-style: normal;
 }
@@ -289,7 +297,7 @@ void init(){
     pageHome = R"DELIM(
 <h1 class="title">What is SGEXTN?</h1>
 <p class="label">&#x9;SGEXTN is a framework built on top of <a class="link" href="https://www.qt.io/">Qt</a> Quick. It provides essential functionality for building apps, such as a colour struct and file system access. The SGWidget module provides a full GUI toolkit to build UI without writing a single line of QML. SGEXTN also does not use signal-slot, instead callback functions are implemented using function pointers.<br>&#x9;Note that documentation is only provided for the latest version. For earlier documentation, pls host the Documentation folder of your release yourself on <a class="link" href="https://www.apachefriends.org/">XAMPP Apache</a>.<br>Below is the full list of all SGEXTN classes with links to their documentation pages.</p>
-<p class="label"><a class="link" href="./setup">how to set up SGEXTN</a></p>
+<p class="label"><a class="link" href="/setup">how to set up SGEXTN</a></p>
 <p class="label"><br></p>
 <div style="width: 100%; height: 0.25em; background-color: var(--c4);"></div>
 <p class="label">list of all classes that you can use inside SGEXTN 5.1.0:</p>
@@ -321,7 +329,7 @@ std::string genSiteMap(const std::string& input){
             for(int i=0; i<sl.length(); i++){
                 if(sl[i] >= 'A' && sl[i] <= 'Z'){sl[i] += ('a' - 'A');}
             }
-            std::string link = "\"./classinfo?classname=" + sl + "\"";
+            std::string link = "\"/classinfo/" + sl + "\"";
             output += ("<a class=\"link\" href=" + link + ">");
             output += s;
             output += "</a>";
@@ -356,7 +364,7 @@ void splitObj(const std::string& a, std::string& o1, std::string& o2, std::strin
     o2 = "";
     o3 = "";
     for(int i=0; i<a.length(); i++){
-        if(a[i] == "_" || (a[i] >= 'a' && a[i] <= 'z') || (a[i] >= 'A' && a[i] <= 'Z') || (a[i] >= '0' && a[i] <= '9')){
+        if(a[i] == '_' || (a[i] >= 'a' && a[i] <= 'z') || (a[i] >= 'A' && a[i] <= 'Z') || (a[i] >= '0' && a[i] <= '9')){
             if(started == 0){o1 += a[i];}
             else if(started == 1){o2 += a[i];}
             else if(started == 2){o3 += a[i];}
@@ -382,7 +390,7 @@ std::string toHtmlTag(const std::string& s){
             output += (s[i] - 'A' + 'a');
             x = false;
         }
-        else if(a[i] >= '0' && a[i] <= '9'){
+        else if(s[i] >= '0' && s[i] <= '9'){
             output += s[i];
             x = false;
         }
@@ -396,7 +404,7 @@ std::string toHtmlTag(const std::string& s){
     return output;
 }
 
-void addObjList(const std::vector<std::pair<<std::string, std::string>>& x, std::string& s){
+void addObjList(const std::vector<std::pair<std::string, std::string>>& x, std::string& s){
     for(int i=0; i<x.size(); i++){
         std::string s1;
         std::string s2;
@@ -431,7 +439,7 @@ std::string genClassInfo(const std::string& input){
     std::string include;
     std::string parentClass;
     std::vector<std::string> childrenClasses;
-    std::pair<std::string, std::string> enumName;
+    std::string enumName;
     std::string enumDescription;
     std::vector<std::pair<std::string, std::string>> enumFlags;
     std::vector<std::pair<std::string, std::string>> memberProperties;
@@ -450,7 +458,10 @@ std::string genClassInfo(const std::string& input){
         std::string value;
         std::string sd;
         if(s.length() == 0){continue;}
-        else if(s[0] != '#'){return ("invalid syntax: " + s);}
+        else if(s[0] != '#'){
+            std::cout << ("invalid syntax at genClassInfo: " + s);
+            return "";
+        }
         for(int i=0; i<s.length(); i++){
             if(s[i] != ' '){type += s[i];}
             else{
@@ -463,7 +474,6 @@ std::string genClassInfo(const std::string& input){
             className = value;
             std::getline(stream, sd);
             classDescription = sd;
-            document.title = (value + " docs");
         }
         else if(type == "ic"){include = value;}
         else if(type == "if"){parentClass = value;}
@@ -505,7 +515,10 @@ std::string genClassInfo(const std::string& input){
             std::getline(stream, sd);
             detailedDescription.push_back(std::make_pair(value, sd));
         }
-        else{return ("invalid type: " + type);}
+        else{
+            std::cout << ("invalid type at genClassInfo: " + type);
+            return "";
+        }
     }
     
     std::string output = "";
@@ -513,15 +526,15 @@ std::string genClassInfo(const std::string& input){
     output += ("<p class=\"label\">" + formatDescription(classDescription) + "</p>\n");
     output += ("<p class=\"label\">&nbsp;<br>&#x9;header: #include\" " + include + "\"</p>\n");
     if(parentClass == ""){output += "<p class=\"label\">&#x9;inherits: none</p>\n";}
-    else{output += ("<p class=\"label\">&#x9;inherits: <a class=\"link\" href=\"./classinfo/" + toLowerCase(parentClass) + "\">" + parentClass + "</a></p>\n");}
+    else{output += ("<p class=\"label\">&#x9;inherits: <a class=\"link\" href=\"/classinfo/" + toLowerCase(parentClass) + "\">" + parentClass + "</a></p>\n");}
     if(childrenClasses.size() > 0){
         output += "<p class=\"label\">&#x9;inherited by:</p>\n";
         for(int i=0; i<childrenClasses.size(); i++){
-            output += ("<p class=\"label\">&#x9;&#x9;<a class=\"link\" href=\"./classinfo/" + toLowerCase(childrenClasses[i]) + "\">" + childrenClasses[i] + "</a></p>\n");
+            output += ("<p class=\"label\">&#x9;&#x9;<a class=\"link\" href=\"/classinfo/" + toLowerCase(childrenClasses[i]) + "\">" + childrenClasses[i] + "</a></p>\n");
         }
     }
     output += "<p class=\"label\">&#x9;<a class=\"link\" href=\"#moreinfo\">More information...</a></p>";
-    output += "<p class=\"label\">&#x9;<a class=\"link\" href=\"./functionlist/" + toLowerCase(className) + "\">List of all including inherited members</a></p>";
+    output += "<p class=\"label\">&#x9;<a class=\"link\" href=\"/functionlist/" + toLowerCase(className) + "\">List of all including inherited members</a></p>";
     output += "<p class=\"label\">&nbsp;</p>";
     
     if(enumName != ""){
@@ -637,7 +650,10 @@ ClassInfo getClassInfo(const std::string& input){
         std::string value;
         std::string sd;
         if(s.length() == 0){continue;}
-        else if(s[0] != '#'){return ("invalid syntax: " + s);}
+        else if(s[0] != '#'){
+            std::cout << ("invalid syntax at getClassInfo: " + s);
+            return ClassInfo();
+        }
         for(int i=0; i<s.length(); i++){
             if(s[i] != ' '){type += s[i];}
             else{
@@ -649,7 +665,6 @@ ClassInfo getClassInfo(const std::string& input){
         if(type == "c"){
             output.className = value;
             std::getline(stream, sd);
-            document.title = (value + " list");
         }
         else if(type == "if"){
             output.parentName = value;
@@ -713,6 +728,20 @@ std::vector<ClassInfo> getClassInfoList(const std::string& input){
     return output;
 }
 
+void addObjList0(const std::vector<std::string>& x, std::string& s, std::string cn){
+    for(int i=0; i<x.size(); i++){
+        std::string s1;
+        std::string s2;
+        std::string s3;
+        splitObj(x.at(i), s1, s2, s3);
+        s += "<p class=\"label\">&#x9;";
+        s += s1;
+        s += ("<a class=\"link\" href=\"/classinfo/" + toLowerCase(cn) + toHtmlTag(x.at(i)) + "\">" + cn + "::" + s2 + "</a>");
+        s += s3;
+        s += "</p>\n";
+    }
+}
+
 std::string genFunctionList(const std::string& input){
     std::vector<ClassInfo> data = getClassInfoList(input);
     std::string enumHTML = "<div style=\"width: 100%; height: 0.25em; background-color: var(--c4);\"></div>\n<h2 class=\"halftitle\">Attached Enum</h2>\n";
@@ -735,35 +764,35 @@ std::string genFunctionList(const std::string& input){
         
         if(currentClass.enumName != ""){
             enumUsed = true;
-            output += ("<p class=\"label\">&#x9;enum <a class=\"link\" href=\"./classinfo/" + toLowerCase(currentClass.className) + "#enum" + toLowerCase(currentClass.enumName) + "\">" + currentClass.className + "::" +  currentClass.enumName + "</a></p>\n");
+            enumHTML += ("<p class=\"label\">&#x9;enum <a class=\"link\" href=\"/classinfo/" + toLowerCase(currentClass.className) + "#enum" + toLowerCase(currentClass.enumName) + "\">" + currentClass.className + "::" +  currentClass.enumName + "</a></p>\n");
             for(int i=0; i<currentClass.enumFlags.size(); i++){
-                output += ("<p class=\"label\">&#x9;&#x9;<a class=\"link\" href=\"./classinfo/" + toLowerCase(currentClass.className) + "#flag" + toLowerCase(currentClass.enumFlags.at(i)) + "\">" + currentClass.className + "::" + currentClass.enumFlags.at(i) + "</a></p>\n");
+                enumHTML += ("<p class=\"label\">&#x9;&#x9;<a class=\"link\" href=\"/classinfo/" + toLowerCase(currentClass.className) + "#flag" + toLowerCase(currentClass.enumFlags.at(i)) + "\">" + currentClass.className + "::" + currentClass.enumFlags.at(i) + "</a></p>\n");
             }
         }
         
         if(currentClass.memberProperties.size() > 0){
             pUsed = true;
-            addObjList(currentClass.memberProperties, pHTML, currentClass.className);
+            addObjList0(currentClass.memberProperties, pHTML, currentClass.className);
         }
         if(currentClass.memberFunctions.size() > 0){
             fUsed = true;
-            addObjList(currentClass.memberFunctions, fHTML, currentClass.className);
+            addObjList0(currentClass.memberFunctions, fHTML, currentClass.className);
         }
         if(currentClass.memberReimplemented.size() > 0){
             rUsed = true;
-            addObjList(currentClass.memberReimplemented, rHTML, currentClass.className);
+            addObjList0(currentClass.memberReimplemented, rHTML, currentClass.className);
         }
         if(currentClass.staticProperties.size() > 0){
             spUsed = true;
-            addObjList(currentClass.staticProperties, spHTML, currentClass.className);
+            addObjList0(currentClass.staticProperties, spHTML, currentClass.className);
         }
         if(currentClass.staticFunctions.size() > 0){
             sfUsed = true;
-            addObjList(currentClass.staticFunctions, sfHTML, currentClass.className);
+            addObjList0(currentClass.staticFunctions, sfHTML, currentClass.className);
         }
         if(currentClass.staticReimplemented.size() > 0){
             srUsed = true;
-            addObjList(currentClass.staticReimplemented, srHTML, currentClass.className);
+            addObjList0(currentClass.staticReimplemented, srHTML, currentClass.className);
         }
     }
     
