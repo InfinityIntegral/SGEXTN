@@ -43,7 +43,7 @@ void init(){
 <div>
 <div style="width: 100%; height: 0.25em; background-color: var(--c4);"></div>
 <p class="label">©2025 05524F.sg (Singapore)</p>
-<p class="label"><a class="link" href="./contact.html">report a bug in SGEXTN or contact 05524F</a></p>
+<p class="label"><a class="link" href="./contact">report a bug in SGEXTN or contact 05524F</a></p>
 <div style="width: 100%; height: 0.25em; background-color: var(--c4);"></div>
 </div>
 )";
@@ -251,7 +251,7 @@ void init(){
     pageHome = R"(
 <h1 class="title">What is SGEXTN?</h1>
 <p class="label">&#x9;SGEXTN is a framework built on top of <a class="link" href="https://www.qt.io/">Qt</a> Quick. It provides essential functionality for building apps, such as a colour struct and file system access. The SGWidget module provides a full GUI toolkit to build UI without writing a single line of QML. SGEXTN also does not use signal-slot, instead callback functions are implemented using function pointers.<br>&#x9;Note that documentation is only provided for the latest version. For earlier documentation, pls host the Documentation folder of your release yourself on <a class="link" href="https://www.apachefriends.org/">XAMPP Apache</a>.<br>Below is the full list of all SGEXTN classes with links to their documentation pages.</p>
-<p class="label"><a class="link" href="./setup.html">how to set up SGEXTN</a></p>
+<p class="label"><a class="link" href="./setup">how to set up SGEXTN</a></p>
 <p class="label"><br></p>
 <div style="width: 100%; height: 0.25em; background-color: var(--c4);"></div>
 <p class="label">list of all classes that you can use inside SGEXTN 5.1.0:</p>
@@ -483,7 +483,7 @@ std::string genClassInfo(const std::string& input){
         }
     }
     output += "<p class=\"label\">&#x9;<a class=\"link\" href=\"#moreinfo\">More information...</a></p>";
-    output += "<p class=\"label\">&#x9;<a class=\"link\" href=\"./functionlist.html?classname=" + toLowerCase(className) + "\">List of all including inherited members</a></p>";
+    output += "<p class=\"label\">&#x9;<a class=\"link\" href=\"./functionlist/" + toLowerCase(className) + "\">List of all including inherited members</a></p>";
     output += "<p class=\"label\">&nbsp;</p>";
     
     if(enumName != ""){
@@ -664,7 +664,7 @@ std::vector<ClassInfo> getClassInfoList(const std::string& input){
     std::vector<ClassInfo> reversedList;
     std::string currentClass = input;
     while(currentClass != ""){
-        ClassInfo nextClass = getClassInfo(readWholeFile("docs/" + toLowerCase(currentClass) + ".html"));
+        ClassInfo nextClass = getClassInfo(readWholeFile("docs/" + toLowerCase(currentClass) + ".sg"));
         reversedList.push_back(nextClass);
         currentClass = nextClass.parentName;
     }
@@ -770,14 +770,14 @@ std::string genXML(const std::string& input){
     output += "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
     output += "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n";
     output += "<url><loc>https://infinityintegral.github.io/</loc><priority>1.0</priority></url>\n";
-    output += "<url><loc>https://infinityintegral.github.io/setup.html</loc><priority>1.0</priority></url>\n";
-    output += "<url><loc>https://infinityintegral.github.io/contact.html</loc><priority>0.3</priority></url>\n";
+    output += "<url><loc>https://infinityintegral.github.io/setup</loc><priority>1.0</priority></url>\n";
+    output += "<url><loc>https://infinityintegral.github.io/contact</loc><priority>0.3</priority></url>\n";
     std::string currentClass;
     while(s >> currentClass){
         if(currentClass.length() < 2 || currentClass.substr(0, 2) != "SG"){continue;}
         currentClass = toLowerCase(currentClass);
         output += ("<url><loc>https://infinityintegral.github.io/classinfo/" + currentClass + "</loc><priority>0.8</priority></url>\n");
-        output += ("<url><loc>https://infinityintegral.github.io/functionlist.html?classname=" + currentClass + "</loc><priority>0.5</priority></url>\n");
+        output += ("<url><loc>https://infinityintegral.github.io/functionlist/" + currentClass + "</loc><priority>0.5</priority></url>\n");
     }
     output += "</urlset>";
     return output;
