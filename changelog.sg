@@ -6,6 +6,7 @@ SGXFileZip: remove restriction on accessible file paths
 SGXFileSystem: make SGXFileSystem::fileExists return bool
 SGXFileSystem: make SGXFileSystem::folderExists return bool
 SGXFile: added error checking for when file fail to open due to file system error
+SGXTimeStamp: added file name generation
 
 Added:
 (none)
@@ -15,6 +16,7 @@ Improved:
 - SGXFileBinUtilities
 - SGXFileZip
 - SGXFile
+- SGXTimeStamp
 
 Removed:
 (none)

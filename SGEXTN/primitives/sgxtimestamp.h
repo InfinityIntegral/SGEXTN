@@ -59,7 +59,14 @@ public:
     [[nodiscard]] bool isNationalDay() const;
     [[nodiscard]] bool isDayBeforeNationalDay() const;
     [[nodiscard]] bool isDayAfterNationalDay() const;
-    [[nodiscard]] QString getSpecialDay() const;
+    [[nodiscard]] QString getFileName() const;
+    [[nodiscard]] QString getFileNameNoOffset() const;
+    [[nodiscard]] QString getFileNameCorrectToSecond() const;
+    [[nodiscard]] QString getFileNameCorrectToSecondNoOffset() const;
+    [[nodiscard]] QString getFileNameSeparated(QChar separator) const;
+    [[nodiscard]] QString getFileNameNoOffsetSeparated(QChar separator) const;
+    [[nodiscard]] QString getFileNameCorrectToSecondSeparated(QChar separator) const;
+    [[nodiscard]] QString getFileNameCorrectToSecondNoOffsetSeparated(QChar separator) const;
 };
 
 inline unsigned int qHash(SGXTimeStamp x, unsigned int seed = 0){
