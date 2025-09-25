@@ -26,15 +26,15 @@ QDateTime SGXTimeStamp::getQDateTime() const {
 }
 
 QString SGXTimeStamp::getString() const {
-    return ("SG" + getQDateTime().addYears(-1965).toString("yy MMdd hhmmss"));
+    return ("SG" + QString::number(getYear()).rightJustified(2, '0') + " " + QString::number(getMonth()).rightJustified(2, '0') + QString::number(getDay()).rightJustified(2, '0') + " " + QString::number(getHour()).rightJustified(2, '0') + QString::number(getMinute()).rightJustified(2, '0') + QString::number(getSecond()).rightJustified(2, '0'));
 }
 
 QString SGXTimeStamp::getStringNoOffset() const {
-    return getQDateTime().toString("yyyyMMdd hhmmss");
+    return (QString::number(getYearNoOffset()).rightJustified(4, '0') + " " + QString::number(getMonth()).rightJustified(2, '0') + QString::number(getDay()).rightJustified(2, '0') + " " + QString::number(getHour()).rightJustified(2, '0') + QString::number(getMinute()).rightJustified(2, '0') + QString::number(getSecond()).rightJustified(2, '0'));
 }
 
 QString SGXTimeStamp::getStringCustomFormat(const QString &s) const {
-    return ("SG" + getQDateTime().addYears(-1965).toString(s));
+    return ("SG" + getQDateTime().addYears(-1965ll).toString(s));
 }
 
 QString SGXTimeStamp::getStringNoOffsetCustomFormat(const QString &s) const {
@@ -113,88 +113,48 @@ void SGXTimeStamp::addSeconds(long long x){
     t += x;
 }
 
-void SGXTimeStamp::addMinutes(float x){
-    double d = static_cast<double>(x);
-    d *= 60.0;
-    t += static_cast<long long>(d);
+void SGXTimeStamp::addMinutes(long long x){
+    t += (60ll * x);
 }
 
-void SGXTimeStamp::addHours(float x){
-    double d = static_cast<double>(x);
-    d *= 60.0;
-    d *= 60.0;
-    t += static_cast<long long>(d);
+void SGXTimeStamp::addHours(long long x){
+    t += (60ll * 60ll * x);
 }
 
-void SGXTimeStamp::addDays(float x){
-    double d = static_cast<double>(x);
-    d *= 60.0;
-    d *= 60.0;
-    d *= 24.0;
-    t += static_cast<long long>(d);
+void SGXTimeStamp::addDays(long long x){
+    t += (60ll * 60ll * 24ll * x);
 }
 
-void SGXTimeStamp::addMonths(float x){
-    double d = static_cast<double>(x);
-    d *= 60.0;
-    d *= 60.0;
-    d *= 24.0;
-    d *= 30.0;
-    t += static_cast<long long>(d);
+void SGXTimeStamp::addMonths(long long x){
+    (*this) = SGXTimeStamp(getQDateTime().addMonths(x));
 }
 
-void SGXTimeStamp::addYears(float x){
-    double d = static_cast<double>(x);
-    d *= 60.0;
-    d *= 60.0;
-    d *= 24.0;
-    d *= 30.0;
-    d *= 12.175;
-    t += static_cast<long long>(d);
+void SGXTimeStamp::addYears(long long x){
+    (*this) = SGXTimeStamp(getQDateTime().addYears(x));
 }
 
 void SGXTimeStamp::subtractSeconds(long long x){
-    t -= x;
+    addSeconds((-1ll) * x);
 }
 
-void SGXTimeStamp::subtractMinutes(float x){
-    double d = static_cast<double>(x);
-    d *= 60.0;
-    t -= static_cast<long long>(d);
+void SGXTimeStamp::subtractMinutes(long long x){
+    addMinutes((-1ll) * x);
 }
 
-void SGXTimeStamp::subtractHours(float x){
-    double d = static_cast<double>(x);
-    d *= 60.0;
-    d *= 60.0;
-    t -= static_cast<long long>(d);
+void SGXTimeStamp::subtractHours(long long x){
+    addHours((-1ll) * x);
 }
 
-void SGXTimeStamp::subtractDays(float x){
-    double d = static_cast<double>(x);
-    d *= 60.0;
-    d *= 60.0;
-    d *= 24.0;
-    t -= static_cast<long long>(d);
+void SGXTimeStamp::subtractDays(long long x){
+    addDays((-1ll) * x);
 }
 
-void SGXTimeStamp::subtractMonths(float x){
-    double d = static_cast<double>(x);
-    d *= 60.0;
-    d *= 60.0;
-    d *= 24.0;
-    d *= 30.0;
-    t -= static_cast<long long>(d);
+void SGXTimeStamp::subtractMonths(long long x){
+    addMonths((-1ll) * x);
 }
 
-void SGXTimeStamp::subtractYears(float x){
-    double d = static_cast<double>(x);
-    d *= 60.0;
-    d *= 60.0;
-    d *= 24.0;
-    d *= 30.0;
-    d *= 12.175;
-    t -= static_cast<long long>(d);
+void SGXTimeStamp::subtractYears(long long x){
+    addYears((-1ll) * x);
 }
 
 SGXTimeStamp SGXTimeStamp::now(){
