@@ -1,4 +1,4 @@
-![](https://raw.githubusercontent.com/InfinityIntegral/InfinityIntegral/main/flagemoji.png)
+![image of Singapore flag emoji](flag.png)
 
 # SGEXTN ("SG" Extension for C++ and Qt)
 
