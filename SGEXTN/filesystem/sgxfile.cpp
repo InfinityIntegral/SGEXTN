@@ -16,13 +16,14 @@
 SGXFile::SGXFile(const QString &s){
     if(SGXFileSystem::fileExists(s) == false){isValid = false;}
     else{
-        isValid = true;
         fileControl = new QFile(s);
-        (*fileControl).open(QIODevice::ReadWrite);
-        fileData = new QDataStream(fileControl);
-        (*fileData).setByteOrder(QDataStream::LittleEndian);
-        (*fileData).setVersion(QDataStream::Qt_6_9);
-        (*fileData).setFloatingPointPrecision(QDataStream::SinglePrecision);
+        isValid = (*fileControl).open(QIODevice::ReadWrite);
+        if(isValid == true){
+            fileData = new QDataStream(fileControl);
+            (*fileData).setByteOrder(QDataStream::LittleEndian);
+            (*fileData).setVersion(QDataStream::Qt_6_9);
+            (*fileData).setFloatingPointPrecision(QDataStream::SinglePrecision);
+        }
     }
 }
 

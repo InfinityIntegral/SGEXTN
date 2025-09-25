@@ -5,6 +5,7 @@ SGXFileBinUtilities: remove restrictions on file deletion
 SGXFileZip: remove restriction on accessible file paths
 SGXFileSystem: make SGXFileSystem::fileExists return bool
 SGXFileSystem: make SGXFileSystem::folderExists return bool
+SGXFile: added error checking for when file fail to open due to file system error
 
 Added:
 (none)
@@ -13,6 +14,7 @@ Improved:
 - SGXFileSystem
 - SGXFileBinUtilities
 - SGXFileZip
+- SGXFile
 
 Removed:
 (none)
