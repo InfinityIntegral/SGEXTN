@@ -8,6 +8,7 @@ SGXFileSystem: make SGXFileSystem::folderExists return bool
 SGXFile: added error checking for when file fail to open due to file system error
 SGXTimeStamp: added file name generation
 SGXTimeStamp: made adding and subtracting time exact
+SGXTimeStamp: made time difference calculation exact
 
 Added:
 (none)

@@ -33,7 +33,7 @@ void SGWStatusBar::terminate(){
 }
 
 void SGWStatusBar::updateTime(){
-    (*(*SGWStatusBar::instance).getTopObject()).setProperty("s", SGXTimeStamp::now().getString());
+    (*(*SGWStatusBar::instance).getTopObject()).setProperty("s", QString::number(static_cast<double>(SGXTimeStamp::now().getYearsFrom(SGXTimeStamp::zero)), 'f', 7));
 }
 
 void SGWStatusBar::eventReceived(const QString& s){

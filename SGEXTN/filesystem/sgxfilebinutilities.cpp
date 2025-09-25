@@ -30,8 +30,8 @@ void SGXFileBinUtilities::loadBinData(){
         }
     }
     for(QHash<SGXIdentifier, std::tuple<QString, SGXTimeStamp>>::const_iterator i = (*SGXFileBinUtilities::deletedFiles).constBegin(); i != (*SGXFileBinUtilities::deletedFiles).constEnd(); i++){
-        const float f = SGXTimeStamp::now().getDaysFrom(std::get<1>(i.value()));
-        if(static_cast<int>(f) > SGXFileBinUtilities::lifespan){SGXFileBinUtilities::permanentDeleteFile(i.key());}
+        const int f = static_cast<int>(SGXTimeStamp::now().getDaysFrom(std::get<1>(i.value())));
+        if(f > SGXFileBinUtilities::lifespan){SGXFileBinUtilities::permanentDeleteFile(i.key());}
     }
 }
 
