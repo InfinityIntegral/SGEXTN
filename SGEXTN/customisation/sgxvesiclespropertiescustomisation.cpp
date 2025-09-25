@@ -6,29 +6,28 @@
 
 void SGXVesiclesPropertiesCustomisation::loadVesicleProperties(){
     const QString path = SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "vesicleproperties.sg");
-    if(SGXFileSystem::fileExists(path) == 1){
-        {
-            const SGXFile fileReader(path);
-            SGUCentralManagement::cuteVesiclesMembraneThickness = fileReader.readFloat();
-            SGUCentralManagement::cuteVesiclesMaximumCenterDistance = fileReader.readFloat();
-            SGUCentralManagement::cuteVesiclesMaximumVelocity = fileReader.readFloat();
-            SGUCentralManagement::cuteVesiclesMaximumAcceleration = fileReader.readFloat();
-            SGUCentralManagement::cuteVesiclesMaximumRadiusChange = fileReader.readFloat();
-            SGUCentralManagement::cuteVesiclesMinimumRadius = fileReader.readFloat();
-            SGUCentralManagement::cuteVesiclesMaximumRadius = fileReader.readFloat();
-            SGUCentralManagement::cuteVesiclesMaximumRadiusOffsetChange = fileReader.readFloat();
-            SGUCentralManagement::cuteVesiclesMaximumRadiusOffset = fileReader.readFloat();
-            SGUCentralManagement::cuteVesiclesCenterTransparency = fileReader.readFloat();
-            SGUCentralManagement::cuteVesiclesEdgeTransparency = fileReader.readFloat();
-            SGUCentralManagement::cuteVesiclesMembraneTransparency = fileReader.readFloat();
-            SGUCentralManagement::cuteVesiclesFrameRate = fileReader.readFloat();
-        }
+    if(SGXFileSystem::fileExists(path) == false){return;}
+    {
+        const SGXFile fileReader(path);
+        SGUCentralManagement::cuteVesiclesMembraneThickness = fileReader.readFloat();
+        SGUCentralManagement::cuteVesiclesMaximumCenterDistance = fileReader.readFloat();
+        SGUCentralManagement::cuteVesiclesMaximumVelocity = fileReader.readFloat();
+        SGUCentralManagement::cuteVesiclesMaximumAcceleration = fileReader.readFloat();
+        SGUCentralManagement::cuteVesiclesMaximumRadiusChange = fileReader.readFloat();
+        SGUCentralManagement::cuteVesiclesMinimumRadius = fileReader.readFloat();
+        SGUCentralManagement::cuteVesiclesMaximumRadius = fileReader.readFloat();
+        SGUCentralManagement::cuteVesiclesMaximumRadiusOffsetChange = fileReader.readFloat();
+        SGUCentralManagement::cuteVesiclesMaximumRadiusOffset = fileReader.readFloat();
+        SGUCentralManagement::cuteVesiclesCenterTransparency = fileReader.readFloat();
+        SGUCentralManagement::cuteVesiclesEdgeTransparency = fileReader.readFloat();
+        SGUCentralManagement::cuteVesiclesMembraneTransparency = fileReader.readFloat();
+        SGUCentralManagement::cuteVesiclesFrameRate = fileReader.readFloat();
     }
 }
 
 void SGXVesiclesPropertiesCustomisation::syncVesicleProperties(){
     const QString path = SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "vesicleproperties.sg");
-    if(SGXFileSystem::fileExists(path) != 0){SGXFileSystem::permanentDeleteFile(path);}
+    if(SGXFileSystem::fileExists(path) == true){SGXFileSystem::permanentDeleteFile(path);}
     SGXFileSystem::createFile(path);
     {
         const SGXFile fileWriter(path);

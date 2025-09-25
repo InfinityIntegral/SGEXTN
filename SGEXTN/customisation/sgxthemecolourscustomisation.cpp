@@ -20,25 +20,24 @@ void SGXThemeColoursCustomisation::loadThemeColours(){
         return;
     }
     const QString path = SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "themecolours.sg");
-    if(SGXFileSystem::fileExists(path) == 1){
-        {
-            const SGXFile fileReader(path);
-            SGUCentralManagement::themeColour0 = fileReader.readColourRGBA();
-            SGUCentralManagement::themeColour1 = fileReader.readColourRGBA();
-            SGUCentralManagement::themeColour2 = fileReader.readColourRGBA();
-            SGUCentralManagement::themeColour3 = fileReader.readColourRGBA();
-            SGUCentralManagement::themeColour4 = fileReader.readColourRGBA();
-            SGUCentralManagement::themeColour5 = fileReader.readColourRGBA();
-            SGUCentralManagement::themeColour6 = fileReader.readColourRGBA();
-            SGUCentralManagement::themeColour7 = fileReader.readColourRGBA();
-            SGUCentralManagement::themeColour8 = fileReader.readColourRGBA();
-        }
+    if(SGXFileSystem::fileExists(path) == false){return;}
+    {
+        const SGXFile fileReader(path);
+        SGUCentralManagement::themeColour0 = fileReader.readColourRGBA();
+        SGUCentralManagement::themeColour1 = fileReader.readColourRGBA();
+        SGUCentralManagement::themeColour2 = fileReader.readColourRGBA();
+        SGUCentralManagement::themeColour3 = fileReader.readColourRGBA();
+        SGUCentralManagement::themeColour4 = fileReader.readColourRGBA();
+        SGUCentralManagement::themeColour5 = fileReader.readColourRGBA();
+        SGUCentralManagement::themeColour6 = fileReader.readColourRGBA();
+        SGUCentralManagement::themeColour7 = fileReader.readColourRGBA();
+        SGUCentralManagement::themeColour8 = fileReader.readColourRGBA();
     }
 }
 
 void SGXThemeColoursCustomisation::syncThemeColours(){
     const QString path = SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "themecolours.sg");
-    if(SGXFileSystem::fileExists(path) != 0){SGXFileSystem::permanentDeleteFile(path);}
+    if(SGXFileSystem::fileExists(path) == true){SGXFileSystem::permanentDeleteFile(path);}
     SGXFileSystem::createFile(path);
     {
         const SGXFile fileWriter(path);

@@ -3,6 +3,7 @@ Changelog v6.0.0
 SGXFileSystem: remove restrictions on file deletion
 SGXFileBinUtilities: remove restrictions on file deletion
 SGXFileZip: remove restriction on accessible file paths
+SGXFileSystem: make SGXFileSystem::fileExists return bool
 
 Added:
 (none)

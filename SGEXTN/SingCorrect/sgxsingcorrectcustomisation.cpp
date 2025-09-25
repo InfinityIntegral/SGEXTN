@@ -13,7 +13,7 @@ void SGXSingCorrectCustomisation::loadFileData(){
     const QString path = SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "correctionconfigs.sg");
     delete SGXSingCorrectCustomisation::database;
     SGXSingCorrectCustomisation::database = new QHash<QString, QChar>();
-    if(SGXFileSystem::fileExists(path) != 1){return;}
+    if(SGXFileSystem::fileExists(path) == false){return;}
     {
         const SGXFile fileReader = SGXFile(path);
         SGXSingCorrectCustomisation::moduleEnabled = fileReader.readBool();
@@ -29,7 +29,7 @@ void SGXSingCorrectCustomisation::loadFileData(){
 
 void SGXSingCorrectCustomisation::syncFileData(){
     const QString path = SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "correctionconfigs.sg");
-    if(SGXFileSystem::fileExists(path) != 0){SGXFileSystem::permanentDeleteFile(path);}
+    if(SGXFileSystem::fileExists(path) == true){SGXFileSystem::permanentDeleteFile(path);}
     SGXFileSystem::createFile(path);
     {
         const SGXFile fileWriter = SGXFile(path);

@@ -14,7 +14,7 @@
 #include "sgxfilesystem.h"
 
 SGXFile::SGXFile(const QString &s){
-    if(SGXFileSystem::fileExists(s) != 1){isValid = false;}
+    if(SGXFileSystem::fileExists(s) == false){isValid = false;}
     else{
         isValid = true;
         fileControl = new QFile(s);
