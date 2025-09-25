@@ -306,14 +306,12 @@ int SGXFileSystem::duplicateFolder(const QString &startPath, const QString &endP
 
 int SGXFileSystem::permanentDeleteFile(const QString &s){
     if(SGXFileSystem::fileExists(s) != 1){return 0;}
-    if(SGXFileSystem::pathIsSubfolder(s, SGXFileSystem::configFilePath) == false){return -3;}
     if(QFile::remove(s) == true){return 1;}
     return -2;
 }
 
 int SGXFileSystem::permanentDeleteFolder(const QString &s){
     if(SGXFileSystem::folderExists(s) != 1){return 0;}
-    if(SGXFileSystem::pathIsSubfolder(s, SGXFileSystem::configFilePath) == false){return -3;}
     QVector<QString> pathList = SGXFileSystem::getFilesListRecursive(s);
     for(int i=0; i<pathList.length(); i++){
         if(QFile::remove(pathList[i]) == false){return -2;}

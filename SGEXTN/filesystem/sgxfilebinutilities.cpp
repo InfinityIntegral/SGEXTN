@@ -59,7 +59,6 @@ void SGXFileBinUtilities::syncMetadata(){
 }
 
 int SGXFileBinUtilities::deleteFile(const QString &s){
-    if(SGXFileSystem::pathIsSubfolder(s, SGXFileSystem::userDataFilePath) == false){return -1;}
     if(QFile::exists(s) == false){return 0;}
     const SGXIdentifier id = SGXIdentifier(true);
     const SGXTimeStamp t = SGXTimeStamp::now();
@@ -72,7 +71,6 @@ int SGXFileBinUtilities::deleteFile(const QString &s){
 }
 
 int SGXFileBinUtilities::deleteFolder(const QString &s){
-    if(SGXFileSystem::pathIsSubfolder(s, SGXFileSystem::userDataFilePath) == false){return -1;}
     if(QDir(s).exists() == false){return 0;}
     QFileInfoList f = QDir(s).entryInfoList(QDir::Files | QDir::NoSymLinks | QDir::NoDotAndDotDot);
     for(int i=0; i<f.length(); i++){

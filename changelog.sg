@@ -1,29 +1,16 @@
-Changelog v5.1.0
+Changelog v6.0.0
 
-SGXFileBinUtilities - refactored lifespan with getter and setter functions
-SGXFileBinUtilities, SGXFileSystem - moved path to recycling bin from SGXFileSystem to SGXFileBinUtilities
-SGXVector2 - added dot product and cross product
-SGXVector2 - changed functions to take 2 vectors instead of 4 numbers
-SGXFile - replaced SGXFileReader and SGXFileWriter
-SGXFile - added support for QChar and C++ string
-SGXFile - added validity check
-SGXIdentifier - pass error code by pointer to make error checking optional
-SGXResizer - added
-SGXThemeColours - added
-SGXFileSystem - removed path validity checks, now can write anywhere
-SGXFileSystem - improved error checking
+SGXFileSystem: remove restrictions on file deletion
+SGXFileBinUtilities: remove restrictions on file deletion
+SGXFileZip: remove restriction on accessible file paths
 
-added:
-SGXFile
-SGXResizer
-SGXThemeColours
+Added:
+(none)
 
-improved:
-SGXFileBinUtilities
-SGXFileSystem
-SGXVector2
-SGXIdentifier
+Improved:
+- SGXFileSystem
+- SGXFileBinUtilities
+- SGXFileZip
 
-removed:
-SGXFileReader
-SGXFileWriter
+Removed:
+(none)

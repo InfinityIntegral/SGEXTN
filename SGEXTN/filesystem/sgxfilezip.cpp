@@ -8,7 +8,6 @@
 #include <tuple>
 
 int SGXFileZip::makeZip(const QString &path, const QString &zipLocation){
-    if(SGXFileSystem::pathIsValid(path) == false || SGXFileSystem::pathIsValid(zipLocation) == false){return -1;}
     if(SGXFileSystem::folderExists(path) != 1 || SGXFileSystem::fileExists(zipLocation) != 0){return 0;}
     QVector<QString> absolutePaths = SGXFileSystem::getFilesListRecursive(path);
     QVector<QString> relativePaths = QVector<QString>();
@@ -44,10 +43,6 @@ int SGXFileZip::makeZip(const QString &path, const QString &zipLocation){
 }
 
 int SGXFileZip::makeZip(const QVector<QString> &list, const QString &zipLocation){
-    if(SGXFileSystem::pathIsValid(zipLocation) == false){return -1;}
-    for(int i=0; i<list.length(); i++){
-        if(SGXFileSystem::pathIsValid(list[i]) == false){return -1;}
-    }
     if(SGXFileSystem::fileExists(zipLocation) != 0){return 0;}
     for(int i=0; i<list.length(); i++){
         if(SGXFileSystem::fileExists(list[i]) != 1){return 0;}
@@ -96,8 +91,6 @@ int SGXFileZip::makeZip(const QVector<QString> &list, const QString &zipLocation
 }
 
 int SGXFileZip::unpackZip(const QString &zipLocation, const QString &path){
-    if(SGXFileSystem::pathIsValid(zipLocation) == false){return -1;}
-    if(SGXFileSystem::pathIsValid(path) == false){return -1;}
     if(SGXFileSystem::fileExists(zipLocation) != 1){return 0;}
     if(SGXFileSystem::folderExists(path) != 0){return 0;}
     SGXFileSystem::createFolder(path);
@@ -125,8 +118,6 @@ int SGXFileZip::unpackZip(const QString &zipLocation, const QString &path){
 }
 
 int SGXFileZip::unpackSingleFileFromZip(const QString &fileName, const QString &zipLocation, const QString &path){
-    if(SGXFileSystem::pathIsValid(zipLocation) == false){return -1;}
-    if(SGXFileSystem::pathIsValid(path) == false){return -1;}
     if(SGXFileSystem::fileExists(zipLocation) != 1){return 0;}
     if(SGXFileSystem::fileExists(path) != 0){return 0;}
     {
@@ -153,7 +144,6 @@ int SGXFileZip::unpackSingleFileFromZip(const QString &fileName, const QString &
 }
 
 QVector<std::tuple<QString, long long>> SGXFileZip::getContentsListFromZip(const QString &zipLocation){
-    if(SGXFileSystem::pathIsValid(zipLocation) == false){return QVector<std::tuple<QString, long long>>();}
     if(SGXFileSystem::fileExists(zipLocation) != 1){return QVector<std::tuple<QString, long long>>();}
     QVector<std::tuple<QString, long long>> contentsList = QVector<std::tuple<QString, long long>>();
     {
