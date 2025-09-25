@@ -33,8 +33,8 @@ void SGXCentral::initialise(){
     SGXFileSystem::userDataFilePath = SGXFileSystem::joinFilePaths(SGXFileSystem::rootFilePath, "yourdata");
     SGXFileSystem::configFilePath = SGXFileSystem::joinFilePaths(SGXFileSystem::rootFilePath, "settings");
     SGXFileBinUtilities::binFilePath = SGXFileSystem::joinFilePaths(SGXFileSystem::rootFilePath, "recyclebin");
-    if(SGXFileSystem::folderExists(SGXFileSystem::userDataFilePath) != 1){SGXFileSystem::createFolder(SGXFileSystem::userDataFilePath);}
-    if(SGXFileSystem::folderExists(SGXFileSystem::configFilePath) != 1){SGXFileSystem::createFolder(SGXFileSystem::configFilePath);}
+    if(SGXFileSystem::folderExists(SGXFileSystem::userDataFilePath) == false){SGXFileSystem::createFolder(SGXFileSystem::userDataFilePath);}
+    if(SGXFileSystem::folderExists(SGXFileSystem::configFilePath) == false){SGXFileSystem::createFolder(SGXFileSystem::configFilePath);}
     SGXFileBinUtilities::loadBinData();
 
     SGUCentralManagement::earlyInitialise();

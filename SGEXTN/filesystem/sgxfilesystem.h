@@ -16,7 +16,7 @@ public:
     static QString decodeBase16(const QString& str);
     static bool pathIsSubfolder(const QString& childPath, const QString& parentPath);
     static bool fileExists(const QString& s);
-    static int folderExists(const QString& s);
+    static bool folderExists(const QString& s);
     static QString getFreePath(const QString& prefix, const QString& unencodedName, const QString& postfix);
     static int createFile(const QString& s);
     static int createFolder(const QString& s);

@@ -141,9 +141,9 @@ bool SGXFileSystem::fileExists(const QString &s){
     return false;
 }
 
-int SGXFileSystem::folderExists(const QString &s){
-    if(QDir(s).exists() == true){return 1;}
-    return 0;
+bool SGXFileSystem::folderExists(const QString &s){
+    if(QDir(s).exists() == true){return true;}
+    return false;
 }
 
 QString SGXFileSystem::getFreePath(const QString &prefix, const QString &unencodedName, const QString &postfix){
@@ -191,7 +191,7 @@ int SGXFileSystem::createFile(const QString &s){
 }
 
 int SGXFileSystem::createFolder(const QString& s){
-    if(SGXFileSystem::folderExists(s) != 0){return 0;}
+    if(SGXFileSystem::folderExists(s) == true){return 0;}
     if(QDir().mkpath(s)){return 1;}
     return -2;
 }
@@ -207,7 +207,7 @@ QString SGXFileSystem::getParentName(const QString &s){
 }
 
 QVector<QString> SGXFileSystem::getFilesList(const QString &s){
-    if(SGXFileSystem::folderExists(s) != 1){return QVector<QString>();}
+    if(SGXFileSystem::folderExists(s) == false){return QVector<QString>();}
     QFileInfoList f = QDir(s).entryInfoList(QDir::Files | QDir::NoSymLinks | QDir::NoDotAndDotDot);
     QVector<QString> list = QVector<QString>();
     for(int i=0; i<f.length(); i++){
@@ -217,7 +217,7 @@ QVector<QString> SGXFileSystem::getFilesList(const QString &s){
 }
 
 QVector<QString> SGXFileSystem::getFoldersList(const QString &s){
-    if(SGXFileSystem::folderExists(s) != 1){return QVector<QString>();}
+    if(SGXFileSystem::folderExists(s) == false){return QVector<QString>();}
     QFileInfoList f = QDir(s).entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot);
     QVector<QString> list = QVector<QString>();
     for(int i=0; i<f.length(); i++){
@@ -227,7 +227,7 @@ QVector<QString> SGXFileSystem::getFoldersList(const QString &s){
 }
 
 QVector<QString> SGXFileSystem::getFilesListRecursive(const QString &s){
-    if(SGXFileSystem::folderExists(s) != 1){return QVector<QString>();}
+    if(SGXFileSystem::folderExists(s) == false){return QVector<QString>();}
     QQueue<QString> pathsToCheck = QQueue<QString>();
     pathsToCheck.enqueue(s);
     QVector<QString> list = QVector<QString>();
@@ -252,7 +252,7 @@ int SGXFileSystem::moveFile(const QString &startPath, const QString &endPath){
 }
 
 int SGXFileSystem::moveFolder(const QString &startPath, const QString &endPath){
-    if(SGXFileSystem::folderExists(startPath) != 1 || SGXFileSystem::folderExists(endPath) != 0){return 0;}
+    if(SGXFileSystem::folderExists(startPath) == false || SGXFileSystem::folderExists(endPath) == true){return 0;}
     QVector<QString> startList = SGXFileSystem::getFilesListRecursive(startPath);
     QVector<QString> endList = QVector<QString>();
     for(int i=0; i<startList.length(); i++){
@@ -260,7 +260,7 @@ int SGXFileSystem::moveFolder(const QString &startPath, const QString &endPath){
     }
     for(int i=0; i<startList.length(); i++){
         const QString parentFolder = SGXFileSystem::getParentPath(endList[i]);
-        if(SGXFileSystem::folderExists(parentFolder) != 1){SGXFileSystem::createFolder(parentFolder);}
+        if(SGXFileSystem::folderExists(parentFolder) == false){SGXFileSystem::createFolder(parentFolder);}
         if(QFile(startList[i]).rename(endList[i]) == false){return -2;}
     }
     QQueue<QString> emptyFolders = QQueue<QString>();
@@ -296,7 +296,7 @@ int SGXFileSystem::duplicateFolder(const QString &startPath, const QString &endP
     }
     for(int i=0; i<startList.length(); i++){
         const QString parentFolder = SGXFileSystem::getParentPath(endList[i]);
-        if(SGXFileSystem::folderExists(parentFolder) != 1){SGXFileSystem::createFolder(parentFolder);}
+        if(SGXFileSystem::folderExists(parentFolder) == false){SGXFileSystem::createFolder(parentFolder);}
         if(QFile(startList[i]).copy(endList[i]) == false){return -2;}
     }
     return 1;
@@ -309,7 +309,7 @@ int SGXFileSystem::permanentDeleteFile(const QString &s){
 }
 
 int SGXFileSystem::permanentDeleteFolder(const QString &s){
-    if(SGXFileSystem::folderExists(s) != 1){return 0;}
+    if(SGXFileSystem::folderExists(s) == false){return 0;}
     QVector<QString> pathList = SGXFileSystem::getFilesListRecursive(s);
     for(int i=0; i<pathList.length(); i++){
         if(QFile::remove(pathList[i]) == false){return -2;}
@@ -338,7 +338,7 @@ long long SGXFileSystem::getFileSize(const QString &s){
 }
 
 long long SGXFileSystem::getFolderSize(const QString &s){
-    if(SGXFileSystem::folderExists(s) != 1){return -1ll;}
+    if(SGXFileSystem::folderExists(s) == false){return -1ll;}
     long long totalSize = 0ll;
     QVector<QString> fileList = SGXFileSystem::getFilesListRecursive(s);
     for(int i=0; i<fileList.length(); i++){
@@ -353,7 +353,7 @@ SGXTimeStamp SGXFileSystem::getFileCreationTime(const QString &s){
 }
 
 SGXTimeStamp SGXFileSystem::getFolderCreationTime(const QString &s){
-    if(SGXFileSystem::folderExists(s) != 1){return SGXTimeStamp::zero;}
+    if(SGXFileSystem::folderExists(s) == false){return SGXTimeStamp::zero;}
     return SGXTimeStamp(QFileInfo(s).birthTime());
 }
 
@@ -363,7 +363,7 @@ SGXTimeStamp SGXFileSystem::getFileLastEditTime(const QString &s){
 }
 
 SGXTimeStamp SGXFileSystem::getFolderLastEditTime(const QString &s){
-    if(SGXFileSystem::folderExists(s) != 1){return SGXTimeStamp::zero;}
+    if(SGXFileSystem::folderExists(s) == false){return SGXTimeStamp::zero;}
     return SGXTimeStamp(QFileInfo(s).lastModified());
 }
 
@@ -384,7 +384,7 @@ QString SGXFileSystem::getFileNameNoExtension(const QString &s){
 }
 
 QVector<QString> SGXFileSystem::getFilesListWithExtension(const QString &s, const QString &ext){
-    if(SGXFileSystem::folderExists(s) != 1){return QVector<QString>();}
+    if(SGXFileSystem::folderExists(s) == false){return QVector<QString>();}
     QVector<QString> list = SGXFileSystem::getFilesList(s);
     QVector<QString> finalList = QVector<QString>();
     for(int i=0; i<list.length(); i++){
@@ -394,7 +394,7 @@ QVector<QString> SGXFileSystem::getFilesListWithExtension(const QString &s, cons
 }
 
 QVector<QString> SGXFileSystem::getFilesListWithExtensionRecursive(const QString &s, const QString &ext){
-    if(SGXFileSystem::folderExists(s) != 1){return QVector<QString>();}
+    if(SGXFileSystem::folderExists(s) == false){return QVector<QString>();}
     QVector<QString> list = SGXFileSystem::getFilesListRecursive(s);
     QVector<QString> finalList = QVector<QString>();
     for(int i=0; i<list.length(); i++){
@@ -404,7 +404,7 @@ QVector<QString> SGXFileSystem::getFilesListWithExtensionRecursive(const QString
 }
 
 QVector<QString> SGXFileSystem::getFilesListContainingName(const QString &s, const QString &name){
-    if(SGXFileSystem::folderExists(s) != 1){return QVector<QString>();}
+    if(SGXFileSystem::folderExists(s) == false){return QVector<QString>();}
     QVector<QString> list = SGXFileSystem::getFilesList(s);
     QVector<QString> finalList = QVector<QString>();
     for(int i=0; i<list.length(); i++){
@@ -414,7 +414,7 @@ QVector<QString> SGXFileSystem::getFilesListContainingName(const QString &s, con
 }
 
 QVector<QString> SGXFileSystem::getFilesListContainingNameRecursive(const QString &s, const QString &name){
-    if(SGXFileSystem::folderExists(s) != 1){return QVector<QString>();}
+    if(SGXFileSystem::folderExists(s) == false){return QVector<QString>();}
     QVector<QString> list = SGXFileSystem::getFilesListRecursive(s);
     QVector<QString> finalList = QVector<QString>();
     for(int i=0; i<list.length(); i++){
