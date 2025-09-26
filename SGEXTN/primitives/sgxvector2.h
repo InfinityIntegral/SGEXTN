@@ -1,7 +1,7 @@
 #ifndef SGXVECTOR2_H
 #define SGXVECTOR2_H
 
-#include <QString>
+#include "sgxstring.h"
 
 class SGXVector2
 {
@@ -14,7 +14,7 @@ public:
     [[nodiscard]] bool operator==(SGXVector2 x) const;
     [[nodiscard]] bool operator!=(SGXVector2 x) const;
     [[nodiscard]] bool operator<(SGXVector2 x) const;
-    [[nodiscard]] QString getStringForPrinting() const;
+    [[nodiscard]] SGXString getStringForPrinting() const;
     [[nodiscard]] SGXVector2 operator+(SGXVector2 x) const;
     [[nodiscard]] SGXVector2 operator-(SGXVector2 x) const;
     [[nodiscard]] SGXVector2 operator*(float m) const;

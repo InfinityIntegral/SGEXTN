@@ -3,13 +3,15 @@
 
 #include <QObject>
 
+class SGXString;
 class SGWWidget;
 class SGWWidgetQuickInterface : public QObject
 {
 public:
     SGWWidgetQuickInterface(SGWWidget* x);
     SGWWidget* x;
-    void eventReceived(const QString& event) const;
+    void eventReceivedWithQString(const QString& event) const;
+    void eventReceived(const SGXString& event) const;
 };
 
 #endif // SGWWIDGETQUICKINTERFACE_H

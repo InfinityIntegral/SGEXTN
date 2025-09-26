@@ -5,7 +5,7 @@
 
 class SGWWidgetQuickInterface;
 class SGXTimer;
-class QString;
+class SGXString;
 class SGWStatusBar : public SGWWidget
 {
 public:
@@ -20,7 +20,7 @@ public:
     static void terminate();
     static void toggleVesicles();
     static void updateTime();
-    static void eventReceived(const QString& s);
+    static void eventReceived(const SGXString& s);
 protected:
     SGWWidgetQuickInterface* quickInterface;
 };

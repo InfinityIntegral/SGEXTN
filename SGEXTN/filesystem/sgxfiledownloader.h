@@ -1,7 +1,7 @@
 #ifndef SGXFILEDOWNLOADER_H
 #define SGXFILEDOWNLOADER_H
 
-#include <QString>
+#include "../primitives/sgxstring.h"
 
 class QObject;
 class QQmlComponent;
@@ -11,9 +11,9 @@ public:
     SGXFileDownloader() = delete;
     static QQmlComponent* fileDownloadTemplate;
     static QObject* fileDownloadInstance;
-    static void downloadFile(const QString& s);
+    static void downloadFile(const SGXString& s);
     static void checkDownloadedFile();
-    static QString sourcePath;
+    static SGXString sourcePath;
 };
 
 #endif // SGXFILEDOWNLOADER_H

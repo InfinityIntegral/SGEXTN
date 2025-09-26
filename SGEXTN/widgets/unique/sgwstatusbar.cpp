@@ -5,7 +5,7 @@
 #include "../../timer/sgxtimer.h"
 #include <QQuickItem>
 #include "../enums/sgwtype.h"
-#include <QString>
+#include "../../primitives/sgxstring.h"
 #include "../../template/sgwcutevesicles.h"
 #include "../../quickui/sgwwidgetquickinterface.h"
 
@@ -33,10 +33,11 @@ void SGWStatusBar::terminate(){
 }
 
 void SGWStatusBar::updateTime(){
-    (*(*SGWStatusBar::instance).getTopObject()).setProperty("s", QString::number(static_cast<double>(SGXTimeStamp::now().getYearsFrom(SGXTimeStamp::zero)), 'f', 7));
+    double t = SGXTimeStamp::now().getYearsFrom(SGXTimeStamp::zero);
+    (*(*SGWStatusBar::instance).getTopObject()).setProperty("s", (*SGXString::doubleToStringDecimalPlaces(t, 7).data));
 }
 
-void SGWStatusBar::eventReceived(const QString& s){
+void SGWStatusBar::eventReceived(const SGXString& s){
     if(s == "clicked"){SGWStatusBar::toggleVesicles();}
 }
 

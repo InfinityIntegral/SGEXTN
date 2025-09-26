@@ -10,7 +10,7 @@
 #include "../widgets/noninstantiable/sgwlabel.h"
 #include <array>
 #include "../widgets/instantiable/sgwblankwidget.h"
-#include <QString>
+#include "../primitives/sgxstring.h"
 #include "../widgets/instantiable/sgwtextlabel.h"
 #include "../widgets/enums/sgwhorizontalalignment.h"
 #include <QRandomGenerator>
@@ -29,7 +29,7 @@ SGWBackground* SGWThemeCustomisationPage::detailsScroll = nullptr;
 SGWLabel* SGWThemeCustomisationPage::detailsInfo = nullptr;
 std::array<SGWBlankWidget*, 9> SGWThemeCustomisationPage::coloursDisplay = {};
 std::array<SGXColourRGBA, 9> SGWThemeCustomisationPage::themeColours = {};
-QString SGWThemeCustomisationPage::infoString = "";
+SGXString SGWThemeCustomisationPage::infoString = "";
 bool SGWThemeCustomisationPage::isUsingCustomLight = false;
 SGWLabel* SGWThemeCustomisationPage::customLightLabel = nullptr;
 SGWColourPickerWidget* SGWThemeCustomisationPage::customLightColourPicker = nullptr;
@@ -359,7 +359,7 @@ void SGWThemeCustomisationPage::confirmChanges(SGWButton */*unused*/){
 
 SGWBackground* SGWThemeCustomisationPage::notifInitialise(){
     SGWBackground* bg = new SGWPageBackground(SGWWidget::parentWidget, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 8);
-    const QString s = "Theme colours are not updated immediately, you must restart the app for changes to take effect.\n\nDuring the National Day period, the theme is locked at For Our Nation to celebrate. Any theme changes applied during that duration will take effect after the period ends.";
+    const SGXString s = "Theme colours are not updated immediately, you must restart the app for changes to take effect.\n\nDuring the National Day period, the theme is locked at For Our Nation to celebrate. Any theme changes applied during that duration will take effect after the period ends.";
     new SGWLongLabel(bg, s, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.0f, 0.0f, 0.5f, 0.0f, 0.5f);
     new SGWTextButton(bg, "ok", &SGWThemeCustomisationPage::closeNotif, 0.0f, 0.0f, 1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f);
     return bg;

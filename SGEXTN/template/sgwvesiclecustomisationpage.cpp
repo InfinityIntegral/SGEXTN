@@ -9,7 +9,6 @@
 #include "../widgets/instantiable/sgwsequentiallonglabel.h"
 #include "../widgets/instantiable/sgwtextinput.h"
 #include "../widgets/noninstantiable/sgwwidget.h"
-#include <QString>
 #include "../widgets/enums/sgwhorizontalalignment.h"
 #include "../widgets/noninstantiable/sgwbutton.h"
 #include "../widgets/noninstantiable/sgwlabel.h"
@@ -17,6 +16,7 @@
 #include <limits>
 #include "../notifications/sgwnotify.h"
 #include "../customisation/sgxvesiclespropertiescustomisation.h"
+#include "../primitives/sgxstring.h"
 
 SGWBackground* SGWVesicleCustomisationPage::instance = nullptr;
 SGWInput* SGWVesicleCustomisationPage::membraneThicknessInput = nullptr;
@@ -56,7 +56,7 @@ SGWBackground* SGWVesicleCustomisationPage::initialise(){
     new SGWTextButton(SGWVesicleCustomisationPage::instance, "cancel", &SGWVesicleCustomisationPage::cancelChange, 0.0f, 0.0f, 1.0f, -1.0f, 0.5f, 0.0f, 0.0f, 1.0f);
     new SGWTextButton(SGWVesicleCustomisationPage::instance, "confirm", &SGWVesicleCustomisationPage::confirmChange, 0.5f, 0.0f, 1.0f, -1.0f, 0.5f, 0.0f, 0.0f, 1.0f);
     SGWWidget* p = nullptr;
-    QString s = "";
+    SGXString s = "";
     
     new SGWBlankWidget(bg, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.5f, 8);
     p = new SGWBlankWidget(bg, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 3.0f, 8);

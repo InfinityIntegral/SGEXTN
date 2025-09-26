@@ -4,7 +4,7 @@
 #include "../noninstantiable/sgwwidget.h"
 #include "../../primitives/sgxcolourrgba.h"
 
-class QString;
+class SGXString;
 class SGWWidgetQuickInterface;
 class SGWColourPickerWidget : public SGWWidget
 {
@@ -37,7 +37,7 @@ public:
     void setE0(float e0);
     [[nodiscard]] void (*getAttachedFunction() const)(SGWColourPickerWidget*);
     void setAttachedFunction(void (*function)(SGWColourPickerWidget*));
-    void eventReceived(const QString& s);
+    void eventReceived(const SGXString& s);
 protected:
     float e1;
     float e0;

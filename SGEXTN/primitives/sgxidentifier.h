@@ -2,7 +2,7 @@
 #define SGXIDENTIFIER_H
 
 #include <QSet>
-#include <QString>
+#include "sgxstring.h"
 
 class SGXIdentifier
 {
@@ -17,14 +17,14 @@ public:
     SGXIdentifier(bool ifValid);
     SGXIdentifier(int);
     SGXIdentifier(unsigned int a, unsigned int b, unsigned int c, unsigned int d, bool ifValid, int* errCode);
-    SGXIdentifier(const QString& s, bool ifValid, int* errCode);
+    SGXIdentifier(const SGXString& s, bool ifValid, int* errCode);
     [[nodiscard]] int registerIdentifier() const;
     [[nodiscard]] int unregisterIdentifier() const;
     [[nodiscard]] bool exists() const;
     [[nodiscard]] bool operator==(SGXIdentifier x) const;
     [[nodiscard]] bool operator!=(SGXIdentifier x) const;
     [[nodiscard]] bool operator<(SGXIdentifier x) const;
-    [[nodiscard]] QString getStringForPrinting() const;
+    [[nodiscard]] SGXString getStringForPrinting() const;
 };
 
 inline unsigned int qHash(SGXIdentifier x, unsigned int seed = 0){

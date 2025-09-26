@@ -3,6 +3,8 @@
 
 #include "sgxchar.h"
 #include <vector>
+#include <string>
+#include <functional>
 
 class QString;
 class SGXString
@@ -108,5 +110,9 @@ public:
     void toUpperLanguageAware();
     void toLowerLanguageAware();
 };
+
+inline unsigned int qHash(SGXString x, unsigned int seed = 0){
+    return (seed ^ static_cast<unsigned int>(std::hash<std::string>{}(x.toStdString())));
+}
 
 #endif // SGXSTRING_H

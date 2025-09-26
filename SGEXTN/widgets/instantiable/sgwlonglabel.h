@@ -4,12 +4,12 @@
 #include "../noninstantiable/sgwlabel.h"
 #include "../../primitives/sgxcolourrgba.h"
 
-class QString;
+class SGXString;
 class SGWWidget;
 class SGWLongLabel : public SGWLabel
 {
 public:
-    SGWLongLabel(SGWWidget* parent, const QString& s, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float f1, float f0, float s1, float s0, float p1, float p0);
+    SGWLongLabel(SGWWidget* parent, const SGXString& s, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float f1, float f0, float s1, float s0, float p1, float p0);
     void syncQuickProperties();
     [[nodiscard]] float getS1() const;
     void setS1(float s1);

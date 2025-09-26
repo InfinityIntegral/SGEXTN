@@ -1,7 +1,7 @@
 #ifndef SGXTIMESTAMP_H
 #define SGXTIMESTAMP_H
 
-#include <QString>
+#include "sgxstring.h"
 #include <QDateTime>
 #include <QTimeZone>
 
@@ -17,10 +17,10 @@ public:
     SGXTimeStamp(int year, int month, int day, int hour, int minute, int second);
     SGXTimeStamp(const QDateTime& dt);
     [[nodiscard]] QDateTime getQDateTime() const;
-    [[nodiscard]] QString getString() const;
-    [[nodiscard]] QString getStringNoOffset() const;
-    [[nodiscard]] QString getStringCustomFormat(const QString& s) const;
-    [[nodiscard]] QString getStringNoOffsetCustomFormat(const QString& s) const;
+    [[nodiscard]] SGXString getString() const;
+    [[nodiscard]] SGXString getStringNoOffset() const;
+    [[nodiscard]] SGXString getStringCustomFormat(const SGXString& s) const;
+    [[nodiscard]] SGXString getStringNoOffsetCustomFormat(const SGXString& s) const;
     [[nodiscard]] bool operator==(SGXTimeStamp x) const;
     [[nodiscard]] bool operator!=(SGXTimeStamp x) const;
     [[nodiscard]] bool operator<(SGXTimeStamp x) const;
@@ -59,14 +59,14 @@ public:
     [[nodiscard]] bool isNationalDay() const;
     [[nodiscard]] bool isDayBeforeNationalDay() const;
     [[nodiscard]] bool isDayAfterNationalDay() const;
-    [[nodiscard]] QString getFileName() const;
-    [[nodiscard]] QString getFileNameNoOffset() const;
-    [[nodiscard]] QString getFileNameCorrectToSecond() const;
-    [[nodiscard]] QString getFileNameCorrectToSecondNoOffset() const;
-    [[nodiscard]] QString getFileNameSeparated(QChar separator) const;
-    [[nodiscard]] QString getFileNameNoOffsetSeparated(QChar separator) const;
-    [[nodiscard]] QString getFileNameCorrectToSecondSeparated(QChar separator) const;
-    [[nodiscard]] QString getFileNameCorrectToSecondNoOffsetSeparated(QChar separator) const;
+    [[nodiscard]] SGXString getFileName() const;
+    [[nodiscard]] SGXString getFileNameNoOffset() const;
+    [[nodiscard]] SGXString getFileNameCorrectToSecond() const;
+    [[nodiscard]] SGXString getFileNameCorrectToSecondNoOffset() const;
+    [[nodiscard]] SGXString getFileNameSeparated(SGXChar separator) const;
+    [[nodiscard]] SGXString getFileNameNoOffsetSeparated(SGXChar separator) const;
+    [[nodiscard]] SGXString getFileNameCorrectToSecondSeparated(SGXChar separator) const;
+    [[nodiscard]] SGXString getFileNameCorrectToSecondNoOffsetSeparated(SGXChar separator) const;
 };
 
 inline unsigned int qHash(SGXTimeStamp x, unsigned int seed = 0){

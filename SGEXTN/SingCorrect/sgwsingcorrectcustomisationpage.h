@@ -7,7 +7,7 @@ class SGWButton;
 class SGWLabel;
 class SGWInput;
 class SGWWidget;
-class QString;
+class SGXString;
 class SGWSingCorrectCustomisationPage
 {
 public:
@@ -35,7 +35,7 @@ public:
     static void addCustomCommand(SGWButton* /*unused*/);
     static void refreshList();
     static SGWWidget* listParent;
-    static QHash<SGWButton*, QString>* buttonsList;
+    static QHash<SGWButton*, SGXString>* buttonsList;
     static void deleteCommand(SGWButton* button);
     static SGWBackground* commandListInstance;
     static SGWBackground* initialiseCommandList();

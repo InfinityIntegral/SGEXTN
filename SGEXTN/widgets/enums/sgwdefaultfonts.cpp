@@ -1,5 +1,5 @@
 #include "sgwdefaultfonts.h"
-#include <QString>
+#include "../../primitives/sgxstring.h"
 
-QString SGWDefaultFonts::textFont = "SingScript.sg";
-QString SGWDefaultFonts::iconsFont = "AppIcons.sg";
+SGXString SGWDefaultFonts::textFont = "SingScript.sg";
+SGXString SGWDefaultFonts::iconsFont = "AppIcons.sg";

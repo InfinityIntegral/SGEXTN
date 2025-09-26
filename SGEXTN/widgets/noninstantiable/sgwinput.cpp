@@ -1,7 +1,6 @@
 #include "sgwinput.h"
 #include "../../quickui/sgxquickinterface.h"
 #include "sgwwidget.h"
-#include <QString>
 #include "../../primitives/sgxcolourrgba.h"
 #include "../enums/sgwhorizontalalignment.h"
 #include "../enums/sgwverticalalignment.h"
@@ -9,6 +8,7 @@
 #include "../enums/sgwdefaultfonts.h"
 #include "../../quickui/sgwwidgetquickinterface.h"
 #include "../../bypassquickui/sgxthemecolours.h"
+#include "../../primitives/sgxstring.h"
 
 SGWInput::SGWInput(SGWWidget *parent, void (*validationFunction)(SGWInput *), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float f1, float f0, SGWHorizontalAlignment::Flag horizontalAlignment, SGWVerticalAlignment::Flag verticalAlignment) : SGWWidget(parent, x1, x0, y1, y0, w1, w0, h1, h0){
     (*this).f1 = f1;
@@ -48,8 +48,8 @@ SGWInput::SGWInput(SGWWidget *parent, void (*validationFunction)(SGWInput *), fl
 void SGWInput::syncQuickProperties(){
     (*topObject).setProperty("f1", f1);
     (*topObject).setProperty("f0", f0);
-    (*topObject).setProperty("text", text);
-    (*topObject).setProperty("f", font);
+    (*topObject).setProperty("text", (*text.data));
+    (*topObject).setProperty("f", (*font.data));
     (*topObject).setProperty("ha", SGWHorizontalAlignment::getQtFlag(horizontalAlignment));
     (*topObject).setProperty("va", SGWVerticalAlignment::getQtFlag(verticalAlignment));
     (*topObject).setProperty("inv", invalid);
@@ -77,8 +77,8 @@ void SGWInput::syncQuickProperties(){
     quickInterface = new SGWWidgetQuickInterface(this);
 }
 
-void SGWInput::eventReceived(const QString &s){
-    if(s == "textChanged"){(*this).text = (*topObject).property("s").toString();}
+void SGWInput::eventReceived(const SGXString &s){
+    if(s == "textChanged"){(*(*this).text.data) = (*topObject).property("s").toString();}
     if(textChangedFunction != nullptr && s == "textChanged"){textChangedFunction(this);}
     else if(focusStartFunction != nullptr && s == "focusStart"){focusStartFunction(this);}
     else if(focusEndFunction != nullptr && s == "focusEnd"){focusEndFunction(this);}
@@ -102,12 +102,12 @@ void SGWInput::setF0(float f0){
     (*(*this).topObject).setProperty("f0", (*this).f0);
 }
 
-QString SGWInput::getTextAsString() const {
+SGXString SGWInput::getTextAsString() const {
     return text;
 }
 
 int SGWInput::getTextAsInt(bool *isValid, int minimum, int maximum) const {
-    int x = text.toInt(isValid);
+    int x = text.parseToInt(isValid);
     if(x < minimum || x > maximum){
         x = 0;
         if(isValid != nullptr){(*isValid) = false;}
@@ -116,7 +116,7 @@ int SGWInput::getTextAsInt(bool *isValid, int minimum, int maximum) const {
 }
 
 float SGWInput::getTextAsFloat(bool *isValid, float minimum, float maximum) const {
-    float x = text.toFloat(isValid);
+    float x = text.parseToFloat(isValid);
     if(x < minimum || x > maximum){
         x = 0.0f;
         if(isValid != nullptr){(*isValid) = false;}
@@ -124,28 +124,28 @@ float SGWInput::getTextAsFloat(bool *isValid, float minimum, float maximum) cons
     return x;
 }
 
-void SGWInput::setTextFromString(const QString& s){
+void SGWInput::setTextFromString(const SGXString& s){
     (*this).text = s;
-    (*(*this).topObject).setProperty("text", (*this).text);
+    (*(*this).topObject).setProperty("text", (*(*this).text.data));
 }
 
 void SGWInput::setTextFromInt(int x){
-    (*this).text = QString::number(x);
-    (*(*this).topObject).setProperty("text", (*this).text);
+    (*this).text = SGXString::intToString(x);
+    (*(*this).topObject).setProperty("text", (*(*this).text.data));
 }
 
 void SGWInput::setTextFromFloat(float x){
-    (*this).text = QString::number(x);
-    (*(*this).topObject).setProperty("text", (*this).text);
+    (*this).text = SGXString::floatToString(x);
+    (*(*this).topObject).setProperty("text", (*(*this).text.data));
 }
 
-QString SGWInput::getFont() const {
+SGXString SGWInput::getFont() const {
     return font;
 }
 
-void SGWInput::setFont(const QString& font){
+void SGWInput::setFont(const SGXString& font){
     (*this).font = font;
-    (*(*this).topObject).setProperty("f", (*this).font);
+    (*(*this).topObject).setProperty("f", (*(*this).font.data));
 }
 
 SGWHorizontalAlignment::Flag SGWInput::getHorizontalAlignment() const {

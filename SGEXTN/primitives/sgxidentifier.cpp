@@ -1,7 +1,7 @@
 #include "sgxidentifier.h"
 #include <QRandomGenerator>
 #include <QSet>
-#include <QString>
+#include "sgxstring.h"
 
 QSet<SGXIdentifier> SGXIdentifier::identifiersList = QSet<SGXIdentifier>();
 const SGXIdentifier SGXIdentifier::nullIdentifier = SGXIdentifier(0);
@@ -41,7 +41,7 @@ SGXIdentifier::SGXIdentifier(unsigned int a, unsigned int b, unsigned int c, uns
     }
 }
 
-SGXIdentifier::SGXIdentifier(const QString &s, bool ifValid, int *errCode){
+SGXIdentifier::SGXIdentifier(const SGXString &s, bool ifValid, int *errCode){
     unsigned int a = 0u;
     unsigned int b = 0u;
     unsigned int c = 0u;
@@ -49,13 +49,13 @@ SGXIdentifier::SGXIdentifier(const QString &s, bool ifValid, int *errCode){
     if(s.length() == 32){
         bool x = true;
         bool x0 = true;
-        a = s.mid(0, 8).toUInt(&x, 16);
+        a = s.substring(0, 8).parseToUnsignedIntBase16(&x);
         if(x == false){x0 = false;}
-        b = s.mid(8, 8).toUInt(&x, 16);
+        b = s.substring(8, 8).parseToUnsignedIntBase16(&x);
         if(x == false){x0 = false;}
-        c = s.mid(16, 8).toUInt(&x, 16);
+        c = s.substring(16, 8).parseToUnsignedIntBase16(&x);
         if(x == false){x0 = false;}
-        d = s.mid(24, 8).toUInt(&x, 16);
+        d = s.substring(24, 8).parseToUnsignedIntBase16(&x);
         if(x == false){x0 = false;}
         if(x0 == false){
             a = 0u;
@@ -106,6 +106,6 @@ bool SGXIdentifier::operator!=(SGXIdentifier x) const {
     return ((a != x.a) || (b != x.b) || (c != x.c) || (d != x.d));
 }
 
-QString SGXIdentifier::getStringForPrinting() const {
-    return (QString::number(a, 16).toUpper().rightJustified(8, '0')  + QString::number(b, 16).toUpper().rightJustified(8, '0') + QString::number(c, 16).toUpper().rightJustified(8, '0') + QString::number(d, 16).toUpper().rightJustified(8, '0'));
+SGXString SGXIdentifier::getStringForPrinting() const {
+    return (SGXString::unsignedIntToStringBase16(a).fillLeftToLength(8, '0')  + SGXString::unsignedIntToStringBase16(b).fillLeftToLength(8, '0') + SGXString::unsignedIntToStringBase16(c).fillLeftToLength(8, '0') + SGXString::unsignedIntToStringBase16(d).fillLeftToLength(8, '0'));
 }

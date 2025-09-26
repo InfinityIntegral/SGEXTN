@@ -5,7 +5,7 @@
 #include "../../primitives/sgxcolourrgba.h"
 #include <QQuickItem>
 #include "../enums/sgwtype.h"
-#include <QString>
+#include "../../primitives/sgxstring.h"
 #include "../../quickui/sgwwidgetquickinterface.h"
 #include "../../bypassquickui/sgxthemecolours.h"
 
@@ -51,7 +51,7 @@ void SGWColourPickerWidget::syncQuickProperties(){
     (*topObject).setProperty("bgfc", backgroundFocusColour.getQColour());
 }
 
-void SGWColourPickerWidget::eventReceived(const QString &s){
+void SGWColourPickerWidget::eventReceived(const SGXString &s){
     if(s == "click"){SGWColourPicker::activateColourPicker(this);}
     if(s == "done" && attachedFunction != nullptr){attachedFunction(this);}
 }

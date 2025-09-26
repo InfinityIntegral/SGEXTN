@@ -3,6 +3,7 @@
 
 #include <array>
 #include "../primitives/sgxcolourrgba.h"
+#include "../primitives/sgxstring.h"
 
 class SGWBackground;
 class SGWButton;
@@ -30,7 +31,7 @@ public:
     static std::array<SGWBlankWidget*, 9> coloursDisplay;
     static SGWBackground* initialiseDetailsPage();
     static std::array<SGXColourRGBA, 9> themeColours;
-    static QString infoString;
+    static SGXString infoString;
     static void updateElements();
     static bool isUsingCustomLight;
     static SGWLabel* customLightLabel;

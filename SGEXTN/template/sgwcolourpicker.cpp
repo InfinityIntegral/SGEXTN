@@ -16,7 +16,6 @@
 #include "../widgets/instantiable/sgwtextlabel.h"
 #include "../widgets/noninstantiable/sgwinput.h"
 #include "../widgets/enums/sgwhorizontalalignment.h"
-#include <QString>
 #include "../colourbackground/sgxrendercolourbackgroundsgwidget.h"
 #include "../widgets/instantiable/sgwcolourpickerwidget.h"
 #include "../widgets/instantiable/sgwtextbutton.h"
@@ -114,8 +113,8 @@ void SGWColourPicker::updateInputs(){
     (*SGWColourPicker::greenInput).setTextFromInt(SGWColourPicker::colour.getGreen());
     (*SGWColourPicker::blueInput).setTextFromInt(SGWColourPicker::colour.getBlue());
     (*SGWColourPicker::transparencyInput).setTextFromInt(SGWColourPicker::colour.getTransparency());
-    QString hexCode = QString::number(SGWColourPicker::colour.x, 16).toUpper().rightJustified(8, '0');
-    if(hexCode.mid(6, 2) == "FF"){hexCode = hexCode.mid(0, 6);}
+    SGXString hexCode = SGXString::unsignedIntToStringBase16(SGWColourPicker::colour.x).fillLeftToLength(8, '0');
+    if(hexCode.substring(6, 2) == "FF"){hexCode = hexCode.substringLeft(6);}
     (*SGWColourPicker::hexCodeInput).setTextFromString(hexCode);
     (*SGWColourPicker::colourDisplay).setColour(SGWColourPicker::colour);
     SGWColourPicker::ignoreInputChanges = false;
@@ -190,17 +189,17 @@ void SGWColourPicker::updateTransparencyFromInput(SGWInput */*unused*/){
 }
 
 void SGWColourPicker::updateHexCode(SGWInput */*unused*/){
-    QString correctedInput = "";
-    QString rawInput = (*SGWColourPicker::hexCodeInput).getTextAsString().toUpper();
+    SGXString correctedInput = "";
+    SGXString rawInput = (*SGWColourPicker::hexCodeInput).getTextAsString().getUpperLanguageAware();
     for(int i=0; i<rawInput.length(); i++){
         if((rawInput.at(i) >= '0' && rawInput.at(i) <= '9') || (rawInput.at(i) >= 'A' && rawInput.at(i) <= 'F')){correctedInput += rawInput.at(i);}
     }
     if(correctedInput.length() == 6){correctedInput += "FF";}
     if(correctedInput.length() != 8){return;}
-    SGWColourPicker::colour.setRed(correctedInput.mid(0, 2).toInt(nullptr, 16));
-    SGWColourPicker::colour.setGreen(correctedInput.mid(2, 2).toInt(nullptr, 16));
-    SGWColourPicker::colour.setBlue(correctedInput.mid(4, 2).toInt(nullptr, 16));
-    SGWColourPicker::colour.setTransparency(correctedInput.mid(6, 2).toInt(nullptr, 16));
+    SGWColourPicker::colour.setRed(correctedInput.substring(0, 2).parseToIntBase16(nullptr));
+    SGWColourPicker::colour.setGreen(correctedInput.substring(2, 2).parseToIntBase16(nullptr));
+    SGWColourPicker::colour.setBlue(correctedInput.substring(4, 2).parseToIntBase16(nullptr));
+    SGWColourPicker::colour.setTransparency(correctedInput.substring(6, 2).parseToIntBase16(nullptr));
     SGWColourPicker::updateUsingColour();
 }
 

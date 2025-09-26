@@ -134,28 +134,28 @@ void SGXColourRGBA::setTransparencyUsingFloat(float a){
     (*this).x = ((*this).x & 0xFFFFFF00u) | temp_floatToUnsignedInt(a);
 }
 
-QString SGXColourRGBA::getStringForPrintingRGBHTML() const {
-    return ("rgb(" + QString::number(getRed()) + ", " + QString::number(getGreen()) + ", " + QString::number(getBlue()) + ")");
+SGXString SGXColourRGBA::getStringForPrintingRGBHTML() const {
+    return (SGXString("rgb(") + SGXString::intToString(getRed()) + ", " + SGXString::intToString(getGreen()) + ", " + SGXString::intToString(getBlue()) + ")");
 }
 
-QString SGXColourRGBA::getStringForPrintingRGBAHTML() const {
-    return ("rgb(" + QString::number(getRed()) + ", " + QString::number(getGreen()) + ", " + QString::number(getBlue()) + ", " + QString::number(getTransparency()) + ")");
+SGXString SGXColourRGBA::getStringForPrintingRGBAHTML() const {
+    return (SGXString("rgb(") + SGXString::intToString(getRed()) + ", " + SGXString::intToString(getGreen()) + ", " + SGXString::intToString(getBlue()) + ", " + SGXString::intToString(getTransparency()) + ")");
 }
 
-QString SGXColourRGBA::getStringForPrintingRGBHex() const{
-    return ("#" + QString::number(getRed(), 16).toUpper() + QString::number(getGreen(), 16).toUpper() + QString::number(getBlue(), 16).toUpper());
+SGXString SGXColourRGBA::getStringForPrintingRGBHex() const{
+    return (SGXString("#") + SGXString::intToStringBase16(getRed()) + SGXString::intToStringBase16(getGreen()) + SGXString::intToStringBase16(getBlue()));
 }
 
-QString SGXColourRGBA::getStringForPrintingRGBAHex() const {
-    return ("#" + QString::number(getRed(), 16).toUpper() + QString::number(getGreen(), 16).toUpper() + QString::number(getBlue(), 16).toUpper() + QString::number(getTransparency(), 16).toUpper());
+SGXString SGXColourRGBA::getStringForPrintingRGBAHex() const {
+    return (SGXString("#") + SGXString::intToStringBase16(getRed()) + SGXString::intToStringBase16(getGreen()) + SGXString::intToStringBase16(getBlue()) + SGXString::intToStringBase16(getTransparency()));
 }
 
-QString SGXColourRGBA::getStringForPrintingRGBFloatHTML() const {
-    return ("rgb(" + QString::number(getRedAsFloat()) + ", " + QString::number(getGreenAsFloat()) + ", " + QString::number(getBlueAsFloat()) + ")");
+SGXString SGXColourRGBA::getStringForPrintingRGBFloatHTML() const {
+    return (SGXString("rgb(") + SGXString::floatToString(getRedAsFloat()) + ", " + SGXString::floatToString(getGreenAsFloat()) + ", " + SGXString::floatToString(getBlueAsFloat()) + ")");
 }
 
-QString SGXColourRGBA::getStringForPrintingRGBAFloatHTML() const {
-    return ("rgb(" + QString::number(getRedAsFloat()) + ", " + QString::number(getGreenAsFloat()) + ", " + QString::number(getBlueAsFloat()) + ", " + QString::number(getTransparencyAsFloat()) + ")");
+SGXString SGXColourRGBA::getStringForPrintingRGBAFloatHTML() const {
+    return (SGXString("rgb(") + SGXString::floatToString(getRedAsFloat()) + ", " + SGXString::floatToString(getGreenAsFloat()) + ", " + SGXString::floatToString(getBlueAsFloat()) + ", " + SGXString::floatToString(getTransparencyAsFloat()) + ")");
 }
 
 bool SGXColourRGBA::operator==(SGXColourRGBA x) const {

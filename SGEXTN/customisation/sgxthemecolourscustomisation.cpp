@@ -4,7 +4,7 @@
 #include "../userDefinedClasses/sgucentralmanagement.h"
 #include "../primitives/sgxtimestamp.h"
 #include "../primitives/sgxcolourrgba.h"
-#include <QString>
+#include "../primitives/sgxstring.h"
 
 void SGXThemeColoursCustomisation::loadThemeColours(){
     if(SGXTimeStamp::now().isNationalDayPeriod()){
@@ -19,7 +19,7 @@ void SGXThemeColoursCustomisation::loadThemeColours(){
         SGUCentralManagement::themeColour8 = SGXColourRGBA(255, 255, 255);
         return;
     }
-    const QString path = SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "themecolours.sg");
+    const SGXString path = SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "themecolours.sg");
     if(SGXFileSystem::fileExists(path) == false){return;}
     {
         const SGXFile fileReader(path);
@@ -36,7 +36,7 @@ void SGXThemeColoursCustomisation::loadThemeColours(){
 }
 
 void SGXThemeColoursCustomisation::syncThemeColours(){
-    const QString path = SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "themecolours.sg");
+    const SGXString path = SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "themecolours.sg");
     if(SGXFileSystem::fileExists(path) == true){SGXFileSystem::permanentDeleteFile(path);}
     SGXFileSystem::createFile(path);
     {

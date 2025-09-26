@@ -2,6 +2,7 @@
 #define SGUCENTRALMANAGEMENT_H
 
 #include "../primitives/sgxcolourrgba.h"
+#include "../primitives/sgxstring.h"
 
 class SGUCentralManagement
 {
@@ -12,10 +13,10 @@ public:
     static void earlyInitialise();
     static void initialiseExtraFonts();
     static void initialiseCustomRendering();
-    static QString applicationName;
-    static QString applicationVersion;
-    static QString organisationName;
-    static QString rootFolderName;
+    static SGXString applicationName;
+    static SGXString applicationVersion;
+    static SGXString organisationName;
+    static SGXString rootFolderName;
     static SGXColourRGBA themeColour0;
     static SGXColourRGBA themeColour1;
     static SGXColourRGBA themeColour2;

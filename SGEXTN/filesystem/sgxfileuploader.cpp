@@ -2,7 +2,7 @@
 #include "sgxfilesystem.h"
 #include <QQmlComponent>
 #include <QObject>
-#include <QString>
+#include "../primitives/sgxstring.h"
 #include <QMetaObject>
 #include <QUrl>
 #include "sgxfile.h"
@@ -11,9 +11,9 @@
 
 QQmlComponent* SGXFileUploader::fileUploadTemplate = nullptr;
 QObject* SGXFileUploader::fileUploadInstance = nullptr;
-void (*SGXFileUploader::fileAcceptor)(const QString&) = nullptr;
+void (*SGXFileUploader::fileAcceptor)(const SGXString&) = nullptr;
 
-void SGXFileUploader::uploadFile(void (*attachedFunction)(const QString &)){
+void SGXFileUploader::uploadFile(void (*attachedFunction)(const SGXString &)){
     if(SGXFileUploader::fileUploadTemplate == nullptr){SGXFileUploader::fileUploadTemplate = new QQmlComponent(SGXQuickInterface::e, ":/SGEXTN/QML/fileupload.qml");}
     SGXFileUploader::fileUploadInstance = (*SGXFileUploader::fileUploadTemplate).create();
     QObject::connect(SGXFileUploader::fileUploadInstance, &QObject::objectNameChanged, &SGXFileUploader::checkUploadedFile);
@@ -22,10 +22,11 @@ void SGXFileUploader::uploadFile(void (*attachedFunction)(const QString &)){
 }
 
 void SGXFileUploader::checkUploadedFile(){
-    QString urlPath = (*SGXFileUploader::fileUploadInstance).property("selectedFilePath").toString();
+    SGXString urlPath = "";
+    (*urlPath.data) = (*SGXFileUploader::fileUploadInstance).property("selectedFilePath").toString();
     if(urlPath != ""){
-        urlPath = QUrl(urlPath).toLocalFile();
-        const QString realPath = SGXFileSystem::getFreePath(SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "temp"), "temp", ".sg");
+        (*urlPath.data) = QUrl(*urlPath.data).toLocalFile();
+        const SGXString realPath = SGXFileSystem::getFreePath(SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "temp"), "temp", ".sg");
         if(SGXFileSystem::folderExists(SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "temp")) == false){SGXFileSystem::createFolder(SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "temp"));}
         SGXFileSystem::createFile(realPath);
         {

@@ -1,36 +1,36 @@
 #include "sgxsingcorrectcore.h"
 #include <QHash>
 #include "../primitives/sgxchar.h"
-#include <QString>
+#include "../primitives/sgxstring.h"
 #include "../quickui/sgxsingcorrectquickinterface.h"
 #include "sgxsingcorrectcustomisation.h"
 
-QString SGXSingCorrectCore::correctionPrefix = "SG-\\";
-QHash<QString, SGXChar>* SGXSingCorrectCore::database = nullptr;
+SGXString SGXSingCorrectCore::correctionPrefix = "SG-\\";
+QHash<SGXString, SGXChar>* SGXSingCorrectCore::database = nullptr;
 SGXSingCorrectQuickInterface* SGXSingCorrectCore::instance = nullptr;
 
-QString SGXSingCorrectCore::correct(const QString &s){
+SGXString SGXSingCorrectCore::correct(const SGXString &s){
     if(SGXSingCorrectCustomisation::moduleEnabled == false){return s;}
     if(SGXSingCorrectCore::database == nullptr){return s;}
-    QString s0 = "";
+    SGXString s0 = "";
     bool maybeCommandActive = false;
-    QString maybeCommand = "";
+    SGXString maybeCommand = "";
     for(int i=0; i<s.length(); i++){
-        if(s.at(i) == SGXSingCorrectCore::correctionPrefix.at(0) && i <= s.length() - SGXSingCorrectCore::correctionPrefix.length() && s.mid(i, SGXSingCorrectCore::correctionPrefix.length()) == SGXSingCorrectCore::correctionPrefix){
+        if(s.at(i) == SGXSingCorrectCore::correctionPrefix.at(0) && i <= s.length() - SGXSingCorrectCore::correctionPrefix.length() && s.substring(i, SGXSingCorrectCore::correctionPrefix.length()) == SGXSingCorrectCore::correctionPrefix){
             maybeCommandActive = true;
             i += static_cast<int>(SGXSingCorrectCore::correctionPrefix.length());
             while(i < s.length()){
-                if((s.at(i) >= 'a' && s.at(i) <= 'z') || (s.at(i) >= 'A' && s.at(i) <= 'Z') || (s.at(i) >= '0' && s.at(i) <= '9' && maybeCommand.length() >= 7 && maybeCommand.at(i) == 'u' && maybeCommand.left(7) == "unicode")){
+                if((s.at(i) >= 'a' && s.at(i) <= 'z') || (s.at(i) >= 'A' && s.at(i) <= 'Z') || (s.at(i) >= '0' && s.at(i) <= '9' && maybeCommand.length() >= 7 && maybeCommand.at(i) == 'u' && maybeCommand.substringLeft(7) == "unicode")){
                     maybeCommand += s.at(i);
                     i++;
                 }
                 else{
-                    if((*SGXSingCorrectCore::database).contains(maybeCommand)){maybeCommand = QChar((*SGXSingCorrectCore::database)[maybeCommand].data);}
-                    else if(SGXSingCorrectCustomisation::database != nullptr && (*SGXSingCorrectCustomisation::database).contains(maybeCommand)){maybeCommand = QChar((*SGXSingCorrectCustomisation::database)[maybeCommand].data);}
-                    else if(maybeCommand.length() > 7 && maybeCommand.left(7) == "unicode"){
+                    if((*SGXSingCorrectCore::database).contains(maybeCommand)){maybeCommand = (*SGXSingCorrectCore::database)[maybeCommand];}
+                    else if(SGXSingCorrectCustomisation::database != nullptr && (*SGXSingCorrectCustomisation::database).contains(maybeCommand)){maybeCommand = (*SGXSingCorrectCustomisation::database)[maybeCommand];}
+                    else if(maybeCommand.length() > 7 && maybeCommand.substringLeft(7) == "unicode"){
                         int cp = 0x0000;
-                        if(maybeCommand.length() == 11 || (maybeCommand.length() == 13 && maybeCommand.mid(7, 2) == "0x")){cp = maybeCommand.right(4).toInt(nullptr, 16);}
-                        if(cp != 0){maybeCommand = QChar(cp);}
+                        if(maybeCommand.length() == 11 || (maybeCommand.length() == 13 && maybeCommand.substring(7, 2) == "0x")){cp = maybeCommand.substringRight(4).parseToIntBase16(nullptr);}
+                        if(cp != 0){maybeCommand = SGXChar(cp);}
                         else{maybeCommand = SGXSingCorrectCore::correctionPrefix + maybeCommand + s.at(i);}
                     }
                     else{maybeCommand = SGXSingCorrectCore::correctionPrefix + maybeCommand + s.at(i);}
@@ -48,7 +48,7 @@ QString SGXSingCorrectCore::correct(const QString &s){
 }
 
 void SGXSingCorrectCore::initialise(){
-    SGXSingCorrectCore::database = new QHash<QString, SGXChar>();
+    SGXSingCorrectCore::database = new QHash<SGXString, SGXChar>();
 
     (*SGXSingCorrectCore::database).insert("SGhome", SGXChar(0x0378));
 

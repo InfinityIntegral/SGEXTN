@@ -3,50 +3,51 @@
 
 #include <qcontainerfwd.h>
 #include "../primitives/sgxtimestamp.h"
+#include "../primitives/sgxstring.h"
 
 class SGXFileSystem
 {
 public:
     SGXFileSystem() = delete;
-    static QString rootFilePath;
-    static QString userDataFilePath;
-    static QString configFilePath;
-    static QString joinFilePaths(const QString& a, const QString& b);
-    static QString encodeBase16(const QString& s);
-    static QString decodeBase16(const QString& str);
-    static bool pathIsSubfolder(const QString& childPath, const QString& parentPath);
-    static bool fileExists(const QString& s);
-    static bool folderExists(const QString& s);
-    static QString getFreePath(const QString& prefix, const QString& unencodedName, const QString& postfix);
-    static int createFile(const QString& s);
-    static int createFolder(const QString& s);
-    static QString getParentPath(const QString& s);
-    static QString getParentName(const QString& s);
-    static QVector<QString> getFilesList(const QString& s);
-    static QVector<QString> getFilesListRecursive(const QString& s);
-    static QVector<QString> getFoldersList(const QString& s);
-    static int moveFile(const QString& startPath, const QString& endPath);
-    static int moveFolder(const QString& startPath, const QString& endPath);
-    static int duplicateFile(const QString& startPath, const QString& endPath);
-    static int duplicateFolder(const QString& startPath, const QString& endPath);
-    static int permanentDeleteFile(const QString& s);
-    static int permanentDeleteFolder(const QString& s);
-    static long long getFileSize(const QString& s);
-    static long long getFolderSize(const QString& s);
-    static SGXTimeStamp getFileCreationTime(const QString& s);
-    static SGXTimeStamp getFolderCreationTime(const QString& s);
-    static SGXTimeStamp getFileLastEditTime(const QString& s);
-    static SGXTimeStamp getFolderLastEditTime(const QString& s);
-    static QString getFolderName(const QString& s);
-    static QString getFileName(const QString& s);
-    static QString getFileExtension(const QString& s);
-    static QString getFileNameNoExtension(const QString& s);
-    static QVector<QString> getFilesListWithExtension(const QString& s, const QString& ext);
-    static QVector<QString> getFilesListWithExtensionRecursive(const QString& s, const QString& ext);
-    static QVector<QString> getFilesListContainingName(const QString& s, const QString& name);
-    static QVector<QString> getFilesListContainingNameRecursive(const QString& s, const QString& name);
-    static bool numberAwareLesserThan(const QString& s1, const QString& s2);
-    static bool numberAwareLesserThanBase16(const QString& s1, const QString& s2);
+    static SGXString rootFilePath;
+    static SGXString userDataFilePath;
+    static SGXString configFilePath;
+    static SGXString joinFilePaths(const SGXString& a, const SGXString& b);
+    static SGXString encodeBase16(const SGXString& s);
+    static SGXString decodeBase16(const SGXString& str);
+    static bool pathIsSubfolder(const SGXString& childPath, const SGXString& parentPath);
+    static bool fileExists(const SGXString& s);
+    static bool folderExists(const SGXString& s);
+    static SGXString getFreePath(const SGXString& prefix, const SGXString& unencodedName, const SGXString& postfix);
+    static int createFile(const SGXString& s);
+    static int createFolder(const SGXString& s);
+    static SGXString getParentPath(const SGXString& s);
+    static SGXString getParentName(const SGXString& s);
+    static QVector<SGXString> getFilesList(const SGXString& s);
+    static QVector<SGXString> getFilesListRecursive(const SGXString& s);
+    static QVector<SGXString> getFoldersList(const SGXString& s);
+    static int moveFile(const SGXString& startPath, const SGXString& endPath);
+    static int moveFolder(const SGXString& startPath, const SGXString& endPath);
+    static int duplicateFile(const SGXString& startPath, const SGXString& endPath);
+    static int duplicateFolder(const SGXString& startPath, const SGXString& endPath);
+    static int permanentDeleteFile(const SGXString& s);
+    static int permanentDeleteFolder(const SGXString& s);
+    static long long getFileSize(const SGXString& s);
+    static long long getFolderSize(const SGXString& s);
+    static SGXTimeStamp getFileCreationTime(const SGXString& s);
+    static SGXTimeStamp getFolderCreationTime(const SGXString& s);
+    static SGXTimeStamp getFileLastEditTime(const SGXString& s);
+    static SGXTimeStamp getFolderLastEditTime(const SGXString& s);
+    static SGXString getFolderName(const SGXString& s);
+    static SGXString getFileName(const SGXString& s);
+    static SGXString getFileExtension(const SGXString& s);
+    static SGXString getFileNameNoExtension(const SGXString& s);
+    static QVector<SGXString> getFilesListWithExtension(const SGXString& s, const SGXString& ext);
+    static QVector<SGXString> getFilesListWithExtensionRecursive(const SGXString& s, const SGXString& ext);
+    static QVector<SGXString> getFilesListContainingName(const SGXString& s, const SGXString& name);
+    static QVector<SGXString> getFilesListContainingNameRecursive(const SGXString& s, const SGXString& name);
+    static bool numberAwareLesserThan(const SGXString& s1, const SGXString& s2);
+    static bool numberAwareLesserThanBase16(const SGXString& s1, const SGXString& s2);
 };
 
 #endif // SGXFILESYSTEM_H

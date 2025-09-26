@@ -1,7 +1,7 @@
 #ifndef SGXCOLOURRGBA_H
 #define SGXCOLOURRGBA_H
 
-#include <QString>
+#include "sgxstring.h"
 #include <QColor>
 
 class SGXColourRGBA
@@ -32,12 +32,12 @@ public:
     void setGreenUsingFloat(float g);
     void setBlueUsingFloat(float b);
     void setTransparencyUsingFloat(float a);
-    [[nodiscard]] QString getStringForPrintingRGBHTML() const;
-    [[nodiscard]] QString getStringForPrintingRGBAHTML() const;
-    [[nodiscard]] QString getStringForPrintingRGBHex() const;
-    [[nodiscard]] QString getStringForPrintingRGBAHex() const;
-    [[nodiscard]] QString getStringForPrintingRGBFloatHTML() const;
-    [[nodiscard]] QString getStringForPrintingRGBAFloatHTML() const;
+    [[nodiscard]] SGXString getStringForPrintingRGBHTML() const;
+    [[nodiscard]] SGXString getStringForPrintingRGBAHTML() const;
+    [[nodiscard]] SGXString getStringForPrintingRGBHex() const;
+    [[nodiscard]] SGXString getStringForPrintingRGBAHex() const;
+    [[nodiscard]] SGXString getStringForPrintingRGBFloatHTML() const;
+    [[nodiscard]] SGXString getStringForPrintingRGBAFloatHTML() const;
     [[nodiscard]] bool operator==(SGXColourRGBA x) const;
     [[nodiscard]] bool operator!=(SGXColourRGBA x) const;
     [[nodiscard]] bool operator<(SGXColourRGBA x) const;

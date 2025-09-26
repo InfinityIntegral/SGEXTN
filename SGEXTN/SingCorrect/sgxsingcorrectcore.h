@@ -1,7 +1,7 @@
 #ifndef SGXSINGCORRECTCORE_H
 #define SGXSINGCORRECTCORE_H
 
-#include <QString>
+#include "../primitives/sgxstring.h"
 
 class SGXChar;
 template <typename T1, typename T2> class QHash;
@@ -10,9 +10,9 @@ class SGXSingCorrectCore
 {
 public:
     SGXSingCorrectCore() = delete;
-    static QString correct(const QString& s);
-    static QString correctionPrefix;
-    static QHash<QString, SGXChar>* database;
+    static SGXString correct(const SGXString& s);
+    static SGXString correctionPrefix;
+    static QHash<SGXString, SGXChar>* database;
     static void initialise();
     static void terminate();
     static SGXSingCorrectQuickInterface* instance;

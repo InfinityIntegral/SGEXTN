@@ -34,8 +34,8 @@ bool SGXVector2::operator<(SGXVector2 x) const {
     return ((*this).y < x.y);
 }
 
-QString SGXVector2::getStringForPrinting() const {
-    return ("(" + QString::number(x) + ", " + QString::number(y) + ")");
+SGXString SGXVector2::getStringForPrinting() const {
+    return (SGXString("(") + SGXString::floatToString(x) + ", " + SGXString::floatToString(y) + ")");
 }
 
 SGXVector2 SGXVector2::operator+(SGXVector2 x) const {

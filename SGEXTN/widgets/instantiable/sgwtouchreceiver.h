@@ -5,7 +5,7 @@
 #include <array>
 
 class SGWWidgetQuickInterface;
-class QString;
+class SGXString;
 class SGXTouchEvent;
 class SGWTouchReceiver : public SGWWidget
 {
@@ -20,7 +20,7 @@ public:
     void (*function)(SGWTouchReceiver*, const std::array<SGXTouchEvent, 5>&);
     [[nodiscard]] float getWidth() const;
     [[nodiscard]] float getHeight() const;
-    void eventReceived(const QString& s);
+    void eventReceived(const SGXString& s);
 protected:
     SGWWidgetQuickInterface* quickInterface;
 };

@@ -5,7 +5,7 @@
 #include <queue>
 #include "../widgets/noninstantiable/sgwwidget.h"
 #include "../widgets/noninstantiable/sgwlabel.h"
-#include <QString>
+#include "../primitives/sgxstring.h"
 #include "../widgets/enums/sgwhorizontalalignment.h"
 #include "../widgets/enums/sgwverticalalignment.h"
 
@@ -22,7 +22,7 @@ void SGWNotify::terminate(){
     (*SGWNotify::instance).pop();
 }
 
-void SGWNotify::notify(const QString &s){
+void SGWNotify::notify(const SGXString &s){
     SGWLabel* x = new SGWTextLabel(SGWStatusBar::instance, s, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, SGWHorizontalAlignment::Center, false);
     if(SGWNotify::instance == nullptr){SGWNotify::instance = new std::queue<SGWWidget*>();}
     (*SGWNotify::instance).push(x);
@@ -48,7 +48,7 @@ void SGWNotify::animate(){
     }
 }
 
-void SGWNotify::pullDownNotify(const QString &s){
+void SGWNotify::pullDownNotify(const SGXString &s){
     delete SGWNotify::pullDownInstance;
     SGWNotify::pullDownInstance = nullptr;
     delete SGWNotify::pullDownTimer;

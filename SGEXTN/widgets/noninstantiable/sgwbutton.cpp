@@ -1,7 +1,6 @@
 #include "sgwbutton.h"
 #include "../../quickui/sgxquickinterface.h"
 #include "sgwwidget.h"
-#include <QString>
 #include "../../primitives/sgxcolourrgba.h"
 #include "../enums/sgwhorizontalalignment.h"
 #include "../enums/sgwverticalalignment.h"
@@ -9,7 +8,7 @@
 #include "../../quickui/sgwwidgetquickinterface.h"
 #include "../../bypassquickui/sgxthemecolours.h"
 
-SGWButton::SGWButton(SGWWidget *parent, const QString &s, void (*attachedFunction)(SGWButton*), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float f1, float f0, const QString& font) : SGWWidget(parent, x1, x0, y1, y0, w1, w0, h1, h0){
+SGWButton::SGWButton(SGWWidget *parent, const SGXString &s, void (*attachedFunction)(SGWButton*), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float f1, float f0, const SGXString& font) : SGWWidget(parent, x1, x0, y1, y0, w1, w0, h1, h0){
     (*this).f1 = f1;
     (*this).f0 = f0;
     (*this).text = s;
@@ -51,8 +50,8 @@ SGWButton::SGWButton(SGWWidget *parent, const QString &s, void (*attachedFunctio
 void SGWButton::syncQuickProperties(){
     (*topObject).setProperty("f1", f1);
     (*topObject).setProperty("f0", f0);
-    (*topObject).setProperty("s", text);
-    (*topObject).setProperty("f", font);
+    (*topObject).setProperty("s", (*text.data));
+    (*topObject).setProperty("f", (*font.data));
     (*topObject).setProperty("ha", SGWHorizontalAlignment::getQtFlag(horizontalAlignment));
     (*topObject).setProperty("va", SGWVerticalAlignment::getQtFlag(verticalAlignment));
     (*topObject).setProperty("sel", selected);
@@ -84,7 +83,7 @@ void SGWButton::syncQuickProperties(){
     quickInterface = new SGWWidgetQuickInterface(this);
 }
 
-void SGWButton::eventReceived(const QString &s){
+void SGWButton::eventReceived(const SGXString &s){
     if(clickFunction != nullptr && s == "click"){clickFunction(this);}
     else if(pressFunction != nullptr && s == "press"){pressFunction(this);}
     else if(releaseFunction != nullptr && s == "release"){releaseFunction(this);}
@@ -108,12 +107,12 @@ void SGWButton::setF0(float f0){
     (*(*this).topObject).setProperty("f0", (*this).f0);
 }
 
-QString SGWButton::getTextAsString() const {
+SGXString SGWButton::getTextAsString() const {
     return text;
 }
 
 int SGWButton::getTextAsInt(bool *isValid, int minimum, int maximum) const {
-    int x = text.toInt(isValid);
+    int x = text.parseToInt(isValid);
     if(x < minimum || x > maximum){
         x = 0;
         if(isValid != nullptr){(*isValid) = false;}
@@ -122,7 +121,7 @@ int SGWButton::getTextAsInt(bool *isValid, int minimum, int maximum) const {
 }
 
 float SGWButton::getTextAsFloat(bool *isValid, float minimum, float maximum) const {
-    float x = text.toFloat(isValid);
+    float x = text.parseToFloat(isValid);
     if(x < minimum || x > maximum){
         x = 0.0f;
         if(isValid != nullptr){(*isValid) = false;}
@@ -130,28 +129,28 @@ float SGWButton::getTextAsFloat(bool *isValid, float minimum, float maximum) con
     return x;
 }
 
-void SGWButton::setTextFromString(const QString& s){
+void SGWButton::setTextFromString(const SGXString& s){
     (*this).text = s;
-    (*(*this).topObject).setProperty("s", (*this).text);
+    (*(*this).topObject).setProperty("s", (*(*this).text.data));
 }
 
 void SGWButton::setTextFromInt(int x){
-    (*this).text = QString::number(x);
-    (*(*this).topObject).setProperty("s", (*this).text);
+    (*this).text = SGXString::intToString(x);
+    (*(*this).topObject).setProperty("s", (*(*this).text.data));
 }
 
 void SGWButton::setTextFromFloat(float x){
-    (*this).text = QString::number(x);
-    (*(*this).topObject).setProperty("s", (*this).text);
+    (*this).text = SGXString::floatToString(x);
+    (*(*this).topObject).setProperty("s", (*(*this).text.data));
 }
 
-QString SGWButton::getFont() const {
+SGXString SGWButton::getFont() const {
     return font;
 }
 
-void SGWButton::setFont(const QString& font){
+void SGWButton::setFont(const SGXString& font){
     (*this).font = font;
-    (*(*this).topObject).setProperty("f", (*this).font);
+    (*(*this).topObject).setProperty("f", (*(*this).font.data));
 }
 
 SGWHorizontalAlignment::Flag SGWButton::getHorizontalAlignment() const {

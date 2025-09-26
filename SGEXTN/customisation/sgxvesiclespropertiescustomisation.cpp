@@ -2,10 +2,10 @@
 #include "../filesystem/sgxfilesystem.h"
 #include "../filesystem/sgxfile.h"
 #include "../userDefinedClasses/sgucentralmanagement.h"
-#include <QString>
+#include "../primitives/sgxstring.h"
 
 void SGXVesiclesPropertiesCustomisation::loadVesicleProperties(){
-    const QString path = SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "vesicleproperties.sg");
+    const SGXString path = SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "vesicleproperties.sg");
     if(SGXFileSystem::fileExists(path) == false){return;}
     {
         const SGXFile fileReader(path);
@@ -26,7 +26,7 @@ void SGXVesiclesPropertiesCustomisation::loadVesicleProperties(){
 }
 
 void SGXVesiclesPropertiesCustomisation::syncVesicleProperties(){
-    const QString path = SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "vesicleproperties.sg");
+    const SGXString path = SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "vesicleproperties.sg");
     if(SGXFileSystem::fileExists(path) == true){SGXFileSystem::permanentDeleteFile(path);}
     SGXFileSystem::createFile(path);
     {

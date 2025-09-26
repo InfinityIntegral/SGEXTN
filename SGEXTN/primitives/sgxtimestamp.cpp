@@ -1,7 +1,7 @@
 #include "sgxtimestamp.h"
 #include <QDate>
 #include <QTime>
-#include <QString>
+#include "../primitives/sgxstring.h"
 
 const QTimeZone SGXTimeStamp::timezone = QTimeZone("Asia/Singapore");
 const SGXTimeStamp SGXTimeStamp::zero = SGXTimeStamp(0ll);
@@ -25,20 +25,24 @@ QDateTime SGXTimeStamp::getQDateTime() const {
     return SGXTimeStamp::zeroAsQDateTime.addSecs(t);
 }
 
-QString SGXTimeStamp::getString() const {
-    return ("SG" + QString::number(getYear()).rightJustified(2, '0') + " " + QString::number(getMonth()).rightJustified(2, '0') + QString::number(getDay()).rightJustified(2, '0') + " " + QString::number(getHour()).rightJustified(2, '0') + QString::number(getMinute()).rightJustified(2, '0') + QString::number(getSecond()).rightJustified(2, '0'));
+SGXString SGXTimeStamp::getString() const {
+    return (SGXString("SG") + SGXString::intToString(getYear()).fillLeftToLength(2, '0') + " " + SGXString::intToString(getMonth()).fillLeftToLength(2, '0') + SGXString::intToString(getDay()).fillLeftToLength(2, '0') + " " + SGXString::intToString(getHour()).fillLeftToLength(2, '0') + SGXString::intToString(getMinute()).fillLeftToLength(2, '0') + SGXString::intToString(getSecond()).fillLeftToLength(2, '0'));
 }
 
-QString SGXTimeStamp::getStringNoOffset() const {
-    return (QString::number(getYearNoOffset()).rightJustified(4, '0') + " " + QString::number(getMonth()).rightJustified(2, '0') + QString::number(getDay()).rightJustified(2, '0') + " " + QString::number(getHour()).rightJustified(2, '0') + QString::number(getMinute()).rightJustified(2, '0') + QString::number(getSecond()).rightJustified(2, '0'));
+SGXString SGXTimeStamp::getStringNoOffset() const {
+    return (SGXString::intToString(getYearNoOffset()).fillLeftToLength(4, '0') + " " + SGXString::intToString(getMonth()).fillLeftToLength(2, '0') + SGXString::intToString(getDay()).fillLeftToLength(2, '0') + " " + SGXString::intToString(getHour()).fillLeftToLength(2, '0') + SGXString::intToString(getMinute()).fillLeftToLength(2, '0') + SGXString::intToString(getSecond()).fillLeftToLength(2, '0'));
 }
 
-QString SGXTimeStamp::getStringCustomFormat(const QString &s) const {
-    return ("SG" + getQDateTime().addYears(-1965ll).toString(s));
+SGXString SGXTimeStamp::getStringCustomFormat(const SGXString &s) const {
+    SGXString output = "";
+    (*output.data) = ("SG" + getQDateTime().addYears(-1965ll).toString(*s.data));
+    return output;
 }
 
-QString SGXTimeStamp::getStringNoOffsetCustomFormat(const QString &s) const {
-    return getQDateTime().toString(s);
+SGXString SGXTimeStamp::getStringNoOffsetCustomFormat(const SGXString &s) const {
+    SGXString output = "";
+    (*output.data) = getQDateTime().toString(*s.data);
+    return output;
 }
 
 bool SGXTimeStamp::operator==(SGXTimeStamp x) const {
@@ -220,34 +224,34 @@ bool SGXTimeStamp::isNationalDayPeriod() const {
     return false;
 }
 
-QString SGXTimeStamp::getFileName() const {
-    return (QString::number(getYear()).rightJustified(2, '0') + QString::number(getMonth()).rightJustified(2, '0') + QString::number(getDay()).rightJustified(2, '0'));
+SGXString SGXTimeStamp::getFileName() const {
+    return (SGXString::intToString(getYear()).fillLeftToLength(2, '0') + SGXString::intToString(getMonth()).fillLeftToLength(2, '0') + SGXString::intToString(getDay()).fillLeftToLength(2, '0'));
 }
 
-QString SGXTimeStamp::getFileNameNoOffset() const {
-    return (QString::number(getYearNoOffset()).rightJustified(4, '0') + QString::number(getMonth()).rightJustified(2, '0') + QString::number(getDay()).rightJustified(2, '0'));
+SGXString SGXTimeStamp::getFileNameNoOffset() const {
+    return (SGXString::intToString(getYearNoOffset()).fillLeftToLength(4, '0') + SGXString::intToString(getMonth()).fillLeftToLength(2, '0') + SGXString::intToString(getDay()).fillLeftToLength(2, '0'));
 }
 
-QString SGXTimeStamp::getFileNameCorrectToSecond() const {
-    return (QString::number(getYear()).rightJustified(2, '0') + QString::number(getMonth()).rightJustified(2, '0') + QString::number(getDay()).rightJustified(2, '0') + QString::number(getHour()).rightJustified(2, '0') + QString::number(getMinute()).rightJustified(2, '0') + QString::number(getSecond()).rightJustified(2, '0'));
+SGXString SGXTimeStamp::getFileNameCorrectToSecond() const {
+    return (SGXString::intToString(getYear()).fillLeftToLength(2, '0') + SGXString::intToString(getMonth()).fillLeftToLength(2, '0') + SGXString::intToString(getDay()).fillLeftToLength(2, '0') + SGXString::intToString(getHour()).fillLeftToLength(2, '0') + SGXString::intToString(getMinute()).fillLeftToLength(2, '0') + SGXString::intToString(getSecond()).fillLeftToLength(2, '0'));
 }
 
-QString SGXTimeStamp::getFileNameCorrectToSecondNoOffset() const {
-    return (QString::number(getYearNoOffset()).rightJustified(4, '0') + QString::number(getMonth()).rightJustified(2, '0') + QString::number(getDay()).rightJustified(2, '0') + QString::number(getHour()).rightJustified(2, '0') + QString::number(getMinute()).rightJustified(2, '0') + QString::number(getSecond()).rightJustified(2, '0'));
+SGXString SGXTimeStamp::getFileNameCorrectToSecondNoOffset() const {
+    return (SGXString::intToString(getYearNoOffset()).fillLeftToLength(4, '0') + SGXString::intToString(getMonth()).fillLeftToLength(2, '0') + SGXString::intToString(getDay()).fillLeftToLength(2, '0') + SGXString::intToString(getHour()).fillLeftToLength(2, '0') + SGXString::intToString(getMinute()).fillLeftToLength(2, '0') + SGXString::intToString(getSecond()).fillLeftToLength(2, '0'));
 }
 
-QString SGXTimeStamp::getFileNameSeparated(QChar separator) const {
-    return (QString::number(getYear()).rightJustified(2, '0') + separator + QString::number(getMonth()).rightJustified(2, '0') + separator + QString::number(getDay()).rightJustified(2, '0'));
+SGXString SGXTimeStamp::getFileNameSeparated(SGXChar separator) const {
+    return (SGXString::intToString(getYear()).fillLeftToLength(2, '0') + separator + SGXString::intToString(getMonth()).fillLeftToLength(2, '0') + separator + SGXString::intToString(getDay()).fillLeftToLength(2, '0'));
 }
 
-QString SGXTimeStamp::getFileNameNoOffsetSeparated(QChar separator) const {
-    return (QString::number(getYearNoOffset()).rightJustified(4, '0') + separator + QString::number(getMonth()).rightJustified(2, '0') + separator + QString::number(getDay()).rightJustified(2, '0'));
+SGXString SGXTimeStamp::getFileNameNoOffsetSeparated(SGXChar separator) const {
+    return (SGXString::intToString(getYearNoOffset()).fillLeftToLength(4, '0') + separator + SGXString::intToString(getMonth()).fillLeftToLength(2, '0') + separator + SGXString::intToString(getDay()).fillLeftToLength(2, '0'));
 }
 
-QString SGXTimeStamp::getFileNameCorrectToSecondSeparated(QChar separator) const {
-    return (QString::number(getYear()).rightJustified(2, '0') + separator + QString::number(getMonth()).rightJustified(2, '0') + separator + QString::number(getDay()).rightJustified(2, '0') + separator + QString::number(getHour()).rightJustified(2, '0') + separator + QString::number(getMinute()).rightJustified(2, '0') + separator + QString::number(getSecond()).rightJustified(2, '0'));
+SGXString SGXTimeStamp::getFileNameCorrectToSecondSeparated(SGXChar separator) const {
+    return (SGXString::intToString(getYear()).fillLeftToLength(2, '0') + separator + SGXString::intToString(getMonth()).fillLeftToLength(2, '0') + separator + SGXString::intToString(getDay()).fillLeftToLength(2, '0') + separator + SGXString::intToString(getHour()).fillLeftToLength(2, '0') + separator + SGXString::intToString(getMinute()).fillLeftToLength(2, '0') + separator + SGXString::intToString(getSecond()).fillLeftToLength(2, '0'));
 }
 
-QString SGXTimeStamp::getFileNameCorrectToSecondNoOffsetSeparated(QChar separator) const {
-    return (QString::number(getYearNoOffset()).rightJustified(4, '0') + separator + QString::number(getMonth()).rightJustified(2, '0') + separator + QString::number(getDay()).rightJustified(2, '0') + separator + QString::number(getHour()).rightJustified(2, '0') + separator + QString::number(getMinute()).rightJustified(2, '0') + separator + QString::number(getSecond()).rightJustified(2, '0'));
+SGXString SGXTimeStamp::getFileNameCorrectToSecondNoOffsetSeparated(SGXChar separator) const {
+    return (SGXString::intToString(getYearNoOffset()).fillLeftToLength(4, '0') + separator + SGXString::intToString(getMonth()).fillLeftToLength(2, '0') + separator + SGXString::intToString(getDay()).fillLeftToLength(2, '0') + separator + SGXString::intToString(getHour()).fillLeftToLength(2, '0') + separator + SGXString::intToString(getMinute()).fillLeftToLength(2, '0') + separator + SGXString::intToString(getSecond()).fillLeftToLength(2, '0'));
 }

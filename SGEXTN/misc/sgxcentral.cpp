@@ -29,7 +29,9 @@
 #include <QQmlApplicationEngine>
 
 void SGXCentral::initialise(){
-    SGXFileSystem::rootFilePath = SGXFileSystem::joinFilePaths(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation), SGUCentralManagement::rootFolderName);
+    SGXString standardPath = "";
+    (*standardPath.data) = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+    SGXFileSystem::rootFilePath = SGXFileSystem::joinFilePaths(standardPath, SGUCentralManagement::rootFolderName);
     SGXFileSystem::userDataFilePath = SGXFileSystem::joinFilePaths(SGXFileSystem::rootFilePath, "yourdata");
     SGXFileSystem::configFilePath = SGXFileSystem::joinFilePaths(SGXFileSystem::rootFilePath, "settings");
     SGXFileBinUtilities::binFilePath = SGXFileSystem::joinFilePaths(SGXFileSystem::rootFilePath, "recyclebin");
@@ -39,9 +41,9 @@ void SGXCentral::initialise(){
 
     SGUCentralManagement::earlyInitialise();
 
-    QCoreApplication::setApplicationName(SGUCentralManagement::applicationName);
-    QCoreApplication::setApplicationVersion(SGUCentralManagement::applicationVersion);
-    QCoreApplication::setOrganizationName(SGUCentralManagement::organisationName);
+    QCoreApplication::setApplicationName(*SGUCentralManagement::applicationName.data);
+    QCoreApplication::setApplicationVersion(*SGUCentralManagement::applicationVersion.data);
+    QCoreApplication::setOrganizationName(*SGUCentralManagement::organisationName.data);
     const QIcon temp_appicon(":/SGEXTN/assets/appicon.png");
     QGuiApplication::setWindowIcon(temp_appicon);
 

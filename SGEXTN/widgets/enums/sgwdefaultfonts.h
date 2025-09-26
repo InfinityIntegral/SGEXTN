@@ -1,14 +1,14 @@
 #ifndef SGWDEFAULTFONTS_H
 #define SGWDEFAULTFONTS_H
 
-#include <QString>
+#include "../../primitives/sgxstring.h"
 
 class SGWDefaultFonts
 {
 public:
     SGWDefaultFonts() = delete;
-    static QString textFont;
-    static QString iconsFont;
+    static SGXString textFont;
+    static SGXString iconsFont;
 };
 
 #endif // SGWDEFAULTFONTS_H

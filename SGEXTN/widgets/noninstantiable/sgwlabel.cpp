@@ -1,6 +1,6 @@
 #include "sgwlabel.h"
 #include "../../quickui/sgxquickinterface.h"
-#include <QString>
+#include "../../primitives/sgxstring.h"
 #include "sgwwidget.h"
 #include "../../primitives/sgxcolourrgba.h"
 #include "../enums/sgwhorizontalalignment.h"
@@ -8,7 +8,7 @@
 #include "../../bypassquickui/sgxthemecolours.h"
 #include <QQuickItem>
 
-SGWLabel::SGWLabel(SGWWidget *parent, const QString &s, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float f1, float f0, SGWHorizontalAlignment::Flag horizontalAlignment, SGWVerticalAlignment::Flag verticalAlignment, const QString &font) : SGWWidget(parent, x1, x0, y1, y0, w1, w0, h1, h0){
+SGWLabel::SGWLabel(SGWWidget *parent, const SGXString &s, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float f1, float f0, SGWHorizontalAlignment::Flag horizontalAlignment, SGWVerticalAlignment::Flag verticalAlignment, const SGXString &font) : SGWWidget(parent, x1, x0, y1, y0, w1, w0, h1, h0){
     (*this).f1 = f1;
     (*this).f0 = f0;
     (*this).text = s;
@@ -25,8 +25,8 @@ SGWLabel::SGWLabel(SGWWidget *parent, const QString &s, float x1, float x0, floa
 void SGWLabel::syncQuickProperties(){
     (*topObject).setProperty("f1", f1);
     (*topObject).setProperty("f0", f0);
-    (*topObject).setProperty("s", text);
-    (*topObject).setProperty("f", font);
+    (*topObject).setProperty("s", (*text.data));
+    (*topObject).setProperty("f", (*font.data));
     (*topObject).setProperty("ha", SGWHorizontalAlignment::getQtFlag(horizontalAlignment));
     (*topObject).setProperty("va", SGWVerticalAlignment::getQtFlag(verticalAlignment));
     (*topObject).setProperty("utc", usingTheme);
@@ -54,12 +54,12 @@ void SGWLabel::setF0(float f0){
     (*(*this).topObject).setProperty("f0", (*this).f0);
 }
 
-QString SGWLabel::getTextAsString() const {
+SGXString SGWLabel::getTextAsString() const {
     return text;
 }
 
 int SGWLabel::getTextAsInt(bool *isValid, int minimum, int maximum) const {
-    int x = text.toInt(isValid);
+    int x = text.parseToInt(isValid);
     if(x < minimum || x > maximum){
         x = 0;
         if(isValid != nullptr){(*isValid) = false;}
@@ -68,7 +68,7 @@ int SGWLabel::getTextAsInt(bool *isValid, int minimum, int maximum) const {
 }
 
 float SGWLabel::getTextAsFloat(bool *isValid, float minimum, float maximum) const {
-    float x = text.toFloat(isValid);
+    float x = text.parseToFloat(isValid);
     if(x < minimum || x > maximum){
         x = 0.0f;
         if(isValid != nullptr){(*isValid) = false;}
@@ -76,28 +76,28 @@ float SGWLabel::getTextAsFloat(bool *isValid, float minimum, float maximum) cons
     return x;
 }
 
-void SGWLabel::setTextFromString(const QString& text){
+void SGWLabel::setTextFromString(const SGXString& text){
     (*this).text = text;
-    (*(*this).topObject).setProperty("s", (*this).text);
+    (*(*this).topObject).setProperty("s", (*(*this).text.data));
 }
 
 void SGWLabel::setTextFromInt(int x){
-    (*this).text = QString::number(x);
-    (*(*this).topObject).setProperty("s", (*this).text);
+    (*this).text = SGXString::intToString(x);
+    (*(*this).topObject).setProperty("s", (*(*this).text.data));
 }
 
 void SGWLabel::setTextFromFloat(float x){
-    (*this).text = QString::number(x);
-    (*(*this).topObject).setProperty("s", (*this).text);
+    (*this).text = SGXString::floatToString(x);
+    (*(*this).topObject).setProperty("s", (*(*this).text.data));
 }
 
-QString SGWLabel::getFont() const {
+SGXString SGWLabel::getFont() const {
     return font;
 }
 
-void SGWLabel::setFont(const QString& font){
+void SGWLabel::setFont(const SGXString& font){
     (*this).font = font;
-    (*(*this).topObject).setProperty("f", (*this).font);
+    (*(*this).topObject).setProperty("f", (*(*this).font.data));
 }
 
 SGWHorizontalAlignment::Flag SGWLabel::getHorizontalAlignment() const {

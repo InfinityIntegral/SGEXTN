@@ -3,16 +3,16 @@
 
 class QObject;
 class QQmlComponent;
-class QString;
+class SGXString;
 class SGXFileUploader
 {
 public:
     SGXFileUploader() = delete;
     static QQmlComponent* fileUploadTemplate;
     static QObject* fileUploadInstance;
-    static void uploadFile(void (*attachedFunction)(const QString&));
+    static void uploadFile(void (*attachedFunction)(const SGXString&));
     static void checkUploadedFile();
-    static void (*fileAcceptor)(const QString&);
+    static void (*fileAcceptor)(const SGXString&);
 };
 
 #endif // SGXFILEUPLOADER_H

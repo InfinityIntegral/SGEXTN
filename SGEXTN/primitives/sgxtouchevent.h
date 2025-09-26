@@ -1,7 +1,6 @@
 #ifndef SGXTOUCHEVENT_H
 #define SGXTOUCHEVENT_H
 
-#include <QString>
 #include <array>
 
 class SGXTouchEvent

@@ -2,7 +2,7 @@
 #include "sgxfilesystem.h"
 #include <QQmlComponent>
 #include <QObject>
-#include <QString>
+#include "../primitives/sgxstring.h"
 #include <QMetaObject>
 #include <QUrl>
 #include "sgxfile.h"
@@ -11,9 +11,9 @@
 
 QQmlComponent* SGXFileDownloader::fileDownloadTemplate = nullptr;
 QObject* SGXFileDownloader::fileDownloadInstance = nullptr;
-QString SGXFileDownloader::sourcePath = "";
+SGXString SGXFileDownloader::sourcePath = "";
 
-void SGXFileDownloader::downloadFile(const QString &s){
+void SGXFileDownloader::downloadFile(const SGXString &s){
     if(SGXFileSystem::fileExists(s) == false){return;}
     if(SGXFileDownloader::fileDownloadTemplate == nullptr){SGXFileDownloader::fileDownloadTemplate = new QQmlComponent(SGXQuickInterface::e, ":/SGEXTN/QML/filedownload.qml");}
     SGXFileDownloader::fileDownloadInstance = (*SGXFileDownloader::fileDownloadTemplate).create();
@@ -23,9 +23,10 @@ void SGXFileDownloader::downloadFile(const QString &s){
 }
 
 void SGXFileDownloader::checkDownloadedFile(){
-    QString urlPath = (*SGXFileDownloader::fileDownloadInstance).property("selectedFilePath").toString();
+    SGXString urlPath = "";
+    (*urlPath.data) = (*SGXFileDownloader::fileDownloadInstance).property("selectedFilePath").toString();
     if(urlPath != ""){
-        urlPath = QUrl(urlPath).toLocalFile();
+        (*urlPath.data) = QUrl(*urlPath.data).toLocalFile();
         {
             const SGXFile fileReader(sourcePath);
             const SGXFile fileWriter(urlPath);

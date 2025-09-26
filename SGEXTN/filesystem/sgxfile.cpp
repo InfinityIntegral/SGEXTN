@@ -12,11 +12,12 @@
 #include <string>
 #include <qnamespace.h>
 #include "sgxfilesystem.h"
+#include "../primitives/sgxstring.h"
 
-SGXFile::SGXFile(const QString &s){
+SGXFile::SGXFile(const SGXString &s){
     if(SGXFileSystem::fileExists(s) == false){isValid = false;}
     else{
-        fileControl = new QFile(s);
+        fileControl = new QFile((*s.data));
         isValid = (*fileControl).open(QIODevice::ReadWrite);
         if(isValid == true){
             fileData = new QDataStream(fileControl);
@@ -25,16 +26,6 @@ SGXFile::SGXFile(const QString &s){
             (*fileData).setFloatingPointPrecision(QDataStream::SinglePrecision);
         }
     }
-}
-
-SGXFile::SGXFile(const QString &s, bool /*unused*/){
-    isValid = false;
-    fileControl = new QFile(s);
-    (*fileControl).open(QIODevice::ReadWrite);
-    fileData = new QDataStream(fileControl);
-    (*fileData).setByteOrder(QDataStream::LittleEndian);
-    (*fileData).setVersion(QDataStream::Qt_6_9);
-    (*fileData).setFloatingPointPrecision(QDataStream::SinglePrecision);
 }
 
 SGXFile::~SGXFile(){
@@ -105,12 +96,14 @@ std::string SGXFile::readCppString() const {
     return std::string(byteSequence.constData(), byteSequence.size());
 }
 
-QString SGXFile::readString() const {
+SGXString SGXFile::readString() const {
     int x = 0;
     (*(*this).fileData) >> x;
     QByteArray byteSequence(x, Qt::Uninitialized);
     (*(*this).fileData).readRawData(byteSequence.data(), x);
-    return QString::fromUtf8(byteSequence);
+    SGXString output = "";
+    (*output.data) = QString::fromUtf8(byteSequence);
+    return output;
 }
 
 SGXColourRGBA SGXFile::readColourRGBA() const {
@@ -175,8 +168,8 @@ void SGXFile::writeCppString(const std::string &x) const {
     (*(*this).fileData).writeRawData(byteSequence.constData(), static_cast<int>(byteSequence.length()));
 }
 
-void SGXFile::writeString(const QString &x) const {
-    const QByteArray byteSequence = x.toUtf8();
+void SGXFile::writeString(const SGXString &x) const {
+    const QByteArray byteSequence = (*x.data).toUtf8();
     (*(*this).fileData) << static_cast<int>(byteSequence.length());
     (*(*this).fileData).writeRawData(byteSequence.constData(), static_cast<int>(byteSequence.length()));
 }

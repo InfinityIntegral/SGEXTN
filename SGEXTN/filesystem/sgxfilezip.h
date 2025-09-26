@@ -8,11 +8,11 @@ class SGXFileZip
 {
 public:
     SGXFileZip() = delete;
-    static int makeZip(const QString& path, const QString& zipLocation);
-    static int makeZip(const QVector<QString>& list, const QString& zipLocation);
-    static int unpackZip(const QString& zipLocation, const QString& path);
-    static int unpackSingleFileFromZip(const QString& fileName, const QString& zipLocation, const QString& path);
-    static QVector<std::tuple<QString, long long>> getContentsListFromZip(const QString& zipLocation);
+    static int makeZip(const SGXString& path, const SGXString& zipLocation);
+    static int makeZip(const QVector<SGXString>& list, const SGXString& zipLocation);
+    static int unpackZip(const SGXString& zipLocation, const SGXString& path);
+    static int unpackSingleFileFromZip(const SGXString& fileName, const SGXString& zipLocation, const SGXString& path);
+    static QVector<std::tuple<SGXString, long long>> getContentsListFromZip(const SGXString& zipLocation);
 };
 
 #endif // SGXFILEZIP_H

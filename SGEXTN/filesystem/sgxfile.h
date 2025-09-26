@@ -9,13 +9,13 @@
 #include "../primitives/sgxchar.h"
 #include <string>
 #include <QByteArray>
+#include "../primitives/sgxstring.h"
 
 class QFile;
 class SGXFile
 {
 public:
-    SGXFile(const QString& s);
-    SGXFile(const QString &s, bool /*unused*/);
+    SGXFile(const SGXString& s);
     SGXFile(const SGXFile&) = delete;
     SGXFile(const SGXFile&&) = delete;
     SGXFile& operator=(const SGXFile&) = delete;
@@ -34,7 +34,7 @@ public:
     [[nodiscard]] float readFloat() const;
     [[nodiscard]] double readDouble() const;
     [[nodiscard]] std::string readCppString() const;
-    [[nodiscard]] QString readString() const;
+    [[nodiscard]] SGXString readString() const;
     [[nodiscard]] SGXColourRGBA readColourRGBA() const;
     [[nodiscard]] SGXColourHSLA readColourHSLA() const;
     [[nodiscard]] SGXTimeStamp readTimeStamp() const;
@@ -50,7 +50,7 @@ public:
     void writeFloat(float x) const;
     void writeDouble(double x) const;
     void writeCppString(const std::string& x) const;
-    void writeString(const QString& x) const;
+    void writeString(const SGXString& x) const;
     void writeColourRGBA(SGXColourRGBA x) const;
     void writeColourHSLA(SGXColourHSLA x) const;
     void writeTimeStamp(SGXTimeStamp x) const;

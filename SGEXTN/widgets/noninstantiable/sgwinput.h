@@ -5,7 +5,7 @@
 #include "../enums/sgwhorizontalalignment.h"
 #include "../enums/sgwverticalalignment.h"
 #include "../../primitives/sgxcolourrgba.h"
-#include <QString>
+#include "../../primitives/sgxstring.h"
 
 class SGWWidgetQuickInterface;
 class SGWInput : public SGWWidget
@@ -22,14 +22,14 @@ public:
     void setF1(float f1);
     [[nodiscard]] float getF0() const;
     void setF0(float f0);
-    [[nodiscard]] QString getTextAsString() const;
+    [[nodiscard]] SGXString getTextAsString() const;
     [[nodiscard]] int getTextAsInt(bool* isValid, int minimum, int maximum) const;
     [[nodiscard]] float getTextAsFloat(bool* isValid, float minimum, float maximum) const;
-    void setTextFromString(const QString& s);
+    void setTextFromString(const SGXString& s);
     void setTextFromInt(int x);
     void setTextFromFloat(float x);
-    [[nodiscard]] QString getFont() const;
-    void setFont(const QString& font);
+    [[nodiscard]] SGXString getFont() const;
+    void setFont(const SGXString& font);
     [[nodiscard]] SGWHorizontalAlignment::Flag getHorizontalAlignment() const;
     void setHorizontalAlignment(SGWHorizontalAlignment::Flag alignment);
     [[nodiscard]] SGWVerticalAlignment::Flag getVerticalAlignment() const;
@@ -82,13 +82,13 @@ public:
     void setForegroundHoverInvalidThemeColour(int themeColour);
     [[nodiscard]] SGXColourRGBA getForegroundHoverInvalidColour(bool* isUsing) const;
     void setForegroundHoverInvalidColour(SGXColourRGBA colour);
-    void eventReceived(const QString& s);
+    void eventReceived(const SGXString& s);
 protected:
     SGWInput(SGWWidget* parent, void (*validationFunction)(SGWInput*), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float f1, float f0, SGWHorizontalAlignment::Flag horizontalAlignment, SGWVerticalAlignment::Flag verticalAlignment);
     float f1;
     float f0;
-    QString text;
-    QString font;
+    SGXString text;
+    SGXString font;
     SGWHorizontalAlignment::Flag horizontalAlignment;
     SGWVerticalAlignment::Flag verticalAlignment;
     void (*textChangedFunction)(SGWInput*);
