@@ -45,6 +45,8 @@ public:
     static QVector<QString> getFilesListWithExtensionRecursive(const QString& s, const QString& ext);
     static QVector<QString> getFilesListContainingName(const QString& s, const QString& name);
     static QVector<QString> getFilesListContainingNameRecursive(const QString& s, const QString& name);
+    static bool numberAwareLesserThan(const QString& s1, const QString& s2);
+    static bool numberAwareLesserThanBase16(const QString& s1, const QString& s2);
 };
 
 #endif // SGXFILESYSTEM_H

@@ -9,6 +9,7 @@ SGXFile: added error checking for when file fail to open due to file system erro
 SGXTimeStamp: added file name generation
 SGXTimeStamp: made adding and subtracting time exact
 SGXTimeStamp: made time difference calculation exact
+SGXFileSystem: added number aware comparison
 
 Added:
 (none)

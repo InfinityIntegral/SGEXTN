@@ -422,3 +422,77 @@ QVector<QString> SGXFileSystem::getFilesListContainingNameRecursive(const QStrin
     }
     return finalList;
 }
+
+bool SGXFileSystem::numberAwareLesserThan(const QString &s1, const QString &s2){
+    if(s1[s1.length()-1] < '0' || s1[s1.length()-1] > '9' || s2[s2.length()-1] < '0' || s2[s2.length()-1] > '9'){return (s1 < s2);}
+    int s1Number = -1;
+    QString s1CleanedName = s1;
+    {
+        QString reversedNumber = "";
+        for(int i=static_cast<int>(s1.length())-1; i>=0; i--){
+            if(s1[i] >= '0' && s1[i] <= '9'){reversedNumber += s1[i];}
+            else{break;}
+        }
+        QString correctNumber = "";
+        for(int i=static_cast<int>(reversedNumber.length())-1; i>=0; i--){
+            correctNumber += reversedNumber[i];
+        }
+        s1Number = correctNumber.toInt();
+        s1CleanedName = s1.left(s1.length() - correctNumber.length());
+    }
+    int s2Number = -1;
+    QString s2CleanedName = s2;
+    {
+        QString reversedNumber = "";
+        for(int i=static_cast<int>(s2.length())-1; i>=0; i--){
+            if(s2[i] >= '0' && s2[i] <= '9'){reversedNumber += s2[i];}
+            else{break;}
+        }
+        QString correctNumber = "";
+        for(int i=static_cast<int>(reversedNumber.length())-1; i>=0; i--){
+            correctNumber += reversedNumber[i];
+        }
+        s2Number = correctNumber.toInt();
+        s2CleanedName = s2.left(s2.length() - correctNumber.length());
+    }
+    if(s1CleanedName != s2CleanedName){return (s1CleanedName < s2CleanedName);}
+    return (s1Number < s2Number);
+}
+
+bool SGXFileSystem::numberAwareLesserThanBase16(const QString &s1, const QString &s2){
+    QChar c1 = s1[s1.length()-1];
+    QChar c2 = s2[s2.length()-1];
+    if(((c1 < '0' || c1 > '9') && (c1 < 'a' || c1 > 'f') && (c1 < 'A' || c1 > 'F')) || ((c2 < '0' || c2 > '9') && (c2 < 'a' || c2 > 'f') && (c2 < 'A' || c2 > 'F'))){return (s1 < s2);}
+    int s1Number = -1;
+    QString s1CleanedName = s1;
+    {
+        QString reversedNumber = "";
+        for(int i=static_cast<int>(s1.length())-1; i>=0; i--){
+            if((s1[i] >= '0' && s1[i] <= '9') || (s1[i] >= 'a' && s1[i] <= 'f') || (s1[i] >= 'A' && s1[i] <= 'F')){reversedNumber += s1[i];}
+            else{break;}
+        }
+        QString correctNumber = "";
+        for(int i=static_cast<int>(reversedNumber.length())-1; i>=0; i--){
+            correctNumber += reversedNumber[i];
+        }
+        s1Number = correctNumber.toInt(nullptr, 16);
+        s1CleanedName = s1.left(s1.length() - correctNumber.length());
+    }
+    int s2Number = -1;
+    QString s2CleanedName = s2;
+    {
+        QString reversedNumber = "";
+        for(int i=static_cast<int>(s2.length())-1; i>=0; i--){
+            if((s2[i] >= '0' && s2[i] <= '9') || (s2[i] >= 'a' && s2[i] <= 'f') || (s2[i] >= 'A' && s2[i] <= 'F')){reversedNumber += s2[i];}
+            else{break;}
+        }
+        QString correctNumber = "";
+        for(int i=static_cast<int>(reversedNumber.length())-1; i>=0; i--){
+            correctNumber += reversedNumber[i];
+        }
+        s2Number = correctNumber.toInt(nullptr, 16);
+        s2CleanedName = s2.left(s2.length() - correctNumber.length());
+    }
+    if(s1CleanedName != s2CleanedName){return (s1CleanedName < s2CleanedName);}
+    return (s1Number < s2Number);
+}
