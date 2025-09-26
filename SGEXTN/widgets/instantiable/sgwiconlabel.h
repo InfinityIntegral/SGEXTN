@@ -2,17 +2,17 @@
 #define SGWICONLABEL_H
 
 #include "../noninstantiable/sgwlabel.h"
-#include <QChar>
+#include "../../primitives/sgxchar.h"
 
 class SGWWidget;
 class SGWIconLabel : public SGWLabel
 {
 public:
-    SGWIconLabel(SGWWidget* parent, QChar s, float x1, float x0, float y1, float y0, float w1, float w0);
-    [[nodiscard]] QChar getChar() const;
-    void setChar(QChar c);
+    SGWIconLabel(SGWWidget* parent, SGXChar s, float x1, float x0, float y1, float y0, float w1, float w0);
+    [[nodiscard]] SGXChar getChar() const;
+    void setChar(SGXChar c);
 protected:
-    QChar textChar;
+    SGXChar textChar;
 };
 
 #endif // SGWICONLABEL_H

@@ -2,17 +2,17 @@
 #define SGWICONBUTTON_H
 
 #include "../noninstantiable/sgwbutton.h"
-#include <QChar>
+#include "../../primitives/sgxchar.h"
 
 class SGWWidget;
 class SGWIconButton : public SGWButton
 {
 public:
-    SGWIconButton(SGWWidget* parent, QChar s, void (*attachedFunction)(SGWButton*), float x1, float x0, float y1, float y0, float w1, float w0);
-    [[nodiscard]] QChar getChar() const;
-    void setChar(QChar c);
+    SGWIconButton(SGWWidget* parent, SGXChar s, void (*attachedFunction)(SGWButton*), float x1, float x0, float y1, float y0, float w1, float w0);
+    [[nodiscard]] SGXChar getChar() const;
+    void setChar(SGXChar c);
 protected:
-    QChar textChar;
+    SGXChar textChar;
 };
 
 #endif // SGWICONBUTTON_H

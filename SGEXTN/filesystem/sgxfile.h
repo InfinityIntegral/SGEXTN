@@ -6,7 +6,7 @@
 #include "../primitives/sgxidentifier.h"
 #include "../primitives/sgxtimestamp.h"
 #include "../primitives/sgxvector2.h"
-#include <QChar>
+#include "../primitives/sgxchar.h"
 #include <string>
 #include <QByteArray>
 
@@ -26,7 +26,7 @@ public:
     bool isValid;
     [[nodiscard]] bool readBool() const;
     [[nodiscard]] char readChar() const;
-    [[nodiscard]] QChar readQChar() const;
+    [[nodiscard]] SGXChar readSGEXTNChar() const;
     [[nodiscard]] int readInt() const;
     [[nodiscard]] unsigned int readUnsignedInt() const;
     [[nodiscard]] long long readLongLong() const;
@@ -42,7 +42,7 @@ public:
     [[nodiscard]] SGXVector2 readVector2() const;
     void writeBool(bool x) const;
     void writeChar(char x) const;
-    void writeQChar(QChar x) const;
+    void writeSGEXTNChar(SGXChar x) const;
     void writeInt(int x) const;
     void writeUnsignedInt(unsigned int x) const;
     void writeLongLong(long long x) const;

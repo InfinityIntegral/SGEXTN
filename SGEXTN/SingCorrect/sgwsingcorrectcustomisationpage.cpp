@@ -19,6 +19,7 @@
 #include "../widgets/noninstantiable/sgwinput.h"
 #include "../widgets/noninstantiable/sgwlabel.h"
 #include "../notifications/sgwnotify.h"
+#include "../primitives/sgxchar.h"
 
 SGWBackground* SGWSingCorrectCustomisationPage::instance = nullptr;
 SGWButton* SGWSingCorrectCustomisationPage::enableButton = nullptr;
@@ -173,7 +174,7 @@ void SGWSingCorrectCustomisationPage::addCustomCommand(SGWButton */*unused*/){
         SGWNotify::pullDownNotify("invalid command");
         return;
     }
-    (*SGXSingCorrectCustomisation::database).insert(s, c.at(0));
+    (*SGXSingCorrectCustomisation::database).insert(s, SGXChar(c.at(0).unicode()));
     (*SGWSingCorrectCustomisationPage::customCharInput).setTextFromString("");
     (*SGWSingCorrectCustomisationPage::customCommandInput).setTextFromString("");
     (*SGWSingCorrectCustomisationPage::customCharInput).setInvalid(false);
@@ -190,9 +191,9 @@ void SGWSingCorrectCustomisationPage::refreshList(){
     for(int i=0; i<c.length(); i++){
         delete c.at(i);
     }
-    for(QHash<QString, QChar>::iterator i = (*SGXSingCorrectCustomisation::database).begin(); i != (*SGXSingCorrectCustomisation::database).end(); i++){
+    for(QHash<QString, SGXChar>::iterator i = (*SGXSingCorrectCustomisation::database).begin(); i != (*SGXSingCorrectCustomisation::database).end(); i++){
         SGWWidget* x = new SGWBlankWidget(SGWSingCorrectCustomisationPage::listParent, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 8);
-        new SGWTextLabel(x, QString(i.value()), 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 2.0f, 0.0f, 1.0f, SGWHorizontalAlignment::Center, false);
+        new SGWTextLabel(x, QString(QChar(i.value().data)), 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 2.0f, 0.0f, 1.0f, SGWHorizontalAlignment::Center, false);
         new SGWTextLabel(x, i.key(), 0.0f, 2.0f, 0.0f, 0.0f, 1.0f, -3.0f, 0.0f, 1.0f, SGWHorizontalAlignment::Left, false);
         SGWButton* b = new SGWTextButton(x, "x", &SGWSingCorrectCustomisationPage::deleteCommand, 1.0f, -1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f);
         (*SGWSingCorrectCustomisationPage::buttonsList).insert(b, i.key());

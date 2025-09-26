@@ -9,6 +9,7 @@
 #include <QQueue>
 #include <qcontainerfwd.h>
 #include "../primitives/sgxtimestamp.h"
+#include "../primitives/sgxchar.h"
 
 QString SGXFileSystem::rootFilePath = "";
 QString SGXFileSystem::userDataFilePath = "";
@@ -460,8 +461,8 @@ bool SGXFileSystem::numberAwareLesserThan(const QString &s1, const QString &s2){
 }
 
 bool SGXFileSystem::numberAwareLesserThanBase16(const QString &s1, const QString &s2){
-    QChar c1 = s1.at(s1.length()-1);
-    QChar c2 = s2.at(s2.length()-1);
+    SGXChar c1 = SGXChar(s1.at(s1.length()-1).unicode());
+    SGXChar c2 = SGXChar(s2.at(s2.length()-1).unicode());
     if(((c1 < '0' || c1 > '9') && (c1 < 'a' || c1 > 'f') && (c1 < 'A' || c1 > 'F')) || ((c2 < '0' || c2 > '9') && (c2 < 'a' || c2 > 'f') && (c2 < 'A' || c2 > 'F'))){return (s1 < s2);}
     int s1Number = -1;
     QString s1CleanedName = s1;

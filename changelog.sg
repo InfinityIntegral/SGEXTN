@@ -10,9 +10,10 @@ SGXTimeStamp: added file name generation
 SGXTimeStamp: made adding and subtracting time exact
 SGXTimeStamp: made time difference calculation exact
 SGXFileSystem: added number aware comparison
+SGXChar: added class to replace QChar
 
 Added:
-(none)
+- SGXChar
 
 Improved:
 - SGXFileSystem

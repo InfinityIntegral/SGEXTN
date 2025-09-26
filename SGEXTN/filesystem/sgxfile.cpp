@@ -8,7 +8,7 @@
 #include "../primitives/sgxidentifier.h"
 #include "../primitives/sgxtimestamp.h"
 #include "../primitives/sgxvector2.h"
-#include <QChar>
+#include "../primitives/sgxchar.h"
 #include <string>
 #include <qnamespace.h>
 #include "sgxfilesystem.h"
@@ -55,10 +55,10 @@ char SGXFile::readChar() const {
     return x;
 }
 
-QChar SGXFile::readQChar() const {
-    QChar x = '\0';
+SGXChar SGXFile::readSGEXTNChar() const {
+    unsigned short x;
     (*(*this).fileData) >> x;
-    return x;
+    return SGXChar(x);
 }
 
 int SGXFile::readInt() const {
@@ -141,8 +141,8 @@ void SGXFile::writeChar(char x) const {
     (*(*this).fileData) << x;
 }
 
-void SGXFile::writeQChar(QChar x) const {
-    (*(*this).fileData) << x;
+void SGXFile::writeSGEXTNChar(SGXChar x) const {
+    (*(*this).fileData) << x.data;
 }
 
 void SGXFile::writeInt(int x) const {

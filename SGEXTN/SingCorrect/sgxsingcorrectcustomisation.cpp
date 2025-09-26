@@ -3,16 +3,16 @@
 #include "../filesystem/sgxfile.h"
 #include <QHash>
 #include <QString>
-#include <QChar>
+#include "../primitives/sgxchar.h"
 #include "sgxsingcorrectcore.h"
 
-QHash<QString, QChar>* SGXSingCorrectCustomisation::database = nullptr;
+QHash<QString, SGXChar>* SGXSingCorrectCustomisation::database = nullptr;
 bool SGXSingCorrectCustomisation::moduleEnabled = true;
 
 void SGXSingCorrectCustomisation::loadFileData(){
     const QString path = SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "correctionconfigs.sg");
     delete SGXSingCorrectCustomisation::database;
-    SGXSingCorrectCustomisation::database = new QHash<QString, QChar>();
+    SGXSingCorrectCustomisation::database = new QHash<QString, SGXChar>();
     if(SGXFileSystem::fileExists(path) == false){return;}
     {
         const SGXFile fileReader = SGXFile(path);
@@ -21,7 +21,7 @@ void SGXSingCorrectCustomisation::loadFileData(){
         const int n = fileReader.readInt();
         for(int i=0; i<n; i++){
             const QString k = fileReader.readString();
-            const QChar v = fileReader.readQChar();
+            const SGXChar v = fileReader.readSGEXTNChar();
             (*SGXSingCorrectCustomisation::database).insert(k, v);
         }
     }
@@ -37,9 +37,9 @@ void SGXSingCorrectCustomisation::syncFileData(){
         fileWriter.writeString(SGXSingCorrectCore::correctionPrefix);
         if(SGXSingCorrectCustomisation::database != nullptr){
             fileWriter.writeInt(static_cast<int>((*SGXSingCorrectCustomisation::database).size()));
-            for(QHash<QString, QChar>::iterator i = (*SGXSingCorrectCustomisation::database).begin(); i != (*SGXSingCorrectCustomisation::database).end(); i++){
+            for(QHash<QString, SGXChar>::iterator i = (*SGXSingCorrectCustomisation::database).begin(); i != (*SGXSingCorrectCustomisation::database).end(); i++){
                 fileWriter.writeString(i.key());
-                fileWriter.writeQChar(i.value());
+                fileWriter.writeSGEXTNChar(i.value());
             }
         }
         else{fileWriter.writeInt(0);}
