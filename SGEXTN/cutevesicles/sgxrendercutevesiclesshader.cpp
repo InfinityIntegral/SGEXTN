@@ -51,7 +51,7 @@ bool SGXRenderCuteVesiclesShader::updateUniformData(RenderState &state, QSGMater
             offsetRadius = (*mat).radius.at(i) + (*mat).radiusOffset.at(i).at(j) * (*mat).radius.at(i);
             memcpy(ubspan.data() + static_cast<ptrdiff_t>(288 + 144 * i + 16 * j), &offsetRadius, 4);
         }
-        offsetRadius = (*mat).radius.at(i) + (*mat).radiusOffset.at(i)[0] * (*mat).radius.at(i);
+        offsetRadius = (*mat).radius.at(i) + (*mat).radiusOffset.at(i).at(0) * (*mat).radius.at(i);
         memcpy(ubspan.data() + static_cast<ptrdiff_t>(416 + 144 * i), &offsetRadius, 4);
     }
     return true;

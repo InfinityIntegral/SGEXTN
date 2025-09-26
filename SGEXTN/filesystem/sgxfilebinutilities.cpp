@@ -77,9 +77,9 @@ int SGXFileBinUtilities::deleteFolder(const QString &s){
         const SGXIdentifier id = SGXIdentifier(true);
         const SGXTimeStamp t = SGXTimeStamp::now();
         const QString endPath = SGXFileSystem::joinFilePaths(SGXFileBinUtilities::binFilePath, id.getStringForPrinting() + ".sg");
-        if(QFile(f[i].absoluteFilePath()).rename(endPath) == false){return -2;}
+        if(QFile(f.at(i).absoluteFilePath()).rename(endPath) == false){return -2;}
         static_cast<void>(id.registerIdentifier());
-        (*SGXFileBinUtilities::deletedFiles).insert(id, std::tuple<QString, SGXTimeStamp>(f[i].absoluteFilePath(), t));
+        (*SGXFileBinUtilities::deletedFiles).insert(id, std::tuple<QString, SGXTimeStamp>(f.at(i).absoluteFilePath(), t));
     }
     QDir(s).removeRecursively();
     SGXFileBinUtilities::syncMetadata();

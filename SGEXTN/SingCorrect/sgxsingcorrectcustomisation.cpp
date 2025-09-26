@@ -21,7 +21,7 @@ void SGXSingCorrectCustomisation::loadFileData(){
         const int n = fileReader.readInt();
         for(int i=0; i<n; i++){
             const QString k = fileReader.readString();
-            const QChar v = fileReader.readString()[0];
+            const QChar v = fileReader.readQChar();
             (*SGXSingCorrectCustomisation::database).insert(k, v);
         }
     }
@@ -39,7 +39,7 @@ void SGXSingCorrectCustomisation::syncFileData(){
             fileWriter.writeInt(static_cast<int>((*SGXSingCorrectCustomisation::database).size()));
             for(QHash<QString, QChar>::iterator i = (*SGXSingCorrectCustomisation::database).begin(); i != (*SGXSingCorrectCustomisation::database).end(); i++){
                 fileWriter.writeString(i.key());
-                fileWriter.writeString(QString(i.value()));
+                fileWriter.writeQChar(i.value());
             }
         }
         else{fileWriter.writeInt(0);}

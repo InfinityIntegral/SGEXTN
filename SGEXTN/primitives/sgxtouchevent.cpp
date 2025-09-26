@@ -3,22 +3,22 @@
 #include <array>
 
 SGXTouchEvent::SGXTouchEvent(int n, const std::array<float, 11> &data){
-    // [x, y, px, py, sx, sy, vx, vy, rx, ry, f]
+    // x, y, px, py, sx, sy, vx, vy, rx, ry, f
     id = n;
-    x = data[0];
-    y = data[1];
-    if(data[0] == data[4] && data[1] == data[5]){phase = SGXTouchEvent::TouchStart;}
+    x = data.at(0);
+    y = data.at(1);
+    if(data.at(0) == data.at(4) && data.at(1) == data.at(5)){phase = SGXTouchEvent::TouchStart;}
     else{phase = SGXTouchEvent::TouchOngoing;}
-    differenceX = data[0] - data[2];
-    differenceY = data[1] - data[3];
-    previousX = data[2];
-    previousY = data[3];
-    startX = data[4];
-    startY = data[5];
-    force = data[10];
-    velocityX = data[6];
-    velocityY = data[7];
-    radius = std::max(data[8], data[9]) / 2.0f;
+    differenceX = data.at(0) - data.at(2);
+    differenceY = data.at(1) - data.at(3);
+    previousX = data.at(2);
+    previousY = data.at(3);
+    startX = data.at(4);
+    startY = data.at(5);
+    force = data.at(10);
+    velocityX = data.at(6);
+    velocityY = data.at(7);
+    radius = std::max(data.at(8), data.at(9)) / 2.0f;
 }
 
 SGXTouchEvent::SGXTouchEvent(int n){

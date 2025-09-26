@@ -16,12 +16,12 @@ QString SGXSingCorrectCore::correct(const QString &s){
     bool maybeCommandActive = false;
     QString maybeCommand = "";
     for(int i=0; i<s.length(); i++){
-        if(s[i] == SGXSingCorrectCore::correctionPrefix[0] && i <= s.length() - SGXSingCorrectCore::correctionPrefix.length() && s.mid(i, SGXSingCorrectCore::correctionPrefix.length()) == SGXSingCorrectCore::correctionPrefix){
+        if(s.at(i) == SGXSingCorrectCore::correctionPrefix.at(i) && i <= s.length() - SGXSingCorrectCore::correctionPrefix.length() && s.mid(i, SGXSingCorrectCore::correctionPrefix.length()) == SGXSingCorrectCore::correctionPrefix){
             maybeCommandActive = true;
             i += static_cast<int>(SGXSingCorrectCore::correctionPrefix.length());
             while(i < s.length()){
-                if((s[i] >= 'a' && s[i] <= 'z') || (s[i] >= 'A' && s[i] <= 'Z') || (s[i] >= '0' && s[i] <= '9' && maybeCommand.length() >= 7 && maybeCommand[0] == 'u' && maybeCommand.left(7) == "unicode")){
-                    maybeCommand += s[i];
+                if((s.at(i) >= 'a' && s.at(i) <= 'z') || (s.at(i) >= 'A' && s.at(i) <= 'Z') || (s.at(i) >= '0' && s.at(i) <= '9' && maybeCommand.length() >= 7 && maybeCommand.at(i) == 'u' && maybeCommand.left(7) == "unicode")){
+                    maybeCommand += s.at(i);
                     i++;
                 }
                 else{
@@ -31,9 +31,9 @@ QString SGXSingCorrectCore::correct(const QString &s){
                         int cp = 0x0000;
                         if(maybeCommand.length() == 11 || (maybeCommand.length() == 13 && maybeCommand.mid(7, 2) == "0x")){cp = maybeCommand.right(4).toInt(nullptr, 16);}
                         if(cp != 0){maybeCommand = QChar(cp);}
-                        else{maybeCommand = SGXSingCorrectCore::correctionPrefix + maybeCommand + s[i];}
+                        else{maybeCommand = SGXSingCorrectCore::correctionPrefix + maybeCommand + s.at(i);}
                     }
-                    else{maybeCommand = SGXSingCorrectCore::correctionPrefix + maybeCommand + s[i];}
+                    else{maybeCommand = SGXSingCorrectCore::correctionPrefix + maybeCommand + s.at(i);}
                     s0 += maybeCommand;
                     maybeCommand = "";
                     maybeCommandActive = false;
@@ -41,7 +41,7 @@ QString SGXSingCorrectCore::correct(const QString &s){
                 }
             }
         }
-        else{s0 += s[i];}
+        else{s0 += s.at(i);}
     }
     if(maybeCommandActive == true){s0 += (SGXSingCorrectCore::correctionPrefix + maybeCommand);}
     return s0;

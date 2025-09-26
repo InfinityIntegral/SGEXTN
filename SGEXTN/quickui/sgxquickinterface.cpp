@@ -94,7 +94,7 @@ QQuickItem* SGXQuickInterface::getBottomObject(QQuickItem *topObject){
         if((*i).property("canParent").toBool() == true){return i;}
         QVector<QQuickItem*> thisChildren = (*i).childItems();
         for(int idx = 0; idx < thisChildren.length(); idx++){
-            childrenList.enqueue(thisChildren[idx]);
+            childrenList.enqueue(thisChildren.at(idx));
         }
     }
     return nullptr;

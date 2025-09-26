@@ -21,51 +21,51 @@ QString SGXFileSystem::joinFilePaths(const QString &a, const QString &b){
 QString SGXFileSystem::encodeBase16(const QString &s){
     QString s0 = "";
     for(int i=0; i<s.length(); i++){
-        std::string thisChar = QString(s[i]).toUtf8().toStdString();
+        std::string thisChar = QString(s.at(i)).toUtf8().toStdString();
         if(thisChar.length() == 1){
             std::string stringToAdd = {'0', '0'};
-            const uint8_t c = thisChar[0];
-            stringToAdd[0] = static_cast<char>((c & 0xF0) / 0xF + 97);
-            stringToAdd[1] = static_cast<char>((c & 0xF) + 97);
+            const uint8_t c = thisChar.at(0);
+            stringToAdd.at(0) = static_cast<char>((c & 0xF0) / 0xF + 97);
+            stringToAdd.at(1) = static_cast<char>((c & 0xF) + 97);
             s0 += QString::fromStdString(stringToAdd);
         }
         else if(thisChar.length() == 2){
             std::string stringToAdd = {'x', '0', '0', '0', '0'};
-            uint8_t c = thisChar[0];
-            stringToAdd[1] = static_cast<char>((c & 0xF0) / 0xF + 97);
-            stringToAdd[2] = static_cast<char>((c & 0xF) + 97);
-            c = thisChar[1];
-            stringToAdd[3] = static_cast<char>((c & 0xF0) / 0xF + 97);
-            stringToAdd[4] = static_cast<char>((c & 0xF) + 97);
+            uint8_t c = thisChar.at(0);
+            stringToAdd.at(1) = static_cast<char>((c & 0xF0) / 0xF + 97);
+            stringToAdd.at(2) = static_cast<char>((c & 0xF) + 97);
+            c = thisChar.at(1);
+            stringToAdd.at(3) = static_cast<char>((c & 0xF0) / 0xF + 97);
+            stringToAdd.at(4) = static_cast<char>((c & 0xF) + 97);
             s0 += QString::fromStdString(stringToAdd);
         }
         else if(thisChar.length() == 3){
             std::string stringToAdd = {'y', '0', '0', '0', '0', '0', '0'};
-            uint8_t c = thisChar[0];
-            stringToAdd[1] = static_cast<char>((c & 0xF0) / 0xF + 97);
-            stringToAdd[2] = static_cast<char>((c & 0xF) + 97);
-            c = thisChar[1];
-            stringToAdd[3] = static_cast<char>((c & 0xF0) / 0xF + 97);
-            stringToAdd[4] = static_cast<char>((c & 0xF) + 97);
-            c = thisChar[2];
-            stringToAdd[5] = static_cast<char>((c & 0xF0) / 0xF + 97);
-            stringToAdd[6] = static_cast<char>((c & 0xF) + 97);
+            uint8_t c = thisChar.at(0);
+            stringToAdd.at(1) = static_cast<char>((c & 0xF0) / 0xF + 97);
+            stringToAdd.at(2) = static_cast<char>((c & 0xF) + 97);
+            c = thisChar.at(1);
+            stringToAdd.at(3) = static_cast<char>((c & 0xF0) / 0xF + 97);
+            stringToAdd.at(4) = static_cast<char>((c & 0xF) + 97);
+            c = thisChar.at(2);
+            stringToAdd.at(5) = static_cast<char>((c & 0xF0) / 0xF + 97);
+            stringToAdd.at(6) = static_cast<char>((c & 0xF) + 97);
             s0 += QString::fromStdString(stringToAdd);
         }
         else{
             std::string stringToAdd = {'z', '0', '0', '0', '0', '0', '0', '0', '0'};
-            uint8_t c = thisChar[0];
-            stringToAdd[1] = static_cast<char>(((c & 0xF0) >> 4) + 97);
-            stringToAdd[2] = static_cast<char>((c & 0xF) + 97);
-            c = thisChar[1];
-            stringToAdd[3] = static_cast<char>(((c & 0xF0) >> 4) + 97);
-            stringToAdd[4] = static_cast<char>((c & 0xF) + 97);
-            c = thisChar[2];
-            stringToAdd[5] = static_cast<char>(((c & 0xF0) >> 4) + 97);
-            stringToAdd[6] = static_cast<char>((c & 0xF) + 97);
-            c = thisChar[3];
-            stringToAdd[7] = static_cast<char>(((c & 0xF0) >> 4) + 97);
-            stringToAdd[8] = static_cast<char>((c & 0xF) + 97);
+            uint8_t c = thisChar.at(0);
+            stringToAdd.at(1) = static_cast<char>(((c & 0xF0) >> 4) + 97);
+            stringToAdd.at(2) = static_cast<char>((c & 0xF) + 97);
+            c = thisChar.at(1);
+            stringToAdd.at(3) = static_cast<char>(((c & 0xF0) >> 4) + 97);
+            stringToAdd.at(4) = static_cast<char>((c & 0xF) + 97);
+            c = thisChar.at(2);
+            stringToAdd.at(5) = static_cast<char>(((c & 0xF0) >> 4) + 97);
+            stringToAdd.at(6) = static_cast<char>((c & 0xF) + 97);
+            c = thisChar.at(3);
+            stringToAdd.at(7) = static_cast<char>(((c & 0xF0) >> 4) + 97);
+            stringToAdd.at(8) = static_cast<char>((c & 0xF) + 97);
             s0 += QString::fromStdString(stringToAdd);
         }
     }
@@ -77,53 +77,53 @@ QString SGXFileSystem::decodeBase16(const QString &str){
     std::string s = str.toStdString();
     QString s0 = "";
     while(i < static_cast<int>(s.length())){
-        if(s[i] == 'x'){
+        if(s.at(i) == 'x'){
             std::string stringToAdd = {'0', '0'};
-            uint8_t a = s[i + 1];
-            uint8_t b = s[i + 2];
-            stringToAdd[0] = static_cast<char>(((a - 97) << 4) | (b - 97));
-            a = s[i + 3];
-            b = s[i + 4];
-            stringToAdd[1] = static_cast<char>(((a - 97) << 4) | (b - 97));
+            uint8_t a = s.at(i+1);
+            uint8_t b = s.at(i+2);
+            stringToAdd.at(0) = static_cast<char>(((a - 97) << 4) | (b - 97));
+            a = s.at(i+3);
+            b = s.at(i+4);
+            stringToAdd.at(1) = static_cast<char>(((a - 97) << 4) | (b - 97));
             s0 += QString::fromStdString(stringToAdd);
             i += 5;
         }
-        else if(s[i] == 'y'){
+        else if(s.at(i) == 'y'){
             std::string stringToAdd = {'0', '0', '0'};
-            uint8_t a = s[i + 1];
-            uint8_t b = s[i + 2];
-            stringToAdd[0] = static_cast<char>(((a - 97) << 4) | (b - 97));
-            a = s[i + 3];
-            b = s[i + 4];
-            stringToAdd[1] = static_cast<char>(((a - 97) << 4) | (b - 97));
-            a = s[i + 5];
-            b = s[i + 6];
-            stringToAdd[2] = static_cast<char>(((a - 97) << 4) | (b - 97));
+            uint8_t a = s.at(i+1);
+            uint8_t b = s.at(i+2);
+            stringToAdd.at(0) = static_cast<char>(((a - 97) << 4) | (b - 97));
+            a = s.at(i+3);
+            b = s.at(i+4);
+            stringToAdd.at(1) = static_cast<char>(((a - 97) << 4) | (b - 97));
+            a = s.at(i+5);
+            b = s.at(i+6);
+            stringToAdd.at(2) = static_cast<char>(((a - 97) << 4) | (b - 97));
             s0 += QString::fromStdString(stringToAdd);
             i += 7;
         }
-        else if(s[i] == 'z'){
+        else if(s.at(i) == 'z'){
             std::string stringToAdd = {'0', '0', '0', '0'};
-            uint8_t a = s[i + 1];
-            uint8_t b = s[i + 2];
-            stringToAdd[0] = static_cast<char>(((a - 97) << 4) | (b - 97));
-            a = s[i + 3];
-            b = s[i + 4];
-            stringToAdd[1] = static_cast<char>(((a - 97) << 4) | (b - 97));
-            a = s[i + 5];
-            b = s[i + 6];
-            stringToAdd[2] = static_cast<char>(((a - 97) << 4) | (b - 97));
-            a = s[i + 7];
-            b = s[i + 8];
-            stringToAdd[3] = static_cast<char>(((a - 97) << 4) | (b - 97));
+            uint8_t a = s.at(i+1);
+            uint8_t b = s.at(i+2);
+            stringToAdd.at(0) = static_cast<char>(((a - 97) << 4) | (b - 97));
+            a = s.at(i+3);
+            b = s.at(i+4);
+            stringToAdd.at(1) = static_cast<char>(((a - 97) << 4) | (b - 97));
+            a = s.at(i+5);
+            b = s.at(i+6);
+            stringToAdd.at(2) = static_cast<char>(((a - 97) << 4) | (b - 97));
+            a = s.at(i+7);
+            b = s.at(i+8);
+            stringToAdd.at(3) = static_cast<char>(((a - 97) << 4) | (b - 97));
             s0 += QString::fromStdString(stringToAdd);
             i += 9;
         }
         else{
             std::string stringToAdd = {'0'};
-            const uint8_t a = s[i];
-            const uint8_t b = s[i + 1];
-            stringToAdd[0] = static_cast<char>(((a - 97) << 4) | (b - 97));
+            const uint8_t a = s.at(i);
+            const uint8_t b = s.at(i+1);
+            stringToAdd.at(0) = static_cast<char>(((a - 97) << 4) | (b - 97));
             s0 += QString::fromStdString(stringToAdd);
             i += 2;
         }
@@ -153,12 +153,12 @@ QString SGXFileSystem::getFreePath(const QString &prefix, const QString &unencod
     {
         QString reversedNumber = "";
         for(int i=static_cast<int>(unencodedName.length())-1; i>=0; i--){
-            if(unencodedName[i] >= '0' && unencodedName[i] <= '9'){reversedNumber += unencodedName[i];}
+            if(unencodedName.at(i) >= '0' && unencodedName.at(i) <= '9'){reversedNumber += unencodedName.at(i);}
             else{break;}
         }
         QString correctNumber = "";
         for(int i=static_cast<int>(reversedNumber.length())-1; i>=0; i--){
-            correctNumber += reversedNumber[i];
+            correctNumber += reversedNumber.at(i);
         }
         if(correctNumber != ""){
             startIndex = correctNumber.toInt();
@@ -211,7 +211,7 @@ QVector<QString> SGXFileSystem::getFilesList(const QString &s){
     QFileInfoList f = QDir(s).entryInfoList(QDir::Files | QDir::NoSymLinks | QDir::NoDotAndDotDot);
     QVector<QString> list = QVector<QString>();
     for(int i=0; i<f.length(); i++){
-        list.push_back(f[i].absoluteFilePath());
+        list.push_back(f.at(i).absoluteFilePath());
     }
     return list;
 }
@@ -221,7 +221,7 @@ QVector<QString> SGXFileSystem::getFoldersList(const QString &s){
     QFileInfoList f = QDir(s).entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot);
     QVector<QString> list = QVector<QString>();
     for(int i=0; i<f.length(); i++){
-        list.push_back(f[i].absoluteFilePath());
+        list.push_back(f.at(i).absoluteFilePath());
     }
     return list;
 }
@@ -235,11 +235,11 @@ QVector<QString> SGXFileSystem::getFilesListRecursive(const QString &s){
         const QString path = pathsToCheck.dequeue();
         QFileInfoList f = QDir(path).entryInfoList(QDir::Files | QDir::NoSymLinks | QDir::NoDotAndDotDot);
         for(int i=0; i<f.length(); i++){
-            list.push_back(f[i].absoluteFilePath());
+            list.push_back(f.at(i).absoluteFilePath());
         }
         f = QDir(path).entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot);
         for(int i=0; i<f.length(); i++){
-            pathsToCheck.enqueue(f[i].absoluteFilePath());
+            pathsToCheck.enqueue(f.at(i).absoluteFilePath());
         }
     }
     return list;
@@ -256,12 +256,12 @@ int SGXFileSystem::moveFolder(const QString &startPath, const QString &endPath){
     QVector<QString> startList = SGXFileSystem::getFilesListRecursive(startPath);
     QVector<QString> endList = QVector<QString>();
     for(int i=0; i<startList.length(); i++){
-        endList.push_back(endPath + startList[i].mid(startPath.length()));
+        endList.push_back(endPath + startList.at(i).mid(startPath.length()));
     }
     for(int i=0; i<startList.length(); i++){
-        const QString parentFolder = SGXFileSystem::getParentPath(endList[i]);
+        const QString parentFolder = SGXFileSystem::getParentPath(endList.at(i));
         if(SGXFileSystem::folderExists(parentFolder) == false){SGXFileSystem::createFolder(parentFolder);}
-        if(QFile(startList[i]).rename(endList[i]) == false){return -2;}
+        if(QFile(startList.at(i)).rename(endList.at(i)) == false){return -2;}
     }
     QQueue<QString> emptyFolders = QQueue<QString>();
     emptyFolders.enqueue(startPath);
@@ -270,7 +270,7 @@ int SGXFileSystem::moveFolder(const QString &startPath, const QString &endPath){
         QVector<QString> foldersInside = SGXFileSystem::getFoldersList(path);
         if(foldersInside.length() > 0){
             for(int i=0; i<foldersInside.length(); i++){
-                emptyFolders.enqueue(foldersInside[i]);
+                emptyFolders.enqueue(foldersInside.at(i));
             }
             emptyFolders.enqueue(path);
         }
@@ -292,12 +292,12 @@ int SGXFileSystem::duplicateFolder(const QString &startPath, const QString &endP
     QVector<QString> startList = SGXFileSystem::getFilesListRecursive(startPath);
     QVector<QString> endList = QVector<QString>();
     for(int i=0; i<startList.length(); i++){
-        endList.push_back(endPath + startList[i].mid(startPath.length()));
+        endList.push_back(endPath + startList.at(i).mid(startPath.length()));
     }
     for(int i=0; i<startList.length(); i++){
-        const QString parentFolder = SGXFileSystem::getParentPath(endList[i]);
+        const QString parentFolder = SGXFileSystem::getParentPath(endList.at(i));
         if(SGXFileSystem::folderExists(parentFolder) == false){SGXFileSystem::createFolder(parentFolder);}
-        if(QFile(startList[i]).copy(endList[i]) == false){return -2;}
+        if(QFile(startList.at(i)).copy(endList.at(i)) == false){return -2;}
     }
     return 1;
 }
@@ -312,7 +312,7 @@ int SGXFileSystem::permanentDeleteFolder(const QString &s){
     if(SGXFileSystem::folderExists(s) == false){return 0;}
     QVector<QString> pathList = SGXFileSystem::getFilesListRecursive(s);
     for(int i=0; i<pathList.length(); i++){
-        if(QFile::remove(pathList[i]) == false){return -2;}
+        if(QFile::remove(pathList.at(i)) == false){return -2;}
     }
     QQueue<QString> emptyFolders = QQueue<QString>();
     emptyFolders.enqueue(s);
@@ -321,7 +321,7 @@ int SGXFileSystem::permanentDeleteFolder(const QString &s){
         QVector<QString> foldersInside = SGXFileSystem::getFoldersList(path);
         if(foldersInside.length() > 0){
             for(int i=0; i<foldersInside.length(); i++){
-                emptyFolders.enqueue(foldersInside[i]);
+                emptyFolders.enqueue(foldersInside.at(i));
             }
             emptyFolders.enqueue(path);
         }
@@ -342,7 +342,7 @@ long long SGXFileSystem::getFolderSize(const QString &s){
     long long totalSize = 0ll;
     QVector<QString> fileList = SGXFileSystem::getFilesListRecursive(s);
     for(int i=0; i<fileList.length(); i++){
-        totalSize += QFileInfo(fileList[i]).size();
+        totalSize += QFileInfo(fileList.at(i)).size();
     }
     return totalSize;
 }
@@ -388,7 +388,7 @@ QVector<QString> SGXFileSystem::getFilesListWithExtension(const QString &s, cons
     QVector<QString> list = SGXFileSystem::getFilesList(s);
     QVector<QString> finalList = QVector<QString>();
     for(int i=0; i<list.length(); i++){
-        if(SGXFileSystem::getFileExtension(list[i]) == ext){finalList.push_back(list[i]);}
+        if(SGXFileSystem::getFileExtension(list.at(i)) == ext){finalList.push_back(list.at(i));}
     }
     return finalList;
 }
@@ -398,7 +398,7 @@ QVector<QString> SGXFileSystem::getFilesListWithExtensionRecursive(const QString
     QVector<QString> list = SGXFileSystem::getFilesListRecursive(s);
     QVector<QString> finalList = QVector<QString>();
     for(int i=0; i<list.length(); i++){
-        if(SGXFileSystem::getFileExtension(list[i]) == ext){finalList.push_back(list[i]);}
+        if(SGXFileSystem::getFileExtension(list.at(i)) == ext){finalList.push_back(list.at(i));}
     }
     return finalList;
 }
@@ -408,7 +408,7 @@ QVector<QString> SGXFileSystem::getFilesListContainingName(const QString &s, con
     QVector<QString> list = SGXFileSystem::getFilesList(s);
     QVector<QString> finalList = QVector<QString>();
     for(int i=0; i<list.length(); i++){
-        if(SGXFileSystem::getFileNameNoExtension(list[i]).contains(name)){finalList.push_back(list[i]);}
+        if(SGXFileSystem::getFileNameNoExtension(list.at(i)).contains(name)){finalList.push_back(list.at(i));}
     }
     return finalList;
 }
@@ -418,24 +418,24 @@ QVector<QString> SGXFileSystem::getFilesListContainingNameRecursive(const QStrin
     QVector<QString> list = SGXFileSystem::getFilesListRecursive(s);
     QVector<QString> finalList = QVector<QString>();
     for(int i=0; i<list.length(); i++){
-        if(SGXFileSystem::getFileNameNoExtension(list[i]).contains(name)){finalList.push_back(list[i]);}
+        if(SGXFileSystem::getFileNameNoExtension(list.at(i)).contains(name)){finalList.push_back(list.at(i));}
     }
     return finalList;
 }
 
 bool SGXFileSystem::numberAwareLesserThan(const QString &s1, const QString &s2){
-    if(s1[s1.length()-1] < '0' || s1[s1.length()-1] > '9' || s2[s2.length()-1] < '0' || s2[s2.length()-1] > '9'){return (s1 < s2);}
+    if(s1.at(s1.length()-1) < '0' || s1.at(s1.length()-1) > '9' || s2.at(s2.length()-1) < '0' || s2.at(s2.length()-1) > '9'){return (s1 < s2);}
     int s1Number = -1;
     QString s1CleanedName = s1;
     {
         QString reversedNumber = "";
         for(int i=static_cast<int>(s1.length())-1; i>=0; i--){
-            if(s1[i] >= '0' && s1[i] <= '9'){reversedNumber += s1[i];}
+            if(s1.at(i) >= '0' && s1.at(i) <= '9'){reversedNumber += s1.at(i);}
             else{break;}
         }
         QString correctNumber = "";
         for(int i=static_cast<int>(reversedNumber.length())-1; i>=0; i--){
-            correctNumber += reversedNumber[i];
+            correctNumber += reversedNumber.at(i);
         }
         s1Number = correctNumber.toInt();
         s1CleanedName = s1.left(s1.length() - correctNumber.length());
@@ -445,12 +445,12 @@ bool SGXFileSystem::numberAwareLesserThan(const QString &s1, const QString &s2){
     {
         QString reversedNumber = "";
         for(int i=static_cast<int>(s2.length())-1; i>=0; i--){
-            if(s2[i] >= '0' && s2[i] <= '9'){reversedNumber += s2[i];}
+            if(s2.at(i) >= '0' && s2.at(i) <= '9'){reversedNumber += s2.at(i);}
             else{break;}
         }
         QString correctNumber = "";
         for(int i=static_cast<int>(reversedNumber.length())-1; i>=0; i--){
-            correctNumber += reversedNumber[i];
+            correctNumber += reversedNumber.at(i);
         }
         s2Number = correctNumber.toInt();
         s2CleanedName = s2.left(s2.length() - correctNumber.length());
@@ -460,20 +460,20 @@ bool SGXFileSystem::numberAwareLesserThan(const QString &s1, const QString &s2){
 }
 
 bool SGXFileSystem::numberAwareLesserThanBase16(const QString &s1, const QString &s2){
-    QChar c1 = s1[s1.length()-1];
-    QChar c2 = s2[s2.length()-1];
+    QChar c1 = s1.at(s1.length()-1);
+    QChar c2 = s2.at(s2.length()-1);
     if(((c1 < '0' || c1 > '9') && (c1 < 'a' || c1 > 'f') && (c1 < 'A' || c1 > 'F')) || ((c2 < '0' || c2 > '9') && (c2 < 'a' || c2 > 'f') && (c2 < 'A' || c2 > 'F'))){return (s1 < s2);}
     int s1Number = -1;
     QString s1CleanedName = s1;
     {
         QString reversedNumber = "";
         for(int i=static_cast<int>(s1.length())-1; i>=0; i--){
-            if((s1[i] >= '0' && s1[i] <= '9') || (s1[i] >= 'a' && s1[i] <= 'f') || (s1[i] >= 'A' && s1[i] <= 'F')){reversedNumber += s1[i];}
+            if((s1.at(i) >= '0' && s1.at(i) <= '9') || (s1.at(i) >= 'a' && s1.at(i) <= 'f') || (s1.at(i) >= 'A' && s1.at(i) <= 'F')){reversedNumber += s1.at(i);}
             else{break;}
         }
         QString correctNumber = "";
         for(int i=static_cast<int>(reversedNumber.length())-1; i>=0; i--){
-            correctNumber += reversedNumber[i];
+            correctNumber += reversedNumber.at(i);
         }
         s1Number = correctNumber.toInt(nullptr, 16);
         s1CleanedName = s1.left(s1.length() - correctNumber.length());
@@ -483,12 +483,12 @@ bool SGXFileSystem::numberAwareLesserThanBase16(const QString &s1, const QString
     {
         QString reversedNumber = "";
         for(int i=static_cast<int>(s2.length())-1; i>=0; i--){
-            if((s2[i] >= '0' && s2[i] <= '9') || (s2[i] >= 'a' && s2[i] <= 'f') || (s2[i] >= 'A' && s2[i] <= 'F')){reversedNumber += s2[i];}
+            if((s2.at(i) >= '0' && s2.at(i) <= '9') || (s2.at(i) >= 'a' && s2.at(i) <= 'f') || (s2.at(i) >= 'A' && s2.at(i) <= 'F')){reversedNumber += s2.at(i);}
             else{break;}
         }
         QString correctNumber = "";
         for(int i=static_cast<int>(reversedNumber.length())-1; i>=0; i--){
-            correctNumber += reversedNumber[i];
+            correctNumber += reversedNumber.at(i);
         }
         s2Number = correctNumber.toInt(nullptr, 16);
         s2CleanedName = s2.left(s2.length() - correctNumber.length());

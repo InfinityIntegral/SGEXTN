@@ -145,7 +145,7 @@ void SGWSingCorrectCustomisationPage::customCommandCheck(SGWInput */*unused*/){
     QString s = (*SGWSingCorrectCustomisationPage::customCommandInput).getTextAsString();
     bool isValid = true;
     for(int i=0; i<s.length(); i++){
-        if((s[i] >= 'a' && s[i] <= 'z') || (s[i] >= 'A' && s[i] <= 'Z')){}
+        if((s.at(i) >= 'a' && s.at(i) <= 'z') || (s.at(i) >= 'A' && s.at(i) <= 'Z')){}
         else{isValid = false;}
     }
     if(s == ""){isValid = false;}
@@ -165,7 +165,7 @@ void SGWSingCorrectCustomisationPage::addCustomCommand(SGWButton */*unused*/){
     bool isValid = true;
     if(c.length() != 1){isValid = false;}
     for(int i=0; i<s.length(); i++){
-        if((s[i] >= 'a' && s[i] <= 'z') || (s[i] >= 'A' && s[i] <= 'Z')){}
+        if((s.at(i) >= 'a' && s.at(i) <= 'z') || (s.at(i) >= 'A' && s.at(i) <= 'Z')){}
         else{isValid = false;}
     }
     if(s == ""){isValid = false;}
@@ -173,7 +173,7 @@ void SGWSingCorrectCustomisationPage::addCustomCommand(SGWButton */*unused*/){
         SGWNotify::pullDownNotify("invalid command");
         return;
     }
-    (*SGXSingCorrectCustomisation::database).insert(s, c[0]);
+    (*SGXSingCorrectCustomisation::database).insert(s, c.at(0));
     (*SGWSingCorrectCustomisationPage::customCharInput).setTextFromString("");
     (*SGWSingCorrectCustomisationPage::customCommandInput).setTextFromString("");
     (*SGWSingCorrectCustomisationPage::customCharInput).setInvalid(false);
