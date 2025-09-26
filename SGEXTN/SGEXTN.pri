@@ -22,6 +22,7 @@ SOURCES += SGEXTN/misc/main.cpp \
     $$PWD/bypassquickui/sgxthemecolours.cpp \
     $$PWD/filesystem/sgxfile.cpp \
     $$PWD/primitives/sgxchar.cpp \
+    $$PWD/primitives/sgxstring.cpp \
     $$PWD/quickui/sgwwidgetquickinterface.cpp \
     $$PWD/quickui/sgxsingcorrectquickinterface.cpp \
     $$PWD/quickui/sgxtimerquickinterface.cpp \
@@ -108,6 +109,7 @@ HEADERS += \
     $$PWD/bypassquickui/sgxthemecolours.h \
     $$PWD/filesystem/sgxfile.h \
     $$PWD/primitives/sgxchar.h \
+    $$PWD/primitives/sgxstring.h \
     $$PWD/quickui/sgwwidgetquickinterface.h \
     $$PWD/quickui/sgxsingcorrectquickinterface.h \
     $$PWD/quickui/sgxtimerquickinterface.h \

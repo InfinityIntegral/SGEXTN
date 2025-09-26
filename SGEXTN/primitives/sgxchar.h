@@ -29,6 +29,7 @@ public:
     [[nodiscard]] bool isEnglishLetter() const;
     [[nodiscard]] bool isEnglishAlphanumeric() const;
     [[nodiscard]] bool isASCII() const;
+    [[nodiscard]] bool isWhitespace() const;
     [[nodiscard]] char getASCII() const;
     [[nodiscard]] int getUnicode() const;
     [[nodiscard]] SGXChar getUpperLanguageAware() const;

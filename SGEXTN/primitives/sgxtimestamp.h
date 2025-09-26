@@ -27,12 +27,12 @@ public:
     [[nodiscard]] bool operator>(SGXTimeStamp x) const;
     [[nodiscard]] bool operator<=(SGXTimeStamp x) const;
     [[nodiscard]] bool operator>=(SGXTimeStamp x) const;
-    [[nodiscard]] long double getSecondsFrom(SGXTimeStamp x) const;
-    [[nodiscard]] long double getMinutesFrom(SGXTimeStamp x) const;
-    [[nodiscard]] long double getHoursFrom(SGXTimeStamp x) const;
-    [[nodiscard]] long double getDaysFrom(SGXTimeStamp x) const;
-    [[nodiscard]] long double getMonthsFrom(SGXTimeStamp x) const;
-    [[nodiscard]] long double getYearsFrom(SGXTimeStamp x) const;
+    [[nodiscard]] double getSecondsFrom(SGXTimeStamp x) const;
+    [[nodiscard]] double getMinutesFrom(SGXTimeStamp x) const;
+    [[nodiscard]] double getHoursFrom(SGXTimeStamp x) const;
+    [[nodiscard]] double getDaysFrom(SGXTimeStamp x) const;
+    [[nodiscard]] double getMonthsFrom(SGXTimeStamp x) const;
+    [[nodiscard]] double getYearsFrom(SGXTimeStamp x) const;
     void addSeconds(long long x);
     void addMinutes(long long x);
     void addHours(long long x);

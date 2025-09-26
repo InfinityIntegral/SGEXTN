@@ -11,9 +11,11 @@ SGXTimeStamp: made adding and subtracting time exact
 SGXTimeStamp: made time difference calculation exact
 SGXFileSystem: added number aware comparison
 SGXChar: added class to replace QChar
+SGXString: added class to replace QString
 
 Added:
 - SGXChar
+- SGXString
 
 Improved:
 - SGXFileSystem

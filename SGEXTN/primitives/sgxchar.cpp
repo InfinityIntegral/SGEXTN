@@ -81,12 +81,20 @@ bool SGXChar::isEnglishUppercase() const {
     return ((*this) >= 'A' && (*this) <= 'Z');
 }
 
+bool SGXChar::isEnglishLetter() const {
+    return (((*this) >= 'a' && (*this) <= 'z') || ((*this) >= 'A' && (*this) <= 'Z'));
+}
+
 bool SGXChar::isEnglishAlphanumeric() const {
     return (((*this) >= '0' && (*this) <= '9') || ((*this) >= 'a' && (*this) <= 'z') || ((*this) >= 'A' && (*this) <= 'Z'));
 }
 
 bool SGXChar::isASCII() const {
     return (data < static_cast<unsigned short>(256));
+}
+
+bool SGXChar::isWhitespace() const {
+    return (QChar(data).isSpace());
 }
 
 int SGXChar::getUnicode() const {
