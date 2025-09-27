@@ -107,6 +107,11 @@ RESOURCES += SGEXTN/assets.qrc
 HEADERS += \
     $$PWD/bypassquickui/sgxresizer.h \
     $$PWD/bypassquickui/sgxthemecolours.h \
+    $$PWD/containers/sglhash.h \
+    $$PWD/containers/sgllesserthan.h \
+    $$PWD/containers/sglmorethan.h \
+    $$PWD/containers/sglprimitivetypechecker.h \
+    $$PWD/containers/sglspan.h \
     $$PWD/filesystem/sgxfile.h \
     $$PWD/primitives/sgxchar.h \
     $$PWD/primitives/sgxstring.h \
