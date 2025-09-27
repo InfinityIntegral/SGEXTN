@@ -20,6 +20,7 @@ DISTFILES += .gitignore LICENSE.txt README.md \
 SOURCES += SGEXTN/misc/main.cpp \
     $$PWD/bypassquickui/sgxresizer.cpp \
     $$PWD/bypassquickui/sgxthemecolours.cpp \
+    $$PWD/containers/sglcrash.cpp \
     $$PWD/filesystem/sgxfile.cpp \
     $$PWD/primitives/sgxchar.cpp \
     $$PWD/primitives/sgxstring.cpp \
@@ -100,6 +101,8 @@ RESOURCES += SGEXTN/assets.qrc
 HEADERS += \
     $$PWD/bypassquickui/sgxresizer.h \
     $$PWD/bypassquickui/sgxthemecolours.h \
+    $$PWD/containers/sglarray.h \
+    $$PWD/containers/sglcrash.h \
     $$PWD/containers/sglhash.h \
     $$PWD/containers/sgllesserthan.h \
     $$PWD/containers/sglmorethan.h \
