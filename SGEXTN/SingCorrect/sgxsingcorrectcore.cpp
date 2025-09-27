@@ -20,7 +20,7 @@ SGXString SGXSingCorrectCore::correct(const SGXString &s){
             maybeCommandActive = true;
             i += SGXSingCorrectCore::correctionPrefix.length();
             while(i < s.length()){
-                if((s.at(i) >= 'a' && s.at(i) <= 'z') || (s.at(i) >= 'A' && s.at(i) <= 'Z') || (s.at(i) >= '0' && s.at(i) <= '9' && maybeCommand.length() >= 7 && maybeCommand.at(i) == 'u' && maybeCommand.substringLeft(7) == "unicode")){
+                if(s.at(i).isEnglishLetter() == true || (s.at(i).isDigitBase16() && maybeCommand.length() >= 7 && maybeCommand.at(i) == 'u' && maybeCommand.substringLeft(7) == "unicode")){
                     maybeCommand += s.at(i);
                     i++;
                 }

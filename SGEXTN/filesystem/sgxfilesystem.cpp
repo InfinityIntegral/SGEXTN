@@ -154,7 +154,7 @@ SGXString SGXFileSystem::getFreePath(const SGXString &prefix, const SGXString &u
     {
         SGXString reversedNumber = "";
         for(int i=unencodedName.length()-1; i>=0; i--){
-            if(unencodedName.at(i) >= '0' && unencodedName.at(i) <= '9'){reversedNumber += unencodedName.at(i);}
+            if(unencodedName.at(i).isDigit() == true){reversedNumber += unencodedName.at(i);}
             else{break;}
         }
         SGXString correctNumber = "";
@@ -444,13 +444,13 @@ QVector<SGXString> SGXFileSystem::getFilesListContainingNameRecursive(const SGXS
 }
 
 bool SGXFileSystem::numberAwareLesserThan(const SGXString &s1, const SGXString &s2){
-    if(s1.at(s1.length()-1) < '0' || s1.at(s1.length()-1) > '9' || s2.at(s2.length()-1) < '0' || s2.at(s2.length()-1) > '9'){return (s1 < s2);}
+    if(s1.at(s1.length()-1).isDigit() == false || s2.at(s2.length()-1).isDigit() == false){return (s1 < s2);}
     int s1Number = -1;
     SGXString s1CleanedName = s1;
     {
         SGXString reversedNumber = "";
         for(int i=s1.length()-1; i>=0; i--){
-            if(s1.at(i) >= '0' && s1.at(i) <= '9'){reversedNumber += s1.at(i);}
+            if(s1.at(i).isDigit() == true){reversedNumber += s1.at(i);}
             else{break;}
         }
         SGXString correctNumber = "";
@@ -465,7 +465,7 @@ bool SGXFileSystem::numberAwareLesserThan(const SGXString &s1, const SGXString &
     {
         SGXString reversedNumber = "";
         for(int i=s2.length()-1; i>=0; i--){
-            if(s2.at(i) >= '0' && s2.at(i) <= '9'){reversedNumber += s2.at(i);}
+            if(s2.at(i).isDigit() == true){reversedNumber += s2.at(i);}
             else{break;}
         }
         SGXString correctNumber = "";
@@ -480,15 +480,13 @@ bool SGXFileSystem::numberAwareLesserThan(const SGXString &s1, const SGXString &
 }
 
 bool SGXFileSystem::numberAwareLesserThanBase16(const SGXString &s1, const SGXString &s2){
-    const SGXChar c1 = s1.at(s1.length()-1);
-    const SGXChar c2 = s2.at(s2.length()-1);
-    if(((c1 < '0' || c1 > '9') && (c1 < 'a' || c1 > 'f') && (c1 < 'A' || c1 > 'F')) || ((c2 < '0' || c2 > '9') && (c2 < 'a' || c2 > 'f') && (c2 < 'A' || c2 > 'F'))){return (s1 < s2);}
+    if(s1.at(s1.length()-1).isDigitBase16() == false || s2.at(s2.length()-1).isDigitBase16() == false){return (s1 < s2);}
     int s1Number = -1;
     SGXString s1CleanedName = s1;
     {
         SGXString reversedNumber = "";
         for(int i=s1.length()-1; i>=0; i--){
-            if((s1.at(i) >= '0' && s1.at(i) <= '9') || (s1.at(i) >= 'a' && s1.at(i) <= 'f') || (s1.at(i) >= 'A' && s1.at(i) <= 'F')){reversedNumber += s1.at(i);}
+            if(s1.at(i).isDigitBase16() == true){reversedNumber += s1.at(i);}
             else{break;}
         }
         SGXString correctNumber = "";
@@ -503,7 +501,7 @@ bool SGXFileSystem::numberAwareLesserThanBase16(const SGXString &s1, const SGXSt
     {
         SGXString reversedNumber = "";
         for(int i=s2.length()-1; i>=0; i--){
-            if((s2.at(i) >= '0' && s2.at(i) <= '9') || (s2.at(i) >= 'a' && s2.at(i) <= 'f') || (s2.at(i) >= 'A' && s2.at(i) <= 'F')){reversedNumber += s2.at(i);}
+            if(s2.at(i).isDigitBase16() == true){reversedNumber += s2.at(i);}
             else{break;}
         }
         SGXString correctNumber = "";

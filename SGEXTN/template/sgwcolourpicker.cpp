@@ -192,7 +192,7 @@ void SGWColourPicker::updateHexCode(SGWInput */*unused*/){
     SGXString correctedInput = "";
     const SGXString rawInput = (*SGWColourPicker::hexCodeInput).getTextAsString().getUpperLanguageAware();
     for(int i=0; i<rawInput.length(); i++){
-        if((rawInput.at(i) >= '0' && rawInput.at(i) <= '9') || (rawInput.at(i) >= 'A' && rawInput.at(i) <= 'F')){correctedInput += rawInput.at(i);}
+        if(rawInput.at(i).isDigitBase16() == true){correctedInput += rawInput.at(i);}
     }
     if(correctedInput.length() == 6){correctedInput += "FF";}
     if(correctedInput.length() != 8){return;}
