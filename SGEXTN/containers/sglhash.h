@@ -6,12 +6,7 @@
 
 template <typename T> class SGLHash {
 public:
-    static_assert(SGLPrimitiveTypeChecker<T>::x, "Using SGLHash on structs with padding would break your data structures, so it has been disabled for everything except primitive types. Pls declare unsigned int YourStruct::hash() const; and SGLHashMerge::merge the SGLHash results of component properties inside that function, then use SGLHashCustom instead. For SGEXTN builtin primitives, use SGLHashCustom directly without defining the function.");
-    [[nodiscard]] unsigned int operator()(const T& x) const;
-};
-
-template <typename T> class SGLHashCustom {
-public:
+    static_assert(SGLPrimitiveTypeChecker<T>::x, "Using SGLHash on structs with padding would break your data structures, so it has been disabled for everything except primitive types. Pls declare your own hash function struct which uses SGLHashMerge::merge to join the SGLHash results of component properties. See documentation for hash function structs of SGEXTN builtin types.");
     [[nodiscard]] unsigned int operator()(const T& x) const;
 };
 
@@ -51,10 +46,6 @@ template <typename T> unsigned int SGLHash<T>::operator()(const T& x) const {
     hash = num3 * (hash ^ (hash >> 13));
     hash = hash ^ (hash >> 16);
     return hash;
-}
-
-template <typename T> unsigned int SGLHashCustom<T>::operator()(const T& x) const {
-    return x.hash();
 }
 
 inline unsigned int SGLHashMerge::merge(unsigned int hash1, unsigned int hash2){
