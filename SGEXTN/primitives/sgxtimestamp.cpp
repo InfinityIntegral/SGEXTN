@@ -5,7 +5,7 @@
 
 const QTimeZone SGXTimeStamp::timezone = QTimeZone("Asia/Singapore");
 const SGXTimeStamp SGXTimeStamp::zero = SGXTimeStamp(0ll);
-const QDateTime SGXTimeStamp::zeroAsQDateTime = QDateTime(QDate(1965, 8, 9), QTime(12, 30, 0), SGXTimeStamp::timezone);
+const QDateTime SGXTimeStamp::zeroAsQDateTime = QDateTime(QDate(1965, 8, 9), QTime(10, 30, 0), SGXTimeStamp::timezone);
 
 SGXTimeStamp::SGXTimeStamp(long long t){
     (*this).t = t;
@@ -86,7 +86,7 @@ double SGXTimeStamp::getDaysFrom(SGXTimeStamp x) const {
 }
 
 double SGXTimeStamp::getMonthsFrom(SGXTimeStamp x) const {
-    const long long d = static_cast<long long>(getSecondsFrom(x) / 60.0 / 60.0 / 24.0 / 30.0);
+    const long long d = 12 * (getYear() - x.getYear()) + (getMonth() - x.getMonth());
     long long l = d - 1000ll;
     long long h = d + 1000ll;
     while(h - l > 1){
@@ -101,7 +101,7 @@ double SGXTimeStamp::getMonthsFrom(SGXTimeStamp x) const {
 }
 
 double SGXTimeStamp::getYearsFrom(SGXTimeStamp x) const {
-    const long long d = static_cast<long long>(getSecondsFrom(x) / 60.0 / 60.0 / 24.0 / 30.0 / 12.175);
+    const long long d = getYear() - x.getYear();
     long long l = d - 1000ll;
     long long h = d + 1000ll;
     while(h - l > 1){
@@ -113,6 +113,89 @@ double SGXTimeStamp::getYearsFrom(SGXTimeStamp x) const {
     const double lt = static_cast<double>(SGXTimeStamp(x.getQDateTime().addYears(static_cast<int>(l))).t);
     const double ht = static_cast<double>(SGXTimeStamp(x.getQDateTime().addYears(static_cast<int>(h))).t);
     return (static_cast<double>(l) + (static_cast<double>(t) - lt) / (ht - lt));
+}
+
+int SGXTimeStamp::getTimeFromYearPart(SGXTimeStamp x) const {
+    int prelim = getYear() - x.getYear();
+    if(getMonth() > x.getMonth()){return prelim;}
+    if(getMonth() < x.getMonth()){return (prelim - 1);}
+    if(getDay() > x.getDay()){return prelim;}
+    if(getDay() < x.getDay()){return (prelim - 1);}
+    if(getHour() > x.getHour()){return prelim;}
+    if(getHour() < x.getHour()){return (prelim - 1);}
+    if(getMinute() > x.getMinute()){return prelim;}
+    if(getMinute() < x.getMinute()){return (prelim - 1);}
+    if(getSecond() > x.getSecond()){return prelim;}
+    if(getSecond() < x.getSecond()){return (prelim - 1);}
+    return prelim;
+}
+
+int SGXTimeStamp::getTimeFromMonthPart(SGXTimeStamp x) const {
+    int prelim = getMonth() - x.getMonth();
+    if(getDay() > x.getDay()){}
+    else if(getDay() < x.getDay()){prelim--;}
+    else if(getHour() > x.getHour()){}
+    else if(getHour() < x.getHour()){prelim--;}
+    else if(getMinute() > x.getMinute()){}
+    else if(getMinute() < x.getMinute()){prelim--;}
+    else if(getSecond() > x.getSecond()){}
+    else if(getSecond() < x.getSecond()){prelim--;}
+    if(prelim < 0){prelim += 12;}
+    return prelim;
+}
+
+int SGXTimeStamp::getTimeFromDayPart(SGXTimeStamp x) const {
+    int prelim = getDay() - x.getDay();
+    if(getHour() > x.getHour()){}
+    else if(getHour() < x.getHour()){prelim--;}
+    else if(getMinute() > x.getMinute()){}
+    else if(getMinute() < x.getMinute()){prelim--;}
+    else if(getSecond() > x.getSecond()){}
+    else if(getSecond() < x.getSecond()){prelim--;}
+    if(prelim < 0){
+        if(x.getMonth() == 1){prelim += 31;}
+        else if(x.getMonth() == 2 && x.getYearNoOffset() % 4 == 0){prelim += 29;}
+        else if(x.getMonth() == 2){prelim += 28;}
+        else if(x.getMonth() == 3){prelim += 31;}
+        else if(x.getMonth() == 4){prelim += 30;}
+        else if(x.getMonth() == 5){prelim += 31;}
+        else if(x.getMonth() == 6){prelim += 30;}
+        else if(x.getMonth() == 7){prelim += 31;}
+        else if(x.getMonth() == 8){prelim += 31;}
+        else if(x.getMonth() == 9){prelim += 30;}
+        else if(x.getMonth() == 10){prelim += 31;}
+        else if(x.getMonth() == 11){prelim += 30;}
+        else if(x.getMonth() == 12){prelim += 31;}
+    }
+    return prelim;
+}
+
+int SGXTimeStamp::getTimeFromHourPart(SGXTimeStamp x) const {
+    int prelim = getHour() - x.getHour();
+    if(getMinute() > x.getMinute()){}
+    else if(getMinute() < x.getMinute()){prelim--;}
+    else if(getSecond() > x.getSecond()){}
+    else if(getSecond() < x.getSecond()){prelim--;}
+    if(prelim < 0){prelim += 24;}
+    return prelim;
+}
+
+int SGXTimeStamp::getTimeFromMinutePart(SGXTimeStamp x) const {
+    int prelim = getMinute() - x.getMinute();
+    if(getSecond() > x.getSecond()){}
+    else if(getSecond() < x.getSecond()){prelim--;}
+    if(prelim < 0){prelim += 60;}
+    return prelim;
+}
+
+int SGXTimeStamp::getTimeFromSecondPart(SGXTimeStamp x) const {
+    int prelim = getSecond() - x.getSecond();
+    if(prelim < 0){prelim += 60;}
+    return prelim;
+}
+
+SGXString SGXTimeStamp::getFullSGCalendar() const {
+    return (SGXString("SG") + SGXString::intToString(getTimeFromYearPart(SGXTimeStamp::zero)).fillLeftToLength(2, '0') + " " + SGXString::intToString(getTimeFromMonthPart(SGXTimeStamp::zero)).fillLeftToLength(2, '0') + SGXString::intToString(getTimeFromDayPart(SGXTimeStamp::zero)).fillLeftToLength(2, '0') + " " + SGXString::intToString(getTimeFromHourPart(SGXTimeStamp::zero)).fillLeftToLength(2, '0') + SGXString::intToString(getTimeFromMinutePart(SGXTimeStamp::zero)).fillLeftToLength(2, '0') + SGXString::intToString(getTimeFromSecondPart(SGXTimeStamp::zero)).fillLeftToLength(2, '0'));
 }
 
 void SGXTimeStamp::addSeconds(long long x){

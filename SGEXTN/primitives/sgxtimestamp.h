@@ -34,6 +34,13 @@ public:
     [[nodiscard]] double getDaysFrom(SGXTimeStamp x) const;
     [[nodiscard]] double getMonthsFrom(SGXTimeStamp x) const;
     [[nodiscard]] double getYearsFrom(SGXTimeStamp x) const;
+    [[nodiscard]] int getTimeFromSecondPart(SGXTimeStamp x) const;
+    [[nodiscard]] int getTimeFromMinutePart(SGXTimeStamp x) const;
+    [[nodiscard]] int getTimeFromHourPart(SGXTimeStamp x) const;
+    [[nodiscard]] int getTimeFromDayPart(SGXTimeStamp x) const;
+    [[nodiscard]] int getTimeFromMonthPart(SGXTimeStamp x) const;
+    [[nodiscard]] int getTimeFromYearPart(SGXTimeStamp x) const;
+    [[nodiscard]] SGXString getFullSGCalendar() const;
     void addSeconds(long long x);
     void addMinutes(long long x);
     void addHours(long long x);

@@ -12,6 +12,8 @@ SGXTimeStamp: made time difference calculation exact
 SGXFileSystem: added number aware comparison
 SGXChar: added class to replace QChar
 SGXString: added class to replace QString
+SGXTimeStamp: added more time difference calculation functions
+SGWStatusBar: changed start of displayed time to align with the Proclamation of Singapore
 
 Added:
 - SGXChar
@@ -23,6 +25,7 @@ Improved:
 - SGXFileZip
 - SGXFile
 - SGXTimeStamp
+- SGWStatusBar
 
 Removed:
 (none)
