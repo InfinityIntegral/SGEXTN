@@ -18,7 +18,7 @@ SGXString SGXSingCorrectCore::correct(const SGXString &s){
     for(int i=0; i<s.length(); i++){
         if(s.at(i) == SGXSingCorrectCore::correctionPrefix.at(0) && i <= s.length() - SGXSingCorrectCore::correctionPrefix.length() && s.substring(i, SGXSingCorrectCore::correctionPrefix.length()) == SGXSingCorrectCore::correctionPrefix){
             maybeCommandActive = true;
-            i += static_cast<int>(SGXSingCorrectCore::correctionPrefix.length());
+            i += SGXSingCorrectCore::correctionPrefix.length();
             while(i < s.length()){
                 if((s.at(i) >= 'a' && s.at(i) <= 'z') || (s.at(i) >= 'A' && s.at(i) <= 'Z') || (s.at(i) >= '0' && s.at(i) <= '9' && maybeCommand.length() >= 7 && maybeCommand.at(i) == 'u' && maybeCommand.substringLeft(7) == "unicode")){
                     maybeCommand += s.at(i);

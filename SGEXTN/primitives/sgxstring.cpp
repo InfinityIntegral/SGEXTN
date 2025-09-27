@@ -3,7 +3,9 @@
 #include <vector>
 #include <QString>
 #include <QChar>
-#include <QStringList>
+#include <qcontainerfwd.h>
+#include <string>
+#include <QList>
 
 SGXString::SGXString(){
     (*this).data = new QString("");
@@ -14,16 +16,17 @@ SGXString::SGXString(const SGXString &s){
 }
 
 SGXString& SGXString::operator=(const SGXString& s){
+    if(this == &s){return (*this);}
     (*(*this).data) = (*s.data);
     return (*this);
 }
 
-SGXString::SGXString(SGXString &&s){
+SGXString::SGXString(SGXString &&s) noexcept {
     (*this).data = s.data;
     s.data = nullptr;
 }
 
-SGXString& SGXString::operator= (SGXString&& s){
+SGXString& SGXString::operator= (SGXString&& s) noexcept {
     delete (*this).data;
     (*this).data = s.data;
     s.data = nullptr;
@@ -105,7 +108,7 @@ SGXChar SGXString::at(int i) const {
 }
 
 int SGXString::length() const {
-    return (*(*this).data).length();
+    return static_cast<int>((*(*this).data).length());
 }
 
 SGXString& SGXString::replace(SGXChar oldChar, SGXChar newChar){
@@ -137,43 +140,43 @@ bool SGXString::contains(const SGXString &s) const {
 }
 
 int SGXString::findFirstFromLeft(SGXChar c) const {
-    return (*(*this).data).indexOf(QChar(c.data));
+    return static_cast<int>((*(*this).data).indexOf(QChar(c.data)));
 }
 
 int SGXString::findFirstFromLeft(const SGXString &s) const {
-    return (*(*this).data).indexOf(*s.data);
+    return static_cast<int>((*(*this).data).indexOf(*s.data));
 }
 
 int SGXString::findFirstFromLeftCustomStart(SGXChar c, int start) const {
-    return (*(*this).data).indexOf(QChar(c.data), start);
+    return static_cast<int>((*(*this).data).indexOf(QChar(c.data), start));
 }
 
 int SGXString::findFirstFromLeftCustomStart(const SGXString &s, int start) const {
-    return (*(*this).data).indexOf((*s.data), start);
+    return static_cast<int>((*(*this).data).indexOf((*s.data), start));
 }
 
 int SGXString::findFirstFromRight(SGXChar c) const {
-    return (*(*this).data).lastIndexOf(QChar(c.data));
+    return static_cast<int>((*(*this).data).lastIndexOf(QChar(c.data)));
 }
 
 int SGXString::findFirstFromRight(const SGXString &s) const {
-    return (*(*this).data).lastIndexOf(*s.data);
+    return static_cast<int>((*(*this).data).lastIndexOf(*s.data));
 }
 
 int SGXString::findFirstFromRightCustomStart(SGXChar c, int start) const {
-    return (*(*this).data).lastIndexOf(QChar(c.data), start);
+    return static_cast<int>((*(*this).data).lastIndexOf(QChar(c.data), start));
 }
 
 int SGXString::findFirstFromRightCustomStart(const SGXString &s, int start) const {
-    return (*(*this).data).lastIndexOf((*s.data), start);
+    return static_cast<int>((*(*this).data).lastIndexOf((*s.data), start));
 }
 
 int SGXString::count(SGXChar c) const {
-    return (*(*this).data).count(QChar(c.data));
+    return static_cast<int>((*(*this).data).count(QChar(c.data)));
 }
 
 int SGXString::count(const SGXString &s) const {
-    return (*(*this).data).count(*s.data);
+    return static_cast<int>((*(*this).data).count(*s.data));
 }
 
 SGXString SGXString::substring(int start, int length) const {
@@ -388,28 +391,20 @@ SGXString SGXString::repeatChar(SGXChar c, int count){
     return output;
 }
 
-void SGXString::removeAllWhitespace(){
-    SGXString output = "";
-    for(int i=0; i<length(); i++){
-        if(at(i).isWhitespace() == false){output += at(i);}
-    }
-    (*this) = output;
-}
-
-void SGXString::removeLeadingTrailingWhitespace(){
+void SGXString::removeLeadingTrailingWhitespace() const {
     (*(*this).data) = (*(*this).data).trimmed();
 }
 
-void SGXString::cleanWhitespace(){
+void SGXString::cleanWhitespace() const {
     (*(*this).data) = (*(*this).data).simplified();
 }
 
 std::vector<SGXString> SGXString::split() const {
-    QStringList list = (*(*this).data).split(' ');
+    const QStringList list = (*(*this).data).split(' ');
     std::vector<SGXString> output;
     output.reserve(list.length());
     for(int i=0; i<list.length(); i++){
-        SGXString s0 = "";
+        const SGXString s0 = "";
         (*s0.data) = list.at(i);
         output.push_back(s0);
     }
@@ -417,11 +412,11 @@ std::vector<SGXString> SGXString::split() const {
 }
 
 std::vector<SGXString> SGXString::splitCustomSeparator(SGXChar separator) const {
-    QStringList list = (*(*this).data).split(QChar(separator.data));
+    const QStringList list = (*(*this).data).split(QChar(separator.data));
     std::vector<SGXString> output;
     output.reserve(list.length());
     for(int i=0; i<list.length(); i++){
-        SGXString s0 = "";
+        const SGXString s0 = "";
         (*s0.data) = list.at(i);
         output.push_back(s0);
     }
@@ -429,11 +424,11 @@ std::vector<SGXString> SGXString::splitCustomSeparator(SGXChar separator) const 
 }
 
 std::vector<SGXString> SGXString::splitCustomSeparator(const SGXString &separator) const {
-    QStringList list = (*(*this).data).split(*separator.data);
+    const QStringList list = (*(*this).data).split(*separator.data);
     std::vector<SGXString> output;
     output.reserve(list.length());
     for(int i=0; i<list.length(); i++){
-        SGXString s0 = "";
+        const SGXString s0 = "";
         (*s0.data) = list.at(i);
         output.push_back(s0);
     }
@@ -512,10 +507,10 @@ SGXString SGXString::getLowerLanguageAware() const {
     return output;
 }
 
-void SGXString::toUpperLanguageAware(){
+void SGXString::toUpperLanguageAware() const {
     (*(*this).data) = (*(*this).data).toUpper();
 }
 
-void SGXString::toLowerLanguageAware(){
+void SGXString::toLowerLanguageAware() const {
     (*(*this).data) = (*(*this).data).toLower();
 }

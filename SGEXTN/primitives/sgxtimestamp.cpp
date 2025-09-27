@@ -74,45 +74,45 @@ double SGXTimeStamp::getSecondsFrom(SGXTimeStamp x) const {
 }
 
 double SGXTimeStamp::getMinutesFrom(SGXTimeStamp x) const {
-    return (getSecondsFrom(x) / 60.0L);
+    return (getSecondsFrom(x) / 60.0);
 }
 
 double SGXTimeStamp::getHoursFrom(SGXTimeStamp x) const {
-    return (getSecondsFrom(x) / 60.0L / 60.0L);
+    return (getSecondsFrom(x) / 60.0 / 60.0);
 }
 
 double SGXTimeStamp::getDaysFrom(SGXTimeStamp x) const {
-    return (getSecondsFrom(x) / 60.0L / 60.0L / 24.0L);
+    return (getSecondsFrom(x) / 60.0 / 60.0 / 24.0);
 }
 
 double SGXTimeStamp::getMonthsFrom(SGXTimeStamp x) const {
-    long long d = static_cast<long long>(getSecondsFrom(x) / 60.0L / 60.0L / 24.0L / 30.0L);
+    const long long d = static_cast<long long>(getSecondsFrom(x) / 60.0 / 60.0 / 24.0 / 30.0);
     long long l = d - 1000ll;
     long long h = d + 1000ll;
     while(h - l > 1){
-        long long m = (l + h) / 2ll;
-        long long t0 = SGXTimeStamp(x.getQDateTime().addMonths(m)).t;
+        const long long m = (l + h) / 2ll;
+        const long long t0 = SGXTimeStamp(x.getQDateTime().addMonths(static_cast<int>(m))).t;
         if(t0 < t){l = m;}
         else{h = m;}
     }
-    double lt = static_cast<double>(SGXTimeStamp(x.getQDateTime().addMonths(l)).t);
-    double ht = static_cast<double>(SGXTimeStamp(x.getQDateTime().addMonths(h)).t);
-    return (static_cast<double>(l) + (t - lt) / (ht - lt));
+    const double lt = static_cast<double>(SGXTimeStamp(x.getQDateTime().addMonths(static_cast<int>(l))).t);
+    const double ht = static_cast<double>(SGXTimeStamp(x.getQDateTime().addMonths(static_cast<int>(h))).t);
+    return (static_cast<double>(l) + (static_cast<double>(t) - lt) / (ht - lt));
 }
 
 double SGXTimeStamp::getYearsFrom(SGXTimeStamp x) const {
-    long long d = static_cast<long long>(getSecondsFrom(x) / 60.0L / 60.0L / 24.0L / 30.0L / 12.175L);
+    const long long d = static_cast<long long>(getSecondsFrom(x) / 60.0 / 60.0 / 24.0 / 30.0 / 12.175);
     long long l = d - 1000ll;
     long long h = d + 1000ll;
     while(h - l > 1){
-        long long m = (l + h) / 2ll;
-        long long t0 = SGXTimeStamp(x.getQDateTime().addYears(m)).t;
+        const long long m = (l + h) / 2ll;
+        const long long t0 = SGXTimeStamp(x.getQDateTime().addYears(static_cast<int>(m))).t;
         if(t0 < t){l = m;}
         else{h = m;}
     }
-    double lt = static_cast<double>(SGXTimeStamp(x.getQDateTime().addYears(l)).t);
-    double ht = static_cast<double>(SGXTimeStamp(x.getQDateTime().addYears(h)).t);
-    return (static_cast<double>(l) + (t - lt) / (ht - lt));
+    const double lt = static_cast<double>(SGXTimeStamp(x.getQDateTime().addYears(static_cast<int>(l))).t);
+    const double ht = static_cast<double>(SGXTimeStamp(x.getQDateTime().addYears(static_cast<int>(h))).t);
+    return (static_cast<double>(l) + (static_cast<double>(t) - lt) / (ht - lt));
 }
 
 void SGXTimeStamp::addSeconds(long long x){
@@ -132,11 +132,11 @@ void SGXTimeStamp::addDays(long long x){
 }
 
 void SGXTimeStamp::addMonths(long long x){
-    (*this) = SGXTimeStamp(getQDateTime().addMonths(x));
+    (*this) = SGXTimeStamp(getQDateTime().addMonths(static_cast<int>(x)));
 }
 
 void SGXTimeStamp::addYears(long long x){
-    (*this) = SGXTimeStamp(getQDateTime().addYears(x));
+    (*this) = SGXTimeStamp(getQDateTime().addYears(static_cast<int>(x)));
 }
 
 void SGXTimeStamp::subtractSeconds(long long x){

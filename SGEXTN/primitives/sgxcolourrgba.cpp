@@ -1,6 +1,7 @@
 #include "sgxcolourrgba.h"
 #include <cmath>
 #include <QColor>
+#include "sgxstring.h"
 
 namespace{
 inline void temp_boundInt(int& x){

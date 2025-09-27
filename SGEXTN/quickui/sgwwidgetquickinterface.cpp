@@ -15,7 +15,7 @@ SGWWidgetQuickInterface::SGWWidgetQuickInterface(SGWWidget *x){
 }
 
 void SGWWidgetQuickInterface::eventReceivedWithQString(const QString &event) const {
-    SGXString s = "";
+    const SGXString s = "";
     (*s.data) = event;
     eventReceived(s);
 }

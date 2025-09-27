@@ -190,7 +190,7 @@ void SGWColourPicker::updateTransparencyFromInput(SGWInput */*unused*/){
 
 void SGWColourPicker::updateHexCode(SGWInput */*unused*/){
     SGXString correctedInput = "";
-    SGXString rawInput = (*SGWColourPicker::hexCodeInput).getTextAsString().getUpperLanguageAware();
+    const SGXString rawInput = (*SGWColourPicker::hexCodeInput).getTextAsString().getUpperLanguageAware();
     for(int i=0; i<rawInput.length(); i++){
         if((rawInput.at(i) >= '0' && rawInput.at(i) <= '9') || (rawInput.at(i) >= 'A' && rawInput.at(i) <= 'F')){correctedInput += rawInput.at(i);}
     }

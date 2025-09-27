@@ -3,6 +3,7 @@
 
 #include <qcontainerfwd.h>
 #include <tuple>
+#include "../primitives/sgxstring.h"
 
 class SGXFileZip
 {

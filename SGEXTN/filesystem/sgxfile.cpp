@@ -47,7 +47,7 @@ char SGXFile::readChar() const {
 }
 
 SGXChar SGXFile::readSGEXTNChar() const {
-    unsigned short x;
+    unsigned short x = static_cast<unsigned short>(0);
     (*(*this).fileData) >> x;
     return SGXChar(x);
 }

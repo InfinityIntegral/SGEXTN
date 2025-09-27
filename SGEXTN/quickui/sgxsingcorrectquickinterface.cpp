@@ -4,7 +4,7 @@
 #include "../primitives/sgxstring.h"
 
 QString SGXSingCorrectQuickInterface::correct(const QString &s) const { // NOLINT(readability-convert-member-functions-to-static)
-    SGXString s0 = "";
+    const SGXString s0 = "";
     (*s0.data) = s;
     return (*SGXSingCorrectCore::correct(s0).data);
 }

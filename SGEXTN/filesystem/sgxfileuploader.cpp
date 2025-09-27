@@ -22,7 +22,7 @@ void SGXFileUploader::uploadFile(void (*attachedFunction)(const SGXString &)){
 }
 
 void SGXFileUploader::checkUploadedFile(){
-    SGXString urlPath = "";
+    const SGXString urlPath = "";
     (*urlPath.data) = (*SGXFileUploader::fileUploadInstance).property("selectedFilePath").toString();
     if(urlPath != ""){
         (*urlPath.data) = QUrl(*urlPath.data).toLocalFile();

@@ -72,12 +72,12 @@ int SGXFileBinUtilities::deleteFile(const SGXString &s){
 
 int SGXFileBinUtilities::deleteFolder(const SGXString &s){
     if(SGXFileSystem::folderExists(s) == false){return 0;}
-    QFileInfoList f = QDir(*s.data).entryInfoList(QDir::Files | QDir::NoSymLinks | QDir::NoDotAndDotDot);
+    const QFileInfoList f = QDir(*s.data).entryInfoList(QDir::Files | QDir::NoSymLinks | QDir::NoDotAndDotDot);
     for(int i=0; i<f.length(); i++){
         const SGXIdentifier id = SGXIdentifier(true);
         const SGXTimeStamp t = SGXTimeStamp::now();
         const SGXString endPath = SGXFileSystem::joinFilePaths(SGXFileBinUtilities::binFilePath, id.getStringForPrinting() + ".sg");
-        SGXString fileName = "";
+        const SGXString fileName = "";
         (*fileName.data) = f.at(i).absoluteFilePath();
         if(SGXFileSystem::moveFile(fileName, endPath) != 1){return -2;}
         static_cast<void>(id.registerIdentifier());

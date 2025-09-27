@@ -2,6 +2,7 @@
 #include <cmath>
 #include <algorithm>
 #include <numbers>
+#include "sgxstring.h"
 
 namespace{
 inline bool temp_isBetween(float x, float a, float b){

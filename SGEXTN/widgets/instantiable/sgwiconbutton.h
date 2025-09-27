@@ -12,7 +12,7 @@ public:
     [[nodiscard]] SGXChar getChar() const;
     void setChar(SGXChar c);
 protected:
-    SGXChar textChar;
+    SGXChar textChar = {};
 };
 
 #endif // SGWICONBUTTON_H

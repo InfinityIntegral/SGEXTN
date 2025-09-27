@@ -33,7 +33,7 @@ void SGWStatusBar::terminate(){
 }
 
 void SGWStatusBar::updateTime(){
-    double t = SGXTimeStamp::now().getYearsFrom(SGXTimeStamp::zero);
+    const double t = SGXTimeStamp::now().getYearsFrom(SGXTimeStamp::zero);
     (*(*SGWStatusBar::instance).getTopObject()).setProperty("s", (*SGXString::doubleToStringDecimalPlaces(t, 7).data));
 }
 

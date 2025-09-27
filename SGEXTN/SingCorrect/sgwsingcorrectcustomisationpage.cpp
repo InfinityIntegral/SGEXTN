@@ -143,7 +143,7 @@ void SGWSingCorrectCustomisationPage::customCharCheck(SGWInput */*unused*/){
 }
 
 void SGWSingCorrectCustomisationPage::customCommandCheck(SGWInput */*unused*/){
-    SGXString s = (*SGWSingCorrectCustomisationPage::customCommandInput).getTextAsString();
+    const SGXString s = (*SGWSingCorrectCustomisationPage::customCommandInput).getTextAsString();
     bool isValid = true;
     for(int i=0; i<s.length(); i++){
         if((s.at(i) >= 'a' && s.at(i) <= 'z') || (s.at(i) >= 'A' && s.at(i) <= 'Z')){}
@@ -161,8 +161,8 @@ void SGWSingCorrectCustomisationPage::customCommandCheck(SGWInput */*unused*/){
 }
 
 void SGWSingCorrectCustomisationPage::addCustomCommand(SGWButton */*unused*/){
-    SGXString c = (*SGWSingCorrectCustomisationPage::customCharInput).getTextAsString();
-    SGXString s = (*SGWSingCorrectCustomisationPage::customCommandInput).getTextAsString();
+    const SGXString c = (*SGWSingCorrectCustomisationPage::customCharInput).getTextAsString();
+    const SGXString s = (*SGWSingCorrectCustomisationPage::customCommandInput).getTextAsString();
     bool isValid = true;
     if(c.length() != 1){isValid = false;}
     for(int i=0; i<s.length(); i++){

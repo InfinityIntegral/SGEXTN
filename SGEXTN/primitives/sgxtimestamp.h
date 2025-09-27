@@ -2,6 +2,7 @@
 #define SGXTIMESTAMP_H
 
 #include "sgxstring.h"
+#include "sgxchar.h"
 #include <QDateTime>
 #include <QTimeZone>
 

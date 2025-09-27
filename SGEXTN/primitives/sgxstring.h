@@ -14,8 +14,8 @@ public:
     SGXString();
     SGXString(const SGXString& s);
     SGXString& operator=(const SGXString& s);
-    SGXString(SGXString&& s);
-    SGXString& operator=(SGXString&& s);
+    SGXString(SGXString&& s) noexcept;
+    SGXString& operator=(SGXString&& s) noexcept;
     ~SGXString();
     SGXString(SGXChar c);
     SGXString(char c);
@@ -90,9 +90,8 @@ public:
     static SGXString doubleToStringSignificantFigures(double x, int sf);
     static SGXString doubleToStringScientificNotation(double x, int sf);
     static SGXString repeatChar(SGXChar c, int count);
-    void removeAllWhitespace();
-    void removeLeadingTrailingWhitespace();
-    void cleanWhitespace();
+    void removeLeadingTrailingWhitespace() const;
+    void cleanWhitespace() const;
     [[nodiscard]] std::vector<SGXString> split() const;
     [[nodiscard]] std::vector<SGXString> splitCustomSeparator(SGXChar separator) const;
     [[nodiscard]] std::vector<SGXString> splitCustomSeparator(const SGXString& separator) const;
@@ -107,11 +106,11 @@ public:
     [[nodiscard]] bool isWhitespace() const;
     [[nodiscard]] SGXString getUpperLanguageAware() const;
     [[nodiscard]] SGXString getLowerLanguageAware() const;
-    void toUpperLanguageAware();
-    void toLowerLanguageAware();
+    void toUpperLanguageAware() const;
+    void toLowerLanguageAware() const;
 };
 
-inline unsigned int qHash(SGXString x, unsigned int seed = 0){
+inline unsigned int qHash(const SGXString& x, unsigned int seed = 0){
     return (seed ^ static_cast<unsigned int>(std::hash<std::string>{}(x.toStdString())));
 }
 

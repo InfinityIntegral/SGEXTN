@@ -29,7 +29,7 @@
 #include <QQmlApplicationEngine>
 
 void SGXCentral::initialise(){
-    SGXString standardPath = "";
+    const SGXString standardPath = "";
     (*standardPath.data) = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
     SGXFileSystem::rootFilePath = SGXFileSystem::joinFilePaths(standardPath, SGUCentralManagement::rootFolderName);
     SGXFileSystem::userDataFilePath = SGXFileSystem::joinFilePaths(SGXFileSystem::rootFilePath, "yourdata");

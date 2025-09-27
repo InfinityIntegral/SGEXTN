@@ -2,7 +2,7 @@
 #include <QChar>
 
 SGXChar::SGXChar(char c){
-    (*this).data = static_cast<unsigned short>(c);
+    (*this).data = static_cast<unsigned char>(static_cast<unsigned short>(c));
 }
 
 SGXChar::SGXChar(unsigned short data){

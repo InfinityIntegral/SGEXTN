@@ -23,7 +23,7 @@ void SGXFileDownloader::downloadFile(const SGXString &s){
 }
 
 void SGXFileDownloader::checkDownloadedFile(){
-    SGXString urlPath = "";
+    const SGXString urlPath = "";
     (*urlPath.data) = (*SGXFileDownloader::fileDownloadInstance).property("selectedFilePath").toString();
     if(urlPath != ""){
         (*urlPath.data) = QUrl(*urlPath.data).toLocalFile();
