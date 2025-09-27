@@ -14,10 +14,26 @@ SGXChar: added class to replace QChar
 SGXString: added class to replace QString
 SGXTimeStamp: added more time difference calculation functions
 SGWStatusBar: changed start of displayed time to align with the Proclamation of Singapore
+SGLLesserThan: added
+SGLMoreThan: added
+SGLHash: added
+SGLSpan: added
+SGLPair: added
+SGLTuple3: added
+SGLTuple4: added
+SGLTuple5: added
 
 Added:
 - SGXChar
 - SGXString
+- SGLLesserThan
+- SGLMoreThan
+- SGLHash
+- SGLSpan
+- SGLPair
+- SGLTuple3
+- SGLTuple4
+- SGLTuple5
 
 Improved:
 - SGXFileSystem

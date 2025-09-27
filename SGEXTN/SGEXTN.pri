@@ -103,8 +103,12 @@ HEADERS += \
     $$PWD/containers/sglhash.h \
     $$PWD/containers/sgllesserthan.h \
     $$PWD/containers/sglmorethan.h \
+    $$PWD/containers/sglpair.h \
     $$PWD/containers/sglprimitivetypechecker.h \
     $$PWD/containers/sglspan.h \
+    $$PWD/containers/sgltuple3.h \
+    $$PWD/containers/sgltuple4.h \
+    $$PWD/containers/sgltuple5.h \
     $$PWD/filesystem/sgxfile.h \
     $$PWD/primitives/sgxchar.h \
     $$PWD/primitives/sgxstring.h \
