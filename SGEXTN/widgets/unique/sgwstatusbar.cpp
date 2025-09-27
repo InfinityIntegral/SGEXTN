@@ -6,7 +6,6 @@
 #include <QQuickItem>
 #include "../enums/sgwtype.h"
 #include "../../primitives/sgxstring.h"
-#include "../../template/sgwcutevesicles.h"
 #include "../../quickui/sgwwidgetquickinterface.h"
 
 SGWStatusBar* SGWStatusBar::instance = nullptr;
@@ -36,10 +35,6 @@ void SGWStatusBar::updateTime(){
     (*(*SGWStatusBar::instance).getTopObject()).setProperty("s", (*SGXTimeStamp::now().getFullSGCalendar().data));
 }
 
-void SGWStatusBar::eventReceived(const SGXString& s){
-    if(s == "clicked"){SGWStatusBar::toggleVesicles();}
-}
-
-void SGWStatusBar::toggleVesicles(){
-    SGWCuteVesicles::toggleAnimation();
+void SGWStatusBar::eventReceived(const SGXString& /*unused*/){
+    
 }

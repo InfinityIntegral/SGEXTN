@@ -116,7 +116,7 @@ double SGXTimeStamp::getYearsFrom(SGXTimeStamp x) const {
 }
 
 int SGXTimeStamp::getTimeFromYearPart(SGXTimeStamp x) const {
-    int prelim = getYear() - x.getYear();
+    const int prelim = getYear() - x.getYear();
     if(getMonth() > x.getMonth()){return prelim;}
     if(getMonth() < x.getMonth()){return (prelim - 1);}
     if(getDay() > x.getDay()){return prelim;}
@@ -132,58 +132,33 @@ int SGXTimeStamp::getTimeFromYearPart(SGXTimeStamp x) const {
 
 int SGXTimeStamp::getTimeFromMonthPart(SGXTimeStamp x) const {
     int prelim = getMonth() - x.getMonth();
-    if(getDay() > x.getDay()){}
-    else if(getDay() < x.getDay()){prelim--;}
-    else if(getHour() > x.getHour()){}
-    else if(getHour() < x.getHour()){prelim--;}
-    else if(getMinute() > x.getMinute()){}
-    else if(getMinute() < x.getMinute()){prelim--;}
-    else if(getSecond() > x.getSecond()){}
-    else if(getSecond() < x.getSecond()){prelim--;}
+    if(getDay() < x.getDay() || (getDay() == x.getDay() && getHour() < x.getHour()) || (getDay() == x.getDay() && getHour() == x.getHour() && getMinute() < x.getMinute()) || (getDay() == x.getDay() && getHour() == x.getHour() && getMinute() == x.getMinute() && getSecond() < x.getSecond())){prelim--;}
     if(prelim < 0){prelim += 12;}
     return prelim;
 }
 
 int SGXTimeStamp::getTimeFromDayPart(SGXTimeStamp x) const {
     int prelim = getDay() - x.getDay();
-    if(getHour() > x.getHour()){}
-    else if(getHour() < x.getHour()){prelim--;}
-    else if(getMinute() > x.getMinute()){}
-    else if(getMinute() < x.getMinute()){prelim--;}
-    else if(getSecond() > x.getSecond()){}
-    else if(getSecond() < x.getSecond()){prelim--;}
+    if(getHour() < x.getHour() || (getHour() == x.getHour() && getMinute() < x.getMinute()) || (getHour() == x.getHour() && getMinute() == x.getMinute() && getSecond() < x.getSecond())){prelim--;}
     if(prelim < 0){
-        if(x.getMonth() == 1){prelim += 31;}
+        if(x.getMonth() == 1 || x.getMonth() == 3 || x.getMonth() == 5 || x.getMonth() == 7 || x.getMonth() == 8 || x.getMonth() == 10 || x.getMonth() == 12){prelim += 31;}
         else if(x.getMonth() == 2 && x.getYearNoOffset() % 4 == 0){prelim += 29;}
         else if(x.getMonth() == 2){prelim += 28;}
-        else if(x.getMonth() == 3){prelim += 31;}
-        else if(x.getMonth() == 4){prelim += 30;}
-        else if(x.getMonth() == 5){prelim += 31;}
-        else if(x.getMonth() == 6){prelim += 30;}
-        else if(x.getMonth() == 7){prelim += 31;}
-        else if(x.getMonth() == 8){prelim += 31;}
-        else if(x.getMonth() == 9){prelim += 30;}
-        else if(x.getMonth() == 10){prelim += 31;}
-        else if(x.getMonth() == 11){prelim += 30;}
-        else if(x.getMonth() == 12){prelim += 31;}
+        else if(x.getMonth() == 4 || x.getMonth() == 6 || x.getMonth() == 9 || x.getMonth() == 11){prelim += 30;}
     }
     return prelim;
 }
 
 int SGXTimeStamp::getTimeFromHourPart(SGXTimeStamp x) const {
     int prelim = getHour() - x.getHour();
-    if(getMinute() > x.getMinute()){}
-    else if(getMinute() < x.getMinute()){prelim--;}
-    else if(getSecond() > x.getSecond()){}
-    else if(getSecond() < x.getSecond()){prelim--;}
+     if(getMinute() < x.getMinute() || (getMinute() == x.getMinute() && getSecond() < x.getSecond())){prelim--;}
     if(prelim < 0){prelim += 24;}
     return prelim;
 }
 
 int SGXTimeStamp::getTimeFromMinutePart(SGXTimeStamp x) const {
     int prelim = getMinute() - x.getMinute();
-    if(getSecond() > x.getSecond()){}
-    else if(getSecond() < x.getSecond()){prelim--;}
+    if(getSecond() < x.getSecond()){prelim--;}
     if(prelim < 0){prelim += 60;}
     return prelim;
 }

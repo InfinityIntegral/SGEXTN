@@ -50,11 +50,6 @@ SOURCES += SGEXTN/misc/main.cpp \
     SGEXTN/colourpickerrendering/transparencychoice/sgxrendercolourpickertransparencychoicesgwidget.cpp \
     SGEXTN/colourpickerrendering/transparencychoice/sgxrendercolourpickertransparencychoiceshader.cpp \
     SGEXTN/customisation/sgxthemecolourscustomisation.cpp \
-    SGEXTN/customisation/sgxvesiclespropertiescustomisation.cpp \
-    SGEXTN/cutevesicles/sgxrendercutevesiclesmaterial.cpp \
-    SGEXTN/cutevesicles/sgxrendercutevesiclesquickuielement.cpp \
-    SGEXTN/cutevesicles/sgxrendercutevesiclessgwidget.cpp \
-    SGEXTN/cutevesicles/sgxrendercutevesiclesshader.cpp \
     SGEXTN/filesystem/sgxfilebinutilities.cpp \
     SGEXTN/filesystem/sgxfiledownloader.cpp \
     SGEXTN/filesystem/sgxfilesystem.cpp \
@@ -71,9 +66,7 @@ SOURCES += SGEXTN/misc/main.cpp \
     SGEXTN/quickui/sgxquickresizer.cpp \
     SGEXTN/quickui/sgxthemecoloursetting.cpp \
     SGEXTN/template/sgwcolourpicker.cpp \
-    SGEXTN/template/sgwcutevesicles.cpp \
     SGEXTN/template/sgwthemecustomisationpage.cpp \
-    SGEXTN/template/sgwvesiclecustomisationpage.cpp \
     SGEXTN/timer/sgxtimer.cpp \
     SGEXTN/userDefinedClasses/sgucentralmanagement.cpp \
     SGEXTN/widgets/noninstantiable/sgwbackground.cpp \
@@ -142,11 +135,6 @@ HEADERS += \
     SGEXTN/colourpickerrendering/transparencychoice/sgxrendercolourpickertransparencychoicesgwidget.h \
     SGEXTN/colourpickerrendering/transparencychoice/sgxrendercolourpickertransparencychoiceshader.h \
     SGEXTN/customisation/sgxthemecolourscustomisation.h \
-    SGEXTN/customisation/sgxvesiclespropertiescustomisation.h \
-    SGEXTN/cutevesicles/sgxrendercutevesiclesmaterial.h \
-    SGEXTN/cutevesicles/sgxrendercutevesiclesquickuielement.h \
-    SGEXTN/cutevesicles/sgxrendercutevesiclessgwidget.h \
-    SGEXTN/cutevesicles/sgxrendercutevesiclesshader.h \
     SGEXTN/filesystem/sgxfilebinutilities.h \
     SGEXTN/filesystem/sgxfiledownloader.h \
     SGEXTN/filesystem/sgxfilesystem.h \
@@ -164,9 +152,7 @@ HEADERS += \
     SGEXTN/quickui/sgxquickresizer.h \
     SGEXTN/quickui/sgxthemecoloursetting.h \
     SGEXTN/template/sgwcolourpicker.h \
-    SGEXTN/template/sgwcutevesicles.h \
     SGEXTN/template/sgwthemecustomisationpage.h \
-    SGEXTN/template/sgwvesiclecustomisationpage.h \
     SGEXTN/timer/sgxtimer.h \
     SGEXTN/userDefinedClasses/sgucentralmanagement.h \
     SGEXTN/widgets/noninstantiable/sgwbackground.h \

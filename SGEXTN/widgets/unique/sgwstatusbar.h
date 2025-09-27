@@ -18,9 +18,8 @@ public:
     static SGWStatusBar* instance;
     static SGXTimer* timer;
     static void terminate();
-    static void toggleVesicles();
     static void updateTime();
-    static void eventReceived(const SGXString& s);
+    static void eventReceived(const SGXString& /*unused*/);
 protected:
     SGWWidgetQuickInterface* quickInterface;
 };

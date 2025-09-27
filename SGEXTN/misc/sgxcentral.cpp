@@ -10,12 +10,10 @@
 #include <qqml.h>
 #include <QGuiApplication>
 #include <QFontDatabase>
-#include "../cutevesicles/sgxrendercutevesiclesquickuielement.h"
 #include "../filesystem/sgxfilesystem.h"
 #include <QStandardPaths>
 #include "../filesystem/sgxfilebinutilities.h"
 #include "../customisation/sgxthemecolourscustomisation.h"
-#include "../customisation/sgxvesiclespropertiescustomisation.h"
 #include "../colourpickerrendering/huechoice/sgxrendercolourpickerhuechoicequickuielement.h"
 #include "../colourpickerrendering/saturationchoice/sgxrendercolourpickersaturationchoicequickuielement.h"
 #include "../colourpickerrendering/lightnesschoice/sgxrendercolourpickerlightnesschoicequickuielement.h"
@@ -48,7 +46,6 @@ void SGXCentral::initialise(){
     QGuiApplication::setWindowIcon(temp_appicon);
 
     SGXThemeColoursCustomisation::loadThemeColours();
-    SGXVesiclesPropertiesCustomisation::loadVesicleProperties();
 
     SGXQuickInterface::themeColoursSingleton = new SGXThemeColourSetting();
     qmlRegisterSingletonInstance("ThemeColours", 0, 0, "ThemeColours", SGXQuickInterface::themeColoursSingleton);
@@ -57,7 +54,6 @@ void SGXCentral::initialise(){
     SGXSingCorrectCore::instance = new SGXSingCorrectQuickInterface();
     qmlRegisterSingletonInstance("SingCorrect", 0, 0, "SingCorrect", SGXSingCorrectCore::instance);
 
-    qmlRegisterType<SGXRenderCuteVesiclesQuickUIElement>("CuteVesicles", 0, 0, "CuteVesicles");
     qmlRegisterType<SGXRenderColourPickerHueChoiceQuickUIElement>("ColourPickerHueChoice", 0, 0, "ColourPickerHueChoice");
     qmlRegisterType<SGXRenderColourPickerSaturationChoiceQuickUIElement>("ColourPickerSaturationChoice", 0, 0, "ColourPickerSaturationChoice");
     qmlRegisterType<SGXRenderColourPickerLightnessChoiceQuickUIElement>("ColourPickerLightnessChoice", 0, 0, "ColourPickerLightnessChoice");

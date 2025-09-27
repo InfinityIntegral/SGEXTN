@@ -2,9 +2,6 @@
     <qresource prefix="/SGEXTN">
         <file>assets/appicon.png</file>
         <file>QML/root.qml</file>
-        <file>cutevesicles/cutevesicles.qml</file>
-        <file>cutevesicles/cutevesicles.vert.qsb</file>
-        <file>cutevesicles/cutevesicles.frag.qsb</file>
         <file>QML/fileupload.qml</file>
         <file>QML/filedownload.qml</file>
         <file>colourpickerrendering/huechoice/huechoice.qml</file>

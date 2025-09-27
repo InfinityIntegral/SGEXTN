@@ -26,21 +26,6 @@ SGXColourRGBA SGUCentralManagement::themeColour6 = SGXColourRGBA(255, 128, 227);
 SGXColourRGBA SGUCentralManagement::themeColour7 = SGXColourRGBA(255, 191, 241);
 SGXColourRGBA SGUCentralManagement::themeColour8 = SGXColourRGBA(255, 255, 255);
 
-// customise vesicle properties for the animation
-float SGUCentralManagement::cuteVesiclesMembraneThickness = 0.05f;
-float SGUCentralManagement::cuteVesiclesMaximumCenterDistance = 1.5f;
-float SGUCentralManagement::cuteVesiclesMaximumVelocity = 0.01f;
-float SGUCentralManagement::cuteVesiclesMaximumAcceleration = 0.01f;
-float SGUCentralManagement::cuteVesiclesMaximumRadiusChange = 0.01f;
-float SGUCentralManagement::cuteVesiclesMinimumRadius = 0.1f;
-float SGUCentralManagement::cuteVesiclesMaximumRadius = 0.35f;
-float SGUCentralManagement::cuteVesiclesMaximumRadiusOffsetChange = 0.1f;
-float SGUCentralManagement::cuteVesiclesMaximumRadiusOffset = 0.1f;
-float SGUCentralManagement::cuteVesiclesCenterTransparency = 0.1f;
-float SGUCentralManagement::cuteVesiclesEdgeTransparency = 0.05f;
-float SGUCentralManagement::cuteVesiclesMembraneTransparency = 0.2f;
-float SGUCentralManagement::cuteVesiclesFrameRate = 10.0f;
-
 // this is run immediately after GUI is created, use it to initialise the UI
 void SGUCentralManagement::initialise(){
     
