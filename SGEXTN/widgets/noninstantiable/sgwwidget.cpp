@@ -33,7 +33,7 @@ SGWWidget::SGWWidget(SGWWidget* parent, float x1, float x0, float y1, float y0, 
 }
 
 SGWWidget::~SGWWidget(){
-    for(QSet<SGWWidget*>::iterator i = children.begin(); i != children.end(); i++){delete (*i);}
+    for(QSet<SGWWidget*>::const_iterator i = children.begin(); i != children.end(); i++){delete (*i);}
     (*topObject).deleteLater();
     if(parent != nullptr){(*parent).children.remove(this);}
 }
