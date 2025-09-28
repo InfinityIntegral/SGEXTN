@@ -27,6 +27,7 @@ SGLVector: added
 SGLDeque: added
 SGLQueue: added
 SGLStack: added
+SGLPriorityQueue: added
 
 Added:
 - SGXChar
@@ -44,6 +45,7 @@ Added:
 - SGLDeque
 - SGLQueue
 - SGLStack
+- SGLPriorityQueue
 
 Improved:
 - SGXFileSystem
