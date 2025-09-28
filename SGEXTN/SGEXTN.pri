@@ -103,6 +103,7 @@ HEADERS += \
     $$PWD/bypassquickui/sgxthemecolours.h \
     $$PWD/containers/sglarray.h \
     $$PWD/containers/sglcrash.h \
+    $$PWD/containers/sgldeque.h \
     $$PWD/containers/sglhash.h \
     $$PWD/containers/sgllesserthan.h \
     $$PWD/containers/sglmorethan.h \
