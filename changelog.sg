@@ -23,6 +23,7 @@ SGLTuple3: added
 SGLTuple4: added
 SGLTuple5: added
 SGLArray: added
+SGLVector: added
 
 Added:
 - SGXChar
@@ -36,6 +37,7 @@ Added:
 - SGLTuple4
 - SGLTuple5
 - SGLArray
+- SGLVector
 
 Improved:
 - SGXFileSystem
