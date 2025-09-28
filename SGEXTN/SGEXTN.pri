@@ -109,7 +109,9 @@ HEADERS += \
     $$PWD/containers/sglmorethan.h \
     $$PWD/containers/sglpair.h \
     $$PWD/containers/sglprimitivetypechecker.h \
+    $$PWD/containers/sglqueue.h \
     $$PWD/containers/sglspan.h \
+    $$PWD/containers/sglstack.h \
     $$PWD/containers/sgltuple3.h \
     $$PWD/containers/sgltuple4.h \
     $$PWD/containers/sgltuple5.h \
