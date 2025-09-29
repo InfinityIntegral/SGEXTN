@@ -26,16 +26,22 @@ SGXColourRGBA SGUCentralManagement::themeColour6 = SGXColourRGBA(255, 128, 227);
 SGXColourRGBA SGUCentralManagement::themeColour7 = SGXColourRGBA(255, 191, 241);
 SGXColourRGBA SGUCentralManagement::themeColour8 = SGXColourRGBA(255, 255, 255);
 #include "../containers/sglset.h"
-#include "../containers/sglmorethan.h"
+#include "../containers/sgllesserthan.h"
 #include <QDebug>
 // this is run immediately after GUI is created, use it to initialise the UI
 void SGUCentralManagement::initialise(){
-    SGLSet<int, SGLMoreThan<int>> s = SGLSet<int, SGLMoreThan<int>>();
+    SGLSet<int, SGLLesserThan<int>> s = SGLSet<int, SGLLesserThan<int>>();
+    qDebug() << s.length();
     s.insert(2);
+    qDebug() << s.length();
     s.insert(3);
+    qDebug() << s.length();
     s.insert(5);
+    qDebug() << s.length();
     s.insert(6);
+    qDebug() << s.length();
     s.insert(7);
+    qDebug() << s.length();
     s.insert(11);
     qDebug() << s.length();
     s.erase(6);
@@ -44,15 +50,20 @@ void SGUCentralManagement::initialise(){
     qDebug() << s.contains(1) << s.contains(6) << s.contains(11);
     qDebug() << (*s.lowerBound(4)) << (*s.upperBound(4)) << (*s.lowerBound(3)) << (*s.upperBound(3));
     qDebug() << "start";
-    for(SGLSet<int, SGLMoreThan<int>>::ConstIterator i=s.constBegin(); i!=s.constEnd(); i++){qDebug() << (*i);}
+    for(SGLSet<int, SGLLesserThan<int>>::ConstIterator i=s.constBegin(); i!=s.constEnd(); i++){qDebug() << (*i);}
     qDebug() << "end";
-    SGLSet<int, SGLMoreThan<int>> t = s;
+    SGLSet<int, SGLLesserThan<int>> t = s;
     qDebug() << s.length();
     qDebug() << "start";
-    for(SGLSet<int, SGLMoreThan<int>>::ConstIterator i=t.constBegin(); i!=t.constEnd(); i++){qDebug() << (*i);}
+    for(SGLSet<int, SGLLesserThan<int>>::ConstIterator i=t.constBegin(); i!=t.constEnd(); i++){qDebug() << (*i);}
     qDebug() << "start";
-    for(SGLSet<int, SGLMoreThan<int>>::Iterator i=t.begin(); i!=t.end(); i++){if((*i) == 5 || (*i) == 11){t.erase(i);}}
-    for(SGLSet<int, SGLMoreThan<int>>::ConstIterator i=t.constBegin(); i!=t.constEnd(); i++){qDebug() << (*i);}
+    for(SGLSet<int, SGLLesserThan<int>>::Iterator i=t.begin(); i!=t.end(); i++){if((*i) == 5 || (*i) == 11){t.erase(i);}}
+    for(SGLSet<int, SGLLesserThan<int>>::ConstIterator i=t.constBegin(); i!=t.constEnd(); i++){qDebug() << (*i);}
+    SGLSet<int, SGLLesserThan<int>> u;
+    qDebug() << u.length() << u.contains(0);
+    u = SGLSet<int, SGLLesserThan<int>>(s);
+    qDebug() << u.indexOf(-2) << u.indexOf(11) << u.indexOf(3);
+    qDebug() << u.elementAt(0) << u.elementAt(u.length()-1);
 }
 
 // this is run after the application is created but before the GUI, use it to edit theme colours from configuration files

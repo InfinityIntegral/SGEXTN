@@ -12,6 +12,7 @@ protected:
         Node* leftChild;
         Node* rightChild;
         int height;
+        int subtreeSize;
         T value;
         Node(T x, Node* parentNode);
         Node(Node* oldNode, Node* newParent);
@@ -20,23 +21,26 @@ protected:
     
     Node* root;
     Comparator comparatorInstance;
-    int lengthInternal;
-    int getEffectiveHeight(Node* x);
+    int getEffectiveHeight(Node* x) const;
+    int getEffectiveSubtreeSize(Node* x) const;
     void updateHeightRecurseToRoot(Node* x);
     Node* rebalanceAtNode(Node* x);
     Node* leftRotate(Node* x);
     Node* rightRotate(Node* x);
-    int heightLeftMinusRight(Node* x);
-    int maximumOf2Ints(int a, int b);
+    int heightLeftMinusRight(Node* x) const;
+    [[nodiscard]] int maximumOf2Ints(int a, int b) const;
     void updateHeightNoRecurse(Node* x);
+    void updateSubtreeSizeNoRecurse(Node* x);
     Node* getParentWithThisAsLeftChild(Node* x) const;
     Node* getParentWithThisAsRightChild(Node* x) const;
     Node* getLeftmostSubchild(Node* x) const;
     Node* getRightmostSubchild(Node* x) const;
     void replaceChildren(Node* parent, Node* child, Node* newChild);
     void replaceParent(Node* child, Node* newParent);
-    Node* lowerBoundNode(T x);
-    Node* upperBoundNode(T x);
+    Node* lowerBoundNode(T x) const;
+    Node* upperBoundNode(T x) const;
+    Node* getNodeByIndex(int x) const;
+    int getIndexOfNode(Node* x) const;
     
 public:
     SGLSet();
@@ -95,11 +99,17 @@ public:
     [[nodiscard]] ConstIterator lowerBound(T x) const;
     [[nodiscard]] Iterator upperBound(T x);
     [[nodiscard]] ConstIterator upperBound(T x) const;
+    
+    [[nodiscard]] int indexOf(T x) const;
+    [[nodiscard]] int indexOf(Iterator i) const;
+    [[nodiscard]] int indexOf(ConstIterator i) const;
+    [[nodiscard]] T elementAt(int n) const;
+    [[nodiscard]] Iterator iteratorAt(int n);
+    [[nodiscard]] ConstIterator constIteratorAt(int n) const;
 };
 
 template <typename T, typename Comparator> SGLSet<T, Comparator>::SGLSet(){
     root = nullptr;
-    lengthInternal = 0;
     comparatorInstance = Comparator();
 }
 
@@ -109,11 +119,13 @@ template <typename T, typename Comparator> SGLSet<T, Comparator>::Node::Node(T x
     leftChild = nullptr;
     rightChild = nullptr;
     height = 0;
+    subtreeSize = 1;
 }
 
 template <typename T, typename Comparator> SGLSet<T, Comparator>::Node::Node(Node* oldNode, Node* newParent){
     value = (*oldNode).value;
     height = (*oldNode).height;
+    subtreeSize = (*oldNode).subtreeSize;
     parent = newParent;
     if((*oldNode).leftChild != nullptr){leftChild = new Node((*oldNode).leftChild, this);}
     else{leftChild = nullptr;}
@@ -123,7 +135,6 @@ template <typename T, typename Comparator> SGLSet<T, Comparator>::Node::Node(Nod
 
 template <typename T, typename Comparator> SGLSet<T, Comparator>::SGLSet(const SGLSet& x){
     root = new Node(x.root, nullptr);
-    lengthInternal = x.lengthInternal;
     comparatorInstance = Comparator();
 }
 
@@ -137,24 +148,19 @@ template <typename T, typename Comparator> SGLSet<T, Comparator>& SGLSet<T, Comp
     if(this == &x){return (*this);}
     if(root != nullptr){(*root).recursiveDelete();}
     root = new Node(x.root, nullptr);
-    lengthInternal = x.lengthInternal;
     return (*this);
 }
 
 template <typename T, typename Comparator> SGLSet<T, Comparator>::SGLSet(SGLSet&& x) noexcept {
     root = x.root;
-    lengthInternal = x.lengthInternal;
     x.root = nullptr;
-    x.lengthInternal = 0;
     comparatorInstance = Comparator();
 }
 
 template <typename T, typename Comparator> SGLSet<T, Comparator>& SGLSet<T, Comparator>::operator=(SGLSet&& x) noexcept {
     if(root != nullptr){(*root).recursiveDelete();}
     root = x.root;
-    lengthInternal = x.lengthInternal;
     x.root = nullptr;
-    x.lengthInternal = 0;
     return (*this);
 }
 
@@ -163,20 +169,25 @@ template <typename T, typename Comparator> SGLSet<T, Comparator>::~SGLSet(){
 }
 
 template <typename T, typename Comparator> int SGLSet<T, Comparator>::length() const {
-    return lengthInternal;
+    return getEffectiveSubtreeSize(root);
 }
 
-template <typename T, typename Comparator> int SGLSet<T, Comparator>::getEffectiveHeight(Node* x){
+template <typename T, typename Comparator> int SGLSet<T, Comparator>::getEffectiveHeight(Node* x) const {
     if(x == nullptr){return -1;}
     return (*x).height;
 }
 
-template <typename T, typename Comparator> int SGLSet<T, Comparator>::heightLeftMinusRight(Node* x){
+template <typename T, typename Comparator> int SGLSet<T, Comparator>::getEffectiveSubtreeSize(Node* x) const {
+    if(x == nullptr){return 0;}
+    return (*x).subtreeSize;
+}
+
+template <typename T, typename Comparator> int SGLSet<T, Comparator>::heightLeftMinusRight(Node* x) const {
     if(x == nullptr){return 0;}
     return (getEffectiveHeight((*x).leftChild) - getEffectiveHeight((*x).rightChild));
 }
 
-template <typename T, typename Comparator> int SGLSet<T, Comparator>::maximumOf2Ints(int a, int b){
+template <typename T, typename Comparator> int SGLSet<T, Comparator>::maximumOf2Ints(int a, int b) const {
     if(a >= b){return a;}
     return b;
 }
@@ -184,6 +195,11 @@ template <typename T, typename Comparator> int SGLSet<T, Comparator>::maximumOf2
 template <typename T, typename Comparator> void SGLSet<T, Comparator>::updateHeightNoRecurse(Node* x){
     if(x == nullptr){return;}
     (*x).height = maximumOf2Ints(getEffectiveHeight((*x).leftChild) + 1, getEffectiveHeight((*x).rightChild) + 1);
+}
+
+template <typename T, typename Comparator> void SGLSet<T, Comparator>::updateSubtreeSizeNoRecurse(Node* x){
+    if(x == nullptr){return;}
+    (*x).subtreeSize = getEffectiveSubtreeSize((*x).leftChild) + getEffectiveSubtreeSize((*x).rightChild) + 1;
 }
 
 template <typename T, typename Comparator> SGLSet<T, Comparator>::Node* SGLSet<T, Comparator>::leftRotate(Node* x){
@@ -195,7 +211,9 @@ template <typename T, typename Comparator> SGLSet<T, Comparator>::Node* SGLSet<T
     (*x).rightChild = z;
     if(z != nullptr){(*z).parent = x;}
     updateHeightNoRecurse(x);
+    updateSubtreeSizeNoRecurse(x);
     updateHeightNoRecurse(y);
+    updateSubtreeSizeNoRecurse(y);
     if(p == nullptr){
         root = y;
         (*y).parent = nullptr;
@@ -217,7 +235,9 @@ template <typename T, typename Comparator> SGLSet<T, Comparator>::Node* SGLSet<T
     (*x).leftChild = z;
     if(z != nullptr){(*z).parent = x;}
     updateHeightNoRecurse(x);
+    updateSubtreeSizeNoRecurse(x);
     updateHeightNoRecurse(y);
+    updateSubtreeSizeNoRecurse(y);
     if(p == nullptr){
         root = y;
         (*y).parent = nullptr;
@@ -245,6 +265,7 @@ template <typename T, typename Comparator> void SGLSet<T, Comparator>::updateHei
     if(x == nullptr){return;}
     while(true){
         updateHeightNoRecurse(x);
+        updateSubtreeSizeNoRecurse(x);
         int heightDiff = heightLeftMinusRight(x);
         if(heightDiff < -1 || heightDiff > 1){x = rebalanceAtNode(x);}
         if(x == root){break;}
@@ -256,7 +277,6 @@ template <typename T, typename Comparator> void SGLSet<T, Comparator>::insert(T 
     Node* currentNode = root;
     if(root == nullptr){
         root = new Node(x, nullptr);
-        lengthInternal++;
         return;
     }
     while(true){
@@ -279,7 +299,6 @@ template <typename T, typename Comparator> void SGLSet<T, Comparator>::insert(T 
         else{SGLCrash::crashOnInsert();}
     }
     updateHeightRecurseToRoot(currentNode);
-    lengthInternal++;
 }
 
 template <typename T, typename Comparator> void SGLSet<T, Comparator>::erase(T x){
@@ -503,7 +522,6 @@ template <typename T, typename Comparator> void SGLSet<T, Comparator>::erase(Ite
         updateHeightRecurseToRoot(updateStart);
         delete nodeToDelete;
     }
-    lengthInternal--;
 }
 
 template <typename T, typename Comparator> SGLSet<T, Comparator>::Iterator SGLSet<T, Comparator>::find(T x){
@@ -538,7 +556,7 @@ template <typename T, typename Comparator> SGLSet<T, Comparator>::ConstIterator 
     }
 }
 
-template <typename T, typename Comparator> SGLSet<T, Comparator>::Node* SGLSet<T, Comparator>::lowerBoundNode(T x){
+template <typename T, typename Comparator> SGLSet<T, Comparator>::Node* SGLSet<T, Comparator>::lowerBoundNode(T x) const {
     Node* output = nullptr;
     Node* currentNode = root;
     while(currentNode != nullptr){
@@ -551,7 +569,7 @@ template <typename T, typename Comparator> SGLSet<T, Comparator>::Node* SGLSet<T
     return output;
 }
 
-template <typename T, typename Comparator> SGLSet<T, Comparator>::Node* SGLSet<T, Comparator>::upperBoundNode(T x){
+template <typename T, typename Comparator> SGLSet<T, Comparator>::Node* SGLSet<T, Comparator>::upperBoundNode(T x) const {
     Node* output = nullptr;
     Node* currentNode = root;
     while(currentNode != nullptr){
@@ -578,6 +596,58 @@ template <typename T, typename Comparator> SGLSet<T, Comparator>::Iterator SGLSe
 
 template <typename T, typename Comparator> SGLSet<T, Comparator>::ConstIterator SGLSet<T, Comparator>::upperBound(T x) const {
     return ConstIterator(upperBoundNode(x), this);
+}
+
+template <typename T, typename Comparator> int SGLSet<T, Comparator>::indexOf(T x) const {
+    return indexOf(find(x));
+}
+
+template <typename T, typename Comparator> int SGLSet<T, Comparator>::indexOf(Iterator i) const {
+    return getIndexOfNode(i.node);
+}
+
+template <typename T, typename Comparator> int SGLSet<T, Comparator>::indexOf(ConstIterator i) const {
+    return getIndexOfNode(i.node);
+}
+
+template <typename T, typename Comparator> int SGLSet<T, Comparator>::getIndexOfNode(Node* x) const {
+    if(x == nullptr){return -1;}
+    Node* currentNode = root;
+    int index = 0;
+    while(true){
+        if(currentNode == x){return (index + getEffectiveSubtreeSize((*currentNode).leftChild));}
+        if(comparatorInstance((*x).value, (*currentNode).value) == true){currentNode = (*currentNode).leftChild;}
+        else{
+            index += (1 + getEffectiveSubtreeSize((*currentNode).leftChild));
+            currentNode = (*currentNode).rightChild;
+        }
+    }
+}
+
+template <typename T, typename Comparator> T SGLSet<T, Comparator>::elementAt(int n) const {
+    return (*constIteratorAt(n));
+}
+
+template <typename T, typename Comparator> SGLSet<T, Comparator>::Iterator SGLSet<T, Comparator>::iteratorAt(int n){
+    return Iterator(getNodeByIndex(n), this);
+}
+
+template <typename T, typename Comparator> SGLSet<T, Comparator>::ConstIterator SGLSet<T, Comparator>::constIteratorAt(int n) const {
+    return ConstIterator(getNodeByIndex(n), this);
+}
+
+template <typename T, typename Comparator> SGLSet<T, Comparator>::Node* SGLSet<T, Comparator>::getNodeByIndex(int x) const {
+    if(root == nullptr){return nullptr;}
+    if(x < 0 || x >= (*root).subtreeSize){return nullptr;}
+    Node* currentNode = root;
+    while(true){
+        if(x == getEffectiveSubtreeSize((*currentNode).leftChild)){return currentNode;}
+        if(x < getEffectiveSubtreeSize((*currentNode).leftChild)){currentNode = (*currentNode).leftChild;}
+        else{
+            x -= (1 + getEffectiveSubtreeSize((*currentNode).leftChild));
+            currentNode = (*currentNode).rightChild;
+        }
+    }
 }
 
 #endif // SGLSET_H

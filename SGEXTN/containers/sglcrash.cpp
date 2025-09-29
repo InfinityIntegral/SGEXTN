@@ -10,5 +10,5 @@ void SGLCrash::crashOnInsert(){
 }
 
 void SGLCrash::crashOnRemove(){
-    throw std::out_of_range("You attempted to remove a element or key from a SGLSet / SGLUnorderedSet / SGLMap / SGLUnorderedMap when the element or key does not exist in the data structure.");
+    throw std::out_of_range("You attempted to remove a element or key from a SGLSet / SGLUnorderedSet / SGLMultiSet / SGLUnorderedMultiSet / SGLMap / SGLUnorderedMap / SGLMultiMap / SGLUnorderedMultiMap when the element or key does not exist in the data structure.");
 }
