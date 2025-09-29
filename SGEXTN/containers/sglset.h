@@ -233,18 +233,12 @@ template <typename T, typename Comparator> SGLSet<T, Comparator>::Node* SGLSet<T
 template <typename T, typename Comparator> SGLSet<T, Comparator>::Node* SGLSet<T, Comparator>::rebalanceAtNode(Node* x){
     if(heightLeftMinusRight(x) > 1){
         if(heightLeftMinusRight((*x).leftChild) >= 0){return rightRotate(x);}
-        else{
-            leftRotate((*x).leftChild);
-            return rightRotate(x);
-        }
+        leftRotate((*x).leftChild);
+        return rightRotate(x);
     }
-    else{
-        if(heightLeftMinusRight((*x).rightChild) <= 0){return leftRotate(x);}
-        else{
-            rightRotate((*x).rightChild);
-            return leftRotate(x);
-        }
-    }
+    if(heightLeftMinusRight((*x).rightChild) <= 0){return leftRotate(x);}
+    rightRotate((*x).rightChild);
+    return leftRotate(x);
 }
 
 template <typename T, typename Comparator> void SGLSet<T, Comparator>::updateHeightRecurseToRoot(Node* x){
