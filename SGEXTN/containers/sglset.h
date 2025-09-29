@@ -1,0 +1,589 @@
+#ifndef SGLSET_H
+#define SGLSET_H
+
+#include "sglcrash.h"
+
+template <typename T, typename Comparator> class SGLSet{
+protected:
+    class Node {
+        friend class SGLSet;
+    public:
+        Node* parent;
+        Node* leftChild;
+        Node* rightChild;
+        int height;
+        T value;
+        Node(T x, Node* parentNode);
+        Node(Node* oldNode, Node* newParent);
+        void recursiveDelete();
+    };
+    
+    Node* root;
+    Comparator comparatorInstance;
+    int lengthInternal;
+    int getEffectiveHeight(Node* x);
+    void updateHeightRecurseToRoot(Node* x);
+    Node* rebalanceAtNode(Node* x);
+    Node* leftRotate(Node* x);
+    Node* rightRotate(Node* x);
+    int heightLeftMinusRight(Node* x);
+    int maximumOf2Ints(int a, int b);
+    void updateHeightNoRecurse(Node* x);
+    Node* getParentWithThisAsLeftChild(Node* x) const;
+    Node* getParentWithThisAsRightChild(Node* x) const;
+    Node* getLeftmostSubchild(Node* x) const;
+    Node* getRightmostSubchild(Node* x) const;
+    void replaceChildren(Node* parent, Node* child, Node* newChild);
+    void replaceParent(Node* child, Node* newParent);
+    Node* lowerBoundNode(T x);
+    Node* upperBoundNode(T x);
+    
+public:
+    SGLSet();
+    SGLSet(const SGLSet& x);
+    SGLSet& operator=(const SGLSet& x);
+    SGLSet(SGLSet&& x) noexcept;
+    SGLSet& operator=(SGLSet&& x) noexcept;
+    ~SGLSet();
+    [[nodiscard]] int length() const;
+    void insert(T x);
+    void erase(T x);
+    [[nodiscard]] bool contains(T x) const;
+    [[nodiscard]] int count(T x) const;
+    
+    class Iterator {
+        friend class SGLSet;
+    public:
+        Iterator& operator++();
+        Iterator operator++(int);
+        Iterator& operator--();
+        Iterator operator--(int);
+        bool operator==(Iterator x);
+        bool operator!=(Iterator x);
+        T operator*();
+    protected:
+        Iterator(Node* x, SGLSet* s);
+        Node* node;
+        SGLSet* associatedSet;
+    };
+    
+    class ConstIterator {
+        friend class SGLSet;
+    public:
+        ConstIterator& operator++();
+        ConstIterator operator++(int);
+        ConstIterator& operator--();
+        ConstIterator operator--(int);
+        bool operator==(ConstIterator x);
+        bool operator!=(ConstIterator x);
+        T operator*();
+    protected:
+        ConstIterator(Node* x, const SGLSet* s);
+        Node* node;
+        const SGLSet* associatedSet;
+    };
+    
+    [[nodiscard]] Iterator begin();
+    [[nodiscard]] ConstIterator constBegin() const;
+    [[nodiscard]] Iterator end();
+    [[nodiscard]] ConstIterator constEnd() const;
+    void erase(Iterator& i);
+    [[nodiscard]] Iterator find(T x);
+    [[nodiscard]] ConstIterator find(T x) const;
+    
+    [[nodiscard]] Iterator lowerBound(T x);
+    [[nodiscard]] ConstIterator lowerBound(T x) const;
+    [[nodiscard]] Iterator upperBound(T x);
+    [[nodiscard]] ConstIterator upperBound(T x) const;
+};
+
+template <typename T, typename Comparator> SGLSet<T, Comparator>::SGLSet(){
+    root = nullptr;
+    lengthInternal = 0;
+    comparatorInstance = Comparator();
+}
+
+template <typename T, typename Comparator> SGLSet<T, Comparator>::Node::Node(T x, Node* parentNode){
+    value = x;
+    parent = parentNode;
+    leftChild = nullptr;
+    rightChild = nullptr;
+    height = 0;
+}
+
+template <typename T, typename Comparator> SGLSet<T, Comparator>::Node::Node(Node* oldNode, Node* newParent){
+    value = (*oldNode).value;
+    height = (*oldNode).height;
+    parent = newParent;
+    if((*oldNode).leftChild != nullptr){leftChild = new Node((*oldNode).leftChild, this);}
+    else{leftChild = nullptr;}
+    if((*oldNode).rightChild != nullptr){rightChild = new Node((*oldNode).rightChild, this);}
+    else{rightChild = nullptr;}
+}
+
+template <typename T, typename Comparator> SGLSet<T, Comparator>::SGLSet(const SGLSet& x){
+    root = new Node(x.root, nullptr);
+    lengthInternal = x.lengthInternal;
+    comparatorInstance = Comparator();
+}
+
+template <typename T, typename Comparator> void SGLSet<T, Comparator>::Node::recursiveDelete(){
+    if(leftChild != nullptr){(*leftChild).recursiveDelete();}
+    if(rightChild != nullptr){(*rightChild).recursiveDelete();}
+    delete this;
+}
+
+template <typename T, typename Comparator> SGLSet<T, Comparator>& SGLSet<T, Comparator>::operator=(const SGLSet& x){
+    if(this == &x){return (*this);}
+    if(root != nullptr){(*root).recursiveDelete();}
+    root = new Node(x.root, nullptr);
+    lengthInternal = x.lengthInternal;
+    return (*this);
+}
+
+template <typename T, typename Comparator> SGLSet<T, Comparator>::SGLSet(SGLSet&& x) noexcept {
+    root = x.root;
+    lengthInternal = x.lengthInternal;
+    x.root = nullptr;
+    x.lengthInternal = 0;
+    comparatorInstance = Comparator();
+}
+
+template <typename T, typename Comparator> SGLSet<T, Comparator>& SGLSet<T, Comparator>::operator=(SGLSet&& x) noexcept {
+    if(root != nullptr){(*root).recursiveDelete();}
+    root = x.root;
+    lengthInternal = x.lengthInternal;
+    x.root = nullptr;
+    x.lengthInternal = 0;
+    return (*this);
+}
+
+template <typename T, typename Comparator> SGLSet<T, Comparator>::~SGLSet(){
+    if(root != nullptr){(*root).recursiveDelete();}
+}
+
+template <typename T, typename Comparator> int SGLSet<T, Comparator>::length() const {
+    return lengthInternal;
+}
+
+template <typename T, typename Comparator> int SGLSet<T, Comparator>::getEffectiveHeight(Node* x){
+    if(x == nullptr){return -1;}
+    return (*x).height;
+}
+
+template <typename T, typename Comparator> int SGLSet<T, Comparator>::heightLeftMinusRight(Node* x){
+    if(x == nullptr){return 0;}
+    return (getEffectiveHeight((*x).leftChild) - getEffectiveHeight((*x).rightChild));
+}
+
+template <typename T, typename Comparator> int SGLSet<T, Comparator>::maximumOf2Ints(int a, int b){
+    if(a >= b){return a;}
+    return b;
+}
+
+template <typename T, typename Comparator> void SGLSet<T, Comparator>::updateHeightNoRecurse(Node* x){
+    if(x == nullptr){return;}
+    (*x).height = maximumOf2Ints(getEffectiveHeight((*x).leftChild) + 1, getEffectiveHeight((*x).rightChild) + 1);
+}
+
+template <typename T, typename Comparator> SGLSet<T, Comparator>::Node* SGLSet<T, Comparator>::leftRotate(Node* x){
+    Node* y = (*x).rightChild;
+    Node* z = (*y).leftChild;
+    Node* p = (*x).parent;
+    (*y).leftChild = x;
+    (*x).parent = y;
+    (*x).rightChild = z;
+    if(z != nullptr){(*z).parent = x;}
+    updateHeightNoRecurse(x);
+    updateHeightNoRecurse(y);
+    if(p == nullptr){
+        root = y;
+        (*y).parent = nullptr;
+    }
+    else{
+        if((*p).leftChild == x){(*p).leftChild = y;}
+        else{(*p).rightChild = y;}
+        (*y).parent = p;
+    }
+    return y;
+}
+
+template <typename T, typename Comparator> SGLSet<T, Comparator>::Node* SGLSet<T, Comparator>::rightRotate(Node* x){
+    Node* y = (*x).leftChild;
+    Node* z = (*y).rightChild;
+    Node* p = (*x).parent;
+    (*y).rightChild = x;
+    (*x).parent = y;
+    (*x).leftChild = z;
+    if(z != nullptr){(*z).parent = x;}
+    updateHeightNoRecurse(x);
+    updateHeightNoRecurse(y);
+    if(p == nullptr){
+        root = y;
+        (*y).parent = nullptr;
+    }
+    else{
+        if((*p).leftChild == x){(*p).leftChild = y;}
+        else{(*p).rightChild = y;}
+        (*y).parent = p;
+    }
+    return y;
+}
+
+template <typename T, typename Comparator> SGLSet<T, Comparator>::Node* SGLSet<T, Comparator>::rebalanceAtNode(Node* x){
+    if(heightLeftMinusRight(x) > 1){
+        if(heightLeftMinusRight((*x).leftChild) >= 0){return rightRotate(x);}
+        else{
+            leftRotate((*x).leftChild);
+            return rightRotate(x);
+        }
+    }
+    else{
+        if(heightLeftMinusRight((*x).rightChild) <= 0){return leftRotate(x);}
+        else{
+            rightRotate((*x).rightChild);
+            return leftRotate(x);
+        }
+    }
+}
+
+template <typename T, typename Comparator> void SGLSet<T, Comparator>::updateHeightRecurseToRoot(Node* x){
+    if(x == nullptr){return;}
+    while(true){
+        updateHeightNoRecurse(x);
+        int heightDiff = heightLeftMinusRight(x);
+        if(heightDiff < -1 || heightDiff > 1){x = rebalanceAtNode(x);}
+        if(x == root){break;}
+        x = (*x).parent;
+    }
+}
+
+template <typename T, typename Comparator> void SGLSet<T, Comparator>::insert(T x){
+    Node* currentNode = root;
+    if(root == nullptr){
+        root = new Node(x, nullptr);
+        lengthInternal++;
+        return;
+    }
+    while(true){
+        if(comparatorInstance(x, (*currentNode).value) == true){
+            if((*currentNode).leftChild == nullptr){
+                (*currentNode).leftChild = new Node(x, currentNode);
+                currentNode = (*currentNode).leftChild;
+                break;
+            }
+            currentNode = (*currentNode).leftChild;
+        }
+        else if(comparatorInstance((*currentNode).value, x) == true){
+            if((*currentNode).rightChild == nullptr){
+                (*currentNode).rightChild = new Node(x, currentNode);
+                currentNode = (*currentNode).rightChild;
+                break;
+            }
+            currentNode = (*currentNode).rightChild;
+        }
+        else{SGLCrash::crashOnInsert();}
+    }
+    updateHeightRecurseToRoot(currentNode);
+    lengthInternal++;
+}
+
+template <typename T, typename Comparator> void SGLSet<T, Comparator>::erase(T x){
+    Iterator i = find(x);
+    erase(i);
+}
+
+template <typename T, typename Comparator> bool SGLSet<T, Comparator>::contains(T x) const {
+    if(find(x) == constEnd()){return false;}
+    return true;
+}
+
+template <typename T, typename Comparator> int SGLSet<T, Comparator>::count(T x) const {
+    if(contains(x) == true){return 1;}
+    return 0;
+}
+
+template <typename T, typename Comparator> SGLSet<T, Comparator>::Iterator::Iterator(Node* x, SGLSet* s){
+    node = x;
+    associatedSet = s;
+}
+
+template <typename T, typename Comparator> SGLSet<T, Comparator>::ConstIterator::ConstIterator(Node* x, const SGLSet* s){
+    node = x;
+    associatedSet = s;
+}
+
+template <typename T, typename Comparator> SGLSet<T, Comparator>::Node* SGLSet<T, Comparator>::getLeftmostSubchild(Node* x) const {
+    if(x == nullptr){return nullptr;}
+    while(true){
+        if((*x).leftChild == nullptr){return x;}
+        x = (*x).leftChild;
+    }
+}
+
+template <typename T, typename Comparator> SGLSet<T, Comparator>::Node* SGLSet<T, Comparator>::getRightmostSubchild(Node* x) const {
+    if(x == nullptr){return nullptr;}
+    while(true){
+        if((*x).rightChild == nullptr){return x;}
+        x = (*x).rightChild;
+    }
+}
+
+template <typename T, typename Comparator> SGLSet<T, Comparator>::Node* SGLSet<T, Comparator>::getParentWithThisAsLeftChild(Node* x) const {
+    if(x == nullptr){return nullptr;}
+    while(true){
+        if((*x).parent == nullptr){return nullptr;}
+        if((*(*x).parent).leftChild == x){return (*x).parent;}
+        x = (*x).parent;
+    }
+}
+
+template <typename T, typename Comparator> SGLSet<T, Comparator>::Node* SGLSet<T, Comparator>::getParentWithThisAsRightChild(Node* x) const {
+    if(x == nullptr){return nullptr;}
+    while(true){
+        if((*x).parent == nullptr){return nullptr;}
+        if((*(*x).parent).rightChild == x){return (*x).parent;}
+        x = (*x).parent;
+    }
+}
+
+template <typename T, typename Comparator> SGLSet<T, Comparator>::Iterator& SGLSet<T, Comparator>::Iterator::operator++(){
+    if(node == nullptr){node = (*associatedSet).getLeftmostSubchild((*associatedSet).root);}
+    else if((*node).rightChild == nullptr){node = (*associatedSet).getParentWithThisAsLeftChild(node);}
+    else{node = (*associatedSet).getLeftmostSubchild((*node).rightChild);}
+    return (*this);
+}
+
+template <typename T, typename Comparator> SGLSet<T, Comparator>::ConstIterator& SGLSet<T, Comparator>::ConstIterator::operator++(){
+    if(node == nullptr){node = (*associatedSet).getLeftmostSubchild((*associatedSet).root);}
+    else if((*node).rightChild == nullptr){node = (*associatedSet).getParentWithThisAsLeftChild(node);}
+    else{node = (*associatedSet).getLeftmostSubchild((*node).rightChild);}
+    return (*this);
+}
+
+template <typename T, typename Comparator> SGLSet<T, Comparator>::Iterator SGLSet<T, Comparator>::Iterator::operator++(int){
+    Iterator prev = (*this);
+    if(node == nullptr){node = (*associatedSet).getLeftmostSubchild((*associatedSet).root);}
+    else if((*node).rightChild == nullptr){node = (*associatedSet).getParentWithThisAsLeftChild(node);}
+    else{node = (*associatedSet).getLeftmostSubchild((*node).rightChild);}
+    return prev;
+}
+
+template <typename T, typename Comparator> SGLSet<T, Comparator>::ConstIterator SGLSet<T, Comparator>::ConstIterator::operator++(int){
+    ConstIterator prev = (*this);
+    if(node == nullptr){node = (*associatedSet).getLeftmostSubchild((*associatedSet).root);}
+    else if((*node).rightChild == nullptr){node = (*associatedSet).getParentWithThisAsLeftChild(node);}
+    else{node = (*associatedSet).getLeftmostSubchild((*node).rightChild);}
+    return prev;
+}
+
+template <typename T, typename Comparator> SGLSet<T, Comparator>::Iterator& SGLSet<T, Comparator>::Iterator::operator--(){
+    if(node == nullptr){node = (*associatedSet).getRightmostSubchild((*associatedSet).root);}
+    else if((*node).leftChild == nullptr){node = (*associatedSet).getParentWithThisAsRightChild(node);}
+    else{node = (*associatedSet).getRightmostSubchild((*node).leftChild);}
+    return (*this);
+}
+
+template <typename T, typename Comparator> SGLSet<T, Comparator>::ConstIterator& SGLSet<T, Comparator>::ConstIterator::operator--(){
+    if(node == nullptr){node = (*associatedSet).getRightmostSubchild((*associatedSet).root);}
+    else if((*node).leftChild == nullptr){node = (*associatedSet).getParentWithThisAsRightChild(node);}
+    else{node = (*associatedSet).getRightmostSubchild((*node).leftChild);}
+    return (*this);
+}
+
+template <typename T, typename Comparator> SGLSet<T, Comparator>::Iterator SGLSet<T, Comparator>::Iterator::operator--(int){
+    Iterator prev = (*this);
+    if(node == nullptr){node = (*associatedSet).getRightmostSubchild((*associatedSet).root);}
+    else if((*node).leftChild == nullptr){node = (*associatedSet).getParentWithThisAsRightChild(node);}
+    else{node = (*associatedSet).getRightmostSubchild((*node).leftChild);}
+    return prev;
+}
+
+template <typename T, typename Comparator> SGLSet<T, Comparator>::ConstIterator SGLSet<T, Comparator>::ConstIterator::operator--(int){
+    ConstIterator prev = (*this);
+    if(node == nullptr){node = (*associatedSet).getRightmostSubchild((*associatedSet).root);}
+    else if((*node).leftChild == nullptr){node = (*associatedSet).getParentWithThisAsRightChild(node);}
+    else{node = (*associatedSet).getRightmostSubchild((*node).leftChild);}
+    return prev;
+}
+
+template <typename T, typename Comparator> T SGLSet<T, Comparator>::Iterator::operator*(){
+    return (*node).value;
+}
+
+template <typename T, typename Comparator> T SGLSet<T, Comparator>::ConstIterator::operator*(){
+    return (*node).value;
+}
+
+template <typename T, typename Comparator> bool SGLSet<T, Comparator>::Iterator::operator==(Iterator x){
+    return (node == x.node);
+}
+
+template <typename T, typename Comparator> bool SGLSet<T, Comparator>::Iterator::operator!=(Iterator x){
+    return (node != x.node);
+}
+
+template <typename T, typename Comparator> bool SGLSet<T, Comparator>::ConstIterator::operator==(ConstIterator x){
+    return (node == x.node);
+}
+
+template <typename T, typename Comparator> bool SGLSet<T, Comparator>::ConstIterator::operator!=(ConstIterator x){
+    return (node != x.node);
+}
+
+template <typename T, typename Comparator> SGLSet<T, Comparator>::Iterator SGLSet<T, Comparator>::begin(){
+    return Iterator(getLeftmostSubchild(root), this);
+}
+
+template <typename T, typename Comparator> SGLSet<T, Comparator>::ConstIterator SGLSet<T, Comparator>::constBegin() const {
+    return ConstIterator(getLeftmostSubchild(root), this);
+}
+
+template <typename T, typename Comparator> SGLSet<T, Comparator>::Iterator SGLSet<T, Comparator>::end(){
+    return Iterator(nullptr, this);
+}
+
+template <typename T, typename Comparator> SGLSet<T, Comparator>::ConstIterator SGLSet<T, Comparator>::constEnd() const {
+    return ConstIterator(nullptr, this);
+}
+
+template <typename T, typename Comparator> void SGLSet<T, Comparator>::replaceChildren(Node* parent, Node* child, Node* newChild){
+    if(parent == nullptr){return;}
+    if((*parent).leftChild == child){(*parent).leftChild = newChild;}
+    else{(*parent).rightChild = newChild;}
+}
+
+template <typename T, typename Comparator> void SGLSet<T, Comparator>::replaceParent(Node* child, Node* newParent){
+    if(child == nullptr){return;}
+    (*child).parent = newParent;
+}
+
+
+template <typename T, typename Comparator> void SGLSet<T, Comparator>::erase(Iterator& i){
+    Node* nodeToDelete = i.node;
+    if(nodeToDelete == nullptr){SGLCrash::crashOnRemove();}
+    i++;
+    if((*nodeToDelete).leftChild == nullptr && (*nodeToDelete).rightChild == nullptr){
+        replaceChildren((*nodeToDelete).parent, nodeToDelete, nullptr);
+        if(nodeToDelete == root){root = nullptr;}
+        updateHeightRecurseToRoot((*nodeToDelete).parent);
+        delete nodeToDelete;
+    }
+    else if((*nodeToDelete).rightChild == nullptr){
+        replaceChildren((*nodeToDelete).parent, nodeToDelete, (*nodeToDelete).leftChild);
+        replaceParent((*nodeToDelete).leftChild, (*nodeToDelete).parent);
+        if(nodeToDelete == root){root = (*nodeToDelete).leftChild;}
+        updateHeightRecurseToRoot((*nodeToDelete).parent);
+        delete nodeToDelete;
+    }
+    else if((*nodeToDelete).leftChild == nullptr){
+        replaceChildren((*nodeToDelete).parent, nodeToDelete, (*nodeToDelete).rightChild);
+        replaceParent((*nodeToDelete).rightChild, (*nodeToDelete).parent);
+        if(nodeToDelete == root){root = (*nodeToDelete).rightChild;}
+        updateHeightRecurseToRoot((*nodeToDelete).parent);
+        delete nodeToDelete;
+    }
+    else{
+        Node* replace = getLeftmostSubchild((*nodeToDelete).rightChild);
+        Node* updateStart = nullptr;
+        if((*replace).parent == nodeToDelete){
+            updateStart = replace;
+            replaceChildren((*nodeToDelete).parent, nodeToDelete, replace);
+            replaceParent((*nodeToDelete).leftChild, replace);
+            (*replace).parent = (*nodeToDelete).parent;
+            (*replace).leftChild = (*nodeToDelete).leftChild;
+            if(nodeToDelete == root){root = replace;}
+        }
+        else{
+            replaceChildren((*replace).parent, replace, (*replace).rightChild);
+            replaceParent((*replace).rightChild, (*replace).parent);
+            updateStart = (*replace).parent;
+            replaceChildren((*nodeToDelete).parent, nodeToDelete, replace);
+            replaceParent((*nodeToDelete).leftChild, replace);
+            replaceParent((*nodeToDelete).rightChild, replace);
+            (*replace).parent = (*nodeToDelete).parent;
+            (*replace).leftChild = (*nodeToDelete).leftChild;
+            (*replace).rightChild = (*nodeToDelete).rightChild;
+            if(nodeToDelete == root){root = replace;}
+        }
+        updateHeightRecurseToRoot(updateStart);
+        delete nodeToDelete;
+    }
+    lengthInternal--;
+}
+
+template <typename T, typename Comparator> SGLSet<T, Comparator>::Iterator SGLSet<T, Comparator>::find(T x){
+    Node* currentNode = root;
+    if(root == nullptr){return end();}
+    while(true){
+        if(comparatorInstance(x, (*currentNode).value) == true){
+            if((*currentNode).leftChild == nullptr){return end();}
+            currentNode = (*currentNode).leftChild;
+        }
+        else if(comparatorInstance((*currentNode).value, x) == true){
+            if((*currentNode).rightChild == nullptr){return end();}
+            currentNode = (*currentNode).rightChild;
+        }
+        else{return Iterator(currentNode, this);}
+    }
+}
+
+template <typename T, typename Comparator> SGLSet<T, Comparator>::ConstIterator SGLSet<T, Comparator>::find(T x) const {
+    Node* currentNode = root;
+    if(root == nullptr){return constEnd();}
+    while(true){
+        if(comparatorInstance(x, (*currentNode).value) == true){
+            if((*currentNode).leftChild == nullptr){return constEnd();}
+            currentNode = (*currentNode).leftChild;
+        }
+        else if(comparatorInstance((*currentNode).value, x) == true){
+            if((*currentNode).rightChild == nullptr){return constEnd();}
+            currentNode = (*currentNode).rightChild;
+        }
+        else{return ConstIterator(currentNode, this);}
+    }
+}
+
+template <typename T, typename Comparator> SGLSet<T, Comparator>::Node* SGLSet<T, Comparator>::lowerBoundNode(T x){
+    Node* output = nullptr;
+    Node* currentNode = root;
+    while(currentNode != nullptr){
+        if(comparatorInstance((*currentNode).value, x) == false){
+            output = currentNode;
+            currentNode = (*currentNode).leftChild;
+        }
+        else{currentNode = (*currentNode).rightChild;}
+    }
+    return output;
+}
+
+template <typename T, typename Comparator> SGLSet<T, Comparator>::Node* SGLSet<T, Comparator>::upperBoundNode(T x){
+    Node* output = nullptr;
+    Node* currentNode = root;
+    while(currentNode != nullptr){
+        if(comparatorInstance(x, (*currentNode).value) == true){
+            output = currentNode;
+            currentNode = (*currentNode).leftChild;
+        }
+        else{currentNode = (*currentNode).rightChild;}
+    }
+    return output;
+}
+
+template <typename T, typename Comparator> SGLSet<T, Comparator>::Iterator SGLSet<T, Comparator>::lowerBound(T x){
+    return Iterator(lowerBoundNode(x), this);
+}
+
+template <typename T, typename Comparator> SGLSet<T, Comparator>::ConstIterator SGLSet<T, Comparator>::lowerBound(T x) const {
+    return ConstIterator(lowerBoundNode(x), this);
+}
+
+template <typename T, typename Comparator> SGLSet<T, Comparator>::Iterator SGLSet<T, Comparator>::upperBound(T x){
+    return Iterator(upperBoundNode(x), this);
+}
+
+template <typename T, typename Comparator> SGLSet<T, Comparator>::ConstIterator SGLSet<T, Comparator>::upperBound(T x) const {
+    return ConstIterator(upperBoundNode(x), this);
+}
+
+#endif // SGLSET_H

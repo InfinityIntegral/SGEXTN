@@ -111,6 +111,7 @@ HEADERS += \
     $$PWD/containers/sglprimitivetypechecker.h \
     $$PWD/containers/sglpriorityqueue.h \
     $$PWD/containers/sglqueue.h \
+    $$PWD/containers/sglset.h \
     $$PWD/containers/sglspan.h \
     $$PWD/containers/sglstack.h \
     $$PWD/containers/sgltuple3.h \

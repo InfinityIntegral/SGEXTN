@@ -5,6 +5,8 @@ class SGLCrash
 {
 public:
     static void crash();
+    static void crashOnInsert();
+    static void crashOnRemove();
 };
 
 #endif // SGLCRASH_H
