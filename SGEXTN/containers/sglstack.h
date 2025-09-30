@@ -9,7 +9,7 @@ public:
     SGLStack(SGLStack&& x) noexcept;
     SGLStack& operator=(SGLStack&& x) noexcept;
     ~SGLStack();
-    [[nodiscard]] T top() const;
+    [[nodiscard]] const T& top() const;
     [[nodiscard]] int length() const;
     void push(T x);
     void pop();
@@ -71,7 +71,7 @@ template <typename T> SGLStack<T>::~SGLStack(){
     delete[] dataInternal;
 }
 
-template <typename T> T SGLStack<T>::top() const {
+template <typename T> const T& SGLStack<T>::top() const {
     return (*(dataInternal + lengthInternal - 1));
 }
 

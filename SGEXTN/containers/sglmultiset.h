@@ -66,7 +66,7 @@ public:
         Iterator operator--(int);
         bool operator==(Iterator x);
         bool operator!=(Iterator x);
-        T operator*();
+        const T& operator*();
     protected:
         Iterator(Node* x, int c, SGLMultiSet* s);
         Node* node;
@@ -83,7 +83,7 @@ public:
         ConstIterator operator--(int);
         bool operator==(ConstIterator x);
         bool operator!=(ConstIterator x);
-        T operator*();
+        const T& operator*();
     protected:
         ConstIterator(Node* x, int c, const SGLMultiSet* s);
         Node* node;
@@ -107,7 +107,7 @@ public:
     [[nodiscard]] int indexOf(T x) const;
     [[nodiscard]] int indexOf(Iterator i) const;
     [[nodiscard]] int indexOf(ConstIterator i) const;
-    [[nodiscard]] T elementAt(int n) const;
+    [[nodiscard]] const T& elementAt(int n) const;
     [[nodiscard]] Iterator iteratorAt(int n);
     [[nodiscard]] ConstIterator constIteratorAt(int n) const;
 };
@@ -529,11 +529,11 @@ template <typename T, typename Comparator> SGLMultiSet<T, Comparator>::ConstIter
     return prev;
 }
 
-template <typename T, typename Comparator> T SGLMultiSet<T, Comparator>::Iterator::operator*(){
+template <typename T, typename Comparator> const T& SGLMultiSet<T, Comparator>::Iterator::operator*(){
     return (*node).value;
 }
 
-template <typename T, typename Comparator> T SGLMultiSet<T, Comparator>::ConstIterator::operator*(){
+template <typename T, typename Comparator> const T& SGLMultiSet<T, Comparator>::ConstIterator::operator*(){
     return (*node).value;
 }
 
@@ -731,7 +731,7 @@ template <typename T, typename Comparator> int SGLMultiSet<T, Comparator>::getIn
     }
 }
 
-template <typename T, typename Comparator> T SGLMultiSet<T, Comparator>::elementAt(int n) const {
+template <typename T, typename Comparator> const T& SGLMultiSet<T, Comparator>::elementAt(int n) const {
     return (*constIteratorAt(n));
 }
 

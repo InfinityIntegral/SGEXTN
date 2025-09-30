@@ -66,6 +66,9 @@ void SGUCentralManagement::initialise(){
     u = SGLMap<int, SGXString, SGLLesserThan<int>>(s);
     qDebug() << u.indexOf(-2) << u.indexOf(11) << u.indexOf(3);
     qDebug() << (*u.valueAt(0).data) << (*u.valueAt(u.length()-1).data);
+    qDebug() << (*s.at(11).data);
+    s.at(11) = "hi";
+    for(SGLMap<int, SGXString, SGLLesserThan<int>>::ConstIterator i=s.constBegin(); i!=s.constEnd(); i++){qDebug() << i.key() << (*i.value().data);}
 }
 
 // this is run after the application is created but before the GUI, use it to edit theme colours from configuration files

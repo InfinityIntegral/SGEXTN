@@ -9,8 +9,8 @@ public:
     SGLQueue(SGLQueue&& x) noexcept;
     SGLQueue& operator=(SGLQueue&& x) noexcept;
     ~SGLQueue();
-    [[nodiscard]] T front() const;
-    [[nodiscard]] T back() const;
+    [[nodiscard]] const T& front() const;
+    [[nodiscard]] const T& back() const;
     [[nodiscard]] int length() const;
     void push(T x);
     void pop();
@@ -87,11 +87,11 @@ template <typename T> SGLQueue<T>::~SGLQueue(){
     delete[] dataInternal;
 }
 
-template <typename T> T SGLQueue<T>::front() const {
+template <typename T> const T& SGLQueue<T>::front() const {
     return (*(dataInternal + startInternal));
 }
 
-template <typename T> T SGLQueue<T>::back() const {
+template <typename T> const T& SGLQueue<T>::back() const {
     return (*(dataInternal + endInternal - 1));
 }
 

@@ -68,8 +68,8 @@ public:
         Iterator operator--(int);
         bool operator==(Iterator x);
         bool operator!=(Iterator x);
-        K key();
-        V value();
+        const K& key();
+        V& value();
     protected:
         Iterator(Node* x, SGLMap* s);
         Node* node;
@@ -85,8 +85,8 @@ public:
         ConstIterator operator--(int);
         bool operator==(ConstIterator x);
         bool operator!=(ConstIterator x);
-        K key();
-        V value();
+        const K& key();
+        const V& value();
     protected:
         ConstIterator(Node* x, const SGLMap* s);
         Node* node;
@@ -109,8 +109,8 @@ public:
     [[nodiscard]] int indexOf(K x) const;
     [[nodiscard]] int indexOf(Iterator i) const;
     [[nodiscard]] int indexOf(ConstIterator i) const;
-    [[nodiscard]] K keyAt(int n) const;
-    [[nodiscard]] V valueAt(int n) const;
+    [[nodiscard]] const K& keyAt(int n) const;
+    [[nodiscard]] V& valueAt(int n);
     [[nodiscard]] Iterator iteratorAt(int n);
     [[nodiscard]] ConstIterator constIteratorAt(int n) const;
 };
@@ -435,19 +435,19 @@ template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>:
     return prev;
 }
 
-template <typename K, typename V, typename Comparator> K SGLMap<K, V, Comparator>::Iterator::key(){
+template <typename K, typename V, typename Comparator> const K& SGLMap<K, V, Comparator>::Iterator::key(){
     return (*node).key;
 }
 
-template <typename K, typename V, typename Comparator> V SGLMap<K, V, Comparator>::Iterator::value(){
+template <typename K, typename V, typename Comparator> V& SGLMap<K, V, Comparator>::Iterator::value(){
     return (*node).value;
 }
 
-template <typename K, typename V, typename Comparator> K SGLMap<K, V, Comparator>::ConstIterator::key(){
+template <typename K, typename V, typename Comparator> const K& SGLMap<K, V, Comparator>::ConstIterator::key(){
     return (*node).key;
 }
 
-template <typename K, typename V, typename Comparator> V SGLMap<K, V, Comparator>::ConstIterator::value(){
+template <typename K, typename V, typename Comparator> const V& SGLMap<K, V, Comparator>::ConstIterator::value(){
     return (*node).value;
 }
 
@@ -640,12 +640,12 @@ template <typename K, typename V, typename Comparator> int SGLMap<K, V, Comparat
     }
 }
 
-template <typename K, typename V, typename Comparator> K SGLMap<K, V, Comparator>::keyAt(int n) const {
-    return constIteratorAt(n).key();
+template <typename K, typename V, typename Comparator> const K& SGLMap<K, V, Comparator>::keyAt(int n) const {
+    return iteratorAt(n).key();
 }
 
-template <typename K, typename V, typename Comparator> V SGLMap<K, V, Comparator>::valueAt(int n) const {
-    return constIteratorAt(n).value();
+template <typename K, typename V, typename Comparator> V& SGLMap<K, V, Comparator>::valueAt(int n){
+    return iteratorAt(n).value();
 }
 
 template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>::Iterator SGLMap<K, V, Comparator>::iteratorAt(int n){
@@ -672,8 +672,8 @@ template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>:
 }
 
 template <typename K, typename V, typename Comparator> V& SGLMap<K, V, Comparator>::at(K x){
-    ConstIterator i = find(x);
-    if(i == constEnd()){SGLCrash::crash();}
+    Iterator i = find(x);
+    if(i == end()){SGLCrash::crash();}
     return i.value();
 }
 

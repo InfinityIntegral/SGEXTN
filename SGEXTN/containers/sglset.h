@@ -65,7 +65,7 @@ public:
         Iterator operator--(int);
         bool operator==(Iterator x);
         bool operator!=(Iterator x);
-        T operator*();
+        const T& operator*();
     protected:
         Iterator(Node* x, SGLSet* s);
         Node* node;
@@ -81,7 +81,7 @@ public:
         ConstIterator operator--(int);
         bool operator==(ConstIterator x);
         bool operator!=(ConstIterator x);
-        T operator*();
+        const T& operator*();
     protected:
         ConstIterator(Node* x, const SGLSet* s);
         Node* node;
@@ -104,7 +104,7 @@ public:
     [[nodiscard]] int indexOf(T x) const;
     [[nodiscard]] int indexOf(Iterator i) const;
     [[nodiscard]] int indexOf(ConstIterator i) const;
-    [[nodiscard]] T elementAt(int n) const;
+    [[nodiscard]] const T& elementAt(int n) const;
     [[nodiscard]] Iterator iteratorAt(int n);
     [[nodiscard]] ConstIterator constIteratorAt(int n) const;
 };
@@ -427,11 +427,11 @@ template <typename T, typename Comparator> SGLSet<T, Comparator>::ConstIterator 
     return prev;
 }
 
-template <typename T, typename Comparator> T SGLSet<T, Comparator>::Iterator::operator*(){
+template <typename T, typename Comparator> const T& SGLSet<T, Comparator>::Iterator::operator*(){
     return (*node).value;
 }
 
-template <typename T, typename Comparator> T SGLSet<T, Comparator>::ConstIterator::operator*(){
+template <typename T, typename Comparator> const T& SGLSet<T, Comparator>::ConstIterator::operator*(){
     return (*node).value;
 }
 
@@ -624,7 +624,7 @@ template <typename T, typename Comparator> int SGLSet<T, Comparator>::getIndexOf
     }
 }
 
-template <typename T, typename Comparator> T SGLSet<T, Comparator>::elementAt(int n) const {
+template <typename T, typename Comparator> const T& SGLSet<T, Comparator>::elementAt(int n) const {
     return (*constIteratorAt(n));
 }
 

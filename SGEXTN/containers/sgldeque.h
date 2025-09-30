@@ -17,8 +17,8 @@ public:
     void fill(T defaultValue);
     [[nodiscard]] T& at(int i);
     [[nodiscard]] const T& at(int i) const;
-    [[nodiscard]] T front() const;
-    [[nodiscard]] T back() const;
+    [[nodiscard]] const T& front() const;
+    [[nodiscard]] const T& back() const;
     [[nodiscard]] int length() const;
     void pushBack(T x);
     void popBack();
@@ -135,11 +135,11 @@ template <typename T> const T& SGLDeque<T>::at(int i) const {
     return (*(dataInternal + startInternal + i));
 }
 
-template <typename T> T SGLDeque<T>::front() const {
+template <typename T> const T& SGLDeque<T>::front() const {
     return (*(dataInternal + startInternal));
 }
 
-template <typename T> T SGLDeque<T>::back() const {
+template <typename T> const T& SGLDeque<T>::back() const {
     return (*(dataInternal + endInternal - 1));
 }
 

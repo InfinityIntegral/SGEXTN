@@ -15,7 +15,7 @@ public:
     ~SGLVector();
     [[nodiscard]] T& at(int i);
     [[nodiscard]] const T& at(int i) const;
-    [[nodiscard]] T back() const;
+    [[nodiscard]] const T& back() const;
     [[nodiscard]] int length() const;
     void assign(int count, T defaultValue);
     void fill(T defaultValue);
@@ -103,7 +103,7 @@ template <typename T> const T& SGLVector<T>::at(int i) const {
     return (*(dataInternal + i));
 }
 
-template <typename T> T SGLVector<T>::back() const {
+template <typename T> const T& SGLVector<T>::back() const {
     return (*(dataInternal + lengthInternal - 1));
 }
 

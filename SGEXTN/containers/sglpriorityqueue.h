@@ -9,7 +9,7 @@ public:
     SGLPriorityQueue(SGLPriorityQueue&& x) noexcept;
     SGLPriorityQueue& operator=(SGLPriorityQueue&& x) noexcept;
     ~SGLPriorityQueue();
-    [[nodiscard]] T top() const;
+    [[nodiscard]] const T& top() const;
     [[nodiscard]] int length() const;
     void push(T x);
     void pop();
@@ -77,7 +77,7 @@ template <typename T, typename Comparator> SGLPriorityQueue<T, Comparator>::~SGL
     delete[] dataInternal;
 }
 
-template <typename T, typename Comparator> T SGLPriorityQueue<T, Comparator>::top() const {
+template <typename T, typename Comparator> const T& SGLPriorityQueue<T, Comparator>::top() const {
     return (*dataInternal);
 }
 
