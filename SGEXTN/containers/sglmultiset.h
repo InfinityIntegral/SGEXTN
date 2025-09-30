@@ -140,7 +140,8 @@ template <typename T, typename Comparator> SGLMultiSet<T, Comparator>::Node::Nod
 }
 
 template <typename T, typename Comparator> SGLMultiSet<T, Comparator>::SGLMultiSet(const SGLMultiSet& x){
-    root = new Node(x.root, nullptr);
+    if(x.root != nullptr){root = new Node(x.root, nullptr);}
+    else{root = nullptr;}
     comparatorInstance = Comparator();
 }
 
@@ -153,7 +154,8 @@ template <typename T, typename Comparator> void SGLMultiSet<T, Comparator>::Node
 template <typename T, typename Comparator> SGLMultiSet<T, Comparator>& SGLMultiSet<T, Comparator>::operator=(const SGLMultiSet& x){
     if(this == &x){return (*this);}
     if(root != nullptr){(*root).recursiveDelete();}
-    root = new Node(x.root, nullptr);
+    if(x.root != nullptr){root = new Node(x.root, nullptr);}
+    else{root = nullptr;}
     return (*this);
 }
 
@@ -536,19 +538,19 @@ template <typename T, typename Comparator> T SGLMultiSet<T, Comparator>::ConstIt
 }
 
 template <typename T, typename Comparator> bool SGLMultiSet<T, Comparator>::Iterator::operator==(Iterator x){
-    return (node == x.node && copy == x.copy);
+    return (node == x.node && copy == x.copy && associatedSet == x.associatedSet);
 }
 
 template <typename T, typename Comparator> bool SGLMultiSet<T, Comparator>::ConstIterator::operator==(ConstIterator x){
-    return (node == x.node && copy == x.copy);
+    return (node == x.node && copy == x.copy && associatedSet == x.associatedSet);
 }
 
 template <typename T, typename Comparator> bool SGLMultiSet<T, Comparator>::Iterator::operator!=(Iterator x){
-    return (node != x.node || copy != x.copy);
+    return (node != x.node || copy != x.copy || associatedSet != x.associatedSet);
 }
 
 template <typename T, typename Comparator> bool SGLMultiSet<T, Comparator>::ConstIterator::operator!=(ConstIterator x){
-    return (node != x.node || copy != x.copy);
+    return (node != x.node || copy != x.copy || associatedSet != x.associatedSet);
 }
 
 template <typename T, typename Comparator> SGLMultiSet<T, Comparator>::Iterator SGLMultiSet<T, Comparator>::begin(){

@@ -1,20 +1,21 @@
-#ifndef SGLSET_H
-#define SGLSET_H
+#ifndef SGLMAP_H
+#define SGLMAP_H
 
 #include "sglcrash.h"
 
-template <typename T, typename Comparator> class SGLSet{
+template <typename K, typename V, typename Comparator> class SGLMap{
 protected:
     class Node {
-        friend class SGLSet;
+        friend class SGLMap;
     public:
         Node* parent;
         Node* leftChild;
         Node* rightChild;
         int height;
         int subtreeSize;
-        T value;
-        Node(T x, Node* parentNode);
+        K key;
+        V value;
+        Node(K xKey, V xValue, Node* parentNode);
         Node(Node* oldNode, Node* newParent);
         void recursiveDelete();
     };
@@ -37,27 +38,29 @@ protected:
     Node* getRightmostSubchild(Node* x) const;
     void replaceChildren(Node* parent, Node* child, Node* newChild);
     void replaceParent(Node* child, Node* newParent);
-    Node* findNode(T x) const;
-    Node* lowerBoundNode(T x) const;
-    Node* upperBoundNode(T x) const;
+    Node* findNode(K x) const;
+    Node* lowerBoundNode(K x) const;
+    Node* upperBoundNode(K x) const;
     Node* getNodeByIndex(int x) const;
     int getIndexOfNode(Node* x) const;
     
 public:
-    SGLSet();
-    SGLSet(const SGLSet& x);
-    SGLSet& operator=(const SGLSet& x);
-    SGLSet(SGLSet&& x) noexcept;
-    SGLSet& operator=(SGLSet&& x) noexcept;
-    ~SGLSet();
+    SGLMap();
+    SGLMap(const SGLMap& x);
+    SGLMap& operator=(const SGLMap& x);
+    SGLMap(SGLMap&& x) noexcept;
+    SGLMap& operator=(SGLMap&& x) noexcept;
+    ~SGLMap();
     [[nodiscard]] int length() const;
-    void insert(T x);
-    void erase(T x);
-    [[nodiscard]] bool contains(T x) const;
-    [[nodiscard]] int count(T x) const;
+    void insert(K xKey, V xValue);
+    void erase(K x);
+    [[nodiscard]] bool contains(K x) const;
+    [[nodiscard]] int count(K x) const;
+    [[nodiscard]] V& at(K x);
+    [[nodiscard]] const V& at(K x) const;
     
     class Iterator {
-        friend class SGLSet;
+        friend class SGLMap;
     public:
         Iterator& operator++();
         Iterator operator++(int);
@@ -65,15 +68,16 @@ public:
         Iterator operator--(int);
         bool operator==(Iterator x);
         bool operator!=(Iterator x);
-        T operator*();
+        K key();
+        V value();
     protected:
-        Iterator(Node* x, SGLSet* s);
+        Iterator(Node* x, SGLMap* s);
         Node* node;
-        SGLSet* associatedSet;
+        SGLMap* associatedSet;
     };
     
     class ConstIterator {
-        friend class SGLSet;
+        friend class SGLMap;
     public:
         ConstIterator& operator++();
         ConstIterator operator++(int);
@@ -81,11 +85,12 @@ public:
         ConstIterator operator--(int);
         bool operator==(ConstIterator x);
         bool operator!=(ConstIterator x);
-        T operator*();
+        K key();
+        V value();
     protected:
-        ConstIterator(Node* x, const SGLSet* s);
+        ConstIterator(Node* x, const SGLMap* s);
         Node* node;
-        const SGLSet* associatedSet;
+        const SGLMap* associatedSet;
     };
     
     [[nodiscard]] Iterator begin();
@@ -93,29 +98,31 @@ public:
     [[nodiscard]] Iterator end();
     [[nodiscard]] ConstIterator constEnd() const;
     void erase(Iterator& i);
-    [[nodiscard]] Iterator find(T x);
-    [[nodiscard]] ConstIterator find(T x) const;
+    [[nodiscard]] Iterator find(K x);
+    [[nodiscard]] ConstIterator find(K x) const;
     
-    [[nodiscard]] Iterator lowerBound(T x);
-    [[nodiscard]] ConstIterator lowerBound(T x) const;
-    [[nodiscard]] Iterator upperBound(T x);
-    [[nodiscard]] ConstIterator upperBound(T x) const;
+    [[nodiscard]] Iterator lowerBound(K x);
+    [[nodiscard]] ConstIterator lowerBound(K x) const;
+    [[nodiscard]] Iterator upperBound(K x);
+    [[nodiscard]] ConstIterator upperBound(K x) const;
     
-    [[nodiscard]] int indexOf(T x) const;
+    [[nodiscard]] int indexOf(K x) const;
     [[nodiscard]] int indexOf(Iterator i) const;
     [[nodiscard]] int indexOf(ConstIterator i) const;
-    [[nodiscard]] T elementAt(int n) const;
+    [[nodiscard]] K keyAt(int n) const;
+    [[nodiscard]] V valueAt(int n) const;
     [[nodiscard]] Iterator iteratorAt(int n);
     [[nodiscard]] ConstIterator constIteratorAt(int n) const;
 };
 
-template <typename T, typename Comparator> SGLSet<T, Comparator>::SGLSet(){
+template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>::SGLMap(){
     root = nullptr;
     comparatorInstance = Comparator();
 }
 
-template <typename T, typename Comparator> SGLSet<T, Comparator>::Node::Node(T x, Node* parentNode){
-    value = x;
+template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>::Node::Node(K xKey, V xValue, Node* parentNode){
+    key = xKey;
+    value = xValue;
     parent = parentNode;
     leftChild = nullptr;
     rightChild = nullptr;
@@ -123,7 +130,8 @@ template <typename T, typename Comparator> SGLSet<T, Comparator>::Node::Node(T x
     subtreeSize = 1;
 }
 
-template <typename T, typename Comparator> SGLSet<T, Comparator>::Node::Node(Node* oldNode, Node* newParent){
+template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>::Node::Node(Node* oldNode, Node* newParent){
+    key = (*oldNode).key;
     value = (*oldNode).value;
     height = (*oldNode).height;
     subtreeSize = (*oldNode).subtreeSize;
@@ -134,19 +142,19 @@ template <typename T, typename Comparator> SGLSet<T, Comparator>::Node::Node(Nod
     else{rightChild = nullptr;}
 }
 
-template <typename T, typename Comparator> SGLSet<T, Comparator>::SGLSet(const SGLSet& x){
+template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>::SGLMap(const SGLMap& x){
     if(x.root != nullptr){root = new Node(x.root, nullptr);}
     else{root = nullptr;}
     comparatorInstance = Comparator();
 }
 
-template <typename T, typename Comparator> void SGLSet<T, Comparator>::Node::recursiveDelete(){
+template <typename K, typename V, typename Comparator> void SGLMap<K, V, Comparator>::Node::recursiveDelete(){
     if(leftChild != nullptr){(*leftChild).recursiveDelete();}
     if(rightChild != nullptr){(*rightChild).recursiveDelete();}
     delete this;
 }
 
-template <typename T, typename Comparator> SGLSet<T, Comparator>& SGLSet<T, Comparator>::operator=(const SGLSet& x){
+template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>& SGLMap<K, V, Comparator>::operator=(const SGLMap& x){
     if(this == &x){return (*this);}
     if(root != nullptr){(*root).recursiveDelete();}
     if(x.root != nullptr){root = new Node(x.root, nullptr);}
@@ -154,58 +162,58 @@ template <typename T, typename Comparator> SGLSet<T, Comparator>& SGLSet<T, Comp
     return (*this);
 }
 
-template <typename T, typename Comparator> SGLSet<T, Comparator>::SGLSet(SGLSet&& x) noexcept {
+template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>::SGLMap(SGLMap&& x) noexcept {
     root = x.root;
     x.root = nullptr;
     comparatorInstance = Comparator();
 }
 
-template <typename T, typename Comparator> SGLSet<T, Comparator>& SGLSet<T, Comparator>::operator=(SGLSet&& x) noexcept {
+template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>& SGLMap<K, V, Comparator>::operator=(SGLMap&& x) noexcept {
     if(root != nullptr){(*root).recursiveDelete();}
     root = x.root;
     x.root = nullptr;
     return (*this);
 }
 
-template <typename T, typename Comparator> SGLSet<T, Comparator>::~SGLSet(){
+template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>::~SGLMap(){
     if(root != nullptr){(*root).recursiveDelete();}
 }
 
-template <typename T, typename Comparator> int SGLSet<T, Comparator>::length() const {
+template <typename K, typename V, typename Comparator> int SGLMap<K, V, Comparator>::length() const {
     return getEffectiveSubtreeSize(root);
 }
 
-template <typename T, typename Comparator> int SGLSet<T, Comparator>::getEffectiveHeight(Node* x) const {
+template <typename K, typename V, typename Comparator> int SGLMap<K, V, Comparator>::getEffectiveHeight(Node* x) const {
     if(x == nullptr){return -1;}
     return (*x).height;
 }
 
-template <typename T, typename Comparator> int SGLSet<T, Comparator>::getEffectiveSubtreeSize(Node* x) const {
+template <typename K, typename V, typename Comparator> int SGLMap<K, V, Comparator>::getEffectiveSubtreeSize(Node* x) const {
     if(x == nullptr){return 0;}
     return (*x).subtreeSize;
 }
 
-template <typename T, typename Comparator> int SGLSet<T, Comparator>::heightLeftMinusRight(Node* x) const {
+template <typename K, typename V, typename Comparator> int SGLMap<K, V, Comparator>::heightLeftMinusRight(Node* x) const {
     if(x == nullptr){return 0;}
     return (getEffectiveHeight((*x).leftChild) - getEffectiveHeight((*x).rightChild));
 }
 
-template <typename T, typename Comparator> int SGLSet<T, Comparator>::maximumOf2Ints(int a, int b) const {
+template <typename K, typename V, typename Comparator> int SGLMap<K, V, Comparator>::maximumOf2Ints(int a, int b) const {
     if(a >= b){return a;}
     return b;
 }
 
-template <typename T, typename Comparator> void SGLSet<T, Comparator>::updateHeightNoRecurse(Node* x){
+template <typename K, typename V, typename Comparator> void SGLMap<K, V, Comparator>::updateHeightNoRecurse(Node* x){
     if(x == nullptr){return;}
     (*x).height = maximumOf2Ints(getEffectiveHeight((*x).leftChild) + 1, getEffectiveHeight((*x).rightChild) + 1);
 }
 
-template <typename T, typename Comparator> void SGLSet<T, Comparator>::updateSubtreeSizeNoRecurse(Node* x){
+template <typename K, typename V, typename Comparator> void SGLMap<K, V, Comparator>::updateSubtreeSizeNoRecurse(Node* x){
     if(x == nullptr){return;}
     (*x).subtreeSize = getEffectiveSubtreeSize((*x).leftChild) + getEffectiveSubtreeSize((*x).rightChild) + 1;
 }
 
-template <typename T, typename Comparator> SGLSet<T, Comparator>::Node* SGLSet<T, Comparator>::leftRotate(Node* x){
+template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>::Node* SGLMap<K, V, Comparator>::leftRotate(Node* x){
     Node* y = (*x).rightChild;
     Node* z = (*y).leftChild;
     Node* p = (*x).parent;
@@ -231,7 +239,7 @@ template <typename T, typename Comparator> SGLSet<T, Comparator>::Node* SGLSet<T
     return y;
 }
 
-template <typename T, typename Comparator> SGLSet<T, Comparator>::Node* SGLSet<T, Comparator>::rightRotate(Node* x){
+template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>::Node* SGLMap<K, V, Comparator>::rightRotate(Node* x){
     Node* y = (*x).leftChild;
     Node* z = (*y).rightChild;
     Node* p = (*x).parent;
@@ -257,7 +265,7 @@ template <typename T, typename Comparator> SGLSet<T, Comparator>::Node* SGLSet<T
     return y;
 }
 
-template <typename T, typename Comparator> SGLSet<T, Comparator>::Node* SGLSet<T, Comparator>::rebalanceAtNode(Node* x){
+template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>::Node* SGLMap<K, V, Comparator>::rebalanceAtNode(Node* x){
     if(heightLeftMinusRight(x) > 1){
         if(heightLeftMinusRight((*x).leftChild) >= 0){return rightRotate(x);}
         leftRotate((*x).leftChild);
@@ -268,7 +276,7 @@ template <typename T, typename Comparator> SGLSet<T, Comparator>::Node* SGLSet<T
     return leftRotate(x);
 }
 
-template <typename T, typename Comparator> void SGLSet<T, Comparator>::updateHeightRecurseToRoot(Node* x){
+template <typename K, typename V, typename Comparator> void SGLMap<K, V, Comparator>::updateHeightRecurseToRoot(Node* x){
     if(x == nullptr){return;}
     while(true){
         updateHeightNoRecurse(x);
@@ -280,24 +288,24 @@ template <typename T, typename Comparator> void SGLSet<T, Comparator>::updateHei
     }
 }
 
-template <typename T, typename Comparator> void SGLSet<T, Comparator>::insert(T x){
+template <typename K, typename V, typename Comparator> void SGLMap<K, V, Comparator>::insert(K xKey, V xValue){
     Node* currentNode = root;
     if(root == nullptr){
-        root = new Node(x, nullptr);
+        root = new Node(xKey, xValue, nullptr);
         return;
     }
     while(true){
-        if(comparatorInstance(x, (*currentNode).value) == true){
+        if(comparatorInstance(xKey, (*currentNode).key) == true){
             if((*currentNode).leftChild == nullptr){
-                (*currentNode).leftChild = new Node(x, currentNode);
+                (*currentNode).leftChild = new Node(xKey, xValue, currentNode);
                 currentNode = (*currentNode).leftChild;
                 break;
             }
             currentNode = (*currentNode).leftChild;
         }
-        else if(comparatorInstance((*currentNode).value, x) == true){
+        else if(comparatorInstance((*currentNode).key, xKey) == true){
             if((*currentNode).rightChild == nullptr){
-                (*currentNode).rightChild = new Node(x, currentNode);
+                (*currentNode).rightChild = new Node(xKey, xValue, currentNode);
                 currentNode = (*currentNode).rightChild;
                 break;
             }
@@ -308,32 +316,32 @@ template <typename T, typename Comparator> void SGLSet<T, Comparator>::insert(T 
     updateHeightRecurseToRoot(currentNode);
 }
 
-template <typename T, typename Comparator> void SGLSet<T, Comparator>::erase(T x){
+template <typename K, typename V, typename Comparator> void SGLMap<K, V, Comparator>::erase(K x){
     Iterator i = find(x);
     erase(i);
 }
 
-template <typename T, typename Comparator> bool SGLSet<T, Comparator>::contains(T x) const {
+template <typename K, typename V, typename Comparator> bool SGLMap<K, V, Comparator>::contains(K x) const {
     if(find(x) == constEnd()){return false;}
     return true;
 }
 
-template <typename T, typename Comparator> int SGLSet<T, Comparator>::count(T x) const {
+template <typename K, typename V, typename Comparator> int SGLMap<K, V, Comparator>::count(K x) const {
     if(contains(x) == true){return 1;}
     return 0;
 }
 
-template <typename T, typename Comparator> SGLSet<T, Comparator>::Iterator::Iterator(Node* x, SGLSet* s){
+template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>::Iterator::Iterator(Node* x, SGLMap* s){
     node = x;
     associatedSet = s;
 }
 
-template <typename T, typename Comparator> SGLSet<T, Comparator>::ConstIterator::ConstIterator(Node* x, const SGLSet* s){
+template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>::ConstIterator::ConstIterator(Node* x, const SGLMap* s){
     node = x;
     associatedSet = s;
 }
 
-template <typename T, typename Comparator> SGLSet<T, Comparator>::Node* SGLSet<T, Comparator>::getLeftmostSubchild(Node* x) const {
+template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>::Node* SGLMap<K, V, Comparator>::getLeftmostSubchild(Node* x) const {
     if(x == nullptr){return nullptr;}
     while(true){
         if((*x).leftChild == nullptr){return x;}
@@ -341,7 +349,7 @@ template <typename T, typename Comparator> SGLSet<T, Comparator>::Node* SGLSet<T
     }
 }
 
-template <typename T, typename Comparator> SGLSet<T, Comparator>::Node* SGLSet<T, Comparator>::getRightmostSubchild(Node* x) const {
+template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>::Node* SGLMap<K, V, Comparator>::getRightmostSubchild(Node* x) const {
     if(x == nullptr){return nullptr;}
     while(true){
         if((*x).rightChild == nullptr){return x;}
@@ -349,7 +357,7 @@ template <typename T, typename Comparator> SGLSet<T, Comparator>::Node* SGLSet<T
     }
 }
 
-template <typename T, typename Comparator> SGLSet<T, Comparator>::Node* SGLSet<T, Comparator>::getParentWithThisAsLeftChild(Node* x) const {
+template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>::Node* SGLMap<K, V, Comparator>::getParentWithThisAsLeftChild(Node* x) const {
     if(x == nullptr){return nullptr;}
     while(true){
         if((*x).parent == nullptr){return nullptr;}
@@ -358,7 +366,7 @@ template <typename T, typename Comparator> SGLSet<T, Comparator>::Node* SGLSet<T
     }
 }
 
-template <typename T, typename Comparator> SGLSet<T, Comparator>::Node* SGLSet<T, Comparator>::getParentWithThisAsRightChild(Node* x) const {
+template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>::Node* SGLMap<K, V, Comparator>::getParentWithThisAsRightChild(Node* x) const {
     if(x == nullptr){return nullptr;}
     while(true){
         if((*x).parent == nullptr){return nullptr;}
@@ -367,21 +375,21 @@ template <typename T, typename Comparator> SGLSet<T, Comparator>::Node* SGLSet<T
     }
 }
 
-template <typename T, typename Comparator> SGLSet<T, Comparator>::Iterator& SGLSet<T, Comparator>::Iterator::operator++(){
+template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>::Iterator& SGLMap<K, V, Comparator>::Iterator::operator++(){
     if(node == nullptr){node = (*associatedSet).getLeftmostSubchild((*associatedSet).root);}
     else if((*node).rightChild == nullptr){node = (*associatedSet).getParentWithThisAsLeftChild(node);}
     else{node = (*associatedSet).getLeftmostSubchild((*node).rightChild);}
     return (*this);
 }
 
-template <typename T, typename Comparator> SGLSet<T, Comparator>::ConstIterator& SGLSet<T, Comparator>::ConstIterator::operator++(){
+template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>::ConstIterator& SGLMap<K, V, Comparator>::ConstIterator::operator++(){
     if(node == nullptr){node = (*associatedSet).getLeftmostSubchild((*associatedSet).root);}
     else if((*node).rightChild == nullptr){node = (*associatedSet).getParentWithThisAsLeftChild(node);}
     else{node = (*associatedSet).getLeftmostSubchild((*node).rightChild);}
     return (*this);
 }
 
-template <typename T, typename Comparator> SGLSet<T, Comparator>::Iterator SGLSet<T, Comparator>::Iterator::operator++(int){
+template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>::Iterator SGLMap<K, V, Comparator>::Iterator::operator++(int){
     Iterator prev = (*this);
     if(node == nullptr){node = (*associatedSet).getLeftmostSubchild((*associatedSet).root);}
     else if((*node).rightChild == nullptr){node = (*associatedSet).getParentWithThisAsLeftChild(node);}
@@ -389,7 +397,7 @@ template <typename T, typename Comparator> SGLSet<T, Comparator>::Iterator SGLSe
     return prev;
 }
 
-template <typename T, typename Comparator> SGLSet<T, Comparator>::ConstIterator SGLSet<T, Comparator>::ConstIterator::operator++(int){
+template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>::ConstIterator SGLMap<K, V, Comparator>::ConstIterator::operator++(int){
     ConstIterator prev = (*this);
     if(node == nullptr){node = (*associatedSet).getLeftmostSubchild((*associatedSet).root);}
     else if((*node).rightChild == nullptr){node = (*associatedSet).getParentWithThisAsLeftChild(node);}
@@ -397,21 +405,21 @@ template <typename T, typename Comparator> SGLSet<T, Comparator>::ConstIterator 
     return prev;
 }
 
-template <typename T, typename Comparator> SGLSet<T, Comparator>::Iterator& SGLSet<T, Comparator>::Iterator::operator--(){
+template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>::Iterator& SGLMap<K, V, Comparator>::Iterator::operator--(){
     if(node == nullptr){node = (*associatedSet).getRightmostSubchild((*associatedSet).root);}
     else if((*node).leftChild == nullptr){node = (*associatedSet).getParentWithThisAsRightChild(node);}
     else{node = (*associatedSet).getRightmostSubchild((*node).leftChild);}
     return (*this);
 }
 
-template <typename T, typename Comparator> SGLSet<T, Comparator>::ConstIterator& SGLSet<T, Comparator>::ConstIterator::operator--(){
+template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>::ConstIterator& SGLMap<K, V, Comparator>::ConstIterator::operator--(){
     if(node == nullptr){node = (*associatedSet).getRightmostSubchild((*associatedSet).root);}
     else if((*node).leftChild == nullptr){node = (*associatedSet).getParentWithThisAsRightChild(node);}
     else{node = (*associatedSet).getRightmostSubchild((*node).leftChild);}
     return (*this);
 }
 
-template <typename T, typename Comparator> SGLSet<T, Comparator>::Iterator SGLSet<T, Comparator>::Iterator::operator--(int){
+template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>::Iterator SGLMap<K, V, Comparator>::Iterator::operator--(int){
     Iterator prev = (*this);
     if(node == nullptr){node = (*associatedSet).getRightmostSubchild((*associatedSet).root);}
     else if((*node).leftChild == nullptr){node = (*associatedSet).getParentWithThisAsRightChild(node);}
@@ -419,7 +427,7 @@ template <typename T, typename Comparator> SGLSet<T, Comparator>::Iterator SGLSe
     return prev;
 }
 
-template <typename T, typename Comparator> SGLSet<T, Comparator>::ConstIterator SGLSet<T, Comparator>::ConstIterator::operator--(int){
+template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>::ConstIterator SGLMap<K, V, Comparator>::ConstIterator::operator--(int){
     ConstIterator prev = (*this);
     if(node == nullptr){node = (*associatedSet).getRightmostSubchild((*associatedSet).root);}
     else if((*node).leftChild == nullptr){node = (*associatedSet).getParentWithThisAsRightChild(node);}
@@ -427,59 +435,67 @@ template <typename T, typename Comparator> SGLSet<T, Comparator>::ConstIterator 
     return prev;
 }
 
-template <typename T, typename Comparator> T SGLSet<T, Comparator>::Iterator::operator*(){
+template <typename K, typename V, typename Comparator> K SGLMap<K, V, Comparator>::Iterator::key(){
+    return (*node).key;
+}
+
+template <typename K, typename V, typename Comparator> V SGLMap<K, V, Comparator>::Iterator::value(){
     return (*node).value;
 }
 
-template <typename T, typename Comparator> T SGLSet<T, Comparator>::ConstIterator::operator*(){
+template <typename K, typename V, typename Comparator> K SGLMap<K, V, Comparator>::ConstIterator::key(){
+    return (*node).key;
+}
+
+template <typename K, typename V, typename Comparator> V SGLMap<K, V, Comparator>::ConstIterator::value(){
     return (*node).value;
 }
 
-template <typename T, typename Comparator> bool SGLSet<T, Comparator>::Iterator::operator==(Iterator x){
+template <typename K, typename V, typename Comparator> bool SGLMap<K, V, Comparator>::Iterator::operator==(Iterator x){
     return (node == x.node && associatedSet == x.associatedSet);
 }
 
-template <typename T, typename Comparator> bool SGLSet<T, Comparator>::Iterator::operator!=(Iterator x){
+template <typename K, typename V, typename Comparator> bool SGLMap<K, V, Comparator>::Iterator::operator!=(Iterator x){
     return (node != x.node || associatedSet != x.associatedSet);
 }
 
-template <typename T, typename Comparator> bool SGLSet<T, Comparator>::ConstIterator::operator==(ConstIterator x){
+template <typename K, typename V, typename Comparator> bool SGLMap<K, V, Comparator>::ConstIterator::operator==(ConstIterator x){
     return (node == x.node && associatedSet == x.associatedSet);
 }
 
-template <typename T, typename Comparator> bool SGLSet<T, Comparator>::ConstIterator::operator!=(ConstIterator x){
+template <typename K, typename V, typename Comparator> bool SGLMap<K, V, Comparator>::ConstIterator::operator!=(ConstIterator x){
     return (node != x.node || associatedSet != x.associatedSet);
 }
 
-template <typename T, typename Comparator> SGLSet<T, Comparator>::Iterator SGLSet<T, Comparator>::begin(){
+template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>::Iterator SGLMap<K, V, Comparator>::begin(){
     return Iterator(getLeftmostSubchild(root), this);
 }
 
-template <typename T, typename Comparator> SGLSet<T, Comparator>::ConstIterator SGLSet<T, Comparator>::constBegin() const {
+template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>::ConstIterator SGLMap<K, V, Comparator>::constBegin() const {
     return ConstIterator(getLeftmostSubchild(root), this);
 }
 
-template <typename T, typename Comparator> SGLSet<T, Comparator>::Iterator SGLSet<T, Comparator>::end(){
+template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>::Iterator SGLMap<K, V, Comparator>::end(){
     return Iterator(nullptr, this);
 }
 
-template <typename T, typename Comparator> SGLSet<T, Comparator>::ConstIterator SGLSet<T, Comparator>::constEnd() const {
+template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>::ConstIterator SGLMap<K, V, Comparator>::constEnd() const {
     return ConstIterator(nullptr, this);
 }
 
-template <typename T, typename Comparator> void SGLSet<T, Comparator>::replaceChildren(Node* parent, Node* child, Node* newChild){
+template <typename K, typename V, typename Comparator> void SGLMap<K, V, Comparator>::replaceChildren(Node* parent, Node* child, Node* newChild){
     if(parent == nullptr){return;}
     if((*parent).leftChild == child){(*parent).leftChild = newChild;}
     else{(*parent).rightChild = newChild;}
 }
 
-template <typename T, typename Comparator> void SGLSet<T, Comparator>::replaceParent(Node* child, Node* newParent){
+template <typename K, typename V, typename Comparator> void SGLMap<K, V, Comparator>::replaceParent(Node* child, Node* newParent){
     if(child == nullptr){return;}
     (*child).parent = newParent;
 }
 
 
-template <typename T, typename Comparator> void SGLSet<T, Comparator>::erase(Iterator& i){
+template <typename K, typename V, typename Comparator> void SGLMap<K, V, Comparator>::erase(Iterator& i){
     Node* nodeToDelete = i.node;
     if(nodeToDelete == nullptr){SGLCrash::crashOnRemove();}
     i++;
@@ -532,15 +548,15 @@ template <typename T, typename Comparator> void SGLSet<T, Comparator>::erase(Ite
     i--;
 }
 
-template <typename T, typename Comparator> SGLSet<T, Comparator>::Node* SGLSet<T, Comparator>::findNode(T x) const {
+template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>::Node* SGLMap<K, V, Comparator>::findNode(K x) const {
     Node* currentNode = root;
     if(root == nullptr){return nullptr;}
     while(true){
-        if(comparatorInstance(x, (*currentNode).value) == true){
+        if(comparatorInstance(x, (*currentNode).key) == true){
             if((*currentNode).leftChild == nullptr){return nullptr;}
             currentNode = (*currentNode).leftChild;
         }
-        else if(comparatorInstance((*currentNode).value, x) == true){
+        else if(comparatorInstance((*currentNode).key, x) == true){
             if((*currentNode).rightChild == nullptr){return nullptr;}
             currentNode = (*currentNode).rightChild;
         }
@@ -548,19 +564,19 @@ template <typename T, typename Comparator> SGLSet<T, Comparator>::Node* SGLSet<T
     }
 }
 
-template <typename T, typename Comparator> SGLSet<T, Comparator>::Iterator SGLSet<T, Comparator>::find(T x){
+template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>::Iterator SGLMap<K, V, Comparator>::find(K x){
     return Iterator(findNode(x), this);
 }
 
-template <typename T, typename Comparator> SGLSet<T, Comparator>::ConstIterator SGLSet<T, Comparator>::find(T x) const {
+template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>::ConstIterator SGLMap<K, V, Comparator>::find(K x) const {
     return ConstIterator(findNode(x), this);
 }
 
-template <typename T, typename Comparator> SGLSet<T, Comparator>::Node* SGLSet<T, Comparator>::lowerBoundNode(T x) const {
+template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>::Node* SGLMap<K, V, Comparator>::lowerBoundNode(K x) const {
     Node* output = nullptr;
     Node* currentNode = root;
     while(currentNode != nullptr){
-        if(comparatorInstance((*currentNode).value, x) == false){
+        if(comparatorInstance((*currentNode).key, x) == false){
             output = currentNode;
             currentNode = (*currentNode).leftChild;
         }
@@ -569,11 +585,11 @@ template <typename T, typename Comparator> SGLSet<T, Comparator>::Node* SGLSet<T
     return output;
 }
 
-template <typename T, typename Comparator> SGLSet<T, Comparator>::Node* SGLSet<T, Comparator>::upperBoundNode(T x) const {
+template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>::Node* SGLMap<K, V, Comparator>::upperBoundNode(K x) const {
     Node* output = nullptr;
     Node* currentNode = root;
     while(currentNode != nullptr){
-        if(comparatorInstance(x, (*currentNode).value) == true){
+        if(comparatorInstance(x, (*currentNode).key) == true){
             output = currentNode;
             currentNode = (*currentNode).leftChild;
         }
@@ -582,41 +598,41 @@ template <typename T, typename Comparator> SGLSet<T, Comparator>::Node* SGLSet<T
     return output;
 }
 
-template <typename T, typename Comparator> SGLSet<T, Comparator>::Iterator SGLSet<T, Comparator>::lowerBound(T x){
+template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>::Iterator SGLMap<K, V, Comparator>::lowerBound(K x){
     return Iterator(lowerBoundNode(x), this);
 }
 
-template <typename T, typename Comparator> SGLSet<T, Comparator>::ConstIterator SGLSet<T, Comparator>::lowerBound(T x) const {
+template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>::ConstIterator SGLMap<K, V, Comparator>::lowerBound(K x) const {
     return ConstIterator(lowerBoundNode(x), this);
 }
 
-template <typename T, typename Comparator> SGLSet<T, Comparator>::Iterator SGLSet<T, Comparator>::upperBound(T x){
+template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>::Iterator SGLMap<K, V, Comparator>::upperBound(K x){
     return Iterator(upperBoundNode(x), this);
 }
 
-template <typename T, typename Comparator> SGLSet<T, Comparator>::ConstIterator SGLSet<T, Comparator>::upperBound(T x) const {
+template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>::ConstIterator SGLMap<K, V, Comparator>::upperBound(K x) const {
     return ConstIterator(upperBoundNode(x), this);
 }
 
-template <typename T, typename Comparator> int SGLSet<T, Comparator>::indexOf(T x) const {
+template <typename K, typename V, typename Comparator> int SGLMap<K, V, Comparator>::indexOf(K x) const {
     return indexOf(find(x));
 }
 
-template <typename T, typename Comparator> int SGLSet<T, Comparator>::indexOf(Iterator i) const {
+template <typename K, typename V, typename Comparator> int SGLMap<K, V, Comparator>::indexOf(Iterator i) const {
     return getIndexOfNode(i.node);
 }
 
-template <typename T, typename Comparator> int SGLSet<T, Comparator>::indexOf(ConstIterator i) const {
+template <typename K, typename V, typename Comparator> int SGLMap<K, V, Comparator>::indexOf(ConstIterator i) const {
     return getIndexOfNode(i.node);
 }
 
-template <typename T, typename Comparator> int SGLSet<T, Comparator>::getIndexOfNode(Node* x) const {
+template <typename K, typename V, typename Comparator> int SGLMap<K, V, Comparator>::getIndexOfNode(Node* x) const {
     if(x == nullptr){return -1;}
     Node* currentNode = root;
     int index = 0;
     while(true){
         if(currentNode == x){return (index + getEffectiveSubtreeSize((*currentNode).leftChild));}
-        if(comparatorInstance((*x).value, (*currentNode).value) == true){currentNode = (*currentNode).leftChild;}
+        if(comparatorInstance((*x).key, (*currentNode).key) == true){currentNode = (*currentNode).leftChild;}
         else{
             index += (1 + getEffectiveSubtreeSize((*currentNode).leftChild));
             currentNode = (*currentNode).rightChild;
@@ -624,19 +640,23 @@ template <typename T, typename Comparator> int SGLSet<T, Comparator>::getIndexOf
     }
 }
 
-template <typename T, typename Comparator> T SGLSet<T, Comparator>::elementAt(int n) const {
-    return (*constIteratorAt(n));
+template <typename K, typename V, typename Comparator> K SGLMap<K, V, Comparator>::keyAt(int n) const {
+    return constIteratorAt(n).key();
 }
 
-template <typename T, typename Comparator> SGLSet<T, Comparator>::Iterator SGLSet<T, Comparator>::iteratorAt(int n){
+template <typename K, typename V, typename Comparator> V SGLMap<K, V, Comparator>::valueAt(int n) const {
+    return constIteratorAt(n).value();
+}
+
+template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>::Iterator SGLMap<K, V, Comparator>::iteratorAt(int n){
     return Iterator(getNodeByIndex(n), this);
 }
 
-template <typename T, typename Comparator> SGLSet<T, Comparator>::ConstIterator SGLSet<T, Comparator>::constIteratorAt(int n) const {
+template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>::ConstIterator SGLMap<K, V, Comparator>::constIteratorAt(int n) const {
     return ConstIterator(getNodeByIndex(n), this);
 }
 
-template <typename T, typename Comparator> SGLSet<T, Comparator>::Node* SGLSet<T, Comparator>::getNodeByIndex(int x) const {
+template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>::Node* SGLMap<K, V, Comparator>::getNodeByIndex(int x) const {
     if(root == nullptr){return nullptr;}
     if(x < 0 || x >= (*root).subtreeSize){return nullptr;}
     Node* currentNode = root;
@@ -651,4 +671,16 @@ template <typename T, typename Comparator> SGLSet<T, Comparator>::Node* SGLSet<T
     }
 }
 
-#endif // SGLSET_H
+template <typename K, typename V, typename Comparator> V& SGLMap<K, V, Comparator>::at(K x){
+    ConstIterator i = find(x);
+    if(i == constEnd()){SGLCrash::crash();}
+    return i.value();
+}
+
+template <typename K, typename V, typename Comparator> const V& SGLMap<K, V, Comparator>::at(K x) const {
+    ConstIterator i = find(x);
+    if(i == constEnd()){SGLCrash::crash();}
+    return i.value();
+}
+
+#endif // SGLMAP_H
