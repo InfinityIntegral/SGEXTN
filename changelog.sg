@@ -29,6 +29,7 @@ SGLQueue: added
 SGLStack: added
 SGLPriorityQueue: added
 SGLSet: added
+SGLMultiSet: added
 
 Added:
 - SGXChar
@@ -48,6 +49,7 @@ Added:
 - SGLStack
 - SGLPriorityQueue
 - SGLSet
+- SGLMultiSet
 
 Improved:
 - SGXFileSystem

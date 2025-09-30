@@ -37,6 +37,7 @@ protected:
     Node* getRightmostSubchild(Node* x) const;
     void replaceChildren(Node* parent, Node* child, Node* newChild);
     void replaceParent(Node* child, Node* newParent);
+    Node* findNode(T x) const;
     Node* lowerBoundNode(T x) const;
     Node* upperBoundNode(T x) const;
     Node* getNodeByIndex(int x) const;
@@ -222,6 +223,8 @@ template <typename T, typename Comparator> SGLSet<T, Comparator>::Node* SGLSet<T
         if((*p).leftChild == x){(*p).leftChild = y;}
         else{(*p).rightChild = y;}
         (*y).parent = p;
+        updateHeightNoRecurse(p);
+        updateSubtreeSizeNoRecurse(p);
     }
     return y;
 }
@@ -246,6 +249,8 @@ template <typename T, typename Comparator> SGLSet<T, Comparator>::Node* SGLSet<T
         if((*p).leftChild == x){(*p).leftChild = y;}
         else{(*p).rightChild = y;}
         (*y).parent = p;
+        updateHeightNoRecurse(p);
+        updateSubtreeSizeNoRecurse(p);
     }
     return y;
 }
@@ -522,38 +527,31 @@ template <typename T, typename Comparator> void SGLSet<T, Comparator>::erase(Ite
         updateHeightRecurseToRoot(updateStart);
         delete nodeToDelete;
     }
+    i--;
+}
+
+template <typename T, typename Comparator> SGLSet<T, Comparator>::Node* SGLSet<T, Comparator>::findNode(T x) const {
+    Node* currentNode = root;
+    if(root == nullptr){return nullptr;}
+    while(true){
+        if(comparatorInstance(x, (*currentNode).value) == true){
+            if((*currentNode).leftChild == nullptr){return nullptr;}
+            currentNode = (*currentNode).leftChild;
+        }
+        else if(comparatorInstance((*currentNode).value, x) == true){
+            if((*currentNode).rightChild == nullptr){return nullptr;}
+            currentNode = (*currentNode).rightChild;
+        }
+        else{return currentNode;}
+    }
 }
 
 template <typename T, typename Comparator> SGLSet<T, Comparator>::Iterator SGLSet<T, Comparator>::find(T x){
-    Node* currentNode = root;
-    if(root == nullptr){return end();}
-    while(true){
-        if(comparatorInstance(x, (*currentNode).value) == true){
-            if((*currentNode).leftChild == nullptr){return end();}
-            currentNode = (*currentNode).leftChild;
-        }
-        else if(comparatorInstance((*currentNode).value, x) == true){
-            if((*currentNode).rightChild == nullptr){return end();}
-            currentNode = (*currentNode).rightChild;
-        }
-        else{return Iterator(currentNode, this);}
-    }
+    return Iterator(findNode(x), this);
 }
 
 template <typename T, typename Comparator> SGLSet<T, Comparator>::ConstIterator SGLSet<T, Comparator>::find(T x) const {
-    Node* currentNode = root;
-    if(root == nullptr){return constEnd();}
-    while(true){
-        if(comparatorInstance(x, (*currentNode).value) == true){
-            if((*currentNode).leftChild == nullptr){return constEnd();}
-            currentNode = (*currentNode).leftChild;
-        }
-        else if(comparatorInstance((*currentNode).value, x) == true){
-            if((*currentNode).rightChild == nullptr){return constEnd();}
-            currentNode = (*currentNode).rightChild;
-        }
-        else{return ConstIterator(currentNode, this);}
-    }
+    return ConstIterator(findNode(x), this);
 }
 
 template <typename T, typename Comparator> SGLSet<T, Comparator>::Node* SGLSet<T, Comparator>::lowerBoundNode(T x) const {
@@ -641,10 +639,11 @@ template <typename T, typename Comparator> SGLSet<T, Comparator>::Node* SGLSet<T
     if(x < 0 || x >= (*root).subtreeSize){return nullptr;}
     Node* currentNode = root;
     while(true){
-        if(x == getEffectiveSubtreeSize((*currentNode).leftChild)){return currentNode;}
-        if(x < getEffectiveSubtreeSize((*currentNode).leftChild)){currentNode = (*currentNode).leftChild;}
+        int leftSize = getEffectiveSubtreeSize((*currentNode).leftChild);
+        if(x == leftSize){return currentNode;}
+        if(x < leftSize){currentNode = (*currentNode).leftChild;}
         else{
-            x -= (1 + getEffectiveSubtreeSize((*currentNode).leftChild));
+            x -= (1 + leftSize);
             currentNode = (*currentNode).rightChild;
         }
     }

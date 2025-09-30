@@ -107,6 +107,7 @@ HEADERS += \
     $$PWD/containers/sglhash.h \
     $$PWD/containers/sgllesserthan.h \
     $$PWD/containers/sglmorethan.h \
+    $$PWD/containers/sglmultiset.h \
     $$PWD/containers/sglpair.h \
     $$PWD/containers/sglprimitivetypechecker.h \
     $$PWD/containers/sglpriorityqueue.h \
