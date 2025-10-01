@@ -7,22 +7,22 @@ template <typename T> class SGLDeque {
 public:
     SGLDeque();
     SGLDeque(int count);
-    SGLDeque(int count, T defaultValue);
+    SGLDeque(int count, const T& defaultValue);
     SGLDeque(const SGLDeque& x);
     SGLDeque& operator=(const SGLDeque& x);
     SGLDeque(SGLDeque&& x) noexcept;
     SGLDeque& operator=(SGLDeque&& x) noexcept;
     ~SGLDeque();
-    void assign(int count, T defaultValue);
-    void fill(T defaultValue);
+    void assign(int count, const T& defaultValue);
+    void fill(const T& defaultValue);
     [[nodiscard]] T& at(int i);
     [[nodiscard]] const T& at(int i) const;
     [[nodiscard]] const T& front() const;
     [[nodiscard]] const T& back() const;
     [[nodiscard]] int length() const;
-    void pushBack(T x);
+    void pushBack(const T& x);
     void popBack();
-    void pushFront(T x);
+    void pushFront(const T& x);
     void popFront();
     void reserve(int newMemoryLength);
     [[nodiscard]] T* pointerToData(int n);
@@ -47,7 +47,7 @@ template <typename T> SGLDeque<T>::SGLDeque(int count){
     memoryLengthInternal = count;
 }
 
-template <typename T> SGLDeque<T>::SGLDeque(int count, T defaultValue){
+template <typename T> SGLDeque<T>::SGLDeque(int count, const T& defaultValue){
     dataInternal = new T[count];
     startInternal = 0;
     endInternal = count;
@@ -108,7 +108,7 @@ template <typename T> SGLDeque<T>::~SGLDeque(){
     delete[] dataInternal;
 }
 
-template <typename T> void SGLDeque<T>::assign(int count, T defaultValue){
+template <typename T> void SGLDeque<T>::assign(int count, const T& defaultValue){
     delete[] dataInternal;
     dataInternal = new T[count];
     startInternal = 0;
@@ -119,7 +119,7 @@ template <typename T> void SGLDeque<T>::assign(int count, T defaultValue){
     }
 }
 
-template <typename T> void SGLDeque<T>::fill(T defaultValue){
+template <typename T> void SGLDeque<T>::fill(const T& defaultValue){
     for(int i=startInternal; i<endInternal; i++){
         (*(dataInternal + i)) = defaultValue;
     }
@@ -166,7 +166,7 @@ template <typename T> T* SGLDeque<T>::pointerToData(int n){
     return (dataInternal + startInternal + n);
 }
 
-template <typename T> void SGLDeque<T>::pushBack(T x){
+template <typename T> void SGLDeque<T>::pushBack(const T& x){
     if(memoryLengthInternal == 0){reserve(1);}
     else if(endInternal == memoryLengthInternal){reserve(3 * memoryLengthInternal);}
     endInternal++;
@@ -177,7 +177,7 @@ template <typename T> void SGLDeque<T>::popBack(){
     endInternal--;
 }
 
-template <typename T> void SGLDeque<T>::pushFront(T x){
+template <typename T> void SGLDeque<T>::pushFront(const T& x){
     if(memoryLengthInternal == 0){reserve(1);}
     else if(startInternal == 0){reserve(3 * memoryLengthInternal);}
     startInternal--;

@@ -11,7 +11,7 @@ public:
     ~SGLStack();
     [[nodiscard]] const T& top() const;
     [[nodiscard]] int length() const;
-    void push(T x);
+    void push(const T& x);
     void pop();
     void reserve(int newMemoryLength);
 protected:
@@ -90,7 +90,7 @@ template <typename T> void SGLStack<T>::reserve(int newMemoryLength){
     delete[] oldPointer;
 }
 
-template <typename T> void SGLStack<T>::push(T x){
+template <typename T> void SGLStack<T>::push(const T& x){
     if(memoryLengthInternal == 0){reserve(1);}
     else if(lengthInternal == memoryLengthInternal){reserve(2 * memoryLengthInternal);}
     lengthInternal++;

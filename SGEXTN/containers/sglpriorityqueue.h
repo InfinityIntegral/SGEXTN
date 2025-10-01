@@ -11,7 +11,7 @@ public:
     ~SGLPriorityQueue();
     [[nodiscard]] const T& top() const;
     [[nodiscard]] int length() const;
-    void push(T x);
+    void push(const T& x);
     void pop();
     void reserve(int newMemoryLength);
 protected:
@@ -106,7 +106,7 @@ template <typename T, typename Comparator> bool SGLPriorityQueue<T, Comparator>:
     return comparatorInstance((*(dataInternal + a)), (*(dataInternal + b)));
 }
 
-template <typename T, typename Comparator> void SGLPriorityQueue<T, Comparator>::push(T x){
+template <typename T, typename Comparator> void SGLPriorityQueue<T, Comparator>::push(const T& x){
     if(memoryLengthInternal == 0){reserve(1);}
     else if(lengthInternal == memoryLengthInternal){reserve(2 * memoryLengthInternal);}
     lengthInternal++;

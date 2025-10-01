@@ -15,7 +15,7 @@ protected:
         int subtreeSize;
         K key;
         V value;
-        Node(K xKey, V xValue, Node* parentNode);
+        Node(const K& xKey, const V& xValue, Node* parentNode);
         Node(Node* oldNode, Node* newParent);
         void recursiveDelete();
     };
@@ -38,9 +38,9 @@ protected:
     Node* getRightmostSubchild(Node* x) const;
     void replaceChildren(Node* parent, Node* child, Node* newChild);
     void replaceParent(Node* child, Node* newParent);
-    Node* findNode(K x) const;
-    Node* lowerBoundNode(K x) const;
-    Node* upperBoundNode(K x) const;
+    Node* findNode(const K& x) const;
+    Node* lowerBoundNode(const K& x) const;
+    Node* upperBoundNode(const K& x) const;
     Node* getNodeByIndex(int x) const;
     int getIndexOfNode(Node* x) const;
     
@@ -52,12 +52,12 @@ public:
     SGLMap& operator=(SGLMap&& x) noexcept;
     ~SGLMap();
     [[nodiscard]] int length() const;
-    void insert(K xKey, V xValue);
-    void erase(K x);
-    [[nodiscard]] bool contains(K x) const;
-    [[nodiscard]] int count(K x) const;
-    [[nodiscard]] V& at(K x);
-    [[nodiscard]] const V& at(K x) const;
+    void insert(const K& xKey, const V& xValue);
+    void erase(const K& x);
+    [[nodiscard]] bool contains(const K& x) const;
+    [[nodiscard]] int count(const K& x) const;
+    [[nodiscard]] V& at(const K& x);
+    [[nodiscard]] const V& at(const K& x) const;
     
     class Iterator {
         friend class SGLMap;
@@ -98,15 +98,15 @@ public:
     [[nodiscard]] Iterator end();
     [[nodiscard]] ConstIterator constEnd() const;
     void erase(Iterator& i);
-    [[nodiscard]] Iterator find(K x);
-    [[nodiscard]] ConstIterator find(K x) const;
+    [[nodiscard]] Iterator find(const K& x);
+    [[nodiscard]] ConstIterator find(const K& x) const;
     
-    [[nodiscard]] Iterator lowerBound(K x);
-    [[nodiscard]] ConstIterator lowerBound(K x) const;
-    [[nodiscard]] Iterator upperBound(K x);
-    [[nodiscard]] ConstIterator upperBound(K x) const;
+    [[nodiscard]] Iterator lowerBound(const K& x);
+    [[nodiscard]] ConstIterator lowerBound(const K& x) const;
+    [[nodiscard]] Iterator upperBound(const K& x);
+    [[nodiscard]] ConstIterator upperBound(const K& x) const;
     
-    [[nodiscard]] int indexOf(K x) const;
+    [[nodiscard]] int indexOf(const K& x) const;
     [[nodiscard]] int indexOf(Iterator i) const;
     [[nodiscard]] int indexOf(ConstIterator i) const;
     [[nodiscard]] const K& keyAt(int n) const;
@@ -120,7 +120,7 @@ template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>:
     comparatorInstance = Comparator();
 }
 
-template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>::Node::Node(K xKey, V xValue, Node* parentNode){
+template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>::Node::Node(const K& xKey, const V& xValue, Node* parentNode){
     key = xKey;
     value = xValue;
     parent = parentNode;
@@ -288,7 +288,7 @@ template <typename K, typename V, typename Comparator> void SGLMap<K, V, Compara
     }
 }
 
-template <typename K, typename V, typename Comparator> void SGLMap<K, V, Comparator>::insert(K xKey, V xValue){
+template <typename K, typename V, typename Comparator> void SGLMap<K, V, Comparator>::insert(const K& xKey, const V& xValue){
     Node* currentNode = root;
     if(root == nullptr){
         root = new Node(xKey, xValue, nullptr);
@@ -316,17 +316,17 @@ template <typename K, typename V, typename Comparator> void SGLMap<K, V, Compara
     updateHeightRecurseToRoot(currentNode);
 }
 
-template <typename K, typename V, typename Comparator> void SGLMap<K, V, Comparator>::erase(K x){
+template <typename K, typename V, typename Comparator> void SGLMap<K, V, Comparator>::erase(const K& x){
     Iterator i = find(x);
     erase(i);
 }
 
-template <typename K, typename V, typename Comparator> bool SGLMap<K, V, Comparator>::contains(K x) const {
+template <typename K, typename V, typename Comparator> bool SGLMap<K, V, Comparator>::contains(const K& x) const {
     if(find(x) == constEnd()){return false;}
     return true;
 }
 
-template <typename K, typename V, typename Comparator> int SGLMap<K, V, Comparator>::count(K x) const {
+template <typename K, typename V, typename Comparator> int SGLMap<K, V, Comparator>::count(const K& x) const {
     if(contains(x) == true){return 1;}
     return 0;
 }
@@ -548,7 +548,7 @@ template <typename K, typename V, typename Comparator> void SGLMap<K, V, Compara
     i--;
 }
 
-template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>::Node* SGLMap<K, V, Comparator>::findNode(K x) const {
+template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>::Node* SGLMap<K, V, Comparator>::findNode(const K& x) const {
     Node* currentNode = root;
     if(root == nullptr){return nullptr;}
     while(true){
@@ -564,15 +564,15 @@ template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>:
     }
 }
 
-template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>::Iterator SGLMap<K, V, Comparator>::find(K x){
+template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>::Iterator SGLMap<K, V, Comparator>::find(const K& x){
     return Iterator(findNode(x), this);
 }
 
-template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>::ConstIterator SGLMap<K, V, Comparator>::find(K x) const {
+template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>::ConstIterator SGLMap<K, V, Comparator>::find(const K& x) const {
     return ConstIterator(findNode(x), this);
 }
 
-template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>::Node* SGLMap<K, V, Comparator>::lowerBoundNode(K x) const {
+template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>::Node* SGLMap<K, V, Comparator>::lowerBoundNode(const K& x) const {
     Node* output = nullptr;
     Node* currentNode = root;
     while(currentNode != nullptr){
@@ -585,7 +585,7 @@ template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>:
     return output;
 }
 
-template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>::Node* SGLMap<K, V, Comparator>::upperBoundNode(K x) const {
+template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>::Node* SGLMap<K, V, Comparator>::upperBoundNode(const K& x) const {
     Node* output = nullptr;
     Node* currentNode = root;
     while(currentNode != nullptr){
@@ -598,23 +598,23 @@ template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>:
     return output;
 }
 
-template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>::Iterator SGLMap<K, V, Comparator>::lowerBound(K x){
+template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>::Iterator SGLMap<K, V, Comparator>::lowerBound(const K& x){
     return Iterator(lowerBoundNode(x), this);
 }
 
-template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>::ConstIterator SGLMap<K, V, Comparator>::lowerBound(K x) const {
+template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>::ConstIterator SGLMap<K, V, Comparator>::lowerBound(const K& x) const {
     return ConstIterator(lowerBoundNode(x), this);
 }
 
-template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>::Iterator SGLMap<K, V, Comparator>::upperBound(K x){
+template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>::Iterator SGLMap<K, V, Comparator>::upperBound(const K& x){
     return Iterator(upperBoundNode(x), this);
 }
 
-template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>::ConstIterator SGLMap<K, V, Comparator>::upperBound(K x) const {
+template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>::ConstIterator SGLMap<K, V, Comparator>::upperBound(const K& x) const {
     return ConstIterator(upperBoundNode(x), this);
 }
 
-template <typename K, typename V, typename Comparator> int SGLMap<K, V, Comparator>::indexOf(K x) const {
+template <typename K, typename V, typename Comparator> int SGLMap<K, V, Comparator>::indexOf(const K& x) const {
     return indexOf(find(x));
 }
 
@@ -671,13 +671,13 @@ template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>:
     }
 }
 
-template <typename K, typename V, typename Comparator> V& SGLMap<K, V, Comparator>::at(K x){
+template <typename K, typename V, typename Comparator> V& SGLMap<K, V, Comparator>::at(const K& x){
     Iterator i = find(x);
     if(i == end()){SGLCrash::crash();}
     return i.value();
 }
 
-template <typename K, typename V, typename Comparator> const V& SGLMap<K, V, Comparator>::at(K x) const {
+template <typename K, typename V, typename Comparator> const V& SGLMap<K, V, Comparator>::at(const K& x) const {
     ConstIterator i = find(x);
     if(i == constEnd()){SGLCrash::crash();}
     return i.value();

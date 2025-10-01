@@ -14,7 +14,7 @@ protected:
         int height;
         int subtreeSize;
         T value;
-        Node(T x, Node* parentNode);
+        Node(const T& x, Node* parentNode);
         Node(Node* oldNode, Node* newParent);
         void recursiveDelete();
     };
@@ -37,9 +37,9 @@ protected:
     Node* getRightmostSubchild(Node* x) const;
     void replaceChildren(Node* parent, Node* child, Node* newChild);
     void replaceParent(Node* child, Node* newParent);
-    Node* findNode(T x) const;
-    Node* lowerBoundNode(T x) const;
-    Node* upperBoundNode(T x) const;
+    Node* findNode(const T& x) const;
+    Node* lowerBoundNode(const T& x) const;
+    Node* upperBoundNode(const T& x) const;
     Node* getNodeByIndex(int x) const;
     int getIndexOfNode(Node* x) const;
     
@@ -51,10 +51,10 @@ public:
     SGLSet& operator=(SGLSet&& x) noexcept;
     ~SGLSet();
     [[nodiscard]] int length() const;
-    void insert(T x);
-    void erase(T x);
-    [[nodiscard]] bool contains(T x) const;
-    [[nodiscard]] int count(T x) const;
+    void insert(const T& x);
+    void erase(const T& x);
+    [[nodiscard]] bool contains(const T& x) const;
+    [[nodiscard]] int count(const T& x) const;
     
     class Iterator {
         friend class SGLSet;
@@ -93,15 +93,15 @@ public:
     [[nodiscard]] Iterator end();
     [[nodiscard]] ConstIterator constEnd() const;
     void erase(Iterator& i);
-    [[nodiscard]] Iterator find(T x);
-    [[nodiscard]] ConstIterator find(T x) const;
+    [[nodiscard]] Iterator find(const T& x);
+    [[nodiscard]] ConstIterator find(const T& x) const;
     
-    [[nodiscard]] Iterator lowerBound(T x);
-    [[nodiscard]] ConstIterator lowerBound(T x) const;
-    [[nodiscard]] Iterator upperBound(T x);
-    [[nodiscard]] ConstIterator upperBound(T x) const;
+    [[nodiscard]] Iterator lowerBound(const T& x);
+    [[nodiscard]] ConstIterator lowerBound(const T& x) const;
+    [[nodiscard]] Iterator upperBound(const T& x);
+    [[nodiscard]] ConstIterator upperBound(const T& x) const;
     
-    [[nodiscard]] int indexOf(T x) const;
+    [[nodiscard]] int indexOf(const T& x) const;
     [[nodiscard]] int indexOf(Iterator i) const;
     [[nodiscard]] int indexOf(ConstIterator i) const;
     [[nodiscard]] const T& elementAt(int n) const;
@@ -114,7 +114,7 @@ template <typename T, typename Comparator> SGLSet<T, Comparator>::SGLSet(){
     comparatorInstance = Comparator();
 }
 
-template <typename T, typename Comparator> SGLSet<T, Comparator>::Node::Node(T x, Node* parentNode){
+template <typename T, typename Comparator> SGLSet<T, Comparator>::Node::Node(const T& x, Node* parentNode){
     value = x;
     parent = parentNode;
     leftChild = nullptr;
@@ -280,7 +280,7 @@ template <typename T, typename Comparator> void SGLSet<T, Comparator>::updateHei
     }
 }
 
-template <typename T, typename Comparator> void SGLSet<T, Comparator>::insert(T x){
+template <typename T, typename Comparator> void SGLSet<T, Comparator>::insert(const T& x){
     Node* currentNode = root;
     if(root == nullptr){
         root = new Node(x, nullptr);
@@ -308,17 +308,17 @@ template <typename T, typename Comparator> void SGLSet<T, Comparator>::insert(T 
     updateHeightRecurseToRoot(currentNode);
 }
 
-template <typename T, typename Comparator> void SGLSet<T, Comparator>::erase(T x){
+template <typename T, typename Comparator> void SGLSet<T, Comparator>::erase(const T& x){
     Iterator i = find(x);
     erase(i);
 }
 
-template <typename T, typename Comparator> bool SGLSet<T, Comparator>::contains(T x) const {
+template <typename T, typename Comparator> bool SGLSet<T, Comparator>::contains(const T& x) const {
     if(find(x) == constEnd()){return false;}
     return true;
 }
 
-template <typename T, typename Comparator> int SGLSet<T, Comparator>::count(T x) const {
+template <typename T, typename Comparator> int SGLSet<T, Comparator>::count(const T& x) const {
     if(contains(x) == true){return 1;}
     return 0;
 }
@@ -532,7 +532,7 @@ template <typename T, typename Comparator> void SGLSet<T, Comparator>::erase(Ite
     i--;
 }
 
-template <typename T, typename Comparator> SGLSet<T, Comparator>::Node* SGLSet<T, Comparator>::findNode(T x) const {
+template <typename T, typename Comparator> SGLSet<T, Comparator>::Node* SGLSet<T, Comparator>::findNode(const T& x) const {
     Node* currentNode = root;
     if(root == nullptr){return nullptr;}
     while(true){
@@ -548,15 +548,15 @@ template <typename T, typename Comparator> SGLSet<T, Comparator>::Node* SGLSet<T
     }
 }
 
-template <typename T, typename Comparator> SGLSet<T, Comparator>::Iterator SGLSet<T, Comparator>::find(T x){
+template <typename T, typename Comparator> SGLSet<T, Comparator>::Iterator SGLSet<T, Comparator>::find(const T& x){
     return Iterator(findNode(x), this);
 }
 
-template <typename T, typename Comparator> SGLSet<T, Comparator>::ConstIterator SGLSet<T, Comparator>::find(T x) const {
+template <typename T, typename Comparator> SGLSet<T, Comparator>::ConstIterator SGLSet<T, Comparator>::find(const T& x) const {
     return ConstIterator(findNode(x), this);
 }
 
-template <typename T, typename Comparator> SGLSet<T, Comparator>::Node* SGLSet<T, Comparator>::lowerBoundNode(T x) const {
+template <typename T, typename Comparator> SGLSet<T, Comparator>::Node* SGLSet<T, Comparator>::lowerBoundNode(const T& x) const {
     Node* output = nullptr;
     Node* currentNode = root;
     while(currentNode != nullptr){
@@ -569,7 +569,7 @@ template <typename T, typename Comparator> SGLSet<T, Comparator>::Node* SGLSet<T
     return output;
 }
 
-template <typename T, typename Comparator> SGLSet<T, Comparator>::Node* SGLSet<T, Comparator>::upperBoundNode(T x) const {
+template <typename T, typename Comparator> SGLSet<T, Comparator>::Node* SGLSet<T, Comparator>::upperBoundNode(const T& x) const {
     Node* output = nullptr;
     Node* currentNode = root;
     while(currentNode != nullptr){
@@ -582,23 +582,23 @@ template <typename T, typename Comparator> SGLSet<T, Comparator>::Node* SGLSet<T
     return output;
 }
 
-template <typename T, typename Comparator> SGLSet<T, Comparator>::Iterator SGLSet<T, Comparator>::lowerBound(T x){
+template <typename T, typename Comparator> SGLSet<T, Comparator>::Iterator SGLSet<T, Comparator>::lowerBound(const T& x){
     return Iterator(lowerBoundNode(x), this);
 }
 
-template <typename T, typename Comparator> SGLSet<T, Comparator>::ConstIterator SGLSet<T, Comparator>::lowerBound(T x) const {
+template <typename T, typename Comparator> SGLSet<T, Comparator>::ConstIterator SGLSet<T, Comparator>::lowerBound(const T& x) const {
     return ConstIterator(lowerBoundNode(x), this);
 }
 
-template <typename T, typename Comparator> SGLSet<T, Comparator>::Iterator SGLSet<T, Comparator>::upperBound(T x){
+template <typename T, typename Comparator> SGLSet<T, Comparator>::Iterator SGLSet<T, Comparator>::upperBound(const T& x){
     return Iterator(upperBoundNode(x), this);
 }
 
-template <typename T, typename Comparator> SGLSet<T, Comparator>::ConstIterator SGLSet<T, Comparator>::upperBound(T x) const {
+template <typename T, typename Comparator> SGLSet<T, Comparator>::ConstIterator SGLSet<T, Comparator>::upperBound(const T& x) const {
     return ConstIterator(upperBoundNode(x), this);
 }
 
-template <typename T, typename Comparator> int SGLSet<T, Comparator>::indexOf(T x) const {
+template <typename T, typename Comparator> int SGLSet<T, Comparator>::indexOf(const T& x) const {
     return indexOf(find(x));
 }
 

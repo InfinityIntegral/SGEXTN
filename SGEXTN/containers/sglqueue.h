@@ -12,7 +12,7 @@ public:
     [[nodiscard]] const T& front() const;
     [[nodiscard]] const T& back() const;
     [[nodiscard]] int length() const;
-    void push(T x);
+    void push(const T& x);
     void pop();
     void reserve(int newMemoryLength);
 protected:
@@ -114,7 +114,7 @@ template <typename T> void SGLQueue<T>::reserve(int newMemoryLength){
     delete[] oldPointer;
 }
 
-template <typename T> void SGLQueue<T>::push(T x){
+template <typename T> void SGLQueue<T>::push(const T& x){
     if(memoryLengthInternal == 0){reserve(1);}
     if(endInternal == memoryLengthInternal){reserve(2 * memoryLengthInternal);}
     endInternal++;

@@ -15,7 +15,7 @@ protected:
         int subtreeSize;
         T value;
         int count;
-        Node(T x, Node* parentNode);
+        Node(const T& x, Node* parentNode);
         Node(Node* oldNode, Node* parentNode);
         void recursiveDelete();
     };
@@ -38,9 +38,9 @@ protected:
     Node* getRightMostSubChild(Node* x) const;
     void replaceChildren(Node* parent, Node* child, Node* newChild);
     void replaceParent(Node* child, Node* newParent);
-    Node* findNode(T x) const;
-    Node* lowerBoundNode(T x) const;
-    Node* upperBoundNode(T x) const;
+    Node* findNode(const T& x) const;
+    Node* lowerBoundNode(const T& x) const;
+    Node* upperBoundNode(const T& x) const;
     Node* getNodeByIndex(int x, int& copy) const;
     int getIndexOfNode(Node* x) const;
     
@@ -52,10 +52,10 @@ public:
     SGLMultiSet& operator=(SGLMultiSet&& x) noexcept;
     ~SGLMultiSet();
     [[nodiscard]] int length() const;
-    void insert(T x);
-    void erase(T x);
-    [[nodiscard]] bool contains(T x) const;
-    [[nodiscard]] int count(T x) const;
+    void insert(const T& x);
+    void erase(const T& x);
+    [[nodiscard]] bool contains(const T& x) const;
+    [[nodiscard]] int count(const T& x) const;
     
     class Iterator {
         friend class SGLMultiSet;
@@ -96,15 +96,15 @@ public:
     [[nodiscard]] Iterator end();
     [[nodiscard]] ConstIterator constEnd() const;
     void erase(Iterator& i);
-    [[nodiscard]] Iterator find(T x);
-    [[nodiscard]] ConstIterator find(T x) const;
+    [[nodiscard]] Iterator find(const T& x);
+    [[nodiscard]] ConstIterator find(const T& x) const;
     
-    [[nodiscard]] Iterator lowerBound(T x);
-    [[nodiscard]] ConstIterator lowerBound(T x) const;
-    [[nodiscard]] Iterator upperBound(T x);
-    [[nodiscard]] ConstIterator upperBound(T x) const;
+    [[nodiscard]] Iterator lowerBound(const T& x);
+    [[nodiscard]] ConstIterator lowerBound(const T& x) const;
+    [[nodiscard]] Iterator upperBound(const T& x);
+    [[nodiscard]] ConstIterator upperBound(const T& x) const;
     
-    [[nodiscard]] int indexOf(T x) const;
+    [[nodiscard]] int indexOf(const T& x) const;
     [[nodiscard]] int indexOf(Iterator i) const;
     [[nodiscard]] int indexOf(ConstIterator i) const;
     [[nodiscard]] const T& elementAt(int n) const;
@@ -117,7 +117,7 @@ template <typename T, typename Comparator> SGLMultiSet<T, Comparator>::SGLMultiS
     comparatorInstance = Comparator();
 }
 
-template <typename T, typename Comparator> SGLMultiSet<T, Comparator>::Node::Node(T x, Node* parentNode){
+template <typename T, typename Comparator> SGLMultiSet<T, Comparator>::Node::Node(const T& x, Node* parentNode){
     value = x;
     parent = parentNode;
     leftChild = nullptr;
@@ -285,7 +285,7 @@ template <typename T, typename Comparator> void SGLMultiSet<T, Comparator>::upda
     }
 }
 
-template <typename T, typename Comparator> void SGLMultiSet<T, Comparator>::insert(T x){
+template <typename T, typename Comparator> void SGLMultiSet<T, Comparator>::insert(const T& x){
     Node* currentNode = root;
     if(root == nullptr){
         root = new Node(x, nullptr);
@@ -316,17 +316,17 @@ template <typename T, typename Comparator> void SGLMultiSet<T, Comparator>::inse
     updateHeightRecurseToRoot(currentNode);
 }
 
-template <typename T, typename Comparator> void SGLMultiSet<T, Comparator>::erase(T x){
+template <typename T, typename Comparator> void SGLMultiSet<T, Comparator>::erase(const T& x){
     Iterator i = find(x);
     erase(i);
 }
 
-template <typename T, typename Comparator> bool SGLMultiSet<T, Comparator>::contains(T x) const {
+template <typename T, typename Comparator> bool SGLMultiSet<T, Comparator>::contains(const T& x) const {
     if(find(x) == constEnd()){return false;}
     return true;
 }
 
-template <typename T, typename Comparator> int SGLMultiSet<T, Comparator>::count(T x) const{
+template <typename T, typename Comparator> int SGLMultiSet<T, Comparator>::count(const T& x) const{
     if(find(x) == constEnd()){return 0;}
     return ((*find(x).node).count);
 }
@@ -639,7 +639,7 @@ template <typename T, typename Comparator> void SGLMultiSet<T, Comparator>::eras
     i--;
 }
 
-template <typename T, typename Comparator> SGLMultiSet<T, Comparator>::Node* SGLMultiSet<T, Comparator>::findNode(T x) const {
+template <typename T, typename Comparator> SGLMultiSet<T, Comparator>::Node* SGLMultiSet<T, Comparator>::findNode(const T& x) const {
     Node* currentNode = root;
     if(root == nullptr){return nullptr;}
     while(true){
@@ -655,15 +655,15 @@ template <typename T, typename Comparator> SGLMultiSet<T, Comparator>::Node* SGL
     }
 }
 
-template <typename T, typename Comparator> SGLMultiSet<T, Comparator>::Iterator SGLMultiSet<T, Comparator>::find(T x){
+template <typename T, typename Comparator> SGLMultiSet<T, Comparator>::Iterator SGLMultiSet<T, Comparator>::find(const T& x){
     return Iterator(findNode(x), 0, this);
 }
 
-template <typename T, typename Comparator> SGLMultiSet<T, Comparator>::ConstIterator SGLMultiSet<T, Comparator>::find(T x) const {
+template <typename T, typename Comparator> SGLMultiSet<T, Comparator>::ConstIterator SGLMultiSet<T, Comparator>::find(const T& x) const {
     return ConstIterator(findNode(x), 0, this);
 }
 
-template <typename T, typename Comparator> SGLMultiSet<T, Comparator>::Node* SGLMultiSet<T, Comparator>::lowerBoundNode(T x) const {
+template <typename T, typename Comparator> SGLMultiSet<T, Comparator>::Node* SGLMultiSet<T, Comparator>::lowerBoundNode(const T& x) const {
     Node* output = nullptr;
     Node* currentNode = root;
     while(currentNode != nullptr){
@@ -676,7 +676,7 @@ template <typename T, typename Comparator> SGLMultiSet<T, Comparator>::Node* SGL
     return output;
 }
 
-template <typename T, typename Comparator> SGLMultiSet<T, Comparator>::Node* SGLMultiSet<T, Comparator>::upperBoundNode(T x) const {
+template <typename T, typename Comparator> SGLMultiSet<T, Comparator>::Node* SGLMultiSet<T, Comparator>::upperBoundNode(const T& x) const {
     Node* output = nullptr;
     Node* currentNode = root;
     while(currentNode != nullptr){
@@ -689,23 +689,23 @@ template <typename T, typename Comparator> SGLMultiSet<T, Comparator>::Node* SGL
     return output;
 }
 
-template <typename T, typename Comparator> SGLMultiSet<T, Comparator>::Iterator SGLMultiSet<T, Comparator>::lowerBound(T x){
+template <typename T, typename Comparator> SGLMultiSet<T, Comparator>::Iterator SGLMultiSet<T, Comparator>::lowerBound(const T& x){
     return Iterator(lowerBoundNode(x), 0, this);
 }
 
-template <typename T, typename Comparator> SGLMultiSet<T, Comparator>::ConstIterator SGLMultiSet<T, Comparator>::lowerBound(T x) const {
+template <typename T, typename Comparator> SGLMultiSet<T, Comparator>::ConstIterator SGLMultiSet<T, Comparator>::lowerBound(const T& x) const {
     return ConstIterator(lowerBoundNode(x), 0, this);
 }
 
-template <typename T, typename Comparator> SGLMultiSet<T, Comparator>::Iterator SGLMultiSet<T, Comparator>::upperBound(T x){
+template <typename T, typename Comparator> SGLMultiSet<T, Comparator>::Iterator SGLMultiSet<T, Comparator>::upperBound(const T& x){
     return Iterator(upperBoundNode(x), 0, this);
 }
 
-template <typename T, typename Comparator> SGLMultiSet<T, Comparator>::ConstIterator SGLMultiSet<T, Comparator>::upperBound(T x) const {
+template <typename T, typename Comparator> SGLMultiSet<T, Comparator>::ConstIterator SGLMultiSet<T, Comparator>::upperBound(const T& x) const {
     return ConstIterator(upperBoundNode(x), 0, this);
 }
 
-template <typename T, typename Comparator> int SGLMultiSet<T, Comparator>::indexOf(T x) const {
+template <typename T, typename Comparator> int SGLMultiSet<T, Comparator>::indexOf(const T& x) const {
     return indexOf(find(x));
 }
 

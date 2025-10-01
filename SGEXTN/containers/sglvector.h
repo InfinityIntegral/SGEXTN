@@ -7,7 +7,7 @@ template <typename T> class SGLVector {
 public:
     SGLVector();
     SGLVector(int count);
-    SGLVector(int count, T defaultValue);
+    SGLVector(int count, const T& defaultValue);
     SGLVector(const SGLVector& x);
     SGLVector& operator=(const SGLVector& x);
     SGLVector(SGLVector&& x) noexcept;
@@ -17,10 +17,10 @@ public:
     [[nodiscard]] const T& at(int i) const;
     [[nodiscard]] const T& back() const;
     [[nodiscard]] int length() const;
-    void assign(int count, T defaultValue);
-    void fill(T defaultValue);
+    void assign(int count, const T& defaultValue);
+    void fill(const T& defaultValue);
     void reserve(int newMemoryLength);
-    void pushBack(T x);
+    void pushBack(const T& x);
     void popBack();
     [[nodiscard]] T* pointerToData(int n);
 protected:
@@ -41,7 +41,7 @@ template <typename T> SGLVector<T>::SGLVector(int count){
     memoryLengthInternal = count;
 }
 
-template <typename T> SGLVector<T>::SGLVector(int count, T defaultValue){
+template <typename T> SGLVector<T>::SGLVector(int count, const T& defaultValue){
     dataInternal = new T[count];
     lengthInternal = count;
     memoryLengthInternal = count;
@@ -111,7 +111,7 @@ template <typename T> int SGLVector<T>::length() const {
     return lengthInternal;
 }
 
-template <typename T> void SGLVector<T>::assign(int count, T defaultValue){
+template <typename T> void SGLVector<T>::assign(int count, const T& defaultValue){
     delete[] dataInternal;
     dataInternal = new T[count];
     lengthInternal = count;
@@ -121,7 +121,7 @@ template <typename T> void SGLVector<T>::assign(int count, T defaultValue){
     }
 }
 
-template <typename T> void SGLVector<T>::fill(T defaultValue){
+template <typename T> void SGLVector<T>::fill(const T& defaultValue){
     for(int i=0; i<lengthInternal; i++){
         (*(dataInternal + i)) = defaultValue;
     }
@@ -138,7 +138,7 @@ template <typename T> void SGLVector<T>::reserve(int newMemoryLength){
     delete[] oldPointer;
 }
 
-template <typename T> void SGLVector<T>::pushBack(T x){
+template <typename T> void SGLVector<T>::pushBack(const T& x){
     if(memoryLengthInternal == 0){reserve(1);}
     else if(lengthInternal == memoryLengthInternal){reserve(2 * memoryLengthInternal);}
     lengthInternal++;

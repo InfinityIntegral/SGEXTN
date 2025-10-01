@@ -6,14 +6,14 @@
 template <typename T> class SGLArray {
 public:
     SGLArray(int count);
-    SGLArray(int count, T defaultValue);
+    SGLArray(int count, const T& defaultValue);
     SGLArray(const SGLArray& x);
     SGLArray& operator=(const SGLArray& x);
     SGLArray(SGLArray&& x) noexcept;
     SGLArray& operator=(SGLArray&& x) noexcept;
     ~SGLArray();
-    void assign(int count, T defaultValue);
-    void fill(T defaultValue);
+    void assign(int count, const T& defaultValue);
+    void fill(const T& defaultValue);
     [[nodiscard]] int length() const;
     [[nodiscard]] T& at(int i);
     [[nodiscard]] const T& at(int i) const;
@@ -28,7 +28,7 @@ template <typename T> SGLArray<T>::SGLArray(int count){
     lengthInternal = count;
 }
 
-template <typename T> SGLArray<T>::SGLArray(int count, T defaultValue){
+template <typename T> SGLArray<T>::SGLArray(int count, const T& defaultValue){
     dataInternal = new T[count];
     lengthInternal = count;
     for(int i=0; i<lengthInternal; i++){
@@ -75,7 +75,7 @@ template <typename T> SGLArray<T>::~SGLArray(){
     delete[] dataInternal;
 }
 
-template <typename T> void SGLArray<T>::assign(int count, T defaultValue){
+template <typename T> void SGLArray<T>::assign(int count, const T& defaultValue){
     delete[] dataInternal;
     dataInternal = new T[count];
     lengthInternal = count;
@@ -84,7 +84,7 @@ template <typename T> void SGLArray<T>::assign(int count, T defaultValue){
     }
 }
 
-template <typename T> void SGLArray<T>::fill(T defaultValue){
+template <typename T> void SGLArray<T>::fill(const T& defaultValue){
     for(int i=0; i<lengthInternal; i++){
         (*(dataInternal + i)) = defaultValue;
     }
