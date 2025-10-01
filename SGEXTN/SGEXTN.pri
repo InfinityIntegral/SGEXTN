@@ -104,6 +104,7 @@ HEADERS += \
     $$PWD/containers/sglarray.h \
     $$PWD/containers/sglcrash.h \
     $$PWD/containers/sgldeque.h \
+    $$PWD/containers/sglequalsto.h \
     $$PWD/containers/sglhash.h \
     $$PWD/containers/sgllesserthan.h \
     $$PWD/containers/sglmap.h \
@@ -119,6 +120,7 @@ HEADERS += \
     $$PWD/containers/sgltuple3.h \
     $$PWD/containers/sgltuple4.h \
     $$PWD/containers/sgltuple5.h \
+    $$PWD/containers/sglunorderedset.h \
     $$PWD/containers/sglvector.h \
     $$PWD/filesystem/sgxfile.h \
     $$PWD/primitives/sgxchar.h \
