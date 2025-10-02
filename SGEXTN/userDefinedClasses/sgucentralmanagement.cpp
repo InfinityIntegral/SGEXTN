@@ -25,50 +25,44 @@ SGXColourRGBA SGUCentralManagement::themeColour5 = SGXColourRGBA(255, 64, 214);
 SGXColourRGBA SGUCentralManagement::themeColour6 = SGXColourRGBA(255, 128, 227);
 SGXColourRGBA SGUCentralManagement::themeColour7 = SGXColourRGBA(255, 191, 241);
 SGXColourRGBA SGUCentralManagement::themeColour8 = SGXColourRGBA(255, 255, 255);
-#include "../containers/sglmap.h"
+#include "../containers/sglunorderedset.h"
 #include "../primitives/sgxstring.h"
-#include "../containers/sgllesserthan.h"
+#include "../containers/sglequalsto.h"
+#include "../containers/sglhash.h"
 #include <QDebug>
 // this is run immediately after GUI is created, use it to initialise the UI
 void SGUCentralManagement::initialise(){
-    SGLMap<int, SGXString, SGLLesserThan<int>> s = SGLMap<int, SGXString, SGLLesserThan<int>>();
+    SGLUnorderedSet<int, SGLEqualsTo<int>, SGLHash<int>> s = SGLUnorderedSet<int, SGLEqualsTo<int>, SGLHash<int>>();
     qDebug() << s.length();
-    s.insert(2, "two");
+    s.insert(2);
     qDebug() << s.length();
-    s.insert(3, "three");
+    s.insert(3);
     qDebug() << s.length();
-    s.insert(5, "five");
+    s.insert(5);
     qDebug() << s.length();
-    s.insert(6, "six");
+    s.insert(6);
     qDebug() << s.length();
-    s.insert(7, "seven");
+    s.insert(7);
     qDebug() << s.length();
-    s.insert(11, "eleven");
+    s.insert(11);
     qDebug() << s.length();
     s.erase(6);
     qDebug() << s.length();
     qDebug() << "start";
     qDebug() << s.contains(1) << s.contains(6) << s.contains(11);
-    qDebug() << (*s.lowerBound(4).value().data) << (*s.upperBound(4).value().data) << (*s.lowerBound(3).value().data) << (*s.upperBound(3).value().data);
     qDebug() << "start";
-    for(SGLMap<int, SGXString, SGLLesserThan<int>>::ConstIterator i=s.constBegin(); i!=s.constEnd(); i++){qDebug() << i.key() << (*i.value().data);}
+    for(SGLUnorderedSet<int, SGLEqualsTo<int>, SGLHash<int>>::ConstIterator i=s.constBegin(); i!=s.constEnd(); i++){qDebug() << (*i);}
     qDebug() << "end";
-    SGLMap<int, SGXString, SGLLesserThan<int>> t = s;
+    SGLUnorderedSet<int, SGLEqualsTo<int>, SGLHash<int>> t = s;
     qDebug() << s.length();
     qDebug() << "start";
-    for(SGLMap<int, SGXString, SGLLesserThan<int>>::ConstIterator i=t.constBegin(); i!=t.constEnd(); i++){qDebug() << i.key() << (*i.value().data);}
+    for(SGLUnorderedSet<int, SGLEqualsTo<int>, SGLHash<int>>::ConstIterator i=t.constBegin(); i!=t.constEnd(); i++){qDebug() << (*i);}
     qDebug() << "start";
-    for(SGLMap<int, SGXString, SGLLesserThan<int>>::Iterator i=t.begin(); i!=t.end(); i++){if(i.key() == 5 || i.key() == 11){t.erase(i);} else {qDebug() << i.key() << (*i.value().data);}}
+    for(SGLUnorderedSet<int, SGLEqualsTo<int>, SGLHash<int>>::Iterator i=t.begin(); i!=t.end(); i++){if((*i) == 5 || (*i) == 11){t.erase(i);} else {qDebug() << (*i);}}
     qDebug() << "A";
-    for(SGLMap<int, SGXString, SGLLesserThan<int>>::ConstIterator i=t.constBegin(); i!=t.constEnd(); i++){qDebug() << i.key() << (*i.value().data);}
-    SGLMap<int, SGXString, SGLLesserThan<int>> u;
+    for(SGLUnorderedSet<int, SGLEqualsTo<int>, SGLHash<int>>::ConstIterator i=t.constBegin(); i!=t.constEnd(); i++){qDebug() << (*i);}
+    SGLUnorderedSet<int, SGLEqualsTo<int>, SGLHash<int>> u;
     qDebug() << u.length() << u.contains(0);
-    u = SGLMap<int, SGXString, SGLLesserThan<int>>(s);
-    qDebug() << u.indexOf(-2) << u.indexOf(11) << u.indexOf(3);
-    qDebug() << (*u.valueAt(0).data) << (*u.valueAt(u.length()-1).data);
-    qDebug() << (*s.at(11).data);
-    s.at(11) = "hi";
-    for(SGLMap<int, SGXString, SGLLesserThan<int>>::ConstIterator i=s.constBegin(); i!=s.constEnd(); i++){qDebug() << i.key() << (*i.value().data);}
 }
 
 // this is run after the application is created but before the GUI, use it to edit theme colours from configuration files

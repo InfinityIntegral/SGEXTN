@@ -6,7 +6,6 @@
 template <typename T, typename Comparator> class SGLSet{
 protected:
     class Node {
-        friend class SGLSet;
     public:
         Node* parent;
         Node* leftChild;

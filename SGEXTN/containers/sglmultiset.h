@@ -6,7 +6,6 @@
 template <typename T, typename Comparator> class SGLMultiSet {
 protected:
     class Node {
-        friend class SGLMultiSet;
     public:
         Node* parent;
         Node* leftChild;

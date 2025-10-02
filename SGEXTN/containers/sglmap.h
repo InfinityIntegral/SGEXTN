@@ -6,7 +6,6 @@
 template <typename K, typename V, typename Comparator> class SGLMap{
 protected:
     class Node {
-        friend class SGLMap;
     public:
         Node* parent;
         Node* leftChild;

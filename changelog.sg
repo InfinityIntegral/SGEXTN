@@ -32,6 +32,7 @@ SGLSet: added
 SGLMultiSet: added
 SGLMap: added
 SGLEqualsTo: added
+SGLUnorderedSet: added
 
 Added:
 - SGXChar
@@ -54,6 +55,7 @@ Added:
 - SGLMultiSet
 - SGLMap
 - SGLEqualsTo
+- SGLUnorderedSet
 
 Improved:
 - SGXFileSystem
