@@ -2,27 +2,152 @@
 #define SGLHASH_H
 
 #include "sglspan.h"
-#include "sglprimitivetypechecker.h"
 
-template <typename T> class SGLHash {
+template <typename T> class SGLHash;
+int wyHash32(const SGLSpan<const unsigned char>& span);
+
+template <> class SGLHash<bool> {
 public:
-    static_assert(SGLPrimitiveTypeChecker<T>::x, "Using SGLHash on structs with padding would break your data structures, so it has been disabled for everything except primitive types. Pls declare your own hash function struct which uses SGLHashMerge::merge to join the SGLHash results of component properties. See documentation for hash function structs of SGEXTN builtin types.");
-    [[nodiscard]] unsigned int operator()(const T& x) const;
+    [[nodiscard]] int operator()(bool x) const;
 };
 
-class SGLHashMerge {
+inline int SGLHash<bool>::operator()(bool x) const {
+    return wyHash32(SGLSpan<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(bool)));
+}
+
+template <> class SGLHash<char> {
 public:
-    static unsigned int merge(unsigned int hash1, unsigned int hash2);
+    [[nodiscard]] int operator()(char x) const;
 };
 
-template <typename T> unsigned int SGLHash<T>::operator()(const T& x) const {
-    const SGLSpan<const unsigned char> span(reinterpret_cast<const unsigned char*>(&x), sizeof(T));
+inline int SGLHash<char>::operator()(char x) const {
+    return wyHash32(SGLSpan<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(char)));
+}
+
+template <> class SGLHash<signed char> {
+public:
+    [[nodiscard]] int operator()(signed char x) const;
+};
+
+inline int SGLHash<signed char>::operator()(signed char x) const {
+    return wyHash32(SGLSpan<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(signed char)));
+}
+
+template <> class SGLHash<unsigned char> {
+public:
+    [[nodiscard]] int operator()(unsigned char x) const;
+};
+
+inline int SGLHash<unsigned char>::operator()(unsigned char x) const {
+    return wyHash32(SGLSpan<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(unsigned char)));
+}
+
+template <> class SGLHash<short> {
+public:
+    [[nodiscard]] int operator()(short x) const;
+};
+
+inline int SGLHash<short>::operator()(short x) const {
+    return wyHash32(SGLSpan<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(short)));
+}
+
+template <> class SGLHash<unsigned short> {
+public:
+    [[nodiscard]] int operator()(unsigned short x) const;
+};
+
+inline int SGLHash<unsigned short>::operator()(unsigned short x) const {
+    return wyHash32(SGLSpan<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(unsigned short)));
+}
+
+template <> class SGLHash<int> {
+public:
+    [[nodiscard]] int operator()(int x) const;
+};
+
+inline int SGLHash<int>::operator()(int x) const {
+    return wyHash32(SGLSpan<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(int)));
+}
+
+template <> class SGLHash<unsigned int> {
+public:
+    [[nodiscard]] int operator()(unsigned int x) const;
+};
+
+inline int SGLHash<unsigned int>::operator()(unsigned int x) const {
+    return wyHash32(SGLSpan<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(unsigned int)));
+}
+
+template <> class SGLHash<long> {
+public:
+    [[nodiscard]] int operator()(long x) const;
+};
+
+inline int SGLHash<long>::operator()(long x) const {
+    return wyHash32(SGLSpan<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(long)));
+}
+
+template <> class SGLHash<unsigned long> {
+public:
+    [[nodiscard]] int operator()(unsigned long x) const;
+};
+
+inline int SGLHash<unsigned long>::operator()(unsigned long x) const {
+    return wyHash32(SGLSpan<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(unsigned long)));
+}
+
+template <> class SGLHash<long long> {
+public:
+    [[nodiscard]] int operator()(long long x) const;
+};
+
+inline int SGLHash<long long>::operator()(long long x) const {
+    return wyHash32(SGLSpan<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(long long)));
+}
+
+template <> class SGLHash<unsigned long long> {
+public:
+    [[nodiscard]] int operator()(unsigned long long x) const;
+};
+
+inline int SGLHash<unsigned long long>::operator()(unsigned long long x) const {
+    return wyHash32(SGLSpan<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(unsigned long long)));
+}
+
+template <> class SGLHash<float> {
+public:
+    [[nodiscard]] int operator()(float x) const;
+};
+
+inline int SGLHash<float>::operator()(float x) const {
+    return wyHash32(SGLSpan<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(float)));
+}
+
+template <> class SGLHash<double> {
+public:
+    [[nodiscard]] int operator()(double x) const;
+};
+
+inline int SGLHash<double>::operator()(double x) const {
+    return wyHash32(SGLSpan<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(double)));
+}
+
+template <> class SGLHash<long double> {
+public:
+    [[nodiscard]] int operator()(long double x) const;
+};
+
+inline int SGLHash<long double>::operator()(long double x) const {
+    return wyHash32(SGLSpan<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(long double)));
+}
+
+inline int wyHash32(const SGLSpan<const unsigned char>& span){
     const unsigned int num0 = 0xA0761D65;
     const unsigned int num1 = 0xE7037ED1;
     const unsigned int num2 = 0x8EBC6AF1;
     const unsigned int num3 = 0x589965CC;
     int i = 0;
-    const int sizeOfT = static_cast<int>(sizeof(T));
+    const int sizeOfT = span.length();
     unsigned int hash = num0;
     while(sizeOfT - i >= 4){
         unsigned int k = 0u;
@@ -45,13 +170,7 @@ template <typename T> unsigned int SGLHash<T>::operator()(const T& x) const {
     hash = num2 * (hash ^ (hash >> 16));
     hash = num3 * (hash ^ (hash >> 13));
     hash = hash ^ (hash >> 16);
-    return hash;
-}
-
-inline unsigned int SGLHashMerge::merge(unsigned int hash1, unsigned int hash2){
-    const unsigned long long x = (static_cast<unsigned long long>(hash1) << 32) | static_cast<unsigned long long>(hash2);
-    const SGLHash<unsigned long long> h;
-    return h(x);
+    return static_cast<int>(hash);
 }
 
 #endif // SGLHASH_H

@@ -172,7 +172,7 @@ template <typename T, typename EqualityCheck, typename HashFunction> void SGLUno
 }
 
 template <typename T, typename EqualityCheck, typename HashFunction> void SGLUnorderedSet<T, EqualityCheck, HashFunction>::rehash(const T& x){
-    int hash = static_cast<int>(hashFunctionInstance(x)) % memoryLengthInternal;
+    int hash = hashFunctionInstance(x) % memoryLengthInternal;
     if(hash < 0){hash += memoryLengthInternal;}
     while(true){
         if(hash == memoryLengthInternal){hash = 0;}
@@ -447,7 +447,7 @@ template <typename T, typename EqualityCheck, typename HashFunction> void SGLUno
 
 template <typename T, typename EqualityCheck, typename HashFunction> SGLUnorderedSet<T, EqualityCheck, HashFunction>::Iterator SGLUnorderedSet<T, EqualityCheck, HashFunction>::find(const T& x){
     if(memoryLengthInternal == 0){return end();}
-    int hash = static_cast<int>(hashFunctionInstance(x)) % memoryLengthInternal;
+    int hash = hashFunctionInstance(x) % memoryLengthInternal;
     if(hash < 0){hash += memoryLengthInternal;}
     while(true){
         if(hash == memoryLengthInternal){hash = 0;}
@@ -459,7 +459,7 @@ template <typename T, typename EqualityCheck, typename HashFunction> SGLUnordere
 
 template <typename T, typename EqualityCheck, typename HashFunction> SGLUnorderedSet<T, EqualityCheck, HashFunction>::ConstIterator SGLUnorderedSet<T, EqualityCheck, HashFunction>::find(const T& x) const {
     if(memoryLengthInternal == 0){return constEnd();}
-    int hash = static_cast<int>(hashFunctionInstance(x)) % memoryLengthInternal;
+    int hash = hashFunctionInstance(x) % memoryLengthInternal;
     if(hash < 0){hash += memoryLengthInternal;}
     while(true){
         if(hash == memoryLengthInternal){hash = 0;}

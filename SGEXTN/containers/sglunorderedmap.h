@@ -177,7 +177,7 @@ template <typename K, typename V, typename EqualityCheck, typename HashFunction>
 }
 
 template <typename K, typename V, typename EqualityCheck, typename HashFunction> void SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::rehash(const K& xKey, const V& xValue){
-    int hash = static_cast<int>(hashFunctionInstance(xKey)) % memoryLengthInternal;
+    int hash = hashFunctionInstance(xKey) % memoryLengthInternal;
     if(hash < 0){hash += memoryLengthInternal;}
     while(true){
         if(hash == memoryLengthInternal){hash = 0;}
@@ -461,7 +461,7 @@ template <typename K, typename V, typename EqualityCheck, typename HashFunction>
 
 template <typename K, typename V, typename EqualityCheck, typename HashFunction> SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::Iterator SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::find(const K& x){
     if(memoryLengthInternal == 0){return end();}
-    int hash = static_cast<int>(hashFunctionInstance(x)) % memoryLengthInternal;
+    int hash = hashFunctionInstance(x) % memoryLengthInternal;
     if(hash < 0){hash += memoryLengthInternal;}
     while(true){
         if(hash == memoryLengthInternal){hash = 0;}
@@ -473,7 +473,7 @@ template <typename K, typename V, typename EqualityCheck, typename HashFunction>
 
 template <typename K, typename V, typename EqualityCheck, typename HashFunction> SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::ConstIterator SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::find(const K& x) const {
     if(memoryLengthInternal == 0){return constEnd();}
-    int hash = static_cast<int>(hashFunctionInstance(x)) % memoryLengthInternal;
+    int hash = hashFunctionInstance(x) % memoryLengthInternal;
     if(hash < 0){hash += memoryLengthInternal;}
     while(true){
         if(hash == memoryLengthInternal){hash = 0;}
