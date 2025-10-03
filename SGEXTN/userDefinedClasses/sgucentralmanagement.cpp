@@ -25,14 +25,14 @@ SGXColourRGBA SGUCentralManagement::themeColour5 = SGXColourRGBA(255, 64, 214);
 SGXColourRGBA SGUCentralManagement::themeColour6 = SGXColourRGBA(255, 128, 227);
 SGXColourRGBA SGUCentralManagement::themeColour7 = SGXColourRGBA(255, 191, 241);
 SGXColourRGBA SGUCentralManagement::themeColour8 = SGXColourRGBA(255, 255, 255);
-#include "../containers/sglunorderedset.h"
+#include "../containers/sglunorderedmultiset.h"
 #include "../primitives/sgxstring.h"
 #include "../containers/sglequalsto.h"
 #include "../containers/sglhash.h"
 #include <QDebug>
 // this is run immediately after GUI is created, use it to initialise the UI
 void SGUCentralManagement::initialise(){
-    SGLUnorderedSet<int, SGLEqualsTo<int>, SGLHash<int>> s = SGLUnorderedSet<int, SGLEqualsTo<int>, SGLHash<int>>();
+    SGLUnorderedMultiSet<int, SGLEqualsTo<int>, SGLHash<int>> s = SGLUnorderedMultiSet<int, SGLEqualsTo<int>, SGLHash<int>>();
     qDebug() << s.length();
     s.insert(2);
     qDebug() << s.length();
@@ -51,17 +51,17 @@ void SGUCentralManagement::initialise(){
     qDebug() << "start";
     qDebug() << s.contains(1) << s.contains(6) << s.contains(11);
     qDebug() << "start";
-    for(SGLUnorderedSet<int, SGLEqualsTo<int>, SGLHash<int>>::ConstIterator i=s.constBegin(); i!=s.constEnd(); i++){qDebug() << (*i);}
+    for(SGLUnorderedMultiSet<int, SGLEqualsTo<int>, SGLHash<int>>::ConstIterator i=s.constBegin(); i!=s.constEnd(); i++){qDebug() << (*i);}
     qDebug() << "end";
-    SGLUnorderedSet<int, SGLEqualsTo<int>, SGLHash<int>> t = s;
+    SGLUnorderedMultiSet<int, SGLEqualsTo<int>, SGLHash<int>> t = s;
     qDebug() << s.length();
     qDebug() << "start";
-    for(SGLUnorderedSet<int, SGLEqualsTo<int>, SGLHash<int>>::ConstIterator i=t.constBegin(); i!=t.constEnd(); i++){qDebug() << (*i);}
+    for(SGLUnorderedMultiSet<int, SGLEqualsTo<int>, SGLHash<int>>::ConstIterator i=t.constBegin(); i!=t.constEnd(); i++){qDebug() << (*i);}
     qDebug() << "start";
-    for(SGLUnorderedSet<int, SGLEqualsTo<int>, SGLHash<int>>::Iterator i=t.begin(); i!=t.end(); i++){if((*i) == 5 || (*i) == 11){t.erase(i);} else {qDebug() << (*i);}}
+    for(SGLUnorderedMultiSet<int, SGLEqualsTo<int>, SGLHash<int>>::Iterator i=t.begin(); i!=t.end(); i++){if((*i) == 5 || (*i) == 11){t.erase(i);} else {qDebug() << (*i);}}
     qDebug() << "A";
-    for(SGLUnorderedSet<int, SGLEqualsTo<int>, SGLHash<int>>::ConstIterator i=t.constBegin(); i!=t.constEnd(); i++){qDebug() << (*i);}
-    SGLUnorderedSet<int, SGLEqualsTo<int>, SGLHash<int>> u;
+    for(SGLUnorderedMultiSet<int, SGLEqualsTo<int>, SGLHash<int>>::ConstIterator i=t.constBegin(); i!=t.constEnd(); i++){qDebug() << (*i);}
+    SGLUnorderedMultiSet<int, SGLEqualsTo<int>, SGLHash<int>> u;
     qDebug() << u.length() << u.contains(0);
 }
 
