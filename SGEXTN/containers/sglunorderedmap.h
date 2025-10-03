@@ -93,20 +93,21 @@ template <typename K, typename V, typename EqualityCheck, typename HashFunction>
 
 template <typename K, typename V, typename EqualityCheck, typename HashFunction> SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::Slot::Slot(){
     usageStatus = unused;
-    key = K();
-    value = V();
 }
 
 template <typename K, typename V, typename EqualityCheck, typename HashFunction> SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::SGLUnorderedMap(const SGLUnorderedMap& x){
-    dataInternal = new Slot[x.memoryLengthInternal];
-    lengthInternal = x.lengthInternal;
-    memoryUsedInternal = x.memoryUsedInternal;
-    memoryLengthInternal = x.memoryLengthInternal;
-    for(int i=0; i<memoryLengthInternal; i++){
-        (*(dataInternal + i)) = (*(x.dataInternal + i));
-    }
     equalityCheckInstance = EqualityCheck();
     hashFunctionInstance = HashFunction();
+    dataInternal = new Slot[x.memoryLengthInternal];
+    lengthInternal = x.lengthInternal;
+    memoryUsedInternal = 0;
+    memoryLengthInternal = x.memoryLengthInternal;
+    for(int i=0; i<memoryLengthInternal; i++){
+        if((*(x.dataInternal + i)).usageStatus == Slot::active){
+          rehash((*(x.dataInternal + i)).key, (*(x.dataInternal + i)).value);
+          memoryUsedInternal++;
+        }
+    }
 }
 
 template <typename K, typename V, typename EqualityCheck, typename HashFunction> SGLUnorderedMap<K, V, EqualityCheck, HashFunction>& SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::operator=(const SGLUnorderedMap& x){
@@ -114,10 +115,13 @@ template <typename K, typename V, typename EqualityCheck, typename HashFunction>
     delete[] dataInternal;
     dataInternal = new Slot[x.memoryLengthInternal];
     lengthInternal = x.lengthInternal;
-    memoryUsedInternal = x.memoryUsedInternal;
+    memoryUsedInternal = 0;
     memoryLengthInternal = x.memoryLengthInternal;
     for(int i=0; i<memoryLengthInternal; i++){
-        (*(dataInternal + i)) = (*(x.dataInternal + i));
+        if((*(x.dataInternal + i)).usageStatus == Slot::active){
+          rehash((*(x.dataInternal + i)).key, (*(x.dataInternal + i)).value);
+          memoryUsedInternal++;
+        }
     }
     return (*this);
 }

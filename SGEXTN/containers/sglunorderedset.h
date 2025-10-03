@@ -88,19 +88,21 @@ template <typename T, typename EqualityCheck, typename HashFunction> SGLUnordere
 
 template <typename T, typename EqualityCheck, typename HashFunction> SGLUnorderedSet<T, EqualityCheck, HashFunction>::Slot::Slot(){
     usageStatus = unused;
-    value = T();
 }
 
 template <typename T, typename EqualityCheck, typename HashFunction> SGLUnorderedSet<T, EqualityCheck, HashFunction>::SGLUnorderedSet(const SGLUnorderedSet& x){
-    dataInternal = new Slot[x.memoryLengthInternal];
-    lengthInternal = x.lengthInternal;
-    memoryUsedInternal = x.memoryUsedInternal;
-    memoryLengthInternal = x.memoryLengthInternal;
-    for(int i=0; i<memoryLengthInternal; i++){
-        (*(dataInternal + i)) = (*(x.dataInternal + i));
-    }
     equalityCheckInstance = EqualityCheck();
     hashFunctionInstance = HashFunction();
+    dataInternal = new Slot[x.memoryLengthInternal];
+    lengthInternal = x.lengthInternal;
+    memoryUsedInternal = 0;
+    memoryLengthInternal = x.memoryLengthInternal;
+    for(int i=0; i<memoryLengthInternal; i++){
+        if((*(x.dataInternal + i)).usageStatus == Slot::active){
+          rehash((*(x.dataInternal + i)).value);
+          memoryUsedInternal++;
+        }
+    }
 }
 
 template <typename T, typename EqualityCheck, typename HashFunction> SGLUnorderedSet<T, EqualityCheck, HashFunction>& SGLUnorderedSet<T, EqualityCheck, HashFunction>::operator=(const SGLUnorderedSet& x){
@@ -108,10 +110,13 @@ template <typename T, typename EqualityCheck, typename HashFunction> SGLUnordere
     delete[] dataInternal;
     dataInternal = new Slot[x.memoryLengthInternal];
     lengthInternal = x.lengthInternal;
-    memoryUsedInternal = x.memoryUsedInternal;
+    memoryUsedInternal = 0;
     memoryLengthInternal = x.memoryLengthInternal;
     for(int i=0; i<memoryLengthInternal; i++){
-        (*(dataInternal + i)) = (*(x.dataInternal + i));
+        if((*(x.dataInternal + i)).usageStatus == Slot::active){
+          rehash((*(x.dataInternal + i)).value);
+          memoryUsedInternal++;
+        }
     }
     return (*this);
 }

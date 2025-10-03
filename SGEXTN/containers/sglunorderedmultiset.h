@@ -91,20 +91,22 @@ template <typename T, typename EqualityCheck, typename HashFunction> SGLUnordere
 
 template <typename T, typename EqualityCheck, typename HashFunction> SGLUnorderedMultiSet<T, EqualityCheck, HashFunction>::Slot::Slot(){
     usageStatus = unused;
-    value = T();
     count = 0;
 }
 
 template <typename T, typename EqualityCheck, typename HashFunction> SGLUnorderedMultiSet<T, EqualityCheck, HashFunction>::SGLUnorderedMultiSet(const SGLUnorderedMultiSet& x){
-    dataInternal = new Slot[x.memoryLengthInternal];
-    lengthInternal = x.lengthInternal;
-    memoryUsedInternal = x.memoryUsedInternal;
-    memoryLengthInternal = x.memoryLengthInternal;
-    for(int i=0; i<memoryLengthInternal; i++){
-        (*(dataInternal + i)) = (*(x.dataInternal + i));
-    }
     equalityCheckInstance = EqualityCheck();
     hashFunctionInstance = HashFunction();
+    dataInternal = new Slot[x.memoryLengthInternal];
+    lengthInternal = x.lengthInternal;
+    memoryUsedInternal = 0;
+    memoryLengthInternal = x.memoryLengthInternal;
+    for(int i=0; i<memoryLengthInternal; i++){
+        if((*(x.dataInternal + i)).usageStatus == Slot::active){
+          bool addedMemory = rehash((*(x.dataInternal + i)).value, (*(x.dataInternal + i)).count);
+          if(addedMemory == true){memoryUsedInternal++;}
+        }
+    }
 }
 
 template <typename T, typename EqualityCheck, typename HashFunction> SGLUnorderedMultiSet<T, EqualityCheck, HashFunction>& SGLUnorderedMultiSet<T, EqualityCheck, HashFunction>::operator=(const SGLUnorderedMultiSet& x){
@@ -112,10 +114,13 @@ template <typename T, typename EqualityCheck, typename HashFunction> SGLUnordere
     delete[] dataInternal;
     dataInternal = new Slot[x.memoryLengthInternal];
     lengthInternal = x.lengthInternal;
-    memoryUsedInternal = x.memoryUsedInternal;
+    memoryUsedInternal = 0;
     memoryLengthInternal = x.memoryLengthInternal;
     for(int i=0; i<memoryLengthInternal; i++){
-        (*(dataInternal + i)) = (*(x.dataInternal + i));
+        if((*(x.dataInternal + i)).usageStatus == Slot::active){
+          bool addedMemory = rehash((*(x.dataInternal + i)).value, (*(x.dataInternal + i)).count);
+          if(addedMemory == true){memoryUsedInternal++;}
+        }
     }
     return (*this);
 }
