@@ -160,9 +160,11 @@ template <typename T, typename EqualityCheck, typename HashFunction> void SGLUno
     int oldMemoryLength = memoryLengthInternal;
     dataInternal = new Slot[newMemoryLength];
     memoryLengthInternal = newMemoryLength;
+    memoryUsedInternal = 0;
     for(int i=0; i<oldMemoryLength; i++){
         if((*(oldPointer + i)).usageStatus == Slot::active){
-            rehash((*(oldPointer + i)).value, (*(oldPointer + i)).count);
+            bool addedMemory = rehash((*(oldPointer + i)).value, (*(oldPointer + i)).count);
+            if(addedMemory == true){memoryUsedInternal++;}
         }
     }
     delete[] oldPointer;
@@ -207,7 +209,7 @@ template <typename T, typename EqualityCheck, typename HashFunction> bool SGLUno
 
 template <typename T, typename EqualityCheck, typename HashFunction> int SGLUnorderedMultiSet<T, EqualityCheck, HashFunction>::count(const T& x) const {
     if(find(x) == constEnd()){return 0;}
-    return 1;
+    return (*(dataInternal + find(x).slot)).count;
 }
 
 template <typename T, typename EqualityCheck, typename HashFunction> SGLUnorderedMultiSet<T, EqualityCheck, HashFunction>::Iterator::Iterator(int x, int c, SGLUnorderedMultiSet* s){
@@ -524,7 +526,7 @@ template <typename T, typename EqualityCheck, typename HashFunction> void SGLUno
                 (*(dataInternal + i)).usageStatus = Slot::unused;
                 deleted++;
             }
-            for(int i=0; i<pos; i++){
+            for(int i=0; i<=pos; i++){
                 (*(dataInternal + i)).usageStatus = Slot::unused;
                 deleted++;
             }

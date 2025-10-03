@@ -1,9 +1,9 @@
-#ifndef SGLUNORDEREDSET_H
-#define SGLUNORDEREDSET_H
+#ifndef SGLUNORDEREDMAP_H
+#define SGLUNORDEREDMAP_H
 
 #include "sglcrash.h"
 
-template <typename T, typename EqualityCheck, typename HashFunction> class SGLUnorderedSet {
+template <typename K, typename V, typename EqualityCheck, typename HashFunction> class SGLUnorderedMap {
 protected:
     class Slot {
     public:
@@ -11,7 +11,8 @@ protected:
         static const char active = 1;
         static const char deleted = 2;
         char usageStatus;
-        T value;
+        K key;
+        V value;
         Slot();
     };
     Slot* dataInternal;
@@ -20,24 +21,26 @@ protected:
     int memoryLengthInternal;
     EqualityCheck equalityCheckInstance;
     HashFunction hashFunctionInstance;
-    void rehash(const T& x);
+    void rehash(const K& xKey, const V& xValue);
     
 public:
-    SGLUnorderedSet();
-    SGLUnorderedSet(const SGLUnorderedSet& x);
-    SGLUnorderedSet& operator=(const SGLUnorderedSet& x);
-    SGLUnorderedSet(SGLUnorderedSet&& x) noexcept;
-    SGLUnorderedSet& operator=(SGLUnorderedSet&& x) noexcept;
-    ~SGLUnorderedSet();
+    SGLUnorderedMap();
+    SGLUnorderedMap(const SGLUnorderedMap& x);
+    SGLUnorderedMap& operator=(const SGLUnorderedMap& x);
+    SGLUnorderedMap(SGLUnorderedMap&& x) noexcept;
+    SGLUnorderedMap& operator=(SGLUnorderedMap&& x) noexcept;
+    ~SGLUnorderedMap();
     [[nodiscard]] int length() const;
     void reserve(int newMemoryLength);
-    void insert(const T& x);
-    void erase(const T& x);
-    [[nodiscard]] bool contains(const T& x) const;
-    [[nodiscard]] int count(const T& x) const;
+    void insert(const K& xKey, const V& xValue);
+    void erase(const K& x);
+    [[nodiscard]] bool contains(const K& x) const;
+    [[nodiscard]] int count(const K& x) const;
+    [[nodiscard]] V& at(const K& x);
+    [[nodiscard]] const V& at(const K &x) const;
     
     class Iterator {
-        friend class SGLUnorderedSet;
+        friend class SGLUnorderedMap;
     public:
         Iterator& operator++();
         Iterator operator++(int);
@@ -45,15 +48,16 @@ public:
         Iterator operator--(int);
         bool operator==(Iterator x);
         bool operator!=(Iterator x);
-        const T& operator*();
+        const K& key();
+        V& value();
     protected:
         int slot;
-        SGLUnorderedSet* associatedSet;
-        Iterator(int x, SGLUnorderedSet* s);
+        SGLUnorderedMap* associatedSet;
+        Iterator(int x, SGLUnorderedMap* s);
     };
     
     class ConstIterator {
-        friend class SGLUnorderedSet;
+        friend class SGLUnorderedMap;
     public:
         ConstIterator& operator++();
         ConstIterator operator++(int);
@@ -61,11 +65,12 @@ public:
         ConstIterator operator--(int);
         bool operator==(ConstIterator x);
         bool operator!=(ConstIterator x);
-        const T& operator*();
+        const K& key();
+        const V& value();
     protected:
         int slot;
-        const SGLUnorderedSet* associatedSet;
-        ConstIterator(int x, const SGLUnorderedSet* s);
+        const SGLUnorderedMap* associatedSet;
+        ConstIterator(int x, const SGLUnorderedMap* s);
     };
     
     [[nodiscard]] Iterator begin();
@@ -73,11 +78,11 @@ public:
     [[nodiscard]] ConstIterator constBegin() const;
     [[nodiscard]] ConstIterator constEnd() const;
     void erase(Iterator& x);
-    [[nodiscard]] Iterator find(const T& x);
-    [[nodiscard]] ConstIterator find(const T& x) const;
+    [[nodiscard]] Iterator find(const K& x);
+    [[nodiscard]] ConstIterator find(const K& x) const;
 };
 
-template <typename T, typename EqualityCheck, typename HashFunction> SGLUnorderedSet<T, EqualityCheck, HashFunction>::SGLUnorderedSet(){
+template <typename K, typename V, typename EqualityCheck, typename HashFunction> SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::SGLUnorderedMap(){
     dataInternal = nullptr;
     lengthInternal = 0;
     memoryUsedInternal = 0;
@@ -86,12 +91,13 @@ template <typename T, typename EqualityCheck, typename HashFunction> SGLUnordere
     hashFunctionInstance = HashFunction();
 }
 
-template <typename T, typename EqualityCheck, typename HashFunction> SGLUnorderedSet<T, EqualityCheck, HashFunction>::Slot::Slot(){
+template <typename K, typename V, typename EqualityCheck, typename HashFunction> SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::Slot::Slot(){
     usageStatus = unused;
-    value = T();
+    key = K();
+    value = V();
 }
 
-template <typename T, typename EqualityCheck, typename HashFunction> SGLUnorderedSet<T, EqualityCheck, HashFunction>::SGLUnorderedSet(const SGLUnorderedSet& x){
+template <typename K, typename V, typename EqualityCheck, typename HashFunction> SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::SGLUnorderedMap(const SGLUnorderedMap& x){
     dataInternal = new Slot[x.memoryLengthInternal];
     lengthInternal = x.lengthInternal;
     memoryUsedInternal = x.memoryUsedInternal;
@@ -103,7 +109,7 @@ template <typename T, typename EqualityCheck, typename HashFunction> SGLUnordere
     hashFunctionInstance = HashFunction();
 }
 
-template <typename T, typename EqualityCheck, typename HashFunction> SGLUnorderedSet<T, EqualityCheck, HashFunction>& SGLUnorderedSet<T, EqualityCheck, HashFunction>::operator=(const SGLUnorderedSet& x){
+template <typename K, typename V, typename EqualityCheck, typename HashFunction> SGLUnorderedMap<K, V, EqualityCheck, HashFunction>& SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::operator=(const SGLUnorderedMap& x){
     if(this == &x){return (*this);}
     delete[] dataInternal;
     dataInternal = new Slot[x.memoryLengthInternal];
@@ -116,7 +122,7 @@ template <typename T, typename EqualityCheck, typename HashFunction> SGLUnordere
     return (*this);
 }
 
-template <typename T, typename EqualityCheck, typename HashFunction> SGLUnorderedSet<T, EqualityCheck, HashFunction>::SGLUnorderedSet(SGLUnorderedSet&& x) noexcept {
+template <typename K, typename V, typename EqualityCheck, typename HashFunction> SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::SGLUnorderedMap(SGLUnorderedMap&& x) noexcept {
     dataInternal = x.dataInternal;
     lengthInternal = x.lengthInternal;
     memoryUsedInternal = x.memoryUsedInternal;
@@ -129,7 +135,7 @@ template <typename T, typename EqualityCheck, typename HashFunction> SGLUnordere
     hashFunctionInstance = HashFunction();
 }
 
-template <typename T, typename EqualityCheck, typename HashFunction> SGLUnorderedSet<T, EqualityCheck, HashFunction>& SGLUnorderedSet<T, EqualityCheck, HashFunction>::operator=(SGLUnorderedSet&& x) noexcept {
+template <typename K, typename V, typename EqualityCheck, typename HashFunction> SGLUnorderedMap<K, V, EqualityCheck, HashFunction>& SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::operator=(SGLUnorderedMap&& x) noexcept {
     delete[] dataInternal;
     dataInternal = x.dataInternal;
     lengthInternal = x.lengthInternal;
@@ -142,15 +148,15 @@ template <typename T, typename EqualityCheck, typename HashFunction> SGLUnordere
     return (*this);
 }
 
-template <typename T, typename EqualityCheck, typename HashFunction> SGLUnorderedSet<T, EqualityCheck, HashFunction>::~SGLUnorderedSet(){
+template <typename K, typename V, typename EqualityCheck, typename HashFunction> SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::~SGLUnorderedMap(){
     delete[] dataInternal;
 }
 
-template <typename T, typename EqualityCheck, typename HashFunction> int SGLUnorderedSet<T, EqualityCheck, HashFunction>::length() const {
+template <typename K, typename V, typename EqualityCheck, typename HashFunction> int SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::length() const {
     return lengthInternal;
 }
 
-template <typename T, typename EqualityCheck, typename HashFunction> void SGLUnorderedSet<T, EqualityCheck, HashFunction>::reserve(int newMemoryLength){
+template <typename K, typename V, typename EqualityCheck, typename HashFunction> void SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::reserve(int newMemoryLength){
     if(newMemoryLength <= memoryLengthInternal){return;}
     Slot* oldPointer = dataInternal;
     int oldMemoryLength = memoryLengthInternal;
@@ -159,21 +165,22 @@ template <typename T, typename EqualityCheck, typename HashFunction> void SGLUno
     memoryUsedInternal = 0;
     for(int i=0; i<oldMemoryLength; i++){
         if((*(oldPointer + i)).usageStatus == Slot::active){
-            rehash((*(oldPointer + i)).value);
+            rehash((*(oldPointer + i)).key, (*(oldPointer + i)).value);
             memoryUsedInternal++;
         }
     }
     delete[] oldPointer;
 }
 
-template <typename T, typename EqualityCheck, typename HashFunction> void SGLUnorderedSet<T, EqualityCheck, HashFunction>::rehash(const T& x){
-    int hash = static_cast<int>(hashFunctionInstance(x)) % memoryLengthInternal;
+template <typename K, typename V, typename EqualityCheck, typename HashFunction> void SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::rehash(const K& xKey, const V& xValue){
+    int hash = static_cast<int>(hashFunctionInstance(xKey)) % memoryLengthInternal;
     if(hash < 0){hash += memoryLengthInternal;}
     while(true){
         if(hash == memoryLengthInternal){hash = 0;}
-        if((*(dataInternal + hash)).usageStatus == Slot::active && equalityCheckInstance((*(dataInternal + hash)).value, x) == true){SGLCrash::crashOnInsert();}
+        if((*(dataInternal + hash)).usageStatus == Slot::active && equalityCheckInstance((*(dataInternal + hash)).key, xKey) == true){SGLCrash::crashOnInsert();}
         if((*(dataInternal + hash)).usageStatus != Slot::active){
-            (*(dataInternal + hash)).value = x;
+            (*(dataInternal + hash)).key = xKey;
+            (*(dataInternal + hash)).value = xValue;
             (*(dataInternal + hash)).usageStatus = Slot::active;
             return;
         }
@@ -181,40 +188,40 @@ template <typename T, typename EqualityCheck, typename HashFunction> void SGLUno
     }
 }
 
-template <typename T, typename EqualityCheck, typename HashFunction> void SGLUnorderedSet<T, EqualityCheck, HashFunction>::insert(const T& x){
+template <typename K, typename V, typename EqualityCheck, typename HashFunction> void SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::insert(const K& xKey, const V& xValue){
     if(memoryLengthInternal == 0){reserve(1);}
     else if(3 * memoryUsedInternal >= memoryLengthInternal){reserve(3 * memoryLengthInternal);}
-    rehash(x);
+    rehash(xKey, xValue);
     memoryUsedInternal++;
     lengthInternal++;
 }
 
-template <typename T, typename EqualityCheck, typename HashFunction> void SGLUnorderedSet<T, EqualityCheck, HashFunction>::erase(const T& x){
+template <typename K, typename V, typename EqualityCheck, typename HashFunction> void SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::erase(const K& x){
     Iterator i = find(x);
     erase(i);
 }
 
-template <typename T, typename EqualityCheck, typename HashFunction> bool SGLUnorderedSet<T, EqualityCheck, HashFunction>::contains(const T& x) const {
+template <typename K, typename V, typename EqualityCheck, typename HashFunction> bool SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::contains(const K& x) const {
     if(find(x) == constEnd()){return false;}
     return true;
 }
 
-template <typename T, typename EqualityCheck, typename HashFunction> int SGLUnorderedSet<T, EqualityCheck, HashFunction>::count(const T& x) const {
+template <typename K, typename V, typename EqualityCheck, typename HashFunction> int SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::count(const K& x) const {
     if(find(x) == constEnd()){return 0;}
     return 1;
 }
 
-template <typename T, typename EqualityCheck, typename HashFunction> SGLUnorderedSet<T, EqualityCheck, HashFunction>::Iterator::Iterator(int x, SGLUnorderedSet* s){
+template <typename K, typename V, typename EqualityCheck, typename HashFunction> SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::Iterator::Iterator(int x, SGLUnorderedMap* s){
     slot = x;
     associatedSet = s;
 }
 
-template <typename T, typename EqualityCheck, typename HashFunction> SGLUnorderedSet<T, EqualityCheck, HashFunction>::ConstIterator::ConstIterator(int x, const SGLUnorderedSet* s){
+template <typename K, typename V, typename EqualityCheck, typename HashFunction> SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::ConstIterator::ConstIterator(int x, const SGLUnorderedMap* s){
     slot = x;
     associatedSet = s;
 }
 
-template <typename T, typename EqualityCheck, typename HashFunction> SGLUnorderedSet<T, EqualityCheck, HashFunction>::Iterator& SGLUnorderedSet<T, EqualityCheck, HashFunction>::Iterator::operator++(){
+template <typename K, typename V, typename EqualityCheck, typename HashFunction> SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::Iterator& SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::Iterator::operator++(){
     if((*associatedSet).memoryLengthInternal == 0){
         slot = -1;
         return (*this);
@@ -230,7 +237,7 @@ template <typename T, typename EqualityCheck, typename HashFunction> SGLUnordere
     return (*this);
 }
 
-template <typename T, typename EqualityCheck, typename HashFunction> SGLUnorderedSet<T, EqualityCheck, HashFunction>::ConstIterator& SGLUnorderedSet<T, EqualityCheck, HashFunction>::ConstIterator::operator++(){
+template <typename K, typename V, typename EqualityCheck, typename HashFunction> SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::ConstIterator& SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::ConstIterator::operator++(){
     if((*associatedSet).memoryLengthInternal == 0){
         slot = -1;
         return (*this);
@@ -246,7 +253,7 @@ template <typename T, typename EqualityCheck, typename HashFunction> SGLUnordere
     return (*this);
 }
 
-template <typename T, typename EqualityCheck, typename HashFunction> SGLUnorderedSet<T, EqualityCheck, HashFunction>::Iterator SGLUnorderedSet<T, EqualityCheck, HashFunction>::Iterator::operator++(int){
+template <typename K, typename V, typename EqualityCheck, typename HashFunction> SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::Iterator SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::Iterator::operator++(int){
     if((*associatedSet).memoryLengthInternal == 0){
         slot = -1;
         return (*this);
@@ -263,7 +270,7 @@ template <typename T, typename EqualityCheck, typename HashFunction> SGLUnordere
     return prev;
 }
 
-template <typename T, typename EqualityCheck, typename HashFunction> SGLUnorderedSet<T, EqualityCheck, HashFunction>::ConstIterator SGLUnorderedSet<T, EqualityCheck, HashFunction>::ConstIterator::operator++(int){
+template <typename K, typename V, typename EqualityCheck, typename HashFunction> SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::ConstIterator SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::ConstIterator::operator++(int){
     if((*associatedSet).memoryLengthInternal == 0){
         slot = -1;
         return (*this);
@@ -280,7 +287,7 @@ template <typename T, typename EqualityCheck, typename HashFunction> SGLUnordere
     return prev;
 }
 
-template <typename T, typename EqualityCheck, typename HashFunction> SGLUnorderedSet<T, EqualityCheck, HashFunction>::Iterator& SGLUnorderedSet<T, EqualityCheck, HashFunction>::Iterator::operator--(){
+template <typename K, typename V, typename EqualityCheck, typename HashFunction> SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::Iterator& SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::Iterator::operator--(){
     if((*associatedSet).memoryLengthInternal == 0){
         slot = -1;
         return (*this);
@@ -296,7 +303,7 @@ template <typename T, typename EqualityCheck, typename HashFunction> SGLUnordere
     return (*this);
 }
 
-template <typename T, typename EqualityCheck, typename HashFunction> SGLUnorderedSet<T, EqualityCheck, HashFunction>::ConstIterator& SGLUnorderedSet<T, EqualityCheck, HashFunction>::ConstIterator::operator--(){
+template <typename K, typename V, typename EqualityCheck, typename HashFunction> SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::ConstIterator& SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::ConstIterator::operator--(){
     if((*associatedSet).memoryLengthInternal == 0){
         slot = -1;
         return (*this);
@@ -312,7 +319,7 @@ template <typename T, typename EqualityCheck, typename HashFunction> SGLUnordere
     return (*this);
 }
 
-template <typename T, typename EqualityCheck, typename HashFunction> SGLUnorderedSet<T, EqualityCheck, HashFunction>::Iterator SGLUnorderedSet<T, EqualityCheck, HashFunction>::Iterator::operator--(int){
+template <typename K, typename V, typename EqualityCheck, typename HashFunction> SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::Iterator SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::Iterator::operator--(int){
     if((*associatedSet).memoryLengthInternal == 0){
         slot = -1;
         return (*this);
@@ -329,7 +336,7 @@ template <typename T, typename EqualityCheck, typename HashFunction> SGLUnordere
     return prev;
 }
 
-template <typename T, typename EqualityCheck, typename HashFunction> SGLUnorderedSet<T, EqualityCheck, HashFunction>::ConstIterator SGLUnorderedSet<T, EqualityCheck, HashFunction>::ConstIterator::operator--(int){
+template <typename K, typename V, typename EqualityCheck, typename HashFunction> SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::ConstIterator SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::ConstIterator::operator--(int){
     if((*associatedSet).memoryLengthInternal == 0){
         slot = -1;
         return (*this);
@@ -346,47 +353,55 @@ template <typename T, typename EqualityCheck, typename HashFunction> SGLUnordere
     return prev;
 }
 
-template <typename T, typename EqualityCheck, typename HashFunction> bool SGLUnorderedSet<T, EqualityCheck, HashFunction>::Iterator::operator==(Iterator x){
+template <typename K, typename V, typename EqualityCheck, typename HashFunction> bool SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::Iterator::operator==(Iterator x){
     return (slot == x.slot && associatedSet == x.associatedSet);
 }
 
-template <typename T, typename EqualityCheck, typename HashFunction> bool SGLUnorderedSet<T, EqualityCheck, HashFunction>::ConstIterator::operator==(ConstIterator x){
+template <typename K, typename V, typename EqualityCheck, typename HashFunction> bool SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::ConstIterator::operator==(ConstIterator x){
     return (slot == x.slot && associatedSet == x.associatedSet);
 }
 
-template <typename T, typename EqualityCheck, typename HashFunction> bool SGLUnorderedSet<T, EqualityCheck, HashFunction>::Iterator::operator!=(Iterator x){
+template <typename K, typename V, typename EqualityCheck, typename HashFunction> bool SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::Iterator::operator!=(Iterator x){
     return (slot != x.slot || associatedSet != x.associatedSet);
 }
 
-template <typename T, typename EqualityCheck, typename HashFunction> bool SGLUnorderedSet<T, EqualityCheck, HashFunction>::ConstIterator::operator!=(ConstIterator x){
+template <typename K, typename V, typename EqualityCheck, typename HashFunction> bool SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::ConstIterator::operator!=(ConstIterator x){
     return (slot != x.slot || associatedSet != x.associatedSet);
 }
 
-template <typename T, typename EqualityCheck, typename HashFunction> const T& SGLUnorderedSet<T, EqualityCheck, HashFunction>::Iterator::operator*(){
+template <typename K, typename V, typename EqualityCheck, typename HashFunction> const K& SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::Iterator::key(){
+    return (*((*associatedSet).dataInternal + slot)).key;
+}
+
+template <typename K, typename V, typename EqualityCheck, typename HashFunction> V& SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::Iterator::value(){
     return (*((*associatedSet).dataInternal + slot)).value;
 }
 
-template <typename T, typename EqualityCheck, typename HashFunction> const T& SGLUnorderedSet<T, EqualityCheck, HashFunction>::ConstIterator::operator*(){
+template <typename K, typename V, typename EqualityCheck, typename HashFunction> const K& SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::ConstIterator::key(){
+    return (*((*associatedSet).dataInternal + slot)).key;
+}
+
+template <typename K, typename V, typename EqualityCheck, typename HashFunction> const V& SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::ConstIterator::value(){
     return (*((*associatedSet).dataInternal + slot)).value;
 }
 
-template <typename T, typename EqualityCheck, typename HashFunction> SGLUnorderedSet<T, EqualityCheck, HashFunction>::Iterator SGLUnorderedSet<T, EqualityCheck, HashFunction>::begin(){
+template <typename K, typename V, typename EqualityCheck, typename HashFunction> SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::Iterator SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::begin(){
     return (++end());
 }
 
-template <typename T, typename EqualityCheck, typename HashFunction> SGLUnorderedSet<T, EqualityCheck, HashFunction>::Iterator SGLUnorderedSet<T, EqualityCheck, HashFunction>::end(){
+template <typename K, typename V, typename EqualityCheck, typename HashFunction> SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::Iterator SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::end(){
     return Iterator(-1, this);
 }
 
-template <typename T, typename EqualityCheck, typename HashFunction> SGLUnorderedSet<T, EqualityCheck, HashFunction>::ConstIterator SGLUnorderedSet<T, EqualityCheck, HashFunction>::constBegin() const {
+template <typename K, typename V, typename EqualityCheck, typename HashFunction> SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::ConstIterator SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::constBegin() const {
     return (++constEnd());
 }
 
-template <typename T, typename EqualityCheck, typename HashFunction> SGLUnorderedSet<T, EqualityCheck, HashFunction>::ConstIterator SGLUnorderedSet<T, EqualityCheck, HashFunction>::constEnd() const {
+template <typename K, typename V, typename EqualityCheck, typename HashFunction> SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::ConstIterator SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::constEnd() const {
     return ConstIterator(-1, this);
 }
 
-template <typename T, typename EqualityCheck, typename HashFunction> void SGLUnorderedSet<T, EqualityCheck, HashFunction>::erase(Iterator& x){
+template <typename K, typename V, typename EqualityCheck, typename HashFunction> void SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::erase(Iterator& x){
     if(x.slot < 0 || x.slot >= memoryLengthInternal){SGLCrash::crashOnRemove();}
     int pos = x.slot;
     x.slot--;
@@ -440,28 +455,40 @@ template <typename T, typename EqualityCheck, typename HashFunction> void SGLUno
     lengthInternal--;
 }
 
-template <typename T, typename EqualityCheck, typename HashFunction> SGLUnorderedSet<T, EqualityCheck, HashFunction>::Iterator SGLUnorderedSet<T, EqualityCheck, HashFunction>::find(const T& x){
+template <typename K, typename V, typename EqualityCheck, typename HashFunction> SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::Iterator SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::find(const K& x){
     if(memoryLengthInternal == 0){return end();}
     int hash = static_cast<int>(hashFunctionInstance(x)) % memoryLengthInternal;
     if(hash < 0){hash += memoryLengthInternal;}
     while(true){
         if(hash == memoryLengthInternal){hash = 0;}
-        if((*(dataInternal + hash)).usageStatus == Slot::active && equalityCheckInstance((*(dataInternal + hash)).value, x) == true){return Iterator(hash, this);}
+        if((*(dataInternal + hash)).usageStatus == Slot::active && equalityCheckInstance((*(dataInternal + hash)).key, x) == true){return Iterator(hash, this);}
         if((*(dataInternal + hash)).usageStatus == Slot::unused){return Iterator(-1, this);}
         hash++;
     }
 }
 
-template <typename T, typename EqualityCheck, typename HashFunction> SGLUnorderedSet<T, EqualityCheck, HashFunction>::ConstIterator SGLUnorderedSet<T, EqualityCheck, HashFunction>::find(const T& x) const {
+template <typename K, typename V, typename EqualityCheck, typename HashFunction> SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::ConstIterator SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::find(const K& x) const {
     if(memoryLengthInternal == 0){return constEnd();}
     int hash = static_cast<int>(hashFunctionInstance(x)) % memoryLengthInternal;
     if(hash < 0){hash += memoryLengthInternal;}
     while(true){
         if(hash == memoryLengthInternal){hash = 0;}
-        if((*(dataInternal + hash)).usageStatus == Slot::active && equalityCheckInstance((*(dataInternal + hash)).value, x) == true){return ConstIterator(hash, this);}
+        if((*(dataInternal + hash)).usageStatus == Slot::active && equalityCheckInstance((*(dataInternal + hash)).key, x) == true){return ConstIterator(hash, this);}
         if((*(dataInternal + hash)).usageStatus == Slot::unused){return ConstIterator(-1, this);}
         hash++;
     }
 }
 
-#endif // SGLUNORDEREDSET_H
+template <typename K, typename V, typename EqualityCheck, typename HashFunction> V& SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::at(const K& x){
+    Iterator i = find(x);
+    if(i == end()){SGLCrash::crash();}
+    return i.value();
+}
+
+template <typename K, typename V, typename EqualityCheck, typename HashFunction> const V& SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::at(const K& x) const {
+    ConstIterator i = find(x);
+    if(i == constEnd()){SGLCrash::crash();}
+    return i.value();
+}
+
+#endif // SGLUNORDEREDMAP_H

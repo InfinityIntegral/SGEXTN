@@ -120,6 +120,7 @@ HEADERS += \
     $$PWD/containers/sgltuple3.h \
     $$PWD/containers/sgltuple4.h \
     $$PWD/containers/sgltuple5.h \
+    $$PWD/containers/sglunorderedmap.h \
     $$PWD/containers/sglunorderedmultiset.h \
     $$PWD/containers/sglunorderedset.h \
     $$PWD/containers/sglvector.h \
