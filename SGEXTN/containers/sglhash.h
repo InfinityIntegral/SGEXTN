@@ -2,9 +2,16 @@
 #define SGLHASH_H
 
 #include "sglspan.h"
+#include "sglhashalgorithm.h"
 
-template <typename T> class SGLHash;
-int wyHash32(const SGLSpan<const unsigned char>& span);
+template <typename T> class SGLHash {
+public:
+    [[nodiscard]] int operator()(T x) const;
+};
+
+template <typename T> int SGLHash<T>::operator()(T x) const {
+    return x.hash();
+}
 
 template <> class SGLHash<bool> {
 public:
@@ -12,7 +19,7 @@ public:
 };
 
 inline int SGLHash<bool>::operator()(bool x) const {
-    return wyHash32(SGLSpan<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(bool)));
+    return SGLHashAlgorithm::wyHash32(SGLSpan<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(bool)));
 }
 
 template <> class SGLHash<char> {
@@ -21,7 +28,7 @@ public:
 };
 
 inline int SGLHash<char>::operator()(char x) const {
-    return wyHash32(SGLSpan<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(char)));
+    return SGLHashAlgorithm::wyHash32(SGLSpan<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(char)));
 }
 
 template <> class SGLHash<signed char> {
@@ -30,7 +37,7 @@ public:
 };
 
 inline int SGLHash<signed char>::operator()(signed char x) const {
-    return wyHash32(SGLSpan<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(signed char)));
+    return SGLHashAlgorithm::wyHash32(SGLSpan<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(signed char)));
 }
 
 template <> class SGLHash<unsigned char> {
@@ -39,7 +46,7 @@ public:
 };
 
 inline int SGLHash<unsigned char>::operator()(unsigned char x) const {
-    return wyHash32(SGLSpan<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(unsigned char)));
+    return SGLHashAlgorithm::wyHash32(SGLSpan<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(unsigned char)));
 }
 
 template <> class SGLHash<short> {
@@ -48,7 +55,7 @@ public:
 };
 
 inline int SGLHash<short>::operator()(short x) const {
-    return wyHash32(SGLSpan<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(short)));
+    return SGLHashAlgorithm::wyHash32(SGLSpan<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(short)));
 }
 
 template <> class SGLHash<unsigned short> {
@@ -57,7 +64,7 @@ public:
 };
 
 inline int SGLHash<unsigned short>::operator()(unsigned short x) const {
-    return wyHash32(SGLSpan<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(unsigned short)));
+    return SGLHashAlgorithm::wyHash32(SGLSpan<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(unsigned short)));
 }
 
 template <> class SGLHash<int> {
@@ -66,7 +73,7 @@ public:
 };
 
 inline int SGLHash<int>::operator()(int x) const {
-    return wyHash32(SGLSpan<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(int)));
+    return SGLHashAlgorithm::wyHash32(SGLSpan<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(int)));
 }
 
 template <> class SGLHash<unsigned int> {
@@ -75,7 +82,7 @@ public:
 };
 
 inline int SGLHash<unsigned int>::operator()(unsigned int x) const {
-    return wyHash32(SGLSpan<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(unsigned int)));
+    return SGLHashAlgorithm::wyHash32(SGLSpan<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(unsigned int)));
 }
 
 template <> class SGLHash<long> {
@@ -84,7 +91,7 @@ public:
 };
 
 inline int SGLHash<long>::operator()(long x) const {
-    return wyHash32(SGLSpan<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(long)));
+    return SGLHashAlgorithm::wyHash32(SGLSpan<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(long)));
 }
 
 template <> class SGLHash<unsigned long> {
@@ -93,7 +100,7 @@ public:
 };
 
 inline int SGLHash<unsigned long>::operator()(unsigned long x) const {
-    return wyHash32(SGLSpan<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(unsigned long)));
+    return SGLHashAlgorithm::wyHash32(SGLSpan<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(unsigned long)));
 }
 
 template <> class SGLHash<long long> {
@@ -102,7 +109,7 @@ public:
 };
 
 inline int SGLHash<long long>::operator()(long long x) const {
-    return wyHash32(SGLSpan<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(long long)));
+    return SGLHashAlgorithm::wyHash32(SGLSpan<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(long long)));
 }
 
 template <> class SGLHash<unsigned long long> {
@@ -111,7 +118,7 @@ public:
 };
 
 inline int SGLHash<unsigned long long>::operator()(unsigned long long x) const {
-    return wyHash32(SGLSpan<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(unsigned long long)));
+    return SGLHashAlgorithm::wyHash32(SGLSpan<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(unsigned long long)));
 }
 
 template <> class SGLHash<float> {
@@ -120,7 +127,7 @@ public:
 };
 
 inline int SGLHash<float>::operator()(float x) const {
-    return wyHash32(SGLSpan<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(float)));
+    return SGLHashAlgorithm::wyHash32(SGLSpan<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(float)));
 }
 
 template <> class SGLHash<double> {
@@ -129,7 +136,7 @@ public:
 };
 
 inline int SGLHash<double>::operator()(double x) const {
-    return wyHash32(SGLSpan<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(double)));
+    return SGLHashAlgorithm::wyHash32(SGLSpan<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(double)));
 }
 
 template <> class SGLHash<long double> {
@@ -138,39 +145,7 @@ public:
 };
 
 inline int SGLHash<long double>::operator()(long double x) const {
-    return wyHash32(SGLSpan<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(long double)));
-}
-
-inline int wyHash32(const SGLSpan<const unsigned char>& span){
-    const unsigned int num0 = 0xA0761D65;
-    const unsigned int num1 = 0xE7037ED1;
-    const unsigned int num2 = 0x8EBC6AF1;
-    const unsigned int num3 = 0x589965CC;
-    int i = 0;
-    const int sizeOfT = span.length();
-    unsigned int hash = num0;
-    while(sizeOfT - i >= 4){
-        unsigned int k = 0u;
-        k = k | (span.at(i));
-        k = k | (span.at(i + 1) << 8);
-        k = k | (span.at(i + 2) << 16);
-        k = k | (span.at(i + 3) << 24);
-        hash = num1 * (hash ^ k);
-        hash = (hash << 13) | (hash >> 19);
-        i += 4;
-    }
-    if(i < sizeOfT){
-        unsigned int k = 0u;
-        for(int j=0; j<sizeOfT-i; j++){
-            k = k | (span.at(i + j) << (8 * j));
-        }
-        hash = num1 * (hash ^ k);
-        hash = (hash << 13) | (hash >> 19);
-    }
-    hash = num2 * (hash ^ (hash >> 16));
-    hash = num3 * (hash ^ (hash >> 13));
-    hash = hash ^ (hash >> 16);
-    return static_cast<int>(hash);
+    return SGLHashAlgorithm::wyHash32(SGLSpan<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(long double)));
 }
 
 #endif // SGLHASH_H

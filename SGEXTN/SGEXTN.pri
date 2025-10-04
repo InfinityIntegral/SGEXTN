@@ -106,6 +106,7 @@ HEADERS += \
     $$PWD/containers/sgldeque.h \
     $$PWD/containers/sglequalsto.h \
     $$PWD/containers/sglhash.h \
+    $$PWD/containers/sglhashalgorithm.h \
     $$PWD/containers/sgllesserthan.h \
     $$PWD/containers/sglmap.h \
     $$PWD/containers/sglmorethan.h \
