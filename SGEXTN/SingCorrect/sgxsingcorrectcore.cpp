@@ -1,12 +1,14 @@
 #include "sgxsingcorrectcore.h"
-#include <QHash>
+#include "../containers/sglunorderedmap.h"
+#include "../containers/sglequalsto.h"
+#include "../containers/sglhash.h"
 #include "../primitives/sgxchar.h"
 #include "../primitives/sgxstring.h"
 #include "../quickui/sgxsingcorrectquickinterface.h"
 #include "sgxsingcorrectcustomisation.h"
 
 SGXString SGXSingCorrectCore::correctionPrefix = "SG-\\";
-QHash<SGXString, SGXChar>* SGXSingCorrectCore::database = nullptr;
+SGLUnorderedMap<SGXString, SGXChar, SGLEqualsTo<SGXString>, SGLHash<SGXString>>* SGXSingCorrectCore::database = nullptr;
 SGXSingCorrectQuickInterface* SGXSingCorrectCore::instance = nullptr;
 
 SGXString SGXSingCorrectCore::correct(const SGXString &s){
@@ -25,8 +27,8 @@ SGXString SGXSingCorrectCore::correct(const SGXString &s){
                     i++;
                 }
                 else{
-                    if((*SGXSingCorrectCore::database).contains(maybeCommand)){maybeCommand = (*SGXSingCorrectCore::database)[maybeCommand];}
-                    else if(SGXSingCorrectCustomisation::database != nullptr && (*SGXSingCorrectCustomisation::database).contains(maybeCommand)){maybeCommand = (*SGXSingCorrectCustomisation::database)[maybeCommand];}
+                    if((*SGXSingCorrectCore::database).contains(maybeCommand)){maybeCommand = (*SGXSingCorrectCore::database).at(maybeCommand);}
+                    else if(SGXSingCorrectCustomisation::database != nullptr && (*SGXSingCorrectCustomisation::database).contains(maybeCommand)){maybeCommand = (*SGXSingCorrectCustomisation::database).at(maybeCommand);}
                     else if(maybeCommand.length() > 7 && maybeCommand.substringLeft(7) == "unicode"){
                         int cp = 0x0000;
                         if(maybeCommand.length() == 11 || (maybeCommand.length() == 13 && maybeCommand.substring(7, 2) == "0x")){cp = maybeCommand.substringRight(4).parseToIntBase16(nullptr);}
@@ -48,8 +50,8 @@ SGXString SGXSingCorrectCore::correct(const SGXString &s){
 }
 
 void SGXSingCorrectCore::initialise(){
-    SGXSingCorrectCore::database = new QHash<SGXString, SGXChar>();
-
+    SGXSingCorrectCore::database = new SGLUnorderedMap<SGXString, SGXChar, SGLEqualsTo<SGXString>, SGLHash<SGXString>>();
+    
     (*SGXSingCorrectCore::database).insert("SGhome", SGXChar(0x0378));
 
     (*SGXSingCorrectCore::database).insert("lparen", SGXChar(0x0028));
@@ -75,7 +77,7 @@ void SGXSingCorrectCore::initialise(){
     (*SGXSingCorrectCore::database).insert("lfloor", SGXChar(0x230A));
     (*SGXSingCorrectCore::database).insert("rfloor", SGXChar(0x230B));
     (*SGXSingCorrectCore::database).insert("lgroup", SGXChar(0x0028));
-    (*SGXSingCorrectCore::database).insert("lgroup", SGXChar(0x0029));
+    (*SGXSingCorrectCore::database).insert("rgroup", SGXChar(0x0029));
     (*SGXSingCorrectCore::database).insert("ulcorner", SGXChar(0x231C));
     (*SGXSingCorrectCore::database).insert("urcorner", SGXChar(0x231D));
     (*SGXSingCorrectCore::database).insert("llcorner", SGXChar(0x231E));
@@ -138,7 +140,7 @@ void SGXSingCorrectCore::initialise(){
     (*SGXSingCorrectCore::database).insert("chi", SGXChar(0x03C7));
     (*SGXSingCorrectCore::database).insert("psi", SGXChar(0x03C8));
     (*SGXSingCorrectCore::database).insert("omega", SGXChar(0x03C9));
-
+    
     (*SGXSingCorrectCore::database).insert("aleph", SGXChar(0x2135));
     (*SGXSingCorrectCore::database).insert("alef", SGXChar(0x2135));
     (*SGXSingCorrectCore::database).insert("alefsym", SGXChar(0x2135));
@@ -252,10 +254,8 @@ void SGXSingCorrectCore::initialise(){
     (*SGXSingCorrectCore::database).insert("doublecup", SGXChar(0x22D3));
     (*SGXSingCorrectCore::database).insert("gtrdot", SGXChar(0x22D7));
     (*SGXSingCorrectCore::database).insert("intercal", SGXChar(0x22BA));
-    (*SGXSingCorrectCore::database).insert("land", SGXChar(0x2227));
     (*SGXSingCorrectCore::database).insert("leftthreetimes", SGXChar(0x22CB));
     (*SGXSingCorrectCore::database).insert("ldotp", SGXChar(0x00B7));
-    (*SGXSingCorrectCore::database).insert("lor", SGXChar(0x2228));
     (*SGXSingCorrectCore::database).insert("lessdot", SGXChar(0x22D6));
     (*SGXSingCorrectCore::database).insert("lhd", SGXChar(0x22B2));
     (*SGXSingCorrectCore::database).insert("ltimes", SGXChar(0x22C9));
@@ -335,13 +335,10 @@ void SGXSingCorrectCore::initialise(){
     (*SGXSingCorrectCore::database).insert("gg", SGXChar(0x226B));
     (*SGXSingCorrectCore::database).insert("ggg", SGXChar(0x22D9));
     (*SGXSingCorrectCore::database).insert("gggtr", SGXChar(0x22D9));
-    (*SGXSingCorrectCore::database).insert("gt", SGXChar(0x003E));
     (*SGXSingCorrectCore::database).insert("gtreqless", SGXChar(0x22DB));
     (*SGXSingCorrectCore::database).insert("gtrless", SGXChar(0x2277));
     (*SGXSingCorrectCore::database).insert("gtrsim", SGXChar(0x2273));
     (*SGXSingCorrectCore::database).insert("imageof", SGXChar(0x22B7));
-    (*SGXSingCorrectCore::database).insert("in", SGXChar(0x2208));
-    (*SGXSingCorrectCore::database).insert("isin", SGXChar(0x2208));
     (*SGXSingCorrectCore::database).insert("Join", SGXChar(0x22C8));
     (*SGXSingCorrectCore::database).insert("le", SGXChar(0x2264));
     (*SGXSingCorrectCore::database).insert("leg", SGXChar(0x2264));
@@ -353,8 +350,6 @@ void SGXSingCorrectCore::initialise(){
     (*SGXSingCorrectCore::database).insert("ll", SGXChar(0x226A));
     (*SGXSingCorrectCore::database).insert("lll", SGXChar(0x22D8));
     (*SGXSingCorrectCore::database).insert("llless", SGXChar(0x22D8));
-    (*SGXSingCorrectCore::database).insert("lt", SGXChar(0x003C));
-    (*SGXSingCorrectCore::database).insert("mid", SGXChar(0x2223));
     (*SGXSingCorrectCore::database).insert("models", SGXChar(0x22A8));
     (*SGXSingCorrectCore::database).insert("multimap", SGXChar(0x22B8));
     (*SGXSingCorrectCore::database).insert("origof", SGXChar(0x22B6));
@@ -383,7 +378,6 @@ void SGXSingCorrectCore::initialise(){
     (*SGXSingCorrectCore::database).insert("sqsupset", SGXChar(0x2290));
     (*SGXSingCorrectCore::database).insert("sqsupseteq", SGXChar(0x2292));
     (*SGXSingCorrectCore::database).insert("Subset", SGXChar(0x22D0));
-    (*SGXSingCorrectCore::database).insert("subset", SGXChar(0x2282));
     (*SGXSingCorrectCore::database).insert("sub", SGXChar(0x2282));
     (*SGXSingCorrectCore::database).insert("subseteq", SGXChar(0x2286));
     (*SGXSingCorrectCore::database).insert("sube", SGXChar(0x2286));
@@ -393,7 +387,6 @@ void SGXSingCorrectCore::initialise(){
     (*SGXSingCorrectCore::database).insert("succeq", SGXChar(0x227D));
     (*SGXSingCorrectCore::database).insert("succsim", SGXChar(0x227F));
     (*SGXSingCorrectCore::database).insert("Supset", SGXChar(0x22D1));
-    (*SGXSingCorrectCore::database).insert("supset", SGXChar(0x2283));
     (*SGXSingCorrectCore::database).insert("supseteq", SGXChar(0x2287));
     (*SGXSingCorrectCore::database).insert("supe", SGXChar(0x2287));
     (*SGXSingCorrectCore::database).insert("thickapprox", SGXChar(0x2248));
@@ -429,8 +422,6 @@ void SGXSingCorrectCore::initialise(){
     (*SGXSingCorrectCore::database).insert("nleqslant", SGXChar(0x2270));
     (*SGXSingCorrectCore::database).insert("nless", SGXChar(0x226E));
     (*SGXSingCorrectCore::database).insert("nmid", SGXChar(0x2224));
-    (*SGXSingCorrectCore::database).insert("notin", SGXChar(0x2209));
-    (*SGXSingCorrectCore::database).insert("notni", SGXChar(0x220C));
     (*SGXSingCorrectCore::database).insert("nparallel", SGXChar(0x2226));
     (*SGXSingCorrectCore::database).insert("nprec", SGXChar(0x2280));
     (*SGXSingCorrectCore::database).insert("npreceq", SGXChar(0x22E0));
@@ -463,19 +454,13 @@ void SGXSingCorrectCore::initialise(){
     (*SGXSingCorrectCore::database).insert("Darr", SGXChar(0x21D3));
     (*SGXSingCorrectCore::database).insert("dArr", SGXChar(0x21D3));
     (*SGXSingCorrectCore::database).insert("darr", SGXChar(0x2193));
-    (*SGXSingCorrectCore::database).insert("downarrow", SGXChar(0x2193));
-    (*SGXSingCorrectCore::database).insert("Downarrow", SGXChar(0x21D3));
     (*SGXSingCorrectCore::database).insert("downharpoonleft", SGXChar(0x21C3));
     (*SGXSingCorrectCore::database).insert("downharpoonright", SGXChar(0x21C2));
-    (*SGXSingCorrectCore::database).insert("gets", SGXChar(0x2190));
     (*SGXSingCorrectCore::database).insert("Harr", SGXChar(0x21D4));
     (*SGXSingCorrectCore::database).insert("hArr", SGXChar(0x21D4));
     (*SGXSingCorrectCore::database).insert("harr", SGXChar(0x2194));
     (*SGXSingCorrectCore::database).insert("hookleftarrow", SGXChar(0x21A9));
     (*SGXSingCorrectCore::database).insert("hookrightarrow", SGXChar(0x21AA));
-    (*SGXSingCorrectCore::database).insert("iff", SGXChar(0x27FA));
-    (*SGXSingCorrectCore::database).insert("impliedby", SGXChar(0x27F8));
-    (*SGXSingCorrectCore::database).insert("implies", SGXChar(0x27F9));
     (*SGXSingCorrectCore::database).insert("Larr", SGXChar(0x21D0));
     (*SGXSingCorrectCore::database).insert("lArr", SGXChar(0x21D0));
     (*SGXSingCorrectCore::database).insert("larr", SGXChar(0x2190));
@@ -484,7 +469,6 @@ void SGXSingCorrectCore::initialise(){
     (*SGXSingCorrectCore::database).insert("leftarrowtail", SGXChar(0x21A2));
     (*SGXSingCorrectCore::database).insert("leftharpoondown", SGXChar(0x21BD));
     (*SGXSingCorrectCore::database).insert("leftharpoonup", SGXChar(0x21BC));
-    (*SGXSingCorrectCore::database).insert("leftrightarrow", SGXChar(0x2194));
     (*SGXSingCorrectCore::database).insert("Leftrightarrow", SGXChar(0x21D4));
     (*SGXSingCorrectCore::database).insert("leftrightarrows", SGXChar(0x21C6));
     (*SGXSingCorrectCore::database).insert("leftrightharpoons", SGXChar(0x21CB));
@@ -499,7 +483,6 @@ void SGXSingCorrectCore::initialise(){
     (*SGXSingCorrectCore::database).insert("lrArr", SGXChar(0x21D4));
     (*SGXSingCorrectCore::database).insert("lrarr", SGXChar(0x2194));
     (*SGXSingCorrectCore::database).insert("Lsh", SGXChar(0x21B0));
-    (*SGXSingCorrectCore::database).insert("mapsto", SGXChar(0x21A6));
     (*SGXSingCorrectCore::database).insert("nearrow", SGXChar(0x2197));
     (*SGXSingCorrectCore::database).insert("nleftarrow", SGXChar(0x219A));
     (*SGXSingCorrectCore::database).insert("nLeftarrow", SGXChar(0x21CD));
@@ -522,14 +505,9 @@ void SGXSingCorrectCore::initialise(){
     (*SGXSingCorrectCore::database).insert("Rsh", SGXChar(0x21B1));
     (*SGXSingCorrectCore::database).insert("searrow", SGXChar(0x2198));
     (*SGXSingCorrectCore::database).insert("swarrow", SGXChar(0x2199));
-    (*SGXSingCorrectCore::database).insert("to", SGXChar(0x2192));
     (*SGXSingCorrectCore::database).insert("Uarr", SGXChar(0x21D1));
     (*SGXSingCorrectCore::database).insert("uArr", SGXChar(0x21D1));
     (*SGXSingCorrectCore::database).insert("uarr", SGXChar(0x2191));
-    (*SGXSingCorrectCore::database).insert("uparrow", SGXChar(0x2191));
-    (*SGXSingCorrectCore::database).insert("Uparrow", SGXChar(0x21D1));
-    (*SGXSingCorrectCore::database).insert("updownarrow", SGXChar(0x2195));
-    (*SGXSingCorrectCore::database).insert("Updownarrow", SGXChar(0x21D5));
     (*SGXSingCorrectCore::database).insert("upharpoonleft", SGXChar(0x21BF));
     (*SGXSingCorrectCore::database).insert("upharpoonright", SGXChar(0x21BE));
 
@@ -564,12 +542,9 @@ void SGXSingCorrectCore::initialise(){
     (*SGXSingCorrectCore::database).insert("quotedoubleright", SGXChar(0x201D));
     (*SGXSingCorrectCore::database).insert("quotedblright", SGXChar(0x201D));
     (*SGXSingCorrectCore::database).insert("textquotedblright", SGXChar(0x201D));
-    (*SGXSingCorrectCore::database).insert("colon", SGXChar(0x003A));
     (*SGXSingCorrectCore::database).insert("backprime", SGXChar(0x2035));
     (*SGXSingCorrectCore::database).insert("prime", SGXChar(0x2032));
-    (*SGXSingCorrectCore::database).insert("less", SGXChar(0x003C));
     (*SGXSingCorrectCore::database).insert("textless", SGXChar(0x003C));
-    (*SGXSingCorrectCore::database).insert("greater", SGXChar(0x003E));
     (*SGXSingCorrectCore::database).insert("textgreater", SGXChar(0x003E));
     (*SGXSingCorrectCore::database).insert("bar", SGXChar(0x007C));
     (*SGXSingCorrectCore::database).insert("textbar", SGXChar(0x007C));
@@ -579,7 +554,6 @@ void SGXSingCorrectCore::initialise(){
     (*SGXSingCorrectCore::database).insert("textbraceleft", SGXChar(0x007B));
     (*SGXSingCorrectCore::database).insert("braceright", SGXChar(0x007D));
     (*SGXSingCorrectCore::database).insert("textbraceright", SGXChar(0x007D));
-    (*SGXSingCorrectCore::database).insert("backslash", SGXChar(0x005C));
     (*SGXSingCorrectCore::database).insert("textbackslash", SGXChar(0x005C));
     (*SGXSingCorrectCore::database).insert("P", SGXChar(0x00B6));
     (*SGXSingCorrectCore::database).insert("S", SGXChar(0x00A7));
@@ -621,7 +595,6 @@ void SGXSingCorrectCore::initialise(){
     (*SGXSingCorrectCore::database).insert("blacklozenge", SGXChar(0x2B27));
     (*SGXSingCorrectCore::database).insert("star", SGXChar(0x2605));
     (*SGXSingCorrectCore::database).insert("bigstar", SGXChar(0x2605));
-    (*SGXSingCorrectCore::database).insert("nabla", SGXChar(0x2207));
     (*SGXSingCorrectCore::database).insert("infty", SGXChar(0x221E));
     (*SGXSingCorrectCore::database).insert("infin", SGXChar(0x221E));
     (*SGXSingCorrectCore::database).insert("infinity", SGXChar(0x221E));

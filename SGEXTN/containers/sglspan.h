@@ -13,6 +13,7 @@ public:
     [[nodiscard]] SGLSpan subspanLeft(int length) const;
     [[nodiscard]] SGLSpan subspanRight(int length) const;
     [[nodiscard]] T* pointerToData(int n);
+    [[nodiscard]] const T* pointerToData(int n) const;
 protected:
     T* dataInternal;
     int lengthInternal;
@@ -50,6 +51,10 @@ template <typename T> SGLSpan<T> SGLSpan<T>::subspanRight(int length) const {
 }
 
 template <typename T> T* SGLSpan<T>::pointerToData(int n){
+    return (dataInternal + n);
+}
+
+template <typename T> const T* SGLSpan<T>::pointerToData(int n) const {
     return (dataInternal + n);
 }
 

@@ -1,7 +1,9 @@
 #ifndef SGWSINGCORRECTCUSTOMISATIONPAGE_H
 #define SGWSINGCORRECTCUSTOMISATIONPAGE_H
 
-template <typename T1, typename T2> class QHash;
+template <typename K, typename V, typename EqualityCheck, typename HashFunction> class SGLUnorderedMap;
+template <typename T> class SGLEqualsTo;
+template <typename T> class SGLHash;
 class SGWBackground;
 class SGWButton;
 class SGWLabel;
@@ -35,7 +37,7 @@ public:
     static void addCustomCommand(SGWButton* /*unused*/);
     static void refreshList();
     static SGWWidget* listParent;
-    static QHash<SGWButton*, SGXString>* buttonsList;
+    static SGLUnorderedMap<SGWButton*, SGXString, SGLEqualsTo<SGWButton*>, SGLHash<SGWButton*>>* buttonsList;
     static void deleteCommand(SGWButton* button);
     static SGWBackground* commandListInstance;
     static SGWBackground* initialiseCommandList();

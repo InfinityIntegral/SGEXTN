@@ -1,8 +1,7 @@
 #ifndef SGWNOTIFY_H
 #define SGWNOTIFY_H
 
-#include <queue>
-
+template <typename T> class SGLQueue;
 class SGWWidget;
 class SGWLabel;
 class SGXTimer;
@@ -12,7 +11,7 @@ class SGWNotify
 public:
     SGWNotify() = delete;
     static float timeShown;
-    static std::queue<SGWWidget*>* instance;
+    static SGLQueue<SGWWidget*>* instance;
     static void notify(const SGXString& s);
     static void terminate();
     static int animationStage;

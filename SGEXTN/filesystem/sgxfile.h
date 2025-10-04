@@ -7,9 +7,8 @@
 #include "../primitives/sgxtimestamp.h"
 #include "../primitives/sgxvector2.h"
 #include "../primitives/sgxchar.h"
-#include <string>
-#include <QByteArray>
 #include "../primitives/sgxstring.h"
+#include "../containers/sglarray.h"
 
 class QFile;
 class SGXFile
@@ -33,7 +32,6 @@ public:
     [[nodiscard]] unsigned long long readUnsignedLongLong() const;
     [[nodiscard]] float readFloat() const;
     [[nodiscard]] double readDouble() const;
-    [[nodiscard]] std::string readCppString() const;
     [[nodiscard]] SGXString readString() const;
     [[nodiscard]] SGXColourRGBA readColourRGBA() const;
     [[nodiscard]] SGXColourHSLA readColourHSLA() const;
@@ -49,7 +47,6 @@ public:
     void writeUnsignedLongLong(unsigned long long x) const;
     void writeFloat(float x) const;
     void writeDouble(double x) const;
-    void writeCppString(const std::string& x) const;
     void writeString(const SGXString& x) const;
     void writeColourRGBA(SGXColourRGBA x) const;
     void writeColourHSLA(SGXColourHSLA x) const;
@@ -58,9 +55,9 @@ public:
     void writeVector2(SGXVector2 x) const;
     [[nodiscard]] long long getPointerLocation() const;
     void setPointerLocation(long long x) const;
-    [[nodiscard]] QByteArray readBytes(long long n) const;
-    [[nodiscard]] QByteArray readAllBytes() const;
-    void writeBytes(const QByteArray& x) const;
+    [[nodiscard]] SGLArray<char> readBytes(long long n) const;
+    [[nodiscard]] SGLArray<char> readAllBytes() const;
+    void writeBytes(const SGLArray<char>& x) const;
 };
 
 #endif // SGXFILE_H

@@ -1,18 +1,20 @@
 #include "sgxsingcorrectcustomisation.h"
 #include "../filesystem/sgxfilesystem.h"
 #include "../filesystem/sgxfile.h"
-#include <QHash>
+#include "../containers/sglunorderedmap.h"
+#include "../containers/sglhash.h"
+#include "../containers/sglequalsto.h"
 #include "../primitives/sgxstring.h"
 #include "../primitives/sgxchar.h"
 #include "sgxsingcorrectcore.h"
 
-QHash<SGXString, SGXChar>* SGXSingCorrectCustomisation::database = nullptr;
+SGLUnorderedMap<SGXString, SGXChar, SGLEqualsTo<SGXString>, SGLHash<SGXString>>* SGXSingCorrectCustomisation::database = nullptr;
 bool SGXSingCorrectCustomisation::moduleEnabled = true;
 
 void SGXSingCorrectCustomisation::loadFileData(){
     const SGXString path = SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "correctionconfigs.sg");
     delete SGXSingCorrectCustomisation::database;
-    SGXSingCorrectCustomisation::database = new QHash<SGXString, SGXChar>();
+    SGXSingCorrectCustomisation::database = new SGLUnorderedMap<SGXString, SGXChar, SGLEqualsTo<SGXString>, SGLHash<SGXString>>();
     if(SGXFileSystem::fileExists(path) == false){return;}
     {
         const SGXFile fileReader = SGXFile(path);
@@ -36,8 +38,8 @@ void SGXSingCorrectCustomisation::syncFileData(){
         fileWriter.writeBool(SGXSingCorrectCustomisation::moduleEnabled);
         fileWriter.writeString(SGXSingCorrectCore::correctionPrefix);
         if(SGXSingCorrectCustomisation::database != nullptr){
-            fileWriter.writeInt(static_cast<int>((*SGXSingCorrectCustomisation::database).size()));
-            for(QHash<SGXString, SGXChar>::const_iterator i = (*SGXSingCorrectCustomisation::database).begin(); i != (*SGXSingCorrectCustomisation::database).end(); i++){
+            fileWriter.writeInt(static_cast<int>((*SGXSingCorrectCustomisation::database).length()));
+            for(SGLUnorderedMap<SGXString, SGXChar, SGLEqualsTo<SGXString>, SGLHash<SGXString>>::ConstIterator i = (*SGXSingCorrectCustomisation::database).constBegin(); i != (*SGXSingCorrectCustomisation::database).constEnd(); i++){
                 fileWriter.writeString(i.key());
                 fileWriter.writeSGEXTNChar(i.value());
             }

@@ -23,6 +23,7 @@ public:
     void pushBack(const T& x);
     void popBack();
     [[nodiscard]] T* pointerToData(int n);
+    [[nodiscard]] const T* pointerToData(int n) const;
 protected:
     T* dataInternal;
     int lengthInternal;
@@ -150,6 +151,10 @@ template <typename T> void SGLVector<T>::popBack(){
 }
 
 template <typename T> T* SGLVector<T>::pointerToData(int n){
+    return (dataInternal + n);
+}
+
+template <typename T> const T* SGLVector<T>::pointerToData(int n) const {
     return (dataInternal + n);
 }
 

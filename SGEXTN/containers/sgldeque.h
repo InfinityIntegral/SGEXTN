@@ -26,6 +26,7 @@ public:
     void popFront();
     void reserve(int newMemoryLength);
     [[nodiscard]] T* pointerToData(int n);
+    [[nodiscard]] const T* pointerToData(int n) const;
 protected:
     T* dataInternal;
     int startInternal;
@@ -163,6 +164,10 @@ template <typename T> void SGLDeque<T>::reserve(int newMemoryLength){
 }
 
 template <typename T> T* SGLDeque<T>::pointerToData(int n){
+    return (dataInternal + startInternal + n);
+}
+
+template <typename T> const T* SGLDeque<T>::pointerToData(int n) const {
     return (dataInternal + startInternal + n);
 }
 

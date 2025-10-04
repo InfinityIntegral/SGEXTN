@@ -3,14 +3,16 @@
 
 class SGXChar;
 class SGXString;
-template <typename T1, typename T2> class QHash;
+template <typename K, typename V, typename EqualityCheck, typename HashFunction> class SGLUnorderedMap;
+template <typename T> class SGLEqualsTo;
+template <typename T> class SGLHash;
 class SGXSingCorrectCustomisation
 {
 public:
     SGXSingCorrectCustomisation() = delete;
     static void loadFileData();
     static void syncFileData();
-    static QHash<SGXString, SGXChar>* database;
+    static SGLUnorderedMap<SGXString, SGXChar, SGLEqualsTo<SGXString>, SGLHash<SGXString>>* database;
     static bool moduleEnabled;
 };
 

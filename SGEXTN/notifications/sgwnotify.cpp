@@ -2,7 +2,7 @@
 #include "../widgets/instantiable/sgwtextlabel.h"
 #include "../widgets/unique/sgwstatusbar.h"
 #include "../timer/sgxtimer.h"
-#include <queue>
+#include "../containers/sglqueue.h"
 #include "../widgets/noninstantiable/sgwwidget.h"
 #include "../widgets/noninstantiable/sgwlabel.h"
 #include "../primitives/sgxstring.h"
@@ -10,7 +10,7 @@
 #include "../widgets/enums/sgwverticalalignment.h"
 
 float SGWNotify::timeShown = 3.0f;
-std::queue<SGWWidget*>* SGWNotify::instance = nullptr;
+SGLQueue<SGWWidget*>* SGWNotify::instance = nullptr;
 float SGWNotify::animationLength = 0.5f;
 bool SGWNotify::animationState = false;
 int SGWNotify::animationStage = 0;
@@ -24,7 +24,7 @@ void SGWNotify::terminate(){
 
 void SGWNotify::notify(const SGXString &s){
     SGWLabel* x = new SGWTextLabel(SGWStatusBar::instance, s, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, SGWHorizontalAlignment::Center, false);
-    if(SGWNotify::instance == nullptr){SGWNotify::instance = new std::queue<SGWWidget*>();}
+    if(SGWNotify::instance == nullptr){SGWNotify::instance = new SGLQueue<SGWWidget*>();}
     (*SGWNotify::instance).push(x);
     SGXTimer::singleCall(SGWNotify::timeShown, &SGWNotify::terminate);
 }

@@ -18,6 +18,7 @@ public:
     [[nodiscard]] T& at(int i);
     [[nodiscard]] const T& at(int i) const;
     [[nodiscard]] T* pointerToData(int n);
+    [[nodiscard]] const T* pointerToData(int n) const;
 protected:
     T* dataInternal;
     int lengthInternal;
@@ -105,6 +106,10 @@ template <typename T> const T& SGLArray<T>::at(int i) const {
 }
 
 template <typename T> T* SGLArray<T>::pointerToData(int n){
+    return (dataInternal + n);
+}
+
+template <typename T> const T* SGLArray<T>::pointerToData(int n) const {
     return (dataInternal + n);
 }
 

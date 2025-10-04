@@ -9,10 +9,10 @@
 #include "../primitives/sgxtimestamp.h"
 #include "../primitives/sgxvector2.h"
 #include "../primitives/sgxchar.h"
-#include <string>
 #include <qnamespace.h>
 #include "sgxfilesystem.h"
 #include "../primitives/sgxstring.h"
+#include <QByteArray>
 
 SGXFile::SGXFile(const SGXString &s){
     if(SGXFileSystem::fileExists(s) == false){isValid = false;}
@@ -88,21 +88,11 @@ double SGXFile::readDouble() const {
     return x;
 }
 
-std::string SGXFile::readCppString() const {
-    int x = 0;
-    (*(*this).fileData) >> x;
-    QByteArray byteSequence(x, Qt::Uninitialized);
-    (*(*this).fileData).readRawData(byteSequence.data(), x);
-    return std::string(byteSequence.constData(), byteSequence.size());
-}
-
 SGXString SGXFile::readString() const {
-    int x = 0;
+    QString x = "";
     (*(*this).fileData) >> x;
-    QByteArray byteSequence(x, Qt::Uninitialized);
-    (*(*this).fileData).readRawData(byteSequence.data(), x);
     SGXString output = "";
-    (*output.data) = QString::fromUtf8(byteSequence);
+    (*output.data) = x;
     return output;
 }
 
@@ -162,16 +152,8 @@ void SGXFile::writeDouble(double x) const {
     (*(*this).fileData) << x;
 }
 
-void SGXFile::writeCppString(const std::string &x) const {
-    const QByteArray byteSequence = QByteArray(x.c_str(), static_cast<long long>(x.size()));
-    (*(*this).fileData) << static_cast<int>(byteSequence.length());
-    (*(*this).fileData).writeRawData(byteSequence.constData(), static_cast<int>(byteSequence.length()));
-}
-
 void SGXFile::writeString(const SGXString &x) const {
-    const QByteArray byteSequence = (*x.data).toUtf8();
-    (*(*this).fileData) << static_cast<int>(byteSequence.length());
-    (*(*this).fileData).writeRawData(byteSequence.constData(), static_cast<int>(byteSequence.length()));
+    (*(*this).fileData) << (*x.data);
 }
 
 void SGXFile::writeColourRGBA(SGXColourRGBA x) const {
@@ -214,14 +196,21 @@ void SGXFile::setPointerLocation(long long x) const {
     }
 }
 
-QByteArray SGXFile::readAllBytes() const {
-    return (*fileControl).readAll();
+SGLArray<char> SGXFile::readAllBytes() const {
+    QByteArray data = (*fileControl).readAll();
+    SGLArray<char> output(data.length());
+    memcpy(output.pointerToData(0), data.constData(), data.length());
+    return output;
 }
 
-QByteArray SGXFile::readBytes(long long n) const {
-    return (*fileControl).read(n);
+SGLArray<char> SGXFile::readBytes(long long n) const {
+    QByteArray data = (*fileControl).read(n);
+    SGLArray<char> output(data.length());
+    memcpy(output.pointerToData(0), data.constData(), data.length());
+    return output;
 }
 
-void SGXFile::writeBytes(const QByteArray &x) const {
-    (*fileControl).write(x);
+void SGXFile::writeBytes(const SGLArray<char> &x) const {
+    QByteArray data = QByteArray::fromRawData(x.pointerToData(0), x.length());
+    (*fileControl).write(data);
 }

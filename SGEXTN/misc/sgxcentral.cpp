@@ -1,7 +1,6 @@
 #include "sgxcentral.h"
 #include "../userDefinedClasses/sgucentralmanagement.h"
 #include <QCoreApplication>
-#include <QList>
 #include "../quickui/sgxthemecoloursetting.h"
 #include "../quickui/sgxquickresizer.h"
 #include <QQuickWindow>

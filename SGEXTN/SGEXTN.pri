@@ -15,7 +15,6 @@ DISTFILES += .gitignore LICENSE.txt README.md \
     SGEXTN/colourpickerrendering/transparencychoice/transparencychoice.frag \
     SGEXTN/colourpickerrendering/transparencychoice/transparencychoice.vert \
     SGEXTN/filesystem/bin.sgfile \
-    SGEXTN/filesystem/singzip.sgfile \
     compilecommands.txt
 SOURCES += SGEXTN/misc/main.cpp \
     $$PWD/bypassquickui/sgxresizer.cpp \
@@ -158,7 +157,6 @@ HEADERS += \
     SGEXTN/filesystem/sgxfiledownloader.h \
     SGEXTN/filesystem/sgxfilesystem.h \
     SGEXTN/filesystem/sgxfileuploader.h \
-    SGEXTN/filesystem/sgxfilezip.h \
     SGEXTN/misc/sgxcentral.h \
     SGEXTN/notifications/sgwnotify.h \
     SGEXTN/primitives/sgxcolourhsla.h \

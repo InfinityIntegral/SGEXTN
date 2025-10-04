@@ -1,9 +1,9 @@
 #ifndef SGXFILESYSTEM_H
 #define SGXFILESYSTEM_H
 
-#include <qcontainerfwd.h>
 #include "../primitives/sgxtimestamp.h"
 #include "../primitives/sgxstring.h"
+#include "../containers/sglarray.h"
 
 class SGXFileSystem
 {
@@ -23,9 +23,9 @@ public:
     static int createFolder(const SGXString& s);
     static SGXString getParentPath(const SGXString& s);
     static SGXString getParentName(const SGXString& s);
-    static QVector<SGXString> getFilesList(const SGXString& s);
-    static QVector<SGXString> getFilesListRecursive(const SGXString& s);
-    static QVector<SGXString> getFoldersList(const SGXString& s);
+    static SGLArray<SGXString> getFilesList(const SGXString& s);
+    static SGLArray<SGXString> getFilesListRecursive(const SGXString& s);
+    static SGLArray<SGXString> getFoldersList(const SGXString& s);
     static int moveFile(const SGXString& startPath, const SGXString& endPath);
     static int moveFolder(const SGXString& startPath, const SGXString& endPath);
     static int duplicateFile(const SGXString& startPath, const SGXString& endPath);
@@ -42,10 +42,10 @@ public:
     static SGXString getFileName(const SGXString& s);
     static SGXString getFileExtension(const SGXString& s);
     static SGXString getFileNameNoExtension(const SGXString& s);
-    static QVector<SGXString> getFilesListWithExtension(const SGXString& s, const SGXString& ext);
-    static QVector<SGXString> getFilesListWithExtensionRecursive(const SGXString& s, const SGXString& ext);
-    static QVector<SGXString> getFilesListContainingName(const SGXString& s, const SGXString& name);
-    static QVector<SGXString> getFilesListContainingNameRecursive(const SGXString& s, const SGXString& name);
+    static SGLArray<SGXString> getFilesListWithExtension(const SGXString& s, const SGXString& ext);
+    static SGLArray<SGXString> getFilesListWithExtensionRecursive(const SGXString& s, const SGXString& ext);
+    static SGLArray<SGXString> getFilesListContainingName(const SGXString& s, const SGXString& name);
+    static SGLArray<SGXString> getFilesListContainingNameRecursive(const SGXString& s, const SGXString& name);
     static bool numberAwareLesserThan(const SGXString& s1, const SGXString& s2);
     static bool numberAwareLesserThanBase16(const SGXString& s1, const SGXString& s2);
 };

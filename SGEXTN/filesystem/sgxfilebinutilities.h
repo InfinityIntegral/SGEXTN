@@ -2,10 +2,12 @@
 #define SGXFILEBINUTILITIES_H
 
 #include "../primitives/sgxidentifier.h"
-#include <tuple>
 #include "../primitives/sgxstring.h"
 
-template <typename T1, typename T2> class QHash;
+template <typename K, typename V, typename EqualityCheck, typename HashFunction> class SGLUnorderedMap;
+template <typename T> class SGLEqualsTo;
+template <typename T> class SGLHash;
+template <typename T1, typename T2> class SGLPair;
 class SGXTimeStamp;
 class SGXFileBinUtilities
 {
@@ -14,7 +16,7 @@ public:
     static SGXString binFilePath;
     static void createEmptyBin();
     static void loadBinData();
-    static QHash<SGXIdentifier, std::tuple<SGXString, SGXTimeStamp>>* deletedFiles;
+    static SGLUnorderedMap<SGXIdentifier, SGLPair<SGXString, SGXTimeStamp>, SGLEqualsTo<SGXIdentifier>, SGLHash<SGXIdentifier>>* deletedFiles;
     static SGXString pathToMetadataFile;
     static int deleteFile(const SGXString& s);
     static int deleteFolder(const SGXString& s);

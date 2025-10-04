@@ -2,8 +2,9 @@
 #include "sgxsingcorrectcustomisation.h"
 #include "../primitives/sgxstring.h"
 #include "sgxsingcorrectcore.h"
-#include <QHash>
-#include <qcontainerfwd.h>
+#include "../containers/sglunorderedmap.h"
+#include "../containers/sglhash.h"
+#include "../containers/sglequalsto.h"
 #include "../widgets/instantiable/sgwlonglabel.h"
 #include "../widgets/instantiable/sgwpagebackground.h"
 #include "../widgets/instantiable/sgwtextbutton.h"
@@ -32,7 +33,7 @@ SGWInput* SGWSingCorrectCustomisationPage::customCommandInput = nullptr;
 SGWLabel* SGWSingCorrectCustomisationPage::customCharError = nullptr;
 SGWLabel* SGWSingCorrectCustomisationPage::customCommandError = nullptr;
 SGWWidget* SGWSingCorrectCustomisationPage::listParent = nullptr;
-QHash<SGWButton*, SGXString>* SGWSingCorrectCustomisationPage::buttonsList = nullptr;
+SGLUnorderedMap<SGWButton*, SGXString, SGLEqualsTo<SGWButton*>, SGLHash<SGWButton*>>* SGWSingCorrectCustomisationPage::buttonsList = nullptr;
 SGWBackground* SGWSingCorrectCustomisationPage::commandListInstance = nullptr;
 
 SGWBackground* SGWSingCorrectCustomisationPage::initialise(){
@@ -71,7 +72,7 @@ SGWBackground* SGWSingCorrectCustomisationPage::initialise(){
     SGWSingCorrectCustomisationPage::customCommandError = new SGWTextLabel(p, "only letters, not blank", 0.5f, -1.5f, 0.0f, 2.0f, 0.0f, 6.0f, 0.0f, 0.75f, SGWHorizontalAlignment::Left, true);
     new SGWTextLabel(x, "custom SingCorrect commands:", 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.0f, SGWHorizontalAlignment::Left, false);
     SGWSingCorrectCustomisationPage::listParent = new SGWSequentialScrollView(x, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 5.5f, 0.0f, 0.5f, 8);
-    SGWSingCorrectCustomisationPage::buttonsList = new QHash<SGWButton*, SGXString>();
+    SGWSingCorrectCustomisationPage::buttonsList = new SGLUnorderedMap<SGWButton*, SGXString, SGLEqualsTo<SGWButton*>, SGLHash<SGWButton*>>();
     new SGWBlankWidget(x, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 0.5f, 8);
     new SGWTextButton(bg, "done", &SGWSingCorrectCustomisationPage::exit, 0.0f, 0.0f, 1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f);
     return bg;
@@ -184,12 +185,12 @@ void SGWSingCorrectCustomisationPage::addCustomCommand(SGWButton */*unused*/){
 
 void SGWSingCorrectCustomisationPage::refreshList(){
     delete SGWSingCorrectCustomisationPage::buttonsList;
-    SGWSingCorrectCustomisationPage::buttonsList = new QHash<SGWButton*, SGXString>();
+    SGWSingCorrectCustomisationPage::buttonsList = new SGLUnorderedMap<SGWButton*, SGXString, SGLEqualsTo<SGWButton*>, SGLHash<SGWButton*>>();
     const QVector<SGWWidget*> c = (*SGWSingCorrectCustomisationPage::listParent).getChildren();
     for(int i=0; i<c.length(); i++){
         delete c.at(i);
     }
-    for(QHash<SGXString, SGXChar>::const_iterator i = (*SGXSingCorrectCustomisation::database).begin(); i != (*SGXSingCorrectCustomisation::database).end(); i++){
+    for(SGLUnorderedMap<SGXString, SGXChar, SGLEqualsTo<SGXString>, SGLHash<SGXString>>::ConstIterator i = (*SGXSingCorrectCustomisation::database).constBegin(); i != (*SGXSingCorrectCustomisation::database).constEnd(); i++){
         SGWWidget* x = new SGWBlankWidget(SGWSingCorrectCustomisationPage::listParent, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 8);
         new SGWTextLabel(x, i.value(), 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 2.0f, 0.0f, 1.0f, SGWHorizontalAlignment::Center, false);
         new SGWTextLabel(x, i.key(), 0.0f, 2.0f, 0.0f, 0.0f, 1.0f, -3.0f, 0.0f, 1.0f, SGWHorizontalAlignment::Left, false);
@@ -199,7 +200,7 @@ void SGWSingCorrectCustomisationPage::refreshList(){
 }
 
 void SGWSingCorrectCustomisationPage::deleteCommand(SGWButton *button){
-    (*SGXSingCorrectCustomisation::database).remove((*SGWSingCorrectCustomisationPage::buttonsList)[button]);
+    (*SGXSingCorrectCustomisation::database).erase((*SGWSingCorrectCustomisationPage::buttonsList).at(button));
     SGWSingCorrectCustomisationPage::refreshList();
 }
 
