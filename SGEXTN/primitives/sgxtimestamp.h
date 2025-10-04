@@ -28,6 +28,7 @@ public:
     [[nodiscard]] bool operator>(SGXTimeStamp x) const;
     [[nodiscard]] bool operator<=(SGXTimeStamp x) const;
     [[nodiscard]] bool operator>=(SGXTimeStamp x) const;
+    [[nodiscard]] int hash() const;
     [[nodiscard]] double getSecondsFrom(SGXTimeStamp x) const;
     [[nodiscard]] double getMinutesFrom(SGXTimeStamp x) const;
     [[nodiscard]] double getHoursFrom(SGXTimeStamp x) const;

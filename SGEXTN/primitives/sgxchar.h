@@ -22,6 +22,7 @@ public:
     [[nodiscard]] bool operator<=(char x) const;
     [[nodiscard]] bool operator>=(SGXChar x) const;
     [[nodiscard]] bool operator>=(char x) const;
+    [[nodiscard]] int hash() const;
     [[nodiscard]] bool isDigit() const;
     [[nodiscard]] bool isDigitBase16() const;
     [[nodiscard]] bool isEnglishLowercase() const;

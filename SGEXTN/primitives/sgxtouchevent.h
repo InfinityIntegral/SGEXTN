@@ -31,6 +31,8 @@ public:
     [[nodiscard]] bool operator==(SGXTouchEvent x) const;
     [[nodiscard]] bool operator!=(SGXTouchEvent x) const;
     [[nodiscard]] bool operator<(SGXTouchEvent x) const;
+    [[nodiscard]] bool operator>(SGXTouchEvent x) const;
+    [[nodiscard]] int hash() const;
 };
 
 inline unsigned int qHash(SGXTouchEvent x, unsigned int seed = 0){

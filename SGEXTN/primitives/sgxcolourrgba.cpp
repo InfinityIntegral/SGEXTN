@@ -2,6 +2,7 @@
 #include <cmath>
 #include <QColor>
 #include "sgxstring.h"
+#include "../containers/sglhash.h"
 
 namespace{
 inline void temp_boundInt(int& x){
@@ -169,6 +170,14 @@ bool SGXColourRGBA::operator!=(SGXColourRGBA x) const {
 
 bool SGXColourRGBA::operator<(SGXColourRGBA x) const {
     return ((*this).x < x.x);
+}
+
+bool SGXColourRGBA::operator>(SGXColourRGBA x) const {
+    return((*this).x > x.x);
+}
+
+int SGXColourRGBA::hash() const {
+    return SGLHash<unsigned int>()(x);
 }
 
 void SGXColourRGBA::linearTransformRed(float m, float c){

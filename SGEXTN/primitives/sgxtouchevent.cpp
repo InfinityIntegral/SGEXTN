@@ -1,6 +1,7 @@
 #include "sgxtouchevent.h"
 #include <algorithm>
 #include <array>
+#include "../containers/sglhash.h"
 
 SGXTouchEvent::SGXTouchEvent(int n, const std::array<float, 11> &data){
     // x, y, px, py, sx, sy, vx, vy, rx, ry, f
@@ -48,4 +49,12 @@ bool SGXTouchEvent::operator !=(SGXTouchEvent x) const {
 
 bool SGXTouchEvent::operator<(SGXTouchEvent x) const {
     return (id < x.id);
+}
+
+bool SGXTouchEvent::operator>(SGXTouchEvent x) const {
+    return (id > x.id);
+}
+
+int SGXTouchEvent::hash() const {
+    return SGLHash<int>()(id);
 }

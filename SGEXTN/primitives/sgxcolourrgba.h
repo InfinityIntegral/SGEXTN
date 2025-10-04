@@ -41,6 +41,8 @@ public:
     [[nodiscard]] bool operator==(SGXColourRGBA x) const;
     [[nodiscard]] bool operator!=(SGXColourRGBA x) const;
     [[nodiscard]] bool operator<(SGXColourRGBA x) const;
+    [[nodiscard]] bool operator>(SGXColourRGBA x) const;
+    [[nodiscard]] int hash() const;
     void linearTransformRed(float m, float c);
     void linearTransformGreen(float m, float c);
     void linearTransformBlue(float m, float c);

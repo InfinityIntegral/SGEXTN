@@ -1,6 +1,10 @@
 #include "sgxcolourhsla.h"
 #include "sgxcolourrgba.h"
 #include <cmath>
+#include "../containers/sglhashalgorithm.h"
+#include "../containers/sglarray.h"
+#include "../containers/sglspan.h"
+#include "../containers/sglhash.h"
 
 namespace{
 inline float temp_maxof3float(float a, float b, float c){
@@ -92,6 +96,22 @@ bool SGXColourHSLA::operator<(SGXColourHSLA x) const {
     if(s != x.s){return (s < x.s);}
     if(l != x.l){return (l < x.l);}
     return (a < x.a);
+}
+
+bool SGXColourHSLA::operator>(SGXColourHSLA x) const {
+    if(h != x.h){return (h > x.h);}
+    if(s != x.s){return (s > x.s);}
+    if(l != x.l){return (l > x.l);}
+    return (a > x.a);
+}
+
+int SGXColourHSLA::hash() const {
+    SGLArray<int> hashArray(4);
+    hashArray.at(0) = SGLHash<float>()(h);
+    hashArray.at(1) = SGLHash<float>()(s);
+    hashArray.at(2) = SGLHash<float>()(l);
+    hashArray.at(3) = SGLHash<float>()(a);
+    return SGLHashAlgorithm::wyHash32(SGLSpan<const unsigned char>(reinterpret_cast<const unsigned char*>(hashArray.pointerToData(0)), 4 * sizeof(int)));
 }
 
 void SGXColourHSLA::setHue(float h){

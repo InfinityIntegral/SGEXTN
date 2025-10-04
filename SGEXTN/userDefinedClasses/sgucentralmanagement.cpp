@@ -25,16 +25,10 @@ SGXColourRGBA SGUCentralManagement::themeColour5 = SGXColourRGBA(255, 64, 214);
 SGXColourRGBA SGUCentralManagement::themeColour6 = SGXColourRGBA(255, 128, 227);
 SGXColourRGBA SGUCentralManagement::themeColour7 = SGXColourRGBA(255, 191, 241);
 SGXColourRGBA SGUCentralManagement::themeColour8 = SGXColourRGBA(255, 255, 255);
-#include "../containers/sgltuple5.h"
-#include "../containers/sglmorethan.h"
-#include <QDebug>
+
 // this is run immediately after GUI is created, use it to initialise the UI
 void SGUCentralManagement::initialise(){
-    SGLHash<SGLTuple5<int, int, int, int, int>> hasher;
-    SGLMoreThan<SGLTuple5<int, int, int, int, int>> comparator;
-    SGLTuple5<int, int, int, int, int> a(1, 1, 1, 1, 1);
-    SGLTuple5<int, int, int, int, int> b(0, 0, 0, 0, 0);
-    qDebug() << hasher(a) << hasher(b) << comparator(a, b) << comparator(b, a);
+    
 }
 
 // this is run after the application is created but before the GUI, use it to edit theme colours from configuration files

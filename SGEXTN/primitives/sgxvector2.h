@@ -14,6 +14,8 @@ public:
     [[nodiscard]] bool operator==(SGXVector2 x) const;
     [[nodiscard]] bool operator!=(SGXVector2 x) const;
     [[nodiscard]] bool operator<(SGXVector2 x) const;
+    [[nodiscard]] bool operator>(SGXVector2 x) const;
+    [[nodiscard]] int hash() const;
     [[nodiscard]] SGXString getStringForPrinting() const;
     [[nodiscard]] SGXVector2 operator+(SGXVector2 x) const;
     [[nodiscard]] SGXVector2 operator-(SGXVector2 x) const;

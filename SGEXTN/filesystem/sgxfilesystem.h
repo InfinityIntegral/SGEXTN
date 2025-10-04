@@ -50,4 +50,24 @@ public:
     static bool numberAwareLesserThanBase16(const SGXString& s1, const SGXString& s2);
 };
 
+class SGXNumberAwareFilePathLesserThan {
+public:
+    [[nodiscard]] bool operator()(const SGXString& a, const SGXString& b);
+};
+
+class SGXNumberAwareFilePathMoreThan {
+public:
+    [[nodiscard]] bool operator()(const SGXString& a, const SGXString& b);
+};
+
+class SGXNumberAwareFilePathLesserThanBase16 {
+public:
+    [[nodiscard]] bool operator()(const SGXString& a, const SGXString& b);
+};
+
+class SGXNumberAwareFilePathMoreThanBase16 {
+public:
+    [[nodiscard]] bool operator()(const SGXString& a, const SGXString& b);
+};
+
 #endif // SGXFILESYSTEM_H

@@ -16,6 +16,8 @@ public:
     [[nodiscard]] bool operator==(SGXColourHSLA x) const;
     [[nodiscard]] bool operator!=(SGXColourHSLA x) const;
     [[nodiscard]] bool operator<(SGXColourHSLA x) const;
+    [[nodiscard]] bool operator>(SGXColourHSLA x) const;
+    [[nodiscard]] int hash() const;
     void setHue(float h);
     void setSaturation(float s);
     void setLightness(float l);

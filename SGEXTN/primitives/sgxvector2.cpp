@@ -3,6 +3,10 @@
 #include <algorithm>
 #include <numbers>
 #include "sgxstring.h"
+#include "../containers/sglhash.h"
+#include "../containers/sglspan.h"
+#include "../containers/sglarray.h"
+#include "../containers/sglhashalgorithm.h"
 
 namespace{
 inline bool temp_isBetween(float x, float a, float b){
@@ -33,6 +37,18 @@ bool SGXVector2::operator!=(SGXVector2 x) const {
 bool SGXVector2::operator<(SGXVector2 x) const {
     if((*this).x != x.x){return ((*this).x < x.x);}
     return ((*this).y < x.y);
+}
+
+bool SGXVector2::operator>(SGXVector2 x) const {
+    if((*this).x != x.x){return ((*this).x > x.x);}
+    return ((*this).y > x.y);
+}
+
+int SGXVector2::hash() const {
+    SGLArray<int> hashArray(2);
+    hashArray.at(0) = SGLHash<float>()(x);
+    hashArray.at(1) = SGLHash<float>()(y);
+    return SGLHashAlgorithm::wyHash32(SGLSpan<const unsigned char>(reinterpret_cast<const unsigned char*>(hashArray.pointerToData(0)), 2 * sizeof(int)));
 }
 
 SGXString SGXVector2::getStringForPrinting() const {

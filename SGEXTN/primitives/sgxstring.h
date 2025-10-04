@@ -29,6 +29,7 @@ public:
     [[nodiscard]] bool operator>=(const SGXString& x) const;
     [[nodiscard]] SGXString operator+(const SGXString& x) const;
     [[nodiscard]] SGXString operator+(SGXChar x) const;
+    [[nodiscard]] int hash() const;
     friend SGXString operator+(SGXChar x, const SGXString& s);
     SGXString& operator+=(const SGXString& x);
     SGXString& operator+=(SGXChar x);

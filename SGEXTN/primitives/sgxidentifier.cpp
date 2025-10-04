@@ -2,6 +2,10 @@
 #include <QRandomGenerator>
 #include <QSet>
 #include "sgxstring.h"
+#include "../containers/sglhashalgorithm.h"
+#include "../containers/sglarray.h"
+#include "../containers/sglspan.h"
+#include "../containers/sglhash.h"
 
 QSet<SGXIdentifier> SGXIdentifier::identifiersList = QSet<SGXIdentifier>();
 const SGXIdentifier SGXIdentifier::nullIdentifier = SGXIdentifier(0);
@@ -100,6 +104,22 @@ bool SGXIdentifier::operator<(SGXIdentifier x) const {
     if(b != x.b){return (b < x.b);}
     if(c != x.c){return (c < x.c);}
     return (d < x.d);
+}
+
+bool SGXIdentifier::operator>(SGXIdentifier x) const {
+    if(a != x.a){return (a > x.a);}
+    if(b != x.b){return (b > x.b);}
+    if(c != x.c){return (c > x.c);}
+    return (d > x.d);
+}
+
+int SGXIdentifier::hash() const {
+    SGLArray<int> hashArray(4);
+    hashArray.at(0) = SGLHash<unsigned int>()(a);
+    hashArray.at(1) = SGLHash<unsigned int>()(b);
+    hashArray.at(2) = SGLHash<unsigned int>()(c);
+    hashArray.at(3) = SGLHash<unsigned int>()(d);
+    return SGLHashAlgorithm::wyHash32(SGLSpan<const unsigned char>(reinterpret_cast<const unsigned char*>(hashArray.pointerToData(0)), 4 * sizeof(int)));
 }
 
 bool SGXIdentifier::operator!=(SGXIdentifier x) const {

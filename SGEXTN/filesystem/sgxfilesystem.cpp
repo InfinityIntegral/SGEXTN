@@ -514,3 +514,19 @@ bool SGXFileSystem::numberAwareLesserThanBase16(const SGXString &s1, const SGXSt
     if(s1CleanedName != s2CleanedName){return (s1CleanedName < s2CleanedName);}
     return (s1Number < s2Number);
 }
+
+bool SGXNumberAwareFilePathLesserThan::operator()(const SGXString& a, const SGXString& b){
+    return SGXFileSystem::numberAwareLesserThan(a, b);
+}
+
+bool SGXNumberAwareFilePathMoreThan::operator()(const SGXString& a, const SGXString& b){
+    return SGXFileSystem::numberAwareLesserThan(b, a);
+}
+
+bool SGXNumberAwareFilePathLesserThanBase16::operator()(const SGXString& a, const SGXString& b){
+    return SGXFileSystem::numberAwareLesserThanBase16(a, b);
+}
+
+bool SGXNumberAwareFilePathMoreThanBase16::operator()(const SGXString& a, const SGXString& b){
+    return SGXFileSystem::numberAwareLesserThanBase16(b, a);
+}

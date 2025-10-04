@@ -1,5 +1,6 @@
 #include "sgxchar.h"
 #include <QChar>
+#include "../containers/sglhash.h"
 
 SGXChar::SGXChar(char c){
     (*this).data = static_cast<unsigned char>(static_cast<unsigned short>(c));
@@ -63,6 +64,10 @@ bool SGXChar::operator>=(SGXChar x) const {
 
 bool SGXChar::operator>=(char x) const {
     return (data >= static_cast<unsigned short>(x));
+}
+
+int SGXChar::hash() const {
+    return SGLHash<unsigned short>()(data);
 }
 
 bool SGXChar::isDigit() const {

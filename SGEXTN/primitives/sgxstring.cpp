@@ -6,6 +6,8 @@
 #include <qcontainerfwd.h>
 #include <string>
 #include <QList>
+#include "../containers/sglhashalgorithm.h"
+#include "../containers/sglspan.h"
 
 SGXString::SGXString(){
     (*this).data = new QString("");
@@ -101,6 +103,11 @@ SGXString& SGXString::operator+=(const SGXString& x){
 SGXString& SGXString::operator+=(SGXChar x){
     (*(*this).data) += QChar(x.data);
     return (*this);
+}
+
+int SGXString::hash() const {
+    const QByteArray byteSequence = (*data).toUtf8();
+    return SGLHashAlgorithm::wyHash32(SGLSpan<const unsigned char>(reinterpret_cast<const unsigned char*>(byteSequence.constData()), static_cast<int>(byteSequence.length())));
 }
 
 SGXChar SGXString::at(int i) const {

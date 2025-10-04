@@ -24,6 +24,8 @@ public:
     [[nodiscard]] bool operator==(SGXIdentifier x) const;
     [[nodiscard]] bool operator!=(SGXIdentifier x) const;
     [[nodiscard]] bool operator<(SGXIdentifier x) const;
+    [[nodiscard]] bool operator>(SGXIdentifier x) const;
+    [[nodiscard]] int hash() const;
     [[nodiscard]] SGXString getStringForPrinting() const;
 };
 

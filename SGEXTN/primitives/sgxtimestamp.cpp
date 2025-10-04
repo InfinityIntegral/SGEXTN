@@ -2,6 +2,7 @@
 #include <QDate>
 #include <QTime>
 #include "../primitives/sgxstring.h"
+#include "../containers/sglhash.h"
 
 const QTimeZone SGXTimeStamp::timezone = QTimeZone("Asia/Singapore");
 const SGXTimeStamp SGXTimeStamp::zero = SGXTimeStamp(0ll);
@@ -67,6 +68,10 @@ bool SGXTimeStamp::operator<=(SGXTimeStamp x) const {
 
 bool SGXTimeStamp::operator>=(SGXTimeStamp x) const {
     return (t >= x.t);
+}
+
+int SGXTimeStamp::hash() const {
+    return SGLHash<long long>()(t);
 }
 
 double SGXTimeStamp::getSecondsFrom(SGXTimeStamp x) const {
