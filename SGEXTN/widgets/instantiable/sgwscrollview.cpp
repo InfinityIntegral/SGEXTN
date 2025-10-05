@@ -6,6 +6,13 @@
 #include "../enums/sgwtype.h"
 #include "../../primitives/sgxcolourrgba.h"
 #include "../../bypassquickui/sgxthemecolours.h"
+#include <QColor>
+
+namespace {
+inline QColor temp_getQColour(SGXColourRGBA x){
+    return QColor(x.getRed(), x.getGreen(), x.getBlue(), x.getTransparency());
+}
+}
 
 SGWScrollView::SGWScrollView(SGWWidget *parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float i1, float i0, float s1, float s0, int themeColour) : SGWBackground(parent, x1, x0, y1, y0, w1, w0, h1, h0, themeColour){
     (*this).i1 = i1;
@@ -38,17 +45,17 @@ void SGWScrollView::syncQuickProperties(){
     (*topObject).setProperty("s1", s1);
     (*topObject).setProperty("s0", s0);
     (*topObject).setProperty("bs", scrollbarBackgroundThemeColour);
-    (*topObject).setProperty("bsc", scrollbarBackgroundColour.getQColour());
+    (*topObject).setProperty("bsc", temp_getQColour(scrollbarBackgroundColour));
     (*topObject).setProperty("fs", scrollbarForegroundThemeColour);
-    (*topObject).setProperty("fsc", scrollbarForegroundColour.getQColour());
+    (*topObject).setProperty("fsc", temp_getQColour(scrollbarForegroundColour));
     (*topObject).setProperty("bsh", scrollbarBackgroundHoverThemeColour);
-    (*topObject).setProperty("bshc", scrollbarBackgroundHoverColour.getQColour());
+    (*topObject).setProperty("bshc", temp_getQColour(scrollbarBackgroundHoverColour));
     (*topObject).setProperty("fsh", scrollbarForegroundHoverThemeColour);
-    (*topObject).setProperty("fshc", scrollbarForegroundHoverColour.getQColour());
+    (*topObject).setProperty("fshc", temp_getQColour(scrollbarForegroundHoverColour));
     (*topObject).setProperty("bsf", scrollbarBackgroundFocusThemeColour);
-    (*topObject).setProperty("bsfc", scrollbarBackgroundFocusColour.getQColour());
+    (*topObject).setProperty("bsfc", temp_getQColour(scrollbarBackgroundFocusColour));
     (*topObject).setProperty("fsf", scrollbarForegroundFocusThemeColour);
-    (*topObject).setProperty("fsfc", scrollbarForegroundFocusColour.getQColour());
+    (*topObject).setProperty("fsfc", temp_getQColour(scrollbarForegroundFocusColour));
 }
 
 float SGWScrollView::getI1() const {
@@ -113,7 +120,7 @@ SGXColourRGBA SGWScrollView::getScrollbarBackgroundColour(bool *isUsing) const {
 void SGWScrollView::setScrollbarBackgroundColour(SGXColourRGBA colour){
     (*this).scrollbarBackgroundColour = colour;
     (*this).usingTheme = false;
-    (*(*this).topObject).setProperty("bsc", (*this).scrollbarBackgroundColour.getQColour());
+    (*(*this).topObject).setProperty("bsc", temp_getQColour((*this).scrollbarBackgroundColour));
     (*(*this).topObject).setProperty("utc", (*this).usingTheme);
 }
 
@@ -143,7 +150,7 @@ SGXColourRGBA SGWScrollView::getScrollbarForegroundColour(bool *isUsing) const {
 void SGWScrollView::setScrollbarForegroundColour(SGXColourRGBA colour){
     (*this).scrollbarForegroundColour = colour;
     (*this).usingTheme = false;
-    (*(*this).topObject).setProperty("fsc", (*this).scrollbarForegroundColour.getQColour());
+    (*(*this).topObject).setProperty("fsc", temp_getQColour((*this).scrollbarForegroundColour));
     (*(*this).topObject).setProperty("utc", (*this).usingTheme);
 }
 
@@ -173,7 +180,7 @@ SGXColourRGBA SGWScrollView::getScrollbarBackgroundHoverColour(bool *isUsing) co
 void SGWScrollView::setScrollbarBackgroundHoverColour(SGXColourRGBA colour){
     (*this).scrollbarBackgroundHoverColour = colour;
     (*this).usingTheme = false;
-    (*(*this).topObject).setProperty("bshc", (*this).scrollbarBackgroundHoverColour.getQColour());
+    (*(*this).topObject).setProperty("bshc", temp_getQColour((*this).scrollbarBackgroundHoverColour));
     (*(*this).topObject).setProperty("utc", (*this).usingTheme);
 }
 
@@ -203,7 +210,7 @@ SGXColourRGBA SGWScrollView::getScrollbarForegroundHoverColour(bool *isUsing) co
 void SGWScrollView::setScrollbarForegroundHoverColour(SGXColourRGBA colour){
     (*this).scrollbarForegroundHoverColour = colour;
     (*this).usingTheme = false;
-    (*(*this).topObject).setProperty("fshc", (*this).scrollbarForegroundHoverColour.getQColour());
+    (*(*this).topObject).setProperty("fshc", temp_getQColour((*this).scrollbarForegroundHoverColour));
     (*(*this).topObject).setProperty("utc", (*this).usingTheme);
 }
 
@@ -233,7 +240,7 @@ SGXColourRGBA SGWScrollView::getScrollbarBackgroundFocusColour(bool *isUsing) co
 void SGWScrollView::setScrollbarBackgroundFocusColour(SGXColourRGBA colour){
     (*this).scrollbarBackgroundFocusColour = colour;
     (*this).usingTheme = false;
-    (*(*this).topObject).setProperty("bsfc", (*this).scrollbarBackgroundFocusColour.getQColour());
+    (*(*this).topObject).setProperty("bsfc", temp_getQColour((*this).scrollbarBackgroundFocusColour));
     (*(*this).topObject).setProperty("utc", (*this).usingTheme);
 }
 
@@ -263,6 +270,6 @@ SGXColourRGBA SGWScrollView::getScrollbarForegroundFocusColour(bool *isUsing) co
 void SGWScrollView::setScrollbarForegroundFocusColour(SGXColourRGBA colour){
     (*this).scrollbarForegroundFocusColour = colour;
     (*this).usingTheme = false;
-    (*(*this).topObject).setProperty("fsfc", (*this).scrollbarForegroundFocusColour.getQColour());
+    (*(*this).topObject).setProperty("fsfc", temp_getQColour((*this).scrollbarForegroundFocusColour));
     (*(*this).topObject).setProperty("utc", (*this).usingTheme);
 }

@@ -8,7 +8,6 @@
 #include "../primitives/sgxidentifier.h"
 #include "../primitives/sgxstring.h"
 #include "../primitives/sgxtimestamp.h"
-#include "../containers/sglpair.h"
 #include "../containers/sglunorderedmap.h"
 #include "../containers/sglequalsto.h"
 #include "../containers/sglhash.h"
@@ -52,7 +51,7 @@ void SGXFileBinUtilities::syncMetadata(){
     {
         const SGXFile fileWriter(SGXFileBinUtilities::pathToMetadataFile);
         fileWriter.writeInt(SGXFileBinUtilities::lifespan);
-        fileWriter.writeInt(static_cast<int>((*SGXFileBinUtilities::deletedFiles).length()));
+        fileWriter.writeInt((*SGXFileBinUtilities::deletedFiles).length());
         for(SGLUnorderedMap<SGXIdentifier, SGLPair<SGXString, SGXTimeStamp>, SGLEqualsTo<SGXIdentifier>, SGLHash<SGXIdentifier>>::ConstIterator i = (*SGXFileBinUtilities::deletedFiles).constBegin(); i != (*SGXFileBinUtilities::deletedFiles).constEnd(); i++){
             fileWriter.writeIdentifier(i.key());
             fileWriter.writeString(i.value().first);

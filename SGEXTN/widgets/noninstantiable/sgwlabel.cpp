@@ -7,6 +7,26 @@
 #include "../enums/sgwverticalalignment.h"
 #include "../../bypassquickui/sgxthemecolours.h"
 #include <QQuickItem>
+#include <QColor>
+#include <qnamespace.h>
+
+namespace {
+inline QColor temp_getQColour(SGXColourRGBA x){
+    return QColor(x.getRed(), x.getGreen(), x.getBlue(), x.getTransparency());
+}
+
+inline Qt::AlignmentFlag temp_getQtFlag(SGWHorizontalAlignment::Flag x){
+    if(x == SGWHorizontalAlignment::Left){return Qt::AlignLeft;}
+    if(x == SGWHorizontalAlignment::Right){return Qt::AlignRight;}
+    return Qt::AlignHCenter;
+}
+
+inline Qt::AlignmentFlag temp_getQtFlag(SGWVerticalAlignment::Flag x){
+    if(x == SGWVerticalAlignment::Top){return Qt::AlignTop;}
+    if(x == SGWVerticalAlignment::Bottom){return Qt::AlignBottom;}
+    return Qt::AlignVCenter;
+}
+}
 
 SGWLabel::SGWLabel(SGWWidget *parent, const SGXString &s, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float f1, float f0, SGWHorizontalAlignment::Flag horizontalAlignment, SGWVerticalAlignment::Flag verticalAlignment, const SGXString &font) : SGWWidget(parent, x1, x0, y1, y0, w1, w0, h1, h0){
     (*this).f1 = f1;
@@ -27,13 +47,13 @@ void SGWLabel::syncQuickProperties(){
     (*topObject).setProperty("f0", f0);
     (*topObject).setProperty("s", (*text.data));
     (*topObject).setProperty("f", (*font.data));
-    (*topObject).setProperty("ha", SGWHorizontalAlignment::getQtFlag(horizontalAlignment));
-    (*topObject).setProperty("va", SGWVerticalAlignment::getQtFlag(verticalAlignment));
+    (*topObject).setProperty("ha", temp_getQtFlag(horizontalAlignment));
+    (*topObject).setProperty("va", temp_getQtFlag(verticalAlignment));
     (*topObject).setProperty("utc", usingTheme);
     (*topObject).setProperty("bg", backgroundThemeColour);
-    (*topObject).setProperty("bgc", backgroundColour.getQColour());
+    (*topObject).setProperty("bgc", temp_getQColour(backgroundColour));
     (*topObject).setProperty("fg", foregroundThemeColour);
-    (*topObject).setProperty("fgc", foregroundColour.getQColour());
+    (*topObject).setProperty("fgc", temp_getQColour(foregroundColour));
 }
 
 float SGWLabel::getF1() const {
@@ -106,7 +126,7 @@ SGWHorizontalAlignment::Flag SGWLabel::getHorizontalAlignment() const {
 
 void SGWLabel::setHorizontalAlignment(SGWHorizontalAlignment::Flag alignment){
     (*this).horizontalAlignment = alignment;
-    (*(*this).topObject).setProperty("ha", SGWHorizontalAlignment::getQtFlag(horizontalAlignment));
+    (*(*this).topObject).setProperty("ha", temp_getQtFlag(horizontalAlignment));
 }
 
 SGWVerticalAlignment::Flag SGWLabel::getVerticalAlignment() const {
@@ -115,7 +135,7 @@ SGWVerticalAlignment::Flag SGWLabel::getVerticalAlignment() const {
 
 void SGWLabel::setVerticalAlignment(SGWVerticalAlignment::Flag alignment){
     (*this).verticalAlignment = alignment;
-    (*(*this).topObject).setProperty("va", SGWVerticalAlignment::getQtFlag(verticalAlignment));
+    (*(*this).topObject).setProperty("va", temp_getQtFlag(verticalAlignment));
 }
 
 int SGWLabel::getBackgroundThemeColour(bool *isUsing) const {
@@ -144,7 +164,7 @@ SGXColourRGBA SGWLabel::getBackgroundColour(bool *isUsing) const {
 void SGWLabel::setBackgroundColour(SGXColourRGBA colour){
     (*this).backgroundColour = colour;
     (*this).usingTheme = false;
-    (*(*this).topObject).setProperty("bgc", (*this).backgroundColour.getQColour());
+    (*(*this).topObject).setProperty("bgc", temp_getQColour((*this).backgroundColour));
     (*(*this).topObject).setProperty("utc", (*this).usingTheme);
 }
 
@@ -174,6 +194,6 @@ SGXColourRGBA SGWLabel::getForegroundColour(bool *isUsing) const {
 void SGWLabel::setForegroundColour(SGXColourRGBA colour){
     (*this).foregroundColour = colour;
     (*this).usingTheme = false;
-    (*(*this).topObject).setProperty("fgc", (*this).foregroundColour.getQColour());
+    (*(*this).topObject).setProperty("fgc", temp_getQColour((*this).foregroundColour));
     (*(*this).topObject).setProperty("utc", (*this).usingTheme);
 }

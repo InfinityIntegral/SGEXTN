@@ -9,6 +9,26 @@
 #include "../../quickui/sgwwidgetquickinterface.h"
 #include "../../bypassquickui/sgxthemecolours.h"
 #include "../../primitives/sgxstring.h"
+#include <QColor>
+#include <qnamespace.h>
+
+namespace {
+inline QColor temp_getQColour(SGXColourRGBA x){
+    return QColor(x.getRed(), x.getGreen(), x.getBlue(), x.getTransparency());
+}
+
+inline Qt::AlignmentFlag temp_getQtFlag(SGWHorizontalAlignment::Flag x){
+    if(x == SGWHorizontalAlignment::Left){return Qt::AlignLeft;}
+    if(x == SGWHorizontalAlignment::Right){return Qt::AlignRight;}
+    return Qt::AlignHCenter;
+}
+
+inline Qt::AlignmentFlag temp_getQtFlag(SGWVerticalAlignment::Flag x){
+    if(x == SGWVerticalAlignment::Top){return Qt::AlignTop;}
+    if(x == SGWVerticalAlignment::Bottom){return Qt::AlignBottom;}
+    return Qt::AlignVCenter;
+}
+}
 
 SGWInput::SGWInput(SGWWidget *parent, void (*validationFunction)(SGWInput *), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float f1, float f0, SGWHorizontalAlignment::Flag horizontalAlignment, SGWVerticalAlignment::Flag verticalAlignment) : SGWWidget(parent, x1, x0, y1, y0, w1, w0, h1, h0){
     (*this).f1 = f1;
@@ -50,30 +70,30 @@ void SGWInput::syncQuickProperties(){
     (*topObject).setProperty("f0", f0);
     (*topObject).setProperty("text", (*text.data));
     (*topObject).setProperty("f", (*font.data));
-    (*topObject).setProperty("ha", SGWHorizontalAlignment::getQtFlag(horizontalAlignment));
-    (*topObject).setProperty("va", SGWVerticalAlignment::getQtFlag(verticalAlignment));
+    (*topObject).setProperty("ha", temp_getQtFlag(horizontalAlignment));
+    (*topObject).setProperty("va", temp_getQtFlag(verticalAlignment));
     (*topObject).setProperty("inv", invalid);
     (*topObject).setProperty("utc", usingTheme);
     (*topObject).setProperty("bg", backgroundThemeColour);
-    (*topObject).setProperty("bgc", backgroundColour.getQColour());
+    (*topObject).setProperty("bgc", temp_getQColour(backgroundColour));
     (*topObject).setProperty("fg", foregroundThemeColour);
-    (*topObject).setProperty("fgc", foregroundColour.getQColour());
+    (*topObject).setProperty("fgc", temp_getQColour(foregroundColour));
     (*topObject).setProperty("bgh", backgroundHoverThemeColour);
-    (*topObject).setProperty("bghc", backgroundHoverColour.getQColour());
+    (*topObject).setProperty("bghc", temp_getQColour(backgroundHoverColour));
     (*topObject).setProperty("fgh", foregroundHoverThemeColour);
-    (*topObject).setProperty("fghc", foregroundHoverColour.getQColour());
+    (*topObject).setProperty("fghc", temp_getQColour(foregroundHoverColour));
     (*topObject).setProperty("bgf", backgroundFocusThemeColour);
-    (*topObject).setProperty("bgfc", backgroundFocusColour.getQColour());
+    (*topObject).setProperty("bgfc", temp_getQColour(backgroundFocusColour));
     (*topObject).setProperty("fgf", foregroundFocusThemeColour);
-    (*topObject).setProperty("fgfc", foregroundFocusColour.getQColour());
+    (*topObject).setProperty("fgfc", temp_getQColour(foregroundFocusColour));
     (*topObject).setProperty("bgi", backgroundInvalidThemeColour);
-    (*topObject).setProperty("bgic", backgroundInvalidColour.getQColour());
+    (*topObject).setProperty("bgic", temp_getQColour(backgroundInvalidColour));
     (*topObject).setProperty("fgi", foregroundInvalidThemeColour);
-    (*topObject).setProperty("fgic", foregroundInvalidColour.getQColour());
+    (*topObject).setProperty("fgic", temp_getQColour(foregroundInvalidColour));
     (*topObject).setProperty("bghi", backgroundHoverInvalidThemeColour);
-    (*topObject).setProperty("bghic", backgroundHoverInvalidColour.getQColour());
+    (*topObject).setProperty("bghic", temp_getQColour(backgroundHoverInvalidColour));
     (*topObject).setProperty("fghi", foregroundHoverInvalidThemeColour);
-    (*topObject).setProperty("fghic", foregroundHoverInvalidColour.getQColour());
+    (*topObject).setProperty("fghic", temp_getQColour(foregroundHoverInvalidColour));
     quickInterface = new SGWWidgetQuickInterface(this);
 }
 
@@ -154,7 +174,7 @@ SGWHorizontalAlignment::Flag SGWInput::getHorizontalAlignment() const {
 
 void SGWInput::setHorizontalAlignment(SGWHorizontalAlignment::Flag alignment){
     (*this).horizontalAlignment = alignment;
-    (*(*this).topObject).setProperty("ha", SGWHorizontalAlignment::getQtFlag(horizontalAlignment));
+    (*(*this).topObject).setProperty("ha", temp_getQtFlag(horizontalAlignment));
 }
 
 SGWVerticalAlignment::Flag SGWInput::getVerticalAlignment() const {
@@ -163,7 +183,7 @@ SGWVerticalAlignment::Flag SGWInput::getVerticalAlignment() const {
 
 void SGWInput::setVerticalAlignment(SGWVerticalAlignment::Flag alignment){
     (*this).verticalAlignment = alignment;
-    (*(*this).topObject).setProperty("va", SGWVerticalAlignment::getQtFlag(verticalAlignment));
+    (*(*this).topObject).setProperty("va", temp_getQtFlag(verticalAlignment));
 }
 
 bool SGWInput::getInvalid() const {
@@ -225,7 +245,7 @@ SGXColourRGBA SGWInput::getBackgroundColour(bool *isUsing) const {
 void SGWInput::setBackgroundColour(SGXColourRGBA colour){
     (*this).backgroundColour = colour;
     (*this).usingTheme = false;
-    (*(*this).topObject).setProperty("bgc", (*this).backgroundColour.getQColour());
+    (*(*this).topObject).setProperty("bgc", temp_getQColour((*this).backgroundColour));
     (*(*this).topObject).setProperty("utc", (*this).usingTheme);
 }
 
@@ -255,7 +275,7 @@ SGXColourRGBA SGWInput::getForegroundColour(bool *isUsing) const {
 void SGWInput::setForegroundColour(SGXColourRGBA colour){
     (*this).foregroundColour = colour;
     (*this).usingTheme = false;
-    (*(*this).topObject).setProperty("fgc", (*this).foregroundColour.getQColour());
+    (*(*this).topObject).setProperty("fgc", temp_getQColour((*this).foregroundColour));
     (*(*this).topObject).setProperty("utc", (*this).usingTheme);
 }
 
@@ -285,7 +305,7 @@ SGXColourRGBA SGWInput::getBackgroundHoverColour(bool *isUsing) const {
 void SGWInput::setBackgroundHoverColour(SGXColourRGBA colour){
     (*this).backgroundHoverColour = colour;
     (*this).usingTheme = false;
-    (*(*this).topObject).setProperty("bghc", (*this).backgroundHoverColour.getQColour());
+    (*(*this).topObject).setProperty("bghc", temp_getQColour((*this).backgroundHoverColour));
     (*(*this).topObject).setProperty("utc", (*this).usingTheme);
 }
 
@@ -315,7 +335,7 @@ SGXColourRGBA SGWInput::getForegroundHoverColour(bool *isUsing) const {
 void SGWInput::setForegroundHoverColour(SGXColourRGBA colour){
     (*this).foregroundHoverColour = colour;
     (*this).usingTheme = false;
-    (*(*this).topObject).setProperty("fghc", (*this).foregroundHoverColour.getQColour());
+    (*(*this).topObject).setProperty("fghc", temp_getQColour((*this).foregroundHoverColour));
     (*(*this).topObject).setProperty("utc", (*this).usingTheme);
 }
 
@@ -345,7 +365,7 @@ SGXColourRGBA SGWInput::getBackgroundFocusColour(bool *isUsing) const {
 void SGWInput::setBackgroundFocusColour(SGXColourRGBA colour){
     (*this).backgroundFocusColour = colour;
     (*this).usingTheme = false;
-    (*(*this).topObject).setProperty("bgfc", (*this).backgroundFocusColour.getQColour());
+    (*(*this).topObject).setProperty("bgfc", temp_getQColour((*this).backgroundFocusColour));
     (*(*this).topObject).setProperty("utc", (*this).usingTheme);
 }
 
@@ -375,7 +395,7 @@ SGXColourRGBA SGWInput::getForegroundFocusColour(bool *isUsing) const {
 void SGWInput::setForegroundFocusColour(SGXColourRGBA colour){
     (*this).foregroundFocusColour = colour;
     (*this).usingTheme = false;
-    (*(*this).topObject).setProperty("fgfc", (*this).foregroundFocusColour.getQColour());
+    (*(*this).topObject).setProperty("fgfc", temp_getQColour((*this).foregroundFocusColour));
     (*(*this).topObject).setProperty("utc", (*this).usingTheme);
 }
 
@@ -405,7 +425,7 @@ SGXColourRGBA SGWInput::getBackgroundInvalidColour(bool *isUsing) const {
 void SGWInput::setBackgroundInvalidColour(SGXColourRGBA colour){
     (*this).backgroundInvalidColour = colour;
     (*this).usingTheme = false;
-    (*(*this).topObject).setProperty("bgic", (*this).backgroundInvalidColour.getQColour());
+    (*(*this).topObject).setProperty("bgic", temp_getQColour((*this).backgroundInvalidColour));
     (*(*this).topObject).setProperty("utc", (*this).usingTheme);
 }
 
@@ -435,7 +455,7 @@ SGXColourRGBA SGWInput::getForegroundInvalidColour(bool *isUsing) const {
 void SGWInput::setForegroundInvalidColour(SGXColourRGBA colour){
     (*this).foregroundInvalidColour = colour;
     (*this).usingTheme = false;
-    (*(*this).topObject).setProperty("fgic", (*this).foregroundInvalidColour.getQColour());
+    (*(*this).topObject).setProperty("fgic", temp_getQColour((*this).foregroundInvalidColour));
     (*(*this).topObject).setProperty("utc", (*this).usingTheme);
 }
 
@@ -465,7 +485,7 @@ SGXColourRGBA SGWInput::getBackgroundHoverInvalidColour(bool *isUsing) const {
 void SGWInput::setBackgroundHoverInvalidColour(SGXColourRGBA colour){
     (*this).backgroundHoverInvalidColour = colour;
     (*this).usingTheme = false;
-    (*(*this).topObject).setProperty("bghic", (*this).backgroundHoverInvalidColour.getQColour());
+    (*(*this).topObject).setProperty("bghic", temp_getQColour((*this).backgroundHoverInvalidColour));
     (*(*this).topObject).setProperty("utc", (*this).usingTheme);
 }
 
@@ -495,7 +515,7 @@ SGXColourRGBA SGWInput::getForegroundHoverInvalidColour(bool *isUsing) const {
 void SGWInput::setForegroundHoverInvalidColour(SGXColourRGBA colour){
     (*this).foregroundHoverInvalidColour = colour;
     (*this).usingTheme = false;
-    (*(*this).topObject).setProperty("fghic", (*this).foregroundHoverInvalidColour.getQColour());
+    (*(*this).topObject).setProperty("fghic", temp_getQColour((*this).foregroundHoverInvalidColour));
     (*(*this).topObject).setProperty("utc", (*this).usingTheme);
 }
 

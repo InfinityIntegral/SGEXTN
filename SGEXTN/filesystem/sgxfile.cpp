@@ -9,10 +9,11 @@
 #include "../primitives/sgxtimestamp.h"
 #include "../primitives/sgxvector2.h"
 #include "../primitives/sgxchar.h"
-#include <qnamespace.h>
 #include "sgxfilesystem.h"
 #include "../primitives/sgxstring.h"
 #include <QByteArray>
+#include "../containers/sglarray.h"
+#include <cstring>
 
 SGXFile::SGXFile(const SGXString &s){
     if(SGXFileSystem::fileExists(s) == false){isValid = false;}
@@ -197,20 +198,20 @@ void SGXFile::setPointerLocation(long long x) const {
 }
 
 SGLArray<char> SGXFile::readAllBytes() const {
-    QByteArray data = (*fileControl).readAll();
-    SGLArray<char> output(data.length());
+    const QByteArray data = (*fileControl).readAll();
+    SGLArray<char> output(static_cast<int>(data.length()));
     memcpy(output.pointerToData(0), data.constData(), data.length());
     return output;
 }
 
 SGLArray<char> SGXFile::readBytes(long long n) const {
-    QByteArray data = (*fileControl).read(n);
-    SGLArray<char> output(data.length());
+    const QByteArray data = (*fileControl).read(n);
+    SGLArray<char> output(static_cast<int>(data.length()));
     memcpy(output.pointerToData(0), data.constData(), data.length());
     return output;
 }
 
 void SGXFile::writeBytes(const SGLArray<char> &x) const {
-    QByteArray data = QByteArray::fromRawData(x.pointerToData(0), x.length());
+    const QByteArray data = QByteArray::fromRawData(x.pointerToData(0), x.length());
     (*fileControl).write(data);
 }

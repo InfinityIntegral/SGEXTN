@@ -1,21 +1,22 @@
 #include "sgxidentifier.h"
-#include <QRandomGenerator>
-#include <QSet>
+#include "../rng/sgxrandomnumbergenerator.h"
 #include "sgxstring.h"
 #include "../containers/sglhashalgorithm.h"
 #include "../containers/sglarray.h"
 #include "../containers/sglspan.h"
 #include "../containers/sglhash.h"
+#include "../containers/sglunorderedset.h"
+#include "../containers/sglequalsto.h"
 
-QSet<SGXIdentifier> SGXIdentifier::identifiersList = QSet<SGXIdentifier>();
+SGLUnorderedSet<SGXIdentifier, SGLEqualsTo<SGXIdentifier>, SGLHash<SGXIdentifier>> SGXIdentifier::identifiersList = SGLUnorderedSet<SGXIdentifier, SGLEqualsTo<SGXIdentifier>, SGLHash<SGXIdentifier>>();
 const SGXIdentifier SGXIdentifier::nullIdentifier = SGXIdentifier(0);
 
 SGXIdentifier::SGXIdentifier(bool ifValid){ // NOLINT(misc-no-recursion)
     if(ifValid == false){
-        (*this).a = static_cast<unsigned int>((*QRandomGenerator::global()).generate());
-        (*this).b = static_cast<unsigned int>((*QRandomGenerator::global()).generate());
-        (*this).c = static_cast<unsigned int>((*QRandomGenerator::global()).generate());
-        (*this).d = static_cast<unsigned int>((*QRandomGenerator::global()).generate());
+        (*this).a = SGXRandomNumberGenerator::rng();
+        (*this).b = SGXRandomNumberGenerator::rng();
+        (*this).c = SGXRandomNumberGenerator::rng();
+        (*this).d = SGXRandomNumberGenerator::rng();
     }
     else{
         SGXIdentifier t = SGXIdentifier(false);
@@ -87,7 +88,7 @@ int SGXIdentifier::registerIdentifier() const {
 
 int SGXIdentifier::unregisterIdentifier() const {
     if(SGXIdentifier::identifiersList.contains((*this)) == false){return 1;}
-    SGXIdentifier::identifiersList.remove((*this));
+    SGXIdentifier::identifiersList.erase((*this));
     return 0;
 }
 

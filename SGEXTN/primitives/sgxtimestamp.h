@@ -3,21 +3,15 @@
 
 #include "sgxstring.h"
 #include "sgxchar.h"
-#include <QDateTime>
-#include <QTimeZone>
 
 class SGXTimeStamp
 {
 public:
     long long t;
-    static const QTimeZone timezone;
     static const SGXTimeStamp zero;
-    static const QDateTime zeroAsQDateTime;
     SGXTimeStamp() = default;
     SGXTimeStamp(long long t);
     SGXTimeStamp(int year, int month, int day, int hour, int minute, int second);
-    SGXTimeStamp(const QDateTime& dt);
-    [[nodiscard]] QDateTime getQDateTime() const;
     [[nodiscard]] SGXString getString() const;
     [[nodiscard]] SGXString getStringNoOffset() const;
     [[nodiscard]] SGXString getStringCustomFormat(const SGXString& s) const;
@@ -77,9 +71,5 @@ public:
     [[nodiscard]] SGXString getFileNameCorrectToSecondSeparated(SGXChar separator) const;
     [[nodiscard]] SGXString getFileNameCorrectToSecondNoOffsetSeparated(SGXChar separator) const;
 };
-
-inline unsigned int qHash(SGXTimeStamp x, unsigned int seed = 0){
-    return static_cast<unsigned int>(static_cast<unsigned long long>(x.t >> 32ll) ^ static_cast<unsigned long long>(x.t & 0xFFFFFFFFll) ^ static_cast<unsigned long long>(seed));
-}
 
 #endif // SGXTIMESTAMP_H

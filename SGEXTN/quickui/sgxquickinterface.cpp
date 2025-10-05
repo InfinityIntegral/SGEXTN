@@ -8,7 +8,7 @@
 #include "sgxthemecoloursetting.h"
 #include "../widgets/unique/sgwparent.h"
 #include "../widgets/unique/sgwstatusbar.h"
-#include <QQueue>
+#include "../containers/sglqueue.h"
 #include <qcontainerfwd.h>
 #include <QQuickItem>
 
@@ -87,14 +87,15 @@ void SGXQuickInterface::deleteSingletons(){
 }
 
 QQuickItem* SGXQuickInterface::getBottomObject(QQuickItem *topObject){
-    QQueue<QQuickItem*> childrenList = QQueue<QQuickItem*>();
-    childrenList.enqueue(topObject);
+    SGLQueue<QQuickItem*> childrenList = SGLQueue<QQuickItem*>();
+    childrenList.push(topObject);
     while(childrenList.length() > 0){
-        QQuickItem* i = childrenList.dequeue();
+        QQuickItem* i = childrenList.front();
+        childrenList.pop();
         if((*i).property("canParent").toBool() == true){return i;}
         const QVector<QQuickItem*> thisChildren = (*i).childItems();
         for(int idx = 0; idx < thisChildren.length(); idx++){
-            childrenList.enqueue(thisChildren.at(idx));
+            childrenList.push(thisChildren.at(idx));
         }
     }
     return nullptr;

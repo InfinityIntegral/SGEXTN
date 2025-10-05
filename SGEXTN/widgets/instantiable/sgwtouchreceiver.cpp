@@ -1,14 +1,14 @@
 #include "sgwtouchreceiver.h"
 #include "../../quickui/sgxquickinterface.h"
 #include "../noninstantiable/sgwwidget.h"
-#include <array>
 #include "../../primitives/sgxtouchevent.h"
 #include <QQuickItem>
 #include "../enums/sgwtype.h"
 #include "../../primitives/sgxstring.h"
 #include "../../quickui/sgwwidgetquickinterface.h"
+#include "../../containers/sglarray.h"
 
-SGWTouchReceiver::SGWTouchReceiver(SGWWidget *parent, void (*function)(SGWTouchReceiver *, const std::array<SGXTouchEvent, 5> &), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0) : SGWWidget(parent, x1, x0, y1, y0, w1, w0, h1, h0){
+SGWTouchReceiver::SGWTouchReceiver(SGWWidget *parent, void (*function)(SGWTouchReceiver *, const SGLArray<SGXTouchEvent> &), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0) : SGWWidget(parent, x1, x0, y1, y0, w1, w0, h1, h0){
     (*this).function = function;
     QQuickItem* thisItem = static_cast<QQuickItem*>((*SGXQuickInterface::touchReceiver).create());
     (*this).initialiseQuickItemReferences(thisItem);
@@ -20,8 +20,8 @@ SGWTouchReceiver::SGWTouchReceiver(SGWWidget *parent, void (*function)(SGWTouchR
 void SGWTouchReceiver::eventReceived(const SGXString &s){
     if(s != "touched"){return;}
     QQuickItem* thisItem = topObject;
-    std::array<float, 11> data = std::array<float, 11>();
-    std::array<SGXTouchEvent, 5> eventsToPass = std::array<SGXTouchEvent, 5>();
+    SGLArray<float> data(11);
+    SGLArray<SGXTouchEvent> eventsToPass(5);
 
     if((*thisItem).property("e1").toBool() == true){
         data.at(0) = (*thisItem).property("e1x").toFloat();

@@ -19,7 +19,7 @@ inline int SGLHashAlgorithm::wyHash32(const SGLSpan<const unsigned char>& span){
     while(sizeOfT - i >= 4){
         unsigned int k = 0u;
         k = k | (span.at(i));
-        k = k | (span.at(i + 1) << 8);
+        k = k | (span.at(i + 1) << 8); // NOLINT(clang-analyzer-core.UndefinedBinaryOperatorResult)
         k = k | (span.at(i + 2) << 16);
         k = k | (span.at(i + 3) << 24);
         hash = num1 * (hash ^ k);

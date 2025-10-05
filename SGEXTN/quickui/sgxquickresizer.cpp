@@ -1,6 +1,5 @@
 #include "sgxquickresizer.h"
 #include "../quickui/sgxquickinterface.h"
-#include <algorithm>
 #include <QQuickItem>
 
 SGXQuickResizer::SGXQuickResizer(){
@@ -71,5 +70,6 @@ void SGXQuickResizer::updateAppWindowSize(){
         setRenderSpaceWidth(appWindowWidth);
         setRenderSpaceHeight(appWindowHeight);
     }
-    setSizeUnit(std::max(renderSpaceWidth / 24.0f, renderSpaceHeight / 25.0f));
+    if(renderSpaceWidth / 24.0f > renderSpaceHeight / 25.0f){setSizeUnit(renderSpaceWidth / 24.0f);}
+    else{setSizeUnit(renderSpaceHeight / 25.0f);}
 }

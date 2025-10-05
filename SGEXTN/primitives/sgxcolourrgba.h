@@ -2,7 +2,6 @@
 #define SGXCOLOURRGBA_H
 
 #include "sgxstring.h"
-#include <QColor>
 
 class SGXColourRGBA
 {
@@ -14,12 +13,10 @@ public:
     SGXColourRGBA(int r, int g, int b);
     SGXColourRGBA(float r, float g, float b, float a);
     SGXColourRGBA(float r, float g, float b);
-    SGXColourRGBA(QColor x);
     [[nodiscard]] int getRed() const;
     [[nodiscard]] int getGreen() const;
     [[nodiscard]] int getBlue() const;
     [[nodiscard]] int getTransparency() const;
-    [[nodiscard]] QColor getQColour() const;
     [[nodiscard]] float getRedAsFloat() const;
     [[nodiscard]] float getGreenAsFloat() const;
     [[nodiscard]] float getBlueAsFloat() const;
@@ -62,9 +59,5 @@ public:
     [[nodiscard]] SGXColourRGBA linearInterpolateGammaCorrection(SGXColourRGBA x, float f) const;
     void toComplementColour();
 };
-
-inline unsigned int qHash(SGXColourRGBA x, unsigned int seed = 0){
-    return (x.x ^ seed);
-}
 
 #endif // SGXCOLOURRGBA_H

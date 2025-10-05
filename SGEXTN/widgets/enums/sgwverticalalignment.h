@@ -1,8 +1,6 @@
 #ifndef SGWVERTICALALIGNMENT_H
 #define SGWVERTICALALIGNMENT_H
 
-#include <qnamespace.h>
-
 class SGWVerticalAlignment
 {
 public:
@@ -12,7 +10,6 @@ public:
         Center,
         Bottom
     };
-    static Qt::AlignmentFlag getQtFlag(SGWVerticalAlignment::Flag x);
 };
 
 #endif // SGWVERTICALALIGNMENT_H

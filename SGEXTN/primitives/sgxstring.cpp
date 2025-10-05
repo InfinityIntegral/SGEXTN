@@ -1,13 +1,14 @@
 #include "sgxstring.h"
 #include "sgxchar.h"
-#include <vector>
+#include "../containers/sglarray.h"
 #include <QString>
 #include <QChar>
-#include <qcontainerfwd.h>
-#include <string>
-#include <QList>
 #include "../containers/sglhashalgorithm.h"
 #include "../containers/sglspan.h"
+#include <QList>
+#include <QByteArray>
+#include <QStringList>
+#include "qcontainerfwd.h"
 
 SGXString::SGXString(){
     (*this).data = new QString("");
@@ -49,10 +50,6 @@ SGXString::SGXString(char c){
 
 SGXString::SGXString(const char *cString){
     data = new QString(cString);
-}
-
-SGXString::SGXString(const std::string &s){
-    data = new QString(QString::fromStdString(s));
 }
 
 bool SGXString::operator==(const SGXString& x) const {
@@ -406,44 +403,37 @@ void SGXString::cleanWhitespace() const {
     (*(*this).data) = (*(*this).data).simplified();
 }
 
-std::vector<SGXString> SGXString::split() const {
+SGLArray<SGXString> SGXString::split() const {
     const QStringList list = (*(*this).data).split(' ');
-    std::vector<SGXString> output;
-    output.reserve(list.length());
+    SGLArray<SGXString> output(static_cast<int>(list.length()));
     for(int i=0; i<list.length(); i++){
         const SGXString s0 = "";
         (*s0.data) = list.at(i);
-        output.push_back(s0);
+        output.at(i) = s0;
     }
     return output;
 }
 
-std::vector<SGXString> SGXString::splitCustomSeparator(SGXChar separator) const {
+SGLArray<SGXString> SGXString::splitCustomSeparator(SGXChar separator) const {
     const QStringList list = (*(*this).data).split(QChar(separator.data));
-    std::vector<SGXString> output;
-    output.reserve(list.length());
+    SGLArray<SGXString> output(static_cast<int>(list.length()));
     for(int i=0; i<list.length(); i++){
         const SGXString s0 = "";
         (*s0.data) = list.at(i);
-        output.push_back(s0);
+        output.at(i) = s0;
     }
     return output;
 }
 
-std::vector<SGXString> SGXString::splitCustomSeparator(const SGXString &separator) const {
+SGLArray<SGXString> SGXString::splitCustomSeparator(const SGXString &separator) const {
     const QStringList list = (*(*this).data).split(*separator.data);
-    std::vector<SGXString> output;
-    output.reserve(list.length());
+    SGLArray<SGXString> output(static_cast<int>(list.length()));
     for(int i=0; i<list.length(); i++){
         const SGXString s0 = "";
         (*s0.data) = list.at(i);
-        output.push_back(s0);
+        output.at(i) = s0;
     }
     return output;
-}
-
-std::string SGXString::toStdString() const {
-    return (*(*this).data).toStdString();
 }
 
 bool SGXString::isDigit() const {

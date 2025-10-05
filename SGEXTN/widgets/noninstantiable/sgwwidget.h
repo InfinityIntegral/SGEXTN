@@ -2,8 +2,10 @@
 #define SGWWIDGET_H
 
 #include "../enums/sgwtype.h"
-#include <QSet>
-#include <qcontainerfwd.h>
+#include "../../containers/sglarray.h"
+#include "../../containers/sglunorderedset.h"
+#include "../../containers/sglequalsto.h"
+#include "../../containers/sglhash.h"
 
 class QQuickItem;
 class SGWWidget
@@ -17,7 +19,7 @@ public:
     virtual ~SGWWidget();
     [[nodiscard]] SGWType::Type getType() const;
     [[nodiscard]] SGWWidget* getParent() const;
-    [[nodiscard]] QVector<SGWWidget*> getChildren() const;
+    [[nodiscard]] SGLArray<SGWWidget*> getChildren() const;
     [[nodiscard]] QQuickItem* getTopObject() const;
     [[nodiscard]] QQuickItem* getBottomObject() const;
     [[nodiscard]] float getX1() const;
@@ -53,7 +55,7 @@ protected:
     SGWWidget(SGWWidget* parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0);
     SGWType::Type type;
     SGWWidget* parent;
-    QSet<SGWWidget*> children;
+    SGLUnorderedSet<SGWWidget*, SGLEqualsTo<SGWWidget*>, SGLHash<SGWWidget*>> children;
     QQuickItem* topObject;
     QQuickItem* bottomObject;
     float x1;

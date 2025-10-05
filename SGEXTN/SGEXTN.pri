@@ -26,6 +26,7 @@ SOURCES += SGEXTN/misc/main.cpp \
     $$PWD/quickui/sgwwidgetquickinterface.cpp \
     $$PWD/quickui/sgxsingcorrectquickinterface.cpp \
     $$PWD/quickui/sgxtimerquickinterface.cpp \
+    $$PWD/rng/sgxrandomnumbergenerator.cpp \
     SGEXTN/SingCorrect/sgwsingcorrectcustomisationpage.cpp \
     SGEXTN/SingCorrect/sgxsingcorrectcore.cpp \
     SGEXTN/SingCorrect/sgxsingcorrectcustomisation.cpp \
@@ -75,7 +76,6 @@ SOURCES += SGEXTN/misc/main.cpp \
     SGEXTN/widgets/instantiable/sgwcolourpickerwidget.cpp \
     SGEXTN/widgets/instantiable/sgwcustomrenderer.cpp \
     SGEXTN/widgets/enums/sgwdefaultfonts.cpp \
-    SGEXTN/widgets/enums/sgwhorizontalalignment.cpp \
     SGEXTN/widgets/instantiable/sgwiconbutton.cpp \
     SGEXTN/widgets/instantiable/sgwiconlabel.cpp \
     SGEXTN/widgets/noninstantiable/sgwinput.cpp \
@@ -94,7 +94,6 @@ SOURCES += SGEXTN/misc/main.cpp \
     SGEXTN/widgets/instantiable/sgwtextlabel.cpp \
     SGEXTN/widgets/instantiable/sgwtouchreceiver.cpp \
     SGEXTN/widgets/enums/sgwtype.cpp \
-    SGEXTN/widgets/enums/sgwverticalalignment.cpp \
     SGEXTN/widgets/noninstantiable/sgwwidget.cpp
 RESOURCES += SGEXTN/assets.qrc
 HEADERS += \
@@ -129,6 +128,7 @@ HEADERS += \
     $$PWD/quickui/sgwwidgetquickinterface.h \
     $$PWD/quickui/sgxsingcorrectquickinterface.h \
     $$PWD/quickui/sgxtimerquickinterface.h \
+    $$PWD/rng/sgxrandomnumbergenerator.h \
     SGEXTN/SingCorrect/sgwsingcorrectcustomisationpage.h \
     SGEXTN/SingCorrect/sgxsingcorrectcore.h \
     SGEXTN/SingCorrect/sgxsingcorrectcustomisation.h \

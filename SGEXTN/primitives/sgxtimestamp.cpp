@@ -3,10 +3,24 @@
 #include <QTime>
 #include "../primitives/sgxstring.h"
 #include "../containers/sglhash.h"
+#include <QDateTime>
+#include <QTimeZone>
 
-const QTimeZone SGXTimeStamp::timezone = QTimeZone("Asia/Singapore");
+namespace{
+inline QTimeZone temp_timezone = QTimeZone("Asia/Singapore");
+inline QDateTime temp_zeroAsQDateTime = QDateTime(QDate(1965, 8, 9), QTime(10, 30, 0), QTimeZone("Asia/Singapore"));
+
+inline SGXTimeStamp temp_qDateTimeToSGXTimeStamp(const QDateTime& dt){
+    if(dt.isValid() == false || dt.isNull() == true){return SGXTimeStamp::zero;}
+    return SGXTimeStamp((temp_zeroAsQDateTime).secsTo(dt));
+}
+
+inline QDateTime temp_sgxTimeStampToQDateTime(const SGXTimeStamp& x){
+    return temp_zeroAsQDateTime.addSecs(x.t);
+}
+}
+
 const SGXTimeStamp SGXTimeStamp::zero = SGXTimeStamp(0ll);
-const QDateTime SGXTimeStamp::zeroAsQDateTime = QDateTime(QDate(1965, 8, 9), QTime(10, 30, 0), SGXTimeStamp::timezone);
 
 SGXTimeStamp::SGXTimeStamp(long long t){
     (*this).t = t;
@@ -14,16 +28,7 @@ SGXTimeStamp::SGXTimeStamp(long long t){
 
 SGXTimeStamp::SGXTimeStamp(int year, int month, int day, int hour, int minute, int second){
     (*this).t = 0ll;
-    (*this) = SGXTimeStamp(QDateTime(QDate(year + 1965, month, day), QTime(hour, minute, second), SGXTimeStamp::timezone));
-}
-
-SGXTimeStamp::SGXTimeStamp(const QDateTime& dt){
-    if(dt.isValid() == false || dt.isNull() == true){(*this).t = 0ll;}
-    else{(*this).t = (SGXTimeStamp::zeroAsQDateTime).secsTo(dt);}
-}
-
-QDateTime SGXTimeStamp::getQDateTime() const {
-    return SGXTimeStamp::zeroAsQDateTime.addSecs(t);
+    (*this) = temp_qDateTimeToSGXTimeStamp(QDateTime(QDate(year + 1965, month, day), QTime(hour, minute, second), temp_timezone));
 }
 
 SGXString SGXTimeStamp::getString() const {
@@ -36,13 +41,13 @@ SGXString SGXTimeStamp::getStringNoOffset() const {
 
 SGXString SGXTimeStamp::getStringCustomFormat(const SGXString &s) const {
     SGXString output = "";
-    (*output.data) = ("SG" + getQDateTime().addYears(-1965ll).toString(*s.data));
+    (*output.data) = ("SG" + temp_sgxTimeStampToQDateTime(*this).addYears(-1965ll).toString(*s.data));
     return output;
 }
 
 SGXString SGXTimeStamp::getStringNoOffsetCustomFormat(const SGXString &s) const {
     SGXString output = "";
-    (*output.data) = getQDateTime().toString(*s.data);
+    (*output.data) = temp_sgxTimeStampToQDateTime(*this).toString(*s.data);
     return output;
 }
 
@@ -96,12 +101,12 @@ double SGXTimeStamp::getMonthsFrom(SGXTimeStamp x) const {
     long long h = d + 1000ll;
     while(h - l > 1){
         const long long m = (l + h) / 2ll;
-        const long long t0 = SGXTimeStamp(x.getQDateTime().addMonths(static_cast<int>(m))).t;
+        const long long t0 = temp_qDateTimeToSGXTimeStamp(temp_sgxTimeStampToQDateTime(x).addMonths(static_cast<int>(m))).t;
         if(t0 < t){l = m;}
         else{h = m;}
     }
-    const double lt = static_cast<double>(SGXTimeStamp(x.getQDateTime().addMonths(static_cast<int>(l))).t);
-    const double ht = static_cast<double>(SGXTimeStamp(x.getQDateTime().addMonths(static_cast<int>(h))).t);
+    const double lt = static_cast<double>(temp_qDateTimeToSGXTimeStamp(temp_sgxTimeStampToQDateTime(x).addMonths(static_cast<int>(l))).t);
+    const double ht = static_cast<double>(temp_qDateTimeToSGXTimeStamp(temp_sgxTimeStampToQDateTime(x).addMonths(static_cast<int>(h))).t);
     return (static_cast<double>(l) + (static_cast<double>(t) - lt) / (ht - lt));
 }
 
@@ -111,12 +116,12 @@ double SGXTimeStamp::getYearsFrom(SGXTimeStamp x) const {
     long long h = d + 1000ll;
     while(h - l > 1){
         const long long m = (l + h) / 2ll;
-        const long long t0 = SGXTimeStamp(x.getQDateTime().addYears(static_cast<int>(m))).t;
+        const long long t0 = temp_qDateTimeToSGXTimeStamp(temp_sgxTimeStampToQDateTime(x).addYears(static_cast<int>(m))).t;
         if(t0 < t){l = m;}
         else{h = m;}
     }
-    const double lt = static_cast<double>(SGXTimeStamp(x.getQDateTime().addYears(static_cast<int>(l))).t);
-    const double ht = static_cast<double>(SGXTimeStamp(x.getQDateTime().addYears(static_cast<int>(h))).t);
+    const double lt = static_cast<double>(temp_qDateTimeToSGXTimeStamp(temp_sgxTimeStampToQDateTime(x).addYears(static_cast<int>(l))).t);
+    const double ht = static_cast<double>(temp_qDateTimeToSGXTimeStamp(temp_sgxTimeStampToQDateTime(x).addYears(static_cast<int>(h))).t);
     return (static_cast<double>(l) + (static_cast<double>(t) - lt) / (ht - lt));
 }
 
@@ -195,11 +200,11 @@ void SGXTimeStamp::addDays(long long x){
 }
 
 void SGXTimeStamp::addMonths(long long x){
-    (*this) = SGXTimeStamp(getQDateTime().addMonths(static_cast<int>(x)));
+    (*this) = temp_qDateTimeToSGXTimeStamp(temp_sgxTimeStampToQDateTime(*this).addMonths(static_cast<int>(x)));
 }
 
 void SGXTimeStamp::addYears(long long x){
-    (*this) = SGXTimeStamp(getQDateTime().addYears(static_cast<int>(x)));
+    (*this) = temp_qDateTimeToSGXTimeStamp(temp_sgxTimeStampToQDateTime(*this).addYears(static_cast<int>(x)));
 }
 
 void SGXTimeStamp::subtractSeconds(long long x){
@@ -227,43 +232,43 @@ void SGXTimeStamp::subtractYears(long long x){
 }
 
 SGXTimeStamp SGXTimeStamp::now(){
-    return SGXTimeStamp(QDateTime::currentDateTime(SGXTimeStamp::timezone));
+    return temp_qDateTimeToSGXTimeStamp(QDateTime::currentDateTime(temp_timezone));
 }
 
 int SGXTimeStamp::getDayOfWeek() const {
-    return getQDateTime().date().dayOfWeek();
+    return temp_sgxTimeStampToQDateTime(*this).date().dayOfWeek();
 }
 
 int SGXTimeStamp::getDayOfYear() const {
-    return getQDateTime().date().dayOfYear();
+    return temp_sgxTimeStampToQDateTime(*this).date().dayOfYear();
 }
 
 int SGXTimeStamp::getSecond() const {
-    return getQDateTime().time().second();
+    return temp_sgxTimeStampToQDateTime(*this).time().second();
 }
 
 int SGXTimeStamp::getMinute() const {
-    return getQDateTime().time().minute();
+    return temp_sgxTimeStampToQDateTime(*this).time().minute();
 }
 
 int SGXTimeStamp::getHour() const {
-    return getQDateTime().time().hour();
+    return temp_sgxTimeStampToQDateTime(*this).time().hour();
 }
 
 int SGXTimeStamp::getDay() const {
-    return getQDateTime().date().day();
+    return temp_sgxTimeStampToQDateTime(*this).date().day();
 }
 
 int SGXTimeStamp::getMonth() const {
-    return getQDateTime().date().month();
+    return temp_sgxTimeStampToQDateTime(*this).date().month();
 }
 
 int SGXTimeStamp::getYear() const {
-    return (getQDateTime().date().year() - 1965);
+    return (temp_sgxTimeStampToQDateTime(*this).date().year() - 1965);
 }
 
 int SGXTimeStamp::getYearNoOffset() const {
-    return getQDateTime().date().year();
+    return temp_sgxTimeStampToQDateTime(*this).date().year();
 }
 
 bool SGXTimeStamp::isNationalDay() const {

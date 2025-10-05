@@ -11,6 +11,27 @@
 #include "../primitives/sgxchar.h"
 #include "../containers/sglarray.h"
 #include "../containers/sglvector.h"
+#include <QDateTime>
+#include <QTimeZone>
+
+namespace{
+inline SGXString temp_stdStringToSGXString(const std::string& s){
+    SGXString o = "";
+    (*o.data) = QString::fromStdString(s);
+    return o;
+}
+
+std::string temp_sgxStringToStdString(const SGXString& s){
+    return (*s.data).toUtf8().toStdString();
+}
+
+QDateTime temp_zeroAsQDateTime = QDateTime(QDate(1965, 8, 9), QTime(10, 30, 0), QTimeZone("Asia/Singapore"));
+
+SGXTimeStamp temp_qDateTimeToSGXTimeStamp(const QDateTime& dt){
+    if(dt.isValid() == false || dt.isNull() == true){return SGXTimeStamp::zero;}
+    return SGXTimeStamp((temp_zeroAsQDateTime).secsTo(dt));
+}
+}
 
 SGXString SGXFileSystem::rootFilePath = "";
 SGXString SGXFileSystem::userDataFilePath = "";
@@ -23,13 +44,13 @@ SGXString SGXFileSystem::joinFilePaths(const SGXString &a, const SGXString &b){
 SGXString SGXFileSystem::encodeBase16(const SGXString &s){
     SGXString s0 = "";
     for(int i=0; i<s.length(); i++){
-        std::string thisChar = SGXString(s.at(i)).toStdString();
+        std::string thisChar = temp_sgxStringToStdString(SGXString(s.at(i)));
         if(thisChar.length() == 1){
             std::string stringToAdd = {'0', '0'};
             const uint8_t c = thisChar.at(0);
             stringToAdd.at(0) = static_cast<char>((c & 0xF0) / 0xF + 97);
             stringToAdd.at(1) = static_cast<char>((c & 0xF) + 97);
-            s0 += SGXString(stringToAdd);
+            s0 += temp_stdStringToSGXString(stringToAdd);
         }
         else if(thisChar.length() == 2){
             std::string stringToAdd = {'x', '0', '0', '0', '0'};
@@ -39,7 +60,7 @@ SGXString SGXFileSystem::encodeBase16(const SGXString &s){
             c = thisChar.at(1);
             stringToAdd.at(3) = static_cast<char>((c & 0xF0) / 0xF + 97);
             stringToAdd.at(4) = static_cast<char>((c & 0xF) + 97);
-            s0 += SGXString(stringToAdd);
+            s0 += temp_stdStringToSGXString(stringToAdd);
         }
         else if(thisChar.length() == 3){
             std::string stringToAdd = {'y', '0', '0', '0', '0', '0', '0'};
@@ -52,7 +73,7 @@ SGXString SGXFileSystem::encodeBase16(const SGXString &s){
             c = thisChar.at(2);
             stringToAdd.at(5) = static_cast<char>((c & 0xF0) / 0xF + 97);
             stringToAdd.at(6) = static_cast<char>((c & 0xF) + 97);
-            s0 += SGXString(stringToAdd);
+            s0 += temp_stdStringToSGXString(stringToAdd);
         }
         else{
             std::string stringToAdd = {'z', '0', '0', '0', '0', '0', '0', '0', '0'};
@@ -68,7 +89,7 @@ SGXString SGXFileSystem::encodeBase16(const SGXString &s){
             c = thisChar.at(3);
             stringToAdd.at(7) = static_cast<char>(((c & 0xF0) >> 4) + 97);
             stringToAdd.at(8) = static_cast<char>((c & 0xF) + 97);
-            s0 += SGXString(stringToAdd);
+            s0 += temp_stdStringToSGXString(stringToAdd);
         }
     }
     return s0;
@@ -76,7 +97,7 @@ SGXString SGXFileSystem::encodeBase16(const SGXString &s){
 
 SGXString SGXFileSystem::decodeBase16(const SGXString &str){
     int i = 0;
-    std::string s = str.toStdString();
+    std::string s = temp_sgxStringToStdString(str);
     SGXString s0 = "";
     while(i < static_cast<int>(s.length())){
         if(s.at(i) == 'x'){
@@ -87,7 +108,7 @@ SGXString SGXFileSystem::decodeBase16(const SGXString &str){
             a = s.at(i+3);
             b = s.at(i+4);
             stringToAdd.at(1) = static_cast<char>(((a - 97) << 4) | (b - 97));
-            s0 += SGXString(stringToAdd);
+            s0 += temp_stdStringToSGXString(stringToAdd);
             i += 5;
         }
         else if(s.at(i) == 'y'){
@@ -101,7 +122,7 @@ SGXString SGXFileSystem::decodeBase16(const SGXString &str){
             a = s.at(i+5);
             b = s.at(i+6);
             stringToAdd.at(2) = static_cast<char>(((a - 97) << 4) | (b - 97));
-            s0 += SGXString(stringToAdd);
+            s0 += temp_stdStringToSGXString(stringToAdd);
             i += 7;
         }
         else if(s.at(i) == 'z'){
@@ -118,7 +139,7 @@ SGXString SGXFileSystem::decodeBase16(const SGXString &str){
             a = s.at(i+7);
             b = s.at(i+8);
             stringToAdd.at(3) = static_cast<char>(((a - 97) << 4) | (b - 97));
-            s0 += SGXString(stringToAdd);
+            s0 += temp_stdStringToSGXString(stringToAdd);
             i += 9;
         }
         else{
@@ -126,7 +147,7 @@ SGXString SGXFileSystem::decodeBase16(const SGXString &str){
             const uint8_t a = s.at(i);
             const uint8_t b = s.at(i+1);
             stringToAdd.at(0) = static_cast<char>(((a - 97) << 4) | (b - 97));
-            s0 += SGXString(stringToAdd);
+            s0 += temp_stdStringToSGXString(stringToAdd);
             i += 2;
         }
     }
@@ -214,7 +235,7 @@ SGXString SGXFileSystem::getParentName(const SGXString &s){
 SGLArray<SGXString> SGXFileSystem::getFilesList(const SGXString &s){
     if(SGXFileSystem::folderExists(s) == false){return SGLArray<SGXString>(0);}
     const QFileInfoList f = QDir(*s.data).entryInfoList(QDir::Files | QDir::NoSymLinks | QDir::NoDotAndDotDot);
-    SGLArray<SGXString> list = SGLArray<SGXString>(f.length());
+    SGLArray<SGXString> list = SGLArray<SGXString>(static_cast<int>(f.length()));
     for(int i=0; i<f.length(); i++){
         const SGXString s0 = "";
         (*s0.data) = f.at(i).absoluteFilePath();
@@ -226,7 +247,7 @@ SGLArray<SGXString> SGXFileSystem::getFilesList(const SGXString &s){
 SGLArray<SGXString> SGXFileSystem::getFoldersList(const SGXString &s){
     if(SGXFileSystem::folderExists(s) == false){return SGLArray<SGXString>(0);}
     const QFileInfoList f = QDir(*s.data).entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot);
-    SGLArray<SGXString> list = SGLArray<SGXString>(f.length());
+    SGLArray<SGXString> list = SGLArray<SGXString>(static_cast<int>(f.length()));
     for(int i=0; i<f.length(); i++){
         const SGXString s0 = "";
         (*s0.data) = f.at(i).absoluteFilePath();
@@ -369,22 +390,22 @@ long long SGXFileSystem::getFolderSize(const SGXString &s){
 
 SGXTimeStamp SGXFileSystem::getFileCreationTime(const SGXString &s){
     if(SGXFileSystem::fileExists(s) == false){return SGXTimeStamp::zero;}
-    return SGXTimeStamp(QFileInfo(*s.data).birthTime());
+    return temp_qDateTimeToSGXTimeStamp(QFileInfo(*s.data).birthTime());
 }
 
 SGXTimeStamp SGXFileSystem::getFolderCreationTime(const SGXString &s){
     if(SGXFileSystem::folderExists(s) == false){return SGXTimeStamp::zero;}
-    return SGXTimeStamp(QFileInfo(*s.data).birthTime());
+    return temp_qDateTimeToSGXTimeStamp(QFileInfo(*s.data).birthTime());
 }
 
 SGXTimeStamp SGXFileSystem::getFileLastEditTime(const SGXString &s){
     if(SGXFileSystem::fileExists(s) == false){return SGXTimeStamp::zero;}
-    return SGXTimeStamp(QFileInfo(*s.data).lastModified());
+    return temp_qDateTimeToSGXTimeStamp(QFileInfo(*s.data).lastModified());
 }
 
 SGXTimeStamp SGXFileSystem::getFolderLastEditTime(const SGXString &s){
     if(SGXFileSystem::folderExists(s) == false){return SGXTimeStamp::zero;}
-    return SGXTimeStamp(QFileInfo(*s.data).lastModified());
+    return temp_qDateTimeToSGXTimeStamp(QFileInfo(*s.data).lastModified());
 }
 
 SGXString SGXFileSystem::getFolderName(const SGXString &s){

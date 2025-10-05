@@ -1,6 +1,5 @@
 #include "sgxvector2.h"
 #include <cmath>
-#include <algorithm>
 #include <numbers>
 #include "sgxstring.h"
 #include "../containers/sglhash.h"
@@ -245,7 +244,8 @@ float SGXVector2::getDistanceToLine(SGXVector2 a, SGXVector2 b) const {
 float SGXVector2::getDistanceToSegment(SGXVector2 a, SGXVector2 b) const {
     const SGXVector2 v = getNearestPointOnLine(a, b);
     if(temp_isBetween(v.x, a.x, b.x) || temp_isBetween(v.y, a.y, b.y)){return getDistance(v);}
-    return std::min(getDistance(a), getDistance(b));
+    if(getDistance(a) < getDistance(b)){return getDistance(a);}
+    return getDistance(b);
 }
 
 float SGXVector2::getDistanceToCircle(float a, float b, float r) const {

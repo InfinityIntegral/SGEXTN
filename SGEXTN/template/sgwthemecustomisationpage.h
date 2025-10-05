@@ -1,7 +1,7 @@
 #ifndef SGWTHEMECUSTOMISATIONPAGE_H
 #define SGWTHEMECUSTOMISATIONPAGE_H
 
-#include <array>
+#include "../containers/sglarray.h"
 #include "../primitives/sgxcolourrgba.h"
 #include "../primitives/sgxstring.h"
 
@@ -28,9 +28,9 @@ public:
     static SGWButton* confirmButton;
     static SGWBackground* detailsScroll;
     static SGWLabel* detailsInfo;
-    static std::array<SGWBlankWidget*, 9> coloursDisplay;
+    static SGLArray<SGWBlankWidget*> coloursDisplay;
     static SGWBackground* initialiseDetailsPage();
-    static std::array<SGXColourRGBA, 9> themeColours;
+    static SGLArray<SGXColourRGBA> themeColours;
     static SGXString infoString;
     static void updateElements();
     static bool isUsingCustomLight;
@@ -43,7 +43,7 @@ public:
     static void updateCustomDark(SGWColourPickerWidget* selector);
     static bool isUsingCustomAny;
     static SGWLabel* customAnyLabel;
-    static std::array<SGWColourPickerWidget*, 9> customAnyColourPicker;
+    static SGLArray<SGWColourPickerWidget*> customAnyColourPicker;
     static void updateCustomAny(SGWColourPickerWidget* selector);
     static void cancelChanges(SGWButton* /*unused*/);
     static void confirmChanges(SGWButton* /*unused*/);

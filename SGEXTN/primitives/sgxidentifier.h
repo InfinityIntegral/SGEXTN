@@ -1,13 +1,15 @@
 #ifndef SGXIDENTIFIER_H
 #define SGXIDENTIFIER_H
 
-#include <QSet>
+#include "../containers/sglunorderedset.h"
 #include "sgxstring.h"
+#include "../containers/sglequalsto.h"
+#include "../containers/sglhash.h"
 
 class SGXIdentifier
 {
 public:
-    static QSet<SGXIdentifier> identifiersList;
+    static SGLUnorderedSet<SGXIdentifier, SGLEqualsTo<SGXIdentifier>, SGLHash<SGXIdentifier>> identifiersList;
     unsigned int a;
     unsigned int b;
     unsigned int c;
@@ -28,9 +30,5 @@ public:
     [[nodiscard]] int hash() const;
     [[nodiscard]] SGXString getStringForPrinting() const;
 };
-
-inline unsigned int qHash(SGXIdentifier x, unsigned int seed = 0){
-    return (x.a ^ x.b ^ x.c ^ x.d ^ seed);
-}
 
 #endif // SGXIDENTIFIER_H

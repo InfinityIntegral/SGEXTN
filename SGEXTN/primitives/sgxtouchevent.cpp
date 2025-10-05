@@ -1,9 +1,8 @@
 #include "sgxtouchevent.h"
-#include <algorithm>
-#include <array>
+#include "../containers/sglarray.h"
 #include "../containers/sglhash.h"
 
-SGXTouchEvent::SGXTouchEvent(int n, const std::array<float, 11> &data){
+SGXTouchEvent::SGXTouchEvent(int n, const SGLArray<float> &data){
     // x, y, px, py, sx, sy, vx, vy, rx, ry, f
     id = n;
     x = data.at(0);
@@ -19,7 +18,8 @@ SGXTouchEvent::SGXTouchEvent(int n, const std::array<float, 11> &data){
     force = data.at(10);
     velocityX = data.at(6);
     velocityY = data.at(7);
-    radius = std::max(data.at(8), data.at(9)) / 2.0f;
+    if(data.at(8) >= data.at(9)){radius = data.at(8) / 2.0f;}
+    else{radius = data.at(9) / 2.0f;}
 }
 
 SGXTouchEvent::SGXTouchEvent(int n){

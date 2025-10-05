@@ -1,18 +1,20 @@
 #include "sgwwidget.h"
 #include "../enums/sgwtype.h"
-#include <QSet>
-#include <qcontainerfwd.h>
 #include <QQuickItem>
 #include "../instantiable/sgwscrollview.h"
 #include "../../quickui/sgxquickinterface.h"
 #include "../instantiable/sgwsequentialscrollview.h"
+#include "../../containers/sglarray.h"
+#include "../../containers/sglunorderedset.h"
+#include "../../containers/sglequalsto.h"
+#include "../../containers/sglhash.h"
 
 SGWWidget* SGWWidget::rootWidget = nullptr;
 SGWWidget* SGWWidget::parentWidget = nullptr;
 
 SGWWidget::SGWWidget(SGWWidget* parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0){
     (*this).type = SGWType::Undefined;
-    (*this).children = QSet<SGWWidget*>();
+    (*this).children = SGLUnorderedSet<SGWWidget*, SGLEqualsTo<SGWWidget*>, SGLHash<SGWWidget*>>();
     (*this).topObject = nullptr;
     (*this).bottomObject = nullptr;
     (*this).x1 = x1;
@@ -33,9 +35,9 @@ SGWWidget::SGWWidget(SGWWidget* parent, float x1, float x0, float y1, float y0, 
 }
 
 SGWWidget::~SGWWidget(){
-    for(QSet<SGWWidget*>::const_iterator i = children.begin(); i != children.end(); i++){delete (*i);}
+    for(SGLUnorderedSet<SGWWidget*, SGLEqualsTo<SGWWidget*>, SGLHash<SGWWidget*>>::ConstIterator i = children.constBegin(); i != children.constEnd(); i++){delete (*i);}
     (*topObject).deleteLater();
-    if(parent != nullptr){(*parent).children.remove(this);}
+    if(parent != nullptr){(*parent).children.erase(this);}
 }
 
 void SGWWidget::initialiseQuickItemReferences(QQuickItem *thisItem){
@@ -53,10 +55,12 @@ SGWWidget* SGWWidget::getParent() const {
     return parent;
 }
 
-QVector<SGWWidget*> SGWWidget::getChildren() const {
-    QVector<SGWWidget*> v = QVector<SGWWidget*>();
-    for(QSet<SGWWidget*>::const_iterator i = children.begin(); i != children.end(); i++){
-        v.push_back(*i);
+SGLArray<SGWWidget*> SGWWidget::getChildren() const {
+    SGLArray<SGWWidget*> v = SGLArray<SGWWidget*>(children.length());
+    int j = 0;
+    for(SGLUnorderedSet<SGWWidget*, SGLEqualsTo<SGWWidget*>, SGLHash<SGWWidget*>>::ConstIterator i = children.constBegin(); i != children.constEnd(); i++){
+        v.at(j) = (*i);
+        j++;
     }
     return v;
 }
@@ -167,9 +171,9 @@ float SGWWidget::getParentH0() const {
 
 void SGWWidget::updateSizeReferences(){ // NOLINT(misc-no-recursion)
     updateParentSize();
-    const QVector<SGWWidget*> c = getChildren();
+    const SGLArray<SGWWidget*> c = getChildren();
     for(int i=0; i<c.length(); i++){
-        (*c.at(i)).updateParentSize();
+        (*c.at(i)).updateParentSize(); // NOLINT(clang-analyzer-core.CallAndMessage)
         (*c.at(i)).updateSizeReferences();
     }
 }

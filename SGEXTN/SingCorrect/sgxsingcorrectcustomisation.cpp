@@ -38,7 +38,7 @@ void SGXSingCorrectCustomisation::syncFileData(){
         fileWriter.writeBool(SGXSingCorrectCustomisation::moduleEnabled);
         fileWriter.writeString(SGXSingCorrectCore::correctionPrefix);
         if(SGXSingCorrectCustomisation::database != nullptr){
-            fileWriter.writeInt(static_cast<int>((*SGXSingCorrectCustomisation::database).length()));
+            fileWriter.writeInt((*SGXSingCorrectCustomisation::database).length());
             for(SGLUnorderedMap<SGXString, SGXChar, SGLEqualsTo<SGXString>, SGLHash<SGXString>>::ConstIterator i = (*SGXSingCorrectCustomisation::database).constBegin(); i != (*SGXSingCorrectCustomisation::database).constEnd(); i++){
                 fileWriter.writeString(i.key());
                 fileWriter.writeSGEXTNChar(i.value());

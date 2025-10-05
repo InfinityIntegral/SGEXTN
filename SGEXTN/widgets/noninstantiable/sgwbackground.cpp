@@ -38,13 +38,13 @@ void SGWBackground::setColour(SGXColourRGBA colour){
     (*this).usingTheme = false;
     (*this).colour = colour;
     (*(*this).topObject).setProperty("utc", false);
-    (*(*this).topObject).setProperty("bgc", colour.getQColour());
+    (*(*this).topObject).setProperty("bgc", QColor(colour.getRed(), colour.getGreen(), colour.getBlue(), colour.getTransparency()));
 }
 
 void SGWBackground::syncQuickProperties(){
     (*topObject).setProperty("utc", usingTheme);
     (*topObject).setProperty("bg", themeColour);
-    (*topObject).setProperty("bgc", colour.getQColour());
+    (*topObject).setProperty("bgc", QColor(colour.getRed(), colour.getGreen(), colour.getBlue(), colour.getTransparency()));
 }
 
 void SGWBackground::enable(SGWBackground *&thisPointer, SGWBackground *(*initFunction)(), void (*resetFunction)()){

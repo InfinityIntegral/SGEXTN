@@ -32,8 +32,4 @@ public:
     [[nodiscard]] SGXColourRGBA toRGBA() const;
 };
 
-inline unsigned int qHash(SGXColourHSLA x, unsigned int seed = 0){
-    return (seed ^ static_cast<unsigned int>(x.h) ^ static_cast<unsigned int>(x.s) ^ static_cast<unsigned int>(x.l) ^ static_cast<unsigned int>(x.a));
-}
-
 #endif // SGXCOLOURHSLA_H

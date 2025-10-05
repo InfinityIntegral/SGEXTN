@@ -63,8 +63,4 @@ public:
     [[nodiscard]] float crossProduct(SGXVector2 x) const;
 };
 
-inline unsigned int qHash(SGXVector2 x, unsigned int seed = 0){
-    return (static_cast<unsigned int>(x.x) ^ static_cast<unsigned int>(x.y) ^ seed);
-}
-
 #endif // SGXVECTOR2_H

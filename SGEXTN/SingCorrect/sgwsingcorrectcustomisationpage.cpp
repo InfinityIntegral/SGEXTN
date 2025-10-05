@@ -21,6 +21,7 @@
 #include "../widgets/noninstantiable/sgwlabel.h"
 #include "../notifications/sgwnotify.h"
 #include "../primitives/sgxchar.h"
+#include "../containers/sglarray.h"
 
 SGWBackground* SGWSingCorrectCustomisationPage::instance = nullptr;
 SGWButton* SGWSingCorrectCustomisationPage::enableButton = nullptr;
@@ -186,7 +187,7 @@ void SGWSingCorrectCustomisationPage::addCustomCommand(SGWButton */*unused*/){
 void SGWSingCorrectCustomisationPage::refreshList(){
     delete SGWSingCorrectCustomisationPage::buttonsList;
     SGWSingCorrectCustomisationPage::buttonsList = new SGLUnorderedMap<SGWButton*, SGXString, SGLEqualsTo<SGWButton*>, SGLHash<SGWButton*>>();
-    const QVector<SGWWidget*> c = (*SGWSingCorrectCustomisationPage::listParent).getChildren();
+    const SGLArray<SGWWidget*> c = (*SGWSingCorrectCustomisationPage::listParent).getChildren();
     for(int i=0; i<c.length(); i++){
         delete c.at(i);
     }

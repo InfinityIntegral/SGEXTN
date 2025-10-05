@@ -2,9 +2,7 @@
 #define SGXSTRING_H
 
 #include "sgxchar.h"
-#include <vector>
-#include <string>
-#include <functional>
+#include "../containers/sglarray.h"
 
 class QString;
 class SGXString
@@ -20,7 +18,6 @@ public:
     SGXString(SGXChar c);
     SGXString(char c);
     SGXString(const char* cString);
-    SGXString(const std::string& s);
     [[nodiscard]] bool operator==(const SGXString& x) const;
     [[nodiscard]] bool operator!=(const SGXString& x) const;
     [[nodiscard]] bool operator<(const SGXString& x) const;
@@ -93,10 +90,9 @@ public:
     static SGXString repeatChar(SGXChar c, int count);
     void removeLeadingTrailingWhitespace() const;
     void cleanWhitespace() const;
-    [[nodiscard]] std::vector<SGXString> split() const;
-    [[nodiscard]] std::vector<SGXString> splitCustomSeparator(SGXChar separator) const;
-    [[nodiscard]] std::vector<SGXString> splitCustomSeparator(const SGXString& separator) const;
-    [[nodiscard]] std::string toStdString() const;
+    [[nodiscard]] SGLArray<SGXString> split() const;
+    [[nodiscard]] SGLArray<SGXString> splitCustomSeparator(SGXChar separator) const;
+    [[nodiscard]] SGLArray<SGXString> splitCustomSeparator(const SGXString& separator) const;
     [[nodiscard]] bool isDigit() const;
     [[nodiscard]] bool isDigitBase16() const;
     [[nodiscard]] bool isEnglishLowercase() const;
@@ -110,9 +106,5 @@ public:
     void toUpperLanguageAware() const;
     void toLowerLanguageAware() const;
 };
-
-inline unsigned int qHash(const SGXString& x, unsigned int seed = 0){
-    return (seed ^ static_cast<unsigned int>(std::hash<std::string>{}(x.toStdString())));
-}
 
 #endif // SGXSTRING_H

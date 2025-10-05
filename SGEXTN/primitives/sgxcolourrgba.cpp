@@ -1,6 +1,5 @@
 #include "sgxcolourrgba.h"
 #include <cmath>
-#include <QColor>
 #include "sgxstring.h"
 #include "../containers/sglhash.h"
 
@@ -55,11 +54,6 @@ SGXColourRGBA::SGXColourRGBA(float r, float g, float b){
     (*this).x = (temp_floatToUnsignedInt(r) << 24u) | (temp_floatToUnsignedInt(g) << 16u) | (temp_floatToUnsignedInt(b) << 8u) | (0xFFu);
 }
 
-SGXColourRGBA::SGXColourRGBA(QColor x){
-    (*this).x = 0u;
-    (*this) = SGXColourRGBA(x.red(), x.green(), x.blue(), x.alpha());
-}
-
 int SGXColourRGBA::getRed() const {
     return static_cast<int>((*this).x >> 24u);
 }
@@ -70,10 +64,6 @@ int SGXColourRGBA::getGreen() const {
 
 int SGXColourRGBA::getBlue() const {
     return static_cast<int>(0xFFu & ((*this).x >> 8u));
-}
-
-QColor SGXColourRGBA::getQColour() const {
-    return QColor(getRed(), getGreen(), getBlue(), getTransparency());
 }
 
 int SGXColourRGBA::getTransparency() const {

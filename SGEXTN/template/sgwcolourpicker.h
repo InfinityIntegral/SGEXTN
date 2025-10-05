@@ -3,8 +3,8 @@
 
 #include "../primitives/sgxcolourrgba.h"
 #include "../primitives/sgxcolourhsla.h"
-#include <array>
 
+template <typename T> class SGLArray;
 class SGWBackground;
 class SGXRenderColourPickerHueChoiceSGWidget;
 class SGXRenderColourPickerSaturationChoiceSGWidget;
@@ -31,16 +31,16 @@ public:
     static void updateUsingColourHSLA();
     static void updateInputs();
     static SGWTouchReceiver* hueTouchReceiver;
-    static void updateHue(SGWTouchReceiver* /*unused*/, const std::array<SGXTouchEvent, 5>& t);
+    static void updateHue(SGWTouchReceiver* /*unused*/, const SGLArray<SGXTouchEvent>& t);
     static SGXRenderColourPickerSaturationChoiceSGWidget* saturationChoice;
     static SGWTouchReceiver* saturationTouchReceiver;
-    static void updateSaturation(SGWTouchReceiver* /*unused*/, const std::array<SGXTouchEvent, 5>& t);
+    static void updateSaturation(SGWTouchReceiver* /*unused*/, const SGLArray<SGXTouchEvent>& t);
     static SGXRenderColourPickerLightnessChoiceSGWidget* lightnessChoice;
     static SGWTouchReceiver* lightnessTouchReceiver;
-    static void updateLightness(SGWTouchReceiver* /*unused*/, const std::array<SGXTouchEvent, 5>& t);
+    static void updateLightness(SGWTouchReceiver* /*unused*/, const SGLArray<SGXTouchEvent>& t);
     static SGXRenderColourPickerTransparencyChoiceSGWidget* transparencyChoice;
     static SGWTouchReceiver* transparencyTouchReceiver;
-    static void updateTransparency(SGWTouchReceiver* /*unused*/, const std::array<SGXTouchEvent, 5>& t);
+    static void updateTransparency(SGWTouchReceiver* /*unused*/, const SGLArray<SGXTouchEvent>& t);
     static SGWInput* redInput;
     static void updateRed(SGWInput* /*unused*/);
     static SGWInput* greenInput;

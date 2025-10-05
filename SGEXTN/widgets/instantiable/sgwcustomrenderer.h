@@ -4,13 +4,15 @@
 #include "../noninstantiable/sgwwidget.h"
 
 class SGXString;
-template <typename T1, typename T2> class QHash;
+template <typename K, typename V, typename EqualityCheck, typename HashFunction> class SGLUnorderedMap;
+template <typename T> class SGLEqualsTo;
+template <typename T> class SGLHash;
 class QQmlComponent;
 class SGWCustomRenderer : public SGWWidget
 {
 public:
     SGWCustomRenderer(SGWWidget* parent, const SGXString& qmlCodeLocation, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0);
-    static QHash<SGXString, QQmlComponent*>* componentDatabase;
+    static SGLUnorderedMap<SGXString, QQmlComponent*, SGLEqualsTo<SGXString>, SGLHash<SGXString>>* componentDatabase;
     void redraw();
 };
 

@@ -7,6 +7,26 @@
 #include <QQuickItem>
 #include "../../quickui/sgwwidgetquickinterface.h"
 #include "../../bypassquickui/sgxthemecolours.h"
+#include <QColor>
+#include <qnamespace.h>
+
+namespace {
+inline QColor temp_getQColour(SGXColourRGBA x){
+    return QColor(x.getRed(), x.getGreen(), x.getBlue(), x.getTransparency());
+}
+
+inline Qt::AlignmentFlag temp_getQtFlag(SGWHorizontalAlignment::Flag x){
+    if(x == SGWHorizontalAlignment::Left){return Qt::AlignLeft;}
+    if(x == SGWHorizontalAlignment::Right){return Qt::AlignRight;}
+    return Qt::AlignHCenter;
+}
+
+inline Qt::AlignmentFlag temp_getQtFlag(SGWVerticalAlignment::Flag x){
+    if(x == SGWVerticalAlignment::Top){return Qt::AlignTop;}
+    if(x == SGWVerticalAlignment::Bottom){return Qt::AlignBottom;}
+    return Qt::AlignVCenter;
+}
+}
 
 SGWButton::SGWButton(SGWWidget *parent, const SGXString &s, void (*attachedFunction)(SGWButton*), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float f1, float f0, const SGXString& font) : SGWWidget(parent, x1, x0, y1, y0, w1, w0, h1, h0){
     (*this).f1 = f1;
@@ -52,34 +72,34 @@ void SGWButton::syncQuickProperties(){
     (*topObject).setProperty("f0", f0);
     (*topObject).setProperty("s", (*text.data));
     (*topObject).setProperty("f", (*font.data));
-    (*topObject).setProperty("ha", SGWHorizontalAlignment::getQtFlag(horizontalAlignment));
-    (*topObject).setProperty("va", SGWVerticalAlignment::getQtFlag(verticalAlignment));
+    (*topObject).setProperty("ha", temp_getQtFlag(horizontalAlignment));
+    (*topObject).setProperty("va", temp_getQtFlag(verticalAlignment));
     (*topObject).setProperty("sel", selected);
     (*topObject).setProperty("utc", usingTheme);
     (*topObject).setProperty("bg", backgroundThemeColour);
-    (*topObject).setProperty("bgc", backgroundColour.getQColour());
+    (*topObject).setProperty("bgc", temp_getQColour(backgroundColour));
     (*topObject).setProperty("fg", foregroundThemeColour);
-    (*topObject).setProperty("fgc", foregroundColour.getQColour());
+    (*topObject).setProperty("fgc", temp_getQColour(foregroundColour));
     (*topObject).setProperty("bgh", backgroundHoverThemeColour);
-    (*topObject).setProperty("bghc", backgroundHoverColour.getQColour());
+    (*topObject).setProperty("bghc", temp_getQColour(backgroundHoverColour));
     (*topObject).setProperty("fgh", foregroundHoverThemeColour);
-    (*topObject).setProperty("fghc", foregroundHoverColour.getQColour());
+    (*topObject).setProperty("fghc", temp_getQColour(foregroundHoverColour));
     (*topObject).setProperty("bgf", backgroundFocusThemeColour);
-    (*topObject).setProperty("bgfc", backgroundFocusColour.getQColour());
+    (*topObject).setProperty("bgfc", temp_getQColour(backgroundFocusColour));
     (*topObject).setProperty("fgf", foregroundFocusThemeColour);
-    (*topObject).setProperty("fgfc", foregroundFocusColour.getQColour());
+    (*topObject).setProperty("fgfc", temp_getQColour(foregroundFocusColour));
     (*topObject).setProperty("bgs", backgroundSelectedThemeColour);
-    (*topObject).setProperty("bgsc", backgroundSelectedColour.getQColour());
+    (*topObject).setProperty("bgsc", temp_getQColour(backgroundSelectedColour));
     (*topObject).setProperty("fgs", foregroundSelectedThemeColour);
-    (*topObject).setProperty("fgsc", foregroundSelectedColour.getQColour());
+    (*topObject).setProperty("fgsc", temp_getQColour(foregroundSelectedColour));
     (*topObject).setProperty("bghs", backgroundHoverSelectedThemeColour);
-    (*topObject).setProperty("bghsc", backgroundHoverSelectedColour.getQColour());
+    (*topObject).setProperty("bghsc", temp_getQColour(backgroundHoverSelectedColour));
     (*topObject).setProperty("fghs", foregroundHoverSelectedThemeColour);
-    (*topObject).setProperty("fghsc", foregroundHoverSelectedColour.getQColour());
+    (*topObject).setProperty("fghsc", temp_getQColour(foregroundHoverSelectedColour));
     (*topObject).setProperty("bgfs", backgroundFocusSelectedThemeColour);
-    (*topObject).setProperty("bgfsc", backgroundFocusSelectedColour.getQColour());
+    (*topObject).setProperty("bgfsc", temp_getQColour(backgroundFocusSelectedColour));
     (*topObject).setProperty("fgfs", foregroundFocusSelectedThemeColour);
-    (*topObject).setProperty("fgfsc", foregroundFocusSelectedColour.getQColour());
+    (*topObject).setProperty("fgfsc", temp_getQColour(foregroundFocusSelectedColour));
     quickInterface = new SGWWidgetQuickInterface(this);
 }
 
@@ -159,7 +179,7 @@ SGWHorizontalAlignment::Flag SGWButton::getHorizontalAlignment() const {
 
 void SGWButton::setHorizontalAlignment(SGWHorizontalAlignment::Flag alignment){
     (*this).horizontalAlignment = alignment;
-    (*(*this).topObject).setProperty("ha", SGWHorizontalAlignment::getQtFlag(horizontalAlignment));
+    (*(*this).topObject).setProperty("ha", temp_getQtFlag(horizontalAlignment));
 }
 
 SGWVerticalAlignment::Flag SGWButton::getVerticalAlignment() const {
@@ -168,7 +188,7 @@ SGWVerticalAlignment::Flag SGWButton::getVerticalAlignment() const {
 
 void SGWButton::setVerticalAlignment(SGWVerticalAlignment::Flag alignment){
     (*this).verticalAlignment = alignment;
-    (*(*this).topObject).setProperty("va", SGWVerticalAlignment::getQtFlag(verticalAlignment));
+    (*(*this).topObject).setProperty("va", temp_getQtFlag(verticalAlignment));
 }
 
 bool SGWButton::getSelected() const {
@@ -230,7 +250,7 @@ SGXColourRGBA SGWButton::getBackgroundColour(bool *isUsing) const {
 void SGWButton::setBackgroundColour(SGXColourRGBA colour){
     (*this).backgroundColour = colour;
     (*this).usingTheme = false;
-    (*(*this).topObject).setProperty("bgc", (*this).backgroundColour.getQColour());
+    (*(*this).topObject).setProperty("bgc", temp_getQColour((*this).backgroundColour));
     (*(*this).topObject).setProperty("utc", (*this).usingTheme);
 }
 
@@ -260,7 +280,7 @@ SGXColourRGBA SGWButton::getForegroundColour(bool *isUsing) const {
 void SGWButton::setForegroundColour(SGXColourRGBA colour){
     (*this).foregroundColour = colour;
     (*this).usingTheme = false;
-    (*(*this).topObject).setProperty("fgc", (*this).foregroundColour.getQColour());
+    (*(*this).topObject).setProperty("fgc", temp_getQColour((*this).foregroundColour));
     (*(*this).topObject).setProperty("utc", (*this).usingTheme);
 }
 
@@ -290,7 +310,7 @@ SGXColourRGBA SGWButton::getBackgroundHoverColour(bool *isUsing) const {
 void SGWButton::setBackgroundHoverColour(SGXColourRGBA colour){
     (*this).backgroundHoverColour = colour;
     (*this).usingTheme = false;
-    (*(*this).topObject).setProperty("bghc", (*this).backgroundHoverColour.getQColour());
+    (*(*this).topObject).setProperty("bghc", temp_getQColour((*this).backgroundHoverColour));
     (*(*this).topObject).setProperty("utc", (*this).usingTheme);
 }
 
@@ -320,7 +340,7 @@ SGXColourRGBA SGWButton::getForegroundHoverColour(bool *isUsing) const {
 void SGWButton::setForegroundHoverColour(SGXColourRGBA colour){
     (*this).foregroundHoverColour = colour;
     (*this).usingTheme = false;
-    (*(*this).topObject).setProperty("fghc", (*this).foregroundHoverColour.getQColour());
+    (*(*this).topObject).setProperty("fghc", temp_getQColour((*this).foregroundHoverColour));
     (*(*this).topObject).setProperty("utc", (*this).usingTheme);
 }
 
@@ -350,7 +370,7 @@ SGXColourRGBA SGWButton::getBackgroundFocusColour(bool *isUsing) const {
 void SGWButton::setBackgroundFocusColour(SGXColourRGBA colour){
     (*this).backgroundFocusColour = colour;
     (*this).usingTheme = false;
-    (*(*this).topObject).setProperty("bgfc", (*this).backgroundFocusColour.getQColour());
+    (*(*this).topObject).setProperty("bgfc", temp_getQColour((*this).backgroundFocusColour));
     (*(*this).topObject).setProperty("utc", (*this).usingTheme);
 }
 
@@ -380,7 +400,7 @@ SGXColourRGBA SGWButton::getForegroundFocusColour(bool *isUsing) const {
 void SGWButton::setForegroundFocusColour(SGXColourRGBA colour){
     (*this).foregroundFocusColour = colour;
     (*this).usingTheme = false;
-    (*(*this).topObject).setProperty("fgfc", (*this).foregroundFocusColour.getQColour());
+    (*(*this).topObject).setProperty("fgfc", temp_getQColour((*this).foregroundFocusColour));
     (*(*this).topObject).setProperty("utc", (*this).usingTheme);
 }
 
@@ -410,7 +430,7 @@ SGXColourRGBA SGWButton::getBackgroundSelectedColour(bool *isUsing) const {
 void SGWButton::setBackgroundSelectedColour(SGXColourRGBA colour){
     (*this).backgroundSelectedColour = colour;
     (*this).usingTheme = false;
-    (*(*this).topObject).setProperty("bgsc", (*this).backgroundSelectedColour.getQColour());
+    (*(*this).topObject).setProperty("bgsc", temp_getQColour((*this).backgroundSelectedColour));
     (*(*this).topObject).setProperty("utc", (*this).usingTheme);
 }
 
@@ -440,7 +460,7 @@ SGXColourRGBA SGWButton::getForegroundSelectedColour(bool *isUsing) const {
 void SGWButton::setForegroundSelectedColour(SGXColourRGBA colour){
     (*this).foregroundSelectedColour = colour;
     (*this).usingTheme = false;
-    (*(*this).topObject).setProperty("fgsc", (*this).foregroundSelectedColour.getQColour());
+    (*(*this).topObject).setProperty("fgsc", temp_getQColour((*this).foregroundSelectedColour));
     (*(*this).topObject).setProperty("utc", (*this).usingTheme);
 }
 
@@ -470,7 +490,7 @@ SGXColourRGBA SGWButton::getBackgroundHoverSelectedColour(bool *isUsing) const {
 void SGWButton::setBackgroundHoverSelectedColour(SGXColourRGBA colour){
     (*this).backgroundHoverSelectedColour = colour;
     (*this).usingTheme = false;
-    (*(*this).topObject).setProperty("bghsc", (*this).backgroundHoverSelectedColour.getQColour());
+    (*(*this).topObject).setProperty("bghsc", temp_getQColour((*this).backgroundHoverSelectedColour));
     (*(*this).topObject).setProperty("utc", (*this).usingTheme);
 }
 
@@ -500,7 +520,7 @@ SGXColourRGBA SGWButton::getForegroundHoverSelectedColour(bool *isUsing) const {
 void SGWButton::setForegroundHoverSelectedColour(SGXColourRGBA colour){
     (*this).foregroundHoverSelectedColour = colour;
     (*this).usingTheme = false;
-    (*(*this).topObject).setProperty("fghsc", (*this).foregroundHoverSelectedColour.getQColour());
+    (*(*this).topObject).setProperty("fghsc", temp_getQColour((*this).foregroundHoverSelectedColour));
     (*(*this).topObject).setProperty("utc", (*this).usingTheme);
 }
 
@@ -530,7 +550,7 @@ SGXColourRGBA SGWButton::getBackgroundFocusSelectedColour(bool *isUsing) const {
 void SGWButton::setBackgroundFocusSelectedColour(SGXColourRGBA colour){
     (*this).backgroundFocusSelectedColour = colour;
     (*this).usingTheme = false;
-    (*(*this).topObject).setProperty("bgfsc", (*this).backgroundFocusSelectedColour.getQColour());
+    (*(*this).topObject).setProperty("bgfsc", temp_getQColour((*this).backgroundFocusSelectedColour));
     (*(*this).topObject).setProperty("utc", (*this).usingTheme);
 }
 
@@ -560,7 +580,7 @@ SGXColourRGBA SGWButton::getForegroundFocusSelectedColour(bool *isUsing) const {
 void SGWButton::setForegroundFocusSelectedColour(SGXColourRGBA colour){
     (*this).foregroundFocusSelectedColour = colour;
     (*this).usingTheme = false;
-    (*(*this).topObject).setProperty("fgfsc", (*this).foregroundFocusSelectedColour.getQColour());
+    (*(*this).topObject).setProperty("fgfsc", temp_getQColour((*this).foregroundFocusSelectedColour));
     (*(*this).topObject).setProperty("utc", (*this).usingTheme);
 }
 

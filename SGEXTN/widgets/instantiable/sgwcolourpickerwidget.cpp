@@ -8,6 +8,13 @@
 #include "../../primitives/sgxstring.h"
 #include "../../quickui/sgwwidgetquickinterface.h"
 #include "../../bypassquickui/sgxthemecolours.h"
+#include <QColor>
+
+namespace {
+inline QColor temp_getQColour(SGXColourRGBA x){
+    return QColor(x.getRed(), x.getGreen(), x.getBlue(), x.getTransparency());
+}
+}
 
 SGWColourPickerWidget::SGWColourPickerWidget(SGWWidget *parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, SGXColourRGBA defaultColour) : SGWWidget(parent, x1, x0, y1, y0, w1, w0, h1, h0){
     (*this).colour = defaultColour;
@@ -35,20 +42,20 @@ SGXColourRGBA SGWColourPickerWidget::getColour() const {
 
 void SGWColourPickerWidget::setColour(SGXColourRGBA colour){
     (*this).colour = colour;
-    (*(*this).topObject).setProperty("c", (*this).colour.getQColour());
+    (*(*this).topObject).setProperty("c", temp_getQColour((*this).colour));
 }
 
 void SGWColourPickerWidget::syncQuickProperties(){
-    (*topObject).setProperty("c", colour.getQColour());
+    (*topObject).setProperty("c", temp_getQColour(colour));
     (*topObject).setProperty("e1", e1);
     (*topObject).setProperty("e0", e0);
     (*topObject).setProperty("utc", usingTheme);
     (*topObject).setProperty("bg", backgroundThemeColour);
-    (*topObject).setProperty("bgc", backgroundColour.getQColour());
+    (*topObject).setProperty("bgc", temp_getQColour(backgroundColour));
     (*topObject).setProperty("bgh", backgroundHoverThemeColour);
-    (*topObject).setProperty("bghc", backgroundHoverColour.getQColour());
+    (*topObject).setProperty("bghc", temp_getQColour(backgroundHoverColour));
     (*topObject).setProperty("bgf", backgroundFocusThemeColour);
-    (*topObject).setProperty("bgfc", backgroundFocusColour.getQColour());
+    (*topObject).setProperty("bgfc", temp_getQColour(backgroundFocusColour));
 }
 
 void SGWColourPickerWidget::eventReceived(const SGXString &s){
@@ -82,7 +89,7 @@ SGXColourRGBA SGWColourPickerWidget::getBackgroundColour(bool *isUsing) const {
 void SGWColourPickerWidget::setBackgroundColour(SGXColourRGBA colour){
     (*this).backgroundColour = colour;
     (*this).usingTheme = false;
-    (*(*this).topObject).setProperty("bgc", (*this).backgroundColour.getQColour());
+    (*(*this).topObject).setProperty("bgc", temp_getQColour((*this).backgroundColour));
     (*(*this).topObject).setProperty("utc", (*this).usingTheme);
 }
 
@@ -112,7 +119,7 @@ SGXColourRGBA SGWColourPickerWidget::getBackgroundHoverColour(bool *isUsing) con
 void SGWColourPickerWidget::setBackgroundHoverColour(SGXColourRGBA colour){
     (*this).backgroundHoverColour = colour;
     (*this).usingTheme = false;
-    (*(*this).topObject).setProperty("bghc", (*this).backgroundHoverColour.getQColour());
+    (*(*this).topObject).setProperty("bghc", temp_getQColour((*this).backgroundHoverColour));
     (*(*this).topObject).setProperty("utc", (*this).usingTheme);
 }
 
@@ -142,7 +149,7 @@ SGXColourRGBA SGWColourPickerWidget::getBackgroundFocusColour(bool *isUsing) con
 void SGWColourPickerWidget::setBackgroundFocusColour(SGXColourRGBA colour){
     (*this).backgroundFocusColour = colour;
     (*this).usingTheme = false;
-    (*(*this).topObject).setProperty("bgfc", (*this).backgroundFocusColour.getQColour());
+    (*(*this).topObject).setProperty("bgfc", temp_getQColour((*this).backgroundFocusColour));
     (*(*this).topObject).setProperty("utc", (*this).usingTheme);
 }
 

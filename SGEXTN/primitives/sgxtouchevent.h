@@ -1,8 +1,7 @@
 #ifndef SGXTOUCHEVENT_H
 #define SGXTOUCHEVENT_H
 
-#include <array>
-
+template <typename T> class SGLArray;
 class SGXTouchEvent
 {
 public:
@@ -13,7 +12,7 @@ public:
     };
     SGXTouchEvent() = default;
     SGXTouchEvent(int n);
-    SGXTouchEvent(int n, const std::array<float, 11>& data);
+    SGXTouchEvent(int n, const SGLArray<float>& data);
     float x;
     float y;
     SGXTouchEvent::TouchPhase phase;
@@ -34,9 +33,5 @@ public:
     [[nodiscard]] bool operator>(SGXTouchEvent x) const;
     [[nodiscard]] int hash() const;
 };
-
-inline unsigned int qHash(SGXTouchEvent x, unsigned int seed = 0){
-    return seed ^ static_cast<unsigned int>(x.id);
-}
 
 #endif // SGXTOUCHEVENT_H

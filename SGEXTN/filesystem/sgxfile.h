@@ -11,6 +11,7 @@
 #include "../containers/sglarray.h"
 
 class QFile;
+class QDataStream;
 class SGXFile
 {
 public:

@@ -39,8 +39,4 @@ public:
     void toLowerLanguageAware();
 };
 
-inline unsigned int qHash(SGXChar x, unsigned int seed = 0){
-    return (seed ^ static_cast<unsigned int>(x.data));
-}
-
 #endif // SGXCHAR_H

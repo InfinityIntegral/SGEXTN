@@ -3,6 +3,12 @@
 #include <QColor>
 #include "../userDefinedClasses/sgucentralmanagement.h"
 
+namespace {
+inline QColor temp_getQColour(SGXColourRGBA x){
+    return QColor(x.getRed(), x.getGreen(), x.getBlue(), x.getTransparency());
+}
+}
+
 SGXThemeColourSetting::SGXThemeColourSetting(){
     (*this).noColour = SGXColourRGBA(255, 255, 255, 0);
     (*this).themeColour0 = SGUCentralManagement::themeColour0;
@@ -17,7 +23,7 @@ SGXThemeColourSetting::SGXThemeColourSetting(){
 }
 
 QColor SGXThemeColourSetting::getNoColour() const {
-    return noColour.getQColour();
+    return temp_getQColour(noColour);
 }
 
 QColor SGXThemeColourSetting::getThemeColour(int x) const {
@@ -34,82 +40,82 @@ QColor SGXThemeColourSetting::getThemeColour(int x) const {
 }
 
 QColor SGXThemeColourSetting::getThemeColour0() const {
-    return themeColour0.getQColour();
+    return temp_getQColour(themeColour0);
 }
 
 void SGXThemeColourSetting::setThemeColour0(const QColor &x){
-    (*this).themeColour0 = SGXColourRGBA(x);
+    (*this).themeColour0 = SGXColourRGBA(x.red(), x.green(), x.blue(), x.alpha());
     (*this).changedThemeColour0();
 }
 
 QColor SGXThemeColourSetting::getThemeColour1() const {
-    return themeColour1.getQColour();
+    return temp_getQColour(themeColour1);
 }
 
 void SGXThemeColourSetting::setThemeColour1(const QColor &x){
-    (*this).themeColour1 = SGXColourRGBA(x);
+    (*this).themeColour1 = SGXColourRGBA(x.red(), x.green(), x.blue(), x.alpha());
     (*this).changedThemeColour1();
 }
 
 QColor SGXThemeColourSetting::getThemeColour2() const {
-    return themeColour2.getQColour();
+    return temp_getQColour(themeColour2);
 }
 
 void SGXThemeColourSetting::setThemeColour2(const QColor &x){
-    (*this).themeColour2 = SGXColourRGBA(x);
+    (*this).themeColour2 = SGXColourRGBA(x.red(), x.green(), x.blue(), x.alpha());
     (*this).changedThemeColour2();
 }
 
 QColor SGXThemeColourSetting::getThemeColour3() const {
-    return themeColour3.getQColour();
+    return temp_getQColour(themeColour3);
 }
 
 void SGXThemeColourSetting::setThemeColour3(const QColor &x){
-    (*this).themeColour3 = SGXColourRGBA(x);
+    (*this).themeColour3 = SGXColourRGBA(x.red(), x.green(), x.blue(), x.alpha());
     (*this).changedThemeColour3();
 }
 
 QColor SGXThemeColourSetting::getThemeColour4() const {
-    return themeColour4.getQColour();
+    return temp_getQColour(themeColour4);
 }
 
 void SGXThemeColourSetting::setThemeColour4(const QColor &x){
-    (*this).themeColour4 = SGXColourRGBA(x);
+    (*this).themeColour4 = SGXColourRGBA(x.red(), x.green(), x.blue(), x.alpha());
     (*this).changedThemeColour4();
 }
 
 QColor SGXThemeColourSetting::getThemeColour5() const {
-    return themeColour5.getQColour();
+    return temp_getQColour(themeColour5);
 }
 
 void SGXThemeColourSetting::setThemeColour5(const QColor &x){
-    (*this).themeColour5 = SGXColourRGBA(x);
+    (*this).themeColour5 = SGXColourRGBA(x.red(), x.green(), x.blue(), x.alpha());
     (*this).changedThemeColour5();
 }
 
 QColor SGXThemeColourSetting::getThemeColour6() const {
-    return themeColour6.getQColour();
+    return temp_getQColour(themeColour6);
 }
 
 void SGXThemeColourSetting::setThemeColour6(const QColor &x){
-    (*this).themeColour6 = SGXColourRGBA(x);
+    (*this).themeColour6 = SGXColourRGBA(x.red(), x.green(), x.blue(), x.alpha());
     (*this).changedThemeColour6();
 }
 
 QColor SGXThemeColourSetting::getThemeColour7() const {
-    return themeColour7.getQColour();
+    return temp_getQColour(themeColour7);
 }
 
 void SGXThemeColourSetting::setThemeColour7(const QColor &x){
-    (*this).themeColour7 = SGXColourRGBA(x);
+    (*this).themeColour7 = SGXColourRGBA(x.red(), x.green(), x.blue(), x.alpha());
     (*this).changedThemeColour7();
 }
 
 QColor SGXThemeColourSetting::getThemeColour8() const {
-    return themeColour8.getQColour();
+    return temp_getQColour(themeColour8);
 }
 
 void SGXThemeColourSetting::setThemeColour8(const QColor &x){
-    (*this).themeColour8 = SGXColourRGBA(x);
+    (*this).themeColour8 = SGXColourRGBA(x.red(), x.green(), x.blue(), x.alpha());
     (*this).changedThemeColour8();
 }
