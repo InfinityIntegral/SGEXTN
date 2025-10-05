@@ -45,6 +45,8 @@ SGLFloatLimits: added
 SGLIntLimits: added
 SGLLongLongLimits: added
 SGLSort: added
+SGXSingCorrectCore: reimplemented algorithm
+SGWBackground: enable and disable ensure only visible content is rendered
 
 Added:
 - SGXChar
@@ -87,6 +89,8 @@ Improved:
 - SGXFile
 - SGXTimeStamp
 - SGWStatusBar
+- SGXSingCorrectCore
+- SGWBackground
 
 Removed:
 - SGLFileZip

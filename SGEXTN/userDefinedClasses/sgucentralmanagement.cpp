@@ -25,10 +25,19 @@ SGXColourRGBA SGUCentralManagement::themeColour5 = SGXColourRGBA(255, 64, 214);
 SGXColourRGBA SGUCentralManagement::themeColour6 = SGXColourRGBA(255, 128, 227);
 SGXColourRGBA SGUCentralManagement::themeColour7 = SGXColourRGBA(255, 191, 241);
 SGXColourRGBA SGUCentralManagement::themeColour8 = SGXColourRGBA(255, 255, 255);
-
+#include "../widgets/instantiable/sgwtextbutton.h"
+#include "../SingCorrect/sgwsingcorrectcustomisationpage.h"
+#include "../template/sgwthemecustomisationpage.h"
+#include "../widgets/instantiable/sgwcolourpickerwidget.h"
+#include "../widgets/instantiable/sgwtextinput.h"
+void func1(SGWButton*){SGWSingCorrectCustomisationPage::activate();}
+void func2(SGWButton*){SGWThemeCustomisationPage::activate();}
 // this is run immediately after GUI is created, use it to initialise the UI
 void SGUCentralManagement::initialise(){
-    
+    new SGWTextButton(SGWWidget::parentWidget, "SingCorrect customisation", &func1, 0.0f, 0.5f, 0.0f, 0.5f, 1.0f, -1.0f, 0.0f, 1.0f);
+    new SGWTextButton(SGWWidget::parentWidget, "theme colours customisation", &func2, 0.0f, 0.5f, 0.0f, 2.0f, 1.0f, -1.0f, 0.0f, 1.0f);
+    new SGWColourPickerWidget(SGWWidget::parentWidget, 0.0f, 0.5f, 0.0f, 3.5f, 1.0f, -1.0f, 0.0f, 1.0f, SGXColourRGBA(255, 0, 200));
+    new SGWTextInput(SGWWidget::parentWidget, nullptr, 0.0f, 0.5f, 0.0f, 5.0f, 1.0f, -1.0f, 0.0f, 1.0f);
 }
 
 // this is run after the application is created but before the GUI, use it to edit theme colours from configuration files

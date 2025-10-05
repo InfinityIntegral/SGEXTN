@@ -336,8 +336,8 @@ void SGWThemeCustomisationPage::updateCustomAny(SGWColourPickerWidget *selector)
 }
 
 void SGWThemeCustomisationPage::cancelChanges(SGWButton */*unused*/){
-    SGWBackground::disable(SGWThemeCustomisationPage::menuInstance);
     SGWBackground::disable(SGWThemeCustomisationPage::detailsInstance);
+    SGWBackground::disable(SGWThemeCustomisationPage::menuInstance);
 }
 
 void SGWThemeCustomisationPage::confirmChanges(SGWButton */*unused*/){
@@ -351,8 +351,8 @@ void SGWThemeCustomisationPage::confirmChanges(SGWButton */*unused*/){
     SGUCentralManagement::themeColour7 = SGWThemeCustomisationPage::themeColours.at(7);
     SGUCentralManagement::themeColour8 = SGWThemeCustomisationPage::themeColours.at(8);
     SGXThemeColoursCustomisation::syncThemeColours();
-    SGWBackground::disable(SGWThemeCustomisationPage::menuInstance);
     SGWBackground::disable(SGWThemeCustomisationPage::detailsInstance);
+    SGWBackground::disable(SGWThemeCustomisationPage::menuInstance);
     SGWNotify::notify("theme updated");
     SGWBackground::enable(SGWThemeCustomisationPage::notifInstance, &SGWThemeCustomisationPage::notifInitialise, nullptr);
 }

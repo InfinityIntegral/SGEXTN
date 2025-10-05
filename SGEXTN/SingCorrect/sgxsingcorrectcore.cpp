@@ -13,40 +13,20 @@ SGXSingCorrectQuickInterface* SGXSingCorrectCore::instance = nullptr;
 
 SGXString SGXSingCorrectCore::correct(const SGXString &s){
     if(SGXSingCorrectCustomisation::moduleEnabled == false){return s;}
-    if(SGXSingCorrectCore::database == nullptr){return s;}
-    SGXString s0 = "";
-    bool maybeCommandActive = false;
-    SGXString maybeCommand = "";
-    for(int i=0; i<s.length(); i++){
-        if(s.at(i) == SGXSingCorrectCore::correctionPrefix.at(0) && i <= s.length() - SGXSingCorrectCore::correctionPrefix.length() && s.substring(i, SGXSingCorrectCore::correctionPrefix.length()) == SGXSingCorrectCore::correctionPrefix){
-            maybeCommandActive = true;
-            i += SGXSingCorrectCore::correctionPrefix.length();
-            while(i < s.length()){
-                if(s.at(i).isEnglishLetter() == true || (s.at(i).isDigitBase16() && maybeCommand.length() >= 7 && maybeCommand.at(i) == 'u' && maybeCommand.substringLeft(7) == "unicode")){
-                    maybeCommand += s.at(i);
-                    i++;
-                }
-                else{
-                    if((*SGXSingCorrectCore::database).contains(maybeCommand)){maybeCommand = (*SGXSingCorrectCore::database).at(maybeCommand);}
-                    else if(SGXSingCorrectCustomisation::database != nullptr && (*SGXSingCorrectCustomisation::database).contains(maybeCommand)){maybeCommand = (*SGXSingCorrectCustomisation::database).at(maybeCommand);}
-                    else if(maybeCommand.length() > 7 && maybeCommand.substringLeft(7) == "unicode"){
-                        int cp = 0x0000;
-                        if(maybeCommand.length() == 11 || (maybeCommand.length() == 13 && maybeCommand.substring(7, 2) == "0x")){cp = maybeCommand.substringRight(4).parseToIntBase16(nullptr);}
-                        if(cp != 0){maybeCommand = SGXChar(cp);}
-                        else{maybeCommand = SGXSingCorrectCore::correctionPrefix + maybeCommand + s.at(i);}
-                    }
-                    else{maybeCommand = SGXSingCorrectCore::correctionPrefix + maybeCommand + s.at(i);}
-                    s0 += maybeCommand;
-                    maybeCommand = "";
-                    maybeCommandActive = false;
-                    break;
-                }
-            }
-        }
-        else{s0 += s.at(i);}
+    if(s.length() == 0){return s;}
+    if(s.at(s.length() - 1).isWhitespace() == false){return s;}
+    int idx = s.findFirstFromRight(SGXSingCorrectCore::correctionPrefix);
+    if(idx == -1){return s;}
+    idx += SGXSingCorrectCore::correctionPrefix.length();
+    SGXString s0 = s.substringLeft(idx - SGXSingCorrectCore::correctionPrefix.length());
+    SGXString maybeCommand = s.substring(idx, s.length() - idx - 1);
+    if(SGXSingCorrectCustomisation::database != nullptr && (*SGXSingCorrectCustomisation::database).contains(maybeCommand) == true){maybeCommand = (*SGXSingCorrectCustomisation::database).at(maybeCommand);}
+    else if(SGXSingCorrectCore::database != nullptr && (*SGXSingCorrectCore::database).contains(maybeCommand) == true){maybeCommand = (*SGXSingCorrectCore::database).at(maybeCommand);}
+    else if(maybeCommand.length() == 11 && maybeCommand.substringLeft(7) == "unicode"){
+        int codePoint = maybeCommand.substringRight(4).parseToIntBase16(nullptr);
+        if(codePoint != 0){maybeCommand = SGXChar(codePoint);}
     }
-    if(maybeCommandActive == true){s0 += (SGXSingCorrectCore::correctionPrefix + maybeCommand);}
-    return s0;
+    return (s0 + maybeCommand);
 }
 
 void SGXSingCorrectCore::initialise(){
