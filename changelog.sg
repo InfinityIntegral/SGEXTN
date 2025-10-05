@@ -37,6 +37,13 @@ SGLUnorderedMultiSet: added
 SGLUnorderedMap: added
 SGLFileZip: removed, to be replaced with new version in future update
 SGXRandomNumberGenerator: added
+SGLFloatConstants: added
+SGLFloatMath: added
+SGLIntMath: added
+SGLLongLongMath: added
+SGLFloatLimits: added
+SGLIntLimits: added
+SGLLongLongLimits: added
 
 Added:
 - SGXChar
@@ -63,6 +70,13 @@ Added:
 - SGLUnorderedMultiSet
 - SGLUnorderedMap
 - SGXRandomNumberGenerator
+- SGLFloatConstants
+- SGLFloatMath
+- SGLIntMath
+- SGLLongLongMath
+- SGLFloatLimits
+- SGLIntLimits
+- SGLLongLongLimits
 
 Improved:
 - SGXFileSystem

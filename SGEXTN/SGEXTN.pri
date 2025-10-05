@@ -21,6 +21,13 @@ SOURCES += SGEXTN/misc/main.cpp \
     $$PWD/bypassquickui/sgxthemecolours.cpp \
     $$PWD/containers/sglcrash.cpp \
     $$PWD/filesystem/sgxfile.cpp \
+    $$PWD/math/sglfloatconstants.cpp \
+    $$PWD/math/sglfloatlimits.cpp \
+    $$PWD/math/sglfloatmath.cpp \
+    $$PWD/math/sglintlimits.cpp \
+    $$PWD/math/sglintmath.cpp \
+    $$PWD/math/sgllonglonglimits.cpp \
+    $$PWD/math/sgllonglongmath.cpp \
     $$PWD/primitives/sgxchar.cpp \
     $$PWD/primitives/sgxstring.cpp \
     $$PWD/quickui/sgwwidgetquickinterface.cpp \
@@ -123,6 +130,13 @@ HEADERS += \
     $$PWD/containers/sglunorderedset.h \
     $$PWD/containers/sglvector.h \
     $$PWD/filesystem/sgxfile.h \
+    $$PWD/math/sglfloatconstants.h \
+    $$PWD/math/sglfloatlimits.h \
+    $$PWD/math/sglfloatmath.h \
+    $$PWD/math/sglintlimits.h \
+    $$PWD/math/sglintmath.h \
+    $$PWD/math/sgllonglonglimits.h \
+    $$PWD/math/sgllonglongmath.h \
     $$PWD/primitives/sgxchar.h \
     $$PWD/primitives/sgxstring.h \
     $$PWD/quickui/sgwwidgetquickinterface.h \
