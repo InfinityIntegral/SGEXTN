@@ -25,6 +25,7 @@
 #include "../widgets/unique/sgwstatusbar.h"
 #include <QQmlApplicationEngine>
 #include "../widgets/noninstantiable/sgwbackground.h"
+#include "../primitives/sgxidentifier.h"
 
 void SGXCentral::initialise(){
     const SGXString standardPath = "";
@@ -89,6 +90,7 @@ void SGXCentral::terminate(){
     SGXQuickInterface::deleteSingletons();
     SGWStatusBar::terminate();
     SGWBackground::terminate();
+    SGXIdentifier::terminate();
     (*SGXQuickInterface::applicationWindow).close();
     (*SGXQuickInterface::applicationWindow).deleteLater();
 }

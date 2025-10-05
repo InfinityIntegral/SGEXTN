@@ -8,8 +8,12 @@
 #include "../containers/sglunorderedset.h"
 #include "../containers/sglequalsto.h"
 
-SGLUnorderedSet<SGXIdentifier, SGLEqualsTo<SGXIdentifier>, SGLHash<SGXIdentifier>> SGXIdentifier::identifiersList = SGLUnorderedSet<SGXIdentifier, SGLEqualsTo<SGXIdentifier>, SGLHash<SGXIdentifier>>();
+SGLUnorderedSet<SGXIdentifier, SGLEqualsTo<SGXIdentifier>, SGLHash<SGXIdentifier>>* SGXIdentifier::identifiersList = new SGLUnorderedSet<SGXIdentifier, SGLEqualsTo<SGXIdentifier>, SGLHash<SGXIdentifier>>();
 const SGXIdentifier SGXIdentifier::nullIdentifier = SGXIdentifier(0);
+
+void SGXIdentifier::terminate(){
+    delete SGXIdentifier::identifiersList;
+}
 
 SGXIdentifier::SGXIdentifier(bool ifValid){ // NOLINT(misc-no-recursion)
     if(ifValid == false){
@@ -81,19 +85,21 @@ SGXIdentifier::SGXIdentifier(const SGXString &s, bool ifValid, int *errCode){
 }
 
 int SGXIdentifier::registerIdentifier() const {
-    if(SGXIdentifier::identifiersList.contains((*this))){return 1;}
-    SGXIdentifier::identifiersList.insert((*this));
+    if(SGXIdentifier::identifiersList != nullptr && (*SGXIdentifier::identifiersList).contains((*this))){return 1;}
+    if(SGXIdentifier::identifiersList == nullptr){SGXIdentifier::identifiersList = new SGLUnorderedSet<SGXIdentifier, SGLEqualsTo<SGXIdentifier>, SGLHash<SGXIdentifier>>();}
+    (*SGXIdentifier::identifiersList).insert((*this));
     return 0;
 }
 
 int SGXIdentifier::unregisterIdentifier() const {
-    if(SGXIdentifier::identifiersList.contains((*this)) == false){return 1;}
-    SGXIdentifier::identifiersList.erase((*this));
+    if(SGXIdentifier::identifiersList == nullptr || (*SGXIdentifier::identifiersList).contains((*this)) == false){return 1;}
+    (*SGXIdentifier::identifiersList).erase((*this));
     return 0;
 }
 
 bool SGXIdentifier::exists() const {
-    return SGXIdentifier::identifiersList.contains((*this));
+    if(SGXIdentifier::identifiersList == nullptr){return false;}
+    return (*SGXIdentifier::identifiersList).contains((*this));
 }
 
 bool SGXIdentifier::operator==(SGXIdentifier x) const {

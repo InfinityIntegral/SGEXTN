@@ -61,7 +61,7 @@ SGWBackground* SGWSingCorrectCustomisationPage::initialise(){
     (*SGWSingCorrectCustomisationPage::prefixInput).setTextChangedFunction(&SGWSingCorrectCustomisationPage::prefixUpdated);
     SGWSingCorrectCustomisationPage::prefixInvalidMessage = new SGWTextLabel(p, "prefix cannot be blank", 0.0f, 2.1f, 0.0f, 1.0f, 1.0f, -2.1f, 0.0f, 0.75f, SGWHorizontalAlignment::Left, true);
     SGWSingCorrectCustomisationPage::prefixUnsavedMessage = new SGWTextLabel(p, "press tab to save", 0.0f, 2.1f, 0.0f, 1.0f, 1.0f, -2.1f, 0.0f, 0.75f, SGWHorizontalAlignment::Left, true);
-    s = "    You can define custom SingCorrect commands that function exactly like builtin ones by entering the symbol (copy paste it from copychar.cc) and the command. Make sure that the command name does not overlap with any builtin command.";
+    s = "    You can define custom SingCorrect commands that function exactly like builtin ones by entering the symbol (copy paste it from copychar.cc) and the command. Note that you can redefine a builtin command by defining a custom command with the same name.";
     new SGWSequentialLongLabel(x, s, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.0f);
     p = new SGWBlankWidget(x, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 3.0f, 8);
     new SGWTextLabel(p, "symbol", 0.25f, -2.1f, 0.0f, 0.0f, 0.0f, 2.0f, 0.0f, 1.0f, SGWHorizontalAlignment::Left, false);
@@ -172,6 +172,10 @@ void SGWSingCorrectCustomisationPage::addCustomCommand(SGWButton */*unused*/){
     if(s == ""){isValid = false;}
     if(isValid == false){
         SGWNotify::pullDownNotify("invalid command");
+        return;
+    }
+    if((*SGXSingCorrectCustomisation::database).contains(s) == true){
+        SGWNotify::pullDownNotify("command already exists");
         return;
     }
     (*SGXSingCorrectCustomisation::database).insert(s, c.at(0));

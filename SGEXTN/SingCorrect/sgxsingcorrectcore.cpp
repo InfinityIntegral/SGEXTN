@@ -18,12 +18,12 @@ SGXString SGXSingCorrectCore::correct(const SGXString &s){
     int idx = s.findFirstFromRight(SGXSingCorrectCore::correctionPrefix);
     if(idx == -1){return s;}
     idx += SGXSingCorrectCore::correctionPrefix.length();
-    SGXString s0 = s.substringLeft(idx - SGXSingCorrectCore::correctionPrefix.length());
+    const SGXString s0 = s.substringLeft(idx - SGXSingCorrectCore::correctionPrefix.length());
     SGXString maybeCommand = s.substring(idx, s.length() - idx - 1);
     if(SGXSingCorrectCustomisation::database != nullptr && (*SGXSingCorrectCustomisation::database).contains(maybeCommand) == true){maybeCommand = (*SGXSingCorrectCustomisation::database).at(maybeCommand);}
     else if(SGXSingCorrectCore::database != nullptr && (*SGXSingCorrectCore::database).contains(maybeCommand) == true){maybeCommand = (*SGXSingCorrectCore::database).at(maybeCommand);}
     else if(maybeCommand.length() == 11 && maybeCommand.substringLeft(7) == "unicode"){
-        int codePoint = maybeCommand.substringRight(4).parseToIntBase16(nullptr);
+        const int codePoint = maybeCommand.substringRight(4).parseToIntBase16(nullptr);
         if(codePoint != 0){maybeCommand = SGXChar(codePoint);}
     }
     return (s0 + maybeCommand);

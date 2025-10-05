@@ -51,7 +51,7 @@ template <typename T> SGLArray<T>& SGLArray<T>::operator=(const SGLArray& x){
     dataInternal = new T[x.lengthInternal];
     lengthInternal = x.lengthInternal;
     for(int i=0; i<lengthInternal; i++){
-        (*(dataInternal + i)) = (*(x.dataInternal + i));
+        (*(dataInternal + i)) = (*(x.dataInternal + i)); // NOLINT(clang-analyzer-core.uninitialized.Assign)
     }
     return (*this);
 }

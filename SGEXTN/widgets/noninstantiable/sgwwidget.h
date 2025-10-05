@@ -3,9 +3,6 @@
 
 #include "../enums/sgwtype.h"
 #include "../../containers/sglarray.h"
-#include "../../containers/sglunorderedset.h"
-#include "../../containers/sglequalsto.h"
-#include "../../containers/sglhash.h"
 
 class QQuickItem;
 class SGWWidget
@@ -55,7 +52,7 @@ protected:
     SGWWidget(SGWWidget* parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0);
     SGWType::Type type;
     SGWWidget* parent;
-    SGLUnorderedSet<SGWWidget*, SGLEqualsTo<SGWWidget*>, SGLHash<SGWWidget*>> children;
+    SGLArray<SGWWidget*> children = SGLArray<SGWWidget*>(0);
     QQuickItem* topObject;
     QQuickItem* bottomObject;
     float x1;

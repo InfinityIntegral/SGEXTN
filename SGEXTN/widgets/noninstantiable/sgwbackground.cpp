@@ -76,4 +76,5 @@ void SGWBackground::disable(SGWBackground *&thisPointer){
 
 void SGWBackground::terminate(){
     delete SGWBackground::activePages;
+    delete SGWWidget::rootWidget;
 }

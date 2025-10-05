@@ -5,16 +5,13 @@
 #include "../../quickui/sgxquickinterface.h"
 #include "../instantiable/sgwsequentialscrollview.h"
 #include "../../containers/sglarray.h"
-#include "../../containers/sglunorderedset.h"
-#include "../../containers/sglequalsto.h"
-#include "../../containers/sglhash.h"
 
 SGWWidget* SGWWidget::rootWidget = nullptr;
 SGWWidget* SGWWidget::parentWidget = nullptr;
 
 SGWWidget::SGWWidget(SGWWidget* parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0){
     (*this).type = SGWType::Undefined;
-    (*this).children = SGLUnorderedSet<SGWWidget*, SGLEqualsTo<SGWWidget*>, SGLHash<SGWWidget*>>();
+    (*this).children = SGLArray<SGWWidget*>(0);
     (*this).topObject = nullptr;
     (*this).bottomObject = nullptr;
     (*this).x1 = x1;
@@ -30,14 +27,30 @@ SGWWidget::SGWWidget(SGWWidget* parent, float x1, float x0, float y1, float y0, 
     (*this).parentH1 = 0.0f;
     (*this).parentH0 = 0.0f;
     (*this).parent = parent;
-    if((*this).parent != nullptr){(*(*this).parent).children.insert(this);}
+    if((*this).parent != nullptr){
+        SGLArray<SGWWidget*> newChildren((*(*this).parent).children.length() + 1);
+        for(int i=0; i<(*(*this).parent).children.length(); i++){
+            newChildren.at(i) = (*(*this).parent).children.at(i);
+        }
+        newChildren.at((*(*this).parent).children.length()) = this;
+        (*(*this).parent).children = newChildren;
+    }
     updateParentSizeNoPush();
 }
 
 SGWWidget::~SGWWidget(){
-    for(SGLUnorderedSet<SGWWidget*, SGLEqualsTo<SGWWidget*>, SGLHash<SGWWidget*>>::ConstIterator i = children.constBegin(); i != children.constEnd(); i++){delete (*i);}
+    for(int i=0; i<children.length(); i++){delete children.at(i);}
     (*topObject).deleteLater();
-    if(parent != nullptr){(*parent).children.erase(this);}
+    if(parent != nullptr){
+        SGLArray<SGWWidget*> newChildren((*(*this).parent).children.length() - 1);
+        int j = 0;
+        for(int i=0; i<(*(*this).parent).children.length(); i++){
+            if((*(*this).parent).children.at(i) == this){continue;}
+            newChildren.at(j) = (*(*this).parent).children.at(i);
+            j++;
+        }
+        (*(*this).parent).children = newChildren;
+    }
 }
 
 void SGWWidget::initialiseQuickItemReferences(QQuickItem *thisItem){
@@ -56,13 +69,7 @@ SGWWidget* SGWWidget::getParent() const {
 }
 
 SGLArray<SGWWidget*> SGWWidget::getChildren() const {
-    SGLArray<SGWWidget*> v = SGLArray<SGWWidget*>(children.length());
-    int j = 0;
-    for(SGLUnorderedSet<SGWWidget*, SGLEqualsTo<SGWWidget*>, SGLHash<SGWWidget*>>::ConstIterator i = children.constBegin(); i != children.constEnd(); i++){
-        v.at(j) = (*i);
-        j++;
-    }
-    return v;
+    return children;
 }
 
 QQuickItem* SGWWidget::getTopObject() const {

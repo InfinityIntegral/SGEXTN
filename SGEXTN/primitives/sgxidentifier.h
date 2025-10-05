@@ -1,15 +1,16 @@
 #ifndef SGXIDENTIFIER_H
 #define SGXIDENTIFIER_H
 
-#include "../containers/sglunorderedset.h"
 #include "sgxstring.h"
-#include "../containers/sglequalsto.h"
-#include "../containers/sglhash.h"
 
+template <typename T, typename EqualityCheck, typename HashFunction> class SGLUnorderedSet;
+template <typename T> class SGLEqualsTo;
+template <typename T> class SGLHash;
 class SGXIdentifier
 {
 public:
-    static SGLUnorderedSet<SGXIdentifier, SGLEqualsTo<SGXIdentifier>, SGLHash<SGXIdentifier>> identifiersList;
+    static SGLUnorderedSet<SGXIdentifier, SGLEqualsTo<SGXIdentifier>, SGLHash<SGXIdentifier>>* identifiersList;
+    static void terminate();
     unsigned int a;
     unsigned int b;
     unsigned int c;
