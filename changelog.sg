@@ -44,6 +44,7 @@ SGLLongLongMath: added
 SGLFloatLimits: added
 SGLIntLimits: added
 SGLLongLongLimits: added
+SGLSort: added
 
 Added:
 - SGXChar
@@ -77,6 +78,7 @@ Added:
 - SGLFloatLimits
 - SGLIntLimits
 - SGLLongLongLimits
+- SGLSort
 
 Improved:
 - SGXFileSystem
