@@ -45,14 +45,16 @@ SGWButton* SGWColourPicker::completeButton = nullptr;
 SGWBackground* SGWColourPicker::initialise(){
     SGWBackground* bg = new SGWPageBackground(SGWWidget::parentWidget, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 6);
     SGWWidget* realBg = new SGWBlankWidget(bg, 0.5f, -5.75f, 0.5f, -6.0f, 0.0f, 11.5f, 0.0f, 11.0f, 8);
-    SGWColourPicker::hueChoice = new SGXRenderColourPickerHueChoiceSGWidget(realBg, 0.0f, 0.5f, 0.0f, 0.5f, 1.0f, -1.0f, 0.0f, 1.25f);
+    /*
+    //SGWColourPicker::hueChoice = new SGXRenderColourPickerHueChoiceSGWidget(realBg, 0.0f, 0.5f, 0.0f, 0.5f, 1.0f, -1.0f, 0.0f, 1.25f);
     SGWColourPicker::hueTouchReceiver = new SGWTouchReceiver(SGWColourPicker::hueChoice, &SGWColourPicker::updateHue, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f);
-    SGWColourPicker::saturationChoice = new SGXRenderColourPickerSaturationChoiceSGWidget(realBg, 0.0f, 0.5f, 0.0f, 2.0f, 1.0f, -1.0f, 0.0f, 1.25f);
+    //SGWColourPicker::saturationChoice = new SGXRenderColourPickerSaturationChoiceSGWidget(realBg, 0.0f, 0.5f, 0.0f, 2.0f, 1.0f, -1.0f, 0.0f, 1.25f);
     SGWColourPicker::saturationTouchReceiver = new SGWTouchReceiver(SGWColourPicker::saturationChoice, &SGWColourPicker::updateSaturation, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f);
-    SGWColourPicker::lightnessChoice = new SGXRenderColourPickerLightnessChoiceSGWidget(realBg, 0.0f, 0.5f, 0.0f, 3.5f, 1.0f, -1.0f, 0.0f, 1.25f);
+    //SGWColourPicker::lightnessChoice = new SGXRenderColourPickerLightnessChoiceSGWidget(realBg, 0.0f, 0.5f, 0.0f, 3.5f, 1.0f, -1.0f, 0.0f, 1.25f);
     SGWColourPicker::lightnessTouchReceiver = new SGWTouchReceiver(SGWColourPicker::lightnessChoice, &SGWColourPicker::updateLightness, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f);
-    SGWColourPicker::transparencyChoice = new SGXRenderColourPickerTransparencyChoiceSGWidget(realBg, 0.0f, 0.5f, 0.0f, 5.0f, 1.0f, -1.0f, 0.0f, 1.25f);
+    //SGWColourPicker::transparencyChoice = new SGXRenderColourPickerTransparencyChoiceSGWidget(realBg, 0.0f, 0.5f, 0.0f, 5.0f, 1.0f, -1.0f, 0.0f, 1.25f);
     SGWColourPicker::transparencyTouchReceiver = new SGWTouchReceiver(SGWColourPicker::transparencyChoice, &SGWColourPicker::updateTransparency, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f);
+    */
     new SGWTextLabel(realBg, "red:", 0.0f, 0.5f, 0.0f, 6.5f, 0.0f, 1.4f, 0.0f, 1.0f, SGWHorizontalAlignment::Right, false);
     SGWColourPicker::redInput = new SGWTextInput(realBg, nullptr, 0.0f, 2.0f, 0.0f, 6.5f, 0.0f, 2.0f, 0.0f, 1.0f);
     (*SGWColourPicker::redInput).setTextChangedFunction(&SGWColourPicker::updateRed);
@@ -95,6 +97,7 @@ void SGWColourPicker::updateUsingColourHSLA(){
 
 void SGWColourPicker::updateInputs(){
     SGWColourPicker::ignoreInputChanges = true;
+    /*
     (*SGWColourPicker::hueChoice).setSelectedHue(SGWColourPicker::colourHSLA.h / 360.0f);
     (*SGWColourPicker::hueChoice).redraw();
     (*SGWColourPicker::saturationChoice).setSelectedHue(SGWColourPicker::colourHSLA.h / 360.0f);
@@ -109,6 +112,7 @@ void SGWColourPicker::updateInputs(){
     (*SGWColourPicker::transparencyChoice).setSelectedLightness(SGWColourPicker::colourHSLA.l / 100.0f);
     (*SGWColourPicker::transparencyChoice).setSelectedTransparency(SGWColourPicker::colourHSLA.a / 100.0f);
     (*SGWColourPicker::transparencyChoice).redraw();
+    */
     (*SGWColourPicker::redInput).setTextFromInt(SGWColourPicker::colour.getRed());
     (*SGWColourPicker::greenInput).setTextFromInt(SGWColourPicker::colour.getGreen());
     (*SGWColourPicker::blueInput).setTextFromInt(SGWColourPicker::colour.getBlue());
