@@ -17,12 +17,12 @@ public:
     static void activate();
     static SGWBackground* initialise();
     static SGWBackground* menuInstance;
-    static void showThemeDefaultLight(SGWButton* /*unused*/);
-    static void showThemeDefaultDark(SGWButton* /*unused*/);
-    static void showThemeForOurNation(SGWButton* /*unused*/);
-    static void showThemeCustomLight(SGWButton* /*unused*/);
-    static void showThemeCustomDark(SGWButton* /*unused*/);
-    static void showThemeCustomAny(SGWButton* /*unused*/);
+    static void showThemeDefaultLight();
+    static void showThemeDefaultDark();
+    static void showThemeForOurNation();
+    static void showThemeCustomLight();
+    static void showThemeCustomDark();
+    static void showThemeCustomAny();
     static SGWBackground* detailsInstance;
     static SGWButton* cancelButton;
     static SGWButton* confirmButton;
@@ -36,20 +36,20 @@ public:
     static bool isUsingCustomLight;
     static SGWLabel* customLightLabel;
     static SGWColourPickerWidget* customLightColourPicker;
-    static void updateCustomLight(SGWColourPickerWidget* selector);
+    static void updateCustomLight();
     static bool isUsingCustomDark;
     static SGWLabel* customDarkLabel;
     static SGWColourPickerWidget* customDarkColourPicker;
-    static void updateCustomDark(SGWColourPickerWidget* selector);
+    static void updateCustomDark();
     static bool isUsingCustomAny;
     static SGWLabel* customAnyLabel;
     static SGLArray<SGWColourPickerWidget*> customAnyColourPicker;
-    static void updateCustomAny(SGWColourPickerWidget* selector);
-    static void cancelChanges(SGWButton* /*unused*/);
-    static void confirmChanges(SGWButton* /*unused*/);
+    static void updateCustomAny(int index);
+    static void cancelChanges();
+    static void confirmChanges();
     static SGWBackground* notifInstance;
     static SGWBackground* notifInitialise();
-    static void closeNotif(SGWButton* /*unused*/);
+    static void closeNotif();
 };
 
 #endif // SGWTHEMECUSTOMISATIONPAGE_H

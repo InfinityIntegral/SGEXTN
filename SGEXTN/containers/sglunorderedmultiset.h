@@ -195,7 +195,7 @@ template <typename T, typename EqualityCheck, typename HashFunction> bool SGLUno
 }
 
 template <typename T, typename EqualityCheck, typename HashFunction> void SGLUnorderedMultiSet<T, EqualityCheck, HashFunction>::insert(const T& x){
-    if(memoryLengthInternal == 0){reserve(1);}
+    if(memoryLengthInternal == 0){reserve(3);}
     else if(3 * memoryUsedInternal >= memoryLengthInternal){reserve(3 * memoryLengthInternal);}
     bool addedMemory = rehash(x, 1);
     if(addedMemory == true){memoryUsedInternal++;}

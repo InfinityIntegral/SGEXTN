@@ -28,16 +28,27 @@ inline Qt::AlignmentFlag temp_getQtFlag(SGWVerticalAlignment::Flag x){
 }
 }
 
-SGWButton::SGWButton(SGWWidget *parent, const SGXString &s, void (*attachedFunction)(SGWButton*), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float f1, float f0, const SGXString& font) : SGWWidget(parent, x1, x0, y1, y0, w1, w0, h1, h0){
+SGWButton::SGWButton(SGWWidget *parent, const SGXString &s, void (*attachedFunction)(), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float f1, float f0, const SGXString& font) : SGWWidget(parent, x1, x0, y1, y0, w1, w0, h1, h0){
     (*this).f1 = f1;
     (*this).f0 = f0;
     (*this).text = s;
     (*this).font = font;
     (*this).horizontalAlignment = SGWHorizontalAlignment::Center;
     (*this).verticalAlignment = SGWVerticalAlignment::Center;
+    (*this).attachedInt = 0;
+    (*this).attachedString = "";
     (*this).clickFunction = attachedFunction;
     (*this).pressFunction = nullptr;
     (*this).releaseFunction = nullptr;
+    (*this).clickFunctionWithInt = nullptr;
+    (*this).pressFunctionWithInt = nullptr;
+    (*this).releaseFunctionWithInt = nullptr;
+    (*this).clickFunctionWithString = nullptr;
+    (*this).pressFunctionWithString = nullptr;
+    (*this).releaseFunctionWithString = nullptr;
+    (*this).clickFunctionWithPointer = nullptr;
+    (*this).pressFunctionWithPointer = nullptr;
+    (*this).releaseFunctionWithPointer = nullptr;
     (*this).selected = false;
     (*this).usingTheme = true;
     (*this).backgroundThemeColour = 4;
@@ -104,9 +115,24 @@ void SGWButton::syncQuickProperties(){
 }
 
 void SGWButton::eventReceived(const SGXString &s){
-    if(clickFunction != nullptr && s == "click"){clickFunction(this);}
-    else if(pressFunction != nullptr && s == "press"){pressFunction(this);}
-    else if(releaseFunction != nullptr && s == "release"){releaseFunction(this);}
+    if(s == "click"){
+        if(clickFunction != nullptr){clickFunction();}
+        if(clickFunctionWithInt != nullptr){clickFunctionWithInt(attachedInt);}
+        if(clickFunctionWithString != nullptr){clickFunctionWithString(attachedString);}
+        if(clickFunctionWithPointer != nullptr){clickFunctionWithPointer(this);}
+    }
+    else if(s == "press"){
+        if(pressFunction != nullptr){pressFunction();}
+        if(pressFunctionWithInt != nullptr){pressFunctionWithInt(attachedInt);}
+        if(pressFunctionWithString != nullptr){pressFunctionWithString(attachedString);}
+        if(pressFunctionWithPointer != nullptr){pressFunctionWithPointer(this);}
+    }
+    else if(s == "release"){
+        if(releaseFunction != nullptr){releaseFunction();}
+        if(releaseFunctionWithInt != nullptr){releaseFunctionWithInt(attachedInt);}
+        if(releaseFunctionWithString != nullptr){releaseFunctionWithString(attachedString);}
+        if(releaseFunctionWithPointer != nullptr){releaseFunctionWithPointer(this);}
+    }
 }
 
 float SGWButton::getF1() const {
@@ -198,30 +224,6 @@ bool SGWButton::getSelected() const {
 void SGWButton::setSelected(bool selected){
     (*this).selected = selected;
     (*topObject).setProperty("sel", (*this).selected);
-}
-
-void (*SGWButton::getClickFunction() const)(SGWButton*){
-    return clickFunction;
-}
-
-void SGWButton::setClickFunction(void (*function)(SGWButton *)){
-    (*this).clickFunction = function;
-}
-
-void (*SGWButton::getPressFunction() const)(SGWButton*){
-    return pressFunction;
-}
-
-void SGWButton::setPressFunction(void (*function)(SGWButton *)){
-    (*this).pressFunction = function;
-}
-
-void (*SGWButton::getReleaseFunction() const)(SGWButton*){
-    return releaseFunction;
-}
-
-void SGWButton::setReleaseFunction(void (*function)(SGWButton *)){
-    (*this).releaseFunction = function;
 }
 
 int SGWButton::getBackgroundThemeColour(bool *isUsing) const {

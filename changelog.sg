@@ -47,6 +47,9 @@ SGLLongLongLimits: added
 SGLSort: added
 SGXSingCorrectCore: reimplemented algorithm
 SGWBackground: enable and disable ensure only visible content is rendered
+SGWColourPickerWidget: add callback functions taking other arguments
+SGWInput: add callback functions taking other arguments
+SGWButton: add callback functions taking other arguments
 
 Added:
 - SGXChar
@@ -91,6 +94,9 @@ Improved:
 - SGWStatusBar
 - SGXSingCorrectCore
 - SGWBackground
+- SGWColourPickerWidget
+- SGWInput
+- SGWButton
 
 Removed:
 - SGLFileZip

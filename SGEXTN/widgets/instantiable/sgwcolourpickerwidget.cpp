@@ -20,7 +20,12 @@ SGWColourPickerWidget::SGWColourPickerWidget(SGWWidget *parent, float x1, float 
     (*this).colour = defaultColour;
     (*this).e1 = 0.0f;
     (*this).e0 = 0.1f;
+    (*this).attachedInt = 0;
+    (*this).attachedString = "";
     (*this).attachedFunction = nullptr;
+    (*this).attachedFunctionWithInt = nullptr;
+    (*this).attachedFunctionWithString = nullptr;
+    (*this).attachedFunctionWithPointer = nullptr;
     (*this).usingTheme = true;
     (*this).backgroundThemeColour = 4;
     (*this).backgroundColour = SGXThemeColours::getThemeColour((*this).backgroundThemeColour);
@@ -60,7 +65,12 @@ void SGWColourPickerWidget::syncQuickProperties(){
 
 void SGWColourPickerWidget::eventReceived(const SGXString &s){
     if(s == "click"){SGWColourPicker::activateColourPicker(this);}
-    if(s == "done" && attachedFunction != nullptr){attachedFunction(this);}
+    if(s == "done"){
+        if(attachedFunction != nullptr){attachedFunction();}
+        if(attachedFunctionWithInt != nullptr){attachedFunctionWithInt(attachedInt);}
+        if(attachedFunctionWithString != nullptr){attachedFunctionWithString(attachedString);}
+        if(attachedFunctionWithPointer != nullptr){attachedFunctionWithPointer(this);}
+    }
 }
 
 int SGWColourPickerWidget::getBackgroundThemeColour(bool *isUsing) const {
@@ -169,14 +179,6 @@ float SGWColourPickerWidget::getE0() const {
 void SGWColourPickerWidget::setE0(float e0){
     (*this).e0 = e0;
     (*(*this).topObject).setProperty("e0", (*this).e0);
-}
-
-void (*SGWColourPickerWidget::getAttachedFunction() const)(SGWColourPickerWidget*){
-    return attachedFunction;
-}
-
-void SGWColourPickerWidget::setAttachedFunction(void (*function)(SGWColourPickerWidget *)){
-    attachedFunction = function;
 }
 
 SGWColourPickerWidget::~SGWColourPickerWidget(){

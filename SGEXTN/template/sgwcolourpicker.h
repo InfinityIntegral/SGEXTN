@@ -42,20 +42,20 @@ public:
     static SGWTouchReceiver* transparencyTouchReceiver;
     static void updateTransparency(SGWTouchReceiver* /*unused*/, const SGLArray<SGXTouchEvent>& t);
     static SGWInput* redInput;
-    static void updateRed(SGWInput* /*unused*/);
+    static void updateRed();
     static SGWInput* greenInput;
-    static void updateGreen(SGWInput* /*unused*/);
+    static void updateGreen();
     static SGWInput* blueInput;
-    static void updateBlue(SGWInput* /*unused*/);
+    static void updateBlue();
     static SGWInput* transparencyInput;
-    static void updateTransparencyFromInput(SGWInput* /*unused*/);
+    static void updateTransparencyFromInput();
     static SGWInput* hexCodeInput;
-    static void updateHexCode(SGWInput* /*unused*/);
+    static void updateHexCode();
     static SGXRenderColourBackgroundSGWidget* colourDisplay;
     static bool ignoreInputChanges;
     static SGWColourPickerWidget* colourReceiver;
     static void activateColourPicker(SGWColourPickerWidget* x);
-    static void completeColourSelection(SGWButton* /*unused*/);
+    static void completeColourSelection();
     static SGWButton* completeButton;
 };
 

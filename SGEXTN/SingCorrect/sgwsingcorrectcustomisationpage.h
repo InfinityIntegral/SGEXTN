@@ -1,9 +1,6 @@
 #ifndef SGWSINGCORRECTCUSTOMISATIONPAGE_H
 #define SGWSINGCORRECTCUSTOMISATIONPAGE_H
 
-template <typename K, typename V, typename EqualityCheck, typename HashFunction> class SGLUnorderedMap;
-template <typename T> class SGLEqualsTo;
-template <typename T> class SGLHash;
 class SGWBackground;
 class SGWButton;
 class SGWLabel;
@@ -18,31 +15,30 @@ public:
     static SGWBackground* initialise();
     static void activate();
     static void reset();
-    static void exit(SGWButton* /*unused*/);
+    static void exit();
     static SGWButton* enableButton;
     static SGWButton* disableButton;
-    static void enableFunction(SGWButton* /*unused*/);
-    static void disableFunction(SGWButton* /*unused*/);
+    static void enableFunction();
+    static void disableFunction();
     static SGWInput* prefixInput;
     static SGWLabel* prefixInvalidMessage;
     static SGWLabel* prefixUnsavedMessage;
-    static void prefixUpdated(SGWInput* /*unused*/);
-    static void prefixSaved(SGWInput* /*unused*/);
+    static void prefixUpdated();
+    static void prefixSaved();
     static SGWInput* customCharInput;
     static SGWInput* customCommandInput;
     static SGWLabel* customCharError;
     static SGWLabel* customCommandError;
-    static void customCharCheck(SGWInput* /*unused*/);
-    static void customCommandCheck(SGWInput* /*unused*/);
-    static void addCustomCommand(SGWButton* /*unused*/);
+    static void customCharCheck();
+    static void customCommandCheck();
+    static void addCustomCommand();
     static void refreshList();
     static SGWWidget* listParent;
-    static SGLUnorderedMap<SGWButton*, SGXString, SGLEqualsTo<SGWButton*>, SGLHash<SGWButton*>>* buttonsList;
-    static void deleteCommand(SGWButton* button);
+    static void deleteCommand(const SGXString& customKey);
     static SGWBackground* commandListInstance;
     static SGWBackground* initialiseCommandList();
-    static void exitCommandList(SGWButton* /*unused*/);
-    static void showCommandList(SGWButton* /*unused*/);
+    static void exitCommandList();
+    static void showCommandList();
 };
 
 #endif // SGWSINGCORRECTCUSTOMISATIONPAGE_H

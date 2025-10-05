@@ -26,6 +26,7 @@ SGXString SGXSingCorrectCore::correct(const SGXString &s){
         const int codePoint = maybeCommand.substringRight(4).parseToIntBase16(nullptr);
         if(codePoint != 0){maybeCommand = SGXChar(codePoint);}
     }
+    else{return s;}
     return (s0 + maybeCommand);
 }
 

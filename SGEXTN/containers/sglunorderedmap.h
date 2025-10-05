@@ -193,7 +193,7 @@ template <typename K, typename V, typename EqualityCheck, typename HashFunction>
 }
 
 template <typename K, typename V, typename EqualityCheck, typename HashFunction> void SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::insert(const K& xKey, const V& xValue){
-    if(memoryLengthInternal == 0){reserve(1);}
+    if(memoryLengthInternal == 0){reserve(3);}
     else if(3 * memoryUsedInternal >= memoryLengthInternal){reserve(3 * memoryLengthInternal);}
     rehash(xKey, xValue);
     memoryUsedInternal++;

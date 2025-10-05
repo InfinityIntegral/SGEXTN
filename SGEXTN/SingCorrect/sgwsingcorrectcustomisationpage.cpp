@@ -34,7 +34,6 @@ SGWInput* SGWSingCorrectCustomisationPage::customCommandInput = nullptr;
 SGWLabel* SGWSingCorrectCustomisationPage::customCharError = nullptr;
 SGWLabel* SGWSingCorrectCustomisationPage::customCommandError = nullptr;
 SGWWidget* SGWSingCorrectCustomisationPage::listParent = nullptr;
-SGLUnorderedMap<SGWButton*, SGXString, SGLEqualsTo<SGWButton*>, SGLHash<SGWButton*>>* SGWSingCorrectCustomisationPage::buttonsList = nullptr;
 SGWBackground* SGWSingCorrectCustomisationPage::commandListInstance = nullptr;
 
 SGWBackground* SGWSingCorrectCustomisationPage::initialise(){
@@ -58,7 +57,7 @@ SGWBackground* SGWSingCorrectCustomisationPage::initialise(){
     p = new SGWBlankWidget(x, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 2.0f, 8);
     new SGWTextLabel(p, "prefix:", 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 2.0f, 0.0f, 1.0f, SGWHorizontalAlignment::Right, false);
     SGWSingCorrectCustomisationPage::prefixInput = new SGWTextInput(p, &SGWSingCorrectCustomisationPage::prefixSaved, 0.0f, 2.1f, 0.0f, 0.0f, 1.0f, -2.1f, 0.0f, 1.0f);
-    (*SGWSingCorrectCustomisationPage::prefixInput).setTextChangedFunction(&SGWSingCorrectCustomisationPage::prefixUpdated);
+    (*SGWSingCorrectCustomisationPage::prefixInput).textChangedFunction = (&SGWSingCorrectCustomisationPage::prefixUpdated);
     SGWSingCorrectCustomisationPage::prefixInvalidMessage = new SGWTextLabel(p, "prefix cannot be blank", 0.0f, 2.1f, 0.0f, 1.0f, 1.0f, -2.1f, 0.0f, 0.75f, SGWHorizontalAlignment::Left, true);
     SGWSingCorrectCustomisationPage::prefixUnsavedMessage = new SGWTextLabel(p, "press tab to save", 0.0f, 2.1f, 0.0f, 1.0f, 1.0f, -2.1f, 0.0f, 0.75f, SGWHorizontalAlignment::Left, true);
     s = "    You can define custom SingCorrect commands that function exactly like builtin ones by entering the symbol (copy paste it from copychar.cc) and the command. Note that you can redefine a builtin command by defining a custom command with the same name.";
@@ -73,7 +72,6 @@ SGWBackground* SGWSingCorrectCustomisationPage::initialise(){
     SGWSingCorrectCustomisationPage::customCommandError = new SGWTextLabel(p, "only letters, not blank", 0.5f, -1.5f, 0.0f, 2.0f, 0.0f, 6.0f, 0.0f, 0.75f, SGWHorizontalAlignment::Left, true);
     new SGWTextLabel(x, "custom SingCorrect commands:", 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.0f, SGWHorizontalAlignment::Left, false);
     SGWSingCorrectCustomisationPage::listParent = new SGWSequentialScrollView(x, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 5.5f, 0.0f, 0.5f, 8);
-    SGWSingCorrectCustomisationPage::buttonsList = new SGLUnorderedMap<SGWButton*, SGXString, SGLEqualsTo<SGWButton*>, SGLHash<SGWButton*>>();
     new SGWBlankWidget(x, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 0.5f, 8);
     new SGWTextButton(bg, "done", &SGWSingCorrectCustomisationPage::exit, 0.0f, 0.0f, 1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f);
     return bg;
@@ -97,29 +95,29 @@ void SGWSingCorrectCustomisationPage::activate(){
     SGWBackground::enable(SGWSingCorrectCustomisationPage::instance, &SGWSingCorrectCustomisationPage::initialise, &SGWSingCorrectCustomisationPage::reset);
 }
 
-void SGWSingCorrectCustomisationPage::exit(SGWButton */*unused*/){
+void SGWSingCorrectCustomisationPage::exit(){
     SGWBackground::disable(SGWSingCorrectCustomisationPage::instance);
     SGXSingCorrectCustomisation::syncFileData();
     SGWNotify::notify("all changes saved");
 }
 
-void SGWSingCorrectCustomisationPage::enableFunction(SGWButton */*unused*/){
+void SGWSingCorrectCustomisationPage::enableFunction(){
     SGXSingCorrectCustomisation::moduleEnabled = true;
     (*SGWSingCorrectCustomisationPage::enableButton).setSelected(true);
     (*SGWSingCorrectCustomisationPage::disableButton).setSelected(false);
 }
 
-void SGWSingCorrectCustomisationPage::disableFunction(SGWButton */*unused*/){
+void SGWSingCorrectCustomisationPage::disableFunction(){
     SGXSingCorrectCustomisation::moduleEnabled = false;
     (*SGWSingCorrectCustomisationPage::enableButton).setSelected(false);
     (*SGWSingCorrectCustomisationPage::disableButton).setSelected(true);
 }
 
-void SGWSingCorrectCustomisationPage::prefixUpdated(SGWInput */*unused*/){
+void SGWSingCorrectCustomisationPage::prefixUpdated(){
     (*SGWSingCorrectCustomisationPage::prefixUnsavedMessage).setItemVisibility(true);
 }
 
-void SGWSingCorrectCustomisationPage::prefixSaved(SGWInput */*unused*/){
+void SGWSingCorrectCustomisationPage::prefixSaved(){
     (*SGWSingCorrectCustomisationPage::prefixUnsavedMessage).setItemVisibility(false);
     const SGXString prefix = (*SGWSingCorrectCustomisationPage::prefixInput).getTextAsString();
     if(prefix == ""){
@@ -132,7 +130,7 @@ void SGWSingCorrectCustomisationPage::prefixSaved(SGWInput */*unused*/){
     SGXSingCorrectCore::correctionPrefix = prefix;
 }
 
-void SGWSingCorrectCustomisationPage::customCharCheck(SGWInput */*unused*/){
+void SGWSingCorrectCustomisationPage::customCharCheck(){
     const SGXString s = (*SGWSingCorrectCustomisationPage::customCharInput).getTextAsString();
     if(s.length() != 1){
         (*SGWSingCorrectCustomisationPage::customCharInput).setInvalid(true);
@@ -144,7 +142,7 @@ void SGWSingCorrectCustomisationPage::customCharCheck(SGWInput */*unused*/){
     }
 }
 
-void SGWSingCorrectCustomisationPage::customCommandCheck(SGWInput */*unused*/){
+void SGWSingCorrectCustomisationPage::customCommandCheck(){
     const SGXString s = (*SGWSingCorrectCustomisationPage::customCommandInput).getTextAsString();
     bool isValid = true;
     for(int i=0; i<s.length(); i++){
@@ -161,7 +159,7 @@ void SGWSingCorrectCustomisationPage::customCommandCheck(SGWInput */*unused*/){
     }
 }
 
-void SGWSingCorrectCustomisationPage::addCustomCommand(SGWButton */*unused*/){
+void SGWSingCorrectCustomisationPage::addCustomCommand(){
     const SGXString c = (*SGWSingCorrectCustomisationPage::customCharInput).getTextAsString();
     const SGXString s = (*SGWSingCorrectCustomisationPage::customCommandInput).getTextAsString();
     bool isValid = true;
@@ -189,8 +187,6 @@ void SGWSingCorrectCustomisationPage::addCustomCommand(SGWButton */*unused*/){
 }
 
 void SGWSingCorrectCustomisationPage::refreshList(){
-    delete SGWSingCorrectCustomisationPage::buttonsList;
-    SGWSingCorrectCustomisationPage::buttonsList = new SGLUnorderedMap<SGWButton*, SGXString, SGLEqualsTo<SGWButton*>, SGLHash<SGWButton*>>();
     const SGLArray<SGWWidget*> c = (*SGWSingCorrectCustomisationPage::listParent).getChildren();
     for(int i=0; i<c.length(); i++){
         delete c.at(i);
@@ -199,13 +195,14 @@ void SGWSingCorrectCustomisationPage::refreshList(){
         SGWWidget* x = new SGWBlankWidget(SGWSingCorrectCustomisationPage::listParent, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 8);
         new SGWTextLabel(x, i.value(), 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 2.0f, 0.0f, 1.0f, SGWHorizontalAlignment::Center, false);
         new SGWTextLabel(x, i.key(), 0.0f, 2.0f, 0.0f, 0.0f, 1.0f, -3.0f, 0.0f, 1.0f, SGWHorizontalAlignment::Left, false);
-        SGWButton* b = new SGWTextButton(x, "x", &SGWSingCorrectCustomisationPage::deleteCommand, 1.0f, -1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f);
-        (*SGWSingCorrectCustomisationPage::buttonsList).insert(b, i.key());
+        SGWButton* b = new SGWTextButton(x, "x", nullptr, 1.0f, -1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f);
+        (*b).attachedString = i.key();
+        (*b).clickFunctionWithString = (&SGWSingCorrectCustomisationPage::deleteCommand);
     }
 }
 
-void SGWSingCorrectCustomisationPage::deleteCommand(SGWButton *button){
-    (*SGXSingCorrectCustomisation::database).erase((*SGWSingCorrectCustomisationPage::buttonsList).at(button));
+void SGWSingCorrectCustomisationPage::deleteCommand(const SGXString& customKey){
+    (*SGXSingCorrectCustomisation::database).erase(customKey);
     SGWSingCorrectCustomisationPage::refreshList();
 }
 
@@ -299,10 +296,10 @@ SGWBackground* SGWSingCorrectCustomisationPage::initialiseCommandList(){
     return bg;
 }
 
-void SGWSingCorrectCustomisationPage::showCommandList(SGWButton */*unused*/){
+void SGWSingCorrectCustomisationPage::showCommandList(){
     SGWBackground::enable(SGWSingCorrectCustomisationPage::commandListInstance, &SGWSingCorrectCustomisationPage::initialiseCommandList, nullptr);
 }
 
-void SGWSingCorrectCustomisationPage::exitCommandList(SGWButton */*unused*/){
+void SGWSingCorrectCustomisationPage::exitCommandList(){
     SGWBackground::disable(SGWSingCorrectCustomisationPage::commandListInstance);
 }

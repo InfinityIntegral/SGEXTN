@@ -25,10 +25,12 @@ SGXColourRGBA SGUCentralManagement::themeColour5 = SGXColourRGBA(255, 64, 214);
 SGXColourRGBA SGUCentralManagement::themeColour6 = SGXColourRGBA(255, 128, 227);
 SGXColourRGBA SGUCentralManagement::themeColour7 = SGXColourRGBA(255, 191, 241);
 SGXColourRGBA SGUCentralManagement::themeColour8 = SGXColourRGBA(255, 255, 255);
-
+#include "../SingCorrect/sgwsingcorrectcustomisationpage.h"
+#include "../template/sgwthemecustomisationpage.h"
 // this is run immediately after GUI is created, use it to initialise the UI
 void SGUCentralManagement::initialise(){
-    
+    SGWThemeCustomisationPage::activate();
+    SGWSingCorrectCustomisationPage::activate();
 }
 
 // this is run after the application is created but before the GUI, use it to edit theme colours from configuration files

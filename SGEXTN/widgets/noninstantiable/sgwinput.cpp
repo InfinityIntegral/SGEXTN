@@ -30,16 +30,27 @@ inline Qt::AlignmentFlag temp_getQtFlag(SGWVerticalAlignment::Flag x){
 }
 }
 
-SGWInput::SGWInput(SGWWidget *parent, void (*validationFunction)(SGWInput *), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float f1, float f0, SGWHorizontalAlignment::Flag horizontalAlignment, SGWVerticalAlignment::Flag verticalAlignment) : SGWWidget(parent, x1, x0, y1, y0, w1, w0, h1, h0){
+SGWInput::SGWInput(SGWWidget *parent, void (*validationFunction)(), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float f1, float f0, SGWHorizontalAlignment::Flag horizontalAlignment, SGWVerticalAlignment::Flag verticalAlignment) : SGWWidget(parent, x1, x0, y1, y0, w1, w0, h1, h0){
     (*this).f1 = f1;
     (*this).f0 = f0;
     (*this).text = "";
     (*this).font = SGWDefaultFonts::textFont;
     (*this).horizontalAlignment = horizontalAlignment;
     (*this).verticalAlignment = verticalAlignment;
+    (*this).attachedInt = 0;
+    (*this).attachedString = "";
     (*this).textChangedFunction = nullptr;
     (*this).focusStartFunction = nullptr;
     (*this).focusEndFunction = validationFunction;
+    (*this).textChangedFunctionWithInt = nullptr;
+    (*this).focusStartFunctionWithInt = nullptr;
+    (*this).focusEndFunctionWithInt = nullptr;
+    (*this).textChangedFunctionWithString = nullptr;
+    (*this).focusStartFunctionWithString = nullptr;
+    (*this).focusEndFunctionWithString = nullptr;
+    (*this).textChangedFunctionWithPointer = nullptr;
+    (*this).focusStartFunctionWithPointer= nullptr;
+    (*this).focusEndFunctionWithPointer = nullptr;
     (*this).invalid = false;
     (*this).usingTheme = true;
     (*this).backgroundThemeColour = 4;
@@ -99,9 +110,24 @@ void SGWInput::syncQuickProperties(){
 
 void SGWInput::eventReceived(const SGXString &s){
     if(s == "textChanged"){(*(*this).text.data) = (*topObject).property("s").toString();}
-    if(textChangedFunction != nullptr && s == "textChanged"){textChangedFunction(this);}
-    else if(focusStartFunction != nullptr && s == "focusStart"){focusStartFunction(this);}
-    else if(focusEndFunction != nullptr && s == "focusEnd"){focusEndFunction(this);}
+    if(s == "textChanged"){
+        if(textChangedFunction != nullptr){textChangedFunction();}
+        if(textChangedFunctionWithInt != nullptr){textChangedFunctionWithInt(attachedInt);}
+        if(textChangedFunctionWithString != nullptr){textChangedFunctionWithString(attachedString);}
+        if(textChangedFunctionWithPointer != nullptr){textChangedFunctionWithPointer(this);}
+    }
+    else if(s == "focusStart"){
+        if(focusStartFunction != nullptr){focusStartFunction();}
+        if(focusStartFunctionWithInt != nullptr){focusStartFunctionWithInt(attachedInt);}
+        if(focusStartFunctionWithString != nullptr){focusStartFunctionWithString(attachedString);}
+        if(focusStartFunctionWithPointer != nullptr){focusStartFunctionWithPointer(this);}
+    }
+    else if(s == "focusEnd"){
+        if(focusEndFunction != nullptr){focusEndFunction();}
+        if(focusEndFunctionWithInt != nullptr){focusEndFunctionWithInt(attachedInt);}
+        if(focusEndFunctionWithString != nullptr){focusEndFunctionWithString(attachedString);}
+        if(focusEndFunctionWithPointer != nullptr){focusEndFunctionWithPointer(this);}
+    }
 }
 
 float SGWInput::getF1() const {
@@ -193,30 +219,6 @@ bool SGWInput::getInvalid() const {
 void SGWInput::setInvalid(bool invalid){
     (*this).invalid = invalid;
     (*topObject).setProperty("inv", (*this).invalid);
-}
-
-void (*SGWInput::getTextChangedFunction() const)(SGWInput*){
-    return textChangedFunction;
-}
-
-void SGWInput::setTextChangedFunction(void (*function)(SGWInput *)){
-    (*this).textChangedFunction = function;
-}
-
-void (*SGWInput::getFocusStartFunction() const)(SGWInput*){
-    return focusStartFunction;
-}
-
-void SGWInput::setFocusStartFunction(void (*function)(SGWInput *)){
-    (*this).focusStartFunction = function;
-}
-
-void (*SGWInput::getFocusEndFunction() const)(SGWInput*){
-    return focusEndFunction;
-}
-
-void SGWInput::setFocusEndFunction(void (*function)(SGWInput *)){
-    (*this).focusEndFunction = function;
 }
 
 int SGWInput::getBackgroundThemeColour(bool *isUsing) const {

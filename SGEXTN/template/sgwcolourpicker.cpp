@@ -57,19 +57,19 @@ SGWBackground* SGWColourPicker::initialise(){
     */
     new SGWTextLabel(realBg, "red:", 0.0f, 0.5f, 0.0f, 6.5f, 0.0f, 1.4f, 0.0f, 1.0f, SGWHorizontalAlignment::Right, false);
     SGWColourPicker::redInput = new SGWTextInput(realBg, nullptr, 0.0f, 2.0f, 0.0f, 6.5f, 0.0f, 2.0f, 0.0f, 1.0f);
-    (*SGWColourPicker::redInput).setTextChangedFunction(&SGWColourPicker::updateRed);
+    (*SGWColourPicker::redInput).textChangedFunction = (&SGWColourPicker::updateRed);
     new SGWTextLabel(realBg, "green:", 0.0f, 4.5f, 0.0f, 6.5f, 0.0f, 1.9f, 0.0f, 1.0f, SGWHorizontalAlignment::Right, false);
     SGWColourPicker::greenInput = new SGWTextInput(realBg, nullptr, 0.0f, 6.5f, 0.0f, 6.5f, 0.0f, 2.0f, 0.0f, 1.0f);
-    (*SGWColourPicker::greenInput).setTextChangedFunction(&SGWColourPicker::updateGreen);
+    (*SGWColourPicker::greenInput).textChangedFunction = (&SGWColourPicker::updateGreen);
     new SGWTextLabel(realBg, "blue:", 0.0f, 0.5f, 0.0f, 8.0f, 0.0f, 1.4f, 0.0f, 1.0f, SGWHorizontalAlignment::Right, false);
     SGWColourPicker::blueInput = new SGWTextInput(realBg, nullptr, 0.0f, 2.0f, 0.0f, 8.0f, 0.0f, 2.0f, 0.0f, 1.0f);
-    (*SGWColourPicker::blueInput).setTextChangedFunction(&SGWColourPicker::updateBlue);
+    (*SGWColourPicker::blueInput).textChangedFunction = (&SGWColourPicker::updateBlue);
     new SGWTextLabel(realBg, "transparency:", 0.0f, 4.4f, 0.0f, 8.0f, 0.0f, 4.4f, 0.0f, 1.0f, SGWHorizontalAlignment::Right, false);
     SGWColourPicker::transparencyInput = new SGWTextInput(realBg, nullptr, 0.0f, 9.0f, 0.0f, 8.0f, 0.0f, 2.0f, 0.0f, 1.0f);
-    (*SGWColourPicker::transparencyInput).setTextChangedFunction(&SGWColourPicker::updateTransparencyFromInput);
+    (*SGWColourPicker::transparencyInput).textChangedFunction = (&SGWColourPicker::updateTransparencyFromInput);
     new SGWTextLabel(realBg, "hex code:", 0.0f, 0.5f, 0.0f, 9.5f, 0.0f, 2.9f, 0.0f, 1.0f, SGWHorizontalAlignment::Right, false);
     SGWColourPicker::hexCodeInput = new SGWTextInput(realBg, nullptr, 0.0f, 3.5f, 0.0f, 9.5f, 0.0f, 5.0f, 0.0f, 1.0f);
-    (*SGWColourPicker::hexCodeInput).setTextChangedFunction(&SGWColourPicker::updateHexCode);
+    (*SGWColourPicker::hexCodeInput).textChangedFunction = (&SGWColourPicker::updateHexCode);
     SGWColourPicker::colourDisplay = new SGXRenderColourBackgroundSGWidget(realBg, 0.0f, 9.0f, 0.0f, 6.5f, 0.0f, 2.0f, 0.0f, 1.0f, SGWColourPicker::colour);
     SGWColourPicker::completeButton = new SGWTextButton(realBg, "ok", &SGWColourPicker::completeColourSelection, 0.0f, 9.0f, 0.0f, 9.5f, 0.0f, 1.5f, 0.0f, 1.0f);
     return bg;
@@ -160,7 +160,7 @@ void SGWColourPicker::updateTransparency(SGWTouchReceiver */*unused*/, const SGL
     SGWColourPicker::updateUsingColourHSLA();
 }
 
-void SGWColourPicker::updateRed(SGWInput */*unused*/){
+void SGWColourPicker::updateRed(){
     bool isValid = false;
     const int r = (*SGWColourPicker::redInput).getTextAsInt(&isValid, 0, 255);
     if(isValid == false){return;}
@@ -168,7 +168,7 @@ void SGWColourPicker::updateRed(SGWInput */*unused*/){
     SGWColourPicker::updateUsingColour();
 }
 
-void SGWColourPicker::updateGreen(SGWInput */*unused*/){
+void SGWColourPicker::updateGreen(){
     bool isValid = false;
     const int g = (*SGWColourPicker::greenInput).getTextAsInt(&isValid, 0, 255);
     if(isValid == false){return;}
@@ -176,7 +176,7 @@ void SGWColourPicker::updateGreen(SGWInput */*unused*/){
     SGWColourPicker::updateUsingColour();
 }
 
-void SGWColourPicker::updateBlue(SGWInput */*unused*/){
+void SGWColourPicker::updateBlue(){
     bool isValid = false;
     const int b = (*SGWColourPicker::blueInput).getTextAsInt(&isValid, 0, 255);
     if(isValid == false){return;}
@@ -184,7 +184,7 @@ void SGWColourPicker::updateBlue(SGWInput */*unused*/){
     SGWColourPicker::updateUsingColour();
 }
 
-void SGWColourPicker::updateTransparencyFromInput(SGWInput */*unused*/){
+void SGWColourPicker::updateTransparencyFromInput(){
     bool isValid = false;
     const int a = (*SGWColourPicker::transparencyInput).getTextAsInt(&isValid, 0, 255);
     if(isValid == false){return;}
@@ -192,7 +192,7 @@ void SGWColourPicker::updateTransparencyFromInput(SGWInput */*unused*/){
     SGWColourPicker::updateUsingColour();
 }
 
-void SGWColourPicker::updateHexCode(SGWInput */*unused*/){
+void SGWColourPicker::updateHexCode(){
     SGXString correctedInput = "";
     const SGXString rawInput = (*SGWColourPicker::hexCodeInput).getTextAsString().getUpperLanguageAware();
     for(int i=0; i<rawInput.length(); i++){
@@ -214,7 +214,7 @@ void SGWColourPicker::activateColourPicker(SGWColourPickerWidget *x){
     SGWColourPicker::activate();
 }
 
-void SGWColourPicker::completeColourSelection(SGWButton */*unused*/){
+void SGWColourPicker::completeColourSelection(){
     (*SGWColourPicker::colourReceiver).setColour(SGWColourPicker::colour);
     SGWColourPicker::colourReceiver = nullptr;
     SGWBackground::disable(SGWColourPicker::instance);

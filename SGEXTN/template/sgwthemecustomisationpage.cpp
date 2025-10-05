@@ -103,7 +103,7 @@ SGWBackground* SGWThemeCustomisationPage::initialiseDetailsPage(){
         SGWWidget* p = new SGWBlankWidget(SGWThemeCustomisationPage::detailsScroll, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.5f, -1);
         SGWThemeCustomisationPage::customLightLabel = new SGWTextLabel(p, "base colour:", 0.0f, 0.0f, 0.0f, 0.0f, 0.5f, -0.1f, 0.0f, 1.0f, SGWHorizontalAlignment::Right, false);
         SGWThemeCustomisationPage::customLightColourPicker = new SGWColourPickerWidget(p, 0.5f, 0.1f, 0.0f, 0.0f, 0.0f, 2.0f, 0.0f, 1.0f, SGWThemeCustomisationPage::themeColours.at(4));
-        (*SGWThemeCustomisationPage::customLightColourPicker).setAttachedFunction(&SGWThemeCustomisationPage::updateCustomLight);
+        (*SGWThemeCustomisationPage::customLightColourPicker).attachedFunction = (&SGWThemeCustomisationPage::updateCustomLight);
     }
     else{
         SGWThemeCustomisationPage::customLightLabel = nullptr;
@@ -113,7 +113,7 @@ SGWBackground* SGWThemeCustomisationPage::initialiseDetailsPage(){
         SGWWidget* p = new SGWBlankWidget(SGWThemeCustomisationPage::detailsScroll, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.5f, -1);
         SGWThemeCustomisationPage::customDarkLabel = new SGWTextLabel(p, "base colour:", 0.0f, 0.0f, 0.0f, 0.0f, 0.5f, -0.1f, 0.0f, 1.0f, SGWHorizontalAlignment::Right, false);
         SGWThemeCustomisationPage::customDarkColourPicker = new SGWColourPickerWidget(p, 0.5f, 0.1f, 0.0f, 0.0f, 0.0f, 2.0f, 0.0f, 1.0f, SGWThemeCustomisationPage::themeColours.at(4));
-        (*SGWThemeCustomisationPage::customDarkColourPicker).setAttachedFunction(&SGWThemeCustomisationPage::updateCustomDark);
+        (*SGWThemeCustomisationPage::customDarkColourPicker).attachedFunction = (&SGWThemeCustomisationPage::updateCustomDark);
     }
     else{
         SGWThemeCustomisationPage::customDarkLabel = nullptr;
@@ -141,7 +141,8 @@ SGWBackground* SGWThemeCustomisationPage::initialiseDetailsPage(){
     else{
         for(int i=0; i<9; i++){
             SGWThemeCustomisationPage::customAnyColourPicker.at(i) = new SGWColourPickerWidget(SGWThemeCustomisationPage::coloursDisplay.at(i), 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, SGWThemeCustomisationPage::themeColours.at(i));
-            (*SGWThemeCustomisationPage::customAnyColourPicker.at(i)).setAttachedFunction(&SGWThemeCustomisationPage::updateCustomAny);
+            (*SGWThemeCustomisationPage::customAnyColourPicker.at(i)).attachedInt = i;
+            (*SGWThemeCustomisationPage::customAnyColourPicker.at(i)).attachedFunctionWithInt = (&SGWThemeCustomisationPage::updateCustomAny);
         }
     }
     SGWThemeCustomisationPage::isUsingCustomLight = false;
@@ -203,7 +204,7 @@ void SGWThemeCustomisationPage::updateElements(){
     }
 }
 
-void SGWThemeCustomisationPage::showThemeDefaultLight(SGWButton */*unused*/){
+void SGWThemeCustomisationPage::showThemeDefaultLight(){
     SGWThemeCustomisationPage::infoString = "we can be the light\nfor the world to be better\nlight every heart\nbe the sun of hope\n(Be the Light, 2020)\n\nBe the Light is the default light mode theme of all SGEXTN apps, featuring a white background typical for light mode themes with the iconic bright pink accent used by SGEXTN. The theme represents positivity, kindness, and Singaporean values in general, and is inspired by the National Day song of the same name.";
     SGWThemeCustomisationPage::themeColours.at(0) = SGXColourRGBA(0, 0, 0);
     SGWThemeCustomisationPage::themeColours.at(1) = SGXColourRGBA(64, 0, 50);
@@ -217,7 +218,7 @@ void SGWThemeCustomisationPage::showThemeDefaultLight(SGWButton */*unused*/){
     SGWBackground::enable(SGWThemeCustomisationPage::detailsInstance, &SGWThemeCustomisationPage::initialiseDetailsPage, &SGWThemeCustomisationPage::updateElements);
 }
 
-void SGWThemeCustomisationPage::showThemeDefaultDark(SGWButton */*unused*/){
+void SGWThemeCustomisationPage::showThemeDefaultDark(){
     SGWThemeCustomisationPage::infoString = "although life has changed\nwe can lend a helping hand\nthinking back, we'll see\nthe path of light shines from within\n(Be the Light, 2020)\n\nShine From Within is the default dark mode theme of all SGEXTN apps, featuring a black background typical for dark mode themes with the iconic bright pink accent used by SGEXTN. Similar to its light mode equivalent, the theme represents positivity, kindness, and Singaporean values in general, and is inspired by the National Day song Be the Light.";
     SGWThemeCustomisationPage::themeColours.at(0) = SGXColourRGBA(255, 255, 255);
     SGWThemeCustomisationPage::themeColours.at(1) = SGXColourRGBA(255, 191, 241);
@@ -231,7 +232,7 @@ void SGWThemeCustomisationPage::showThemeDefaultDark(SGWButton */*unused*/){
     SGWBackground::enable(SGWThemeCustomisationPage::detailsInstance, &SGWThemeCustomisationPage::initialiseDetailsPage, &SGWThemeCustomisationPage::updateElements);
 }
 
-void SGWThemeCustomisationPage::showThemeForOurNation(SGWButton */*unused*/){
+void SGWThemeCustomisationPage::showThemeForOurNation(){
     SGWThemeCustomisationPage::infoString = "You, my people, my home,\nour lives, defend and uphold,\nmay the good we achieve,\nas one nation,\nbe shared with the world\n(My People My Home, 1995)\n\nFor Our Nation is the National Day special theme applied to all SGEXTN apps during the National Day period, overwriting any theme settings defined by the user. The theme features a mix of red and white, both being the exact same colour as the colours on our flag. The name of the theme comes from our pledge.";
     SGWThemeCustomisationPage::themeColours.at(0) = SGXColourRGBA(0, 0, 0);
     SGWThemeCustomisationPage::themeColours.at(1) = SGXColourRGBA(60, 9, 14);
@@ -245,7 +246,7 @@ void SGWThemeCustomisationPage::showThemeForOurNation(SGWButton */*unused*/){
     SGWBackground::enable(SGWThemeCustomisationPage::detailsInstance, &SGWThemeCustomisationPage::initialiseDetailsPage, &SGWThemeCustomisationPage::updateElements);
 }
 
-void SGWThemeCustomisationPage::showThemeCustomLight(SGWButton */*unused*/){
+void SGWThemeCustomisationPage::showThemeCustomLight(){
     SGWThemeCustomisationPage::infoString = "Custom Light is a custom theme allowing the user to choose any main theme colour. The remaining theme colours will be interpolated from the main theme colour, mostly between white and the main theme colour.";
     SGWThemeCustomisationPage::isUsingCustomLight = true;
     const SGXColourRGBA baseColour = SGXColourRGBA(static_cast<int>(100.0f * SGXRandomNumberGenerator::rng0To1() + 50.0f), static_cast<int>(100.0f * SGXRandomNumberGenerator::rng0To1() + 50.0f), static_cast<int>(100.0f * SGXRandomNumberGenerator::rng0To1() + 50.0f));
@@ -263,7 +264,7 @@ void SGWThemeCustomisationPage::showThemeCustomLight(SGWButton */*unused*/){
     SGWBackground::enable(SGWThemeCustomisationPage::detailsInstance, &SGWThemeCustomisationPage::initialiseDetailsPage, &SGWThemeCustomisationPage::updateElements);
 }
 
-void SGWThemeCustomisationPage::showThemeCustomDark(SGWButton */*unused*/){
+void SGWThemeCustomisationPage::showThemeCustomDark(){
     SGWThemeCustomisationPage::infoString = "Custom Dark is a custom theme allowing the user to choose any main theme colour. The remaining theme colours will be interpolated from the main theme colour, mostly between black and the main theme colour.";
     SGWThemeCustomisationPage::isUsingCustomDark = true;
     const SGXColourRGBA baseColour = SGXColourRGBA(static_cast<int>(100.0f * SGXRandomNumberGenerator::rng0To1() + 155.0f), static_cast<int>(100.0f * SGXRandomNumberGenerator::rng0To1() + 155.0f), static_cast<int>(100.0f * SGXRandomNumberGenerator::rng0To1() + 155.0f));
@@ -281,7 +282,7 @@ void SGWThemeCustomisationPage::showThemeCustomDark(SGWButton */*unused*/){
     SGWBackground::enable(SGWThemeCustomisationPage::detailsInstance, &SGWThemeCustomisationPage::initialiseDetailsPage, &SGWThemeCustomisationPage::updateElements);
 }
 
-void SGWThemeCustomisationPage::showThemeCustomAny(SGWButton */*unused*/){
+void SGWThemeCustomisationPage::showThemeCustomAny(){
     SGWThemeCustomisationPage::infoString = "Custom Any gives the user full control over all theme colours by allowing all 9 theme colours to be set directly.";
     SGWThemeCustomisationPage::isUsingCustomAny = true;
     for(int i=0; i<9; i++){
@@ -290,8 +291,8 @@ void SGWThemeCustomisationPage::showThemeCustomAny(SGWButton */*unused*/){
     SGWBackground::enable(SGWThemeCustomisationPage::detailsInstance, &SGWThemeCustomisationPage::initialiseDetailsPage, &SGWThemeCustomisationPage::updateElements);
 }
 
-void SGWThemeCustomisationPage::updateCustomLight(SGWColourPickerWidget *selector){
-    SGXColourRGBA baseColour = (*selector).getColour();
+void SGWThemeCustomisationPage::updateCustomLight(){
+    SGXColourRGBA baseColour = (*SGWThemeCustomisationPage::customLightColourPicker).getColour();
     baseColour.setTransparency(255);
     const SGXColourRGBA black = SGXColourRGBA(0, 0, 0);
     const SGXColourRGBA white = SGXColourRGBA(255, 255, 255);
@@ -307,8 +308,8 @@ void SGWThemeCustomisationPage::updateCustomLight(SGWColourPickerWidget *selecto
     SGWThemeCustomisationPage::updateElements();
 }
 
-void SGWThemeCustomisationPage::updateCustomDark(SGWColourPickerWidget *selector){
-    SGXColourRGBA baseColour = (*selector).getColour();
+void SGWThemeCustomisationPage::updateCustomDark(){
+    SGXColourRGBA baseColour = (*SGWThemeCustomisationPage::customDarkColourPicker).getColour();
     baseColour.setTransparency(255);
     const SGXColourRGBA black = SGXColourRGBA(0, 0, 0);
     const SGXColourRGBA white = SGXColourRGBA(255, 255, 255);
@@ -324,23 +325,19 @@ void SGWThemeCustomisationPage::updateCustomDark(SGWColourPickerWidget *selector
     SGWThemeCustomisationPage::updateElements();
 }
 
-void SGWThemeCustomisationPage::updateCustomAny(SGWColourPickerWidget *selector){
-    int n = -1;
-    for(int i=0; i<9; i++){
-        if(SGWThemeCustomisationPage::customAnyColourPicker.at(i) == selector){n = i;}
-    }
-    SGXColourRGBA baseColour = (*selector).getColour();
+void SGWThemeCustomisationPage::updateCustomAny(int index){
+    SGXColourRGBA baseColour = (*SGWThemeCustomisationPage::customAnyColourPicker.at(index)).getColour();
     baseColour.setTransparency(255);
-    SGWThemeCustomisationPage::themeColours.at(n) = baseColour;
+    SGWThemeCustomisationPage::themeColours.at(index) = baseColour;
     SGWThemeCustomisationPage::updateElements();
 }
 
-void SGWThemeCustomisationPage::cancelChanges(SGWButton */*unused*/){
+void SGWThemeCustomisationPage::cancelChanges(){
     SGWBackground::disable(SGWThemeCustomisationPage::detailsInstance);
     SGWBackground::disable(SGWThemeCustomisationPage::menuInstance);
 }
 
-void SGWThemeCustomisationPage::confirmChanges(SGWButton */*unused*/){
+void SGWThemeCustomisationPage::confirmChanges(){
     SGUCentralManagement::themeColour0 = SGWThemeCustomisationPage::themeColours.at(0);
     SGUCentralManagement::themeColour1 = SGWThemeCustomisationPage::themeColours.at(1);
     SGUCentralManagement::themeColour2 = SGWThemeCustomisationPage::themeColours.at(2);
@@ -365,6 +362,6 @@ SGWBackground* SGWThemeCustomisationPage::notifInitialise(){
     return bg;
 }
 
-void SGWThemeCustomisationPage::closeNotif(SGWButton */*unused*/){
+void SGWThemeCustomisationPage::closeNotif(){
     SGWBackground::disable(SGWThemeCustomisationPage::notifInstance);
 }

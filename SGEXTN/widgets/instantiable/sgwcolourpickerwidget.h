@@ -3,8 +3,8 @@
 
 #include "../noninstantiable/sgwwidget.h"
 #include "../../primitives/sgxcolourrgba.h"
+#include "../../primitives/sgxstring.h"
 
-class SGXString;
 class SGWWidgetQuickInterface;
 class SGWColourPickerWidget : public SGWWidget
 {
@@ -35,8 +35,12 @@ public:
     void setE1(float e1);
     [[nodiscard]] float getE0() const;
     void setE0(float e0);
-    [[nodiscard]] void (*getAttachedFunction() const)(SGWColourPickerWidget*);
-    void setAttachedFunction(void (*function)(SGWColourPickerWidget*));
+    int attachedInt;
+    SGXString attachedString;
+    void (*attachedFunction)();
+    void (*attachedFunctionWithInt)(int);
+    void (*attachedFunctionWithString)(const SGXString&);
+    void (*attachedFunctionWithPointer)(SGWColourPickerWidget*);
     void eventReceived(const SGXString& s);
 protected:
     float e1;
@@ -49,7 +53,6 @@ protected:
     SGXColourRGBA backgroundHoverColour = {};
     int backgroundFocusThemeColour;
     SGXColourRGBA backgroundFocusColour = {};
-    void (*attachedFunction)(SGWColourPickerWidget*);
     SGWWidgetQuickInterface* quickInterface;
 };
 
