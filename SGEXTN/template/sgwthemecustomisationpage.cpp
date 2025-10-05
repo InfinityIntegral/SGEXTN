@@ -248,7 +248,7 @@ void SGWThemeCustomisationPage::showThemeForOurNation(SGWButton */*unused*/){
 void SGWThemeCustomisationPage::showThemeCustomLight(SGWButton */*unused*/){
     SGWThemeCustomisationPage::infoString = "Custom Light is a custom theme allowing the user to choose any main theme colour. The remaining theme colours will be interpolated from the main theme colour, mostly between white and the main theme colour.";
     SGWThemeCustomisationPage::isUsingCustomLight = true;
-    const SGXColourRGBA baseColour = SGXColourRGBA(static_cast<int>(100.0f * SGXRandomNumberGenerator::rngDouble() + 50.0f), static_cast<int>(100.0f * SGXRandomNumberGenerator::rngDouble() + 50.0f), static_cast<int>(100.0f * SGXRandomNumberGenerator::rngDouble() + 50.0f));
+    const SGXColourRGBA baseColour = SGXColourRGBA(static_cast<int>(100.0f * SGXRandomNumberGenerator::rng0To1() + 50.0f), static_cast<int>(100.0f * SGXRandomNumberGenerator::rng0To1() + 50.0f), static_cast<int>(100.0f * SGXRandomNumberGenerator::rng0To1() + 50.0f));
     const SGXColourRGBA black = SGXColourRGBA(0, 0, 0);
     const SGXColourRGBA white = SGXColourRGBA(255, 255, 255);
     SGWThemeCustomisationPage::themeColours.at(0) = black;
@@ -266,7 +266,7 @@ void SGWThemeCustomisationPage::showThemeCustomLight(SGWButton */*unused*/){
 void SGWThemeCustomisationPage::showThemeCustomDark(SGWButton */*unused*/){
     SGWThemeCustomisationPage::infoString = "Custom Dark is a custom theme allowing the user to choose any main theme colour. The remaining theme colours will be interpolated from the main theme colour, mostly between black and the main theme colour.";
     SGWThemeCustomisationPage::isUsingCustomDark = true;
-    const SGXColourRGBA baseColour = SGXColourRGBA(static_cast<int>(100.0f * SGXRandomNumberGenerator::rngDouble() + 155.0f), static_cast<int>(100.0f * SGXRandomNumberGenerator::rngDouble() + 155.0f), static_cast<int>(100.0f * SGXRandomNumberGenerator::rngDouble() + 155.0f));
+    const SGXColourRGBA baseColour = SGXColourRGBA(static_cast<int>(100.0f * SGXRandomNumberGenerator::rng0To1() + 155.0f), static_cast<int>(100.0f * SGXRandomNumberGenerator::rng0To1() + 155.0f), static_cast<int>(100.0f * SGXRandomNumberGenerator::rng0To1() + 155.0f));
     const SGXColourRGBA black = SGXColourRGBA(0, 0, 0);
     const SGXColourRGBA white = SGXColourRGBA(255, 255, 255);
     SGWThemeCustomisationPage::themeColours.at(0) = white;
@@ -285,7 +285,7 @@ void SGWThemeCustomisationPage::showThemeCustomAny(SGWButton */*unused*/){
     SGWThemeCustomisationPage::infoString = "Custom Any gives the user full control over all theme colours by allowing all 9 theme colours to be set directly.";
     SGWThemeCustomisationPage::isUsingCustomAny = true;
     for(int i=0; i<9; i++){
-        SGWThemeCustomisationPage::themeColours.at(i) = SGXColourHSLA(360.0f * static_cast<float>(SGXRandomNumberGenerator::rngDouble()), 50.0f, 12.5f * static_cast<float>(i), 100.0f).toRGBA();
+        SGWThemeCustomisationPage::themeColours.at(i) = SGXColourHSLA(360.0f * static_cast<float>(SGXRandomNumberGenerator::rng0To1()), 50.0f, 12.5f * static_cast<float>(i), 100.0f).toRGBA();
     }
     SGWBackground::enable(SGWThemeCustomisationPage::detailsInstance, &SGWThemeCustomisationPage::initialiseDetailsPage, &SGWThemeCustomisationPage::updateElements);
 }

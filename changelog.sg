@@ -36,6 +36,7 @@ SGLUnorderedSet: added
 SGLUnorderedMultiSet: added
 SGLUnorderedMap: added
 SGLFileZip: removed, to be replaced with new version in future update
+SGXRandomNumberGenerator: added
 
 Added:
 - SGXChar
@@ -61,6 +62,7 @@ Added:
 - SGLUnorderedSet
 - SGLUnorderedMultiSet
 - SGLUnorderedMap
+- SGXRandomNumberGenerator
 
 Improved:
 - SGXFileSystem

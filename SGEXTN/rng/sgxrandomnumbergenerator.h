@@ -5,9 +5,9 @@ class SGXRandomNumberGenerator
 {
 public:
     SGXRandomNumberGenerator() = delete;
-    static unsigned int rng();
-    static double rngDouble();
-    static unsigned long long rngLongLong();
+    static double rng0To1();
+    static unsigned int rngInt32();
+    static unsigned long long rngInt64();
 };
 
 #endif // SGXRANDOMNUMBERGENERATOR_H

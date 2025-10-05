@@ -13,10 +13,10 @@ const SGXIdentifier SGXIdentifier::nullIdentifier = SGXIdentifier(0);
 
 SGXIdentifier::SGXIdentifier(bool ifValid){ // NOLINT(misc-no-recursion)
     if(ifValid == false){
-        (*this).a = SGXRandomNumberGenerator::rng();
-        (*this).b = SGXRandomNumberGenerator::rng();
-        (*this).c = SGXRandomNumberGenerator::rng();
-        (*this).d = SGXRandomNumberGenerator::rng();
+        (*this).a = SGXRandomNumberGenerator::rngInt32();
+        (*this).b = SGXRandomNumberGenerator::rngInt32();
+        (*this).c = SGXRandomNumberGenerator::rngInt32();
+        (*this).d = SGXRandomNumberGenerator::rngInt32();
     }
     else{
         SGXIdentifier t = SGXIdentifier(false);
