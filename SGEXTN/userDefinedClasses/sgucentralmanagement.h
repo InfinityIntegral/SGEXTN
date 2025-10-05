@@ -17,6 +17,7 @@ public:
     static SGXString applicationVersion;
     static SGXString organisationName;
     static SGXString rootFolderName;
+    static float scaleFactor;
     static SGXColourRGBA themeColour0;
     static SGXColourRGBA themeColour1;
     static SGXColourRGBA themeColour2;

@@ -63,11 +63,11 @@ SGWBackground* SGWSingCorrectCustomisationPage::initialise(){
     s = "    You can define custom SingCorrect commands that function exactly like builtin ones by entering the symbol (copy paste it from copychar.cc) and the command. Note that you can redefine a builtin command by defining a custom command with the same name.";
     new SGWSequentialLongLabel(x, s, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.0f);
     p = new SGWBlankWidget(x, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 3.0f, 8);
-    new SGWTextLabel(p, "symbol", 0.25f, -2.1f, 0.0f, 0.0f, 0.0f, 2.0f, 0.0f, 1.0f, SGWHorizontalAlignment::Left, false);
+    new SGWTextLabel(p, "symbol", 0.25f, -2.6f, 0.0f, 0.0f, 0.0f, 2.5f, 0.0f, 1.0f, SGWHorizontalAlignment::Center, false);
     new SGWTextLabel(p, "command", 0.25f, 0.1f, 0.0f, 0.0f, 0.5f, -0.2f, 0.0f, 1.0f, SGWHorizontalAlignment::Center, false);
-    SGWSingCorrectCustomisationPage::customCharInput = new SGWTextInput(p, &SGWSingCorrectCustomisationPage::customCharCheck, 0.25f, -2.1f, 0.0f, 1.0f, 0.0f, 2.0f, 0.0f, 1.0f);
-    SGWSingCorrectCustomisationPage::customCommandInput = new SGWTextInput(p, &SGWSingCorrectCustomisationPage::customCommandCheck, 0.25f, 0.1f, 0.0f, 1.0f, 0.5f, -0.2f, 0.0f, 1.0f);
-    new SGWTextButton(p, "add", &SGWSingCorrectCustomisationPage::addCustomCommand, 0.75f, 0.1f, 0.0f, 1.0f, 0.0f, 2.0f, 0.0f, 1.0f);
+    SGWSingCorrectCustomisationPage::customCharInput = new SGWTextInput(p, &SGWSingCorrectCustomisationPage::customCharCheck, 0.25f, -2.6f, 0.0f, 1.0f, 0.0f, 2.5f, 0.0f, 1.0f);
+    SGWSingCorrectCustomisationPage::customCommandInput = new SGWTextInput(p, &SGWSingCorrectCustomisationPage::customCommandCheck, 0.25f, 0.1f, 0.0f, 1.0f, 0.5f, 0.3f, 0.0f, 1.0f);
+    new SGWTextButton(p, "add", &SGWSingCorrectCustomisationPage::addCustomCommand, 0.75f, 0.6f, 0.0f, 1.0f, 0.0f, 2.0f, 0.0f, 1.0f);
     SGWSingCorrectCustomisationPage::customCharError = new SGWTextLabel(p, "single symbol", 0.25f, -2.1f, 0.0f, 2.0f, 0.0f, 4.0f, 0.0f, 0.75f, SGWHorizontalAlignment::Left, true);
     SGWSingCorrectCustomisationPage::customCommandError = new SGWTextLabel(p, "only letters, not blank", 0.5f, -1.5f, 0.0f, 2.0f, 0.0f, 6.0f, 0.0f, 0.75f, SGWHorizontalAlignment::Left, true);
     new SGWTextLabel(x, "custom SingCorrect commands:", 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.0f, SGWHorizontalAlignment::Left, false);

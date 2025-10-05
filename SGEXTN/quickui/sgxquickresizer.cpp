@@ -1,6 +1,7 @@
 #include "sgxquickresizer.h"
 #include "../quickui/sgxquickinterface.h"
 #include <QQuickItem>
+#include "../userDefinedClasses/sgucentralmanagement.h"
 
 SGXQuickResizer::SGXQuickResizer(){
     (*this).appWindowWidth = 0.0f;
@@ -58,18 +59,9 @@ void SGXQuickResizer::setSizeUnit(float x){
 void SGXQuickResizer::updateAppWindowSize(){
     setAppWindowWidth(static_cast<float>((*SGXQuickInterface::rootWindow).width()));
     setAppWindowHeight(static_cast<float>((*SGXQuickInterface::rootWindow).height()));
-    if(appWindowWidth > 16.0f / 9.0f * appWindowHeight){
-        setRenderSpaceWidth(16.0f / 9.0f * appWindowHeight);
-        setRenderSpaceHeight(appWindowHeight);
-    }
-    else if(appWindowHeight > 16.0f / 9.0f * appWindowWidth){
-        setRenderSpaceWidth(appWindowWidth);
-        setRenderSpaceHeight(16.0f / 9.0f * appWindowWidth);
-    }
-    else{
-        setRenderSpaceWidth(appWindowWidth);
-        setRenderSpaceHeight(appWindowHeight);
-    }
-    if(renderSpaceWidth / 24.0f > renderSpaceHeight / 25.0f){setSizeUnit(renderSpaceWidth / 24.0f);}
-    else{setSizeUnit(renderSpaceHeight / 25.0f);}
+    setRenderSpaceWidth(appWindowWidth);
+    setRenderSpaceHeight(appWindowHeight);
+    // 13 on mobile, 20 on desktop
+    if(renderSpaceWidth * SGUCentralManagement::scaleFactor < renderSpaceHeight / (1.0f / SGUCentralManagement::scaleFactor + 1.0f)){setSizeUnit(renderSpaceWidth * SGUCentralManagement::scaleFactor);}
+    else{setSizeUnit(renderSpaceHeight / (1.0f / SGUCentralManagement::scaleFactor + 1.0f));}
 }
