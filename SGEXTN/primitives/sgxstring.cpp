@@ -8,7 +8,7 @@
 #include <QList>
 #include <QByteArray>
 #include <QStringList>
-#include "qcontainerfwd.h"
+#include <qcontainerfwd.h>
 
 SGXString::SGXString(){
     (*this).data = new QString("");

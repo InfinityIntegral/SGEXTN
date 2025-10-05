@@ -1,7 +1,7 @@
 #include "sgxcolourrgba.h"
-#include <cmath>
 #include "sgxstring.h"
 #include "../containers/sglhash.h"
+#include "../math/sglfloatmath.h"
 
 namespace{
 inline void temp_boundInt(int& x){
@@ -15,7 +15,7 @@ inline void temp_boundFloat(float& x){
 }
 
 inline unsigned int temp_floatToUnsignedInt(float x){
-    const int x0 = static_cast<int>(std::roundf(255.0f * x));
+    const int x0 = SGLFloatMath::roundToInt(255.0f * x);
     return static_cast<unsigned int>(x0);
 }
 }
@@ -195,15 +195,15 @@ void SGXColourRGBA::linearTransformTransparency(float m, float c){
 }
 
 void SGXColourRGBA::gammaCorrectBegin(float &r, float &g, float &b) const {
-    r = std::powf(getRedAsFloat(), 2.2f);
-    g = std::powf(getGreenAsFloat(), 2.2f);
-    b = std::powf(getBlueAsFloat(), 2.2f);
+    r = SGLFloatMath::aToThePowerOfB(getRedAsFloat(), 2.2f);
+    g = SGLFloatMath::aToThePowerOfB(getGreenAsFloat(), 2.2f);
+    b = SGLFloatMath::aToThePowerOfB(getBlueAsFloat(), 2.2f);
 }
 
 void SGXColourRGBA::gammaCorrectEnd(float r, float g, float b){
-    setRedUsingFloat(std::powf(r, 1.0f / 2.2f));
-    setGreenUsingFloat(std::powf(g, 1.0f / 2.2f));
-    setBlueUsingFloat(std::powf(b, 1.0f / 2.2f));
+    setRedUsingFloat(SGLFloatMath::aToThePowerOfB(r, 1.0f / 2.2f));
+    setGreenUsingFloat(SGLFloatMath::aToThePowerOfB(g, 1.0f / 2.2f));
+    setBlueUsingFloat(SGLFloatMath::aToThePowerOfB(b, 1.0f / 2.2f));
 }
 
 void SGXColourRGBA::linearTransformRedWithGamma(float m, float c){

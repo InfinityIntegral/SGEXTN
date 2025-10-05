@@ -1,11 +1,11 @@
 #include "sgxvector2.h"
-#include <cmath>
-#include <numbers>
 #include "sgxstring.h"
 #include "../containers/sglhash.h"
 #include "../containers/sglspan.h"
 #include "../containers/sglarray.h"
 #include "../containers/sglhashalgorithm.h"
+#include "../math/sglfloatconstants.h"
+#include "../math/sglfloatmath.h"
 
 namespace{
 inline bool temp_isBetween(float x, float a, float b){
@@ -103,7 +103,7 @@ float SGXVector2::getMagnitudeSquare() const {
 }
 
 float SGXVector2::getMagnitude() const {
-    return std::sqrtf(getMagnitudeSquare());
+    return SGLFloatMath::squareRoot(getMagnitudeSquare());
 }
 
 float SGXVector2::getDistanceSquare(SGXVector2 x) const {
@@ -111,7 +111,7 @@ float SGXVector2::getDistanceSquare(SGXVector2 x) const {
 }
 
 float SGXVector2::getDistance(SGXVector2 x) const {
-    return std::sqrtf(getDistanceSquare(x));
+    return SGLFloatMath::squareRoot(getDistanceSquare(x));
 }
 
 void SGXVector2::normalise(){
@@ -123,12 +123,12 @@ void SGXVector2::normaliseGivenMagnitude(float m){
 }
 
 float SGXVector2::getArgument() const {
-    return (std::atan2f(y, x) * 180.0f / std::numbers::pi_v<float>);
+    return (SGLFloatMath::arctangentQuadrantAware(y, x) * 180.0f / SGLFloatConstants::pi());
 }
 
 float SGXVector2::getAngleBetween(SGXVector2 x) const {
     float f = x.getArgument() - getArgument();
-    f = std::fmodf(f, 360.0f);
+    f = SGLFloatMath::modulo(f, 360.0f);
     if(f <= -180.0f){f += 360.0f;}
     else if(f > 180.0f){f -= 360.0f;}
     return f;
@@ -136,9 +136,9 @@ float SGXVector2::getAngleBetween(SGXVector2 x) const {
 
 void SGXVector2::redirectUsingArgument(float a){
     const float m = getMagnitude();
-    a *= (std::numbers::pi_v<float> / 180.0f);
-    x = std::cosf(a);
-    y = std::sinf(a);
+    a *= (SGLFloatConstants::pi() / 180.0f);
+    x = SGLFloatMath::cosine(a);
+    y = SGLFloatMath::sine(a);
     (*this) *= m;
 }
 
@@ -159,18 +159,18 @@ void SGXVector2::rotateClockwise90(){
 }
 
 void SGXVector2::rotateCounterclockwise(float a){
-    a *= (std::numbers::pi_v<float> / 180.0f);
-    (*this) = SGXVector2(x * std::cosf(a) - y * std::sinf(a), x * std::sinf(a) + y * std::cosf(a));
+    a *= (SGLFloatConstants::pi() / 180.0f);
+    (*this) = SGXVector2(x * SGLFloatMath::cosine(a) - y * SGLFloatMath::sine(a), x * SGLFloatMath::sine(a) + y * SGLFloatMath::cosine(a));
 }
 
 void SGXVector2::rotateClockwise(float a){
-    a *= (std::numbers::pi_v<float> / 180.0f);
-    (*this) = SGXVector2(x * std::cosf(a) + y * std::sinf(a), (-1.0f) * x * std::sinf(a) + y * std::cosf(a));
+    a *= (SGLFloatConstants::pi() / 180.0f);
+    (*this) = SGXVector2(x * SGLFloatMath::cosine(a) + y * SGLFloatMath::sine(a), (-1.0f) * x * SGLFloatMath::sine(a) + y * SGLFloatMath::cosine(a));
 }
 
 bool SGXVector2::isCollinear(SGXVector2 a, SGXVector2 b, float limit) const {
     float arg = (a - (*this)).getArgument() - (b - (*this)).getArgument();
-    arg = std::fmodf(arg, 180.0f);
+    arg = SGLFloatMath::modulo(arg, 180.0f);
     if(arg < -90.0f){arg += 180.0f;}
     else if(arg > 90.0f){arg -= 180.0f;}
     if(arg >= (-1.0f) * limit && arg <= limit){return true;}
@@ -179,7 +179,7 @@ bool SGXVector2::isCollinear(SGXVector2 a, SGXVector2 b, float limit) const {
 
 bool SGXVector2::isParallel(SGXVector2 a2, SGXVector2 b1, SGXVector2 b2, float limit) const {
     float arg = (a2 - (*this)).getArgument() - (b2 - b1).getArgument();
-    arg = std::fmodf(arg, 180.0f);
+    arg = SGLFloatMath::modulo(arg, 180.0f);
     if(arg < -90.0f){arg += 180.0f;}
     else if(arg > 90.0f){arg -= 180.0f;}
     if(arg >= (-1.0f) * limit && arg <= limit){return true;}
@@ -188,7 +188,7 @@ bool SGXVector2::isParallel(SGXVector2 a2, SGXVector2 b1, SGXVector2 b2, float l
 
 bool SGXVector2::isPerpendicular(SGXVector2 a, SGXVector2 b, float limit) const {
     float arg = (a - (*this)).getArgument() - (b - (*this)).getArgument() + 90.0f;
-    arg = std::fmodf(arg, 180.0f);
+    arg = SGLFloatMath::modulo(arg, 180.0f);
     if(arg < -90.0f){arg += 180.0f;}
     else if(arg > 90.0f){arg -= 180.0f;}
     if(arg >= (-1.0f) * limit && arg <= limit){return true;}

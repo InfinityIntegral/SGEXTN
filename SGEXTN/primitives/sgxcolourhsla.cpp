@@ -1,10 +1,10 @@
 #include "sgxcolourhsla.h"
 #include "sgxcolourrgba.h"
-#include <cmath>
 #include "../containers/sglhashalgorithm.h"
 #include "../containers/sglarray.h"
 #include "../containers/sglspan.h"
 #include "../containers/sglhash.h"
+#include "../math/sglfloatmath.h"
 
 namespace{
 inline float temp_maxof3float(float a, float b, float c){
@@ -25,7 +25,7 @@ inline void temp_limitto100(float& x){
 }
 
 inline void temp_limitto360(float& x){
-    x = std::fmodf(x, 360.0f);
+    x = SGLFloatMath::modulo(x, 360.0f);
     if(x < 0.0f){x += 360.0f;}
 }
 
