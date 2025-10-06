@@ -34,10 +34,11 @@
         <file>QML/sgwiconbutton.qml</file>
         <file>QML/sgwtextinput.qml</file>
         <file>QML/sgwlonginput.qml</file>
-        <file>QML/sgwtouchreceiver.qml</file>
         <file>QML/sgwcolourpickerwidget.qml</file>
         <file>QML/sgwsequentialscrollview.qml</file>
         <file>QML/sgwsequentiallonglabel.qml</file>
         <file>QML/sgwsingletouchreceiver.qml</file>
+        <file>QML/sgwmultitouchreceiver.qml</file>
     </qresource>
+    <qresource prefix="/"/>
 </RCC>

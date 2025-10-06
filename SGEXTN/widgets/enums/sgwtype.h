@@ -23,7 +23,7 @@ public:
         SequentialScrollView,
         ColourPicker,
         SingleTouchReceiver,
-        TouchReceiver,
+        MultiTouchReceiver,
         CustomRenderer,
         Undefined
     };

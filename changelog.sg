@@ -51,6 +51,7 @@ SGWColourPickerWidget: add callback functions taking other arguments
 SGWInput: add callback functions taking other arguments
 SGWButton: add callback functions taking other arguments
 SGWSingleTouchReceiver: added
+SGWMultiTouchReceiver: added
 
 Added:
 - SGXChar
@@ -86,6 +87,7 @@ Added:
 - SGLLongLongLimits
 - SGLSort
 - SGWSingleTouchReceiver
+- SGWMultiTouchReceiver
 
 Improved:
 - SGXFileSystem

@@ -5,7 +5,7 @@
 #include "../widgets/instantiable/sgwcolourpickerwidget.h"
 #include "../widgets/noninstantiable/sgwinput.h"
 #include "../widgets/unique/sgwstatusbar.h"
-#include "../widgets/instantiable/sgwtouchreceiver.h"
+#include "../widgets/instantiable/sgwmultitouchreceiver.h".h"
 #include <QQuickItem>
 #include "../primitives/sgxstring.h"
 #include "../widgets/instantiable/sgwsingletouchreceiver.h"
@@ -25,7 +25,7 @@ void SGWWidgetQuickInterface::eventReceived(const SGXString &event) const {
     if(SGWType::isButton((*x).getType()) == true){(*static_cast<SGWButton*>(x)).eventReceived(event);}
     else if(SGWType::isInputField((*x).getType()) == true){(*static_cast<SGWInput*>(x)).eventReceived(event);}
     else if((*x).getType() == SGWType::ColourPicker){(*static_cast<SGWColourPickerWidget*>(x)).eventReceived(event);}
-    else if((*x).getType() == SGWType::TouchReceiver){(*static_cast<SGWTouchReceiver*>(x)).eventReceived(event);}
+    else if((*x).getType() == SGWType::MultiTouchReceiver){(*static_cast<SGWMultiTouchReceiver*>(x)).eventReceived(event);}
     else if((*x).getType() == SGWType::SingleTouchReceiver){(*static_cast<SGWSingleTouchReceiver*>(x)).eventReceived(event);}
     else if((*x).getType() == SGWType::StatusBar){SGWStatusBar::eventReceived(event);}
 }

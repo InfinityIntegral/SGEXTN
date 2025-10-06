@@ -34,7 +34,7 @@ public:
     static QQmlComponent* iconButton;
     static QQmlComponent* textInput;
     static QQmlComponent* longInput;
-    static QQmlComponent* touchReceiver;
+    static QQmlComponent* multiTouchReceiver;
     static QQmlComponent* singleTouchReceiver;
     static QQmlComponent* colourPicker;
     static QQmlComponent* sequentialScrollView;

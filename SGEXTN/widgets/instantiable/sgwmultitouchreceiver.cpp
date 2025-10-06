@@ -1,4 +1,4 @@
-#include "sgwtouchreceiver.h"
+#include "sgwmultitouchreceiver.h"
 #include "../../quickui/sgxquickinterface.h"
 #include "../noninstantiable/sgwwidget.h"
 #include "../../primitives/sgxtouchevent.h"
@@ -8,16 +8,21 @@
 #include "../../quickui/sgwwidgetquickinterface.h"
 #include "../../containers/sglarray.h"
 
-SGWTouchReceiver::SGWTouchReceiver(SGWWidget *parent, void (*function)(SGWTouchReceiver *, const SGLArray<SGXTouchEvent> &), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0) : SGWWidget(parent, x1, x0, y1, y0, w1, w0, h1, h0){
-    (*this).function = function;
-    QQuickItem* thisItem = nullptr;
+SGWMultiTouchReceiver::SGWMultiTouchReceiver(SGWWidget *parent, void (*function)(const SGLArray<SGXTouchEvent> &), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0) : SGWWidget(parent, x1, x0, y1, y0, w1, w0, h1, h0){
+    (*this).attachedInt = 0;
+    (*this).attachedString = "";
+    (*this).callbackFunction = function;
+    (*this).callbackFunctionWithInt = nullptr;
+    (*this).callbackFunctionWithString = nullptr;
+    (*this).callbackFunctionWithPointer = nullptr;
+    QQuickItem* thisItem = static_cast<QQuickItem*>((*SGXQuickInterface::multiTouchReceiver).create());
     (*this).initialiseQuickItemReferences(thisItem);
-    (*this).type = SGWType::Undefined;
+    (*this).type = SGWType::MultiTouchReceiver;
     SGWWidget::syncQuickProperties();
     quickInterface = new SGWWidgetQuickInterface(this);
 }
 
-void SGWTouchReceiver::eventReceived(const SGXString &s){
+void SGWMultiTouchReceiver::eventReceived(const SGXString &s){
     if(s != "touched"){return;}
     QQuickItem* thisItem = topObject;
     SGLArray<float> data(11);
@@ -103,17 +108,20 @@ void SGWTouchReceiver::eventReceived(const SGXString &s){
     }
     else{eventsToPass.at(4) = SGXTouchEvent(5);}
 
-    (*this).function(this, eventsToPass);
+    if(callbackFunction != nullptr){callbackFunction(eventsToPass);}
+    if(callbackFunctionWithInt != nullptr){callbackFunctionWithInt(attachedInt, eventsToPass);}
+    if(callbackFunctionWithString != nullptr){callbackFunctionWithString(attachedString, eventsToPass);}
+    if(callbackFunctionWithPointer != nullptr){callbackFunctionWithPointer(this, eventsToPass);}
 }
 
-float SGWTouchReceiver::getWidth() const {
+float SGWMultiTouchReceiver::getWidth() const {
     return static_cast<float>((*topObject).width());
 }
 
-float SGWTouchReceiver::getHeight() const {
+float SGWMultiTouchReceiver::getHeight() const {
     return static_cast<float>((*topObject).height());
 }
 
-SGWTouchReceiver::~SGWTouchReceiver(){
+SGWMultiTouchReceiver::~SGWMultiTouchReceiver(){
     (*quickInterface).deleteLater();
 }
