@@ -50,6 +50,7 @@ SGWBackground: enable and disable ensure only visible content is rendered
 SGWColourPickerWidget: add callback functions taking other arguments
 SGWInput: add callback functions taking other arguments
 SGWButton: add callback functions taking other arguments
+SGWSingleTouchReceiver: added
 
 Added:
 - SGXChar
@@ -84,6 +85,7 @@ Added:
 - SGLIntLimits
 - SGLLongLongLimits
 - SGLSort
+- SGWSingleTouchReceiver
 
 Improved:
 - SGXFileSystem

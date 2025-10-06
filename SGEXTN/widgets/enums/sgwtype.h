@@ -22,6 +22,7 @@ public:
         ScrollView,
         SequentialScrollView,
         ColourPicker,
+        SingleTouchReceiver,
         TouchReceiver,
         CustomRenderer,
         Undefined

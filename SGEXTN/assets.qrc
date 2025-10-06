@@ -38,5 +38,6 @@
         <file>QML/sgwcolourpickerwidget.qml</file>
         <file>QML/sgwsequentialscrollview.qml</file>
         <file>QML/sgwsequentiallonglabel.qml</file>
+        <file>QML/sgwsingletouchreceiver.qml</file>
     </qresource>
 </RCC>

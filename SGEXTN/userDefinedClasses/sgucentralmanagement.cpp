@@ -15,10 +15,14 @@ SGXString SGUCentralManagement::organisationName = "05524F.sg (Singapore)";
 // name of root folder of your application, only use uppercase or lowercase letters, definitely no banned characters, no dots, no spaces, no hyphens, no underscores, avoid numbers, avoid non ASCII characters
 SGXString SGUCentralManagement::rootFolderName = "SGEXTN";
 float SGUCentralManagement::scaleFactor = 0.05f; // 0.05 for desktop, 0.08 for mobile
-
+#include "../widgets/instantiable/sgwsingletouchreceiver.h"
+#include "../primitives/sgxtouchevent.h"
+#include <QDebug>
+SGWSingleTouchReceiver* t;
+void func(const SGXTouchEvent& x){qDebug() << (x.x / (*t).getWidth()) << (x.y / (*t).getHeight());}
 // this is run immediately after GUI is created, use it to initialise the UI
 void SGUCentralManagement::initialise(){
-    
+    t = new SGWSingleTouchReceiver(SGWWidget::parentWidget, &func, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f);
 }
 
 // this is run after the application is created but before the GUI, use it to edit theme colours from configuration files

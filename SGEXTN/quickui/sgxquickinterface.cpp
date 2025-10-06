@@ -31,6 +31,7 @@ QQmlComponent* SGXQuickInterface::iconButton = nullptr;
 QQmlComponent* SGXQuickInterface::textInput = nullptr;
 QQmlComponent* SGXQuickInterface::longInput = nullptr;
 QQmlComponent* SGXQuickInterface::touchReceiver = nullptr;
+QQmlComponent* SGXQuickInterface::singleTouchReceiver = nullptr;
 QQmlComponent* SGXQuickInterface::colourPicker = nullptr;
 QQmlComponent* SGXQuickInterface::sequentialScrollView = nullptr;
 QQmlComponent* SGXQuickInterface::sequentialLongLabel = nullptr;
@@ -50,6 +51,7 @@ void SGXQuickInterface::createTemplates(){
     SGXQuickInterface::textInput = new QQmlComponent(SGXQuickInterface::e, ":/SGEXTN/QML/sgwtextinput.qml");
     SGXQuickInterface::longInput = new QQmlComponent(SGXQuickInterface::e, ":/SGEXTN/QML/sgwlonginput.qml");
     SGXQuickInterface::touchReceiver = new QQmlComponent(SGXQuickInterface::e, ":/SGEXTN/QML/sgwtouchreceiver.qml");
+    SGXQuickInterface::singleTouchReceiver = new QQmlComponent(SGXQuickInterface::e, ":/SGEXTN/QML/sgwsingletouchreceiver.qml");
     SGXQuickInterface::colourPicker = new QQmlComponent(SGXQuickInterface::e, ":/SGEXTN/QML/sgwcolourpickerwidget.qml");
     SGXQuickInterface::sequentialScrollView = new QQmlComponent(SGXQuickInterface::e, ":/SGEXTN/QML/sgwsequentialscrollview.qml");
     SGXQuickInterface::sequentialLongLabel = new QQmlComponent(SGXQuickInterface::e, ":/SGEXTN/QML/sgwsequentiallonglabel.qml");
@@ -70,6 +72,7 @@ void SGXQuickInterface::deleteTemplates(){
     delete SGXQuickInterface::textInput;
     delete SGXQuickInterface::longInput;
     delete SGXQuickInterface::touchReceiver;
+    delete SGXQuickInterface::singleTouchReceiver;
     delete SGXQuickInterface::colourPicker;
     delete SGXQuickInterface::sequentialScrollView;
     delete SGXQuickInterface::sequentialLongLabel;

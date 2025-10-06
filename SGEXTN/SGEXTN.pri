@@ -34,6 +34,7 @@ SOURCES += SGEXTN/misc/main.cpp \
     $$PWD/quickui/sgxsingcorrectquickinterface.cpp \
     $$PWD/quickui/sgxtimerquickinterface.cpp \
     $$PWD/rng/sgxrandomnumbergenerator.cpp \
+    $$PWD/widgets/instantiable/sgwsingletouchreceiver.cpp \
     SGEXTN/SingCorrect/sgwsingcorrectcustomisationpage.cpp \
     SGEXTN/SingCorrect/sgxsingcorrectcore.cpp \
     SGEXTN/SingCorrect/sgxsingcorrectcustomisation.cpp \
@@ -144,6 +145,7 @@ HEADERS += \
     $$PWD/quickui/sgxsingcorrectquickinterface.h \
     $$PWD/quickui/sgxtimerquickinterface.h \
     $$PWD/rng/sgxrandomnumbergenerator.h \
+    $$PWD/widgets/instantiable/sgwsingletouchreceiver.h \
     SGEXTN/SingCorrect/sgwsingcorrectcustomisationpage.h \
     SGEXTN/SingCorrect/sgxsingcorrectcore.h \
     SGEXTN/SingCorrect/sgxsingcorrectcustomisation.h \

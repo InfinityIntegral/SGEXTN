@@ -8,6 +8,7 @@
 #include "../widgets/instantiable/sgwtouchreceiver.h"
 #include <QQuickItem>
 #include "../primitives/sgxstring.h"
+#include "../widgets/instantiable/sgwsingletouchreceiver.h"
 
 SGWWidgetQuickInterface::SGWWidgetQuickInterface(SGWWidget *x){
     (*this).x = x;
@@ -25,5 +26,6 @@ void SGWWidgetQuickInterface::eventReceived(const SGXString &event) const {
     else if(SGWType::isInputField((*x).getType()) == true){(*static_cast<SGWInput*>(x)).eventReceived(event);}
     else if((*x).getType() == SGWType::ColourPicker){(*static_cast<SGWColourPickerWidget*>(x)).eventReceived(event);}
     else if((*x).getType() == SGWType::TouchReceiver){(*static_cast<SGWTouchReceiver*>(x)).eventReceived(event);}
+    else if((*x).getType() == SGWType::SingleTouchReceiver){(*static_cast<SGWSingleTouchReceiver*>(x)).eventReceived(event);}
     else if((*x).getType() == SGWType::StatusBar){SGWStatusBar::eventReceived(event);}
 }
