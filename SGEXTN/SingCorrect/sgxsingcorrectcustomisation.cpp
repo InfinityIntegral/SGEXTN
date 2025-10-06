@@ -12,7 +12,7 @@ SGLUnorderedMap<SGXString, SGXChar, SGLEqualsTo<SGXString>, SGLHash<SGXString>>*
 bool SGXSingCorrectCustomisation::moduleEnabled = true;
 
 void SGXSingCorrectCustomisation::loadFileData(){
-    const SGXString path = SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "correctionconfigs.sg");
+    const SGXString path = SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "SGEXTN/correctionconfigs.sg");
     delete SGXSingCorrectCustomisation::database;
     SGXSingCorrectCustomisation::database = new SGLUnorderedMap<SGXString, SGXChar, SGLEqualsTo<SGXString>, SGLHash<SGXString>>();
     if(SGXFileSystem::fileExists(path) == false){return;}
@@ -30,7 +30,7 @@ void SGXSingCorrectCustomisation::loadFileData(){
 }
 
 void SGXSingCorrectCustomisation::syncFileData(){
-    const SGXString path = SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "correctionconfigs.sg");
+    const SGXString path = SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "SGEXTN/correctionconfigs.sg");
     if(SGXFileSystem::fileExists(path) == true){SGXFileSystem::permanentDeleteFile(path);}
     SGXFileSystem::createFile(path);
     {

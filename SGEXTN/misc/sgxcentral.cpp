@@ -37,15 +37,12 @@ void SGXCentral::initialise(){
     if(SGXFileSystem::folderExists(SGXFileSystem::userDataFilePath) == false){SGXFileSystem::createFolder(SGXFileSystem::userDataFilePath);}
     if(SGXFileSystem::folderExists(SGXFileSystem::configFilePath) == false){SGXFileSystem::createFolder(SGXFileSystem::configFilePath);}
     SGXFileBinUtilities::loadBinData();
-
     SGUCentralManagement::earlyInitialise();
-
     QCoreApplication::setApplicationName(*SGUCentralManagement::applicationName.data);
     QCoreApplication::setApplicationVersion(*SGUCentralManagement::applicationVersion.data);
     QCoreApplication::setOrganizationName(*SGUCentralManagement::organisationName.data);
     const QIcon temp_appicon(":/SGEXTN/assets/appicon.png");
     QGuiApplication::setWindowIcon(temp_appicon);
-
     SGXThemeColoursCustomisation::loadThemeColours();
 
     SGXQuickInterface::themeColoursSingleton = new SGXThemeColourSetting();

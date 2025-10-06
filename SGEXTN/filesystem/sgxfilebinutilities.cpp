@@ -39,7 +39,7 @@ void SGXFileBinUtilities::loadBinData(){
 
 void SGXFileBinUtilities::createEmptyBin(){
     if(SGXFileSystem::folderExists(SGXFileBinUtilities::binFilePath) == true){SGXFileSystem::permanentDeleteFolder(SGXFileBinUtilities::binFilePath);}
-    SGXFileSystem::createFolder(SGXFileBinUtilities::binFilePath);
+    SGXFileSystem::createFile(SGXFileBinUtilities::pathToMetadataFile);
     {
         const SGXFile fileWriter(SGXFileBinUtilities::pathToMetadataFile);
         fileWriter.writeInt(SGXFileBinUtilities::lifespan);

@@ -26,8 +26,7 @@ void SGXFileUploader::checkUploadedFile(){
     (*urlPath.data) = (*SGXFileUploader::fileUploadInstance).property("selectedFilePath").toString();
     if(urlPath != ""){
         (*urlPath.data) = QUrl(*urlPath.data).toLocalFile();
-        const SGXString realPath = SGXFileSystem::getFreePath(SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "temp"), "temp", ".sg");
-        if(SGXFileSystem::folderExists(SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "temp")) == false){SGXFileSystem::createFolder(SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "temp"));}
+        const SGXString realPath = SGXFileSystem::getFreePath(SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "SGEXTN/temp"), "temp", ".sg");
         SGXFileSystem::createFile(realPath);
         {
             const SGXFile fileReader(urlPath);
