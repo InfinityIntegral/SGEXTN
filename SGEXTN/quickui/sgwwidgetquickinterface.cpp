@@ -5,7 +5,7 @@
 #include "../widgets/instantiable/sgwcolourpickerwidget.h"
 #include "../widgets/noninstantiable/sgwinput.h"
 #include "../widgets/unique/sgwstatusbar.h"
-#include "../widgets/instantiable/sgwmultitouchreceiver.h".h"
+#include "../widgets/instantiable/sgwmultitouchreceiver.h"
 #include <QQuickItem>
 #include "../primitives/sgxstring.h"
 #include "../widgets/instantiable/sgwsingletouchreceiver.h"

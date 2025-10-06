@@ -101,7 +101,6 @@ SOURCES += SGEXTN/misc/main.cpp \
     SGEXTN/widgets/instantiable/sgwtextbutton.cpp \
     SGEXTN/widgets/instantiable/sgwtextinput.cpp \
     SGEXTN/widgets/instantiable/sgwtextlabel.cpp \
-    SGEXTN/widgets/instantiable/sgwtouchreceiver.cpp \
     SGEXTN/widgets/enums/sgwtype.cpp \
     SGEXTN/widgets/noninstantiable/sgwwidget.cpp
 RESOURCES += SGEXTN/assets.qrc
@@ -214,7 +213,6 @@ HEADERS += \
     SGEXTN/widgets/instantiable/sgwtextbutton.h \
     SGEXTN/widgets/instantiable/sgwtextinput.h \
     SGEXTN/widgets/instantiable/sgwtextlabel.h \
-    SGEXTN/widgets/instantiable/sgwtouchreceiver.h \
     SGEXTN/widgets/enums/sgwtype.h \
     SGEXTN/widgets/enums/sgwverticalalignment.h \
     SGEXTN/widgets/noninstantiable/sgwwidget.h

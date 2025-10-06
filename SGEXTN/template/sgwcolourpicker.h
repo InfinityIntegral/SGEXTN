@@ -4,14 +4,13 @@
 #include "../primitives/sgxcolourrgba.h"
 #include "../primitives/sgxcolourhsla.h"
 
-template <typename T> class SGLArray;
 class SGWBackground;
 class SGXRenderColourPickerHueChoiceSGWidget;
 class SGXRenderColourPickerSaturationChoiceSGWidget;
 class SGXRenderColourPickerLightnessChoiceSGWidget;
 class SGXRenderColourPickerTransparencyChoiceSGWidget;
 class SGXRenderColourBackgroundSGWidget;
-class SGWTouchReceiver;
+class SGWSingleTouchReceiver;
 class SGWInput;
 class SGWColourPickerWidget;
 class SGWButton;
@@ -30,17 +29,17 @@ public:
     static void updateUsingColour();
     static void updateUsingColourHSLA();
     static void updateInputs();
-    static SGWTouchReceiver* hueTouchReceiver;
-    static void updateHue(SGWTouchReceiver* /*unused*/, const SGLArray<SGXTouchEvent>& t);
+    static SGWSingleTouchReceiver* hueTouchReceiver;
+    static void updateHue(const SGXTouchEvent& t);
     static SGXRenderColourPickerSaturationChoiceSGWidget* saturationChoice;
-    static SGWTouchReceiver* saturationTouchReceiver;
-    static void updateSaturation(SGWTouchReceiver* /*unused*/, const SGLArray<SGXTouchEvent>& t);
+    static SGWSingleTouchReceiver* saturationTouchReceiver;
+    static void updateSaturation(const SGXTouchEvent& t);
     static SGXRenderColourPickerLightnessChoiceSGWidget* lightnessChoice;
-    static SGWTouchReceiver* lightnessTouchReceiver;
-    static void updateLightness(SGWTouchReceiver* /*unused*/, const SGLArray<SGXTouchEvent>& t);
+    static SGWSingleTouchReceiver* lightnessTouchReceiver;
+    static void updateLightness(const SGXTouchEvent& t);
     static SGXRenderColourPickerTransparencyChoiceSGWidget* transparencyChoice;
-    static SGWTouchReceiver* transparencyTouchReceiver;
-    static void updateTransparency(SGWTouchReceiver* /*unused*/, const SGLArray<SGXTouchEvent>& t);
+    static SGWSingleTouchReceiver* transparencyTouchReceiver;
+    static void updateTransparency(const SGXTouchEvent& t);
     static SGWInput* redInput;
     static void updateRed();
     static SGWInput* greenInput;
