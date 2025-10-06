@@ -26,6 +26,7 @@
 #include <QQmlApplicationEngine>
 #include "../widgets/noninstantiable/sgwbackground.h"
 #include "../primitives/sgxidentifier.h"
+#include "../customisation/sgxfontsizecustomisation.h"
 
 void SGXCentral::initialise(){
     const SGXString standardPath = "";
@@ -37,6 +38,7 @@ void SGXCentral::initialise(){
     if(SGXFileSystem::folderExists(SGXFileSystem::userDataFilePath) == false){SGXFileSystem::createFolder(SGXFileSystem::userDataFilePath);}
     if(SGXFileSystem::folderExists(SGXFileSystem::configFilePath) == false){SGXFileSystem::createFolder(SGXFileSystem::configFilePath);}
     SGXFileBinUtilities::loadBinData();
+    
     SGUCentralManagement::earlyInitialise();
     QCoreApplication::setApplicationName(*SGUCentralManagement::applicationName.data);
     QCoreApplication::setApplicationVersion(*SGUCentralManagement::applicationVersion.data);
@@ -51,6 +53,7 @@ void SGXCentral::initialise(){
     qmlRegisterSingletonInstance("Resizer", 0, 0, "Resizer", SGXQuickInterface::resizerSingleton);
     SGXSingCorrectCore::instance = new SGXSingCorrectQuickInterface();
     qmlRegisterSingletonInstance("SingCorrect", 0, 0, "SingCorrect", SGXSingCorrectCore::instance);
+    SGXFontSizeCustomisation::loadFontSize();
 
     qmlRegisterType<SGXRenderColourPickerHueChoiceQuickUIElement>("ColourPickerHueChoice", 0, 0, "ColourPickerHueChoice");
     qmlRegisterType<SGXRenderColourPickerSaturationChoiceQuickUIElement>("ColourPickerSaturationChoice", 0, 0, "ColourPickerSaturationChoice");

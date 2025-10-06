@@ -1,7 +1,7 @@
 #include "sgxquickresizer.h"
 #include "../quickui/sgxquickinterface.h"
 #include <QQuickItem>
-#include "../userDefinedClasses/sgucentralmanagement.h"
+#include "../customisation/sgxfontsizecustomisation.h"
 
 SGXQuickResizer::SGXQuickResizer(){
     (*this).appWindowWidth = 0.0f;
@@ -61,7 +61,6 @@ void SGXQuickResizer::updateAppWindowSize(){
     setAppWindowHeight(static_cast<float>((*SGXQuickInterface::rootWindow).height()));
     setRenderSpaceWidth(appWindowWidth);
     setRenderSpaceHeight(appWindowHeight);
-    // 13 on mobile, 20 on desktop
-    if(renderSpaceWidth * SGUCentralManagement::scaleFactor < renderSpaceHeight / (1.0f / SGUCentralManagement::scaleFactor + 1.0f)){setSizeUnit(renderSpaceWidth * SGUCentralManagement::scaleFactor);}
-    else{setSizeUnit(renderSpaceHeight / (1.0f / SGUCentralManagement::scaleFactor + 1.0f));}
+    if(renderSpaceWidth * SGXFontSizeCustomisation::fontSize < renderSpaceHeight / (1.0f / SGXFontSizeCustomisation::fontSize + 1.0f)){setSizeUnit(renderSpaceWidth * SGXFontSizeCustomisation::fontSize);}
+    else{setSizeUnit(renderSpaceHeight / (1.0f / SGXFontSizeCustomisation::fontSize + 1.0f));}
 }

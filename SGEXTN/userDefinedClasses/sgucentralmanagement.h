@@ -17,7 +17,6 @@ public:
     static SGXString applicationVersion;
     static SGXString organisationName;
     static SGXString rootFolderName;
-    static float scaleFactor;
 };
 
 #endif // SGUCENTRALMANAGEMENT_H

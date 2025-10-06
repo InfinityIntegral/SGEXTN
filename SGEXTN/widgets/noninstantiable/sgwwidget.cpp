@@ -250,5 +250,6 @@ bool SGWWidget::getItemVisibility() const {
 }
 
 void SGWWidget::setItemVisibility(bool x){
+    if((*topObject).isVisible() == x){return;}
     (*topObject).setVisible(x);
 }

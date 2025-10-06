@@ -20,6 +20,7 @@ SOURCES += SGEXTN/misc/main.cpp \
     $$PWD/bypassquickui/sgxresizer.cpp \
     $$PWD/bypassquickui/sgxthemecolours.cpp \
     $$PWD/containers/sglcrash.cpp \
+    $$PWD/customisation/sgxfontsizecustomisation.cpp \
     $$PWD/filesystem/sgxfile.cpp \
     $$PWD/math/sglfloatconstants.cpp \
     $$PWD/math/sglfloatlimits.cpp \
@@ -34,6 +35,7 @@ SOURCES += SGEXTN/misc/main.cpp \
     $$PWD/quickui/sgxsingcorrectquickinterface.cpp \
     $$PWD/quickui/sgxtimerquickinterface.cpp \
     $$PWD/rng/sgxrandomnumbergenerator.cpp \
+    $$PWD/template/sgwfontsizecustomisationpage.cpp \
     $$PWD/widgets/instantiable/sgwmultitouchreceiver.cpp \
     $$PWD/widgets/instantiable/sgwsingletouchreceiver.cpp \
     SGEXTN/SingCorrect/sgwsingcorrectcustomisationpage.cpp \
@@ -131,6 +133,7 @@ HEADERS += \
     $$PWD/containers/sglunorderedmultiset.h \
     $$PWD/containers/sglunorderedset.h \
     $$PWD/containers/sglvector.h \
+    $$PWD/customisation/sgxfontsizecustomisation.h \
     $$PWD/filesystem/sgxfile.h \
     $$PWD/math/sglfloatconstants.h \
     $$PWD/math/sglfloatlimits.h \
@@ -145,6 +148,7 @@ HEADERS += \
     $$PWD/quickui/sgxsingcorrectquickinterface.h \
     $$PWD/quickui/sgxtimerquickinterface.h \
     $$PWD/rng/sgxrandomnumbergenerator.h \
+    $$PWD/template/sgwfontsizecustomisationpage.h \
     $$PWD/widgets/instantiable/sgwmultitouchreceiver.h \
     $$PWD/widgets/instantiable/sgwsingletouchreceiver.h \
     SGEXTN/SingCorrect/sgwsingcorrectcustomisationpage.h \
