@@ -1,7 +1,7 @@
 #include "sgxthemecoloursetting.h"
 #include "../primitives/sgxcolourrgba.h"
 #include <QColor>
-#include "../userDefinedClasses/sgucentralmanagement.h"
+#include "../customisation/sgxthemecolourscustomisation.h"
 
 namespace {
 inline QColor temp_getQColour(SGXColourRGBA x){
@@ -11,15 +11,15 @@ inline QColor temp_getQColour(SGXColourRGBA x){
 
 SGXThemeColourSetting::SGXThemeColourSetting(){
     (*this).noColour = SGXColourRGBA(255, 255, 255, 0);
-    (*this).themeColour0 = SGUCentralManagement::themeColour0;
-    (*this).themeColour1 = SGUCentralManagement::themeColour1;
-    (*this).themeColour2 = SGUCentralManagement::themeColour2;
-    (*this).themeColour3 = SGUCentralManagement::themeColour3;
-    (*this).themeColour4 = SGUCentralManagement::themeColour4;
-    (*this).themeColour5 = SGUCentralManagement::themeColour5;
-    (*this).themeColour6 = SGUCentralManagement::themeColour6;
-    (*this).themeColour7 = SGUCentralManagement::themeColour7;
-    (*this).themeColour8 = SGUCentralManagement::themeColour8;
+    (*this).themeColour0 = SGXThemeColoursCustomisation::themeColour0;
+    (*this).themeColour1 = SGXThemeColoursCustomisation::themeColour1;
+    (*this).themeColour2 = SGXThemeColoursCustomisation::themeColour2;
+    (*this).themeColour3 = SGXThemeColoursCustomisation::themeColour3;
+    (*this).themeColour4 = SGXThemeColoursCustomisation::themeColour4;
+    (*this).themeColour5 = SGXThemeColoursCustomisation::themeColour5;
+    (*this).themeColour6 = SGXThemeColoursCustomisation::themeColour6;
+    (*this).themeColour7 = SGXThemeColoursCustomisation::themeColour7;
+    (*this).themeColour8 = SGXThemeColoursCustomisation::themeColour8;
 }
 
 QColor SGXThemeColourSetting::getNoColour() const {

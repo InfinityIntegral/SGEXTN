@@ -18,15 +18,6 @@ public:
     static SGXString organisationName;
     static SGXString rootFolderName;
     static float scaleFactor;
-    static SGXColourRGBA themeColour0;
-    static SGXColourRGBA themeColour1;
-    static SGXColourRGBA themeColour2;
-    static SGXColourRGBA themeColour3;
-    static SGXColourRGBA themeColour4;
-    static SGXColourRGBA themeColour5;
-    static SGXColourRGBA themeColour6;
-    static SGXColourRGBA themeColour7;
-    static SGXColourRGBA themeColour8;
 };
 
 #endif // SGUCENTRALMANAGEMENT_H

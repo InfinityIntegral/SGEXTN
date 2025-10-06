@@ -15,7 +15,6 @@
 #include "../widgets/enums/sgwhorizontalalignment.h"
 #include "../widgets/instantiable/sgwcolourpickerwidget.h"
 #include "../primitives/sgxcolourhsla.h"
-#include "../userDefinedClasses/sgucentralmanagement.h"
 #include "../customisation/sgxthemecolourscustomisation.h"
 #include "../widgets/instantiable/sgwlonglabel.h"
 #include "../notifications/sgwnotify.h"
@@ -338,15 +337,15 @@ void SGWThemeCustomisationPage::cancelChanges(){
 }
 
 void SGWThemeCustomisationPage::confirmChanges(){
-    SGUCentralManagement::themeColour0 = SGWThemeCustomisationPage::themeColours.at(0);
-    SGUCentralManagement::themeColour1 = SGWThemeCustomisationPage::themeColours.at(1);
-    SGUCentralManagement::themeColour2 = SGWThemeCustomisationPage::themeColours.at(2);
-    SGUCentralManagement::themeColour3 = SGWThemeCustomisationPage::themeColours.at(3);
-    SGUCentralManagement::themeColour4 = SGWThemeCustomisationPage::themeColours.at(4);
-    SGUCentralManagement::themeColour5 = SGWThemeCustomisationPage::themeColours.at(5);
-    SGUCentralManagement::themeColour6 = SGWThemeCustomisationPage::themeColours.at(6);
-    SGUCentralManagement::themeColour7 = SGWThemeCustomisationPage::themeColours.at(7);
-    SGUCentralManagement::themeColour8 = SGWThemeCustomisationPage::themeColours.at(8);
+    SGXThemeColoursCustomisation::themeColour0 = SGWThemeCustomisationPage::themeColours.at(0);
+    SGXThemeColoursCustomisation::themeColour1 = SGWThemeCustomisationPage::themeColours.at(1);
+    SGXThemeColoursCustomisation::themeColour2 = SGWThemeCustomisationPage::themeColours.at(2);
+    SGXThemeColoursCustomisation::themeColour3 = SGWThemeCustomisationPage::themeColours.at(3);
+    SGXThemeColoursCustomisation::themeColour4 = SGWThemeCustomisationPage::themeColours.at(4);
+    SGXThemeColoursCustomisation::themeColour5 = SGWThemeCustomisationPage::themeColours.at(5);
+    SGXThemeColoursCustomisation::themeColour6 = SGWThemeCustomisationPage::themeColours.at(6);
+    SGXThemeColoursCustomisation::themeColour7 = SGWThemeCustomisationPage::themeColours.at(7);
+    SGXThemeColoursCustomisation::themeColour8 = SGWThemeCustomisationPage::themeColours.at(8);
     SGXThemeColoursCustomisation::syncThemeColours();
     SGWBackground::disable(SGWThemeCustomisationPage::detailsInstance);
     SGWBackground::disable(SGWThemeCustomisationPage::menuInstance);

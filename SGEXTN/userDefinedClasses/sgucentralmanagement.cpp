@@ -14,17 +14,6 @@ SGXString SGUCentralManagement::applicationVersion = "v5.1.0";
 SGXString SGUCentralManagement::organisationName = "05524F.sg (Singapore)";
 // name of root folder of your application, only use uppercase or lowercase letters, definitely no banned characters, no dots, no spaces, no hyphens, no underscores, avoid numbers, avoid non ASCII characters
 SGXString SGUCentralManagement::rootFolderName = "SGEXTN";
-
-// theme colours of your application
-SGXColourRGBA SGUCentralManagement::themeColour0 = SGXColourRGBA(0, 0, 0);
-SGXColourRGBA SGUCentralManagement::themeColour1 = SGXColourRGBA(64, 0, 50);
-SGXColourRGBA SGUCentralManagement::themeColour2 = SGXColourRGBA(128, 0, 100);
-SGXColourRGBA SGUCentralManagement::themeColour3 = SGXColourRGBA(191, 0, 150);
-SGXColourRGBA SGUCentralManagement::themeColour4 = SGXColourRGBA(255, 0, 200);
-SGXColourRGBA SGUCentralManagement::themeColour5 = SGXColourRGBA(255, 64, 214);
-SGXColourRGBA SGUCentralManagement::themeColour6 = SGXColourRGBA(255, 128, 227);
-SGXColourRGBA SGUCentralManagement::themeColour7 = SGXColourRGBA(255, 191, 241);
-SGXColourRGBA SGUCentralManagement::themeColour8 = SGXColourRGBA(255, 255, 255);
 float SGUCentralManagement::scaleFactor = 0.05f; // 0.05 for desktop, 0.08 for mobile
 
 // this is run immediately after GUI is created, use it to initialise the UI
