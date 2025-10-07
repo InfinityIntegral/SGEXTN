@@ -52,6 +52,7 @@ SGWInput: add callback functions taking other arguments
 SGWButton: add callback functions taking other arguments
 SGWSingleTouchReceiver: added
 SGWMultiTouchReceiver: added
+SGWCustomisationPageControl: added, replaces individual customisation pages' public API
 
 Added:
 - SGXChar
@@ -88,6 +89,7 @@ Added:
 - SGLSort
 - SGWSingleTouchReceiver
 - SGWMultiTouchReceiver
+- SGWCustomisationPageControl
 
 Improved:
 - SGXFileSystem

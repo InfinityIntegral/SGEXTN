@@ -20,6 +20,7 @@ SOURCES += SGEXTN/misc/main.cpp \
     $$PWD/bypassquickui/sgxresizer.cpp \
     $$PWD/bypassquickui/sgxthemecolours.cpp \
     $$PWD/containers/sglcrash.cpp \
+    $$PWD/customisation/sgwcustomisationpagecontrol.cpp \
     $$PWD/customisation/sgxfontsizecustomisation.cpp \
     $$PWD/filesystem/sgxfile.cpp \
     $$PWD/math/sglfloatconstants.cpp \
@@ -133,6 +134,7 @@ HEADERS += \
     $$PWD/containers/sglunorderedmultiset.h \
     $$PWD/containers/sglunorderedset.h \
     $$PWD/containers/sglvector.h \
+    $$PWD/customisation/sgwcustomisationpagecontrol.h \
     $$PWD/customisation/sgxfontsizecustomisation.h \
     $$PWD/filesystem/sgxfile.h \
     $$PWD/math/sglfloatconstants.h \

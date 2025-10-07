@@ -1,6 +1,5 @@
 #include "sgucentralmanagement.h"
 #include "../primitives/sgxstring.h"
-#include "../primitives/sgxcolourrgba.h"
 
 // pls update README and license
 // do not forget to replace the icons font file and app icon in assets.qrc based on the app, do not change their file paths though
@@ -14,13 +13,10 @@ SGXString SGUCentralManagement::applicationVersion = "v5.1.0";
 SGXString SGUCentralManagement::organisationName = "05524F.sg (Singapore)";
 // name of root folder of your application, only use uppercase or lowercase letters, definitely no banned characters, no dots, no spaces, no hyphens, no underscores, avoid numbers, avoid non ASCII characters
 SGXString SGUCentralManagement::rootFolderName = "SGEXTN";
-#include "../template/sgwfontsizecustomisationpage.h"
-#include "../widgets/instantiable/sgwtextbutton.h"
-#include "../SingCorrect/sgwsingcorrectcustomisationpage.h"
+
 // this is run immediately after GUI is created, use it to initialise the UI
 void SGUCentralManagement::initialise(){
-    new SGWTextButton(SGWWidget::parentWidget, "font size", &SGWFontSizeCustomisationPage::activate, 0.0f, 0.5f, 0.0f, 0.5f, 0.0f, 5.0f, 0.0f, 1.0f);
-    new SGWTextButton(SGWWidget::parentWidget, "SingCorrect", &SGWSingCorrectCustomisationPage::activate, 0.0f, 0.5f, 0.0f, 2.0f, 0.0f, 5.0f, 0.0f, 1.0f);
+    
 }
 
 // this is run after the application is created but before the GUI, use it to edit theme colours from configuration files

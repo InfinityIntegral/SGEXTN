@@ -1,7 +1,6 @@
 #ifndef SGUCENTRALMANAGEMENT_H
 #define SGUCENTRALMANAGEMENT_H
 
-#include "../primitives/sgxcolourrgba.h"
 #include "../primitives/sgxstring.h"
 
 class SGUCentralManagement

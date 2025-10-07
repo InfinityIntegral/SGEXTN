@@ -13,6 +13,7 @@
 #include "../primitives/sgxtouchevent.h"
 #include "../bypassquickui/sgxresizer.h"
 #include "../math/sglfloatmath.h"
+#include "../widgets/enums/sgwhorizontalalignment.h"
 
 SGWBackground* SGWFontSizeCustomisationPage::instance = nullptr;
 SGWButton* SGWFontSizeCustomisationPage::exitButton = nullptr;
@@ -31,10 +32,10 @@ SGWBackground* SGWFontSizeCustomisationPage::initialise(){
     SGWWidget* realBg = new SGWSequentialScrollView(bg, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, -3.0f, 0.0f, 0.5f, 8);
     SGWFontSizeCustomisationPage::exitButton = new SGWTextButton(bg, "done", &SGWFontSizeCustomisationPage::exit, 0.0f, 0.0f, 1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f);
     new SGWTextLabel(realBg, "Adjust text size", 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 2.0f, SGWHorizontalAlignment::Center, false);
-    SGXString s = "Use the slider and input field below to adjust the font size for the application. The font size can be set to a minimum of half the default font size and a maximum of double the default font size. Font size is automatically saved.";
+    const SGXString s = "Use the slider and input field below to adjust the font size for the application. The font size can be set to a minimum of half the default font size and a maximum of double the default font size. Font size is automatically saved.";
     new SGWSequentialLongLabel(realBg, s, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.0f);
-    SGWWidget* p = new SGWBlankWidget(realBg, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.5f, 8);
-    p = new SGWBlankWidget(realBg, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 2.0f, 8);
+    new SGWBlankWidget(realBg, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.5f, 8);
+    SGWWidget* p = new SGWBlankWidget(realBg, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 2.0f, 8);
     new SGWTextLabel(p, "font size:", 0.5f, -3.6f, 0.0f, 0.0f, 0.0f, 3.5f, 0.0f, 1.0f, SGWHorizontalAlignment::Left, false);
     SGWFontSizeCustomisationPage::sizeInput = new SGWTextInput(p, &SGWFontSizeCustomisationPage::sizeValidityCheck, 0.5f, 0.1f, 0.0f, 0.0f, 0.0f, 4.0f, 0.0f, 1.0f);
     (*SGWFontSizeCustomisationPage::sizeInput).textChangedFunction = (&SGWFontSizeCustomisationPage::sizeUnsavedCheck);
@@ -52,7 +53,7 @@ SGWBackground* SGWFontSizeCustomisationPage::initialise(){
 void SGWFontSizeCustomisationPage::reset(){
     (*SGWFontSizeCustomisationPage::sizeInput).setTextFromFloat(SGXFontSizeCustomisation::fontSize / SGXFontSizeCustomisation::defaultFontSize);
     (*SGWFontSizeCustomisationPage::sizeUnsavedMessage).setItemVisibility(false);
-    float f = SGLFloatMath::logarithmBase2(SGXFontSizeCustomisation::fontSize / SGXFontSizeCustomisation::defaultFontSize);
+    const float f = SGLFloatMath::logarithmBase2(SGXFontSizeCustomisation::fontSize / SGXFontSizeCustomisation::defaultFontSize);
     (*SGWFontSizeCustomisationPage::sliderForeground).setX1(0.5f + 0.5f * f);
     (*SGWFontSizeCustomisationPage::sliderForeground).setX0((-1.0f) * f - 0.5f);
 }
@@ -71,13 +72,13 @@ void SGWFontSizeCustomisationPage::sizeUnsavedCheck(){
 void SGWFontSizeCustomisationPage::sizeValidityCheck(){
     (*SGWFontSizeCustomisationPage::sizeUnsavedMessage).setItemVisibility(false);
     bool isValid = false;
-    float fontSize = (*SGWFontSizeCustomisationPage::sizeInput).getTextAsFloat(&isValid, 0.5f, 2.0f);
+    const float fontSize = (*SGWFontSizeCustomisationPage::sizeInput).getTextAsFloat(&isValid, 0.5f, 2.0f);
     if(isValid == false){
         (*SGWFontSizeCustomisationPage::sizeInvalidMessage).setItemVisibility(true);
         (*SGWFontSizeCustomisationPage::sizeInput).setInvalid(true);
         return;
     }
-    float f = SGLFloatMath::logarithmBase2(fontSize);
+    const float f = SGLFloatMath::logarithmBase2(fontSize);
     (*SGWFontSizeCustomisationPage::sliderForeground).setX1(0.5f + 0.5f * f);
     (*SGWFontSizeCustomisationPage::sliderForeground).setX0((-1.0f) * f - 0.5f);
     (*SGWFontSizeCustomisationPage::sizeInvalidMessage).setItemVisibility(false);
@@ -97,7 +98,7 @@ void SGWFontSizeCustomisationPage::sliderChange(const SGXTouchEvent &x){
     (*SGWFontSizeCustomisationPage::sizeInput).setInvalid(false);
     (*SGWFontSizeCustomisationPage::sizeInvalidMessage).setItemVisibility(false);
     float f = x.x / (*SGWFontSizeCustomisationPage::sliderInput).getWidth();
-    float limit = 0.5f * SGXResizer::getSizeUnit() / (SGXResizer::getRenderSpaceWidth() - SGXResizer::getSizeUnit());
+    const float limit = 0.5f * SGXResizer::getSizeUnit() / (SGXResizer::getRenderSpaceWidth() - SGXResizer::getSizeUnit());
     f = (f - limit) / (1 - 2 * limit);
     f = 2.0f * (f - 0.5f);
     if(f < -1.0f){f = -1.0f;}
