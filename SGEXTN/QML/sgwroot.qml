@@ -5,7 +5,7 @@ import Resizer 0.0
 Rectangle{
     x: 0
     y: 0
-    width: Resizer.appWindowWidth
-    height: Resizer.appWindowHeight
+    width: Resizer.renderSpaceWidth
+    height: Resizer.renderSpaceHeight
     color: ThemeColours.getThemeColour(6)
 }

@@ -2,7 +2,9 @@
 
 # SGEXTN ("SG" Extension for C++ and Qt)
 
-Welcome to the Singaporean dimension (reference to my [profile](https://github.com/InfinityIntegral) README)
+I know we'll build a new world, a world of hope for ever after...
+
+(reference to my [profile](https://github.com/InfinityIntegral) README)
 
 ## About this project
 

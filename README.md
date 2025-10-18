@@ -8,4 +8,3 @@ I kept promising first v5.0.0 then v5.1.0 to be ready for development usage, but
 - [ ] Colours++, testing app for SGEXTN is done
 - [ ] official demo app for SGEXTN is done
 - [ ] SGEXTN maintenance tool is done
-- [ ] work has started on the ChengSing (诚信) Editor

@@ -7,8 +7,8 @@ Button{
 	property string s: ""
 	
 	layer.enabled: true
-	x: 0.5 * (Resizer.appWindowWidth - Resizer.renderSpaceWidth)
-	y: 0.5 * (Resizer.appWindowHeight - Resizer.renderSpaceHeight)
+	x: 0
+	y: 0
 	width: Resizer.renderSpaceWidth
 	height: Resizer.sizeUnit
 	property int bg: 4

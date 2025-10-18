@@ -5,8 +5,6 @@ class SGXResizer
 {
 public:
     SGXResizer() = delete;
-    static float getAppWindowWidth();
-    static float getAppWindowHeight();
     static float getRenderSpaceWidth();
     static float getRenderSpaceHeight();
     static float getSizeUnit();
