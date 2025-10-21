@@ -5,42 +5,6 @@ shader .qsb compilation:
 qsb [file name].vert -o [file name].vert.qsb --batchable --glsl 330 --hlsl 50 --msl 12 --glsl "300 es"
 qsb [file name].frag -o [file name].frag.qsb --glsl 330 --hlsl 50 --msl 12 --glsl "300 es"
 
-vesicles:
-cd SGEXTN
-cd cutevesicles
-qsb cutevesicles.vert -o cutevesicles.vert.qsb --batchable --glsl 330 --hlsl 50 --msl 12 --glsl "300 es"
-qsb cutevesicles.frag -o cutevesicles.frag.qsb --glsl 330 --hlsl 50 --msl 12 --glsl "300 es"
-
-colour picker hue choice:
-cd SGEXTN
-cd colourpickerrendering
-cd huechoice
-qsb huechoice.vert -o huechoice.vert.qsb --batchable --glsl 330 --hlsl 50 --msl 12 --glsl "300 es"
-qsb huechoice.frag -o huechoice.frag.qsb --glsl 330 --hlsl 50 --msl 12 --glsl "300 es"
-
-colour picker saturation choice:
-cd SGEXTN
-cd colourpickerrendering
-cd saturationchoice
-qsb saturationchoice.vert -o saturationchoice.vert.qsb --batchable --glsl 330 --hlsl 50 --msl 12 --glsl "300 es"
-qsb saturationchoice.frag -o saturationchoice.frag.qsb --glsl 330 --hlsl 50 --msl 12 --glsl "300 es"
-
-colour picker lightness choice:
-cd SGEXTN
-cd colourpickerrendering
-cd lightnesschoice
-qsb lightnesschoice.vert -o lightnesschoice.vert.qsb --batchable --glsl 330 --hlsl 50 --msl 12 --glsl "300 es"
-qsb lightnesschoice.frag -o lightnesschoice.frag.qsb --glsl 330 --hlsl 50 --msl 12 --glsl "300 es"
-
-colour picker transparency choice:
-cd SGEXTN
-cd colourpickerrendering
-cd transparencychoice
-qsb transparencychoice.vert -o transparencychoice.vert.qsb --batchable --glsl 330 --hlsl 50 --msl 12 --glsl "300 es"
-qsb transparencychoice.frag -o transparencychoice.frag.qsb --glsl 330 --hlsl 50 --msl 12 --glsl "300 es"
-
-colour background:
-cd SGEXTN
-cd colourbackground
-qsb colourbackground.vert -o colourbackground.vert.qsb --batchable --glsl 330 --hlsl 50 --msl 12 --glsl "300 es"
-qsb colourbackground.frag -o colourbackground.frag.qsb --glsl 330 --hlsl 50 --msl 12 --glsl "300 es"
+cd SGEXTN/RendererInterface/test
+qsb test.vert -o test.vert.qsb --batchable --glsl 330 --hlsl 50 --msl 12 --glsl "300 es"
+qsb test.frag -o test.frag.qsb --glsl 330 --hlsl 50 --msl 12 --glsl "300 es"

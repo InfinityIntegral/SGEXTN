@@ -1,0 +1,59 @@
+#ifndef SGRRENDERINGPROGRAMME_H
+#define SGRRENDERINGPROGRAMME_H
+
+#include "sgrgraphicslanguagetype.h"
+
+class SGXString;
+class QRhiGraphicsPipeline;
+class SGRRendererNode;
+class QRhiShaderStage;
+template <typename T> class SGLVector;
+class SGRVertexProperty;
+template <typename T1, typename T2> class SGLPair;
+class QRhiShaderResourceBindings;
+class QRhiBuffer;
+class QRhiResourceUpdateBatch;
+class SGRDataBuffer;
+class QRhi;
+class SGRRenderingProgramme
+{
+public:
+    SGRRenderingProgramme(SGRRendererNode* node, QRhi* rhi);
+    SGRRenderingProgramme(const SGRRenderingProgramme&) = delete;
+    SGRRenderingProgramme& operator=(const SGRRenderingProgramme&) = delete;
+    SGRRenderingProgramme(SGRRenderingProgramme&& x);
+    SGRRenderingProgramme& operator=(SGRRenderingProgramme&& x) = delete;
+    ~SGRRenderingProgramme();
+    
+    QRhiGraphicsPipeline* pipeline;
+    SGRRendererNode* node;
+    QRhi* rhi;
+    
+    bool shadersAreSet;
+    QRhiShaderStage* vertexShader;
+    QRhiShaderStage* fragmentShader;
+    void setShaderQSBFiles(const SGXString& vertexShaderPath, const SGXString& fragmentShaderPath);
+    
+    bool vertexFormattingIsSet;
+    SGLVector<int>* vertexBufferObjects;
+    void addVertexBufferObject(int vertexSize);
+    SGLVector<SGRVertexProperty>* vertexProperties;
+    void addVertexProperty(int vertexBufferObjectIndex, int offsetFromVertexStart, int shaderDeclaredLocation, SGRGraphicsLanguageType::Type propertyType, int vectorLength);
+    void finaliseVertices();
+    
+    bool shaderResourceIsSet;
+    SGLVector<SGLPair<int, int>>* uniformBufferObjects;
+    void addUniformBufferObject(int std140AlignedSize, int shaderDeclaredBinding);
+    QRhiShaderResourceBindings* shaderResources;
+    SGLVector<SGLPair<int, QRhiBuffer*>>* uniformBuffers;
+    void finaliseShaderResource();
+    
+    void finaliseRenderingProgramme();
+    bool isFinalised;
+    
+    QRhiResourceUpdateBatch* resourceUpdateOperation;
+    void updateDataBuffer(SGRDataBuffer* buffer, int startLocation, int dataSize, void* pointerToData);
+    void updateShaderUniforms(int shaderDeclaredBinding, int startLocation, int dataSize, void* pointerToData);
+};
+
+#endif // SGRRENDERINGPROGRAMME_H

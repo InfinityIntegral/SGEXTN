@@ -39,6 +39,8 @@
         <file>QML/sgwsequentiallonglabel.qml</file>
         <file>QML/sgwsingletouchreceiver.qml</file>
         <file>QML/sgwmultitouchreceiver.qml</file>
+        <file>RendererInterface/test/test.frag.qsb</file>
+        <file>RendererInterface/test/test.vert.qsb</file>
     </qresource>
     <qresource prefix="/"/>
 </RCC>

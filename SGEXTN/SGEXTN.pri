@@ -1,9 +1,11 @@
-QT += core gui qml quick quickcontrols2
+QT += core gui qml quick quickcontrols2 gui-private
 QMAKE_CXXFLAGS_RELEASE += -O3 -flto -ffunction-sections -fdata-sections -std=c++20
 QMAKE_CXXFLAGS_RELEASE -= -O2
 QMAKE_CXXFLAGS_DEBUG += -std=c++20
 QMAKE_LFLAGS += -flto -Wl,--gc-sections
 DISTFILES += .gitignore LICENSE.txt README.md \
+    $$PWD/RendererInterface/test/test.frag \
+    $$PWD/RendererInterface/test/test.vert \
     SGEXTN/colourbackground/colourbackground.frag \
     SGEXTN/colourbackground/colourbackground.vert \
     SGEXTN/colourpickerrendering/huechoice/huechoice.frag \
@@ -17,6 +19,17 @@ DISTFILES += .gitignore LICENSE.txt README.md \
     SGEXTN/filesystem/bin.sgfile \
     compilecommands.txt
 SOURCES += SGEXTN/misc/main.cpp \
+    $$PWD/RendererInterface/sgrbaserenderer.cpp \
+    $$PWD/RendererInterface/sgrcommandrequest.cpp \
+    $$PWD/RendererInterface/sgrdatabuffer.cpp \
+    $$PWD/RendererInterface/sgrelementbufferobject.cpp \
+    $$PWD/RendererInterface/sgrgraphicslanguagetype.cpp \
+    $$PWD/RendererInterface/sgrrenderergenerator.cpp \
+    $$PWD/RendererInterface/sgrrenderernode.cpp \
+    $$PWD/RendererInterface/sgrrendererwidget.cpp \
+    $$PWD/RendererInterface/sgrrenderingprogramme.cpp \
+    $$PWD/RendererInterface/sgrvertexbufferobject.cpp \
+    $$PWD/RendererInterface/sgrvertexproperty.cpp \
     $$PWD/bypassquickui/sgxresizer.cpp \
     $$PWD/bypassquickui/sgxthemecolours.cpp \
     $$PWD/containers/sglcrash.cpp \
@@ -108,6 +121,17 @@ SOURCES += SGEXTN/misc/main.cpp \
     SGEXTN/widgets/noninstantiable/sgwwidget.cpp
 RESOURCES += SGEXTN/assets.qrc
 HEADERS += \
+    $$PWD/RendererInterface/sgrbaserenderer.h \
+    $$PWD/RendererInterface/sgrcommandrequest.h \
+    $$PWD/RendererInterface/sgrdatabuffer.h \
+    $$PWD/RendererInterface/sgrelementbufferobject.h \
+    $$PWD/RendererInterface/sgrgraphicslanguagetype.h \
+    $$PWD/RendererInterface/sgrrenderergenerator.h \
+    $$PWD/RendererInterface/sgrrenderernode.h \
+    $$PWD/RendererInterface/sgrrendererwidget.h \
+    $$PWD/RendererInterface/sgrrenderingprogramme.h \
+    $$PWD/RendererInterface/sgrvertexbufferobject.h \
+    $$PWD/RendererInterface/sgrvertexproperty.h \
     $$PWD/bypassquickui/sgxresizer.h \
     $$PWD/bypassquickui/sgxthemecolours.h \
     $$PWD/containers/sglarray.h \

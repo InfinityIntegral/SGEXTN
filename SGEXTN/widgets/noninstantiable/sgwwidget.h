@@ -48,7 +48,7 @@ public:
     static SGWWidget* parentWidget;
     [[nodiscard]] bool getItemVisibility() const;
     void setItemVisibility(bool x);
-protected:
+public:
     SGWWidget(SGWWidget* parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0);
     SGWType::Type type;
     SGWWidget* parent;

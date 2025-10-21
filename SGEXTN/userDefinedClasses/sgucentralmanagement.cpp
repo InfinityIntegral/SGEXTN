@@ -13,7 +13,6 @@ SGXString SGUCentralManagement::applicationVersion = "v5.1.0";
 SGXString SGUCentralManagement::organisationName = "05524F.sg (Singapore)";
 // name of root folder of your application, only use uppercase or lowercase letters, definitely no banned characters, no dots, no spaces, no hyphens, no underscores, avoid numbers, avoid non ASCII characters
 SGXString SGUCentralManagement::rootFolderName = "SGEXTN";
-
 // this is run immediately after GUI is created, use it to initialise the UI
 void SGUCentralManagement::initialise(){
     
