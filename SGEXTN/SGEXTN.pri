@@ -20,6 +20,7 @@ DISTFILES += .gitignore LICENSE.txt README.md \
     compilecommands.txt
 SOURCES += SGEXTN/misc/main.cpp \
     $$PWD/RendererInterface/sgrbaserenderer.cpp \
+    $$PWD/RendererInterface/sgrbasesyncer.cpp \
     $$PWD/RendererInterface/sgrcommandrequest.cpp \
     $$PWD/RendererInterface/sgrdatabuffer.cpp \
     $$PWD/RendererInterface/sgrelementbufferobject.cpp \
@@ -30,6 +31,7 @@ SOURCES += SGEXTN/misc/main.cpp \
     $$PWD/RendererInterface/sgrrenderingprogramme.cpp \
     $$PWD/RendererInterface/sgrvertexbufferobject.cpp \
     $$PWD/RendererInterface/sgrvertexproperty.cpp \
+    $$PWD/RendererInterface/test/sgrtestrenderer.cpp \
     $$PWD/bypassquickui/sgxresizer.cpp \
     $$PWD/bypassquickui/sgxthemecolours.cpp \
     $$PWD/containers/sglcrash.cpp \
@@ -122,6 +124,7 @@ SOURCES += SGEXTN/misc/main.cpp \
 RESOURCES += SGEXTN/assets.qrc
 HEADERS += \
     $$PWD/RendererInterface/sgrbaserenderer.h \
+    $$PWD/RendererInterface/sgrbasesyncer.h \
     $$PWD/RendererInterface/sgrcommandrequest.h \
     $$PWD/RendererInterface/sgrdatabuffer.h \
     $$PWD/RendererInterface/sgrelementbufferobject.h \
@@ -132,6 +135,7 @@ HEADERS += \
     $$PWD/RendererInterface/sgrrenderingprogramme.h \
     $$PWD/RendererInterface/sgrvertexbufferobject.h \
     $$PWD/RendererInterface/sgrvertexproperty.h \
+    $$PWD/RendererInterface/test/sgrtestrenderer.h \
     $$PWD/bypassquickui/sgxresizer.h \
     $$PWD/bypassquickui/sgxthemecolours.h \
     $$PWD/containers/sglarray.h \

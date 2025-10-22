@@ -6,7 +6,7 @@
 
 class RenderState;
 class SGRBaseRenderer;
-class QQuickWindow;
+class QRhi;
 class QQuickItem;
 class SGRRenderingProgramme;
 class SGRRendererNode : public QSGRenderNode
@@ -15,7 +15,7 @@ public:
     SGRRendererNode(SGRBaseRenderer* renderControl);
     SGRRendererNode(const SGRRendererNode&) = delete;
     SGRRendererNode& operator=(const SGRRendererNode&) = delete;
-    SGRRendererNode(SGRRendererNode&& x);
+    SGRRendererNode(SGRRendererNode&& x) = delete;
     SGRRendererNode& operator=(SGRRendererNode&& x) = delete;
     ~SGRRendererNode();
     void prepare() override;
@@ -25,7 +25,7 @@ public:
     QSGRenderNode::StateFlags changedStates() const override;
     QQuickItem* associatedItem;
     SGRBaseRenderer* renderControl;
-    QQuickWindow* window;
+    QRhi* rhi;
     SGRRenderingProgramme* renderingProgramme;
 };
 

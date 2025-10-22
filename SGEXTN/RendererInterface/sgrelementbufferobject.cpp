@@ -1,8 +1,10 @@
 #include "sgrelementbufferobject.h"
 #include <rhi/qrhi.h>
+#include "sgrbaserenderer.h"
+#include "sgrrenderernode.h"
 
-SGRElementBufferObject::SGRElementBufferObject(QRhi *rhi, int bufferSize){
-    (*this).rhi = rhi;
+SGRElementBufferObject::SGRElementBufferObject(SGRBaseRenderer *renderControl, int bufferSize){
+    (*this).rhi = (*(*renderControl).node).rhi;
     (*this).bufferSize = bufferSize;
     (*this).data = (*rhi).newBuffer(QRhiBuffer::Dynamic, QRhiBuffer::IndexBuffer, bufferSize);
     (*(*this).data).create();

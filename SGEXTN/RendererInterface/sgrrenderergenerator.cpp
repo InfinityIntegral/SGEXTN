@@ -2,10 +2,13 @@
 #include "sgrrenderernode.h"
 #include "../bypassquickui/sgxresizer.h"
 #include "../widgets/noninstantiable/sgwwidget.h"
+#include "sgrbasesyncer.h"
 
-SGRRendererGenerator::SGRRendererGenerator(SGRBaseRenderer* renderControl, SGWWidget *attachedWidget) : QQuickItem(nullptr){
+SGRRendererGenerator::SGRRendererGenerator(SGRBaseRenderer* renderControl, SGRBaseSyncer* syncControl, SGWWidget *attachedWidget) : QQuickItem(nullptr){
     setFlag(ItemHasContents, true);
     (*this).renderControl = renderControl;
+    (*this).syncControl = syncControl;
+    (*syncControl).associatedItem = this;
     (*this).attachedWidget = attachedWidget;
 }
 
@@ -15,6 +18,7 @@ QSGNode* SGRRendererGenerator::updatePaintNode(QSGNode *old, UpdatePaintNodeData
         node = new SGRRendererNode(renderControl);
         (*node).associatedItem = this;
     }
+    (*syncControl).syncEverything(renderControl);
     return node;
 }
 

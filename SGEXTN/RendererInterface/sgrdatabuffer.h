@@ -11,7 +11,7 @@ public:
     int bufferSize;
     SGRDataBuffer(const SGRDataBuffer&) = delete;
     SGRDataBuffer& operator=(const SGRDataBuffer&) = delete;
-    SGRDataBuffer(SGRDataBuffer&& x);
+    SGRDataBuffer(SGRDataBuffer&& x) = delete;
     SGRDataBuffer& operator=(SGRDataBuffer&&) = delete;
     ~SGRDataBuffer();
 protected:

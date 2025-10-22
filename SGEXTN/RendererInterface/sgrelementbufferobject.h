@@ -3,11 +3,11 @@
 
 #include "sgrdatabuffer.h"
 
-class QRhi;
+class SGRBaseRenderer;
 class SGRElementBufferObject : public SGRDataBuffer
 {
 public:
-    SGRElementBufferObject(QRhi* rhi, int bufferSize);
+    SGRElementBufferObject(SGRBaseRenderer* renderControl, int bufferSize);
 };
 
 #endif // SGRELEMENTBUFFEROBJECT_H

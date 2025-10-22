@@ -18,10 +18,10 @@ class QRhi;
 class SGRRenderingProgramme
 {
 public:
-    SGRRenderingProgramme(SGRRendererNode* node, QRhi* rhi);
+    SGRRenderingProgramme(SGRRendererNode* node);
     SGRRenderingProgramme(const SGRRenderingProgramme&) = delete;
     SGRRenderingProgramme& operator=(const SGRRenderingProgramme&) = delete;
-    SGRRenderingProgramme(SGRRenderingProgramme&& x);
+    SGRRenderingProgramme(SGRRenderingProgramme&& x) = delete;
     SGRRenderingProgramme& operator=(SGRRenderingProgramme&& x) = delete;
     ~SGRRenderingProgramme();
     

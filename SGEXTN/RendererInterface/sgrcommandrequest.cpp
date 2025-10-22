@@ -13,16 +13,6 @@ SGRCommandRequest::SGRCommandRequest(QRhiCommandBuffer *commandBuffer){
     (*this).buffersAttached = false;
 }
 
-SGRCommandRequest::SGRCommandRequest(SGRCommandRequest &&x){
-    (*this).commandBuffer = x.commandBuffer;
-    (*this).vbos = x.vbos;
-    (*this).ebo = x.ebo;
-    (*this).eboOffset = x.eboOffset;
-    (*this).buffersAttached = x.buffersAttached;
-    x.vbos = nullptr;
-    x.ebo = nullptr;
-}
-
 SGRCommandRequest::~SGRCommandRequest(){
     delete vbos;
 }

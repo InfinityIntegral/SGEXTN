@@ -12,7 +12,7 @@ public:
     SGRCommandRequest(QRhiCommandBuffer* commandBuffer);
     SGRCommandRequest(const SGRCommandRequest&) = delete;
     SGRCommandRequest& operator=(const SGRCommandRequest&) = delete;
-    SGRCommandRequest(SGRCommandRequest&& x);
+    SGRCommandRequest(SGRCommandRequest&& x) = delete;
     SGRCommandRequest& operator=(SGRCommandRequest&&) = delete;
     ~SGRCommandRequest();
     QRhiCommandBuffer* commandBuffer;

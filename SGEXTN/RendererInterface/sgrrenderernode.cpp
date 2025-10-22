@@ -9,15 +9,10 @@
 #include "sgrcommandrequest.h"
 
 SGRRendererNode::SGRRendererNode(SGRBaseRenderer *renderControl){
-    (*this).window = SGXQuickInterface::applicationWindow;
+    (*this).rhi = (*SGXQuickInterface::applicationWindow).rhi();
     (*this).renderControl = renderControl;
     (*renderControl).node = this;
     (*this).renderingProgramme = nullptr;
-}
-
-SGRRendererNode::SGRRendererNode(SGRRendererNode &&x){
-    (*this).renderControl = x.renderControl;
-    x.renderControl = nullptr;
 }
 
 SGRRendererNode::~SGRRendererNode(){
@@ -25,23 +20,18 @@ SGRRendererNode::~SGRRendererNode(){
 }
 
 void SGRRendererNode::prepare(){
-    QRhi* rhi = (*window).rhi();
     QRhiResourceUpdateBatch* resourceUpdate = (*rhi).nextResourceUpdateBatch();
     if(renderingProgramme == nullptr){
         renderingProgramme = (*renderControl).createRenderingProgramme();
         if((*renderingProgramme).isFinalised == false){std::runtime_error("you forgot to finalise your rendering programme before use, use SGRRenderingProgramme::finaliseRenderingProgramme to finalise it");}
     }
     (*renderingProgramme).resourceUpdateOperation = resourceUpdate;
-    float builtins[8] = {
-        static_cast<float>((*associatedItem).mapToScene(QPointF(0.0f, 0.0f)).x()),
-        static_cast<float>((*associatedItem).mapToScene(QPointF(0.0f, 0.0f)).y()),
-        static_cast<float>((*associatedItem).width()),
-        static_cast<float>((*associatedItem).height()),
-        static_cast<float>((*SGXQuickInterface::applicationWindow).width()),
-        static_cast<float>((*SGXQuickInterface::applicationWindow).height()),
-        0.0f, 0.0f
-    };
+    float builtins[8] = {(*renderControl).internalX, (*renderControl).internalY, (*renderControl).internalW, (*renderControl).internalH, (*renderControl).internalWindowW, (*renderControl).internalWindowH, 0.0f, 0.0f};
     (*renderingProgramme).updateShaderUniforms(0, 0, 32, builtins);
+    if((*renderControl).initialised == false){
+        (*renderControl).initialised = true;
+        (*renderControl).initialise();
+    }
     (*renderControl).uploadShaderData();
     (*commandBuffer()).resourceUpdate(resourceUpdate);
     (*renderingProgramme).resourceUpdateOperation = nullptr;

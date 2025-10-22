@@ -3,11 +3,11 @@
 
 #include "sgrdatabuffer.h"
 
-class QRhi;
+class SGRBaseRenderer;
 class SGRVertexBufferObject : public SGRDataBuffer
 {
 public:
-    SGRVertexBufferObject(QRhi* rhi, int bufferSize);
+    SGRVertexBufferObject(SGRBaseRenderer* renderControl, int bufferSize);
 };
 
 #endif // SGRVERTEXBUFFEROBJECT_H

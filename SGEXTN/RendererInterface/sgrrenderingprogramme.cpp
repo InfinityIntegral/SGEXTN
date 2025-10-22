@@ -31,9 +31,9 @@ QRhiVertexInputAttribute::Format temp_getVertexAttributeType(SGRGraphicsLanguage
 }
 }
 
-SGRRenderingProgramme::SGRRenderingProgramme(SGRRendererNode* node, QRhi* rhi){
+SGRRenderingProgramme::SGRRenderingProgramme(SGRRendererNode* node){
     (*this).node = node;
-    (*this).rhi = rhi;
+    (*this).rhi = (*node).rhi;
     
     pipeline = (*rhi).newGraphicsPipeline();
     (*pipeline).setTopology(QRhiGraphicsPipeline::Triangles);
@@ -55,31 +55,6 @@ SGRRenderingProgramme::SGRRenderingProgramme(SGRRendererNode* node, QRhi* rhi){
     vertexFormattingIsSet = false;
     shaderResourceIsSet = false;
     isFinalised = false;
-}
-
-SGRRenderingProgramme::SGRRenderingProgramme(SGRRenderingProgramme &&x){
-    (*this).pipeline = x.pipeline;
-    (*this).node = x.node;
-    (*this).rhi = x.rhi;
-    (*this).shadersAreSet = x.shadersAreSet;
-    (*this).vertexShader = x.vertexShader;
-    (*this).fragmentShader = x.fragmentShader;
-    (*this).vertexBufferObjects = x.vertexBufferObjects;
-    (*this).vertexProperties = x.vertexProperties;
-    (*this).shaderResources = x.shaderResources;
-    (*this).uniformBufferObjects = x.uniformBufferObjects;
-    (*this).uniformBuffers = x.uniformBuffers;
-    (*this).isFinalised = x.isFinalised;
-    x.pipeline = nullptr;
-    x.node = nullptr;
-    x.rhi = nullptr;
-    x.vertexShader = nullptr;
-    x.fragmentShader = nullptr;
-    x.vertexBufferObjects = nullptr;
-    x.vertexProperties = nullptr;
-    x.uniformBufferObjects = nullptr;
-    x.shaderResources = nullptr;
-    x.uniformBuffers = nullptr;
 }
 
 SGRRenderingProgramme::~SGRRenderingProgramme(){
