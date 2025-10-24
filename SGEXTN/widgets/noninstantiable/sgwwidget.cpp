@@ -5,6 +5,7 @@
 #include "../../quickui/sgxquickinterface.h"
 #include "../instantiable/sgwsequentialscrollview.h"
 #include "../../containers/sglarray.h"
+#include "../../quickui/sgrscreenshotcallback.h"
 
 SGWWidget* SGWWidget::rootWidget = nullptr;
 SGWWidget* SGWWidget::parentWidget = nullptr;
@@ -252,4 +253,8 @@ bool SGWWidget::getItemVisibility() const {
 void SGWWidget::setItemVisibility(bool x){
     if((*topObject).isVisible() == x){return;}
     (*topObject).setVisible(x);
+}
+
+void SGWWidget::screenshot(void (*callback)(SGRImage *)){
+    new SGRScreenshotCallback(callback, getTopObject());
 }

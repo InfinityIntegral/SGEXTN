@@ -22,6 +22,7 @@ public:
     [[nodiscard]] SGXColourRGBA colourAt(int x, int y) const;
     void setColourAt(int x, int y, SGXColourRGBA c);
     [[nodiscard]] SGXColourRGBA interpolatedColourAt(float x, float y) const;
+    void saveToFile(const SGXString& filePath) const;
 };
 
 #endif // SGRIMAGE_H

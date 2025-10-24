@@ -43,9 +43,9 @@ void SGRTestRenderer::initialise(){
     (*renderingProgramme()).updateDataBuffer(vboPosition, 0, 3 * 3 * 4, vpt);
     vboColour = new SGRVertexBufferObject(this, 3 * 2 * 4);
     float vct[3 * 2] = {
-        0.003f, 0.8f,
-        0.0f, 0.827f,
-        0.006f, 0.827f
+        0.5f, 0.0f,
+        0.0f, 1.0f,
+        1.0f, 1.0f
     };
     (*renderingProgramme()).updateDataBuffer(vboColour, 0, 3 * 2 * 4, vct);
     ebo = new SGRElementBufferObject(this, 1 * 3 * 4);

@@ -84,3 +84,7 @@ SGXColourRGBA SGRImage::interpolatedColourAt(float x, float y) const {
     SGXColourRGBA c1 = c11.linearInterpolate(c10, dy);
     return c1.linearInterpolate(c0, dx);
 }
+
+void SGRImage::saveToFile(const SGXString &filePath) const {
+    (*data).save((*filePath.data), "PNG");
+}

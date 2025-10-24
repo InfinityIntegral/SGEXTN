@@ -18,8 +18,19 @@ SGXString SGUCentralManagement::rootFolderName = "SGEXTN";
 #include "../RendererInterface/test/sgrtestrenderer.h"
 #include "../RendererInterface/test/sgrtestsyncer.h"
 #include "../RendererInterface/sgrrendererwidget.h"
+#include "../RendererInterface/sgrimage.h"
+#include "../filesystem/sgxfilesystem.h"
+#include "../timer/sgxtimer.h"
+#include <QQuickItem>
+SGWWidget* w;
+void func(SGRImage* img){
+    (*img).saveToFile(SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "img.png"));
+    delete img;
+}
+void func0(){(*SGWWidget::rootWidget).screenshot(&func);}
 void SGUCentralManagement::initialise(){
-    new SGRRendererWidget(SGWWidget::parentWidget, 0.0f, 0.5f, 0.0f, 0.5f, 1.0f, -1.0f, 1.0f, -1.0f, new SGRTestRenderer(), new SGRTestSyncer());
+    w = new SGRRendererWidget(SGWWidget::parentWidget, 0.0f, 0.5f, 0.0f, 0.5f, 1.0f, -1.0f, 1.0f, -1.0f, new SGRTestRenderer(), new SGRTestSyncer());
+    SGXTimer::singleCall(0.0f, &func0);
 }
 
 // this is run after the application is created but before the GUI, use it to edit theme colours from configuration files

@@ -50,6 +50,7 @@ SOURCES += SGEXTN/misc/main.cpp \
     $$PWD/math/sgllonglongmath.cpp \
     $$PWD/primitives/sgxchar.cpp \
     $$PWD/primitives/sgxstring.cpp \
+    $$PWD/quickui/sgrscreenshotcallback.cpp \
     $$PWD/quickui/sgwwidgetquickinterface.cpp \
     $$PWD/quickui/sgxsingcorrectquickinterface.cpp \
     $$PWD/quickui/sgxtimerquickinterface.cpp \
@@ -180,6 +181,7 @@ HEADERS += \
     $$PWD/math/sgllonglongmath.h \
     $$PWD/primitives/sgxchar.h \
     $$PWD/primitives/sgxstring.h \
+    $$PWD/quickui/sgrscreenshotcallback.h \
     $$PWD/quickui/sgwwidgetquickinterface.h \
     $$PWD/quickui/sgxsingcorrectquickinterface.h \
     $$PWD/quickui/sgxtimerquickinterface.h \

@@ -27,6 +27,7 @@ void SGRRendererNode::prepare(){
     }
     (*renderingProgramme).resourceUpdateOperation = resourceUpdate;
     float builtins[8] = {(*renderControl).internalX, (*renderControl).internalY, (*renderControl).internalW, (*renderControl).internalH, (*renderControl).internalWindowW, (*renderControl).internalWindowH, 0.0f, 0.0f};
+    if((*renderTarget()).resourceType() == QRhiResource::TextureRenderTarget){builtins[6] = 1.0f;}
     (*renderingProgramme).updateShaderUniforms(0, 0, 32, builtins);
     if((*renderControl).initialised == false){
         (*renderControl).initialised = true;

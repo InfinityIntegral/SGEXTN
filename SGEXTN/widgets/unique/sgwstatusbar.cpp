@@ -32,7 +32,7 @@ void SGWStatusBar::terminate(){
 }
 
 void SGWStatusBar::updateTime(){
-    (*(*SGWStatusBar::instance).getTopObject()).setProperty("s", (*SGXTimeStamp::now().getFullSGCalendar().data));
+    (*(*SGWStatusBar::instance).getTopObject()).setProperty("s", (*SGXString::doubleToStringSignificantFigures(SGXTimeStamp::now().getYearsFrom(SGXTimeStamp::zero), 9).data));
 }
 
 void SGWStatusBar::eventReceived(const SGXString& /*unused*/){
