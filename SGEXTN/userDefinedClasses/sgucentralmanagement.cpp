@@ -14,8 +14,12 @@ SGXString SGUCentralManagement::organisationName = "05524F.sg (Singapore)";
 // name of root folder of your application, only use uppercase or lowercase letters, definitely no banned characters, no dots, no spaces, no hyphens, no underscores, avoid numbers, avoid non ASCII characters
 SGXString SGUCentralManagement::rootFolderName = "SGEXTN";
 // this is run immediately after GUI is created, use it to initialise the UI
+
+#include "../RendererInterface/test/sgrtestrenderer.h"
+#include "../RendererInterface/test/sgrtestsyncer.h"
+#include "../RendererInterface/sgrrendererwidget.h"
 void SGUCentralManagement::initialise(){
-    
+    new SGRRendererWidget(SGWWidget::parentWidget, 0.0f, 0.5f, 0.0f, 0.5f, 1.0f, -1.0f, 1.0f, -1.0f, new SGRTestRenderer(), new SGRTestSyncer());
 }
 
 // this is run after the application is created but before the GUI, use it to edit theme colours from configuration files

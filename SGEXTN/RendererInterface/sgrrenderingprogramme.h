@@ -15,10 +15,13 @@ class QRhiBuffer;
 class QRhiResourceUpdateBatch;
 class SGRDataBuffer;
 class QRhi;
+class SGRBaseRenderer;
+class SGRTexture;
+class SGRImage;
 class SGRRenderingProgramme
 {
 public:
-    SGRRenderingProgramme(SGRRendererNode* node);
+    SGRRenderingProgramme(SGRBaseRenderer* renderControl);
     SGRRenderingProgramme(const SGRRenderingProgramme&) = delete;
     SGRRenderingProgramme& operator=(const SGRRenderingProgramme&) = delete;
     SGRRenderingProgramme(SGRRenderingProgramme&& x) = delete;
@@ -43,9 +46,12 @@ public:
     
     bool shaderResourceIsSet;
     SGLVector<SGLPair<int, int>>* uniformBufferObjects;
+    SGLVector<int>* textureObjects;
     void addUniformBufferObject(int std140AlignedSize, int shaderDeclaredBinding);
+    void addTexture(int shaderDeclaredBinding);
     QRhiShaderResourceBindings* shaderResources;
     SGLVector<SGLPair<int, QRhiBuffer*>>* uniformBuffers;
+    SGLVector<SGLPair<int, SGRTexture*>>* textures;
     void finaliseShaderResource();
     
     void finaliseRenderingProgramme();
@@ -54,6 +60,7 @@ public:
     QRhiResourceUpdateBatch* resourceUpdateOperation;
     void updateDataBuffer(SGRDataBuffer* buffer, int startLocation, int dataSize, void* pointerToData);
     void updateShaderUniforms(int shaderDeclaredBinding, int startLocation, int dataSize, void* pointerToData);
+    void updateTexture(int shaderDeclaredBinding, SGRImage* sourceImage);
 };
 
 #endif // SGRRENDERINGPROGRAMME_H

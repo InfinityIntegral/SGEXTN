@@ -15,6 +15,7 @@ public:
     virtual void sync(SGRBaseRenderer* renderControl) = 0;
     void syncEverything(SGRBaseRenderer* renderControl);
     QQuickItem* associatedItem;
+    void updateRenderedImage();
 };
 
 #endif // SGRBASESYNCER_H

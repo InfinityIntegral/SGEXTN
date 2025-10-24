@@ -17,18 +17,17 @@ SGRCommandRequest::~SGRCommandRequest(){
     delete vbos;
 }
 
-void SGRCommandRequest::addVertexBufferObject(SGRVertexBufferObject *vbo, int shaderDeclaredBinding){
-    (*vbos).pushBack(SGLPair<int, SGRVertexBufferObject*>(shaderDeclaredBinding, vbo));
+void SGRCommandRequest::addVertexBufferObject(SGRVertexBufferObject *vbo, int bufferOffsetInBytes){
+    (*vbos).pushBack(SGLPair<int, SGRVertexBufferObject*>(bufferOffsetInBytes, vbo));
 }
 
-void SGRCommandRequest::chooseElementBufferObject(SGRElementBufferObject *ebo, int vertexIndexOffset){
+void SGRCommandRequest::chooseElementBufferObject(SGRElementBufferObject *ebo){
     (*this).ebo = ebo;
-    (*this).eboOffset = vertexIndexOffset;
 }
 
 void SGRCommandRequest::finaliseForDraw(){
-    if((*vbos).length() == 0){std::runtime_error("you forgot to bind vertex buffer objects, use SGRCommandRequest::addVertexBufferObject to bind them, you can bind multiple vertex buffer objects");}
-    if(ebo == nullptr){std::runtime_error("you forgot to bind a element buffer object, use SGRCommandRequest::chooseElementBufferObject to bind it, SG RI forces use of element buffer objects even when the performance gain is not significant");}
+    if((*vbos).length() == 0){throw std::runtime_error("you forgot to bind vertex buffer objects, use SGRCommandRequest::addVertexBufferObject to bind them, you can bind multiple vertex buffer objects");}
+    if(ebo == nullptr){throw std::runtime_error("you forgot to bind a element buffer object, use SGRCommandRequest::chooseElementBufferObject to bind it, SG RI forces use of element buffer objects even when the performance gain is not significant");}
     SGLVector<QRhiCommandBuffer::VertexInput> vboBindings;
     for(int i=0; i<(*vbos).length(); i++){
         vboBindings.pushBack(QRhiCommandBuffer::VertexInput((*(*vbos).at(i).second).data, (*vbos).at(i).first));
@@ -37,7 +36,7 @@ void SGRCommandRequest::finaliseForDraw(){
     buffersAttached = true;
 }
 
-void SGRCommandRequest::drawUsingIndex(int numberOfTriangles, int startLocation){
-    if(buffersAttached == false){std::runtime_error("you forgot to attach the vertex buffer objects and element buffer objects by finalising the command request before drawing, use SGRCommandRequest::finaliseForDraw to attach the buffers");}
-    (*commandBuffer).drawIndexed(3 * numberOfTriangles, 1, startLocation, eboOffset, 0);
+void SGRCommandRequest::drawTriangles(int numberOfTriangles, int startLocation){
+    if(buffersAttached == false){throw std::runtime_error("you forgot to attach the vertex buffer objects and element buffer objects by finalising the command request before drawing, use SGRCommandRequest::finaliseForDraw to attach the buffers");}
+    (*commandBuffer).drawIndexed(3 * numberOfTriangles, 1, startLocation, 0, 0);
 }

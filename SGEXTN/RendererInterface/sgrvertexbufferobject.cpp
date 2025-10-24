@@ -5,7 +5,6 @@
 
 SGRVertexBufferObject::SGRVertexBufferObject(SGRBaseRenderer *renderControl, int bufferSize){
     (*this).rhi = (*(*renderControl).node).rhi;
-    (*this).bufferSize = bufferSize;
     (*this).data = (*rhi).newBuffer(QRhiBuffer::Dynamic, QRhiBuffer::VertexBuffer, bufferSize);
     (*(*this).data).create();
 }

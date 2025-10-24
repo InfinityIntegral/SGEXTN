@@ -3,6 +3,7 @@
 
 #include <QSGRenderNode>
 #include <QByteArray>
+#include <QRectF>
 
 class RenderState;
 class SGRBaseRenderer;
@@ -23,6 +24,7 @@ public:
     void releaseResources() override;
     RenderingFlags flags() const override;
     QSGRenderNode::StateFlags changedStates() const override;
+    QRectF rect() const override;
     QQuickItem* associatedItem;
     SGRBaseRenderer* renderControl;
     QRhi* rhi;

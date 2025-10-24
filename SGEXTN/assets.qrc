@@ -41,6 +41,7 @@
         <file>QML/sgwmultitouchreceiver.qml</file>
         <file>RendererInterface/test/test.frag.qsb</file>
         <file>RendererInterface/test/test.vert.qsb</file>
+        <file>bg.jpg</file>
     </qresource>
     <qresource prefix="/"/>
 </RCC>

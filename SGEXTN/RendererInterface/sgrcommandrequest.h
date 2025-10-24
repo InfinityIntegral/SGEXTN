@@ -18,12 +18,11 @@ public:
     QRhiCommandBuffer* commandBuffer;
     SGLVector<SGLPair<int, SGRVertexBufferObject*>>* vbos;
     SGRElementBufferObject* ebo;
-    int eboOffset;
     bool buffersAttached;
     void addVertexBufferObject(SGRVertexBufferObject* vbo, int shaderDeclaredBinding);
-    void chooseElementBufferObject(SGRElementBufferObject* ebo, int vertexIndexOffset);
+    void chooseElementBufferObject(SGRElementBufferObject* ebo);
     void finaliseForDraw();
-    void drawUsingIndex(int numberOfTriangles, int startLocation);
+    void drawTriangles(int numberOfTriangles, int startLocation);
 };
 
 #endif // SGRCOMMANDREQUEST_H

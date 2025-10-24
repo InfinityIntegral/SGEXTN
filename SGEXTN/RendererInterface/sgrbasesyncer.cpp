@@ -13,3 +13,8 @@ void SGRBaseSyncer::syncEverything(SGRBaseRenderer *renderControl){
     (*renderControl).internalWindowW = static_cast<float>((*SGXQuickInterface::applicationWindow).width());
     (*renderControl).internalWindowH = static_cast<float>((*SGXQuickInterface::applicationWindow).height());
 }
+
+void SGRBaseSyncer::updateRenderedImage(){
+    (*associatedItem).polish();
+    (*associatedItem).update();
+}

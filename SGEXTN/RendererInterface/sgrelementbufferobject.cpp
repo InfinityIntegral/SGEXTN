@@ -5,7 +5,6 @@
 
 SGRElementBufferObject::SGRElementBufferObject(SGRBaseRenderer *renderControl, int bufferSize){
     (*this).rhi = (*(*renderControl).node).rhi;
-    (*this).bufferSize = bufferSize;
     (*this).data = (*rhi).newBuffer(QRhiBuffer::Dynamic, QRhiBuffer::IndexBuffer, bufferSize);
     (*(*this).data).create();
 }

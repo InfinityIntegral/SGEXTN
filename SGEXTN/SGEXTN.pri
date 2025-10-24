@@ -25,13 +25,16 @@ SOURCES += SGEXTN/misc/main.cpp \
     $$PWD/RendererInterface/sgrdatabuffer.cpp \
     $$PWD/RendererInterface/sgrelementbufferobject.cpp \
     $$PWD/RendererInterface/sgrgraphicslanguagetype.cpp \
+    $$PWD/RendererInterface/sgrimage.cpp \
     $$PWD/RendererInterface/sgrrenderergenerator.cpp \
     $$PWD/RendererInterface/sgrrenderernode.cpp \
     $$PWD/RendererInterface/sgrrendererwidget.cpp \
     $$PWD/RendererInterface/sgrrenderingprogramme.cpp \
+    $$PWD/RendererInterface/sgrtexture.cpp \
     $$PWD/RendererInterface/sgrvertexbufferobject.cpp \
     $$PWD/RendererInterface/sgrvertexproperty.cpp \
     $$PWD/RendererInterface/test/sgrtestrenderer.cpp \
+    $$PWD/RendererInterface/test/sgrtestsyncer.cpp \
     $$PWD/bypassquickui/sgxresizer.cpp \
     $$PWD/bypassquickui/sgxthemecolours.cpp \
     $$PWD/containers/sglcrash.cpp \
@@ -129,13 +132,16 @@ HEADERS += \
     $$PWD/RendererInterface/sgrdatabuffer.h \
     $$PWD/RendererInterface/sgrelementbufferobject.h \
     $$PWD/RendererInterface/sgrgraphicslanguagetype.h \
+    $$PWD/RendererInterface/sgrimage.h \
     $$PWD/RendererInterface/sgrrenderergenerator.h \
     $$PWD/RendererInterface/sgrrenderernode.h \
     $$PWD/RendererInterface/sgrrendererwidget.h \
     $$PWD/RendererInterface/sgrrenderingprogramme.h \
+    $$PWD/RendererInterface/sgrtexture.h \
     $$PWD/RendererInterface/sgrvertexbufferobject.h \
     $$PWD/RendererInterface/sgrvertexproperty.h \
     $$PWD/RendererInterface/test/sgrtestrenderer.h \
+    $$PWD/RendererInterface/test/sgrtestsyncer.h \
     $$PWD/bypassquickui/sgxresizer.h \
     $$PWD/bypassquickui/sgxthemecolours.h \
     $$PWD/containers/sglarray.h \

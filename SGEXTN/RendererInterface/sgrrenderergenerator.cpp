@@ -10,6 +10,7 @@ SGRRendererGenerator::SGRRendererGenerator(SGRBaseRenderer* renderControl, SGRBa
     (*this).syncControl = syncControl;
     (*syncControl).associatedItem = this;
     (*this).attachedWidget = attachedWidget;
+    (*this).updatePolish();
 }
 
 QSGNode* SGRRendererGenerator::updatePaintNode(QSGNode *old, UpdatePaintNodeData */*unused*/){
@@ -19,6 +20,7 @@ QSGNode* SGRRendererGenerator::updatePaintNode(QSGNode *old, UpdatePaintNodeData
         (*node).associatedItem = this;
     }
     (*syncControl).syncEverything(renderControl);
+    (*node).markDirty(QSGRenderNode::DirtyForceUpdate);
     return node;
 }
 
