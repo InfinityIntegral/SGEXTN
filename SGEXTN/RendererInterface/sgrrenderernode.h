@@ -18,13 +18,13 @@ public:
     SGRRendererNode& operator=(const SGRRendererNode&) = delete;
     SGRRendererNode(SGRRendererNode&& x) = delete;
     SGRRendererNode& operator=(SGRRendererNode&& x) = delete;
-    ~SGRRendererNode();
+    ~SGRRendererNode() override;
     void prepare() override;
     void render(const RenderState* /*unused*/) override;
     void releaseResources() override;
-    RenderingFlags flags() const override;
-    QSGRenderNode::StateFlags changedStates() const override;
-    QRectF rect() const override;
+    [[nodiscard]] RenderingFlags flags() const override;
+    [[nodiscard]] QSGRenderNode::StateFlags changedStates() const override;
+    [[nodiscard]] QRectF rect() const override;
     QQuickItem* associatedItem;
     SGRBaseRenderer* renderControl;
     QRhi* rhi;

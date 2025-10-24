@@ -1,1 +1,0 @@
-#include "sgrgraphicslanguagetype.h"

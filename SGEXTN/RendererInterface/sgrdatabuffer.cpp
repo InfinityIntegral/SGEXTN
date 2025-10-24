@@ -7,9 +7,9 @@ SGRDataBuffer::~SGRDataBuffer(){
 }
 
 int SGRDataBuffer::length() const {
-    return (*data).size();
+    return static_cast<int>((*data).size());
 }
 
-void SGRDataBuffer::doubleBuffer(){
+void SGRDataBuffer::doubleBuffer() const {
     (*data).setSize(2 * (*data).size());
 }

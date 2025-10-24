@@ -4,6 +4,10 @@
 #include "../quickui/sgxquickinterface.h"
 #include <QQuickWindow>
 
+SGRBaseSyncer::SGRBaseSyncer(){
+    associatedItem = nullptr;
+}
+
 void SGRBaseSyncer::syncEverything(SGRBaseRenderer *renderControl){
     sync(renderControl);
     (*renderControl).internalX = static_cast<float>((*associatedItem).mapToScene(QPointF(0.0f, 0.0f)).x());
@@ -14,7 +18,7 @@ void SGRBaseSyncer::syncEverything(SGRBaseRenderer *renderControl){
     (*renderControl).internalWindowH = static_cast<float>((*SGXQuickInterface::applicationWindow).height());
 }
 
-void SGRBaseSyncer::updateRenderedImage(){
+void SGRBaseSyncer::updateRenderedImage() const {
     (*associatedItem).polish();
     (*associatedItem).update();
 }

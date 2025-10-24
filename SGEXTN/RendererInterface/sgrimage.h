@@ -13,14 +13,14 @@ public:
     SGRImage(const SGXString& filePath);
     SGRImage(const SGRImage& x);
     SGRImage& operator=(const SGRImage& x);
-    SGRImage(SGRImage&& x);
-    SGRImage& operator=(SGRImage&& x);
+    SGRImage(SGRImage&& x) noexcept;
+    SGRImage& operator=(SGRImage&& x) noexcept;
     ~SGRImage();
     QImage* data;
     [[nodiscard]] int width() const;
     [[nodiscard]] int height() const;
     [[nodiscard]] SGXColourRGBA colourAt(int x, int y) const;
-    void setColourAt(int x, int y, SGXColourRGBA c);
+    void setColourAt(int x, int y, SGXColourRGBA c) const;
     [[nodiscard]] SGXColourRGBA interpolatedColourAt(float x, float y) const;
     void saveToFile(const SGXString& filePath) const;
 };

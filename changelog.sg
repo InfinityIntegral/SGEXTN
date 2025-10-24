@@ -54,6 +54,19 @@ SGWSingleTouchReceiver: added
 SGWMultiTouchReceiver: added
 SGWCustomisationPageControl: added, replaces individual customisation pages' public API
 SGXResizer: merged app window dimensions with render space dimensions
+SGLArray: added variadic template constructor (equivalent to initialiser list)
+SGWWidget: added screenshots
+SGRBaseRenderer: added
+SGRBaseSyncer: added
+SGRCommandRequest: added
+SGRDataBuffer: added
+SGRElementBufferObject: added
+SGRGraphicsLanguageType: added
+SGRImage: added
+SGRRendererWidget: added
+SGRRenderingProgramme: added
+SGRTexture: added
+SGRVertexBufferObject: added
 
 Added:
 - SGXChar
@@ -91,6 +104,17 @@ Added:
 - SGWSingleTouchReceiver
 - SGWMultiTouchReceiver
 - SGWCustomisationPageControl
+- SGRBaseRenderer
+- SGRBaseSyncer
+- SGRCommandRequest
+- SGRDataBuffer
+- SGRElementBufferObject
+- SGRGraphicsLanguageType
+- SGRImage
+- SGRRendererWidget
+- SGRRenderingProgramme
+- SGRTexture
+- SGRVertexBufferObject
 
 Improved:
 - SGXFileSystem
@@ -105,6 +129,7 @@ Improved:
 - SGWInput
 - SGWButton
 - SGXResizer
+- SGWWidget
 
 Removed:
 - SGLFileZip

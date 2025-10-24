@@ -17,7 +17,7 @@ SGRCommandRequest::~SGRCommandRequest(){
     delete vbos;
 }
 
-void SGRCommandRequest::addVertexBufferObject(SGRVertexBufferObject *vbo, int bufferOffsetInBytes){
+void SGRCommandRequest::addVertexBufferObject(SGRVertexBufferObject *vbo, int bufferOffsetInBytes) const {
     (*vbos).pushBack(SGLPair<int, SGRVertexBufferObject*>(bufferOffsetInBytes, vbo));
 }
 
@@ -36,7 +36,7 @@ void SGRCommandRequest::finaliseForDraw(){
     buffersAttached = true;
 }
 
-void SGRCommandRequest::drawTriangles(int numberOfTriangles, int startLocation){
+void SGRCommandRequest::drawTriangles(int numberOfTriangles, int startLocation) const {
     if(buffersAttached == false){throw std::runtime_error("you forgot to attach the vertex buffer objects and element buffer objects by finalising the command request before drawing, use SGRCommandRequest::finaliseForDraw to attach the buffers");}
     (*commandBuffer).drawIndexed(3 * numberOfTriangles, 1, startLocation, 0, 0);
 }

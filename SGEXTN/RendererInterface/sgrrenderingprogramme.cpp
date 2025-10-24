@@ -12,6 +12,9 @@
 #include "sgrbaserenderer.h"
 #include "sgrtexture.h"
 #include "sgrimage.h"
+#include "sgrgraphicslanguagetype.h"
+#include <QIODevice>
+#include <rhi/qshader.h>
 
 namespace {
 QRhiVertexInputAttribute::Format temp_getVertexAttributeType(SGRGraphicsLanguageType::Type type, int vectorLength){
@@ -35,6 +38,11 @@ QRhiVertexInputAttribute::Format temp_getVertexAttributeType(SGRGraphicsLanguage
 }
 
 SGRRenderingProgramme::SGRRenderingProgramme(SGRBaseRenderer *renderControl){
+    (*this).vertexShader = nullptr;
+    (*this).fragmentShader = nullptr;
+    (*this).shaderResources = nullptr;
+    (*this).resourceUpdateOperation = nullptr;
+    
     (*this).node = (*renderControl).node;
     (*this).rhi = (*node).rhi;
     
@@ -100,13 +108,12 @@ void SGRRenderingProgramme::setShaderQSBFiles(const SGXString &vertexShaderPath,
     shadersAreSet = true;
 }
 
-void SGRRenderingProgramme::addVertexBufferObject(int vertexSize){
+void SGRRenderingProgramme::addVertexBufferObject(int vertexSize) const {
     (*vertexBufferObjects).pushBack(vertexSize);
 }
 
-void SGRRenderingProgramme::addVertexProperty(int vertexBufferObjectIndex, int offsetFromVertexStart, int shaderDeclaredLocation, SGRGraphicsLanguageType::Type propertyType, int vectorLength){
-    SGRVertexProperty vp(vertexBufferObjectIndex, offsetFromVertexStart, shaderDeclaredLocation, propertyType, vectorLength);
-    (*vertexProperties).pushBack(vp);
+void SGRRenderingProgramme::addVertexProperty(int vertexBufferObjectIndex, int offsetFromVertexStart, int shaderDeclaredLocation, SGRGraphicsLanguageType::Type propertyType, int vectorLength) const {
+    (*vertexProperties).pushBack(SGRVertexProperty(vertexBufferObjectIndex, offsetFromVertexStart, shaderDeclaredLocation, propertyType, vectorLength));
 }
 
 void SGRRenderingProgramme::finaliseVertices(){
@@ -125,11 +132,11 @@ void SGRRenderingProgramme::finaliseVertices(){
     vertexFormattingIsSet = true;
 }
 
-void SGRRenderingProgramme::addUniformBufferObject(int std140AlignedSize, int shaderDeclaredBinding){
+void SGRRenderingProgramme::addUniformBufferObject(int std140AlignedSize, int shaderDeclaredBinding) const {
     (*uniformBufferObjects).pushBack(SGLPair<int, int>(std140AlignedSize, shaderDeclaredBinding));
 }
 
-void SGRRenderingProgramme::addTexture(int shaderDeclaredBinding){
+void SGRRenderingProgramme::addTexture(int shaderDeclaredBinding) const {
     (*textureObjects).pushBack(shaderDeclaredBinding);
 }
 
@@ -175,11 +182,11 @@ void SGRRenderingProgramme::finaliseRenderingProgramme(){
     isFinalised = true;
 }
 
-void SGRRenderingProgramme::updateDataBuffer(SGRDataBuffer *buffer, int startLocation, int dataSize, void *pointerToData){
+void SGRRenderingProgramme::updateDataBuffer(SGRDataBuffer *buffer, int startLocation, int dataSize, void *pointerToData) const {
     (*resourceUpdateOperation).updateDynamicBuffer((*buffer).data, startLocation, dataSize, pointerToData);
 }
 
-void SGRRenderingProgramme::updateShaderUniforms(int shaderDeclaredBinding, int startLocation, int dataSize, void *pointerToData){
+void SGRRenderingProgramme::updateShaderUniforms(int shaderDeclaredBinding, int startLocation, int dataSize, void *pointerToData) const {
     QRhiBuffer* buffer = nullptr;
     for(int i=0; i<(*uniformBuffers).length(); i++){
         if((*uniformBuffers).at(i).first == shaderDeclaredBinding){
@@ -191,7 +198,7 @@ void SGRRenderingProgramme::updateShaderUniforms(int shaderDeclaredBinding, int 
     (*resourceUpdateOperation).updateDynamicBuffer(buffer, startLocation, dataSize, pointerToData);
 }
 
-void SGRRenderingProgramme::updateTexture(int shaderDeclaredBinding, SGRImage *sourceImage){
+void SGRRenderingProgramme::updateTexture(int shaderDeclaredBinding, SGRImage *sourceImage) const {
     SGRTexture* texture = nullptr;
     for(int i=0; i<(*textures).length(); i++){
         if((*textures).at(i).first == shaderDeclaredBinding){

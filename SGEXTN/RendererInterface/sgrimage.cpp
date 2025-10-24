@@ -2,23 +2,25 @@
 #include <QImage>
 #include <QColor>
 #include "../math/sglfloatmath.h"
+#include "../primitives/sgxcolourrgba.h"
 
 SGRImage::SGRImage(const SGRImage &x){
+    (*this).data = new QImage();
     (*(*this).data) = (*x.data);
 }
 
 SGRImage& SGRImage::operator=(const SGRImage& x){
-    delete (*this).data;
+    if(this == &x){return (*this);}
     (*(*this).data) = (*x.data);
     return (*this);
 }
 
-SGRImage::SGRImage(SGRImage &&x){
+SGRImage::SGRImage(SGRImage &&x) noexcept {
     (*this).data = x.data;
     x.data = nullptr;
 }
 
-SGRImage& SGRImage::operator=(SGRImage&& x){
+SGRImage& SGRImage::operator=(SGRImage&& x) noexcept {
     delete (*this).data;
     (*this).data = x.data;
     x.data = nullptr;
@@ -52,22 +54,22 @@ int SGRImage::height() const {
 }
 
 SGXColourRGBA SGRImage::colourAt(int x, int y) const {
-    QColor c = (*data).pixelColor(x, y);
+    const QColor c = (*data).pixelColor(x, y);
     return SGXColourRGBA(c.red(), c.green(), c.blue(), c.alpha());
 }
 
-void SGRImage::setColourAt(int x, int y, SGXColourRGBA c){
-    QColor col(c.getRed(), c.getGreen(), c.getBlue(), c.getTransparency());
+void SGRImage::setColourAt(int x, int y, SGXColourRGBA c) const {
+    const QColor col(c.getRed(), c.getGreen(), c.getBlue(), c.getTransparency());
     (*data).setPixelColor(x, y, col);
 }
 
 SGXColourRGBA SGRImage::interpolatedColourAt(float x, float y) const {
     int x0 = SGLFloatMath::floorToInt(x);
     int x1 = SGLFloatMath::ceilingToInt(x);
-    float dx = x - x0;
+    const float dx = x - static_cast<float>(x0);
     int y0 = SGLFloatMath::floorToInt(y);
     int y1 = SGLFloatMath::ceilingToInt(y);
-    float dy = y - y0;
+    const float dy = y - static_cast<float>(y0);
     x0 %= width();
     if(x0 < 0){x0 += width();}
     x1 %= width();
@@ -76,12 +78,12 @@ SGXColourRGBA SGRImage::interpolatedColourAt(float x, float y) const {
     if(y0 < 0){y0 += height();}
     y1 %= height();
     if(y1 < 0){y1 += height();}
-    SGXColourRGBA c00 = colourAt(x0, y0);
-    SGXColourRGBA c01 = colourAt(x0, y1);
-    SGXColourRGBA c10 = colourAt(x1, y0);
-    SGXColourRGBA c11 = colourAt(x1, y1);
-    SGXColourRGBA c0 = c01.linearInterpolate(c00, dy);
-    SGXColourRGBA c1 = c11.linearInterpolate(c10, dy);
+    const SGXColourRGBA c00 = colourAt(x0, y0);
+    const SGXColourRGBA c01 = colourAt(x0, y1);
+    const SGXColourRGBA c10 = colourAt(x1, y0);
+    const SGXColourRGBA c11 = colourAt(x1, y1);
+    const SGXColourRGBA c0 = c01.linearInterpolate(c00, dy);
+    const SGXColourRGBA c1 = c11.linearInterpolate(c10, dy);
     return c1.linearInterpolate(c0, dx);
 }
 

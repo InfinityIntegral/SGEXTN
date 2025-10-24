@@ -11,6 +11,7 @@ public:
     SGLArray& operator=(const SGLArray& x);
     SGLArray(SGLArray&& x) noexcept;
     SGLArray& operator=(SGLArray&& x) noexcept;
+    template <typename... Ts> SGLArray(Ts... data);
     ~SGLArray();
     void assign(int count, const T& defaultValue);
     void fill(const T& defaultValue);
@@ -35,6 +36,11 @@ template <typename T> SGLArray<T>::SGLArray(int count, const T& defaultValue){
     for(int i=0; i<lengthInternal; i++){
         (*(dataInternal + i)) = defaultValue;
     }
+}
+
+template <typename T> template <typename... Ts> SGLArray<T>::SGLArray(Ts... data){
+    dataInternal = new T[sizeof...(Ts)] {data...};
+    lengthInternal = sizeof...(Ts);
 }
 
 template <typename T> SGLArray<T>::SGLArray(const SGLArray& x){

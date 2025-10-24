@@ -1,5 +1,4 @@
 #include "sgrtexture.h"
-#include "sgrbaserenderer.h"
 #include "sgrrenderernode.h"
 #include <rhi/qrhi.h>
 

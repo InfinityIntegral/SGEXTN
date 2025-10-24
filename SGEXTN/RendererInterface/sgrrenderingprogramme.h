@@ -39,16 +39,16 @@ public:
     
     bool vertexFormattingIsSet;
     SGLVector<int>* vertexBufferObjects;
-    void addVertexBufferObject(int vertexSize);
+    void addVertexBufferObject(int vertexSize) const;
     SGLVector<SGRVertexProperty>* vertexProperties;
-    void addVertexProperty(int vertexBufferObjectIndex, int offsetFromVertexStart, int shaderDeclaredLocation, SGRGraphicsLanguageType::Type propertyType, int vectorLength);
+    void addVertexProperty(int vertexBufferObjectIndex, int offsetFromVertexStart, int shaderDeclaredLocation, SGRGraphicsLanguageType::Type propertyType, int vectorLength) const;
     void finaliseVertices();
     
     bool shaderResourceIsSet;
     SGLVector<SGLPair<int, int>>* uniformBufferObjects;
     SGLVector<int>* textureObjects;
-    void addUniformBufferObject(int std140AlignedSize, int shaderDeclaredBinding);
-    void addTexture(int shaderDeclaredBinding);
+    void addUniformBufferObject(int std140AlignedSize, int shaderDeclaredBinding) const;
+    void addTexture(int shaderDeclaredBinding) const;
     QRhiShaderResourceBindings* shaderResources;
     SGLVector<SGLPair<int, QRhiBuffer*>>* uniformBuffers;
     SGLVector<SGLPair<int, SGRTexture*>>* textures;
@@ -58,9 +58,9 @@ public:
     bool isFinalised;
     
     QRhiResourceUpdateBatch* resourceUpdateOperation;
-    void updateDataBuffer(SGRDataBuffer* buffer, int startLocation, int dataSize, void* pointerToData);
-    void updateShaderUniforms(int shaderDeclaredBinding, int startLocation, int dataSize, void* pointerToData);
-    void updateTexture(int shaderDeclaredBinding, SGRImage* sourceImage);
+    void updateDataBuffer(SGRDataBuffer* buffer, int startLocation, int dataSize, void* pointerToData) const;
+    void updateShaderUniforms(int shaderDeclaredBinding, int startLocation, int dataSize, void* pointerToData) const;
+    void updateTexture(int shaderDeclaredBinding, SGRImage* sourceImage) const;
 };
 
 #endif // SGRRENDERINGPROGRAMME_H

@@ -19,10 +19,10 @@ public:
     SGLVector<SGLPair<int, SGRVertexBufferObject*>>* vbos;
     SGRElementBufferObject* ebo;
     bool buffersAttached;
-    void addVertexBufferObject(SGRVertexBufferObject* vbo, int shaderDeclaredBinding);
+    void addVertexBufferObject(SGRVertexBufferObject *vbo, int bufferOffsetInBytes) const;
     void chooseElementBufferObject(SGRElementBufferObject* ebo);
     void finaliseForDraw();
-    void drawTriangles(int numberOfTriangles, int startLocation);
+    void drawTriangles(int numberOfTriangles, int startLocation) const;
 };
 
 #endif // SGRCOMMANDREQUEST_H

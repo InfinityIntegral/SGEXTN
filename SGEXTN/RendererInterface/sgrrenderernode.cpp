@@ -7,16 +7,21 @@
 #include "sgrrenderingprogramme.h"
 #include <stdexcept>
 #include "sgrcommandrequest.h"
+#include <QSGRenderNode>
+#include <QRectF>
+#include "../containers/sglarray.h"
 
 SGRRendererNode::SGRRendererNode(SGRBaseRenderer *renderControl){
     (*this).rhi = (*SGXQuickInterface::applicationWindow).rhi();
     (*this).renderControl = renderControl;
     (*renderControl).node = this;
     (*this).renderingProgramme = nullptr;
+    (*this).associatedItem = nullptr;
 }
 
 SGRRendererNode::~SGRRendererNode(){
-    (*this).releaseResources();
+    (*renderControl).cleanResourcesOnDestruction();
+    delete renderingProgramme;
 }
 
 void SGRRendererNode::prepare(){
@@ -26,9 +31,9 @@ void SGRRendererNode::prepare(){
         if((*renderingProgramme).isFinalised == false){throw std::runtime_error("you forgot to finalise your rendering programme before use, use SGRRenderingProgramme::finaliseRenderingProgramme to finalise it");}
     }
     (*renderingProgramme).resourceUpdateOperation = resourceUpdate;
-    float builtins[8] = {(*renderControl).internalX, (*renderControl).internalY, (*renderControl).internalW, (*renderControl).internalH, (*renderControl).internalWindowW, (*renderControl).internalWindowH, 0.0f, 0.0f};
-    if((*renderTarget()).resourceType() == QRhiResource::TextureRenderTarget){builtins[6] = 1.0f;}
-    (*renderingProgramme).updateShaderUniforms(0, 0, 32, builtins);
+    SGLArray<float> builtins((*renderControl).internalX, (*renderControl).internalY, (*renderControl).internalW, (*renderControl).internalH, (*renderControl).internalWindowW, (*renderControl).internalWindowH, 0.0f, 0.0f);
+    if((*renderTarget()).resourceType() == QRhiResource::TextureRenderTarget){builtins.at(6) = 1.0f;}
+    (*renderingProgramme).updateShaderUniforms(0, 0, 32, builtins.pointerToData(0));
     if((*renderControl).initialised == false){
         (*renderControl).initialised = true;
         (*renderControl).initialise();
@@ -41,7 +46,7 @@ void SGRRendererNode::prepare(){
 void SGRRendererNode::render(const RenderState */*unused*/){
     QRhiCommandBuffer* commands = commandBuffer();
     (*commands).setGraphicsPipeline((*renderingProgramme).pipeline);
-    (*commands).setViewport(QRhiViewport(0, 0, (*renderTarget()).pixelSize().width(), (*renderTarget()).pixelSize().height()));    
+    (*commands).setViewport(QRhiViewport(0, 0, static_cast<float>((*renderTarget()).pixelSize().width()), static_cast<float>((*renderTarget()).pixelSize().height())));    
     (*commands).setShaderResources();
     SGRCommandRequest commandRequest(commands);
     (*renderControl).requestRenderCommands(&commandRequest);

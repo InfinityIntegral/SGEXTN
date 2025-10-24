@@ -3,6 +3,8 @@
 #include "../bypassquickui/sgxresizer.h"
 #include "../widgets/noninstantiable/sgwwidget.h"
 #include "sgrbasesyncer.h"
+#include <QQuickItem>
+#include <QSGRenderNode>
 
 SGRRendererGenerator::SGRRendererGenerator(SGRBaseRenderer* renderControl, SGRBaseSyncer* syncControl, SGWWidget *attachedWidget) : QQuickItem(nullptr){
     setFlag(ItemHasContents, true);
@@ -10,7 +12,7 @@ SGRRendererGenerator::SGRRendererGenerator(SGRBaseRenderer* renderControl, SGRBa
     (*this).syncControl = syncControl;
     (*syncControl).associatedItem = this;
     (*this).attachedWidget = attachedWidget;
-    (*this).updatePolish();
+    (*this).syncSize();
 }
 
 QSGNode* SGRRendererGenerator::updatePaintNode(QSGNode *old, UpdatePaintNodeData */*unused*/){
@@ -24,9 +26,13 @@ QSGNode* SGRRendererGenerator::updatePaintNode(QSGNode *old, UpdatePaintNodeData
     return node;
 }
 
-void SGRRendererGenerator::updatePolish(){
+void SGRRendererGenerator::syncSize(){
     setX((*attachedWidget).getX1() * ((*attachedWidget).getParentW1() * SGXResizer::getRenderSpaceWidth() + (*attachedWidget).getParentW0() * SGXResizer::getSizeUnit()) + (*attachedWidget).getX0() * SGXResizer::getSizeUnit());
     setY((*attachedWidget).getY1() * ((*attachedWidget).getParentH1() * SGXResizer::getRenderSpaceHeight() + (*attachedWidget).getParentH0() * SGXResizer::getSizeUnit()) + (*attachedWidget).getY0() * SGXResizer::getSizeUnit());
     setWidth((*attachedWidget).getW1() * ((*attachedWidget).getParentW1() * SGXResizer::getRenderSpaceWidth() + (*attachedWidget).getParentW0() * SGXResizer::getSizeUnit()) + (*attachedWidget).getW0() * SGXResizer::getSizeUnit());
     setHeight((*attachedWidget).getH1() * ((*attachedWidget).getParentH1() * SGXResizer::getRenderSpaceHeight() + (*attachedWidget).getParentH0() * SGXResizer::getSizeUnit()) + (*attachedWidget).getH0() * SGXResizer::getSizeUnit());
+}
+
+void SGRRendererGenerator::updatePolish(){
+    SGRRendererGenerator::syncSize();
 }

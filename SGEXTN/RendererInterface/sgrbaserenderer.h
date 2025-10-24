@@ -18,7 +18,7 @@ public:
     virtual void requestRenderCommands(SGRCommandRequest* commandRequest) = 0;
     virtual void cleanResourcesOnDestruction() = 0;
     virtual ~SGRBaseRenderer() = default;
-    SGRRenderingProgramme* renderingProgramme();
+    [[nodiscard]] SGRRenderingProgramme* renderingProgramme() const;
     SGRRendererNode* node;
     bool initialised;
     float internalX;

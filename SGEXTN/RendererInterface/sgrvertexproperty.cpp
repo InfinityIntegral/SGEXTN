@@ -1,4 +1,5 @@
 #include "sgrvertexproperty.h"
+#include "sgrgraphicslanguagetype.h"
 
 SGRVertexProperty::SGRVertexProperty(int vertexBufferObjectIndex, int offsetFromVertexStart, int shaderDeclaredLocation, SGRGraphicsLanguageType::Type propertyType, int vectorLength){
     (*this).vertexBufferObjectIndex = vertexBufferObjectIndex;

@@ -255,6 +255,6 @@ void SGWWidget::setItemVisibility(bool x){
     (*topObject).setVisible(x);
 }
 
-void SGWWidget::screenshot(void (*callback)(SGRImage *)){
+void SGWWidget::screenshot(void (*callback)(SGRImage *)) const {
     new SGRScreenshotCallback(callback, getTopObject());
 }

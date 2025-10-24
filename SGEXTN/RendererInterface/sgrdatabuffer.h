@@ -14,7 +14,7 @@ public:
     SGRDataBuffer& operator=(SGRDataBuffer&&) = delete;
     ~SGRDataBuffer();
     [[nodiscard]] int length() const;
-    void doubleBuffer();
+    void doubleBuffer() const;
 protected:
     SGRDataBuffer() = default;
 };

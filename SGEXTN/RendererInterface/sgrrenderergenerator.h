@@ -17,6 +17,7 @@ public:
     SGRBaseSyncer* syncControl;
     SGWWidget* attachedWidget;
     void updatePolish() override;
+    void syncSize();
 };
 
 #endif // SGRRENDERERGENERATOR_H
