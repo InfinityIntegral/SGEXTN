@@ -9,12 +9,12 @@ class SGXRenderColourPickerHueChoiceSGWidget;
 class SGXRenderColourPickerSaturationChoiceSGWidget;
 class SGXRenderColourPickerLightnessChoiceSGWidget;
 class SGXRenderColourPickerTransparencyChoiceSGWidget;
-class SGXRenderColourBackgroundSGWidget;
 class SGWSingleTouchReceiver;
 class SGWInput;
 class SGWColourPickerWidget;
 class SGWButton;
 class SGXTouchEvent;
+class SGWBlankWidget;
 class SGWColourPicker
 {
 public:
@@ -50,7 +50,8 @@ public:
     static void updateTransparencyFromInput();
     static SGWInput* hexCodeInput;
     static void updateHexCode();
-    static SGXRenderColourBackgroundSGWidget* colourDisplay;
+    static SGWBlankWidget* transparencyGrid;
+    static SGWBlankWidget* colourDisplay;
     static bool ignoreInputChanges;
     static SGWColourPickerWidget* colourReceiver;
     static void activateColourPicker(SGWColourPickerWidget* x);

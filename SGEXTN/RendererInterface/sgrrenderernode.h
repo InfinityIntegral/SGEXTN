@@ -25,7 +25,6 @@ public:
     [[nodiscard]] RenderingFlags flags() const override;
     [[nodiscard]] QSGRenderNode::StateFlags changedStates() const override;
     [[nodiscard]] QRectF rect() const override;
-    QQuickItem* associatedItem;
     SGRBaseRenderer* renderControl;
     QRhi* rhi;
     SGRRenderingProgramme* renderingProgramme;

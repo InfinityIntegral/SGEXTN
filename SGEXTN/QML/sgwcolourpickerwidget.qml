@@ -2,7 +2,6 @@ import QtQuick
 import QtQuick.Controls
 import ThemeColours 0.0
 import Resizer 0.0
-import ColourBackground 0.0
 
 Button{
 	property real x1: 0.0
@@ -20,7 +19,6 @@ Button{
 	property real ph1: 0.0
 	property real ph0: 0.0
 	property color c: "#FF00C8"
-	property bool canParent: true
 	property bool utc: true
 	property int bg: 4
 	property color bgc: "#FF00C8"
@@ -68,12 +66,20 @@ Button{
 		height: parent.height
 		color: getBg(utc, vh, vf, bg, bgc, bgh, bghc, bgf, bgfc)
 		
-		ColourBackground{
+		Rectangle{
 			x: e1 * (pw1 * Resizer.renderSpaceWidth + pw0 * Resizer.sizeUnit) + e0 * Resizer.sizeUnit
 			y: e1 * (pw1 * Resizer.renderSpaceWidth + pw0 * Resizer.sizeUnit) + e0 * Resizer.sizeUnit
 			width: parent.width - 2.0 * (e1 * (pw1 * Resizer.renderSpaceWidth + pw0 * Resizer.sizeUnit) + e0 * Resizer.sizeUnit)
 			height: parent.height - 2.0 * (e1 * (pw1 * Resizer.renderSpaceWidth + pw0 * Resizer.sizeUnit) + e0 * Resizer.sizeUnit)
-			layer.enabled: true
+			
+			Rectangle{
+				x: 0
+				y: 0
+				width: parent.width
+				height: parent.height
+				color: ThemeColours.getThemeColour(-1);
+				property bool canParent: true
+			}
 		
 			Rectangle{
 				x: 0

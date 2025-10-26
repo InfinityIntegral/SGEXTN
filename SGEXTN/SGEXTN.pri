@@ -4,10 +4,8 @@ QMAKE_CXXFLAGS_RELEASE -= -O2
 QMAKE_CXXFLAGS_DEBUG += -std=c++20
 QMAKE_LFLAGS += -flto -Wl,--gc-sections
 DISTFILES += .gitignore LICENSE.txt README.md \
-    $$PWD/RendererInterface/test/test.frag \
-    $$PWD/RendererInterface/test/test.vert \
-    SGEXTN/colourbackground/colourbackground.frag \
-    SGEXTN/colourbackground/colourbackground.vert \
+    SGEXTN/RendererInterface/transparencyindicator/transparencyindicator.frag \
+    SGEXTN/RendererInterface/transparencyindicator/transparencyindicator.vert \
     SGEXTN/colourpickerrendering/huechoice/huechoice.frag \
     SGEXTN/colourpickerrendering/huechoice/huechoice.vert \
     SGEXTN/colourpickerrendering/lightnesschoice/lightnesschoice.frag \
@@ -15,56 +13,50 @@ DISTFILES += .gitignore LICENSE.txt README.md \
     SGEXTN/colourpickerrendering/saturationchoice/saturationchoice.frag \
     SGEXTN/colourpickerrendering/saturationchoice/saturationchoice.vert \
     SGEXTN/colourpickerrendering/transparencychoice/transparencychoice.frag \
-    SGEXTN/colourpickerrendering/transparencychoice/transparencychoice.vert \
-    SGEXTN/filesystem/bin.sgfile \
-    compilecommands.txt
+    SGEXTN/colourpickerrendering/transparencychoice/transparencychoice.vert
+    
 SOURCES += SGEXTN/misc/main.cpp \
-    $$PWD/RendererInterface/sgrbaserenderer.cpp \
-    $$PWD/RendererInterface/sgrbasesyncer.cpp \
-    $$PWD/RendererInterface/sgrcommandrequest.cpp \
-    $$PWD/RendererInterface/sgrdatabuffer.cpp \
-    $$PWD/RendererInterface/sgrelementbufferobject.cpp \
-    $$PWD/RendererInterface/sgrgraphicslanguagetype.cpp \
-    $$PWD/RendererInterface/sgrimage.cpp \
-    $$PWD/RendererInterface/sgrrenderergenerator.cpp \
-    $$PWD/RendererInterface/sgrrenderernode.cpp \
-    $$PWD/RendererInterface/sgrrendererwidget.cpp \
-    $$PWD/RendererInterface/sgrrenderingprogramme.cpp \
-    $$PWD/RendererInterface/sgrtexture.cpp \
-    $$PWD/RendererInterface/sgrvertexbufferobject.cpp \
-    $$PWD/RendererInterface/sgrvertexproperty.cpp \
-    $$PWD/RendererInterface/test/sgrtestrenderer.cpp \
-    $$PWD/RendererInterface/test/sgrtestsyncer.cpp \
-    $$PWD/bypassquickui/sgxresizer.cpp \
-    $$PWD/bypassquickui/sgxthemecolours.cpp \
-    $$PWD/containers/sglcrash.cpp \
-    $$PWD/customisation/sgwcustomisationpagecontrol.cpp \
-    $$PWD/customisation/sgxfontsizecustomisation.cpp \
-    $$PWD/filesystem/sgxfile.cpp \
-    $$PWD/math/sglfloatconstants.cpp \
-    $$PWD/math/sglfloatlimits.cpp \
-    $$PWD/math/sglfloatmath.cpp \
-    $$PWD/math/sglintlimits.cpp \
-    $$PWD/math/sglintmath.cpp \
-    $$PWD/math/sgllonglonglimits.cpp \
-    $$PWD/math/sgllonglongmath.cpp \
-    $$PWD/primitives/sgxchar.cpp \
-    $$PWD/primitives/sgxstring.cpp \
-    $$PWD/quickui/sgrscreenshotcallback.cpp \
-    $$PWD/quickui/sgwwidgetquickinterface.cpp \
-    $$PWD/quickui/sgxsingcorrectquickinterface.cpp \
-    $$PWD/quickui/sgxtimerquickinterface.cpp \
-    $$PWD/rng/sgxrandomnumbergenerator.cpp \
-    $$PWD/template/sgwfontsizecustomisationpage.cpp \
-    $$PWD/widgets/instantiable/sgwmultitouchreceiver.cpp \
-    $$PWD/widgets/instantiable/sgwsingletouchreceiver.cpp \
+    SGEXTN/RendererInterface/sgrbaserenderer.cpp \
+    SGEXTN/RendererInterface/sgrbasesyncer.cpp \
+    SGEXTN/RendererInterface/sgrcommandrequest.cpp \
+    SGEXTN/RendererInterface/sgrdatabuffer.cpp \
+    SGEXTN/RendererInterface/sgrelementbufferobject.cpp \
+    SGEXTN/RendererInterface/sgrgraphicslanguagetype.cpp \
+    SGEXTN/RendererInterface/sgrimage.cpp \
+    SGEXTN/RendererInterface/sgrrenderergenerator.cpp \
+    SGEXTN/RendererInterface/sgrrenderernode.cpp \
+    SGEXTN/RendererInterface/sgrrendererwidget.cpp \
+    SGEXTN/RendererInterface/sgrrenderingprogramme.cpp \
+    SGEXTN/RendererInterface/sgrtexture.cpp \
+    SGEXTN/RendererInterface/sgrvertexbufferobject.cpp \
+    SGEXTN/RendererInterface/sgrvertexproperty.cpp \
+    SGEXTN/RendererInterface/transparencyindicator/sgrtransparencyindicatorrenderer.cpp \
+    SGEXTN/bypassquickui/sgxresizer.cpp \
+    SGEXTN/bypassquickui/sgxthemecolours.cpp \
+    SGEXTN/containers/sglcrash.cpp \
+    SGEXTN/customisation/sgwcustomisationpagecontrol.cpp \
+    SGEXTN/customisation/sgxfontsizecustomisation.cpp \
+    SGEXTN/filesystem/sgxfile.cpp \
+    SGEXTN/math/sglfloatconstants.cpp \
+    SGEXTN/math/sglfloatlimits.cpp \
+    SGEXTN/math/sglfloatmath.cpp \
+    SGEXTN/math/sglintlimits.cpp \
+    SGEXTN/math/sglintmath.cpp \
+    SGEXTN/math/sgllonglonglimits.cpp \
+    SGEXTN/math/sgllonglongmath.cpp \
+    SGEXTN/primitives/sgxchar.cpp \
+    SGEXTN/primitives/sgxstring.cpp \
+    SGEXTN/quickui/sgrscreenshotcallback.cpp \
+    SGEXTN/quickui/sgwwidgetquickinterface.cpp \
+    SGEXTN/quickui/sgxsingcorrectquickinterface.cpp \
+    SGEXTN/quickui/sgxtimerquickinterface.cpp \
+    SGEXTN/rng/sgxrandomnumbergenerator.cpp \
+    SGEXTN/template/sgwfontsizecustomisationpage.cpp \
+    SGEXTN/widgets/instantiable/sgwmultitouchreceiver.cpp \
+    SGEXTN/widgets/instantiable/sgwsingletouchreceiver.cpp \
     SGEXTN/SingCorrect/sgwsingcorrectcustomisationpage.cpp \
     SGEXTN/SingCorrect/sgxsingcorrectcore.cpp \
     SGEXTN/SingCorrect/sgxsingcorrectcustomisation.cpp \
-    SGEXTN/colourbackground/sgxrendercolourbackgroundmaterial.cpp \
-    SGEXTN/colourbackground/sgxrendercolourbackgroundquickuielement.cpp \
-    SGEXTN/colourbackground/sgxrendercolourbackgroundsgwidget.cpp \
-    SGEXTN/colourbackground/sgxrendercolourbackgroundshader.cpp \
     SGEXTN/colourpickerrendering/huechoice/sgxrendercolourpickerhuechoicematerial.cpp \
     SGEXTN/colourpickerrendering/huechoice/sgxrendercolourpickerhuechoicequickuielement.cpp \
     SGEXTN/colourpickerrendering/huechoice/sgxrendercolourpickerhuechoicesgwidget.cpp \
@@ -127,75 +119,70 @@ SOURCES += SGEXTN/misc/main.cpp \
     SGEXTN/widgets/noninstantiable/sgwwidget.cpp
 RESOURCES += SGEXTN/assets.qrc
 HEADERS += \
-    $$PWD/RendererInterface/sgrbaserenderer.h \
-    $$PWD/RendererInterface/sgrbasesyncer.h \
-    $$PWD/RendererInterface/sgrcommandrequest.h \
-    $$PWD/RendererInterface/sgrdatabuffer.h \
-    $$PWD/RendererInterface/sgrelementbufferobject.h \
-    $$PWD/RendererInterface/sgrgraphicslanguagetype.h \
-    $$PWD/RendererInterface/sgrimage.h \
-    $$PWD/RendererInterface/sgrrenderergenerator.h \
-    $$PWD/RendererInterface/sgrrenderernode.h \
-    $$PWD/RendererInterface/sgrrendererwidget.h \
-    $$PWD/RendererInterface/sgrrenderingprogramme.h \
-    $$PWD/RendererInterface/sgrtexture.h \
-    $$PWD/RendererInterface/sgrvertexbufferobject.h \
-    $$PWD/RendererInterface/sgrvertexproperty.h \
-    $$PWD/RendererInterface/test/sgrtestrenderer.h \
-    $$PWD/RendererInterface/test/sgrtestsyncer.h \
-    $$PWD/bypassquickui/sgxresizer.h \
-    $$PWD/bypassquickui/sgxthemecolours.h \
-    $$PWD/containers/sglarray.h \
-    $$PWD/containers/sglcrash.h \
-    $$PWD/containers/sgldeque.h \
-    $$PWD/containers/sglequalsto.h \
-    $$PWD/containers/sglhash.h \
-    $$PWD/containers/sglhashalgorithm.h \
-    $$PWD/containers/sgllesserthan.h \
-    $$PWD/containers/sglmap.h \
-    $$PWD/containers/sglmorethan.h \
-    $$PWD/containers/sglmultiset.h \
-    $$PWD/containers/sglpair.h \
-    $$PWD/containers/sglpriorityqueue.h \
-    $$PWD/containers/sglqueue.h \
-    $$PWD/containers/sglset.h \
-    $$PWD/containers/sglsort.h \
-    $$PWD/containers/sglspan.h \
-    $$PWD/containers/sglstack.h \
-    $$PWD/containers/sgltuple3.h \
-    $$PWD/containers/sgltuple4.h \
-    $$PWD/containers/sgltuple5.h \
-    $$PWD/containers/sglunorderedmap.h \
-    $$PWD/containers/sglunorderedmultiset.h \
-    $$PWD/containers/sglunorderedset.h \
-    $$PWD/containers/sglvector.h \
-    $$PWD/customisation/sgwcustomisationpagecontrol.h \
-    $$PWD/customisation/sgxfontsizecustomisation.h \
-    $$PWD/filesystem/sgxfile.h \
-    $$PWD/math/sglfloatconstants.h \
-    $$PWD/math/sglfloatlimits.h \
-    $$PWD/math/sglfloatmath.h \
-    $$PWD/math/sglintlimits.h \
-    $$PWD/math/sglintmath.h \
-    $$PWD/math/sgllonglonglimits.h \
-    $$PWD/math/sgllonglongmath.h \
-    $$PWD/primitives/sgxchar.h \
-    $$PWD/primitives/sgxstring.h \
-    $$PWD/quickui/sgrscreenshotcallback.h \
-    $$PWD/quickui/sgwwidgetquickinterface.h \
-    $$PWD/quickui/sgxsingcorrectquickinterface.h \
-    $$PWD/quickui/sgxtimerquickinterface.h \
-    $$PWD/rng/sgxrandomnumbergenerator.h \
-    $$PWD/template/sgwfontsizecustomisationpage.h \
-    $$PWD/widgets/instantiable/sgwmultitouchreceiver.h \
-    $$PWD/widgets/instantiable/sgwsingletouchreceiver.h \
+    SGEXTN/RendererInterface/sgrbaserenderer.h \
+    SGEXTN/RendererInterface/sgrbasesyncer.h \
+    SGEXTN/RendererInterface/sgrcommandrequest.h \
+    SGEXTN/RendererInterface/sgrdatabuffer.h \
+    SGEXTN/RendererInterface/sgrelementbufferobject.h \
+    SGEXTN/RendererInterface/sgrgraphicslanguagetype.h \
+    SGEXTN/RendererInterface/sgrimage.h \
+    SGEXTN/RendererInterface/sgrrenderergenerator.h \
+    SGEXTN/RendererInterface/sgrrenderernode.h \
+    SGEXTN/RendererInterface/sgrrendererwidget.h \
+    SGEXTN/RendererInterface/sgrrenderingprogramme.h \
+    SGEXTN/RendererInterface/sgrtexture.h \
+    SGEXTN/RendererInterface/sgrvertexbufferobject.h \
+    SGEXTN/RendererInterface/sgrvertexproperty.h \
+    SGEXTN/RendererInterface/transparencyindicator/sgrtransparencyindicatorrenderer.h \
+    SGEXTN/bypassquickui/sgxresizer.h \
+    SGEXTN/bypassquickui/sgxthemecolours.h \
+    SGEXTN/containers/sglarray.h \
+    SGEXTN/containers/sglcrash.h \
+    SGEXTN/containers/sgldeque.h \
+    SGEXTN/containers/sglequalsto.h \
+    SGEXTN/containers/sglhash.h \
+    SGEXTN/containers/sglhashalgorithm.h \
+    SGEXTN/containers/sgllesserthan.h \
+    SGEXTN/containers/sglmap.h \
+    SGEXTN/containers/sglmorethan.h \
+    SGEXTN/containers/sglmultiset.h \
+    SGEXTN/containers/sglpair.h \
+    SGEXTN/containers/sglpriorityqueue.h \
+    SGEXTN/containers/sglqueue.h \
+    SGEXTN/containers/sglset.h \
+    SGEXTN/containers/sglsort.h \
+    SGEXTN/containers/sglspan.h \
+    SGEXTN/containers/sglstack.h \
+    SGEXTN/containers/sgltuple3.h \
+    SGEXTN/containers/sgltuple4.h \
+    SGEXTN/containers/sgltuple5.h \
+    SGEXTN/containers/sglunorderedmap.h \
+    SGEXTN/containers/sglunorderedmultiset.h \
+    SGEXTN/containers/sglunorderedset.h \
+    SGEXTN/containers/sglvector.h \
+    SGEXTN/customisation/sgwcustomisationpagecontrol.h \
+    SGEXTN/customisation/sgxfontsizecustomisation.h \
+    SGEXTN/filesystem/sgxfile.h \
+    SGEXTN/math/sglfloatconstants.h \
+    SGEXTN/math/sglfloatlimits.h \
+    SGEXTN/math/sglfloatmath.h \
+    SGEXTN/math/sglintlimits.h \
+    SGEXTN/math/sglintmath.h \
+    SGEXTN/math/sgllonglonglimits.h \
+    SGEXTN/math/sgllonglongmath.h \
+    SGEXTN/primitives/sgxchar.h \
+    SGEXTN/primitives/sgxstring.h \
+    SGEXTN/quickui/sgrscreenshotcallback.h \
+    SGEXTN/quickui/sgwwidgetquickinterface.h \
+    SGEXTN/quickui/sgxsingcorrectquickinterface.h \
+    SGEXTN/quickui/sgxtimerquickinterface.h \
+    SGEXTN/rng/sgxrandomnumbergenerator.h \
+    SGEXTN/template/sgwfontsizecustomisationpage.h \
+    SGEXTN/widgets/instantiable/sgwmultitouchreceiver.h \
+    SGEXTN/widgets/instantiable/sgwsingletouchreceiver.h \
     SGEXTN/SingCorrect/sgwsingcorrectcustomisationpage.h \
     SGEXTN/SingCorrect/sgxsingcorrectcore.h \
     SGEXTN/SingCorrect/sgxsingcorrectcustomisation.h \
-    SGEXTN/colourbackground/sgxrendercolourbackgroundmaterial.h \
-    SGEXTN/colourbackground/sgxrendercolourbackgroundquickuielement.h \
-    SGEXTN/colourbackground/sgxrendercolourbackgroundsgwidget.h \
-    SGEXTN/colourbackground/sgxrendercolourbackgroundshader.h \
     SGEXTN/colourpickerrendering/huechoice/sgxrendercolourpickerhuechoicematerial.h \
     SGEXTN/colourpickerrendering/huechoice/sgxrendercolourpickerhuechoicequickuielement.h \
     SGEXTN/colourpickerrendering/huechoice/sgxrendercolourpickerhuechoicesgwidget.h \

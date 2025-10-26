@@ -20,3 +20,8 @@ SGRRendererWidget::~SGRRendererWidget(){
     delete renderControl;
     delete syncControl;
 }
+
+void SGRRendererWidget::updateCustomRenderer() const {
+    (*topObject).polish();
+    (*topObject).update();
+}

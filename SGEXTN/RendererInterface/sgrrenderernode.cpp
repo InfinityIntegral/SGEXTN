@@ -16,7 +16,6 @@ SGRRendererNode::SGRRendererNode(SGRBaseRenderer *renderControl){
     (*this).renderControl = renderControl;
     (*renderControl).node = this;
     (*this).renderingProgramme = nullptr;
-    (*this).associatedItem = nullptr;
 }
 
 SGRRendererNode::~SGRRendererNode(){
@@ -55,6 +54,7 @@ void SGRRendererNode::render(const RenderState */*unused*/){
 void SGRRendererNode::releaseResources(){
     (*renderControl).cleanResourcesOnDestruction();
     delete renderingProgramme;
+    renderingProgramme = nullptr;
 }
 
 QSGRenderNode::RenderingFlags SGRRendererNode::flags() const {
@@ -66,5 +66,5 @@ QSGRenderNode::StateFlags SGRRendererNode::changedStates() const {
 }
 
 QRectF SGRRendererNode::rect() const {
-    return QRectF((*associatedItem).mapToScene(QPointF(0.0f, 0.0f)).x(), (*associatedItem).mapToScene(QPointF(0.0f, 0.0f)).y(), (*associatedItem).width(), (*associatedItem).height());
+    return QRectF((*renderControl).internalX, (*renderControl).internalY, (*renderControl).internalW, (*renderControl).internalH);
 }

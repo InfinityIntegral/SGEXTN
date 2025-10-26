@@ -17,7 +17,6 @@
 #include "../colourpickerrendering/saturationchoice/sgxrendercolourpickersaturationchoicequickuielement.h"
 #include "../colourpickerrendering/lightnesschoice/sgxrendercolourpickerlightnesschoicequickuielement.h"
 #include "../colourpickerrendering/transparencychoice/sgxrendercolourpickertransparencychoicequickuielement.h"
-#include "../colourbackground/sgxrendercolourbackgroundquickuielement.h"
 #include "../SingCorrect/sgxsingcorrectcore.h"
 #include "../quickui/sgxsingcorrectquickinterface.h"
 #include "../SingCorrect/sgxsingcorrectcustomisation.h"
@@ -59,7 +58,6 @@ void SGXCentral::initialise(){
     qmlRegisterType<SGXRenderColourPickerSaturationChoiceQuickUIElement>("ColourPickerSaturationChoice", 0, 0, "ColourPickerSaturationChoice");
     qmlRegisterType<SGXRenderColourPickerLightnessChoiceQuickUIElement>("ColourPickerLightnessChoice", 0, 0, "ColourPickerLightnessChoice");
     qmlRegisterType<SGXRenderColourPickerTransparencyChoiceQuickUIElement>("ColourPickerTransparencyChoice", 0, 0, "ColourPickerTransparencyChoice");
-    qmlRegisterType<SGXRenderColourBackgroundQuickUIElement>("ColourBackground", 0, 0, "ColourBackground");
 
     SGUCentralManagement::initialiseCustomRendering();
     (*SGXQuickInterface::e).load(":/SGEXTN/QML/root.qml");

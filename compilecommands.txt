@@ -5,6 +5,7 @@ shader .qsb compilation:
 qsb [file name].vert -o [file name].vert.qsb --batchable --glsl 330 --hlsl 50 --msl 12 --glsl "300 es"
 qsb [file name].frag -o [file name].frag.qsb --glsl 330 --hlsl 50 --msl 12 --glsl "300 es"
 
-cd SGEXTN/RendererInterface/test
-qsb test.vert -o test.vert.qsb --batchable --glsl 330 --hlsl 50 --msl 12 --glsl "300 es"
-qsb test.frag -o test.frag.qsb --glsl 330 --hlsl 50 --msl 12 --glsl "300 es"
+cd SGEXTN/RendererInterface/transparencyindicator
+qsb transparencyindicator.vert -o transparencyindicator.vert.qsb --batchable --glsl 330 --hlsl 50 --msl 12 --glsl "300 es"
+qsb transparencyindicator.frag -o transparencyindicator.frag.qsb --glsl 330 --hlsl 50 --msl 12 --glsl "300 es"
+cd ../../..

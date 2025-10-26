@@ -9,6 +9,8 @@
 #include "../../quickui/sgwwidgetquickinterface.h"
 #include "../../bypassquickui/sgxthemecolours.h"
 #include <QColor>
+#include "../../RendererInterface/transparencyindicator/sgrtransparencyindicatorrenderer.h"
+#include "../../RendererInterface/sgrrenderergenerator.h"
 
 namespace {
 inline QColor temp_getQColour(SGXColourRGBA x){
@@ -39,6 +41,8 @@ SGWColourPickerWidget::SGWColourPickerWidget(SGWWidget *parent, float x1, float 
     SGWWidget::syncQuickProperties();
     SGWColourPickerWidget::syncQuickProperties();
     quickInterface = new SGWWidgetQuickInterface(this);
+    renderControl = new SGRTransparencyIndicatorRenderer();
+    new SGRRendererGenerator(renderControl, nullptr, bottomObject);
 }
 
 SGXColourRGBA SGWColourPickerWidget::getColour() const {
@@ -183,4 +187,5 @@ void SGWColourPickerWidget::setE0(float e0){
 
 SGWColourPickerWidget::~SGWColourPickerWidget(){
     (*quickInterface).deleteLater();
+    delete renderControl;
 }

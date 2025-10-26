@@ -16,6 +16,7 @@ public:
     ~SGRRendererWidget() override;
     SGRBaseRenderer* renderControl;
     SGRBaseSyncer* syncControl;
+    void updateCustomRenderer() const;
 };
 
 #endif // SGRRENDERERWIDGET_H

@@ -13,9 +13,6 @@
         <file>colourpickerrendering/lightnesschoice/lightnesschoice.qml</file>
         <file>colourpickerrendering/lightnesschoice/lightnesschoice.vert.qsb</file>
         <file>colourpickerrendering/lightnesschoice/lightnesschoice.frag.qsb</file>
-        <file>colourbackground/colourbackground.qml</file>
-        <file>colourbackground/colourbackground.vert.qsb</file>
-        <file>colourbackground/colourbackground.frag.qsb</file>
         <file>colourpickerrendering/transparencychoice/transparencychoice.qml</file>
         <file>colourpickerrendering/transparencychoice/transparencychoice.vert.qsb</file>
         <file>colourpickerrendering/transparencychoice/transparencychoice.frag.qsb</file>
@@ -39,9 +36,8 @@
         <file>QML/sgwsequentiallonglabel.qml</file>
         <file>QML/sgwsingletouchreceiver.qml</file>
         <file>QML/sgwmultitouchreceiver.qml</file>
-        <file>RendererInterface/test/test.frag.qsb</file>
-        <file>RendererInterface/test/test.vert.qsb</file>
-        <file>bg.jpg</file>
+        <file>RendererInterface/transparencyindicator/transparencyindicator.vert.qsb</file>
+        <file>RendererInterface/transparencyindicator/transparencyindicator.frag.qsb</file>
     </qresource>
     <qresource prefix="/"/>
 </RCC>

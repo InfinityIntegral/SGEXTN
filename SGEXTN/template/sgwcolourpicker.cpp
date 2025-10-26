@@ -14,11 +14,12 @@
 #include "../widgets/instantiable/sgwtextlabel.h"
 #include "../widgets/noninstantiable/sgwinput.h"
 #include "../widgets/enums/sgwhorizontalalignment.h"
-#include "../colourbackground/sgxrendercolourbackgroundsgwidget.h"
 #include "../widgets/instantiable/sgwcolourpickerwidget.h"
 #include "../widgets/instantiable/sgwtextbutton.h"
 #include "../widgets/noninstantiable/sgwbutton.h"
 #include "../widgets/instantiable/sgwsingletouchreceiver.h"
+#include "../RendererInterface/transparencyindicator/sgrtransparencyindicatorrenderer.h"
+#include "../RendererInterface/sgrrenderergenerator.h"
 
 SGWBackground* SGWColourPicker::instance = nullptr;
 SGXColourRGBA SGWColourPicker::colour = SGXColourRGBA(255, 0, 200);
@@ -36,7 +37,8 @@ SGWInput* SGWColourPicker::greenInput = nullptr;
 SGWInput* SGWColourPicker::blueInput = nullptr;
 SGWInput* SGWColourPicker::transparencyInput = nullptr;
 SGWInput* SGWColourPicker::hexCodeInput = nullptr;
-SGXRenderColourBackgroundSGWidget* SGWColourPicker::colourDisplay = nullptr;
+SGWBlankWidget* SGWColourPicker::transparencyGrid = nullptr;
+SGWBlankWidget* SGWColourPicker::colourDisplay = nullptr;
 bool SGWColourPicker::ignoreInputChanges = false;
 SGWColourPickerWidget* SGWColourPicker::colourReceiver = nullptr;
 SGWButton* SGWColourPicker::completeButton = nullptr;
@@ -72,7 +74,10 @@ SGWBackground* SGWColourPicker::initialise(){
     new SGWTextLabel(realBg, "hex code:", 0.0f, 0.5f, 0.0f, 9.5f, 0.0f, 2.9f, 0.0f, 1.0f, SGWHorizontalAlignment::Right, false);
     SGWColourPicker::hexCodeInput = new SGWTextInput(realBg, nullptr, 0.0f, 3.5f, 0.0f, 9.5f, 0.0f, 5.0f, 0.0f, 1.0f);
     (*SGWColourPicker::hexCodeInput).textChangedFunction = (&SGWColourPicker::updateHexCode);
-    SGWColourPicker::colourDisplay = new SGXRenderColourBackgroundSGWidget(realBg, 0.0f, 9.0f, 0.0f, 6.5f, 0.0f, 2.0f, 0.0f, 1.0f, SGWColourPicker::colour);
+    SGWColourPicker::transparencyGrid = new SGWBlankWidget(realBg, 0.0f, 9.0f, 0.0f, 6.5f, 0.0f, 2.0f, 0.0f, 1.0f, -1);
+    SGWColourPicker::colourDisplay = new SGWBlankWidget(realBg, 0.0f, 9.0f, 0.0f, 6.5f, 0.0f, 2.0f, 0.0f, 1.0f, -1);
+    SGRBaseRenderer* renderControl = new SGRTransparencyIndicatorRenderer();
+    new SGRRendererGenerator(renderControl, nullptr, (*SGWColourPicker::transparencyGrid).getBottomObject());
     SGWColourPicker::completeButton = new SGWTextButton(realBg, "ok", &SGWColourPicker::completeColourSelection, 0.0f, 9.0f, 0.0f, 9.5f, 0.0f, 1.5f, 0.0f, 1.0f);
     return bg;
 }

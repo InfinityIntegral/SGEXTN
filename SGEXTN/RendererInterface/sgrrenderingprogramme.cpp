@@ -53,10 +53,6 @@ SGRRenderingProgramme::SGRRenderingProgramme(SGRBaseRenderer *renderControl){
     blendFunction.enable = true;
     (*pipeline).setTargetBlends({blendFunction});
     
-    (*pipeline).setDepthTest(true);
-    (*pipeline).setDepthWrite(true);
-    (*pipeline).setDepthOp(QRhiGraphicsPipeline::Less);
-    
     vertexBufferObjects = new SGLVector<int>();
     vertexProperties = new SGLVector<SGRVertexProperty>();
     uniformBufferObjects = new SGLVector<SGLPair<int, int>>();

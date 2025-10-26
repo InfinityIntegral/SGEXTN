@@ -12,6 +12,7 @@ class SGRRendererGenerator : public QQuickItem
 {
 public:
     SGRRendererGenerator(SGRBaseRenderer* renderControl, SGRBaseSyncer* syncControl, SGWWidget* attachedWidget);
+    SGRRendererGenerator(SGRBaseRenderer* renderControl, SGRBaseSyncer* syncControl, QQuickItem* parentItem);
     QSGNode* updatePaintNode(QSGNode* old, UpdatePaintNodeData* /*unused*/) override;
     SGRBaseRenderer* renderControl;
     SGRBaseSyncer* syncControl;

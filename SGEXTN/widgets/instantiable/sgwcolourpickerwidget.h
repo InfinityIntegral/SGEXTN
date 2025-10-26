@@ -5,6 +5,7 @@
 #include "../../primitives/sgxcolourrgba.h"
 #include "../../primitives/sgxstring.h"
 
+class SGRBaseRenderer;
 class SGWWidgetQuickInterface;
 class SGWColourPickerWidget : public SGWWidget
 {
@@ -54,6 +55,7 @@ protected:
     int backgroundFocusThemeColour;
     SGXColourRGBA backgroundFocusColour = {};
     SGWWidgetQuickInterface* quickInterface;
+    SGRBaseRenderer* renderControl;
 };
 
 #endif // SGWCOLOURPICKERWIDGET_H
