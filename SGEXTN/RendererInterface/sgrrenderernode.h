@@ -10,6 +10,7 @@ class SGRBaseRenderer;
 class QRhi;
 class QQuickItem;
 class SGRRenderingProgramme;
+class SGRBaseSyncer;
 class SGRRendererNode : public QSGRenderNode
 {
 public:
@@ -28,6 +29,8 @@ public:
     SGRBaseRenderer* renderControl;
     QRhi* rhi;
     SGRRenderingProgramme* renderingProgramme;
+    SGRBaseRenderer* rendererToDelete;
+    SGRBaseSyncer* syncerToDelete;
 };
 
 #endif // SGRRENDERERNODE_H

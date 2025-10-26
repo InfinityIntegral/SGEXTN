@@ -15,6 +15,7 @@ SGRRendererGenerator::SGRRendererGenerator(SGRBaseRenderer* renderControl, SGRBa
     (*this).syncControl = syncControl;
     (*this).attachedWidget = attachedWidget;
     (*this).syncSize();
+    (*this).node = nullptr;
     connect(SGXQuickInterface::applicationWindow, &QQuickWindow::widthChanged, this, &SGRRendererGenerator::syncSize);
     connect(SGXQuickInterface::applicationWindow, &QQuickWindow::heightChanged, this, &SGRRendererGenerator::syncSize);
 }
@@ -25,6 +26,7 @@ SGRRendererGenerator::SGRRendererGenerator(SGRBaseRenderer *renderControl, SGRBa
     (*this).syncControl = syncControl;
     (*this).attachedWidget = nullptr;
     (*this).syncSize();
+    (*this).node = nullptr;
     connect(SGXQuickInterface::applicationWindow, &QQuickWindow::widthChanged, this, &SGRRendererGenerator::syncSize);
     connect(SGXQuickInterface::applicationWindow, &QQuickWindow::heightChanged, this, &SGRRendererGenerator::syncSize);
 }
@@ -40,6 +42,7 @@ QSGNode* SGRRendererGenerator::updatePaintNode(QSGNode *old, UpdatePaintNodeData
     (*renderControl).internalWindowH = static_cast<float>((*SGXQuickInterface::applicationWindow).height());
     if(syncControl != nullptr){(*syncControl).sync(renderControl);}
     (*node).markDirty(QSGRenderNode::DirtyForceUpdate);
+    (*this).node = node;
     return node;
 }
 

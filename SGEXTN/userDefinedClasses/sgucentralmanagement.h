@@ -9,9 +9,8 @@ public:
     SGUCentralManagement() = delete;
     static void initialise();
     static void terminate();
-    static void earlyInitialise();
-    static void initialiseExtraFonts();
-    static void initialiseCustomRendering();
+    static void setDefaultTheme();
+    static void importExtraFonts();
     static SGXString applicationName;
     static SGXString applicationVersion;
     static SGXString organisationName;

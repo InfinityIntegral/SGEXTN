@@ -10,12 +10,15 @@
 #include <QSGRenderNode>
 #include <QRectF>
 #include "../containers/sglarray.h"
+#include "sgrbasesyncer.h"
 
 SGRRendererNode::SGRRendererNode(SGRBaseRenderer *renderControl){
     (*this).rhi = (*SGXQuickInterface::applicationWindow).rhi();
     (*this).renderControl = renderControl;
     (*renderControl).node = this;
     (*this).renderingProgramme = nullptr;
+    (*this).rendererToDelete = nullptr;
+    (*this).syncerToDelete = nullptr;
 }
 
 SGRRendererNode::~SGRRendererNode(){
@@ -30,9 +33,11 @@ void SGRRendererNode::prepare(){
         if((*renderingProgramme).isFinalised == false){throw std::runtime_error("you forgot to finalise your rendering programme before use, use SGRRenderingProgramme::finaliseRenderingProgramme to finalise it");}
     }
     (*renderingProgramme).resourceUpdateOperation = resourceUpdate;
-    SGLArray<float> builtins((*renderControl).internalX, (*renderControl).internalY, (*renderControl).internalW, (*renderControl).internalH, (*renderControl).internalWindowW, (*renderControl).internalWindowH, 0.0f, 0.0f);
-    if((*renderTarget()).resourceType() == QRhiResource::TextureRenderTarget){builtins.at(6) = 1.0f;}
-    (*renderingProgramme).updateShaderUniforms(0, 0, 32, builtins.pointerToData(0));
+    SGLArray<float> builtins((*renderControl).internalX, (*renderControl).internalY, (*renderControl).internalW, (*renderControl).internalH, (*renderControl).internalWindowW, (*renderControl).internalWindowH);
+    int offscreen = 0;
+    if((*renderTarget()).resourceType() == QRhiResource::TextureRenderTarget){offscreen = 1;}
+    (*renderingProgramme).updateShaderUniforms(0, 0, 24, builtins.pointerToData(0));
+    (*renderingProgramme).updateShaderUniforms(0, 24, 4, &offscreen);
     if((*renderControl).initialised == false){
         (*renderControl).initialised = true;
         (*renderControl).initialise();
@@ -54,7 +59,8 @@ void SGRRendererNode::render(const RenderState */*unused*/){
 void SGRRendererNode::releaseResources(){
     (*renderControl).cleanResourcesOnDestruction();
     delete renderingProgramme;
-    renderingProgramme = nullptr;
+    delete rendererToDelete;
+    delete syncerToDelete;
 }
 
 QSGRenderNode::RenderingFlags SGRRendererNode::flags() const {

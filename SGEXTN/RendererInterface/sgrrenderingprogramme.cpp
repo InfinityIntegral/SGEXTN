@@ -139,7 +139,7 @@ void SGRRenderingProgramme::addTexture(int shaderDeclaredBinding) const {
 void SGRRenderingProgramme::finaliseShaderResource(){
     SGLVector<QRhiShaderResourceBinding> resourceBindings;
     {
-        QRhiBuffer* uniformBuffer = (*rhi).newBuffer(QRhiBuffer::Dynamic, QRhiBuffer::UniformBuffer, 32);
+        QRhiBuffer* uniformBuffer = (*rhi).newBuffer(QRhiBuffer::Dynamic, QRhiBuffer::UniformBuffer, 28);
         (*uniformBuffer).create();
         resourceBindings.pushBack(QRhiShaderResourceBinding::uniformBuffer(0, QRhiShaderResourceBinding::VertexStage | QRhiShaderResourceBinding::FragmentStage, uniformBuffer));
         (*uniformBuffers).pushBack(SGLPair<int, QRhiBuffer*>(0, uniformBuffer));

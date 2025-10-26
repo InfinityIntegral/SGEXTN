@@ -8,6 +8,7 @@ class UpdatePaintNodeData;
 class SGRBaseRenderer;
 class SGWWidget;
 class SGRBaseSyncer;
+class SGRRendererNode;
 class SGRRendererGenerator : public QQuickItem
 {
 public:
@@ -19,6 +20,7 @@ public:
     SGWWidget* attachedWidget;
     void updatePolish() override;
     void syncSize();
+    SGRRendererNode* node;
 };
 
 #endif // SGRRENDERERGENERATOR_H

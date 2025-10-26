@@ -4,18 +4,14 @@ QMAKE_CXXFLAGS_RELEASE -= -O2
 QMAKE_CXXFLAGS_DEBUG += -std=c++20
 QMAKE_LFLAGS += -flto -Wl,--gc-sections
 DISTFILES += .gitignore LICENSE.txt README.md \
+    $$PWD/RendererInterface/colourpicker/colourpicker.frag \
+    $$PWD/RendererInterface/colourpicker/colourpicker.vert \
     SGEXTN/RendererInterface/transparencyindicator/transparencyindicator.frag \
-    SGEXTN/RendererInterface/transparencyindicator/transparencyindicator.vert \
-    SGEXTN/colourpickerrendering/huechoice/huechoice.frag \
-    SGEXTN/colourpickerrendering/huechoice/huechoice.vert \
-    SGEXTN/colourpickerrendering/lightnesschoice/lightnesschoice.frag \
-    SGEXTN/colourpickerrendering/lightnesschoice/lightnesschoice.vert \
-    SGEXTN/colourpickerrendering/saturationchoice/saturationchoice.frag \
-    SGEXTN/colourpickerrendering/saturationchoice/saturationchoice.vert \
-    SGEXTN/colourpickerrendering/transparencychoice/transparencychoice.frag \
-    SGEXTN/colourpickerrendering/transparencychoice/transparencychoice.vert
+    SGEXTN/RendererInterface/transparencyindicator/transparencyindicator.vert
     
 SOURCES += SGEXTN/misc/main.cpp \
+    $$PWD/RendererInterface/colourpicker/sgrcolourpickerrenderer.cpp \
+    $$PWD/RendererInterface/colourpicker/sgrcolourpickersyncer.cpp \
     SGEXTN/RendererInterface/sgrbaserenderer.cpp \
     SGEXTN/RendererInterface/sgrbasesyncer.cpp \
     SGEXTN/RendererInterface/sgrcommandrequest.cpp \
@@ -57,22 +53,6 @@ SOURCES += SGEXTN/misc/main.cpp \
     SGEXTN/SingCorrect/sgwsingcorrectcustomisationpage.cpp \
     SGEXTN/SingCorrect/sgxsingcorrectcore.cpp \
     SGEXTN/SingCorrect/sgxsingcorrectcustomisation.cpp \
-    SGEXTN/colourpickerrendering/huechoice/sgxrendercolourpickerhuechoicematerial.cpp \
-    SGEXTN/colourpickerrendering/huechoice/sgxrendercolourpickerhuechoicequickuielement.cpp \
-    SGEXTN/colourpickerrendering/huechoice/sgxrendercolourpickerhuechoicesgwidget.cpp \
-    SGEXTN/colourpickerrendering/huechoice/sgxrendercolourpickerhuechoiceshader.cpp \
-    SGEXTN/colourpickerrendering/lightnesschoice/sgxrendercolourpickerlightnesschoicematerial.cpp \
-    SGEXTN/colourpickerrendering/lightnesschoice/sgxrendercolourpickerlightnesschoicequickuielement.cpp \
-    SGEXTN/colourpickerrendering/lightnesschoice/sgxrendercolourpickerlightnesschoicesgwidget.cpp \
-    SGEXTN/colourpickerrendering/lightnesschoice/sgxrendercolourpickerlightnesschoiceshader.cpp \
-    SGEXTN/colourpickerrendering/saturationchoice/sgxrendercolourpickersaturationchoicematerial.cpp \
-    SGEXTN/colourpickerrendering/saturationchoice/sgxrendercolourpickersaturationchoicequickuielement.cpp \
-    SGEXTN/colourpickerrendering/saturationchoice/sgxrendercolourpickersaturationchoicesgwidget.cpp \
-    SGEXTN/colourpickerrendering/saturationchoice/sgxrendercolourpickersaturationchoiceshader.cpp \
-    SGEXTN/colourpickerrendering/transparencychoice/sgxrendercolourpickertransparencychoicematerial.cpp \
-    SGEXTN/colourpickerrendering/transparencychoice/sgxrendercolourpickertransparencychoicequickuielement.cpp \
-    SGEXTN/colourpickerrendering/transparencychoice/sgxrendercolourpickertransparencychoicesgwidget.cpp \
-    SGEXTN/colourpickerrendering/transparencychoice/sgxrendercolourpickertransparencychoiceshader.cpp \
     SGEXTN/customisation/sgxthemecolourscustomisation.cpp \
     SGEXTN/filesystem/sgxfilebinutilities.cpp \
     SGEXTN/filesystem/sgxfiledownloader.cpp \
@@ -119,6 +99,8 @@ SOURCES += SGEXTN/misc/main.cpp \
     SGEXTN/widgets/noninstantiable/sgwwidget.cpp
 RESOURCES += SGEXTN/assets.qrc
 HEADERS += \
+    $$PWD/RendererInterface/colourpicker/sgrcolourpickerrenderer.h \
+    $$PWD/RendererInterface/colourpicker/sgrcolourpickersyncer.h \
     SGEXTN/RendererInterface/sgrbaserenderer.h \
     SGEXTN/RendererInterface/sgrbasesyncer.h \
     SGEXTN/RendererInterface/sgrcommandrequest.h \
@@ -183,22 +165,6 @@ HEADERS += \
     SGEXTN/SingCorrect/sgwsingcorrectcustomisationpage.h \
     SGEXTN/SingCorrect/sgxsingcorrectcore.h \
     SGEXTN/SingCorrect/sgxsingcorrectcustomisation.h \
-    SGEXTN/colourpickerrendering/huechoice/sgxrendercolourpickerhuechoicematerial.h \
-    SGEXTN/colourpickerrendering/huechoice/sgxrendercolourpickerhuechoicequickuielement.h \
-    SGEXTN/colourpickerrendering/huechoice/sgxrendercolourpickerhuechoicesgwidget.h \
-    SGEXTN/colourpickerrendering/huechoice/sgxrendercolourpickerhuechoiceshader.h \
-    SGEXTN/colourpickerrendering/lightnesschoice/sgxrendercolourpickerlightnesschoicematerial.h \
-    SGEXTN/colourpickerrendering/lightnesschoice/sgxrendercolourpickerlightnesschoicequickuielement.h \
-    SGEXTN/colourpickerrendering/lightnesschoice/sgxrendercolourpickerlightnesschoicesgwidget.h \
-    SGEXTN/colourpickerrendering/lightnesschoice/sgxrendercolourpickerlightnesschoiceshader.h \
-    SGEXTN/colourpickerrendering/saturationchoice/sgxrendercolourpickersaturationchoicematerial.h \
-    SGEXTN/colourpickerrendering/saturationchoice/sgxrendercolourpickersaturationchoicequickuielement.h \
-    SGEXTN/colourpickerrendering/saturationchoice/sgxrendercolourpickersaturationchoicesgwidget.h \
-    SGEXTN/colourpickerrendering/saturationchoice/sgxrendercolourpickersaturationchoiceshader.h \
-    SGEXTN/colourpickerrendering/transparencychoice/sgxrendercolourpickertransparencychoicematerial.h \
-    SGEXTN/colourpickerrendering/transparencychoice/sgxrendercolourpickertransparencychoicequickuielement.h \
-    SGEXTN/colourpickerrendering/transparencychoice/sgxrendercolourpickertransparencychoicesgwidget.h \
-    SGEXTN/colourpickerrendering/transparencychoice/sgxrendercolourpickertransparencychoiceshader.h \
     SGEXTN/customisation/sgxthemecolourscustomisation.h \
     SGEXTN/filesystem/sgxfilebinutilities.h \
     SGEXTN/filesystem/sgxfiledownloader.h \

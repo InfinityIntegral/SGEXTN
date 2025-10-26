@@ -5,16 +5,14 @@
 #include "../primitives/sgxcolourhsla.h"
 
 class SGWBackground;
-class SGXRenderColourPickerHueChoiceSGWidget;
-class SGXRenderColourPickerSaturationChoiceSGWidget;
-class SGXRenderColourPickerLightnessChoiceSGWidget;
-class SGXRenderColourPickerTransparencyChoiceSGWidget;
 class SGWSingleTouchReceiver;
 class SGWInput;
 class SGWColourPickerWidget;
 class SGWButton;
 class SGXTouchEvent;
 class SGWBlankWidget;
+class SGRColourPickerSyncer;
+class SGRRendererWidget;
 class SGWColourPicker
 {
 public:
@@ -25,19 +23,23 @@ public:
     static SGWBackground* initialise();
     static void reset();
     static void activate();
-    static SGXRenderColourPickerHueChoiceSGWidget* hueChoice;
+    static SGRRendererWidget* hueChoice;
+    static SGRColourPickerSyncer* hueSync;
     static void updateUsingColour();
     static void updateUsingColourHSLA();
     static void updateInputs();
     static SGWSingleTouchReceiver* hueTouchReceiver;
     static void updateHue(const SGXTouchEvent& t);
-    static SGXRenderColourPickerSaturationChoiceSGWidget* saturationChoice;
+    static SGRRendererWidget* saturationChoice;
+    static SGRColourPickerSyncer* saturationSync;
     static SGWSingleTouchReceiver* saturationTouchReceiver;
     static void updateSaturation(const SGXTouchEvent& t);
-    static SGXRenderColourPickerLightnessChoiceSGWidget* lightnessChoice;
+    static SGRRendererWidget* lightnessChoice;
+    static SGRColourPickerSyncer* lightnessSync;
     static SGWSingleTouchReceiver* lightnessTouchReceiver;
     static void updateLightness(const SGXTouchEvent& t);
-    static SGXRenderColourPickerTransparencyChoiceSGWidget* transparencyChoice;
+    static SGRRendererWidget* transparencyChoice;
+    static SGRColourPickerSyncer* transparencySync;
     static SGWSingleTouchReceiver* transparencyTouchReceiver;
     static void updateTransparency(const SGXTouchEvent& t);
     static SGWInput* redInput;
@@ -50,7 +52,6 @@ public:
     static void updateTransparencyFromInput();
     static SGWInput* hexCodeInput;
     static void updateHexCode();
-    static SGWBlankWidget* transparencyGrid;
     static SGWBlankWidget* colourDisplay;
     static bool ignoreInputChanges;
     static SGWColourPickerWidget* colourReceiver;

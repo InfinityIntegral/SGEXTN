@@ -9,3 +9,8 @@ cd SGEXTN/RendererInterface/transparencyindicator
 qsb transparencyindicator.vert -o transparencyindicator.vert.qsb --batchable --glsl 330 --hlsl 50 --msl 12 --glsl "300 es"
 qsb transparencyindicator.frag -o transparencyindicator.frag.qsb --glsl 330 --hlsl 50 --msl 12 --glsl "300 es"
 cd ../../..
+
+cd SGEXTN/RendererInterface/colourpicker
+qsb colourpicker.vert -o colourpicker.vert.qsb --batchable --glsl 330 --hlsl 50 --msl 12 --glsl "300 es"
+qsb colourpicker.frag -o colourpicker.frag.qsb --glsl 330 --hlsl 50 --msl 12 --glsl "300 es"
+cd ../../..

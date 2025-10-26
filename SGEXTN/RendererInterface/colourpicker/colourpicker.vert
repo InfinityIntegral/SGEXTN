@@ -19,7 +19,7 @@ layout(location = 0) out vec2 vertexUnits;
 
 void main(){
     gl_Position = vec4(vertex.x, vertex.y, 0.0f, 1.0f);
-    vertexUnits = vec2(5.0f * vertex.x * SG_RI_builtin.width / SG_RI_builtin.height, 5.0f * vertex.y);
+    vertexUnits = vertex;
     
     gl_Position = SG_RI_transform(gl_Position);
 }

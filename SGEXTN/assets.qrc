@@ -4,19 +4,6 @@
         <file>QML/root.qml</file>
         <file>QML/fileupload.qml</file>
         <file>QML/filedownload.qml</file>
-        <file>colourpickerrendering/huechoice/huechoice.qml</file>
-        <file>colourpickerrendering/huechoice/huechoice.vert.qsb</file>
-        <file>colourpickerrendering/huechoice/huechoice.frag.qsb</file>
-        <file>colourpickerrendering/saturationchoice/saturationchoice.qml</file>
-        <file>colourpickerrendering/saturationchoice/saturationchoice.vert.qsb</file>
-        <file>colourpickerrendering/saturationchoice/saturationchoice.frag.qsb</file>
-        <file>colourpickerrendering/lightnesschoice/lightnesschoice.qml</file>
-        <file>colourpickerrendering/lightnesschoice/lightnesschoice.vert.qsb</file>
-        <file>colourpickerrendering/lightnesschoice/lightnesschoice.frag.qsb</file>
-        <file>colourpickerrendering/transparencychoice/transparencychoice.qml</file>
-        <file>colourpickerrendering/transparencychoice/transparencychoice.vert.qsb</file>
-        <file>colourpickerrendering/transparencychoice/transparencychoice.frag.qsb</file>
-        <file>assets/AppIcons.sg</file>
         <file>assets/SingScript.sg</file>
         <file>QML/sgwroot.qml</file>
         <file>QML/sgwparent.qml</file>
@@ -38,6 +25,8 @@
         <file>QML/sgwmultitouchreceiver.qml</file>
         <file>RendererInterface/transparencyindicator/transparencyindicator.vert.qsb</file>
         <file>RendererInterface/transparencyindicator/transparencyindicator.frag.qsb</file>
+        <file>RendererInterface/colourpicker/colourpicker.vert.qsb</file>
+        <file>RendererInterface/colourpicker/colourpicker.frag.qsb</file>
     </qresource>
     <qresource prefix="/"/>
 </RCC>

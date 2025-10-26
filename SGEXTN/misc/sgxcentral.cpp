@@ -13,10 +13,6 @@
 #include <QStandardPaths>
 #include "../filesystem/sgxfilebinutilities.h"
 #include "../customisation/sgxthemecolourscustomisation.h"
-#include "../colourpickerrendering/huechoice/sgxrendercolourpickerhuechoicequickuielement.h"
-#include "../colourpickerrendering/saturationchoice/sgxrendercolourpickersaturationchoicequickuielement.h"
-#include "../colourpickerrendering/lightnesschoice/sgxrendercolourpickerlightnesschoicequickuielement.h"
-#include "../colourpickerrendering/transparencychoice/sgxrendercolourpickertransparencychoicequickuielement.h"
 #include "../SingCorrect/sgxsingcorrectcore.h"
 #include "../quickui/sgxsingcorrectquickinterface.h"
 #include "../SingCorrect/sgxsingcorrectcustomisation.h"
@@ -26,6 +22,7 @@
 #include "../widgets/noninstantiable/sgwbackground.h"
 #include "../primitives/sgxidentifier.h"
 #include "../customisation/sgxfontsizecustomisation.h"
+#include <QQuickItem>
 
 void SGXCentral::initialise(){
     const SGXString standardPath = "";
@@ -38,12 +35,12 @@ void SGXCentral::initialise(){
     if(SGXFileSystem::folderExists(SGXFileSystem::configFilePath) == false){SGXFileSystem::createFolder(SGXFileSystem::configFilePath);}
     SGXFileBinUtilities::loadBinData();
     
-    SGUCentralManagement::earlyInitialise();
     QCoreApplication::setApplicationName(*SGUCentralManagement::applicationName.data);
     QCoreApplication::setApplicationVersion(*SGUCentralManagement::applicationVersion.data);
     QCoreApplication::setOrganizationName(*SGUCentralManagement::organisationName.data);
     const QIcon temp_appicon(":/SGEXTN/assets/appicon.png");
     QGuiApplication::setWindowIcon(temp_appicon);
+    SGUCentralManagement::setDefaultTheme();
     SGXThemeColoursCustomisation::loadThemeColours();
 
     SGXQuickInterface::themeColoursSingleton = new SGXThemeColourSetting();
@@ -53,19 +50,11 @@ void SGXCentral::initialise(){
     SGXSingCorrectCore::instance = new SGXSingCorrectQuickInterface();
     qmlRegisterSingletonInstance("SingCorrect", 0, 0, "SingCorrect", SGXSingCorrectCore::instance);
     SGXFontSizeCustomisation::loadFontSize();
-
-    qmlRegisterType<SGXRenderColourPickerHueChoiceQuickUIElement>("ColourPickerHueChoice", 0, 0, "ColourPickerHueChoice");
-    qmlRegisterType<SGXRenderColourPickerSaturationChoiceQuickUIElement>("ColourPickerSaturationChoice", 0, 0, "ColourPickerSaturationChoice");
-    qmlRegisterType<SGXRenderColourPickerLightnessChoiceQuickUIElement>("ColourPickerLightnessChoice", 0, 0, "ColourPickerLightnessChoice");
-    qmlRegisterType<SGXRenderColourPickerTransparencyChoiceQuickUIElement>("ColourPickerTransparencyChoice", 0, 0, "ColourPickerTransparencyChoice");
-
-    SGUCentralManagement::initialiseCustomRendering();
     (*SGXQuickInterface::e).load(":/SGEXTN/QML/root.qml");
 
     QObject::connect(qApp, &QGuiApplication::aboutToQuit, &SGXCentral::terminate); // NOLINT(cppcoreguidelines-pro-type-static-cast-downcast)
     QFontDatabase::addApplicationFont(":/SGEXTN/assets/SingScript.sg");
-    QFontDatabase::addApplicationFont(":/SGEXTN/assets/AppIcons.sg");
-    SGUCentralManagement::initialiseExtraFonts();
+    SGUCentralManagement::importExtraFonts();
 
     SGXQuickInterface::applicationWindow = static_cast<QQuickWindow*>((*SGXQuickInterface::e).rootObjects().first());
     SGXQuickInterface::rootWindow = (*SGXQuickInterface::applicationWindow).contentItem();
