@@ -23,6 +23,8 @@
 #include "../primitives/sgxidentifier.h"
 #include "../customisation/sgxfontsizecustomisation.h"
 #include <QQuickItem>
+#include "../widgets/enums/sgwdefaultfonts.h"
+#include <qlogging.h>
 
 void SGXCentral::initialise(){
     const SGXString standardPath = "";
@@ -53,8 +55,12 @@ void SGXCentral::initialise(){
     (*SGXQuickInterface::e).load(":/SGEXTN/QML/root.qml");
 
     QObject::connect(qApp, &QGuiApplication::aboutToQuit, &SGXCentral::terminate); // NOLINT(cppcoreguidelines-pro-type-static-cast-downcast)
-    QFontDatabase::addApplicationFont(":/SGEXTN/assets/SingScript.sg");
+    SGWDefaultFonts::addFont(":/SGEXTN/assets/SingScript.sg");
+    QFontDatabase::addApplicationFallbackFontFamily(QChar::Script_Common, (*SGWDefaultFonts::textFont.data));
+    QFontDatabase::addApplicationFallbackFontFamily(QChar::Script_Latin, (*SGWDefaultFonts::textFont.data));
     SGUCentralManagement::importExtraFonts();
+    if(QFontDatabase::families().contains(*SGWDefaultFonts::textFont.data) == false){qWarning() << "SingScript.sg font is not found, the application will not display text and symbols used in Mathematics, Science, and Informatics correctly, to fix this, do not clear the QFontDatabase";}
+    if(QFontDatabase::families().contains(*SGWDefaultFonts::iconsFont.data) == false){qWarning() << "AppIcons.sg font is not found, application icons will not be displayed correctly, to fix this, use the static function SGWDefaultFont::addFont to add the correct font from its file path when importing extra fonts. You may ignore this warning if you are not using SGWidget icons or icon buttons";}
 
     SGXQuickInterface::applicationWindow = static_cast<QQuickWindow*>((*SGXQuickInterface::e).rootObjects().first());
     SGXQuickInterface::rootWindow = (*SGXQuickInterface::applicationWindow).contentItem();

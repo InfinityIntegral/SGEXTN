@@ -67,6 +67,7 @@ SGRRendererWidget: added
 SGRRenderingProgramme: added
 SGRTexture: added
 SGRVertexBufferObject: added
+SGWDefaultFonts: added functionality for importing custom fonts
 
 Added:
 - SGXChar
@@ -130,6 +131,7 @@ Improved:
 - SGWButton
 - SGXResizer
 - SGWWidget
+- SGWDefaultFonts
 
 Removed:
 - SGLFileZip

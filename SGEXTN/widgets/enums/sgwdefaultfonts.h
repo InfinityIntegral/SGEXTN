@@ -9,6 +9,7 @@ public:
     SGWDefaultFonts() = delete;
     static SGXString textFont;
     static SGXString iconsFont;
+    static void addFont(const SGXString& fileName);
 };
 
 #endif // SGWDEFAULTFONTS_H
