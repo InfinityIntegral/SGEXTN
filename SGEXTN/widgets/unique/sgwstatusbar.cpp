@@ -20,11 +20,6 @@ SGWStatusBar::SGWStatusBar() : SGWWidget(SGWWidget::rootWidget, 0.0f, 0.0f, 0.0f
     (*this).bottomObject = SGXQuickInterface::getBottomObject(thisItem);
     SGWStatusBar::timer = new SGXTimer(1.0f, &SGWStatusBar::updateTime);
     SGXTimer::singleCall(0.0f, &SGWStatusBar::updateTime);
-    (*this).quickInterface = new SGWWidgetQuickInterface(this);
-}
-
-SGWStatusBar::~SGWStatusBar(){
-    (*quickInterface).deleteLater();
 }
 
 void SGWStatusBar::terminate(){
@@ -32,9 +27,5 @@ void SGWStatusBar::terminate(){
 }
 
 void SGWStatusBar::updateTime(){
-    (*(*SGWStatusBar::instance).getTopObject()).setProperty("s", (*SGXString::doubleToStringSignificantFigures(SGXTimeStamp::now().getYearsFrom(SGXTimeStamp::zero), 9).data));
-}
-
-void SGWStatusBar::eventReceived(const SGXString& /*unused*/){
-    
+    (*(*SGWStatusBar::instance).getTopObject()).setProperty("s", (*SGXString::doubleToStringSignificantFigures(SGXTimeStamp::now().getYearsFrom(SGXTimeStamp::zero), 9).fillRightToLength(10, '0').data));
 }

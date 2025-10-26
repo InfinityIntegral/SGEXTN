@@ -27,5 +27,4 @@ void SGWWidgetQuickInterface::eventReceived(const SGXString &event) const {
     else if((*x).getType() == SGWType::ColourPicker){(*static_cast<SGWColourPickerWidget*>(x)).eventReceived(event);}
     else if((*x).getType() == SGWType::MultiTouchReceiver){(*static_cast<SGWMultiTouchReceiver*>(x)).eventReceived(event);}
     else if((*x).getType() == SGWType::SingleTouchReceiver){(*static_cast<SGWSingleTouchReceiver*>(x)).eventReceived(event);}
-    else if((*x).getType() == SGWType::StatusBar){SGWStatusBar::eventReceived(event);}
 }
