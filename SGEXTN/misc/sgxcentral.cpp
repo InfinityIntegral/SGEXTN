@@ -25,8 +25,19 @@
 #include <QQuickItem>
 #include "../widgets/enums/sgwdefaultfonts.h"
 #include <qlogging.h>
+#include <QQuickStyle>
+#include <QLocale>
 
 void SGXCentral::initialise(){
+    QLocale::setDefault(QLocale(QLocale::English, QLocale::Singapore));
+    QQuickStyle::setStyle("Basic");
+    SGXQuickInterface::e = new QQmlApplicationEngine();
+    
+    QCoreApplication::setApplicationName(*SGUCentralManagement::applicationName.data);
+    QCoreApplication::setApplicationVersion(*SGUCentralManagement::applicationVersion.data);
+    QCoreApplication::setOrganizationName(*SGUCentralManagement::organisationName.data);
+    QGuiApplication::setWindowIcon(QIcon(":/SGEXTN/assets/appicon.png"));
+    
     const SGXString standardPath = "";
     (*standardPath.data) = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
     SGXFileSystem::rootFilePath = SGXFileSystem::joinFilePaths(standardPath, SGUCentralManagement::rootFolderName);
@@ -37,11 +48,6 @@ void SGXCentral::initialise(){
     if(SGXFileSystem::folderExists(SGXFileSystem::configFilePath) == false){SGXFileSystem::createFolder(SGXFileSystem::configFilePath);}
     SGXFileBinUtilities::loadBinData();
     
-    QCoreApplication::setApplicationName(*SGUCentralManagement::applicationName.data);
-    QCoreApplication::setApplicationVersion(*SGUCentralManagement::applicationVersion.data);
-    QCoreApplication::setOrganizationName(*SGUCentralManagement::organisationName.data);
-    const QIcon temp_appicon(":/SGEXTN/assets/appicon.png");
-    QGuiApplication::setWindowIcon(temp_appicon);
     SGUCentralManagement::setDefaultTheme();
     SGXThemeColoursCustomisation::loadThemeColours();
 
@@ -86,4 +92,12 @@ void SGXCentral::terminate(){
     SGXIdentifier::terminate();
     (*SGXQuickInterface::applicationWindow).close();
     (*SGXQuickInterface::applicationWindow).deleteLater();
+    (*SGXQuickInterface::e).deleteLater();
+}
+
+int SGEXTN(int argc, char **argv){
+    QGuiApplication app(argc, argv); // NOLINT(misc-const-correctness)
+    SGUCentralManagement::interpretCmdArgs(argc, argv);
+    SGXCentral::initialise();
+    return QGuiApplication::exec();
 }

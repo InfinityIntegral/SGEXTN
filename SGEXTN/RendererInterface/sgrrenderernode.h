@@ -2,7 +2,6 @@
 #define SGRRENDERERNODE_H
 
 #include <QSGRenderNode>
-#include <QByteArray>
 #include <QRectF>
 
 class RenderState;

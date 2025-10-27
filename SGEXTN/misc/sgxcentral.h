@@ -9,4 +9,6 @@ public:
     static void terminate();
 };
 
+int SGEXTN(int argc, char** argv);
+
 #endif // SGXCENTRAL_H

@@ -37,3 +37,8 @@ void SGUCentralManagement::importExtraFonts(){
 void SGUCentralManagement::terminate(){
 
 }
+
+void SGUCentralManagement::interpretCmdArgs(int argc, char **argv){
+    (void)argc;
+    (void)argv;
+}

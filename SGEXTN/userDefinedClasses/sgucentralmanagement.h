@@ -11,6 +11,7 @@ public:
     static void terminate();
     static void setDefaultTheme();
     static void importExtraFonts();
+    static void interpretCmdArgs(int argc, char** argv);
     static SGXString applicationName;
     static SGXString applicationVersion;
     static SGXString organisationName;
