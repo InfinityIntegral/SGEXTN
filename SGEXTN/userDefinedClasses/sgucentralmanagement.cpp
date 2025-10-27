@@ -13,10 +13,10 @@ SGXString SGUCentralManagement::applicationVersion = "v5.1.0";
 SGXString SGUCentralManagement::organisationName = "05524F.sg (Singapore)";
 // name of root folder of your application, only use uppercase or lowercase letters, definitely no banned characters, no dots, no spaces, no hyphens, no underscores, avoid numbers, avoid non ASCII characters
 SGXString SGUCentralManagement::rootFolderName = "SGEXTN";
-
+#include "../widgets/instantiable/sgwcolourpickerwidget.h"
 // this is run immediately after GUI is created, use it to initialise the UI
 void SGUCentralManagement::initialise(){
-    
+    new SGWColourPickerWidget(SGWWidget::parentWidget, 0.0f, 0.5f, 0.0f, 0.5f, 1.0f, -1.0f, 1.0f, -1.0f, SGXColourRGBA(255, 0, 200, 200));
 }
 
 // this is run after the application is created but before the GUI, use it to set default theme colours of your app

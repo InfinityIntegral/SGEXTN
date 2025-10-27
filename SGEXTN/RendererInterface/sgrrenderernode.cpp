@@ -11,6 +11,7 @@
 #include <QRectF>
 #include "../containers/sglarray.h"
 #include "sgrbasesyncer.h"
+#include <QSGNode>
 
 SGRRendererNode::SGRRendererNode(SGRBaseRenderer *renderControl){
     (*this).rhi = (*SGXQuickInterface::applicationWindow).rhi();
@@ -19,6 +20,7 @@ SGRRendererNode::SGRRendererNode(SGRBaseRenderer *renderControl){
     (*this).renderingProgramme = nullptr;
     (*this).rendererToDelete = nullptr;
     (*this).syncerToDelete = nullptr;
+    (*this).setFlag(QSGNode::OwnedByParent);
 }
 
 SGRRendererNode::~SGRRendererNode(){
