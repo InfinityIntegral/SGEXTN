@@ -33,9 +33,13 @@ endif()
 
 project(SGEXTN VERSION 6.0.0 LANGUAGES CXX)
 
-add_executable(InternalTest WIN32)
+add_executable(InternalTest WIN32
+    private_api/SG_DLL.h)
 target_compile_definitions(InternalTest PRIVATE SG_BUILDING_INTERNALTEST)
-target_include_directories(InternalTest PUBLIC "internal_test/include")
+target_include_directories(InternalTest
+    PRIVATE "private_api"
+    PUBLIC "internal_test/include"
+)
 target_sources(InternalTest
     PRIVATE "internal_test/src/main.cpp"
 )
