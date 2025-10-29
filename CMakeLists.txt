@@ -5,7 +5,6 @@ cmake_minimum_required(VERSION 3.20 FATAL_ERROR)
 set(CMAKE_ERROR_DEPRECATED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_SHARED_LIBRARY_ENABLE_EXPORTS ON)
-set(CMAKE_AUTOGEN_PARALLEL ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 if(APPLE)
@@ -39,7 +38,7 @@ project(SGEXTN
 add_library(Containers SHARED)
 target_compile_definitions(Containers PRIVATE SG_BUILDING_CONTAINERS)
 target_include_directories(Containers
-    PRIVATE "private_api"
+    PUBLIC "private_api"
     PUBLIC "SG_Containers/include"
 )
 target_sources(Containers
@@ -50,7 +49,7 @@ target_sources(Containers
 add_library(Math SHARED)
 target_compile_definitions(Math PRIVATE SG_BUILDING_MATH)
 target_include_directories(Math
-    PRIVATE "private_api"
+    PUBLIC "private_api"
     PUBLIC "SG_Math/include"
 )
 target_sources(Math
@@ -63,16 +62,42 @@ target_sources(Math
     PRIVATE "SG_Math/src/sgllonglongmath.cpp"
 )
 
+add_library(Core SHARED)
+target_compile_definitions(Core PRIVATE SG_BUILDING_CORE)
+target_include_directories(Core
+    PUBLIC "private_api"
+    PUBLIC "SG_Core/include"
+)
+target_sources(Core
+    PRIVATE "SG_Core/src/SGXCentral.cpp"
+    PRIVATE "SG_Core/src/SGXChar.cpp"
+    PRIVATE "SG_Core/src/SGXColourHSLA.cpp"
+    PRIVATE "SG_Core/src/SGXColourRGBA.cpp"
+    PRIVATE "SG_Core/src/SGXIdentifier.cpp"
+    PRIVATE "SG_Core/src/SGXRandomNumberGenerator.cpp"
+    PRIVATE "SG_Core/src/SGXString.cpp"
+    PRIVATE "SG_Core/src/SGXTimer.cpp"
+    PRIVATE "SG_Core/src/SGXTimerQuickInterface.cpp"
+    PRIVATE "SG_Core/src/SGXTimeStamp.cpp"
+    PRIVATE "SG_Core/src/SGXVector2.cpp"
+)
+find_package(Qt6 REQUIRED COMPONENTS Core Gui)
+target_link_libraries(Core
+    PUBLIC Containers
+    PUBLIC Math
+    PRIVATE Qt6::Core
+    PRIVATE Qt6::Gui
+)
+
 add_executable(InternalTest WIN32)
 target_compile_definitions(InternalTest PRIVATE SG_BUILDING_INTERNALTEST)
-target_include_directories(InternalTest
-    PRIVATE "private_api"
-    PUBLIC "internal_test/include"
-)
 target_sources(InternalTest
     PRIVATE "internal_test/src/main.cpp"
 )
+find_package(Qt6 REQUIRED COMPONENTS Core)
 target_link_libraries(InternalTest
     PUBLIC Containers
     PUBLIC Math
+    PUBLIC Core
+    PRIVATE Qt6::Core
 )

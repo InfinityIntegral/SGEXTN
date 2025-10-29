@@ -2,7 +2,7 @@
 #define SGLHASH_H
 
 #include <SGLSpan.h>
-#include <private_api_Containers/SGLHashAlgorithm.h>
+#include <SGLHashAlgorithm.h>
 
 template <typename T> class SGLHash {
 public:

@@ -4,7 +4,7 @@
 #include <SGLHash.h>
 #include <SGLSpan.h>
 #include <SGLArray.h>
-#include <private_api_Containers/SGLHashAlgorithm.h>
+#include <SGLHashAlgorithm.h>
 
 template <typename T1, typename T2, typename T3> class SGLTuple3 {
 public:
