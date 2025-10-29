@@ -9,9 +9,12 @@
 SGXString SGXCentral::applicationName = "app name not set";
 SGXString SGXCentral::applicationVersion = "app version not set";
 SGXString SGXCentral::organisationName = "organisation name not set";
+SGXString SGXCentral::folderName = "folder name not set";
 void (*SGXCentral::interpretCmdArgs)(int, char**) = nullptr;
 void (*SGXCentral::customInitialise)() = nullptr;
 void (*SGXCentral::customTerminate)() = nullptr;
+
+void (*SGXCentral::sgFileSystemInitFolders)() = nullptr;
 
 void SGXCentral::initialise(){
     QLocale::setDefault(QLocale(QLocale::English, QLocale::Singapore));
@@ -27,17 +30,7 @@ void SGXCentral::initialise(){
     QGuiApplication::setWindowIcon(QIcon(":/SGEXTN/assets/appicon.png"));
     */
     
-    /* file system
-    const SGXString standardPath = "";
-    (*standardPath.data) = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-    SGXFileSystem::rootFilePath = SGXFileSystem::joinFilePaths(standardPath, SGUCentralManagement::rootFolderName);
-    SGXFileSystem::userDataFilePath = SGXFileSystem::joinFilePaths(SGXFileSystem::rootFilePath, "yourdata");
-    SGXFileSystem::configFilePath = SGXFileSystem::joinFilePaths(SGXFileSystem::rootFilePath, "settings");
-    SGXFileBinUtilities::binFilePath = SGXFileSystem::joinFilePaths(SGXFileSystem::rootFilePath, "recyclebin");
-    if(SGXFileSystem::folderExists(SGXFileSystem::userDataFilePath) == false){SGXFileSystem::createFolder(SGXFileSystem::userDataFilePath);}
-    if(SGXFileSystem::folderExists(SGXFileSystem::configFilePath) == false){SGXFileSystem::createFolder(SGXFileSystem::configFilePath);}
-    SGXFileBinUtilities::loadBinData();
-    */
+    if(SGXCentral::sgFileSystemInitFolders != nullptr){SGXCentral::sgFileSystemInitFolders();}
     
     /* widgets
     SGUCentralManagement::setDefaultTheme();
@@ -98,10 +91,12 @@ void SGXCentral::terminate(){
     SGXIdentifier::terminate();
 }
 
-int SGEXTN(int argc, char **argv, void (*initialiseFunction)()){
-    QGuiApplication app(argc, argv); // NOLINT(misc-const-correctness)
-    if(SGXCentral::interpretCmdArgs != nullptr){SGXCentral::interpretCmdArgs(argc, argv);}
+void SGXCentral::createApplication(int argc, char **argv, void (*initialiseFunction)()){
+    new QGuiApplication(argc, argv); // NOLINT(misc-const-correctness)
     initialiseFunction();
-    SGXCentral::initialise();
+    if(SGXCentral::interpretCmdArgs != nullptr){SGXCentral::interpretCmdArgs(argc, argv);}
+}
+
+int SGXCentral::startEventLoop(){
     return QGuiApplication::exec();
 }

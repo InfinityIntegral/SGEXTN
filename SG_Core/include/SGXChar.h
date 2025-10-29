@@ -1,7 +1,9 @@
 #ifndef SGXCHAR_H
 #define SGXCHAR_H
 
-class SGXChar
+#include <private_api_Core/SG_Build_Core.h>
+
+class SG_CORE_DLL SGXChar
 {
 public:
     unsigned short data;

@@ -4,7 +4,9 @@
 #include <SGXString.h>
 #include <SGXChar.h>
 
-class SGXTimeStamp
+#include <private_api_Core/SG_Build_Core.h>
+
+class SG_CORE_DLL SGXTimeStamp
 {
 public:
     long long t;

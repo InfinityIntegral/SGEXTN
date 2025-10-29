@@ -1,9 +1,11 @@
 #ifndef SGXTIMER_H
 #define SGXTIMER_H
 
+#include <private_api_Core/SG_Build_Core.h>
+
 class SGXTimerQuickInterface;
 class QTimer;
-class SGXTimer
+class SG_CORE_DLL SGXTimer
 {
 public:
     SGXTimer(float t, void (*attachedFunction)());

@@ -9,14 +9,16 @@
 #include <SGXIdentifier.h>
 #include <SGXRandomNumberGenerator.h>
 #include <SGXTimeStamp.h>
+#include <SGXFileSystem.h>
+#include <SGXFile.h>
+
+#include <SGEXTN_EntryPoint.h>
 
 void init();
 void test();
 
 int main(int argc, char** argv){
-    (void)argc;
-    (void)argv;
-    SGEXTN(argc, argv, &init);
+    return SGEXTN(argc, argv, &init);
 }
 
 void init(){
@@ -24,6 +26,7 @@ void init(){
     SGXCentral::applicationVersion = "v6.0.0";
     SGXCentral::organisationName = "05524F (Singapore)";
     SGXCentral::customInitialise = &test;
+    SGXCentral::folderName = "SGEXTN";
 }
 
 void test(){
@@ -38,4 +41,16 @@ void test(){
     qDebug() << (*SGXIdentifier(false).getStringForPrinting().data);
     qDebug() << SGXRandomNumberGenerator::rng0To1();
     qDebug() << (*SGXTimeStamp::now().getString().data);
+    qDebug() << (*SGXFileSystem::userDataFilePath.data);
+    qDebug() << SGXFileSystem::getFolderSize(SGXFileSystem::configFilePath);
+    if(SGXFileSystem::fileExists(SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "testing.txt")) == true){
+        SGXFile fileReader(SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "testing.txt"));
+        SGXString x = fileReader.readString();
+        qDebug() << (*x.data);
+    }
+    {
+        if(SGXFileSystem::fileExists(SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "testing.txt")) == false){SGXFileSystem::createFile(SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "testing.txt"));}
+        SGXFile fileWriter(SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "testing.txt"));
+        if(fileWriter.isValid == true){fileWriter.writeString(SGXTimeStamp::now().getString());}
+    }
 }

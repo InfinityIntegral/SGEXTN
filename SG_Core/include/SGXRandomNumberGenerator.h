@@ -1,7 +1,9 @@
 #ifndef SGXRANDOMNUMBERGENERATOR_H
 #define SGXRANDOMNUMBERGENERATOR_H
 
-class SGXRandomNumberGenerator
+#include <private_api_Core/SG_Build_Core.h>
+
+class SG_CORE_DLL SGXRandomNumberGenerator
 {
 public:
     SGXRandomNumberGenerator() = delete;

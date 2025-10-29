@@ -3,7 +3,9 @@
 
 #include <SGXColourRGBA.h>
 
-class SGXColourHSLA
+#include <private_api_Core/SG_Build_Core.h>
+
+class SG_CORE_DLL SGXColourHSLA
 {
 public:
     float h;

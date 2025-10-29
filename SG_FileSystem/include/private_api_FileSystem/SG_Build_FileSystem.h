@@ -1,0 +1,12 @@
+#ifndef SG_BUILD_FILESYSTEM_H
+#define SG_BUILD_FILESYSTEM_H
+
+#include <SG_DLL.h>
+
+#ifdef SG_BUILDING_FILESYSTEM
+    #define SG_FILESYSTEM_DLL SG_DLL_EXPORT
+#else
+    #define SG_FILESYSTEM_DLL SG_DLL_IMPORT
+#endif
+
+#endif // SG_BUILD_FILESYSTEM_H

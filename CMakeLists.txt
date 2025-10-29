@@ -36,9 +36,12 @@ project(SGEXTN
 )
 
 add_library(Containers SHARED)
-target_compile_definitions(Containers PRIVATE SG_BUILDING_CONTAINERS)
+target_compile_definitions(Containers
+    PRIVATE SG_BUILDING_CONTAINERS
+    PUBLIC SG_USING_CONTAINERS
+)
 target_include_directories(Containers
-    PUBLIC "private_api"
+    PUBLIC "dll_defines"
     PUBLIC "SG_Containers/include"
 )
 target_sources(Containers
@@ -47,9 +50,12 @@ target_sources(Containers
 )
 
 add_library(Math SHARED)
-target_compile_definitions(Math PRIVATE SG_BUILDING_MATH)
+target_compile_definitions(Math
+    PRIVATE SG_BUILDING_MATH
+    PUBLIC SG_USING_MATH
+)
 target_include_directories(Math
-    PUBLIC "private_api"
+    PUBLIC "dll_defines"
     PUBLIC "SG_Math/include"
 )
 target_sources(Math
@@ -63,9 +69,12 @@ target_sources(Math
 )
 
 add_library(Core SHARED)
-target_compile_definitions(Core PRIVATE SG_BUILDING_CORE)
+target_compile_definitions(Core
+    PRIVATE SG_BUILDING_CORE
+    PUBLIC SG_USING_CORE
+)
 target_include_directories(Core
-    PUBLIC "private_api"
+    PUBLIC "dll_defines"
     PUBLIC "SG_Core/include"
 )
 target_sources(Core
@@ -89,8 +98,37 @@ target_link_libraries(Core
     PRIVATE Qt6::Gui
 )
 
+add_library(FileSystem SHARED)
+target_compile_definitions(FileSystem
+    PRIVATE SG_BUILDING_FILESYSTEM
+    PUBLIC SG_USING_FILESYSTEM
+)
+target_include_directories(FileSystem
+    PUBLIC "dll_defines"
+    PUBLIC "SG_FileSystem/include"
+)
+target_sources(FileSystem
+    PRIVATE "SG_FileSystem/src/SGXFile.cpp"
+    PRIVATE "SG_FileSystem/src/SGXFileBinUtilities.cpp"
+    PRIVATE "SG_FileSystem/src/SGXFileSystem.cpp"
+)
+find_package(Qt6 REQUIRED COMPONENTS Core)
+target_link_libraries(FileSystem
+    PUBLIC Containers
+    PUBLIC Core
+    PRIVATE Qt6::Core
+)
+
+add_library(EntryPoint_SG INTERFACE)
+target_include_directories(EntryPoint_SG
+    INTERFACE "EntryPoint_SG"
+)
+
 add_executable(InternalTest WIN32)
-target_compile_definitions(InternalTest PRIVATE SG_BUILDING_INTERNALTEST)
+target_compile_definitions(InternalTest
+    PRIVATE SG_BUILDING_INTERNALTEST
+    PRIVATE SG_SINGLE_FRAME
+)
 target_sources(InternalTest
     PRIVATE "internal_test/src/main.cpp"
 )
@@ -99,5 +137,7 @@ target_link_libraries(InternalTest
     PUBLIC Containers
     PUBLIC Math
     PUBLIC Core
+    PUBLIC FileSystem
+    PRIVATE EntryPoint_SG
     PRIVATE Qt6::Core
 )

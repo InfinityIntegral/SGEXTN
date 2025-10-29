@@ -3,7 +3,9 @@
 
 #include <SGXString.h>
 
-class SGXVector2
+#include <private_api_Core/SG_Build_Core.h>
+
+class SG_CORE_DLL SGXVector2
 {
 public:
     float x;

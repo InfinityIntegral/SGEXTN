@@ -3,10 +3,12 @@
 
 #include <SGXString.h>
 
+#include <private_api_Core/SG_Build_Core.h>
+
 template <typename T, typename EqualityCheck, typename HashFunction> class SGLUnorderedSet;
 template <typename T> class SGLEqualsTo;
 template <typename T> class SGLHash;
-class SGXIdentifier
+class SG_CORE_DLL SGXIdentifier
 {
 public:
     static SGLUnorderedSet<SGXIdentifier, SGLEqualsTo<SGXIdentifier>, SGLHash<SGXIdentifier>>* identifiersList;

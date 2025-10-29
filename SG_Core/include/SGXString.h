@@ -4,8 +4,10 @@
 #include <SGXChar.h>
 #include <SGLArray.h>
 
+#include <private_api_Core/SG_Build_Core.h>
+
 class QString;
-class SGXString
+class SG_CORE_DLL SGXString
 {
 public:
     QString* data;

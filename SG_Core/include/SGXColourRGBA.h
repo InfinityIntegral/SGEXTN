@@ -3,7 +3,9 @@
 
 #include <SGXString.h>
 
-class SGXColourRGBA
+#include <private_api_Core/SG_Build_Core.h>
+
+class SG_CORE_DLL SGXColourRGBA
 {
 public:
     unsigned int x;
