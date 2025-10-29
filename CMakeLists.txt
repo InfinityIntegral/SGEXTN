@@ -1,27 +1,27 @@
 # CMake file for SGEXTN
 
-cmake_minimum_required(VERSION 3.30.5 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.20 FATAL_ERROR)
 
-set_property(GLOBAL PROPERTY CMAKE_ERROR_DEPRECATED ON)
-set_property(GLOBAL PROPERTY CMAKE_EXPORT_COMPILE_COMMANDS ON)
-set_property(GLOBAL PROPERTY CMAKE_SHARED_LIBRARY_ENABLE_EXPORTS ON)
-set_property(GLOBAL PROPERTY CMAKE_AUTOGEN_PARALLEL ON)
-set_property(GLOBAL PROPERTY CMAKE_AUTOMOC ON)
-set_property(GLOBAL PROPERTY CMAKE_AUTORCC ON)
+set(CMAKE_ERROR_DEPRECATED ON)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(CMAKE_SHARED_LIBRARY_ENABLE_EXPORTS ON)
+set(CMAKE_AUTOGEN_PARALLEL ON)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
 if(APPLE)
-    set_property(GLOBAL PROPERTY CMAKE_BUILD_RPATH "@loader_path")
+    set(CMAKE_BUILD_RPATH "@loader_path")
 elseif(UNIX)
-    set_property(GLOBAL PROPERTY CMAKE_BUILD_RPATH "$ORIGIN")
+    set(CMAKE_BUILD_RPATH "$ORIGIN")
 endif()
-set_property(GLOBAL PROPERTY CMAKE_BUILD_RPATH_USE_ORIGIN ON)
-set_property(GLOBAL PROPERTY CMAKE_INCLUDE_CURRENT_DIR OFF)
-set_property(GLOBAL PROPERTY CMAKE_INCLUDE_CURRENT_DIR_IN_INTERFACE OFF)
-set_property(GLOBAL PROPERTY CMAKE_OPTIMIZE_DEPENDENCIES ON)
-set_property(GLOBAL PROPERTY CMAKE_POSITION_INDEPENDENT_CODE ON)
-set_property(GLOBAL PROPERTY CMAKE_VISIBILITY_INLINES_HIDDEN ON)
-set_property(GLOBAL PROPERTY CMAKE_CXX_EXTENSIONS OFF)
-set_property(GLOBAL PROPERTY CMAKE_CXX_STANDARD 20)
-set_property(GLOBAL PROPERTY CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_BUILD_RPATH_USE_ORIGIN ON)
+set(CMAKE_INCLUDE_CURRENT_DIR OFF)
+set(CMAKE_INCLUDE_CURRENT_DIR_IN_INTERFACE OFF)
+set(CMAKE_OPTIMIZE_DEPENDENCIES ON)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+set(CMAKE_VISIBILITY_INLINES_HIDDEN ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set_property(DIRECTORY . PROPERTY GLOBAL_DEPENDS_NO_CYCLES ON)
 set_property(DIRECTORY . PROPERTY REPORT_UNDEFINED_PROPERTIES ON)
@@ -47,6 +47,22 @@ target_sources(Containers
     PRIVATE "SG_Containers/src/SGLCrash.cpp"
 )
 
+add_library(Math SHARED)
+target_compile_definitions(Math PRIVATE SG_BUILDING_MATH)
+target_include_directories(Math
+    PRIVATE "private_api"
+    PUBLIC "SG_Math/include"
+)
+target_sources(Math
+    PRIVATE "SG_Math/src/sglfloatconstants.cpp"
+    PRIVATE "SG_Math/src/sglfloatlimits.cpp"
+    PRIVATE "SG_Math/src/sglfloatmath.cpp"
+    PRIVATE "SG_Math/src/sglintlimits.cpp"
+    PRIVATE "SG_Math/src/sglintmath.cpp"
+    PRIVATE "SG_Math/src/sgllonglonglimits.cpp"
+    PRIVATE "SG_Math/src/sgllonglongmath.cpp"
+)
+
 add_executable(InternalTest WIN32)
 target_compile_definitions(InternalTest PRIVATE SG_BUILDING_INTERNALTEST)
 target_include_directories(InternalTest
@@ -58,4 +74,5 @@ target_sources(InternalTest
 )
 target_link_libraries(InternalTest
     PUBLIC Containers
+    PUBLIC Math
 )
