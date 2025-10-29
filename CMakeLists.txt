@@ -31,10 +31,23 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     message("building in DEBUG mode, this should NOT be released")
 endif()
 
-project(SGEXTN VERSION 6.0.0 LANGUAGES CXX)
+project(SGEXTN
+    VERSION 6.0.0
+    LANGUAGES CXX
+)
 
-add_executable(InternalTest WIN32
-    private_api/SG_DLL.h)
+add_library(Containers SHARED)
+target_compile_definitions(Containers PRIVATE SG_BUILDING_CONTAINERS)
+target_include_directories(Containers
+    PRIVATE "private_api"
+    PUBLIC "SG_Containers/include"
+)
+target_sources(Containers
+    PRIVATE "SG_Containers/src/SG_Build_Containers.cpp"
+    PRIVATE "SG_Containers/src/SGLCrash.cpp"
+)
+
+add_executable(InternalTest WIN32)
 target_compile_definitions(InternalTest PRIVATE SG_BUILDING_INTERNALTEST)
 target_include_directories(InternalTest
     PRIVATE "private_api"
@@ -42,4 +55,7 @@ target_include_directories(InternalTest
 )
 target_sources(InternalTest
     PRIVATE "internal_test/src/main.cpp"
+)
+target_link_libraries(InternalTest
+    PUBLIC Containers
 )
