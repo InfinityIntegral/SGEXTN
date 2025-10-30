@@ -8,7 +8,6 @@
 #include <SGXFontSizeCustomisation.h>
 #include <SGWDefaultFonts.h>
 #include <QFontDatabase>
-#include <QDebug>
 #include <QQuickWindow>
 #include <QQuickItem>
 #include <SGXSingCorrectCore.h>
@@ -17,6 +16,12 @@
 #include <private_api_Widgets/SGWStatusBar.h>
 #include <SGWBackground.h>
 #include <SGXCentral.h>
+#include <qqml.h>
+#include <QChar>
+#include <qlogging.h>
+#include <QObject>
+#include <QCoreApplication>
+#include <QEventLoop>
 
 void SGWWidgetInitialisation::init0(){
     QQuickStyle::setStyle("Basic");

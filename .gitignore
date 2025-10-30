@@ -6,3 +6,4 @@ build*/
 *.qmake.stash
 *.autosave
 .DS_Store
+.qtcreator/*

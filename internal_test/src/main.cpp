@@ -17,6 +17,7 @@
 #include <SGWTextLabel.h>
 #include <SGWCustomisationPageControl.h>
 #include <SGWColourPickerWidget.h>
+#include <SGWNotify.h>
 
 #include <SGEXTN_EntryPoint.h>
 
@@ -70,4 +71,5 @@ void test(){
     new SGWTextInput(w, &log, 0.0f, 0.5f, 0.0f, 3.5f, 1.0f, -1.0f, 0.0f, 1.0f);
     //SGWCustomisationPageControl::enableThemeColoursCustomisationPage();
     new SGWColourPickerWidget(w, 0.0f, 0.5f, 0.0f, 5.0f, 0.0f, 4.0f, 0.0f, 1.0f, SGXColourRGBA(255, 0, 200, 200));
+    SGWNotify::notify("something");
 }

@@ -103,7 +103,7 @@ template <typename T> int SGLArray<T>::length() const {
 
 template <typename T> T& SGLArray<T>::at(int i){
     if(i < 0 || i >= lengthInternal){SGLCrash::crash();}
-    return (*(dataInternal + i));
+    return (*(dataInternal + i)); // NOLINT(clang-analyzer-security.ArrayBound)
 }
 
 template <typename T> const T& SGLArray<T>::at(int i) const {

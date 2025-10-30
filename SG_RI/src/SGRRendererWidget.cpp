@@ -18,7 +18,7 @@ SGRRendererWidget::SGRRendererWidget(SGWWidget *parent, float x1, float x0, floa
 }
 
 SGRRendererWidget::~SGRRendererWidget(){
-    SGRRendererGenerator* item = static_cast<SGRRendererGenerator*>(topObject);
+    const SGRRendererGenerator* item = static_cast<SGRRendererGenerator*>(topObject);
     (*(*item).node).rendererToDelete = renderControl;
     (*(*item).node).syncerToDelete = syncControl;
 }

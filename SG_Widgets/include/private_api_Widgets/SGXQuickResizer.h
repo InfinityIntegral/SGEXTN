@@ -23,12 +23,11 @@ public:
     float sizeUnit;
     [[nodiscard]] float getSizeUnit() const;
     void setSizeUnit(float x);
+    void updateAppWindowSize();
 signals:
     void changedRenderSpaceWidth();
     void changedRenderSpaceHeight();
-    void changedSizeUnit();
-public slots:
-    void updateAppWindowSize();
+    void changedSizeUnit();  
 };
 
 #endif // SGXQUICKRESIZER_H

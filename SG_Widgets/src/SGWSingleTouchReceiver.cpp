@@ -23,7 +23,7 @@ SGWSingleTouchReceiver::SGWSingleTouchReceiver(SGWWidget *parent, void (*functio
 
 void SGWSingleTouchReceiver::eventReceived(const SGXString &s){
     if(s != "touched"){return;}
-    QQuickItem* thisItem = topObject;
+    const QQuickItem* thisItem = topObject;
     SGLArray<float> data(11);
     SGXTouchEvent eventToPass = SGXTouchEvent();
     

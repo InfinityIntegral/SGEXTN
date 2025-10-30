@@ -55,7 +55,7 @@ void SGXCentral::terminate(){
 
 void SGXCentral::createApplication(int argc, char **argv, void (*initialiseFunction)()){
     new QGuiApplication(argc, argv); // NOLINT(misc-const-correctness)
-    initialiseFunction();
+    initialiseFunction(); // NOLINT(clang-analyzer-cplusplus.NewDeleteLeaks)
     if(SGXCentral::interpretCmdArgs != nullptr){SGXCentral::interpretCmdArgs(argc, argv);}
 }
 

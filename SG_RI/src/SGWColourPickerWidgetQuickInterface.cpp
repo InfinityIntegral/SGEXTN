@@ -1,6 +1,7 @@
 #include <private_api_RI/SGWColourPickerWidgetQuickInterface.h>
 #include <SGWColourPickerWidget.h>
 #include <QQuickItem>
+#include <QString>
 
 SGWColourPickerWidgetQuickInterface::SGWColourPickerWidgetQuickInterface(SGWColourPickerWidget *x){
     (*this).x = x;

@@ -1,6 +1,5 @@
 #include <SGWNotify.h>
 #include <SGWTextLabel.h>
-#include <private_api_Widgets/SGWStatusBar.h>
 #include <SGXTimer.h>
 #include <SGLQueue.h>
 #include <SGWWidget.h>
@@ -10,7 +9,7 @@
 #include <SGWVerticalAlignment.h>
 
 float SGWNotify::timeShown = 3.0f;
-SGLQueue<SGWWidget*>* SGWNotify::instance = nullptr;
+SGLQueue<const SGWWidget*>* SGWNotify::instance = nullptr;
 float SGWNotify::animationLength = 0.5f;
 bool SGWNotify::animationState = false;
 int SGWNotify::animationStage = 0;
@@ -23,8 +22,8 @@ void SGWNotify::terminate(){
 }
 
 void SGWNotify::notify(const SGXString &s){
-    SGWLabel* x = new SGWTextLabel(SGWStatusBar::instance, s, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, SGWHorizontalAlignment::Center, false);
-    if(SGWNotify::instance == nullptr){SGWNotify::instance = new SGLQueue<SGWWidget*>();}
+    const SGWLabel* x = new SGWTextLabel(SGWWidget::rootWidget, s, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, SGWHorizontalAlignment::Center, false);
+    if(SGWNotify::instance == nullptr){SGWNotify::instance = new SGLQueue<const SGWWidget*>();}
     (*SGWNotify::instance).push(x);
     SGXTimer::singleCall(SGWNotify::timeShown, &SGWNotify::terminate);
 }

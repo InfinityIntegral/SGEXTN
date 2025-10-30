@@ -13,7 +13,7 @@ class SG_WIDGETS_DLL SGWNotify
 public:
     SGWNotify() = delete;
     static float timeShown;
-    static SGLQueue<SGWWidget*>* instance;
+    static SGLQueue<const SGWWidget*>* instance;
     static void notify(const SGXString& s);
     static void terminate();
     static int animationStage;

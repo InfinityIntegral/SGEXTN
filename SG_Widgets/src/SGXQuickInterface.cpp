@@ -93,7 +93,7 @@ QQuickItem* SGXQuickInterface::getBottomObject(QQuickItem *topObject){
     SGLQueue<QQuickItem*> childrenList = SGLQueue<QQuickItem*>();
     childrenList.push(topObject);
     while(childrenList.length() > 0){
-        QQuickItem* i = childrenList.front();
+        QQuickItem* i = childrenList.front(); // NOLINT(misc-const-correctness)
         childrenList.pop();
         if((*i).property("canParent").toBool() == true){return i;}
         const QVector<QQuickItem*> thisChildren = (*i).childItems();

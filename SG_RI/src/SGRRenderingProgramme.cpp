@@ -195,7 +195,7 @@ void SGRRenderingProgramme::updateShaderUniforms(int shaderDeclaredBinding, int 
 }
 
 void SGRRenderingProgramme::updateTexture(int shaderDeclaredBinding, SGRImage *sourceImage) const {
-    SGRTexture* texture = nullptr;
+    const SGRTexture* texture = nullptr;
     for(int i=0; i<(*textures).length(); i++){
         if((*textures).at(i).first == shaderDeclaredBinding){
             texture = (*textures).at(i).second;

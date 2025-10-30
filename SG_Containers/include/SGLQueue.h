@@ -109,7 +109,7 @@ template <typename T> void SGLQueue<T>::reserve(int newMemoryLength){
     endInternal = oldEnd - oldStart;
     memoryLengthInternal = newMemoryLength;
     for(int i=startInternal; i<endInternal; i++){
-        (*(dataInternal + i)) = (*(oldPointer + oldStart + i));
+        (*(dataInternal + i)) = (*(oldPointer + oldStart + i)); // NOLINT(clang-analyzer-security.ArrayBound)
     }
     delete[] oldPointer;
 }

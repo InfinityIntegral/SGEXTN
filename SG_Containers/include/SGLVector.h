@@ -134,7 +134,7 @@ template <typename T> void SGLVector<T>::reserve(int newMemoryLength){
     dataInternal = new T[newMemoryLength];
     memoryLengthInternal = newMemoryLength;
     for(int i=0; i<lengthInternal; i++){
-        (*(dataInternal + i)) = (*(oldPointer + i));
+        (*(dataInternal + i)) = (*(oldPointer + i)); // NOLINT(clang-analyzer-security.ArrayBound)
     }
     delete[] oldPointer;
 }
@@ -143,7 +143,7 @@ template <typename T> void SGLVector<T>::pushBack(const T& x){
     if(memoryLengthInternal == 0){reserve(1);}
     else if(lengthInternal == memoryLengthInternal){reserve(2 * memoryLengthInternal);}
     lengthInternal++;
-    (*(dataInternal + lengthInternal - 1)) = x;
+    (*(dataInternal + lengthInternal - 1)) = x; // NOLINT(clang-analyzer-security.ArrayBound)
 }
 
 template <typename T> void SGLVector<T>::popBack(){
