@@ -8,11 +8,25 @@
 #include <SGXFileSystem.h>
 #endif
 
+#ifdef SG_USING_WIDGETS
+#include <private_api_Widgets/SGWWidgetInitialisation.h>
+#endif
+
 int SGEXTN(int argc, char **argv, void (*initialiseFunction)()){
     SGXCentral::createApplication(argc, argv, initialiseFunction);
     
 #ifdef SG_USING_FILESYSTEM
     SGXCentral::sgFileSystemInitFolders = &SGXFileSystem::initialiseAppFolder;
+#endif
+    
+#ifdef SG_USING_WIDGETS
+    SGXCentral::sgWidgetsInit0 = &SGWWidgetInitialisation::init0;
+    SGXCentral::sgWidgetsInit1 = &SGWWidgetInitialisation::init1;
+    SGXCentral::sgWidgetsInit2 = &SGWWidgetInitialisation::init2;
+    SGXCentral::sgWidgetsInit3 = &SGWWidgetInitialisation::init3;
+    SGXCentral::sgWidgetsInit4 = &SGWWidgetInitialisation::init4;
+    SGXCentral::sgWidgetsInit5 = &SGWWidgetInitialisation::init5;
+    SGXCentral::sgWidgetsTerminate = &SGWWidgetInitialisation::terminate;
 #endif
     
     SGXCentral::initialise();

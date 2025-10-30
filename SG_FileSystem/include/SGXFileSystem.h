@@ -53,22 +53,22 @@ public:
     static void initialiseAppFolder();
 };
 
-class SGXNumberAwareFilePathLesserThan {
+class SG_FILESYSTEM_DLL SGXNumberAwareFilePathLesserThan {
 public:
     [[nodiscard]] bool operator()(const SGXString& a, const SGXString& b);
 };
 
-class SGXNumberAwareFilePathMoreThan {
+class SG_FILESYSTEM_DLL SGXNumberAwareFilePathMoreThan {
 public:
     [[nodiscard]] bool operator()(const SGXString& a, const SGXString& b);
 };
 
-class SGXNumberAwareFilePathLesserThanBase16 {
+class SG_FILESYSTEM_DLL SGXNumberAwareFilePathLesserThanBase16 {
 public:
     [[nodiscard]] bool operator()(const SGXString& a, const SGXString& b);
 };
 
-class SGXNumberAwareFilePathMoreThanBase16 {
+class SG_FILESYSTEM_DLL SGXNumberAwareFilePathMoreThanBase16 {
 public:
     [[nodiscard]] bool operator()(const SGXString& a, const SGXString& b);
 };

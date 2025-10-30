@@ -11,11 +11,16 @@
 #include <SGXTimeStamp.h>
 #include <SGXFileSystem.h>
 #include <SGXFile.h>
+#include <SGWBlankWidget.h>
+#include <SGWTextButton.h>
+#include <SGWTextInput.h>
+#include <SGWTextLabel.h>
 
 #include <SGEXTN_EntryPoint.h>
 
 void init();
 void test();
+void log();
 
 int main(int argc, char** argv){
     return SGEXTN(argc, argv, &init);
@@ -27,6 +32,10 @@ void init(){
     SGXCentral::organisationName = "05524F (Singapore)";
     SGXCentral::customInitialise = &test;
     SGXCentral::folderName = "SGEXTN";
+}
+
+void log(){
+    qDebug() << "did something";
 }
 
 void test(){
@@ -53,4 +62,8 @@ void test(){
         SGXFile fileWriter(SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "testing.txt"));
         if(fileWriter.isValid == true){fileWriter.writeString(SGXTimeStamp::now().getString());}
     }
+    SGWWidget* w = new SGWBlankWidget(SGWWidget::parentWidget, 0.0f, 0.5f, 0.0f, 0.5f, 1.0f, -1.0f, 1.0f, -1.0f, 6);
+    new SGWTextLabel(w, "built with CMake", 0.0f, 0.5f, 0.0f, 0.5f, 1.0f, -1.0f, 0.0f, 1.0f, SGWHorizontalAlignment::Center, false);
+    new SGWTextButton(w, "click here", &log, 0.0f, 0.5f, 0.0f, 2.0f, 1.0f, -1.0f, 0.0f, 1.0f);
+    new SGWTextInput(w, &log, 0.0f, 0.5f, 0.0f, 3.5f, 1.0f, -1.0f, 0.0f, 1.0f);
 }

@@ -119,6 +119,102 @@ target_link_libraries(FileSystem
     PRIVATE Qt6::Core
 )
 
+add_library(Widgets SHARED)
+target_compile_definitions(Widgets
+    PRIVATE SG_BUILDING_WIDGETS
+    PUBLIC SG_USING_WIDGETS
+)
+target_include_directories(Widgets
+    PUBLIC "dll_defines"
+    PUBLIC "SG_Widgets/include"
+)
+qt6_add_resources(Widgets SG_Widgets_assets PREFIX "SGEXTN" BASE "SG_Widgets/assets" FILES
+    "SG_Widgets/assets/FileDownload.qml"
+    "SG_Widgets/assets/FileUpload.qml"
+    "SG_Widgets/assets/Root.qml"
+    "SG_Widgets/assets/SGWBlankWidget.qml"
+    "SG_Widgets/assets/SGWColourPickerWidget.qml"
+    "SG_Widgets/assets/SGWIconButton.qml"
+    "SG_Widgets/assets/SGWIconLabel.qml"
+    "SG_Widgets/assets/SGWLongInput.qml"
+    "SG_Widgets/assets/SGWLongLabel.qml"
+    "SG_Widgets/assets/SGWMultiTouchReceiver.qml"
+    "SG_Widgets/assets/SGWPageBackground.qml"
+    "SG_Widgets/assets/SGWParent.qml"
+    "SG_Widgets/assets/SGWRoot.qml"
+    "SG_Widgets/assets/SGWScrollView.qml"
+    "SG_Widgets/assets/SGWSequentialLongLabel.qml"
+    "SG_Widgets/assets/SGWSequentialScrollView.qml"
+    "SG_Widgets/assets/SGWSingleTouchReceiver.qml"
+    "SG_Widgets/assets/SGWStatusBar.qml"
+    "SG_Widgets/assets/SGWTextButton.qml"
+    "SG_Widgets/assets/SGWTextInput.qml"
+    "SG_Widgets/assets/SGWTextLabel.qml"
+    "SG_Widgets/assets/SingScript.sg"
+)
+target_sources(Widgets
+    PRIVATE "SG_Widgets/src/SGRImage.cpp"
+    PRIVATE "SG_Widgets/src/SGRScreenshotCallback.cpp"
+    PRIVATE "SG_Widgets/src/SGWBackground.cpp"
+    PRIVATE "SG_Widgets/src/SGWBlankWidget.cpp"
+    PRIVATE "SG_Widgets/src/SGWButton.cpp"
+    PRIVATE "SG_Widgets/src/SGWCustomisationPageControl.cpp"
+    PRIVATE "SG_Widgets/src/SGWDefaultFonts.cpp"
+    PRIVATE "SG_Widgets/src/SGWFontSizeCustomisationPage.cpp"
+    PRIVATE "SG_Widgets/src/SGWIconButton.cpp"
+    PRIVATE "SG_Widgets/src/SGWIconLabel.cpp"
+    PRIVATE "SG_Widgets/src/SGWInput.cpp"
+    PRIVATE "SG_Widgets/src/SGWLabel.cpp"
+    PRIVATE "SG_Widgets/src/SGWLongInput.cpp"
+    PRIVATE "SG_Widgets/src/SGWLongLabel.cpp"
+    PRIVATE "SG_Widgets/src/SGWMultiTouchReceiver.cpp"
+    PRIVATE "SG_Widgets/src/SGWNotify.cpp"
+    PRIVATE "SG_Widgets/src/SGWPageBackground.cpp"
+    PRIVATE "SG_Widgets/src/SGWParent.cpp"
+    PRIVATE "SG_Widgets/src/SGWRoot.cpp"
+    PRIVATE "SG_Widgets/src/SGWScrollView.cpp"
+    PRIVATE "SG_Widgets/src/SGWSequentialLongLabel.cpp"
+    PRIVATE "SG_Widgets/src/SGWSequentialScrollView.cpp"
+    PRIVATE "SG_Widgets/src/SGWSingCorrectCustomisationPage.cpp"
+    PRIVATE "SG_Widgets/src/SGWSingleTouchReceiver.cpp"
+    PRIVATE "SG_Widgets/src/SGWStatusBar.cpp"
+    PRIVATE "SG_Widgets/src/SGWTextButton.cpp"
+    PRIVATE "SG_Widgets/src/SGWTextInput.cpp"
+    PRIVATE "SG_Widgets/src/SGWTextLabel.cpp"
+    PRIVATE "SG_Widgets/src/SGWType.cpp"
+    PRIVATE "SG_Widgets/src/SGWWidget.cpp"
+    PRIVATE "SG_Widgets/src/SGWWidgetInitialisation.cpp"
+    PRIVATE "SG_Widgets/src/SGWWidgetQuickInterface.cpp"
+    PRIVATE "SG_Widgets/src/SGXFileDownloader.cpp"
+    PRIVATE "SG_Widgets/src/SGXFileUploader.cpp"
+    PRIVATE "SG_Widgets/src/SGXFontSizeCustomisation.cpp"
+    PRIVATE "SG_Widgets/src/SGXQuickInterface.cpp"
+    PRIVATE "SG_Widgets/src/SGXQuickResizer.cpp"
+    PRIVATE "SG_Widgets/src/SGXResizer.cpp"
+    PRIVATE "SG_Widgets/src/SGXSingCorrectCore.cpp"
+    PRIVATE "SG_Widgets/src/SGXSingCorrectCustomisation.cpp"
+    PRIVATE "SG_Widgets/src/SGXSingCorrectQuickInterface.cpp"
+    PRIVATE "SG_Widgets/src/SGXThemeColours.cpp"
+    PRIVATE "SG_Widgets/src/SGXThemeColoursCustomisation.cpp"
+    PRIVATE "SG_Widgets/src/SGXThemeColoursSetting.cpp"
+    PRIVATE "SG_Widgets/src/SGXTouchEvent.cpp"
+    PRIVATE "SG_Widgets/include/private_api_Widgets/SGXQuickResizer.h"
+    PRIVATE "SG_Widgets/include/private_api_Widgets/SGXThemeColourSetting.h"
+    PRIVATE "SG_Widgets/include/private_api_Widgets/SGXSingCorrectQuickInterface.h"
+)
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Qml Quick QuickControls2)
+target_link_libraries(Widgets
+    PUBLIC Containers
+    PUBLIC Math
+    PUBLIC Core
+    PUBLIC FileSystem
+    PRIVATE Qt6::Core
+    PRIVATE Qt6::Gui
+    PRIVATE Qt6::Qml
+    PRIVATE Qt6::Quick
+    PRIVATE Qt6::QuickControls2
+)
+
 add_library(EntryPoint_SG INTERFACE)
 target_include_directories(EntryPoint_SG
     INTERFACE "EntryPoint_SG"
@@ -127,7 +223,6 @@ target_include_directories(EntryPoint_SG
 add_executable(InternalTest WIN32)
 target_compile_definitions(InternalTest
     PRIVATE SG_BUILDING_INTERNALTEST
-    PRIVATE SG_SINGLE_FRAME
 )
 target_sources(InternalTest
     PRIVATE "internal_test/src/main.cpp"
@@ -138,6 +233,7 @@ target_link_libraries(InternalTest
     PUBLIC Math
     PUBLIC Core
     PUBLIC FileSystem
+    PUBLIC Widgets
     PRIVATE EntryPoint_SG
     PRIVATE Qt6::Core
 )

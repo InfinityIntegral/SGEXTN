@@ -5,89 +5,53 @@
 #include <SGXCentral.h>
 #include <SGXString.h>
 #include <QGuiApplication>
+#include <QIcon>
 
 SGXString SGXCentral::applicationName = "app name not set";
 SGXString SGXCentral::applicationVersion = "app version not set";
 SGXString SGXCentral::organisationName = "organisation name not set";
 SGXString SGXCentral::folderName = "folder name not set";
+SGXString SGXCentral::pathToAppIcon = "";
 void (*SGXCentral::interpretCmdArgs)(int, char**) = nullptr;
 void (*SGXCentral::customInitialise)() = nullptr;
 void (*SGXCentral::customTerminate)() = nullptr;
+void (*SGXCentral::setCustomTheme)() = nullptr;
+void (*SGXCentral::importCustomFonts)() = nullptr;
 
 void (*SGXCentral::sgFileSystemInitFolders)() = nullptr;
+void (*SGXCentral::sgWidgetsInit0)() = nullptr;
+void (*SGXCentral::sgWidgetsInit1)() = nullptr;
+void (*SGXCentral::sgWidgetsInit2)() = nullptr;
+void (*SGXCentral::sgWidgetsInit3)() = nullptr;
+void (*SGXCentral::sgWidgetsInit4)() = nullptr;
+void (*SGXCentral::sgWidgetsInit5)() = nullptr;
+void (*SGXCentral::sgWidgetsTerminate)() = nullptr;
 
 void SGXCentral::initialise(){
     QLocale::setDefault(QLocale(QLocale::English, QLocale::Singapore));
-    /* widgets
-    QQuickStyle::setStyle("Basic");
-    SGXQuickInterface::e = new QQmlApplicationEngine();
-    */
+    // link SGWThemeCustomisationPage (SG RI) to SGWCustomisationPageControl (SGWidget)
+    // add event listener for colour picker widget
+    if(SGXCentral::sgWidgetsInit0 != nullptr){SGXCentral::sgWidgetsInit0();}
     
     QCoreApplication::setApplicationName(*SGXCentral::applicationName.data);
     QCoreApplication::setApplicationVersion(*SGXCentral::applicationVersion.data);
     QCoreApplication::setOrganizationName(*SGXCentral::organisationName.data);
-    /* widgets
-    QGuiApplication::setWindowIcon(QIcon(":/SGEXTN/assets/appicon.png"));
-    */
+    if(SGXCentral::pathToAppIcon != ""){QGuiApplication::setWindowIcon(QIcon(*SGXCentral::pathToAppIcon.data));}
     
     if(SGXCentral::sgFileSystemInitFolders != nullptr){SGXCentral::sgFileSystemInitFolders();}
-    
-    /* widgets
-    SGUCentralManagement::setDefaultTheme();
-    SGXThemeColoursCustomisation::loadThemeColours();
-    */
-
-    /* widgets
-    SGXQuickInterface::themeColoursSingleton = new SGXThemeColourSetting();
-    qmlRegisterSingletonInstance("ThemeColours", 0, 0, "ThemeColours", SGXQuickInterface::themeColoursSingleton);
-    SGXQuickInterface::resizerSingleton = new SGXQuickResizer();
-    qmlRegisterSingletonInstance("Resizer", 0, 0, "Resizer", SGXQuickInterface::resizerSingleton);
-    SGXSingCorrectCore::instance = new SGXSingCorrectQuickInterface();
-    qmlRegisterSingletonInstance("SingCorrect", 0, 0, "SingCorrect", SGXSingCorrectCore::instance);
-    SGXFontSizeCustomisation::loadFontSize();
-    (*SGXQuickInterface::e).load(":/SGEXTN/QML/root.qml");
-    */
-
+    if(SGXCentral::setCustomTheme != nullptr){SGXCentral::setCustomTheme();}
+    if(SGXCentral::sgWidgetsInit1 != nullptr){SGXCentral::sgWidgetsInit1();}
+    if(SGXCentral::sgWidgetsInit2 != nullptr){SGXCentral::sgWidgetsInit2();}
     QObject::connect(qApp, &QGuiApplication::aboutToQuit, &SGXCentral::terminate); // NOLINT(cppcoreguidelines-pro-type-static-cast-downcast)
-    /* widgets
-    SGWDefaultFonts::addFont(":/SGEXTN/assets/SingScript.sg");
-    QFontDatabase::addApplicationFallbackFontFamily(QChar::Script_Common, (*SGWDefaultFonts::textFont.data));
-    QFontDatabase::addApplicationFallbackFontFamily(QChar::Script_Latin, (*SGWDefaultFonts::textFont.data));
-    SGUCentralManagement::importExtraFonts();
-    if(QFontDatabase::families().contains(*SGWDefaultFonts::textFont.data) == false){qWarning() << "SingScript.sg font is not found, the application will not display text and symbols used in Mathematics, Science, and Informatics correctly, to fix this, do not clear the QFontDatabase";}
-    if(QFontDatabase::families().contains(*SGWDefaultFonts::iconsFont.data) == false){qWarning() << "AppIcons.sg font is not found, application icons will not be displayed correctly, to fix this, use the static function SGWDefaultFont::addFont to add the correct font from its file path when importing extra fonts. You may ignore this warning if you are not using SGWidget icons or icon buttons";}
-    */
-
-    /* widgets
-    SGXQuickInterface::applicationWindow = static_cast<QQuickWindow*>((*SGXQuickInterface::e).rootObjects().first());
-    SGXQuickInterface::rootWindow = (*SGXQuickInterface::applicationWindow).contentItem();
-    QObject::connect(SGXQuickInterface::rootWindow, &QQuickItem::widthChanged, SGXQuickInterface::resizerSingleton, &SGXQuickResizer::updateAppWindowSize);
-    QObject::connect(SGXQuickInterface::rootWindow, &QQuickItem::heightChanged, SGXQuickInterface::resizerSingleton, &SGXQuickResizer::updateAppWindowSize);
-    SGXQuickInterface::createTemplates();
-    SGXQuickInterface::buildBase();
-    (*SGXQuickInterface::resizerSingleton).updateAppWindowSize();
-    */
-
-    /* widgets
-    SGXSingCorrectCore::initialise();
-    SGXSingCorrectCustomisation::loadFileData();
-    */
-
+    if(SGXCentral::sgWidgetsInit3 != nullptr){SGXCentral::sgWidgetsInit3();}
+    if(SGXCentral::sgWidgetsInit4 != nullptr){SGXCentral::sgWidgetsInit4();}
+    if(SGXCentral::sgWidgetsInit5 != nullptr){SGXCentral::sgWidgetsInit5();}
     if(SGXCentral::customInitialise != nullptr){SGXCentral::customInitialise();}
 }
 
 void SGXCentral::terminate(){
     if(SGXCentral::customTerminate != nullptr){SGXCentral::customTerminate();}
-    /* widgets
-    SGXSingCorrectCore::terminate();
-    SGXQuickInterface::deleteTemplates();
-    SGXQuickInterface::deleteSingletons();
-    SGWStatusBar::terminate();
-    SGWBackground::terminate();
-    (*SGXQuickInterface::applicationWindow).close();
-    (*SGXQuickInterface::applicationWindow).deleteLater();
-    (*SGXQuickInterface::e).deleteLater();
-    */
+    if(SGXCentral::sgWidgetsTerminate != nullptr){SGXCentral::sgWidgetsTerminate();}
     SGXIdentifier::terminate();
 }
 
