@@ -12,6 +12,11 @@
 #include <private_api_Widgets/SGWWidgetInitialisation.h>
 #endif
 
+#ifdef SG_USING_RI
+#include <SGWCustomisationPageControl.h>
+#include <private_api_RI/SGWThemeCustomisationPage.h>
+#endif
+
 int SGEXTN(int argc, char **argv, void (*initialiseFunction)()){
     SGXCentral::createApplication(argc, argv, initialiseFunction);
     
@@ -27,6 +32,10 @@ int SGEXTN(int argc, char **argv, void (*initialiseFunction)()){
     SGXCentral::sgWidgetsInit4 = &SGWWidgetInitialisation::init4;
     SGXCentral::sgWidgetsInit5 = &SGWWidgetInitialisation::init5;
     SGXCentral::sgWidgetsTerminate = &SGWWidgetInitialisation::terminate;
+#endif
+    
+#ifdef SG_USING_RI
+    SGWCustomisationPageControl::themeColoursCustomisationPageActivationFunction = &SGWThemeCustomisationPage::activate;
 #endif
     
     SGXCentral::initialise();

@@ -69,6 +69,8 @@ void SGWWidgetInitialisation::terminate(){
     SGWStatusBar::terminate();
     SGWBackground::terminate();
     (*SGXQuickInterface::applicationWindow).close();
+    (*SGXQuickInterface::applicationWindow).releaseResources();
     (*SGXQuickInterface::applicationWindow).deleteLater();
     (*SGXQuickInterface::e).deleteLater();
+    QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 }

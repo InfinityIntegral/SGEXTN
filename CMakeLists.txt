@@ -1,6 +1,6 @@
 # CMake file for SGEXTN
 
-cmake_minimum_required(VERSION 3.20 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.21 FATAL_ERROR)
 
 set(CMAKE_ERROR_DEPRECATED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
@@ -28,6 +28,8 @@ set_property(DIRECTORY . PROPERTY TARGET_SUPPORTS_SHARED_LIBS ON)
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     message("building in DEBUG mode, this should NOT be released")
+else()
+   add_compile_definitions(QT_NO_DEBUG_OUTPUT)
 endif()
 
 project(SGEXTN
@@ -35,30 +37,30 @@ project(SGEXTN
     LANGUAGES CXX
 )
 
-add_library(Containers SHARED)
-target_compile_definitions(Containers
+add_library(SG_Containers SHARED)
+target_compile_definitions(SG_Containers
     PRIVATE SG_BUILDING_CONTAINERS
     PUBLIC SG_USING_CONTAINERS
 )
-target_include_directories(Containers
+target_include_directories(SG_Containers
     PUBLIC "dll_defines"
     PUBLIC "SG_Containers/include"
 )
-target_sources(Containers
+target_sources(SG_Containers
     PRIVATE "SG_Containers/src/SG_Build_Containers.cpp"
     PRIVATE "SG_Containers/src/SGLCrash.cpp"
 )
 
-add_library(Math SHARED)
-target_compile_definitions(Math
+add_library(SG_Math SHARED)
+target_compile_definitions(SG_Math
     PRIVATE SG_BUILDING_MATH
     PUBLIC SG_USING_MATH
 )
-target_include_directories(Math
+target_include_directories(SG_Math
     PUBLIC "dll_defines"
     PUBLIC "SG_Math/include"
 )
-target_sources(Math
+target_sources(SG_Math
     PRIVATE "SG_Math/src/sglfloatconstants.cpp"
     PRIVATE "SG_Math/src/sglfloatlimits.cpp"
     PRIVATE "SG_Math/src/sglfloatmath.cpp"
@@ -68,16 +70,16 @@ target_sources(Math
     PRIVATE "SG_Math/src/sgllonglongmath.cpp"
 )
 
-add_library(Core SHARED)
-target_compile_definitions(Core
+add_library(SG_Core SHARED)
+target_compile_definitions(SG_Core
     PRIVATE SG_BUILDING_CORE
     PUBLIC SG_USING_CORE
 )
-target_include_directories(Core
+target_include_directories(SG_Core
     PUBLIC "dll_defines"
     PUBLIC "SG_Core/include"
 )
-target_sources(Core
+target_sources(SG_Core
     PRIVATE "SG_Core/src/SGXCentral.cpp"
     PRIVATE "SG_Core/src/SGXChar.cpp"
     PRIVATE "SG_Core/src/SGXColourHSLA.cpp"
@@ -91,44 +93,44 @@ target_sources(Core
     PRIVATE "SG_Core/src/SGXVector2.cpp"
 )
 find_package(Qt6 REQUIRED COMPONENTS Core Gui)
-target_link_libraries(Core
-    PUBLIC Containers
-    PUBLIC Math
+target_link_libraries(SG_Core
+    PUBLIC SG_Containers
+    PUBLIC SG_Math
     PRIVATE Qt6::Core
     PRIVATE Qt6::Gui
 )
 
-add_library(FileSystem SHARED)
-target_compile_definitions(FileSystem
+add_library(SG_FileSystem SHARED)
+target_compile_definitions(SG_FileSystem
     PRIVATE SG_BUILDING_FILESYSTEM
     PUBLIC SG_USING_FILESYSTEM
 )
-target_include_directories(FileSystem
+target_include_directories(SG_FileSystem
     PUBLIC "dll_defines"
     PUBLIC "SG_FileSystem/include"
 )
-target_sources(FileSystem
+target_sources(SG_FileSystem
     PRIVATE "SG_FileSystem/src/SGXFile.cpp"
     PRIVATE "SG_FileSystem/src/SGXFileBinUtilities.cpp"
     PRIVATE "SG_FileSystem/src/SGXFileSystem.cpp"
 )
 find_package(Qt6 REQUIRED COMPONENTS Core)
-target_link_libraries(FileSystem
-    PUBLIC Containers
-    PUBLIC Core
+target_link_libraries(SG_FileSystem
+    PUBLIC SG_Containers
+    PUBLIC SG_Core
     PRIVATE Qt6::Core
 )
 
-add_library(Widgets SHARED)
-target_compile_definitions(Widgets
+add_library(SG_Widgets SHARED)
+target_compile_definitions(SG_Widgets
     PRIVATE SG_BUILDING_WIDGETS
     PUBLIC SG_USING_WIDGETS
 )
-target_include_directories(Widgets
+target_include_directories(SG_Widgets
     PUBLIC "dll_defines"
     PUBLIC "SG_Widgets/include"
 )
-qt6_add_resources(Widgets SG_Widgets_assets PREFIX "SGEXTN" BASE "SG_Widgets/assets" FILES
+qt6_add_resources(SG_Widgets SG_Widgets_assets PREFIX "SGEXTN" BASE "SG_Widgets/assets" FILES
     "SG_Widgets/assets/FileDownload.qml"
     "SG_Widgets/assets/FileUpload.qml"
     "SG_Widgets/assets/Root.qml"
@@ -152,7 +154,7 @@ qt6_add_resources(Widgets SG_Widgets_assets PREFIX "SGEXTN" BASE "SG_Widgets/ass
     "SG_Widgets/assets/SGWTextLabel.qml"
     "SG_Widgets/assets/SingScript.sg"
 )
-target_sources(Widgets
+target_sources(SG_Widgets
     PRIVATE "SG_Widgets/src/SGRImage.cpp"
     PRIVATE "SG_Widgets/src/SGRScreenshotCallback.cpp"
     PRIVATE "SG_Widgets/src/SGWBackground.cpp"
@@ -203,16 +205,67 @@ target_sources(Widgets
     PRIVATE "SG_Widgets/include/private_api_Widgets/SGXSingCorrectQuickInterface.h"
 )
 find_package(Qt6 REQUIRED COMPONENTS Core Gui Qml Quick QuickControls2)
-target_link_libraries(Widgets
-    PUBLIC Containers
-    PUBLIC Math
-    PUBLIC Core
-    PUBLIC FileSystem
+target_link_libraries(SG_Widgets
+    PUBLIC SG_Containers
+    PUBLIC SG_Math
+    PUBLIC SG_Core
+    PUBLIC SG_FileSystem
     PRIVATE Qt6::Core
     PRIVATE Qt6::Gui
     PRIVATE Qt6::Qml
     PRIVATE Qt6::Quick
     PRIVATE Qt6::QuickControls2
+)
+
+add_library(SG_RI SHARED)
+target_compile_definitions(SG_RI
+    PRIVATE SG_BUILDING_RI
+    PUBLIC SG_USING_RI
+)
+target_include_directories(SG_RI
+    PUBLIC "dll_defines"
+    PUBLIC "SG_RI/include"
+)
+find_package(Qt6 REQUIRED COMPONENTS ShaderTools)
+qt6_add_shaders(SG_RI SG_RI_shaders PREFIX "SGEXTN" BASE "SG_RI/assets" FILES
+    "SG_RI/assets/colourpicker.vert"
+    "SG_RI/assets/colourpicker.frag"
+    "SG_RI/assets/transparencyindicator.vert"
+    "SG_RI/assets/transparencyindicator.frag"
+)
+target_sources(SG_RI
+    PRIVATE "SG_RI/src/SGRBaseRenderer.cpp"
+    PRIVATE "SG_RI/src/SGRColourPickerRenderer.cpp"
+    PRIVATE "SG_RI/src/SGRColourPickerSyncer.cpp"
+    PRIVATE "SG_RI/src/SGRCommandRequest.cpp"
+    PRIVATE "SG_RI/src/SGRDataBuffer.cpp"
+    PRIVATE "SG_RI/src/SGRElementBufferObject.cpp"
+    PRIVATE "SG_RI/src/SGRRendererGenerator.cpp"
+    PRIVATE "SG_RI/src/SGRRendererNode.cpp"
+    PRIVATE "SG_RI/src/SGRRendererWidget.cpp"
+    PRIVATE "SG_RI/src/SGRRenderingProgramme.cpp"
+    PRIVATE "SG_RI/src/SGRTexture.cpp"
+    PRIVATE "SG_RI/src/SGRTransparencyIndicatorRenderer.cpp"
+    PRIVATE "SG_RI/src/SGRVertexBufferObject.cpp"
+    PRIVATE "SG_RI/src/SGRVertexProperty.cpp"
+    PRIVATE "SG_RI/src/SGWColourPicker.cpp"
+    PRIVATE "SG_RI/src/SGWColourPickerWidget.cpp"
+    PRIVATE "SG_RI/src/SGWColourPickerWidgetQuickInterface.cpp"
+    PRIVATE "SG_RI/src/SGWThemeCustomisationPage.cpp"
+)
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Qml Quick QuickControls2 GuiPrivate)
+target_link_libraries(SG_RI
+    PUBLIC SG_Containers
+    PUBLIC SG_Math
+    PUBLIC SG_Core
+    PUBLIC SG_FileSystem
+    PUBLIC SG_Widgets
+    PRIVATE Qt6::Core
+    PRIVATE Qt6::Gui
+    PRIVATE Qt6::Qml
+    PRIVATE Qt6::Quick
+    PRIVATE Qt6::QuickControls2
+    PRIVATE Qt6::GuiPrivate
 )
 
 add_library(EntryPoint_SG INTERFACE)
@@ -221,19 +274,17 @@ target_include_directories(EntryPoint_SG
 )
 
 add_executable(InternalTest WIN32)
-target_compile_definitions(InternalTest
-    PRIVATE SG_BUILDING_INTERNALTEST
-)
 target_sources(InternalTest
     PRIVATE "internal_test/src/main.cpp"
 )
 find_package(Qt6 REQUIRED COMPONENTS Core)
 target_link_libraries(InternalTest
-    PUBLIC Containers
-    PUBLIC Math
-    PUBLIC Core
-    PUBLIC FileSystem
-    PUBLIC Widgets
+    PUBLIC SG_Containers
+    PUBLIC SG_Math
+    PUBLIC SG_Core
+    PUBLIC SG_FileSystem
+    PUBLIC SG_Widgets
+    PUBLIC SG_RI
     PRIVATE EntryPoint_SG
     PRIVATE Qt6::Core
 )

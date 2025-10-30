@@ -3,8 +3,10 @@
 
 #include <QObject>
 
+#include <private_api_Core/SG_Build_Core.h>
+
 class SGXTimer;
-class SGXTimerQuickInterface : public QObject
+class SG_CORE_DLL SGXTimerQuickInterface : public QObject
 {
 public:
     SGXTimerQuickInterface(SGXTimer* x);

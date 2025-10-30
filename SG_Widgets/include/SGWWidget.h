@@ -6,6 +6,10 @@
 
 #include <private_api_Widgets/SG_Build_Widgets.h>
 
+#ifdef SG_SINGLE_FRAME
+#error "Do not use SGWidgets when your app is in single frame mode as the user will not see anything"
+#endif
+
 class QQuickItem;
 class SGRImage;
 class SG_WIDGETS_DLL SGWWidget

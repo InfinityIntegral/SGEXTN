@@ -29,8 +29,6 @@ void (*SGXCentral::sgWidgetsTerminate)() = nullptr;
 
 void SGXCentral::initialise(){
     QLocale::setDefault(QLocale(QLocale::English, QLocale::Singapore));
-    // link SGWThemeCustomisationPage (SG RI) to SGWCustomisationPageControl (SGWidget)
-    // add event listener for colour picker widget
     if(SGXCentral::sgWidgetsInit0 != nullptr){SGXCentral::sgWidgetsInit0();}
     
     QCoreApplication::setApplicationName(*SGXCentral::applicationName.data);

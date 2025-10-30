@@ -7,9 +7,10 @@ class SG_WIDGETS_DLL SGWCustomisationPageControl
 {
 public:
     SGWCustomisationPageControl() = delete;
-    static void (*enableThemeColoursCustomisationPage)();
+    static void enableThemeColoursCustomisationPage();
     static void enableFontSizeCustomisationPage();
     static void enableSingCorrectCustomisationPage();
+    static void (*themeColoursCustomisationPageActivationFunction)();
 };
 
 #endif // SGWCUSTOMISATIONPAGECONTROL_H

@@ -15,6 +15,8 @@
 #include <SGWTextButton.h>
 #include <SGWTextInput.h>
 #include <SGWTextLabel.h>
+#include <SGWCustomisationPageControl.h>
+#include <SGWColourPickerWidget.h>
 
 #include <SGEXTN_EntryPoint.h>
 
@@ -66,4 +68,6 @@ void test(){
     new SGWTextLabel(w, "built with CMake", 0.0f, 0.5f, 0.0f, 0.5f, 1.0f, -1.0f, 0.0f, 1.0f, SGWHorizontalAlignment::Center, false);
     new SGWTextButton(w, "click here", &log, 0.0f, 0.5f, 0.0f, 2.0f, 1.0f, -1.0f, 0.0f, 1.0f);
     new SGWTextInput(w, &log, 0.0f, 0.5f, 0.0f, 3.5f, 1.0f, -1.0f, 0.0f, 1.0f);
+    //SGWCustomisationPageControl::enableThemeColoursCustomisationPage();
+    new SGWColourPickerWidget(w, 0.0f, 0.5f, 0.0f, 5.0f, 0.0f, 4.0f, 0.0f, 1.0f, SGXColourRGBA(255, 0, 200, 200));
 }

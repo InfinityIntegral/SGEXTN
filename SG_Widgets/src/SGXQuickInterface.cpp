@@ -52,7 +52,7 @@ void SGXQuickInterface::createTemplates(){
     SGXQuickInterface::longInput = new QQmlComponent(SGXQuickInterface::e, ":/SGEXTN/SGWLongInput.qml");
     SGXQuickInterface::multiTouchReceiver = new QQmlComponent(SGXQuickInterface::e, ":/SGEXTN/SGWMultiTouchReceiver.qml");
     SGXQuickInterface::singleTouchReceiver = new QQmlComponent(SGXQuickInterface::e, ":/SGEXTN/SGWSingleTouchReceiver.qml");
-    SGXQuickInterface::colourPicker = new QQmlComponent(SGXQuickInterface::e, ":/SGEXTN/QML/SGWColourPickerWidget.qml");
+    SGXQuickInterface::colourPicker = new QQmlComponent(SGXQuickInterface::e, ":/SGEXTN/SGWColourPickerWidget.qml");
     SGXQuickInterface::sequentialScrollView = new QQmlComponent(SGXQuickInterface::e, ":/SGEXTN/SGWSequentialScrollView.qml");
     SGXQuickInterface::sequentialLongLabel = new QQmlComponent(SGXQuickInterface::e, ":/SGEXTN/SGWSequentialLongLabel.qml");
 }
