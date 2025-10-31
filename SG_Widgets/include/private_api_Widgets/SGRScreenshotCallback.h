@@ -3,11 +3,12 @@
 
 #include <QObject>
 #include <QSharedPointer>
+#include <private_api_Widgets/SG_Build_Widgets.h>
 
 class SGRImage;
 class QQuickItem;
 class QQuickItemGrabResult;
-class SGRScreenshotCallback : public QObject
+class SG_WIDGETS_DLL SGRScreenshotCallback : public QObject
 {
 public:
     SGRScreenshotCallback(void (*callback)(SGRImage*), QQuickItem* item);

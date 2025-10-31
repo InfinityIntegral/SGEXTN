@@ -3,9 +3,11 @@
 
 #include <QObject>
 
+#include <private_api_RI/SG_Build_RI.h>
+
 class SGXString;
 class SGWColourPickerWidget;
-class SGWColourPickerWidgetQuickInterface : public QObject {
+class SG_RI_DLL SGWColourPickerWidgetQuickInterface : public QObject {
 public:
     SGWColourPickerWidgetQuickInterface(SGWColourPickerWidget* x);
     SGWColourPickerWidget* x;

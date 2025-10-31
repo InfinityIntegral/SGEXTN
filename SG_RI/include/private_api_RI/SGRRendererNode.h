@@ -4,13 +4,15 @@
 #include <QSGRenderNode>
 #include <QRectF>
 
+#include <private_api_RI/SG_Build_RI.h>
+
 class RenderState;
 class SGRBaseRenderer;
 class QRhi;
 class QQuickItem;
 class SGRRenderingProgramme;
 class SGRBaseSyncer;
-class SGRRendererNode : public QSGRenderNode
+class SG_RI_DLL SGRRendererNode : public QSGRenderNode
 {
 public:
     SGRRendererNode(SGRBaseRenderer* renderControl);

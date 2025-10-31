@@ -6,7 +6,9 @@
 #include <SGXColourRGBA.h>
 #include <qtmetamacros.h>
 
-class SGXThemeColourSetting : public QObject
+#include <private_api_Widgets/SG_Build_Widgets.h>
+
+class SG_WIDGETS_DLL SGXThemeColourSetting : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QColor noColour READ getNoColour CONSTANT)
