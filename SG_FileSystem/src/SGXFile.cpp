@@ -14,6 +14,7 @@
 #include <QByteArray>
 #include <SGLArray.h>
 #include <cstring>
+#include <QTextStream>
 
 SGXFile::SGXFile(const SGXString &s){
     fileControl = nullptr;
@@ -216,4 +217,22 @@ SGLArray<char> SGXFile::readBytes(long long n) const {
 void SGXFile::writeBytes(const SGLArray<char> &x) const {
     const QByteArray data = QByteArray::fromRawData(x.pointerToData(0), x.length());
     (*fileControl).write(data);
+}
+
+SGXString SGXFile::readAllText(const SGXString &filePath){
+    QFile file(*filePath.data);
+    (void)file.open(QIODevice::ReadWrite | QIODevice::Text);
+    QTextStream stream(&file);
+    SGXString contents = "";
+    (*contents.data) = stream.readAll();
+    file.close();
+    return contents;
+}
+
+void SGXFile::writeAllText(const SGXString &filePath, const SGXString &contents){
+    QFile file(*filePath.data);
+    (void)file.open(QIODevice::ReadWrite | QIODevice::Text);
+    QTextStream stream(&file);
+    stream << (*contents.data);
+    file.close();
 }

@@ -61,6 +61,8 @@ public:
     [[nodiscard]] SGLArray<char> readBytes(long long n) const;
     [[nodiscard]] SGLArray<char> readAllBytes() const;
     void writeBytes(const SGLArray<char>& x) const;
+    static SGXString readAllText(const SGXString& filePath);
+    static void writeAllText(const SGXString& filePath, const SGXString& contents);
 };
 
 #endif // SGXFILE_H
