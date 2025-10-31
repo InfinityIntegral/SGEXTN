@@ -18,6 +18,7 @@
 #include <SGWCustomisationPageControl.h>
 #include <SGWColourPickerWidget.h>
 #include <SGWNotify.h>
+#include <SGXDebug.h>
 
 #include <SGEXTN_EntryPoint.h>
 
@@ -72,4 +73,6 @@ void test(){
     //SGWCustomisationPageControl::enableThemeColoursCustomisationPage();
     new SGWColourPickerWidget(w, 0.0f, 0.5f, 0.0f, 5.0f, 0.0f, 4.0f, 0.0f, 1.0f, SGXColourRGBA(255, 0, 200, 200));
     SGWNotify::notify("something");
+    SG(true)(1)("hi")(SGXColourRGBA(255, 0, 200, 200))(w)(SGXIdentifier(false));
+    SG;
 }

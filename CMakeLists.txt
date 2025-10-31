@@ -85,6 +85,7 @@ target_sources(SG_Core
     PRIVATE "SG_Core/src/SGXChar.cpp"
     PRIVATE "SG_Core/src/SGXColourHSLA.cpp"
     PRIVATE "SG_Core/src/SGXColourRGBA.cpp"
+    PRIVATE "SG_Core/src/SGXDebug.cpp"
     PRIVATE "SG_Core/src/SGXIdentifier.cpp"
     PRIVATE "SG_Core/src/SGXRandomNumberGenerator.cpp"
     PRIVATE "SG_Core/src/SGXString.cpp"

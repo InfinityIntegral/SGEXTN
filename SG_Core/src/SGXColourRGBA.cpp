@@ -135,11 +135,11 @@ SGXString SGXColourRGBA::getStringForPrintingRGBAHTML() const {
 }
 
 SGXString SGXColourRGBA::getStringForPrintingRGBHex() const{
-    return (SGXString("#") + SGXString::intToStringBase16(getRed()) + SGXString::intToStringBase16(getGreen()) + SGXString::intToStringBase16(getBlue()));
+    return (SGXString("#") + SGXString::intToStringBase16(getRed()).fillLeftToLength(2, '0') + SGXString::intToStringBase16(getGreen()).fillLeftToLength(2, '0') + SGXString::intToStringBase16(getBlue()).fillLeftToLength(2, '0'));
 }
 
 SGXString SGXColourRGBA::getStringForPrintingRGBAHex() const {
-    return (SGXString("#") + SGXString::intToStringBase16(getRed()) + SGXString::intToStringBase16(getGreen()) + SGXString::intToStringBase16(getBlue()) + SGXString::intToStringBase16(getTransparency()));
+    return (SGXString("#") + SGXString::intToStringBase16(getRed()).fillLeftToLength(2, '0') + SGXString::intToStringBase16(getGreen()).fillLeftToLength(2, '0') + SGXString::intToStringBase16(getBlue()).fillLeftToLength(2, '0') + SGXString::intToStringBase16(getTransparency()).fillLeftToLength(2, '0'));
 }
 
 SGXString SGXColourRGBA::getStringForPrintingRGBFloatHTML() const {
