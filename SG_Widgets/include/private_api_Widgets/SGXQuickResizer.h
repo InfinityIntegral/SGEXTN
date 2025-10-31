@@ -1,12 +1,10 @@
 #ifndef SGXQUICKRESIZER_H
 #define SGXQUICKRESIZER_H
 
-#include <private_api_Widgets/SG_Build_Widgets.h>
-
 #include <QObject>
 #include <qtmetamacros.h>
 
-class SG_WIDGETS_DLL SGXQuickResizer : public QObject
+class SGXQuickResizer : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(float renderSpaceWidth READ getRenderSpaceWidth WRITE setRenderSpaceWidth NOTIFY changedRenderSpaceWidth FINAL)

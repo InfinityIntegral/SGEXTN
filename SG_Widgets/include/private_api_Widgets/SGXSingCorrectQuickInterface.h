@@ -4,9 +4,7 @@
 #include <QObject>
 #include <qtmetamacros.h>
 
-#include <private_api_Widgets/SG_Build_Widgets.h>
-
-class SG_WIDGETS_DLL SGXSingCorrectQuickInterface : public QObject
+class SGXSingCorrectQuickInterface : public QObject
 {
     Q_OBJECT
 public:

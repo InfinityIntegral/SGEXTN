@@ -3,11 +3,9 @@
 
 #include <QObject>
 
-#include <private_api_Widgets/SG_Build_Widgets.h>
-
 class SGXString;
 class SGWWidget;
-class SG_WIDGETS_DLL SGWWidgetQuickInterface : public QObject
+class SGWWidgetQuickInterface : public QObject
 {
 public:
     SGWWidgetQuickInterface(SGWWidget* x);

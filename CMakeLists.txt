@@ -29,8 +29,6 @@ set_property(DIRECTORY . PROPERTY TARGET_SUPPORTS_SHARED_LIBS ON)
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     message("building in DEBUG mode, this should NOT be released")
-else()
-   add_compile_definitions(QT_NO_DEBUG_OUTPUT)
 endif()
 
 project(SGEXTN
@@ -96,8 +94,8 @@ target_sources(SG_Core
 )
 find_package(Qt6 REQUIRED COMPONENTS Core Gui)
 target_link_libraries(SG_Core
-    PUBLIC SG_Containers
-    PUBLIC SG_Math
+    PRIVATE SG_Containers
+    PRIVATE SG_Math
     PRIVATE Qt6::Core
     PRIVATE Qt6::Gui
 )
@@ -118,8 +116,8 @@ target_sources(SG_FileSystem
 )
 find_package(Qt6 REQUIRED COMPONENTS Core)
 target_link_libraries(SG_FileSystem
-    PUBLIC SG_Containers
-    PUBLIC SG_Core
+    PRIVATE SG_Containers
+    PRIVATE SG_Core
     PRIVATE Qt6::Core
 )
 
@@ -208,10 +206,10 @@ target_sources(SG_Widgets
 )
 find_package(Qt6 REQUIRED COMPONENTS Core Gui Qml Quick QuickControls2)
 target_link_libraries(SG_Widgets
-    PUBLIC SG_Containers
-    PUBLIC SG_Math
-    PUBLIC SG_Core
-    PUBLIC SG_FileSystem
+    PRIVATE SG_Containers
+    PRIVATE SG_Math
+    PRIVATE SG_Core
+    PRIVATE SG_FileSystem
     PRIVATE Qt6::Core
     PRIVATE Qt6::Gui
     PRIVATE Qt6::Qml
@@ -257,11 +255,11 @@ target_sources(SG_RI
 )
 find_package(Qt6 REQUIRED COMPONENTS Core Gui Qml Quick QuickControls2 GuiPrivate)
 target_link_libraries(SG_RI
-    PUBLIC SG_Containers
-    PUBLIC SG_Math
-    PUBLIC SG_Core
-    PUBLIC SG_FileSystem
-    PUBLIC SG_Widgets
+    PRIVATE SG_Containers
+    PRIVATE SG_Math
+    PRIVATE SG_Core
+    PRIVATE SG_FileSystem
+    PRIVATE SG_Widgets
     PRIVATE Qt6::Core
     PRIVATE Qt6::Gui
     PRIVATE Qt6::Qml
@@ -279,14 +277,12 @@ add_executable(InternalTest WIN32)
 target_sources(InternalTest
     PRIVATE "internal_test/src/main.cpp"
 )
-find_package(Qt6 REQUIRED COMPONENTS Core)
 target_link_libraries(InternalTest
-    PUBLIC SG_Containers
-    PUBLIC SG_Math
-    PUBLIC SG_Core
-    PUBLIC SG_FileSystem
-    PUBLIC SG_Widgets
-    PUBLIC SG_RI
+    PRIVATE SG_Containers
+    PRIVATE SG_Math
+    PRIVATE SG_Core
+    PRIVATE SG_FileSystem
+    PRIVATE SG_Widgets
+    PRIVATE SG_RI
     PRIVATE EntryPoint_SG
-    PRIVATE Qt6::Core
 )
