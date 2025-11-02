@@ -5,19 +5,7 @@
 
 template <typename K, typename V, typename Comparator> class SGLMap{
 protected:
-    class Node {
-    public:
-        Node* parent;
-        Node* leftChild;
-        Node* rightChild;
-        int height;
-        int subtreeSize;
-        K key;
-        V value;
-        Node(const K& xKey, const V& xValue, Node* parentNode);
-        Node(Node* oldNode, Node* newParent);
-        void recursiveDelete();
-    };
+    class Node;
     
     Node* root;
     Comparator comparatorInstance;
@@ -58,39 +46,8 @@ public:
     [[nodiscard]] V& at(const K& x);
     [[nodiscard]] const V& at(const K& x) const;
     
-    class Iterator {
-        friend class SGLMap;
-    public:
-        Iterator& operator++();
-        Iterator operator++(int);
-        Iterator& operator--();
-        Iterator operator--(int);
-        bool operator==(Iterator x);
-        bool operator!=(Iterator x);
-        const K& key();
-        V& value();
-    protected:
-        Iterator(Node* x, SGLMap* s);
-        Node* node;
-        SGLMap* associatedSet;
-    };
-    
-    class ConstIterator {
-        friend class SGLMap;
-    public:
-        ConstIterator& operator++();
-        ConstIterator operator++(int);
-        ConstIterator& operator--();
-        ConstIterator operator--(int);
-        bool operator==(ConstIterator x);
-        bool operator!=(ConstIterator x);
-        const K& key();
-        const V& value();
-    protected:
-        ConstIterator(Node* x, const SGLMap* s);
-        Node* node;
-        const SGLMap* associatedSet;
-    };
+    class Iterator;
+    class ConstIterator;
     
     [[nodiscard]] Iterator begin();
     [[nodiscard]] ConstIterator constBegin() const;
@@ -112,6 +69,54 @@ public:
     [[nodiscard]] V& valueAt(int n);
     [[nodiscard]] Iterator iteratorAt(int n);
     [[nodiscard]] ConstIterator constIteratorAt(int n) const;
+};
+
+template <typename K, typename V, typename Comparator> class SGLMap<K, V, Comparator>::Iterator {
+    friend class SGLMap;
+public:
+    Iterator& operator++();
+    Iterator operator++(int);
+    Iterator& operator--();
+    Iterator operator--(int);
+    bool operator==(Iterator x);
+    bool operator!=(Iterator x);
+    const K& key();
+    V& value();
+protected:
+    Iterator(Node* x, SGLMap* s);
+    Node* node;
+    SGLMap* associatedSet;
+};
+
+template <typename K, typename V, typename Comparator> class SGLMap<K, V, Comparator>::ConstIterator {
+    friend class SGLMap;
+public:
+    ConstIterator& operator++();
+    ConstIterator operator++(int);
+    ConstIterator& operator--();
+    ConstIterator operator--(int);
+    bool operator==(ConstIterator x);
+    bool operator!=(ConstIterator x);
+    const K& key();
+    const V& value();
+protected:
+    ConstIterator(Node* x, const SGLMap* s);
+    Node* node;
+    const SGLMap* associatedSet;
+};
+
+template <typename K, typename V, typename Comparator> class SGLMap<K, V, Comparator>::Node {
+public:
+    Node* parent;
+    Node* leftChild;
+    Node* rightChild;
+    int height;
+    int subtreeSize;
+    K key;
+    V value;
+    Node(const K& xKey, const V& xValue, Node* parentNode);
+    Node(Node* oldNode, Node* newParent);
+    void recursiveDelete();
 };
 
 template <typename K, typename V, typename Comparator> SGLMap<K, V, Comparator>::SGLMap(){

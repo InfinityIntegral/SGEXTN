@@ -5,16 +5,7 @@
 
 template <typename K, typename V, typename EqualityCheck, typename HashFunction> class SGLUnorderedMap {
 protected:
-    class Slot {
-    public:
-        static const char unused = 0;
-        static const char active = 1;
-        static const char deleted = 2;
-        char usageStatus;
-        K key;
-        V value;
-        Slot();
-    };
+    class Slot;
     Slot* dataInternal;
     int lengthInternal;
     int memoryUsedInternal;
@@ -39,39 +30,8 @@ public:
     [[nodiscard]] V& at(const K& x);
     [[nodiscard]] const V& at(const K &x) const;
     
-    class Iterator {
-        friend class SGLUnorderedMap;
-    public:
-        Iterator& operator++();
-        Iterator operator++(int);
-        Iterator& operator--();
-        Iterator operator--(int);
-        bool operator==(Iterator x);
-        bool operator!=(Iterator x);
-        const K& key();
-        V& value();
-    protected:
-        int slot;
-        SGLUnorderedMap* associatedSet;
-        Iterator(int x, SGLUnorderedMap* s);
-    };
-    
-    class ConstIterator {
-        friend class SGLUnorderedMap;
-    public:
-        ConstIterator& operator++();
-        ConstIterator operator++(int);
-        ConstIterator& operator--();
-        ConstIterator operator--(int);
-        bool operator==(ConstIterator x);
-        bool operator!=(ConstIterator x);
-        const K& key();
-        const V& value();
-    protected:
-        int slot;
-        const SGLUnorderedMap* associatedSet;
-        ConstIterator(int x, const SGLUnorderedMap* s);
-    };
+    class Iterator;
+    class ConstIterator;
     
     [[nodiscard]] Iterator begin();
     [[nodiscard]] Iterator end();
@@ -80,6 +40,51 @@ public:
     void erase(Iterator& x);
     [[nodiscard]] Iterator find(const K& x);
     [[nodiscard]] ConstIterator find(const K& x) const;
+};
+
+template <typename K, typename V, typename EqualityCheck, typename HashFunction> class SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::Slot {
+public:
+    static const char unused = 0;
+    static const char active = 1;
+    static const char deleted = 2;
+    char usageStatus;
+    K key;
+    V value;
+    Slot();
+};
+
+template <typename K, typename V, typename EqualityCheck, typename HashFunction> class SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::Iterator {
+    friend class SGLUnorderedMap;
+public:
+    Iterator& operator++();
+    Iterator operator++(int);
+    Iterator& operator--();
+    Iterator operator--(int);
+    bool operator==(Iterator x);
+    bool operator!=(Iterator x);
+    const K& key();
+    V& value();
+protected:
+    int slot;
+    SGLUnorderedMap* associatedSet;
+    Iterator(int x, SGLUnorderedMap* s);
+};
+
+template <typename K, typename V, typename EqualityCheck, typename HashFunction> class SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::ConstIterator {
+    friend class SGLUnorderedMap;
+public:
+    ConstIterator& operator++();
+    ConstIterator operator++(int);
+    ConstIterator& operator--();
+    ConstIterator operator--(int);
+    bool operator==(ConstIterator x);
+    bool operator!=(ConstIterator x);
+    const K& key();
+    const V& value();
+protected:
+    int slot;
+    const SGLUnorderedMap* associatedSet;
+    ConstIterator(int x, const SGLUnorderedMap* s);
 };
 
 template <typename K, typename V, typename EqualityCheck, typename HashFunction> SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::SGLUnorderedMap(){

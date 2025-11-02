@@ -5,18 +5,7 @@
 
 template <typename T, typename Comparator> class SGLSet{
 protected:
-    class Node {
-    public:
-        Node* parent;
-        Node* leftChild;
-        Node* rightChild;
-        int height;
-        int subtreeSize;
-        T value;
-        Node(const T& x, Node* parentNode);
-        Node(Node* oldNode, Node* newParent);
-        void recursiveDelete();
-    };
+    class Node;
     
     Node* root;
     Comparator comparatorInstance;
@@ -55,37 +44,8 @@ public:
     [[nodiscard]] bool contains(const T& x) const;
     [[nodiscard]] int count(const T& x) const;
     
-    class Iterator {
-        friend class SGLSet;
-    public:
-        Iterator& operator++();
-        Iterator operator++(int);
-        Iterator& operator--();
-        Iterator operator--(int);
-        bool operator==(Iterator x);
-        bool operator!=(Iterator x);
-        const T& operator*();
-    protected:
-        Iterator(Node* x, SGLSet* s);
-        Node* node;
-        SGLSet* associatedSet;
-    };
-    
-    class ConstIterator {
-        friend class SGLSet;
-    public:
-        ConstIterator& operator++();
-        ConstIterator operator++(int);
-        ConstIterator& operator--();
-        ConstIterator operator--(int);
-        bool operator==(ConstIterator x);
-        bool operator!=(ConstIterator x);
-        const T& operator*();
-    protected:
-        ConstIterator(Node* x, const SGLSet* s);
-        Node* node;
-        const SGLSet* associatedSet;
-    };
+    class Iterator;
+    class ConstIterator;
     
     [[nodiscard]] Iterator begin();
     [[nodiscard]] ConstIterator constBegin() const;
@@ -106,6 +66,51 @@ public:
     [[nodiscard]] const T& elementAt(int n) const;
     [[nodiscard]] Iterator iteratorAt(int n);
     [[nodiscard]] ConstIterator constIteratorAt(int n) const;
+};
+
+template <typename T, typename Comparator> class SGLSet<T, Comparator>::Node {
+public:
+    Node* parent;
+    Node* leftChild;
+    Node* rightChild;
+    int height;
+    int subtreeSize;
+    T value;
+    Node(const T& x, Node* parentNode);
+    Node(Node* oldNode, Node* newParent);
+    void recursiveDelete();
+};
+
+template <typename T, typename Comparator> class SGLSet<T, Comparator>::Iterator {
+    friend class SGLSet;
+public:
+    Iterator& operator++();
+    Iterator operator++(int);
+    Iterator& operator--();
+    Iterator operator--(int);
+    bool operator==(Iterator x);
+    bool operator!=(Iterator x);
+    const T& operator*();
+protected:
+    Iterator(Node* x, SGLSet* s);
+    Node* node;
+    SGLSet* associatedSet;
+};
+
+template <typename T, typename Comparator> class SGLSet<T, Comparator>::ConstIterator {
+    friend class SGLSet;
+public:
+    ConstIterator& operator++();
+    ConstIterator operator++(int);
+    ConstIterator& operator--();
+    ConstIterator operator--(int);
+    bool operator==(ConstIterator x);
+    bool operator!=(ConstIterator x);
+    const T& operator*();
+protected:
+    ConstIterator(Node* x, const SGLSet* s);
+    Node* node;
+    const SGLSet* associatedSet;
 };
 
 template <typename T, typename Comparator> SGLSet<T, Comparator>::SGLSet(){

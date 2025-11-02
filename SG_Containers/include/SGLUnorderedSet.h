@@ -5,15 +5,7 @@
 
 template <typename T, typename EqualityCheck, typename HashFunction> class SGLUnorderedSet {
 protected:
-    class Slot {
-    public:
-        static const char unused = 0;
-        static const char active = 1;
-        static const char deleted = 2;
-        char usageStatus;
-        T value;
-        Slot();
-    };
+    class Slot;
     Slot* dataInternal;
     int lengthInternal;
     int memoryUsedInternal;
@@ -36,37 +28,8 @@ public:
     [[nodiscard]] bool contains(const T& x) const;
     [[nodiscard]] int count(const T& x) const;
     
-    class Iterator {
-        friend class SGLUnorderedSet;
-    public:
-        Iterator& operator++();
-        Iterator operator++(int);
-        Iterator& operator--();
-        Iterator operator--(int);
-        bool operator==(Iterator x);
-        bool operator!=(Iterator x);
-        const T& operator*();
-    protected:
-        int slot;
-        SGLUnorderedSet* associatedSet;
-        Iterator(int x, SGLUnorderedSet* s);
-    };
-    
-    class ConstIterator {
-        friend class SGLUnorderedSet;
-    public:
-        ConstIterator& operator++();
-        ConstIterator operator++(int);
-        ConstIterator& operator--();
-        ConstIterator operator--(int);
-        bool operator==(ConstIterator x);
-        bool operator!=(ConstIterator x);
-        const T& operator*();
-    protected:
-        int slot;
-        const SGLUnorderedSet* associatedSet;
-        ConstIterator(int x, const SGLUnorderedSet* s);
-    };
+    class Iterator;
+    class ConstIterator;
     
     [[nodiscard]] Iterator begin();
     [[nodiscard]] Iterator end();
@@ -75,6 +38,48 @@ public:
     void erase(Iterator& x);
     [[nodiscard]] Iterator find(const T& x);
     [[nodiscard]] ConstIterator find(const T& x) const;
+};
+
+template <typename T, typename EqualityCheck, typename HashFunction> class SGLUnorderedSet<T, EqualityCheck, HashFunction>::Slot {
+public:
+    static const char unused = 0;
+    static const char active = 1;
+    static const char deleted = 2;
+    char usageStatus;
+    T value;
+    Slot();
+};
+
+template <typename T, typename EqualityCheck, typename HashFunction> class SGLUnorderedSet<T, EqualityCheck, HashFunction>::Iterator {
+    friend class SGLUnorderedSet;
+public:
+    Iterator& operator++();
+    Iterator operator++(int);
+    Iterator& operator--();
+    Iterator operator--(int);
+    bool operator==(Iterator x);
+    bool operator!=(Iterator x);
+    const T& operator*();
+protected:
+    int slot;
+    SGLUnorderedSet* associatedSet;
+    Iterator(int x, SGLUnorderedSet* s);
+};
+
+template <typename T, typename EqualityCheck, typename HashFunction> class SGLUnorderedSet<T, EqualityCheck, HashFunction>::ConstIterator {
+    friend class SGLUnorderedSet;
+public:
+    ConstIterator& operator++();
+    ConstIterator operator++(int);
+    ConstIterator& operator--();
+    ConstIterator operator--(int);
+    bool operator==(ConstIterator x);
+    bool operator!=(ConstIterator x);
+    const T& operator*();
+protected:
+    int slot;
+    const SGLUnorderedSet* associatedSet;
+    ConstIterator(int x, const SGLUnorderedSet* s);
 };
 
 template <typename T, typename EqualityCheck, typename HashFunction> SGLUnorderedSet<T, EqualityCheck, HashFunction>::SGLUnorderedSet(){

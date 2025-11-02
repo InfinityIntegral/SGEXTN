@@ -5,19 +5,7 @@
 
 template <typename T, typename Comparator> class SGLMultiSet {
 protected:
-    class Node {
-    public:
-        Node* parent;
-        Node* leftChild;
-        Node* rightChild;
-        int height;
-        int subtreeSize;
-        T value;
-        int count;
-        Node(const T& x, Node* parentNode);
-        Node(Node* oldNode, Node* parentNode);
-        void recursiveDelete();
-    };
+    class Node;
     
     Node* root;
     Comparator comparatorInstance;
@@ -56,39 +44,8 @@ public:
     [[nodiscard]] bool contains(const T& x) const;
     [[nodiscard]] int count(const T& x) const;
     
-    class Iterator {
-        friend class SGLMultiSet;
-    public:
-        Iterator& operator++();
-        Iterator operator++(int);
-        Iterator& operator--();
-        Iterator operator--(int);
-        bool operator==(Iterator x);
-        bool operator!=(Iterator x);
-        const T& operator*();
-    protected:
-        Iterator(Node* x, int c, SGLMultiSet* s);
-        Node* node;
-        SGLMultiSet* associatedSet;
-        int copy;
-    };
-    
-    class ConstIterator {
-        friend class SGLMultiSet;
-    public:
-        ConstIterator& operator++();
-        ConstIterator operator++(int);
-        ConstIterator& operator--();
-        ConstIterator operator--(int);
-        bool operator==(ConstIterator x);
-        bool operator!=(ConstIterator x);
-        const T& operator*();
-    protected:
-        ConstIterator(Node* x, int c, const SGLMultiSet* s);
-        Node* node;
-        const SGLMultiSet* associatedSet;
-        int copy;
-    };
+    class Iterator;
+    class ConstIterator;
     
     [[nodiscard]] Iterator begin();
     [[nodiscard]] ConstIterator constBegin() const;
@@ -109,6 +66,54 @@ public:
     [[nodiscard]] const T& elementAt(int n) const;
     [[nodiscard]] Iterator iteratorAt(int n);
     [[nodiscard]] ConstIterator constIteratorAt(int n) const;
+};
+
+template <typename T, typename Comparator> class SGLMultiSet<T, Comparator>::Node {
+public:
+    Node* parent;
+    Node* leftChild;
+    Node* rightChild;
+    int height;
+    int subtreeSize;
+    T value;
+    int count;
+    Node(const T& x, Node* parentNode);
+    Node(Node* oldNode, Node* parentNode);
+    void recursiveDelete();
+};
+
+template <typename T, typename Comparator> class SGLMultiSet<T, Comparator>::Iterator {
+    friend class SGLMultiSet;
+public:
+    Iterator& operator++();
+    Iterator operator++(int);
+    Iterator& operator--();
+    Iterator operator--(int);
+    bool operator==(Iterator x);
+    bool operator!=(Iterator x);
+    const T& operator*();
+protected:
+    Iterator(Node* x, int c, SGLMultiSet* s);
+    Node* node;
+    SGLMultiSet* associatedSet;
+    int copy;
+};
+
+template <typename T, typename Comparator> class SGLMultiSet<T, Comparator>::ConstIterator {
+    friend class SGLMultiSet;
+public:
+    ConstIterator& operator++();
+    ConstIterator operator++(int);
+    ConstIterator& operator--();
+    ConstIterator operator--(int);
+    bool operator==(ConstIterator x);
+    bool operator!=(ConstIterator x);
+    const T& operator*();
+protected:
+    ConstIterator(Node* x, int c, const SGLMultiSet* s);
+    Node* node;
+    const SGLMultiSet* associatedSet;
+    int copy;
 };
 
 template <typename T, typename Comparator> SGLMultiSet<T, Comparator>::SGLMultiSet(){

@@ -5,16 +5,7 @@
 
 template <typename T, typename EqualityCheck, typename HashFunction> class SGLUnorderedMultiSet {
 protected:
-    class Slot {
-    public:
-        static const char unused = 0;
-        static const char active = 1;
-        static const char deleted = 2;
-        char usageStatus;
-        T value;
-        int count;
-        Slot();
-    };
+    class Slot;
     Slot* dataInternal;
     int lengthInternal;
     int memoryUsedInternal;
@@ -37,39 +28,8 @@ public:
     [[nodiscard]] bool contains(const T& x) const;
     [[nodiscard]] int count(const T& x) const;
     
-    class Iterator {
-        friend class SGLUnorderedMultiSet;
-    public:
-        Iterator& operator++();
-        Iterator operator++(int);
-        Iterator& operator--();
-        Iterator operator--(int);
-        bool operator==(Iterator x);
-        bool operator!=(Iterator x);
-        const T& operator*();
-    protected:
-        int slot;
-        int copy;
-        SGLUnorderedMultiSet* associatedSet;
-        Iterator(int x, int c, SGLUnorderedMultiSet* s);
-    };
-    
-    class ConstIterator {
-        friend class SGLUnorderedMultiSet;
-    public:
-        ConstIterator& operator++();
-        ConstIterator operator++(int);
-        ConstIterator& operator--();
-        ConstIterator operator--(int);
-        bool operator==(ConstIterator x);
-        bool operator!=(ConstIterator x);
-        const T& operator*();
-    protected:
-        int slot;
-        int copy;
-        const SGLUnorderedMultiSet* associatedSet;
-        ConstIterator(int x, int c, const SGLUnorderedMultiSet* s);
-    };
+    class Iterator;
+    class ConstIterator;
     
     [[nodiscard]] Iterator begin();
     [[nodiscard]] Iterator end();
@@ -78,6 +38,51 @@ public:
     void erase(Iterator& x);
     [[nodiscard]] Iterator find(const T& x);
     [[nodiscard]] ConstIterator find(const T& x) const;
+};
+
+template <typename T, typename EqualityCheck, typename HashFunction> class SGLUnorderedMultiSet<T, EqualityCheck, HashFunction>::Slot {
+public:
+    static const char unused = 0;
+    static const char active = 1;
+    static const char deleted = 2;
+    char usageStatus;
+    T value;
+    int count;
+    Slot();
+};
+
+template <typename T, typename EqualityCheck, typename HashFunction> class SGLUnorderedMultiSet<T, EqualityCheck, HashFunction>::Iterator {
+    friend class SGLUnorderedMultiSet;
+public:
+    Iterator& operator++();
+    Iterator operator++(int);
+    Iterator& operator--();
+    Iterator operator--(int);
+    bool operator==(Iterator x);
+    bool operator!=(Iterator x);
+    const T& operator*();
+protected:
+    int slot;
+    int copy;
+    SGLUnorderedMultiSet* associatedSet;
+    Iterator(int x, int c, SGLUnorderedMultiSet* s);
+};
+
+template <typename T, typename EqualityCheck, typename HashFunction> class SGLUnorderedMultiSet<T, EqualityCheck, HashFunction>::ConstIterator {
+    friend class SGLUnorderedMultiSet;
+public:
+    ConstIterator& operator++();
+    ConstIterator operator++(int);
+    ConstIterator& operator--();
+    ConstIterator operator--(int);
+    bool operator==(ConstIterator x);
+    bool operator!=(ConstIterator x);
+    const T& operator*();
+protected:
+    int slot;
+    int copy;
+    const SGLUnorderedMultiSet* associatedSet;
+    ConstIterator(int x, int c, const SGLUnorderedMultiSet* s);
 };
 
 template <typename T, typename EqualityCheck, typename HashFunction> SGLUnorderedMultiSet<T, EqualityCheck, HashFunction>::SGLUnorderedMultiSet(){
