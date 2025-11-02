@@ -42,8 +42,10 @@ target_compile_definitions(SG_Containers
     PUBLIC SG_USING_CONTAINERS
 )
 target_include_directories(SG_Containers
-    PUBLIC "dll_defines"
-    PUBLIC "SG_Containers/include"
+    PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/dll_defines>"
+    PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/SG_Containers/include>"
+    PUBLIC "$<INSTALL_INTERFACE:include/dll_defines>"
+    PUBLIC "$<INSTALL_INTERFACE:include/SG_Containers/include>"
 )
 target_sources(SG_Containers
     PRIVATE "SG_Containers/src/SG_Build_Containers.cpp"
@@ -56,8 +58,10 @@ target_compile_definitions(SG_Math
     PUBLIC SG_USING_MATH
 )
 target_include_directories(SG_Math
-    PUBLIC "dll_defines"
-    PUBLIC "SG_Math/include"
+    PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/dll_defines>"
+    PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/SG_Math/include>"
+    PUBLIC "$<INSTALL_INTERFACE:include/dll_defines>"
+    PUBLIC "$<INSTALL_INTERFACE:include/SG_Math/include>"
 )
 target_sources(SG_Math
     PRIVATE "SG_Math/src/sglfloatconstants.cpp"
@@ -75,8 +79,10 @@ target_compile_definitions(SG_Core
     PUBLIC SG_USING_CORE
 )
 target_include_directories(SG_Core
-    PUBLIC "dll_defines"
-    PUBLIC "SG_Core/include"
+    PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/dll_defines>"
+    PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/SG_Core/include>"
+    PUBLIC "$<INSTALL_INTERFACE:include/dll_defines>"
+    PUBLIC "$<INSTALL_INTERFACE:include/SG_Core/include>"
 )
 target_sources(SG_Core
     PRIVATE "SG_Core/src/SGXCentral.cpp"
@@ -106,8 +112,10 @@ target_compile_definitions(SG_FileSystem
     PUBLIC SG_USING_FILESYSTEM
 )
 target_include_directories(SG_FileSystem
-    PUBLIC "dll_defines"
-    PUBLIC "SG_FileSystem/include"
+    PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/dll_defines>"
+    PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/SG_FileSystem/include>"
+    PUBLIC "$<INSTALL_INTERFACE:include/dll_defines>"
+    PUBLIC "$<INSTALL_INTERFACE:include/SG_FileSystem/include>"
 )
 target_sources(SG_FileSystem
     PRIVATE "SG_FileSystem/src/SGXFile.cpp"
@@ -127,8 +135,10 @@ target_compile_definitions(SG_Widgets
     PUBLIC SG_USING_WIDGETS
 )
 target_include_directories(SG_Widgets
-    PUBLIC "dll_defines"
-    PUBLIC "SG_Widgets/include"
+    PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/dll_defines>"
+    PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/SG_Widgets/include>"
+    PUBLIC "$<INSTALL_INTERFACE:include/dll_defines>"
+    PUBLIC "$<INSTALL_INTERFACE:include/SG_Widgets/include>"
 )
 qt6_add_resources(SG_Widgets SG_Widgets_assets PREFIX "SGEXTN" BASE "SG_Widgets/assets" FILES
     "SG_Widgets/assets/FileDownload.qml"
@@ -223,8 +233,10 @@ target_compile_definitions(SG_RI
     PUBLIC SG_USING_RI
 )
 target_include_directories(SG_RI
-    PUBLIC "dll_defines"
-    PUBLIC "SG_RI/include"
+    PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/dll_defines>"
+    PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/SG_RI/include>"
+    PUBLIC "$<INSTALL_INTERFACE:include/dll_defines>"
+    PUBLIC "$<INSTALL_INTERFACE:include/SG_RI/include>"
 )
 find_package(Qt6 REQUIRED COMPONENTS ShaderTools)
 qt6_add_shaders(SG_RI SG_RI_shaders PREFIX "SGEXTN" BASE "SG_RI/assets" FILES
@@ -270,7 +282,8 @@ target_link_libraries(SG_RI
 
 add_library(EntryPoint_SG INTERFACE)
 target_include_directories(EntryPoint_SG
-    INTERFACE "EntryPoint_SG"
+    INTERFACE "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/EntryPoint_SG>"
+    INTERFACE "$<INSTALL_INTERFACE:include/EntryPoint_SG>"
 )
 
 add_executable(InternalTest WIN32)
@@ -286,3 +299,34 @@ target_link_libraries(InternalTest
     PRIVATE SG_RI
     PRIVATE EntryPoint_SG
 )
+
+install(TARGETS SG_Containers SG_Math SG_Core SG_FileSystem SG_Widgets SG_RI EntryPoint_SG
+    EXPORT SG_ALL_Targets
+    RUNTIME DESTINATION "C:/SGEXTN_install/lib"
+    ARCHIVE DESTINATION "C:/SGEXTN_install/lib"
+    LIBRARY DESTINATION "C:/SGEXTN_install/lib"
+    INCLUDES DESTINATION include
+)
+install(DIRECTORY dll_defines/ DESTINATION include/dll_defines)
+install(DIRECTORY SG_Containers/include/ DESTINATION include/SG_Containers/include)
+install(DIRECTORY SG_Math/include/ DESTINATION include/SG_Math/include)
+install(DIRECTORY SG_Core/include/ DESTINATION include/SG_Core/include)
+install(DIRECTORY SG_FileSystem/include/ DESTINATION include/SG_FileSystem/include)
+install(DIRECTORY SG_Widgets/include/ DESTINATION include/SG_Widgets/include)
+install(DIRECTORY SG_RI/include/ DESTINATION include/SG_RI/include)
+install(DIRECTORY EntryPoint_SG/ DESTINATION include/EntryPoint_SG)
+install(EXPORT SG_ALL_Targets
+    NAMESPACE SGEXTN::
+    DESTINATION lib/cmake/SGEXTN
+)
+include(CMakePackageConfigHelpers)
+configure_package_config_file(
+    "${CMAKE_CURRENT_SOURCE_DIR}/cmake/SGEXTNConfig.cmake.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/SGEXTNConfig.cmake"
+    INSTALL_DESTINATION lib/cmake/SGEXTN
+)
+install(FILES
+    "${CMAKE_CURRENT_BINARY_DIR}/SGEXTNConfig.cmake"
+    DESTINATION lib/cmake/SGEXTN
+)
+# cmake --install C:\SGEXTN\build\Desktop_Qt_6_10_0_llvm_mingw_64_bit-Release --config Release --prefix C:/SGEXTN_install

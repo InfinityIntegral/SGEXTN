@@ -69,6 +69,7 @@ template <typename T> SGLVector<T>& SGLVector<T>::operator=(const SGLVector& x){
     for(int i=0; i<lengthInternal; i++){
         (*(dataInternal + i)) = (*(x.dataInternal + i));
     }
+    return (*this);
 }
 
 template <typename T> SGLVector<T>::SGLVector(SGLVector&& x) noexcept {
@@ -88,6 +89,7 @@ template <typename T> SGLVector<T>& SGLVector<T>::operator=(SGLVector&& x) noexc
     x.dataInternal = nullptr;
     x.lengthInternal = 0;
     x.memoryLengthInternal = 0;
+    return (*this);
 }
 
 template <typename T> SGLVector<T>::~SGLVector(){
