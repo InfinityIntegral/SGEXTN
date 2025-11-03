@@ -1,0 +1,30 @@
+@SG_CPP_CLASS SGLQueue
+@SG_SHORT_DESCRP queue for any type of data
+@SG_LONG_DESCRP SGLQueue provides a template based queue for any data type. @SG_FINDREP_HEADER_ONLY @SG_FINDREP_CONTAINER_CAN_COPY_MOVE @SG_FINDREP_CONTENTS_CAN_COPY_MOVE
+@SG_IMPLE SGLQueue internally stores a buffer in the form of a C array. When no more elements can be appended into the buffer, it resizes to double its previous size and aligns all elements to the front of the queue.
+@SG_FUNC SGLQueue();
+Creates an empty SGLQueue.
+@SG_FUNC [[nodiscard]] const T& front() const;
+Returns the element at the front of the SGLQueue.
+@SG_WARN This is undefined behaviour if the SGLQueue is empty.
+@SG_FUNC [[nodiscard]] const T& back() const;
+Returns the element at the back of the SGLQueue.
+@SG_WARN This is undefined behaviour if the SGLQueue is empty.
+@SG_FUNC [[nodiscard]] int length() const;
+Returns the length of the SGLQueue.
+@SG_FUNC void push(const T& x);
+Appends $x at the back of the SGLQueue.
+@SG_NOTE This has a amortised constant time complexity. To achieve true constant time complexity, pre allocate memory equal to the amount you need using SGLQueue::reserve.
+@SG_FUNC void pop();
+Removes the front element of the SGLQueue.
+@SG_NOTE This has truly constant time complexity.
+@SG_NOTE This does not return the removed element. To access the removed element, use SGLQueue::front before removal.
+@SG_WARN This is undefined behaviour if the SGLQueue is empty.
+@SG_FUNC void reserve(int newMemoryLength);
+Pre allocates sufficient memory to store $newMemoryLength elements in the SGLQueue.
+@SG_NOTE If there is already sufficient memory to store $newMemoryLength elements, this is ignored.
+@SG_PRIVATE_API T* dataInternal;
+@SG_PRIVATE_API int startInternal;
+@SG_PRIVATE_API int endInternal;
+@SG_PRIVATE_API int memoryLengthInternal;
+@SG_PRIVATE_API int getMemoryIndex(int logicalIndex);

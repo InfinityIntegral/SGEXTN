@@ -1,0 +1,59 @@
+@SG_CPP_CLASS SGLVector
+@SG_SHORT_DESCRP resizable array for any type of data
+@SG_LONG_DESCRP SGLVector provides a template based vector (resizable array) that works with any data type. @SG_FINDREP_HEADER_ONLY @SG_FINDREP_CONTAINER_CAN_COPY_MOVE @SG_FINDREP_CONTENTS_CAN_COPY_MOVE
+@SG_IMPLE SGLDeque internally stores a buffer in the form of a C array. When the buffer is full and more elements need to be appended, the buffer doubles in size.
+@SG_FUNC SGLVector();
+Creates an empty SGLVector.
+@SG_FUNC SGLVector(int count);
+Creates a SGLVector of size $count with every element default initialised.
+@SG_WARN This will not compile if the data in the SGLVector do not have a default constructor (the one taking no arguments).
+@SG_WARN Negative $count is undefined behaviour.
+@SG_FUNC SGLVector(int count, const T& defaultValue);
+Creates a SGLVector of size $count with every element set to $defaultValue.
+@SG_WARN Negative $count is undefined behaviour.
+@SG_FUNC [[nodiscard]] T& at(int i);
+Returns a reference to element $i of the SGLVector.
+@SG_NOTE Since this returns a reference and not a copy, assigning to it directly (using it as a lvalue) would modify the SGLVector.
+@SG_WARN This crashes for out of bounds $i.
+@SG_FUNC [[nodiscard]] const T& at(int i) const;
+Returns a constant reference to element $i of the SGLVector.
+@SG_WARN This crashes for out of bounds $i.
+@SG_FUNC [[nodiscard]] const T& back() const;
+Returns a constant reference to the last element of the SGLVector.
+@SG_NOTE v.back() has the same effect as v.at(v.length() - 1)
+@SG_NOTE Use SGLVector::at if the element needs to be modified.
+@SG_WARN This crashes if the SGLVector is empty.
+@SG_FUNC [[nodiscard]] int length() const;
+Returns the length of the SGLVector, which is the number of elements currently stored in it.
+@SG_FUNC void assign(int count, const T& defaultValue);
+Assigns a SGLVector($count, $defaultValue) to this SGLVector.
+@SG_NOTE v.assign($count, $defaultValue); is identical in functionality to v = SGLVector<T>($count, $defaultValue); Choosing one over the other is purely coding style.
+@SG_WARN Negative $count is undefined behaviour.
+@SG_FUNC void fill(const T& defaultValue);
+Sets every element in the existing SGLVector to $defaultValue without resizing the SGLVector.
+@SG_NOTE If the SGLVector may need to be resized, use SGLVector::assign instead.
+@SG_FUNC void reserve(int newMemoryLength);
+Pre allocates enough memory in the buffer to store $newMemoryLength elements in the SGLVector.
+@SG_NOTE If there is already sufficient memory to store $newMemoryLength elements, this is ignored.
+@SG_FUNC void pushBack(const T& x);
+Appends $x to the SGLVector.
+@SG_NOTE This runs at amortised constant time complexity. To make it truly constant time, pre allocate the memory needed using SGLVector::reserve.
+@SG_FUNC void popBack();
+Removes the last element of the SGLVector.
+@SG_NOTE This does not return the removed element. Use SGLVector::back before removal to access the element.
+@SG_NOTE This runs at true constant time complexity.
+@SG_WARN Removing from empty SGLVector is undefined behaviour.
+@SG_FUNC [[nodiscard]] T* pointerToData(int n);
+Returns a pointer to element $n of the SGLVector. This does not dereference the returned pointer.
+@SG_NOTE Using an out of bounds value for $n is ok for this function as long as the returned pointer is not dereferenced. Out of bounds values for $n may be used intentionally to specify parts of the SGLVector to run SGLSort on.
+@SG_NOTE The returned value may function as an iterator.
+@SG_NOTE Assigning to the dereferenced value from the returned pointer would modify the SGLArray
+@SG_WARN Dereferencing the returned pointer when $n is out of bounds results in undefined behaviour.
+@SG_FUNC [[nodiscard]] const T* pointerToData(int n) const;
+Returns a read only pointer to element $n of the SGLVector. This does not dereference the returned pointer.
+@SG_NOTE Using an out of bounds value for $n is ok for this function as long as the returned pointer is not dereferenced. Out of bounds values for $n may be used intentionally to specify parts of the SGLVector to run SGLSort on.
+@SG_NOTE The returned value may function as an iterator.
+@SG_WARN Dereferencing the returned pointer when $n is out of bounds results in undefined behaviour.
+@SG_PRIVATE_API T* dataInternal;
+@SG_PRIVATE_API int lengthInternal;
+@SG_PRIVATE_API int memoryLengthInternal;

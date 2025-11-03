@@ -1,0 +1,14 @@
+@SG_CPP_CLASS SGLSort
+@SG_SHORT_DESCRP static functions class for sorting array-like data
+@SG_LONG_DESCRP SGLSort provides a template based static functions class to sort array-like data structures. It works with any SGEXTN container data structure that provides pointerToData(). Specify the type of data to sort and the comparator to use as template arguments. @SG_FINDREP_HEADER_ONLY
+@SG_IMPLE SGLSort uses IntroSort, the same algorithm that the C++ Standard Template Library uses.
+@SG_PRIVATE_API static void insertionSort(T* start, int left, int right, Comparator comparatorInstance);
+@SG_PRIVATE_API static void enforceHeap(T* start, int count, int index, int left, Comparator comparatorInstance);
+@SG_PRIVATE_API static void heapSort(T* start, int left, int right, Comparator comparatorInstance);
+@SG_PRIVATE_API static int partition(T* start, int low, int high, Comparator comparatorInstance);
+@SG_PRIVATE_API static void introSort(T* start, int low, int high, int maximumDepth, Comparator comparatorInstance);
+@SG_FUNC static void sort(T* start, T* end);
+Sorts the data structure from $start (inclusive) to $end (exclusive), the comparator is provided using template arguments for SGLSort.
+@SG_WARN SGLSort::sort has a time complexity of O(n ln(n))
+@SG_WARN $end being before $start results in undefined behaviour.
+@SG_WARN If $start and $end are from different data structures, this function will cause undefined behaviour.

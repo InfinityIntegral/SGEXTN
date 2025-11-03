@@ -1,0 +1,9 @@
+@SG_CPP_CLASS SGLHashAlgorithm
+@SG_SHORT_DESCRP Implementation of 32bit WyHash@SG_LINK_https://github.com/wangyi-fudan/wyhash for hash tables
+@SG_LONG_DESCRP SGLHashAlgorithm implements 32bit WyHash for a SGLSpan of const unsigned char. WyHash@SG_LINK_https://github.com/wangyi-fudan/wyhash is a high quality hashing algorithm for producing hash tables with minimal hash collision. SGLHashAlgorithm allows you to implement WyHash for your custom structs so that they can be used with SGLHash. @SG_FINDREP_HEADER_ONLY
+@SG_IMPLE SGLHashAlgorithm implements 32bit WyHash as a static function. The implementation is placed in the header file to allow easier access to the WyHash source code.
+@SG_FUNC static int wyHash32(const SGLSpan<const unsigned char>& span);
+Returns a int corresponding to the WyHash output from $span.
+@SG_NOTE For convenience, the functions returns a int not a unsigned int. These are effectively the same.
+@SG_NOTE Check the source code of any SGEXTN struct (SGXChar, SGXString, SGXColourRGBA, SGXColourHSLA, SGXIdentifier, SGXTimeStamp, SGXVector2) to see how to implement hash() using this function.
+@SG_WARN Due to padding, attempting to hash the entire memory of custom structs is undefined behaviour. Instead hash only the defined fields.

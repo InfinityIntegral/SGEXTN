@@ -1,0 +1,25 @@
+@SG_CPP_CLASS SGLStack
+@SG_SHORT_DESCRP stack for any type of data
+@SG_LONG_DESCRP SGLStack provides a template based stack for any data type. SGLStack is preferred over SGLVector when only stack functionality is needed as it provides more readable code. @SG_FINDREP_HEADER_ONLY @SG_FINDREP_CONTAINER_CAN_COPY_MOVE @SG_FINDREP_CONTENTS_CAN_COPY_MOVE
+@SG_IMPLE SGLStack internally stores a buffer in the form of a C array. When the buffer is full, it resizes to double its previous size.
+@SG_FUNC SGLStack();
+Creates an empty SGLStack.
+@SG_FUNC [[nodiscard]] const T& top() const;
+Returns the topmost element of the SGLStack.
+@SG_WARN Using this when the SGLStack is empty results in undefined behaviour.
+@SG_FUNC [[nodiscard]] int length() const;
+Returns the length of the SGLStack, that is the number of elements currently stored inside it.
+@SG_FUNC void push(const T& x);
+Appends $x to the top of the SGLStack.
+@SG_NOTE This has a amortised constant time complexity. To make it run in truly constant time, use SGLStack::reserve to pre allocate as much memory as you need.
+@SG_FUNC void pop();
+Removes the top element of the SGLStack.
+@SG_NOTE This does not return the removed element. To access the removed element, use SGLStack::top before removal.
+@SG_NOTE This runs in truly constant time complexity.
+@SG_WARN Removing from an empty SGLStack is undefined behaviour.
+@SG_FUNC void reserve(int newMemoryLength);
+Pre allocates sufficient memory to store $newMemoryLength elements in the SGLStack.
+@SG_NOTE If there is already sufficient memory for $newMemoryLength elements, this is ignored.
+@SG_PRIVATE_API T* dataInternal;
+@SG_PRIVATE_API int lengthInternal;
+@SG_PRIVATE_API int memoryLengthInternal;

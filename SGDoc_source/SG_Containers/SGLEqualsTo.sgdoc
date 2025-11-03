@@ -1,0 +1,9 @@
+@SG_CPP_CLASS SGLEqualsTo
+@SG_SHORT_DESCRP Equality check struct for use with SGEXTN Containers
+@SG_LONG_DESCRP SGLEqualsTo provides a equality check struct for use with SGEXTN Containers, this should be used most of the time when using SGLUnorderedSet, SGLUnorderedMultiSet, or SGLUnorderedMap. You need operator== defined to use SGLEqualsTo with custom structs. @SG_FINDREP_HEADER_ONLY
+@SG_IMPLE SGLEqualsTo simply checks operator== on the corresponding data type.
+@SG_FUNC [[nodiscard]] bool operator()(const T& a, const T& b) const;
+Checks if $a and $b are equal using operator== on T.
+@SG_NOTE This is internally used by SGLUnorderedSet, SGLUnorderedMultiSet, and SGLUnorderedMap when SGLEqualsTo is selected as the equality check struct.
+@SG_NOTE The presense of operator() makes SGLEqualsTo a functor.
+@SG_WARN This will not compile if operator== is not defined for T. Check the source code of any SGEXTN struct (SGXChar, SGXString, SGXColourRGBA, SGXColourHSLA, SGXIdentifier, SGXTimeStamp, SGXVector2) to see how to define operator==.

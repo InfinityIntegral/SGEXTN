@@ -1,18 +1,19 @@
 #ifndef SGLSORT_H
 #define SGLSORT_H
 
-class SGLSort {
+template <typename T, typename Comparator> class SGLSort {
 protected:
-    template <typename T, typename Comparator> static void insertionSort(T* start, int left, int right, Comparator comparatorInstance);
-    template <typename T, typename Comparator> static void enforceHeap(T* start, int count, int index, int left, Comparator comparatorInstance);
-    template <typename T, typename Comparator> static void heapSort(T* start, int left, int right, Comparator comparatorInstance);
-    template <typename T, typename Comparator> static int partition(T* start, int low, int high, Comparator comparatorInstance);
-    template <typename T, typename Comparator> static void introSort(T* start, int low, int high, int maximumDepth, Comparator comparatorInstance);
+    static void insertionSort(T* start, int left, int right, Comparator comparatorInstance);
+    static void enforceHeap(T* start, int count, int index, int left, Comparator comparatorInstance);
+    static void heapSort(T* start, int left, int right, Comparator comparatorInstance);
+    static int partition(T* start, int low, int high, Comparator comparatorInstance);
+    static void introSort(T* start, int low, int high, int maximumDepth, Comparator comparatorInstance);
 public:
-    template <typename T, typename Comparator> static void sort(T* start, T* end);
+    static void sort(T* start, T* end);
 };
 
-inline int log2(int n){
+namespace{
+inline int temp_log2(int n){
     if(n < 4){return 1;}
     if(n < 8){return 2;}
     if(n < 16){return 3;}
@@ -30,14 +31,15 @@ inline int log2(int n){
     if(n < 65536){return 15;}
     return 16;
 }
-
-template <typename T, typename Comparator> void SGLSort::sort(T* start, T* end){
-    if(start >= end){return;}
-    int log2 = 10;
-    SGLSort::introSort(start, 0, end - start - 1, 2 * log2(end - start), Comparator());
 }
 
-template <typename T, typename Comparator> void SGLSort::insertionSort(T* start, int left, int right, Comparator comparatorInstance){
+template <typename T, typename Comparator> void SGLSort<T, Comparator>::sort(T* start, T* end){
+    if(start >= end){return;}
+    const int log2 = 10;
+    SGLSort::introSort(start, 0, end - start - 1, 2 * temp_log2(end - start), Comparator());
+}
+
+template <typename T, typename Comparator> void SGLSort<T, Comparator>::insertionSort(T* start, int left, int right, Comparator comparatorInstance){
     for (int i = left + 1; i <= right; i++) {
         T key = (*(start + i));
         int j = i - 1;
@@ -49,7 +51,7 @@ template <typename T, typename Comparator> void SGLSort::insertionSort(T* start,
     }    
 }
 
-template <typename T, typename Comparator> void SGLSort::enforceHeap(T* start, int count, int index, int left, Comparator comparatorInstance){
+template <typename T, typename Comparator> void SGLSort<T, Comparator>::enforceHeap(T* start, int count, int index, int left, Comparator comparatorInstance){
     int largest = index;
     int l = 2*index - left + 1;
     int r = l + 1;
@@ -66,7 +68,7 @@ template <typename T, typename Comparator> void SGLSort::enforceHeap(T* start, i
     }
 }
 
-template <typename T, typename Comparator> void SGLSort::heapSort(T* start, int left, int right, Comparator comparatorInstance){
+template <typename T, typename Comparator> void SGLSort<T, Comparator>::heapSort(T* start, int left, int right, Comparator comparatorInstance){
     int n = right - left + 1;
     for(int i = left + n/2 - 1; i >= left; i--){
         SGLSort::enforceHeap(start, n, i, left, comparatorInstance);
@@ -79,7 +81,7 @@ template <typename T, typename Comparator> void SGLSort::heapSort(T* start, int 
     }
 }
 
-template <typename T, typename Comparator> int SGLSort::partition(T* start, int low, int high, Comparator comparatorInstance){
+template <typename T, typename Comparator> int SGLSort<T, Comparator>::partition(T* start, int low, int high, Comparator comparatorInstance){
     int i = low - 1;
     for(int j = low; j < high; j++){
         if(comparatorInstance((*(start + high)), (*(start + j))) == false){
@@ -96,7 +98,7 @@ template <typename T, typename Comparator> int SGLSort::partition(T* start, int 
     return i;
 }
 
-template <typename T, typename Comparator> void SGLSort::introSort(T* start, int low, int high, int maximumDepth, Comparator comparatorInstance){
+template <typename T, typename Comparator> void SGLSort<T, Comparator>::introSort(T* start, int low, int high, int maximumDepth, Comparator comparatorInstance){
     const int size = high - low + 1;
     if(size <= 16){
         SGLSort::insertionSort(start, low, high, comparatorInstance);
