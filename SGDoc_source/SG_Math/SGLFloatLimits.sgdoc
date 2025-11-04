@@ -1,0 +1,31 @@
+@SG_CPP_CLASS SGLFloatLimits
+@SG_SHORT_DESCRP static function class providing floating point limits
+@SG_LONG_DESCRP SGLFloatLimits provides floating point numbers for limits of what the standard can represent, such as the largest possible float and the smallest nonzero float.
+@SG_IMPLE Uses <numeric_limits> from Standard Template Library
+@SG_FUNC static float minimumPositive();
+Returns minimum positive floating point number with full precision.
+@SG_FUNC static float maximumNegative();
+Returns maximum negative floating point number with full precision.
+@SG_FUNC static float maximumFinite();
+Returns maximum finite floating point number.
+@SG_FUNC static float mimimumFinite();
+Returns minimum finite floating point number, this is negative.
+@SG_FUNC static float denormalisedMinimumPositive();
+Returns minimum positive floating point number that can be represented.
+@SG_NOTE This includes denormalised floating point numbers which do not have full precision.
+@SG_FUNC static float denormalisedMaximumNegative();
+Returns maximum negative floating point number that can be represented.
+@SG_NOTE This includes denormalised floating point numbers which do not have full precision.
+@SG_FUNC static float relativeIncrementGap();
+Returns the difference between 1 and the next floating point number that can be represented.
+@SG_NOTE This provides the percentage error in floating point precision.
+@SG_FUNC static float positiveInfinity();
+Returns positive infinity.
+@SG_FUNC static float negativeInfinity();
+Returns negative infinity.
+@SG_FUNC static float notANumber();
+Returns a NaN.
+@SG_FUNC static bool isInfinite(float x);
+Returns if $x is positive infinity or negative infinity.
+@SG_FUNC static bool isNotANumber(float x);
+Returns if $x is a NaN.

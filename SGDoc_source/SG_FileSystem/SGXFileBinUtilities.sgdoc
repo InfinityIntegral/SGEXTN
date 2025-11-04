@@ -1,5 +1,5 @@
 @SG_CPP_CLASS SGXFileBinUtilities
-@SG_SHORT_DESCRP utilities for the SGEXTN builtin file bin
+@SG_SHORT_DESCRP static functions class for the SGEXTN builtin file bin
 @SG_LONG_DESCRP SGXFileBinUtilities provides access to the file bin builtin to SGEXTN. Deleted user data should be moved to the file bin so that it can be recovered if the user changes their mind. Files in the bin are automatically deleted after a period of time. Files in the bin must be accessed through their SGXIdentifier, not through the path.
 @SG_IMPLE Manages a bin file which contains a list of files moved to the bin.
 @SG_PRIVATE_API static SGXString binFilePath;

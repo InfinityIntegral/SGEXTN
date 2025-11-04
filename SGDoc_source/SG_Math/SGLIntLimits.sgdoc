@@ -1,0 +1,10 @@
+@SG_CPP_CLASS SGLIntLimits
+@SG_SHORT_DESCRP static function class providing int limits
+@SG_LONG_DESCRP SGLIntLimits provides limits of the int data type including the maximum and minimum representable int values.
+@SG_IMPLE Uses <numeric_limits> from Standard Template Library
+@SG_FUNC static int maximum();
+Returns the maximum possible 32bit signed integer.
+@SG_WARN Signed integer overflow is undefined behaviour. If integer overflow is ever intended, cast to unsigned int first.
+@SG_FUNC static int minimum();
+Returns the minimum possible 32bit signed integer.
+@SG_WARN Signed integer overflow is undefined behaviour. If integer overflow is ever intended, cast to unsigned int first.

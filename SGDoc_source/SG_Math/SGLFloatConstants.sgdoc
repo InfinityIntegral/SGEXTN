@@ -1,0 +1,22 @@
+@SG_CPP_CLASS SGLFloatConstants
+@SG_SHORT_DESCRP static function class providing numeric constants
+@SG_LONG_DESCRP SGLFloatConstants provides floating point numbers for numeric constants used in mathematics, such as pi and e.
+@SG_IMPLE Uses <numbers> from Standard Template Library
+@SG_FUNC static float eulerNumber();
+Returns Euler's Number, approximately 2.71828182845904
+@SG_FUNC static float log2OfEulerNumber();
+Returns the base2 logarithm of Euler's Number.
+@SG_FUNC static float log10OfEulerNumber();
+Returns the base10 logarithm of Euler's Number.
+@SG_FUNC static float pi();
+Returns pi, approximately 3.1415926535897932384626433832795028841971
+@SG_FUNC static float naturalLogarithmOf2();
+Returns ln(2).
+@SG_FUNC static float naturalLogarithmOf10();
+Returns ln(10).
+@SG_FUNC static float squareRootOf2();
+Returns sqrt(2).
+@SG_FUNC static float squareRootOf3();
+Returns sqrt(3).
+@SG_FUNC static float goldenRatio();
+Returns the golden ratio, which is (1 + sqrt(5)) / 2.

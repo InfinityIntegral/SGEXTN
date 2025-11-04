@@ -1,0 +1,10 @@
+@SG_CPP_CLASS SGLLongLongLimits
+@SG_SHORT_DESCRP static function class providing long long limits.
+@SG_LONG_DESCRP SGLLongLongLimits provides limits for the long long data type, such as the minimum and maximum long long that can be represented.
+@SG_IMPLE Uses <numeric_limits> from Standard Template Library
+@SG_FUNC static long long maximum();
+Returns the largest integer that can be represented using long long.
+@SG_WARN Signed integer overflow is undefined behaviour. If integer overflow is intended, cast to unsigned long long first.
+@SG_FUNC static long long minimum();
+Returns the smallest integer that can be represented using long long.
+@SG_WARN Signed integer overflow is undefined behaviour. If integer overflow is intended, cast to unsigned long long first.
