@@ -1,0 +1,142 @@
+@SG_CPP_CLASS SGXColourRGBA
+@SG_SHORT_DESCRP 8bit RGBA colour
+@SG_LONG_DESCRP SGXColourRGBA represents a colour in RGBA format with 8 bits per channel. Each of the red, green, blue, and transparency channels can range between 0 to 255 inclusive. Features such as colour transformation and gamma correction are included also.
+@SG_IMPLE SGXColourRGBA packs all 4 channels into 1 unsigned int.
+@SG_PRIVATE_API unsigned int x;
+@SG_PRIVATE_API SGXColourRGBA(unsigned int x0);
+@SG_FUNC SGXColourRGBA(int r, int g, int b, int a);
+Creates a SGXColourRGBA from its components.
+@SG_NOTE Each channel should range from 0 to 255 inclusive. Out of bounds channels are corrected automatically.
+@SG_WARN Ensure that all arguments passed have a type of int, otherwise it may trigger the wrong constructor.
+@SG_FUNC SGXColourRGBA(int r, int g, int b);
+Creates a SGXColourRGBA from its components with transparency assumed to be 255.
+@SG_NOTE Each channel should range from 0 to 255 inclusive. Out of bounds channels are corrected automatically.
+@SG_WARN Ensure that all arguments passed have a type of int, otherwise it may trigger the wrong constructor.
+@SG_FUNC SGXColourRGBA(float r, float g, float b, float a);
+Creates a SGXColourRGBA from its components.
+@SG_NOTE Each channel should range from 0 to 1 inclusive. Out of bounds channels are corrected automatically.
+@SG_WARN Ensure that all arguments passed have a type of float, otherwise it may trigger the wrong constructor.
+@SG_FUNC SGXColourRGBA(float r, float g, float b);
+Creates a SGXColourRGBA from its components with transparency assumed to be 1.
+@SG_NOTE Each channel should range from 0 to 1 inclusive. Out of bounds channels are corrected automatically.
+@SG_WARN Ensure that all arguments passed have a type of float, otherwise it may trigger the wrong constructor.
+@SG_FUNC [[nodiscard]] int getRed() const;
+Returns the red component of this SGXColourRGBA as a int between 0 and 255 inclusive.
+@SG_FUNC [[nodiscard]] int getGreen() const;
+Returns the green component of this SGXColourRGBA as a int between 0 and 255 inclusive.
+@SG_FUNC [[nodiscard]] int getBlue() const;
+Returns the blue component of this SGXColourRGBA as a int between 0 and 255 inclusive.
+@SG_FUNC [[nodiscard]] int getTransparency() const;
+Returns the transparency component of this SGXColourRGBA as a int between 0 and 255 inclusive.
+@SG_FUNC [[nodiscard]] float getRedAsFloat() const;
+Returns the red component of this SGXColourRGBA as a float between 0 and 1 inclusive.
+@SG_FUNC [[nodiscard]] float getGreenAsFloat() const;
+Returns the green component of this SGXColourRGBA as a float between 0 and 1 inclusive.
+@SG_FUNC [[nodiscard]] float getBlueAsFloat() const;
+Returns the blue component of this SGXColourRGBA as a float between 0 and 1 inclusive.
+@SG_FUNC [[nodiscard]] float getTransparencyAsFloat() const;
+Returns the transparency component of this SGXColourRGBA as a float between 0 and 1 inclusive.
+@SG_FUNC void setRed(int r);
+Sets the red component of this SGXColourRGBA to $r.
+@SG_NOTE $r should be between 0 and 255 inclusive. If it is out of bounds, it is corrected automatically.
+@SG_FUNC void setGreen(int g);
+Sets the green component of this SGXColourRGBA to $g.
+@SG_NOTE $g should be between 0 and 255 inclusive. If it is out of bounds, it is corrected automatically.
+@SG_FUNC void setBlue(int b);
+Sets the blue component of this SGXColourRGBA to $b.
+@SG_NOTE $b should be between 0 and 255 inclusive. If it is out of bounds, it is corrected automatically.
+@SG_FUNC void setTransparency(int a);
+Sets the transparency component of this SGXColourRGBA to $a.
+@SG_NOTE $a should be between 0 and 255 inclusive. If it is out of bounds, it is corrected automatically.
+@SG_FUNC void setRedUsingFloat(float r);
+Sets the red component of this SGXColourRGBA to $r.
+@SG_NOTE $r should be between 0 and 1 inclusive. If it is out of bounds, it is corrected automatically.
+@SG_FUNC void setGreenUsingFloat(float g);
+Sets the green component of this SGXColourRGBA to $g.
+@SG_NOTE $g should be between 0 and 1 inclusive. If it is out of bounds, it is corrected automatically.
+@SG_FUNC void setBlueUsingFloat(float b);
+Sets the blue component of this SGXColourRGBA to $b.
+@SG_NOTE $b should be between 0 and 1 inclusive. If it is out of bounds, it is corrected automatically.
+@SG_FUNC void setTransparencyUsingFloat(float a);
+Sets the transparency component of this SGXColourRGBA to $a.
+@SG_NOTE $a should be between 0 and 1 inclusive. If it is out of bounds, it is corrected automatically.
+@SG_FUNC [[nodiscard]] SGXString getStringForPrintingRGBHTML() const;
+Returns the HTML style string representation of this SGXColourRGBA with colour between 0 and 255 inclusive, this is something like rgb(255, 0, 200).
+@SG_FUNC [[nodiscard]] SGXString getStringForPrintingRGBAHTML() const;
+Returns the HTML style string representation of this SGXColourRGBA with colour between 0 and 255 inclusive, this is something like rgb(255, 0, 200, 255).
+@SG_FUNC [[nodiscard]] SGXString getStringForPrintingRGBHex() const;
+Returns the hex code string representation of this SGXColourRGBA, this is something like #FF00C8.
+@SG_FUNC [[nodiscard]] SGXString getStringForPrintingRGBAHex() const;
+Returns the hex code string representation of this SGXColourRGBA, this is something like #FF00C8FF.
+@SG_FUNC [[nodiscard]] SGXString getStringForPrintingRGBFloatHTML() const;
+Returns the HTML style string representation of this SGXColourRGBA with colour between 0 and 1 inclusive, this is something like rgb(1.0, 0.0, 0.8).
+@SG_FUNC [[nodiscard]] SGXString getStringForPrintingRGBAFloatHTML() const;
+Returns the HTML style string representation of this SGXColourRGBA with colour between 0 and 1 inclusive, this is something like rgb(1.0, 0.0, 0.8, 1.0).
+@SG_FUNC [[nodiscard]] bool operator==(SGXColourRGBA x) const;
+Equality check defined for SGLEqualsTo.
+@SG_FUNC [[nodiscard]] bool operator!=(SGXColourRGBA x) const;
+Inequality check defined for SGLEqualsTo.
+@SG_FUNC [[nodiscard]] bool operator<(SGXColourRGBA x) const;
+Lesser than operator defined for SGLLesserThan and SGLMoreThan.
+@SG_FUNC [[nodiscard]] bool operator>(SGXColourRGBA x) const;
+More than operator defined for SGLLesserThan and SGLMoreThan.
+@SG_FUNC [[nodiscard]] int hash() const;
+Hash function defined for SGLHash.
+@SG_FUNC void linearTransformRed(float m, float c);
+Replaces the red component of this SGXColourRGBA with $m * red + $c.
+@SG_NOTE If the new red component is out of bounds, it is corrected automatically.
+@SG_FUNC void linearTransformGreen(float m, float c);
+Replaces the green component of this SGXColourRGBA with $m * green + $c.
+@SG_NOTE If the new green component is out of bounds, it is corrected automatically.
+@SG_FUNC void linearTransformBlue(float m, float c);
+Replaces the blue component of this SGXColourRGBA with $m * blue + $c.
+@SG_NOTE If the new blue component is out of bounds, it is corrected automatically.
+@SG_FUNC void linearTransformTransparency(float m, float c);
+Replaces the transparency component of this SGXColourRGBA with $m * transparency + $c.
+@SG_NOTE If the new transparency component is out of bounds, it is corrected automatically.
+@SG_FUNC void gammaCorrectBegin(float& r, float& g, float& b) const;
+Converts the SGXColourRGBA to linear colour space for physically accurate colour mixing. The linear colour space RGB values are output in $r, $g, and $b as floating point numbers between 0 and 1 inclusive.
+@SG_WARN Putting linear colour space values into a SGXColourRGBA is not recommended, instead use SGXColourRGBA::gammaCorrectEnd to convert it back.
+@SG_FUNC void gammaCorrectEnd(float r, float g, float b);
+Converts the RGB values $r, $g, $b in linear colour space back into the SGXColourRGBA colour space and apply them to this SGXColourRGBA.
+@SG_FUNC void linearTransformRedWithGamma(float m, float c);
+Replaces the red component of this SGXColourRGBA with $m * red + $c, with computation done in linear colour space.
+@SG_NOTE If the new red component is out of bounds, it is corrected automatically.
+@SG_FUNC void linearTransformGreenWithGamma(float m, float c);
+Replaces the green component of this SGXColourRGBA with $m * green + $c, with computation done in linear colour space.
+@SG_NOTE If the new green component is out of bounds, it is corrected automatically.
+@SG_FUNC void linearTransformBlueWithGamma(float m, float c);
+Replaces the blue component of this SGXColourRGBA with $m * blue + $c, with computation done in linear colour space.
+@SG_NOTE If the new blue component is out of bounds, it is corrected automatically.
+@SG_FUNC void applyTint(SGXColourRGBA x);
+Sets this SGXColourRGBA to the resulting colour if this SGXColourRGBA is viewed behind a screen with colour $x, with computation done in linear colour space.
+@SG_NOTE This does not change the transparency of this SGXColourRGBA.
+@SG_FUNC void applyTintSeparateTransparency(SGXColourRGBA x, int a);
+Sets this SGXColourRGBA to the resulting colour if this SGXColourRGBA is viewed behind a screen with colour c, where c has equal RGB channels as $x but a transparency of $a between 0 and 255 inclusive, with computation done in linear colour space.
+@SG_NOTE The computation proceeds anyways if $a is out of bounds, this is NOT undefined behaviour. This can be useful for effects that remove a certain colour.
+@SG_NOTE This does not change the transparency of this SGXColourRGBA.
+@SG_FUNC void applyTintSeparateTransparencyUsingFloat(SGXColourRGBA x, float a);
+Sets this SGXColourRGBA to the resulting colour if this SGXColourRGBA is viewed behind a screen with colour c, where c has equal RGB channels as $x but a transparency of $a between 0 and 1 inclusive, with computation done in linear colour space.
+@SG_NOTE The computation proceeds anyways if $a is out of bounds, this is NOT undefined behaviour. This can be useful for effects that remove a certain colour.
+@SG_NOTE This does not change the transparency of this SGXColourRGBA.
+@SG_FUNC void applyTintNoGammaCorrection(SGXColourRGBA x);
+Sets this SGXColourRGBA to the resulting colour if this SGXColourRGBA is viewed behind a screen with colour $x.
+@SG_NOTE This does not change the transparency of this SGXColourRGBA.
+@SG_FUNC void applyTintNoGammaCorrectionSeparateTransparency(SGXColourRGBA x, int a);
+Sets this SGXColourRGBA to the resulting colour if this SGXColourRGBA is viewed behind a screen with colour c, where c has equal RGB channels as $x but a transparency of $a between 0 and 255 inclusive.
+@SG_NOTE The computation proceeds anyways if $a is out of bounds, this is NOT undefined behaviour. This can be useful for effects that remove a certain colour.
+@SG_NOTE This does not change the transparency of this SGXColourRGBA.
+@SG_FUNC void applyTintNoGammaCorrectionSeparateTransparencyUsingFloat(SGXColourRGBA x, float a);
+Sets this SGXColourRGBA to the resulting colour if this SGXColourRGBA is viewed behind a screen with colour c, where c has equal RGB channels as $x but a transparency of $a between 0 and 1 inclusive.
+@SG_NOTE The computation proceeds anyways if $a is out of bounds, this is NOT undefined behaviour. This can be useful for effects that remove a certain colour.
+@SG_NOTE This does not change the transparency of this SGXColourRGBA.
+@SG_FUNC [[nodiscard]] SGXColourRGBA linearInterpolate(SGXColourRGBA x, float f) const;
+Returns the resulting colour if $f of this SGXColourRGBA is mixed with (1 - $f) of $x, where $f is between 0 and 1 inclusive.
+@SG_NOTE The computation proceeds anyways if $f is out of bounds, this is NOT undefined behaviour. This can be useful for effects that remove a certain colour.
+@SG_NOTE The returned colour has the same transparency as this SGXColourRGBA.
+@SG_FUNC [[nodiscard]] SGXColourRGBA linearInterpolateGammaCorrection(SGXColourRGBA x, float f) const;
+Returns the resulting colour if $f of this SGXColourRGBA is mixed with (1 - $f) of $x, where $f is between 0 and 1 inclusive, computation done in linear colour space.
+@SG_NOTE The computation proceeds anyways if $f is out of bounds, this is NOT undefined behaviour. This can be useful for effects that remove a certain colour.
+@SG_NOTE The returned colour has the same transparency as this SGXColourRGBA.
+@SG_FUNC void toComplementColour();
+Sets this SGXColourRGBA to its complementary colour, with RGB channels inverted.

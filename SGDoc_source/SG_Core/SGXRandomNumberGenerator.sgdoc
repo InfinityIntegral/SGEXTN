@@ -1,0 +1,12 @@
+@SG_CPP_CLASS SGXRandomNumberGenerator
+@SG_SHORT_DESCRP random number generation utility
+@SG_LONG_DESCRP SGXRandomNumberGenerator provides evenly distributed floating point numbers between 0 and 1, unsigned ints, and unsigned long longs.
+@SG_IMPLE wrapper of QRandomGenerator
+@SG_FUNC static double rng0To1();
+Returns a randomly generated floating point number between 0 to 1, an even distribution is guaranteed.
+@SG_FUNC static unsigned int rngInt32();
+Returns a randomly generated unsigned int.
+@SG_NOTE This is effectively a sequence of 32 random bits.
+@SG_FUNC static unsigned long long rngInt64();
+Returns a randomly generated unsigned long long.
+@SG_NOTE This is effectively a sequence of 64 random bits.

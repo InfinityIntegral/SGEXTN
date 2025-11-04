@@ -1,0 +1,263 @@
+@SG_CPP_CLASS SGXString
+@SG_SHORT_DESCRP Unicode compatible string with language aware features
+@SG_LONG_DESCRP SGXString is a string that can store anything in the Unicode Basic Multilingual Plane (essentially all characters you will ever need except for emojis) in a single SGXChar. It provides both string operations such as substring, string addition, and find-replace, in addition to language aware features including case conversion.
+@SG_IMPLE wrapper of QString, with usage of SGXChar
+@SG_PRIVATE_API QString* data;
+@SG_FUNC SGXString();
+Creates an empty SGXString, or a "".
+@SG_FUNC SGXString(SGXChar c);
+Creates a SGXString containing a single character, $c.
+@SG_FUNC SGXString(char c);
+Creates a SGXString containing a single character, $c.
+@SG_FUNC SGXString(const char* cString);
+Creates a SGXString from a C string.
+@SG_FUNC [[nodiscard]] bool operator==(const SGXString& x) const;
+Returns if this SGXString is the same as $x.
+@SG_FUNC [[nodiscard]] bool operator!=(const SGXString& x) const;
+Returns if this SGXString is different from $x.
+@SG_FUNC [[nodiscard]] bool operator<(const SGXString& x) const;
+Returns if this SGXString is in front of $x when ordered alphabetically.
+@SG_FUNC [[nodiscard]] bool operator>(const SGXString& x) const;
+Returns if this SGXString is behind $x when ordered alphabetically.
+@SG_FUNC [[nodiscard]] bool operator<=(const SGXString& x) const;
+Returns if this SGXString is in front of or equal to $x when ordered alphabetically.
+@SG_FUNC [[nodiscard]] bool operator>=(const SGXString& x) const;
+Returns if this SGXString is behind or equal to $x when ordered alphabetically.
+@SG_FUNC [[nodiscard]] SGXString operator+(const SGXString& x) const;
+Appends the SGXString $x behind this SGXString.
+@SG_FUNC [[nodiscard]] SGXString operator+(SGXChar x) const;
+Appends the SGXChar $x behind this SGXString.
+@SG_FUNC [[nodiscard]] int hash() const;
+Hash function for SGLHash.
+@SG_FUNC SGXString& operator+=(const SGXString& x);
+Appends the SGXString $x behind this SGXString.
+@SG_FUNC [[nodiscard]] SGXChar at(int i) const;
+Appends the SGXChar $x behind this SGXString.
+@SG_FUNC [[nodiscard]] int length() const;
+Returns the length of this SGXString, which is the number of SGXChar it contains.
+@SG_FUNC SGXString& replace(SGXChar oldChar, SGXChar newChar);
+Replaces every instance of $oldChar in this SGXString with $newChar, then returns a reference to this SGXString to enable expression chaining.
+@SG_NOTE If this SGXString does not contain $oldChar, nothing is done.
+@SG_FUNC SGXString& replace(const SGXString& oldText, const SGXString& newText);
+Replaces every instance of $oldText in this SGXString with $newText, then returns a reference to this SGXString to enable expression chaining.
+@SG_NOTE If this SGXString does not contain $oldText, nothing is done.
+@SG_FUNC SGXString& insert(int pos, SGXChar c);
+Inserts $c into this SGXString such that $c will start at index $pos of this SGXString after insertion, then returns a reference to this SGXString to enable expression chaining.
+@SG_WARN Out of bounds $pos causes undefined behaviour.
+@SG_FUNC SGXString& insert(int pos, const SGXString& s);
+Inserts $s into this SGXString such that $s will start at index $pos of this SGXString after insertion, then returns a reference to this SGXString to enable expression chaining.
+@SG_WARN Out of bounds $pos causes undefined behaviour.
+@SG_FUNC [[nodiscard]] bool contains(SGXChar c) const;
+Returns if this SGXString contains the character $c.
+@SG_FUNC [[nodiscard]] bool contains(const SGXString& s) const;
+Returns if this SGXString contains the substring $s.
+@SG_FUNC [[nodiscard]] int findFirstFromLeft(SGXChar c) const;
+Returns the index of the first index of character $c found in this SGXString when searching from the left.
+@SG_NOTE This returns -1 if the character $c is not in this SGXString.
+@SG_FUNC [[nodiscard]] int findFirstFromLeft(const SGXString& s) const;
+Returns the index of the first index of substring $s found in this SGXString when searching from the left.
+@SG_NOTE This returns -1 if the substring $s is not in this SGXString.
+@SG_FUNC [[nodiscard]] int findFirstFromLeftCustomStart(SGXChar c, int start) const;
+Returns the index of the first index of character $c found in this SGXString when searching from the left starting at $start.
+@SG_NOTE This returns -1 if the character $c is not in this SGXString.
+@SG_WARN This is undefined behaviour if $start is out of bounds.
+@SG_FUNC [[nodiscard]] int findFirstFromLeftCustomStart(const SGXString& s, int start) const;
+Returns the index of the first index of substring $s found in this SGXString when searching from the left starting at $start.
+@SG_NOTE This returns -1 if the substring $s is not in this SGXString.
+@SG_WARN This is undefined behaviour if $start is out of bounds.
+@SG_FUNC [[nodiscard]] int findFirstFromRight(SGXChar c) const;
+Returns the index of the first index of character $c found in this SGXString when searching from the right.
+@SG_NOTE This returns -1 if the character $c is not in this SGXString.
+@SG_FUNC [[nodiscard]] int findFirstFromRight(const SGXString& s) const;
+Returns the index of the first index of substring $s found in this SGXString when searching from the right.
+@SG_NOTE This returns -1 if the substring $s is not in this SGXString.
+@SG_FUNC [[nodiscard]] int findFirstFromRightCustomStart(SGXChar c, int start) const;
+Returns the index of the first index of character $c found in this SGXString when searching from the right starting at $start.
+@SG_NOTE This returns -1 if the character $c is not in this SGXString.
+@SG_WARN This is undefined behaviour if $start is out of bounds.
+@SG_FUNC [[nodiscard]] int findFirstFromRightCustomStart(const SGXString& s, int start) const;
+Returns the index of the first index of substring $s found in this SGXString when searching from the right starting at $start.
+@SG_NOTE This returns -1 if the substring $s is not in this SGXString.
+@SG_WARN This is undefined behaviour if $start is out of bounds.
+@SG_FUNC [[nodiscard]] int count(SGXChar c) const;
+Returns the number of characters $c in this SGXString.
+@SG_FUNC [[nodiscard]] int count(const SGXString& s) const;
+Returns the number of substrings $s in this SGXString.
+@SG_FUNC [[nodiscard]] SGXString substring(int start, int length) const;
+Returns the substring of this SGXString starting at $start with a length of $length.
+@SG_WARN This is undefined behaviour if $start or $start + $length - 1 is out of bounds.
+@SG_WARN This is undefined behaviour if $length is negative.
+@SG_FUNC [[nodiscard]] SGXString substringLeft(int length) const;
+Returns the substring of this SGXString containing the first $length letters from the left.
+@SG_WARN This is undefined behaviour is $length is negative or greater than the length of this SGXString.
+@SG_FUNC [[nodiscard]] SGXString substringRight(int length) const;
+Returns the substring of this SGXString containing the first $length letters from the right.
+@SG_WARN This is undefined behaviour is $length is negative or greater than the length of this SGXString.
+@SG_FUNC [[nodiscard]] SGXString fillLeftToLength(int length, SGXChar fillChar) const;
+Returns the string formed when this SGXString is prefixed with $fillChar until its length is at least $length.
+@SG_NOTE This SGXString is returned if its length is already more than or equal to $length.
+@SG_FUNC [[nodiscard]] SGXString fillRightToLength(int length, SGXChar fillChar) const;
+Returns the string formed when this SGXString is postfixed with $fillChar until its length is at least $length.
+@SG_NOTE This SGXString is returned if its length is already more than or equal to $length.
+@SG_FUNC [[nodiscard]] int parseToInt(bool* isValid) const;
+Returns the int that this SGXString represents. If this SGXString does not represent a int, 0 is returned as default. If $isValid is not nullptr, the bool that it points to is set to true if this SGXString represents a int and false otherwise.
+@SG_NOTE If you are not interested in if this SGXString represents a int, pass nullptr to $isValid.
+@SG_FUNC [[nodiscard]] int parseToIntBase16(bool* isValid) const;
+Returns the int in base16 that this SGXString represents. If this SGXString does not represent a base16 int, 0 is returned as default. If $isValid is not nullptr, the bool that it points to is set to true if this SGXString represents a base16 int and false otherwise.
+@SG_NOTE If you are not interested in if this SGXString represents a base16 int, pass nullptr to $isValid.
+@SG_NOTE Both uppercase and lowercase represents of non numerical base16 digits are accepted.
+@SG_FUNC [[nodiscard]] int parseToIntCustomBase(bool* isValid, int base) const;
+Returns the int in base $base that this SGXString represents. If this SGXString does not represent a base $base int, 0 is returned as default. If $isValid is not nullptr, the bool that it points to is set to true if this SGXString represents a base $base int and false otherwise.
+@SG_NOTE If you are not interested in if this SGXString represents a base $base int, pass nullptr to $isValid.
+@SG_NOTE Both uppercase and lowercase represents of non numerical base $base digits are accepted.
+@SG_WARN $base being below 2 or above 36 is undefined behaviour.
+@SG_FUNC [[nodiscard]] unsigned int parseToUnsignedInt(bool* isValid) const;
+Returns the unsigned int that this SGXString represents. If this SGXString does not represent a unsigned int, 0 is returned as default. If $isValid is not nullptr, the bool that it points to is set to true if this SGXString represents a unsigned int and false otherwise.
+@SG_NOTE If you are not interested in if this SGXString represents a unsigned int, pass nullptr to $isValid.
+@SG_FUNC [[nodiscard]] unsigned int parseToUnsignedIntBase16(bool* isValid) const;
+Returns the unsigned int in base16 that this SGXString represents. If this SGXString does not represent a base16 unsigned int, 0 is returned as default. If $isValid is not nullptr, the bool that it points to is set to true if this SGXString represents a base16 unsigned int and false otherwise.
+@SG_NOTE If you are not interested in if this SGXString represents a base16 unsigned int, pass nullptr to $isValid.
+@SG_NOTE Both uppercase and lowercase represents of non numerical base16 digits are accepted.
+@SG_FUNC [[nodiscard]] unsigned int parseToUnsignedIntCustomBase(bool* isValid, int base) const;
+Returns the unsigned int in base $base that this SGXString represents. If this SGXString does not represent a base $base unsigned int, 0 is returned as default. If $isValid is not nullptr, the bool that it points to is set to true if this SGXString represents a base $base unsigned int and false otherwise.
+@SG_NOTE If you are not interested in if this SGXString represents a base $base unsigned int, pass nullptr to $isValid.
+@SG_NOTE Both uppercase and lowercase represents of non numerical base $base digits are accepted.
+@SG_WARN $base being below 2 or above 36 is undefined behaviour.
+@SG_FUNC [[nodiscard]] long long parseToLongLong(bool* isValid) const;
+Returns the long long that this SGXString represents. If this SGXString does not represent a long long, 0 is returned as default. If $isValid is not nullptr, the bool that it points to is set to true if this SGXString represents a long long and false otherwise.
+@SG_NOTE If you are not interested in if this SGXString represents a long long, pass nullptr to $isValid.
+@SG_FUNC [[nodiscard]] long long parseToLongLongBase16(bool* isValid) const;
+Returns the long long in base16 that this SGXString represents. If this SGXString does not represent a base16 long long, 0 is returned as default. If $isValid is not nullptr, the bool that it points to is set to true if this SGXString represents a base16 long long and false otherwise.
+@SG_NOTE If you are not interested in if this SGXString represents a base16 long long, pass nullptr to $isValid.
+@SG_NOTE Both uppercase and lowercase represents of non numerical base16 digits are accepted.
+@SG_FUNC [[nodiscard]] long long parseToLongLongCustomBase(bool* isValid, int base) const;
+Returns the long long in base $base that this SGXString represents. If this SGXString does not represent a base $base long long, 0 is returned as default. If $isValid is not nullptr, the bool that it points to is set to true if this SGXString represents a base $base long long and false otherwise.
+@SG_NOTE If you are not interested in if this SGXString represents a base $base long long, pass nullptr to $isValid.
+@SG_NOTE Both uppercase and lowercase represents of non numerical base $base digits are accepted.
+@SG_WARN $base being below 2 or above 36 is undefined behaviour.
+@SG_FUNC [[nodiscard]] unsigned long long parseToUnsignedLongLong(bool* isValid) const;
+Returns the unsigned long long that this SGXString represents. If this SGXString does not represent a unsigned long long, 0 is returned as default. If $isValid is not nullptr, the bool that it points to is set to true if this SGXString represents a unsigned long long and false otherwise.
+@SG_NOTE If you are not interested in if this SGXString represents a unsigned long long, pass nullptr to $isValid.
+@SG_FUNC [[nodiscard]] unsigned long long parseToUnsignedLongLongBase16(bool* isValid) const;
+Returns the unsigned long long in base16 that this SGXString represents. If this SGXString does not represent a base16 unsigned long long, 0 is returned as default. If $isValid is not nullptr, the bool that it points to is set to true if this SGXString represents a base16 unsigned long long and false otherwise.
+@SG_NOTE If you are not interested in if this SGXString represents a base16 unsigned long long, pass nullptr to $isValid.
+@SG_NOTE Both uppercase and lowercase represents of non numerical base16 digits are accepted.
+@SG_FUNC [[nodiscard]] unsigned long long parseToUnsignedLongLongCustomBase(bool* isValid, int base) const;
+Returns the unsigned long long in base $base that this SGXString represents. If this SGXString does not represent a base $base unsigned long long, 0 is returned as default. If $isValid is not nullptr, the bool that it points to is set to true if this SGXString represents a base $base unsigned long long and false otherwise.
+@SG_NOTE If you are not interested in if this SGXString represents a base $base unsigned long long, pass nullptr to $isValid.
+@SG_NOTE Both uppercase and lowercase represents of non numerical base $base digits are accepted.
+@SG_WARN $base being below 2 or above 36 is undefined behaviour.
+@SG_FUNC [[nodiscard]] float parseToFloat(bool* isValid) const;
+Returns the floating point number that this SGXString represents. If this SGXString does not represent a floating point number, 0 is returned as default. If $isValid is not nullptr, the bool that it points to is set to true if this SGXString represents a floating point number and false otherwise.
+@SG_NOTE If you are not interested in if this SGXString represents a floating point number, pass nullptr to $isValid.
+@SG_FUNC [[nodiscard]] double parseToDouble(bool* isValid) const;
+Returns the double precision floating point number that this SGXString represents. If this SGXString does not represent a double precision floating point number, 0 is returned as default. If $isValid is not nullptr, the bool that it points to is set to true if this SGXString represents a double precision floating point number and false otherwise.
+@SG_NOTE If you are not interested in if this SGXString represents a double precision floating point number, pass nullptr to $isValid.
+@SG_FUNC static SGXString intToString(int x);
+Returns the SGXString that represents $x.
+@SG_FUNC static SGXString intToStringBase16(int x);
+Returns the SGXString that represents $x in base16.
+@SG_FUNC static SGXString intToStringCustomBase(int x, int base);
+Returns the SGXString that represents $x in base $base.
+@SG_FUNC static SGXString unsignedIntToString(unsigned int x);
+Returns the SGXString that represents $x.
+@SG_FUNC static SGXString unsignedIntToStringBase16(unsigned int x);
+Returns the SGXString that represents $x in base16.
+@SG_FUNC static SGXString unsignedIntToStringCustomBase(unsigned int x, int base);
+Returns the SGXString that represents $x in base $base.
+@SG_FUNC static SGXString longLongToString(long long x);
+Returns the SGXString that represents $x.
+@SG_FUNC static SGXString longLongToStringBase16(long long x);
+Returns the SGXString that represents $x in base16.
+@SG_FUNC static SGXString longLongToStringCustomBase(long long x, int base);
+Returns the SGXString that represents $x in base $base.
+@SG_FUNC static SGXString unsignedLongLongToString(unsigned long long x);
+Returns the SGXString that represents $x.
+@SG_FUNC static SGXString unsignedLongLongToStringBase16(unsigned long long x);
+Returns the SGXString that represents $x in base16.
+@SG_FUNC static SGXString unsignedLongLongToStringCustomBase(unsigned long long x, int base);
+Returns the SGXString that represents $x in base $base.
+@SG_FUNC static SGXString floatToString(float x);
+Returns the SGXString that represents $x.
+@SG_FUNC static SGXString floatToStringDecimalPlaces(float x, int dp);
+Returns the SGXString that represents $x rounded to $dp decimal places.
+@SG_WARN In this version of SGEXTN, negative $dp is undefined behaviour. Support is likely to be added in a future version.
+@SG_FUNC static SGXString floatToStringSignificantFigures(float x, int sf);
+Returns the SGXString that represents $x rounds to $sf significant figures.
+@SG_WARN Negative $sf is undefined behaviour.
+@SG_FUNC static SGXString floatToStringScientificNotation(float x, int sf);
+Returns the SGXString that represents $x rounds to $sf significant figures, expressed in scientific notation.
+@SG_NOTE The exponent is prefixed with English lowercase letter e, this is likely to be changed to the x10 Unicode character in a future version of SGEXTN.
+@SG_WARN Negative $sf is undefined behaviour.
+@SG_FUNC static SGXString doubleToString(double x);
+Returns the SGXString that represents $x.
+@SG_FUNC static SGXString doubleToStringDecimalPlaces(double x, int dp);
+Returns the SGXString that represents $x rounded to $dp decimal places.
+@SG_WARN In this version of SGEXTN, negative $dp is undefined behaviour. Support is likely to be added in a future version.
+@SG_FUNC static SGXString doubleToStringSignificantFigures(double x, int sf);
+Returns the SGXString that represents $x rounds to $sf significant figures.
+@SG_WARN Negative $sf is undefined behaviour.
+@SG_FUNC static SGXString doubleToStringScientificNotation(double x, int sf);
+Returns the SGXString that represents $x rounds to $sf significant figures, expressed in scientific notation.
+@SG_NOTE The exponent is prefixed with English lowercase letter e, this is likely to be changed to the x10 Unicode character in a future version of SGEXTN.
+@SG_WARN Negative $sf is undefined behaviour.
+@SG_FUNC static SGXString repeatChar(SGXChar c, int count);
+Returns the SGXString formed by putting together $count copies of $c.
+@SG_WARN Negative $count is undefined behaviour.
+@SG_FUNC void removeLeadingTrailingWhitespace() const;
+Removes leading and trailing whitespace from this SGXString.
+@SG_NOTE Whitespace is defined by SGXChar::isWhitespace.
+@SG_FUNC void cleanWhitespace() const;
+Removes leading and trailing whitespace from this SGXString and replaces all consecutive groups of whitespace characters with a single space.
+@SG_NOTE Whitespace is defined by SGXChar::isWhitespace.
+@SG_FUNC [[nodiscard]] SGLArray<SGXString> split() const;
+Returns a SGLArray of SGXString of space separated strings that make up this SGXString.
+@SG_NOTE This can be used to parse text input.
+@SG_NOTE The extracted strings will not contain any space.
+@SG_FUNC [[nodiscard]] SGLArray<SGXString> splitCustomSeparator(SGXChar separator) const;
+Returns a SGLArray of SGXString of strings separated by character $separator that make up this SGXString.
+@SG_NOTE This can be used to parse text input.
+@SG_NOTE The extracted strings will not contain any $separator character.
+@SG_FUNC [[nodiscard]] SGLArray<SGXString> splitCustomSeparator(const SGXString& separator) const;
+Returns a SGLArray of SGXString of strings separated by substring $separator that make up this SGXString.
+@SG_NOTE This can be used to parse text input.
+@SG_NOTE The extracted strings will not contain any $separator substring.
+@SG_FUNC [[nodiscard]] bool isDigit() const;
+Returns if all characters in this SGXString are digits from 0 to 9.
+@SG_NOTE For a single SGXChar, use SGXChar::isDigit instead.
+@SG_FUNC [[nodiscard]] bool isDigitBase16() const;
+Returns if all characters in this SGXString are base 16 digits from 0 to F.
+@SG_NOTE Both uppercase and lowercase representations of non numerical base16 digits are accepted.
+@SG_NOTE For a single SGXChar, use SGXChar::isDigitBase16 instead.
+@SG_FUNC [[nodiscard]] bool isEnglishLowercase() const;
+Returns if all characters in this SGXString are English lowercase letters from a to z.
+@SG_NOTE For a single SGXChar, use SGXChar::isEnglishLowercase instead.
+@SG_FUNC [[nodiscard]] bool isEnglishUppercase() const;
+Returns if all characters in this SGXString are English uppercase letters from A to Z.
+@SG_NOTE For a single SGXChar, use SGXChar::isEnglishUppercase instead.
+@SG_FUNC [[nodiscard]] bool isEnglishLetter() const;
+Returns if all characters in this SGXString are English letters ignoring case.
+@SG_NOTE For a single SGXChar, use SGXChar::isEnglishLetter instead.
+@SG_FUNC [[nodiscard]] bool isEnglishAlphanumeric() const;
+Returns if all characters in this SGXString are alphanumeric characters.
+@SG_NOTE This can be used to validate usernames and file names.
+@SG_NOTE For a single SGXChar, use SGXChar::isEnglishAlphanumeric instead.
+@SG_FUNC [[nodiscard]] bool isASCII() const;
+Returns if all characters in this SGXString are ASCII characters.
+@SG_NOTE For a single SGXChar, use SGXChar::isASCII instead.
+@SG_FUNC [[nodiscard]] bool isWhitespace() const;
+Returns if all characters in this SGXString are whitespace characters.
+@SG_NOTE Whitespace is defined by SGXChar::isWhitespace.
+@SG_NOTE For a single SGXChar, use SGXChar::isWhitespace instead.
+@SG_FUNC [[nodiscard]] SGXString getUpperLanguageAware() const;
+Returns the language aware uppercase version of this SGXString.
+@SG_NOTE For a single SGXChar, use SGXChar::getUpperLanguageAware instead.
+@SG_FUNC [[nodiscard]] SGXString getLowerLanguageAware() const;
+Returns the language aware lowercase version of this SGXString.
+@SG_NOTE For a single SGXChar, use SGXChar::getLowerLanguageAware instead.
+@SG_FUNC void toUpperLanguageAware() const;
+Converts this SGXString to its language aware uppercase form.
+@SG_NOTE For a single SGXChar, use SGXChar::toUpperLanguageAware instead.
+@SG_FUNC void toLowerLanguageAware() const;
+Converts this SGXString to its language aware lowercase form.
+@SG_NOTE For a single SGXChar, use SGXChar::toLowerLanguageAware instead.

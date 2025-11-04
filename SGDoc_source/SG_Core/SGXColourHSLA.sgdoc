@@ -1,0 +1,65 @@
+@SG_CPP_CLASS SGXColourHSLA
+@SG_SHORT_DESCRP HSLA (hue saturation lightness) colour
+@SG_LONG_DESCRP SGXColourHSLA represents a colour in HSLA format with effectively infinite precision as it uses floating point numbers internally. The hue can range from 0 to 360 inclusive and the saturation, lightness, and transparency can range from 0 to 100 inclusive. SGXColourHSLA is only intended for precise colour mixing, it must be convert to SGXColourRGBA for output. Note that a colour with full lightness is always white, HSL is NOT the same as HSV.
+@SG_IMPLE SGXColourHSLA stores the hue, saturation, lightness, and transparency channels in 4 floating point numbers.
+@SG_FUNC float h;
+Hue of the SGXColourHSLA.
+@SG_WARN Setting this to a value below 0 or above 360 is undefined behaviour.
+@SG_FUNC float s;
+Saturation of the SGXColourHSLA
+@SG_WARN Setting this to a value below 0 or above 100 is undefined behaviour.
+@SG_FUNC float l;
+Lightness of the SGXColourHSLA.
+@SG_WARN Setting this to a value below 0 or above 100 is undefined behaviour.
+@SG_FUNC float a;
+Transparency of the SGXColourHSLA.
+@SG_WARN Setting this to a value below 0 or above 100 is undefined behaviour.
+@SG_FUNC SGXColourHSLA(SGXColourRGBA x);
+Creates a SGXColourHSLA from a SGXColourRGBA.
+@SG_FUNC SGXColourHSLA(float h, float s, float l, float a);
+Creates a SGXColourHSLA from its hue, saturation, lightness, and transparency.
+@SG_NOTE If any argument is out of bounds, the constructor corrects it automatically.
+@SG_FUNC [[nodiscard]] bool operator==(SGXColourHSLA x) const;
+Equality check defined for SGLEqualsTo.
+@SG_FUNC [[nodiscard]] bool operator!=(SGXColourHSLA x) const;
+Inequality check defined for SGLEqualsTo.
+@SG_FUNC [[nodiscard]] bool operator<(SGXColourHSLA x) const;
+Lesser than operator defined for SGLLesserThan and SGLMoreThan.
+@SG_FUNC [[nodiscard]] bool operator>(SGXColourHSLA x) const;
+More than operator defined for SGLLesserThan and SGLMoreThan.
+@SG_FUNC [[nodiscard]] int hash() const;
+Hash function defined for SGLLesserThan and SGLMoreThan.
+@SG_FUNC void setHue(float h);
+Sets the hue of this SGXColourHSLA to $h.
+@SG_NOTE If $h is out of bounds, it is corrected automatically.
+@SG_FUNC void setSaturation(float s);
+Sets the saturation of this SGXColourHSLA to $s.
+@SG_NOTE If $s is out of bounds, it is corrected automatically.
+@SG_FUNC void setLightness(float l);
+Sets the lightness of this SGXColourHSLA to $l.
+@SG_NOTE If $l is out of bounds, it is corrected automatically.
+@SG_FUNC void setTransparency(float a);
+Sets the transparency of this SGXColourHSLA to $a.
+@SG_NOTE If $a is out of bounds, it is corrected automatically.
+@SG_FUNC void invertHue();
+Inverts the hue of this SGXColourHSLA.
+@SG_FUNC void invertSaturation();
+Inverts the saturation of this SGXColourHSLA.
+@SG_FUNC void invertLightness();
+Inverts the lightness of this SGXColourHSLA.
+@SG_NOTE This can be used to change between light mode and dark mode for custom UI.
+@SG_FUNC void linearTransformSaturation(float m, float c);
+Replaces the saturation of this SGXColourHSLA with $m * saturation + $c.
+@SG_NOTE If the new saturation is out of bounds, it is corrected automatically.
+@SG_FUNC void linearTransformLightness(float m, float c);
+Replaces the lightness of this SGXColourHSLA with $m * lightness + $c.
+@SG_NOTE If the new lightness is out of bounds, it is corrected automatically.
+@SG_FUNC void linearTransformTransparency(float m, float c);
+Replaces the transparency of this SGXColourHSLA with $m * transparency + $c.
+@SG_NOTE If the new transparency is out of bounds, it is corrected automatically.
+@SG_FUNC void offsetHue(float c);
+Replaces the hue of this SGXColourHSLA with hue + $c.
+@SG_NOTE If the new hue is out of bounds, it is corrected automatically.
+@SG_FUNC [[nodiscard]] SGXColourRGBA toRGBA() const;
+Returns this SGXColourHSLA converted to a SGXColourRGBA.
+@SG_NOTE This is necessary to use the colour for display.

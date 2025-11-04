@@ -1,0 +1,24 @@
+@SG_CPP_CLASS SGXDebug
+@SG_SHORT_DESCRP class defining @SG_FINDREP_DEBUGSG macro
+@SG_LONG_DESCRP SGXDebug defines the @SG_FINDREP_DEBUGSG macro, which is the easiest way to debug your application without using a debugger. Follow the link here: @SG_FINDREP_DEBUGSG to read more about it. Note that you need this header file included to use the macro.
+@SG_IMPLE SGXDebug defines the SG macro that creates a temporary SGXDebug object which registers debug information. When the SGXDebug object is deleted at the end of the line, all the debug information is sent to the console.
+@SG_PRIVATE_API SGXDebug(const SGXString& fileName, int lineNumber);
+@SG_PRIVATE_API SGXString debugInfo;
+@SG_PRIVATE_API SGXString metaInfo;
+@SG_PRIVATE_API SGXDebug& operator()(bool x);
+@SG_PRIVATE_API SGXDebug& operator()(char x);
+@SG_PRIVATE_API SGXDebug& operator()(int x);
+@SG_PRIVATE_API SGXDebug& operator()(unsigned int x);
+@SG_PRIVATE_API SGXDebug& operator()(long long x);
+@SG_PRIVATE_API SGXDebug& operator()(unsigned long long x);
+@SG_PRIVATE_API SGXDebug& operator()(float x);
+@SG_PRIVATE_API SGXDebug& operator()(double x);
+@SG_PRIVATE_API SGXDebug& operator()(const SGXChar& x);
+@SG_PRIVATE_API SGXDebug& operator()(const SGXString& x);
+@SG_PRIVATE_API SGXDebug& operator()(const SGXColourRGBA& x);
+@SG_PRIVATE_API SGXDebug& operator()(const SGXColourHSLA& x);
+@SG_PRIVATE_API SGXDebug& operator()(const SGXIdentifier& x);
+@SG_PRIVATE_API SGXDebug& operator()(const SGXTimeStamp& x);
+@SG_PRIVATE_API SGXDebug& operator()(const SGXVector2& x);
+@SG_PRIVATE_API SGXDebug& operator()(void* x);
+@SG_PRIVATE_API SGXDebug& operator()(const char* x);
