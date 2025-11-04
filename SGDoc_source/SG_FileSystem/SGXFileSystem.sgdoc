@@ -1,0 +1,137 @@
+@SG_CPP_CLASS SGXFileSystem
+@SG_SHORT_DESCRP provides access to the file system
+@SG_LONG_DESCRP SGXFileSystem allows access to the file system. This includes iterating through files and folders, and querying for properties of files and folders. Use SGXFile instead to read and write files, and use SGXFileBinUtilities instead to manage the SGEXTN builtin file bin.
+@SG_IMPLE Internally uses QDir, QFileInfo, and QFile
+@SG_PRIVATE_API static SGXString rootFilePath;
+@SG_FUNC static SGXString userDataFilePath;
+The folder that you should keep user data in.
+@SG_WARN Setting this manually is undefined behaviour.
+@SG_FUNC static SGXString configFilePath;
+The folder that you should keep application settings files in.
+@SG_WARN Setting this manually is undefined behaviour.
+@SG_FUNC static SGXString joinFilePaths(const SGXString& a, const SGXString& b);
+Returns the file path $a/$b
+@SG_FUNC static SGXString encodeBase16(const SGXString& s);
+Encodes $s to base16, the SGEXTN provided encoding that is guaranteed to be safe on all file systems, including case insensitive ones.
+@SG_NOTE As of this SGEXTN version, base16 is not human readable. This likely will be changed in a future version.
+@SG_FUNC static SGXString decodeBase16(const SGXString& str);
+Decodes $str which is currently in base16, the SGEXTN provided encoding that is guaranteed to be safe on all file systems, including case insensitive ones.
+@SG_NOTE As of this SGEXTN version, base16 is not human readable. This likely will be changed in a future version.
+@SG_FUNC static bool pathIsSubfolder(const SGXString& childPath, const SGXString& parentPath);
+Returns if $childPath is a possibly recursive subfolder of $parentPath.
+@SG_FUNC static bool fileExists(const SGXString& s);
+Returns if any file exists at $s.
+@SG_FUNC static bool folderExists(const SGXString& s);
+Returns if any folder exists at $s.
+@SG_FUNC static SGXString getFreePath(const SGXString& prefix, const SGXString& unencodedName, const SGXString& postfix);
+This should be used to replace directly setting the path as $prefix/SGXFileSystem::encodeBase16($unencodedName)$postfix to avoid file name collisions causing accidental overwrite.
+@SG_FUNC static int createFile(const SGXString& s);
+Creates a file at $s. This returns -2 if a file system error caused the operation to fail, 0 if the file already exists, and 1 if the operation was successful.
+@SG_FUNC static int createFolder(const SGXString& s);
+Creates a folder at $s. This returns -2 if a file system error caused the operation to fail, 0 if the file already exists, and 1 if the operation was successful.
+@SG_FUNC static SGXString getParentPath(const SGXString& s);
+Returns the path to the parent folder of $s.
+@SG_FUNC static SGXString getParentName(const SGXString& s);
+Returns the name of the parent folder of $s.
+@SG_FUNC static SGLArray<SGXString> getFilesList(const SGXString& s);
+Returns a list of files inside folder $s by their paths.
+@SG_NOTE If $s does not exist, an empty list is returned.
+@SG_FUNC static SGLArray<SGXString> getFilesListRecursive(const SGXString& s);
+Returns a list of files inside folder $s and its recursive subfolders by their paths.
+@SG_NOTE If $s does not exist, an empty list is returned.
+@SG_FUNC static SGLArray<SGXString> getFoldersList(const SGXString& s);
+Returns a list of subfolders inside folder $s by their paths.
+@SG_NOTE If $s does not exist, an empty list is returned.
+@SG_FUNC static int moveFile(const SGXString& startPath, const SGXString& endPath);
+Moves the file at $startPath to $endPath. This returns -2 if a file system error caused the operation to fail, 0 if there is already a file at $endPath or if there is no file at $startPath, and 1 if the operation was successful.
+@SG_FUNC static int moveFolder(const SGXString& startPath, const SGXString& endPath);
+Moves the folder at $startPath to $endPath. This returns -2 if a file system error caused the operation to fail, 0 if there is already a folder at $endPath or if there is no folder at $startPath, and 1 if the operation was successful.
+@SG_FUNC static int duplicateFile(const SGXString& startPath, const SGXString& endPath);
+Copies the file at $startPath to $endPath. This returns -2 if a file system error caused the operation to fail, 0 if there is already a file at $endPath or if there is no file at $startPath, and 1 if the operation was successful.
+@SG_FUNC static int duplicateFolder(const SGXString& startPath, const SGXString& endPath);
+Copies the folder at $startPath to $endPath. This returns -2 if a file system error caused the operation to fail, 0 if there is already a folder at $endPath or if there is no folder at $startPath, and 1 if the operation was successful.
+@SG_FUNC static int permanentDeleteFile(const SGXString& s);
+Permanently deletes the file at $s. This returns -2 if a file system error caused the operation to fail, 0 if there is no file at $s, and 1 if the operation was successful.
+@SG_WARN This can cause irreversible loss of user data if used on user files. Use this only on application generated settings files. For deleting user files, use SGXFileBinUtilities::deleteFile instead to allow recovery.
+@SG_FUNC static int permanentDeleteFolder(const SGXString& s);
+Permanently deletes the folder at $s. This returns -2 if a file system error caused the operation to fail, 0 if there is no folder at $s, and 1 if the operation was successful.
+@SG_WARN This can cause irreversible loss of user data if used on user files. Use this only on application generated settings files. For deleting user files, use SGXFileBinUtilities::deleteFolder instead to allow recovery.
+@SG_FUNC static long long getFileSize(const SGXString& s);
+Returns the size of the file at &s in bytes.
+@SG_NOTE If there is no file at $s, this returns 0.
+@SG_FUNC static long long getFolderSize(const SGXString& s);
+Returns the size of the folder at $s, which is the sum of sizes of all its subfolders, in bytes.
+@SG_NOTE If there is no folder at $s, this returns 0.
+@SG_FUNC static SGXTimeStamp getFileCreationTime(const SGXString& s);
+Returns the time at which the file at $s was created in the form of a SGXTimeStamp.
+@SG_NOTE If there is no file at $s or if file creation time is not supported by the file system, this returns SGXTimeStamp::zero.
+@SG_FUNC static SGXTimeStamp getFolderCreationTime(const SGXString& s);
+Returns the time at which the folder at $s was created in the form of a SGXTimeStamp.
+@SG_NOTE If there is no folder at $s or if folder creation time is not supported by the file system, this returns SGXTimeStamp::zero.
+@SG_FUNC static SGXTimeStamp getFileLastEditTime(const SGXString& s);
+Returns the time at which the file at $s was last opened in a write capable mode.
+@SG_NOTE If there is no file at $s, this returns SGXTimeStamp::zero.
+@SG_NOTE Using SGXFile for reading a file also causes this to change as SGXFile always opens files in read-write mode.
+@SG_FUNC static SGXTimeStamp getFolderLastEditTime(const SGXString& s);
+Returns the time at which the folder at $s was last opened in a write capable mode.
+@SG_NOTE If there is no folder at $s, this returns SGXTimeStamp::zero.
+@SG_NOTE Using SGXFile for reading a file in the folder also causes this to change as SGXFile always opens files in read-write mode.
+@SG_FUNC static SGXString getFolderName(const SGXString& s);
+Returns the name of the folder at path $s.
+@SG_FUNC static SGXString getFileName(const SGXString& s);
+Returns the name of the file at path $s.
+@SG_FUNC static SGXString getFileExtension(const SGXString& s);
+Returns the extension of the file at path $s. This does not include the dot.
+@SG_FUNC static SGXString getFileNameNoExtension(const SGXString& s);
+Returns the file name of the file at path $s with the extension removed.
+@SG_FUNC static SGLArray<SGXString> getFilesListWithExtension(const SGXString& s, const SGXString& ext);
+Returns a list of paths to files in folder $s with extension matching $ext.
+@SG_NOTE An empty list is returned if there is no folder at $s.
+@SG_FUNC static SGLArray<SGXString> getFilesListWithExtensionRecursive(const SGXString& s, const SGXString& ext);
+Returns a list of paths to files in folder $s including recursive subfolders, with extension matching $ext.
+@SG_NOTE An empty list is returned if there is no folder at $s.
+@SG_FUNC static SGLArray<SGXString> getFilesListContainingName(const SGXString& s, const SGXString& name);
+Returns a list of paths to files in folder $s containing a substring of $name in their names.
+@SG_NOTE An empty list is returned if there is no folder at $s.
+@SG_FUNC static SGLArray<SGXString> getFilesListContainingNameRecursive(const SGXString& s, const SGXString& name);
+Returns a list of paths to files in folder $s including recursive subfolders containing a substring of $name in their names.
+@SG_NOTE An empty list is returned if there is no folder at $s.
+@SG_FUNC static bool numberAwareLesserThan(const SGXString& s1, const SGXString& s2);
+Comparator used by SGXNumberAwareFilePathLesserThan and SGXNumberAwareFilePathMoreThan
+@SG_FUNC static bool numberAwareLesserThanBase16(const SGXString& s1, const SGXString& s2);
+Comparator used by SGXNumberAwareFilePathLesserThanBase16 and SGXNumberAwareFilePathMoreThanBase16.
+@SG_PRIVATE_API static void initialiseAppFolder();
+
+@SG_CPP_CLASS SGXNumberAwareFilePathLesserThan
+@SG_SHORT_DESCRP sorts file paths in alphabetical order taking into account numbers in file names
+@SG_LONG_DESCRP SGXNumberAwareFilePathLesserThan provides a comparator struct for sorting file paths in ascending alphabetical order for display to the user. This takes into account numbers in file names, so file9 would be before file10.
+@SG_IMPLE Uses SGXFileSystem::numberAwareLesserThan
+@SG_FUNC [[nodiscard]] bool operator()(const SGXString& a, const SGXString& b);
+Returns if $a should be in front of $b.
+@SG_NOTE The presence of operator() makes SGXNumberAwareFilePathLesserThan a functor.
+
+@SG_CPP_CLASS SGXNumberAwareFilePathMoreThan
+@SG_SHORT_DESCRP sorts file paths in descending alphabetical order taking into account numbers in file names
+@SG_LONG_DESCRP SGXNumberAwareFilePathMoreThan provides a comparator struct for sorting file paths in descending alphabetical order for display to the user. This takes into account numbers in file names, so file9 would be after file10.
+@SG_IMPLE Uses SGXFileSystem::numberAwareLesserThan
+@SG_FUNC [[nodiscard]] bool operator()(const SGXString& a, const SGXString& b);
+Returns if $a should be in front of $b.
+@SG_NOTE The presence of operator() makes SGXNumberAwareFilePathMoreThan a functor.
+
+@SG_CPP_CLASS SGXNumberAwareFilePathLesserThanBase16
+@SG_SHORT_DESCRP sorts file paths in alphabetical order taking into account base16 numbers in file names
+@SG_LONG_DESCRP SGXNumberAwareFilePathLesserThanBase16 provides a comparator struct for sorting file paths in ascending alphabetical order for display to the user. This takes into account base16 numbers in file names, so fileF would be before file10.
+@SG_IMPLE Uses SGXFileSystem::numberAwareLesserThanBase16
+@SG_FUNC [[nodiscard]] bool operator()(const SGXString& a, const SGXString& b);
+Returns if $a should be in front of $b.
+@SG_NOTE The presence of operator() makes SGXNumberAwareFilePathLesserThanBase16 a functor.
+@SG_NOTE Both uppercase and lowercase representations of non numerical base16 digits are accepted.
+
+@SG_CPP_CLASS SGXNumberAwareFilePathMoreThanBase16
+@SG_SHORT_DESCRP sorts file paths in descending alphabetical order taking into account base16 numbers in file names
+@SG_LONG_DESCRP SGXNumberAwareFilePathMoreThanBase16 provides a comparator struct for sorting file paths in descending alphabetical order for display to the user. This takes into account base16 numbers in file names, so fileF would be after file10.
+@SG_IMPLE Uses SGXFileSystem::numberAwareLesserThanBase16
+@SG_FUNC [[nodiscard]] bool operator()(const SGXString& a, const SGXString& b);
+Returns if $a should be in front of $b.
+@SG_NOTE The presence of operator() makes SGXNumberAwareFilePathMoreThanBase16 a functor.
+@SG_NOTE Both uppercase and lowercase representations of non numerical base16 digits are accepted.

@@ -73,13 +73,13 @@ Rotates this SGXVector2 by 180 degrees in either direction.
 Rotates this SGXVector2 by a degrees clockwise.
 @SG_FUNC void rotateCounterclockwise(float a);
 Rotates this SGXVector2 by a degrees counterclockwise.
-@SG_FUNC [[nodiscard]] bool isCollinear(SGXVector2 a, SGXVector2 b, float limit = 1.0f) const;
+@SG_FUNC [[nodiscard]] bool isCollinear(SGXVector2 a, SGXVector2 b, float limit) const;
 Returns if this SGXVector2, $a, and $b are collinear with a maximum angular tolerance of $limit degrees.
 @SG_NOTE If any 2 points overlap, the behaviour is not defined but it will not crash.
-@SG_FUNC [[nodiscard]] bool isParallel(SGXVector2 a2, SGXVector2 b1, SGXVector2 b2, float limit = 1.0f) const;
+@SG_FUNC [[nodiscard]] bool isParallel(SGXVector2 a2, SGXVector2 b1, SGXVector2 b2, float limit) const;
 Returns if the line formed by joining this SGXVector2 with $a2 and the line formed by joining $b1 with $b2 are parallel with a maximum angular tolerance of $limit degrees.
 @SG_NOTE If any 2 points overlap, the behaviour is not defined but it will not crash.
-@SG_FUNC [[nodiscard]] bool isPerpendicular(SGXVector2 a, SGXVector2 b, float limit = 1.0f) const;
+@SG_FUNC [[nodiscard]] bool isPerpendicular(SGXVector2 a, SGXVector2 b, float limit) const;
 Returns if the line formed by joining this SGXVector2 with $a is perpendicular with the line formed by joining this SGXVector2 with $b with a maximum angular tolerance of $limit degrees.
 @SG_NOTE If any 2 points overlap, the behaviour is not defined but it will not crash.
 @SG_FUNC [[nodiscard]] SGXVector2 midpoint(SGXVector2 x) const;

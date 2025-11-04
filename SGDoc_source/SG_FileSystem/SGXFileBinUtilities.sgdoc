@@ -1,0 +1,37 @@
+@SG_CPP_CLASS SGXFileBinUtilities
+@SG_SHORT_DESCRP utilities for the SGEXTN builtin file bin
+@SG_LONG_DESCRP SGXFileBinUtilities provides access to the file bin builtin to SGEXTN. Deleted user data should be moved to the file bin so that it can be recovered if the user changes their mind. Files in the bin are automatically deleted after a period of time. Files in the bin must be accessed through their SGXIdentifier, not through the path.
+@SG_IMPLE Manages a bin file which contains a list of files moved to the bin.
+@SG_PRIVATE_API static SGXString binFilePath;
+@SG_PRIVATE_API static void createEmptyBin();
+@SG_PRIVATE_API static void loadBinData();
+@SG_PRIVATE_API static SGLUnorderedMap<SGXIdentifier, SGLPair<SGXString, SGXTimeStamp>, SGLEqualsTo<SGXIdentifier>, SGLHash<SGXIdentifier>>* deletedFiles;
+@SG_PRIVATE_API static SGXString pathToMetadataFile;
+@SG_FUNC static int deleteFile(const SGXString& s);
+Move the file at file path $s to the file bin. This returns -2 if a file system error caused the operation to fail, 0 if there is no file at $s, and 1 if the operation is successful.
+@SG_NOTE The original path of the file is stored in the file bin after its deletion and can be used for recovery of deleted files.
+@SG_NOTE Do not move application generated files to the bin, instead delete them directly using SGXFileSystem::permanentDeleteFile. The file bin is only for user data.
+@SG_FUNC static int deleteFolder(const SGXString& s);
+Move all files in the folder $s and its recursive subfolders to the file bin. This returns -2 if a file system error caused the operation to fail, 0 if there is no folder at $s, and 1 if the operation is successful.
+@SG_NOTE Files in the folder are moved to the bin separately, so the user may see more than 1 files being added to the bin.
+@SG_NOTE The original path of the files is stored in the file bin after its deletion and can be used for recovery of deleted files.
+@SG_NOTE Do not move application generated files to the bin, instead delete them directly using SGXFileSystem::permanentDeleteFolder. The file bin is only for user data.
+@SG_PRIVATE_API static void syncMetadata();
+@SG_FUNC static int restoreFile(SGXIdentifier x);
+Restores the file $x currently in the bin. This returns -3 if the file bin registry is corrupted, -2 if the operation failed due to a file system error, 0 if there is no file $x in the bin, and 1 if the operation is successful.
+@SG_NOTE The restored file is moved to its original location before deletion.
+@SG_FUNC static int permanentDeleteFile(SGXIdentifier x);
+Permanently deletes the file $x currently in the bin. This returns -2 if the operation failed due to a file system error, 0 if there is no file $x in the bin, and 1 if the operation is successful.
+@SG_NOTE Always warn the user before this is used. The operation can cause irreversible loss of user data if used inappropriately.
+@SG_FUNC static void permanentClearBin();
+Permanently deletes everything in the file bin.
+@SG_NOTE This is guaranteed to fix a corrupt bin.
+@SG_NOTE Always warn the user before this is used. The operation can cause irreversible loss of user data if used inappropriately.
+@SG_FUNC static int getLifespan();
+Returns the time in days that files in the bin are stored before deletion.
+@SG_NOTE The default value for this is 1000 days, or slightly less than 3 years.
+@SG_FUNC static void setLifespan(int x);
+Sets files in the bin to be deleted permanently $x days after being moved to the bin.
+@SG_NOTE The default value for this is 1000 days, or slightly less than 3 years.
+@SG_NOTE Always keep this at least the length of a school year.
+@SG_PRIVATE_API static int lifespan;

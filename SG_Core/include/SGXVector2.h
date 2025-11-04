@@ -43,9 +43,9 @@ public:
     void rotate180();
     void rotateClockwise(float a);
     void rotateCounterclockwise(float a);
-    [[nodiscard]] bool isCollinear(SGXVector2 a, SGXVector2 b, float limit = 1.0f) const;
-    [[nodiscard]] bool isParallel(SGXVector2 a2, SGXVector2 b1, SGXVector2 b2, float limit = 1.0f) const;
-    [[nodiscard]] bool isPerpendicular(SGXVector2 a, SGXVector2 b, float limit = 1.0f) const;
+    [[nodiscard]] bool isCollinear(SGXVector2 a, SGXVector2 b, float limit) const;
+    [[nodiscard]] bool isParallel(SGXVector2 a2, SGXVector2 b1, SGXVector2 b2, float limit) const;
+    [[nodiscard]] bool isPerpendicular(SGXVector2 a, SGXVector2 b, float limit) const;
     [[nodiscard]] SGXVector2 midpoint(SGXVector2 x) const;
     [[nodiscard]] SGXVector2 linearInterpolate(SGXVector2 x, float f) const;
     void reflectAcrossX();
