@@ -1,0 +1,7 @@
+@SG_CPP_CLASS SGRGraphicsLanguageType
+@SG_SHORT_DESCRP provides enum describing a GLSL type
+@SG_LONG_DESCRP SGRGraphicsLanguageType is used by @SG_FINDREP_RENDERER renderers to indicate the data type of information stored in a SGRVertexBufferObject.
+@SG_IMPLE @SG_FINDREP_RENDERER internally uses QRhi.
+@SG_FUNC enum Type{ Float, UnsignedInt, Int };
+Indicates the GLSL type.
+@SG_NOTE The number of data (scalar / vec2 / vec3 / vec4) is indicated separately.

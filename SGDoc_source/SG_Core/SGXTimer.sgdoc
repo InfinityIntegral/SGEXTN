@@ -1,6 +1,6 @@
 @SG_CPP_CLASS SGXTimer
 @SG_SHORT_DESCRP timer for delayed and repeated execution of functions
-@SG_LONG_DESCRP SGXTimer provides a timer that takes a callback function which can be either run after a specified amount of time have passed or be run at a regular interval.
+@SG_LONG_DESCRP SGXTimer provides a timer that takes a @SG_FINDREP_FUNCPTR which can be either run after a specified amount of time have passed or be run at a regular interval.
 @SG_IMPLE wrapper of QTimer
 @SG_FUNC SGXTimer(float t, void (*attachedFunction)());
 Creates and starts a SGXTimer running $attachedFunction every $t seconds.
@@ -16,8 +16,8 @@ Pauses this SGXTimer. The timer can be resumed using SGXTimer::start later.
 Restarts this SGXTimer which is previously paused.
 @SG_NOTE If this SGXTimer was not previously paused, this restarts the time.
 @SG_FUNC void (*attachedFunction)();
-Callback function attached to this SGXTimer.
-@SG_NOTE This is set automatically by the constructor. Only set it explicitly if you want to change the callback function attached to an ongoing SGXTimer.
+@SG_FINDREP_FUNCPTR attached to this SGXTimer.
+@SG_NOTE This is set automatically by the constructor. Only set it explicitly if you want to change the @SG_FINDREP_FUNCPTR attached to an ongoing SGXTimer.
 @SG_WARN Setting this to nullptr is undefined behaviour. Use SGXTimer::stop if you want to stop an ongoing SGXTimer.
 @SG_PRIVATE_API QTimer* timer;
 @SG_FUNC static void singleCall(float t, void (*attachedFunction)());

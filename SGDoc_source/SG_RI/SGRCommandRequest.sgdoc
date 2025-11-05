@@ -1,0 +1,22 @@
+@SG_CPP_CLASS SGRCommandRequest
+@SG_SHORT_DESCRP class allowing draw commands to be sent to the GPU
+@SG_LONG_DESCRP SGRCommandRequest allows @SG_FINDREP_RENDERER renderers to send draw commands to the GPU. This is only provided in SGRBaseRenderer::requestRenderCommands and attempting to cache it for use at another time is undefined behaviour.
+@SG_IMPLE @SG_FINDREP_RENDERER internally uses QRhi, SGRCommandRequest wraps QRhiCommandBuffer.
+@SG_PRIVATE_API SGRCommandRequest(QRhiCommandBuffer* commandBuffer);
+@SG_PRIVATE_API QRhiCommandBuffer* commandBuffer;
+@SG_PRIVATE_API SGLVector<SGLPair<int, SGRVertexBufferObject*>>* vbos;
+@SG_PRIVATE_API SGRElementBufferObject* ebo;
+@SG_PRIVATE_API bool buffersAttached;
+@SG_FUNC void addVertexBufferObject(SGRVertexBufferObject *vbo, int bufferOffsetInBytes) const;
+Adds the vertex buffer object $vbo starting at $bufferOffsetInBytes bytes into the buffer. Data before the $bufferOffsetInBytes is ignored. Vertex buffer objects are added sequentially, so the first added vertex buffer object will have a binding point of 0, the second added vertex buffer object will have a binding point of 1, etc.
+@SG_NOTE @SG_FINDREP_RENDERER permits binding multiple vertex buffer objects.
+@SG_FUNC void chooseElementBufferObject(SGRElementBufferObject* ebo);
+Selects $ebo to be used for the next draw command. If you want to only use the element buffer object starting at a certain index, set that in SGRCommandRequest::drawTriangles.
+@SG_NOTE @SG_FINDREP_RENDERER forces you to use a element buffer object even if it is not really needed.
+@SG_FUNC void finaliseForDraw();
+Prepares the vertex buffer objects added using SGRCommandRequest::addVertexBufferObject amd the element buffer object selected using SGRCommandRequest::chooseElementBufferObject for drawing.
+@SG_WARN Adding more vertex buffer objects or changing the element buffer object after this is called is undefined behaviour.
+@SG_FUNC void drawTriangles(int numberOfTriangles, int startLocation) const;
+Draws $numberOfTriangles triangles using indices found in the chosen element buffer object starting at $startLocation bytes into the buffer.
+@SG_NOTE Drawing other shapes is not supported by @SG_FINDREP_RENDERER, for rectangles, simply use 2 triangles.
+@SG_WARN This will crash if SGRCommandRequest::finaliseForDraw has not yet been called.

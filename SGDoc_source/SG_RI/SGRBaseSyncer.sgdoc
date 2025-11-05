@@ -1,0 +1,7 @@
+@SG_CPP_CLASS SGRBaseSyncer
+@SG_SHORT_DESCRP base class of syncers for custom renderers
+@SG_LONG_DESCRP SGRBaseSyncer provides a base class to build syncers for @SG_FINDREP_RENDERER renderers on top of. All syncers must inherit this class and implement all pure virtual functions provided in this class. Creating @SG_FINDREP_RENDERER renderers is the only way in SGEXTN to use custom shaders. Since most of the logic in custom renderers run on a separate thread, it is not allowed to access objects not owned by the renderer from inside the renderer, or to access objects owned by the renderer from outside. Syncers provide a function where it is safe to exchange data between 2 threads.
+@SG_IMPLE @SG_FINDREP_RENDERER internally uses QRhi.
+@SG_FUNC virtual void sync(SGRBaseRenderer* renderControl) = 0;
+Use this function to transfer data from the main thread to the custom renderer. Typically this involves copying data from static or main thread variables into variables owned by the renderer.
+@SG_WARN Transferring data across the main thread and the custom renderer thread anywhere else is undefined behaviour. Even reading the data elsewhere causes undefined behaviour.

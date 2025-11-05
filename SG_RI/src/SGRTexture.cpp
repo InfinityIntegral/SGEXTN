@@ -1,4 +1,4 @@
-#include <SGRTexture.h>
+#include <private_api_RI/SGRTexture.h>
 #include <private_api_RI/SGRRendererNode.h>
 #include <rhi/qrhi.h>
 

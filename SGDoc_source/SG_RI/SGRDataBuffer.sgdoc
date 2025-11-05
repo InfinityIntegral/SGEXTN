@@ -1,0 +1,10 @@
+@SG_CPP_CLASS SGRDataBuffer
+@SG_SHORT_DESCRP GPU side buffer
+@SG_LONG_DESCRP SGRDataBuffer represent a GPU side data buffer used by @SG_FINDREP_RENDERER renderers to store information on the GPU. This is also the base class for SGRVertexBufferObject and SGRElementBufferObject.
+@SG_IMPLE @SG_FINDREP_RENDERER internally uses QRhi, SGRDataBuffer wraps QRhiBuffer.
+@SG_PRIVATE_API QRhi* rhi;
+@SG_PRIVATE_API QRhiBuffer* data;
+@SG_FUNC [[nodiscard]] int length() const;
+Returns the length of this SGRDataBuffer.
+@SG_FUNC void doubleBuffer() const;
+Doubles the size of this SGRDataBuffer without losing data that it already contains.

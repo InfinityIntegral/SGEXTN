@@ -10,7 +10,7 @@
 #include <SGRCommandRequest.h>
 #include <SGRDataBuffer.h>
 #include <SGRBaseRenderer.h>
-#include <SGRTexture.h>
+#include <private_api_RI/SGRTexture.h>
 #include <SGRImage.h>
 #include <SGRGraphicsLanguageType.h>
 #include <QIODevice>
