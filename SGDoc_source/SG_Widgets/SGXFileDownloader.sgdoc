@@ -1,0 +1,12 @@
+@SG_CPP_CLASS SGXFileDownloader
+@SG_SHORT_DESCRP provides file download functionality
+@SG_LONG_DESCRP SGXFileDownloader allows the user to download a file from the application into anywhere in their file system. Note that this does not actually involve downloading from a network, it just gives the user a file dialog. This is required to access files outside the application folder on mobile.
+@SG_IMPLE Uses QML file downloader.
+@SG_PRIVATE_API static QQmlComponent* fileDownloadTemplate;
+@SG_PRIVATE_API static QObject* fileDownloadInstance;
+@SG_FUNC static void downloadFile(const SGXString& s);
+Offers the user to download the file at path $s.
+@SG_NOTE This does not delete the file at $s.
+@SG_WARN Nonexistent file at path $s results in undefined behaviour.
+@SG_PRIVATE_API static void checkDownloadedFile();
+@SG_PRIVATE_API static SGXString sourcePath;

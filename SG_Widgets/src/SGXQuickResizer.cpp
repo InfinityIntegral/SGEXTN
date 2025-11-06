@@ -1,7 +1,7 @@
 #include <private_api_Widgets/SGXQuickResizer.h>
 #include <private_api_Widgets/SGXQuickInterface.h>
 #include <QQuickItem>
-#include <SGXFontSizeCustomisation.h>
+#include <private_api_Widgets/SGXFontSizeCustomisation.h>
 
 SGXQuickResizer::SGXQuickResizer(){
     (*this).renderSpaceWidth = 0.0f;

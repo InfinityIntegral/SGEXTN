@@ -1,4 +1,4 @@
-#include <SGXFontSizeCustomisation.h>
+#include <private_api_Widgets/SGXFontSizeCustomisation.h>
 #include <SGXFileSystem.h>
 #include <SGXFile.h>
 #include <SGXString.h>

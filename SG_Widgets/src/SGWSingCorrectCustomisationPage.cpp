@@ -1,5 +1,5 @@
 #include <private_api_Widgets/SGWSingCorrectCustomisationPage.h>
-#include <SGXSingCorrectCustomisation.h>
+#include <private_api_Widgets/SGXSingCorrectCustomisation.h>
 #include <SGXString.h>
 #include <SGXSingCorrectCore.h>
 #include <SGLUnorderedMap.h>

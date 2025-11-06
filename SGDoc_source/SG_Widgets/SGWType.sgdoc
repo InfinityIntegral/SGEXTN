@@ -1,0 +1,14 @@
+@SG_CPP_CLASS SGWType
+@SG_SHORT_DESCRP provides infromation about the type of a @SG_FINDREP_WIDGET UI element
+@SG_LONG_DESCRP SGWType provides an enum describing the type of a @SG_FINDREP_WIDGET UI element. This can be used to static_cast SGWWidget pointers to a subclass safely.
+@SG_IMPLE provides an enum
+@SG_FUNC enum Type{ Root, Parent, StatusBar, BlankWidget, PageBackground, TextLabel, IconLabel, LongLabel, SequentialLongLabel, TextButton, IconButton, TextInput, LongInput, ScrollView, SequentialScrollView, ColourPicker, SingleTouchReceiver, MultiTouchReceiver, CustomRenderer, Undefined };
+Used to indicate the type of a @SG_FINDREP_WIDGET UI element.
+@SG_FUNC static bool isBackground(SGWType::Type x);
+Returns if the UI element is a subclass of SGWBackground.
+@SG_FUNC static bool isDisplayText(SGWType::Type x);
+Returns if the UI element is a subclass of SGWLabel.
+@SG_FUNC static bool isButton(SGWType::Type x);
+Returns if the UI element is a subclass of SGWButton.
+@SG_FUNC static bool isInputField(SGWType::Type x);
+Returns if the UI element is a subclass of SGWInput.

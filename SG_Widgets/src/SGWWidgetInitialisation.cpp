@@ -5,13 +5,13 @@
 #include <private_api_Widgets/SGXThemeColourSetting.h>
 #include <private_api_Widgets/SGXQuickResizer.h>
 #include <private_api_Widgets/SGXSingCorrectQuickInterface.h>
-#include <SGXFontSizeCustomisation.h>
+#include <private_api_Widgets/SGXFontSizeCustomisation.h>
 #include <SGWDefaultFonts.h>
 #include <QFontDatabase>
 #include <QQuickWindow>
 #include <QQuickItem>
 #include <SGXSingCorrectCore.h>
-#include <SGXSingCorrectCustomisation.h>
+#include <private_api_Widgets/SGXSingCorrectCustomisation.h>
 #include <SGXThemeColoursCustomisation.h>
 #include <private_api_Widgets/SGWStatusBar.h>
 #include <SGWBackground.h>

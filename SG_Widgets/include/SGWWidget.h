@@ -60,7 +60,7 @@ protected:
     SGWWidget(SGWWidget* parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0);
     SGWType::Type type;
     SGWWidget* parent;
-    SGLArray<SGWWidget*> children = SGLArray<SGWWidget*>(0);
+    SGLArray<SGWWidget*> children = {};
     QQuickItem* topObject;
     QQuickItem* bottomObject;
     float x1;

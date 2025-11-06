@@ -1,4 +1,4 @@
-#include <SGXSingCorrectCustomisation.h>
+#include <private_api_Widgets/SGXSingCorrectCustomisation.h>
 #include <SGXFileSystem.h>
 #include <SGXFile.h>
 #include <SGLUnorderedMap.h>

@@ -1,0 +1,11 @@
+@SG_CPP_CLASS SGWCustomisationPageControl
+@SG_SHORT_DESCRP activates @SG_FINDREP_WIDGET builtin customisation pages
+@SG_LONG_DESCRP SGWCustomisationPageControl provides methods to activate @SG_FINDREP_WIDGET builtin UI pages to customise things such as font size (which controls @SG_FINDREP_WDIST) and @SG_FINDREP_THEME. Your application should give the user access to all these features.
+@SG_IMPLE Calls private API exposed functions
+@SG_FUNC static void enableThemeColoursCustomisationPage();
+Activates the page to customise @SG_FINDREP_THEME.
+@SG_NOTE This is not available if the @SG_FINDREP_RENDERER module is not being used.
+@SG_FUNC static void enableFontSizeCustomisationPage();
+Activates the page to customise font size, which controls @SG_FINDREP_WDIST
+@SG_FUNC static void enableSingCorrectCustomisationPage();
+Activates the @SG_FINDREP_SINGCORRECT customisation page.

@@ -1,0 +1,90 @@
+@SG_CPP_CLASS SGWLongInput
+@SG_SHORT_DESCRP @SG_FINDREP_WIDGET multi line input field
+@SG_LONG_DESCRP SGWLongInput provides a multi line input field for @SG_FINDREP_WIDGET. This uses @SG_FINDREP_SINGCORRECT and allows the user to write long paragraphs of text.
+@SG_IMPLE Stores information about the SGWLongInput.
+@SG_FUNC SGWLongInput(SGWWidget* parent, void (*validationFunction)(), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float f1, float f0, float s1, float s0);
+Creates a SGWLongInput with parent @SG_FINDREP_WIDGET $parent, @SG_FINDREP_WDIST coordinates ($x1, $x0, $y1, $y0, $w1, $w0, $h1, $h0), and @SG_FUNCPTR on unfocus as $validationFunction. Additionally, the font size has a @SG_FINDREP_WDIST of ($f1, $f0) and the scrollbar width has a @SG_FINDREP_WDIST of ($s1, $s0).
+@SG_WARN $parent being nullptr is undefined behaviour.
+@SG_PRIVATE_API void syncQuickProperties();
+@SG_FUNC [[nodiscard]] float getS1() const;
+Returns the 1 coordinate of the @SG_FINDREP_WDIST controlling the scrollbar width.
+@SG_FUNC void setS1(float s1);
+Sets the 1 coordinate of the @SG_FINDREP_WDIST controlling the scrollbar width to $s1.
+@SG_FUNC [[nodiscard]] float getS0() const;
+Returns the 0 coordinate of the @SG_FINDREP_WDIST controlling the scrollbar width.
+@SG_FUNC void setS0(float s0);
+Sets the 0 coordinate of the @SG_FINDREP_WDIST controlling the scrollbar width to $s0.
+@SG_FUNC [[nodiscard]] int getScrollbarBackgroundThemeColour(bool* isUsing) const;
+Returns the @SG_FINDREP_THEME currently being used for the scrollbar background of this SGWLongInput. The bool that $isUsing points to is set to true if @SG_FINDREP_THEME mode is on, and false otherwise.
+@SG_NOTE If you are not interested in the current @SG_FINDREP_THEME mode, pass nullptr to $isUsing.
+@SG_FUNC void setScrollbarBackgroundThemeColour(int themeColour);
+Sets the @SG_FINDREP_THEME of the scrollbar background of this SGWLongInput to $themeColour and turns on @SG_FINDREP_THEME mode.
+@SG_FUNC [[nodiscard]] SGXColourRGBA getScrollbarBackgroundColour(bool* isUsing) const;
+Returns the SGXColourRGBA currently being used for the scrollbar background of this SGWLongInput. The bool that $isUsing points to is set to true if @SG_FINDREP_THEME mode is off, and false otherwise.
+@SG_NOTE If you are not interested in the current @SG_FINDREP_THEME mode, pass nullptr to $isUsing.
+@SG_FUNC void setScrollbarBackgroundColour(SGXColourRGBA colour);
+Sets the SGXColourRGBA of the scrollbar background of this SGWLongInput to $colour and turns off @SG_FINDREP_THEME mode.
+@SG_FUNC [[nodiscard]] int getScrollbarForegroundThemeColour(bool* isUsing) const;
+Returns the @SG_FINDREP_THEME currently being used for the scrollbar foreground of this SGWLongInput. The bool that $isUsing points to is set to true if @SG_FINDREP_THEME mode is on, and false otherwise.
+@SG_NOTE If you are not interested in the current @SG_FINDREP_THEME mode, pass nullptr to $isUsing.
+@SG_FUNC void setScrollbarForegroundThemeColour(int themeColour);
+Sets the @SG_FINDREP_THEME of the scrollbar foreground of this SGWLongInput to $themeColour and turns on @SG_FINDREP_THEME mode.
+@SG_FUNC [[nodiscard]] SGXColourRGBA getScrollbarForegroundColour(bool* isUsing) const;
+Returns the SGXColourRGBA currently being used for the scrollbar foreground of this SGWLongInput. The bool that $isUsing points to is set to true if @SG_FINDREP_THEME mode is off, and false otherwise.
+@SG_NOTE If you are not interested in the current @SG_FINDREP_THEME mode, pass nullptr to $isUsing.
+@SG_FUNC void setScrollbarForegroundColour(SGXColourRGBA colour);
+Sets the SGXColourRGBA of the scrollbar foreground of this SGWLongInput to $colour and turns off @SG_FINDREP_THEME mode.
+@SG_FUNC [[nodiscard]] int getScrollbarBackgroundHoverThemeColour(bool* isUsing) const;
+Returns the @SG_FINDREP_THEME currently being used for the scrollbar background of this SGWLongInput when hovered over. The bool that $isUsing points to is set to true if @SG_FINDREP_THEME mode is on, and false otherwise.
+@SG_NOTE If you are not interested in the current @SG_FINDREP_THEME mode, pass nullptr to $isUsing.
+@SG_FUNC void setScrollbarBackgroundHoverThemeColour(int themeColour);
+Sets the @SG_FINDREP_THEME of the scrollbar background of this SGWLongInput when hovered over to $themeColour and turns on @SG_FINDREP_THEME mode.
+@SG_FUNC [[nodiscard]] SGXColourRGBA getScrollbarBackgroundHoverColour(bool* isUsing) const;
+Returns the SGXColourRGBA currently being used for the scrollbar background of this SGWLongInput when hovered over. The bool that $isUsing points to is set to true if @SG_FINDREP_THEME mode is off, and false otherwise.
+@SG_NOTE If you are not interested in the current @SG_FINDREP_THEME mode, pass nullptr to $isUsing.
+@SG_FUNC void setScrollbarBackgroundHoverColour(SGXColourRGBA colour);
+Sets the SGXColourRGBA of the scrollbar background of this SGWLongInput when hovered over to $colour and turns off @SG_FINDREP_THEME mode.
+@SG_FUNC [[nodiscard]] int getScrollbarForegroundHoverThemeColour(bool* isUsing) const;
+Returns the @SG_FINDREP_THEME currently being used for the scrollbar foreground of this SGWLongInput when hovered over. The bool that $isUsing points to is set to true if @SG_FINDREP_THEME mode is on, and false otherwise.
+@SG_NOTE If you are not interested in the current @SG_FINDREP_THEME mode, pass nullptr to $isUsing.
+@SG_FUNC void setScrollbarForegroundHoverThemeColour(int themeColour);
+Sets the @SG_FINDREP_THEME of the scrollbar foreground of this SGWLongInput when hovered over to $themeColour and turns on @SG_FINDREP_THEME mode.
+@SG_FUNC [[nodiscard]] SGXColourRGBA getScrollbarForegroundHoverColour(bool* isUsing) const;
+Returns the SGXColourRGBA currently being used for the scrollbar foreground of this SGWLongInput when hovered over. The bool that $isUsing points to is set to true if @SG_FINDREP_THEME mode is off, and false otherwise.
+@SG_NOTE If you are not interested in the current @SG_FINDREP_THEME mode, pass nullptr to $isUsing.
+@SG_FUNC void setScrollbarForegroundHoverColour(SGXColourRGBA colour);
+Sets the SGXColourRGBA of the scrollbar foreground of this SGWLongInput when hovered over to $colour and turns off @SG_FINDREP_THEME mode.
+@SG_FUNC [[nodiscard]] int getScrollbarBackgroundFocusThemeColour(bool* isUsing) const;
+Returns the @SG_FINDREP_THEME currently being used for the scrollbar background of this SGWLongInput when focused. The bool that $isUsing points to is set to true if @SG_FINDREP_THEME mode is on, and false otherwise.
+@SG_NOTE If you are not interested in the current @SG_FINDREP_THEME mode, pass nullptr to $isUsing.
+@SG_FUNC void setScrollbarBackgroundFocusThemeColour(int themeColour);
+Sets the @SG_FINDREP_THEME of the scrollbar background of this SGWLongInput when focused to $themeColour and turns on @SG_FINDREP_THEME mode.
+@SG_FUNC [[nodiscard]] SGXColourRGBA getScrollbarBackgroundFocusColour(bool* isUsing) const;
+Returns the SGXColourRGBA currently being used for the scrollbar background of this SGWLongInput when focused. The bool that $isUsing points to is set to true if @SG_FINDREP_THEME mode is off, and false otherwise.
+@SG_NOTE If you are not interested in the current @SG_FINDREP_THEME mode, pass nullptr to $isUsing.
+@SG_FUNC void setScrollbarBackgroundFocusColour(SGXColourRGBA colour);
+Sets the SGXColourRGBA of the scrollbar background of this SGWLongInput when focused to $colour and turns off @SG_FINDREP_THEME mode.
+@SG_FUNC [[nodiscard]] int getScrollbarForegroundFocusThemeColour(bool* isUsing) const;
+Returns the @SG_FINDREP_THEME currently being used for the scrollbar foreground of this SGWLongInput when focused. The bool that $isUsing points to is set to true if @SG_FINDREP_THEME mode is on, and false otherwise.
+@SG_NOTE If you are not interested in the current @SG_FINDREP_THEME mode, pass nullptr to $isUsing.
+@SG_FUNC void setScrollbarForegroundFocusThemeColour(int themeColour);
+Sets the @SG_FINDREP_THEME of the scrollbar foreground of this SGWLongInput when focused to $themeColour and turns on @SG_FINDREP_THEME mode.
+@SG_FUNC [[nodiscard]] SGXColourRGBA getScrollbarForegroundFocusColour(bool* isUsing) const;
+Returns the SGXColourRGBA currently being used for the scrollbar foreground of this SGWLongInput when focused. The bool that $isUsing points to is set to true if @SG_FINDREP_THEME mode is off, and false otherwise.
+@SG_NOTE If you are not interested in the current @SG_FINDREP_THEME mode, pass nullptr to $isUsing.
+@SG_FUNC void setScrollbarForegroundFocusColour(SGXColourRGBA colour);
+Sets the SGXColourRGBA of the scrollbar foreground of this SGWLongInput when focused to $colour and turns off @SG_FINDREP_THEME mode.
+@SG_PRIVATE_API float s1;
+@SG_PRIVATE_API float s0;
+@SG_PRIVATE_API int scrollbarBackgroundThemeColour;
+@SG_PRIVATE_API SGXColourRGBA scrollbarBackgroundColour;
+@SG_PRIVATE_API int scrollbarForegroundThemeColour;
+@SG_PRIVATE_API SGXColourRGBA scrollbarForegroundColour;
+@SG_PRIVATE_API int scrollbarBackgroundHoverThemeColour;
+@SG_PRIVATE_API SGXColourRGBA scrollbarBackgroundHoverColour;
+@SG_PRIVATE_API int scrollbarForegroundHoverThemeColour;
+@SG_PRIVATE_API SGXColourRGBA scrollbarForegroundHoverColour;
+@SG_PRIVATE_API int scrollbarBackgroundFocusThemeColour;
+@SG_PRIVATE_API SGXColourRGBA scrollbarBackgroundFocusColour;
+@SG_PRIVATE_API int scrollbarForegroundFocusThemeColour;
+@SG_PRIVATE_API SGXColourRGBA scrollbarForegroundFocusColour;

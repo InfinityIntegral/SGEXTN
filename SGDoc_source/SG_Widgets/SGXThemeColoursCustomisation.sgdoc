@@ -1,0 +1,51 @@
+@SG_CPP_CLASS SGXThemeColoursCustomisation
+@SG_SHORT_DESCRP allows setting custom @SG_FINDREP_THEME
+@SG_LONG_DESCRP SGXThemeColoursCustomisation allows you to set custom @SG_FINDREP_THEME for your application.
+@SG_IMPLE Sets @SG_FINDREP_THEME at start of application.
+@SG_PRIVATE_API static void loadThemeColours();
+@SG_PRIVATE_API static void syncThemeColours();
+@SG_FUNC static SGXColourRGBA themeColour0;
+@SG_FINDREP_THEME number 0.
+@SG_NOTE Setting this outside SGXCentral::setCustomTheme has no effect.
+@SG_NOTE This does not override the automatic theme change to celebrate National Day.
+@SG_NOTE After SGXCentral::setCustomTheme is called, this may not match the @SG_FINDREP_THEME being used.
+@SG_FUNC static SGXColourRGBA themeColour1;
+@SG_FINDREP_THEME number 1.
+@SG_NOTE Setting this outside SGXCentral::setCustomTheme has no effect.
+@SG_NOTE This does not override the automatic theme change to celebrate National Day.
+@SG_NOTE After SGXCentral::setCustomTheme is called, this may not match the @SG_FINDREP_THEME being used.
+@SG_FUNC static SGXColourRGBA themeColour2;
+@SG_FINDREP_THEME number 2.
+@SG_NOTE Setting this outside SGXCentral::setCustomTheme has no effect.
+@SG_NOTE This does not override the automatic theme change to celebrate National Day.
+@SG_NOTE After SGXCentral::setCustomTheme is called, this may not match the @SG_FINDREP_THEME being used.
+@SG_FUNC static SGXColourRGBA themeColour3;
+@SG_FINDREP_THEME number 3.
+@SG_NOTE Setting this outside SGXCentral::setCustomTheme has no effect.
+@SG_NOTE This does not override the automatic theme change to celebrate National Day.
+@SG_NOTE After SGXCentral::setCustomTheme is called, this may not match the @SG_FINDREP_THEME being used.
+@SG_FUNC static SGXColourRGBA themeColour4;
+@SG_FINDREP_THEME number 4.
+@SG_NOTE Setting this outside SGXCentral::setCustomTheme has no effect.
+@SG_NOTE This does not override the automatic theme change to celebrate National Day.
+@SG_NOTE After SGXCentral::setCustomTheme is called, this may not match the @SG_FINDREP_THEME being used.
+@SG_FUNC static SGXColourRGBA themeColour5;
+@SG_FINDREP_THEME number 5.
+@SG_NOTE Setting this outside SGXCentral::setCustomTheme has no effect.
+@SG_NOTE This does not override the automatic theme change to celebrate National Day.
+@SG_NOTE After SGXCentral::setCustomTheme is called, this may not match the @SG_FINDREP_THEME being used.
+@SG_FUNC static SGXColourRGBA themeColour6;
+@SG_FINDREP_THEME number 6.
+@SG_NOTE Setting this outside SGXCentral::setCustomTheme has no effect.
+@SG_NOTE This does not override the automatic theme change to celebrate National Day.
+@SG_NOTE After SGXCentral::setCustomTheme is called, this may not match the @SG_FINDREP_THEME being used.
+@SG_FUNC static SGXColourRGBA themeColour7;
+@SG_FINDREP_THEME number 7.
+@SG_NOTE Setting this outside SGXCentral::setCustomTheme has no effect.
+@SG_NOTE This does not override the automatic theme change to celebrate National Day.
+@SG_NOTE After SGXCentral::setCustomTheme is called, this may not match the @SG_FINDREP_THEME being used.
+@SG_FUNC static SGXColourRGBA themeColour8;
+@SG_FINDREP_THEME number 8.
+@SG_NOTE Setting this outside SGXCentral::setCustomTheme has no effect.
+@SG_NOTE This does not override the automatic theme change to celebrate National Day.
+@SG_NOTE After SGXCentral::setCustomTheme is called, this may not match the @SG_FINDREP_THEME being used.

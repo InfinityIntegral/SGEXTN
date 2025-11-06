@@ -1,0 +1,6 @@
+@SG_CPP_CLASS SGWHorizontalAlignment
+@SG_SHORT_DESCRP defines @SG_FINDREP_WIDGET text horizontal alignment
+@SG_LONG_DESCRP SGWHorizontalAlignment provides an enum describing the horizontal alignment mode of text in the @SG_FINDREP_WIDGET system. This is used by SGWLabel, SGWButton, and SGWInput.
+@SG_IMPLE provides an enum
+@SG_FUNC enum Flag{ Left, Center, Right };
+Defines if to left align, center align, or right align text.

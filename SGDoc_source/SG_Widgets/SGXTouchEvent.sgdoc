@@ -1,0 +1,52 @@
+@SG_CPP_CLASS SGXTouchEvent
+@SG_SHORT_DESCRP represents touch event
+@SG_LONG_DESCRP SGXTouchEvent returns a touch event received by SGWSingleTouchReceiver or a SGWMultiTouchReceiver. This is passed to the corresponding @SG_FINDREP_FUNCPTR to allow custom interactions.
+@SG_IMPLE Contains information about the touch event.
+@SG_FUNC enum TouchPhase{ TouchStart = 1, TouchOngoing = 2, TouchEnd = 3 };
+Indicates the type of touch event. The phase is TouchStart when the finger contacts the screen for the first time, TouchOngoing if the finger is moved while in contact with the screen, and TouchEnd when the finger is not in contact.
+@SG_PRIVATE_API SGXTouchEvent(int n);
+@SG_PRIVATE_API SGXTouchEvent(int n, const SGLArray<float>& data);
+@SG_FUNC float x;
+X coordinate in pixels of the SGXTouchEvent.
+@SG_FUNC float y;
+Y coordinate in pixels of the SGXTouchEvent.
+@SG_FUNC SGXTouchEvent::TouchPhase phase;
+Phase of the SGXTouchEvent.
+@SG_FUNC int id;
+Index of the SGXTouchEvent.
+@SG_NOTE The same touch event is guaranteed to have the same index across different frames.
+@SG_FUNC float differenceX;
+Difference in x coordinate between the SGXTouchEvent this frame and the corresponding SGXTouchEvent last frame.
+@SG_FUNC float differenceY;
+Difference in y coordinate between the SGXTouchEvent this frame and the corresponding SGXTouchEvent last frame.
+@SG_FUNC float previousX;
+X coordinate of the corresponding SGXTouchEvent last frame.
+@SG_FUNC float previousY;
+Y coordinate of the corresponding SGXTouchEvent last frame.
+@SG_FUNC float startX;
+X coordinate of the SGXTouchEvent on the first frame when the finger touched the screen.
+@SG_FUNC float startY;
+Y coordinate of the SGXTouchEvent on the first frame when the finger touched the screen.
+@SG_FUNC float force;
+Force of the user pressing their finger against the screen.
+@SG_NOTE This is always between 0 and 1.
+@SG_WARN This may not be available on some devices.
+@SG_FUNC float velocityX;
+X direction of the speed of the user moving their finger across the screen in pixels per second.
+@SG_WARN This may not be available on some devices.
+@SG_FUNC float velocityY;
+Y direction of the speed of the user moving their finger across the screen in pixels per second.
+@SG_WARN This may not be available on some devices.
+@SG_FUNC float radius;
+Radius of contact point in pixels.
+@SG_NOTE This can be used for palm detection.
+@SG_FUNC [[nodiscard]] bool operator==(SGXTouchEvent x) const;
+Equality check for SGLEqualsTo.
+@SG_FUNC [[nodiscard]] bool operator!=(SGXTouchEvent x) const;
+Inequality check for SGLEqualsTo.
+@SG_FUNC [[nodiscard]] bool operator<(SGXTouchEvent x) const;
+Lesser than operator for SGLLesserThan and SGLMoreThan.
+@SG_FUNC [[nodiscard]] bool operator>(SGXTouchEvent x) const;
+More than operator for SGLLesserThan and SGLMoreThan.
+@SG_FUNC [[nodiscard]] int hash() const;
+Hash function for SGLHash.

@@ -1,0 +1,73 @@
+@SG_CPP_CLASS SGWLabel
+@SG_SHORT_DESCRP @SG_FINDREP_WIDGET text label base class
+@SG_LONG_DESCRP SGWLabel provides a base class for @SG_FINDREP_WIDGET text labels. This is not meant to be instantiated directly, you are supposed to create its subclasses (SGWTextLabel, SGWIconLabel, SGWLongLabel, SGWSequentialLongLabel) to use its functionality.
+@SG_IMPLE Stores information about the SGWLabel.
+@SG_PRIVATE_API void syncQuickProperties();
+@SG_FUNC [[nodiscard]] float getF1() const;
+Returns the 1 coordinate of the font size as a @SG_FINDREP_WDIST.
+@SG_FUNC void setF1(float f1);
+Sets the 1 coordinate of the font size as a @SG_FINDREP_WDIST to $f1.
+@SG_FUNC [[nodiscard]] float getF0() const;
+Returns the 0 coordinate of the font size as a @SG_FINDREP_WDIST.
+@SG_FUNC void setF0(float f0);
+Sets the 0 coordinate of the font size as a @SG_FINDREP_WDIST to $f0.
+@SG_FUNC [[nodiscard]] SGXString getTextAsString() const;
+Returns the text displayed in the SGWLabel.
+@SG_FUNC [[nodiscard]] int getTextAsInt(bool* isValid, int minimum, int maximum) const;
+Returns the text displayed in the SGWLabel as an integer between $minimum and $maximum inclusive. If the text does not represent an integer or if it is out of bounds, $isValid is set to false and 0 is returned, otherwise $isValid is set to true.
+@SG_NOTE Pass nullptr to $isValid if you are not interested if the text represents an integer and the integer is in bounds.
+@SG_WARN $minimum more than $maximum is undefined behaviour.
+@SG_FUNC [[nodiscard]] float getTextAsFloat(bool* isValid, float minimum, float maximum) const;
+Returns the text displayed in the SGWLabel as a number between $minimum and $maximum inclusive. If the text does not represent a number or if it is out of bounds, $isValid is set to false and 0 is returned, otherwise $isValid is set to true.
+@SG_NOTE Pass nullptr to $isValid if you are not interested if the text represents a number and the integer is in bounds.
+@SG_WARN $minimum more than $maximum is undefined behaviour.
+@SG_FUNC void setTextFromString(const SGXString& s);
+Sets the text currently displayed in the SGWLabel to $s.
+@SG_FUNC void setTextFromInt(int x);
+Sets the text currently displayed in the SGWLabel to the string representation of $x.
+@SG_FUNC void setTextFromFloat(float x);
+Sets the text currently displayed in the SGWLabel to the string representation of $x.
+@SG_FUNC [[nodiscard]] SGXString getFont() const;
+Returns the current font used to display text in the SGWLabel.
+@SG_FUNC void setFont(const SGXString& font);
+Sets the SGWLabel to use $font to display text.
+@SG_FUNC [[nodiscard]] SGWHorizontalAlignment::Flag getHorizontalAlignment() const;
+Returns the current SGWHorizontalAlignment mode used to display text in this SGWLabel.
+@SG_FUNC void setHorizontalAlignment(SGWHorizontalAlignment::Flag alignment);
+Sets the SGWHorizontalAlignment mode used to display text in this SGWLabel to $alignment.
+@SG_FUNC [[nodiscard]] SGWVerticalAlignment::Flag getVerticalAlignment() const;
+Returns the current SGWVerticalAlignment mode used to display text in this SGWLabel.
+@SG_FUNC void setVerticalAlignment(SGWVerticalAlignment::Flag alignment);
+Sets the SGWVerticalAlignment mode used to display text in this SGWLabel to $alignment.
+@SG_FUNC [[nodiscard]] int getBackgroundThemeColour(bool* isUsing) const;
+Returns the @SG_FINDREP_THEME currently being used for the background of this SGWLabel. The bool that $isUsing points to is set to true if @SG_FINDREP_THEME mode is on, and false otherwise.
+@SG_NOTE If you are not interested in the current @SG_FINDREP_THEME mode, pass nullptr to $isUsing.
+@SG_FUNC void setBackgroundThemeColour(int themeColour);
+Sets the @SG_FINDREP_THEME of the background of this SGWLabel to $themeColour and turns on @SG_FINDREP_THEME mode.
+@SG_FUNC [[nodiscard]] SGXColourRGBA getBackgroundColour(bool* isUsing) const;
+Returns the SGXColourRGBA currently being used for the background of this SGWLabel. The bool that $isUsing points to is set to true if @SG_FINDREP_THEME mode is off, and false otherwise.
+@SG_NOTE If you are not interested in the current @SG_FINDREP_THEME mode, pass nullptr to $isUsing.
+@SG_FUNC void setBackgroundColour(SGXColourRGBA colour);
+Sets the SGXColourRGBA of the background of this SGWLabel to $colour and turns off @SG_FINDREP_THEME mode.
+@SG_FUNC [[nodiscard]] int getForegroundThemeColour(bool* isUsing) const;
+Returns the @SG_FINDREP_THEME currently being used for the foreground of this SGWLabel. The bool that $isUsing points to is set to true if @SG_FINDREP_THEME mode is on, and false otherwise.
+@SG_NOTE If you are not interested in the current @SG_FINDREP_THEME mode, pass nullptr to $isUsing.
+@SG_FUNC void setForegroundThemeColour(int themeColour);
+Sets the @SG_FINDREP_THEME of the foreground of this SGWLabel to $themeColour and turns on @SG_FINDREP_THEME mode.
+@SG_FUNC [[nodiscard]] SGXColourRGBA getForegroundColour(bool* isUsing) const;
+Returns the SGXColourRGBA currently being used for the foreground of this SGWLabel. The bool that $isUsing points to is set to true if @SG_FINDREP_THEME mode is off, and false otherwise.
+@SG_NOTE If you are not interested in the current @SG_FINDREP_THEME mode, pass nullptr to $isUsing.
+@SG_FUNC void setForegroundColour(SGXColourRGBA colour);
+Sets the SGXColourRGBA of the foreground of this SGWLabel to $colour and turns off @SG_FINDREP_THEME mode.
+@SG_PRIVATE_API SGWLabel(SGWWidget* parent, const SGXString& s, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float f1, float f0, SGWHorizontalAlignment::Flag horizontalAlignment, SGWVerticalAlignment::Flag verticalAlignment, const SGXString& font);
+@SG_PRIVATE_API float f1;
+@SG_PRIVATE_API float f0;
+@SG_PRIVATE_API SGXString text;
+@SG_PRIVATE_API SGXString font;
+@SG_PRIVATE_API SGWHorizontalAlignment::Flag horizontalAlignment;
+@SG_PRIVATE_API SGWVerticalAlignment::Flag verticalAlignment;
+@SG_PRIVATE_API bool usingTheme;
+@SG_PRIVATE_API int backgroundThemeColour;
+@SG_PRIVATE_API SGXColourRGBA backgroundColour;
+@SG_PRIVATE_API int foregroundThemeColour;
+@SG_PRIVATE_API SGXColourRGBA foregroundColour;

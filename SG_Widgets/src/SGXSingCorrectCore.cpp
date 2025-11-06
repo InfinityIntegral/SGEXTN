@@ -5,7 +5,7 @@
 #include <SGXChar.h>
 #include <SGXString.h>
 #include <private_api_Widgets/SGXSingCorrectQuickInterface.h>
-#include <SGXSingCorrectCustomisation.h>
+#include <private_api_Widgets/SGXSingCorrectCustomisation.h>
 
 SGXString SGXSingCorrectCore::correctionPrefix = "SG-\\";
 SGLUnorderedMap<SGXString, SGXChar, SGLEqualsTo<SGXString>, SGLHash<SGXString>>* SGXSingCorrectCore::database = nullptr;

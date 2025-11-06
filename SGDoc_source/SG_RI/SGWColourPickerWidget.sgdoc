@@ -12,27 +12,33 @@ Returns the currently chosen SGXColourRGBA.
 Sets the currently chosen SGXColourRGBA to $colour.
 @SG_NOTE This does not activate @SG_FINDREP_FUNCPTR.
 @SG_FUNC [[nodiscard]] int getBackgroundThemeColour(bool* isUsing) const;
-Returns the @SG_FINDREP_THEME currently being used for the background of this SGWColourPickerWidget. $isUsing is set to true if @SG_FINDREP_THEME mode is on, and false otherwise.
+Returns the @SG_FINDREP_THEME currently being used for the background of this SGWColourPickerWidget. The bool that $isUsing points to is set to true if @SG_FINDREP_THEME mode is on, and false otherwise.
+@SG_NOTE If you are not interested in the current @SG_FINDREP_THEME mode, pass nullptr to $isUsing.
 @SG_FUNC void setBackgroundThemeColour(int themeColour);
 Sets the @SG_FINDREP_THEME of the background of this SGWColourPickerWidget to $themeColour and turns on @SG_FINDREP_THEME mode.
 @SG_FUNC [[nodiscard]] SGXColourRGBA getBackgroundColour(bool* isUsing) const;
-Returns the SGXColourRGBA currently being used for the background of this SGWColourPickerWidget. $isUsing is set to true if @SG_FINDREP_THEME mode is off, and false otherwise.
+Returns the SGXColourRGBA currently being used for the background of this SGWColourPickerWidget. The bool that $isUsing points to is set to true if @SG_FINDREP_THEME mode is off, and false otherwise.
+@SG_NOTE If you are not interested in the current @SG_FINDREP_THEME mode, pass nullptr to $isUsing.
 @SG_FUNC void setBackgroundColour(SGXColourRGBA colour);
 Sets the SGXColourRGBA of the background of this SGWColourPickerWidget to $colour and turns off @SG_FINDREP_THEME mode.
 @SG_FUNC [[nodiscard]] int getBackgroundHoverThemeColour(bool* isUsing) const;
-Returns the @SG_FINDREP_THEME currently being used for the background of this SGWColourPickerWidget when hovered over. $isUsing is set to true if @SG_FINDREP_THEME mode is on, and false otherwise.
+Returns the @SG_FINDREP_THEME currently being used for the background of this SGWColourPickerWidget when hovered over. The bool that $isUsing points to is set to true if @SG_FINDREP_THEME mode is on, and false otherwise.
+@SG_NOTE If you are not interested in the current @SG_FINDREP_THEME mode, pass nullptr to $isUsing.
 @SG_FUNC void setBackgroundHoverThemeColour(int themeColour);
 Sets the @SG_FINDREP_THEME of the background of this SGWColourPickerWidget when hovered over to $themeColour and turns on @SG_FINDREP_THEME mode.
 @SG_FUNC [[nodiscard]] SGXColourRGBA getBackgroundHoverColour(bool* isUsing) const;
-Returns the SGXColourRGBA currently being used for the background of this SGWColourPickerWidget when hovered over. $isUsing is set to true if @SG_FINDREP_THEME mode is off, and false otherwise.
+Returns the SGXColourRGBA currently being used for the background of this SGWColourPickerWidget when hovered over. The bool that $isUsing points to is set to true if @SG_FINDREP_THEME mode is off, and false otherwise.
+@SG_NOTE If you are not interested in the current @SG_FINDREP_THEME mode, pass nullptr to $isUsing.
 @SG_FUNC void setBackgroundHoverColour(SGXColourRGBA colour);
 Sets the SGXColourRGBA of the background of this SGWColourPickerWidget when hovered over to $colour and turns off @SG_FINDREP_THEME mode.
 @SG_FUNC [[nodiscard]] int getBackgroundFocusThemeColour(bool* isUsing) const;
-Returns the @SG_FINDREP_THEME currently being used for the background of this SGWColourPickerWidget when focused. $isUsing is set to true if @SG_FINDREP_THEME mode is on, and false otherwise.
+Returns the @SG_FINDREP_THEME currently being used for the background of this SGWColourPickerWidget when focused. The bool that $isUsing points to is set to true if @SG_FINDREP_THEME mode is on, and false otherwise.
+@SG_NOTE If you are not interested in the current @SG_FINDREP_THEME mode, pass nullptr to $isUsing.
 @SG_FUNC void setBackgroundFocusThemeColour(int themeColour);
 Sets the @SG_FINDREP_THEME of the background of this SGWColourPickerWidget when focused to $themeColour and turns on @SG_FINDREP_THEME mode.
 @SG_FUNC [[nodiscard]] SGXColourRGBA getBackgroundFocusColour(bool* isUsing) const;
-Returns the SGXColourRGBA currently being used for the background of this SGWColourPickerWidget when focused. $isUsing is set to true if @SG_FINDREP_THEME mode is off, and false otherwise.
+Returns the SGXColourRGBA currently being used for the background of this SGWColourPickerWidget when focused. The bool that $isUsing points to is set to true if @SG_FINDREP_THEME mode is off, and false otherwise.
+@SG_NOTE If you are not interested in the current @SG_FINDREP_THEME mode, pass nullptr to $isUsing.
 @SG_FUNC void setBackgroundFocusColour(SGXColourRGBA colour);
 Sets the SGXColourRGBA of the background of this SGWColourPickerWidget when focused to $colour and turns off @SG_FINDREP_THEME mode.
 @SG_FUNC [[nodiscard]] float getE1() const;

@@ -1,0 +1,7 @@
+@SG_CPP_CLASS SGXThemeColours
+@SG_SHORT_DESCRP provides access to @SG_FINDREP_THEME
+@SG_LONG_DESCRP SGXThemeColours allows @SG_FINDREP_THEME to be accessed as SGXColourRGBA values. This can be helpful to set default colour choices to match @SG_FINDREP_THEME.
+@SG_IMPLE Returns @SG_FINDREP_THEME.
+@SG_FUNC static SGXColourRGBA getThemeColour(int themeColour);
+Returns @SG_FINDREP_THEME number $themeColour.
+@SG_NOTE If $themeColour is between 0 to 8 inclusive, this returns an actual colour. Otherwise it gives fully transparent black.

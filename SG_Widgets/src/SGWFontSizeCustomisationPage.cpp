@@ -7,7 +7,7 @@
 #include <SGWSequentialLongLabel.h>
 #include <SGWBlankWidget.h>
 #include <SGWTextInput.h>
-#include <SGXFontSizeCustomisation.h>
+#include <private_api_Widgets/SGXFontSizeCustomisation.h>
 #include <SGWNotify.h>
 #include <SGWSingleTouchReceiver.h>
 #include <SGXTouchEvent.h>
