@@ -12,7 +12,7 @@ Creates a SGLArray of size $count, with every element initialised to $defaultVal
 @SG_FUNC template <typename... Ts> SGLArray(Ts... data);
 SGLArray does not support initialisation using initialiser lists. This is the closest that you can get to using a initialiser list.
 This constructor of SGLArray takes a variable number of arguments corresponding to what the data inside should be set to. The length of the SGLArray is determined automatically from the number of arguments passed.
-SGLArray<int>(1, 2, 3, 4, 5) will create a SGLArray<int> with contents [1, 2, 3, 4, 5]
+The produced SGLArray will contain all the arguments passed in order to the variadic template $data, for example SGLArray<int>(1, 2, 3, 4, 5) will create a SGLArray<int> with contents [1, 2, 3, 4, 5]
 @SG_NOTE The arguments to this constructor must be within a pair of parentheses, not braces. This is NOT a initialiser list.
 @SG_WARN This constructor has lower function overload resolution priority than any other constructor. When using this to initialise a SGLArray containing 1 or 2 numerical data types, ensure that this does not resolve to another constructor unintentionally.
 @SG_FUNC void assign(int count, const T& defaultValue);

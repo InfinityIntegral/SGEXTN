@@ -60,20 +60,20 @@ String attached to this SGWColourPickerWidget.
 @SG_FINDREP_FUNCPTR taking no arguments, triggered when the SGWButton is released.
 @SG_NOTE This also triggers when the SGWButton is clicked.
 @SG_FUNC void (*clickFunctionWithInt)(int);
-@SG_FINDREP_FUNCPTR taking a int, triggered when the SGWButton is clicked and $SGWButton::attachedInt is passed as argument.
+@SG_FINDREP_FUNCPTR taking a int, triggered when the SGWButton is clicked and SGWButton::attachedInt is passed as argument.
 @SG_FUNC void (*pressFunctionWithInt)(int);
-@SG_FINDREP_FUNCPTR taking a int, triggered when the SGWButton is pressed down and $SGWButton::attachedInt is passed as argument.
+@SG_FINDREP_FUNCPTR taking a int, triggered when the SGWButton is pressed down and SGWButton::attachedInt is passed as argument.
 @SG_NOTE This also triggers when the SGWButton is clicked.
 @SG_FUNC void (*releaseFunctionWithInt)(int);
-@SG_FINDREP_FUNCPTR taking a int, triggered when the SGWButton is released and $SGWButton::attachedInt is passed as argument.
+@SG_FINDREP_FUNCPTR taking a int, triggered when the SGWButton is released and SGWButton::attachedInt is passed as argument.
 @SG_NOTE This also triggers when the SGWButton is clicked.
 @SG_FUNC void (*clickFunctionWithString)(const SGXString&);
-@SG_FINDREP_FUNCPTR taking a string, triggered when the SGWButton is clicked and $SGWButton::attachedString is passed as argument.
+@SG_FINDREP_FUNCPTR taking a string, triggered when the SGWButton is clicked and SGWButton::attachedString is passed as argument.
 @SG_FUNC void (*pressFunctionWithString)(const SGXString&);
-@SG_FINDREP_FUNCPTR taking a string, triggered when the SGWButton is pressed down and $SGWButton::attachedString is passed as argument.
+@SG_FINDREP_FUNCPTR taking a string, triggered when the SGWButton is pressed down and SGWButton::attachedString is passed as argument.
 @SG_NOTE This also triggers when the SGWButton is clicked.
 @SG_FUNC void (*releaseFunctionWithString)(const SGXString&);
-@SG_FINDREP_FUNCPTR taking a string, triggered when the SGWButton is released and $SGWButton::attachedString is passed as argument.
+@SG_FINDREP_FUNCPTR taking a string, triggered when the SGWButton is released and SGWButton::attachedString is passed as argument.
 @SG_NOTE This also triggers when the SGWButton is clicked.
 @SG_FUNC void (*clickFunctionWithPointer)(SGWButton*);
 @SG_FINDREP_FUNCPTR taking a pointer to SGWButton, triggered when the SGWButton is clicked and the pointer to this SGWButton is passed as argument.

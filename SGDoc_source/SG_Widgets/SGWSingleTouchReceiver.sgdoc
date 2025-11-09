@@ -22,9 +22,9 @@ String attached to this SGWSingleTouchReceiver.
 @SG_FINDREP_FUNCPTR called when the user interacts with the SGWSingleTouchReceiver. The touch event is sent as a SGXTouchEvent along with a pointer to this SGWSingleTouchReceiver.
 @SG_FUNC [[nodiscard]] float getWidth() const;
 Returns the width in pixels of this SGWSingleTouchReceiver.
-@SG_WARN This should only be used to interpret the SGXTouchEvent sent from the @SGWSingleTouchReceiver. Using pixel size for any other purpose is not recommended, instead use @SG_FINDREP_WDIST.
+@SG_WARN This should only be used to interpret the SGXTouchEvent sent from the SGWSingleTouchReceiver. Using pixel size for any other purpose is not recommended, instead use @SG_FINDREP_WDIST.
 @SG_FUNC [[nodiscard]] float getHeight() const;
 Returns the height in pixels of this SGWSingleTouchReceiver.
-@SG_WARN This should only be used to interpret the SGXTouchEvent sent from the @SGWSingleTouchReceiver. Using pixel size for any other purpose is not recommended, instead use @SG_FINDREP_WDIST.
+@SG_WARN This should only be used to interpret the SGXTouchEvent sent from the SGWSingleTouchReceiver. Using pixel size for any other purpose is not recommended, instead use @SG_FINDREP_WDIST.
 @SG_PRIVATE_API void eventReceived(const SGXString& s);
 @SG_PRIVATE_API SGWWidgetQuickInterface* quickInterface;

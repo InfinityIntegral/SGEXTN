@@ -5,19 +5,19 @@
 @SG_PRIVATE_API unsigned int x;
 @SG_PRIVATE_API SGXColourRGBA(unsigned int x0);
 @SG_FUNC SGXColourRGBA(int r, int g, int b, int a);
-Creates a SGXColourRGBA from its components.
+Creates a SGXColourRGBA from its components (red $r, green $g, blue $b, transparency $a).
 @SG_NOTE Each channel should range from 0 to 255 inclusive. Out of bounds channels are corrected automatically.
 @SG_WARN Ensure that all arguments passed have a type of int, otherwise it may trigger the wrong constructor.
 @SG_FUNC SGXColourRGBA(int r, int g, int b);
-Creates a SGXColourRGBA from its components with transparency assumed to be 255.
+Creates a SGXColourRGBA from its components (red $r, green $g, blue $b) with transparency assumed to be 255.
 @SG_NOTE Each channel should range from 0 to 255 inclusive. Out of bounds channels are corrected automatically.
 @SG_WARN Ensure that all arguments passed have a type of int, otherwise it may trigger the wrong constructor.
 @SG_FUNC SGXColourRGBA(float r, float g, float b, float a);
-Creates a SGXColourRGBA from its components.
+Creates a SGXColourRGBA from its components (red $r, green $g, blue $b, transparency $a).
 @SG_NOTE Each channel should range from 0 to 1 inclusive. Out of bounds channels are corrected automatically.
 @SG_WARN Ensure that all arguments passed have a type of float, otherwise it may trigger the wrong constructor.
 @SG_FUNC SGXColourRGBA(float r, float g, float b);
-Creates a SGXColourRGBA from its components with transparency assumed to be 1.
+Creates a SGXColourRGBA from its components (red $r, green $g, blue $b) with transparency assumed to be 1.
 @SG_NOTE Each channel should range from 0 to 1 inclusive. Out of bounds channels are corrected automatically.
 @SG_WARN Ensure that all arguments passed have a type of float, otherwise it may trigger the wrong constructor.
 @SG_FUNC [[nodiscard]] int getRed() const;
@@ -73,13 +73,13 @@ Returns the HTML style string representation of this SGXColourRGBA with colour b
 @SG_FUNC [[nodiscard]] SGXString getStringForPrintingRGBAFloatHTML() const;
 Returns the HTML style string representation of this SGXColourRGBA with colour between 0 and 1 inclusive, this is something like rgb(1.0, 0.0, 0.8, 1.0).
 @SG_FUNC [[nodiscard]] bool operator==(SGXColourRGBA x) const;
-Equality check defined for SGLEqualsTo.
+Equality check with $x defined for SGLEqualsTo.
 @SG_FUNC [[nodiscard]] bool operator!=(SGXColourRGBA x) const;
-Inequality check defined for SGLEqualsTo.
+Inequality check with $x defined for SGLEqualsTo.
 @SG_FUNC [[nodiscard]] bool operator<(SGXColourRGBA x) const;
-Lesser than operator defined for SGLLesserThan and SGLMoreThan.
+Lesser than operator with $x defined for SGLLesserThan and SGLMoreThan.
 @SG_FUNC [[nodiscard]] bool operator>(SGXColourRGBA x) const;
-More than operator defined for SGLLesserThan and SGLMoreThan.
+More than operator with $x defined for SGLLesserThan and SGLMoreThan.
 @SG_FUNC [[nodiscard]] int hash() const;
 Hash function defined for SGLHash.
 @SG_FUNC void linearTransformRed(float m, float c);

@@ -2,7 +2,7 @@
 @SG_SHORT_DESCRP represents touch event
 @SG_LONG_DESCRP SGXTouchEvent returns a touch event received by SGWSingleTouchReceiver or a SGWMultiTouchReceiver. This is passed to the corresponding @SG_FINDREP_FUNCPTR to allow custom interactions.
 @SG_IMPLE Contains information about the touch event.
-@SG_FUNC enum TouchPhase{ TouchStart = 1, TouchOngoing = 2, TouchEnd = 3 };
+@SG_FUNC enum TouchPhase{ TouchStart, TouchOngoing, TouchEnd };
 Indicates the type of touch event. The phase is TouchStart when the finger contacts the screen for the first time, TouchOngoing if the finger is moved while in contact with the screen, and TouchEnd when the finger is not in contact.
 @SG_PRIVATE_API SGXTouchEvent(int n);
 @SG_PRIVATE_API SGXTouchEvent(int n, const SGLArray<float>& data);
@@ -41,12 +41,12 @@ Y direction of the speed of the user moving their finger across the screen in pi
 Radius of contact point in pixels.
 @SG_NOTE This can be used for palm detection.
 @SG_FUNC [[nodiscard]] bool operator==(SGXTouchEvent x) const;
-Equality check for SGLEqualsTo.
+Equality check with $x for SGLEqualsTo.
 @SG_FUNC [[nodiscard]] bool operator!=(SGXTouchEvent x) const;
-Inequality check for SGLEqualsTo.
+Inequality check with $x for SGLEqualsTo.
 @SG_FUNC [[nodiscard]] bool operator<(SGXTouchEvent x) const;
-Lesser than operator for SGLLesserThan and SGLMoreThan.
+Lesser than operator with $x for SGLLesserThan and SGLMoreThan.
 @SG_FUNC [[nodiscard]] bool operator>(SGXTouchEvent x) const;
-More than operator for SGLLesserThan and SGLMoreThan.
+More than operator with $x for SGLLesserThan and SGLMoreThan.
 @SG_FUNC [[nodiscard]] int hash() const;
 Hash function for SGLHash.

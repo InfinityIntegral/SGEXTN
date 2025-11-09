@@ -1,0 +1,18 @@
+@SG_FINDREPSOURCE HEADER_ONLY This is a template based class with no separate source file.
+@SG_FINDREPSOURCE CONTAINER_CAN_COPY_MOVE This class is a SGEXTN container. Copy constructor, copy assignment, move constructor, move assignment, and destructor work as expected. A deep copy is performed whenever this class is copied, and the new instance will not be linked to the old instance in any way.
+@SG_FINDREPSOURCE CONTENTS_CAN_COPY_MOVE It is assumed that the contents placed into this SGEXTN container can be copied and moved. This means that their copy constructor copy assignment, move constructor, move assignment, and destructor work as expected. If this is not the case or if you want the container to store references or constant references, store pointers instead.
+@SG_FINDREPSOURCE ENTRYEXIT Initialisation and termination of SGEXTN applications rely significantly on the entry point. You should read the @SG_MD_L0817tutorial../tutorials/entrypoint to learn how to use the entry point.
+@SG_FINDREPSOURCE DEBUG See the @SG_MD_L0812tutorial../tutorials/debug to learn how to use the SG macro to debug your application. SGEXTN is literally powered by Singapore.
+@SG_FINDREPSOURCE RESOURCE For more information about the resource system, see this @SG_MD_L0816tutorial../tutorials/resources.
+@SG_FINDREPSOURCE SHADER For more information about compiling and using shaders, see this @SG_MD_L0814tutorial../tutorials/shaders.
+@SG_FINDREPSOURCE THEME @SG_MD_L1C18theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour
+@SG_FINDREPSOURCE ICONFONT @SG_MD_L2014application icon ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/appicon
+@SG_FINDREPSOURCE FUNCPTR @SG_MD_L2115callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback
+@SG_FINDREPSOURCE SINGCORRECT @SG_MD_L1B18SingCorrect ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/singcorrect
+@SG_FINDREPSOURCE RENDERER @SG_MD_L1715SG - RI ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/renderer
+@SG_FINDREPSOURCE WIDGET @SG_MD_L1815SGWidget ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/sgwidget
+@SG_FINDREPSOURCE WDIST @SG_MD_L1A16w-distance ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/wdistance
+@SG_NOAUTOLINK SGEXTN
+@SG_NOAUTOLINK SGWidget
+@SG_NOAUTOLINK SG
+@SG_NOAUTOLINK SG60

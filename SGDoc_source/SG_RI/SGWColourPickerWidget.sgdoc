@@ -58,9 +58,9 @@ String attached to this SGWColourPickerWidget.
 @SG_FUNC void (*attachedFunction)();
 @SG_FINDREP_FUNCPTR taking no arguments, triggered when a colour is selected by the user.
 @SG_FUNC void (*attachedFunctionWithInt)(int);
-@SG_FINDREP_FUNCPTR taking a int, triggered when a colour is selected by the user and $SGWColourPickerWidget::attachedInt is passed as argument.
+@SG_FINDREP_FUNCPTR taking a int, triggered when a colour is selected by the user and SGWColourPickerWidget::attachedInt is passed as argument.
 @SG_FUNC void (*attachedFunctionWithString)(const SGXString&);
-@SG_FINDREP_FUNCPTR taking a string, triggered when a colour is selected by the user and $SGWColourPickerWidget::attachedString is passed as argument.
+@SG_FINDREP_FUNCPTR taking a string, triggered when a colour is selected by the user and SGWColourPickerWidget::attachedString is passed as argument.
 @SG_FUNC void (*attachedFunctionWithPointer)(SGWColourPickerWidget*);
 @SG_FINDREP_FUNCPTR taking a pointer to SGWColourPickerWidget, triggered when a colour is selected by the user and the pointer to this SGWColourPickerWidget is passed as argument.
 @SG_PRIVATE_API void eventReceived(const SGXString& s);

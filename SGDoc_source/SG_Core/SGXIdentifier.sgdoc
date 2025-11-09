@@ -15,10 +15,10 @@ Null identifier, or SGXIdentifier with all bits at zero.
 Generates a new random SGXIdentifier. If $ifValid is true, it is guaranteed that the generated SGXIdentifier does not collide with any existing registered SGXIdentifier.
 @SG_NOTE Setting $ifValid to true does not register the generated SGXIdentifier, it has to be registered using SGXIdentifier::registerIdentifier separately.
 @SG_FUNC SGXIdentifier(unsigned int a, unsigned int b, unsigned int c, unsigned int d, bool ifValid, int* errCode);
-Generates a SGXIdentifier storing information from $a, $b, $c, $d, this can be used for generating SGXIdentifiers consistently from a set of data. If $ifValid is true, it is checked if the SGXIdentifier is already registered. In that case, if the constructed SGXIdentifier is the null identifier, the int pointed to by $errCode is set to 2. If the constructed SGXIdentifier overlaps with an existing registered SGXIdentifier, the int pointed to by $errCode is set to 1. Otherwise the int pointed to by $errCode is set to 0. Pass $errCode as nullptr if you do not need existence checking.
+Generates a SGXIdentifier storing information from $a, $b, $c, $d, this can be used for generating SGXIdentifier objects consistently from a set of data. If $ifValid is true, it is checked if the SGXIdentifier is already registered. In that case, if the constructed SGXIdentifier is the null identifier, the int pointed to by $errCode is set to 2. If the constructed SGXIdentifier overlaps with an existing registered SGXIdentifier, the int pointed to by $errCode is set to 1. Otherwise the int pointed to by $errCode is set to 0. Pass $errCode as nullptr if you do not need existence checking.
 @SG_NOTE Setting $ifValid to true does not register the generated SGXIdentifier, it has to be registered using SGXIdentifier::registerIdentifier separately.
 @SG_FUNC SGXIdentifier(const SGXString& s, bool ifValid, int* errCode);
-Generates a SGXIdentifier from the string representation $s, this can be used for generating SGXIdentifiers consistently from a set of data. If $ifValid is true, it is checked if the SGXIdentifier is already registered. In that case, if the constructed SGXIdentifier is the null identifier, the int pointed to by $errCode is set to 2. If the constructed SGXIdentifier overlaps with an existing registered SGXIdentifier, the int pointed to by $errCode is set to 1. Otherwise the int pointed to by $errCode is set to 0. Pass $errCode as nullptr if you do not need existence checking.
+Generates a SGXIdentifier from the string representation $s, this can be used for generating SGXIdentifier objects consistently from a set of data. If $ifValid is true, it is checked if the SGXIdentifier is already registered. In that case, if the constructed SGXIdentifier is the null identifier, the int pointed to by $errCode is set to 2. If the constructed SGXIdentifier overlaps with an existing registered SGXIdentifier, the int pointed to by $errCode is set to 1. Otherwise the int pointed to by $errCode is set to 0. Pass $errCode as nullptr if you do not need existence checking.
 @SG_NOTE Setting $ifValid to true does not register the generated SGXIdentifier, it has to be registered using SGXIdentifier::registerIdentifier separately.
 @SG_WARN This only works if $s was generated using SGXIdentifier::getStringForPrinting. If $s does not represent a valid SGXIdentifier in the defined format, a null identifier is constructed.
 @SG_FUNC [[nodiscard]] int registerIdentifier() const;
@@ -31,13 +31,13 @@ Unregisters this SGXIdentifier. The function returns 1 if the SGXIdentifier was 
 Returns if the SGXIdentifier has already been registered.
 @SG_NOTE There is no need to use SGXIdentifier::exists before SGXIdentifier::registerIdentifier or SGXIdentifier::unregisterIdentifier as the check is done internally.
 @SG_FUNC [[nodiscard]] bool operator==(SGXIdentifier x) const;
-Returns if this SGXIdentifier is the same as another SGXIdentifier.
+Returns if this SGXIdentifier is the same as $x.
 @SG_FUNC [[nodiscard]] bool operator!=(SGXIdentifier x) const;
-Returns if this SGXIdentifier is not the same as another SGXIdentifier.
+Returns if this SGXIdentifier is not the same as $x.
 @SG_FUNC [[nodiscard]] bool operator<(SGXIdentifier x) const;
-Lesser than operator defined for SGLLesserThan and SGLMoreThan.
+Lesser than operator with $x defined for SGLLesserThan and SGLMoreThan.
 @SG_FUNC [[nodiscard]] bool operator>(SGXIdentifier x) const;
-More than operator defined for SGLLesserThan and SGLMoreThan.
+More than operator with $x defined for SGLLesserThan and SGLMoreThan.
 @SG_FUNC [[nodiscard]] int hash() const;
 Hash function defined for SGLHash.
 @SG_FUNC [[nodiscard]] SGXString getStringForPrinting() const;

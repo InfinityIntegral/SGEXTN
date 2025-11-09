@@ -13,7 +13,7 @@ Sends a informational message $s in the top status bar.
 @SG_PRIVATE_API static float animationLength;
 @SG_PRIVATE_API static void animate();
 @SG_FUNC static void pullDownNotify(const SGXString& s);
-Sends a pull down notification which pulls down the status bar to catch attention.
+Sends a pull down notification with message $s which pulls down the status bar to catch attention.
 @SG_NOTE This disrupts user interaction with the application and only should be used when immediate attention is required.
 @SG_PRIVATE_API static SGWLabel* pullDownInstance;
 @SG_PRIVATE_API static SGXTimer* pullDownTimer;

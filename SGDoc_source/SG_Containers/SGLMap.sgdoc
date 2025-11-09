@@ -47,55 +47,55 @@ Returns a reference to the value associated with key $x in the SGLMap.
 @SG_FUNC [[nodiscard]] const V& at(const K& x) const;
 Returns a constant reference to the value associated with key $x in the SGLMap.
 @SG_WARN This crashes if $x is not in the SGLMap. Use SGLMap::contains to check if $x is in the SGLMap if unsure.
-@SG_FUNC [[nodiscard]] Iterator begin();
+@SG_FUNC [[nodiscard]] SGLMap::Iterator begin();
 Returns a iterator to the first key value pair in the SGLMap.
 @SG_NOTE SGLMap iterators behave circularly. This is equivalent to running operator++ on SGLMap::end.
 @SG_NOTE SGLMap::Iterator allows modifying the SGLMap through it. If modification is not needed, use SGLMap::ConstIterator instead. The SGLMap::ConstIterator equivalent to this function is SGLMap::constBegin.
 @SG_WARN If the SGLMap is empty, this is the same as SGLMap::end.
-@SG_FUNC [[nodiscard]] ConstIterator constBegin() const;
+@SG_FUNC [[nodiscard]] SGLMap::ConstIterator constBegin() const;
 Returns a constant iterator to the first key value pair in the SGLMap.
 @SG_NOTE SGLMap iterators behave circularly. This is equivalent to running operator++ on SGLMap::constEnd.
 @SG_WARN If the SGLMap is empty, this is the same as SGLMap::constEnd.
-@SG_FUNC [[nodiscard]] Iterator end();
+@SG_FUNC [[nodiscard]] SGLMap::Iterator end();
 Returns a null iterator associated to this SGLMap.
 @SG_NOTE SGLMap iterators behave circularly. This is equivalent to running operator-- on SGLMap::begin.
 @SG_NOTE SGLMap::Iterator allows modifying the SGLMap through it. If modification is not needed, use SGLMap::ConstIterator instead. The SGLMap::ConstIterator equivalent to this function is SGLMap::constEnd.
 @SG_WARN Attempting to access the key or value that this iterator points to is undefined behaviour.
-@SG_FUNC [[nodiscard]] ConstIterator constEnd() const;
+@SG_FUNC [[nodiscard]] SGLMap::ConstIterator constEnd() const;
 Returns a null constant iterator associated to this SGLMap.
 @SG_NOTE SGLMap iterators behave circularly. This is equivalent to running operator-- on SGLMap::constBegin.
 @SG_WARN Attempting to access the key or value that this iterator points to is undefined behaviour.
-@SG_FUNC void erase(Iterator& i);
+@SG_FUNC void erase(SGLMap::Iterator& i);
 Removes the key value pair associated with $i from the SGLMap.
 After the removal, $i which is passed as a reference, is decremented. This means that you do not have to do any special handling for removed elements when iterating over a SGLMap.
 @SG_WARN Do not write any special logic to modify iterators while removing elements from a SGLMap in a loop, SGLMap::erase handles this for you automatically.
-@SG_FUNC [[nodiscard]] Iterator find(const K& x);
+@SG_FUNC [[nodiscard]] SGLMap::Iterator find(const K& x);
 Returns the iterator pointing to key $x.
 @SG_NOTE SGLMap::end is returned if $x is not in the SGLMap.
-@SG_FUNC [[nodiscard]] ConstIterator find(const K& x) const;
+@SG_FUNC [[nodiscard]] SGLMap::ConstIterator find(const K& x) const;
 Returns the constant iterator pointing to key $x.
 @SG_NOTE SGLMap::constEnd is returned if $x is not in the SGLMap.
-@SG_FUNC [[nodiscard]] Iterator lowerBound(const K& x);
+@SG_FUNC [[nodiscard]] SGLMap::Iterator lowerBound(const K& x);
 Returns a iterator to the first key value pair in the SGLMap with a key more than or equal to $x.
 @SG_NOTE SGLMap::end is returned if no such iterator exists.
-@SG_FUNC [[nodiscard]] ConstIterator lowerBound(const K& x) const;
+@SG_FUNC [[nodiscard]] SGLMap::ConstIterator lowerBound(const K& x) const;
 Returns a constant iterator to the first key value pair in the SGLMap with a key more than or equal to $x.
 @SG_NOTE SGLMap::constEnd is returned if no such iterator exists.
-@SG_FUNC [[nodiscard]] Iterator upperBound(const K& x);
+@SG_FUNC [[nodiscard]] SGLMap::Iterator upperBound(const K& x);
 Returns a iterator to the first key value pair in the SGLMap with a key strictly more than $x.
 @SG_NOTE SGLMap::end is returned if no such iterator exists.
-@SG_FUNC [[nodiscard]] ConstIterator upperBound(const K& x) const;
+@SG_FUNC [[nodiscard]] SGLMap::ConstIterator upperBound(const K& x) const;
 Returns a constant iterator to the first key value pair in the SGLMap with a key strictly more than $x.
 @SG_NOTE SGLMap::constEnd is returned if no such iterator exists.
 @SG_FUNC [[nodiscard]] int indexOf(const K& x) const;
 Returns the index of the key value pair with key $x in the SGLMap.
 @SG_NOTE -1 is returned if the key $x is not in the SGLMap.
 @SG_WARN The index may change if elements are inserted into or removed from SGLMap to keep the SGLMap always sorted by key.
-@SG_FUNC [[nodiscard]] int indexOf(Iterator i) const;
+@SG_FUNC [[nodiscard]] int indexOf(SGLMap::Iterator i) const;
 Returns the index of the key value pair in the SGLMap that $i points to.
 @SG_NOTE -1 is returned if $i is SGLMap::end.
 @SG_WARN The index may change if elements are inserted into or removed from SGLMap to keep the SGLMap always sorted by key.
-@SG_FUNC [[nodiscard]] int indexOf(ConstIterator i) const;
+@SG_FUNC [[nodiscard]] int indexOf(SGLMap::ConstIterator i) const;
 Returns the index of the key value pair in the SGLMap that $i points to.
 @SG_NOTE -1 is returned if $i is SGLMap::constEnd.
 @SG_WARN The index may change if elements are inserted into or removed from SGLMap to keep the SGLMap always sorted by key.
@@ -106,11 +106,11 @@ Returns the key at index $n in the SGLMap.
 Returns the value associated with the key at index $n in the SGLMap.
 @SG_NOTE The value is returned as a reference and not a copy. Assigning to it (using it as a lvalue) modifies the SGLMap.
 @SG_WARN If $n is out of bounds, this is undefined behaviour.
-@SG_FUNC [[nodiscard]] Iterator iteratorAt(int n);
+@SG_FUNC [[nodiscard]] SGLMap::Iterator iteratorAt(int n);
 Returns the iterator pointing towards the key value pair, the key of which is at index $n in the SGLMap.
 @SG_NOTE SGLMap::Iterator allows modifying the SGLMap through it. If modification is not needed, use SGLMap::ConstIterator instead. The SGLMap::ConstIterator equivalent to this function is SGLMap::constIteratorAt.
 @SG_NOTE If $n is out of bounds, SGLMap::end is returned.
-@SG_FUNC [[nodiscard]] ConstIterator constIteratorAt(int n) const;
+@SG_FUNC [[nodiscard]] SGLMap::ConstIterator constIteratorAt(int n) const;
 Returns the constant iterator pointing towards the key value pair, the key of which is at index $n in the SGLMap.
 @SG_NOTE If $n is out of bounds, SGLMap::constEnd is returned.
 
@@ -118,21 +118,21 @@ Returns the constant iterator pointing towards the key value pair, the key of wh
 @SG_SHORT_DESCRP iterator for SGLMap
 @SG_LONG_DESCRP SGLMap::Iterator is a iterator for SGLMap and points towards a key value pair in the SGLMap. This can be used to iterate over the SGLMap sequentially. If you do not need to modify the SGLMap while iterating, use SGLMap::ConstIterator instead. @SG_FINDREP_HEADER_ONLY
 @SG_IMPLE SGLMap::Iterator stores a pointer to the memory location where SGLMap keeps all its data.
-@SG_FUNC Iterator& operator++();
+@SG_FUNC SGLMap::Iterator& operator++();
 Increments the iterator to point towards the next key value pair and returns the new iterator.
 @SG_NOTE SGLMap::Iterator is circular, incrementing SGLMap::end gives SGLMap::begin and decrementing SGLMap::begin gives SGLMap::end.
-@SG_FUNC Iterator operator++(int);
+@SG_FUNC SGLMap::Iterator operator++(int);
 Increments the iterator to point towards the next key value pair and returns the old iterator.
 @SG_NOTE SGLMap::Iterator is circular, incrementing SGLMap::end gives SGLMap::begin and decrementing SGLMap::begin gives SGLMap::end.
-@SG_FUNC Iterator& operator--();
+@SG_FUNC SGLMap::Iterator& operator--();
 Decrements the iterator to point towards the previous key value pair and returns the new iterator.
 @SG_NOTE SGLMap::Iterator is circular, incrementing SGLMap::end gives SGLMap::begin and decrementing SGLMap::begin gives SGLMap::end.
-@SG_FUNC Iterator operator--(int);
+@SG_FUNC SGLMap::Iterator operator--(int);
 Decrements the iterator to point towards the previous key value pair and returns the old iterator.
 @SG_NOTE SGLMap::Iterator is circular, incrementing SGLMap::end gives SGLMap::begin and decrementing SGLMap::begin gives SGLMap::end.
-@SG_FUNC bool operator==(Iterator x);
+@SG_FUNC bool operator==(SGLMap::Iterator x);
 Checks if this iterator points to the same key value pair as $x.
-@SG_FUNC bool operator!=(Iterator x);
+@SG_FUNC bool operator!=(SGLMap::Iterator x);
 Checks if this iterator points to a different key value pair from $x.
 @SG_FUNC const K& key();
 Returns the key in the key value pair that this iterator points to.
@@ -141,7 +141,7 @@ Returns the key in the key value pair that this iterator points to.
 Returns a reference to the value in the key value pair that this iterator points to.
 @SG_NOTE This returns a reference and not a copy. Assigning to the returned reference (using it as a lvalue) modifies the SGLMap.
 @SG_WARN If this iterator is SGLMap::end, using this function results in undefined behaviour.
-@SG_PRIVATE_API Iterator(Node* x, SGLMap* s);
+@SG_PRIVATE_API SGLMap::Iterator(Node* x, SGLMap* s);
 @SG_PRIVATE_API Node* node;
 @SG_PRIVATE_API SGLMap* associatedSet;
 
@@ -149,28 +149,28 @@ Returns a reference to the value in the key value pair that this iterator points
 @SG_SHORT_DESCRP constant iterator for SGLMap
 @SG_LONG_DESCRP SGLMap::ConstIterator is a constant iterator for SGLMap and points towards a key value pair in the SGLMap. This can be used to iterate over the SGLMap sequentially. Modification to the SGLMap through a constant iterator is not possible. To do that, use a SGLMap::Iterator instead. @SG_FINDREP_HEADER_ONLY
 @SG_IMPLE SGLMap::ConstIterator stores a pointer to the memory location where SGLMap keeps all its data.
-@SG_FUNC ConstIterator& operator++();
+@SG_FUNC SGLMap::ConstIterator& operator++();
 Increments the constant iterator to point towards the next key value pair and returns the new constant iterator.
 @SG_NOTE SGLMap::ConstIterator is circular, incrementing SGLMap::constEnd gives SGLMap::constBegin and decrementing SGLMap::constBegin gives SGLMap::constEnd.
-@SG_FUNC ConstIterator operator++(int);
+@SG_FUNC SGLMap::ConstIterator operator++(int);
 Increments the constant iterator to point towards the next key value pair and returns the old constant iterator.
 @SG_NOTE SGLMap::ConstIterator is circular, incrementing SGLMap::constEnd gives SGLMap::constBegin and decrementing SGLMap::constBegin gives SGLMap::constEnd.
-@SG_FUNC ConstIterator& operator--();
+@SG_FUNC SGLMap::ConstIterator& operator--();
 Decrements the constant iterator to point towards the previous key value pair and returns the new constant iterator.
 @SG_NOTE SGLMap::ConstIterator is circular, incrementing SGLMap::constEnd gives SGLMap::constBegin and decrementing SGLMap::constBegin gives SGLMap::constEnd.
-@SG_FUNC ConstIterator operator--(int);
+@SG_FUNC SGLMap::ConstIterator operator--(int);
 Decrements the constant iterator to point towards the previous key value pair and returns the old constant iterator.
 @SG_NOTE SGLMap::ConstIterator is circular, incrementing SGLMap::constEnd gives SGLMap::constBegin and decrementing SGLMap::constBegin gives SGLMap::constEnd.
-@SG_FUNC bool operator==(ConstIterator x);
+@SG_FUNC bool operator==(SGLMap::ConstIterator x);
 Checks if this constant iterator points to the same key value pair as $x.
-@SG_FUNC bool operator!=(ConstIterator x);
+@SG_FUNC bool operator!=(SGLMap::ConstIterator x);
 Checks if this constant iterator points to a different key value pair from $x.
 @SG_FUNC const K& key();
 Returns the key in the key value pair that this constant iterator points to.
 @SG_WARN If this iterator is SGLMap::constEnd, using this function results in undefined behaviour.
-@SG_FUNC V& value();
+@SG_FUNC const V& value();
 Returns the value in the key value pair that this constant iterator points to.
 @SG_WARN If this iterator is SGLMap::constEnd, using this function results in undefined behaviour.
-@SG_PRIVATE_API ConstIterator(Node* x, SGLMap* s);
+@SG_PRIVATE_API SGLMap::ConstIterator(Node* x, const SGLMap* s);
 @SG_PRIVATE_API Node* node;
-@SG_PRIVATE_API SGLMap* associatedSet;
+@SG_PRIVATE_API const SGLMap* associatedSet;

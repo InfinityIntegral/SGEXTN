@@ -9,16 +9,16 @@ Second component.
 @SG_FUNC SGLPair(T1 first, T2 second);
 Creates a SGLPair with the first element $first and second element $second.
 @SG_FUNC [[nodiscard]] bool operator==(const SGLPair& x) const;
-Returns if this pair is equal to another pair.
+Returns if this pair is equal to $x.
 @SG_NOTE This is ignored if any component does not have operator== defined.
 @SG_FUNC [[nodiscard]] bool operator!=(const SGLPair& x) const;
-Returns if this pair is not equal to another pair.
+Returns if this pair is not equal to $x.
 @SG_NOTE This is ignored if any component does not have operator!= defined.
 @SG_FUNC [[nodiscard]] bool operator<(const SGLPair& x) const;
-Returns if this pair is less than another pair, components in front have their comparators taking priority.
+Returns if this pair is less than $x, components in front have their comparators taking priority.
 @SG_NOTE This is ignored if any component does not have operator< or operator> defined.
 @SG_FUNC [[nodiscard]] bool operator>(const SGLPair& x) const;
-Returns if this pair is more than another pair, components in front have their comparators taking priority.
+Returns if this pair is more than $x, components in front have their comparators taking priority.
 @SG_NOTE This is ignored if any component does not have operator< or operator> defined.
 @SG_FUNC [[nodiscard]] int hash() const;
 Returns the hash value of this pair, used by SGLHash.

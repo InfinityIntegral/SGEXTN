@@ -4,10 +4,10 @@
 @SG_IMPLE SGXChar stores the Unicode value of the character. When language aware features are needed, it uses QChar internally.
 @SG_PRIVATE_API unsigned short data;
 @SG_FUNC SGXChar(char c);
-Converts a C++ char to a SGXChar.
+Converts C++ char $c to a SGXChar.
 @SG_PRIVATE_API SGXChar(unsigned short data);
 @SG_FUNC SGXChar(int unicode);
-Converts a Unicode index to its corresponding SGXChar.
+Converts Unicode index $unicode to its corresponding SGXChar.
 @SG_WARN If $unicode is below 0 or above 65535, this is undefined behaviour.
 @SG_FUNC [[nodiscard]] operator char() const;
 Converts SGXChar to a C++ char.

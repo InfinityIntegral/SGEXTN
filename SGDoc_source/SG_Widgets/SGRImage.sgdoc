@@ -12,7 +12,7 @@ Creates a SGRImage with width $w pixels, height $h pixels, containing uninitiali
 @SG_FUNC SGRImage(const SGXString& filePath);
 Creates a SGRImage using the image found at $filePath.
 @SG_WARN Nonexistent $filePath is undefined behaviour.
-@SG_WARN The matching files must exist in the @SG_FINDREP_QRCRESOURCE. To ensure that, use relevant @SG_FINDREP_CMAKE commands.
+@SG_WARN The matching file must exist in the resource system. To ensure that, use relevant CMake commands. @SG_FINDREP_RESOURCE
 @SG_PRIVATE_API QImage* data;
 @SG_FUNC [[nodiscard]] int width() const;
 Returns the width of this SGRImage.

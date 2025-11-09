@@ -15,18 +15,18 @@ Lightness of the SGXColourHSLA.
 Transparency of the SGXColourHSLA.
 @SG_WARN Setting this to a value below 0 or above 100 is undefined behaviour.
 @SG_FUNC SGXColourHSLA(SGXColourRGBA x);
-Creates a SGXColourHSLA from a SGXColourRGBA.
+Creates a SGXColourHSLA from the SGXColourRGBA $x.
 @SG_FUNC SGXColourHSLA(float h, float s, float l, float a);
-Creates a SGXColourHSLA from its hue, saturation, lightness, and transparency.
+Creates a SGXColourHSLA with hue $h, saturation $s, lightness $l, and transparency $a.
 @SG_NOTE If any argument is out of bounds, the constructor corrects it automatically.
 @SG_FUNC [[nodiscard]] bool operator==(SGXColourHSLA x) const;
-Equality check defined for SGLEqualsTo.
+Equality check with $x defined for SGLEqualsTo.
 @SG_FUNC [[nodiscard]] bool operator!=(SGXColourHSLA x) const;
-Inequality check defined for SGLEqualsTo.
+Inequality check with $x defined for SGLEqualsTo.
 @SG_FUNC [[nodiscard]] bool operator<(SGXColourHSLA x) const;
-Lesser than operator defined for SGLLesserThan and SGLMoreThan.
+Lesser than operator with $x defined for SGLLesserThan and SGLMoreThan.
 @SG_FUNC [[nodiscard]] bool operator>(SGXColourHSLA x) const;
-More than operator defined for SGLLesserThan and SGLMoreThan.
+More than operator with $x defined for SGLLesserThan and SGLMoreThan.
 @SG_FUNC [[nodiscard]] int hash() const;
 Hash function defined for SGLLesserThan and SGLMoreThan.
 @SG_FUNC void setHue(float h);

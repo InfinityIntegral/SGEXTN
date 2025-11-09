@@ -3,7 +3,7 @@
 @SG_LONG_DESCRP SGLMoreThan provides a descending comparator struct for use with SGEXTN Containers, this can be used when using SGLPriorityQueue, SGLSet, SGLMultiSet, or SGLMap. You need operator> defined to use SGLMoreThan with custom structs. SGLLesserThan works with any object pointers. @SG_FINDREP_HEADER_ONLY
 @SG_IMPLE SGLMoreThan calls operator> on the corresponding data type if it is a custom struct. For object pointers, direct comparison is undefined behaviour if they are not allocated in the same C array creation call, so SGLMoreThan converts them to bytes first and compares the bytes.
 @SG_FUNC [[nodiscard]] bool operator()(const T& a, const T& b) const;
-Returns if a is more than b.
+Returns if $a is more than $b.
 @SG_NOTE This is internally used by SGLPriorityQueue, SGLSet, SGLMultiSet, and SGLMap when SGLMoreThan is selected as the comparator struct.
 @SG_NOTE The presense of operator() makes SGLMoreThan a functor.
 @SG_WARN This will not compile if operator> is not defined for T. Check the source code of any SGEXTN struct (SGXChar, SGXString, SGXColourRGBA, SGXColourHSLA, SGXIdentifier, SGXTimeStamp, SGXVector2) to see how to define operator>.

@@ -56,17 +56,17 @@ String attached to this SGWInput.
 @SG_FUNC void (*focusEndFunction)();
 @SG_FINDREP_FUNCPTR taking no arguments, triggered when the SGWInput is unfocused.
 @SG_FUNC void (*textChangedFunctionWithInt)(int);
-@SG_FINDREP_FUNCPTR taking a int, triggered when the text in this SGWInput is changed and $SGWInput::attachedInt is passed as argument.
+@SG_FINDREP_FUNCPTR taking a int, triggered when the text in this SGWInput is changed and SGWInput::attachedInt is passed as argument.
 @SG_FUNC void (*focusStartFunctionWithInt)(int);
-@SG_FINDREP_FUNCPTR taking a int, triggered when this SGWInput is focused and $SGWInput::attachedInt is passed as argument.
+@SG_FINDREP_FUNCPTR taking a int, triggered when this SGWInput is focused and SGWInput::attachedInt is passed as argument.
 @SG_FUNC void (*focusEndFunctionWithInt)(int);
-@SG_FINDREP_FUNCPTR taking a int, triggered when this SGWInput is unfocused and $SGWInput::attachedInt is passed as argument.
+@SG_FINDREP_FUNCPTR taking a int, triggered when this SGWInput is unfocused and SGWInput::attachedInt is passed as argument.
 @SG_FUNC void (*textChangedFunctionWithString)(const SGXString&);
-@SG_FINDREP_FUNCPTR taking a string, triggered when the text in this SGWInput is changed and $SGWInput::attachedString is passed as argument.
+@SG_FINDREP_FUNCPTR taking a string, triggered when the text in this SGWInput is changed and SGWInput::attachedString is passed as argument.
 @SG_FUNC void (*focusStartFunctionWithString)(const SGXString&);
-@SG_FINDREP_FUNCPTR taking a string, triggered when the SGWInput is focused and $SGWInput::attachedString is passed as argument.
+@SG_FINDREP_FUNCPTR taking a string, triggered when the SGWInput is focused and SGWInput::attachedString is passed as argument.
 @SG_FUNC void (*focusEndFunctionWithString)(const SGXString&);
-@SG_FINDREP_FUNCPTR taking a string, triggered when the SGWInput is unfocused and $SGWInput::attachedString is passed as argument.
+@SG_FINDREP_FUNCPTR taking a string, triggered when the SGWInput is unfocused and SGWInput::attachedString is passed as argument.
 @SG_FUNC void (*textChangedFunctionWithPointer)(SGWInput*);
 @SG_FINDREP_FUNCPTR taking a pointer to SGWInput, triggered when the text on this SGWInput is changed and the pointer to this SGWInput is passed as argument.
 @SG_FUNC void (*focusStartFunctionWithPointer)(SGWInput*);

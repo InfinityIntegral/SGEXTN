@@ -14,7 +14,7 @@ Use this to create a SGRRenderingProgramme. The SGRRenderingProgramme enables th
 This is used to upload data to the GPU. Data can be uploaded using SGRRenderingProgramme::updateDataBuffer for vertex buffer objects and element buffer objects, SGRRenderingProgramme::updateShaderUniforms for uniform buffer objects, and SGRRenderingProgramme::updateTexture for textures. It is not allowed to issue draw commands in this function, which you cannot do anyways as you do not have a SGRCommandRequest.
 @SG_WARN To prevent data race, accessing any static variables or objects that do not belong to the renderer in this function is undefined behaviour.
 @SG_FUNC virtual void requestRenderCommands(SGRCommandRequest* commandRequest) = 0;
-Use this to issue draw commands to the GPU. The SGRCommandRequest is provided for this purpose. It is not allowed to upload shader data in this function, that should have been done in your implementation of SGRBaseRenderer::uploadShaderData.
+Use this to issue draw commands to the GPU. The SGRCommandRequest $commandRequest is provided for this purpose. It is not allowed to upload shader data in this function, that should have been done in your implementation of SGRBaseRenderer::uploadShaderData.
 @SG_WARN Uploading shader data in this function is undefined behaviour.
 @SG_WARN To prevent data race, accessing any static variables or objects that do not belong to the renderer in this function is undefined behaviour.
 @SG_FUNC virtual void cleanResourcesOnDestruction() = 0;

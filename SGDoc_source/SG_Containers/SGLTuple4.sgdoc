@@ -13,16 +13,16 @@ Fourth component.
 @SG_FUNC SGLTuple4(T1 first, T2 second, T3 third, T4 fourth);
 Creates a SGLTuple4 with first component $first, second component $second, third component $third, and fourth component $fourth.
 @SG_FUNC [[nodiscard]] bool operator==(const SGLTuple4& x) const;
-Returns if this tuple is equal to another tuple.
+Returns if this tuple is equal to $x.
 @SG_NOTE This is ignored if any component does not have operator== defined.
 @SG_FUNC [[nodiscard]] bool operator!=(const SGLTuple4& x) const;
-Returns if this tuple is not equal to another tuple.
+Returns if this tuple is not equal to $x.
 @SG_NOTE This is ignored if any component does not have operator!= defined.
 @SG_FUNC [[nodiscard]] bool operator<(const SGLTuple4& x) const;
-Returns if this tuple is less than another tuple, components in front have their comparators taking priority.
+Returns if this tuple is less than $x, components in front have their comparators taking priority.
 @SG_NOTE This is ignored if any component does not have operator< or operator> defined.
 @SG_FUNC [[nodiscard]] bool operator>(const SGLTuple4& x) const;
-Returns if this tuple is more than another tuple, components in front have their comparators taking priority.
+Returns if this tuple is more than $x, components in front have their comparators taking priority.
 @SG_NOTE This is ignored if any component does not have operator< or operator> defined.
 @SG_FUNC [[nodiscard]] int hash() const;
 Returns the hash value of this tuple, used by SGLHash.

@@ -1,6 +1,6 @@
 @SG_CPP_CLASS SGXDebug
-@SG_SHORT_DESCRP class defining @SG_FINDREP_DEBUGSG macro
-@SG_LONG_DESCRP SGXDebug defines the @SG_FINDREP_DEBUGSG macro, which is the easiest way to debug your application without using a debugger. Follow the link here: @SG_FINDREP_DEBUGSG to read more about it. Note that you need this header file included to use the macro.
+@SG_SHORT_DESCRP class defining SG debug macro
+@SG_LONG_DESCRP SGXDebug defines the SG debug macro, which is the easiest way to debug your application without using a debugger. Note that you need this header file included to use the macro. @SG_FINDREP_DEBUG
 @SG_IMPLE SGXDebug defines the SG macro that creates a temporary SGXDebug object which registers debug information. When the SGXDebug object is deleted at the end of the line, all the debug information is sent to the console.
 @SG_PRIVATE_API SGXDebug(const SGXString& fileName, int lineNumber);
 @SG_PRIVATE_API SGXString debugInfo;

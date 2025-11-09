@@ -42,7 +42,7 @@ Returns the cosine of a $x radians angle.
 Returns the tangent of a $x radians angle.
 @SG_NOTE Multiply by pi / 180 to convert degrees to radians.
 @SG_FUNC static float arcsine(float x);
-Returns the angle in radians, the sine of which is $x. This inverts SGLF
+Returns the angle in radians, the sine of which is $x.
 @SG_NOTE The behaviour is undefined for $x less than -1 or more than 1, but it will not crash.
 @SG_NOTE Multiply by 180 / pi to convert from radians to degrees.
 @SG_NOTE This is the inverse function of sine.
@@ -56,7 +56,7 @@ Returns the angle in radians, the tangent of which is $x.
 @SG_NOTE Multiply by 180 / pi to convert from radians to degrees.
 @SG_NOTE This is the inverse function of tangent.
 @SG_FUNC static float arctangentQuadrantAware(float y, float x);
-Returns the angle in radians such that rotating (1, 0) by that angle around the origin counterclockwise gives the point (kx, ky) where k is positive.
+Returns the angle in radians such that rotating (1, 0) by that angle around the origin counterclockwise gives the point (k * $x, k * $y) where k is positive.
 @SG_NOTE Multiply by 180 / pi to convert from radians to degrees.
 @SG_FUNC static float cosecant(float x);
 Returns the cosecant of a $x radians angle.

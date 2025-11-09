@@ -8,9 +8,9 @@ class SG_WIDGETS_DLL SGXTouchEvent
 {
 public:
     enum TouchPhase{
-        TouchStart = 1,
-        TouchOngoing = 2,
-        TouchEnd = 3
+        TouchStart,
+        TouchOngoing,
+        TouchEnd
     };
     SGXTouchEvent() = default;
     SGXTouchEvent(int n);

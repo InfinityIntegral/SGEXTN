@@ -21,8 +21,8 @@ Returns the text displayed in the SGWLabel as an integer between $minimum and $m
 Returns the text displayed in the SGWLabel as a number between $minimum and $maximum inclusive. If the text does not represent a number or if it is out of bounds, $isValid is set to false and 0 is returned, otherwise $isValid is set to true.
 @SG_NOTE Pass nullptr to $isValid if you are not interested if the text represents a number and the integer is in bounds.
 @SG_WARN $minimum more than $maximum is undefined behaviour.
-@SG_FUNC void setTextFromString(const SGXString& s);
-Sets the text currently displayed in the SGWLabel to $s.
+@SG_FUNC void setTextFromString(const SGXString& text);
+Sets the text currently displayed in the SGWLabel to $text.
 @SG_FUNC void setTextFromInt(int x);
 Sets the text currently displayed in the SGWLabel to the string representation of $x.
 @SG_FUNC void setTextFromFloat(float x);

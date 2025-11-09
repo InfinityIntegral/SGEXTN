@@ -5,10 +5,10 @@
 @SG_FUNC enum Type{ Root, Parent, StatusBar, BlankWidget, PageBackground, TextLabel, IconLabel, LongLabel, SequentialLongLabel, TextButton, IconButton, TextInput, LongInput, ScrollView, SequentialScrollView, ColourPicker, SingleTouchReceiver, MultiTouchReceiver, CustomRenderer, Undefined };
 Used to indicate the type of a @SG_FINDREP_WIDGET UI element.
 @SG_FUNC static bool isBackground(SGWType::Type x);
-Returns if the UI element is a subclass of SGWBackground.
+Returns if a UI element with SGWType $x is a subclass of SGWBackground.
 @SG_FUNC static bool isDisplayText(SGWType::Type x);
-Returns if the UI element is a subclass of SGWLabel.
+Returns if a UI element with SGWType $x is a subclass of SGWLabel.
 @SG_FUNC static bool isButton(SGWType::Type x);
-Returns if the UI element is a subclass of SGWButton.
+Returns if a UI element with SGWType $x is a subclass of SGWButton.
 @SG_FUNC static bool isInputField(SGWType::Type x);
-Returns if the UI element is a subclass of SGWInput.
+Returns if a UI element with SGWType $x is a subclass of SGWInput.

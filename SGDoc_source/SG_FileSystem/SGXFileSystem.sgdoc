@@ -57,7 +57,7 @@ Permanently deletes the file at $s. This returns -2 if a file system error cause
 Permanently deletes the folder at $s. This returns -2 if a file system error caused the operation to fail, 0 if there is no folder at $s, and 1 if the operation was successful.
 @SG_WARN This can cause irreversible loss of user data if used on user files. Use this only on application generated settings files. For deleting user files, use SGXFileBinUtilities::deleteFolder instead to allow recovery.
 @SG_FUNC static long long getFileSize(const SGXString& s);
-Returns the size of the file at &s in bytes.
+Returns the size of the file at $s in bytes.
 @SG_NOTE If there is no file at $s, this returns 0.
 @SG_FUNC static long long getFolderSize(const SGXString& s);
 Returns the size of the folder at $s, which is the sum of sizes of all its subfolders, in bytes.
@@ -97,9 +97,9 @@ Returns a list of paths to files in folder $s containing a substring of $name in
 Returns a list of paths to files in folder $s including recursive subfolders containing a substring of $name in their names.
 @SG_NOTE An empty list is returned if there is no folder at $s.
 @SG_FUNC static bool numberAwareLesserThan(const SGXString& s1, const SGXString& s2);
-Comparator used by SGXNumberAwareFilePathLesserThan and SGXNumberAwareFilePathMoreThan
+Comparator used by SGXNumberAwareFilePathLesserThan and SGXNumberAwareFilePathMoreThan, returns if a file with name $s1 should be displayed in front of a file with name $s2 when number aware lesser than sorting is used.
 @SG_FUNC static bool numberAwareLesserThanBase16(const SGXString& s1, const SGXString& s2);
-Comparator used by SGXNumberAwareFilePathLesserThanBase16 and SGXNumberAwareFilePathMoreThanBase16.
+Comparator used by SGXNumberAwareFilePathLesserThanBase16 and SGXNumberAwareFilePathMoreThanBase16, returns if a file with name $s1 should be displayed in front of a file with name $s2 when base16 number aware lesser than sorting is used.
 @SG_PRIVATE_API static void initialiseAppFolder();
 
 @SG_CPP_CLASS SGXNumberAwareFilePathLesserThan

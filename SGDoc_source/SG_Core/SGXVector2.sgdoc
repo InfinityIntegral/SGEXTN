@@ -15,9 +15,9 @@ Returns if this SGXVector2 is the same as $x.
 @SG_FUNC [[nodiscard]] bool operator!=(SGXVector2 x) const;
 Returns if this SGXVector2 is different from $x.
 @SG_FUNC [[nodiscard]] bool operator<(SGXVector2 x) const;
-Lesser than operator for SGLLesserThan and SGLMoreThan.
+Lesser than operator with $x for SGLLesserThan and SGLMoreThan.
 @SG_FUNC [[nodiscard]] bool operator>(SGXVector2 x) const;
-More than operator for SGLLesserThan and SGLMoreThan.
+More than operator with $x for SGLLesserThan and SGLMoreThan.
 @SG_FUNC [[nodiscard]] int hash() const;
 Hash function for SGLHash.
 @SG_FUNC [[nodiscard]] SGXString getStringForPrinting() const;
@@ -70,9 +70,9 @@ Rotates this SGXVector2 counterclockwise by 90 degrees.
 Rotates this SGXVector2 by 180 degrees in either direction.
 @SG_NOTE This is equivalent to multiplying the SGXVector2 by -1.
 @SG_FUNC void rotateClockwise(float a);
-Rotates this SGXVector2 by a degrees clockwise.
+Rotates this SGXVector2 by $a degrees clockwise.
 @SG_FUNC void rotateCounterclockwise(float a);
-Rotates this SGXVector2 by a degrees counterclockwise.
+Rotates this SGXVector2 by $a degrees counterclockwise.
 @SG_FUNC [[nodiscard]] bool isCollinear(SGXVector2 a, SGXVector2 b, float limit) const;
 Returns if this SGXVector2, $a, and $b are collinear with a maximum angular tolerance of $limit degrees.
 @SG_NOTE If any 2 points overlap, the behaviour is not defined but it will not crash.

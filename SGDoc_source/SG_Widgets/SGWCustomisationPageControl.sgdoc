@@ -9,3 +9,4 @@ Activates the page to customise @SG_FINDREP_THEME.
 Activates the page to customise font size, which controls @SG_FINDREP_WDIST
 @SG_FUNC static void enableSingCorrectCustomisationPage();
 Activates the @SG_FINDREP_SINGCORRECT customisation page.
+@SG_PRIVATE_API static void (*themeColoursCustomisationPageActivationFunction)();

@@ -51,18 +51,18 @@ Gets the exact number of months between this SGXTimeStamp and $x.
 Gets the exact number of years between this SGXTimeStamp and $x.
 @SG_NOTE This is positive if this SGXTimeStamp is after $x and negative if this SGXTimeStamp is before $x.
 @SG_FUNC [[nodiscard]] int getTimeFromSecondPart(SGXTimeStamp x) const;
-For any SGXTimeStamp a and b, the following statement makes sense.
-a refers to a time exactly a.getTimeFromYearPart(b) years, a.getTimeFromMonthPart(b) months, a.getTimeFromDayPart(b) days, a.getTimeFromHourPart(b) hours, a.getTimeFromMinutePart(b) minutes, and a.getTimeFromSecondPart(b) seconds after the time that b refers to.
+For any SGXTimeStamp a, the following statement makes sense.
+a refers to a time exactly a.getTimeFromYearPart($x) years, a.getTimeFromMonthPart($x) months, a.getTimeFromDayPart($x) days, a.getTimeFromHourPart($x) hours, a.getTimeFromMinutePart($x) minutes, and a.getTimeFromSecondPart($x) seconds after the time that $x refers to.
 @SG_FUNC [[nodiscard]] int getTimeFromMinutePart(SGXTimeStamp x) const;
-See explanation of SGXTimeStamp::getTimeFromSecondPart.
+See explanation of SGXTimeStamp::getTimeFromSecondPart. The corresponding parameter to $x is still named x.
 @SG_FUNC [[nodiscard]] int getTimeFromHourPart(SGXTimeStamp x) const;
-See explanation of SGXTimeStamp::getTimeFromSecondPart.
+See explanation of SGXTimeStamp::getTimeFromSecondPart. The corresponding parameter to $x is still named x.
 @SG_FUNC [[nodiscard]] int getTimeFromDayPart(SGXTimeStamp x) const;
-See explanation of SGXTimeStamp::getTimeFromSecondPart.
+See explanation of SGXTimeStamp::getTimeFromSecondPart. The corresponding parameter to $x is still named x.
 @SG_FUNC [[nodiscard]] int getTimeFromMonthPart(SGXTimeStamp x) const;
-See explanation of SGXTimeStamp::getTimeFromSecondPart.
+See explanation of SGXTimeStamp::getTimeFromSecondPart. The corresponding parameter to $x is still named x.
 @SG_FUNC [[nodiscard]] int getTimeFromYearPart(SGXTimeStamp x) const;
-See explanation of SGXTimeStamp::getTimeFromSecondPart.
+See explanation of SGXTimeStamp::getTimeFromSecondPart. The corresponding parameter to $x is still named x.
 @SG_PRIVATE_API [[nodiscard]] SGXString getFullSGCalendar() const;
 @SG_FUNC void addSeconds(long long x);
 Moves this SGXTimeStamp forwards by $x seconds.

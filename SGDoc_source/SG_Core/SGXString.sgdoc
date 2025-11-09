@@ -10,7 +10,7 @@ Creates a SGXString containing a single character, $c.
 @SG_FUNC SGXString(char c);
 Creates a SGXString containing a single character, $c.
 @SG_FUNC SGXString(const char* cString);
-Creates a SGXString from a C string.
+Creates a SGXString from C string $cString.
 @SG_FUNC [[nodiscard]] bool operator==(const SGXString& x) const;
 Returns if this SGXString is the same as $x.
 @SG_FUNC [[nodiscard]] bool operator!=(const SGXString& x) const;
@@ -31,8 +31,10 @@ Appends the SGXChar $x behind this SGXString.
 Hash function for SGLHash.
 @SG_FUNC SGXString& operator+=(const SGXString& x);
 Appends the SGXString $x behind this SGXString.
-@SG_FUNC [[nodiscard]] SGXChar at(int i) const;
+@SG_FUNC SGXString& operator+=(SGXChar x);
 Appends the SGXChar $x behind this SGXString.
+@SG_FUNC [[nodiscard]] SGXChar at(int i) const;
+Returns the SGXChar at index $i of this SGXString.
 @SG_FUNC [[nodiscard]] int length() const;
 Returns the length of this SGXString, which is the number of SGXChar it contains.
 @SG_FUNC SGXString& replace(SGXChar oldChar, SGXChar newChar);
