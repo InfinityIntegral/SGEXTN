@@ -23,22 +23,22 @@ children classes: (none)
 &#9;@SG_ML_L011077SGRRendererWidget#SGRRendererWidget_SGWWidget_ptr_float_float_float_float_float_float_float_float_SGRBaseRenderer_ptr_SGRBaseSyncer_ptr_(@SG_ML_L009009SGWWidgetsgwwidget* parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, @SG_ML_L00F00FSGRBaseRenderersgrbaserenderer* renderControl, @SG_ML_L00D00DSGRBaseSyncersgrbasesyncer* syncControl);
 &#9;void @SG_ML_L014026updateCustomRenderer#void_updateCustomRenderer_func_const_() const;
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_detaileddescription Detailed Description
-@SG_ML_L011011SGRRendererWidgetsgrrendererwidget contains a @SG_ML_L017015SG - RI ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/renderer renderer so that it can be used in the @SG_ML_L018015SGWidget ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/sgwidget system.
+@SG_ML_HEADER_sg_detaileddescription Detailed Description
+@SG_ML_L01101DSGRRendererWidget../cppclass/sgrrendererwidget contains a @SG_ML_L017015SG - RI ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/renderer renderer so that it can be used in the @SG_ML_L018015SGWidget ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/sgwidget system.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_implementationdetails Implementation Details
+@SG_ML_HEADER_sg_implementationdetails Implementation Details
 @SG_ML_L017015SG - RI ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/renderer internally uses QRhi.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_SGRRendererWidget_SGWWidget_ptr_float_float_float_float_float_float_float_float_SGRBaseRenderer_ptr_SGRBaseSyncer_ptr_ @SG_ML_L011077SGRRendererWidget#SGRRendererWidget_SGWWidget_ptr_float_float_float_float_float_float_float_float_SGRBaseRenderer_ptr_SGRBaseSyncer_ptr_(@SG_ML_L009009SGWWidgetsgwwidget* parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, @SG_ML_L00F00FSGRBaseRenderersgrbaserenderer* renderControl, @SG_ML_L00D00DSGRBaseSyncersgrbasesyncer* syncControl);
-Creates a @SG_ML_L011011SGRRendererWidgetsgrrendererwidget with parent @SG_ML_L018015SGWidget ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/sgwidget @SG_ML_B006parent, @SG_ML_L01A016w-distance ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/wdistance coordinates (@SG_ML_B002x1, @SG_ML_B002x0, @SG_ML_B002y1, @SG_ML_B002y0, @SG_ML_B002w1, @SG_ML_B002w0, @SG_ML_B002h1, @SG_ML_B002h0), @SG_ML_L017015SG - RI ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/renderer renderer @SG_ML_B00DrenderControl, and @SG_ML_L017015SG - RI ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/renderer syncer @SG_ML_B00BsyncControl.
-@SG_ML_NOTE If no syncer is needed for this @SG_ML_L011011SGRRendererWidgetsgrrendererwidget, @SG_ML_B00BsyncControl can be nullptr.
-@SG_ML_NOTE The @SG_ML_L011011SGRRendererWidgetsgrrendererwidget owns the renderer and syncer, they do not need to be deleted manually.
-@SG_ML_NOTE Keep references to the @SG_ML_L017015SG - RI ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/renderer renderer and syncer elsewhere in your code since they cannot be accessed using public API provided by @SG_ML_L011011SGRRendererWidgetsgrrendererwidget.
+Creates a @SG_ML_L01101DSGRRendererWidget../cppclass/sgrrendererwidget with parent @SG_ML_L018015SGWidget ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/sgwidget @SG_ML_B006parent, @SG_ML_L01A016w-distance ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/wdistance coordinates (@SG_ML_B002x1, @SG_ML_B002x0, @SG_ML_B002y1, @SG_ML_B002y0, @SG_ML_B002w1, @SG_ML_B002w0, @SG_ML_B002h1, @SG_ML_B002h0), @SG_ML_L017015SG - RI ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/renderer renderer @SG_ML_B00DrenderControl, and @SG_ML_L017015SG - RI ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/renderer syncer @SG_ML_B00BsyncControl.
+@SG_ML_NOTE If no syncer is needed for this @SG_ML_L01101DSGRRendererWidget../cppclass/sgrrendererwidget, @SG_ML_B00BsyncControl can be nullptr.
+@SG_ML_NOTE The @SG_ML_L01101DSGRRendererWidget../cppclass/sgrrendererwidget owns the renderer and syncer, they do not need to be deleted manually.
+@SG_ML_NOTE Keep references to the @SG_ML_L017015SG - RI ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/renderer renderer and syncer elsewhere in your code since they cannot be accessed using public API provided by @SG_ML_L01101DSGRRendererWidget../cppclass/sgrrendererwidget.
 @SG_ML_WARN @SG_ML_B006parent being nullptr is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
 @SG_ML_WARN @SG_ML_B00DrenderControl being nullptr is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_updateCustomRenderer_func_const_ void @SG_ML_L014026updateCustomRenderer#void_updateCustomRenderer_func_const_() const;
-Calls for the @SG_ML_L011011SGRRendererWidgetsgrrendererwidget to be redrawn. The @SG_ML_L011011SGRRendererWidgetsgrrendererwidget will not be redrawn until this is called due to Qt Quick's power usage optimisations.
-@SG_ML_NOTE If a syncer is being used, call @SG_ML_L01303BSGRBaseSyncer::syncsgrbasesyncer#virtual_void_sync_SGRBaseRenderer_ptr_assign_ before requesting for redraw.
+Calls for the @SG_ML_L01101DSGRRendererWidget../cppclass/sgrrendererwidget to be redrawn. The @SG_ML_L01101DSGRRendererWidget../cppclass/sgrrendererwidget will not be redrawn until this is called due to Qt Quick's power usage optimisations.
+@SG_ML_NOTE If a syncer is being used, call @SG_ML_L013047SGRBaseSyncer::sync../cppclass/sgrbasesyncer#virtual_void_sync_SGRBaseRenderer_ptr_assign_ before requesting for redraw.
 @SG_ML_NOTE Only request a redraw if the contents really changed. This can save a lot of battery especially on mobile devices.
 @SG_ML_BLANKLINE

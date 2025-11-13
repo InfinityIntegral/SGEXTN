@@ -22,13 +22,13 @@ children classes: (none)
 @SG_ML_HEADER_ instance member functions
 &#9;[[nodiscard]] bool @SG_ML_L00A046operator()#nodiscard_bool_operator_func_const_SGXString_ref_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& a, const @SG_ML_L009009SGXStringsgxstring& b);
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_detaileddescription Detailed Description
-@SG_ML_L020020SGXNumberAwareFilePathLesserThansgxnumberawarefilepathlesserthan provides a comparator struct for sorting file paths in ascending alphabetical order for display to the user. This takes into account numbers in file names, so file9 would be before file10.
+@SG_ML_HEADER_sg_detaileddescription Detailed Description
+@SG_ML_L02002CSGXNumberAwareFilePathLesserThan../cppclass/sgxnumberawarefilepathlesserthan provides a comparator struct for sorting file paths in ascending alphabetical order for display to the user. This takes into account numbers in file names, so file9 would be before file10.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_implementationdetails Implementation Details
-Uses @SG_ML_L024058SGXFileSystem::numberAwareLesserThansgxfilesystem#static_bool_numberAwareLesserThan_const_SGXString_ref_const_SGXString_ref_
+@SG_ML_HEADER_sg_implementationdetails Implementation Details
+Uses @SG_ML_L024064SGXFileSystem::numberAwareLesserThan../cppclass/sgxfilesystem#static_bool_numberAwareLesserThan_const_SGXString_ref_const_SGXString_ref_
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_bool_operator_func_const_SGXString_ref_const_SGXString_ref_ [[nodiscard]] bool @SG_ML_L00A046operator()#nodiscard_bool_operator_func_const_SGXString_ref_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& a, const @SG_ML_L009009SGXStringsgxstring& b);
 Returns if @SG_ML_B001a should be in front of @SG_ML_B001b.
-@SG_ML_NOTE The presence of operator() makes @SG_ML_L020020SGXNumberAwareFilePathLesserThansgxnumberawarefilepathlesserthan a functor.
+@SG_ML_NOTE The presence of operator() makes @SG_ML_L02002CSGXNumberAwareFilePathLesserThan../cppclass/sgxnumberawarefilepathlesserthan a functor.
 @SG_ML_BLANKLINE

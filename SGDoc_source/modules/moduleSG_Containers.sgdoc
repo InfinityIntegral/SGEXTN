@@ -1,0 +1,7 @@
+@SG_MODULE SG_Containers
+The SGEXTN Containers module provides header only template based containers for common data structures, mostly mirroring the structure of the C++ Standard Template Library's containers module.
+Apart from providing things like spans, arrays, vectors, queues, sets, and maps, this module also gives SGLLesserThan and SGLMoreThan, comparators builtin to SGEXTN. There is also SGLHash, a hash function for hash table based containers, and SGLSort, used for array sorting
+Pairs and tuples are also provided in this module. For simplicity, only tuples of up to 5 elements are given, since having a tuple with more elements is very rarely needed and is bad for readability. If you ever need a tuple of more than 5 elements, just create a custom struct.
+The time complexity of all operations on SGEXTN containers is guaranteed to match Standard Template Library equivalents. However, internal implementation differences and micro optimisations can still cause a difference in runtime speed. If your use case is truly performance critical, consider using a dedicated high performance container library instead.
+For most use cases, SGEXTN containers are sufficient. You are recommended to choose these over Qt containers and Standard Template Library containers to speed up clang-tidy passes.
+Although the header files for SGEXTN Containers are already as clean as possible, you should still forward declare the containers when only using pointers and references to them in header files.

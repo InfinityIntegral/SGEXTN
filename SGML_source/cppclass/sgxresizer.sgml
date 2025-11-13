@@ -24,17 +24,17 @@ children classes: (none)
 &#9;static float @SG_ML_L013027getRenderSpaceWidth#static_float_getRenderSpaceWidth_func_();
 &#9;static float @SG_ML_L00B01FgetSizeUnit#static_float_getSizeUnit_func_();
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_detaileddescription Detailed Description
-@SG_ML_L00A00ASGXResizersgxresizer allows conversion of @SG_ML_L01A016w-distance ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/wdistance to pixels by providing the @SG_ML_L01A016w-distance ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/wdistance base units. However, all UI layout should still use @SG_ML_L01A016w-distance ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/wdistance.
+@SG_ML_HEADER_sg_detaileddescription Detailed Description
+@SG_ML_L00A016SGXResizer../cppclass/sgxresizer allows conversion of @SG_ML_L01A016w-distance ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/wdistance to pixels by providing the @SG_ML_L01A016w-distance ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/wdistance base units. However, all UI layout should still use @SG_ML_L01A016w-distance ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/wdistance.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_implementationdetails Implementation Details
+@SG_ML_HEADER_sg_implementationdetails Implementation Details
 Outputs @SG_ML_L01A016w-distance ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/wdistance data.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_float_getRenderSpaceHeight_func_ static float @SG_ML_L014028getRenderSpaceHeight#static_float_getRenderSpaceHeight_func_();
-Returns the render space height, which is the height of @SG_ML_L01702CSGWWidget::parentWidgetsgwwidget#static_SGWWidget_ptr_parentWidget_, in pixels.
+Returns the render space height, which is the height of @SG_ML_L017038SGWWidget::parentWidget../cppclass/sgwwidget#static_SGWWidget_ptr_parentWidget_, in pixels.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_float_getRenderSpaceWidth_func_ static float @SG_ML_L013027getRenderSpaceWidth#static_float_getRenderSpaceWidth_func_();
-Returns the render space width, which is the width of @SG_ML_L01702CSGWWidget::parentWidgetsgwwidget#static_SGWWidget_ptr_parentWidget_, in pixels.
+Returns the render space width, which is the width of @SG_ML_L017038SGWWidget::parentWidget../cppclass/sgwwidget#static_SGWWidget_ptr_parentWidget_, in pixels.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_float_getSizeUnit_func_ static float @SG_ML_L00B01FgetSizeUnit#static_float_getSizeUnit_func_();
 Returns 1 @SG_ML_L01A016w-distance ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/wdistance size unit in pixels.

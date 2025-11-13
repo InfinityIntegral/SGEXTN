@@ -48,94 +48,94 @@ children classes: (none)
 &#9;void @SG_ML_L005012setE0#void_setE0_float_(float e0);
 &#9;void @SG_ML_L005012setE1#void_setE1_float_(float e1);
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_detaileddescription Detailed Description
-@SG_ML_L015015SGWColourPickerWidgetsgwcolourpickerwidget is part of the @SG_ML_L018015SGWidget ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/sgwidget system that provides a colour picker, allowing the user to choose a colour. It also supports running a @SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback after the colour is chosen. The colour picker UI is builtin to SGEXTN and does not need to be implemented.
+@SG_ML_HEADER_sg_detaileddescription Detailed Description
+@SG_ML_L015021SGWColourPickerWidget../cppclass/sgwcolourpickerwidget is part of the @SG_ML_L018015SGWidget ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/sgwidget system that provides a colour picker, allowing the user to choose a colour. It also supports running a @SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback after the colour is chosen. The colour picker UI is builtin to SGEXTN and does not need to be implemented.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_implementationdetails Implementation Details
-@SG_ML_L015015SGWColourPickerWidgetsgwcolourpickerwidget internally uses @SG_ML_L017015SG - RI ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/renderer.
+@SG_ML_HEADER_sg_implementationdetails Implementation Details
+@SG_ML_L015021SGWColourPickerWidget../cppclass/sgwcolourpickerwidget internally uses @SG_ML_L017015SG - RI ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/renderer.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_ptr_attachedFunction_func_ void (*@SG_ML_L010020attachedFunction#void_ptr_attachedFunction_func_)();
 @SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback taking no arguments, triggered when a colour is selected by the user.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_ptr_attachedFunctionWithInt_int_ void (*@SG_ML_L017026attachedFunctionWithInt#void_ptr_attachedFunctionWithInt_int_)(int);
-@SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback taking a int, triggered when a colour is selected by the user and @SG_ML_L022026SGWColourPickerWidget::attachedIntsgwcolourpickerwidget#int_attachedInt_ is passed as argument.
+@SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback taking a int, triggered when a colour is selected by the user and @SG_ML_L022032SGWColourPickerWidget::attachedInt../cppclass/sgwcolourpickerwidget#int_attachedInt_ is passed as argument.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_ptr_attachedFunctionWithPointer_SGWColourPickerWidget_ptr_ void (*@SG_ML_L01B040attachedFunctionWithPointer#void_ptr_attachedFunctionWithPointer_SGWColourPickerWidget_ptr_)(@SG_ML_L015015SGWColourPickerWidgetsgwcolourpickerwidget*);
-@SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback taking a pointer to @SG_ML_L015015SGWColourPickerWidgetsgwcolourpickerwidget, triggered when a colour is selected by the user and the pointer to this @SG_ML_L015015SGWColourPickerWidgetsgwcolourpickerwidget is passed as argument.
+@SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback taking a pointer to @SG_ML_L015021SGWColourPickerWidget../cppclass/sgwcolourpickerwidget, triggered when a colour is selected by the user and the pointer to this @SG_ML_L015021SGWColourPickerWidget../cppclass/sgwcolourpickerwidget is passed as argument.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_ptr_attachedFunctionWithString_const_SGXString_ref_ void (*@SG_ML_L01A039attachedFunctionWithString#void_ptr_attachedFunctionWithString_const_SGXString_ref_)(const @SG_ML_L009009SGXStringsgxstring&);
-@SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback taking a string, triggered when a colour is selected by the user and @SG_ML_L02502FSGWColourPickerWidget::attachedStringsgwcolourpickerwidget#SGXString_attachedString_ is passed as argument.
+@SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback taking a string, triggered when a colour is selected by the user and @SG_ML_L02503BSGWColourPickerWidget::attachedString../cppclass/sgwcolourpickerwidget#SGXString_attachedString_ is passed as argument.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_int_attachedInt_ int @SG_ML_L00B011attachedInt#int_attachedInt_;
-Int attached to this @SG_ML_L015015SGWColourPickerWidgetsgwcolourpickerwidget.
+Int attached to this @SG_ML_L015021SGWColourPickerWidget../cppclass/sgwcolourpickerwidget.
 @SG_ML_NOTE This is used to identify the source of the callback in @SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_SGXString_attachedString_ @SG_ML_L009009SGXStringsgxstring @SG_ML_L00E01AattachedString#SGXString_attachedString_;
-String attached to this @SG_ML_L015015SGWColourPickerWidgetsgwcolourpickerwidget.
+String attached to this @SG_ML_L015021SGWColourPickerWidget../cppclass/sgwcolourpickerwidget.
 @SG_ML_NOTE This is used to identify the source of the callback in @SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_SGWColourPickerWidget_SGWWidget_ptr_float_float_float_float_float_float_float_float_SGXColourRGBA_ @SG_ML_L015063SGWColourPickerWidget#SGWColourPickerWidget_SGWWidget_ptr_float_float_float_float_float_float_float_float_SGXColourRGBA_(@SG_ML_L009009SGWWidgetsgwwidget* parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba defaultColour);
-Creates a @SG_ML_L015015SGWColourPickerWidgetsgwcolourpickerwidget with parent @SG_ML_L018015SGWidget ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/sgwidget @SG_ML_B006parent, @SG_ML_L01A016w-distance ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/wdistance coordinates (@SG_ML_B002x1, @SG_ML_B002x0, @SG_ML_B002y1, @SG_ML_B002y0, @SG_ML_B002w1, @SG_ML_B002w0, @SG_ML_B002h1, @SG_ML_B002h0), and the default choice of colour set to @SG_ML_B00DdefaultColour.
+Creates a @SG_ML_L015021SGWColourPickerWidget../cppclass/sgwcolourpickerwidget with parent @SG_ML_L018015SGWidget ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/sgwidget @SG_ML_B006parent, @SG_ML_L01A016w-distance ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/wdistance coordinates (@SG_ML_B002x1, @SG_ML_B002x0, @SG_ML_B002y1, @SG_ML_B002y0, @SG_ML_B002w1, @SG_ML_B002w0, @SG_ML_B002h1, @SG_ML_B002h0), and the default choice of colour set to @SG_ML_B00DdefaultColour.
 @SG_ML_WARN @SG_ML_B006parent being nullptr is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGXColourRGBA_getBackgroundColour_bool_ptr_const_ [[nodiscard]] @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba @SG_ML_L01303CgetBackgroundColour#nodiscard_SGXColourRGBA_getBackgroundColour_bool_ptr_const_(bool* isUsing) const;
-Returns the @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba currently being used for the background of this @SG_ML_L015015SGWColourPickerWidgetsgwcolourpickerwidget. The bool that @SG_ML_B007isUsing points to is set to true if @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode is off, and false otherwise.
+Returns the @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba currently being used for the background of this @SG_ML_L015021SGWColourPickerWidget../cppclass/sgwcolourpickerwidget. The bool that @SG_ML_B007isUsing points to is set to true if @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode is off, and false otherwise.
 @SG_ML_NOTE If you are not interested in the current @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode, pass nullptr to @SG_ML_B007isUsing.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGXColourRGBA_getBackgroundFocusColour_bool_ptr_const_ [[nodiscard]] @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba @SG_ML_L018041getBackgroundFocusColour#nodiscard_SGXColourRGBA_getBackgroundFocusColour_bool_ptr_const_(bool* isUsing) const;
-Returns the @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba currently being used for the background of this @SG_ML_L015015SGWColourPickerWidgetsgwcolourpickerwidget when focused. The bool that @SG_ML_B007isUsing points to is set to true if @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode is off, and false otherwise.
+Returns the @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba currently being used for the background of this @SG_ML_L015021SGWColourPickerWidget../cppclass/sgwcolourpickerwidget when focused. The bool that @SG_ML_B007isUsing points to is set to true if @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode is off, and false otherwise.
 @SG_ML_NOTE If you are not interested in the current @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode, pass nullptr to @SG_ML_B007isUsing.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_int_getBackgroundFocusThemeColour_bool_ptr_const_ [[nodiscard]] int @SG_ML_L01D03CgetBackgroundFocusThemeColour#nodiscard_int_getBackgroundFocusThemeColour_bool_ptr_const_(bool* isUsing) const;
-Returns the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour currently being used for the background of this @SG_ML_L015015SGWColourPickerWidgetsgwcolourpickerwidget when focused. The bool that @SG_ML_B007isUsing points to is set to true if @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode is on, and false otherwise.
+Returns the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour currently being used for the background of this @SG_ML_L015021SGWColourPickerWidget../cppclass/sgwcolourpickerwidget when focused. The bool that @SG_ML_B007isUsing points to is set to true if @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode is on, and false otherwise.
 @SG_ML_NOTE If you are not interested in the current @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode, pass nullptr to @SG_ML_B007isUsing.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGXColourRGBA_getBackgroundHoverColour_bool_ptr_const_ [[nodiscard]] @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba @SG_ML_L018041getBackgroundHoverColour#nodiscard_SGXColourRGBA_getBackgroundHoverColour_bool_ptr_const_(bool* isUsing) const;
-Returns the @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba currently being used for the background of this @SG_ML_L015015SGWColourPickerWidgetsgwcolourpickerwidget when hovered over. The bool that @SG_ML_B007isUsing points to is set to true if @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode is off, and false otherwise.
+Returns the @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba currently being used for the background of this @SG_ML_L015021SGWColourPickerWidget../cppclass/sgwcolourpickerwidget when hovered over. The bool that @SG_ML_B007isUsing points to is set to true if @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode is off, and false otherwise.
 @SG_ML_NOTE If you are not interested in the current @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode, pass nullptr to @SG_ML_B007isUsing.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_int_getBackgroundHoverThemeColour_bool_ptr_const_ [[nodiscard]] int @SG_ML_L01D03CgetBackgroundHoverThemeColour#nodiscard_int_getBackgroundHoverThemeColour_bool_ptr_const_(bool* isUsing) const;
-Returns the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour currently being used for the background of this @SG_ML_L015015SGWColourPickerWidgetsgwcolourpickerwidget when hovered over. The bool that @SG_ML_B007isUsing points to is set to true if @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode is on, and false otherwise.
+Returns the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour currently being used for the background of this @SG_ML_L015021SGWColourPickerWidget../cppclass/sgwcolourpickerwidget when hovered over. The bool that @SG_ML_B007isUsing points to is set to true if @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode is on, and false otherwise.
 @SG_ML_NOTE If you are not interested in the current @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode, pass nullptr to @SG_ML_B007isUsing.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_int_getBackgroundThemeColour_bool_ptr_const_ [[nodiscard]] int @SG_ML_L018037getBackgroundThemeColour#nodiscard_int_getBackgroundThemeColour_bool_ptr_const_(bool* isUsing) const;
-Returns the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour currently being used for the background of this @SG_ML_L015015SGWColourPickerWidgetsgwcolourpickerwidget. The bool that @SG_ML_B007isUsing points to is set to true if @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode is on, and false otherwise.
+Returns the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour currently being used for the background of this @SG_ML_L015021SGWColourPickerWidget../cppclass/sgwcolourpickerwidget. The bool that @SG_ML_B007isUsing points to is set to true if @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode is on, and false otherwise.
 @SG_ML_NOTE If you are not interested in the current @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode, pass nullptr to @SG_ML_B007isUsing.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGXColourRGBA_getColour_func_const_ [[nodiscard]] @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba @SG_ML_L00902EgetColour#nodiscard_SGXColourRGBA_getColour_func_const_() const;
-Returns the currently chosen @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba.
+Returns the currently chosen @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_float_getE0_func_const_ [[nodiscard]] float @SG_ML_L005022getE0#nodiscard_float_getE0_func_const_() const;
-Returns the 0 coordinate of the @SG_ML_L01A016w-distance ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/wdistance controlling the width of the border of this @SG_ML_L015015SGWColourPickerWidgetsgwcolourpickerwidget.
+Returns the 0 coordinate of the @SG_ML_L01A016w-distance ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/wdistance controlling the width of the border of this @SG_ML_L015021SGWColourPickerWidget../cppclass/sgwcolourpickerwidget.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_float_getE1_func_const_ [[nodiscard]] float @SG_ML_L005022getE1#nodiscard_float_getE1_func_const_() const;
-Returns the 1 coordinate of the @SG_ML_L01A016w-distance ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/wdistance controlling the width of the border of this @SG_ML_L015015SGWColourPickerWidgetsgwcolourpickerwidget.
+Returns the 1 coordinate of the @SG_ML_L01A016w-distance ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/wdistance controlling the width of the border of this @SG_ML_L015021SGWColourPickerWidget../cppclass/sgwcolourpickerwidget.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_setBackgroundColour_SGXColourRGBA_ void @SG_ML_L013028setBackgroundColour#void_setBackgroundColour_SGXColourRGBA_(@SG_ML_L00D00DSGXColourRGBAsgxcolourrgba colour);
-Sets the @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba of the background of this @SG_ML_L015015SGWColourPickerWidgetsgwcolourpickerwidget to @SG_ML_B006colour and turns off @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode.
+Sets the @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba of the background of this @SG_ML_L015021SGWColourPickerWidget../cppclass/sgwcolourpickerwidget to @SG_ML_B006colour and turns off @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_setBackgroundFocusColour_SGXColourRGBA_ void @SG_ML_L01802DsetBackgroundFocusColour#void_setBackgroundFocusColour_SGXColourRGBA_(@SG_ML_L00D00DSGXColourRGBAsgxcolourrgba colour);
-Sets the @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba of the background of this @SG_ML_L015015SGWColourPickerWidgetsgwcolourpickerwidget when focused to @SG_ML_B006colour and turns off @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode.
+Sets the @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba of the background of this @SG_ML_L015021SGWColourPickerWidget../cppclass/sgwcolourpickerwidget when focused to @SG_ML_B006colour and turns off @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_setBackgroundFocusThemeColour_int_ void @SG_ML_L01D028setBackgroundFocusThemeColour#void_setBackgroundFocusThemeColour_int_(int themeColour);
-Sets the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour of the background of this @SG_ML_L015015SGWColourPickerWidgetsgwcolourpickerwidget when focused to @SG_ML_B00BthemeColour and turns on @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode.
+Sets the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour of the background of this @SG_ML_L015021SGWColourPickerWidget../cppclass/sgwcolourpickerwidget when focused to @SG_ML_B00BthemeColour and turns on @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_setBackgroundHoverColour_SGXColourRGBA_ void @SG_ML_L01802DsetBackgroundHoverColour#void_setBackgroundHoverColour_SGXColourRGBA_(@SG_ML_L00D00DSGXColourRGBAsgxcolourrgba colour);
-Sets the @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba of the background of this @SG_ML_L015015SGWColourPickerWidgetsgwcolourpickerwidget when hovered over to @SG_ML_B006colour and turns off @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode.
+Sets the @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba of the background of this @SG_ML_L015021SGWColourPickerWidget../cppclass/sgwcolourpickerwidget when hovered over to @SG_ML_B006colour and turns off @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_setBackgroundHoverThemeColour_int_ void @SG_ML_L01D028setBackgroundHoverThemeColour#void_setBackgroundHoverThemeColour_int_(int themeColour);
-Sets the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour of the background of this @SG_ML_L015015SGWColourPickerWidgetsgwcolourpickerwidget when hovered over to @SG_ML_B00BthemeColour and turns on @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode.
+Sets the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour of the background of this @SG_ML_L015021SGWColourPickerWidget../cppclass/sgwcolourpickerwidget when hovered over to @SG_ML_B00BthemeColour and turns on @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_setBackgroundThemeColour_int_ void @SG_ML_L018023setBackgroundThemeColour#void_setBackgroundThemeColour_int_(int themeColour);
-Sets the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour of the background of this @SG_ML_L015015SGWColourPickerWidgetsgwcolourpickerwidget to @SG_ML_B00BthemeColour and turns on @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode.
+Sets the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour of the background of this @SG_ML_L015021SGWColourPickerWidget../cppclass/sgwcolourpickerwidget to @SG_ML_B00BthemeColour and turns on @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_setColour_SGXColourRGBA_ void @SG_ML_L00901EsetColour#void_setColour_SGXColourRGBA_(@SG_ML_L00D00DSGXColourRGBAsgxcolourrgba colour);
-Sets the currently chosen @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba to @SG_ML_B006colour.
+Sets the currently chosen @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba to @SG_ML_B006colour.
 @SG_ML_NOTE This does not activate @SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_setE0_float_ void @SG_ML_L005012setE0#void_setE0_float_(float e0);
-Sets the 0 coordinate of the @SG_ML_L01A016w-distance ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/wdistance controlling the width of the border of this @SG_ML_L015015SGWColourPickerWidgetsgwcolourpickerwidget to @SG_ML_B002e0.
+Sets the 0 coordinate of the @SG_ML_L01A016w-distance ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/wdistance controlling the width of the border of this @SG_ML_L015021SGWColourPickerWidget../cppclass/sgwcolourpickerwidget to @SG_ML_B002e0.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_setE1_float_ void @SG_ML_L005012setE1#void_setE1_float_(float e1);
-Sets the 1 coordinate of the @SG_ML_L01A016w-distance ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/wdistance controlling the width of the border of this @SG_ML_L015015SGWColourPickerWidgetsgwcolourpickerwidget to @SG_ML_B002e1.
+Sets the 1 coordinate of the @SG_ML_L01A016w-distance ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/wdistance controlling the width of the border of this @SG_ML_L015021SGWColourPickerWidget../cppclass/sgwcolourpickerwidget to @SG_ML_B002e1.
 @SG_ML_BLANKLINE

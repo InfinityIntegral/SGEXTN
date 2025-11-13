@@ -22,10 +22,10 @@ children classes: (none)
 @SG_ML_HEADER_ pure virtual functions
 &#9;virtual void @SG_ML_L00402Esync#virtual_void_sync_SGRBaseRenderer_ptr_assign_(@SG_ML_L00F00FSGRBaseRenderersgrbaserenderer* renderControl) = 0;
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_detaileddescription Detailed Description
-@SG_ML_L00D00DSGRBaseSyncersgrbasesyncer provides a base class to build syncers for @SG_ML_L017015SG - RI ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/renderer renderers on top of. All syncers must inherit this class and implement all pure virtual functions provided in this class. Creating @SG_ML_L017015SG - RI ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/renderer renderers is the only way in SGEXTN to use custom shaders. Since most of the logic in custom renderers run on a separate thread, it is not allowed to access objects not owned by the renderer from inside the renderer, or to access objects owned by the renderer from outside. Syncers provide a function where it is safe to exchange data between 2 threads.
+@SG_ML_HEADER_sg_detaileddescription Detailed Description
+@SG_ML_L00D019SGRBaseSyncer../cppclass/sgrbasesyncer provides a base class to build syncers for @SG_ML_L017015SG - RI ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/renderer renderers on top of. All syncers must inherit this class and implement all pure virtual functions provided in this class. Creating @SG_ML_L017015SG - RI ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/renderer renderers is the only way in SGEXTN to use custom shaders. Since most of the logic in custom renderers run on a separate thread, it is not allowed to access objects not owned by the renderer from inside the renderer, or to access objects owned by the renderer from outside. Syncers provide a function where it is safe to exchange data between 2 threads.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_implementationdetails Implementation Details
+@SG_ML_HEADER_sg_implementationdetails Implementation Details
 @SG_ML_L017015SG - RI ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/renderer internally uses QRhi.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_virtual_void_sync_SGRBaseRenderer_ptr_assign_ virtual void @SG_ML_L00402Esync#virtual_void_sync_SGRBaseRenderer_ptr_assign_(@SG_ML_L00F00FSGRBaseRenderersgrbaserenderer* renderControl) = 0;

@@ -24,21 +24,21 @@ children classes: (none)
 &#9;[[nodiscard]] @SG_ML_L007007SGXCharsgxchar @SG_ML_L007026getChar#nodiscard_SGXChar_getChar_func_const_() const;
 &#9;void @SG_ML_L007016setChar#void_setChar_SGXChar_(@SG_ML_L007007SGXCharsgxchar c);
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_detaileddescription Detailed Description
-@SG_ML_L00D00DSGWIconButtonsgwiconbutton provides a button that displays an icon for @SG_ML_L018015SGWidget ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/sgwidget. To use this, the @SG_ML_L020014application icon ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/appicon font must be provided. The button sends out @SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback when pressed.
+@SG_ML_HEADER_sg_detaileddescription Detailed Description
+@SG_ML_L00D019SGWIconButton../cppclass/sgwiconbutton provides a button that displays an icon for @SG_ML_L018015SGWidget ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/sgwidget. To use this, the @SG_ML_L020014application icon ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/appicon font must be provided. The button sends out @SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback when pressed.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_implementationdetails Implementation Details
-Stores information about the @SG_ML_L00D00DSGWIconButtonsgwiconbutton.
+@SG_ML_HEADER_sg_implementationdetails Implementation Details
+Stores information about the @SG_ML_L00D019SGWIconButton../cppclass/sgwiconbutton.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_SGWIconButton_SGWWidget_ptr_SGXChar_void_ptr_func_float_float_float_float_float_float_ @SG_ML_L00D057SGWIconButton#SGWIconButton_SGWWidget_ptr_SGXChar_void_ptr_func_float_float_float_float_float_float_(@SG_ML_L009009SGWWidgetsgwwidget* parent, @SG_ML_L007007SGXCharsgxchar s, void (*attachedFunction)(), float x1, float x0, float y1, float y0, float w1, float w0);
-Creates a @SG_ML_L00D00DSGWIconButtonsgwiconbutton with parent @SG_ML_L018015SGWidget ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/sgwidget @SG_ML_B006parent, @SG_ML_L01A016w-distance ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/wdistance coordinates (@SG_ML_B002x1, @SG_ML_B002x0, @SG_ML_B002y1, @SG_ML_B002y0, @SG_ML_B002w1, @SG_ML_B002w0, ?, ?), @SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback when clicked as @SG_ML_B010attachedFunction, and @SG_ML_L020014application icon ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/appicon @SG_ML_B001s. The height of the @SG_ML_L00D00DSGWIconButtonsgwiconbutton is always equal to its width.
+Creates a @SG_ML_L00D019SGWIconButton../cppclass/sgwiconbutton with parent @SG_ML_L018015SGWidget ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/sgwidget @SG_ML_B006parent, @SG_ML_L01A016w-distance ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/wdistance coordinates (@SG_ML_B002x1, @SG_ML_B002x0, @SG_ML_B002y1, @SG_ML_B002y0, @SG_ML_B002w1, @SG_ML_B002w0, ?, ?), @SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback when clicked as @SG_ML_B010attachedFunction, and @SG_ML_L020014application icon ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/appicon @SG_ML_B001s. The height of the @SG_ML_L00D019SGWIconButton../cppclass/sgwiconbutton is always equal to its width.
 @SG_ML_NOTE @SG_ML_B001s should be present in the @SG_ML_L020014application icon ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/appicon font. It is recommended that it be in the Unicode private use range.
 @SG_ML_WARN @SG_ML_B006parent being nullptr is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGXChar_getChar_func_const_ [[nodiscard]] @SG_ML_L007007SGXCharsgxchar @SG_ML_L007026getChar#nodiscard_SGXChar_getChar_func_const_() const;
-Returns the @SG_ML_L007007SGXCharsgxchar currently being displayed by the @SG_ML_L00D00DSGWIconButtonsgwiconbutton.
+Returns the @SG_ML_L007013SGXChar../cppclass/sgxchar currently being displayed by the @SG_ML_L00D019SGWIconButton../cppclass/sgwiconbutton.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_setChar_SGXChar_ void @SG_ML_L007016setChar#void_setChar_SGXChar_(@SG_ML_L007007SGXCharsgxchar c);
-Sets the @SG_ML_L00D00DSGWIconButtonsgwiconbutton to display the @SG_ML_L007007SGXCharsgxchar @SG_ML_B001c.
+Sets the @SG_ML_L00D019SGWIconButton../cppclass/sgwiconbutton to display the @SG_ML_L007013SGXChar../cppclass/sgxchar @SG_ML_B001c.
 @SG_ML_NOTE @SG_ML_B001c should be present in the @SG_ML_L020014application icon ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/appicon font. It is recommended that it be in the Unicode private use range.
 @SG_ML_BLANKLINE

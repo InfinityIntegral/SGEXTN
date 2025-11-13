@@ -22,15 +22,15 @@ children classes: (none)
 @SG_ML_HEADER_ instance member functions
 &#9;[[nodiscard]] bool @SG_ML_L00A03Coperator()#nodiscard_bool_operator_func_const_T_ref_const_T_ref_const_(const T& a, const T& b) const;
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_detaileddescription Detailed Description
-@SG_ML_L00B00BSGLMoreThansglmorethan provides a descending comparator struct for use with SGEXTN Containers, this can be used when using @SG_ML_L010010SGLPriorityQueuesglpriorityqueue, @SG_ML_L006006SGLSetsglset, @SG_ML_L00B00BSGLMultiSetsglmultiset, or @SG_ML_L006006SGLMapsglmap. You need operator› defined to use @SG_ML_L00B00BSGLMoreThansglmorethan with custom structs. @SG_ML_L00D00DSGLLesserThansgllesserthan works with any object pointers. This is a template based class with no separate source file.
+@SG_ML_HEADER_sg_detaileddescription Detailed Description
+@SG_ML_L00B017SGLMoreThan../cppclass/sglmorethan provides a descending comparator struct for use with SGEXTN Containers, this can be used when using @SG_ML_L01001CSGLPriorityQueue../cppclass/sglpriorityqueue, @SG_ML_L006012SGLSet../cppclass/sglset, @SG_ML_L00B017SGLMultiSet../cppclass/sglmultiset, or @SG_ML_L006012SGLMap../cppclass/sglmap. You need operator› defined to use @SG_ML_L00B017SGLMoreThan../cppclass/sglmorethan with custom structs. @SG_ML_L00D019SGLLesserThan../cppclass/sgllesserthan works with any object pointers. This is a template based class with no separate source file.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_implementationdetails Implementation Details
-@SG_ML_L00B00BSGLMoreThansglmorethan calls operator› on the corresponding data type if it is a custom struct. For object pointers, direct comparison is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour if they are not allocated in the same C array creation call, so @SG_ML_L00B00BSGLMoreThansglmorethan converts them to bytes first and compares the bytes.
+@SG_ML_HEADER_sg_implementationdetails Implementation Details
+@SG_ML_L00B017SGLMoreThan../cppclass/sglmorethan calls operator› on the corresponding data type if it is a custom struct. For object pointers, direct comparison is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour if they are not allocated in the same C array creation call, so @SG_ML_L00B017SGLMoreThan../cppclass/sglmorethan converts them to bytes first and compares the bytes.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_bool_operator_func_const_T_ref_const_T_ref_const_ [[nodiscard]] bool @SG_ML_L00A03Coperator()#nodiscard_bool_operator_func_const_T_ref_const_T_ref_const_(const T& a, const T& b) const;
 Returns if @SG_ML_B001a is more than @SG_ML_B001b.
-@SG_ML_NOTE This is internally used by @SG_ML_L010010SGLPriorityQueuesglpriorityqueue, @SG_ML_L006006SGLSetsglset, @SG_ML_L00B00BSGLMultiSetsglmultiset, and @SG_ML_L006006SGLMapsglmap when @SG_ML_L00B00BSGLMoreThansglmorethan is selected as the comparator struct.
-@SG_ML_NOTE The presense of operator() makes @SG_ML_L00B00BSGLMoreThansglmorethan a functor.
-@SG_ML_WARN This will not compile if operator› is not defined for T. Check the source code of any SGEXTN struct (@SG_ML_L007007SGXCharsgxchar, @SG_ML_L009009SGXStringsgxstring, @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba, @SG_ML_L00D00DSGXColourHSLAsgxcolourhsla, @SG_ML_L00D00DSGXIdentifiersgxidentifier, @SG_ML_L00C00CSGXTimeStampsgxtimestamp, @SG_ML_L00A00ASGXVector2sgxvector2) to see how to define operator›.
+@SG_ML_NOTE This is internally used by @SG_ML_L01001CSGLPriorityQueue../cppclass/sglpriorityqueue, @SG_ML_L006012SGLSet../cppclass/sglset, @SG_ML_L00B017SGLMultiSet../cppclass/sglmultiset, and @SG_ML_L006012SGLMap../cppclass/sglmap when @SG_ML_L00B017SGLMoreThan../cppclass/sglmorethan is selected as the comparator struct.
+@SG_ML_NOTE The presense of operator() makes @SG_ML_L00B017SGLMoreThan../cppclass/sglmorethan a functor.
+@SG_ML_WARN This will not compile if operator› is not defined for T. Check the source code of any SGEXTN struct (@SG_ML_L007013SGXChar../cppclass/sgxchar, @SG_ML_L009015SGXString../cppclass/sgxstring, @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba, @SG_ML_L00D019SGXColourHSLA../cppclass/sgxcolourhsla, @SG_ML_L00D019SGXIdentifier../cppclass/sgxidentifier, @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp, @SG_ML_L00A016SGXVector2../cppclass/sgxvector2) to see how to define operator›.
 @SG_ML_BLANKLINE

@@ -22,15 +22,15 @@ children classes: (none)
 @SG_ML_HEADER_ static member functions
 &#9;static int @SG_ML_L008041wyHash32#static_int_wyHash32_const_SGLSpan_lt_const_unsigned_char_gt_ref_(const @SG_ML_L007007SGLSpansglspan‹const unsigned char›& span);
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_detaileddescription Detailed Description
-@SG_ML_L010010SGLHashAlgorithmsglhashalgorithm implements 32bit WyHash for a @SG_ML_L007007SGLSpansglspan of const unsigned char. WyHash is a high quality hashing algorithm for producing hash tables with minimal hash collision. @SG_ML_L010010SGLHashAlgorithmsglhashalgorithm allows you to implement WyHash for your custom structs so that they can be used with @SG_ML_L007007SGLHashsglhash. This is a template based class with no separate source file.
+@SG_ML_HEADER_sg_detaileddescription Detailed Description
+@SG_ML_L01001CSGLHashAlgorithm../cppclass/sglhashalgorithm implements 32bit WyHash for a @SG_ML_L007013SGLSpan../cppclass/sglspan of const unsigned char. WyHash is a high quality hashing algorithm for producing hash tables with minimal hash collision. @SG_ML_L01001CSGLHashAlgorithm../cppclass/sglhashalgorithm allows you to implement WyHash for your custom structs so that they can be used with @SG_ML_L007013SGLHash../cppclass/sglhash. This is a template based class with no separate source file.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_implementationdetails Implementation Details
-@SG_ML_L010010SGLHashAlgorithmsglhashalgorithm implements 32bit WyHash as a static function. The implementation is placed in the header file to allow easier access to the WyHash source code.
+@SG_ML_HEADER_sg_implementationdetails Implementation Details
+@SG_ML_L01001CSGLHashAlgorithm../cppclass/sglhashalgorithm implements 32bit WyHash as a static function. The implementation is placed in the header file to allow easier access to the WyHash source code.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_int_wyHash32_const_SGLSpan_lt_const_unsigned_char_gt_ref_ static int @SG_ML_L008041wyHash32#static_int_wyHash32_const_SGLSpan_lt_const_unsigned_char_gt_ref_(const @SG_ML_L007007SGLSpansglspan‹const unsigned char›& span);
 Returns a int corresponding to the WyHash output from @SG_ML_B004span.
 @SG_ML_NOTE For convenience, the functions returns a int not a unsigned int. These are effectively the same.
-@SG_ML_NOTE Check the source code of any SGEXTN struct (@SG_ML_L007007SGXCharsgxchar, @SG_ML_L009009SGXStringsgxstring, @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba, @SG_ML_L00D00DSGXColourHSLAsgxcolourhsla, @SG_ML_L00D00DSGXIdentifiersgxidentifier, @SG_ML_L00C00CSGXTimeStampsgxtimestamp, @SG_ML_L00A00ASGXVector2sgxvector2) to see how to implement hash() using this function.
+@SG_ML_NOTE Check the source code of any SGEXTN struct (@SG_ML_L007013SGXChar../cppclass/sgxchar, @SG_ML_L009015SGXString../cppclass/sgxstring, @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba, @SG_ML_L00D019SGXColourHSLA../cppclass/sgxcolourhsla, @SG_ML_L00D019SGXIdentifier../cppclass/sgxidentifier, @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp, @SG_ML_L00A016SGXVector2../cppclass/sgxvector2) to see how to implement hash() using this function.
 @SG_ML_WARN Due to padding, attempting to hash the entire memory of custom structs is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour. Instead hash only the defined fields.
 @SG_ML_BLANKLINE

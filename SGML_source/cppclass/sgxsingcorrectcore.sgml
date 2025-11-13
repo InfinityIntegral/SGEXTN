@@ -22,10 +22,10 @@ children classes: (none)
 @SG_ML_HEADER_ static member functions
 &#9;static @SG_ML_L009009SGXStringsgxstring @SG_ML_L00702Ecorrect#static_SGXString_correct_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& s);
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_detaileddescription Detailed Description
-@SG_ML_L012012SGXSingCorrectCoresgxsingcorrectcore allows @SG_ML_L01B018SingCorrect ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/singcorrect to be used without input from the user. This can be used to automatically run @SG_ML_L01B018SingCorrect ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/singcorrect on text. @SG_ML_L01B018SingCorrect ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/singcorrect automatically replaces LaTeX style commands with corresponding Unicode characters.
+@SG_ML_HEADER_sg_detaileddescription Detailed Description
+@SG_ML_L01201ESGXSingCorrectCore../cppclass/sgxsingcorrectcore allows @SG_ML_L01B018SingCorrect ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/singcorrect to be used without input from the user. This can be used to automatically run @SG_ML_L01B018SingCorrect ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/singcorrect on text. @SG_ML_L01B018SingCorrect ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/singcorrect automatically replaces LaTeX style commands with corresponding Unicode characters.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_implementationdetails Implementation Details
+@SG_ML_HEADER_sg_implementationdetails Implementation Details
 Implements @SG_ML_L01B018SingCorrect ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/singcorrect.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_SGXString_correct_const_SGXString_ref_ static @SG_ML_L009009SGXStringsgxstring @SG_ML_L00702Ecorrect#static_SGXString_correct_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& s);

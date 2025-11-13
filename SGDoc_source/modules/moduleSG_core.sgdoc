@@ -1,0 +1,5 @@
+@SG_MODULE SG_Core
+This is the core SGEXTN module providing access to structs, the application entry point, and debugging.
+The module contains structs for colours in both RGBA and HSLA format, timestamps for date and time, 2 dimensional vectors, and identifiers with a registration system builtin. There is also a random number generator and a timer system that operates using @SG_FINDREP_FUNCPTR.
+SGXChar and SGXString, both very helpful for text processing, are found here. These are recommended over <string> from the Standard Template Library or QString for more readable code and faster clang-tidy passes.
+Read this @SG_ML_L008017tutorial../tutorials/entrypoint to learn how to use the entry point to set up a SGEXTN application, and this @SG_ML_L008012tutorial../tutorials/debug for debugging SGEXTN applications using the builtin debugging tool.

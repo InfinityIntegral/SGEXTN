@@ -22,10 +22,10 @@ children classes: (none)
 @SG_ML_HEADER_ static member functions
 &#9;static @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba @SG_ML_L00E029getThemeColour#static_SGXColourRGBA_getThemeColour_int_(int themeColour);
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_detaileddescription Detailed Description
-@SG_ML_L00F00FSGXThemeColourssgxthemecolours allows @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour to be accessed as @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba values. This can be helpful to set default colour choices to match @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour.
+@SG_ML_HEADER_sg_detaileddescription Detailed Description
+@SG_ML_L00F01BSGXThemeColours../cppclass/sgxthemecolours allows @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour to be accessed as @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba values. This can be helpful to set default colour choices to match @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_implementationdetails Implementation Details
+@SG_ML_HEADER_sg_implementationdetails Implementation Details
 Returns @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_SGXColourRGBA_getThemeColour_int_ static @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba @SG_ML_L00E029getThemeColour#static_SGXColourRGBA_getThemeColour_int_(int themeColour);

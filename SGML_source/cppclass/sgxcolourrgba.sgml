@@ -70,194 +70,194 @@ children classes: (none)
 &#9;void @SG_ML_L019026setTransparencyUsingFloat#void_setTransparencyUsingFloat_float_(float a);
 &#9;void @SG_ML_L01201EtoComplementColour#void_toComplementColour_func_();
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_detaileddescription Detailed Description
-@SG_ML_L00D00DSGXColourRGBAsgxcolourrgba represents a colour in RGBA format with 8 bits per channel. Each of the red, green, blue, and transparency channels can range between 0 to 255 inclusive. Features such as colour transformation and gamma correction are included also.
+@SG_ML_HEADER_sg_detaileddescription Detailed Description
+@SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba represents a colour in RGBA format with 8 bits per channel. Each of the red, green, blue, and transparency channels can range between 0 to 255 inclusive. Features such as colour transformation and gamma correction are included also.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_implementationdetails Implementation Details
-@SG_ML_L00D00DSGXColourRGBAsgxcolourrgba packs all 4 channels into 1 unsigned int.
+@SG_ML_HEADER_sg_implementationdetails Implementation Details
+@SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba packs all 4 channels into 1 unsigned int.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_SGXColourRGBA_int_int_int_int_ @SG_ML_L00D01FSGXColourRGBA#SGXColourRGBA_int_int_int_int_(int r, int g, int b, int a);
-Creates a @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba from its components (red @SG_ML_B001r, green @SG_ML_B001g, blue @SG_ML_B001b, transparency @SG_ML_B001a).
+Creates a @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba from its components (red @SG_ML_B001r, green @SG_ML_B001g, blue @SG_ML_B001b, transparency @SG_ML_B001a).
 @SG_ML_NOTE Each channel should range from 0 to 255 inclusive. Out of bounds channels are corrected automatically.
 @SG_ML_WARN Ensure that all arguments passed have a type of int, otherwise it may trigger the wrong constructor.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_SGXColourRGBA_int_int_int_ @SG_ML_L00D01BSGXColourRGBA#SGXColourRGBA_int_int_int_(int r, int g, int b);
-Creates a @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba from its components (red @SG_ML_B001r, green @SG_ML_B001g, blue @SG_ML_B001b) with transparency assumed to be 255.
+Creates a @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba from its components (red @SG_ML_B001r, green @SG_ML_B001g, blue @SG_ML_B001b) with transparency assumed to be 255.
 @SG_ML_NOTE Each channel should range from 0 to 255 inclusive. Out of bounds channels are corrected automatically.
 @SG_ML_WARN Ensure that all arguments passed have a type of int, otherwise it may trigger the wrong constructor.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_SGXColourRGBA_float_float_float_ @SG_ML_L00D021SGXColourRGBA#SGXColourRGBA_float_float_float_(float r, float g, float b);
-Creates a @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba from its components (red @SG_ML_B001r, green @SG_ML_B001g, blue @SG_ML_B001b) with transparency assumed to be 1.
+Creates a @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba from its components (red @SG_ML_B001r, green @SG_ML_B001g, blue @SG_ML_B001b) with transparency assumed to be 1.
 @SG_ML_NOTE Each channel should range from 0 to 1 inclusive. Out of bounds channels are corrected automatically.
 @SG_ML_WARN Ensure that all arguments passed have a type of float, otherwise it may trigger the wrong constructor.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_SGXColourRGBA_float_float_float_float_ @SG_ML_L00D027SGXColourRGBA#SGXColourRGBA_float_float_float_float_(float r, float g, float b, float a);
-Creates a @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba from its components (red @SG_ML_B001r, green @SG_ML_B001g, blue @SG_ML_B001b, transparency @SG_ML_B001a).
+Creates a @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba from its components (red @SG_ML_B001r, green @SG_ML_B001g, blue @SG_ML_B001b, transparency @SG_ML_B001a).
 @SG_ML_NOTE Each channel should range from 0 to 1 inclusive. Out of bounds channels are corrected automatically.
 @SG_ML_WARN Ensure that all arguments passed have a type of float, otherwise it may trigger the wrong constructor.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_applyTint_SGXColourRGBA_ void @SG_ML_L00901EapplyTint#void_applyTint_SGXColourRGBA_(@SG_ML_L00D00DSGXColourRGBAsgxcolourrgba x);
-Sets this @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba to the resulting colour if this @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba is viewed behind a screen with colour @SG_ML_B001x, with computation done in linear colour space.
-@SG_ML_NOTE This does not change the transparency of this @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba.
+Sets this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba to the resulting colour if this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba is viewed behind a screen with colour @SG_ML_B001x, with computation done in linear colour space.
+@SG_ML_NOTE This does not change the transparency of this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_applyTintNoGammaCorrection_SGXColourRGBA_ void @SG_ML_L01A02FapplyTintNoGammaCorrection#void_applyTintNoGammaCorrection_SGXColourRGBA_(@SG_ML_L00D00DSGXColourRGBAsgxcolourrgba x);
-Sets this @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba to the resulting colour if this @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba is viewed behind a screen with colour @SG_ML_B001x.
-@SG_ML_NOTE This does not change the transparency of this @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba.
+Sets this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba to the resulting colour if this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba is viewed behind a screen with colour @SG_ML_B001x.
+@SG_ML_NOTE This does not change the transparency of this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_applyTintNoGammaCorrectionSeparateTransparency_SGXColourRGBA_int_ void @SG_ML_L02E047applyTintNoGammaCorrectionSeparateTransparency#void_applyTintNoGammaCorrectionSeparateTransparency_SGXColourRGBA_int_(@SG_ML_L00D00DSGXColourRGBAsgxcolourrgba x, int a);
-Sets this @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba to the resulting colour if this @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba is viewed behind a screen with colour c, where c has equal RGB channels as @SG_ML_B001x but a transparency of @SG_ML_B001a between 0 and 255 inclusive.
+Sets this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba to the resulting colour if this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba is viewed behind a screen with colour c, where c has equal RGB channels as @SG_ML_B001x but a transparency of @SG_ML_B001a between 0 and 255 inclusive.
 @SG_ML_NOTE The computation proceeds anyways if @SG_ML_B001a is out of bounds, this is NOT @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour. This can be useful for effects that remove a certain colour.
-@SG_ML_NOTE This does not change the transparency of this @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba.
+@SG_ML_NOTE This does not change the transparency of this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_applyTintNoGammaCorrectionSeparateTransparencyUsingFloat_SGXColourRGBA_float_ void @SG_ML_L038053applyTintNoGammaCorrectionSeparateTransparencyUsingFloat#void_applyTintNoGammaCorrectionSeparateTransparencyUsingFloat_SGXColourRGBA_float_(@SG_ML_L00D00DSGXColourRGBAsgxcolourrgba x, float a);
-Sets this @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba to the resulting colour if this @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba is viewed behind a screen with colour c, where c has equal RGB channels as @SG_ML_B001x but a transparency of @SG_ML_B001a between 0 and 1 inclusive.
+Sets this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba to the resulting colour if this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba is viewed behind a screen with colour c, where c has equal RGB channels as @SG_ML_B001x but a transparency of @SG_ML_B001a between 0 and 1 inclusive.
 @SG_ML_NOTE The computation proceeds anyways if @SG_ML_B001a is out of bounds, this is NOT @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour. This can be useful for effects that remove a certain colour.
-@SG_ML_NOTE This does not change the transparency of this @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba.
+@SG_ML_NOTE This does not change the transparency of this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_applyTintSeparateTransparency_SGXColourRGBA_int_ void @SG_ML_L01D036applyTintSeparateTransparency#void_applyTintSeparateTransparency_SGXColourRGBA_int_(@SG_ML_L00D00DSGXColourRGBAsgxcolourrgba x, int a);
-Sets this @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba to the resulting colour if this @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba is viewed behind a screen with colour c, where c has equal RGB channels as @SG_ML_B001x but a transparency of @SG_ML_B001a between 0 and 255 inclusive, with computation done in linear colour space.
+Sets this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba to the resulting colour if this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba is viewed behind a screen with colour c, where c has equal RGB channels as @SG_ML_B001x but a transparency of @SG_ML_B001a between 0 and 255 inclusive, with computation done in linear colour space.
 @SG_ML_NOTE The computation proceeds anyways if @SG_ML_B001a is out of bounds, this is NOT @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour. This can be useful for effects that remove a certain colour.
-@SG_ML_NOTE This does not change the transparency of this @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba.
+@SG_ML_NOTE This does not change the transparency of this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_applyTintSeparateTransparencyUsingFloat_SGXColourRGBA_float_ void @SG_ML_L027042applyTintSeparateTransparencyUsingFloat#void_applyTintSeparateTransparencyUsingFloat_SGXColourRGBA_float_(@SG_ML_L00D00DSGXColourRGBAsgxcolourrgba x, float a);
-Sets this @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba to the resulting colour if this @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba is viewed behind a screen with colour c, where c has equal RGB channels as @SG_ML_B001x but a transparency of @SG_ML_B001a between 0 and 1 inclusive, with computation done in linear colour space.
+Sets this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba to the resulting colour if this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba is viewed behind a screen with colour c, where c has equal RGB channels as @SG_ML_B001x but a transparency of @SG_ML_B001a between 0 and 1 inclusive, with computation done in linear colour space.
 @SG_ML_NOTE The computation proceeds anyways if @SG_ML_B001a is out of bounds, this is NOT @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour. This can be useful for effects that remove a certain colour.
-@SG_ML_NOTE This does not change the transparency of this @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba.
+@SG_ML_NOTE This does not change the transparency of this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_gammaCorrectBegin_float_ref_float_ref_float_ref_const_ void @SG_ML_L01103CgammaCorrectBegin#void_gammaCorrectBegin_float_ref_float_ref_float_ref_const_(float& r, float& g, float& b) const;
-Converts the @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba to linear colour space for physically accurate colour mixing. The linear colour space RGB values are output in @SG_ML_B001r, @SG_ML_B001g, and @SG_ML_B001b as floating point numbers between 0 and 1 inclusive.
-@SG_ML_WARN Putting linear colour space values into a @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba is not recommended, instead use @SG_ML_L01E035SGXColourRGBA::gammaCorrectEndsgxcolourrgba#void_gammaCorrectEnd_float_float_float_ to convert it back.
+Converts the @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba to linear colour space for physically accurate colour mixing. The linear colour space RGB values are output in @SG_ML_B001r, @SG_ML_B001g, and @SG_ML_B001b as floating point numbers between 0 and 1 inclusive.
+@SG_ML_WARN Putting linear colour space values into a @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba is not recommended, instead use @SG_ML_L01E041SGXColourRGBA::gammaCorrectEnd../cppclass/sgxcolourrgba#void_gammaCorrectEnd_float_float_float_ to convert it back.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_gammaCorrectEnd_float_float_float_ void @SG_ML_L00F028gammaCorrectEnd#void_gammaCorrectEnd_float_float_float_(float r, float g, float b);
-Converts the RGB values @SG_ML_B001r, @SG_ML_B001g, @SG_ML_B001b in linear colour space back into the @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba colour space and apply them to this @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba.
+Converts the RGB values @SG_ML_B001r, @SG_ML_B001g, @SG_ML_B001b in linear colour space back into the @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba colour space and apply them to this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_int_getBlue_func_const_ [[nodiscard]] int @SG_ML_L007022getBlue#nodiscard_int_getBlue_func_const_() const;
-Returns the blue component of this @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba as a int between 0 and 255 inclusive.
+Returns the blue component of this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba as a int between 0 and 255 inclusive.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_float_getBlueAsFloat_func_const_ [[nodiscard]] float @SG_ML_L00E02BgetBlueAsFloat#nodiscard_float_getBlueAsFloat_func_const_() const;
-Returns the blue component of this @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba as a float between 0 and 1 inclusive.
+Returns the blue component of this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba as a float between 0 and 1 inclusive.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_int_getGreen_func_const_ [[nodiscard]] int @SG_ML_L008023getGreen#nodiscard_int_getGreen_func_const_() const;
-Returns the green component of this @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba as a int between 0 and 255 inclusive.
+Returns the green component of this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba as a int between 0 and 255 inclusive.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_float_getGreenAsFloat_func_const_ [[nodiscard]] float @SG_ML_L00F02CgetGreenAsFloat#nodiscard_float_getGreenAsFloat_func_const_() const;
-Returns the green component of this @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba as a float between 0 and 1 inclusive.
+Returns the green component of this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba as a float between 0 and 1 inclusive.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_int_getRed_func_const_ [[nodiscard]] int @SG_ML_L006021getRed#nodiscard_int_getRed_func_const_() const;
-Returns the red component of this @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba as a int between 0 and 255 inclusive.
+Returns the red component of this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba as a int between 0 and 255 inclusive.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_float_getRedAsFloat_func_const_ [[nodiscard]] float @SG_ML_L00D02AgetRedAsFloat#nodiscard_float_getRedAsFloat_func_const_() const;
-Returns the red component of this @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba as a float between 0 and 1 inclusive.
+Returns the red component of this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba as a float between 0 and 1 inclusive.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGXString_getStringForPrintingRGBAFloatHTML_func_const_ [[nodiscard]] @SG_ML_L009009SGXStringsgxstring @SG_ML_L021042getStringForPrintingRGBAFloatHTML#nodiscard_SGXString_getStringForPrintingRGBAFloatHTML_func_const_() const;
-Returns the HTML style string representation of this @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba with colour between 0 and 1 inclusive, this is something like rgb(1.0, 0.0, 0.8, 1.0).
+Returns the HTML style string representation of this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba with colour between 0 and 1 inclusive, this is something like rgb(1.0, 0.0, 0.8, 1.0).
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGXString_getStringForPrintingRGBAHTML_func_const_ [[nodiscard]] @SG_ML_L009009SGXStringsgxstring @SG_ML_L01C03DgetStringForPrintingRGBAHTML#nodiscard_SGXString_getStringForPrintingRGBAHTML_func_const_() const;
-Returns the HTML style string representation of this @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba with colour between 0 and 255 inclusive, this is something like rgb(255, 0, 200, 255).
+Returns the HTML style string representation of this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba with colour between 0 and 255 inclusive, this is something like rgb(255, 0, 200, 255).
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGXString_getStringForPrintingRGBAHex_func_const_ [[nodiscard]] @SG_ML_L009009SGXStringsgxstring @SG_ML_L01B03CgetStringForPrintingRGBAHex#nodiscard_SGXString_getStringForPrintingRGBAHex_func_const_() const;
-Returns the hex code string representation of this @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba, this is something like #FF00C8FF.
+Returns the hex code string representation of this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba, this is something like #FF00C8FF.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGXString_getStringForPrintingRGBFloatHTML_func_const_ [[nodiscard]] @SG_ML_L009009SGXStringsgxstring @SG_ML_L020041getStringForPrintingRGBFloatHTML#nodiscard_SGXString_getStringForPrintingRGBFloatHTML_func_const_() const;
-Returns the HTML style string representation of this @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba with colour between 0 and 1 inclusive, this is something like rgb(1.0, 0.0, 0.8).
+Returns the HTML style string representation of this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba with colour between 0 and 1 inclusive, this is something like rgb(1.0, 0.0, 0.8).
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGXString_getStringForPrintingRGBHTML_func_const_ [[nodiscard]] @SG_ML_L009009SGXStringsgxstring @SG_ML_L01B03CgetStringForPrintingRGBHTML#nodiscard_SGXString_getStringForPrintingRGBHTML_func_const_() const;
-Returns the HTML style string representation of this @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba with colour between 0 and 255 inclusive, this is something like rgb(255, 0, 200).
+Returns the HTML style string representation of this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba with colour between 0 and 255 inclusive, this is something like rgb(255, 0, 200).
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGXString_getStringForPrintingRGBHex_func_const_ [[nodiscard]] @SG_ML_L009009SGXStringsgxstring @SG_ML_L01A03BgetStringForPrintingRGBHex#nodiscard_SGXString_getStringForPrintingRGBHex_func_const_() const;
-Returns the hex code string representation of this @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba, this is something like #FF00C8.
+Returns the hex code string representation of this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba, this is something like #FF00C8.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_int_getTransparency_func_const_ [[nodiscard]] int @SG_ML_L00F02AgetTransparency#nodiscard_int_getTransparency_func_const_() const;
-Returns the transparency component of this @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba as a int between 0 and 255 inclusive.
+Returns the transparency component of this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba as a int between 0 and 255 inclusive.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_float_getTransparencyAsFloat_func_const_ [[nodiscard]] float @SG_ML_L016033getTransparencyAsFloat#nodiscard_float_getTransparencyAsFloat_func_const_() const;
-Returns the transparency component of this @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba as a float between 0 and 1 inclusive.
+Returns the transparency component of this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba as a float between 0 and 1 inclusive.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_int_hash_func_const_ [[nodiscard]] int @SG_ML_L00401Fhash#nodiscard_int_hash_func_const_() const;
-Hash function defined for @SG_ML_L007007SGLHashsglhash.
+Hash function defined for @SG_ML_L007013SGLHash../cppclass/sglhash.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGXColourRGBA_linearInterpolate_SGXColourRGBA_float_const_ [[nodiscard]] @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba @SG_ML_L011045linearInterpolate#nodiscard_SGXColourRGBA_linearInterpolate_SGXColourRGBA_float_const_(@SG_ML_L00D00DSGXColourRGBAsgxcolourrgba x, float f) const;
-Returns the resulting colour if @SG_ML_B001f of this @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba is mixed with (1 - @SG_ML_B001f) of @SG_ML_B001x, where @SG_ML_B001f is between 0 and 1 inclusive.
+Returns the resulting colour if @SG_ML_B001f of this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba is mixed with (1 - @SG_ML_B001f) of @SG_ML_B001x, where @SG_ML_B001f is between 0 and 1 inclusive.
 @SG_ML_NOTE The computation proceeds anyways if @SG_ML_B001f is out of bounds, this is NOT @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour. This can be useful for effects that remove a certain colour.
-@SG_ML_NOTE The returned colour has the same transparency as this @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba.
+@SG_ML_NOTE The returned colour has the same transparency as this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGXColourRGBA_linearInterpolateGammaCorrection_SGXColourRGBA_float_const_ [[nodiscard]] @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba @SG_ML_L020054linearInterpolateGammaCorrection#nodiscard_SGXColourRGBA_linearInterpolateGammaCorrection_SGXColourRGBA_float_const_(@SG_ML_L00D00DSGXColourRGBAsgxcolourrgba x, float f) const;
-Returns the resulting colour if @SG_ML_B001f of this @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba is mixed with (1 - @SG_ML_B001f) of @SG_ML_B001x, where @SG_ML_B001f is between 0 and 1 inclusive, computation done in linear colour space.
+Returns the resulting colour if @SG_ML_B001f of this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba is mixed with (1 - @SG_ML_B001f) of @SG_ML_B001x, where @SG_ML_B001f is between 0 and 1 inclusive, computation done in linear colour space.
 @SG_ML_NOTE The computation proceeds anyways if @SG_ML_B001f is out of bounds, this is NOT @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour. This can be useful for effects that remove a certain colour.
-@SG_ML_NOTE The returned colour has the same transparency as this @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba.
+@SG_ML_NOTE The returned colour has the same transparency as this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_linearTransformBlue_float_float_ void @SG_ML_L013026linearTransformBlue#void_linearTransformBlue_float_float_(float m, float c);
-Replaces the blue component of this @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba with @SG_ML_B001m * blue + @SG_ML_B001c.
+Replaces the blue component of this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba with @SG_ML_B001m * blue + @SG_ML_B001c.
 @SG_ML_NOTE If the new blue component is out of bounds, it is corrected automatically.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_linearTransformBlueWithGamma_float_float_ void @SG_ML_L01C02FlinearTransformBlueWithGamma#void_linearTransformBlueWithGamma_float_float_(float m, float c);
-Replaces the blue component of this @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba with @SG_ML_B001m * blue + @SG_ML_B001c, with computation done in linear colour space.
+Replaces the blue component of this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba with @SG_ML_B001m * blue + @SG_ML_B001c, with computation done in linear colour space.
 @SG_ML_NOTE If the new blue component is out of bounds, it is corrected automatically.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_linearTransformGreen_float_float_ void @SG_ML_L014027linearTransformGreen#void_linearTransformGreen_float_float_(float m, float c);
-Replaces the green component of this @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba with @SG_ML_B001m * green + @SG_ML_B001c.
+Replaces the green component of this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba with @SG_ML_B001m * green + @SG_ML_B001c.
 @SG_ML_NOTE If the new green component is out of bounds, it is corrected automatically.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_linearTransformGreenWithGamma_float_float_ void @SG_ML_L01D030linearTransformGreenWithGamma#void_linearTransformGreenWithGamma_float_float_(float m, float c);
-Replaces the green component of this @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba with @SG_ML_B001m * green + @SG_ML_B001c, with computation done in linear colour space.
+Replaces the green component of this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba with @SG_ML_B001m * green + @SG_ML_B001c, with computation done in linear colour space.
 @SG_ML_NOTE If the new green component is out of bounds, it is corrected automatically.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_linearTransformRed_float_float_ void @SG_ML_L012025linearTransformRed#void_linearTransformRed_float_float_(float m, float c);
-Replaces the red component of this @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba with @SG_ML_B001m * red + @SG_ML_B001c.
+Replaces the red component of this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba with @SG_ML_B001m * red + @SG_ML_B001c.
 @SG_ML_NOTE If the new red component is out of bounds, it is corrected automatically.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_linearTransformRedWithGamma_float_float_ void @SG_ML_L01B02ElinearTransformRedWithGamma#void_linearTransformRedWithGamma_float_float_(float m, float c);
-Replaces the red component of this @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba with @SG_ML_B001m * red + @SG_ML_B001c, with computation done in linear colour space.
+Replaces the red component of this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba with @SG_ML_B001m * red + @SG_ML_B001c, with computation done in linear colour space.
 @SG_ML_NOTE If the new red component is out of bounds, it is corrected automatically.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_linearTransformTransparency_float_float_ void @SG_ML_L01B02ElinearTransformTransparency#void_linearTransformTransparency_float_float_(float m, float c);
-Replaces the transparency component of this @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba with @SG_ML_B001m * transparency + @SG_ML_B001c.
+Replaces the transparency component of this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba with @SG_ML_B001m * transparency + @SG_ML_B001c.
 @SG_ML_NOTE If the new transparency component is out of bounds, it is corrected automatically.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_bool_operator_neq_SGXColourRGBA_const_ [[nodiscard]] bool @SG_ML_L00A031operator!=#nodiscard_bool_operator_neq_SGXColourRGBA_const_(@SG_ML_L00D00DSGXColourRGBAsgxcolourrgba x) const;
-Inequality check with @SG_ML_B001x defined for @SG_ML_L00B00BSGLEqualsTosglequalsto.
+Inequality check with @SG_ML_B001x defined for @SG_ML_L00B017SGLEqualsTo../cppclass/sglequalsto.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_bool_operator_lt_SGXColourRGBA_const_ [[nodiscard]] bool @SG_ML_L009030operator‹#nodiscard_bool_operator_lt_SGXColourRGBA_const_(@SG_ML_L00D00DSGXColourRGBAsgxcolourrgba x) const;
-Lesser than operator with @SG_ML_B001x defined for @SG_ML_L00D00DSGLLesserThansgllesserthan and @SG_ML_L00B00BSGLMoreThansglmorethan.
+Lesser than operator with @SG_ML_B001x defined for @SG_ML_L00D019SGLLesserThan../cppclass/sgllesserthan and @SG_ML_L00B017SGLMoreThan../cppclass/sglmorethan.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_bool_operator_eq_SGXColourRGBA_const_ [[nodiscard]] bool @SG_ML_L00A030operator==#nodiscard_bool_operator_eq_SGXColourRGBA_const_(@SG_ML_L00D00DSGXColourRGBAsgxcolourrgba x) const;
-Equality check with @SG_ML_B001x defined for @SG_ML_L00B00BSGLEqualsTosglequalsto.
+Equality check with @SG_ML_B001x defined for @SG_ML_L00B017SGLEqualsTo../cppclass/sglequalsto.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_bool_operator_gt_SGXColourRGBA_const_ [[nodiscard]] bool @SG_ML_L009030operator›#nodiscard_bool_operator_gt_SGXColourRGBA_const_(@SG_ML_L00D00DSGXColourRGBAsgxcolourrgba x) const;
-More than operator with @SG_ML_B001x defined for @SG_ML_L00D00DSGLLesserThansgllesserthan and @SG_ML_L00B00BSGLMoreThansglmorethan.
+More than operator with @SG_ML_B001x defined for @SG_ML_L00D019SGLLesserThan../cppclass/sgllesserthan and @SG_ML_L00B017SGLMoreThan../cppclass/sglmorethan.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_setBlue_int_ void @SG_ML_L007012setBlue#void_setBlue_int_(int b);
-Sets the blue component of this @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba to @SG_ML_B001b.
+Sets the blue component of this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba to @SG_ML_B001b.
 @SG_ML_NOTE @SG_ML_B001b should be between 0 and 255 inclusive. If it is out of bounds, it is corrected automatically.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_setBlueUsingFloat_float_ void @SG_ML_L01101EsetBlueUsingFloat#void_setBlueUsingFloat_float_(float b);
-Sets the blue component of this @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba to @SG_ML_B001b.
+Sets the blue component of this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba to @SG_ML_B001b.
 @SG_ML_NOTE @SG_ML_B001b should be between 0 and 1 inclusive. If it is out of bounds, it is corrected automatically.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_setGreen_int_ void @SG_ML_L008013setGreen#void_setGreen_int_(int g);
-Sets the green component of this @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba to @SG_ML_B001g.
+Sets the green component of this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba to @SG_ML_B001g.
 @SG_ML_NOTE @SG_ML_B001g should be between 0 and 255 inclusive. If it is out of bounds, it is corrected automatically.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_setGreenUsingFloat_float_ void @SG_ML_L01201FsetGreenUsingFloat#void_setGreenUsingFloat_float_(float g);
-Sets the green component of this @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba to @SG_ML_B001g.
+Sets the green component of this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba to @SG_ML_B001g.
 @SG_ML_NOTE @SG_ML_B001g should be between 0 and 1 inclusive. If it is out of bounds, it is corrected automatically.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_setRed_int_ void @SG_ML_L006011setRed#void_setRed_int_(int r);
-Sets the red component of this @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba to @SG_ML_B001r.
+Sets the red component of this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba to @SG_ML_B001r.
 @SG_ML_NOTE @SG_ML_B001r should be between 0 and 255 inclusive. If it is out of bounds, it is corrected automatically.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_setRedUsingFloat_float_ void @SG_ML_L01001DsetRedUsingFloat#void_setRedUsingFloat_float_(float r);
-Sets the red component of this @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba to @SG_ML_B001r.
+Sets the red component of this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba to @SG_ML_B001r.
 @SG_ML_NOTE @SG_ML_B001r should be between 0 and 1 inclusive. If it is out of bounds, it is corrected automatically.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_setTransparency_int_ void @SG_ML_L00F01AsetTransparency#void_setTransparency_int_(int a);
-Sets the transparency component of this @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba to @SG_ML_B001a.
+Sets the transparency component of this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba to @SG_ML_B001a.
 @SG_ML_NOTE @SG_ML_B001a should be between 0 and 255 inclusive. If it is out of bounds, it is corrected automatically.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_setTransparencyUsingFloat_float_ void @SG_ML_L019026setTransparencyUsingFloat#void_setTransparencyUsingFloat_float_(float a);
-Sets the transparency component of this @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba to @SG_ML_B001a.
+Sets the transparency component of this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba to @SG_ML_B001a.
 @SG_ML_NOTE @SG_ML_B001a should be between 0 and 1 inclusive. If it is out of bounds, it is corrected automatically.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_toComplementColour_func_ void @SG_ML_L01201EtoComplementColour#void_toComplementColour_func_();
-Sets this @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba to its complementary colour, with RGB channels inverted.
+Sets this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba to its complementary colour, with RGB channels inverted.
 @SG_ML_BLANKLINE

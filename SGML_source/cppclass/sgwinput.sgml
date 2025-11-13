@@ -95,94 +95,94 @@ children classes: @SG_ML_L00C00CSGWLongInputsgwlonginput, @SG_ML_L00C00CSGWTextI
 &#9;void @SG_ML_L01102CsetTextFromString#void_setTextFromString_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& s);
 &#9;void @SG_ML_L014038setVerticalAlignment#void_setVerticalAlignment_SGWVerticalAlignment_mc_Flag_(SGWVerticalAlignment::Flag alignment);
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_detaileddescription Detailed Description
-@SG_ML_L008008SGWInputsgwinput provides a base class for @SG_ML_L018015SGWidget ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/sgwidget input fields. This is not meant to be instantiated directly, you are supposed to create its subclasses (@SG_ML_L00C00CSGWTextInputsgwtextinput, @SG_ML_L00C00CSGWLongInputsgwlonginput) to use its functionality. This is interactive and can trigger @SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback when focused, unfocused, or the text inside is modified. All @SG_ML_L008008SGWInputsgwinput subclasses use @SG_ML_L01B018SingCorrect ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/singcorrect.
+@SG_ML_HEADER_sg_detaileddescription Detailed Description
+@SG_ML_L008014SGWInput../cppclass/sgwinput provides a base class for @SG_ML_L018015SGWidget ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/sgwidget input fields. This is not meant to be instantiated directly, you are supposed to create its subclasses (@SG_ML_L00C018SGWTextInput../cppclass/sgwtextinput, @SG_ML_L00C018SGWLongInput../cppclass/sgwlonginput) to use its functionality. This is interactive and can trigger @SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback when focused, unfocused, or the text inside is modified. All @SG_ML_L008014SGWInput../cppclass/sgwinput subclasses use @SG_ML_L01B018SingCorrect ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/singcorrect.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_implementationdetails Implementation Details
-Stores information about the @SG_ML_L008008SGWInputsgwinput.
+@SG_ML_HEADER_sg_implementationdetails Implementation Details
+Stores information about the @SG_ML_L008014SGWInput../cppclass/sgwinput.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_int_attachedInt_ int @SG_ML_L00B011attachedInt#int_attachedInt_;
-Int attached to this @SG_ML_L008008SGWInputsgwinput.
+Int attached to this @SG_ML_L008014SGWInput../cppclass/sgwinput.
 @SG_ML_NOTE This is used to identify the source of the callback in @SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_SGXString_attachedString_ @SG_ML_L009009SGXStringsgxstring @SG_ML_L00E01AattachedString#SGXString_attachedString_;
-String attached to this @SG_ML_L008008SGWInputsgwinput.
+String attached to this @SG_ML_L008014SGWInput../cppclass/sgwinput.
 @SG_ML_NOTE This is used to identify the source of the callback in @SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_ptr_focusEndFunction_func_ void (*@SG_ML_L010020focusEndFunction#void_ptr_focusEndFunction_func_)();
-@SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback taking no arguments, triggered when the @SG_ML_L008008SGWInputsgwinput is unfocused.
+@SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback taking no arguments, triggered when the @SG_ML_L008014SGWInput../cppclass/sgwinput is unfocused.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_ptr_focusEndFunctionWithInt_int_ void (*@SG_ML_L017026focusEndFunctionWithInt#void_ptr_focusEndFunctionWithInt_int_)(int);
-@SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback taking a int, triggered when this @SG_ML_L008008SGWInputsgwinput is unfocused and @SG_ML_L015019SGWInput::attachedIntsgwinput#int_attachedInt_ is passed as argument.
+@SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback taking a int, triggered when this @SG_ML_L008014SGWInput../cppclass/sgwinput is unfocused and @SG_ML_L015025SGWInput::attachedInt../cppclass/sgwinput#int_attachedInt_ is passed as argument.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_ptr_focusEndFunctionWithPointer_SGWInput_ptr_ void (*@SG_ML_L01B033focusEndFunctionWithPointer#void_ptr_focusEndFunctionWithPointer_SGWInput_ptr_)(@SG_ML_L008008SGWInputsgwinput*);
-@SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback taking a pointer to @SG_ML_L008008SGWInputsgwinput, triggered when the @SG_ML_L008008SGWInputsgwinput is unfocused and the pointer to this @SG_ML_L008008SGWInputsgwinput is passed as argument.
+@SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback taking a pointer to @SG_ML_L008014SGWInput../cppclass/sgwinput, triggered when the @SG_ML_L008014SGWInput../cppclass/sgwinput is unfocused and the pointer to this @SG_ML_L008014SGWInput../cppclass/sgwinput is passed as argument.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_ptr_focusEndFunctionWithString_const_SGXString_ref_ void (*@SG_ML_L01A039focusEndFunctionWithString#void_ptr_focusEndFunctionWithString_const_SGXString_ref_)(const @SG_ML_L009009SGXStringsgxstring&);
-@SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback taking a string, triggered when the @SG_ML_L008008SGWInputsgwinput is unfocused and @SG_ML_L018022SGWInput::attachedStringsgwinput#SGXString_attachedString_ is passed as argument.
+@SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback taking a string, triggered when the @SG_ML_L008014SGWInput../cppclass/sgwinput is unfocused and @SG_ML_L01802ESGWInput::attachedString../cppclass/sgwinput#SGXString_attachedString_ is passed as argument.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_ptr_focusStartFunction_func_ void (*@SG_ML_L012022focusStartFunction#void_ptr_focusStartFunction_func_)();
-@SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback taking no arguments, triggered when the @SG_ML_L008008SGWInputsgwinput is focused.
+@SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback taking no arguments, triggered when the @SG_ML_L008014SGWInput../cppclass/sgwinput is focused.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_ptr_focusStartFunctionWithInt_int_ void (*@SG_ML_L019028focusStartFunctionWithInt#void_ptr_focusStartFunctionWithInt_int_)(int);
-@SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback taking a int, triggered when this @SG_ML_L008008SGWInputsgwinput is focused and @SG_ML_L015019SGWInput::attachedIntsgwinput#int_attachedInt_ is passed as argument.
+@SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback taking a int, triggered when this @SG_ML_L008014SGWInput../cppclass/sgwinput is focused and @SG_ML_L015025SGWInput::attachedInt../cppclass/sgwinput#int_attachedInt_ is passed as argument.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_ptr_focusStartFunctionWithPointer_SGWInput_ptr_ void (*@SG_ML_L01D035focusStartFunctionWithPointer#void_ptr_focusStartFunctionWithPointer_SGWInput_ptr_)(@SG_ML_L008008SGWInputsgwinput*);
-@SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback taking a pointer to @SG_ML_L008008SGWInputsgwinput, triggered when the @SG_ML_L008008SGWInputsgwinput is focused and the pointer to this @SG_ML_L008008SGWInputsgwinput is passed as argument.
+@SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback taking a pointer to @SG_ML_L008014SGWInput../cppclass/sgwinput, triggered when the @SG_ML_L008014SGWInput../cppclass/sgwinput is focused and the pointer to this @SG_ML_L008014SGWInput../cppclass/sgwinput is passed as argument.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_ptr_focusStartFunctionWithString_const_SGXString_ref_ void (*@SG_ML_L01C03BfocusStartFunctionWithString#void_ptr_focusStartFunctionWithString_const_SGXString_ref_)(const @SG_ML_L009009SGXStringsgxstring&);
-@SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback taking a string, triggered when the @SG_ML_L008008SGWInputsgwinput is focused and @SG_ML_L018022SGWInput::attachedStringsgwinput#SGXString_attachedString_ is passed as argument.
+@SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback taking a string, triggered when the @SG_ML_L008014SGWInput../cppclass/sgwinput is focused and @SG_ML_L01802ESGWInput::attachedString../cppclass/sgwinput#SGXString_attachedString_ is passed as argument.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_ptr_textChangedFunction_func_ void (*@SG_ML_L013023textChangedFunction#void_ptr_textChangedFunction_func_)();
-@SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback taking no arguments, triggered when the text in this @SG_ML_L008008SGWInputsgwinput is changed.
+@SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback taking no arguments, triggered when the text in this @SG_ML_L008014SGWInput../cppclass/sgwinput is changed.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_ptr_textChangedFunctionWithInt_int_ void (*@SG_ML_L01A029textChangedFunctionWithInt#void_ptr_textChangedFunctionWithInt_int_)(int);
-@SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback taking a int, triggered when the text in this @SG_ML_L008008SGWInputsgwinput is changed and @SG_ML_L015019SGWInput::attachedIntsgwinput#int_attachedInt_ is passed as argument.
+@SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback taking a int, triggered when the text in this @SG_ML_L008014SGWInput../cppclass/sgwinput is changed and @SG_ML_L015025SGWInput::attachedInt../cppclass/sgwinput#int_attachedInt_ is passed as argument.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_ptr_textChangedFunctionWithPointer_SGWInput_ptr_ void (*@SG_ML_L01E036textChangedFunctionWithPointer#void_ptr_textChangedFunctionWithPointer_SGWInput_ptr_)(@SG_ML_L008008SGWInputsgwinput*);
-@SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback taking a pointer to @SG_ML_L008008SGWInputsgwinput, triggered when the text on this @SG_ML_L008008SGWInputsgwinput is changed and the pointer to this @SG_ML_L008008SGWInputsgwinput is passed as argument.
+@SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback taking a pointer to @SG_ML_L008014SGWInput../cppclass/sgwinput, triggered when the text on this @SG_ML_L008014SGWInput../cppclass/sgwinput is changed and the pointer to this @SG_ML_L008014SGWInput../cppclass/sgwinput is passed as argument.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_ptr_textChangedFunctionWithString_const_SGXString_ref_ void (*@SG_ML_L01D03CtextChangedFunctionWithString#void_ptr_textChangedFunctionWithString_const_SGXString_ref_)(const @SG_ML_L009009SGXStringsgxstring&);
-@SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback taking a string, triggered when the text in this @SG_ML_L008008SGWInputsgwinput is changed and @SG_ML_L018022SGWInput::attachedStringsgwinput#SGXString_attachedString_ is passed as argument.
+@SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback taking a string, triggered when the text in this @SG_ML_L008014SGWInput../cppclass/sgwinput is changed and @SG_ML_L01802ESGWInput::attachedString../cppclass/sgwinput#SGXString_attachedString_ is passed as argument.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGXColourRGBA_getBackgroundColour_bool_ptr_const_ [[nodiscard]] @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba @SG_ML_L01303CgetBackgroundColour#nodiscard_SGXColourRGBA_getBackgroundColour_bool_ptr_const_(bool* isUsing) const;
-Returns the @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba currently being used for the background of this @SG_ML_L008008SGWInputsgwinput. The bool that @SG_ML_B007isUsing points to is set to true if @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode is off, and false otherwise.
+Returns the @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba currently being used for the background of this @SG_ML_L008014SGWInput../cppclass/sgwinput. The bool that @SG_ML_B007isUsing points to is set to true if @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode is off, and false otherwise.
 @SG_ML_NOTE If you are not interested in the current @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode, pass nullptr to @SG_ML_B007isUsing.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGXColourRGBA_getBackgroundFocusColour_bool_ptr_const_ [[nodiscard]] @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba @SG_ML_L018041getBackgroundFocusColour#nodiscard_SGXColourRGBA_getBackgroundFocusColour_bool_ptr_const_(bool* isUsing) const;
-Returns the @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba currently being used for the background of this @SG_ML_L008008SGWInputsgwinput when focused. The bool that @SG_ML_B007isUsing points to is set to true if @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode is off, and false otherwise.
+Returns the @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba currently being used for the background of this @SG_ML_L008014SGWInput../cppclass/sgwinput when focused. The bool that @SG_ML_B007isUsing points to is set to true if @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode is off, and false otherwise.
 @SG_ML_NOTE If you are not interested in the current @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode, pass nullptr to @SG_ML_B007isUsing.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_int_getBackgroundFocusThemeColour_bool_ptr_const_ [[nodiscard]] int @SG_ML_L01D03CgetBackgroundFocusThemeColour#nodiscard_int_getBackgroundFocusThemeColour_bool_ptr_const_(bool* isUsing) const;
-Returns the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour currently being used for the background of this @SG_ML_L008008SGWInputsgwinput when focused. The bool that @SG_ML_B007isUsing points to is set to true if @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode is on, and false otherwise.
+Returns the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour currently being used for the background of this @SG_ML_L008014SGWInput../cppclass/sgwinput when focused. The bool that @SG_ML_B007isUsing points to is set to true if @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode is on, and false otherwise.
 @SG_ML_NOTE If you are not interested in the current @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode, pass nullptr to @SG_ML_B007isUsing.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGXColourRGBA_getBackgroundHoverColour_bool_ptr_const_ [[nodiscard]] @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba @SG_ML_L018041getBackgroundHoverColour#nodiscard_SGXColourRGBA_getBackgroundHoverColour_bool_ptr_const_(bool* isUsing) const;
-Returns the @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba currently being used for the background of this @SG_ML_L008008SGWInputsgwinput when hovered over. The bool that @SG_ML_B007isUsing points to is set to true if @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode is off, and false otherwise.
+Returns the @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba currently being used for the background of this @SG_ML_L008014SGWInput../cppclass/sgwinput when hovered over. The bool that @SG_ML_B007isUsing points to is set to true if @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode is off, and false otherwise.
 @SG_ML_NOTE If you are not interested in the current @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode, pass nullptr to @SG_ML_B007isUsing.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGXColourRGBA_getBackgroundHoverInvalidColour_bool_ptr_const_ [[nodiscard]] @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba @SG_ML_L01F048getBackgroundHoverInvalidColour#nodiscard_SGXColourRGBA_getBackgroundHoverInvalidColour_bool_ptr_const_(bool* isUsing) const;
-Returns the @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba currently being used for the background of this @SG_ML_L008008SGWInputsgwinput when marked as invalid and hovered over. The bool that @SG_ML_B007isUsing points to is set to true if @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode is off, and false otherwise.
+Returns the @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba currently being used for the background of this @SG_ML_L008014SGWInput../cppclass/sgwinput when marked as invalid and hovered over. The bool that @SG_ML_B007isUsing points to is set to true if @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode is off, and false otherwise.
 @SG_ML_NOTE If you are not interested in the current @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode, pass nullptr to @SG_ML_B007isUsing.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_int_getBackgroundHoverInvalidThemeColour_bool_ptr_const_ [[nodiscard]] int @SG_ML_L024043getBackgroundHoverInvalidThemeColour#nodiscard_int_getBackgroundHoverInvalidThemeColour_bool_ptr_const_(bool* isUsing) const;
-Returns the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour currently being used for the background of this @SG_ML_L008008SGWInputsgwinput when marked as invalid and hovered over. The bool that @SG_ML_B007isUsing points to is set to true if @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode is on, and false otherwise.
+Returns the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour currently being used for the background of this @SG_ML_L008014SGWInput../cppclass/sgwinput when marked as invalid and hovered over. The bool that @SG_ML_B007isUsing points to is set to true if @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode is on, and false otherwise.
 @SG_ML_NOTE If you are not interested in the current @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode, pass nullptr to @SG_ML_B007isUsing.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_int_getBackgroundHoverThemeColour_bool_ptr_const_ [[nodiscard]] int @SG_ML_L01D03CgetBackgroundHoverThemeColour#nodiscard_int_getBackgroundHoverThemeColour_bool_ptr_const_(bool* isUsing) const;
-Returns the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour currently being used for the background of this @SG_ML_L008008SGWInputsgwinput when hovered over. The bool that @SG_ML_B007isUsing points to is set to true if @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode is on, and false otherwise.
+Returns the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour currently being used for the background of this @SG_ML_L008014SGWInput../cppclass/sgwinput when hovered over. The bool that @SG_ML_B007isUsing points to is set to true if @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode is on, and false otherwise.
 @SG_ML_NOTE If you are not interested in the current @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode, pass nullptr to @SG_ML_B007isUsing.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGXColourRGBA_getBackgroundInvalidColour_bool_ptr_const_ [[nodiscard]] @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba @SG_ML_L01A043getBackgroundInvalidColour#nodiscard_SGXColourRGBA_getBackgroundInvalidColour_bool_ptr_const_(bool* isUsing) const;
-Returns the @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba currently being used for the background of this @SG_ML_L008008SGWInputsgwinput when marked as invalid. The bool that @SG_ML_B007isUsing points to is set to true if @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode is off, and false otherwise.
+Returns the @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba currently being used for the background of this @SG_ML_L008014SGWInput../cppclass/sgwinput when marked as invalid. The bool that @SG_ML_B007isUsing points to is set to true if @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode is off, and false otherwise.
 @SG_ML_NOTE If you are not interested in the current @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode, pass nullptr to @SG_ML_B007isUsing.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_int_getBackgroundInvalidThemeColour_bool_ptr_const_ [[nodiscard]] int @SG_ML_L01F03EgetBackgroundInvalidThemeColour#nodiscard_int_getBackgroundInvalidThemeColour_bool_ptr_const_(bool* isUsing) const;
-Returns the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour currently being used for the background of this @SG_ML_L008008SGWInputsgwinput when marked as invalid. The bool that @SG_ML_B007isUsing points to is set to true if @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode is on, and false otherwise.
+Returns the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour currently being used for the background of this @SG_ML_L008014SGWInput../cppclass/sgwinput when marked as invalid. The bool that @SG_ML_B007isUsing points to is set to true if @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode is on, and false otherwise.
 @SG_ML_NOTE If you are not interested in the current @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode, pass nullptr to @SG_ML_B007isUsing.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_int_getBackgroundThemeColour_bool_ptr_const_ [[nodiscard]] int @SG_ML_L018037getBackgroundThemeColour#nodiscard_int_getBackgroundThemeColour_bool_ptr_const_(bool* isUsing) const;
-Returns the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour currently being used for the background of this @SG_ML_L008008SGWInputsgwinput. The bool that @SG_ML_B007isUsing points to is set to true if @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode is on, and false otherwise.
+Returns the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour currently being used for the background of this @SG_ML_L008014SGWInput../cppclass/sgwinput. The bool that @SG_ML_B007isUsing points to is set to true if @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode is on, and false otherwise.
 @SG_ML_NOTE If you are not interested in the current @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode, pass nullptr to @SG_ML_B007isUsing.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_float_getF0_func_const_ [[nodiscard]] float @SG_ML_L005022getF0#nodiscard_float_getF0_func_const_() const;
@@ -192,99 +192,99 @@ Gets the 0 coordinate of the @SG_ML_L01A016w-distance ⁽㈳㈴㈳㈮㈱㈨㈠�
 Gets the 1 coordinate of the @SG_ML_L01A016w-distance ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/wdistance controlling the font size.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGXString_getFont_func_const_ [[nodiscard]] @SG_ML_L009009SGXStringsgxstring @SG_ML_L007028getFont#nodiscard_SGXString_getFont_func_const_() const;
-Returns the current font used to display text in the @SG_ML_L008008SGWInputsgwinput.
+Returns the current font used to display text in the @SG_ML_L008014SGWInput../cppclass/sgwinput.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGXColourRGBA_getForegroundColour_bool_ptr_const_ [[nodiscard]] @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba @SG_ML_L01303CgetForegroundColour#nodiscard_SGXColourRGBA_getForegroundColour_bool_ptr_const_(bool* isUsing) const;
-Returns the @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba currently being used for the foreground of this @SG_ML_L008008SGWInputsgwinput. The bool that @SG_ML_B007isUsing points to is set to true if @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode is off, and false otherwise.
+Returns the @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba currently being used for the foreground of this @SG_ML_L008014SGWInput../cppclass/sgwinput. The bool that @SG_ML_B007isUsing points to is set to true if @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode is off, and false otherwise.
 @SG_ML_NOTE If you are not interested in the current @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode, pass nullptr to @SG_ML_B007isUsing.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGXColourRGBA_getForegroundFocusColour_bool_ptr_const_ [[nodiscard]] @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba @SG_ML_L018041getForegroundFocusColour#nodiscard_SGXColourRGBA_getForegroundFocusColour_bool_ptr_const_(bool* isUsing) const;
-Returns the @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba currently being used for the foreground of this @SG_ML_L008008SGWInputsgwinput when focused. The bool that @SG_ML_B007isUsing points to is set to true if @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode is off, and false otherwise.
+Returns the @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba currently being used for the foreground of this @SG_ML_L008014SGWInput../cppclass/sgwinput when focused. The bool that @SG_ML_B007isUsing points to is set to true if @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode is off, and false otherwise.
 @SG_ML_NOTE If you are not interested in the current @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode, pass nullptr to @SG_ML_B007isUsing.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_int_getForegroundFocusThemeColour_bool_ptr_const_ [[nodiscard]] int @SG_ML_L01D03CgetForegroundFocusThemeColour#nodiscard_int_getForegroundFocusThemeColour_bool_ptr_const_(bool* isUsing) const;
-Returns the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour currently being used for the foreground of this @SG_ML_L008008SGWInputsgwinput when focused. The bool that @SG_ML_B007isUsing points to is set to true if @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode is on, and false otherwise.
+Returns the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour currently being used for the foreground of this @SG_ML_L008014SGWInput../cppclass/sgwinput when focused. The bool that @SG_ML_B007isUsing points to is set to true if @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode is on, and false otherwise.
 @SG_ML_NOTE If you are not interested in the current @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode, pass nullptr to @SG_ML_B007isUsing.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGXColourRGBA_getForegroundHoverColour_bool_ptr_const_ [[nodiscard]] @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba @SG_ML_L018041getForegroundHoverColour#nodiscard_SGXColourRGBA_getForegroundHoverColour_bool_ptr_const_(bool* isUsing) const;
-Returns the @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba currently being used for the foreground of this @SG_ML_L008008SGWInputsgwinput when hovered over. The bool that @SG_ML_B007isUsing points to is set to true if @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode is off, and false otherwise.
+Returns the @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba currently being used for the foreground of this @SG_ML_L008014SGWInput../cppclass/sgwinput when hovered over. The bool that @SG_ML_B007isUsing points to is set to true if @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode is off, and false otherwise.
 @SG_ML_NOTE If you are not interested in the current @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode, pass nullptr to @SG_ML_B007isUsing.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGXColourRGBA_getForegroundHoverInvalidColour_bool_ptr_const_ [[nodiscard]] @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba @SG_ML_L01F048getForegroundHoverInvalidColour#nodiscard_SGXColourRGBA_getForegroundHoverInvalidColour_bool_ptr_const_(bool* isUsing) const;
-Returns the @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba currently being used for the foreground of this @SG_ML_L008008SGWInputsgwinput when marked as invalid and hovered over. The bool that @SG_ML_B007isUsing points to is set to true if @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode is off, and false otherwise.
+Returns the @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba currently being used for the foreground of this @SG_ML_L008014SGWInput../cppclass/sgwinput when marked as invalid and hovered over. The bool that @SG_ML_B007isUsing points to is set to true if @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode is off, and false otherwise.
 @SG_ML_NOTE If you are not interested in the current @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode, pass nullptr to @SG_ML_B007isUsing.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_int_getForegroundHoverInvalidThemeColour_bool_ptr_const_ [[nodiscard]] int @SG_ML_L024043getForegroundHoverInvalidThemeColour#nodiscard_int_getForegroundHoverInvalidThemeColour_bool_ptr_const_(bool* isUsing) const;
-Returns the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour currently being used for the foreground of this @SG_ML_L008008SGWInputsgwinput when marked as invalid and hovered over. The bool that @SG_ML_B007isUsing points to is set to true if @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode is on, and false otherwise.
+Returns the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour currently being used for the foreground of this @SG_ML_L008014SGWInput../cppclass/sgwinput when marked as invalid and hovered over. The bool that @SG_ML_B007isUsing points to is set to true if @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode is on, and false otherwise.
 @SG_ML_NOTE If you are not interested in the current @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode, pass nullptr to @SG_ML_B007isUsing.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_int_getForegroundHoverThemeColour_bool_ptr_const_ [[nodiscard]] int @SG_ML_L01D03CgetForegroundHoverThemeColour#nodiscard_int_getForegroundHoverThemeColour_bool_ptr_const_(bool* isUsing) const;
-Returns the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour currently being used for the foreground of this @SG_ML_L008008SGWInputsgwinput when hovered over. The bool that @SG_ML_B007isUsing points to is set to true if @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode is on, and false otherwise.
+Returns the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour currently being used for the foreground of this @SG_ML_L008014SGWInput../cppclass/sgwinput when hovered over. The bool that @SG_ML_B007isUsing points to is set to true if @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode is on, and false otherwise.
 @SG_ML_NOTE If you are not interested in the current @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode, pass nullptr to @SG_ML_B007isUsing.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGXColourRGBA_getForegroundInvalidColour_bool_ptr_const_ [[nodiscard]] @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba @SG_ML_L01A043getForegroundInvalidColour#nodiscard_SGXColourRGBA_getForegroundInvalidColour_bool_ptr_const_(bool* isUsing) const;
-Returns the @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba currently being used for the foreground of this @SG_ML_L008008SGWInputsgwinput when marked as invalid. The bool that @SG_ML_B007isUsing points to is set to true if @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode is off, and false otherwise.
+Returns the @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba currently being used for the foreground of this @SG_ML_L008014SGWInput../cppclass/sgwinput when marked as invalid. The bool that @SG_ML_B007isUsing points to is set to true if @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode is off, and false otherwise.
 @SG_ML_NOTE If you are not interested in the current @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode, pass nullptr to @SG_ML_B007isUsing.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_int_getForegroundInvalidThemeColour_bool_ptr_const_ [[nodiscard]] int @SG_ML_L01F03EgetForegroundInvalidThemeColour#nodiscard_int_getForegroundInvalidThemeColour_bool_ptr_const_(bool* isUsing) const;
-Returns the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour currently being used for the foreground of this @SG_ML_L008008SGWInputsgwinput when marked as invalid. The bool that @SG_ML_B007isUsing points to is set to true if @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode is on, and false otherwise.
+Returns the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour currently being used for the foreground of this @SG_ML_L008014SGWInput../cppclass/sgwinput when marked as invalid. The bool that @SG_ML_B007isUsing points to is set to true if @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode is on, and false otherwise.
 @SG_ML_NOTE If you are not interested in the current @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode, pass nullptr to @SG_ML_B007isUsing.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_int_getForegroundThemeColour_bool_ptr_const_ [[nodiscard]] int @SG_ML_L018037getForegroundThemeColour#nodiscard_int_getForegroundThemeColour_bool_ptr_const_(bool* isUsing) const;
-Returns the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour currently being used for the foreground of this @SG_ML_L008008SGWInputsgwinput. The bool that @SG_ML_B007isUsing points to is set to true if @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode is on, and false otherwise.
+Returns the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour currently being used for the foreground of this @SG_ML_L008014SGWInput../cppclass/sgwinput. The bool that @SG_ML_B007isUsing points to is set to true if @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode is on, and false otherwise.
 @SG_ML_NOTE If you are not interested in the current @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode, pass nullptr to @SG_ML_B007isUsing.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGWHorizontalAlignment_mc_Flag_getHorizontalAlignment_func_const_ [[nodiscard]] SGWHorizontalAlignment::Flag @SG_ML_L01604CgetHorizontalAlignment#nodiscard_SGWHorizontalAlignment_mc_Flag_getHorizontalAlignment_func_const_() const;
-Returns the current @SG_ML_L016016SGWHorizontalAlignmentsgwhorizontalalignment mode used to display text in this @SG_ML_L008008SGWInputsgwinput.
+Returns the current @SG_ML_L016022SGWHorizontalAlignment../cppclass/sgwhorizontalalignment mode used to display text in this @SG_ML_L008014SGWInput../cppclass/sgwinput.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_bool_getInvalid_func_const_ [[nodiscard]] bool @SG_ML_L00A026getInvalid#nodiscard_bool_getInvalid_func_const_() const;
-Returns if the @SG_ML_L008008SGWInputsgwinput is currently set to invalid.
+Returns if the @SG_ML_L008014SGWInput../cppclass/sgwinput is currently set to invalid.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_float_getTextAsFloat_bool_ptr_float_float_const_ [[nodiscard]] float @SG_ML_L00E03BgetTextAsFloat#nodiscard_float_getTextAsFloat_bool_ptr_float_float_const_(bool* isValid, float minimum, float maximum) const;
-Returns the text displayed in the @SG_ML_L008008SGWInputsgwinput as a number between @SG_ML_B007minimum and @SG_ML_B007maximum inclusive. If the text does not represent a number or if it is out of bounds, @SG_ML_B007isValid is set to false and 0 is returned, otherwise @SG_ML_B007isValid is set to true.
+Returns the text displayed in the @SG_ML_L008014SGWInput../cppclass/sgwinput as a number between @SG_ML_B007minimum and @SG_ML_B007maximum inclusive. If the text does not represent a number or if it is out of bounds, @SG_ML_B007isValid is set to false and 0 is returned, otherwise @SG_ML_B007isValid is set to true.
 @SG_ML_NOTE Pass nullptr to @SG_ML_B007isValid if you are not interested if the text represents a number and the integer is in bounds.
 @SG_ML_WARN @SG_ML_B007minimum more than @SG_ML_B007maximum is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_int_getTextAsInt_bool_ptr_int_int_const_ [[nodiscard]] int @SG_ML_L00C033getTextAsInt#nodiscard_int_getTextAsInt_bool_ptr_int_int_const_(bool* isValid, int minimum, int maximum) const;
-Returns the text displayed in the @SG_ML_L008008SGWInputsgwinput as an integer between @SG_ML_B007minimum and @SG_ML_B007maximum inclusive. If the text does not represent an integer or if it is out of bounds, @SG_ML_B007isValid is set to false and 0 is returned, otherwise @SG_ML_B007isValid is set to true.
+Returns the text displayed in the @SG_ML_L008014SGWInput../cppclass/sgwinput as an integer between @SG_ML_B007minimum and @SG_ML_B007maximum inclusive. If the text does not represent an integer or if it is out of bounds, @SG_ML_B007isValid is set to false and 0 is returned, otherwise @SG_ML_B007isValid is set to true.
 @SG_ML_NOTE Pass nullptr to @SG_ML_B007isValid if you are not interested if the text represents an integer and the integer is in bounds.
 @SG_ML_WARN @SG_ML_B007minimum more than @SG_ML_B007maximum is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGXString_getTextAsString_func_const_ [[nodiscard]] @SG_ML_L009009SGXStringsgxstring @SG_ML_L00F030getTextAsString#nodiscard_SGXString_getTextAsString_func_const_() const;
-Returns the text displayed in the @SG_ML_L008008SGWInputsgwinput.
+Returns the text displayed in the @SG_ML_L008014SGWInput../cppclass/sgwinput.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGWVerticalAlignment_mc_Flag_getVerticalAlignment_func_const_ [[nodiscard]] SGWVerticalAlignment::Flag @SG_ML_L014048getVerticalAlignment#nodiscard_SGWVerticalAlignment_mc_Flag_getVerticalAlignment_func_const_() const;
-Returns the current @SG_ML_L014014SGWVerticalAlignmentsgwverticalalignment mode used to display text in this @SG_ML_L008008SGWInputsgwinput.
+Returns the current @SG_ML_L014020SGWVerticalAlignment../cppclass/sgwverticalalignment mode used to display text in this @SG_ML_L008014SGWInput../cppclass/sgwinput.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_setBackgroundColour_SGXColourRGBA_ void @SG_ML_L013028setBackgroundColour#void_setBackgroundColour_SGXColourRGBA_(@SG_ML_L00D00DSGXColourRGBAsgxcolourrgba colour);
-Sets the @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba of the background of this @SG_ML_L008008SGWInputsgwinput to @SG_ML_B006colour and turns off @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode.
+Sets the @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba of the background of this @SG_ML_L008014SGWInput../cppclass/sgwinput to @SG_ML_B006colour and turns off @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_setBackgroundFocusColour_SGXColourRGBA_ void @SG_ML_L01802DsetBackgroundFocusColour#void_setBackgroundFocusColour_SGXColourRGBA_(@SG_ML_L00D00DSGXColourRGBAsgxcolourrgba colour);
-Sets the @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba of the background of this @SG_ML_L008008SGWInputsgwinput when focused to @SG_ML_B006colour and turns off @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode.
+Sets the @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba of the background of this @SG_ML_L008014SGWInput../cppclass/sgwinput when focused to @SG_ML_B006colour and turns off @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_setBackgroundFocusThemeColour_int_ void @SG_ML_L01D028setBackgroundFocusThemeColour#void_setBackgroundFocusThemeColour_int_(int themeColour);
-Sets the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour of the background of this @SG_ML_L008008SGWInputsgwinput when focused to @SG_ML_B00BthemeColour and turns on @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode.
+Sets the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour of the background of this @SG_ML_L008014SGWInput../cppclass/sgwinput when focused to @SG_ML_B00BthemeColour and turns on @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_setBackgroundHoverColour_SGXColourRGBA_ void @SG_ML_L01802DsetBackgroundHoverColour#void_setBackgroundHoverColour_SGXColourRGBA_(@SG_ML_L00D00DSGXColourRGBAsgxcolourrgba colour);
-Sets the @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba of the background of this @SG_ML_L008008SGWInputsgwinput when hovered over to @SG_ML_B006colour and turns off @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode.
+Sets the @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba of the background of this @SG_ML_L008014SGWInput../cppclass/sgwinput when hovered over to @SG_ML_B006colour and turns off @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_setBackgroundHoverInvalidColour_SGXColourRGBA_ void @SG_ML_L01F034setBackgroundHoverInvalidColour#void_setBackgroundHoverInvalidColour_SGXColourRGBA_(@SG_ML_L00D00DSGXColourRGBAsgxcolourrgba colour);
-Sets the @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba of the background of this @SG_ML_L008008SGWInputsgwinput when marked as invalid and hovered over to @SG_ML_B006colour and turns off @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode.
+Sets the @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba of the background of this @SG_ML_L008014SGWInput../cppclass/sgwinput when marked as invalid and hovered over to @SG_ML_B006colour and turns off @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_setBackgroundHoverInvalidThemeColour_int_ void @SG_ML_L02402FsetBackgroundHoverInvalidThemeColour#void_setBackgroundHoverInvalidThemeColour_int_(int themeColour);
-Sets the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour of the background of this @SG_ML_L008008SGWInputsgwinput when marked as invalid and hovered over to @SG_ML_B00BthemeColour and turns on @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode.
+Sets the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour of the background of this @SG_ML_L008014SGWInput../cppclass/sgwinput when marked as invalid and hovered over to @SG_ML_B00BthemeColour and turns on @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_setBackgroundHoverThemeColour_int_ void @SG_ML_L01D028setBackgroundHoverThemeColour#void_setBackgroundHoverThemeColour_int_(int themeColour);
-Sets the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour of the background of this @SG_ML_L008008SGWInputsgwinput when hovered over to @SG_ML_B00BthemeColour and turns on @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode.
+Sets the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour of the background of this @SG_ML_L008014SGWInput../cppclass/sgwinput when hovered over to @SG_ML_B00BthemeColour and turns on @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_setBackgroundInvalidColour_SGXColourRGBA_ void @SG_ML_L01A02FsetBackgroundInvalidColour#void_setBackgroundInvalidColour_SGXColourRGBA_(@SG_ML_L00D00DSGXColourRGBAsgxcolourrgba colour);
-Sets the @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba of the background of this @SG_ML_L008008SGWInputsgwinput when marked as invalid to @SG_ML_B006colour and turns off @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode.
+Sets the @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba of the background of this @SG_ML_L008014SGWInput../cppclass/sgwinput when marked as invalid to @SG_ML_B006colour and turns off @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_setBackgroundInvalidThemeColour_int_ void @SG_ML_L01F02AsetBackgroundInvalidThemeColour#void_setBackgroundInvalidThemeColour_int_(int themeColour);
-Sets the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour of the background of this @SG_ML_L008008SGWInputsgwinput when marked as invalid to @SG_ML_B00BthemeColour and turns on @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode.
+Sets the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour of the background of this @SG_ML_L008014SGWInput../cppclass/sgwinput when marked as invalid to @SG_ML_B00BthemeColour and turns on @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_setBackgroundThemeColour_int_ void @SG_ML_L018023setBackgroundThemeColour#void_setBackgroundThemeColour_int_(int themeColour);
-Sets the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour of the background of this @SG_ML_L008008SGWInputsgwinput to @SG_ML_B00BthemeColour and turns on @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode.
+Sets the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour of the background of this @SG_ML_L008014SGWInput../cppclass/sgwinput to @SG_ML_B00BthemeColour and turns on @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_setF0_float_ void @SG_ML_L005012setF0#void_setF0_float_(float f0);
 Sets the 0 coordinate of the @SG_ML_L01A016w-distance ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/wdistance controlling the font size to @SG_ML_B002f0.
@@ -293,53 +293,53 @@ Sets the 0 coordinate of the @SG_ML_L01A016w-distance ⁽㈳㈴㈳㈮㈱㈨㈠�
 Sets the 1 coordinate of the @SG_ML_L01A016w-distance ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/wdistance controlling the font size to @SG_ML_B002f1.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_setFont_const_SGXString_ref_ void @SG_ML_L007022setFont#void_setFont_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& font);
-Sets the @SG_ML_L008008SGWInputsgwinput to use @SG_ML_B004font to display text.
+Sets the @SG_ML_L008014SGWInput../cppclass/sgwinput to use @SG_ML_B004font to display text.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_setForegroundColour_SGXColourRGBA_ void @SG_ML_L013028setForegroundColour#void_setForegroundColour_SGXColourRGBA_(@SG_ML_L00D00DSGXColourRGBAsgxcolourrgba colour);
-Sets the @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba of the foreground of this @SG_ML_L008008SGWInputsgwinput to @SG_ML_B006colour and turns off @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode.
+Sets the @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba of the foreground of this @SG_ML_L008014SGWInput../cppclass/sgwinput to @SG_ML_B006colour and turns off @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_setForegroundFocusColour_SGXColourRGBA_ void @SG_ML_L01802DsetForegroundFocusColour#void_setForegroundFocusColour_SGXColourRGBA_(@SG_ML_L00D00DSGXColourRGBAsgxcolourrgba colour);
-Sets the @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba of the foreground of this @SG_ML_L008008SGWInputsgwinput when focused to @SG_ML_B006colour and turns off @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode.
+Sets the @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba of the foreground of this @SG_ML_L008014SGWInput../cppclass/sgwinput when focused to @SG_ML_B006colour and turns off @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_setForegroundFocusThemeColour_int_ void @SG_ML_L01D028setForegroundFocusThemeColour#void_setForegroundFocusThemeColour_int_(int themeColour);
-Sets the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour of the foreground of this @SG_ML_L008008SGWInputsgwinput when focused to @SG_ML_B00BthemeColour and turns on @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode.
+Sets the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour of the foreground of this @SG_ML_L008014SGWInput../cppclass/sgwinput when focused to @SG_ML_B00BthemeColour and turns on @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_setForegroundHoverColour_SGXColourRGBA_ void @SG_ML_L01802DsetForegroundHoverColour#void_setForegroundHoverColour_SGXColourRGBA_(@SG_ML_L00D00DSGXColourRGBAsgxcolourrgba colour);
-Sets the @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba of the foreground of this @SG_ML_L008008SGWInputsgwinput when hovered over to @SG_ML_B006colour and turns off @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode.
+Sets the @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba of the foreground of this @SG_ML_L008014SGWInput../cppclass/sgwinput when hovered over to @SG_ML_B006colour and turns off @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_setForegroundHoverInvalidColour_SGXColourRGBA_ void @SG_ML_L01F034setForegroundHoverInvalidColour#void_setForegroundHoverInvalidColour_SGXColourRGBA_(@SG_ML_L00D00DSGXColourRGBAsgxcolourrgba colour);
-Sets the @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba of the foreground of this @SG_ML_L008008SGWInputsgwinput when marked as invalid and hovered over to @SG_ML_B006colour and turns off @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode.
+Sets the @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba of the foreground of this @SG_ML_L008014SGWInput../cppclass/sgwinput when marked as invalid and hovered over to @SG_ML_B006colour and turns off @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_setForegroundHoverInvalidThemeColour_int_ void @SG_ML_L02402FsetForegroundHoverInvalidThemeColour#void_setForegroundHoverInvalidThemeColour_int_(int themeColour);
-Sets the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour of the foreground of this @SG_ML_L008008SGWInputsgwinput when marked as invalid and hovered over to @SG_ML_B00BthemeColour and turns on @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode.
+Sets the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour of the foreground of this @SG_ML_L008014SGWInput../cppclass/sgwinput when marked as invalid and hovered over to @SG_ML_B00BthemeColour and turns on @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_setForegroundHoverThemeColour_int_ void @SG_ML_L01D028setForegroundHoverThemeColour#void_setForegroundHoverThemeColour_int_(int themeColour);
-Sets the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour of the foreground of this @SG_ML_L008008SGWInputsgwinput when hovered over to @SG_ML_B00BthemeColour and turns on @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode.
+Sets the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour of the foreground of this @SG_ML_L008014SGWInput../cppclass/sgwinput when hovered over to @SG_ML_B00BthemeColour and turns on @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_setForegroundInvalidColour_SGXColourRGBA_ void @SG_ML_L01A02FsetForegroundInvalidColour#void_setForegroundInvalidColour_SGXColourRGBA_(@SG_ML_L00D00DSGXColourRGBAsgxcolourrgba colour);
-Sets the @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba of the foreground of this @SG_ML_L008008SGWInputsgwinput when marked as invalid to @SG_ML_B006colour and turns off @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode.
+Sets the @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba of the foreground of this @SG_ML_L008014SGWInput../cppclass/sgwinput when marked as invalid to @SG_ML_B006colour and turns off @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_setForegroundInvalidThemeColour_int_ void @SG_ML_L01F02AsetForegroundInvalidThemeColour#void_setForegroundInvalidThemeColour_int_(int themeColour);
-Sets the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour of the foreground of this @SG_ML_L008008SGWInputsgwinput when marked as invalid to @SG_ML_B00BthemeColour and turns on @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode.
+Sets the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour of the foreground of this @SG_ML_L008014SGWInput../cppclass/sgwinput when marked as invalid to @SG_ML_B00BthemeColour and turns on @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_setForegroundThemeColour_int_ void @SG_ML_L018023setForegroundThemeColour#void_setForegroundThemeColour_int_(int themeColour);
-Sets the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour of the foreground of this @SG_ML_L008008SGWInputsgwinput to @SG_ML_B00BthemeColour and turns on @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode.
+Sets the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour of the foreground of this @SG_ML_L008014SGWInput../cppclass/sgwinput to @SG_ML_B00BthemeColour and turns on @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_setHorizontalAlignment_SGWHorizontalAlignment_mc_Flag_ void @SG_ML_L01603CsetHorizontalAlignment#void_setHorizontalAlignment_SGWHorizontalAlignment_mc_Flag_(SGWHorizontalAlignment::Flag alignment);
-Sets the @SG_ML_L016016SGWHorizontalAlignmentsgwhorizontalalignment mode used to display text in this @SG_ML_L008008SGWInputsgwinput to @SG_ML_B009alignment.
+Sets the @SG_ML_L016022SGWHorizontalAlignment../cppclass/sgwhorizontalalignment mode used to display text in this @SG_ML_L008014SGWInput../cppclass/sgwinput to @SG_ML_B009alignment.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_setInvalid_bool_ void @SG_ML_L00A016setInvalid#void_setInvalid_bool_(bool invalid);
-If @SG_ML_B007invalid is true, set the @SG_ML_L008008SGWInputsgwinput to invalid, otherwise set the @SG_ML_L008008SGWInputsgwinput to not invalid.
+If @SG_ML_B007invalid is true, set the @SG_ML_L008014SGWInput../cppclass/sgwinput to invalid, otherwise set the @SG_ML_L008014SGWInput../cppclass/sgwinput to not invalid.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_setTextFromFloat_float_ void @SG_ML_L01001DsetTextFromFloat#void_setTextFromFloat_float_(float x);
-Sets the text currently displayed in the @SG_ML_L008008SGWInputsgwinput to the string representation of @SG_ML_B001x.
+Sets the text currently displayed in the @SG_ML_L008014SGWInput../cppclass/sgwinput to the string representation of @SG_ML_B001x.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_setTextFromInt_int_ void @SG_ML_L00E019setTextFromInt#void_setTextFromInt_int_(int x);
-Sets the text currently displayed in the @SG_ML_L008008SGWInputsgwinput to the string representation of @SG_ML_B001x.
+Sets the text currently displayed in the @SG_ML_L008014SGWInput../cppclass/sgwinput to the string representation of @SG_ML_B001x.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_setTextFromString_const_SGXString_ref_ void @SG_ML_L01102CsetTextFromString#void_setTextFromString_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& s);
-Sets the text currently displayed in the @SG_ML_L008008SGWInputsgwinput to @SG_ML_B001s.
+Sets the text currently displayed in the @SG_ML_L008014SGWInput../cppclass/sgwinput to @SG_ML_B001s.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_setVerticalAlignment_SGWVerticalAlignment_mc_Flag_ void @SG_ML_L014038setVerticalAlignment#void_setVerticalAlignment_SGWVerticalAlignment_mc_Flag_(SGWVerticalAlignment::Flag alignment);
-Sets the @SG_ML_L014014SGWVerticalAlignmentsgwverticalalignment mode used to display text in this @SG_ML_L008008SGWInputsgwinput to @SG_ML_B009alignment.
+Sets the @SG_ML_L014020SGWVerticalAlignment../cppclass/sgwverticalalignment mode used to display text in this @SG_ML_L008014SGWInput../cppclass/sgwinput to @SG_ML_B009alignment.
 @SG_ML_BLANKLINE

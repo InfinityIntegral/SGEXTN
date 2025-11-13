@@ -24,10 +24,10 @@ children classes: (none)
 &#9;static unsigned int @SG_ML_L008023rngInt32#static_unsigned_int_rngInt32_func_();
 &#9;static unsigned long long @SG_ML_L008029rngInt64#static_unsigned_long_long_rngInt64_func_();
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_detaileddescription Detailed Description
-@SG_ML_L018018SGXRandomNumberGeneratorsgxrandomnumbergenerator provides evenly distributed floating point numbers between 0 and 1, unsigned ints, and unsigned long longs.
+@SG_ML_HEADER_sg_detaileddescription Detailed Description
+@SG_ML_L018024SGXRandomNumberGenerator../cppclass/sgxrandomnumbergenerator provides evenly distributed floating point numbers between 0 and 1, unsigned ints, and unsigned long longs.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_implementationdetails Implementation Details
+@SG_ML_HEADER_sg_implementationdetails Implementation Details
 wrapper of QRandomGenerator
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_double_rng0To1_func_ static double @SG_ML_L00701Crng0To1#static_double_rng0To1_func_();

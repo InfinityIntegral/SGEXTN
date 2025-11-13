@@ -30,10 +30,10 @@ children classes: (none)
 &#9;static float @SG_ML_L00D021squareRootOf2#static_float_squareRootOf2_func_();
 &#9;static float @SG_ML_L00D021squareRootOf3#static_float_squareRootOf3_func_();
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_detaileddescription Detailed Description
-@SG_ML_L011011SGLFloatConstantssglfloatconstants provides floating point numbers for numeric constants used in mathematics, such as pi and e.
+@SG_ML_HEADER_sg_detaileddescription Detailed Description
+@SG_ML_L01101DSGLFloatConstants../cppclass/sglfloatconstants provides floating point numbers for numeric constants used in mathematics, such as pi and e.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_implementationdetails Implementation Details
+@SG_ML_HEADER_sg_implementationdetails Implementation Details
 Uses ‹numbers› from Standard Template Library
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_float_eulerNumber_func_ static float @SG_ML_L00B01FeulerNumber#static_float_eulerNumber_func_();

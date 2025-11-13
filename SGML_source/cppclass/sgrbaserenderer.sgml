@@ -30,10 +30,10 @@ children classes: (none)
 &#9;@SG_ML_L00F016SGRBaseRenderer#SGRBaseRenderer_func_();
 &#9;[[nodiscard]] @SG_ML_L015015SGRRenderingProgrammesgrrenderingprogramme* @SG_ML_L012043renderingProgramme#nodiscard_SGRRenderingProgramme_ptr_renderingProgramme_func_const_() const;
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_detaileddescription Detailed Description
-@SG_ML_L00F00FSGRBaseRenderersgrbaserenderer provides a base class to build @SG_ML_L017015SG - RI ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/renderer renderers on top of. All renderers must inherit this class and implement all pure virtual functions provided in this class. Creating @SG_ML_L017015SG - RI ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/renderer renderers is the only way in SGEXTN to use custom shaders.
+@SG_ML_HEADER_sg_detaileddescription Detailed Description
+@SG_ML_L00F01BSGRBaseRenderer../cppclass/sgrbaserenderer provides a base class to build @SG_ML_L017015SG - RI ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/renderer renderers on top of. All renderers must inherit this class and implement all pure virtual functions provided in this class. Creating @SG_ML_L017015SG - RI ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/renderer renderers is the only way in SGEXTN to use custom shaders.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_implementationdetails Implementation Details
+@SG_ML_HEADER_sg_implementationdetails Implementation Details
 @SG_ML_L017015SG - RI ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/renderer internally uses QRhi.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_virtual_void_cleanResourcesOnDestruction_func_assign_ virtual void @SG_ML_L01B036cleanResourcesOnDestruction#virtual_void_cleanResourcesOnDestruction_func_assign_() = 0;
@@ -42,26 +42,26 @@ This is called when a renderer is deleted. It must clean up everything that you 
 @SG_ML_WARN To prevent data race, accessing any static variables or objects that do not belong to the renderer in this function is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_virtual_SGRRenderingProgramme_ptr_createRenderingProgramme_func_assign_ virtual @SG_ML_L015015SGRRenderingProgrammesgrrenderingprogramme* @SG_ML_L018048createRenderingProgramme#virtual_SGRRenderingProgramme_ptr_createRenderingProgramme_func_assign_() = 0;
-Use this to create a @SG_ML_L015015SGRRenderingProgrammesgrrenderingprogramme. The @SG_ML_L015015SGRRenderingProgrammesgrrenderingprogramme enables the use of shaders, textures and uniform buffer objects. Every renderer must create a @SG_ML_L015015SGRRenderingProgrammesgrrenderingprogramme.
-@SG_ML_WARN Not returning a pointer to a valid @SG_ML_L015015SGRRenderingProgrammesgrrenderingprogramme at the end of this function is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
+Use this to create a @SG_ML_L015021SGRRenderingProgramme../cppclass/sgrrenderingprogramme. The @SG_ML_L015021SGRRenderingProgramme../cppclass/sgrrenderingprogramme enables the use of shaders, textures and uniform buffer objects. Every renderer must create a @SG_ML_L015021SGRRenderingProgramme../cppclass/sgrrenderingprogramme.
+@SG_ML_WARN Not returning a pointer to a valid @SG_ML_L015021SGRRenderingProgramme../cppclass/sgrrenderingprogramme at the end of this function is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
 @SG_ML_WARN To prevent data race, accessing any static variables or objects that do not belong to the renderer in this function is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_virtual_void_initialise_func_assign_ virtual void @SG_ML_L00A025initialise#virtual_void_initialise_func_assign_() = 0;
 This is run once before the render process begins. Use this to create resources that do not change, such as vertex buffer objects for the bounding box of your shader.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_virtual_void_requestRenderCommands_SGRCommandRequest_ptr_assign_ virtual void @SG_ML_L015041requestRenderCommands#virtual_void_requestRenderCommands_SGRCommandRequest_ptr_assign_(@SG_ML_L011011SGRCommandRequestsgrcommandrequest* commandRequest) = 0;
-Use this to issue draw commands to the GPU. The @SG_ML_L011011SGRCommandRequestsgrcommandrequest @SG_ML_B00EcommandRequest is provided for this purpose. It is not allowed to upload shader data in this function, that should have been done in your implementation of @SG_ML_L02103ASGRBaseRenderer::uploadShaderDatasgrbaserenderer#virtual_void_uploadShaderData_func_assign_.
+Use this to issue draw commands to the GPU. The @SG_ML_L01101DSGRCommandRequest../cppclass/sgrcommandrequest @SG_ML_B00EcommandRequest is provided for this purpose. It is not allowed to upload shader data in this function, that should have been done in your implementation of @SG_ML_L021046SGRBaseRenderer::uploadShaderData../cppclass/sgrbaserenderer#virtual_void_uploadShaderData_func_assign_.
 @SG_ML_WARN Uploading shader data in this function is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
 @SG_ML_WARN To prevent data race, accessing any static variables or objects that do not belong to the renderer in this function is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_virtual_void_uploadShaderData_func_assign_ virtual void @SG_ML_L01002BuploadShaderData#virtual_void_uploadShaderData_func_assign_() = 0;
-This is used to upload data to the GPU. Data can be uploaded using @SG_ML_L027055SGRRenderingProgramme::updateDataBuffersgrrenderingprogramme#void_updateDataBuffer_SGRDataBuffer_ptr_int_int_void_ptr_const_ for vertex buffer objects and element buffer objects, @SG_ML_L02B04BSGRRenderingProgramme::updateShaderUniformssgrrenderingprogramme#void_updateShaderUniforms_int_int_int_void_ptr_const_ for uniform buffer objects, and @SG_ML_L024040SGRRenderingProgramme::updateTexturesgrrenderingprogramme#void_updateTexture_int_SGRImage_ptr_const_ for textures. It is not allowed to issue draw commands in this function, which you cannot do anyways as you do not have a @SG_ML_L011011SGRCommandRequestsgrcommandrequest.
+This is used to upload data to the GPU. Data can be uploaded using @SG_ML_L027061SGRRenderingProgramme::updateDataBuffer../cppclass/sgrrenderingprogramme#void_updateDataBuffer_SGRDataBuffer_ptr_int_int_void_ptr_const_ for vertex buffer objects and element buffer objects, @SG_ML_L02B057SGRRenderingProgramme::updateShaderUniforms../cppclass/sgrrenderingprogramme#void_updateShaderUniforms_int_int_int_void_ptr_const_ for uniform buffer objects, and @SG_ML_L02404CSGRRenderingProgramme::updateTexture../cppclass/sgrrenderingprogramme#void_updateTexture_int_SGRImage_ptr_const_ for textures. It is not allowed to issue draw commands in this function, which you cannot do anyways as you do not have a @SG_ML_L01101DSGRCommandRequest../cppclass/sgrcommandrequest.
 @SG_ML_WARN To prevent data race, accessing any static variables or objects that do not belong to the renderer in this function is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_SGRBaseRenderer_func_ @SG_ML_L00F016SGRBaseRenderer#SGRBaseRenderer_func_();
-Creates a @SG_ML_L00F00FSGRBaseRenderersgrbaserenderer. This should be used in the constructor of your renderer.
+Creates a @SG_ML_L00F01BSGRBaseRenderer../cppclass/sgrbaserenderer. This should be used in the constructor of your renderer.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGRRenderingProgramme_ptr_renderingProgramme_func_const_ [[nodiscard]] @SG_ML_L015015SGRRenderingProgrammesgrrenderingprogramme* @SG_ML_L012043renderingProgramme#nodiscard_SGRRenderingProgramme_ptr_renderingProgramme_func_const_() const;
-Returns a pointer to the @SG_ML_L015015SGRRenderingProgrammesgrrenderingprogramme used by this renderer. This is owned by the renderer and is automatically cleaned up upon deletion. Access to this is needed to upload shader data.
-@SG_ML_WARN Attempting to modify the @SG_ML_L015015SGRRenderingProgrammesgrrenderingprogramme that this pointer points to is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
+Returns a pointer to the @SG_ML_L015021SGRRenderingProgramme../cppclass/sgrrenderingprogramme used by this renderer. This is owned by the renderer and is automatically cleaned up upon deletion. Access to this is needed to upload shader data.
+@SG_ML_WARN Attempting to modify the @SG_ML_L015021SGRRenderingProgramme../cppclass/sgrrenderingprogramme that this pointer points to is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
 @SG_ML_BLANKLINE

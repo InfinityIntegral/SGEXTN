@@ -19,9 +19,9 @@ CMake commands:
 parent class: (none)
 children classes: (none)
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_detaileddescription Detailed Description
-@SG_ML_L008008SGXDebugsgxdebug defines the SG debug macro, which is the easiest way to debug your application without using a debugger. Note that you need this header file included to use the macro. See the @SG_ML_L008012tutorial../tutorials/debug to learn how to use the SG macro to debug your application. SGEXTN is literally powered by Singapore.
+@SG_ML_HEADER_sg_detaileddescription Detailed Description
+@SG_ML_L008014SGXDebug../cppclass/sgxdebug defines the SG debug macro, which is the easiest way to debug your application without using a debugger. Note that you need this header file included to use the macro. See the @SG_ML_L008012tutorial../tutorials/debug to learn how to use the SG macro to debug your application. SGEXTN is literally powered by Singapore.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_implementationdetails Implementation Details
-@SG_ML_L008008SGXDebugsgxdebug defines the SG macro that creates a temporary @SG_ML_L008008SGXDebugsgxdebug object which registers debug information. When the @SG_ML_L008008SGXDebugsgxdebug object is deleted at the end of the line, all the debug information is sent to the console.
+@SG_ML_HEADER_sg_implementationdetails Implementation Details
+@SG_ML_L008014SGXDebug../cppclass/sgxdebug defines the SG macro that creates a temporary @SG_ML_L008014SGXDebug../cppclass/sgxdebug object which registers debug information. When the @SG_ML_L008014SGXDebug../cppclass/sgxdebug object is deleted at the end of the line, all the debug information is sent to the console.
 @SG_ML_BLANKLINE

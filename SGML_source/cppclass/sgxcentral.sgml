@@ -31,11 +31,11 @@ children classes: (none)
 &#9;static @SG_ML_L009009SGXStringsgxstring @SG_ML_L00D020pathToAppIcon#static_SGXString_pathToAppIcon_;
 &#9;static void (*@SG_ML_L00E025setCustomTheme#static_void_ptr_setCustomTheme_func_)();
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_detaileddescription Detailed Description
-@SG_ML_L00A00ASGXCentralsgxcentral contains general information about the application, including the functions that should be called during the application's initialisation and termination. Initialisation and termination of SGEXTN applications rely significantly on the entry point. You should read the @SG_ML_L008017tutorial../tutorials/entrypoint to learn how to use the entry point.
+@SG_ML_HEADER_sg_detaileddescription Detailed Description
+@SG_ML_L00A016SGXCentral../cppclass/sgxcentral contains general information about the application, including the functions that should be called during the application's initialisation and termination. Initialisation and termination of SGEXTN applications rely significantly on the entry point. You should read the @SG_ML_L008017tutorial../tutorials/entrypoint to learn how to use the entry point.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_implementationdetails Implementation Details
-@SG_ML_L00A00ASGXCentralsgxcentral stores function pointers as static variables to initialise every module that are defined at compile time using preprocessor conditionals and then set at runtime.
+@SG_ML_HEADER_sg_implementationdetails Implementation Details
+@SG_ML_L00A016SGXCentral../cppclass/sgxcentral stores function pointers as static variables to initialise every module that are defined at compile time using preprocessor conditionals and then set at runtime.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_SGXString_applicationName_ static @SG_ML_L009009SGXStringsgxstring @SG_ML_L00F022applicationName#static_SGXString_applicationName_;
 Name of the application and is displayed as the window name. This must be set in the entry point.
@@ -43,7 +43,7 @@ Name of the application and is displayed as the window name. This must be set in
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_SGXString_applicationVersion_ static @SG_ML_L009009SGXStringsgxstring @SG_ML_L012025applicationVersion#static_SGXString_applicationVersion_;
 Version number of the application. This must be set in the entry point.
-@SG_ML_NOTE The version number is a @SG_ML_L009009SGXStringsgxstring, not a number. You are strongly encouraged to use semantic versioning for your application.
+@SG_ML_NOTE The version number is a @SG_ML_L009015SGXString../cppclass/sgxstring, not a number. You are strongly encouraged to use semantic versioning for your application.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_void_ptr_customInitialise_func_ static void (*@SG_ML_L010027customInitialise#static_void_ptr_customInitialise_func_)();
 Function pointer to the initialisation function of your custom code. This must be set in the entry point but is run after SGEXTN initialisation.
@@ -64,16 +64,16 @@ Name of the folder where your application stores data. This must be set in the e
 @SG_ML_HEADER_static_void_ptr_importCustomFonts_func_ static void (*@SG_ML_L011028importCustomFonts#static_void_ptr_importCustomFonts_func_)();
 Function pointer to the function import custom fonts. This must be set in the entry point if needed.
 @SG_ML_NOTE Setting this after the entry point has no effect.
-@SG_ML_NOTE Use @SG_ML_L018038SGWDefaultFonts::addFontsgwdefaultfonts#static_void_addFont_const_SGXString_ref_ to import custom fonts.
+@SG_ML_NOTE Use @SG_ML_L018044SGWDefaultFonts::addFont../cppclass/sgwdefaultfonts#static_void_addFont_const_SGXString_ref_ to import custom fonts.
 @SG_ML_NOTE You may import custom fonts outside this function.
 @SG_ML_NOTE SGEXTN will warn if the @SG_ML_L020014application icon ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/appicon font is not found by the end of this function's execution.
-@SG_ML_WARN Using @SG_ML_L00C00CSGWIconLabelsgwiconlabel or @SG_ML_L00D00DSGWIconButtonsgwiconbutton when there is no @SG_ML_L020014application icon ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/appicon font is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
+@SG_ML_WARN Using @SG_ML_L00C018SGWIconLabel../cppclass/sgwiconlabel or @SG_ML_L00D019SGWIconButton../cppclass/sgwiconbutton when there is no @SG_ML_L020014application icon ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/appicon font is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_void_ptr_interpretCmdArgs_int_char_ptr_ptr_ static void (*@SG_ML_L010033interpretCmdArgs#static_void_ptr_interpretCmdArgs_int_char_ptr_ptr_)(int, char**);
 Function pointer to function interpreting command line arguments. This must be set in the entry point.
 @SG_ML_NOTE Setting this after the entry point has no effect.
 @SG_ML_NOTE The function that this points to should interpret the arguments passed and use them to set static variables.
-@SG_ML_WARN Creating any registered @SG_ML_L00D00DSGXIdentifiersgxidentifier, registering any @SG_ML_L00D00DSGXIdentifiersgxidentifier, and using any class from the SGEXTN file system, widgets, and renderer interface modules within this function is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour. Instead, do this in the function that is provided to @SG_ML_L01C031SGXCentral::customInitialisesgxcentral#static_void_ptr_customInitialise_func_.
+@SG_ML_WARN Creating any registered @SG_ML_L00D019SGXIdentifier../cppclass/sgxidentifier, registering any @SG_ML_L00D019SGXIdentifier../cppclass/sgxidentifier, and using any class from the SGEXTN file system, widgets, and renderer interface modules within this function is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour. Instead, do this in the function that is provided to @SG_ML_L01C03DSGXCentral::customInitialise../cppclass/sgxcentral#static_void_ptr_customInitialise_func_.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_SGXString_organisationName_ static @SG_ML_L009009SGXStringsgxstring @SG_ML_L010023organisationName#static_SGXString_organisationName_;
 Name of your company or yourself. This must be set in the entry point.

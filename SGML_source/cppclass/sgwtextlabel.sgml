@@ -22,13 +22,13 @@ children classes: (none)
 @SG_ML_HEADER_ instance member functions
 &#9;@SG_ML_L00C084SGWTextLabel#SGWTextLabel_SGWWidget_ptr_const_SGXString_ref_float_float_float_float_float_float_float_float_SGWHorizontalAlignment_mc_Flag_bool_(@SG_ML_L009009SGWWidgetsgwwidget* parent, const @SG_ML_L009009SGXStringsgxstring& s, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, SGWHorizontalAlignment::Flag alignment, bool isWarning);
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_detaileddescription Detailed Description
-@SG_ML_L00C00CSGWTextLabelsgwtextlabel provides a @SG_ML_L018015SGWidget ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/sgwidget non interactive label that displays text.
+@SG_ML_HEADER_sg_detaileddescription Detailed Description
+@SG_ML_L00C018SGWTextLabel../cppclass/sgwtextlabel provides a @SG_ML_L018015SGWidget ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/sgwidget non interactive label that displays text.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_implementationdetails Implementation Details
-Stores information about the @SG_ML_L00C00CSGWTextLabelsgwtextlabel.
+@SG_ML_HEADER_sg_implementationdetails Implementation Details
+Stores information about the @SG_ML_L00C018SGWTextLabel../cppclass/sgwtextlabel.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_SGWTextLabel_SGWWidget_ptr_const_SGXString_ref_float_float_float_float_float_float_float_float_SGWHorizontalAlignment_mc_Flag_bool_ @SG_ML_L00C084SGWTextLabel#SGWTextLabel_SGWWidget_ptr_const_SGXString_ref_float_float_float_float_float_float_float_float_SGWHorizontalAlignment_mc_Flag_bool_(@SG_ML_L009009SGWWidgetsgwwidget* parent, const @SG_ML_L009009SGXStringsgxstring& s, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, SGWHorizontalAlignment::Flag alignment, bool isWarning);
-Creates a @SG_ML_L00C00CSGWTextLabelsgwtextlabel with parent @SG_ML_L018015SGWidget ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/sgwidget @SG_ML_B006parent, @SG_ML_L01A016w-distance ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/wdistance coordinates (@SG_ML_B002x1, @SG_ML_B002x0, @SG_ML_B002y1, @SG_ML_B002y0, @SG_ML_B002w1, @SG_ML_B002w0, @SG_ML_B002h1, @SG_ML_B002h0), displayed text @SG_ML_B001s, and horizontal text alignment mode @SG_ML_B009alignment. If @SG_ML_B009isWarning is false, the @SG_ML_L00C00CSGWTextLabelsgwtextlabel is created normally, otherwise it is seen as a warning for invalid input, so it would have a darker colour and would be hidden upon creation.
+Creates a @SG_ML_L00C018SGWTextLabel../cppclass/sgwtextlabel with parent @SG_ML_L018015SGWidget ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/sgwidget @SG_ML_B006parent, @SG_ML_L01A016w-distance ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/wdistance coordinates (@SG_ML_B002x1, @SG_ML_B002x0, @SG_ML_B002y1, @SG_ML_B002y0, @SG_ML_B002w1, @SG_ML_B002w0, @SG_ML_B002h1, @SG_ML_B002h0), displayed text @SG_ML_B001s, and horizontal text alignment mode @SG_ML_B009alignment. If @SG_ML_B009isWarning is false, the @SG_ML_L00C018SGWTextLabel../cppclass/sgwtextlabel is created normally, otherwise it is seen as a warning for invalid input, so it would have a darker colour and would be hidden upon creation.
 @SG_ML_WARN @SG_ML_B006parent being nullptr is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
 @SG_ML_BLANKLINE

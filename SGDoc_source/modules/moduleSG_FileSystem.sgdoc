@@ -1,0 +1,4 @@
+@SG_MODULE SG_FileSystem
+The SGEXTN FileSystem modules allows you to interact with the file system, such as by reading, writing, creating, moving and deleting files. This module is primarily meant for binary files, though there is limited support for text files also.
+For anything that does not need to be directly edited by the user (essentially everything that is not a developer tool), binary file formats should be used for easier parsing and to save space.
+SGEXTN provides a file recycling bin. You should use it to delete files containing user data in your app so that the user can recover deleted files easily. As of this SGEXTN version, you are responsible for building the UI to interact with the recycling bin, but this may change in a future version.

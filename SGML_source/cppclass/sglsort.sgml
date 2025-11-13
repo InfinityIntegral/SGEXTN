@@ -22,15 +22,15 @@ children classes: (none)
 @SG_ML_HEADER_ static member functions
 &#9;static void @SG_ML_L00401Esort#static_void_sort_T_ptr_T_ptr_(T* start, T* end);
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_detaileddescription Detailed Description
-@SG_ML_L007007SGLSortsglsort provides a template based static functions class to sort array-like data structures. It works with any SGEXTN container data structure that provides pointerToData(). Specify the type of data to sort and the comparator to use as template arguments. This is a template based class with no separate source file.
+@SG_ML_HEADER_sg_detaileddescription Detailed Description
+@SG_ML_L007013SGLSort../cppclass/sglsort provides a template based static functions class to sort array-like data structures. It works with any SGEXTN container data structure that provides pointerToData(). Specify the type of data to sort and the comparator to use as template arguments. This is a template based class with no separate source file.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_implementationdetails Implementation Details
-@SG_ML_L007007SGLSortsglsort uses IntroSort, the same algorithm that the C++ Standard Template Library uses.
+@SG_ML_HEADER_sg_implementationdetails Implementation Details
+@SG_ML_L007013SGLSort../cppclass/sglsort uses IntroSort, the same algorithm that the C++ Standard Template Library uses.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_void_sort_T_ptr_T_ptr_ static void @SG_ML_L00401Esort#static_void_sort_T_ptr_T_ptr_(T* start, T* end);
-Sorts the data structure from @SG_ML_B005start (inclusive) to @SG_ML_B003end (exclusive), the comparator is provided using template arguments for @SG_ML_L007007SGLSortsglsort.
-@SG_ML_WARN @SG_ML_L00D025SGLSort::sortsglsort#static_void_sort_T_ptr_T_ptr_ has a time complexity of O(n ln(n))
+Sorts the data structure from @SG_ML_B005start (inclusive) to @SG_ML_B003end (exclusive), the comparator is provided using template arguments for @SG_ML_L007013SGLSort../cppclass/sglsort.
+@SG_ML_WARN @SG_ML_L00D031SGLSort::sort../cppclass/sglsort#static_void_sort_T_ptr_T_ptr_ has a time complexity of O(n ln(n))
 @SG_ML_WARN @SG_ML_B003end being before @SG_ML_B005start results in @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
 @SG_ML_WARN If @SG_ML_B005start and @SG_ML_B003end are from different data structures, this function will cause @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
 @SG_ML_BLANKLINE

@@ -23,10 +23,10 @@ children classes: (none)
 &#9;static void @SG_ML_L006028notify#static_void_notify_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& s);
 &#9;static void @SG_ML_L00E030pullDownNotify#static_void_pullDownNotify_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& s);
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_detaileddescription Detailed Description
-@SG_ML_L009009SGWNotifysgwnotify allows the sending of notifications on the SGEXTN builtin status bar. This can be used to send both informational messages ("changes saved", "opened document" etc) and messages that need immediate attention ("input invalid" etc).
+@SG_ML_HEADER_sg_detaileddescription Detailed Description
+@SG_ML_L009015SGWNotify../cppclass/sgwnotify allows the sending of notifications on the SGEXTN builtin status bar. This can be used to send both informational messages ("changes saved", "opened document" etc) and messages that need immediate attention ("input invalid" etc).
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_implementationdetails Implementation Details
+@SG_ML_HEADER_sg_implementationdetails Implementation Details
 Controls overlay on top of status bar.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_void_notify_const_SGXString_ref_ static void @SG_ML_L006028notify#static_void_notify_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& s);

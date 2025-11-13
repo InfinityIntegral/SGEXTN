@@ -28,22 +28,22 @@ children classes: (none)
 &#9;static int @SG_ML_L00B026restoreFile#static_int_restoreFile_SGXIdentifier_(@SG_ML_L00D00DSGXIdentifiersgxidentifier x);
 &#9;static void @SG_ML_L00B01DsetLifespan#static_void_setLifespan_int_(int x);
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_detaileddescription Detailed Description
-@SG_ML_L013013SGXFileBinUtilitiessgxfilebinutilities provides access to the file bin builtin to SGEXTN. Deleted user data should be moved to the file bin so that it can be recovered if the user changes their mind. Files in the bin are automatically deleted after a period of time. Files in the bin must be accessed through their @SG_ML_L00D00DSGXIdentifiersgxidentifier, not through the path.
+@SG_ML_HEADER_sg_detaileddescription Detailed Description
+@SG_ML_L01301FSGXFileBinUtilities../cppclass/sgxfilebinutilities provides access to the file bin builtin to SGEXTN. Deleted user data should be moved to the file bin so that it can be recovered if the user changes their mind. Files in the bin are automatically deleted after a period of time. Files in the bin must be accessed through their @SG_ML_L00D019SGXIdentifier../cppclass/sgxidentifier, not through the path.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_implementationdetails Implementation Details
+@SG_ML_HEADER_sg_implementationdetails Implementation Details
 Manages a bin file which contains a list of files moved to the bin.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_int_deleteFile_const_SGXString_ref_ static int @SG_ML_L00A02BdeleteFile#static_int_deleteFile_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& s);
 Move the file at file path @SG_ML_B001s to the file bin. This returns -2 if a file system error caused the operation to fail, 0 if there is no file at @SG_ML_B001s, and 1 if the operation is successful.
 @SG_ML_NOTE The original path of the file is stored in the file bin after its deletion and can be used for recovery of deleted files.
-@SG_ML_NOTE Do not move application generated files to the bin, instead delete them directly using @SG_ML_L022041SGXFileSystem::permanentDeleteFilesgxfilesystem#static_int_permanentDeleteFile_const_SGXString_ref_. The file bin is only for user data.
+@SG_ML_NOTE Do not move application generated files to the bin, instead delete them directly using @SG_ML_L02204DSGXFileSystem::permanentDeleteFile../cppclass/sgxfilesystem#static_int_permanentDeleteFile_const_SGXString_ref_. The file bin is only for user data.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_int_deleteFolder_const_SGXString_ref_ static int @SG_ML_L00C02DdeleteFolder#static_int_deleteFolder_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& s);
 Move all files in the folder @SG_ML_B001s and its recursive subfolders to the file bin. This returns -2 if a file system error caused the operation to fail, 0 if there is no folder at @SG_ML_B001s, and 1 if the operation is successful.
 @SG_ML_NOTE Files in the folder are moved to the bin separately, so the user may see more than 1 files being added to the bin.
 @SG_ML_NOTE The original path of the files is stored in the file bin after its deletion and can be used for recovery of deleted files.
-@SG_ML_NOTE Do not move application generated files to the bin, instead delete them directly using @SG_ML_L024043SGXFileSystem::permanentDeleteFoldersgxfilesystem#static_int_permanentDeleteFolder_const_SGXString_ref_. The file bin is only for user data.
+@SG_ML_NOTE Do not move application generated files to the bin, instead delete them directly using @SG_ML_L02404FSGXFileSystem::permanentDeleteFolder../cppclass/sgxfilesystem#static_int_permanentDeleteFolder_const_SGXString_ref_. The file bin is only for user data.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_int_getLifespan_func_ static int @SG_ML_L00B01DgetLifespan#static_int_getLifespan_func_();
 Returns the time in days that files in the bin are stored before deletion.

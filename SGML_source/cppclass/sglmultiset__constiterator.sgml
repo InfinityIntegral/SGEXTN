@@ -7,7 +7,7 @@
 @SG_ML_BLANKLINE
 template ‹typename T, typename Comparator› class SGLMultiSet::ConstIterator;
 part of SGEXTN module @SG_ML_L00D018SG_Containers../modules/sg_containers
-constant iterator for @SG_ML_L00B00BSGLMultiSetsglmultiset
+constant iterator for @SG_ML_L00B017SGLMultiSet../cppclass/sglmultiset
 @SG_ML_L014017detailed description#sg_detaileddescription
 @SG_ML_L027026list of all including inherited members../funclist/sglmultiset__constiterator
 @SG_ML_L016019implementation details#sg_implementationdetails
@@ -28,34 +28,34 @@ children classes: (none)
 &#9;@SG_ML_L01A01ASGLMultiSet::ConstIteratorsglmultiset__constiterator @SG_ML_L00A035operator--#SGLMultiSet_mc_ConstIterator_operator_decrement_int_(int);
 &#9;bool @SG_ML_L00A02Foperator==#bool_operator_eq_SGLMultiSet_mc_ConstIterator_(@SG_ML_L01A01ASGLMultiSet::ConstIteratorsglmultiset__constiterator x);
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_detaileddescription Detailed Description
-@SG_ML_L01A01ASGLMultiSet::ConstIteratorsglmultiset__constiterator is a constant iterator for @SG_ML_L00B00BSGLMultiSetsglmultiset and points towards an element in the @SG_ML_L00B00BSGLMultiSetsglmultiset. This can be used to iterate over the @SG_ML_L00B00BSGLMultiSetsglmultiset sequentially. Modification to the @SG_ML_L00B00BSGLMultiSetsglmultiset through a constant iterator is not possible. To do that, use a @SG_ML_L015015SGLMultiSet::Iteratorsglmultiset__iterator instead. This is a template based class with no separate source file.
+@SG_ML_HEADER_sg_detaileddescription Detailed Description
+@SG_ML_L01A026SGLMultiSet::ConstIterator../cppclass/sglmultiset__constiterator is a constant iterator for @SG_ML_L00B017SGLMultiSet../cppclass/sglmultiset and points towards an element in the @SG_ML_L00B017SGLMultiSet../cppclass/sglmultiset. This can be used to iterate over the @SG_ML_L00B017SGLMultiSet../cppclass/sglmultiset sequentially. Modification to the @SG_ML_L00B017SGLMultiSet../cppclass/sglmultiset through a constant iterator is not possible. To do that, use a @SG_ML_L015021SGLMultiSet::Iterator../cppclass/sglmultiset__iterator instead. This is a template based class with no separate source file.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_implementationdetails Implementation Details
-@SG_ML_L01A01ASGLMultiSet::ConstIteratorsglmultiset__constiterator stores a pointer to the memory location where @SG_ML_L00B00BSGLMultiSetsglmultiset keeps all its data.
+@SG_ML_HEADER_sg_implementationdetails Implementation Details
+@SG_ML_L01A026SGLMultiSet::ConstIterator../cppclass/sglmultiset__constiterator stores a pointer to the memory location where @SG_ML_L00B017SGLMultiSet../cppclass/sglmultiset keeps all its data.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_bool_operator_neq_SGLMultiSet_mc_ConstIterator_ bool @SG_ML_L00A030operator!=#bool_operator_neq_SGLMultiSet_mc_ConstIterator_(@SG_ML_L01A01ASGLMultiSet::ConstIteratorsglmultiset__constiterator x);
 Checks if this constant iterator points to a different element from @SG_ML_B001x.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_const_T_ref_operator_ptr_func_ const T& @SG_ML_L00901Foperator*#const_T_ref_operator_ptr_func_();
 Returns the element that this constant iterator points to.
-@SG_ML_WARN If this iterator is @SG_ML_L015047SGLMultiSet::constEndsglmultiset#nodiscard_SGLMultiSet_mc_ConstIterator_constEnd_func_const_, using this function results in @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
+@SG_ML_WARN If this iterator is @SG_ML_L015053SGLMultiSet::constEnd../cppclass/sglmultiset#nodiscard_SGLMultiSet_mc_ConstIterator_constEnd_func_const_, using this function results in @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_SGLMultiSet_mc_ConstIterator_operator_increment_int_ @SG_ML_L01A01ASGLMultiSet::ConstIteratorsglmultiset__constiterator @SG_ML_L00A035operator++#SGLMultiSet_mc_ConstIterator_operator_increment_int_(int);
 Increments the constant iterator to point towards the next element and returns the old constant iterator.
-@SG_ML_NOTE @SG_ML_L01A01ASGLMultiSet::ConstIteratorsglmultiset__constiterator is circular, incrementing @SG_ML_L015047SGLMultiSet::constEndsglmultiset#nodiscard_SGLMultiSet_mc_ConstIterator_constEnd_func_const_ gives @SG_ML_L017049SGLMultiSet::constBeginsglmultiset#nodiscard_SGLMultiSet_mc_ConstIterator_constBegin_func_const_ and decrementing @SG_ML_L017049SGLMultiSet::constBeginsglmultiset#nodiscard_SGLMultiSet_mc_ConstIterator_constBegin_func_const_ gives @SG_ML_L015047SGLMultiSet::constEndsglmultiset#nodiscard_SGLMultiSet_mc_ConstIterator_constEnd_func_const_.
+@SG_ML_NOTE @SG_ML_L01A026SGLMultiSet::ConstIterator../cppclass/sglmultiset__constiterator is circular, incrementing @SG_ML_L015053SGLMultiSet::constEnd../cppclass/sglmultiset#nodiscard_SGLMultiSet_mc_ConstIterator_constEnd_func_const_ gives @SG_ML_L017055SGLMultiSet::constBegin../cppclass/sglmultiset#nodiscard_SGLMultiSet_mc_ConstIterator_constBegin_func_const_ and decrementing @SG_ML_L017055SGLMultiSet::constBegin../cppclass/sglmultiset#nodiscard_SGLMultiSet_mc_ConstIterator_constBegin_func_const_ gives @SG_ML_L015053SGLMultiSet::constEnd../cppclass/sglmultiset#nodiscard_SGLMultiSet_mc_ConstIterator_constEnd_func_const_.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_SGLMultiSet_mc_ConstIterator_ref_operator_increment_func_ @SG_ML_L01A01ASGLMultiSet::ConstIteratorsglmultiset__constiterator& @SG_ML_L00A03Aoperator++#SGLMultiSet_mc_ConstIterator_ref_operator_increment_func_();
 Increments the constant iterator to point towards the next element and returns the new constant iterator.
-@SG_ML_NOTE @SG_ML_L01A01ASGLMultiSet::ConstIteratorsglmultiset__constiterator is circular, incrementing @SG_ML_L015047SGLMultiSet::constEndsglmultiset#nodiscard_SGLMultiSet_mc_ConstIterator_constEnd_func_const_ gives @SG_ML_L017049SGLMultiSet::constBeginsglmultiset#nodiscard_SGLMultiSet_mc_ConstIterator_constBegin_func_const_ and decrementing @SG_ML_L017049SGLMultiSet::constBeginsglmultiset#nodiscard_SGLMultiSet_mc_ConstIterator_constBegin_func_const_ gives @SG_ML_L015047SGLMultiSet::constEndsglmultiset#nodiscard_SGLMultiSet_mc_ConstIterator_constEnd_func_const_.
+@SG_ML_NOTE @SG_ML_L01A026SGLMultiSet::ConstIterator../cppclass/sglmultiset__constiterator is circular, incrementing @SG_ML_L015053SGLMultiSet::constEnd../cppclass/sglmultiset#nodiscard_SGLMultiSet_mc_ConstIterator_constEnd_func_const_ gives @SG_ML_L017055SGLMultiSet::constBegin../cppclass/sglmultiset#nodiscard_SGLMultiSet_mc_ConstIterator_constBegin_func_const_ and decrementing @SG_ML_L017055SGLMultiSet::constBegin../cppclass/sglmultiset#nodiscard_SGLMultiSet_mc_ConstIterator_constBegin_func_const_ gives @SG_ML_L015053SGLMultiSet::constEnd../cppclass/sglmultiset#nodiscard_SGLMultiSet_mc_ConstIterator_constEnd_func_const_.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_SGLMultiSet_mc_ConstIterator_ref_operator_decrement_func_ @SG_ML_L01A01ASGLMultiSet::ConstIteratorsglmultiset__constiterator& @SG_ML_L00A03Aoperator--#SGLMultiSet_mc_ConstIterator_ref_operator_decrement_func_();
 Decrements the constant iterator to point towards the previous element and returns the new constant iterator.
-@SG_ML_NOTE @SG_ML_L01A01ASGLMultiSet::ConstIteratorsglmultiset__constiterator is circular, incrementing @SG_ML_L015047SGLMultiSet::constEndsglmultiset#nodiscard_SGLMultiSet_mc_ConstIterator_constEnd_func_const_ gives @SG_ML_L017049SGLMultiSet::constBeginsglmultiset#nodiscard_SGLMultiSet_mc_ConstIterator_constBegin_func_const_ and decrementing @SG_ML_L017049SGLMultiSet::constBeginsglmultiset#nodiscard_SGLMultiSet_mc_ConstIterator_constBegin_func_const_ gives @SG_ML_L015047SGLMultiSet::constEndsglmultiset#nodiscard_SGLMultiSet_mc_ConstIterator_constEnd_func_const_.
+@SG_ML_NOTE @SG_ML_L01A026SGLMultiSet::ConstIterator../cppclass/sglmultiset__constiterator is circular, incrementing @SG_ML_L015053SGLMultiSet::constEnd../cppclass/sglmultiset#nodiscard_SGLMultiSet_mc_ConstIterator_constEnd_func_const_ gives @SG_ML_L017055SGLMultiSet::constBegin../cppclass/sglmultiset#nodiscard_SGLMultiSet_mc_ConstIterator_constBegin_func_const_ and decrementing @SG_ML_L017055SGLMultiSet::constBegin../cppclass/sglmultiset#nodiscard_SGLMultiSet_mc_ConstIterator_constBegin_func_const_ gives @SG_ML_L015053SGLMultiSet::constEnd../cppclass/sglmultiset#nodiscard_SGLMultiSet_mc_ConstIterator_constEnd_func_const_.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_SGLMultiSet_mc_ConstIterator_operator_decrement_int_ @SG_ML_L01A01ASGLMultiSet::ConstIteratorsglmultiset__constiterator @SG_ML_L00A035operator--#SGLMultiSet_mc_ConstIterator_operator_decrement_int_(int);
 Decrements the constant iterator to point towards the previous element and returns the old constant iterator.
-@SG_ML_NOTE @SG_ML_L01A01ASGLMultiSet::ConstIteratorsglmultiset__constiterator is circular, incrementing @SG_ML_L015047SGLMultiSet::constEndsglmultiset#nodiscard_SGLMultiSet_mc_ConstIterator_constEnd_func_const_ gives @SG_ML_L017049SGLMultiSet::constBeginsglmultiset#nodiscard_SGLMultiSet_mc_ConstIterator_constBegin_func_const_ and decrementing @SG_ML_L017049SGLMultiSet::constBeginsglmultiset#nodiscard_SGLMultiSet_mc_ConstIterator_constBegin_func_const_ gives @SG_ML_L015047SGLMultiSet::constEndsglmultiset#nodiscard_SGLMultiSet_mc_ConstIterator_constEnd_func_const_.
+@SG_ML_NOTE @SG_ML_L01A026SGLMultiSet::ConstIterator../cppclass/sglmultiset__constiterator is circular, incrementing @SG_ML_L015053SGLMultiSet::constEnd../cppclass/sglmultiset#nodiscard_SGLMultiSet_mc_ConstIterator_constEnd_func_const_ gives @SG_ML_L017055SGLMultiSet::constBegin../cppclass/sglmultiset#nodiscard_SGLMultiSet_mc_ConstIterator_constBegin_func_const_ and decrementing @SG_ML_L017055SGLMultiSet::constBegin../cppclass/sglmultiset#nodiscard_SGLMultiSet_mc_ConstIterator_constBegin_func_const_ gives @SG_ML_L015053SGLMultiSet::constEnd../cppclass/sglmultiset#nodiscard_SGLMultiSet_mc_ConstIterator_constEnd_func_const_.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_bool_operator_eq_SGLMultiSet_mc_ConstIterator_ bool @SG_ML_L00A02Foperator==#bool_operator_eq_SGLMultiSet_mc_ConstIterator_(@SG_ML_L01A01ASGLMultiSet::ConstIteratorsglmultiset__constiterator x);
 Checks if this constant iterator points to the same element as @SG_ML_B001x.

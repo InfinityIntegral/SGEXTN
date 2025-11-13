@@ -30,41 +30,41 @@ children classes: (none)
 &#9;[[nodiscard]] @SG_ML_L007007SGLSpansglspan @SG_ML_L00B029subspanLeft#nodiscard_SGLSpan_subspanLeft_int_const_(int length) const;
 &#9;[[nodiscard]] @SG_ML_L007007SGLSpansglspan @SG_ML_L00C02AsubspanRight#nodiscard_SGLSpan_subspanRight_int_const_(int length) const;
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_detaileddescription Detailed Description
-@SG_ML_L007007SGLSpansglspan provides a template based span that can be used with any data type. @SG_ML_L007007SGLSpansglspan does not own the data that it allows access to. Deleting heap data accessed through @SG_ML_L007007SGLSpansglspan is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour in the form of double delete. This is a template based class with no separate source file.
+@SG_ML_HEADER_sg_detaileddescription Detailed Description
+@SG_ML_L007013SGLSpan../cppclass/sglspan provides a template based span that can be used with any data type. @SG_ML_L007013SGLSpan../cppclass/sglspan does not own the data that it allows access to. Deleting heap data accessed through @SG_ML_L007013SGLSpan../cppclass/sglspan is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour in the form of double delete. This is a template based class with no separate source file.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_implementationdetails Implementation Details
-@SG_ML_L007007SGLSpansglspan stores a pointer to the start of the span and the number of elements in the span.
+@SG_ML_HEADER_sg_implementationdetails Implementation Details
+@SG_ML_L007013SGLSpan../cppclass/sglspan stores a pointer to the start of the span and the number of elements in the span.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_SGLSpan_T_ptr_int_ @SG_ML_L007013SGLSpan#SGLSpan_T_ptr_int_(T* dataInternal, int lengthInternal);
-Creates a @SG_ML_L007007SGLSpansglspan starting from @SG_ML_B00CdataInternal with a length of @SG_ML_B00ElengthInternal.
+Creates a @SG_ML_L007013SGLSpan../cppclass/sglspan starting from @SG_ML_B00CdataInternal with a length of @SG_ML_B00ElengthInternal.
 @SG_ML_WARN Negative @SG_ML_B00ElengthInternal is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
 @SG_ML_WARN If any memory between @SG_ML_B00CdataInternal (inclusive) and @SG_ML_B00CdataInternal + @SG_ML_B00ElengthInternal (exclusive) is not allocated, have been deleted, or if the 2 endpoints come from different data structures, creating the span is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
 @SG_ML_WARN Using the span in any way after the host data structure is deleted is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour
-@SG_ML_WARN To avoid @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour, do not allocate any @SG_ML_L007007SGLSpansglspan on the heap.
+@SG_ML_WARN To avoid @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour, do not allocate any @SG_ML_L007013SGLSpan../cppclass/sglspan on the heap.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_const_T_ref_at_int_const_ [[nodiscard]] const T& @SG_ML_L002024at#nodiscard_const_T_ref_at_int_const_(int i) const;
-Returns a constant reference to the element at index @SG_ML_B001i of the @SG_ML_L007007SGLSpansglspan.
+Returns a constant reference to the element at index @SG_ML_B001i of the @SG_ML_L007013SGLSpan../cppclass/sglspan.
 @SG_ML_WARN If @SG_ML_B001i is out of bounds, this causes a crash.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_T_ref_at_int_ [[nodiscard]] T& @SG_ML_L002018at#nodiscard_T_ref_at_int_(int i);
-Returns a reference to the element at index @SG_ML_B001i of the @SG_ML_L007007SGLSpansglspan.
+Returns a reference to the element at index @SG_ML_B001i of the @SG_ML_L007013SGLSpan../cppclass/sglspan.
 @SG_ML_NOTE This returns a reference and not a copy. Assigning to the returned value (using it as a lvalue) modifies the host data structure.
 @SG_ML_WARN If @SG_ML_B001i is out of bounds, this causes a crash.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_int_length_func_const_ [[nodiscard]] int @SG_ML_L006021length#nodiscard_int_length_func_const_() const;
-Returns the length of the @SG_ML_L007007SGLSpansglspan.
-@SG_ML_NOTE This is constant after the creation of the @SG_ML_L007007SGLSpansglspan.
+Returns the length of the @SG_ML_L007013SGLSpan../cppclass/sglspan.
+@SG_ML_NOTE This is constant after the creation of the @SG_ML_L007013SGLSpan../cppclass/sglspan.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_const_T_ptr_pointerToData_int_const_ [[nodiscard]] const T* @SG_ML_L00D02FpointerToData#nodiscard_const_T_ptr_pointerToData_int_const_(int n) const;
 Returns a read only pointer to the element at index @SG_ML_B001n of the original span.
-@SG_ML_NOTE It is ok for @SG_ML_B001n to be out of bounds as long as the returned pointer is not dereferenced. This can be done intentionally to define bounds for @SG_ML_L007007SGLSortsglsort.
+@SG_ML_NOTE It is ok for @SG_ML_B001n to be out of bounds as long as the returned pointer is not dereferenced. This can be done intentionally to define bounds for @SG_ML_L007013SGLSort../cppclass/sglsort.
 @SG_ML_NOTE The returned value may function as an iterator.
 @SG_ML_WARN Dereferencing the returned pointer when @SG_ML_B001n is out of bounds is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_T_ptr_pointerToData_int_ [[nodiscard]] T* @SG_ML_L00D023pointerToData#nodiscard_T_ptr_pointerToData_int_(int n);
 Returns a pointer to the element at index @SG_ML_B001n of the original span.
-@SG_ML_NOTE It is ok for @SG_ML_B001n to be out of bounds as long as the returned pointer is not dereferenced. This can be done intentionally to define bounds for @SG_ML_L007007SGLSortsglsort.
+@SG_ML_NOTE It is ok for @SG_ML_B001n to be out of bounds as long as the returned pointer is not dereferenced. This can be done intentionally to define bounds for @SG_ML_L007013SGLSort../cppclass/sglsort.
 @SG_ML_NOTE The returned value may function as an iterator.
 @SG_ML_WARN Dereferencing the returned pointer when @SG_ML_B001n is out of bounds is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
 @SG_ML_BLANKLINE

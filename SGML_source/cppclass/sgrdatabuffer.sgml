@@ -23,15 +23,15 @@ children classes: @SG_ML_L016016SGRElementBufferObjectsgrelementbufferobject, @S
 &#9;void @SG_ML_L00C01EdoubleBuffer#void_doubleBuffer_func_const_() const;
 &#9;[[nodiscard]] int @SG_ML_L006021length#nodiscard_int_length_func_const_() const;
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_detaileddescription Detailed Description
-@SG_ML_L00D00DSGRDataBuffersgrdatabuffer represent a GPU side data buffer used by @SG_ML_L017015SG - RI ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/renderer renderers to store information on the GPU. This is also the base class for @SG_ML_L015015SGRVertexBufferObjectsgrvertexbufferobject and @SG_ML_L016016SGRElementBufferObjectsgrelementbufferobject.
+@SG_ML_HEADER_sg_detaileddescription Detailed Description
+@SG_ML_L00D019SGRDataBuffer../cppclass/sgrdatabuffer represent a GPU side data buffer used by @SG_ML_L017015SG - RI ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/renderer renderers to store information on the GPU. This is also the base class for @SG_ML_L015021SGRVertexBufferObject../cppclass/sgrvertexbufferobject and @SG_ML_L016022SGRElementBufferObject../cppclass/sgrelementbufferobject.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_implementationdetails Implementation Details
-@SG_ML_L017015SG - RI ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/renderer internally uses QRhi, @SG_ML_L00D00DSGRDataBuffersgrdatabuffer wraps QRhiBuffer.
+@SG_ML_HEADER_sg_implementationdetails Implementation Details
+@SG_ML_L017015SG - RI ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/renderer internally uses QRhi, @SG_ML_L00D019SGRDataBuffer../cppclass/sgrdatabuffer wraps QRhiBuffer.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_doubleBuffer_func_const_ void @SG_ML_L00C01EdoubleBuffer#void_doubleBuffer_func_const_() const;
-Doubles the size of this @SG_ML_L00D00DSGRDataBuffersgrdatabuffer without losing data that it already contains.
+Doubles the size of this @SG_ML_L00D019SGRDataBuffer../cppclass/sgrdatabuffer without losing data that it already contains.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_int_length_func_const_ [[nodiscard]] int @SG_ML_L006021length#nodiscard_int_length_func_const_() const;
-Returns the length of this @SG_ML_L00D00DSGRDataBuffersgrdatabuffer.
+Returns the length of this @SG_ML_L00D019SGRDataBuffer../cppclass/sgrdatabuffer.
 @SG_ML_BLANKLINE

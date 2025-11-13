@@ -83,39 +83,39 @@ children classes: (none)
 @SG_ML_HEADER_ static member functions
 &#9;[[nodiscard]] static @SG_ML_L00C00CSGXTimeStampsgxtimestamp @SG_ML_L003028now#nodiscard_static_SGXTimeStamp_now_func_();
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_detaileddescription Detailed Description
-@SG_ML_L00C00CSGXTimeStampsgxtimestamp allows for computations concerning date and time. The time is stored correct to the nearest second. There are builtin functions for find the day of week, day of months, number of days between 2 dates etc. Time is stored using long long, so 32bit time overflowing in 2033 is not a concern. Using @SG_ML_L00C00CSGXTimeStampsgxtimestamp for any time zone other than Singapore time zone is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour, you must convert the time into Singapore time zone before computation.
+@SG_ML_HEADER_sg_detaileddescription Detailed Description
+@SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp allows for computations concerning date and time. The time is stored correct to the nearest second. There are builtin functions for find the day of week, day of months, number of days between 2 dates etc. Time is stored using long long, so 32bit time overflowing in 2033 is not a concern. Using @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp for any time zone other than Singapore time zone is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour, you must convert the time into Singapore time zone before computation.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_implementationdetails Implementation Details
-Stores the number of seconds after @SG_ML_L01202CSGXTimeStamp::zerosgxtimestamp#static_const_SGXTimeStamp_zero_ that a @SG_ML_L00C00CSGXTimeStampsgxtimestamp refers to as a long long.
+@SG_ML_HEADER_sg_implementationdetails Implementation Details
+Stores the number of seconds after @SG_ML_L012038SGXTimeStamp::zero../cppclass/sgxtimestamp#static_const_SGXTimeStamp_zero_ that a @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp refers to as a long long.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_SGXTimeStamp_int_int_int_int_int_int_ @SG_ML_L00C026SGXTimeStamp#SGXTimeStamp_int_int_int_int_int_int_(int year, int month, int day, int hour, int minute, int second);
-Constructs a @SG_ML_L00C00CSGXTimeStampsgxtimestamp object with the year, month, day, hour, minute, and second set to @SG_ML_B004year, @SG_ML_B005month, @SG_ML_B003day, @SG_ML_B004hour, @SG_ML_B006minute, @SG_ML_B006second respectively.
+Constructs a @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp object with the year, month, day, hour, minute, and second set to @SG_ML_B004year, @SG_ML_B005month, @SG_ML_B003day, @SG_ML_B004hour, @SG_ML_B006minute, @SG_ML_B006second respectively.
 @SG_ML_NOTE @SG_ML_B004year should be the year on the corresponding National Day logo. For example, 2025 should be passed in as 60 because 2025 is when we celebrate SG60.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_addDays_long_long_ void @SG_ML_L007018addDays#void_addDays_long_long_(long long x);
-Moves this @SG_ML_L00C00CSGXTimeStampsgxtimestamp forwards by @SG_ML_B001x days.
+Moves this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp forwards by @SG_ML_B001x days.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_addHours_long_long_ void @SG_ML_L008019addHours#void_addHours_long_long_(long long x);
-Moves this @SG_ML_L00C00CSGXTimeStampsgxtimestamp forwards by @SG_ML_B001x hours.
+Moves this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp forwards by @SG_ML_B001x hours.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_addMinutes_long_long_ void @SG_ML_L00A01BaddMinutes#void_addMinutes_long_long_(long long x);
-Moves this @SG_ML_L00C00CSGXTimeStampsgxtimestamp forwards by @SG_ML_B001x minutes.
+Moves this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp forwards by @SG_ML_B001x minutes.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_addMonths_long_long_ void @SG_ML_L00901AaddMonths#void_addMonths_long_long_(long long x);
-Moves this @SG_ML_L00C00CSGXTimeStampsgxtimestamp forwards by @SG_ML_B001x months.
+Moves this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp forwards by @SG_ML_B001x months.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_addSeconds_long_long_ void @SG_ML_L00A01BaddSeconds#void_addSeconds_long_long_(long long x);
-Moves this @SG_ML_L00C00CSGXTimeStampsgxtimestamp forwards by @SG_ML_B001x seconds.
+Moves this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp forwards by @SG_ML_B001x seconds.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_addYears_long_long_ void @SG_ML_L008019addYears#void_addYears_long_long_(long long x);
-Moves this @SG_ML_L00C00CSGXTimeStampsgxtimestamp forwards by @SG_ML_B001x years.
+Moves this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp forwards by @SG_ML_B001x years.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_int_getDay_func_const_ [[nodiscard]] int @SG_ML_L006021getDay#nodiscard_int_getDay_func_const_() const;
-See explanation of @SG_ML_L017030SGXTimeStamp::getSecondsgxtimestamp#nodiscard_int_getSecond_func_const_.
+See explanation of @SG_ML_L01703CSGXTimeStamp::getSecond../cppclass/sgxtimestamp#nodiscard_int_getSecond_func_const_.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_int_getDayOfWeek_func_const_ [[nodiscard]] int @SG_ML_L00C027getDayOfWeek#nodiscard_int_getDayOfWeek_func_const_() const;
-Returns the day of the week corresponding to this @SG_ML_L00C00CSGXTimeStampsgxtimestamp.
+Returns the day of the week corresponding to this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp.
 Interpret the return value as following:
 1 - Monday
 2 - Tuesday
@@ -127,65 +127,65 @@ Interpret the return value as following:
 @SG_ML_NOTE This corresponds to the Chinese names of the days of the week.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_int_getDayOfYear_func_const_ [[nodiscard]] int @SG_ML_L00C027getDayOfYear#nodiscard_int_getDayOfYear_func_const_() const;
-Returns the day of the year corresponding to this @SG_ML_L00C00CSGXTimeStampsgxtimestamp. This is a number between 1 and 365 or 366 inclusive.
+Returns the day of the year corresponding to this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp. This is a number between 1 and 365 or 366 inclusive.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_double_getDaysFrom_SGXTimeStamp_const_ [[nodiscard]] double @SG_ML_L00B031getDaysFrom#nodiscard_double_getDaysFrom_SGXTimeStamp_const_(@SG_ML_L00C00CSGXTimeStampsgxtimestamp x) const;
-Gets the exact number of days between this @SG_ML_L00C00CSGXTimeStampsgxtimestamp and @SG_ML_B001x.
-@SG_ML_NOTE This is positive if this @SG_ML_L00C00CSGXTimeStampsgxtimestamp is after @SG_ML_B001x and negative if this @SG_ML_L00C00CSGXTimeStampsgxtimestamp is before @SG_ML_B001x.
+Gets the exact number of days between this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp and @SG_ML_B001x.
+@SG_ML_NOTE This is positive if this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp is after @SG_ML_B001x and negative if this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp is before @SG_ML_B001x.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGXString_getFileName_func_const_ [[nodiscard]] @SG_ML_L009009SGXStringsgxstring @SG_ML_L00B02CgetFileName#nodiscard_SGXString_getFileName_func_const_() const;
-Returns a string representation of this @SG_ML_L00C00CSGXTimeStampsgxtimestamp optimised for naming files, correct to the nearest day.
+Returns a string representation of this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp optimised for naming files, correct to the nearest day.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGXString_getFileNameCorrectToSecond_func_const_ [[nodiscard]] @SG_ML_L009009SGXStringsgxstring @SG_ML_L01A03BgetFileNameCorrectToSecond#nodiscard_SGXString_getFileNameCorrectToSecond_func_const_() const;
-Returns a string representation of this @SG_ML_L00C00CSGXTimeStampsgxtimestamp optimised for naming files, correct to the nearest second.
+Returns a string representation of this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp optimised for naming files, correct to the nearest second.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGXString_getFileNameCorrectToSecondNoOffset_func_const_ [[nodiscard]] @SG_ML_L009009SGXStringsgxstring @SG_ML_L022043getFileNameCorrectToSecondNoOffset#nodiscard_SGXString_getFileNameCorrectToSecondNoOffset_func_const_() const;
-Returns a string representation of this @SG_ML_L00C00CSGXTimeStampsgxtimestamp optimised for naming files, correct to the nearest second, without the offset of 1965 on the year number.
+Returns a string representation of this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp optimised for naming files, correct to the nearest second, without the offset of 1965 on the year number.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGXString_getFileNameCorrectToSecondNoOffsetSeparated_SGXChar_const_ [[nodiscard]] @SG_ML_L009009SGXStringsgxstring @SG_ML_L02B04FgetFileNameCorrectToSecondNoOffsetSeparated#nodiscard_SGXString_getFileNameCorrectToSecondNoOffsetSeparated_SGXChar_const_(@SG_ML_L007007SGXCharsgxchar separator) const;
-Returns a string representation of this @SG_ML_L00C00CSGXTimeStampsgxtimestamp optimised for naming files, correct to the nearest second, with numbers separated using @SG_ML_B009separator, without the offset of 1965 on the year number.
+Returns a string representation of this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp optimised for naming files, correct to the nearest second, with numbers separated using @SG_ML_B009separator, without the offset of 1965 on the year number.
 @SG_ML_WARN The choice of @SG_ML_B009separator may cause issues with the file system. Using _ (underscore) is recommended.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGXString_getFileNameCorrectToSecondSeparated_SGXChar_const_ [[nodiscard]] @SG_ML_L009009SGXStringsgxstring @SG_ML_L023047getFileNameCorrectToSecondSeparated#nodiscard_SGXString_getFileNameCorrectToSecondSeparated_SGXChar_const_(@SG_ML_L007007SGXCharsgxchar separator) const;
-Returns a string representation of this @SG_ML_L00C00CSGXTimeStampsgxtimestamp optimised for naming files, correct to the nearest second, with numbers separated using @SG_ML_B009separator.
+Returns a string representation of this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp optimised for naming files, correct to the nearest second, with numbers separated using @SG_ML_B009separator.
 @SG_ML_WARN The choice of @SG_ML_B009separator may cause issues with the file system. Using _ (underscore) is recommended.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGXString_getFileNameNoOffset_func_const_ [[nodiscard]] @SG_ML_L009009SGXStringsgxstring @SG_ML_L013034getFileNameNoOffset#nodiscard_SGXString_getFileNameNoOffset_func_const_() const;
-Returns a string representation of this @SG_ML_L00C00CSGXTimeStampsgxtimestamp optimised for naming files, correct to the nearest day, without the offset of 1965 on the year number.
+Returns a string representation of this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp optimised for naming files, correct to the nearest day, without the offset of 1965 on the year number.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGXString_getFileNameNoOffsetSeparated_SGXChar_const_ [[nodiscard]] @SG_ML_L009009SGXStringsgxstring @SG_ML_L01C040getFileNameNoOffsetSeparated#nodiscard_SGXString_getFileNameNoOffsetSeparated_SGXChar_const_(@SG_ML_L007007SGXCharsgxchar separator) const;
-Returns a string representation of this @SG_ML_L00C00CSGXTimeStampsgxtimestamp optimised for naming files, correct to the nearest day, with numbers separated using @SG_ML_B009separator, without the offset of 1965 on the year number.
+Returns a string representation of this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp optimised for naming files, correct to the nearest day, with numbers separated using @SG_ML_B009separator, without the offset of 1965 on the year number.
 @SG_ML_WARN The choice of @SG_ML_B009separator may cause issues with the file system. Using _ (underscore) is recommended.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGXString_getFileNameSeparated_SGXChar_const_ [[nodiscard]] @SG_ML_L009009SGXStringsgxstring @SG_ML_L014038getFileNameSeparated#nodiscard_SGXString_getFileNameSeparated_SGXChar_const_(@SG_ML_L007007SGXCharsgxchar separator) const;
-Returns a string representation of this @SG_ML_L00C00CSGXTimeStampsgxtimestamp optimised for naming files, correct to the nearest day, with numbers separated using @SG_ML_B009separator.
+Returns a string representation of this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp optimised for naming files, correct to the nearest day, with numbers separated using @SG_ML_B009separator.
 @SG_ML_WARN The choice of @SG_ML_B009separator may cause issues with the file system. Using _ (underscore) is recommended.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_int_getHour_func_const_ [[nodiscard]] int @SG_ML_L007022getHour#nodiscard_int_getHour_func_const_() const;
-See explanation of @SG_ML_L017030SGXTimeStamp::getSecondsgxtimestamp#nodiscard_int_getSecond_func_const_.
+See explanation of @SG_ML_L01703CSGXTimeStamp::getSecond../cppclass/sgxtimestamp#nodiscard_int_getSecond_func_const_.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_double_getHoursFrom_SGXTimeStamp_const_ [[nodiscard]] double @SG_ML_L00C032getHoursFrom#nodiscard_double_getHoursFrom_SGXTimeStamp_const_(@SG_ML_L00C00CSGXTimeStampsgxtimestamp x) const;
-Gets the exact number of hours between this @SG_ML_L00C00CSGXTimeStampsgxtimestamp and @SG_ML_B001x.
-@SG_ML_NOTE This is positive if this @SG_ML_L00C00CSGXTimeStampsgxtimestamp is after @SG_ML_B001x and negative if this @SG_ML_L00C00CSGXTimeStampsgxtimestamp is before @SG_ML_B001x.
+Gets the exact number of hours between this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp and @SG_ML_B001x.
+@SG_ML_NOTE This is positive if this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp is after @SG_ML_B001x and negative if this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp is before @SG_ML_B001x.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_int_getMinute_func_const_ [[nodiscard]] int @SG_ML_L009024getMinute#nodiscard_int_getMinute_func_const_() const;
-See explanation of @SG_ML_L017030SGXTimeStamp::getSecondsgxtimestamp#nodiscard_int_getSecond_func_const_.
+See explanation of @SG_ML_L01703CSGXTimeStamp::getSecond../cppclass/sgxtimestamp#nodiscard_int_getSecond_func_const_.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_double_getMinutesFrom_SGXTimeStamp_const_ [[nodiscard]] double @SG_ML_L00E034getMinutesFrom#nodiscard_double_getMinutesFrom_SGXTimeStamp_const_(@SG_ML_L00C00CSGXTimeStampsgxtimestamp x) const;
-Gets the exact number of minutes between this @SG_ML_L00C00CSGXTimeStampsgxtimestamp and @SG_ML_B001x.
-@SG_ML_NOTE This is positive if this @SG_ML_L00C00CSGXTimeStampsgxtimestamp is after @SG_ML_B001x and negative if this @SG_ML_L00C00CSGXTimeStampsgxtimestamp is before @SG_ML_B001x.
+Gets the exact number of minutes between this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp and @SG_ML_B001x.
+@SG_ML_NOTE This is positive if this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp is after @SG_ML_B001x and negative if this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp is before @SG_ML_B001x.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_int_getMonth_func_const_ [[nodiscard]] int @SG_ML_L008023getMonth#nodiscard_int_getMonth_func_const_() const;
-See explanation of @SG_ML_L017030SGXTimeStamp::getSecondsgxtimestamp#nodiscard_int_getSecond_func_const_.
+See explanation of @SG_ML_L01703CSGXTimeStamp::getSecond../cppclass/sgxtimestamp#nodiscard_int_getSecond_func_const_.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_double_getMonthsFrom_SGXTimeStamp_const_ [[nodiscard]] double @SG_ML_L00D033getMonthsFrom#nodiscard_double_getMonthsFrom_SGXTimeStamp_const_(@SG_ML_L00C00CSGXTimeStampsgxtimestamp x) const;
-Gets the exact number of months between this @SG_ML_L00C00CSGXTimeStampsgxtimestamp and @SG_ML_B001x.
-@SG_ML_NOTE This is positive if this @SG_ML_L00C00CSGXTimeStampsgxtimestamp is after @SG_ML_B001x and negative if this @SG_ML_L00C00CSGXTimeStampsgxtimestamp is before @SG_ML_B001x.
+Gets the exact number of months between this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp and @SG_ML_B001x.
+@SG_ML_NOTE This is positive if this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp is after @SG_ML_B001x and negative if this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp is before @SG_ML_B001x.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_int_getSecond_func_const_ [[nodiscard]] int @SG_ML_L009024getSecond#nodiscard_int_getSecond_func_const_() const;
-For any @SG_ML_L00C00CSGXTimeStampsgxtimestamp x, the following statement makes sense.
+For any @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp x, the following statement makes sense.
 x refers to the time x.getHour() x.getMinute() x.getSecond(), on x.getDay() of the x.getMonth() th month of the x.getYear() th year after the independence of Singapore.
-For @SG_ML_L01602FSGXTimeStamp::getMonthsgxtimestamp#nodiscard_int_getMonth_func_const_, interpret the return value as following:
+For @SG_ML_L01603BSGXTimeStamp::getMonth../cppclass/sgxtimestamp#nodiscard_int_getMonth_func_const_, interpret the return value as following:
 1 - January
 2 - February
 3 - March
@@ -201,102 +201,102 @@ For @SG_ML_L01602FSGXTimeStamp::getMonthsgxtimestamp#nodiscard_int_getMonth_func
 @SG_ML_NOTE This corresponds to the Chinese names of the months.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_double_getSecondsFrom_SGXTimeStamp_const_ [[nodiscard]] double @SG_ML_L00E034getSecondsFrom#nodiscard_double_getSecondsFrom_SGXTimeStamp_const_(@SG_ML_L00C00CSGXTimeStampsgxtimestamp x) const;
-Gets the exact number of seconds between this @SG_ML_L00C00CSGXTimeStampsgxtimestamp and @SG_ML_B001x.
-@SG_ML_NOTE This is positive if this @SG_ML_L00C00CSGXTimeStampsgxtimestamp is after @SG_ML_B001x and negative if this @SG_ML_L00C00CSGXTimeStampsgxtimestamp is before @SG_ML_B001x.
+Gets the exact number of seconds between this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp and @SG_ML_B001x.
+@SG_ML_NOTE This is positive if this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp is after @SG_ML_B001x and negative if this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp is before @SG_ML_B001x.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGXString_getString_func_const_ [[nodiscard]] @SG_ML_L009009SGXStringsgxstring @SG_ML_L00902AgetString#nodiscard_SGXString_getString_func_const_() const;
-Returns a @SG_ML_L009009SGXStringsgxstring representing this @SG_ML_L00C00CSGXTimeStampsgxtimestamp.
+Returns a @SG_ML_L009015SGXString../cppclass/sgxstring representing this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGXString_getStringCustomFormat_const_SGXString_ref_const_ [[nodiscard]] @SG_ML_L009009SGXStringsgxstring @SG_ML_L015045getStringCustomFormat#nodiscard_SGXString_getStringCustomFormat_const_SGXString_ref_const_(const @SG_ML_L009009SGXStringsgxstring& s) const;
-Returns a @SG_ML_L009009SGXStringsgxstring representing this @SG_ML_L00C00CSGXTimeStampsgxtimestamp with formatting @SG_ML_B001s.
+Returns a @SG_ML_L009015SGXString../cppclass/sgxstring representing this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp with formatting @SG_ML_B001s.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGXString_getStringNoOffset_func_const_ [[nodiscard]] @SG_ML_L009009SGXStringsgxstring @SG_ML_L011032getStringNoOffset#nodiscard_SGXString_getStringNoOffset_func_const_() const;
-Returns a @SG_ML_L009009SGXStringsgxstring representing this @SG_ML_L00C00CSGXTimeStampsgxtimestamp without the offset of 1965 on the year number.
+Returns a @SG_ML_L009015SGXString../cppclass/sgxstring representing this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp without the offset of 1965 on the year number.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGXString_getStringNoOffsetCustomFormat_const_SGXString_ref_const_ [[nodiscard]] @SG_ML_L009009SGXStringsgxstring @SG_ML_L01D04DgetStringNoOffsetCustomFormat#nodiscard_SGXString_getStringNoOffsetCustomFormat_const_SGXString_ref_const_(const @SG_ML_L009009SGXStringsgxstring& s) const;
-Returns a @SG_ML_L009009SGXStringsgxstring representing this @SG_ML_L00C00CSGXTimeStampsgxtimestamp with formatting @SG_ML_B001s without the offset of 1965 on the year number.
+Returns a @SG_ML_L009015SGXString../cppclass/sgxstring representing this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp with formatting @SG_ML_B001s without the offset of 1965 on the year number.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_int_getTimeFromDayPart_SGXTimeStamp_const_ [[nodiscard]] int @SG_ML_L012035getTimeFromDayPart#nodiscard_int_getTimeFromDayPart_SGXTimeStamp_const_(@SG_ML_L00C00CSGXTimeStampsgxtimestamp x) const;
-See explanation of @SG_ML_L023044SGXTimeStamp::getTimeFromSecondPartsgxtimestamp#nodiscard_int_getTimeFromSecondPart_SGXTimeStamp_const_. The corresponding parameter to @SG_ML_B001x is still named x.
+See explanation of @SG_ML_L023050SGXTimeStamp::getTimeFromSecondPart../cppclass/sgxtimestamp#nodiscard_int_getTimeFromSecondPart_SGXTimeStamp_const_. The corresponding parameter to @SG_ML_B001x is still named x.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_int_getTimeFromHourPart_SGXTimeStamp_const_ [[nodiscard]] int @SG_ML_L013036getTimeFromHourPart#nodiscard_int_getTimeFromHourPart_SGXTimeStamp_const_(@SG_ML_L00C00CSGXTimeStampsgxtimestamp x) const;
-See explanation of @SG_ML_L023044SGXTimeStamp::getTimeFromSecondPartsgxtimestamp#nodiscard_int_getTimeFromSecondPart_SGXTimeStamp_const_. The corresponding parameter to @SG_ML_B001x is still named x.
+See explanation of @SG_ML_L023050SGXTimeStamp::getTimeFromSecondPart../cppclass/sgxtimestamp#nodiscard_int_getTimeFromSecondPart_SGXTimeStamp_const_. The corresponding parameter to @SG_ML_B001x is still named x.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_int_getTimeFromMinutePart_SGXTimeStamp_const_ [[nodiscard]] int @SG_ML_L015038getTimeFromMinutePart#nodiscard_int_getTimeFromMinutePart_SGXTimeStamp_const_(@SG_ML_L00C00CSGXTimeStampsgxtimestamp x) const;
-See explanation of @SG_ML_L023044SGXTimeStamp::getTimeFromSecondPartsgxtimestamp#nodiscard_int_getTimeFromSecondPart_SGXTimeStamp_const_. The corresponding parameter to @SG_ML_B001x is still named x.
+See explanation of @SG_ML_L023050SGXTimeStamp::getTimeFromSecondPart../cppclass/sgxtimestamp#nodiscard_int_getTimeFromSecondPart_SGXTimeStamp_const_. The corresponding parameter to @SG_ML_B001x is still named x.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_int_getTimeFromMonthPart_SGXTimeStamp_const_ [[nodiscard]] int @SG_ML_L014037getTimeFromMonthPart#nodiscard_int_getTimeFromMonthPart_SGXTimeStamp_const_(@SG_ML_L00C00CSGXTimeStampsgxtimestamp x) const;
-See explanation of @SG_ML_L023044SGXTimeStamp::getTimeFromSecondPartsgxtimestamp#nodiscard_int_getTimeFromSecondPart_SGXTimeStamp_const_. The corresponding parameter to @SG_ML_B001x is still named x.
+See explanation of @SG_ML_L023050SGXTimeStamp::getTimeFromSecondPart../cppclass/sgxtimestamp#nodiscard_int_getTimeFromSecondPart_SGXTimeStamp_const_. The corresponding parameter to @SG_ML_B001x is still named x.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_int_getTimeFromSecondPart_SGXTimeStamp_const_ [[nodiscard]] int @SG_ML_L015038getTimeFromSecondPart#nodiscard_int_getTimeFromSecondPart_SGXTimeStamp_const_(@SG_ML_L00C00CSGXTimeStampsgxtimestamp x) const;
-For any @SG_ML_L00C00CSGXTimeStampsgxtimestamp a, the following statement makes sense.
+For any @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp a, the following statement makes sense.
 a refers to a time exactly a.getTimeFromYearPart(@SG_ML_B001x) years, a.getTimeFromMonthPart(@SG_ML_B001x) months, a.getTimeFromDayPart(@SG_ML_B001x) days, a.getTimeFromHourPart(@SG_ML_B001x) hours, a.getTimeFromMinutePart(@SG_ML_B001x) minutes, and a.getTimeFromSecondPart(@SG_ML_B001x) seconds after the time that @SG_ML_B001x refers to.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_int_getTimeFromYearPart_SGXTimeStamp_const_ [[nodiscard]] int @SG_ML_L013036getTimeFromYearPart#nodiscard_int_getTimeFromYearPart_SGXTimeStamp_const_(@SG_ML_L00C00CSGXTimeStampsgxtimestamp x) const;
-See explanation of @SG_ML_L023044SGXTimeStamp::getTimeFromSecondPartsgxtimestamp#nodiscard_int_getTimeFromSecondPart_SGXTimeStamp_const_. The corresponding parameter to @SG_ML_B001x is still named x.
+See explanation of @SG_ML_L023050SGXTimeStamp::getTimeFromSecondPart../cppclass/sgxtimestamp#nodiscard_int_getTimeFromSecondPart_SGXTimeStamp_const_. The corresponding parameter to @SG_ML_B001x is still named x.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_int_getYear_func_const_ [[nodiscard]] int @SG_ML_L007022getYear#nodiscard_int_getYear_func_const_() const;
-See explanation of @SG_ML_L017030SGXTimeStamp::getSecondsgxtimestamp#nodiscard_int_getSecond_func_const_.
+See explanation of @SG_ML_L01703CSGXTimeStamp::getSecond../cppclass/sgxtimestamp#nodiscard_int_getSecond_func_const_.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_int_getYearNoOffset_func_const_ [[nodiscard]] int @SG_ML_L00F02AgetYearNoOffset#nodiscard_int_getYearNoOffset_func_const_() const;
-Similar to @SG_ML_L01502ESGXTimeStamp::getYearsgxtimestamp#nodiscard_int_getYear_func_const_ but without the offset of 1965 on the year number.
+Similar to @SG_ML_L01503ASGXTimeStamp::getYear../cppclass/sgxtimestamp#nodiscard_int_getYear_func_const_ but without the offset of 1965 on the year number.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_double_getYearsFrom_SGXTimeStamp_const_ [[nodiscard]] double @SG_ML_L00C032getYearsFrom#nodiscard_double_getYearsFrom_SGXTimeStamp_const_(@SG_ML_L00C00CSGXTimeStampsgxtimestamp x) const;
-Gets the exact number of years between this @SG_ML_L00C00CSGXTimeStampsgxtimestamp and @SG_ML_B001x.
-@SG_ML_NOTE This is positive if this @SG_ML_L00C00CSGXTimeStampsgxtimestamp is after @SG_ML_B001x and negative if this @SG_ML_L00C00CSGXTimeStampsgxtimestamp is before @SG_ML_B001x.
+Gets the exact number of years between this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp and @SG_ML_B001x.
+@SG_ML_NOTE This is positive if this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp is after @SG_ML_B001x and negative if this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp is before @SG_ML_B001x.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_int_hash_func_const_ [[nodiscard]] int @SG_ML_L00401Fhash#nodiscard_int_hash_func_const_() const;
-Hash function for @SG_ML_L007007SGLHashsglhash.
+Hash function for @SG_ML_L007013SGLHash../cppclass/sglhash.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_bool_isDayAfterNationalDay_func_const_ [[nodiscard]] bool @SG_ML_L015031isDayAfterNationalDay#nodiscard_bool_isDayAfterNationalDay_func_const_() const;
-Returns if this @SG_ML_L00C00CSGXTimeStampsgxtimestamp corresponds to a time on the day after National Day.
+Returns if this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp corresponds to a time on the day after National Day.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_bool_isDayBeforeNationalDay_func_const_ [[nodiscard]] bool @SG_ML_L016032isDayBeforeNationalDay#nodiscard_bool_isDayBeforeNationalDay_func_const_() const;
-Returns if this @SG_ML_L00C00CSGXTimeStampsgxtimestamp corresponds to a time on the day before National Day.
+Returns if this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp corresponds to a time on the day before National Day.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_bool_isNationalDay_func_const_ [[nodiscard]] bool @SG_ML_L00D029isNationalDay#nodiscard_bool_isNationalDay_func_const_() const;
-Returns if this @SG_ML_L00C00CSGXTimeStampsgxtimestamp corresponds to a time on National Day.
+Returns if this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp corresponds to a time on National Day.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_bool_operator_neq_SGXTimeStamp_const_ [[nodiscard]] bool @SG_ML_L00A030operator!=#nodiscard_bool_operator_neq_SGXTimeStamp_const_(@SG_ML_L00C00CSGXTimeStampsgxtimestamp x) const;
-Returns if this @SG_ML_L00C00CSGXTimeStampsgxtimestamp is different from @SG_ML_B001x.
+Returns if this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp is different from @SG_ML_B001x.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_bool_operator_lt_SGXTimeStamp_const_ [[nodiscard]] bool @SG_ML_L00902Foperator‹#nodiscard_bool_operator_lt_SGXTimeStamp_const_(@SG_ML_L00C00CSGXTimeStampsgxtimestamp x) const;
-Returns if this @SG_ML_L00C00CSGXTimeStampsgxtimestamp refers to a time before @SG_ML_B001x.
+Returns if this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp refers to a time before @SG_ML_B001x.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_bool_operator_leq_SGXTimeStamp_const_ [[nodiscard]] bool @SG_ML_L00A030operator‹=#nodiscard_bool_operator_leq_SGXTimeStamp_const_(@SG_ML_L00C00CSGXTimeStampsgxtimestamp x) const;
-Returns if this @SG_ML_L00C00CSGXTimeStampsgxtimestamp refers to a time before or equal to @SG_ML_B001x.
+Returns if this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp refers to a time before or equal to @SG_ML_B001x.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_bool_operator_eq_SGXTimeStamp_const_ [[nodiscard]] bool @SG_ML_L00A02Foperator==#nodiscard_bool_operator_eq_SGXTimeStamp_const_(@SG_ML_L00C00CSGXTimeStampsgxtimestamp x) const;
-Returns if this @SG_ML_L00C00CSGXTimeStampsgxtimestamp is the same as @SG_ML_B001x.
+Returns if this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp is the same as @SG_ML_B001x.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_bool_operator_gt_SGXTimeStamp_const_ [[nodiscard]] bool @SG_ML_L00902Foperator›#nodiscard_bool_operator_gt_SGXTimeStamp_const_(@SG_ML_L00C00CSGXTimeStampsgxtimestamp x) const;
-Returns if this @SG_ML_L00C00CSGXTimeStampsgxtimestamp refers to a time after @SG_ML_B001x.
+Returns if this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp refers to a time after @SG_ML_B001x.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_bool_operator_geq_SGXTimeStamp_const_ [[nodiscard]] bool @SG_ML_L00A030operator›=#nodiscard_bool_operator_geq_SGXTimeStamp_const_(@SG_ML_L00C00CSGXTimeStampsgxtimestamp x) const;
-Returns if this @SG_ML_L00C00CSGXTimeStampsgxtimestamp refers to a time after or equal to @SG_ML_B001x.
+Returns if this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp refers to a time after or equal to @SG_ML_B001x.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_subtractDays_long_long_ void @SG_ML_L00C01DsubtractDays#void_subtractDays_long_long_(long long x);
-Moves this @SG_ML_L00C00CSGXTimeStampsgxtimestamp backwards by @SG_ML_B001x days.
+Moves this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp backwards by @SG_ML_B001x days.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_subtractHours_long_long_ void @SG_ML_L00D01EsubtractHours#void_subtractHours_long_long_(long long x);
-Moves this @SG_ML_L00C00CSGXTimeStampsgxtimestamp backwards by @SG_ML_B001x hours.
+Moves this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp backwards by @SG_ML_B001x hours.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_subtractMinutes_long_long_ void @SG_ML_L00F020subtractMinutes#void_subtractMinutes_long_long_(long long x);
-Moves this @SG_ML_L00C00CSGXTimeStampsgxtimestamp backwards by @SG_ML_B001x minutes.
+Moves this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp backwards by @SG_ML_B001x minutes.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_subtractMonths_long_long_ void @SG_ML_L00E01FsubtractMonths#void_subtractMonths_long_long_(long long x);
-Moves this @SG_ML_L00C00CSGXTimeStampsgxtimestamp backwards by @SG_ML_B001x months.
+Moves this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp backwards by @SG_ML_B001x months.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_subtractSeconds_long_long_ void @SG_ML_L00F020subtractSeconds#void_subtractSeconds_long_long_(long long x);
-Moves this @SG_ML_L00C00CSGXTimeStampsgxtimestamp backwards by @SG_ML_B001x seconds.
+Moves this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp backwards by @SG_ML_B001x seconds.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_subtractYears_long_long_ void @SG_ML_L00D01EsubtractYears#void_subtractYears_long_long_(long long x);
-Moves this @SG_ML_L00C00CSGXTimeStampsgxtimestamp backwards by @SG_ML_B001x years.
+Moves this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp backwards by @SG_ML_B001x years.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_const_SGXTimeStamp_zero_ static const @SG_ML_L00C00CSGXTimeStampsgxtimestamp @SG_ML_L004020zero#static_const_SGXTimeStamp_zero_;
-Reference time of @SG_ML_L00C00CSGXTimeStampsgxtimestamp. This corresponds to 1000, 9 August 1965, when PM Lee Kuan Yew signed the Proclamation of Singapore.
-@SG_ML_NOTE @SG_ML_L00C00CSGXTimeStampsgxtimestamp does NOT follow UNIX epoch and is NOT compatible with UNIX epoch.
+Reference time of @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp. This corresponds to 1000, 9 August 1965, when PM Lee Kuan Yew signed the Proclamation of Singapore.
+@SG_ML_NOTE @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp does NOT follow UNIX epoch and is NOT compatible with UNIX epoch.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_static_SGXTimeStamp_now_func_ [[nodiscard]] static @SG_ML_L00C00CSGXTimeStampsgxtimestamp @SG_ML_L003028now#nodiscard_static_SGXTimeStamp_now_func_();
-Returns a @SG_ML_L00C00CSGXTimeStampsgxtimestamp representing the time at which the function was called.
+Returns a @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp representing the time at which the function was called.
 @SG_ML_BLANKLINE

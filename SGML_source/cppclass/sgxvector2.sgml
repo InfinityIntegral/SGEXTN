@@ -78,10 +78,10 @@ children classes: (none)
 @SG_ML_HEADER_ static member variables
 &#9;static const @SG_ML_L00A00ASGXVector2sgxvector2 @SG_ML_L006020origin#static_const_SGXVector2_origin_;
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_detaileddescription Detailed Description
-@SG_ML_L00A00ASGXVector2sgxvector2 represents a 2D vector which depending on context can refer to either the vector itself or the endpoint of the vector. Common geometry and linear algebra operations are builtin to @SG_ML_L00A00ASGXVector2sgxvector2. SGEXTN currently has no plans of building a 3D vector as it is not designed for rendering in 3D.
+@SG_ML_HEADER_sg_detaileddescription Detailed Description
+@SG_ML_L00A016SGXVector2../cppclass/sgxvector2 represents a 2D vector which depending on context can refer to either the vector itself or the endpoint of the vector. Common geometry and linear algebra operations are builtin to @SG_ML_L00A016SGXVector2../cppclass/sgxvector2. SGEXTN currently has no plans of building a 3D vector as it is not designed for rendering in 3D.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_implementationdetails Implementation Details
+@SG_ML_HEADER_sg_implementationdetails Implementation Details
 Stores 2 floating point numbers, 1 per coordinate.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_float_x_ float @SG_ML_L001009x#float_x_;
@@ -91,169 +91,169 @@ X coordinate.
 Y coordinate.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_SGXVector2_float_float_ @SG_ML_L00A018SGXVector2#SGXVector2_float_float_(float x, float y);
-Creates a @SG_ML_L00A00ASGXVector2sgxvector2 with x coordinate of @SG_ML_B001x and y coordinate of @SG_ML_B001y.
+Creates a @SG_ML_L00A016SGXVector2../cppclass/sgxvector2 with x coordinate of @SG_ML_B001x and y coordinate of @SG_ML_B001y.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_float_crossProduct_SGXVector2_const_ [[nodiscard]] float @SG_ML_L00C02FcrossProduct#nodiscard_float_crossProduct_SGXVector2_const_(@SG_ML_L00A00ASGXVector2sgxvector2 x) const;
-Returns the cross product of this @SG_ML_L00A00ASGXVector2sgxvector2 with @SG_ML_B001x.
+Returns the cross product of this @SG_ML_L00A016SGXVector2../cppclass/sgxvector2 with @SG_ML_B001x.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_float_dotProduct_SGXVector2_const_ [[nodiscard]] float @SG_ML_L00A02DdotProduct#nodiscard_float_dotProduct_SGXVector2_const_(@SG_ML_L00A00ASGXVector2sgxvector2 x) const;
-Returns the dot product of this @SG_ML_L00A00ASGXVector2sgxvector2 with @SG_ML_B001x.
+Returns the dot product of this @SG_ML_L00A016SGXVector2../cppclass/sgxvector2 with @SG_ML_B001x.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_float_getAngleBetween_SGXVector2_const_ [[nodiscard]] float @SG_ML_L00F032getAngleBetween#nodiscard_float_getAngleBetween_SGXVector2_const_(@SG_ML_L00A00ASGXVector2sgxvector2 x) const;
-Returns the angle between this @SG_ML_L00A00ASGXVector2sgxvector2 and @SG_ML_B001x in degrees.
+Returns the angle between this @SG_ML_L00A016SGXVector2../cppclass/sgxvector2 and @SG_ML_B001x in degrees.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_float_getArgument_func_const_ [[nodiscard]] float @SG_ML_L00B028getArgument#nodiscard_float_getArgument_func_const_() const;
-Returns the argument of this @SG_ML_L00A00ASGXVector2sgxvector2 in degrees, that is its signed angle away from the positive x direction.
-@SG_ML_NOTE If the @SG_ML_L00A00ASGXVector2sgxvector2 is the origin, this is not defined, but it will not crash.
+Returns the argument of this @SG_ML_L00A016SGXVector2../cppclass/sgxvector2 in degrees, that is its signed angle away from the positive x direction.
+@SG_ML_NOTE If the @SG_ML_L00A016SGXVector2../cppclass/sgxvector2 is the origin, this is not defined, but it will not crash.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_float_getDistance_SGXVector2_const_ [[nodiscard]] float @SG_ML_L00B02EgetDistance#nodiscard_float_getDistance_SGXVector2_const_(@SG_ML_L00A00ASGXVector2sgxvector2 x) const;
-Returns the distance from this @SG_ML_L00A00ASGXVector2sgxvector2 to @SG_ML_B001x.
+Returns the distance from this @SG_ML_L00A016SGXVector2../cppclass/sgxvector2 to @SG_ML_B001x.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_float_getDistanceSquare_SGXVector2_const_ [[nodiscard]] float @SG_ML_L011034getDistanceSquare#nodiscard_float_getDistanceSquare_SGXVector2_const_(@SG_ML_L00A00ASGXVector2sgxvector2 x) const;
-Returns the squared distance from this @SG_ML_L00A00ASGXVector2sgxvector2 to @SG_ML_B001x.
-@SG_ML_NOTE This is slightly faster than @SG_ML_L017038SGXVector2::getDistancesgxvector2#nodiscard_float_getDistance_SGXVector2_const_ as it does not involve square root computation.
+Returns the squared distance from this @SG_ML_L00A016SGXVector2../cppclass/sgxvector2 to @SG_ML_B001x.
+@SG_ML_NOTE This is slightly faster than @SG_ML_L017044SGXVector2::getDistance../cppclass/sgxvector2#nodiscard_float_getDistance_SGXVector2_const_ as it does not involve square root computation.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_float_getDistanceToCircle_float_float_float_const_ [[nodiscard]] float @SG_ML_L01303DgetDistanceToCircle#nodiscard_float_getDistanceToCircle_float_float_float_const_(float a, float b, float r) const;
-Returns the distance from this @SG_ML_L00A00ASGXVector2sgxvector2 to the circle centered at (@SG_ML_B001a, @SG_ML_B001b) with radius @SG_ML_B001r.
-@SG_ML_NOTE This is negative if this @SG_ML_L00A00ASGXVector2sgxvector2 is inside the circle.
-@SG_ML_NOTE @SG_ML_B001a and @SG_ML_B001b may be merged into a single @SG_ML_L00A00ASGXVector2sgxvector2 argument in a future version of SGEXTN.
+Returns the distance from this @SG_ML_L00A016SGXVector2../cppclass/sgxvector2 to the circle centered at (@SG_ML_B001a, @SG_ML_B001b) with radius @SG_ML_B001r.
+@SG_ML_NOTE This is negative if this @SG_ML_L00A016SGXVector2../cppclass/sgxvector2 is inside the circle.
+@SG_ML_NOTE @SG_ML_B001a and @SG_ML_B001b may be merged into a single @SG_ML_L00A016SGXVector2../cppclass/sgxvector2 argument in a future version of SGEXTN.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_float_getDistanceToLine_SGXVector2_SGXVector2_const_ [[nodiscard]] float @SG_ML_L01103FgetDistanceToLine#nodiscard_float_getDistanceToLine_SGXVector2_SGXVector2_const_(@SG_ML_L00A00ASGXVector2sgxvector2 a, @SG_ML_L00A00ASGXVector2sgxvector2 b) const;
-Returns the distance from this @SG_ML_L00A00ASGXVector2sgxvector2 to the line formed by joining @SG_ML_B001a with @SG_ML_B001b.
+Returns the distance from this @SG_ML_L00A016SGXVector2../cppclass/sgxvector2 to the line formed by joining @SG_ML_B001a with @SG_ML_B001b.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_float_getDistanceToSegment_SGXVector2_SGXVector2_const_ [[nodiscard]] float @SG_ML_L014042getDistanceToSegment#nodiscard_float_getDistanceToSegment_SGXVector2_SGXVector2_const_(@SG_ML_L00A00ASGXVector2sgxvector2 a, @SG_ML_L00A00ASGXVector2sgxvector2 b) const;
-Returns the distance from this @SG_ML_L00A00ASGXVector2sgxvector2 to the line segment formed by joining @SG_ML_B001a with @SG_ML_B001b.
+Returns the distance from this @SG_ML_L00A016SGXVector2../cppclass/sgxvector2 to the line segment formed by joining @SG_ML_B001a with @SG_ML_B001b.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_float_getMagnitude_func_const_ [[nodiscard]] float @SG_ML_L00C029getMagnitude#nodiscard_float_getMagnitude_func_const_() const;
-Returns the magnitude of this @SG_ML_L00A00ASGXVector2sgxvector2.
+Returns the magnitude of this @SG_ML_L00A016SGXVector2../cppclass/sgxvector2.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_float_getMagnitudeSquare_func_const_ [[nodiscard]] float @SG_ML_L01202FgetMagnitudeSquare#nodiscard_float_getMagnitudeSquare_func_const_() const;
-Returns the square of the magnitude of this @SG_ML_L00A00ASGXVector2sgxvector2.
-@SG_ML_NOTE This is slightly faster than @SG_ML_L018033SGXVector2::getMagnitudesgxvector2#nodiscard_float_getMagnitude_func_const_ as it does not involve square root computation.
+Returns the square of the magnitude of this @SG_ML_L00A016SGXVector2../cppclass/sgxvector2.
+@SG_ML_NOTE This is slightly faster than @SG_ML_L01803FSGXVector2::getMagnitude../cppclass/sgxvector2#nodiscard_float_getMagnitude_func_const_ as it does not involve square root computation.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGXVector2_getNearestPointOnCircle_float_float_float_const_ [[nodiscard]] @SG_ML_L00A00ASGXVector2sgxvector2 @SG_ML_L017046getNearestPointOnCircle#nodiscard_SGXVector2_getNearestPointOnCircle_float_float_float_const_(float a, float b, float r) const;
-Returns the nearest point to this @SG_ML_L00A00ASGXVector2sgxvector2 on the circle centered at (@SG_ML_B001a, @SG_ML_B001b) with radius @SG_ML_B001r.
+Returns the nearest point to this @SG_ML_L00A016SGXVector2../cppclass/sgxvector2 on the circle centered at (@SG_ML_B001a, @SG_ML_B001b) with radius @SG_ML_B001r.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGXVector2_getNearestPointOnLine_SGXVector2_SGXVector2_const_ [[nodiscard]] @SG_ML_L00A00ASGXVector2sgxvector2 @SG_ML_L015048getNearestPointOnLine#nodiscard_SGXVector2_getNearestPointOnLine_SGXVector2_SGXVector2_const_(@SG_ML_L00A00ASGXVector2sgxvector2 a, @SG_ML_L00A00ASGXVector2sgxvector2 b) const;
-Returns the nearest point to this @SG_ML_L00A00ASGXVector2sgxvector2 on the line formed by joining @SG_ML_B001a with @SG_ML_B001b.
+Returns the nearest point to this @SG_ML_L00A016SGXVector2../cppclass/sgxvector2 on the line formed by joining @SG_ML_B001a with @SG_ML_B001b.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGXVector2_getNearestPointOnSegment_SGXVector2_SGXVector2_const_ [[nodiscard]] @SG_ML_L00A00ASGXVector2sgxvector2 @SG_ML_L01804BgetNearestPointOnSegment#nodiscard_SGXVector2_getNearestPointOnSegment_SGXVector2_SGXVector2_const_(@SG_ML_L00A00ASGXVector2sgxvector2 a, @SG_ML_L00A00ASGXVector2sgxvector2 b) const;
-Returns the nearest point to this @SG_ML_L00A00ASGXVector2sgxvector2 on the line segment formed by joining @SG_ML_B001a with @SG_ML_B001b.
+Returns the nearest point to this @SG_ML_L00A016SGXVector2../cppclass/sgxvector2 on the line segment formed by joining @SG_ML_B001a with @SG_ML_B001b.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGXString_getStringForPrinting_func_const_ [[nodiscard]] @SG_ML_L009009SGXStringsgxstring @SG_ML_L014035getStringForPrinting#nodiscard_SGXString_getStringForPrinting_func_const_() const;
-Returns @SG_ML_L009009SGXStringsgxstring representing this @SG_ML_L00A00ASGXVector2sgxvector2 in the format (x, y).
+Returns @SG_ML_L009015SGXString../cppclass/sgxstring representing this @SG_ML_L00A016SGXVector2../cppclass/sgxvector2 in the format (x, y).
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_int_hash_func_const_ [[nodiscard]] int @SG_ML_L00401Fhash#nodiscard_int_hash_func_const_() const;
-Hash function for @SG_ML_L007007SGLHashsglhash.
+Hash function for @SG_ML_L007013SGLHash../cppclass/sglhash.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_invert_func_ void @SG_ML_L006012invert#void_invert_func_();
-Multiplies this @SG_ML_L00A00ASGXVector2sgxvector2 by -1.
+Multiplies this @SG_ML_L00A016SGXVector2../cppclass/sgxvector2 by -1.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_bool_isCollinear_SGXVector2_SGXVector2_float_const_ [[nodiscard]] bool @SG_ML_L00B03EisCollinear#nodiscard_bool_isCollinear_SGXVector2_SGXVector2_float_const_(@SG_ML_L00A00ASGXVector2sgxvector2 a, @SG_ML_L00A00ASGXVector2sgxvector2 b, float limit) const;
-Returns if this @SG_ML_L00A00ASGXVector2sgxvector2, @SG_ML_B001a, and @SG_ML_B001b are collinear with a maximum angular tolerance of @SG_ML_B005limit degrees.
+Returns if this @SG_ML_L00A016SGXVector2../cppclass/sgxvector2, @SG_ML_B001a, and @SG_ML_B001b are collinear with a maximum angular tolerance of @SG_ML_B005limit degrees.
 @SG_ML_NOTE If any 2 points overlap, the behaviour is not defined but it will not crash.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_bool_isParallel_SGXVector2_SGXVector2_SGXVector2_float_const_ [[nodiscard]] bool @SG_ML_L00A048isParallel#nodiscard_bool_isParallel_SGXVector2_SGXVector2_SGXVector2_float_const_(@SG_ML_L00A00ASGXVector2sgxvector2 a2, @SG_ML_L00A00ASGXVector2sgxvector2 b1, @SG_ML_L00A00ASGXVector2sgxvector2 b2, float limit) const;
-Returns if the line formed by joining this @SG_ML_L00A00ASGXVector2sgxvector2 with @SG_ML_B002a2 and the line formed by joining @SG_ML_B002b1 with @SG_ML_B002b2 are parallel with a maximum angular tolerance of @SG_ML_B005limit degrees.
+Returns if the line formed by joining this @SG_ML_L00A016SGXVector2../cppclass/sgxvector2 with @SG_ML_B002a2 and the line formed by joining @SG_ML_B002b1 with @SG_ML_B002b2 are parallel with a maximum angular tolerance of @SG_ML_B005limit degrees.
 @SG_ML_NOTE If any 2 points overlap, the behaviour is not defined but it will not crash.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_bool_isPerpendicular_SGXVector2_SGXVector2_float_const_ [[nodiscard]] bool @SG_ML_L00F042isPerpendicular#nodiscard_bool_isPerpendicular_SGXVector2_SGXVector2_float_const_(@SG_ML_L00A00ASGXVector2sgxvector2 a, @SG_ML_L00A00ASGXVector2sgxvector2 b, float limit) const;
-Returns if the line formed by joining this @SG_ML_L00A00ASGXVector2sgxvector2 with @SG_ML_B001a is perpendicular with the line formed by joining this @SG_ML_L00A00ASGXVector2sgxvector2 with @SG_ML_B001b with a maximum angular tolerance of @SG_ML_B005limit degrees.
+Returns if the line formed by joining this @SG_ML_L00A016SGXVector2../cppclass/sgxvector2 with @SG_ML_B001a is perpendicular with the line formed by joining this @SG_ML_L00A016SGXVector2../cppclass/sgxvector2 with @SG_ML_B001b with a maximum angular tolerance of @SG_ML_B005limit degrees.
 @SG_ML_NOTE If any 2 points overlap, the behaviour is not defined but it will not crash.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGXVector2_linearInterpolate_SGXVector2_float_const_ [[nodiscard]] @SG_ML_L00A00ASGXVector2sgxvector2 @SG_ML_L01103FlinearInterpolate#nodiscard_SGXVector2_linearInterpolate_SGXVector2_float_const_(@SG_ML_L00A00ASGXVector2sgxvector2 x, float f) const;
-Returns @SG_ML_B001f * this @SG_ML_L00A00ASGXVector2sgxvector2 + (1 - @SG_ML_B001f) * @SG_ML_B001x.
+Returns @SG_ML_B001f * this @SG_ML_L00A016SGXVector2../cppclass/sgxvector2 + (1 - @SG_ML_B001f) * @SG_ML_B001x.
 @SG_ML_NOTE It is ok for @SG_ML_B001f to be below 0 or above 1.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGXVector2_midpoint_SGXVector2_const_ [[nodiscard]] @SG_ML_L00A00ASGXVector2sgxvector2 @SG_ML_L008030midpoint#nodiscard_SGXVector2_midpoint_SGXVector2_const_(@SG_ML_L00A00ASGXVector2sgxvector2 x) const;
-Returns the midpoint of this @SG_ML_L00A00ASGXVector2sgxvector2 and @SG_ML_B001x.
+Returns the midpoint of this @SG_ML_L00A016SGXVector2../cppclass/sgxvector2 and @SG_ML_B001x.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_normalise_func_ void @SG_ML_L009015normalise#void_normalise_func_();
-Normalises this @SG_ML_L00A00ASGXVector2sgxvector2, or sets its magnitude to 1 without changing its direction.
+Normalises this @SG_ML_L00A016SGXVector2../cppclass/sgxvector2, or sets its magnitude to 1 without changing its direction.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_normaliseGivenMagnitude_float_ void @SG_ML_L017024normaliseGivenMagnitude#void_normaliseGivenMagnitude_float_(float m);
-Sets the magnitude of this @SG_ML_L00A00ASGXVector2sgxvector2 to @SG_ML_B001m without changing its direction.
+Sets the magnitude of this @SG_ML_L00A016SGXVector2../cppclass/sgxvector2 to @SG_ML_B001m without changing its direction.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_bool_operator_neq_SGXVector2_const_ [[nodiscard]] bool @SG_ML_L00A02Eoperator!=#nodiscard_bool_operator_neq_SGXVector2_const_(@SG_ML_L00A00ASGXVector2sgxvector2 x) const;
-Returns if this @SG_ML_L00A00ASGXVector2sgxvector2 is different from @SG_ML_B001x.
+Returns if this @SG_ML_L00A016SGXVector2../cppclass/sgxvector2 is different from @SG_ML_B001x.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_SGXVector2_ref_operator_ptr_assign_float_ @SG_ML_L00A00ASGXVector2sgxvector2& @SG_ML_L00902Aoperator*#SGXVector2_ref_operator_ptr_assign_float_=(float m);
-Multiplies this @SG_ML_L00A00ASGXVector2sgxvector2 by @SG_ML_B001m and returns a reference to this @SG_ML_L00A00ASGXVector2sgxvector2.
+Multiplies this @SG_ML_L00A016SGXVector2../cppclass/sgxvector2 by @SG_ML_B001m and returns a reference to this @SG_ML_L00A016SGXVector2../cppclass/sgxvector2.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGXVector2_operator_ptr_float_const_ [[nodiscard]] @SG_ML_L00A00ASGXVector2sgxvector2 @SG_ML_L00902Foperator*#nodiscard_SGXVector2_operator_ptr_float_const_(float m) const;
-Returns (this @SG_ML_L00A00ASGXVector2sgxvector2 * @SG_ML_B001m).
+Returns (this @SG_ML_L00A016SGXVector2../cppclass/sgxvector2 * @SG_ML_B001m).
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGXVector2_operator_plus_SGXVector2_const_ [[nodiscard]] @SG_ML_L00A00ASGXVector2sgxvector2 @SG_ML_L009035operator+#nodiscard_SGXVector2_operator_plus_SGXVector2_const_(@SG_ML_L00A00ASGXVector2sgxvector2 x) const;
-Returns (this @SG_ML_L00A00ASGXVector2sgxvector2 + @SG_ML_B001x).
+Returns (this @SG_ML_L00A016SGXVector2../cppclass/sgxvector2 + @SG_ML_B001x).
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_SGXVector2_ref_operator_plus_assign_SGXVector2_ @SG_ML_L00A00ASGXVector2sgxvector2& @SG_ML_L009030operator+#SGXVector2_ref_operator_plus_assign_SGXVector2_=(@SG_ML_L00A00ASGXVector2sgxvector2 x);
-Adds @SG_ML_B001x to this @SG_ML_L00A00ASGXVector2sgxvector2 and returns a reference to this @SG_ML_L00A00ASGXVector2sgxvector2.
+Adds @SG_ML_B001x to this @SG_ML_L00A016SGXVector2../cppclass/sgxvector2 and returns a reference to this @SG_ML_L00A016SGXVector2../cppclass/sgxvector2.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGXVector2_operator_minus_SGXVector2_const_ [[nodiscard]] @SG_ML_L00A00ASGXVector2sgxvector2 @SG_ML_L009036operator-#nodiscard_SGXVector2_operator_minus_SGXVector2_const_(@SG_ML_L00A00ASGXVector2sgxvector2 x) const;
-Returns (this @SG_ML_L00A00ASGXVector2sgxvector2 - @SG_ML_B001x).
+Returns (this @SG_ML_L00A016SGXVector2../cppclass/sgxvector2 - @SG_ML_B001x).
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_SGXVector2_ref_operator_minus_assign_SGXVector2_ @SG_ML_L00A00ASGXVector2sgxvector2& @SG_ML_L009031operator-#SGXVector2_ref_operator_minus_assign_SGXVector2_=(@SG_ML_L00A00ASGXVector2sgxvector2 x);
-Subtracts @SG_ML_B001x from this @SG_ML_L00A00ASGXVector2sgxvector2 and returns a reference to this @SG_ML_L00A00ASGXVector2sgxvector2.
+Subtracts @SG_ML_B001x from this @SG_ML_L00A016SGXVector2../cppclass/sgxvector2 and returns a reference to this @SG_ML_L00A016SGXVector2../cppclass/sgxvector2.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_SGXVector2_ref_operator_div_assign_float_ @SG_ML_L00A00ASGXVector2sgxvector2& @SG_ML_L00902Aoperator/#SGXVector2_ref_operator_div_assign_float_=(float m);
-Divides this @SG_ML_L00A00ASGXVector2sgxvector2 by @SG_ML_B001m and returns a reference to this @SG_ML_L00A00ASGXVector2sgxvector2.
+Divides this @SG_ML_L00A016SGXVector2../cppclass/sgxvector2 by @SG_ML_B001m and returns a reference to this @SG_ML_L00A016SGXVector2../cppclass/sgxvector2.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGXVector2_operator_div_float_const_ [[nodiscard]] @SG_ML_L00A00ASGXVector2sgxvector2 @SG_ML_L00902Foperator/#nodiscard_SGXVector2_operator_div_float_const_(float m) const;
-Returns (this @SG_ML_L00A00ASGXVector2sgxvector2 / @SG_ML_B001m).
+Returns (this @SG_ML_L00A016SGXVector2../cppclass/sgxvector2 / @SG_ML_B001m).
 @SG_ML_NOTE Division by 0 here follows floating point numbers division by 0 rules.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_bool_operator_lt_SGXVector2_const_ [[nodiscard]] bool @SG_ML_L00902Doperator‹#nodiscard_bool_operator_lt_SGXVector2_const_(@SG_ML_L00A00ASGXVector2sgxvector2 x) const;
-Lesser than operator with @SG_ML_B001x for @SG_ML_L00D00DSGLLesserThansgllesserthan and @SG_ML_L00B00BSGLMoreThansglmorethan.
+Lesser than operator with @SG_ML_B001x for @SG_ML_L00D019SGLLesserThan../cppclass/sgllesserthan and @SG_ML_L00B017SGLMoreThan../cppclass/sglmorethan.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_bool_operator_eq_SGXVector2_const_ [[nodiscard]] bool @SG_ML_L00A02Doperator==#nodiscard_bool_operator_eq_SGXVector2_const_(@SG_ML_L00A00ASGXVector2sgxvector2 x) const;
-Returns if this @SG_ML_L00A00ASGXVector2sgxvector2 is the same as @SG_ML_B001x.
+Returns if this @SG_ML_L00A016SGXVector2../cppclass/sgxvector2 is the same as @SG_ML_B001x.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_bool_operator_gt_SGXVector2_const_ [[nodiscard]] bool @SG_ML_L00902Doperator›#nodiscard_bool_operator_gt_SGXVector2_const_(@SG_ML_L00A00ASGXVector2sgxvector2 x) const;
-More than operator with @SG_ML_B001x for @SG_ML_L00D00DSGLLesserThansgllesserthan and @SG_ML_L00B00BSGLMoreThansglmorethan.
+More than operator with @SG_ML_B001x for @SG_ML_L00D019SGLLesserThan../cppclass/sgllesserthan and @SG_ML_L00B017SGLMoreThan../cppclass/sglmorethan.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_projectToLine_SGXVector2_SGXVector2_ void @SG_ML_L00D02AprojectToLine#void_projectToLine_SGXVector2_SGXVector2_(@SG_ML_L00A00ASGXVector2sgxvector2 a, @SG_ML_L00A00ASGXVector2sgxvector2 b);
-Projects this @SG_ML_L00A00ASGXVector2sgxvector2 onto the line formed by joining @SG_ML_B001a and @SG_ML_B001b.
+Projects this @SG_ML_L00A016SGXVector2../cppclass/sgxvector2 onto the line formed by joining @SG_ML_B001a and @SG_ML_B001b.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_projectToX_func_ void @SG_ML_L00A016projectToX#void_projectToX_func_();
-Projects this @SG_ML_L00A00ASGXVector2sgxvector2 onto the x axis.
+Projects this @SG_ML_L00A016SGXVector2../cppclass/sgxvector2 onto the x axis.
 @SG_ML_NOTE This is equivalent to setting its y coordinate to 0.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_projectToY_func_ void @SG_ML_L00A016projectToY#void_projectToY_func_();
-Projects this @SG_ML_L00A00ASGXVector2sgxvector2 onto the y axis.
+Projects this @SG_ML_L00A016SGXVector2../cppclass/sgxvector2 onto the y axis.
 @SG_ML_NOTE This is equivalent to setting its x coordinate to 0.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_redirectUsingArgument_float_ void @SG_ML_L015022redirectUsingArgument#void_redirectUsingArgument_float_(float a);
-Sets the argument of this @SG_ML_L00A00ASGXVector2sgxvector2 to @SG_ML_B001a degrees without changing its magnitude.
+Sets the argument of this @SG_ML_L00A016SGXVector2../cppclass/sgxvector2 to @SG_ML_B001a degrees without changing its magnitude.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_reflectAcrossLine_SGXVector2_SGXVector2_ void @SG_ML_L01102EreflectAcrossLine#void_reflectAcrossLine_SGXVector2_SGXVector2_(@SG_ML_L00A00ASGXVector2sgxvector2 a, @SG_ML_L00A00ASGXVector2sgxvector2 b);
-Reflects this @SG_ML_L00A00ASGXVector2sgxvector2 across the line formed by joining @SG_ML_B001a with @SG_ML_B001b.
+Reflects this @SG_ML_L00A016SGXVector2../cppclass/sgxvector2 across the line formed by joining @SG_ML_B001a with @SG_ML_B001b.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_reflectAcrossPoint_SGXVector2_ void @SG_ML_L012024reflectAcrossPoint#void_reflectAcrossPoint_SGXVector2_(@SG_ML_L00A00ASGXVector2sgxvector2 x);
-Reflects this @SG_ML_L00A00ASGXVector2sgxvector2 across @SG_ML_B001x.
+Reflects this @SG_ML_L00A016SGXVector2../cppclass/sgxvector2 across @SG_ML_B001x.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_reflectAcrossX_func_ void @SG_ML_L00E01AreflectAcrossX#void_reflectAcrossX_func_();
-Reflect this @SG_ML_L00A00ASGXVector2sgxvector2 across the x axis.
+Reflect this @SG_ML_L00A016SGXVector2../cppclass/sgxvector2 across the x axis.
 @SG_ML_NOTE This is equivalent to multiplying its y coordinate by -1.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_reflectAcrossY_func_ void @SG_ML_L00E01AreflectAcrossY#void_reflectAcrossY_func_();
-Reflect this @SG_ML_L00A00ASGXVector2sgxvector2 across the y axis.
+Reflect this @SG_ML_L00A016SGXVector2../cppclass/sgxvector2 across the y axis.
 @SG_ML_NOTE This is equivalent to multiplying its x coordinate by -1.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_rotate180_func_ void @SG_ML_L009015rotate180#void_rotate180_func_();
-Rotates this @SG_ML_L00A00ASGXVector2sgxvector2 by 180 degrees in either direction.
-@SG_ML_NOTE This is equivalent to multiplying the @SG_ML_L00A00ASGXVector2sgxvector2 by -1.
+Rotates this @SG_ML_L00A016SGXVector2../cppclass/sgxvector2 by 180 degrees in either direction.
+@SG_ML_NOTE This is equivalent to multiplying the @SG_ML_L00A016SGXVector2../cppclass/sgxvector2 by -1.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_rotateClockwise_float_ void @SG_ML_L00F01CrotateClockwise#void_rotateClockwise_float_(float a);
-Rotates this @SG_ML_L00A00ASGXVector2sgxvector2 by @SG_ML_B001a degrees clockwise.
+Rotates this @SG_ML_L00A016SGXVector2../cppclass/sgxvector2 by @SG_ML_B001a degrees clockwise.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_rotateClockwise90_func_ void @SG_ML_L01101DrotateClockwise90#void_rotateClockwise90_func_();
-Rotates this @SG_ML_L00A00ASGXVector2sgxvector2 clockwise by 90 degrees.
+Rotates this @SG_ML_L00A016SGXVector2../cppclass/sgxvector2 clockwise by 90 degrees.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_rotateCounterclockwise_float_ void @SG_ML_L016023rotateCounterclockwise#void_rotateCounterclockwise_float_(float a);
-Rotates this @SG_ML_L00A00ASGXVector2sgxvector2 by @SG_ML_B001a degrees counterclockwise.
+Rotates this @SG_ML_L00A016SGXVector2../cppclass/sgxvector2 by @SG_ML_B001a degrees counterclockwise.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_rotateCounterclockwise90_func_ void @SG_ML_L018024rotateCounterclockwise90#void_rotateCounterclockwise90_func_();
-Rotates this @SG_ML_L00A00ASGXVector2sgxvector2 counterclockwise by 90 degrees.
+Rotates this @SG_ML_L00A016SGXVector2../cppclass/sgxvector2 counterclockwise by 90 degrees.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_const_SGXVector2_origin_ static const @SG_ML_L00A00ASGXVector2sgxvector2 @SG_ML_L006020origin#static_const_SGXVector2_origin_;
 The origin, which is (0, 0).

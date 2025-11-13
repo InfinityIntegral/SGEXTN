@@ -26,10 +26,10 @@ children classes: (none)
 &#9;static int @SG_ML_L00701Cmaximum#static_int_maximum_int_int_(int a, int b);
 &#9;static int @SG_ML_L00701Cminimum#static_int_minimum_int_int_(int a, int b);
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_detaileddescription Detailed Description
-@SG_ML_L00A00ASGLIntMathsglintmath provides mathematical operations such as highest common factor and lowest common multiple for the int data type.
+@SG_ML_HEADER_sg_detaileddescription Detailed Description
+@SG_ML_L00A016SGLIntMath../cppclass/sglintmath provides mathematical operations such as highest common factor and lowest common multiple for the int data type.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_implementationdetails Implementation Details
+@SG_ML_HEADER_sg_implementationdetails Implementation Details
 Uses ‹cmath› from Standard Template Library
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_int_absoluteValue_int_ static int @SG_ML_L00D01EabsoluteValue#static_int_absoluteValue_int_(int x);

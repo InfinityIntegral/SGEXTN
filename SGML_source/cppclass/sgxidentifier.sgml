@@ -36,57 +36,57 @@ children classes: (none)
 @SG_ML_HEADER_ static member variables
 &#9;static const @SG_ML_L00D00DSGXIdentifiersgxidentifier @SG_ML_L00E02BnullIdentifier#static_const_SGXIdentifier_nullIdentifier_;
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_detaileddescription Detailed Description
-@SG_ML_L00D00DSGXIdentifiersgxidentifier looks like a GUID and can function like a GUID in most scenarios. However, it technically is not a GUID because it does not comply with any GUID standard, and SGEXTN does not guarantee non collision when @SG_ML_L00D00DSGXIdentifiersgxidentifier from different databases are merged. @SG_ML_L00D00DSGXIdentifiersgxidentifier provides an internal registration system to make accidental collision impossible.
+@SG_ML_HEADER_sg_detaileddescription Detailed Description
+@SG_ML_L00D019SGXIdentifier../cppclass/sgxidentifier looks like a GUID and can function like a GUID in most scenarios. However, it technically is not a GUID because it does not comply with any GUID standard, and SGEXTN does not guarantee non collision when @SG_ML_L00D019SGXIdentifier../cppclass/sgxidentifier from different databases are merged. @SG_ML_L00D019SGXIdentifier../cppclass/sgxidentifier provides an internal registration system to make accidental collision impossible.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_implementationdetails Implementation Details
+@SG_ML_HEADER_sg_implementationdetails Implementation Details
 a sequence of 4 unsigned ints, randomly generated or read from file on initialisation.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_SGXIdentifier_const_SGXString_ref_bool_int_ptr_ @SG_ML_L00D030SGXIdentifier#SGXIdentifier_const_SGXString_ref_bool_int_ptr_(const @SG_ML_L009009SGXStringsgxstring& s, bool ifValid, int* errCode);
-Generates a @SG_ML_L00D00DSGXIdentifiersgxidentifier from the string representation @SG_ML_B001s, this can be used for generating @SG_ML_L00D00DSGXIdentifiersgxidentifier objects consistently from a set of data. If @SG_ML_B007ifValid is true, it is checked if the @SG_ML_L00D00DSGXIdentifiersgxidentifier is already registered. In that case, if the constructed @SG_ML_L00D00DSGXIdentifiersgxidentifier is the null identifier, the int pointed to by @SG_ML_B007errCode is set to 2. If the constructed @SG_ML_L00D00DSGXIdentifiersgxidentifier overlaps with an existing registered @SG_ML_L00D00DSGXIdentifiersgxidentifier, the int pointed to by @SG_ML_B007errCode is set to 1. Otherwise the int pointed to by @SG_ML_B007errCode is set to 0. Pass @SG_ML_B007errCode as nullptr if you do not need existence checking.
-@SG_ML_NOTE Setting @SG_ML_B007ifValid to true does not register the generated @SG_ML_L00D00DSGXIdentifiersgxidentifier, it has to be registered using @SG_ML_L02103ASGXIdentifier::registerIdentifiersgxidentifier#nodiscard_int_registerIdentifier_func_const_ separately.
-@SG_ML_WARN This only works if @SG_ML_B001s was generated using @SG_ML_L023042SGXIdentifier::getStringForPrintingsgxidentifier#nodiscard_SGXString_getStringForPrinting_func_const_. If @SG_ML_B001s does not represent a valid @SG_ML_L00D00DSGXIdentifiersgxidentifier in the defined format, a null identifier is constructed.
+Generates a @SG_ML_L00D019SGXIdentifier../cppclass/sgxidentifier from the string representation @SG_ML_B001s, this can be used for generating @SG_ML_L00D019SGXIdentifier../cppclass/sgxidentifier objects consistently from a set of data. If @SG_ML_B007ifValid is true, it is checked if the @SG_ML_L00D019SGXIdentifier../cppclass/sgxidentifier is already registered. In that case, if the constructed @SG_ML_L00D019SGXIdentifier../cppclass/sgxidentifier is the null identifier, the int pointed to by @SG_ML_B007errCode is set to 2. If the constructed @SG_ML_L00D019SGXIdentifier../cppclass/sgxidentifier overlaps with an existing registered @SG_ML_L00D019SGXIdentifier../cppclass/sgxidentifier, the int pointed to by @SG_ML_B007errCode is set to 1. Otherwise the int pointed to by @SG_ML_B007errCode is set to 0. Pass @SG_ML_B007errCode as nullptr if you do not need existence checking.
+@SG_ML_NOTE Setting @SG_ML_B007ifValid to true does not register the generated @SG_ML_L00D019SGXIdentifier../cppclass/sgxidentifier, it has to be registered using @SG_ML_L021046SGXIdentifier::registerIdentifier../cppclass/sgxidentifier#nodiscard_int_registerIdentifier_func_const_ separately.
+@SG_ML_WARN This only works if @SG_ML_B001s was generated using @SG_ML_L02304ESGXIdentifier::getStringForPrinting../cppclass/sgxidentifier#nodiscard_SGXString_getStringForPrinting_func_const_. If @SG_ML_B001s does not represent a valid @SG_ML_L00D019SGXIdentifier../cppclass/sgxidentifier in the defined format, a null identifier is constructed.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_SGXIdentifier_bool_ @SG_ML_L00D014SGXIdentifier#SGXIdentifier_bool_(bool ifValid);
-Generates a new random @SG_ML_L00D00DSGXIdentifiersgxidentifier. If @SG_ML_B007ifValid is true, it is guaranteed that the generated @SG_ML_L00D00DSGXIdentifiersgxidentifier does not collide with any existing registered @SG_ML_L00D00DSGXIdentifiersgxidentifier.
-@SG_ML_NOTE Setting @SG_ML_B007ifValid to true does not register the generated @SG_ML_L00D00DSGXIdentifiersgxidentifier, it has to be registered using @SG_ML_L02103ASGXIdentifier::registerIdentifiersgxidentifier#nodiscard_int_registerIdentifier_func_const_ separately.
+Generates a new random @SG_ML_L00D019SGXIdentifier../cppclass/sgxidentifier. If @SG_ML_B007ifValid is true, it is guaranteed that the generated @SG_ML_L00D019SGXIdentifier../cppclass/sgxidentifier does not collide with any existing registered @SG_ML_L00D019SGXIdentifier../cppclass/sgxidentifier.
+@SG_ML_NOTE Setting @SG_ML_B007ifValid to true does not register the generated @SG_ML_L00D019SGXIdentifier../cppclass/sgxidentifier, it has to be registered using @SG_ML_L021046SGXIdentifier::registerIdentifier../cppclass/sgxidentifier#nodiscard_int_registerIdentifier_func_const_ separately.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_SGXIdentifier_unsigned_int_unsigned_int_unsigned_int_unsigned_int_bool_int_ptr_ @SG_ML_L00D050SGXIdentifier#SGXIdentifier_unsigned_int_unsigned_int_unsigned_int_unsigned_int_bool_int_ptr_(unsigned int a, unsigned int b, unsigned int c, unsigned int d, bool ifValid, int* errCode);
-Generates a @SG_ML_L00D00DSGXIdentifiersgxidentifier storing information from @SG_ML_B001a, @SG_ML_B001b, @SG_ML_B001c, @SG_ML_B001d, this can be used for generating @SG_ML_L00D00DSGXIdentifiersgxidentifier objects consistently from a set of data. If @SG_ML_B007ifValid is true, it is checked if the @SG_ML_L00D00DSGXIdentifiersgxidentifier is already registered. In that case, if the constructed @SG_ML_L00D00DSGXIdentifiersgxidentifier is the null identifier, the int pointed to by @SG_ML_B007errCode is set to 2. If the constructed @SG_ML_L00D00DSGXIdentifiersgxidentifier overlaps with an existing registered @SG_ML_L00D00DSGXIdentifiersgxidentifier, the int pointed to by @SG_ML_B007errCode is set to 1. Otherwise the int pointed to by @SG_ML_B007errCode is set to 0. Pass @SG_ML_B007errCode as nullptr if you do not need existence checking.
-@SG_ML_NOTE Setting @SG_ML_B007ifValid to true does not register the generated @SG_ML_L00D00DSGXIdentifiersgxidentifier, it has to be registered using @SG_ML_L02103ASGXIdentifier::registerIdentifiersgxidentifier#nodiscard_int_registerIdentifier_func_const_ separately.
+Generates a @SG_ML_L00D019SGXIdentifier../cppclass/sgxidentifier storing information from @SG_ML_B001a, @SG_ML_B001b, @SG_ML_B001c, @SG_ML_B001d, this can be used for generating @SG_ML_L00D019SGXIdentifier../cppclass/sgxidentifier objects consistently from a set of data. If @SG_ML_B007ifValid is true, it is checked if the @SG_ML_L00D019SGXIdentifier../cppclass/sgxidentifier is already registered. In that case, if the constructed @SG_ML_L00D019SGXIdentifier../cppclass/sgxidentifier is the null identifier, the int pointed to by @SG_ML_B007errCode is set to 2. If the constructed @SG_ML_L00D019SGXIdentifier../cppclass/sgxidentifier overlaps with an existing registered @SG_ML_L00D019SGXIdentifier../cppclass/sgxidentifier, the int pointed to by @SG_ML_B007errCode is set to 1. Otherwise the int pointed to by @SG_ML_B007errCode is set to 0. Pass @SG_ML_B007errCode as nullptr if you do not need existence checking.
+@SG_ML_NOTE Setting @SG_ML_B007ifValid to true does not register the generated @SG_ML_L00D019SGXIdentifier../cppclass/sgxidentifier, it has to be registered using @SG_ML_L021046SGXIdentifier::registerIdentifier../cppclass/sgxidentifier#nodiscard_int_registerIdentifier_func_const_ separately.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_bool_exists_func_const_ [[nodiscard]] bool @SG_ML_L006022exists#nodiscard_bool_exists_func_const_() const;
-Returns if the @SG_ML_L00D00DSGXIdentifiersgxidentifier has already been registered.
-@SG_ML_NOTE There is no need to use @SG_ML_L01502FSGXIdentifier::existssgxidentifier#nodiscard_bool_exists_func_const_ before @SG_ML_L02103ASGXIdentifier::registerIdentifiersgxidentifier#nodiscard_int_registerIdentifier_func_const_ or @SG_ML_L02303CSGXIdentifier::unregisterIdentifiersgxidentifier#nodiscard_int_unregisterIdentifier_func_const_ as the check is done internally.
+Returns if the @SG_ML_L00D019SGXIdentifier../cppclass/sgxidentifier has already been registered.
+@SG_ML_NOTE There is no need to use @SG_ML_L01503BSGXIdentifier::exists../cppclass/sgxidentifier#nodiscard_bool_exists_func_const_ before @SG_ML_L021046SGXIdentifier::registerIdentifier../cppclass/sgxidentifier#nodiscard_int_registerIdentifier_func_const_ or @SG_ML_L023048SGXIdentifier::unregisterIdentifier../cppclass/sgxidentifier#nodiscard_int_unregisterIdentifier_func_const_ as the check is done internally.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGXString_getStringForPrinting_func_const_ [[nodiscard]] @SG_ML_L009009SGXStringsgxstring @SG_ML_L014035getStringForPrinting#nodiscard_SGXString_getStringForPrinting_func_const_() const;
-Converts the @SG_ML_L00D00DSGXIdentifiersgxidentifier to text.
+Converts the @SG_ML_L00D019SGXIdentifier../cppclass/sgxidentifier to text.
 @SG_ML_NOTE This can be used for file names
-@SG_ML_NOTE This is not really human readable. Do not make the user read @SG_ML_L00D00DSGXIdentifiersgxidentifier values, instead get them to name whatever their data is.
+@SG_ML_NOTE This is not really human readable. Do not make the user read @SG_ML_L00D019SGXIdentifier../cppclass/sgxidentifier values, instead get them to name whatever their data is.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_int_hash_func_const_ [[nodiscard]] int @SG_ML_L00401Fhash#nodiscard_int_hash_func_const_() const;
-Hash function defined for @SG_ML_L007007SGLHashsglhash.
+Hash function defined for @SG_ML_L007013SGLHash../cppclass/sglhash.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_bool_operator_neq_SGXIdentifier_const_ [[nodiscard]] bool @SG_ML_L00A031operator!=#nodiscard_bool_operator_neq_SGXIdentifier_const_(@SG_ML_L00D00DSGXIdentifiersgxidentifier x) const;
-Returns if this @SG_ML_L00D00DSGXIdentifiersgxidentifier is not the same as @SG_ML_B001x.
+Returns if this @SG_ML_L00D019SGXIdentifier../cppclass/sgxidentifier is not the same as @SG_ML_B001x.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_bool_operator_lt_SGXIdentifier_const_ [[nodiscard]] bool @SG_ML_L009030operator‹#nodiscard_bool_operator_lt_SGXIdentifier_const_(@SG_ML_L00D00DSGXIdentifiersgxidentifier x) const;
-Lesser than operator with @SG_ML_B001x defined for @SG_ML_L00D00DSGLLesserThansgllesserthan and @SG_ML_L00B00BSGLMoreThansglmorethan.
+Lesser than operator with @SG_ML_B001x defined for @SG_ML_L00D019SGLLesserThan../cppclass/sgllesserthan and @SG_ML_L00B017SGLMoreThan../cppclass/sglmorethan.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_bool_operator_eq_SGXIdentifier_const_ [[nodiscard]] bool @SG_ML_L00A030operator==#nodiscard_bool_operator_eq_SGXIdentifier_const_(@SG_ML_L00D00DSGXIdentifiersgxidentifier x) const;
-Returns if this @SG_ML_L00D00DSGXIdentifiersgxidentifier is the same as @SG_ML_B001x.
+Returns if this @SG_ML_L00D019SGXIdentifier../cppclass/sgxidentifier is the same as @SG_ML_B001x.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_bool_operator_gt_SGXIdentifier_const_ [[nodiscard]] bool @SG_ML_L009030operator›#nodiscard_bool_operator_gt_SGXIdentifier_const_(@SG_ML_L00D00DSGXIdentifiersgxidentifier x) const;
-More than operator with @SG_ML_B001x defined for @SG_ML_L00D00DSGLLesserThansgllesserthan and @SG_ML_L00B00BSGLMoreThansglmorethan.
+More than operator with @SG_ML_B001x defined for @SG_ML_L00D019SGLLesserThan../cppclass/sgllesserthan and @SG_ML_L00B017SGLMoreThan../cppclass/sglmorethan.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_int_registerIdentifier_func_const_ [[nodiscard]] int @SG_ML_L01202DregisterIdentifier#nodiscard_int_registerIdentifier_func_const_() const;
-Registers this @SG_ML_L00D00DSGXIdentifiersgxidentifier. The function returns 1 if the @SG_ML_L00D00DSGXIdentifiersgxidentifier is already registered and 0 otherwise.
-@SG_ML_NOTE Attempting to register a @SG_ML_L00D00DSGXIdentifiersgxidentifier that is already registered does NOT cause a crash or @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour, it just gives a return value of 1.
+Registers this @SG_ML_L00D019SGXIdentifier../cppclass/sgxidentifier. The function returns 1 if the @SG_ML_L00D019SGXIdentifier../cppclass/sgxidentifier is already registered and 0 otherwise.
+@SG_ML_NOTE Attempting to register a @SG_ML_L00D019SGXIdentifier../cppclass/sgxidentifier that is already registered does NOT cause a crash or @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour, it just gives a return value of 1.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_int_unregisterIdentifier_func_const_ [[nodiscard]] int @SG_ML_L01402FunregisterIdentifier#nodiscard_int_unregisterIdentifier_func_const_() const;
-Unregisters this @SG_ML_L00D00DSGXIdentifiersgxidentifier. The function returns 1 if the @SG_ML_L00D00DSGXIdentifiersgxidentifier was never registered and 0 otherwise.
-@SG_ML_NOTE Attempting to deregister a @SG_ML_L00D00DSGXIdentifiersgxidentifier that has never been registered does NOT cause a crash or @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour, it just gives a return value of 1.
+Unregisters this @SG_ML_L00D019SGXIdentifier../cppclass/sgxidentifier. The function returns 1 if the @SG_ML_L00D019SGXIdentifier../cppclass/sgxidentifier was never registered and 0 otherwise.
+@SG_ML_NOTE Attempting to deregister a @SG_ML_L00D019SGXIdentifier../cppclass/sgxidentifier that has never been registered does NOT cause a crash or @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour, it just gives a return value of 1.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_const_SGXIdentifier_nullIdentifier_ static const @SG_ML_L00D00DSGXIdentifiersgxidentifier @SG_ML_L00E02BnullIdentifier#static_const_SGXIdentifier_nullIdentifier_;
-Null identifier, or @SG_ML_L00D00DSGXIdentifiersgxidentifier with all bits at zero.
+Null identifier, or @SG_ML_L00D019SGXIdentifier../cppclass/sgxidentifier with all bits at zero.
 @SG_ML_BLANKLINE

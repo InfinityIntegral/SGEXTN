@@ -22,10 +22,10 @@ children classes: (none)
 @SG_ML_HEADER_ static member functions
 &#9;static void @SG_ML_L00C02EdownloadFile#static_void_downloadFile_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& s);
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_detaileddescription Detailed Description
-@SG_ML_L011011SGXFileDownloadersgxfiledownloader allows the user to download a file from the application into anywhere in their file system. Note that this does not actually involve downloading from a network, it just gives the user a file dialog. This is required to access files outside the application folder on mobile.
+@SG_ML_HEADER_sg_detaileddescription Detailed Description
+@SG_ML_L01101DSGXFileDownloader../cppclass/sgxfiledownloader allows the user to download a file from the application into anywhere in their file system. Note that this does not actually involve downloading from a network, it just gives the user a file dialog. This is required to access files outside the application folder on mobile.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_implementationdetails Implementation Details
+@SG_ML_HEADER_sg_implementationdetails Implementation Details
 Uses QML file downloader.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_void_downloadFile_const_SGXString_ref_ static void @SG_ML_L00C02EdownloadFile#static_void_downloadFile_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& s);

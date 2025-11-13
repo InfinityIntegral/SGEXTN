@@ -24,10 +24,10 @@ children classes: (none)
 &#9;static void @SG_ML_L022035enableSingCorrectCustomisationPage#static_void_enableSingCorrectCustomisationPage_func_();
 &#9;static void @SG_ML_L023036enableThemeColoursCustomisationPage#static_void_enableThemeColoursCustomisationPage_func_();
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_detaileddescription Detailed Description
-@SG_ML_L01B01BSGWCustomisationPageControlsgwcustomisationpagecontrol provides methods to activate @SG_ML_L018015SGWidget ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/sgwidget builtin UI pages to customise things such as font size (which controls @SG_ML_L01A016w-distance ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/wdistance) and @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour. Your application should give the user access to all these features.
+@SG_ML_HEADER_sg_detaileddescription Detailed Description
+@SG_ML_L01B027SGWCustomisationPageControl../cppclass/sgwcustomisationpagecontrol provides methods to activate @SG_ML_L018015SGWidget ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/sgwidget builtin UI pages to customise things such as font size (which controls @SG_ML_L01A016w-distance ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/wdistance) and @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour. Your application should give the user access to all these features.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_implementationdetails Implementation Details
+@SG_ML_HEADER_sg_implementationdetails Implementation Details
 Calls private API exposed functions
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_void_enableFontSizeCustomisationPage_func_ static void @SG_ML_L01F032enableFontSizeCustomisationPage#static_void_enableFontSizeCustomisationPage_func_();

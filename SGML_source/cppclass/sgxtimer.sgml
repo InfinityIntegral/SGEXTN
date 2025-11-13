@@ -30,36 +30,36 @@ children classes: (none)
 @SG_ML_HEADER_ static member functions
 &#9;static void @SG_ML_L00A02CsingleCall#static_void_singleCall_float_void_ptr_func_(float t, void (*attachedFunction)());
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_detaileddescription Detailed Description
-@SG_ML_L008008SGXTimersgxtimer provides a timer that takes a @SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback which can be either run after a specified amount of time have passed or be run at a regular interval.
+@SG_ML_HEADER_sg_detaileddescription Detailed Description
+@SG_ML_L008014SGXTimer../cppclass/sgxtimer provides a timer that takes a @SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback which can be either run after a specified amount of time have passed or be run at a regular interval.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_implementationdetails Implementation Details
+@SG_ML_HEADER_sg_implementationdetails Implementation Details
 wrapper of QTimer
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_ptr_attachedFunction_func_ void (*@SG_ML_L010020attachedFunction#void_ptr_attachedFunction_func_)();
-@SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback attached to this @SG_ML_L008008SGXTimersgxtimer.
-@SG_ML_NOTE This is set automatically by the constructor. Only set it explicitly if you want to change the @SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback attached to an ongoing @SG_ML_L008008SGXTimersgxtimer.
-@SG_ML_WARN Setting this to nullptr is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour. Use @SG_ML_L00E01ESGXTimer::stopsgxtimer#void_stop_func_const_ if you want to stop an ongoing @SG_ML_L008008SGXTimersgxtimer.
+@SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback attached to this @SG_ML_L008014SGXTimer../cppclass/sgxtimer.
+@SG_ML_NOTE This is set automatically by the constructor. Only set it explicitly if you want to change the @SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback attached to an ongoing @SG_ML_L008014SGXTimer../cppclass/sgxtimer.
+@SG_ML_WARN Setting this to nullptr is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour. Use @SG_ML_L00E02ASGXTimer::stop../cppclass/sgxtimer#void_stop_func_const_ if you want to stop an ongoing @SG_ML_L008014SGXTimer../cppclass/sgxtimer.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_SGXTimer_float_void_ptr_func_ @SG_ML_L00801ESGXTimer#SGXTimer_float_void_ptr_func_(float t, void (*attachedFunction)());
-Creates and starts a @SG_ML_L008008SGXTimersgxtimer running @SG_ML_B010attachedFunction every @SG_ML_B001t seconds.
+Creates and starts a @SG_ML_L008014SGXTimer../cppclass/sgxtimer running @SG_ML_B010attachedFunction every @SG_ML_B001t seconds.
 @SG_ML_NOTE Pass 0 to @SG_ML_B001t to run @SG_ML_B010attachedFunction on every frame, this may significantly increase power consumption of your application.
 @SG_ML_NOTE The timer is automatically started upon creation.
 @SG_ML_WARN @SG_ML_B010attachedFunction being nullptr is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
 @SG_ML_WARN @SG_ML_B001t being negative is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_start_func_const_ void @SG_ML_L005017start#void_start_func_const_() const;
-Restarts this @SG_ML_L008008SGXTimersgxtimer which is previously paused.
-@SG_ML_NOTE If this @SG_ML_L008008SGXTimersgxtimer was not previously paused, this restarts the time.
+Restarts this @SG_ML_L008014SGXTimer../cppclass/sgxtimer which is previously paused.
+@SG_ML_NOTE If this @SG_ML_L008014SGXTimer../cppclass/sgxtimer was not previously paused, this restarts the time.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_stop_func_const_ void @SG_ML_L004016stop#void_stop_func_const_() const;
-Pauses this @SG_ML_L008008SGXTimersgxtimer. The timer can be resumed using @SG_ML_L00F01FSGXTimer::startsgxtimer#void_start_func_const_ later.
-@SG_ML_NOTE Restarting a @SG_ML_L008008SGXTimersgxtimer using @SG_ML_L00F01FSGXTimer::startsgxtimer#void_start_func_const_ resets the time.
+Pauses this @SG_ML_L008014SGXTimer../cppclass/sgxtimer. The timer can be resumed using @SG_ML_L00F02BSGXTimer::start../cppclass/sgxtimer#void_start_func_const_ later.
+@SG_ML_NOTE Restarting a @SG_ML_L008014SGXTimer../cppclass/sgxtimer using @SG_ML_L00F02BSGXTimer::start../cppclass/sgxtimer#void_start_func_const_ resets the time.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_void_singleCall_float_void_ptr_func_ static void @SG_ML_L00A02CsingleCall#static_void_singleCall_float_void_ptr_func_(float t, void (*attachedFunction)());
 Runs @SG_ML_B010attachedFunction after @SG_ML_B001t seconds once without repeating it.
 @SG_ML_NOTE Pass 0 to @SG_ML_B001t to run @SG_ML_B010attachedFunction immediately after this frame.
-@SG_ML_NOTE The @SG_ML_L008008SGXTimersgxtimer object controlling this is not exposed, so you cannot stop or restart this timer.
+@SG_ML_NOTE The @SG_ML_L008014SGXTimer../cppclass/sgxtimer object controlling this is not exposed, so you cannot stop or restart this timer.
 @SG_ML_WARN @SG_ML_B010attachedFunction being nullptr is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
 @SG_ML_WARN @SG_ML_B001t being negative is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
 @SG_ML_BLANKLINE

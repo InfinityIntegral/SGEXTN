@@ -22,10 +22,10 @@ children classes: (none)
 @SG_ML_HEADER_ instance member variables
 &#9;enum @SG_ML_L004021Type#enum_Type_Float_UnsignedInt_Int_{ Float, UnsignedInt, Int };
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_detaileddescription Detailed Description
-@SG_ML_L017017SGRGraphicsLanguageTypesgrgraphicslanguagetype is used by @SG_ML_L017015SG - RI ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/renderer renderers to indicate the data type of information stored in a @SG_ML_L015015SGRVertexBufferObjectsgrvertexbufferobject.
+@SG_ML_HEADER_sg_detaileddescription Detailed Description
+@SG_ML_L017023SGRGraphicsLanguageType../cppclass/sgrgraphicslanguagetype is used by @SG_ML_L017015SG - RI ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/renderer renderers to indicate the data type of information stored in a @SG_ML_L015021SGRVertexBufferObject../cppclass/sgrvertexbufferobject.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_implementationdetails Implementation Details
+@SG_ML_HEADER_sg_implementationdetails Implementation Details
 @SG_ML_L017015SG - RI ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/renderer internally uses QRhi.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_enum_Type_Float_UnsignedInt_Int_ enum @SG_ML_L004021Type#enum_Type_Float_UnsignedInt_Int_{ Float, UnsignedInt, Int };

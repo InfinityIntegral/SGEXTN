@@ -32,42 +32,42 @@ children classes: (none)
 &#9;[[nodiscard]] float @SG_ML_L009026getHeight#nodiscard_float_getHeight_func_const_() const;
 &#9;[[nodiscard]] float @SG_ML_L008025getWidth#nodiscard_float_getWidth_func_const_() const;
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_detaileddescription Detailed Description
-@SG_ML_L016016SGWSingleTouchReceiversgwsingletouchreceiver allows for custom programmed interactive components in @SG_ML_L018015SGWidget ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/sgwidget. It receives 1 touch event at a time and sends it to a @SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback for processing in the form of a @SG_ML_L00D00DSGXTouchEventsgxtouchevent. Additional touch events are ignored.
+@SG_ML_HEADER_sg_detaileddescription Detailed Description
+@SG_ML_L016022SGWSingleTouchReceiver../cppclass/sgwsingletouchreceiver allows for custom programmed interactive components in @SG_ML_L018015SGWidget ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/sgwidget. It receives 1 touch event at a time and sends it to a @SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback for processing in the form of a @SG_ML_L00D019SGXTouchEvent../cppclass/sgxtouchevent. Additional touch events are ignored.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_implementationdetails Implementation Details
-Stores information about the @SG_ML_L016016SGWSingleTouchReceiversgwsingletouchreceiver.
+@SG_ML_HEADER_sg_implementationdetails Implementation Details
+Stores information about the @SG_ML_L016022SGWSingleTouchReceiver../cppclass/sgwsingletouchreceiver.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_int_attachedInt_ int @SG_ML_L00B011attachedInt#int_attachedInt_;
-Int attached to this @SG_ML_L016016SGWSingleTouchReceiversgwsingletouchreceiver.
+Int attached to this @SG_ML_L016022SGWSingleTouchReceiver../cppclass/sgwsingletouchreceiver.
 @SG_ML_NOTE This is used to identify the source of the callback in @SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_SGXString_attachedString_ @SG_ML_L009009SGXStringsgxstring @SG_ML_L00E01AattachedString#SGXString_attachedString_;
-String attached to this @SG_ML_L016016SGWSingleTouchReceiversgwsingletouchreceiver.
+String attached to this @SG_ML_L016022SGWSingleTouchReceiver../cppclass/sgwsingletouchreceiver.
 @SG_ML_NOTE This is used to identify the source of the callback in @SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_ptr_callbackFunction_const_SGXTouchEvent_ref_ void (*@SG_ML_L010033callbackFunction#void_ptr_callbackFunction_const_SGXTouchEvent_ref_)(const @SG_ML_L00D00DSGXTouchEventsgxtouchevent&);
-@SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback called when the user interacts with the @SG_ML_L016016SGWSingleTouchReceiversgwsingletouchreceiver. The touch event is sent as a @SG_ML_L00D00DSGXTouchEventsgxtouchevent.
+@SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback called when the user interacts with the @SG_ML_L016022SGWSingleTouchReceiver../cppclass/sgwsingletouchreceiver. The touch event is sent as a @SG_ML_L00D019SGXTouchEvent../cppclass/sgxtouchevent.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_ptr_callbackFunctionWithInt_int_const_SGXTouchEvent_ref_ void (*@SG_ML_L01703EcallbackFunctionWithInt#void_ptr_callbackFunctionWithInt_int_const_SGXTouchEvent_ref_)(int, const @SG_ML_L00D00DSGXTouchEventsgxtouchevent&);
-@SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback called when the user interacts with the @SG_ML_L016016SGWSingleTouchReceiversgwsingletouchreceiver. The touch event is sent as a @SG_ML_L00D00DSGXTouchEventsgxtouchevent along with @SG_ML_L023027SGWSingleTouchReceiver::attachedIntsgwsingletouchreceiver#int_attachedInt_.
+@SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback called when the user interacts with the @SG_ML_L016022SGWSingleTouchReceiver../cppclass/sgwsingletouchreceiver. The touch event is sent as a @SG_ML_L00D019SGXTouchEvent../cppclass/sgxtouchevent along with @SG_ML_L023033SGWSingleTouchReceiver::attachedInt../cppclass/sgwsingletouchreceiver#int_attachedInt_.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_ptr_callbackFunctionWithPointer_SGWSingleTouchReceiver_ptr_const_SGXTouchEvent_ref_ void (*@SG_ML_L01B059callbackFunctionWithPointer#void_ptr_callbackFunctionWithPointer_SGWSingleTouchReceiver_ptr_const_SGXTouchEvent_ref_)(@SG_ML_L016016SGWSingleTouchReceiversgwsingletouchreceiver*, const @SG_ML_L00D00DSGXTouchEventsgxtouchevent&);
-@SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback called when the user interacts with the @SG_ML_L016016SGWSingleTouchReceiversgwsingletouchreceiver. The touch event is sent as a @SG_ML_L00D00DSGXTouchEventsgxtouchevent along with a pointer to this @SG_ML_L016016SGWSingleTouchReceiversgwsingletouchreceiver.
+@SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback called when the user interacts with the @SG_ML_L016022SGWSingleTouchReceiver../cppclass/sgwsingletouchreceiver. The touch event is sent as a @SG_ML_L00D019SGXTouchEvent../cppclass/sgxtouchevent along with a pointer to this @SG_ML_L016022SGWSingleTouchReceiver../cppclass/sgwsingletouchreceiver.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_ptr_callbackFunctionWithString_SGXString_const_SGXTouchEvent_ref_ void (*@SG_ML_L01A047callbackFunctionWithString#void_ptr_callbackFunctionWithString_SGXString_const_SGXTouchEvent_ref_)(@SG_ML_L009009SGXStringsgxstring, const @SG_ML_L00D00DSGXTouchEventsgxtouchevent&);
-@SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback called when the user interacts with the @SG_ML_L016016SGWSingleTouchReceiversgwsingletouchreceiver. The touch event is sent as a @SG_ML_L00D00DSGXTouchEventsgxtouchevent along with @SG_ML_L026030SGWSingleTouchReceiver::attachedStringsgwsingletouchreceiver#SGXString_attachedString_.
+@SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback called when the user interacts with the @SG_ML_L016022SGWSingleTouchReceiver../cppclass/sgwsingletouchreceiver. The touch event is sent as a @SG_ML_L00D019SGXTouchEvent../cppclass/sgxtouchevent along with @SG_ML_L02603CSGWSingleTouchReceiver::attachedString../cppclass/sgwsingletouchreceiver#SGXString_attachedString_.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_SGWSingleTouchReceiver_SGWWidget_ptr_void_ptr_const_SGXTouchEvent_ref_float_float_float_float_float_float_float_float_ @SG_ML_L016077SGWSingleTouchReceiver#SGWSingleTouchReceiver_SGWWidget_ptr_void_ptr_const_SGXTouchEvent_ref_float_float_float_float_float_float_float_float_(@SG_ML_L009009SGWWidgetsgwwidget* parent, void (*function)(const @SG_ML_L00D00DSGXTouchEventsgxtouchevent&), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0);
-Creates a @SG_ML_L016016SGWSingleTouchReceiversgwsingletouchreceiver with parent @SG_ML_L018015SGWidget ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/sgwidget @SG_ML_B006parent, @SG_ML_L01A016w-distance ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/wdistance coordinates (@SG_ML_B002x1, @SG_ML_B002x0, @SG_ML_B002y1, @SG_ML_B002y0, @SG_ML_B002w1, @SG_ML_B002w0, @SG_ML_B002h1, @SG_ML_B002h0), and @SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback @SG_ML_B008function.
+Creates a @SG_ML_L016022SGWSingleTouchReceiver../cppclass/sgwsingletouchreceiver with parent @SG_ML_L018015SGWidget ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/sgwidget @SG_ML_B006parent, @SG_ML_L01A016w-distance ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/wdistance coordinates (@SG_ML_B002x1, @SG_ML_B002x0, @SG_ML_B002y1, @SG_ML_B002y0, @SG_ML_B002w1, @SG_ML_B002w0, @SG_ML_B002h1, @SG_ML_B002h0), and @SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback @SG_ML_B008function.
 @SG_ML_NOTE Only the first touch event will be sent, the others will be ignored.
 @SG_ML_WARN @SG_ML_B006parent being nullptr is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_float_getHeight_func_const_ [[nodiscard]] float @SG_ML_L009026getHeight#nodiscard_float_getHeight_func_const_() const;
-Returns the height in pixels of this @SG_ML_L016016SGWSingleTouchReceiversgwsingletouchreceiver.
-@SG_ML_WARN This should only be used to interpret the @SG_ML_L00D00DSGXTouchEventsgxtouchevent sent from the @SG_ML_L016016SGWSingleTouchReceiversgwsingletouchreceiver. Using pixel size for any other purpose is not recommended, instead use @SG_ML_L01A016w-distance ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/wdistance.
+Returns the height in pixels of this @SG_ML_L016022SGWSingleTouchReceiver../cppclass/sgwsingletouchreceiver.
+@SG_ML_WARN This should only be used to interpret the @SG_ML_L00D019SGXTouchEvent../cppclass/sgxtouchevent sent from the @SG_ML_L016022SGWSingleTouchReceiver../cppclass/sgwsingletouchreceiver. Using pixel size for any other purpose is not recommended, instead use @SG_ML_L01A016w-distance ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/wdistance.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_float_getWidth_func_const_ [[nodiscard]] float @SG_ML_L008025getWidth#nodiscard_float_getWidth_func_const_() const;
-Returns the width in pixels of this @SG_ML_L016016SGWSingleTouchReceiversgwsingletouchreceiver.
-@SG_ML_WARN This should only be used to interpret the @SG_ML_L00D00DSGXTouchEventsgxtouchevent sent from the @SG_ML_L016016SGWSingleTouchReceiversgwsingletouchreceiver. Using pixel size for any other purpose is not recommended, instead use @SG_ML_L01A016w-distance ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/wdistance.
+Returns the width in pixels of this @SG_ML_L016022SGWSingleTouchReceiver../cppclass/sgwsingletouchreceiver.
+@SG_ML_WARN This should only be used to interpret the @SG_ML_L00D019SGXTouchEvent../cppclass/sgxtouchevent sent from the @SG_ML_L016022SGWSingleTouchReceiver../cppclass/sgwsingletouchreceiver. Using pixel size for any other purpose is not recommended, instead use @SG_ML_L01A016w-distance ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/wdistance.
 @SG_ML_BLANKLINE

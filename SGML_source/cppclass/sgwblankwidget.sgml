@@ -26,27 +26,27 @@ children classes: (none)
 &#9;void @SG_ML_L00901EsetColour#void_setColour_SGXColourRGBA_(@SG_ML_L00D00DSGXColourRGBAsgxcolourrgba colour);
 &#9;void @SG_ML_L00E019setThemeColour#void_setThemeColour_int_(int themeColour);
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_detaileddescription Detailed Description
-@SG_ML_L00E00ESGWBlankWidgetsgwblankwidget provides a @SG_ML_L018015SGWidget ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/sgwidget coloured rectangle. This does not block touch events from reaching any @SG_ML_L018015SGWidget ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/sgwidget below it. For backgrounds of UI pages, use a @SG_ML_L00D00DSGWBackgroundsgwbackground subclass instead.
+@SG_ML_HEADER_sg_detaileddescription Detailed Description
+@SG_ML_L00E01ASGWBlankWidget../cppclass/sgwblankwidget provides a @SG_ML_L018015SGWidget ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/sgwidget coloured rectangle. This does not block touch events from reaching any @SG_ML_L018015SGWidget ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/sgwidget below it. For backgrounds of UI pages, use a @SG_ML_L00D019SGWBackground../cppclass/sgwbackground subclass instead.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_implementationdetails Implementation Details
-Stores information about the @SG_ML_L00E00ESGWBlankWidgetsgwblankwidget
+@SG_ML_HEADER_sg_implementationdetails Implementation Details
+Stores information about the @SG_ML_L00E01ASGWBlankWidget../cppclass/sgwblankwidget
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_SGWBlankWidget_SGWWidget_ptr_float_float_float_float_float_float_float_float_int_ @SG_ML_L00E052SGWBlankWidget#SGWBlankWidget_SGWWidget_ptr_float_float_float_float_float_float_float_float_int_(@SG_ML_L009009SGWWidgetsgwwidget* parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, int themeColour);
-Creates a @SG_ML_L00E00ESGWBlankWidgetsgwblankwidget with parent @SG_ML_L018015SGWidget ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/sgwidget @SG_ML_B006parent, @SG_ML_L01A016w-distance ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/wdistance coordinates (@SG_ML_B002x1, @SG_ML_B002x0, @SG_ML_B002y1, @SG_ML_B002y0, @SG_ML_B002w1, @SG_ML_B002w0, @SG_ML_B002h1, @SG_ML_B002h0), and background @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour @SG_ML_B00BthemeColour.
+Creates a @SG_ML_L00E01ASGWBlankWidget../cppclass/sgwblankwidget with parent @SG_ML_L018015SGWidget ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/sgwidget @SG_ML_B006parent, @SG_ML_L01A016w-distance ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/wdistance coordinates (@SG_ML_B002x1, @SG_ML_B002x0, @SG_ML_B002y1, @SG_ML_B002y0, @SG_ML_B002w1, @SG_ML_B002w0, @SG_ML_B002h1, @SG_ML_B002h0), and background @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour @SG_ML_B00BthemeColour.
 @SG_ML_WARN @SG_ML_B006parent being nullptr is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGXColourRGBA_getColour_bool_ptr_const_ [[nodiscard]] @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba @SG_ML_L009032getColour#nodiscard_SGXColourRGBA_getColour_bool_ptr_const_(bool* isUsing) const;
-Returns the @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba currently being used for the background of this @SG_ML_L00E00ESGWBlankWidgetsgwblankwidget. The bool that @SG_ML_B007isUsing points to is set to true if @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode is off, and false otherwise.
+Returns the @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba currently being used for the background of this @SG_ML_L00E01ASGWBlankWidget../cppclass/sgwblankwidget. The bool that @SG_ML_B007isUsing points to is set to true if @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode is off, and false otherwise.
 @SG_ML_NOTE If you are not interested in the current @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode, pass nullptr to @SG_ML_B007isUsing.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_int_getThemeColour_bool_ptr_const_ [[nodiscard]] int @SG_ML_L00E02DgetThemeColour#nodiscard_int_getThemeColour_bool_ptr_const_(bool* isUsing) const;
-Returns the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour currently being used for the background of this @SG_ML_L00E00ESGWBlankWidgetsgwblankwidget. The bool that @SG_ML_B007isUsing points to is set to true if @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode is on, and false otherwise.
+Returns the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour currently being used for the background of this @SG_ML_L00E01ASGWBlankWidget../cppclass/sgwblankwidget. The bool that @SG_ML_B007isUsing points to is set to true if @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode is on, and false otherwise.
 @SG_ML_NOTE If you are not interested in the current @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode, pass nullptr to @SG_ML_B007isUsing.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_setColour_SGXColourRGBA_ void @SG_ML_L00901EsetColour#void_setColour_SGXColourRGBA_(@SG_ML_L00D00DSGXColourRGBAsgxcolourrgba colour);
-Sets the @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba of the background of this @SG_ML_L00E00ESGWBlankWidgetsgwblankwidget to @SG_ML_B006colour and turns off @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode.
+Sets the @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba of the background of this @SG_ML_L00E01ASGWBlankWidget../cppclass/sgwblankwidget to @SG_ML_B006colour and turns off @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_setThemeColour_int_ void @SG_ML_L00E019setThemeColour#void_setThemeColour_int_(int themeColour);
-Sets the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour of the background of this @SG_ML_L00E00ESGWBlankWidgetsgwblankwidget to @SG_ML_B00BthemeColour and turns on @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode.
+Sets the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour of the background of this @SG_ML_L00E01ASGWBlankWidget../cppclass/sgwblankwidget to @SG_ML_B00BthemeColour and turns on @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode.
 @SG_ML_BLANKLINE

@@ -22,14 +22,14 @@ children classes: (none)
 @SG_ML_HEADER_ instance member functions
 &#9;[[nodiscard]] bool @SG_ML_L00A046operator()#nodiscard_bool_operator_func_const_SGXString_ref_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& a, const @SG_ML_L009009SGXStringsgxstring& b);
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_detaileddescription Detailed Description
-@SG_ML_L024024SGXNumberAwareFilePathMoreThanBase16sgxnumberawarefilepathmorethanbase16 provides a comparator struct for sorting file paths in descending alphabetical order for display to the user. This takes into account base16 numbers in file names, so fileF would be after file10.
+@SG_ML_HEADER_sg_detaileddescription Detailed Description
+@SG_ML_L024030SGXNumberAwareFilePathMoreThanBase16../cppclass/sgxnumberawarefilepathmorethanbase16 provides a comparator struct for sorting file paths in descending alphabetical order for display to the user. This takes into account base16 numbers in file names, so fileF would be after file10.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_implementationdetails Implementation Details
-Uses @SG_ML_L02A05ESGXFileSystem::numberAwareLesserThanBase16sgxfilesystem#static_bool_numberAwareLesserThanBase16_const_SGXString_ref_const_SGXString_ref_
+@SG_ML_HEADER_sg_implementationdetails Implementation Details
+Uses @SG_ML_L02A06ASGXFileSystem::numberAwareLesserThanBase16../cppclass/sgxfilesystem#static_bool_numberAwareLesserThanBase16_const_SGXString_ref_const_SGXString_ref_
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_bool_operator_func_const_SGXString_ref_const_SGXString_ref_ [[nodiscard]] bool @SG_ML_L00A046operator()#nodiscard_bool_operator_func_const_SGXString_ref_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& a, const @SG_ML_L009009SGXStringsgxstring& b);
 Returns if @SG_ML_B001a should be in front of @SG_ML_B001b.
-@SG_ML_NOTE The presence of operator() makes @SG_ML_L024024SGXNumberAwareFilePathMoreThanBase16sgxnumberawarefilepathmorethanbase16 a functor.
+@SG_ML_NOTE The presence of operator() makes @SG_ML_L024030SGXNumberAwareFilePathMoreThanBase16../cppclass/sgxnumberawarefilepathmorethanbase16 a functor.
 @SG_ML_NOTE Both uppercase and lowercase representations of non numerical base16 digits are accepted.
 @SG_ML_BLANKLINE

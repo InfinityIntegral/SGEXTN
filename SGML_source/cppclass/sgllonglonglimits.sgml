@@ -23,10 +23,10 @@ children classes: (none)
 &#9;static long long @SG_ML_L00701Fmaximum#static_long_long_maximum_func_();
 &#9;static long long @SG_ML_L00701Fminimum#static_long_long_minimum_func_();
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_detaileddescription Detailed Description
-@SG_ML_L011011SGLLongLongLimitssgllonglonglimits provides limits for the long long data type, such as the minimum and maximum long long that can be represented.
+@SG_ML_HEADER_sg_detaileddescription Detailed Description
+@SG_ML_L01101DSGLLongLongLimits../cppclass/sgllonglonglimits provides limits for the long long data type, such as the minimum and maximum long long that can be represented.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_implementationdetails Implementation Details
+@SG_ML_HEADER_sg_implementationdetails Implementation Details
 Uses ‹numeric_limits› from Standard Template Library
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_long_long_maximum_func_ static long long @SG_ML_L00701Fmaximum#static_long_long_maximum_func_();

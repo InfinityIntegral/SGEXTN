@@ -22,10 +22,10 @@ children classes: (none)
 @SG_ML_HEADER_ static member functions
 &#9;static void @SG_ML_L00A035uploadFile#static_void_uploadFile_void_ptr_const_SGXString_ref_(void (*attachedFunction)(const @SG_ML_L009009SGXStringsgxstring&));
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_detaileddescription Detailed Description
-@SG_ML_L00F00FSGXFileUploadersgxfileuploader allows the user to upload a file from anywhere in the file system into the application. Note that this does not actually involve uploading from a network, it just gives the user a file dialog. This is required to access files outside the application folder on mobile.
+@SG_ML_HEADER_sg_detaileddescription Detailed Description
+@SG_ML_L00F01BSGXFileUploader../cppclass/sgxfileuploader allows the user to upload a file from anywhere in the file system into the application. Note that this does not actually involve uploading from a network, it just gives the user a file dialog. This is required to access files outside the application folder on mobile.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_implementationdetails Implementation Details
+@SG_ML_HEADER_sg_implementationdetails Implementation Details
 Uses QML file uploader.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_void_uploadFile_void_ptr_const_SGXString_ref_ static void @SG_ML_L00A035uploadFile#static_void_uploadFile_void_ptr_const_SGXString_ref_(void (*attachedFunction)(const @SG_ML_L009009SGXStringsgxstring&));

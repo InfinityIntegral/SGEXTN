@@ -22,14 +22,14 @@ children classes: (none)
 @SG_ML_HEADER_ instance member functions
 &#9;@SG_ML_L01606ASGWSequentialLongLabel#SGWSequentialLongLabel_SGWWidget_ptr_const_SGXString_ref_float_float_float_float_float_float_float_float_(@SG_ML_L009009SGWWidgetsgwwidget* parent, const @SG_ML_L009009SGXStringsgxstring& s, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0);
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_detaileddescription Detailed Description
-@SG_ML_L016016SGWSequentialLongLabelsgwsequentiallonglabel provides a @SG_ML_L018015SGWidget ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/sgwidget multi line text label that does not have a fixed height and can be used inside a @SG_ML_L017017SGWSequentialScrollViewsgwsequentialscrollview. However, this can only be used in a @SG_ML_L017017SGWSequentialScrollViewsgwsequentialscrollview since its changing height would disrupt the layout of other UI elements anywhere else.
+@SG_ML_HEADER_sg_detaileddescription Detailed Description
+@SG_ML_L016022SGWSequentialLongLabel../cppclass/sgwsequentiallonglabel provides a @SG_ML_L018015SGWidget ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/sgwidget multi line text label that does not have a fixed height and can be used inside a @SG_ML_L017023SGWSequentialScrollView../cppclass/sgwsequentialscrollview. However, this can only be used in a @SG_ML_L017023SGWSequentialScrollView../cppclass/sgwsequentialscrollview since its changing height would disrupt the layout of other UI elements anywhere else.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_implementationdetails Implementation Details
-Stores information about the @SG_ML_L016016SGWSequentialLongLabelsgwsequentiallonglabel.
+@SG_ML_HEADER_sg_implementationdetails Implementation Details
+Stores information about the @SG_ML_L016022SGWSequentialLongLabel../cppclass/sgwsequentiallonglabel.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_SGWSequentialLongLabel_SGWWidget_ptr_const_SGXString_ref_float_float_float_float_float_float_float_float_ @SG_ML_L01606ASGWSequentialLongLabel#SGWSequentialLongLabel_SGWWidget_ptr_const_SGXString_ref_float_float_float_float_float_float_float_float_(@SG_ML_L009009SGWWidgetsgwwidget* parent, const @SG_ML_L009009SGXStringsgxstring& s, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0);
-Creates a @SG_ML_L016016SGWSequentialLongLabelsgwsequentiallonglabel with parent @SG_ML_L018015SGWidget ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/sgwidget @SG_ML_B006parent, @SG_ML_L01A016w-distance ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/wdistance coordinates (@SG_ML_B002x1, @SG_ML_B002x0, @SG_ML_B002y1, @SG_ML_B002y0, @SG_ML_B002w1, @SG_ML_B002w0, ?, ?), text displayed @SG_ML_B001s, and font size as a @SG_ML_L01A016w-distance ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/wdistance (@SG_ML_B002h1, @SG_ML_B002h0).
-@SG_ML_NOTE Only place this inside a @SG_ML_L017017SGWSequentialScrollViewsgwsequentialscrollview.
+Creates a @SG_ML_L016022SGWSequentialLongLabel../cppclass/sgwsequentiallonglabel with parent @SG_ML_L018015SGWidget ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/sgwidget @SG_ML_B006parent, @SG_ML_L01A016w-distance ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/wdistance coordinates (@SG_ML_B002x1, @SG_ML_B002x0, @SG_ML_B002y1, @SG_ML_B002y0, @SG_ML_B002w1, @SG_ML_B002w0, ?, ?), text displayed @SG_ML_B001s, and font size as a @SG_ML_L01A016w-distance ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/wdistance (@SG_ML_B002h1, @SG_ML_B002h0).
+@SG_ML_NOTE Only place this inside a @SG_ML_L017023SGWSequentialScrollView../cppclass/sgwsequentialscrollview.
 @SG_ML_WARN @SG_ML_B006parent being nullptr is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
 @SG_ML_BLANKLINE

@@ -27,33 +27,33 @@ children classes: (none)
 &#9;void @SG_ML_L007012reserve#void_reserve_int_(int newMemoryLength);
 &#9;[[nodiscard]] const T& @SG_ML_L003026top#nodiscard_const_T_ref_top_func_const_() const;
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_detaileddescription Detailed Description
-@SG_ML_L010010SGLPriorityQueuesglpriorityqueue provides a template based priority queue for any data type. It is guaranteed that the element in front is always the last element in the list if all priority queue elements are placed into a list and that list is sorted. This is a template based class with no separate source file. This class is a SGEXTN container. Copy constructor, copy assignment, move constructor, move assignment, and destructor work as expected. A deep copy is performed whenever this class is copied, and the new instance will not be linked to the old instance in any way. It is assumed that the contents placed into this SGEXTN container can be copied and moved. This means that their copy constructor copy assignment, move constructor, move assignment, and destructor work as expected. If this is not the case or if you want the container to store references or constant references, store pointers instead.
+@SG_ML_HEADER_sg_detaileddescription Detailed Description
+@SG_ML_L01001CSGLPriorityQueue../cppclass/sglpriorityqueue provides a template based priority queue for any data type. It is guaranteed that the element in front is always the last element in the list if all priority queue elements are placed into a list and that list is sorted. This is a template based class with no separate source file. This class is a SGEXTN container. Copy constructor, copy assignment, move constructor, move assignment, and destructor work as expected. A deep copy is performed whenever this class is copied, and the new instance will not be linked to the old instance in any way. It is assumed that the contents placed into this SGEXTN container can be copied and moved. This means that their copy constructor copy assignment, move constructor, move assignment, and destructor work as expected. If this is not the case or if you want the container to store references or constant references, store pointers instead.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_implementationdetails Implementation Details
-@SG_ML_L010010SGLPriorityQueuesglpriorityqueue internally uses a maximum heap implemented over a resizable C array buffer. The C array buffer expands to double its size when filled.
+@SG_ML_HEADER_sg_implementationdetails Implementation Details
+@SG_ML_L01001CSGLPriorityQueue../cppclass/sglpriorityqueue internally uses a maximum heap implemented over a resizable C array buffer. The C array buffer expands to double its size when filled.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_SGLPriorityQueue_func_ @SG_ML_L010017SGLPriorityQueue#SGLPriorityQueue_func_();
 Creates an empty priority queue.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_int_length_func_const_ [[nodiscard]] int @SG_ML_L006021length#nodiscard_int_length_func_const_() const;
-Returns the length of the @SG_ML_L010010SGLPriorityQueuesglpriorityqueue, which is the number of elements currently stored inside it.
+Returns the length of the @SG_ML_L01001CSGLPriorityQueue../cppclass/sglpriorityqueue, which is the number of elements currently stored inside it.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_pop_func_ void @SG_ML_L00300Fpop#void_pop_func_();
-Removes the most in front element of the @SG_ML_L010010SGLPriorityQueuesglpriorityqueue.
+Removes the most in front element of the @SG_ML_L01001CSGLPriorityQueue../cppclass/sglpriorityqueue.
 @SG_ML_NOTE This function has truly logarithmic time complexity.
-@SG_ML_NOTE This function does not return the first element before removing it. To access the element being removed, use @SG_ML_L015036SGLPriorityQueue::topsglpriorityqueue#nodiscard_const_T_ref_top_func_const_ before removal.
-@SG_ML_WARN Removing from an empty @SG_ML_L010010SGLPriorityQueuesglpriorityqueue is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
+@SG_ML_NOTE This function does not return the first element before removing it. To access the element being removed, use @SG_ML_L015042SGLPriorityQueue::top../cppclass/sglpriorityqueue#nodiscard_const_T_ref_top_func_const_ before removal.
+@SG_ML_WARN Removing from an empty @SG_ML_L01001CSGLPriorityQueue../cppclass/sglpriorityqueue is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_push_const_T_ref_ void @SG_ML_L004017push#void_push_const_T_ref_(const T& x);
-Inserts @SG_ML_B001x into the @SG_ML_L010010SGLPriorityQueuesglpriorityqueue.
-@SG_ML_NOTE This function has a amortised logarithmic time complexity due to the memory buffer resizing. To achieve true logarithmic time complexity, use @SG_ML_L019022SGLPriorityQueue::reservesglpriorityqueue#void_reserve_int_ to pre allocate the memory you need.
+Inserts @SG_ML_B001x into the @SG_ML_L01001CSGLPriorityQueue../cppclass/sglpriorityqueue.
+@SG_ML_NOTE This function has a amortised logarithmic time complexity due to the memory buffer resizing. To achieve true logarithmic time complexity, use @SG_ML_L01902ESGLPriorityQueue::reserve../cppclass/sglpriorityqueue#void_reserve_int_ to pre allocate the memory you need.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_reserve_int_ void @SG_ML_L007012reserve#void_reserve_int_(int newMemoryLength);
-Pre allocates memory sufficient for @SG_ML_B00FnewMemoryLength elements to be stored in the @SG_ML_L010010SGLPriorityQueuesglpriorityqueue without resizing the memory buffer.
+Pre allocates memory sufficient for @SG_ML_B00FnewMemoryLength elements to be stored in the @SG_ML_L01001CSGLPriorityQueue../cppclass/sglpriorityqueue without resizing the memory buffer.
 @SG_ML_NOTE Nothing is done if the memory buffer is already enough to store @SG_ML_B00FnewMemoryLength elements.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_const_T_ref_top_func_const_ [[nodiscard]] const T& @SG_ML_L003026top#nodiscard_const_T_ref_top_func_const_() const;
-Returns the first element of the @SG_ML_L010010SGLPriorityQueuesglpriorityqueue.
+Returns the first element of the @SG_ML_L01001CSGLPriorityQueue../cppclass/sglpriorityqueue.
 @SG_ML_WARN Using this when the priority queue is empty results in @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
 @SG_ML_BLANKLINE

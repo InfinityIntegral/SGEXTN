@@ -22,10 +22,10 @@ children classes: (none)
 @SG_ML_HEADER_ instance member variables
 &#9;enum @SG_ML_L00401DFlag#enum_Flag_Left_Center_Right_{ Left, Center, Right };
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_detaileddescription Detailed Description
-@SG_ML_L016016SGWHorizontalAlignmentsgwhorizontalalignment provides an enum describing the horizontal alignment mode of text in the @SG_ML_L018015SGWidget ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/sgwidget system. This is used by @SG_ML_L008008SGWLabelsgwlabel, @SG_ML_L009009SGWButtonsgwbutton, and @SG_ML_L008008SGWInputsgwinput.
+@SG_ML_HEADER_sg_detaileddescription Detailed Description
+@SG_ML_L016022SGWHorizontalAlignment../cppclass/sgwhorizontalalignment provides an enum describing the horizontal alignment mode of text in the @SG_ML_L018015SGWidget ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/sgwidget system. This is used by @SG_ML_L008014SGWLabel../cppclass/sgwlabel, @SG_ML_L009015SGWButton../cppclass/sgwbutton, and @SG_ML_L008014SGWInput../cppclass/sgwinput.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_implementationdetails Implementation Details
+@SG_ML_HEADER_sg_implementationdetails Implementation Details
 provides an enum
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_enum_Flag_Left_Center_Right_ enum @SG_ML_L00401DFlag#enum_Flag_Left_Center_Right_{ Left, Center, Right };

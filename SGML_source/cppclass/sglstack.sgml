@@ -27,33 +27,33 @@ children classes: (none)
 &#9;void @SG_ML_L007012reserve#void_reserve_int_(int newMemoryLength);
 &#9;[[nodiscard]] const T& @SG_ML_L003026top#nodiscard_const_T_ref_top_func_const_() const;
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_detaileddescription Detailed Description
-@SG_ML_L008008SGLStacksglstack provides a template based stack for any data type. @SG_ML_L008008SGLStacksglstack is preferred over @SG_ML_L009009SGLVectorsglvector when only stack functionality is needed as it provides more readable code. This is a template based class with no separate source file. This class is a SGEXTN container. Copy constructor, copy assignment, move constructor, move assignment, and destructor work as expected. A deep copy is performed whenever this class is copied, and the new instance will not be linked to the old instance in any way. It is assumed that the contents placed into this SGEXTN container can be copied and moved. This means that their copy constructor copy assignment, move constructor, move assignment, and destructor work as expected. If this is not the case or if you want the container to store references or constant references, store pointers instead.
+@SG_ML_HEADER_sg_detaileddescription Detailed Description
+@SG_ML_L008014SGLStack../cppclass/sglstack provides a template based stack for any data type. @SG_ML_L008014SGLStack../cppclass/sglstack is preferred over @SG_ML_L009015SGLVector../cppclass/sglvector when only stack functionality is needed as it provides more readable code. This is a template based class with no separate source file. This class is a SGEXTN container. Copy constructor, copy assignment, move constructor, move assignment, and destructor work as expected. A deep copy is performed whenever this class is copied, and the new instance will not be linked to the old instance in any way. It is assumed that the contents placed into this SGEXTN container can be copied and moved. This means that their copy constructor copy assignment, move constructor, move assignment, and destructor work as expected. If this is not the case or if you want the container to store references or constant references, store pointers instead.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_implementationdetails Implementation Details
-@SG_ML_L008008SGLStacksglstack internally stores a buffer in the form of a C array. When the buffer is full, it resizes to double its previous size.
+@SG_ML_HEADER_sg_implementationdetails Implementation Details
+@SG_ML_L008014SGLStack../cppclass/sglstack internally stores a buffer in the form of a C array. When the buffer is full, it resizes to double its previous size.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_SGLStack_func_ @SG_ML_L00800FSGLStack#SGLStack_func_();
-Creates an empty @SG_ML_L008008SGLStacksglstack.
+Creates an empty @SG_ML_L008014SGLStack../cppclass/sglstack.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_int_length_func_const_ [[nodiscard]] int @SG_ML_L006021length#nodiscard_int_length_func_const_() const;
-Returns the length of the @SG_ML_L008008SGLStacksglstack, that is the number of elements currently stored inside it.
+Returns the length of the @SG_ML_L008014SGLStack../cppclass/sglstack, that is the number of elements currently stored inside it.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_pop_func_ void @SG_ML_L00300Fpop#void_pop_func_();
-Removes the top element of the @SG_ML_L008008SGLStacksglstack.
-@SG_ML_NOTE This does not return the removed element. To access the removed element, use @SG_ML_L00D02ESGLStack::topsglstack#nodiscard_const_T_ref_top_func_const_ before removal.
+Removes the top element of the @SG_ML_L008014SGLStack../cppclass/sglstack.
+@SG_ML_NOTE This does not return the removed element. To access the removed element, use @SG_ML_L00D03ASGLStack::top../cppclass/sglstack#nodiscard_const_T_ref_top_func_const_ before removal.
 @SG_ML_NOTE This runs in truly constant time complexity.
-@SG_ML_WARN Removing from an empty @SG_ML_L008008SGLStacksglstack is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
+@SG_ML_WARN Removing from an empty @SG_ML_L008014SGLStack../cppclass/sglstack is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_push_const_T_ref_ void @SG_ML_L004017push#void_push_const_T_ref_(const T& x);
-Appends @SG_ML_B001x to the top of the @SG_ML_L008008SGLStacksglstack.
-@SG_ML_NOTE This has a amortised constant time complexity. To make it run in truly constant time, use @SG_ML_L01101ASGLStack::reservesglstack#void_reserve_int_ to pre allocate as much memory as you need.
+Appends @SG_ML_B001x to the top of the @SG_ML_L008014SGLStack../cppclass/sglstack.
+@SG_ML_NOTE This has a amortised constant time complexity. To make it run in truly constant time, use @SG_ML_L011026SGLStack::reserve../cppclass/sglstack#void_reserve_int_ to pre allocate as much memory as you need.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_reserve_int_ void @SG_ML_L007012reserve#void_reserve_int_(int newMemoryLength);
-Pre allocates sufficient memory to store @SG_ML_B00FnewMemoryLength elements in the @SG_ML_L008008SGLStacksglstack.
+Pre allocates sufficient memory to store @SG_ML_B00FnewMemoryLength elements in the @SG_ML_L008014SGLStack../cppclass/sglstack.
 @SG_ML_NOTE If there is already sufficient memory for @SG_ML_B00FnewMemoryLength elements, this is ignored.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_const_T_ref_top_func_const_ [[nodiscard]] const T& @SG_ML_L003026top#nodiscard_const_T_ref_top_func_const_() const;
-Returns the topmost element of the @SG_ML_L008008SGLStacksglstack.
-@SG_ML_WARN Using this when the @SG_ML_L008008SGLStacksglstack is empty results in @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
+Returns the topmost element of the @SG_ML_L008014SGLStack../cppclass/sglstack.
+@SG_ML_WARN Using this when the @SG_ML_L008014SGLStack../cppclass/sglstack is empty results in @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
 @SG_ML_BLANKLINE

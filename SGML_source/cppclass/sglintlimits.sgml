@@ -23,10 +23,10 @@ children classes: (none)
 &#9;static int @SG_ML_L007019maximum#static_int_maximum_func_();
 &#9;static int @SG_ML_L007019minimum#static_int_minimum_func_();
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_detaileddescription Detailed Description
-@SG_ML_L00C00CSGLIntLimitssglintlimits provides limits of the int data type including the maximum and minimum representable int values.
+@SG_ML_HEADER_sg_detaileddescription Detailed Description
+@SG_ML_L00C018SGLIntLimits../cppclass/sglintlimits provides limits of the int data type including the maximum and minimum representable int values.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_implementationdetails Implementation Details
+@SG_ML_HEADER_sg_implementationdetails Implementation Details
 Uses ‹numeric_limits› from Standard Template Library
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_int_maximum_func_ static int @SG_ML_L007019maximum#static_int_maximum_func_();
