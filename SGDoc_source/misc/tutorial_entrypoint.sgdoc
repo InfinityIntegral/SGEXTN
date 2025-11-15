@@ -1,0 +1,43 @@
+@SG_OTHERFILE_tutorials/entrypoint Entry Point Tutorial
+Normally in C++ when we build applications, the application always contains a main function. Typically this has the function signature
+@SG_STARTCODEBLK
+int main();
+@SG_ENDCODEBLK
+or
+@SG_STARTCODEBLK
+int main(int argc, char** argv);
+@SG_ENDCODEBLK
+if you want to accept command line arguments, especially for CLI apps. We call this the entry point of the application because this function is run automatically when the app starts.
+@SG_ML_BLANKLINE
+When you write your application's entry point, the computer does not know about SGEXTN or how to initialise it. To initialise SGEXTN properly, you would need to use the function
+@SG_STARTCODEBLK
+int SGEXTN(int argc, char **argv, void (*initialiseFunction)())
+@SG_ENDCODEBLK
+This function is found in the EntryPoint_SG "module", so to use it, you have to link to the "module" in your CMakeLists.txt file. Here is the CMake command required.
+@SG_STARTCODEBLK
+find_package(SGEXTN REQUIRED COMPONENTS EntryPoint_SG)
+target_link_libraries(yourCMakeTarget PRIVATE SGEXTN::EntryPoint_SG)
+@SG_ENDCODEBLK
+You must pass argc and argv to the SGEXTN entry point. This is especially important if your programme will accept command line arguments, since SGEXTN internally provides the arguments to your function handling them. If no arguments or the wrong arguments are sent, it may cause undefined behaviour.
+@SG_ML_BLANKLINE
+Almost certainly, your application also needs to perform setup. This can include creating UI pages, reading configuration files, setting up static variables, or even loading fonts.
+SGEXTN does not know how to set up your application, so you must create a setup function and pass it to the entry point's initialiseFunction argument as a @SG_FINDREP_FUNCPTR. Note that this setup function does not need to and should not be in your main.cpp file.
+Inside your initialiseFunction, you should assign values to static member variables of SGXCentral. This allows you to time different parts of your application's initialisation process appropriately. For example, UI creation can only occur after the @SG_FINDREP_WIDGET module is initialised. For more information, look through the SGXCentral documentation to see what you can set.
+@SG_ML_BLANKLINE
+Here is a sample implementation of your application's entry point.
+@SG_STARTCODEBLK
+#include <SGEXTN_EntryPoint.h>
+#include <SGXCentral.h>
+
+int main(int argc, char** argv){
+    return SGEXTN(argc, argv, &init); // call SGEXTN entry point
+}
+
+void init(){
+    SGXCentral::applicationName = "Your Application";
+    SGXCentral::applicationVersion = "v0.0.0";
+    SGXCentral::organisationName = "05524F (Singapore)";
+    SGXCentral::customInitialise = &initUI; // will be run after SGEXTN is set up
+    SGXCentral::folderName = "someFolder";
+}
+@SG_ENDCODEBLK

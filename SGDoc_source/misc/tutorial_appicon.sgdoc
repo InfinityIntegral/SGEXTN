@@ -1,0 +1,8 @@
+@SG_OTHERFILE_tutorials/appicon Application Icons Tutorial
+SGEXTN does not use SVGs or images to display icons. Instead, the best way to do this is through a font. The name of the font must be AppIcons.sg and it must be added in SGXCentral::importCustomFonts.
+To make a font, you can use FontForge. However, 05524F is also planning an application that allows you to make fonts for SGEXTN icon easily without dealing with the complexity of building fonts.
+Your font for application icons should only include characters in the Unicode private use range. You can specify which icon to use by passing the matching character to the constructors of SGWIconLabel or SGWIconButton.
+@SG_ML_BLANKLINE
+SGEXTN assumes that you will be using application icons, so if the font is not properly added or is not added at all at the end of SGXCentral::importCustomFonts, a warning will be sent. You can ignore the warning if you are not using application icons.
+@SG_ML_BLANKLINE
+If you really want to use image based icons, write a custom shader for them using @SG_FINDREP_RENDERER.

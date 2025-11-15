@@ -1,0 +1,12 @@
+@SG_OTHERFILE_tutorials/undefinedbehaviour Undefined Behaviour
+Undefined behaviour in SGEXTN refers to when you pass something nonsensical into a SGEXTN function and the function does not check if the thing passed is nonsensical. Typically, this triggers a C++ undefined behaviour.
+As the words "undefined behaviour" suggest, there is no guarantee on the behaviour of undefined behaviour. Maybe it will appear to work, maybe it will crash, maybe it will open a cmd window and print "Why so blur leh" 100000000 times. There is no guarantee on what it will do.
+In practise, most of the time, undefined behaviour crashes or appears to work. The compiler does not like doing crazy stuff such as scolding you in Singlish repeatedly.
+To avoid undefined behaviour, always run clang-tidy on your code. SGEXTN header files are already optimised for clang-tidy usage, so running clang-tidy will not take too long.
+@SG_ML_BLANKLINE
+Here are some common causes of undefined behaviour
+- nullptr dereference
+- use after delete and double delete
+- out of bounds access
+- signed integer overflow
+- incorrect deletion of C array (use SGLArray to avoid this)

@@ -1,0 +1,23 @@
+@SG_OTHERFILE_tutorials/wdistance W-Distance Tutorial
+The @SG_FINDREP_WIDGET module has automatic resizing for UI components through w-distance. This means if w-distance is used properly, your application UI would not look too bad on any aspect ratio except for really extreme ones.
+@SG_ML_BLANKLINE
+w-distance is used interchangeably in the SGEXTN documentation to refer to the 8 coordinate version describing the layout of a widget and the 2 coordinate version describing a single length.
+1 size unit is the height of a line of text, this can be adjusted by the user after the customisation page is provided to them through calling SGWCustomisationPageControl::enableFontSizeCustomisationPage.
+The 2 coordinate version has a 1 coordinate and a 0 coordinate. The 1 coordinate represents a proportion of the parent width if the w-distance represents the length of a horizontal line, and it is a proportion of the parent height otherwise. The 0 coordinate is a proportion of the size unit. Parent refers to the parent @SG_FINDREP_WIDGET
+The distance represented by a 2 coordinate w-distance is the sum of the distances represented by each coordinate. A 2 coordinate w-distance will be denoted as (c1, c0) where c1 is the 1 coordinate and c0 is the 0 coordinate.
+@SG_STARTCODEBLK
+distance = 1_coordinate * parent_width_or_height + 0_coordinate * size_unit
+@SG_ENDCODEBLK
+Note that either coordinate can be negative. Typically the 0 coordinate of the width and height of fullscreen UI elements can be negative for padding around the widget.
+A 8 coordinate w-distance is denoted as (x1, x0, y1, y0, w1, w0, h1, h0). This means that the top left corner of the widget is at (x, y) in pixel coordinates where x = (x1, x0) and y = (y1, y0). The widget has a width of (w1, w0) and a height of (h1, h0).
+@SG_ML_BLANKLINE
+Here are some commonly used w-distances for widget layout
+fullscreen background - (0, 0, 0, 0, 1, 0, 1, 0)
+fullscreen textbox or scroll view - (0, 0.5, 0, 0.5, 1, -1, 1, -1)
+full width textbox or input field - (0, 0.5, 0, ?, 1, -1, 0, 1)
+page title - (0, 0.5, 0, 0.5, 1, -1, 0, 1.5)
+most UI text - (0, ?, 0, ?, 0, ?, 0, 1)
+invalid input warnings - (0, ?, 0, ?, 0, ?, 0, 0.75)
+application icons - (0, ?, 0, ?, 0, 1.5, ?, ?)
+@SG_ML_BLANKLINE
+If you still do not get it, try creating a SGWBlankWidget with different w-distances and see how it appears on screen.

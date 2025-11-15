@@ -9,7 +9,7 @@ CMake commands:
 &#9;This is the core SGEXTN module providing access to structs, the application entry point, and debugging.
 &#9;The module contains structs for colours in both RGBA and HSLA format, timestamps for date and time, 2 dimensional vectors, and identifiers with a registration system builtin. There is also a random number generator and a timer system that operates using @SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback.
 &#9;@SG_ML_L007013SGXChar../cppclass/sgxchar and @SG_ML_L009015SGXString../cppclass/sgxstring, both very helpful for text processing, are found here. These are recommended over ‹string› from the Standard Template Library or QString for more readable code and faster clang-tidy passes.
-&#9;Read this ../tutorials/entrypoint to learn how to use the entry point to set up a SGEXTN application, and this ../tutorials/debug for debugging SGEXTN applications using the builtin debugging tool.
+&#9;Read this @SG_ML_L008017tutorial../tutorials/entrypoint to learn how to use the entry point to set up a SGEXTN application, and this @SG_ML_L008012tutorial../tutorials/debug for debugging SGEXTN applications using the builtin debugging tool.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_sg_classlist List of classes in this module
 &#9;@SG_ML_L00A016SGXCentral../cppclass/sgxcentral

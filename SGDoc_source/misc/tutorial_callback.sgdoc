@@ -1,0 +1,16 @@
+@SG_OTHERFILE_tutorials/callback Callback Functions Tutorial
+Function pointers are used very extensively in SGEXTN as callback functions and replaces Qt's signal-slot mechanism.
+@SG_ML_BLANKLINE
+A function pointer is a special pointer to the code of a function. It can be passed around like any other pointer and also be called like a function. Callback functions in SGEXTN refers to function pointers to static member functions of classes, and they must return void.
+The arguments in a function are part of the type when a pointer to the function is created. Therefore you must match the arguments and return type when writing to a function pointer.
+To make a function pointer, you literally make a function into a pointer using &.
+@SG_STARTCODEBLK
+#include <SGXDebug.h> // necessary for debug logging
+#include <SGXTimer.h> // for the timer
+void func(){ // a function
+    SG("callback function called"); // log stuff
+}
+SGXTimer::singleCall(0.0f, &func); // &func is a function pointer to func
+@SG_ENDCODEBLK
+@SG_ML_BLANKLINE
+Function pointers are almost always exposed variables in SGEXTN and can be read from and written to directly. Modifying a function pointer property immediately changes the callback function being used. There is no need for connect or disconnect calls and no need for complicated MetaObject stuff that slow down compilation.
