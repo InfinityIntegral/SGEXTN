@@ -1,11 +1,25 @@
-# WORK IN PROGRESS
+# SGEXTN README
 
-# SGEXTN CODE IS NOT DELETED, IT IS PLACED SOMEWHERE ELSE WHILE THE BUILD SYSTEM IS BEING SWITCHED TO CMAKE, THE PROJECT IS ACTIVELY UNDER DEVELOPMENT
+The [HTML version](https://infinityintegral.github.io/SGEXTN/readme/readme) of this README offers a significantly better user experience than this Markdown version.
 
-SGEXTN v6.0.0 is a work in progress. When it is completed, we will bring back the README which is in something.md as of now.
+SGEXTN is 05524F's own C++ framework for application development with an emphasis on pure C++ code.
 
-I kept promising first v5.0.0 then v5.1.0 to be ready for development usage, but every time I ended up making more changes and adding more stuff. To avoid misleading users, SGEXTN v6.0.0 will NOT be ready for development use until the following conditions are met:
-- [ ] SGEXTN v6.0.0 itself is done
-- [ ] the 05524F GitHub pages + docs is done
-- [ ] Colours++ is rebuilt with SGEXTN
-- [ ] official demo app + tests for SGEXTN is done
+No compiled binaries are available for SGEXTN but it is very easy to build one yourself. See [setting up SGEXTN](https://infinityintegral.github.io/SGEXTN/readme/readme#setup) for more information. You need Qt, CMake and Qt Shader Tools to build SGEXTN.
+
+This version of SGEXTN is designed to work with Qt version 6.10.0, though anything at or above Qt 6.9.1 is likely fine.
+
+[list of features](https://infinityintegral.github.io/SGEXTN/readme/readme#featurelist)  
+[setting up SGEXTN](https://infinityintegral.github.io/SGEXTN/readme/readme#setup)  
+[demo app](https://infinityintegral.github.io/SGEXTN/readme/readme#demo)  
+[credits and legal info](https://infinityintegral.github.io/SGEXTN/readme/readme#legal)  
+
+## List of modules
+
+SGEXTN contains 6 modules. Each module is described in detail in their own documentation pages linked below.
+
+[Containers](https://infinityintegral.github.io/SGEXTN/modules/sg_containers) - template based container data structures  
+[Math](https://infinityintegral.github.io/SGEXTN/modules/sg_math) - mathematical operations  
+[Core](https://infinityintegral.github.io/SGEXTN/modules/sg_core) - core SGEXTN functionality  
+[FileSystem](https://infinityintegral.github.io/SGEXTN/modules/sg_filesystem) - access to file system  
+[SGWidget](https://infinityintegral.github.io/SGEXTN/modules/sg_widgets) - graphical user interface  
+[SG - RI](https://infinityintegral.github.io/SGEXTN/modules/sg_ri) - custom rendering  
