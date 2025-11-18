@@ -18,7 +18,7 @@ SGEXTN contains 6 modules. Each module is described in detail in their own docum
 @SG_ML_L004012Math../modules/sg_math - mathematical operations
 @SG_ML_L004012Core../modules/sg_core - core SGEXTN functionality
 @SG_ML_L00A018FileSystem../modules/sg_filesystem - access to file system
-@SG_ML_L009015SGWidget../modules/sg_widgets - graphical user interface
+@SG_ML_L008015SGWidget../modules/sg_widgets - graphical user interface
 @SG_ML_L007010SG - RI../modules/sg_ri - custom rendering
 @SG_ML_HEADER_setup Setting up SGEXTN
 There are no compiled binaries for SGEXTN as supporting all possible operating system and compiler combinations is unfeasible. However, building SGEXTN yourself is really easy.
