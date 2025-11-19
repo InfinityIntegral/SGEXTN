@@ -289,6 +289,7 @@ target_include_directories(EntryPoint_SG
 add_executable(InternalTest WIN32)
 target_sources(InternalTest
     PRIVATE "internal_test/src/main.cpp"
+    PRIVATE "internal_test/src/clangtidychecks.cpp"
 )
 target_link_libraries(InternalTest
     PRIVATE SG_Containers
