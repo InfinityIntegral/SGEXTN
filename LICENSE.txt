@@ -9,7 +9,7 @@ You may use, distribute and copy all SGEXTN documentation under the terms of GNU
 SGEXTN uses the Qt framework under the terms of the GNU Lesser General Public License v3 (LGPL v3) through dynamically linking against the Qt framework. In compliance with LGPL v3, users may relink or replace the Qt libraries.
 See https://doc.qt.io/qt-6/lgpl.html for more information about Qt licensing.
 See https://github.com/InfinityIntegral/SGEXTN for SGEXTN source code.
-See https://infinityintegral.github.io for SGEXTN documentation.
+See https://infinityintegral.github.io/SGEXTN/readme/readme for SGEXTN documentation.
 See https://github.com/qt for Qt source code.
 
 [Singlish]
@@ -18,7 +18,7 @@ SGEXTN docs is under GNU-FDLv1.3 one, also got copy below.
 SGEXTN uses Qt which is under LGPLv3, relinking or replacing Qt libraries dynamically linked to SGEXTN is ok.
 See https://doc.qt.io/qt-6/lgpl.html for more info about Qt licensing.
 See https://github.com/InfinityIntegral/SGEXTN for SGEXTN source code.
-See https://infinityintegral.github.io for SGEXTN docs.
+See https://infinityintegral.github.io/SGEXTN/readme/readme for SGEXTN docs.
 See https://github.com/qt for Qt source code.
 
 [华文 （新加坡）]
@@ -27,7 +27,7 @@ See https://github.com/qt for Qt source code.
 SGEXTN 通过与 Qt 框架进行动态链接，依照 GNU 较宽松通用公共许可证第 3 版（LGPL v3）的条款使用 Qt 框架。根据 LGPL v3 的要求，用户可以重新链接或替换 Qt 库。
 更多关于 Qt 授权的信息，请参阅：https://doc.qt.io/qt-6/lgpl.html
 SGEXTN 源代码请见：https://github.com/InfinityIntegral/SGEXTN
-SGEXTN 文档请见：https://infinityintegral.github.io
+SGEXTN 文档请见：https://infinityintegral.github.io/SGEXTN/readme/readme
 Qt 源代码请见：https://github.com/qt
 
 [Bahasa Melayu (Singapura)]
@@ -36,7 +36,7 @@ Anda boleh menggunakan, mengedar dan menyalin semua dokumentasi SGEXTN di bawah 
 SGEXTN menggunakan rangka kerja Qt di bawah terma Lesen Awam Am Lesser GNU versi 3 (LGPL v3) melalui pautan dinamik kepada rangka kerja Qt. Selaras dengan keperluan LGPL v3, pengguna boleh memaut semula atau menggantikan pustaka Qt.
 Untuk maklumat lanjut tentang pelesenan Qt, sila rujuk: https://doc.qt.io/qt-6/lgpl.html
 Kod sumber SGEXTN boleh didapati di: https://github.com/InfinityIntegral/SGEXTN
-Dokumentasi SGEXTN boleh didapati di: https://infinityintegral.github.io
+Dokumentasi SGEXTN boleh didapati di: https://infinityintegral.github.io/SGEXTN/readme/readme
 Kod sumber Qt boleh didapati di: https://github.com/qt
 
 தமிழ் (சிங்கப்பூர்)
@@ -45,7 +45,7 @@ SGEXTN ஆவணங்களை GNU Free Documentation License பதிப்�
 SGEXTN, Qt கட்டமைப்புடன் (framework) இயக்கமாக இணைக்கப்பட்டு, GNU Lesser General Public License பதிப்பு 3 (LGPL v3) விதிமுறைகளின் கீழ் Qt கட்டமைப்பைப் பயன்படுத்துகிறது. LGPL v3 க்கு ஏற்ப, பயனர்கள் Qt நூலகங்களை (libraries) மீண்டும் இணைக்கவோ அல்லது மாற்றவோ முடியும்.
 Qt உரிமம் குறித்த மேலும் தகவல்களுக்கு: https://doc.qt.io/qt-6/lgpl.html
 SGEXTN மூல குறியீடு: https://github.com/InfinityIntegral/SGEXTN
-SGEXTN ஆவணங்கள்: https://infinityintegral.github.io
+SGEXTN ஆவணங்கள்: https://infinityintegral.github.io/SGEXTN/readme/readme
 Qt மூல குறியீடு: https://github.com/qt
 
 -------------------------------------------------------
