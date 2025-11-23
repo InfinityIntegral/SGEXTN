@@ -64,13 +64,13 @@ target_include_directories(SG_Math
     PUBLIC "$<INSTALL_INTERFACE:include/SG_Math/include>"
 )
 target_sources(SG_Math
-    PRIVATE "SG_Math/src/sglfloatconstants.cpp"
-    PRIVATE "SG_Math/src/sglfloatlimits.cpp"
-    PRIVATE "SG_Math/src/sglfloatmath.cpp"
-    PRIVATE "SG_Math/src/sglintlimits.cpp"
-    PRIVATE "SG_Math/src/sglintmath.cpp"
-    PRIVATE "SG_Math/src/sgllonglonglimits.cpp"
-    PRIVATE "SG_Math/src/sgllonglongmath.cpp"
+    PRIVATE "SG_Math/src/SGLFloatConstants.cpp"
+    PRIVATE "SG_Math/src/SGLFloatLimits.cpp"
+    PRIVATE "SG_Math/src/SGLFloatMath.cpp"
+    PRIVATE "SG_Math/src/SGLIntLimits.cpp"
+    PRIVATE "SG_Math/src/SGLIntMath.cpp"
+    PRIVATE "SG_Math/src/SGLLongLongLimits.cpp"
+    PRIVATE "SG_Math/src/SGLLongLongMath.cpp"
 )
 
 add_library(SG_Core SHARED)
@@ -303,9 +303,9 @@ target_link_libraries(InternalTest
 
 install(TARGETS SG_Containers SG_Math SG_Core SG_FileSystem SG_Widgets SG_RI EntryPoint_SG
     EXPORT SG_ALL_Targets
-    RUNTIME DESTINATION "C:/SGEXTN_install/lib"
-    ARCHIVE DESTINATION "C:/SGEXTN_install/lib"
-    LIBRARY DESTINATION "C:/SGEXTN_install/lib"
+    RUNTIME DESTINATION "../SGEXTN_install/lib"
+    ARCHIVE DESTINATION "../SGEXTN_install/lib"
+    LIBRARY DESTINATION "../SGEXTN_install/lib"
     INCLUDES DESTINATION include
 )
 install(DIRECTORY dll_defines/ DESTINATION include/dll_defines)
@@ -330,4 +330,4 @@ install(FILES
     "${CMAKE_CURRENT_BINARY_DIR}/SGEXTNConfig.cmake"
     DESTINATION lib/cmake/SGEXTN
 )
-# cmake --install C:\SGEXTN\build\Desktop_Qt_6_10_0_llvm_mingw_64_bit-Release --config Release --prefix C:/SGEXTN_install
+# cmake --install build/Desktop_Qt_6_10_1-Release --config Release --prefix ../SGEXTN_install
