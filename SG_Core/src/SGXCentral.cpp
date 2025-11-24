@@ -18,6 +18,9 @@ void (*SGXCentral::customTerminate)() = nullptr;
 void (*SGXCentral::setCustomTheme)() = nullptr;
 void (*SGXCentral::importCustomFonts)() = nullptr;
 
+int SGXCentral::actualArgc = 0;
+char** SGXCentral::actualArgv = nullptr;
+
 void (*SGXCentral::sgFileSystemInitFolders)() = nullptr;
 void (*SGXCentral::sgWidgetsInit0)() = nullptr;
 void (*SGXCentral::sgWidgetsInit1)() = nullptr;
@@ -54,9 +57,11 @@ void SGXCentral::terminate(){
 }
 
 void SGXCentral::createApplication(int argc, char **argv, void (*initialiseFunction)()){
-    new QGuiApplication(argc, argv); // NOLINT(misc-const-correctness)
+    SGXCentral::actualArgc = argc;
+    SGXCentral::actualArgv = argv;
+    new QGuiApplication(actualArgc, actualArgv); // NOLINT(misc-const-correctness)
     initialiseFunction(); // NOLINT(clang-analyzer-cplusplus.NewDeleteLeaks)
-    if(SGXCentral::interpretCmdArgs != nullptr){SGXCentral::interpretCmdArgs(argc, argv);}
+    if(SGXCentral::interpretCmdArgs != nullptr){SGXCentral::interpretCmdArgs(actualArgc, actualArgv);}
 }
 
 int SGXCentral::startEventLoop(){

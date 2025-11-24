@@ -22,6 +22,8 @@ public:
     static void (*setCustomTheme)();
     static void (*importCustomFonts)();
     static void createApplication(int argc, char** argv, void (*initialiseFunction)());
+    static int actualArgc;
+    static char** actualArgv;
     static int startEventLoop();
     static void (*sgFileSystemInitFolders)();
     static void (*sgWidgetsInit0)();
