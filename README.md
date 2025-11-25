@@ -6,7 +6,7 @@ SGEXTN is 05524F's own C++ framework for application development with an emphasi
 
 No compiled binaries are available for SGEXTN but it is very easy to build one yourself. See [setting up SGEXTN](https://infinityintegral.github.io/SGEXTN/readme/readme#setup) for more information. You need Qt, CMake and Qt Shader Tools to build SGEXTN.
 
-This version of SGEXTN is designed to work with Qt version 6.10.0, though anything at or above Qt 6.9.1 is likely fine.
+This version of SGEXTN is designed to work with Qt version 6.10.1, though anything at or above Qt 6.9.1 is likely fine.
 
 [list of features](https://infinityintegral.github.io/SGEXTN/readme/readme#featurelist)  
 [setting up SGEXTN](https://infinityintegral.github.io/SGEXTN/readme/readme#setup)  
