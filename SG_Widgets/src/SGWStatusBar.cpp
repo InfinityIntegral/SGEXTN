@@ -22,7 +22,8 @@ SGWStatusBar::SGWStatusBar() : SGWWidget(SGWWidget::rootWidget, 0.0f, 0.0f, 0.0f
 }
 
 void SGWStatusBar::terminate(){
-    delete SGWStatusBar::timer;
+    (*SGWStatusBar::timer).deleteTimer();
+    SGWStatusBar::timer = nullptr;
 }
 
 void SGWStatusBar::updateTime(){

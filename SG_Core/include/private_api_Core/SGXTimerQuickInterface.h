@@ -12,6 +12,7 @@ public:
     SGXTimerQuickInterface(SGXTimer* x);
     SGXTimer* x;
     void runFunction() const;
+    void actuallyDeleteTimer() const;
 };
 
 #endif // SGXTIMERQUICKINTERFACE_H

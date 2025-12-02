@@ -29,7 +29,7 @@ int main(int argc, char** argv){
 
 void init(){
     SGXCentral::applicationName = "internal test";
-    SGXCentral::applicationVersion = "v6.0.1";
+    SGXCentral::applicationVersion = "v6.0.2";
     SGXCentral::organisationName = "05524F (Singapore)";
     SGXCentral::customInitialise = &test;
     SGXCentral::folderName = "SGEXTN";

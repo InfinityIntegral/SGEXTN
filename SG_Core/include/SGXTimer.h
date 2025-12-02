@@ -21,9 +21,11 @@ public:
     QTimer* timer;
     static void singleCall(float t, void (*attachedFunction)());
     void runFunction();
+    void deleteTimer();
 protected:
     float interval;
     bool onceOnly;
+    bool deleted;
     SGXTimerQuickInterface* quickInterface;
 };
 

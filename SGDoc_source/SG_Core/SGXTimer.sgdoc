@@ -8,6 +8,7 @@ Creates and starts a SGXTimer running $attachedFunction every $t seconds.
 @SG_NOTE The timer is automatically started upon creation.
 @SG_WARN $attachedFunction being nullptr is undefined behaviour.
 @SG_WARN $t being negative is undefined behaviour.
+@SG_WARN Directly deleting a SGXTimer will crash as not preventing it would lead to a use after free bug.
 @SG_PRIVATE_API SGXTimer(bool x, float t, void (*attachedFunction)());
 @SG_FUNC void stop() const;
 Pauses this SGXTimer. The timer can be resumed using SGXTimer::start later.
@@ -26,7 +27,11 @@ Runs $attachedFunction after $t seconds once without repeating it.
 @SG_NOTE The SGXTimer object controlling this is not exposed, so you cannot stop or restart this timer.
 @SG_WARN $attachedFunction being nullptr is undefined behaviour.
 @SG_WARN $t being negative is undefined behaviour.
+@SG_FUNC void deleteTimer();
+Deletes the SGXTimer safely.
+@SG_WARN Directly deleting a SGXTimer will crash as not preventing it would lead to a use after free bug.
 @SG_PRIVATE_API void runFunction();
 @SG_PRIVATE_API float interval;
 @SG_PRIVATE_API bool onceOnly;
 @SG_PRIVATE_API SGXTimerQuickInterface* quickInterface;
+@SG_PRIVATE_API bool deleted;

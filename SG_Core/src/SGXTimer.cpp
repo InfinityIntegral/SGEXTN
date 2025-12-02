@@ -2,9 +2,11 @@
 #include <SGLFloatMath.h>
 #include <QTimer>
 #include <private_api_Core/SGXTimerQuickInterface.h>
+#include <private_api_Containers/SGLCrash.h>
 
 SGXTimer::SGXTimer(float t, void (*attachedFunction)()){
     (*this).onceOnly = false;
+    (*this).deleted = false;
     (*this).interval = t;
     (*this).attachedFunction = attachedFunction;
     (*this).timer = new QTimer();
@@ -16,6 +18,7 @@ SGXTimer::SGXTimer(float t, void (*attachedFunction)()){
 SGXTimer::SGXTimer(bool x, float t, void (*attachedFunction)()){
     (void)x;
     (*this).onceOnly = true;
+    (*this).deleted = false;
     (*this).interval = t;
     (*this).attachedFunction = attachedFunction;
     (*this).timer = new QTimer();
@@ -25,6 +28,7 @@ SGXTimer::SGXTimer(bool x, float t, void (*attachedFunction)()){
 }
 
 SGXTimer::~SGXTimer(){
+    if((*this).deleted == false){SGLCrash::crashOnDeleteTimer();}
     (*(*this).timer).deleteLater();
     (*(*this).quickInterface).deleteLater();
 }
@@ -39,9 +43,15 @@ void SGXTimer::start() const {
 
 void SGXTimer::runFunction(){
     attachedFunction();
-    if(onceOnly == true){delete this;}
+    if(onceOnly == true){(*this).deleteTimer();}
 }
 
 void SGXTimer::singleCall(float t, void (*attachedFunction)()){
     new SGXTimer(true, t, attachedFunction);
+}
+
+void SGXTimer::deleteTimer(){
+    (*this).deleted = true;
+    (*(*this).timer).stop();
+    QTimer::singleShot(0, (*this).quickInterface, &SGXTimerQuickInterface::actuallyDeleteTimer);
 }

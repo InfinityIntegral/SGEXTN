@@ -12,3 +12,7 @@ void SGLCrash::crashOnInsert(){
 void SGLCrash::crashOnRemove(){
     throw std::runtime_error("You attempted to remove a element or key from a SGLSet / SGLUnorderedSet / SGLMultiSet / SGLUnorderedMultiSet / SGLMap / SGLUnorderedMap / SGLMultiMap / SGLUnorderedMultiMap when the element or key does not exist in the data structure.");
 }
+
+void SGLCrash::crashOnDeleteTimer(){
+    throw std::runtime_error("You attempted to directly delete a SGXTimer, this is not allowed, instead call SGXTimer::deleteTimer to delete it safely.");
+}

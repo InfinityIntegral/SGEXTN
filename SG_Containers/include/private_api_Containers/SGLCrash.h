@@ -9,6 +9,7 @@ public:
     static void crash();
     static void crashOnInsert();
     static void crashOnRemove();
+    static void crashOnDeleteTimer();
 };
 
 #endif // SGLCRASH_H

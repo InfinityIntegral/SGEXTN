@@ -58,3 +58,5 @@ Function pointer to the function import custom fonts. This must be set in the en
 @SG_PRIVATE_API static void (*sgWidgetsInit4)();
 @SG_PRIVATE_API static void (*sgWidgetsInit5)();
 @SG_PRIVATE_API static void (*sgWidgetsTerminate)();
+@SG_PRIVATE_API static int actualArgc;
+@SG_PRIVATE_API static char** actualArgv;

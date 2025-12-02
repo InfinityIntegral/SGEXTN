@@ -10,3 +10,7 @@ SGXTimerQuickInterface::SGXTimerQuickInterface(SGXTimer *x){
 void SGXTimerQuickInterface::runFunction() const {
     (*x).runFunction();
 }
+
+void SGXTimerQuickInterface::actuallyDeleteTimer() const {
+    delete x;
+}

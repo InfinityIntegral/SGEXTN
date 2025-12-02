@@ -24,6 +24,7 @@ children classes: (none)
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_ instance member functions
 &#9;@SG_ML_L00801ESGXTimer#SGXTimer_float_void_ptr_func_(float t, void (*attachedFunction)());
+&#9;void @SG_ML_L00B017deleteTimer#void_deleteTimer_func_();
 &#9;void @SG_ML_L005017start#void_start_func_const_() const;
 &#9;void @SG_ML_L004016stop#void_stop_func_const_() const;
 @SG_ML_BLANKLINE
@@ -47,6 +48,11 @@ Creates and starts a @SG_ML_L008014SGXTimer../cppclass/sgxtimer running @SG_ML_B
 @SG_ML_NOTE The timer is automatically started upon creation.
 @SG_ML_WARN @SG_ML_B010attachedFunction being nullptr is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
 @SG_ML_WARN @SG_ML_B001t being negative is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
+@SG_ML_WARN Directly deleting a @SG_ML_L008014SGXTimer../cppclass/sgxtimer will crash as not preventing it would lead to a use after free bug.
+@SG_ML_BLANKLINE
+@SG_ML_HEADER_void_deleteTimer_func_ void @SG_ML_L00B017deleteTimer#void_deleteTimer_func_();
+Deletes the @SG_ML_L008014SGXTimer../cppclass/sgxtimer safely.
+@SG_ML_WARN Directly deleting a @SG_ML_L008014SGXTimer../cppclass/sgxtimer will crash as not preventing it would lead to a use after free bug.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_start_func_const_ void @SG_ML_L005017start#void_start_func_const_() const;
 Restarts this @SG_ML_L008014SGXTimer../cppclass/sgxtimer which is previously paused.
