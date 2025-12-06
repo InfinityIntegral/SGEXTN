@@ -69,7 +69,7 @@ jobs:
           ../linuxdeployqt/build/tools/linuxdeployqt/qmlimportscanner ${{github.workspace}}/SG_Widgets/assets
           echo "above was QML import scanner output"
           echo "QT_INSTALL_QML is set to $(qmake -query QT_INSTALL_QML)"
-          ../linuxdeployqt/build/tools/linuxdeployqt/linuxdeployqt package/${{env.APPNAME}}.AppDir/usr/bin/${{env.APPNAME}} -appimage -qmldir=${{github.workspace}}/SG_Widgets/assets -verbose=3 -qmake=${{github.workspace}}/../Qt/6.10.1/gcc_64/bin/qmake
+          ../linuxdeployqt/build/tools/linuxdeployqt/linuxdeployqt package/${{env.APPNAME}}.AppDir/usr/bin/${{env.APPNAME}} -verbose=3 -appimage -qmldir=${{github.workspace}}/SG_Widgets/assets -qmake=${{github.workspace}}/../Qt/6.10.1/gcc_64/bin/qmake
 
       - name: write file with version info
         run: |
