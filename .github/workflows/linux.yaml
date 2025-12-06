@@ -41,7 +41,6 @@ jobs:
           export PATH=${{github.workspace}}/Qt/6.10.1/gcc_64/bin:$PATH
           export PATH=${{github.workspace}}/Qt/6.10.1/gcc_64/libexec:$PATH
           export QML_IMPORT_PATH=${{github.workspace}}/Qt/6.10.1/gcc_64/qml
-          ls ${{github.workspace}}/Qt/6.10.1/gcc_64/libexec
 
       - name: build application binary
         run: |
@@ -54,9 +53,8 @@ jobs:
           cp $(find build -type f -executable -name "${{env.CMAKETARGET}}") package/${{env.APPNAME}}.AppDir/usr/bin/${{env.APPNAME}}
           mkdir -p package/${{env.APPNAME}}.AppDir/usr/lib
           find build -type f -name "*.so*" -exec cp {} package/${{env.APPNAME}}.AppDir/usr/lib/ \; -exec echo "Copied {} to usr/lib" \;
+          cp ${{github.workspace}}/Qt/6.10.1/gcc_64/bin/qmlimportscanner package/${APPNAME}.AppDir/usr/bin/
           linuxdeployqt package/${{env.APPNAME}}.AppDir/usr/bin/${{env.APPNAME}} -appimage -qmldir=../SG_Widgets/assets
-
-
 
       - name: write file with version info
         run: |
