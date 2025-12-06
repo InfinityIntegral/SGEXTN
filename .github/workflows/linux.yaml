@@ -50,8 +50,7 @@ jobs:
           cd build
           cmake .. -DCMAKE_PREFIX_PATH=../../Qt/${{env.QTVERSION}}/gcc_64
           cmake --build .
-          echo "Copying $(which qmlimportscanner) to tools/linuxdeployqt/qmlimportscanner"
-          cp $(which qmlimportscanner) tools/linuxdeployqt/qmlimportscanner
+          cp ../../Qt/6.10.1/gcc_64/libexec/qmlimportscanner tools/linuxdeployqt/qmlimportscanner
           chmod +x tools/linuxdeployqt/qmlimportscanner
 
       - name: build application binary
