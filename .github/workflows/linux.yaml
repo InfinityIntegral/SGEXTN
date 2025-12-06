@@ -27,7 +27,7 @@ jobs:
           target: desktop
           dir: ${{github.workspace}}
           cache: true
-          modules: qtshadertools
+          modules: qtshadertools qttools
 
       - name: install devtools
         run: |
