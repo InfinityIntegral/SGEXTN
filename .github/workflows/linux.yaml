@@ -21,7 +21,7 @@ jobs:
       - name: install Qt
         uses: jurplel/install-qt-action@v4
         with:
-          version: '6-latest'
+          version: ${{env.QTVERSION}}
           host: linux
           target: desktop
           dir: ${{github.workspace}}/Qt
