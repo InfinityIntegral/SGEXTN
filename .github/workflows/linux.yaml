@@ -8,6 +8,7 @@ env:
   APPNAME: sg-extn
   VERSION: 6.1.0
   QTVERSION: 6.10.1
+  CMAKETARGET: InternalTest
 
 jobs:
   build:
@@ -44,11 +45,12 @@ jobs:
           cd build
           cmake .. -DCMAKE_PREFIX_PATH=${{github.workspace}}/Qt/${{env.QTVERSION}}/gcc_64
           cmake --build .
-          mkdir -p ../package/${{env.APPNAME}}.AppDir/usr/bin
-          mkdir -p ../package/${{env.APPNAME}}.AppDir/usr/lib
-          find . -type f -executable -exec bash -c 'echo "Copying {} to ../package/'"${APPNAME}"'.AppDir/usr/bin/{}"; cp "$1" ../package/'"${APPNAME}"'.AppDir/usr/bin/'{}' ' _ {} \;
-          find . -type f -name "*.so*" -exec bash -c 'echo "Copying {} to ../package/'"${APPNAME}"'.AppDir/usr/lib/{}"; cp "$1" ../package/'"${APPNAME}"'.AppDir/usr/lib/'{}' ' _ {} \;
-          linuxdeployqt ../package/${APPNAME}.AppDir/usr/bin/${APPNAME} -appimage -qmldir=../SG_Widgets/assets
+          mkdir -p package/${{env.APPNAME}}.AppDir/usr/bin
+          cp build/${{env.CMAKETARGET}} package/${{env.APPNAME}}.AppDir/usr/bin/${{env.APPNAME}}
+          mkdir -p package/${{env.APPNAME}}.AppDir/usr/lib
+          find build -type f -name "*.so*" -exec cp {} package/${{env.APPNAME}}.AppDir/usr/lib/ \; -exec echo "Copied {} to usr/lib" \;
+          linuxdeployqt package/${{env.APPNAME}}.AppDir/usr/bin/${{env.APPNAME}} -appimage -qmldir=../SG_Widgets/assets
+
 
 
       - name: write file with version info
