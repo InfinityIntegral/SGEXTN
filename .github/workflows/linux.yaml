@@ -24,9 +24,10 @@ jobs:
           version: ${{env.QTVERSION}}
           host: linux
           target: desktop
-          dir: ${{github.workspace}}/Qt
+          dir: ${{github.workspace}}
           archive: true
           cache: true
+          components: qtbase, qtdeclarative, qttools, qtsvg, qtshadertools, qtquickcontrols2, qtx11extras
 
       - name: install devtools
         run: |
