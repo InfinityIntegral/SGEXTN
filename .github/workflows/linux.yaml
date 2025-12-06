@@ -46,9 +46,9 @@ jobs:
           cmake .. -DCMAKE_PREFIX_PATH=${{github.workspace}}/Qt/${{env.QTVERSION}}/gcc_64
           cmake --build .
           mkdir -p package/${{env.APPNAME}}.AppDir/usr/bin
-          cp $(find build -type f -executable -name "${{env.CMAKETARGET}}") package/${{env.APPNAME}}.AppDir/usr/bin/${{env.APPNAME}}
+          cp $(find . -type f -executable -name "${{env.CMAKETARGET}}") package/${{env.APPNAME}}.AppDir/usr/bin/${{env.APPNAME}}
           mkdir -p package/${{env.APPNAME}}.AppDir/usr/lib
-          find build -type f -name "*.so*" -exec cp {} package/${{env.APPNAME}}.AppDir/usr/lib/ \; -exec echo "Copied {} to usr/lib" \;
+          find . -type f -name "*.so*" -exec cp {} package/${{env.APPNAME}}.AppDir/usr/lib/ \; -exec echo "Copied {} to usr/lib" \;
           linuxdeployqt package/${{env.APPNAME}}.AppDir/usr/bin/${{env.APPNAME}} -appimage -qmldir=../SG_Widgets/assets
 
 
