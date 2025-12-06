@@ -68,7 +68,7 @@ jobs:
           echo "linuxdeployqt at $(find ${{github.workspace}}/../linuxdeployqt/build -type f -executable -name linuxdeployqt)"
           ../linuxdeployqt/build/tools/linuxdeployqt/qmlimportscanner ${{github.workspace}}/SG_Widgets/assets
           echo "above was QML import scanner output"
-          ../linuxdeployqt/build/tools/linuxdeployqt/linuxdeployqt package/${{env.APPNAME}}.AppDir/usr/bin/${{env.APPNAME}} -appimage -qmldir=/home/runner/work/SGEXTN/SGEXTN/SG_Widgets/assets -verbose=3
+          ../linuxdeployqt/build/tools/linuxdeployqt/linuxdeployqt package/${{env.APPNAME}}.AppDir/usr/bin/${{env.APPNAME}} -appimage -qmldir=/home/runner/work/SGEXTN/SGEXTN/SG_Widgets/assets -verbose=2
 
       - name: write file with version info
         run: |
