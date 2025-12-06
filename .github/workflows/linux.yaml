@@ -41,6 +41,7 @@ jobs:
           export PATH=${{github.workspace}}/Qt/6.10.1/gcc_64/bin:$PATH
           export PATH=${{github.workspace}}/Qt/6.10.1/gcc_64/libexec:$PATH
           export QML_IMPORT_PATH=${{github.workspace}}/Qt/6.10.1/gcc_64/qml
+          ls PATH=${{github.workspace}}/Qt/6.10.1/gcc_64/libexec
 
       - name: build application binary
         run: |
