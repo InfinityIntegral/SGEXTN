@@ -23,7 +23,7 @@ jobs:
         with:
           version: ${{env.QTVERSION}}
           host: linux
-          target: gcc_64
+          target: desktop
           dir: ${{github.workspace}}/Qt
 
       - name: install devtools
