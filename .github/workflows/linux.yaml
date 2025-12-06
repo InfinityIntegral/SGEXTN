@@ -54,7 +54,6 @@ jobs:
         run: |
           export PATH=${{github.workspace}}/../Qt/6.10.1/gcc_64/bin:$PATH
           export PATH=${{github.workspace}}/../Qt/6.10.1/gcc_64/libexec:$PATH
-          export PATH=$(find ${{github.workspace}}/../linuxdeployqt/build -type f -executable -name linuxdeployqt):$PATH
           export QML_IMPORT_PATH=${{github.workspace}}/../Qt/6.10.1/gcc_64/qml
           mkdir -p build
           cd build
@@ -67,7 +66,7 @@ jobs:
           find build -type f -name "*.so*" -exec cp {} package/${{env.APPNAME}}.AppDir/usr/lib/ \; -exec echo "Copied {} to usr/lib" \;
           echo "QMLDIR = '${{github.workspace}}/SG_Widgets/assets'"
           echo "linuxdeployqt at $(find ${{github.workspace}}/../linuxdeployqt/build -type f -executable -name linuxdeployqt)"
-          linuxdeployqt package/${{env.APPNAME}}.AppDir/usr/bin/${{env.APPNAME}} -appimage -qmldir=${{github.workspace}}/SG_Widgets/assets
+          ../linuxdeployqt/build/tools/linuxdeployqt/linuxdeployqt package/${{env.APPNAME}}.AppDir/usr/bin/${{env.APPNAME}} -appimage -qmldir=${{github.workspace}}/SG_Widgets/assets
 
       - name: write file with version info
         run: |
