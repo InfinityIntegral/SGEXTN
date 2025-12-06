@@ -64,7 +64,7 @@ jobs:
           cp $(find build -type f -executable -name "${{env.CMAKETARGET}}") package/${{env.APPNAME}}.AppDir/usr/bin/${{env.APPNAME}}
           mkdir -p package/${{env.APPNAME}}.AppDir/usr/lib
           find build -type f -name "*.so*" -exec cp {} package/${{env.APPNAME}}.AppDir/usr/lib/ \; -exec echo "Copied {} to usr/lib" \;
-          $(find ../linuxdeployqt/build -type f -executable -name linuxdeployqt) package/${{env.APPNAME}}.AppDir/usr/bin/${{env.APPNAME}} -appimage -qmldir=../SG_Widgets/assets
+          $(find ../linuxdeployqt/build -type f -executable -name linuxdeployqt) package/${{env.APPNAME}}.AppDir/usr/bin/${{env.APPNAME}} -appimage -qmldir=../../SG_Widgets/assets
 
       - name: write file with version info
         run: |
