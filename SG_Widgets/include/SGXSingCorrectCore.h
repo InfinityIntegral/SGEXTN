@@ -18,7 +18,6 @@ public:
     static SGXString correctionPrefix;
     static SGLUnorderedMap<SGXString, SGXChar, SGLEqualsTo<SGXString>, SGLHash<SGXString>>* database;
     static void initialise();
-    static void terminate();
     static SGXSingCorrectQuickInterface* instance;
 };
 

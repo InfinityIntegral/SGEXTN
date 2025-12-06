@@ -24,7 +24,6 @@ Turn on a SGWBackground using a initialisation function and a reset function. $i
 Turns off the UI page referenced by $thisPointer then set $thisPointer, which is passed by reference, to nullptr.
 @SG_WARN If $thisPointer is nullptr when the function is called, it is assumed that the UI page is already off so nothing is done. If the UI page was previously turned on using SGWBackground::enable, this is not a concern.
 @SG_PRIVATE_API static SGLStack<SGWBackground*>* activePages;
-@SG_PRIVATE_API static void terminate();
 @SG_PRIVATE_API SGWBackground(SGWWidget* parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, int themeColour);
 @SG_PRIVATE_API bool usingTheme;
 @SG_PRIVATE_API int themeColour;

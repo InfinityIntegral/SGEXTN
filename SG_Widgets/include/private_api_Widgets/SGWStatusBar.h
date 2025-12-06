@@ -13,7 +13,6 @@ public:
     SGWStatusBar();
     static SGWStatusBar* instance;
     static SGXTimer* timer;
-    static void terminate();
     static void updateTime();
 };
 

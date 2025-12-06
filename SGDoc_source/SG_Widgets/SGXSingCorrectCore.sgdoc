@@ -8,5 +8,4 @@ Returns $s after running it through @SG_FINDREP_SINGCORRECT.
 @SG_PRIVATE_API static SGXString correctionPrefix;
 @SG_PRIVATE_API static SGLUnorderedMap<SGXString, SGXChar, SGLEqualsTo<SGXString>, SGLHash<SGXString>>* database;
 @SG_PRIVATE_API static void initialise();
-@SG_PRIVATE_API static void terminate();
 @SG_PRIVATE_API static SGXSingCorrectQuickInterface* instance;

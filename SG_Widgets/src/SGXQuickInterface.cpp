@@ -57,36 +57,10 @@ void SGXQuickInterface::createTemplates(){
     SGXQuickInterface::sequentialLongLabel = new QQmlComponent(SGXQuickInterface::e, ":/SGEXTN/SGWSequentialLongLabel.qml");
 }
 
-void SGXQuickInterface::deleteTemplates(){
-    delete SGXQuickInterface::root;
-    delete SGXQuickInterface::parentWidget;
-    delete SGXQuickInterface::statusBar;
-    delete SGXQuickInterface::blankWidget;
-    delete SGXQuickInterface::pageBackground;
-    delete SGXQuickInterface::scrollView;
-    delete SGXQuickInterface::textLabel;
-    delete SGXQuickInterface::iconLabel;
-    delete SGXQuickInterface::longLabel;
-    delete SGXQuickInterface::textButton;
-    delete SGXQuickInterface::iconButton;
-    delete SGXQuickInterface::textInput;
-    delete SGXQuickInterface::longInput;
-    delete SGXQuickInterface::multiTouchReceiver;
-    delete SGXQuickInterface::singleTouchReceiver;
-    delete SGXQuickInterface::colourPicker;
-    delete SGXQuickInterface::sequentialScrollView;
-    delete SGXQuickInterface::sequentialLongLabel;
-}
-
 void SGXQuickInterface::buildBase(){
     SGWWidget::rootWidget = new SGWRoot();
     SGWWidget::parentWidget = new SGWParent();
     SGWStatusBar::instance = new SGWStatusBar();
-}
-
-void SGXQuickInterface::deleteSingletons(){
-    delete SGXQuickInterface::resizerSingleton;
-    delete SGXQuickInterface::themeColoursSingleton;
 }
 
 QQuickItem* SGXQuickInterface::getBottomObject(QQuickItem *topObject){

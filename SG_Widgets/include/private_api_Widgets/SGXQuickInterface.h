@@ -19,8 +19,6 @@ public:
     static QQmlComponent* root;
     static QQuickWindow* applicationWindow;
     static QQuickItem* rootWindow;
-    static void deleteTemplates();
-    static void deleteSingletons();
     static SGXQuickResizer* resizerSingleton;
     static SGXThemeColourSetting* themeColoursSingleton;
     static QQmlComponent* parentWidget;

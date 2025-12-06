@@ -14,7 +14,6 @@
 #include <private_api_Widgets/SGXSingCorrectCustomisation.h>
 #include <SGXThemeColoursCustomisation.h>
 #include <private_api_Widgets/SGWStatusBar.h>
-#include <SGWBackground.h>
 #include <SGXCentral.h>
 #include <qqml.h>
 #include <QChar>
@@ -65,17 +64,4 @@ void SGWWidgetInitialisation::init4(){
 void SGWWidgetInitialisation::init5(){
     SGXSingCorrectCore::initialise();
     SGXSingCorrectCustomisation::loadFileData();
-}
-
-void SGWWidgetInitialisation::terminate(){
-    SGXSingCorrectCore::terminate();
-    SGXQuickInterface::deleteTemplates();
-    SGXQuickInterface::deleteSingletons();
-    SGWStatusBar::terminate();
-    SGWBackground::terminate();
-    (*SGXQuickInterface::applicationWindow).close();
-    (*SGXQuickInterface::applicationWindow).releaseResources();
-    (*SGXQuickInterface::applicationWindow).deleteLater();
-    (*SGXQuickInterface::e).deleteLater();
-    QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 }

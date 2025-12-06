@@ -11,10 +11,6 @@
 SGLUnorderedSet<SGXIdentifier, SGLEqualsTo<SGXIdentifier>, SGLHash<SGXIdentifier>>* SGXIdentifier::identifiersList = new SGLUnorderedSet<SGXIdentifier, SGLEqualsTo<SGXIdentifier>, SGLHash<SGXIdentifier>>();
 const SGXIdentifier SGXIdentifier::nullIdentifier = SGXIdentifier(0);
 
-void SGXIdentifier::terminate(){
-    delete SGXIdentifier::identifiersList;
-}
-
 SGXIdentifier::SGXIdentifier(bool ifValid){ // NOLINT(misc-no-recursion)
     if(ifValid == false){
         (*this).a = SGXRandomNumberGenerator::rngInt32();

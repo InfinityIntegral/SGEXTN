@@ -991,10 +991,3 @@ void SGXSingCorrectCore::initialise(){
     (*SGXSingCorrectCore::database).insert("SGoasy", SGXChar(0x24E8));
     (*SGXSingCorrectCore::database).insert("SGoasz", SGXChar(0x24E9));
 }
-
-void SGXSingCorrectCore::terminate(){
-    delete SGXSingCorrectCore::database;
-    SGXSingCorrectCore::database = nullptr;
-    delete SGXSingCorrectCore::instance;
-    delete SGXSingCorrectCustomisation::database;
-}

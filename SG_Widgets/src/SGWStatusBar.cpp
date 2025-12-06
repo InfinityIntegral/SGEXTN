@@ -21,11 +21,6 @@ SGWStatusBar::SGWStatusBar() : SGWWidget(SGWWidget::rootWidget, 0.0f, 0.0f, 0.0f
     SGXTimer::singleCall(0.0f, &SGWStatusBar::updateTime);
 }
 
-void SGWStatusBar::terminate(){
-    (*SGWStatusBar::timer).deleteTimer();
-    SGWStatusBar::timer = nullptr;
-}
-
 void SGWStatusBar::updateTime(){
     (*(*SGWStatusBar::instance).getTopObject()).setProperty("s", (*SGXString::doubleToStringSignificantFigures(SGXTimeStamp::now().getYearsFrom(SGXTimeStamp::zero), 9).fillRightToLength(10, '0').data));
 }

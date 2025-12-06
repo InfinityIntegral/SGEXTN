@@ -73,8 +73,3 @@ void SGWBackground::disable(SGWBackground *&thisPointer){
         (*(*SGWBackground::activePages).top()).setItemVisibility(true);
     }
 }
-
-void SGWBackground::terminate(){
-    delete SGWBackground::activePages;
-    delete SGWWidget::rootWidget;
-}

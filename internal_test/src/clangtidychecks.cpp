@@ -1,92 +1,92 @@
-#include <SGLArray.h>
-#include <SGLDeque.h>
-#include <SGLEqualsTo.h>
-#include <SGLHash.h>
-#include <SGLHashAlgorithm.h>
-#include <SGLLesserThan.h>
-#include <SGLMap.h>
-#include <SGLMoreThan.h>
-#include <SGLMultiSet.h>
-#include <SGLPair.h>
-#include <SGLPriorityQueue.h>
-#include <SGLQueue.h>
-#include <SGLSet.h>
-#include <SGLSort.h>
-#include <SGLSpan.h>
-#include <SGLStack.h>
-#include <SGLTuple3.h>
-#include <SGLTuple4.h>
-#include <SGLTuple5.h>
-#include <SGLUnorderedMap.h>
-#include <SGLUnorderedMultiSet.h>
-#include <SGLUnorderedSet.h>
-#include <SGLVector.h>
+#include <SGLArray.h> // NOLINT(misc-include-cleaner)
+#include <SGLDeque.h> // NOLINT(misc-include-cleaner)
+#include <SGLEqualsTo.h> // NOLINT(misc-include-cleaner)
+#include <SGLHash.h> // NOLINT(misc-include-cleaner)
+#include <SGLHashAlgorithm.h> // NOLINT(misc-include-cleaner)
+#include <SGLLesserThan.h> // NOLINT(misc-include-cleaner)
+#include <SGLMap.h> // NOLINT(misc-include-cleaner)
+#include <SGLMoreThan.h> // NOLINT(misc-include-cleaner)
+#include <SGLMultiSet.h> // NOLINT(misc-include-cleaner)
+#include <SGLPair.h> // NOLINT(misc-include-cleaner)
+#include <SGLPriorityQueue.h> // NOLINT(misc-include-cleaner)
+#include <SGLQueue.h> // NOLINT(misc-include-cleaner)
+#include <SGLSet.h> // NOLINT(misc-include-cleaner)
+#include <SGLSort.h> // NOLINT(misc-include-cleaner)
+#include <SGLSpan.h> // NOLINT(misc-include-cleaner)
+#include <SGLStack.h> // NOLINT(misc-include-cleaner)
+#include <SGLTuple3.h> // NOLINT(misc-include-cleaner)
+#include <SGLTuple4.h> // NOLINT(misc-include-cleaner)
+#include <SGLTuple5.h> // NOLINT(misc-include-cleaner)
+#include <SGLUnorderedMap.h> // NOLINT(misc-include-cleaner)
+#include <SGLUnorderedMultiSet.h> // NOLINT(misc-include-cleaner)
+#include <SGLUnorderedSet.h> // NOLINT(misc-include-cleaner)
+#include <SGLVector.h> // NOLINT(misc-include-cleaner)
 
-#include <SGLFloatConstants.h>
-#include <SGLFloatLimits.h>
-#include <SGLFloatMath.h>
-#include <SGLIntLimits.h>
-#include <SGLIntMath.h>
-#include <SGLLongLongLimits.h>
-#include <SGLLongLongMath.h>
+#include <SGLFloatConstants.h> // NOLINT(misc-include-cleaner)
+#include <SGLFloatLimits.h> // NOLINT(misc-include-cleaner)
+#include <SGLFloatMath.h> // NOLINT(misc-include-cleaner)
+#include <SGLIntLimits.h> // NOLINT(misc-include-cleaner)
+#include <SGLIntMath.h> // NOLINT(misc-include-cleaner)
+#include <SGLLongLongLimits.h> // NOLINT(misc-include-cleaner)
+#include <SGLLongLongMath.h> // NOLINT(misc-include-cleaner)
 
-#include <SGXCentral.h>
-#include <SGXChar.h>
-#include <SGXColourHSLA.h>
-#include <SGXColourRGBA.h>
-#include <SGXDebug.h>
-#include <SGXIdentifier.h>
-#include <SGXRandomNumberGenerator.h>
-#include <SGXString.h>
-#include <SGXTimeStamp.h>
-#include <SGXTimer.h>
-#include <SGXVector2.h>
+#include <SGXCentral.h> // NOLINT(misc-include-cleaner)
+#include <SGXChar.h> // NOLINT(misc-include-cleaner)
+#include <SGXColourHSLA.h> // NOLINT(misc-include-cleaner)
+#include <SGXColourRGBA.h> // NOLINT(misc-include-cleaner)
+#include <SGXDebug.h> // NOLINT(misc-include-cleaner)
+#include <SGXIdentifier.h> // NOLINT(misc-include-cleaner)
+#include <SGXRandomNumberGenerator.h> // NOLINT(misc-include-cleaner)
+#include <SGXString.h> // NOLINT(misc-include-cleaner)
+#include <SGXTimeStamp.h> // NOLINT(misc-include-cleaner)
+#include <SGXTimer.h> // NOLINT(misc-include-cleaner)
+#include <SGXVector2.h> // NOLINT(misc-include-cleaner)
 
-#include <SGXFile.h>
-#include <SGXFileBinUtilities.h>
-#include <SGXFileSystem.h>
+#include <SGXFile.h> // NOLINT(misc-include-cleaner)
+#include <SGXFileBinUtilities.h> // NOLINT(misc-include-cleaner)
+#include <SGXFileSystem.h> // NOLINT(misc-include-cleaner)
 
-#include <SGRImage.h>
-#include <SGWBackground.h>
-#include <SGWBlankWidget.h>
-#include <SGWButton.h>
-#include <SGWCustomisationPageControl.h>
-#include <SGWDefaultFonts.h>
-#include <SGWHorizontalAlignment.h>
-#include <SGWIconButton.h>
-#include <SGWIconLabel.h>
-#include <SGWInput.h>
-#include <SGWLabel.h>
-#include <SGWLongInput.h>
-#include <SGWLongLabel.h>
-#include <SGWMultiTouchReceiver.h>
-#include <SGWNotify.h>
-#include <SGWPageBackground.h>
-#include <SGWScrollView.h>
-#include <SGWSequentialLongLabel.h>
-#include <SGWSequentialScrollView.h>
-#include <SGWSingleTouchReceiver.h>
-#include <SGWTextButton.h>
-#include <SGWTextInput.h>
-#include <SGWTextLabel.h>
-#include <SGWType.h>
-#include <SGWVerticalAlignment.h>
-#include <SGWWidget.h>
-#include <SGXFileDownloader.h>
-#include <SGXFileUploader.h>
-#include <SGXResizer.h>
-#include <SGXSingCorrectCore.h>
-#include <SGXThemeColours.h>
-#include <SGXThemeColoursCustomisation.h>
-#include <SGXTouchEvent.h>
+#include <SGRImage.h> // NOLINT(misc-include-cleaner)
+#include <SGWBackground.h> // NOLINT(misc-include-cleaner)
+#include <SGWBlankWidget.h> // NOLINT(misc-include-cleaner)
+#include <SGWButton.h> // NOLINT(misc-include-cleaner)
+#include <SGWCustomisationPageControl.h> // NOLINT(misc-include-cleaner)
+#include <SGWDefaultFonts.h> // NOLINT(misc-include-cleaner)
+#include <SGWHorizontalAlignment.h> // NOLINT(misc-include-cleaner)
+#include <SGWIconButton.h> // NOLINT(misc-include-cleaner)
+#include <SGWIconLabel.h> // NOLINT(misc-include-cleaner)
+#include <SGWInput.h> // NOLINT(misc-include-cleaner)
+#include <SGWLabel.h> // NOLINT(misc-include-cleaner)
+#include <SGWLongInput.h> // NOLINT(misc-include-cleaner)
+#include <SGWLongLabel.h> // NOLINT(misc-include-cleaner)
+#include <SGWMultiTouchReceiver.h> // NOLINT(misc-include-cleaner)
+#include <SGWNotify.h> // NOLINT(misc-include-cleaner)
+#include <SGWPageBackground.h> // NOLINT(misc-include-cleaner)
+#include <SGWScrollView.h> // NOLINT(misc-include-cleaner)
+#include <SGWSequentialLongLabel.h> // NOLINT(misc-include-cleaner)
+#include <SGWSequentialScrollView.h> // NOLINT(misc-include-cleaner)
+#include <SGWSingleTouchReceiver.h> // NOLINT(misc-include-cleaner)
+#include <SGWTextButton.h> // NOLINT(misc-include-cleaner)
+#include <SGWTextInput.h> // NOLINT(misc-include-cleaner)
+#include <SGWTextLabel.h> // NOLINT(misc-include-cleaner)
+#include <SGWType.h> // NOLINT(misc-include-cleaner)
+#include <SGWVerticalAlignment.h> // NOLINT(misc-include-cleaner)
+#include <SGWWidget.h> // NOLINT(misc-include-cleaner)
+#include <SGXFileDownloader.h> // NOLINT(misc-include-cleaner)
+#include <SGXFileUploader.h> // NOLINT(misc-include-cleaner)
+#include <SGXResizer.h> // NOLINT(misc-include-cleaner)
+#include <SGXSingCorrectCore.h> // NOLINT(misc-include-cleaner)
+#include <SGXThemeColours.h> // NOLINT(misc-include-cleaner)
+#include <SGXThemeColoursCustomisation.h> // NOLINT(misc-include-cleaner)
+#include <SGXTouchEvent.h> // NOLINT(misc-include-cleaner)
 
-#include <SGRBaseRenderer.h>
-#include <SGRBaseSyncer.h>
-#include <SGRCommandRequest.h>
-#include <SGRDataBuffer.h>
-#include <SGRElementBufferObject.h>
-#include <SGRGraphicsLanguageType.h>
-#include <SGRRendererWidget.h>
-#include <SGRRenderingProgramme.h>
-#include <SGRVertexBufferObject.h>
-#include <SGWColourPickerWidget.h>
+#include <SGRBaseRenderer.h> // NOLINT(misc-include-cleaner)
+#include <SGRBaseSyncer.h> // NOLINT(misc-include-cleaner)
+#include <SGRCommandRequest.h> // NOLINT(misc-include-cleaner)
+#include <SGRDataBuffer.h> // NOLINT(misc-include-cleaner)
+#include <SGRElementBufferObject.h> // NOLINT(misc-include-cleaner)
+#include <SGRGraphicsLanguageType.h> // NOLINT(misc-include-cleaner)
+#include <SGRRendererWidget.h> // NOLINT(misc-include-cleaner)
+#include <SGRRenderingProgramme.h> // NOLINT(misc-include-cleaner)
+#include <SGRVertexBufferObject.h> // NOLINT(misc-include-cleaner)
+#include <SGWColourPickerWidget.h> // NOLINT(misc-include-cleaner)

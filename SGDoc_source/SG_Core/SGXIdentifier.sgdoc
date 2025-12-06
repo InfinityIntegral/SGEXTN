@@ -3,7 +3,6 @@
 @SG_LONG_DESCRP SGXIdentifier looks like a GUID and can function like a GUID in most scenarios. However, it technically is not a GUID because it does not comply with any GUID standard, and SGEXTN does not guarantee non collision when SGXIdentifier from different databases are merged. SGXIdentifier provides an internal registration system to make accidental collision impossible.
 @SG_IMPLE a sequence of 4 unsigned ints, randomly generated or read from file on initialisation.
 @SG_PRIVATE_API static SGLUnorderedSet<SGXIdentifier, SGLEqualsTo<SGXIdentifier>, SGLHash<SGXIdentifier>>* identifiersList;
-@SG_PRIVATE_API static void terminate();
 @SG_PRIVATE_API unsigned int a;
 @SG_PRIVATE_API unsigned int b;
 @SG_PRIVATE_API unsigned int c;

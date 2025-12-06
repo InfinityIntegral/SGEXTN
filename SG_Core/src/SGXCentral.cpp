@@ -1,11 +1,12 @@
 #include <QLocale>
 #include <QCoreApplication>
 #include <QObject>
-#include <SGXIdentifier.h>
 #include <SGXCentral.h>
 #include <SGXString.h>
 #include <QGuiApplication>
 #include <QIcon>
+#include <SGXTimer.h>
+#include <cstring>
 
 SGXString SGXCentral::applicationName = "app name not set";
 SGXString SGXCentral::applicationVersion = "app version not set";
@@ -28,7 +29,6 @@ void (*SGXCentral::sgWidgetsInit2)() = nullptr;
 void (*SGXCentral::sgWidgetsInit3)() = nullptr;
 void (*SGXCentral::sgWidgetsInit4)() = nullptr;
 void (*SGXCentral::sgWidgetsInit5)() = nullptr;
-void (*SGXCentral::sgWidgetsTerminate)() = nullptr;
 
 void SGXCentral::initialise(){
     QLocale::setDefault(QLocale(QLocale::English, QLocale::Singapore));
@@ -48,12 +48,16 @@ void SGXCentral::initialise(){
     if(SGXCentral::sgWidgetsInit4 != nullptr){SGXCentral::sgWidgetsInit4();}
     if(SGXCentral::sgWidgetsInit5 != nullptr){SGXCentral::sgWidgetsInit5();}
     if(SGXCentral::customInitialise != nullptr){SGXCentral::customInitialise();}
+
+    bool isTest = false;
+    for(int i=0; i<SGXCentral::actualArgc; i++){
+        if(std::strcmp(SGXCentral::actualArgv[i], "--SG-test") == 0){isTest = true;} // NOLINT(cppcoreguidelines-pro-bounds-pointer-arithmetic)
+    }
+    if(isTest == true){SGXTimer::singleCall(0.0f, &QCoreApplication::quit);}
 }
 
 void SGXCentral::terminate(){
     if(SGXCentral::customTerminate != nullptr){SGXCentral::customTerminate();}
-    if(SGXCentral::sgWidgetsTerminate != nullptr){SGXCentral::sgWidgetsTerminate();}
-    SGXIdentifier::terminate();
 }
 
 void SGXCentral::createApplication(int argc, char **argv, void (*initialiseFunction)()){

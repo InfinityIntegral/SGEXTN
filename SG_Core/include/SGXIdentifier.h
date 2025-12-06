@@ -12,7 +12,6 @@ class SG_CORE_DLL SGXIdentifier
 {
 public:
     static SGLUnorderedSet<SGXIdentifier, SGLEqualsTo<SGXIdentifier>, SGLHash<SGXIdentifier>>* identifiersList;
-    static void terminate();
     unsigned int a;
     unsigned int b;
     unsigned int c;

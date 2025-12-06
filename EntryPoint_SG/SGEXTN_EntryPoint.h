@@ -31,7 +31,6 @@ int SGEXTN(int argc, char **argv, void (*initialiseFunction)()){
     SGXCentral::sgWidgetsInit3 = &SGWWidgetInitialisation::init3;
     SGXCentral::sgWidgetsInit4 = &SGWWidgetInitialisation::init4;
     SGXCentral::sgWidgetsInit5 = &SGWWidgetInitialisation::init5;
-    SGXCentral::sgWidgetsTerminate = &SGWWidgetInitialisation::terminate;
 #endif
     
 #ifdef SG_USING_RI

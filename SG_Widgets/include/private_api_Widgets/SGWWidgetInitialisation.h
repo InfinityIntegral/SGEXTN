@@ -11,7 +11,6 @@ public:
     static void init3();
     static void init4();
     static void init5();
-    static void terminate();
 };
 
 #endif // SGWWIDGETINITIALISATION_H

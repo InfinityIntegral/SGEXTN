@@ -32,7 +32,6 @@ public:
     static void (*sgWidgetsInit3)();
     static void (*sgWidgetsInit4)();
     static void (*sgWidgetsInit5)();
-    static void (*sgWidgetsTerminate)();
 };
 
 #endif // SGXCENTRAL_H
