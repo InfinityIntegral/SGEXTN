@@ -34,6 +34,9 @@ jobs:
           sudo apt-get install -y build-essential
           sudo apt-get install -y cmake
           sudo apt-get install -y zip
+          wget https://github.com/linuxdeploy/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage
+          chmod +x linuxdeployqt-continuous-x86_64.AppImage
+          sudo mv linuxdeployqt-continuous-x86_64.AppImage /usr/local/bin/linuxdeployqt
 
       - name: build application binary
         run: |
@@ -41,11 +44,11 @@ jobs:
           cd build
           cmake .. -DCMAKE_PREFIX_PATH=${{github.workspace}}/Qt/${{env.QTVERSION}}/gcc_64
           cmake --build .
-          mkdir -p package/${{env.APPNAME}}.AppDir/usr/bin
-          mkdir -p package/${{env.APPNAME}}.AppDir/usr/lib
-          find . -type f -executable -exec cp {} package/${{env.APPNAME}}.AppDir/usr/bin/ \;
-          find . -type f -name "*.so*" -exec cp {} package/${{env.APPNAME}}.AppDir/usr/lib/ \;
-          linuxdeployqt package/${{env.APPNAME}}.AppDir/usr/bin/${{env.APPNAME}} -appimage -qmldir=../SG_Widgets/assets
+          mkdir -p ../package/${{env.APPNAME}}.AppDir/usr/bin
+          mkdir -p ../package/${{env.APPNAME}}.AppDir/usr/lib
+          find . -type f -executable -exec cp {} ../package/${{env.APPNAME}}.AppDir/usr/bin/ \;
+          find . -type f -name "*.so*" -exec cp {} ../package/${{env.APPNAME}}.AppDir/usr/lib/ \;
+          linuxdeployqt ../package/${{env.APPNAME}}.AppDir/usr/bin/${{env.APPNAME}} -appimage -qmldir=../SG_Widgets/assets
 
       - name: write file with version info
         run: |
@@ -55,7 +58,7 @@ jobs:
 
       - name: zip everything
         run: |
-          zip -r ${{env.APPNAME}}.zip build versions.txt
+          zip -r ${{env.APPNAME}}.zip ../package versions.txt
 
       - name: upload binary
         uses: actions/upload-artifact@v4
