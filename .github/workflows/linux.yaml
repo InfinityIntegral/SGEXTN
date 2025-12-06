@@ -1,0 +1,108 @@
+name: Linux build and test
+
+on:
+  workflow_dispatch:
+
+env:
+  PLATFORM: linux
+  APPNAME: sg-extn
+  VERSION: 6.1.0
+  QTVERSION: 6.10.1
+
+jobs:
+  build:
+    name: build app
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: pull repository
+        uses: actions/checkout@v3
+
+      - name: install Qt
+        uses: jurplel/install-qt-action@v2
+        with:
+          version: ${{env.QTVERSION}}
+          host: linux
+          target: gcc_64
+          dir: ${{github.workspace}}/Qt
+
+      - name: install devtools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential
+          sudo apt-get install -y cmake
+          sudo apt-get install -y zip
+
+      - name: build application binary
+        run: |
+          mkdir -p build
+          cd build
+          cmake .. -DCMAKE_PREFIX_PATH=${{github.workspace}}/Qt/${{env.QTVERSION}}/gcc_64
+          cmake --build .
+
+      - name: write file with version info
+        run: |
+          echo "using Qt version ${{env.QTVERSION}}" > versions.txt
+          echo "using compiler version $(g++ --version | head -n 1)" >> versions.txt
+          echo "building application version ${{env.VERSION}}" >> versions.txt
+
+      - name: zip everything
+        run: |
+          zip -r ${{env.APPNAME}}.zip build versions.txt
+
+      - name: upload binary
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{env.APPNAME}}-${{env.VERSION}}
+          path: ${{env.APPNAME}}.zip
+
+  test:
+    name: test app
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: download binary
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{env.APPNAME}}-${{env.VERSION}}
+          path: ./${{env.APPNAME}}
+
+      - name: install zip library
+        run: |
+          sudo apt-get install -y unzip
+
+      - name: unzip everything
+        run: |
+          unzip ./${{env.APPNAME}}/${{env.APPNAME}}.zip -d ./${{env.APPNAME}}
+
+      - name: remove devtools
+        # delete everything on purpose to ensure app can run on machine of non programmer user, all necessary libraries are packaged except for glibc which is not safe to package, this is on a different machine from the first one
+        run: |
+          sudo apt-get remove --purge -y build-essential
+          sudo apt-get remove --purge -y cmake
+          sudo apt-get remove --purge -y g++
+          sudo apt-get remove --purge -y gcc
+          sudo apt-get remove --purge -y qt*
+          sudo apt-get remove --purge -y qmake
+          sudo apt-get autoremove -y
+          sudo apt-get install -y libstdc++6
+
+      - name: test run app
+        id: run_app
+        run: |
+          mkdir -p logs
+          cd ./${{env.APPNAME}}
+          ./${{env.APPNAME}} --SG-test > ../logs/stdout.log 2> ../logs/stderr.log || exit 1
+
+      - name: upload fail logs
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: fail-logs-${{env.APPNAME}}-${{env.VERSION}}
+          path: logs/
+
+      - name: say test pass
+        if: success()
+        run: |
+          echo "test passed, binary is on GitHub"
