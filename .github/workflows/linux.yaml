@@ -42,14 +42,14 @@ jobs:
           export QML_IMPORT_PATH=${{github.workspace}}/../Qt/6.10.1/gcc_64/qml
 
       - name: build linuxdeployqt
-      run: |
-        cd ..
-        git clone --depth 1 https://github.com/probonopd/linuxdeployqt.git
-        cd linuxdeployqt
-        mkdir build
-        cd build
-        cmake .. -DCMAKE_PREFIX_PATH=../../Qt/${{env.QTVERSION}}/gcc_64
-        cmake --build .
+        run: |
+          cd ..
+          git clone --depth 1 https://github.com/probonopd/linuxdeployqt.git
+          cd linuxdeployqt
+          mkdir build
+          cd build
+          cmake .. -DCMAKE_PREFIX_PATH=../../Qt/${{env.QTVERSION}}/gcc_64
+          cmake --build .
 
       - name: build application binary
         run: |
