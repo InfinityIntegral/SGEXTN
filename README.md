@@ -6,7 +6,7 @@ SGEXTN is 05524F's own C++ framework for application development with an emphasi
 
 This version of SGEXTN is designed to work with Qt version 6.10.1, though anything at or above Qt 6.9.1 is likely fine.
 
-Current version of SGEXTN: v6.0.2
+Current version of SGEXTN: v6.1.0
 
 published on: 12 December, SG60
 
