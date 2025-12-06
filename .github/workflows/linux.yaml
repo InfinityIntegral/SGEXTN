@@ -38,6 +38,8 @@ jobs:
           wget https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage
           chmod +x linuxdeployqt-continuous-x86_64.AppImage
           sudo mv linuxdeployqt-continuous-x86_64.AppImage /usr/local/bin/linuxdeployqt
+          export PATH=${{github.workspace}}/Qt/6.10.1/gcc_64/bin:$PATH
+          export QML_IMPORT_PATH=${{github.workspace}}/Qt/6.10.1/gcc_64/qml
 
       - name: build application binary
         run: |
