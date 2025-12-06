@@ -27,7 +27,7 @@ jobs:
           target: desktop
           dir: ${{github.workspace}}
           cache: true
-          modules: qtshadertools qttools
+          modules: qtshadertools
 
       - name: install devtools
         run: |
@@ -40,8 +40,8 @@ jobs:
           sudo mv linuxdeployqt-continuous-x86_64.AppImage /usr/local/bin/linuxdeployqt
           export PATH=${{github.workspace}}/Qt/6.10.1/gcc_64/bin:$PATH
           export QML_IMPORT_PATH=${{github.workspace}}/Qt/6.10.1/gcc_64/qml
-          echo ${{github.workspace}}/Qt/6.10.1/gcc_64/bin/qmlimportscanner
-          ls ${{github.workspace}}/Qt/6.10.1/gcc_64/bin/qmlimportscanner
+          echo ${{github.workspace}}/Qt/6.10.1/gcc_64/bin
+          ls ${{github.workspace}}/Qt/6.10.1/gcc_64/bin
 
       - name: build application binary
         run: |
