@@ -32,7 +32,7 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
 endif()
 
 project(SGEXTN
-    VERSION 6.0.1
+    VERSION 6.1.0
     LANGUAGES CXX
 )
 
