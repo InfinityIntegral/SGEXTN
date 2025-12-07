@@ -91,7 +91,7 @@ jobs:
           rm -rf ../Qt/${{env.QTVERSION}}/gcc_64/plugins/qmltooling
           mkdir -p output
           cd output
-          ../linuxdeployqt/build/tools/linuxdeployqt/linuxdeployqt package/${{env.APPNAME}}.AppDir/usr/share/applications/${{env.APPNAME}}.desktop -appimage -qmldir=${{github.workspace}}/SG_Widgets/assets
+          ../../linuxdeployqt/build/tools/linuxdeployqt/linuxdeployqt package/${{env.APPNAME}}.AppDir/usr/share/applications/${{env.APPNAME}}.desktop -appimage -qmldir=${{github.workspace}}/SG_Widgets/assets
           cd ..
           echo "using Qt version ${{env.QTVERSION}}" > output/versions.txt
           echo "using compiler version $(g++ --version | head -n 1)" >> output/versions.txt
