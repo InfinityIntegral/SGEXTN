@@ -121,7 +121,8 @@ jobs:
       - name: check dependencies of app
         run: |
           export PATH=/usr/bin:/bin:/usr/sbin:/sbin
-          ldd ./${{env.APPNAME}}.AppImage
+          ./${{env.APPNAME}}.AppImage --appimage-extract
+          ldd squashfs-root/usr/bin/${{env.APPNAME}}
 
       - name: test run app
         run: |
