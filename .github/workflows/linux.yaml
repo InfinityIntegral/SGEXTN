@@ -93,7 +93,7 @@ jobs:
           mkdir -p package/${{env.APPNAME}}.AppDir/usr/share/icons/hicolor/256x256/apps
           cp ${{env.ICONLOCATION}} package/${{env.APPNAME}}.AppDir/usr/share/icons/hicolor/256x256/apps/${{env.APPNAME}}.png
           export PATH=${{github.workspace}}/../appimagetool:$PATH
-          ../linuxdeployqt/build/tools/linuxdeployqt/linuxdeployqt package/${{env.APPNAME}}.AppDir/usr/share/applications/${{env.APPNAME}}.desktop -qmldir=${{github.workspace}}/../SGEXTN/SG_Widgets/assets -bundle-non-qt-libs
+          ../linuxdeployqt/build/tools/linuxdeployqt/linuxdeployqt package/${{env.APPNAME}}.AppDir/usr/share/applications/${{env.APPNAME}}.desktop -qmldir=${{github.workspace}}/../SGEXTN/SG_Widgets/assets
           mv package/${{env.APPNAME}}.AppDir ${{env.APPNAME}}
           chmod +x ${{env.APPNAME}}/AppRun
 
@@ -141,8 +141,9 @@ jobs:
 
       - name: test run app
         run: |
+          sudo apt-get install -y xvfb
           export PATH=/usr/bin:/bin:/usr/sbin:/sbin
-          ./${{env.APPNAME}}/AppRun -platform offscreen ${{env.TESTARG}} > logs.txt 2>&1
+          xvfb-run ./${{env.APPNAME}}/AppRun ${{env.TESTARG}} > logs.txt 2>&1
           EXIT_CODE=$?
           echo "Exit code: $EXIT_CODE" >> logs.txt
           if [ $EXIT_CODE -ne 0 ]; then
