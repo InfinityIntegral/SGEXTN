@@ -94,8 +94,12 @@ jobs:
           cp ${{env.ICONLOCATION}} package/${{env.APPNAME}}.AppDir/usr/share/icons/hicolor/256x256/apps/${{env.APPNAME}}.png
           export PATH=${{github.workspace}}/../appimagetool:$PATH
           ../linuxdeployqt/build/tools/linuxdeployqt/linuxdeployqt package/${{env.APPNAME}}.AppDir/usr/share/applications/${{env.APPNAME}}.desktop -qmldir=${{github.workspace}}/../SGEXTN/SG_Widgets/assets
+          echo "folder is here"
+          ls package/${{env.APPNAME}}.AppDir
           mv package/${{env.APPNAME}}.AppDir ${{env.APPNAME}}
           echo "renamed folder"
+          ls ${{env.APPNAME}}
+          echo "above are folder contents"
           ln -s ${{env.APPNAME}}/AppRun ${{env.APPNAME}}/shortcut_to_app
           echo "created launch shortcut"
           chmod +x ${{env.APPNAME}}/shortcut_to_app
