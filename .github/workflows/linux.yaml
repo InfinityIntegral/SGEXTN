@@ -36,7 +36,6 @@ jobs:
           sudo apt-get install -y build-essential
           sudo apt-get install -y cmake
           sudo apt-get install -y git
-          sudo apt-get install -y zip
           sudo apt-get install -y libfuse2
 
       - name: delete unnecessary Qt plugins
@@ -94,13 +93,12 @@ jobs:
           echo "using Qt version ${{env.QTVERSION}}" > versions.txt
           echo "using compiler version $(g++ --version | head -n 1)" >> versions.txt
           echo "building application ${{env.APPNAME}} version ${{env.VERSION}}" >> versions.txt
-          zip -r ${{env.APPNAME}}.zip package versions.txt
 
       - name: upload binary
         uses: actions/upload-artifact@v4
         with:
           name: ${{env.APPNAME}}-${{env.VERSION}}
-          path: ${{env.APPNAME}}.zip
+          path: .
 
   test:
     name: test app
@@ -130,7 +128,6 @@ jobs:
           sudo apt-get remove --purge -y g++
           sudo apt-get remove --purge -y gcc
           sudo apt-get remove --purge -y qt*
-          sudo apt-get remove --purge -y qmake
           sudo apt-get autoremove -y
           sudo apt-get install -y libstdc++6
 
