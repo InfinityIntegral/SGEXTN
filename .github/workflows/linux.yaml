@@ -43,7 +43,6 @@ jobs:
           cd ..
           git clone https://github.com/probonopd/linuxdeployqt.git
           cd linuxdeployqt
-          sed -i '1223s/.*/qtDetected = 6;/' tools/linuxdeployqt/shared.cpp
           mkdir build
           cd build
           cmake .. -DCMAKE_PREFIX_PATH=../../Qt/${{env.QTVERSION}}/gcc_64
@@ -69,7 +68,7 @@ jobs:
           echo "linuxdeployqt at $(find ${{github.workspace}}/../linuxdeployqt/build -type f -executable -name linuxdeployqt)"
           ../linuxdeployqt/build/tools/linuxdeployqt/qmlimportscanner -rootPath "${{github.workspace}}/SG_Widgets/assets" -importPath "${{github.workspace}}/../Qt/6.10.1/gcc_64/qml" -importPath
           echo "above was QML import scanner output"
-          ../linuxdeployqt/build/tools/linuxdeployqt/linuxdeployqt package/${{env.APPNAME}}.AppDir/usr/bin/${{env.APPNAME}} -appimage -qmldir=${{github.workspace}}/SG_Widgets/assets -qmlimport=${{github.workspace}}/../Qt/6.10.1/gcc_64/qml
+          ../linuxdeployqt/build/tools/linuxdeployqt/linuxdeployqt package/${{env.APPNAME}}.AppDir/usr/bin/${{env.APPNAME}} -appimage -qmldir=${{github.workspace}}/SG_Widgets/assets
 
       - name: write file with version info
         run: |

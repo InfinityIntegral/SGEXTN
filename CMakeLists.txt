@@ -8,10 +8,14 @@ set(CMAKE_SHARED_LIBRARY_ENABLE_EXPORTS ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 if(APPLE)
-    set(CMAKE_BUILD_RPATH "@loader_path")
+    set(CMAKE_BUILD_RPATH "@loader_path/../Frameworks")
+    set(CMAKE_INSTALL_RPATH "@loader_path/../Frameworks")
 elseif(UNIX)
-    set(CMAKE_BUILD_RPATH "$ORIGIN")
+    set(CMAKE_BUILD_RPATH "$ORIGIN/../lib:$ORIGIN/../plugins")
+    set(CMAKE_INSTALL_RPATH "$ORIGIN/../lib:$ORIGIN/../plugins")
 endif()
+set(CMAKE_SKIP_RPATH FALSE)
+set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 set(CMAKE_BUILD_RPATH_USE_ORIGIN ON)
 set(CMAKE_INCLUDE_CURRENT_DIR OFF)
 set(CMAKE_INCLUDE_CURRENT_DIR_IN_INTERFACE OFF)
@@ -272,6 +276,7 @@ target_link_libraries(SG_RI
     PRIVATE SG_Core
     PRIVATE SG_FileSystem
     PRIVATE SG_Widgets
+    # link Qt stuff to create environment
     PRIVATE Qt6::Core
     PRIVATE Qt6::Gui
     PRIVATE Qt6::Qml
@@ -299,6 +304,13 @@ target_link_libraries(InternalTest
     PRIVATE SG_Widgets
     PRIVATE SG_RI
     PRIVATE EntryPoint_SG
+    # link Qt stuff to create environment
+    PRIVATE Qt6::Core
+    PRIVATE Qt6::Gui
+    PRIVATE Qt6::Qml
+    PRIVATE Qt6::Quick
+    PRIVATE Qt6::QuickControls2
+    PRIVATE Qt6::GuiPrivate
 )
 
 install(TARGETS SG_Containers SG_Math SG_Core SG_FileSystem SG_Widgets SG_RI EntryPoint_SG
