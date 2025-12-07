@@ -42,8 +42,6 @@ jobs:
         run: |
           cd ../Qt/${{env.QTVERSION}}/gcc_64/plugins
           rm -rf designer
-          rm -rf egldeviceintegrations
-          rm -rf generic
           rm -rf help
           rm -rf printsupport
           rm -rf qmllint
