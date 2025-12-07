@@ -43,7 +43,6 @@ jobs:
           cd ..
           git clone https://github.com/probonopd/linuxdeployqt.git
           cd linuxdeployqt
-          sed -i '1223s/.*/qtDetected = 6;/' tools/linuxdeployqt/shared.cpp
           mkdir build
           cd build
           cmake .. -DCMAKE_PREFIX_PATH=../../Qt/${{env.QTVERSION}}/gcc_64
