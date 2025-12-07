@@ -98,9 +98,13 @@ jobs:
           chmod +x ${{env.APPNAME}}.AppImage
           ./${{env.APPNAME}}.AppImage --appimage-extract
           mv squashfs-root ${{env.APPNAME}}
+          echo "renamed folder"
           rm ${{env.APPNAME}}.AppImage
+          echo "deleted AppImage"
           ln -s ${{env.APPNAME}}/AppRun ${{env.APPNAME}}/shortcut_to_app
+          echo "created launch shortcut"
           chmod +x ${{env.APPNAME}}/shortcut_to_app
+          echo "enabled launch shortcut"
 
       - name: write version file
         run: |
