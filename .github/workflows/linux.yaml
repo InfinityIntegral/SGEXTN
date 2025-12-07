@@ -58,10 +58,18 @@ jobs:
           cp ../../Qt/6.10.1/gcc_64/libexec/qmlimportscanner tools/linuxdeployqt/qmlimportscanner
           chmod +x tools/linuxdeployqt/qmlimportscanner
 
+      - name: get appimagetool which limuxdeployqt needs
+        run: |
+          mkdir -p appimagetool
+          cd appimagetool
+          wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
+          chmod +x appimagetool-x86_64.AppImage
+
       - name: build application binary
         run: |
           export PATH=${{github.workspace}}/../Qt/6.10.1/gcc_64/bin:$PATH
           export PATH=${{github.workspace}}/../Qt/6.10.1/gcc_64/libexec:$PATH
+          export PATH=${{github.workspace}}/../appimagetool:$PATH
           export QML_IMPORT_PATH=${{github.workspace}}/../Qt/6.10.1/gcc_64/qml
           mkdir -p build
           cd build
