@@ -96,6 +96,11 @@ jobs:
           ../linuxdeployqt/build/tools/linuxdeployqt/linuxdeployqt package/${{env.APPNAME}}.AppDir/usr/share/applications/${{env.APPNAME}}.desktop -appimage -qmldir=${{github.workspace}}/../SGEXTN/SG_Widgets/assets
           mv "$(find . -maxdepth 1 -type f -name '*.AppImage')" ${{env.APPNAME}}.AppImage
           chmod +x ${{env.APPNAME}}.AppImage
+          ./${{env.APPNAME}}.AppImage --appimage-extract
+          mv squashfs-root ${{env.APPNAME}}
+          rm ${{env.APPNAME}}.AppImage
+          ln -s ${{env.APPNAME}}/AppRun ${{env.APPNAME}}/shortcut_to_app
+          chmod +x ${{env.APPNAME}}/shortcut_to_app
 
       - name: write version file
         run: |
@@ -121,13 +126,12 @@ jobs:
       - name: check dependencies of app
         run: |
           export PATH=/usr/bin:/bin:/usr/sbin:/sbin
-          ./${{env.APPNAME}}.AppImage --appimage-extract
-          ldd squashfs-root/usr/bin/${{env.APPNAME}}
+          ldd ${{env.APPNAME}}/shortcut_to_app
 
       - name: test run app
         run: |
           export PATH=/usr/bin:/bin:/usr/sbin:/sbin
-          ./${{env.APPNAME}}.AppImage ${{env.TESTARG}} > logs.txt 2>&1
+          ./${{env.APPNAME}}/shortcut_to_app ${{env.TESTARG}} > logs.txt 2>&1
           EXIT_CODE=$?
           echo "Exit code: $EXIT_CODE" >> logs.txt
           if [ $EXIT_CODE -ne 0 ]; then
@@ -150,4 +154,4 @@ jobs:
             package
             logs.txt
             version.txt
-            ${{env.APPNAME}}.AppImage
+            ${{env.APPNAME}}
