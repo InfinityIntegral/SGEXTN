@@ -167,6 +167,7 @@ qt6_add_resources(SG_Widgets SG_Widgets_assets PREFIX "SGEXTN" BASE "SG_Widgets/
     "SG_Widgets/assets/SGWTextInput.qml"
     "SG_Widgets/assets/SGWTextLabel.qml"
     "SG_Widgets/assets/SingScript.sg"
+    "SG_Widgets/assets/SGEXTN_icon.png"
 )
 target_sources(SG_Widgets
     PRIVATE "SG_Widgets/src/SGRImage.cpp"

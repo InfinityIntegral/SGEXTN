@@ -84,10 +84,11 @@ jobs:
           mkdir -p package/${{env.APPNAME}}.AppDir/usr/lib
           find build -type f -name "*.so*" -exec cp {} package/${{env.APPNAME}}.AppDir/usr/lib/ \; -exec echo "Copied {} to usr/lib" \;
           mkdir -p package/${{env.APPNAME}}.AppDir/usr/share/applications
-          echo -e "[Desktop Entry]\nType=Application\nName=SGEXTN Internal Test\nExec=${{env.APPNAME}}\nComment=test application to see if SGEXTN has been packaged properly\nCategories=Utility;" > package/${{env.APPNAME}}.AppDir/usr/share/applications/${{env.APPNAME}}.desktop
+          echo -e "[Desktop Entry]\nType=Application\nName=SGEXTN Internal Test\nExec=${{env.APPNAME}}\Icon=${{env.APPNAME}}\nComment=test application to see if SGEXTN has been packaged properly\nCategories=Utility;" > package/${{env.APPNAME}}.AppDir/usr/share/applications/${{env.APPNAME}}.desktop
           rm -rf ../Qt/${{env.QTVERSION}}/gcc_64/plugins/qmllint
           rm -rf ../Qt/${{env.QTVERSION}}/gcc_64/plugins/qmlls
           rm -rf ../Qt/${{env.QTVERSION}}/gcc_64/plugins/qmltooling
+          cp SG_Widgets/assets/SGEXTN_icon.png package/${{env.APPNAME}}.AppDir/usr/share/icons/hicolor/256x256/apps/${{env.APPNAME}}.png
           ../linuxdeployqt/build/tools/linuxdeployqt/linuxdeployqt package/${{env.APPNAME}}.AppDir/usr/share/applications/${{env.APPNAME}}.desktop -appimage -qmldir=${{github.workspace}}/SG_Widgets/assets
           echo "using Qt version ${{env.QTVERSION}}" > versions.txt
           echo "using compiler version $(g++ --version | head -n 1)" >> versions.txt

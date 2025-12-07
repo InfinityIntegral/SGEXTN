@@ -69,6 +69,7 @@ void init(){
     SGXCentral::organisationName = "05524F (Singapore)";
     SGXCentral::customInitialise = &test;
     SGXCentral::folderName = "SGEXTN";
+    SGXCentral::pathToAppIcon = ":/SGEXTN/SGEXTN_icon.png";
 }
 }
 
