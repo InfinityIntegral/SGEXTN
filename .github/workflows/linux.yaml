@@ -64,6 +64,7 @@ jobs:
           cd appimagetool
           wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
           chmod +x appimagetool-x86_64.AppImage
+          ln -s ${{github.workspace}}/../appimagetool/appimagetool-x86_64.AppImage ${{github.workspace}}/../appimagetool/appimagetool
 
       - name: build application binary
         run: |
