@@ -94,16 +94,8 @@ jobs:
           cp ${{env.ICONLOCATION}} package/${{env.APPNAME}}.AppDir/usr/share/icons/hicolor/256x256/apps/${{env.APPNAME}}.png
           export PATH=${{github.workspace}}/../appimagetool:$PATH
           ../linuxdeployqt/build/tools/linuxdeployqt/linuxdeployqt package/${{env.APPNAME}}.AppDir/usr/share/applications/${{env.APPNAME}}.desktop -qmldir=${{github.workspace}}/../SGEXTN/SG_Widgets/assets
-          echo "folder is here"
-          ls package/${{env.APPNAME}}.AppDir
           mv package/${{env.APPNAME}}.AppDir ${{env.APPNAME}}
-          echo "renamed folder"
-          ls ${{env.APPNAME}}
-          echo "above are folder contents"
-          ln -s ${{env.APPNAME}}/AppRun ${{env.APPNAME}}/shortcut_to_app
-          echo "created launch shortcut"
-          chmod +x ${{env.APPNAME}}/shortcut_to_app
-          echo "enabled launch shortcut"
+          chmod +x ${{env.APPNAME}}/AppRun
 
       - name: write version file
         run: |
@@ -129,12 +121,15 @@ jobs:
       - name: check dependencies of app
         run: |
           export PATH=/usr/bin:/bin:/usr/sbin:/sbin
-          ldd ${{env.APPNAME}}/shortcut_to_app
+          echo "from AppRun:"
+          ldd ${{env.APPNAME}}/AppRun
+          echo "directly from binary:"
+          ldd ${{env.APPNAME}}/usr/bin/${{env.APPNAME}}
 
       - name: test run app
         run: |
           export PATH=/usr/bin:/bin:/usr/sbin:/sbin
-          ./${{env.APPNAME}}/shortcut_to_app ${{env.TESTARG}} > logs.txt 2>&1
+          ./${{env.APPNAME}}/AppRun ${{env.TESTARG}} > logs.txt 2>&1
           EXIT_CODE=$?
           echo "Exit code: $EXIT_CODE" >> logs.txt
           if [ $EXIT_CODE -ne 0 ]; then
