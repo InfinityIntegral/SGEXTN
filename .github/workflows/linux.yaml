@@ -99,12 +99,23 @@ jobs:
 
       - name: write version file
         run: |
-          echo "using Qt version ${{env.QTVERSION}}" > version.txt
-          echo "using compiler version $(g++ --version | head -n 1)" >> version.txt
-          echo "building application ${{env.APPNAME}} version ${{env.VERSION}}" >> version.txt
+          echo "using Qt version ${{env.QTVERSION}}" > build/version.txt
+          echo "using compiler version $(g++ --version | head -n 1)" >> build/version.txt
+          echo "building application ${{env.APPNAME}} version ${{env.VERSION}}" >> build/version.txt
+          cp build/version.txt ${{env.APPNAME}}/version.txt
+
+      - name: upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: linux-gcc-${{env.APPNAME}}-${{env.VERSION}}-build
+          path: build
 
       - name: delete everything to ensure app can run on machine of non programmer user
         run: |
+          cd ..
+          mv ${{github.workspace}}/${{env.APPNAME}} ${{env.APPNAME}}
+          rm -rf SGEXTN
+          rm -rf ${{github.workspace}}
           rm -rf Qt
           rm -rf linuxdeployqt
           rm -rf appimagetool
@@ -117,6 +128,8 @@ jobs:
           sudo apt-get remove --purge -y qt*
           sudo apt-get autoremove -y
           sudo apt-get install -y libstdc++6
+          mkdir -p ${{github.workspace}}
+          mv ${{env.APPNAME}} ${{github.workspace}}/${{env.APPNAME}}
 
       - name: check dependencies of app
         run: |
@@ -146,10 +159,12 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: linux-gcc-${{env.APPNAME}}-${{env.VERSION}}
-          path: |
-            build
-            package
-            logs.txt
-            version.txt
-            ${{env.APPNAME}}
+          name: linux-gcc-${{env.APPNAME}}-${{env.VERSION}}-binary
+          path: ${{env.APPNAME}}
+
+      - name: upload logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: linux-gcc-${{env.APPNAME}}-${{env.VERSION}}-logs
+          path: logs.txt
