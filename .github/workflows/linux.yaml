@@ -8,6 +8,11 @@ env:
   VERSION: 6.1.0
   QTVERSION: 6.10.1
   CMAKETARGET: InternalTest
+  ICONLOCATION: SG_Widgets/assets/SGEXTN_icon.png
+  TESTARG: --SG-test
+  DESKTOPNAME: SGEXTN Internal Test
+  DESKTOPDESCRIPTION: test application to see if SGEXTN has been packaged properly
+  DESKTOPCATEGORY: Utility
 
 jobs:
   build:
@@ -30,7 +35,6 @@ jobs:
 
       - name: install devtools
         run: |
-          cd ..
           sudo apt-get update
           sudo apt-get install -y build-essential
           sudo apt-get install -y cmake
@@ -39,11 +43,10 @@ jobs:
 
       - name: delete unnecessary Qt plugins
         run: |
-          cd ../Qt/${{env.QTVERSION}}/gcc_64/plugins
-          rm -rf designer
-          rm -rf help
-          rm -rf printsupport
-          rm -rf sqldrivers
+          rm -rf ../Qt/${{env.QTVERSION}}/gcc_64/plugins/designer
+          rm -rf ../Qt/${{env.QTVERSION}}/gcc_64/plugins/help
+          rm -rf ../Qt/${{env.QTVERSION}}/gcc_64/plugins/printsupport
+          rm -rf ../Qt/${{env.QTVERSION}}/gcc_64/plugins/sqldrivers
 
       - name: build linuxdeployqt
         run: |
@@ -79,16 +82,16 @@ jobs:
           rm -rf ../Qt/${{env.QTVERSION}}/gcc_64/plugins/qmlls
           rm -rf ../Qt/${{env.QTVERSION}}/gcc_64/plugins/qmltooling
 
-      - name: copy paste stuff into package folder
+      - name: package app
         run: |
           mkdir -p package/${{env.APPNAME}}.AppDir/usr/bin
           cp $(find build -type f -executable -name "${{env.CMAKETARGET}}") package/${{env.APPNAME}}.AppDir/usr/bin/${{env.APPNAME}}
           mkdir -p package/${{env.APPNAME}}.AppDir/usr/lib
           find build -type f -name "*.so*" -exec cp {} package/${{env.APPNAME}}.AppDir/usr/lib/ \; -exec echo "Copied {} to usr/lib" \;
           mkdir -p package/${{env.APPNAME}}.AppDir/usr/share/applications
-          echo -e "[Desktop Entry]\nType=Application\nName=SGEXTN Internal Test\nExec=${{env.APPNAME}}\nIcon=${{env.APPNAME}}\nComment=test application to see if SGEXTN has been packaged properly\nCategories=Utility;" > package/${{env.APPNAME}}.AppDir/usr/share/applications/${{env.APPNAME}}.desktop
+          echo -e "[Desktop Entry]\nType=Application\nName=${{env.DESKTOPNAME}}\nExec=${{env.APPNAME}}\nIcon=${{env.APPNAME}}\nComment=${{env.DESKTOPDESCRIPTION}}\nCategories=${{env.DESKTOPCATEGORY}};" > package/${{env.APPNAME}}.AppDir/usr/share/applications/${{env.APPNAME}}.desktop
           mkdir -p package/${{env.APPNAME}}.AppDir/usr/share/icons/hicolor/256x256/apps
-          cp SG_Widgets/assets/SGEXTN_icon.png package/${{env.APPNAME}}.AppDir/usr/share/icons/hicolor/256x256/apps/${{env.APPNAME}}.png
+          cp ${{env.ICONLOCATION}} package/${{env.APPNAME}}.AppDir/usr/share/icons/hicolor/256x256/apps/${{env.APPNAME}}.png
           export PATH=${{github.workspace}}/../appimagetool:$PATH
           ../linuxdeployqt/build/tools/linuxdeployqt/linuxdeployqt package/${{env.APPNAME}}.AppDir/usr/share/applications/${{env.APPNAME}}.desktop -appimage -qmldir=${{github.workspace}}/../SGEXTN/SG_Widgets/assets
           mv "$(find . -maxdepth 1 -type f -name '*.AppImage')" ${{env.APPNAME}}.AppImage
@@ -119,7 +122,8 @@ jobs:
         id: run_app
         run: |
           export PATH=/usr/bin:/bin:/usr/sbin:/sbin
-          ./${{env.APPNAME}}.AppImage --SG-test > logs.txt 2>&1
+          ls .
+          ./${{env.APPNAME}}.AppImage ${{env.TESTARG}} > logs.txt 2>&1
           EXIT_CODE=$?
           echo "Exit code: $EXIT_CODE" >> logs.txt
           if [ $EXIT_CODE -ne 0 ]; then
