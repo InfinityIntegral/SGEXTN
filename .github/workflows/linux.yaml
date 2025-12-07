@@ -129,7 +129,7 @@ jobs:
       - name: test run app
         run: |
           export PATH=/usr/bin:/bin:/usr/sbin:/sbin
-          ./${{env.APPNAME}}/AppRun ${{env.TESTARG}} > logs.txt 2>&1
+          ./${{env.APPNAME}}/AppRun -platform offscreen ${{env.TESTARG}} > logs.txt 2>&1
           EXIT_CODE=$?
           echo "Exit code: $EXIT_CODE" >> logs.txt
           if [ $EXIT_CODE -ne 0 ]; then
