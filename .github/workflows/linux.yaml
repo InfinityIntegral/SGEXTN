@@ -8,11 +8,7 @@ env:
   VERSION: 6.1.0
   QTVERSION: 6.10.1
   CMAKETARGET: InternalTest
-  ICONLOCATION: SG_Widgets/assets/SGEXTN_icon.png
   TESTARG: --SG-test
-  DESKTOPNAME: SGEXTN Internal Test
-  DESKTOPDESCRIPTION: test application to see if SGEXTN has been packaged properly
-  DESKTOPCATEGORY: Utility
 
 jobs:
   build:
@@ -89,9 +85,9 @@ jobs:
           mkdir -p package/${{env.APPNAME}}.AppDir/usr/lib
           find build -type f -name "*.so*" -exec cp {} package/${{env.APPNAME}}.AppDir/usr/lib/ \; -exec echo "Copied {} to usr/lib" \;
           mkdir -p package/${{env.APPNAME}}.AppDir/usr/share/applications
-          echo -e "[Desktop Entry]\nType=Application\nName=${{env.DESKTOPNAME}}\nExec=${{env.APPNAME}}\nIcon=${{env.APPNAME}}\nComment=${{env.DESKTOPDESCRIPTION}}\nCategories=${{env.DESKTOPCATEGORY}};" > package/${{env.APPNAME}}.AppDir/usr/share/applications/${{env.APPNAME}}.desktop
+          echo -e "[Desktop Entry]\nType=Application\nName=name\nExec=${{env.APPNAME}}\nIcon=${{env.APPNAME}}\nComment=comments\nCategories=category;" > package/${{env.APPNAME}}.AppDir/usr/share/applications/${{env.APPNAME}}.desktop
           mkdir -p package/${{env.APPNAME}}.AppDir/usr/share/icons/hicolor/256x256/apps
-          cp ${{env.ICONLOCATION}} package/${{env.APPNAME}}.AppDir/usr/share/icons/hicolor/256x256/apps/${{env.APPNAME}}.png
+          cp ${{github.workspace}}/../SGEXTN/SG_Widgets/assets/SGEXTN_icon.png package/${{env.APPNAME}}.AppDir/usr/share/icons/hicolor/256x256/apps/${{env.APPNAME}}.png
           export PATH=${{github.workspace}}/../appimagetool:$PATH
           ../linuxdeployqt/build/tools/linuxdeployqt/linuxdeployqt package/${{env.APPNAME}}.AppDir/usr/share/applications/${{env.APPNAME}}.desktop -qmldir=${{github.workspace}}/../SGEXTN/SG_Widgets/assets
           mv package/${{env.APPNAME}}.AppDir/usr ${{env.APPNAME}}
