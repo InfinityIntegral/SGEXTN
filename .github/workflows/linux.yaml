@@ -60,11 +60,12 @@ jobs:
 
       - name: get appimagetool which limuxdeployqt needs
         run: |
+          cd ..
           mkdir -p appimagetool
           cd appimagetool
           wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
-          chmod +x appimagetool-x86_64.AppImage
-          ln -s appimagetool-x86_64.AppImage appimagetool
+          mv appimagetool-x86_64.AppImage appimagetool
+          chmod +x appimagetool
 
       - name: build application binary
         run: |
