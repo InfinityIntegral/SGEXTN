@@ -38,6 +38,19 @@ jobs:
           sudo apt-get install -y git
           sudo apt-get install -y zip
 
+      - name: delete unnecessary Qt plugins
+        run: |
+          cd ../Qt/${{env.QTVERSION}}/gcc_64/plugins
+          rm -rf designer
+          rm -rf egldeviceintegrations
+          rm -rf generic
+          rm -rf help
+          rm -rf printsupport
+          rm -rf qmllint
+          rm -rf qmlls
+          rm -rf qmltooling
+          rm -rf sqldrivers
+
       - name: build linuxdeployqt
         run: |
           cd ..
@@ -65,15 +78,9 @@ jobs:
           mkdir -p package/${{env.APPNAME}}.AppDir/usr/lib
           find build -type f -name "*.so*" -exec cp {} package/${{env.APPNAME}}.AppDir/usr/lib/ \; -exec echo "Copied {} to usr/lib" \;
           ../linuxdeployqt/build/tools/linuxdeployqt/linuxdeployqt package/${{env.APPNAME}}.AppDir/usr/bin/${{env.APPNAME}} -appimage -qmldir=${{github.workspace}}/SG_Widgets/assets
-
-      - name: write file with version info
-        run: |
           echo "using Qt version ${{env.QTVERSION}}" > versions.txt
           echo "using compiler version $(g++ --version | head -n 1)" >> versions.txt
           echo "building application ${{env.APPNAME}} version ${{env.VERSION}}" >> versions.txt
-
-      - name: zip everything
-        run: |
           zip -r ${{env.APPNAME}}.zip package versions.txt
 
       - name: upload binary
