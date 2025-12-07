@@ -122,7 +122,8 @@ jobs:
         id: run_app
         run: |
           export PATH=/usr/bin:/bin:/usr/sbin:/sbin
-          ls .
+          echo "APPNAME=${{env.APPNAME}}"
+          ls -l ./${{env.APPNAME}}.AppImage
           ./${{env.APPNAME}}.AppImage ${{env.TESTARG}} > logs.txt 2>&1
           EXIT_CODE=$?
           echo "Exit code: $EXIT_CODE" >> logs.txt
