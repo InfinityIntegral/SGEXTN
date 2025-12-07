@@ -118,12 +118,14 @@ jobs:
           sudo apt-get autoremove -y
           sudo apt-get install -y libstdc++6
 
-      - name: test run app
-        id: run_app
+      - name: check dependencies of app
         run: |
           export PATH=/usr/bin:/bin:/usr/sbin:/sbin
-          echo "APPNAME=${{env.APPNAME}}"
-          ls -l ./${{env.APPNAME}}.AppImage
+          ldd ./${{env.APPNAME}}.AppImage
+
+      - name: test run app
+        run: |
+          export PATH=/usr/bin:/bin:/usr/sbin:/sbin
           ./${{env.APPNAME}}.AppImage ${{env.TESTARG}} > logs.txt 2>&1
           EXIT_CODE=$?
           echo "Exit code: $EXIT_CODE" >> logs.txt
@@ -132,7 +134,13 @@ jobs:
               exit $EXIT_CODE
           fi
 
+      - name: print logs
+        if: always()
+        run: |
+          cat logs.txt
+
       - name: upload binary
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: linux-gcc-${{env.APPNAME}}-${{env.VERSION}}
