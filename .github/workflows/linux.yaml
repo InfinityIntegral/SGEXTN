@@ -4,7 +4,6 @@ on:
   workflow_dispatch:
 
 env:
-  PLATFORM: linux
   APPNAME: sg-extn
   VERSION: 6.1.0
   QTVERSION: 6.10.1
@@ -55,7 +54,7 @@ jobs:
           cd build
           cmake .. -DCMAKE_PREFIX_PATH=../../Qt/${{env.QTVERSION}}/gcc_64
           cmake --build .
-          cp ../../Qt/6.10.1/gcc_64/libexec/qmlimportscanner tools/linuxdeployqt/qmlimportscanner
+          cp ../../Qt/${{env.QTVERSION}}/gcc_64/libexec/qmlimportscanner tools/linuxdeployqt/qmlimportscanner
           chmod +x tools/linuxdeployqt/qmlimportscanner
 
       - name: get appimagetool which linuxdeployqt needs
@@ -69,10 +68,10 @@ jobs:
 
       - name: build application binary
         run: |
-          export PATH=${{github.workspace}}/../Qt/6.10.1/gcc_64/bin:$PATH
-          export PATH=${{github.workspace}}/../Qt/6.10.1/gcc_64/libexec:$PATH
+          export PATH=${{github.workspace}}/../Qt/${{env.QTVERSION}}/gcc_64/bin:$PATH
+          export PATH=${{github.workspace}}/../Qt/${{env.QTVERSION}}/gcc_64/libexec:$PATH
           export PATH=${{github.workspace}}/../appimagetool:$PATH
-          export QML_IMPORT_PATH=${{github.workspace}}/../Qt/6.10.1/gcc_64/qml
+          export QML_IMPORT_PATH=${{github.workspace}}/../Qt/${{env.QTVERSION}}/gcc_64/qml
           mkdir -p build
           cd build
           cmake .. -DCMAKE_PREFIX_PATH=../../Qt/${{env.QTVERSION}}/gcc_64
@@ -89,50 +88,24 @@ jobs:
           rm -rf ../Qt/${{env.QTVERSION}}/gcc_64/plugins/qmllint
           rm -rf ../Qt/${{env.QTVERSION}}/gcc_64/plugins/qmlls
           rm -rf ../Qt/${{env.QTVERSION}}/gcc_64/plugins/qmltooling
-          mkdir -p output
-          cd output
-          ../../linuxdeployqt/build/tools/linuxdeployqt/linuxdeployqt ../package/${{env.APPNAME}}.AppDir/usr/share/applications/${{env.APPNAME}}.desktop -appimage -qmldir=${{github.workspace}}/SG_Widgets/assets
-          cd ..
-          echo "using Qt version ${{env.QTVERSION}}" > output/versions.txt
-          echo "using compiler version $(g++ --version | head -n 1)" >> output/versions.txt
-          echo "building application ${{env.APPNAME}} version ${{env.VERSION}}" >> output/versions.txt
+          ../linuxdeployqt/build/tools/linuxdeployqt/linuxdeployqt package/${{env.APPNAME}}.AppDir/usr/share/applications/${{env.APPNAME}}.desktop -appimage -qmldir=${{github.workspace}}/SG_Widgets/assets
+          mv "$(find . -maxdepth 1 -type f -name '*.AppImage')" ${{env.APPNAME}}.AppImage
+          chmod +x ${{env.APPNAME}}.AppImage
+          echo "using Qt version ${{env.QTVERSION}}" > version.txt
+          echo "using compiler version $(g++ --version | head -n 1)" >> version.txt
+          echo "building application ${{env.APPNAME}} version ${{env.VERSION}}" >> version.txt
 
-      - name: upload binary
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{env.APPNAME}}-${{env.VERSION}}
-          path: |
-            build
-            package
-            output
-
-  test:
-    name: test app
-    runs-on: ubuntu-latest
-    needs: build
-
-    steps:
-      - name: download binary
-        uses: actions/download-artifact@v4
-        with:
-          name: ${{env.APPNAME}}-${{env.VERSION}}
-          path: ./${{env.APPNAME}}
-
-      - name: install zip library
+      - name: delete everything to ensure app can run on machine of non programmer user
         run: |
-          sudo apt-get install -y unzip
-
-      - name: unzip everything
-        run: |
-          unzip ./${{env.APPNAME}}/${{env.APPNAME}}.zip -d ./${{env.APPNAME}}
-
-      - name: remove devtools
-        # delete everything on purpose to ensure app can run on machine of non programmer user, all necessary libraries are packaged except for glibc which is not safe to package, this is on a different machine from the first one
-        run: |
+          rm -rf Qt
+          rm -rf linuxdeployqt
+          rm -rf appimagetool
           sudo apt-get remove --purge -y build-essential
           sudo apt-get remove --purge -y cmake
+          sudo apt-get remove --purge -y libfuse2
           sudo apt-get remove --purge -y g++
           sudo apt-get remove --purge -y gcc
+          sudo apt-get remove --purge -y git
           sudo apt-get remove --purge -y qt*
           sudo apt-get autoremove -y
           sudo apt-get install -y libstdc++6
@@ -140,18 +113,22 @@ jobs:
       - name: test run app
         id: run_app
         run: |
-          mkdir -p logs
-          cd ./${{env.APPNAME}}
-          ./${{env.APPNAME}} --SG-test > ../logs/stdout.log 2> ../logs/stderr.log || exit 1
+          export PATH=/usr/bin:/bin:/usr/sbin:/sbin
+          ${{env.APPNAME}}.AppImage --SG-test > logs.txt 2>&1
+          EXIT_CODE=$?
+          echo "Exit code: $EXIT_CODE" >> logs.txt
+          if [ $EXIT_CODE -ne 0 ]; then
+              cat logs.txt
+              exit $EXIT_CODE
+          fi
 
-      - name: upload fail logs
-        if: failure()
+      - name: upload binary
         uses: actions/upload-artifact@v4
         with:
-          name: fail-logs-${{env.APPNAME}}-${{env.VERSION}}
-          path: logs/
-
-      - name: say test pass
-        if: success()
-        run: |
-          echo "test passed, binary is on GitHub"
+          name: linux-gcc-${{env.APPNAME}}-${{env.VERSION}}
+          path: |
+            build
+            package
+            logs.txt
+            version.txt
+            ${{env.APPNAME}}.AppImage
