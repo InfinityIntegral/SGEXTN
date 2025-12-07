@@ -94,8 +94,10 @@ jobs:
           cp ${{env.ICONLOCATION}} package/${{env.APPNAME}}.AppDir/usr/share/icons/hicolor/256x256/apps/${{env.APPNAME}}.png
           export PATH=${{github.workspace}}/../appimagetool:$PATH
           ../linuxdeployqt/build/tools/linuxdeployqt/linuxdeployqt package/${{env.APPNAME}}.AppDir/usr/share/applications/${{env.APPNAME}}.desktop -qmldir=${{github.workspace}}/../SGEXTN/SG_Widgets/assets
-          mv package/${{env.APPNAME}}.AppDir ${{env.APPNAME}}
-          chmod +x ${{env.APPNAME}}/AppRun
+          mv package/${{env.APPNAME}}.AppDir/usr ${{env.APPNAME}}
+          rm -rf ${{env.APPNAME}}/share
+          rm -rf ${{env.APPNAME}}/translations
+          chmod +x ${{env.APPNAME}}/bin/${{env.APPNAME}}
 
       - name: write version file
         run: |
@@ -134,16 +136,13 @@ jobs:
       - name: check dependencies of app
         run: |
           export PATH=/usr/bin:/bin:/usr/sbin:/sbin
-          echo "from AppRun:"
-          ldd ${{env.APPNAME}}/AppRun
-          echo "directly from binary:"
-          ldd ${{env.APPNAME}}/usr/bin/${{env.APPNAME}}
+          ldd ${{env.APPNAME}}/bin/${{env.APPNAME}}
 
       - name: test run app
         run: |
           sudo apt-get install -y xvfb
           export PATH=/usr/bin:/bin:/usr/sbin:/sbin
-          xvfb-run ./${{env.APPNAME}}/AppRun ${{env.TESTARG}} > logs.txt 2>&1
+          xvfb-run ./${{env.APPNAME}}/bin/${{env.APPNAME}} ${{env.TESTARG}} > logs.txt 2>&1
           EXIT_CODE=$?
           echo "Exit code: $EXIT_CODE" >> logs.txt
           if [ $EXIT_CODE -ne 0 ]; then
