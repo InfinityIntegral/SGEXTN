@@ -68,15 +68,19 @@ jobs:
 
       - name: build application binary
         run: |
-          export PATH=${{github.workspace}}/../Qt/${{env.QTVERSION}}/gcc_64/bin:$PATH
-          export PATH=${{github.workspace}}/../Qt/${{env.QTVERSION}}/gcc_64/libexec:$PATH
-          export PATH=${{github.workspace}}/../appimagetool:$PATH
-          export QML_IMPORT_PATH=${{github.workspace}}/../Qt/${{env.QTVERSION}}/gcc_64/qml
           mkdir -p build
           cd build
           cmake .. -DCMAKE_PREFIX_PATH=../../Qt/${{env.QTVERSION}}/gcc_64
           cmake --build .
-          cd ..
+
+      - name: delete QML tooling
+        run: |
+          rm -rf ../Qt/${{env.QTVERSION}}/gcc_64/plugins/qmllint
+          rm -rf ../Qt/${{env.QTVERSION}}/gcc_64/plugins/qmlls
+          rm -rf ../Qt/${{env.QTVERSION}}/gcc_64/plugins/qmltooling
+
+      - name: copy paste stuff into package folder
+        run: |
           mkdir -p package/${{env.APPNAME}}.AppDir/usr/bin
           cp $(find build -type f -executable -name "${{env.CMAKETARGET}}") package/${{env.APPNAME}}.AppDir/usr/bin/${{env.APPNAME}}
           mkdir -p package/${{env.APPNAME}}.AppDir/usr/lib
@@ -85,12 +89,13 @@ jobs:
           echo -e "[Desktop Entry]\nType=Application\nName=SGEXTN Internal Test\nExec=${{env.APPNAME}}\nIcon=${{env.APPNAME}}\nComment=test application to see if SGEXTN has been packaged properly\nCategories=Utility;" > package/${{env.APPNAME}}.AppDir/usr/share/applications/${{env.APPNAME}}.desktop
           mkdir -p package/${{env.APPNAME}}.AppDir/usr/share/icons/hicolor/256x256/apps
           cp SG_Widgets/assets/SGEXTN_icon.png package/${{env.APPNAME}}.AppDir/usr/share/icons/hicolor/256x256/apps/${{env.APPNAME}}.png
-          rm -rf ../Qt/${{env.QTVERSION}}/gcc_64/plugins/qmllint
-          rm -rf ../Qt/${{env.QTVERSION}}/gcc_64/plugins/qmlls
-          rm -rf ../Qt/${{env.QTVERSION}}/gcc_64/plugins/qmltooling
-          ../linuxdeployqt/build/tools/linuxdeployqt/linuxdeployqt package/${{env.APPNAME}}.AppDir/usr/share/applications/${{env.APPNAME}}.desktop -appimage -qmldir=${{github.workspace}}/SG_Widgets/assets
+          export PATH=${{github.workspace}}/../appimagetool:$PATH
+          ../linuxdeployqt/build/tools/linuxdeployqt/linuxdeployqt package/${{env.APPNAME}}.AppDir/usr/share/applications/${{env.APPNAME}}.desktop -appimage -qmldir=${{github.workspace}}/../SGEXTN/SG_Widgets/assets
           mv "$(find . -maxdepth 1 -type f -name '*.AppImage')" ${{env.APPNAME}}.AppImage
           chmod +x ${{env.APPNAME}}.AppImage
+
+      - name: write version file
+        run: |
           echo "using Qt version ${{env.QTVERSION}}" > version.txt
           echo "using compiler version $(g++ --version | head -n 1)" >> version.txt
           echo "building application ${{env.APPNAME}} version ${{env.VERSION}}" >> version.txt
@@ -114,7 +119,7 @@ jobs:
         id: run_app
         run: |
           export PATH=/usr/bin:/bin:/usr/sbin:/sbin
-          ${{env.APPNAME}}.AppImage --SG-test > logs.txt 2>&1
+          ./${{env.APPNAME}}.AppImage --SG-test > logs.txt 2>&1
           EXIT_CODE=$?
           echo "Exit code: $EXIT_CODE" >> logs.txt
           if [ $EXIT_CODE -ne 0 ]; then
