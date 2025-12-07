@@ -59,7 +59,7 @@ jobs:
           cp ../../Qt/6.10.1/gcc_64/libexec/qmlimportscanner tools/linuxdeployqt/qmlimportscanner
           chmod +x tools/linuxdeployqt/qmlimportscanner
 
-      - name: get appimagetool which limuxdeployqt needs
+      - name: get appimagetool which linuxdeployqt needs
         run: |
           cd ..
           mkdir -p appimagetool
@@ -83,6 +83,15 @@ jobs:
           cp $(find build -type f -executable -name "${{env.CMAKETARGET}}") package/${{env.APPNAME}}.AppDir/usr/bin/${{env.APPNAME}}
           mkdir -p package/${{env.APPNAME}}.AppDir/usr/lib
           find build -type f -name "*.so*" -exec cp {} package/${{env.APPNAME}}.AppDir/usr/lib/ \; -exec echo "Copied {} to usr/lib" \;
+          mkdir -p package/${{env.APPNAME}}.AppDir/usr/share/applications
+          cat > package/${{env.APPNAME}}.AppDir/usr/share/applications/${{env.APPNAME}}.desktop <<EOL
+          [Desktop Entry]
+          Type=Application
+          Name=SGEXTN Internal Test
+          Exec=${{env.APPNAME}}
+          Comment=test application to see if SGEXTN has been packaged properly
+          Categories=Utility;
+          EOL
           rm -rf ../Qt/${{env.QTVERSION}}/gcc_64/plugins/qmllint
           rm -rf ../Qt/${{env.QTVERSION}}/gcc_64/plugins/qmlls
           rm -rf ../Qt/${{env.QTVERSION}}/gcc_64/plugins/qmltooling
