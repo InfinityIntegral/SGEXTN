@@ -93,39 +93,48 @@ jobs:
         shell: powershell
         run: |
           Get-ChildItem "${{env.APPNAME}}\${{env.APPNAME}}.exe" | Format-List *
-          $logFile = "logs.txt"
-          $exePath = "${{env.APPNAME}}\${{env.APPNAME}}.exe"
-          $args = "${{env.TESTARG}}"
-          $process = New-Object System.Diagnostics.Process
-          $process.StartInfo.FileName = $exePath
-          $process.StartInfo.Arguments = $args
-          $process.StartInfo.UseShellExecute = $false
-          $process.StartInfo.RedirectStandardOutput = $true
-          $process.StartInfo.RedirectStandardError = $true
-          $process.StartInfo.CreateNoWindow = $true
-          $stream = [System.IO.StreamWriter]::new($logFile, $true)
-          $stream.AutoFlush = $true
-          $handlerError = $false
-          $process.add_OutputDataReceived({
-            try { if ($_.Data) { $stream.WriteLine($_.Data) } }
-            catch { $handlerError = $true }
-          })
-          $process.add_ErrorDataReceived({
-            try { if ($_.Data) { $stream.WriteLine($_.Data) } }
-            catch { $handlerError = $true }
-          })
-          $process.Start() | Out-Null
-          $process.BeginOutputReadLine()
-          $process.BeginErrorReadLine()
-          $process.WaitForExit()
-          if ($handlerError) { $stream.WriteLine("Error in output handler!"); $stream.Close(); exit 26 }
-          $exitCode = if ($process.HasExited) { $process.ExitCode } else { 26 }
-          $stream.WriteLine("Exit code: $exitCode")
-          $stream.Close()
-          if ($exitCode -ne 0) {
-            Get-Content $logFile | Out-Host
-            exit $exitCode
-          }
+          - name: Test run app
+            shell: powershell
+            run: |
+              Get-ChildItem "${{env.APPNAME}}\${{env.APPNAME}}.exe" | Format-List *
+              $logFile = "logs.txt"
+              $exePath = "${{env.APPNAME}}\${{env.APPNAME}}.exe"
+              $args = "${{env.TESTARG}}"
+              $stream = [System.IO.StreamWriter]::new($logFile, $true)
+              $stream.AutoFlush = $true
+              $process = New-Object System.Diagnostics.Process
+              $process.StartInfo.FileName = $exePath
+              $process.StartInfo.Arguments = $args
+              $process.StartInfo.UseShellExecute = $false
+              $process.StartInfo.RedirectStandardOutput = $true
+              $process.StartInfo.RedirectStandardError = $true
+              $process.StartInfo.CreateNoWindow = $true
+              $process.add_OutputDataReceived({ if ($_.Data) { $stream.WriteLine($_.Data) } })
+              $process.add_ErrorDataReceived({ if ($_.Data) { $stream.WriteLine($_.Data) } })
+              try {
+                $process.Start() | Out-Null
+              } catch {
+                $stream.WriteLine("CreateProcess failed:")
+                $stream.WriteLine($_.Exception.Message)
+                $stream.Close()
+                exit 5
+              }
+              $process.BeginOutputReadLine()
+              $process.BeginErrorReadLine()
+              $process.WaitForExit()
+              $exitCode = $process.ExitCode
+              $stream.WriteLine("Exit code: $exitCode")
+              if ($exitCode -ne 0) {
+                $stream.WriteLine("")
+                $stream.WriteLine("=== Windows Application Event Log (loader errors) ===")
+                wevtutil qe Application /q:"*[System[(EventID=1000 or EventID=1026)]]" /f:text /c:5 |
+                  ForEach-Object { $stream.WriteLine($_) }
+              }
+              $stream.Close()
+              if ($exitCode -ne 0) {
+                Get-Content $logFile | Out-Host
+                exit $exitCode
+              }
 
       - name: print logs
         if: always()
