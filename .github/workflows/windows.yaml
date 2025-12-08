@@ -1,0 +1,105 @@
+ name: Windows build and test
+
+on:
+  workflow_dispatch:
+
+env:
+  APPNAME: sg-extn
+  VERSION: 6.1.0
+  QTVERSION: 6.10.1
+  CMAKETARGET: InternalTest
+  TESTARG: --SG-test
+  PLATFORM: windows-llvm-mingw
+
+jobs:
+  build:
+    name: build app
+    runs-on: windows-latest
+
+    steps:
+      - name: pull repository
+        uses: actions/checkout@v3
+
+      - name: install Qt
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: ${{env.QTVERSION}}
+          host: win64
+          target: desktop
+          dir: ${{github.workspace}}\..
+          cache: true
+          modules: qtshadertools
+
+      - name: install compiler and related
+        run: |
+          "$('function Controller() {}\nfunction Component() {\nvar packages = [\"qt.tools.llvm-mingw\", \"qt.tools.cmake\", \"qt.tools.ninja\"];\nfor (var i=0;i<packages.length;i++) installer.addPackage(packages[i]);\n}')" | Set-Content "${{github.workspace}}\..\Qt\install.qs" -Encoding UTF8
+          "${{github.workspace}}\..\Qt\${{env.QTVERSION}}\MaintenanceTool.exe" --script "${{github.workspace}}\..\Qt\install.qs"
+          echo "listing plugins in Qt"
+          ls "..\Qt\${{env.QTVERSION}}\mingw_64\plugins"
+
+      - name: install devtools
+        run: |
+          choco install -y cmake
+          choco install -y git
+          choco install -y wget
+
+      - name: delete unnecessary Qt plugins
+        run: |
+          Remove-Item -Recurse -Force "..\Qt\${{env.QTVERSION}}\mingw_64\plugins\designer"
+          Remove-Item -Recurse -Force "..\Qt\${{env.QTVERSION}}\mingw_64\plugins\help"
+          Remove-Item -Recurse -Force "..\Qt\${{env.QTVERSION}}\mingw_64\plugins\printsupport"
+          Remove-Item -Recurse -Force "..\Qt\${{env.QTVERSION}}\mingw_64\plugins\sqldrivers"
+
+      - name: build application binary
+        run: |
+          $env:PATH = "${{github.workspace}}\..\Qt\Tools\CMake\bin;${{github.workspace}}\..\Qt\Tools\Ninja;${{github.workspace}}\..\Qt\Tools\mingwllvm\bin;" + $env:PATH
+          mkdir build
+          cd build
+          cmake .. -G "Ninja" -DCMAKE_PREFIX_PATH=../../Qt/${{env.QTVERSION}}/mingw_64
+          cmake --build . --config Release
+
+      - name: delete QML tooling
+        run: |
+          Remove-Item -Recurse -Force "..\Qt\${{env.QTVERSION}}\mingw_64\plugins\qmllint"
+          Remove-Item -Recurse -Force "..\Qt\${{env.QTVERSION}}\mingw_64\plugins\qmlls"
+          Remove-Item -Recurse -Force "..\Qt\${{env.QTVERSION}}\mingw_64\plugins\qmltooling"
+
+      - name: package app using windowsdeployqt
+        run: |
+          mkdir ${{github.workspace}}\${{env.APPNAME}}
+          Copy-Item -Path "build\${{env.CMAKETARGET}}.exe" -Destination "${{github.workspace}}\${{env.APPNAME}}\${{env.APPNAME}}.exe"
+          Get-ChildItem -Path build -Filter *.dll -Recurse | ForEach-Object {Copy-Item $_.FullName -Destination ${{github.workspace}}\${{env.APPNAME}} -Force}
+          "..\Qt\${{env.QTVERSION}}\mingw_64\bin\windeployqt.exe" ${{github.workspace}}\${{env.APPNAME}}\${{env.APPNAME}}.exe -qmldir=${{github.workspace}}\..\SGEXTN\SG_Widgets\assets
+
+      - name: write version file
+        run: |
+          "${{github.workspace}}\build\version.txt" | Out-File
+          Add-Content -Path "${{github.workspace}}\build\version.txt" -Value "using Qt version ${{env.QTVERSION}}"
+          Add-Content -Path "${{github.workspace}}\build\version.txt" -Value "using compiler version $((Get-Command g++).FileVersionInfo.FileVersion)"
+          Add-Content -Path "${{github.workspace}}\build\version.txt" -Value "building application ${{env.APPNAME}} version ${{env.VERSION}}"
+          Copy-Item "${{github.workspace}}\build\version.txt" "${{github.workspace}}\${{env.APPNAME}}\version.txt"
+
+      - name: upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{env.PLATFORM}}-${{env.APPNAME}}-${{env.VERSION}}-build
+          path: build
+
+      - name: test run app
+        run: |
+          ${{env.APPNAME}}\${{env.APPNAME}}.exe ${{env.TESTARG}} > logs.txt 2>&1
+          $exitCode = $LASTEXITCODE
+          Write-Output "Exit code: $exitCode" | Out-File -Append logs.txt
+          if ($exitCode -ne 0) { Get-Content logs.txt; exit $exitCode }
+
+      - name: upload binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{env.PLATFORM}}-${{env.APPNAME}}-${{env.VERSION}}-binary
+          path: ${{env.APPNAME}}
+
+      - name: upload logs
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{env.PLATFORM}}-${{env.APPNAME}}-${{env.VERSION}}-logs
+          path: logs.txt

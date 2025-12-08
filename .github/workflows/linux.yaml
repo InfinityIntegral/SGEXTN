@@ -9,6 +9,7 @@ env:
   QTVERSION: 6.10.1
   CMAKETARGET: InternalTest
   TESTARG: --SG-test
+  PLATFORM: linux-gcc
 
 jobs:
   build:
@@ -110,7 +111,7 @@ jobs:
       - name: upload build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: linux-gcc-${{env.APPNAME}}-${{env.VERSION}}-build
+          name: ${{env.PLATFORM}}-${{env.APPNAME}}-${{env.VERSION}}-build
           path: build
 
       - name: delete everything to ensure app can run on machine of non programmer user
@@ -160,12 +161,12 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: linux-gcc-${{env.APPNAME}}-${{env.VERSION}}-binary
+          name: ${{env.PLATFORM}}-${{env.APPNAME}}-${{env.VERSION}}-binary
           path: ${{env.APPNAME}}
 
       - name: upload logs
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: linux-gcc-${{env.APPNAME}}-${{env.VERSION}}-logs
+          name: ${{env.PLATFORM}}-${{env.APPNAME}}-${{env.VERSION}}-logs
           path: logs.txt
