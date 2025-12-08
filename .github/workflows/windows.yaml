@@ -32,7 +32,13 @@ jobs:
 
       - name: install compiler and related
         run: |
-          "$('function Controller() {}\nfunction Component() {\nvar packages = [\"qt.tools.llvm-mingw\", \"qt.tools.cmake\", \"qt.tools.ninja\"];\nfor (var i=0;i<packages.length;i++) installer.addPackage(packages[i]);\n}')" | Set-Content "${{github.workspace}}\..\Qt\install.qs" -Encoding UTF8
+          @"
+          function Controller() {}
+          function Component() {
+              var packages = ["qt.tools.llvm-mingw", "qt.tools.cmake", "qt.tools.ninja"];
+              for (var i=0;i<packages.length;i++) installer.addPackage(packages[i]);
+          }
+          "@ | Set-Content "${{github.workspace}}\..\Qt\install.qs" -Encoding UTF8
           "${{github.workspace}}\..\Qt\${{env.QTVERSION}}\MaintenanceTool.exe" --script "${{github.workspace}}\..\Qt\install.qs"
           echo "listing plugins in Qt"
           ls "..\Qt\${{env.QTVERSION}}\mingw_64\plugins"
@@ -73,7 +79,7 @@ jobs:
 
       - name: write version file
         run: |
-          "${{github.workspace}}\build\version.txt" | Out-File
+          New-Item -Path "${{github.workspace}}\build\version.txt" -ItemType File -Force
           Add-Content -Path "${{github.workspace}}\build\version.txt" -Value "using Qt version ${{env.QTVERSION}}"
           Add-Content -Path "${{github.workspace}}\build\version.txt" -Value "using compiler version $((Get-Command g++).FileVersionInfo.FileVersion)"
           Add-Content -Path "${{github.workspace}}\build\version.txt" -Value "building application ${{env.APPNAME}} version ${{env.VERSION}}"
@@ -84,6 +90,19 @@ jobs:
         with:
           name: ${{env.PLATFORM}}-${{env.APPNAME}}-${{env.VERSION}}-build
           path: build
+
+      - name: delete everything to ensure app can run on machine of non programmer user
+        run: |
+          cd ..
+          mv ${{github.workspace}}\${{env.APPNAME}} ${{github.workspace}}\..\${{env.APPNAME}}
+          Remove-Item -Recurse -Force Qt
+          Remove-Item -Recurse -Force SGEXTN
+          Remove-Item -Recurse -Force ${{github.workspace}}
+          choco uninstall -y cmake
+          choco uninstall -y git
+          choco uninstall -y wget
+          mkdir ${{github.workspace}}
+          mv ${{github.workspace}}\..\${{env.APPNAME}} ${{github.workspace}}\${{env.APPNAME}}
 
       - name: test run app
         run: |
