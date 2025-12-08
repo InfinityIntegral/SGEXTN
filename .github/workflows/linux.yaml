@@ -29,12 +29,12 @@ jobs:
           dir: ${{github.workspace}}/..
           cache: true
           modules: qtshadertools
+          tools: 'tools_cmake tools_ninja'
 
       - name: install devtools
         run: |
           sudo apt-get update
           sudo apt-get install -y build-essential
-          sudo apt-get install -y cmake
           sudo apt-get install -y git
           sudo apt-get install -y libfuse2
 
@@ -52,7 +52,7 @@ jobs:
           cd linuxdeployqt
           mkdir build
           cd build
-          cmake .. -DCMAKE_PREFIX_PATH=../../Qt/${{env.QTVERSION}}/gcc_64
+          cmake .. -G "Ninja" -DCMAKE_PREFIX_PATH=../../Qt/${{env.QTVERSION}}/gcc_64
           cmake --build .
           cp ../../Qt/${{env.QTVERSION}}/gcc_64/libexec/qmlimportscanner tools/linuxdeployqt/qmlimportscanner
           chmod +x tools/linuxdeployqt/qmlimportscanner
@@ -70,7 +70,7 @@ jobs:
         run: |
           mkdir -p build
           cd build
-          cmake .. -DCMAKE_PREFIX_PATH=../../Qt/${{env.QTVERSION}}/gcc_64
+          cmake .. -G "Ninja" -DCMAKE_PREFIX_PATH=../../Qt/${{env.QTVERSION}}/gcc_64
           cmake --build .
 
       - name: delete QML tooling
@@ -124,7 +124,6 @@ jobs:
           rm -rf linuxdeployqt
           rm -rf appimagetool
           sudo apt-get remove --purge -y build-essential
-          sudo apt-get remove --purge -y cmake
           sudo apt-get remove --purge -y libfuse2
           sudo apt-get remove --purge -y g++
           sudo apt-get remove --purge -y gcc

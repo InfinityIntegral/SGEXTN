@@ -83,8 +83,8 @@ jobs:
           cd ..
           mv ${{github.workspace}}\${{env.APPNAME}} ${{github.workspace}}\..\${{env.APPNAME}}
           Remove-Item -Recurse -Force Qt
-          Remove-Item -Recurse -Force SGEXTN
-          Remove-Item -Recurse -Force ${{github.workspace}}
+          Remove-Item -Recurse -Force SGEXTN\build
+          Remove-Item -Recurse -Force ${{github.workspace}}\build
           choco uninstall -y git
           choco uninstall -y wget
           mkdir ${{github.workspace}}
