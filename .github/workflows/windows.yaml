@@ -29,6 +29,7 @@ jobs:
           dir: ${{github.workspace}}\..
           cache: true
           modules: qtshadertools
+          arch: win64_llvm_mingw
 
       - name: install compiler and related
         run: |
@@ -36,6 +37,8 @@ jobs:
           Get-ChildItem -Path (Resolve-Path "..")
           echo "ls of ../Qt"
           Get-ChildItem -Path (Resolve-Path "..\Qt")
+          echo "ls of ../Qt/version"
+          Get-ChildItem -Path (Resolve-Path "..\Qt\${{env.QTVERSION}}")
           echo "ls done"
           @"
           function Controller() {}
