@@ -92,6 +92,7 @@ jobs:
       - name: Test run app
         shell: powershell
         run: |
+          Get-ChildItem "${{env.APPNAME}}\${{env.APPNAME}}.exe" | Format-List *
           $logFile = "logs.txt"
           $exePath = "${{env.APPNAME}}\${{env.APPNAME}}.exe"
           $args = "${{env.TESTARG}}"
