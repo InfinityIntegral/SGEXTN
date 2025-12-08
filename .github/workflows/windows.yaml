@@ -92,7 +92,7 @@ jobs:
       - name: Test run app
         shell: powershell
         run: |
-          $logFile = "${{env.APPNAME}}-logs.txt"
+          $logFile = "logs.txt"
           $exePath = "${{env.APPNAME}}\${{env.APPNAME}}.exe"
           $args = "${{env.TESTARG}}"
           $process = New-Object System.Diagnostics.Process
