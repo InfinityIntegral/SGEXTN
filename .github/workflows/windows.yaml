@@ -89,9 +89,10 @@ jobs:
           choco uninstall -y wget
           mv ${{github.workspace}}\..\${{env.APPNAME}} ${{github.workspace}}\${{env.APPNAME}}
 
-      - name: test run app
+      - name: Test run app
+        shell: powershell
         run: |
-          $logFile = "logs.txt"
+          $logFile = "${{env.APPNAME}}-logs.txt"
           $exePath = "${{env.APPNAME}}\${{env.APPNAME}}.exe"
           $args = "${{env.TESTARG}}"
           $process = New-Object System.Diagnostics.Process
@@ -103,18 +104,26 @@ jobs:
           $process.StartInfo.CreateNoWindow = $true
           $stream = [System.IO.StreamWriter]::new($logFile, $true)
           $stream.AutoFlush = $true
-          $process.add_OutputDataReceived({ if ($_.Data) { $stream.WriteLine($_.Data) } })
-          $process.add_ErrorDataReceived({ if ($_.Data) { $stream.WriteLine($_.Data) } })
+          $handlerError = $false
+          $process.add_OutputDataReceived({
+            try { if ($_.Data) { $stream.WriteLine($_.Data) } }
+            catch { $handlerError = $true }
+          })
+          $process.add_ErrorDataReceived({
+            try { if ($_.Data) { $stream.WriteLine($_.Data) } }
+            catch { $handlerError = $true }
+          })
           $process.Start() | Out-Null
           $process.BeginOutputReadLine()
           $process.BeginErrorReadLine()
           $process.WaitForExit()
+          if ($handlerError) { $stream.WriteLine("Error in output handler!"); $stream.Close(); exit 26 }
           $exitCode = if ($process.HasExited) { $process.ExitCode } else { 26 }
           $stream.WriteLine("Exit code: $exitCode")
           $stream.Close()
           if ($exitCode -ne 0) {
-              Get-Content $logFile | Out-Host
-              exit $exitCode
+            Get-Content $logFile | Out-Host
+            exit $exitCode
           }
 
       - name: upload binary
