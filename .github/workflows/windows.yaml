@@ -126,13 +126,20 @@ jobs:
             exit $exitCode
           }
 
+      - name: print logs
+        if: always()
+        run: |
+          Get-Content logs.txt
+
       - name: upload binary
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: ${{env.PLATFORM}}-${{env.APPNAME}}-${{env.VERSION}}-binary
           path: ${{env.APPNAME}}
 
       - name: upload logs
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: ${{env.PLATFORM}}-${{env.APPNAME}}-${{env.VERSION}}-logs
