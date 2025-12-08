@@ -39,9 +39,9 @@ jobs:
               for (var i=0;i<packages.length;i++) installer.addPackage(packages[i]);
           }
           "@ | Set-Content "${{github.workspace}}\..\Qt\install.qs" -Encoding UTF8
-          & "${{github.workspace}}\..\Qt\${{env.QTVERSION}}\MaintenanceTool.exe" --script "${{github.workspace}}\..\Qt\install.qs"
+          & "${{github.workspace}}\..\Qt\MaintenanceTool.exe" --script "${{github.workspace}}\..\Qt\install.qs"
           echo "listing plugins in Qt"
-          ls "..\Qt\${{env.QTVERSION}}\mingw_64\plugins"
+          ls "..\Qt\${{env.QTVERSION}}\llvm-mingw_64\plugins"
 
       - name: install devtools
         run: |
@@ -51,31 +51,30 @@ jobs:
 
       - name: delete unnecessary Qt plugins
         run: |
-          Remove-Item -Recurse -Force "..\Qt\${{env.QTVERSION}}\mingw_64\plugins\designer"
-          Remove-Item -Recurse -Force "..\Qt\${{env.QTVERSION}}\mingw_64\plugins\help"
-          Remove-Item -Recurse -Force "..\Qt\${{env.QTVERSION}}\mingw_64\plugins\printsupport"
-          Remove-Item -Recurse -Force "..\Qt\${{env.QTVERSION}}\mingw_64\plugins\sqldrivers"
+          Remove-Item -Recurse -Force "..\Qt\${{env.QTVERSION}}\llvm-mingw_64\plugins\designer"
+          Remove-Item -Recurse -Force "..\Qt\${{env.QTVERSION}}\llvm-mingw_64\plugins\help"
+          Remove-Item -Recurse -Force "..\Qt\${{env.QTVERSION}}\llvm-mingw_64\plugins\sqldrivers"
 
       - name: build application binary
         run: |
-          $env:PATH = "${{github.workspace}}\..\Qt\Tools\CMake\bin;${{github.workspace}}\..\Qt\Tools\Ninja;${{github.workspace}}\..\Qt\Tools\mingwllvm\bin;" + $env:PATH
+          $env:PATH = "${{github.workspace}}\..\Qt\Tools\CMake_64\bin;${{github.workspace}}\..\Qt\Tools\Ninja;${{github.workspace}}\..\Qt\Tools\llvm-mingw1706_64\bin;" + $env:PATH
           mkdir build
           cd build
-          cmake .. -G "Ninja" -DCMAKE_PREFIX_PATH=../../Qt/${{env.QTVERSION}}/mingw_64
+          cmake .. -G "Ninja" -DCMAKE_PREFIX_PATH=../../Qt/${{env.QTVERSION}}/llvm-mingw_64
           cmake --build . --config Release
 
       - name: delete QML tooling
         run: |
-          Remove-Item -Recurse -Force "..\Qt\${{env.QTVERSION}}\mingw_64\plugins\qmllint"
-          Remove-Item -Recurse -Force "..\Qt\${{env.QTVERSION}}\mingw_64\plugins\qmlls"
-          Remove-Item -Recurse -Force "..\Qt\${{env.QTVERSION}}\mingw_64\plugins\qmltooling"
+          Remove-Item -Recurse -Force "..\Qt\${{env.QTVERSION}}\llvm-mingw_64\plugins\qmllint"
+          Remove-Item -Recurse -Force "..\Qt\${{env.QTVERSION}}\llvm-mingw_64\plugins\qmlls"
+          Remove-Item -Recurse -Force "..\Qt\${{env.QTVERSION}}\llvm-mingw_64\plugins\qmltooling"
 
       - name: package app using windowsdeployqt
         run: |
           mkdir ${{github.workspace}}\${{env.APPNAME}}
           Copy-Item -Path "build\${{env.CMAKETARGET}}.exe" -Destination "${{github.workspace}}\${{env.APPNAME}}\${{env.APPNAME}}.exe"
           Get-ChildItem -Path build -Filter *.dll -Recurse | ForEach-Object {Copy-Item $_.FullName -Destination ${{github.workspace}}\${{env.APPNAME}} -Force}
-          & "..\Qt\${{env.QTVERSION}}\mingw_64\bin\windeployqt.exe" ${{github.workspace}}\${{env.APPNAME}}\${{env.APPNAME}}.exe -qmldir=${{github.workspace}}\..\SGEXTN\SG_Widgets\assets
+          & "..\Qt\${{env.QTVERSION}}\llvm-mingw_64\bin\windeployqt.exe" ${{github.workspace}}\${{env.APPNAME}}\${{env.APPNAME}}.exe -qmldir=${{github.workspace}}\..\SGEXTN\SG_Widgets\assets
 
       - name: write version file
         run: |
