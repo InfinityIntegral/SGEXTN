@@ -33,9 +33,9 @@ jobs:
       - name: install compiler and related
         run: |
           echo "ls of .."
-          ls (Resolve-Path "..")
+          Get-ChildItem -Path (Resolve-Path "..")
           echo "ls of ../Qt"
-          ls (Resolve-Path "..\Qt")
+          Get-ChildItem -Path (Resolve-Path "..\Qt")
           echo "ls done"
           @"
           function Controller() {}
@@ -46,7 +46,7 @@ jobs:
           "@ | Set-Content "${{github.workspace}}\..\Qt\install.qs" -Encoding UTF8
           & (Resolve-Path "${{github.workspace}}\..\Qt\MaintenanceTool.exe") --script (Resolve-Path "${{github.workspace}}\..\Qt\install.qs")
           echo "listing plugins in Qt"
-          ls (Resolve-Path "..\Qt\${{env.QTVERSION}}\llvm-mingw_64\plugins")
+          Get-ChildItem -Path (Resolve-Path "..\Qt\${{env.QTVERSION}}\llvm-mingw_64\plugins")
 
       - name: install devtools
         run: |
