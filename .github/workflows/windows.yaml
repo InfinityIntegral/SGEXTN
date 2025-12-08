@@ -91,10 +91,31 @@ jobs:
 
       - name: test run app
         run: |
-          $process = Start-Process -FilePath "$env:APPNAME\$env:APPNAME.exe" -ArgumentList "$env:TESTARG" -Wait -PassThru -NoNewWindow -RedirectStandardOutput "logs.txt" -RedirectStandardError "logs.txt"
-          $exitCode = $process.ExitCode
-          Write-Output "Exit code: $exitCode" | Out-File -Append logs.txt
-          if ($exitCode -ne 0) { Get-Content logs.txt; exit $exitCode }
+          $logFile = "logs.txt"
+          $exePath = "${{env.APPNAME}}\${{env.APPNAME}}.exe"
+          $args = "${{env.TESTARG}}"
+          $process = New-Object System.Diagnostics.Process
+          $process.StartInfo.FileName = $exePath
+          $process.StartInfo.Arguments = $args
+          $process.StartInfo.UseShellExecute = $false
+          $process.StartInfo.RedirectStandardOutput = $true
+          $process.StartInfo.RedirectStandardError = $true
+          $process.StartInfo.CreateNoWindow = $true
+          $stream = [System.IO.StreamWriter]::new($logFile, $true)
+          $stream.AutoFlush = $true
+          $process.add_OutputDataReceived({ if ($_.Data) { $stream.WriteLine($_.Data) } })
+          $process.add_ErrorDataReceived({ if ($_.Data) { $stream.WriteLine($_.Data) } })
+          $process.Start() | Out-Null
+          $process.BeginOutputReadLine()
+          $process.BeginErrorReadLine()
+          $process.WaitForExit()
+          $exitCode = if ($process.HasExited) { $process.ExitCode } else { 26 }
+          $stream.WriteLine("Exit code: $exitCode")
+          $stream.Close()
+          if ($exitCode -ne 0) {
+              Get-Content $logFile | Out-Host
+              exit $exitCode
+          }
 
       - name: upload binary
         uses: actions/upload-artifact@v4
