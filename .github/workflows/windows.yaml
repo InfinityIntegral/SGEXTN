@@ -82,9 +82,6 @@ jobs:
         run: |
           cd ..
           mv ${{github.workspace}}\${{env.APPNAME}} ${{github.workspace}}\..\${{env.APPNAME}}
-          Remove-Item -Recurse -Force Qt
-          Remove-Item -Recurse -Force SGEXTN\build
-          Remove-Item -Recurse -Force -ErrorAction SilentlyContinue build
           choco uninstall -y git
           choco uninstall -y wget
           mv ${{github.workspace}}\..\${{env.APPNAME}} ${{github.workspace}}\${{env.APPNAME}}
@@ -92,9 +89,8 @@ jobs:
       - name: test run app
         shell: cmd
         run: |
-          cmd /c "\"${{env.APPNAME}}\${{env.APPNAME}}.exe\" \"${{env.TESTARG}}\" > logs.txt 2>&1"
+          cmd /c ${{env.APPNAME}}\${{env.APPNAME}}.exe ${{env.TESTARG}} > logs.txt 2>&1"
           echo EXITCODE:%ERRORLEVEL%
-
 
       - name: print logs
         if: always()
