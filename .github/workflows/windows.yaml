@@ -90,30 +90,11 @@ jobs:
           mv ${{github.workspace}}\..\${{env.APPNAME}} ${{github.workspace}}\${{env.APPNAME}}
 
       - name: test run app
-        shell: powershell
+        shell: cmd
         run: |
-          $logFile = "$PWD\logs.txt"
-          "=== STEP STARTED ===" | Out-File $logFile -Encoding utf8
-          "PWD: $PWD" | Out-File $logFile -Append
-          "Exe: ${{env.APPNAME}}\${{env.APPNAME}}.exe" | Out-File $logFile -Append
-          $exePath = "${{env.APPNAME}}\${{env.APPNAME}}.exe"
-          $args = "${{env.TESTARG}}"
-          try {
-            & $exePath $args 2>&1 | Out-File $logFile -Append
-            $exitCode = $LASTEXITCODE
-          } catch {
-            "CreateProcess exception:" | Out-File $logFile -Append
-            $_.Exception.Message | Out-File $logFile -Append
-            $exitCode = 5
-          }
-          Start-Sleep -Seconds 2
-          if ($exitCode -ne 0) {
-            "=== Windows Application Event Log ===" | Out-File $logFile -Append
-            wevtutil qe Application /q:"*[System[(EventID=1000 or EventID=1026)]]" /f:text /c:5 |
-              Out-File $logFile -Append
-          }
-          Get-Content $logFile | Out-Host
-          exit $exitCode
+          "${{env.APPNAME}}\${{env.APPNAME}}.exe" ${{env.TESTARG}} > logs.txt 2>&1
+          echo EXITCODE:%ERRORLEVEL%
+
 
       - name: print logs
         if: always()
