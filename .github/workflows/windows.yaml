@@ -39,7 +39,7 @@ jobs:
               for (var i=0;i<packages.length;i++) installer.addPackage(packages[i]);
           }
           "@ | Set-Content "${{github.workspace}}\..\Qt\install.qs" -Encoding UTF8
-          "${{github.workspace}}\..\Qt\${{env.QTVERSION}}\MaintenanceTool.exe" --script "${{github.workspace}}\..\Qt\install.qs"
+          & "${{github.workspace}}\..\Qt\${{env.QTVERSION}}\MaintenanceTool.exe" --script "${{github.workspace}}\..\Qt\install.qs"
           echo "listing plugins in Qt"
           ls "..\Qt\${{env.QTVERSION}}\mingw_64\plugins"
 
@@ -75,7 +75,7 @@ jobs:
           mkdir ${{github.workspace}}\${{env.APPNAME}}
           Copy-Item -Path "build\${{env.CMAKETARGET}}.exe" -Destination "${{github.workspace}}\${{env.APPNAME}}\${{env.APPNAME}}.exe"
           Get-ChildItem -Path build -Filter *.dll -Recurse | ForEach-Object {Copy-Item $_.FullName -Destination ${{github.workspace}}\${{env.APPNAME}} -Force}
-          "..\Qt\${{env.QTVERSION}}\mingw_64\bin\windeployqt.exe" ${{github.workspace}}\${{env.APPNAME}}\${{env.APPNAME}}.exe -qmldir=${{github.workspace}}\..\SGEXTN\SG_Widgets\assets
+          & "..\Qt\${{env.QTVERSION}}\mingw_64\bin\windeployqt.exe" ${{github.workspace}}\${{env.APPNAME}}\${{env.APPNAME}}.exe -qmldir=${{github.workspace}}\..\SGEXTN\SG_Widgets\assets
 
       - name: write version file
         run: |
@@ -106,7 +106,7 @@ jobs:
 
       - name: test run app
         run: |
-          ${{env.APPNAME}}\${{env.APPNAME}}.exe ${{env.TESTARG}} > logs.txt 2>&1
+          & ${{env.APPNAME}}\${{env.APPNAME}}.exe ${{env.TESTARG}} > logs.txt 2>&1
           $exitCode = $LASTEXITCODE
           Write-Output "Exit code: $exitCode" | Out-File -Append logs.txt
           if ($exitCode -ne 0) { Get-Content logs.txt; exit $exitCode }
