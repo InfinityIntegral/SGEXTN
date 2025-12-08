@@ -87,7 +87,6 @@ jobs:
           Remove-Item -Recurse -Force -ErrorAction SilentlyContinue build
           choco uninstall -y git
           choco uninstall -y wget
-          mkdir ${{github.workspace}}
           mv ${{github.workspace}}\..\${{env.APPNAME}} ${{github.workspace}}\${{env.APPNAME}}
 
       - name: test run app
