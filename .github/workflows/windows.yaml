@@ -26,12 +26,17 @@ jobs:
           version: ${{env.QTVERSION}}
           host: windows
           target: desktop
-          dir: (Resolve-Path ${{github.workspace}}\..)
+          dir: ${{github.workspace}}\..
           cache: true
           modules: qtshadertools
 
       - name: install compiler and related
         run: |
+          echo "ls of .."
+          ls (Resolve-Path "..")
+          echo "ls of ../Qt"
+          ls (Resolve-Path "..\Qt")
+          echo "ls done"
           @"
           function Controller() {}
           function Component() {
