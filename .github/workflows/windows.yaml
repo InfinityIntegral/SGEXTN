@@ -91,8 +91,8 @@ jobs:
 
       - name: test run app
         run: |
-          & ${{env.APPNAME}}\${{env.APPNAME}}.exe ${{env.TESTARG}} > logs.txt 2>&1
-          $exitCode = $LASTEXITCODE
+          $process = Start-Process -FilePath "$env:APPNAME\$env:APPNAME.exe" -ArgumentList "$env:TESTARG" -Wait -PassThru -NoNewWindow -RedirectStandardOutput "logs.txt" -RedirectStandardError "logs.txt"
+          $exitCode = $process.ExitCode
           Write-Output "Exit code: $exitCode" | Out-File -Append logs.txt
           if ($exitCode -ne 0) { Get-Content logs.txt; exit $exitCode }
 
