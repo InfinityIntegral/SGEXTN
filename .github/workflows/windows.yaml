@@ -89,48 +89,31 @@ jobs:
           choco uninstall -y wget
           mv ${{github.workspace}}\..\${{env.APPNAME}} ${{github.workspace}}\${{env.APPNAME}}
 
-      - name: Test run app
+      - name: test run app
         shell: powershell
         run: |
-          Get-ChildItem "${{env.APPNAME}}\${{env.APPNAME}}.exe" | Format-List *
-          $logFile = "logs.txt"
+          $logFile = "$PWD\logs.txt"
+          "=== STEP STARTED ===" | Out-File $logFile -Encoding utf8
+          "PWD: $PWD" | Out-File $logFile -Append
+          "Exe: ${{env.APPNAME}}\${{env.APPNAME}}.exe" | Out-File $logFile -Append
           $exePath = "${{env.APPNAME}}\${{env.APPNAME}}.exe"
           $args = "${{env.TESTARG}}"
-          $stream = [System.IO.StreamWriter]::new($logFile, $true)
-          $stream.AutoFlush = $true
-          $process = New-Object System.Diagnostics.Process
-          $process.StartInfo.FileName = $exePath
-          $process.StartInfo.Arguments = $args
-          $process.StartInfo.UseShellExecute = $false
-          $process.StartInfo.RedirectStandardOutput = $true
-          $process.StartInfo.RedirectStandardError = $true
-          $process.StartInfo.CreateNoWindow = $true
-          $process.add_OutputDataReceived({ if ($_.Data) { $stream.WriteLine($_.Data) } })
-          $process.add_ErrorDataReceived({ if ($_.Data) { $stream.WriteLine($_.Data) } })
           try {
-            $process.Start() | Out-Null
+            & $exePath $args 2>&1 | Out-File $logFile -Append
+            $exitCode = $LASTEXITCODE
           } catch {
-            $stream.WriteLine("CreateProcess failed:")
-            $stream.WriteLine($_.Exception.Message)
-            $stream.Close()
-            exit 5
+            "CreateProcess exception:" | Out-File $logFile -Append
+            $_.Exception.Message | Out-File $logFile -Append
+            $exitCode = 5
           }
-          $process.BeginOutputReadLine()
-          $process.BeginErrorReadLine()
-          $process.WaitForExit()
-          $exitCode = $process.ExitCode
-          $stream.WriteLine("Exit code: $exitCode")
+          Start-Sleep -Seconds 2
           if ($exitCode -ne 0) {
-            stream.WriteLine("")
-            $stream.WriteLine("=== Windows Application Event Log (loader errors) ===")
+            "=== Windows Application Event Log ===" | Out-File $logFile -Append
             wevtutil qe Application /q:"*[System[(EventID=1000 or EventID=1026)]]" /f:text /c:5 |
-            ForEach-Object { $stream.WriteLine($_) }
+              Out-File $logFile -Append
           }
-          $stream.Close()
-          if ($exitCode -ne 0) {
-            Get-Content $logFile | Out-Host
-            exit $exitCode
-          }
+          Get-Content $logFile | Out-Host
+          exit $exitCode
 
       - name: print logs
         if: always()
