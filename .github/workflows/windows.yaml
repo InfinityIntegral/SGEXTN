@@ -39,9 +39,9 @@ jobs:
               for (var i=0;i<packages.length;i++) installer.addPackage(packages[i]);
           }
           "@ | Set-Content "${{github.workspace}}\..\Qt\install.qs" -Encoding UTF8
-          & "${{github.workspace}}\..\Qt\MaintenanceTool.exe" --script "${{github.workspace}}\..\Qt\install.qs"
+          & (Resolve-Path "${{github.workspace}}\..\Qt\MaintenanceTool.exe") --script (Resolve-Path "${{github.workspace}}\..\Qt\install.qs")
           echo "listing plugins in Qt"
-          ls "..\Qt\${{env.QTVERSION}}\llvm-mingw_64\plugins"
+          ls (Resolve-Path "..\Qt\${{env.QTVERSION}}\llvm-mingw_64\plugins")
 
       - name: install devtools
         run: |
