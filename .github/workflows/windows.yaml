@@ -92,7 +92,7 @@ jobs:
       - name: test run app
         shell: cmd
         run: |
-          "${{env.APPNAME}}\${{env.APPNAME}}.exe" ${{env.TESTARG}} > logs.txt 2>&1
+          cmd /c "\"${{env.APPNAME}}\${{env.APPNAME}}.exe\" \"${{env.TESTARG}}\" > logs.txt 2>&1"
           echo EXITCODE:%ERRORLEVEL%
 
 
