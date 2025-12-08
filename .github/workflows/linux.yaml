@@ -93,7 +93,7 @@ jobs:
           rm -rf package/${{env.APPNAME}}.AppDir/usr/plugins
           mkdir -p package/${{env.APPNAME}}.AppDir/usr/plugins
           cd ${{github.workspace}}/../Qt/${{env.QTVERSION}}/gcc_64/plugins
-          find . -type f -name "*.so*" -exec cp --parents {} ${{github.workspace}}/package/${{env.APPNAME}}.AppDir/usr/plugins
+          find . -type f -name "*.so*" -exec cp --parents {} "${{github.workspace}}/package/${{env.APPNAME}}.AppDir/usr/plugins" \;
           cd ${{github.workspace}}
           mv package/${{env.APPNAME}}.AppDir/usr ${{env.APPNAME}}
           rm -rf ${{env.APPNAME}}/share
