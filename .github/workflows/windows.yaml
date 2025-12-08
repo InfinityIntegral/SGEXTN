@@ -30,30 +30,10 @@ jobs:
           cache: true
           modules: qtshadertools
           arch: win64_llvm_mingw
-
-      - name: install compiler and related
-        run: |
-          echo "ls of .."
-          Get-ChildItem -Path (Resolve-Path "..")
-          echo "ls of ../Qt"
-          Get-ChildItem -Path (Resolve-Path "..\Qt")
-          echo "ls of ../Qt/version"
-          Get-ChildItem -Path (Resolve-Path "..\Qt\${{env.QTVERSION}}")
-          echo "ls done"
-          @"
-          function Controller() {}
-          function Component() {
-              var packages = ["qt.tools.llvm-mingw", "qt.tools.cmake", "qt.tools.ninja"];
-              for (var i=0;i<packages.length;i++) installer.addPackage(packages[i]);
-          }
-          "@ | Set-Content "${{github.workspace}}\..\Qt\install.qs" -Encoding UTF8
-          & (Resolve-Path "${{github.workspace}}\..\Qt\MaintenanceTool.exe") --script (Resolve-Path "${{github.workspace}}\..\Qt\install.qs")
-          echo "listing plugins in Qt"
-          Get-ChildItem -Path (Resolve-Path "..\Qt\${{env.QTVERSION}}\llvm-mingw_64\plugins")
+          tools: 'tools_llvm_mingw1706 tools_cmake tools_ninja'
 
       - name: install devtools
         run: |
-          choco install -y cmake
           choco install -y git
           choco install -y wget
 
@@ -105,7 +85,6 @@ jobs:
           Remove-Item -Recurse -Force Qt
           Remove-Item -Recurse -Force SGEXTN
           Remove-Item -Recurse -Force ${{github.workspace}}
-          choco uninstall -y cmake
           choco uninstall -y git
           choco uninstall -y wget
           mkdir ${{github.workspace}}
