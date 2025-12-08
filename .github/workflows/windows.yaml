@@ -26,7 +26,7 @@ jobs:
           version: ${{env.QTVERSION}}
           host: windows
           target: desktop
-          dir: ${{github.workspace}}\..
+          dir: (Resolve-Path ${{github.workspace}}\..)
           cache: true
           modules: qtshadertools
 
