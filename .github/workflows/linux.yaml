@@ -90,6 +90,11 @@ jobs:
           cp ${{github.workspace}}/../SGEXTN/SG_Widgets/assets/SGEXTN_icon.png package/${{env.APPNAME}}.AppDir/usr/share/icons/hicolor/256x256/apps/${{env.APPNAME}}.png
           export PATH=${{github.workspace}}/../appimagetool:$PATH
           ../linuxdeployqt/build/tools/linuxdeployqt/linuxdeployqt package/${{env.APPNAME}}.AppDir/usr/share/applications/${{env.APPNAME}}.desktop -qmldir=${{github.workspace}}/../SGEXTN/SG_Widgets/assets
+          rm -rf package/${{env.APPNAME}}.AppDir/usr/plugins
+          mkdir -p package/${{env.APPNAME}}.AppDir/usr/plugins
+          cd ${{github.workspace}}/../Qt/${{env.QTVERSION}}/gcc_64/plugins
+          find . -type f -name "*.so*" -exec cp --parents {} ${{github.workspace}}/package/${{env.APPNAME}}.AppDir/usr/plugins
+          cd ${{github.workspace}}
           mv package/${{env.APPNAME}}.AppDir/usr ${{env.APPNAME}}
           rm -rf ${{env.APPNAME}}/share
           rm -rf ${{env.APPNAME}}/translations
