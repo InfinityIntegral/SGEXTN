@@ -75,11 +75,7 @@ jobs:
           cp $(find build -type f -executable -name "${{env.CMAKETARGET}}") package/${{env.APPNAME}}.AppDir/usr/bin/${{env.APPNAME}}
           mkdir -p package/${{env.APPNAME}}.AppDir/usr/lib
           find build -type f -name "*.so*" -exec cp {} package/${{env.APPNAME}}.AppDir/usr/lib/ \; -exec echo "Copied {} to usr/lib" \;
-          mkdir -p package/${{env.APPNAME}}.AppDir/usr/share/applications
-          echo -e "[Desktop Entry]\nType=Application\nName=name\nExec=${{env.APPNAME}}\nIcon=${{env.APPNAME}}\nComment=comments\nCategories=category;" > package/${{env.APPNAME}}.AppDir/usr/share/applications/${{env.APPNAME}}.desktop
-          mkdir -p package/${{env.APPNAME}}.AppDir/usr/share/icons/hicolor/256x256/apps
-          cp ${{github.workspace}}/../SGEXTN/SG_Widgets/assets/SGEXTN_icon.png package/${{env.APPNAME}}.AppDir/usr/share/icons/hicolor/256x256/apps/${{env.APPNAME}}.png
-          ../linuxdeployqt/build/tools/linuxdeployqt/linuxdeployqt package/${{env.APPNAME}}.AppDir/usr/share/applications/${{env.APPNAME}}.desktop -qmldir=${{github.workspace}}/../SGEXTN/SG_Widgets/assets
+          ../linuxdeployqt/build/tools/linuxdeployqt/linuxdeployqt package/${{env.APPNAME}}.AppDir/usr/bin/${{env.APPNAME}} -qmldir=${{github.workspace}}/../SGEXTN/SG_Widgets/assets
           rm -rf package/${{env.APPNAME}}.AppDir/usr/plugins
           mkdir -p package/${{env.APPNAME}}.AppDir/usr/plugins
           cd ${{github.workspace}}/../Qt/${{env.QTVERSION}}/gcc_64/plugins
