@@ -35,7 +35,6 @@ jobs:
       - name: install devtools
         run: |
           choco install -y git
-          choco install -y wget
 
       - name: delete unnecessary Qt plugins
         run: |
@@ -87,7 +86,6 @@ jobs:
           Remove-Item -Recurse -Force SGEXTN\build
           Remove-Item -Recurse -Force -ErrorAction SilentlyContinue build
           choco uninstall -y git
-          choco uninstall -y wget
           mv ${{github.workspace}}\..\${{env.APPNAME}} ${{github.workspace}}\${{env.APPNAME}}
 
       - name: test run app
