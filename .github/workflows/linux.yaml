@@ -116,11 +116,6 @@ jobs:
           mkdir -p ${{github.workspace}}
           mv ${{env.APPNAME}} ${{github.workspace}}/${{env.APPNAME}}
 
-      - name: check dependencies of app
-        run: |
-          export PATH=/usr/bin:/bin:/usr/sbin:/sbin
-          ldd ${{env.APPNAME}}/bin/${{env.APPNAME}}
-
       - name: test run app
         run: |
           sudo apt-get install -y xvfb
