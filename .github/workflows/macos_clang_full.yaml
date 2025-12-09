@@ -44,7 +44,7 @@ jobs:
 
       - name: build application binary
         run: |
-          ls ../Qt/${{env.QTVERSION}}
+          ls ../Qt/${{env.QTVERSION}}/macos
           mkdir build
           cd build
           cmake .. -G Ninja -DCMAKE_PREFIX_PATH=../../Qt/${{env.QTVERSION}}/clang_64 -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" -DCMAKE_FIND_FRAMEWORK=TRUE
