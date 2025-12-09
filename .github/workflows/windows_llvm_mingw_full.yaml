@@ -1,4 +1,4 @@
-name: Windows build and test
+name: Windows LLVM MinGW build and full package integrity test
 
 on:
   workflow_dispatch:
