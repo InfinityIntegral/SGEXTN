@@ -67,12 +67,18 @@ jobs:
           Remove-Item -Recurse -Force ${{env.APPNAME}}/translations
 
       - name: write version file
+        shell: cmd
         run: |
-          New-Item -Path "${{github.workspace}}\build\version.txt" -ItemType File -Force
-          Add-Content -Path "${{github.workspace}}\build\version.txt" -Value "using Qt version ${{env.QTVERSION}}"
-          Add-Content -Path "${{github.workspace}}\build\version.txt" -Value "using compiler $(cl --version | Select-Object -First 1)"
-          Add-Content -Path "${{github.workspace}}\build\version.txt" -Value "building application ${{env.APPNAME}} version ${{env.VERSION}}"
-          Copy-Item "${{github.workspace}}\build\version.txt" "${{github.workspace}}\${{env.APPNAME}}\version.txt"
+          call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+          echo. > "${{github.workspace}}\build\version.txt"
+          echo using Qt version ${{env.QTVERSION}} >> "${{github.workspace}}\build\version.txt"
+          for /f "delims=" %%i in ('cl 2^>^&1 ^| findstr /R /C:".*"') do (
+              echo using compiler %%i >> "${{github.workspace}}\build\version.txt"
+              goto donecompiler
+          )
+          :donecompiler
+          echo building application ${{env.APPNAME}} version ${{env.VERSION}} >> "${{github.workspace}}\build\version.txt"
+          copy "${{github.workspace}}\build\version.txt" "${{github.workspace}}\${{env.APPNAME}}\version.txt"
 
       - name: upload build artifacts
         uses: actions/upload-artifact@v4
