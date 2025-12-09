@@ -1,4 +1,4 @@
-name: macOS Clang build and full package integrity test
+name: MacOS Clang build and full package integrity test
 
 on:
   workflow_dispatch:
