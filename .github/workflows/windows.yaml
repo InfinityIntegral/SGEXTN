@@ -60,7 +60,7 @@ jobs:
       - name: package app using windowsdeployqt
         run: |
           echo "test running app"
-          build\${{env.CMAKETARGET}}.exe
+          build\${{env.CMAKETARGET}}.exe ${{env.TESTARG}}
           echo "test run done"
           mkdir ${{github.workspace}}\${{env.APPNAME}}
           Copy-Item -Path "build\${{env.CMAKETARGET}}.exe" -Destination "${{github.workspace}}\${{env.APPNAME}}\${{env.APPNAME}}.exe"
