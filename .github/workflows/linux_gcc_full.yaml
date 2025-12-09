@@ -75,7 +75,8 @@ jobs:
           cp $(find build -type f -executable -name "${{env.CMAKETARGET}}") package/${{env.APPNAME}}.AppDir/usr/bin/${{env.APPNAME}}
           mkdir -p package/${{env.APPNAME}}.AppDir/usr/lib
           find build -type f -name "*.so*" -exec cp {} package/${{env.APPNAME}}.AppDir/usr/lib/ \; -exec echo "Copied {} to usr/lib" \;
-          ../linuxdeployqt/build/tools/linuxdeployqt/linuxdeployqt package/${{env.APPNAME}}.AppDir/usr/bin/${{env.APPNAME}} -qmldir=${{github.workspace}}/../SGEXTN/SG_Widgets/assets -no-translations -no-plugins
+          ../linuxdeployqt/build/tools/linuxdeployqt/linuxdeployqt package/${{env.APPNAME}}.AppDir/usr/bin/${{env.APPNAME}} -qmldir=${{github.workspace}}/../SGEXTN/SG_Widgets/assets -no-translations
+          rm -rf package/${{env.APPNAME}}.AppDir/usr/plugins
           mkdir -p package/${{env.APPNAME}}.AppDir/usr/plugins
           cd ${{github.workspace}}/../Qt/${{env.QTVERSION}}/gcc_64/plugins
           find . -type f -name "*.so*" -exec cp --parents {} "${{github.workspace}}/package/${{env.APPNAME}}.AppDir/usr/plugins" \;
