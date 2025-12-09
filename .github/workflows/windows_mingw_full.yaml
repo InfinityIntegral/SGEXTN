@@ -1,0 +1,118 @@
+name: Windows MinGW build and full package integrity test
+
+on:
+  workflow_dispatch:
+
+env:
+  APPNAME: sg-extn
+  VERSION: 6.1.0
+  QTVERSION: 6.10.1
+  CMAKETARGET: InternalTest
+  TESTARG: --SG-test
+  PLATFORM: windows-mingw
+
+jobs:
+  build:
+    name: build app
+    runs-on: windows-latest
+
+    steps:
+      - name: pull repository
+        uses: actions/checkout@v3
+
+      - name: install Qt
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: ${{env.QTVERSION}}
+          host: windows
+          target: desktop
+          dir: ${{github.workspace}}\..
+          cache: true
+          modules: qtshadertools
+          arch: win64_mingw
+          tools: 'tools_mingw1310 tools_cmake tools_ninja'
+
+      - name: install devtools
+        run: |
+          choco install -y git
+          choco install -y wget
+
+      - name: delete unnecessary Qt plugins
+        run: |
+          Remove-Item -Recurse -Force "..\Qt\${{env.QTVERSION}}\mingw_64\plugins\designer"
+          Remove-Item -Recurse -Force "..\Qt\${{env.QTVERSION}}\mingw_64\plugins\help"
+          Remove-Item -Recurse -Force "..\Qt\${{env.QTVERSION}}\mingw_64\plugins\sqldrivers"
+
+      - name: build application binary
+        run: |
+          $env:PATH = "${{github.workspace}}\..\Qt\Tools\CMake_64\bin;${{github.workspace}}\..\Qt\Tools\Ninja;${{github.workspace}}\..\Qt\Tools\mingw1310_64\bin;" + $env:PATH
+          mkdir build
+          cd build
+          cmake .. -G "Ninja" -DCMAKE_PREFIX_PATH=../../Qt/${{env.QTVERSION}}/mingw_64
+          cmake --build . --config Release
+
+      - name: delete QML tooling
+        run: |
+          Remove-Item -Recurse -Force "..\Qt\${{env.QTVERSION}}\mingw_64\plugins\qmllint"
+          Remove-Item -Recurse -Force "..\Qt\${{env.QTVERSION}}\mingw_64\plugins\qmlls"
+          Remove-Item -Recurse -Force "..\Qt\${{env.QTVERSION}}\mingw_64\plugins\qmltooling"
+
+      - name: package app using windowsdeployqt
+        run: |
+          mkdir ${{github.workspace}}\${{env.APPNAME}}
+          Copy-Item -Path "build\${{env.CMAKETARGET}}.exe" -Destination "${{github.workspace}}\${{env.APPNAME}}\${{env.APPNAME}}.exe"
+          Get-ChildItem -Path build -Filter *.dll -Recurse | ForEach-Object {Copy-Item $_.FullName -Destination ${{github.workspace}}\${{env.APPNAME}} -Force}
+          & "..\Qt\${{env.QTVERSION}}\mingw_64\bin\windeployqt.exe" ${{github.workspace}}\${{env.APPNAME}}\${{env.APPNAME}}.exe -qmldir=${{github.workspace}}\..\SGEXTN\SG_Widgets\assets
+          Remove-Item -Recurse -Force ${{env.APPNAME}}/translations
+
+      - name: write version file
+        run: |
+          New-Item -Path "${{github.workspace}}\build\version.txt" -ItemType File -Force
+          Add-Content -Path "${{github.workspace}}\build\version.txt" -Value "using Qt version ${{env.QTVERSION}}"
+          Add-Content -Path "${{github.workspace}}\build\version.txt" -Value "using compiler $(${{github.workspace}}\..\Qt\Tools\mingw1310_64\bin\g++.exe --version | Select-Object -First 1)"
+          Add-Content -Path "${{github.workspace}}\build\version.txt" -Value "building application ${{env.APPNAME}} version ${{env.VERSION}}"
+          Copy-Item "${{github.workspace}}\build\version.txt" "${{github.workspace}}\${{env.APPNAME}}\version.txt"
+
+      - name: upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{env.PLATFORM}}-${{env.APPNAME}}-${{env.VERSION}}-build
+          path: build
+
+      - name: delete everything to ensure app can run on machine of non programmer user
+        run: |
+          cd ..
+          mv ${{github.workspace}}\${{env.APPNAME}} ${{github.workspace}}\..\${{env.APPNAME}}
+          Remove-Item -Recurse -Force Qt
+          Remove-Item -Recurse -Force SGEXTN\build
+          Remove-Item -Recurse -Force -ErrorAction SilentlyContinue build
+          choco uninstall -y git
+          choco uninstall -y wget
+          mv ${{github.workspace}}\..\${{env.APPNAME}} ${{github.workspace}}\${{env.APPNAME}}
+
+      - name: test run app
+        run: |
+          $env:PATH = "C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0"
+          ${{env.APPNAME}}\${{env.APPNAME}}.exe ${{env.TESTARG}} --SG-log-file=${{github.workspace}}\logs.txt
+          $EXIT_CODE = $LASTEXITCODE
+          "Exit code: $EXIT_CODE" | Out-File -FilePath logs.txt -Append
+          exit $EXIT_CODE
+
+      - name: print logs
+        if: always()
+        run: |
+          Get-Content logs.txt
+
+      - name: upload binary
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{env.PLATFORM}}-${{env.APPNAME}}-${{env.VERSION}}-binary
+          path: ${{env.APPNAME}}
+
+      - name: upload logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{env.PLATFORM}}-${{env.APPNAME}}-${{env.VERSION}}-logs
+          path: logs.txt
