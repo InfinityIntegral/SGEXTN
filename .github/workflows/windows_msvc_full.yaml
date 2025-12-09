@@ -1,4 +1,4 @@
-name: Windows LLVM MinGW build and full package integrity test
+name: Windows MSVC build and full package integrity test
 
 on:
   workflow_dispatch:
@@ -9,7 +9,7 @@ env:
   QTVERSION: 6.10.1
   CMAKETARGET: InternalTest
   TESTARG: --SG-test
-  PLATFORM: windows-llvm-mingw
+  PLATFORM: windows-msvc
 
 jobs:
   build:
@@ -29,46 +29,47 @@ jobs:
           dir: ${{github.workspace}}\..
           cache: true
           modules: qtshadertools
-          arch: win64_llvm_mingw
-          tools: 'tools_llvm_mingw1706 tools_cmake tools_ninja'
+          arch: win64_msvc2022_64
+          tools: 'tools_vcredist,qt.tools.vcredist_msvc2022_x64 tools_cmake tools_ninja'
 
       - name: install devtools
         run: |
           choco install -y git
+          choco install -y wget
 
       - name: delete unnecessary Qt plugins
         run: |
-          Remove-Item -Recurse -Force "..\Qt\${{env.QTVERSION}}\llvm-mingw_64\plugins\designer"
-          Remove-Item -Recurse -Force "..\Qt\${{env.QTVERSION}}\llvm-mingw_64\plugins\help"
-          Remove-Item -Recurse -Force "..\Qt\${{env.QTVERSION}}\llvm-mingw_64\plugins\sqldrivers"
+          Remove-Item -Recurse -Force "..\Qt\${{env.QTVERSION}}\msvc2022_64\plugins\designer"
+          Remove-Item -Recurse -Force "..\Qt\${{env.QTVERSION}}\msvc2022_64\plugins\help"
+          Remove-Item -Recurse -Force "..\Qt\${{env.QTVERSION}}\msvc2022_64\plugins\sqldrivers"
 
       - name: build application binary
         run: |
-          $env:PATH = "${{github.workspace}}\..\Qt\Tools\CMake_64\bin;${{github.workspace}}\..\Qt\Tools\Ninja;${{github.workspace}}\..\Qt\Tools\llvm-mingw1706_64\bin;" + $env:PATH
+          $env:PATH = "${{github.workspace}}\..\Qt\Tools\CMake_64\bin;${{github.workspace}}\..\Qt\Tools\Ninja;" + $env:PATH
           mkdir build
           cd build
-          cmake .. -G "Ninja" -DCMAKE_PREFIX_PATH=../../Qt/${{env.QTVERSION}}/llvm-mingw_64
+          cmake .. -G "Ninja" -DCMAKE_PREFIX_PATH=../../Qt/${{env.QTVERSION}}/msvc2022_64
           cmake --build . --config Release
 
       - name: delete QML tooling
         run: |
-          Remove-Item -Recurse -Force "..\Qt\${{env.QTVERSION}}\llvm-mingw_64\plugins\qmllint"
-          Remove-Item -Recurse -Force "..\Qt\${{env.QTVERSION}}\llvm-mingw_64\plugins\qmlls"
-          Remove-Item -Recurse -Force "..\Qt\${{env.QTVERSION}}\llvm-mingw_64\plugins\qmltooling"
+          Remove-Item -Recurse -Force "..\Qt\${{env.QTVERSION}}\msvc2022_64\plugins\qmllint"
+          Remove-Item -Recurse -Force "..\Qt\${{env.QTVERSION}}\msvc2022_64\plugins\qmlls"
+          Remove-Item -Recurse -Force "..\Qt\${{env.QTVERSION}}\msvc2022_64\plugins\qmltooling"
 
       - name: package app using windowsdeployqt
         run: |
           mkdir ${{github.workspace}}\${{env.APPNAME}}
           Copy-Item -Path "build\${{env.CMAKETARGET}}.exe" -Destination "${{github.workspace}}\${{env.APPNAME}}\${{env.APPNAME}}.exe"
           Get-ChildItem -Path build -Filter *.dll -Recurse | ForEach-Object {Copy-Item $_.FullName -Destination ${{github.workspace}}\${{env.APPNAME}} -Force}
-          & "..\Qt\${{env.QTVERSION}}\llvm-mingw_64\bin\windeployqt.exe" ${{github.workspace}}\${{env.APPNAME}}\${{env.APPNAME}}.exe -qmldir=${{github.workspace}}\..\SGEXTN\SG_Widgets\assets
+          & "..\Qt\${{env.QTVERSION}}\msvc2022_64\bin\windeployqt.exe" ${{github.workspace}}\${{env.APPNAME}}\${{env.APPNAME}}.exe -qmldir=${{github.workspace}}\..\SGEXTN\SG_Widgets\assets
           Remove-Item -Recurse -Force ${{env.APPNAME}}/translations
 
       - name: write version file
         run: |
           New-Item -Path "${{github.workspace}}\build\version.txt" -ItemType File -Force
           Add-Content -Path "${{github.workspace}}\build\version.txt" -Value "using Qt version ${{env.QTVERSION}}"
-          Add-Content -Path "${{github.workspace}}\build\version.txt" -Value "using compiler $(${{github.workspace}}\..\Qt\Tools\llvm-mingw1706_64\bin\g++.exe --version | Select-Object -First 1)"
+          Add-Content -Path "${{github.workspace}}\build\version.txt" -Value "using compiler $(cl --version | Select-Object -First 1)"
           Add-Content -Path "${{github.workspace}}\build\version.txt" -Value "building application ${{env.APPNAME}} version ${{env.VERSION}}"
           Copy-Item "${{github.workspace}}\build\version.txt" "${{github.workspace}}\${{env.APPNAME}}\version.txt"
 
@@ -86,6 +87,7 @@ jobs:
           Remove-Item -Recurse -Force SGEXTN\build
           Remove-Item -Recurse -Force -ErrorAction SilentlyContinue build
           choco uninstall -y git
+          choco uninstall -y wget
           mv ${{github.workspace}}\..\${{env.APPNAME}} ${{github.workspace}}\${{env.APPNAME}}
 
       - name: test run app
