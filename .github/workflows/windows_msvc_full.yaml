@@ -46,6 +46,8 @@ jobs:
         run: |
           $env:PATH = "${{github.workspace}}\..\Qt\Tools\CMake_64\bin;${{github.workspace}}\..\Qt\Tools\Ninja;${{github.workspace}}\..\Qt\Tools\msvc2022_64\bin;" + $env:PATH
           ls ..\Qt\Tools
+          ls ..\Qt\${{env.QTVERSION}}
+          ls ..\Qt\${{env.QTVERSION}}\msvc2022_64
           & "..\Qt\Tools\msvc2022_64\vcvars64.bat"
           mkdir build
           cd build
