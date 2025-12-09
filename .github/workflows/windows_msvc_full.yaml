@@ -45,6 +45,7 @@ jobs:
       - name: build application binary
         run: |
           $env:PATH = "${{github.workspace}}\..\Qt\Tools\CMake_64\bin;${{github.workspace}}\..\Qt\Tools\Ninja;${{github.workspace}}\..\Qt\Tools\msvc2022_64\bin;" + $env:PATH
+          call "..\Qt\Tools\msvc2022_64\vcvars64.bat"
           mkdir build
           cd build
           cmake .. -G "Ninja" -DCMAKE_PREFIX_PATH=../../Qt/${{env.QTVERSION}}/msvc2022_64
