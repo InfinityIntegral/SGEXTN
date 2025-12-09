@@ -48,11 +48,11 @@ jobs:
           ls "C:\Program Files"
           ls "C:\Program Files\Microsoft Visual Studio"
           ls "C:\Program Files\Microsoft Visual Studio\2022"
-          ls "C:\Program Files\Microsoft Visual Studio\2022\BuildTools"
-          ls "C:\Program Files\Microsoft Visual Studio\2022\BuildTools\VC"
-          ls "C:\Program Files\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliary"
-          ls "C:\Program Files\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliary\Build"
-          & "C:\Program Files\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
+          ls "C:\Program Files\Microsoft Visual Studio\2022\Enterprise"
+          ls "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC"
+          ls "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary"
+          ls "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build"
+          & "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
           mkdir build
           cd build
           cmake .. -G "Ninja" -DCMAKE_PREFIX_PATH=../../Qt/${{env.QTVERSION}}/msvc2022_64
