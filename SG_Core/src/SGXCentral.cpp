@@ -32,6 +32,13 @@ void (*SGXCentral::sgWidgetsInit4)() = nullptr;
 void (*SGXCentral::sgWidgetsInit5)() = nullptr;
 
 void SGXCentral::initialise(){
+    bool isTest = false;
+    for(int i=0; i<SGXCentral::actualArgc; i++){
+        const SGXString arg(const_cast<const char*>(SGXCentral::actualArgv[i])); // NOLINT(cppcoreguidelines-pro-bounds-pointer-arithmetic)
+        if(arg == "--SG-test"){isTest = true;}
+        else if(arg.substringLeft(14) == "--SG-log-file="){SGXDebug::logFile = arg.substringRight(arg.length() - 14);}
+    }
+
     QLocale::setDefault(QLocale(QLocale::English, QLocale::Singapore));
     if(SGXCentral::sgWidgetsInit0 != nullptr){SGXCentral::sgWidgetsInit0();}
     
@@ -49,13 +56,6 @@ void SGXCentral::initialise(){
     if(SGXCentral::sgWidgetsInit4 != nullptr){SGXCentral::sgWidgetsInit4();}
     if(SGXCentral::sgWidgetsInit5 != nullptr){SGXCentral::sgWidgetsInit5();}
     if(SGXCentral::customInitialise != nullptr){SGXCentral::customInitialise();}
-
-    bool isTest = false;
-    for(int i=0; i<SGXCentral::actualArgc; i++){
-        const SGXString arg(const_cast<const char*>(SGXCentral::actualArgv[i])); // NOLINT(cppcoreguidelines-pro-bounds-pointer-arithmetic)
-        if(arg == "--SG-test"){isTest = true;}
-        else if(arg.substringLeft(14) == "--SG-log-file="){SGXDebug::logFile = arg.substringRight(arg.length() - 14);}
-    }
     if(isTest == true){SGXTimer::singleCall(0.0f, &QCoreApplication::quit);}
 }
 
