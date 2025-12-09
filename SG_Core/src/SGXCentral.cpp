@@ -7,6 +7,7 @@
 #include <QIcon>
 #include <SGXTimer.h>
 #include <cstring>
+#include <SGXDebug.h>
 
 SGXString SGXCentral::applicationName = "app name not set";
 SGXString SGXCentral::applicationVersion = "app version not set";
@@ -51,7 +52,9 @@ void SGXCentral::initialise(){
 
     bool isTest = false;
     for(int i=0; i<SGXCentral::actualArgc; i++){
-        if(std::strcmp(SGXCentral::actualArgv[i], "--SG-test") == 0){isTest = true;} // NOLINT(cppcoreguidelines-pro-bounds-pointer-arithmetic)
+        const SGXString arg(const_cast<const char*>(SGXCentral::actualArgv[i])); // NOLINT(cppcoreguidelines-pro-bounds-pointer-arithmetic)
+        if(arg == "--SG-test"){isTest = true;}
+        else if(arg.substringLeft(14) == "--SG-log-file="){SGXDebug::logFile = arg.substringRight(arg.length() - 14);}
     }
     if(isTest == true){SGXTimer::singleCall(0.0f, &QCoreApplication::quit);}
 }

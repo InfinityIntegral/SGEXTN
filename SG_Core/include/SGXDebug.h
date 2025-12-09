@@ -40,6 +40,7 @@ public:
     SGXDebug& operator()(const SGXVector2& x);
     SGXDebug& operator()(void* x);
     SGXDebug& operator()(const char* x);
+    static SGXString logFile;
 };
 
 #endif // SGXDEBUG_H

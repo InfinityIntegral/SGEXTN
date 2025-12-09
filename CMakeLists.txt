@@ -292,7 +292,7 @@ target_include_directories(EntryPoint_SG
     INTERFACE "$<INSTALL_INTERFACE:include/EntryPoint_SG>"
 )
 
-add_executable(InternalTest)
+add_executable(InternalTest WIN32)
 target_sources(InternalTest
     PRIVATE "internal_test/src/main.cpp"
     PRIVATE "internal_test/src/clangtidychecks.cpp"

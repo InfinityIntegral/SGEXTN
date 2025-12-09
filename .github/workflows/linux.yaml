@@ -36,7 +36,6 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y build-essential
           sudo apt-get install -y git
-          sudo apt-get install -y libfuse2
 
       - name: delete unnecessary Qt plugins
         run: |
@@ -124,7 +123,6 @@ jobs:
           rm -rf linuxdeployqt
           rm -rf appimagetool
           sudo apt-get remove --purge -y build-essential
-          sudo apt-get remove --purge -y libfuse2
           sudo apt-get remove --purge -y g++
           sudo apt-get remove --purge -y gcc
           sudo apt-get remove --purge -y git
@@ -143,13 +141,10 @@ jobs:
         run: |
           sudo apt-get install -y xvfb
           export PATH=/usr/bin:/bin:/usr/sbin:/sbin
-          xvfb-run ./${{env.APPNAME}}/bin/${{env.APPNAME}} ${{env.TESTARG}} > logs.txt 2>&1
+          xvfb-run ./${{env.APPNAME}}/bin/${{env.APPNAME}} ${{env.TESTARG}} --SG-log-file=${{github.workspace}}/logs.txt
           EXIT_CODE=$?
           echo "Exit code: $EXIT_CODE" >> logs.txt
-          if [ $EXIT_CODE -ne 0 ]; then
-              cat logs.txt
-              exit $EXIT_CODE
-          fi
+          exit $EXIT_CODE
 
       - name: print logs
         if: always()

@@ -10,6 +10,11 @@
 #include <QString>
 #include <cstdio>
 #include <qlogging.h>
+#include <QFile>
+#include <QIODevice>
+#include <QTextStream>
+
+SGXString SGXDebug::logFile = "";
 
 SGXDebug::SGXDebug(const SGXString& fileName, int lineNumber){
     debugInfo = "";
@@ -24,8 +29,18 @@ SGXDebug::SGXDebug(const SGXString& fileName, int lineNumber){
 }
 
 SGXDebug::~SGXDebug(){
-    if(debugInfo == ""){qDebug().noquote() << (QString("SG - ") + (*metaInfo.data));}
-    else{qDebug().noquote() << (QString("SG") + (*debugInfo.data));}
+    SGXString logData = "";
+    if(debugInfo == ""){logData = SGXString("SG - ") + metaInfo;}
+    else{logData = SGXString("SG") + debugInfo;}
+    qDebug().noquote() << (*logData.data);
+    if(SGXDebug::logFile != ""){
+        QFile file(*SGXDebug::logFile.data);
+        if(file.open(QIODevice::Append | QIODevice::Text)){
+            QTextStream stream(&file);
+            stream << (*logData.data) << "\n";
+            file.close();
+        }
+    }
 }
 
 SGXDebug& SGXDebug::operator()(bool x){
