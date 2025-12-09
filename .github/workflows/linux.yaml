@@ -56,15 +56,6 @@ jobs:
           cp ../../Qt/${{env.QTVERSION}}/gcc_64/libexec/qmlimportscanner tools/linuxdeployqt/qmlimportscanner
           chmod +x tools/linuxdeployqt/qmlimportscanner
 
-      - name: get appimagetool which linuxdeployqt needs
-        run: |
-          cd ..
-          mkdir -p appimagetool
-          cd appimagetool
-          wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
-          mv appimagetool-x86_64.AppImage appimagetool
-          chmod +x appimagetool
-
       - name: build application binary
         run: |
           mkdir -p build
@@ -88,7 +79,6 @@ jobs:
           echo -e "[Desktop Entry]\nType=Application\nName=name\nExec=${{env.APPNAME}}\nIcon=${{env.APPNAME}}\nComment=comments\nCategories=category;" > package/${{env.APPNAME}}.AppDir/usr/share/applications/${{env.APPNAME}}.desktop
           mkdir -p package/${{env.APPNAME}}.AppDir/usr/share/icons/hicolor/256x256/apps
           cp ${{github.workspace}}/../SGEXTN/SG_Widgets/assets/SGEXTN_icon.png package/${{env.APPNAME}}.AppDir/usr/share/icons/hicolor/256x256/apps/${{env.APPNAME}}.png
-          export PATH=${{github.workspace}}/../appimagetool:$PATH
           ../linuxdeployqt/build/tools/linuxdeployqt/linuxdeployqt package/${{env.APPNAME}}.AppDir/usr/share/applications/${{env.APPNAME}}.desktop -qmldir=${{github.workspace}}/../SGEXTN/SG_Widgets/assets
           rm -rf package/${{env.APPNAME}}.AppDir/usr/plugins
           mkdir -p package/${{env.APPNAME}}.AppDir/usr/plugins
@@ -121,7 +111,6 @@ jobs:
           rm -rf ${{github.workspace}}
           rm -rf Qt
           rm -rf linuxdeployqt
-          rm -rf appimagetool
           sudo apt-get remove --purge -y build-essential
           sudo apt-get remove --purge -y g++
           sudo apt-get remove --purge -y gcc

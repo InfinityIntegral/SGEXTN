@@ -91,6 +91,7 @@ jobs:
 
       - name: test run app
         run: |
+          $env:PATH = "C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0"
           ${{env.APPNAME}}\${{env.APPNAME}}.exe ${{env.TESTARG}} --SG-log-file=${{github.workspace}}\logs.txt
           $EXIT_CODE = $LASTEXITCODE
           "Exit code: $EXIT_CODE" | Out-File -FilePath logs.txt -Append
