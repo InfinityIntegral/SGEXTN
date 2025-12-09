@@ -63,6 +63,7 @@ jobs:
           Copy-Item -Path "build\${{env.CMAKETARGET}}.exe" -Destination "${{github.workspace}}\${{env.APPNAME}}\${{env.APPNAME}}.exe"
           Get-ChildItem -Path build -Filter *.dll -Recurse | ForEach-Object {Copy-Item $_.FullName -Destination ${{github.workspace}}\${{env.APPNAME}} -Force}
           & "..\Qt\${{env.QTVERSION}}\llvm-mingw_64\bin\windeployqt.exe" ${{github.workspace}}\${{env.APPNAME}}\${{env.APPNAME}}.exe -qmldir=${{github.workspace}}\..\SGEXTN\SG_Widgets\assets
+          Remove-Item -Recurse -Force ${{env.APPNAME}}/translations
 
       - name: write version file
         run: |
