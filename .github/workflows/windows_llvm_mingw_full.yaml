@@ -47,7 +47,7 @@ jobs:
           $env:PATH = "${{github.workspace}}\..\Qt\Tools\CMake_64\bin;${{github.workspace}}\..\Qt\Tools\Ninja;${{github.workspace}}\..\Qt\Tools\llvm-mingw1706_64\bin;" + $env:PATH
           mkdir build
           cd build
-          cmake .. -G "Ninja" -DCMAKE_PREFIX_PATH=../../Qt/${{env.QTVERSION}}/llvm-mingw_64
+          cmake .. -G "Ninja" -DCMAKE_PREFIX_PATH=../../Qt/${{env.QTVERSION}}/llvm-mingw_64 -DCMAKE_BUILD_TYPE=Release
           cmake --build . --config Release
 
       - name: delete QML tooling

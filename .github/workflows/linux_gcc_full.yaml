@@ -51,7 +51,7 @@ jobs:
           cd linuxdeployqt
           mkdir build
           cd build
-          cmake .. -G "Ninja" -DCMAKE_PREFIX_PATH=../../Qt/${{env.QTVERSION}}/gcc_64
+          cmake .. -G "Ninja" -DCMAKE_PREFIX_PATH=../../Qt/${{env.QTVERSION}}/gcc_64 -DCMAKE_BUILD_TYPE=Release
           cmake --build .
           cp ../../Qt/${{env.QTVERSION}}/gcc_64/libexec/qmlimportscanner tools/linuxdeployqt/qmlimportscanner
           chmod +x tools/linuxdeployqt/qmlimportscanner
@@ -60,7 +60,7 @@ jobs:
         run: |
           mkdir -p build
           cd build
-          cmake .. -G "Ninja" -DCMAKE_PREFIX_PATH=../../Qt/${{env.QTVERSION}}/gcc_64
+          cmake .. -G "Ninja" -DCMAKE_PREFIX_PATH=../../Qt/${{env.QTVERSION}}/gcc_64 -DCMAKE_BUILD_TYPE=Release
           cmake --build .
 
       - name: delete QML tooling
