@@ -88,7 +88,7 @@ jobs:
       - name: write version file
         run: |
           echo "using Qt version ${{env.QTVERSION}}" > build/version.txt
-          echo "using compiler version $(g++ --version | head -n 1)" >> build/version.txt
+          echo "using compiler $(g++ --version | head -n 1)" >> build/version.txt
           echo "building application ${{env.APPNAME}} version ${{env.VERSION}}" >> build/version.txt
           cp build/version.txt ${{env.APPNAME}}/version.txt
 
