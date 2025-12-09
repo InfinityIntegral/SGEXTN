@@ -58,11 +58,10 @@ jobs:
 
       - name: package app using windowsdeployqt
         run: |
-          ls "..\Qt\${{env.QTVERSION}}\llvm-mingw_64\plugins\platforms"
           mkdir ${{github.workspace}}\${{env.APPNAME}}
           Copy-Item -Path "build\${{env.CMAKETARGET}}.exe" -Destination "${{github.workspace}}\${{env.APPNAME}}\${{env.APPNAME}}.exe"
-          & "..\Qt\${{env.QTVERSION}}\llvm-mingw_64\bin\windeployqt.exe" ${{github.workspace}}\${{env.APPNAME}}\${{env.APPNAME}}.exe -qmldir=${{github.workspace}}\..\SGEXTN\SG_Widgets\assets --no-translations --compiler-runtime --release
           Get-ChildItem -Path build -Filter *.dll -Recurse | ForEach-Object {Copy-Item $_.FullName -Destination ${{github.workspace}}\${{env.APPNAME}} -Force}
+          & "..\Qt\${{env.QTVERSION}}\llvm-mingw_64\bin\windeployqt.exe" ${{github.workspace}}\${{env.APPNAME}}\${{env.APPNAME}}.exe -qmldir=${{github.workspace}}\..\SGEXTN\SG_Widgets\assets
 
       - name: write version file
         run: |
