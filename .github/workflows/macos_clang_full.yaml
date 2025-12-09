@@ -37,24 +37,23 @@ jobs:
 
       - name: delete unnecessary Qt plugins
         run: |
-          rm -rf ../Qt/${{env.QTVERSION}}/clang_64/plugins/designer
-          rm -rf ../Qt/${{env.QTVERSION}}/clang_64/plugins/help
-          rm -rf ../Qt/${{env.QTVERSION}}/clang_64/plugins/sqldrivers
-          rm -rf ../Qt/${{env.QTVERSION}}/clang_64/plugins/printsupport
+          rm -rf ../Qt/${{env.QTVERSION}}/macos/plugins/designer
+          rm -rf ../Qt/${{env.QTVERSION}}/macos/plugins/help
+          rm -rf ../Qt/${{env.QTVERSION}}/macos/plugins/sqldrivers
+          rm -rf ../Qt/${{env.QTVERSION}}/macos/plugins/printsupport
 
       - name: build application binary
         run: |
-          ls ../Qt/${{env.QTVERSION}}/macos
           mkdir build
           cd build
-          cmake .. -G Ninja -DCMAKE_PREFIX_PATH=../../Qt/${{env.QTVERSION}}/clang_64 -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" -DCMAKE_FIND_FRAMEWORK=TRUE
+          cmake .. -G Ninja -DCMAKE_PREFIX_PATH=../../Qt/${{env.QTVERSION}}/macos -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" -DCMAKE_FIND_FRAMEWORK=TRUE
           cmake --build .
 
       - name: delete QML tooling
         run: |
-          rm -rf ../Qt/${{env.QTVERSION}}/clang_64/plugins/qmllint
-          rm -rf ../Qt/${{env.QTVERSION}}/clang_64/plugins/qmlls
-          rm -rf ../Qt/${{env.QTVERSION}}/clang_64/plugins/qmltooling
+          rm -rf ../Qt/${{env.QTVERSION}}/macos/plugins/qmllint
+          rm -rf ../Qt/${{env.QTVERSION}}/macos/plugins/qmlls
+          rm -rf ../Qt/${{env.QTVERSION}}/macos/plugins/qmltooling
 
       - name: package app using macdeployqt
         run: |
@@ -62,7 +61,7 @@ jobs:
           mkdir -p package/${{env.APPNAME}}.app/Contents/Frameworks
           cp $(find build -type f -executable -name "${{env.CMAKETARGET}}") package/${{env.APPNAME}}.app/Contents/MacOS/${{env.APPNAME}}
           find build -type f -name "*.dylib" -exec cp {} package/${{env.APPNAME}}.app/Contents/Frameworks/ \; -exec echo "Copied {} to Contents/Frameworks" \;
-          ../Qt/${{env.QTVERSION}}/clang_64/bin/macdeployqt package/${{env.APPNAME}}.app -qmldir=${{github.workspace}}/../SGEXTN/SG_Widgets/assets -no-translate
+          ../Qt/${{env.QTVERSION}}/macos/bin/macdeployqt package/${{env.APPNAME}}.app -qmldir=${{github.workspace}}/../SGEXTN/SG_Widgets/assets -no-translate
           mv package/${{env.APPNAME}}.app/Contents ${{env.APPNAME}}
           chmod +x ${{env.APPNAME}}/MacOS/${{env.APPNAME}}
 
