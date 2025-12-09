@@ -67,10 +67,10 @@ jobs:
           ls "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC"
           ls "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Redist"
           ls "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Redist\MSVC"
-          ls "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Redist\MSVC\14.44.35221"
-          ls "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Redist\MSVC\14.44.35221\x64"
-          ls "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Redist\MSVC\14.44.35221\x64\Microsoft.VC142.CRT"
-          Copy-Item "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Redist\MSVC\14.44.35221\x64\Microsoft.VC142.CRT\*" ${{env.APPNAME}} -Recurse -Force
+          ls "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Redist\MSVC\14.44.35112"
+          ls "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Redist\MSVC\14.44.35112\x64"
+          ls "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Redist\MSVC\14.44.35112\x64\Microsoft.VC142.CRT"
+          Copy-Item "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Redist\MSVC\14.44.35112\x64\Microsoft.VC142.CRT\*" ${{env.APPNAME}} -Recurse -Force
 
       - name: write version file
         shell: cmd
