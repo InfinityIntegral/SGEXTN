@@ -69,7 +69,7 @@ jobs:
         run: |
           New-Item -Path "${{github.workspace}}\build\version.txt" -ItemType File -Force
           Add-Content -Path "${{github.workspace}}\build\version.txt" -Value "using Qt version ${{env.QTVERSION}}"
-          Add-Content -Path "${{github.workspace}}\build\version.txt" -Value "using compiler version $((Get-Command g++).FileVersionInfo.FileVersion)"
+          Add-Content -Path "${{github.workspace}}\build\version.txt" -Value "using compiler version $(${{github.workspace}}\..\Qt\Tools\llvm-mingw1706_64\bin\g++.exe --version | Select-Object -First 1)"
           Add-Content -Path "${{github.workspace}}\build\version.txt" -Value "building application ${{env.APPNAME}} version ${{env.VERSION}}"
           Copy-Item "${{github.workspace}}\build\version.txt" "${{github.workspace}}\${{env.APPNAME}}\version.txt"
 

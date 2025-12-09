@@ -112,7 +112,6 @@ jobs:
           sudo apt-get remove --purge -y git
           sudo apt-get remove --purge -y qt*
           sudo apt-get autoremove -y
-          sudo apt-get install -y libstdc++6
           mkdir -p ${{github.workspace}}
           mv ${{env.APPNAME}} ${{github.workspace}}/${{env.APPNAME}}
 
