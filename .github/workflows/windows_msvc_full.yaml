@@ -45,6 +45,13 @@ jobs:
       - name: build application binary
         run: |
           $env:PATH = "${{github.workspace}}\..\Qt\Tools\CMake_64\bin;${{github.workspace}}\..\Qt\Tools\Ninja;" + $env:PATH
+          ls "C:\Program Files"
+          ls "C:\Program Files\Microsoft Visual Studio"
+          ls "C:\Program Files\Microsoft Visual Studio\2022"
+          ls "C:\Program Files\Microsoft Visual Studio\2022\BuildTools"
+          ls "C:\Program Files\Microsoft Visual Studio\2022\BuildTools\VC"
+          ls "C:\Program Files\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliary"
+          ls "C:\Program Files\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliary\Build"
           & "C:\Program Files\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
           mkdir build
           cd build
