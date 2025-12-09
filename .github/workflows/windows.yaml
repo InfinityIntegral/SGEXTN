@@ -59,6 +59,9 @@ jobs:
 
       - name: package app using windowsdeployqt
         run: |
+          echo "test running app"
+          build\${{env.CMAKETARGET}}.exe
+          echo "test run done"
           mkdir ${{github.workspace}}\${{env.APPNAME}}
           Copy-Item -Path "build\${{env.CMAKETARGET}}.exe" -Destination "${{github.workspace}}\${{env.APPNAME}}\${{env.APPNAME}}.exe"
           Get-ChildItem -Path build -Filter *.dll -Recurse | ForEach-Object {Copy-Item $_.FullName -Destination ${{github.workspace}}\${{env.APPNAME}} -Force}
@@ -82,6 +85,9 @@ jobs:
         run: |
           cd ..
           mv ${{github.workspace}}\${{env.APPNAME}} ${{github.workspace}}\..\${{env.APPNAME}}
+          Remove-Item -Recurse -Force Qt
+          Remove-Item -Recurse -Force SGEXTN\build
+          Remove-Item -Recurse -Force -ErrorAction SilentlyContinue build
           choco uninstall -y git
           choco uninstall -y wget
           mv ${{github.workspace}}\..\${{env.APPNAME}} ${{github.workspace}}\${{env.APPNAME}}
