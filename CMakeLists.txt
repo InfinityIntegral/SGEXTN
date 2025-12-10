@@ -28,6 +28,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(QT_NO_PRIVATE_MODULE_WARNING ON)
 
 set_property(DIRECTORY . PROPERTY GLOBAL_DEPENDS_NO_CYCLES ON)
+set_property(DIRECTORY . PROPERTY REPORT_UNDEFINED_PROPERTIES ON)
 set_property(DIRECTORY . PROPERTY TARGET_SUPPORTS_SHARED_LIBS ON)
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
@@ -40,6 +41,16 @@ project(SGEXTN
 )
 
 find_package(Qt6 REQUIRED COMPONENTS Core Gui Qml Quick QuickControls2 GuiPrivate ShaderTools)
+if(APPLE)
+    set_target_properties(Qt6::Core PROPERTIES IMPORTED_IMPLIB_RELEASE "")
+    set_target_properties(Qt6::Gui PROPERTIES IMPORTED_IMPLIB_RELEASE "")
+    set_target_properties(Qt6::Qml PROPERTIES IMPORTED_IMPLIB_RELEASE "")
+    set_target_properties(Qt6::Quick PROPERTIES IMPORTED_IMPLIB_RELEASE "")
+    set_target_properties(Qt6::QuickControls2 PROPERTIES IMPORTED_IMPLIB_RELEASE "")
+    set_target_properties(Qt6::GuiPrivate PROPERTIES IMPORTED_IMPLIB_RELEASE "")
+    set_target_properties(Qt6::ShaderTools PROPERTIES IMPORTED_IMPLIB_RELEASE "")
+    message("fake import library paths set")
+endif()
 
 add_library(SG_Containers SHARED)
 target_compile_definitions(SG_Containers
