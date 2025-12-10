@@ -31,13 +31,6 @@ jobs:
           modules: qtshadertools
           tools: 'tools_cmake tools_ninja'
 
-      - name: upload Qt
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: qt-install
-          path: /Users/runner/work/SGEXTN/Qt
-
       - name: install devtools
         run: |
           brew install git
@@ -54,7 +47,7 @@ jobs:
           mkdir build
           cd build
           ls -R ../../Qt/${{env.QTVERSION}}/macos/lib/QtCore.framework
-          cmake .. -G Ninja -DCMAKE_PREFIX_PATH=../../Qt/${{env.QTVERSION}}/macos/pkgconfig -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" -DCMAKE_FIND_FRAMEWORK=LAST
+          cmake .. -G Ninja -DCMAKE_PREFIX_PATH=../../Qt/${{env.QTVERSION}}/macos -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" -DCMAKE_FIND_FRAMEWORK=LAST
           cmake --build .
 
       - name: delete QML tooling
