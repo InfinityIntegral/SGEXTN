@@ -73,7 +73,7 @@ jobs:
               exit 1
           fi
           find build -type f -name "*.dylib" -exec cp {} package/${{env.APPNAME}}.app/Contents/Frameworks/ \; -exec echo "Copied {} to Contents/Frameworks" \;
-          ../Qt/${{env.QTVERSION}}/macos/bin/macdeployqt package/${{env.APPNAME}}.app -qmldir=${{github.workspace}}/../SGEXTN/SG_Widgets/assets -no-translate
+          ../Qt/${{env.QTVERSION}}/macos/bin/macdeployqt package/${{env.APPNAME}}.app -qmldir=${{github.workspace}}/../SGEXTN/SG_Widgets/assets
           mv package/${{env.APPNAME}}.app/Contents ${{env.APPNAME}}
           chmod +x ${{env.APPNAME}}/MacOS/${{env.APPNAME}}
 
