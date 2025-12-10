@@ -42,6 +42,7 @@ project(SGEXTN
 
 find_package(Qt6 REQUIRED COMPONENTS Core Gui Qml Quick QuickControls2 GuiPrivate ShaderTools)
 if(APPLE)
+    find_package(Qt6 REQUIRED COMPONENTS OpenGL Network)
     set_target_properties(Qt6::Core PROPERTIES IMPORTED_IMPLIB_RELEASE "something")
     set_target_properties(Qt6::Gui PROPERTIES IMPORTED_IMPLIB_RELEASE "something")
     set_target_properties(Qt6::Qml PROPERTIES IMPORTED_IMPLIB_RELEASE "something")
@@ -49,6 +50,8 @@ if(APPLE)
     set_target_properties(Qt6::QuickControls2 PROPERTIES IMPORTED_IMPLIB_RELEASE "something")
     set_target_properties(Qt6::GuiPrivate PROPERTIES IMPORTED_IMPLIB_RELEASE "something")
     set_target_properties(Qt6::ShaderTools PROPERTIES IMPORTED_IMPLIB_RELEASE "something")
+    set_target_properties(Qt6::OpenGL PROPERTIES IMPORTED_IMPLIB_RELEASE "something")
+    set_target_properties(Qt6::Network PROPERTIES IMPORTED_IMPLIB_RELEASE "something")
     message("fake import library paths set")
 endif()
 
