@@ -67,6 +67,7 @@ runs:
         cd build
         cmake .. -G "Ninja" -DCMAKE_PREFIX_PATH=../../Qt/${{inputs.qt-version}}/gcc_64 -DCMAKE_BUILD_TYPE=Release
         cmake --build . --config Release
+        cmake --install build --config Release --prefix ../SGEXTN_install
 
     - name: build application binary
       shell: bash
@@ -76,7 +77,7 @@ runs:
         echo "ls to debug"
         ls -l ../../SGEXTN/build/SGEXTNConfig.cmake
         echo "done ls"
-        cmake .. -G "Ninja" -DCMAKE_PREFIX_PATH=../../Qt/${{inputs.qt-version}}/gcc_64 -DSGEXTN_DIR=${{github.workspace}}../SGEXTN/build/../../../ -DCMAKE_BUILD_TYPE=Release
+        cmake .. -G "Ninja" -DCMAKE_PREFIX_PATH=../../Qt/${{inputs.qt-version}}/gcc_64:../../SGEXTN_install -DCMAKE_BUILD_TYPE=Release
         cmake --build . --config Release
 
     - name: delete QML tooling
