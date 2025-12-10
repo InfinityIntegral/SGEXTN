@@ -55,11 +55,14 @@ runs:
         cd build
         cmake .. -G "Ninja" -DCMAKE_PREFIX_PATH=../../Qt/${{inputs.qt-version}}/mingw_64 -DCMAKE_BUILD_TYPE=Release
         cmake --build . --config Release
+        cd ..
+        cmake --install build --config Release --prefix ../SGEXTN_install
 
     - name: build application binary
       shell: pwsh
       run: |
         $env:PATH = "${{github.workspace}}\..\Qt\Tools\CMake_64\bin;${{github.workspace}}\..\Qt\Tools\Ninja;${{github.workspace}}\..\Qt\Tools\mingw1310_64\bin;" + $env:PATH
+        $env:PATH="${{github.workspace}}\..\SGEXTN_install\lib;${{github.workspace}}\..\SGEXTN_install\lib\cmake\SGEXTN;$env:PATH"
         mkdir build
         cd build
         cmake .. -G "Ninja" -DCMAKE_PREFIX_PATH=../../Qt/${{inputs.qt-version}}/mingw_64 -DSGEXTN_DIR=../../SGEXTN/build -DCMAKE_BUILD_TYPE=Release
