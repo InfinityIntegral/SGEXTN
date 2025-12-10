@@ -40,6 +40,18 @@ project(SGEXTN
     LANGUAGES CXX
 )
 
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Qml Quick QuickControls2 GuiPrivate ShaderTools)
+if(APPLE)
+    set_target_properties(Qt6::Core PROPERTIES IMPORTED_IMPLIB "")
+    set_target_properties(Qt6::Gui PROPERTIES IMPORTED_IMPLIB "")
+    set_target_properties(Qt6::Qml PROPERTIES IMPORTED_IMPLIB "")
+    set_target_properties(Qt6::Quick PROPERTIES IMPORTED_IMPLIB "")
+    set_target_properties(Qt6::QuickControls2 PROPERTIES IMPORTED_IMPLIB "")
+    set_target_properties(Qt6::GuiPrivate PROPERTIES IMPORTED_IMPLIB "")
+    set_target_properties(Qt6::ShaderTools PROPERTIES IMPORTED_IMPLIB "")
+    message("fake import library paths set")
+endif()
+
 add_library(SG_Containers SHARED)
 target_compile_definitions(SG_Containers
     PRIVATE SG_BUILDING_CONTAINERS
@@ -102,7 +114,6 @@ target_sources(SG_Core
     PRIVATE "SG_Core/src/SGXTimeStamp.cpp"
     PRIVATE "SG_Core/src/SGXVector2.cpp"
 )
-find_package(Qt6 REQUIRED COMPONENTS Core Gui)
 target_link_libraries(SG_Core
     PRIVATE SG_Containers
     PRIVATE SG_Math
@@ -126,7 +137,6 @@ target_sources(SG_FileSystem
     PRIVATE "SG_FileSystem/src/SGXFileBinUtilities.cpp"
     PRIVATE "SG_FileSystem/src/SGXFileSystem.cpp"
 )
-find_package(Qt6 REQUIRED COMPONENTS Core)
 target_link_libraries(SG_FileSystem
     PRIVATE SG_Containers
     PRIVATE SG_Core
@@ -219,7 +229,6 @@ target_sources(SG_Widgets
     PRIVATE "SG_Widgets/include/private_api_Widgets/SGXThemeColourSetting.h"
     PRIVATE "SG_Widgets/include/private_api_Widgets/SGXSingCorrectQuickInterface.h"
 )
-find_package(Qt6 REQUIRED COMPONENTS Core Gui Qml Quick QuickControls2)
 target_link_libraries(SG_Widgets
     PRIVATE SG_Containers
     PRIVATE SG_Math
@@ -243,7 +252,6 @@ target_include_directories(SG_RI
     PUBLIC "$<INSTALL_INTERFACE:include/dll_defines>"
     PUBLIC "$<INSTALL_INTERFACE:include/SG_RI/include>"
 )
-find_package(Qt6 REQUIRED COMPONENTS ShaderTools)
 qt6_add_shaders(SG_RI SG_RI_shaders PREFIX "SGEXTN" BASE "SG_RI/assets" FILES
     "SG_RI/assets/colourpicker.vert"
     "SG_RI/assets/colourpicker.frag"
@@ -270,7 +278,6 @@ target_sources(SG_RI
     PRIVATE "SG_RI/src/SGWColourPickerWidgetQuickInterface.cpp"
     PRIVATE "SG_RI/src/SGWThemeCustomisationPage.cpp"
 )
-find_package(Qt6 REQUIRED COMPONENTS Core Gui Qml Quick QuickControls2 GuiPrivate)
 target_link_libraries(SG_RI
     PRIVATE SG_Containers
     PRIVATE SG_Math
