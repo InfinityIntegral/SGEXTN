@@ -101,7 +101,7 @@ jobs:
 
       - name: test run app
         run: |
-          ./ ${{env.APPNAME}}/Contents/MacOS/${{env.APPNAME}} ${{env.TESTARG}} --SG-log-file=${{github.workspace}}/logs.txt
+          ./${{env.APPNAME}}/MacOS/${{env.APPNAME}} ${{env.TESTARG}} --SG-log-file=${{github.workspace}}/logs.txt
           EXIT_CODE=$?
           echo "Exit code: $EXIT_CODE" >> logs.txt
           exit $EXIT_CODE
