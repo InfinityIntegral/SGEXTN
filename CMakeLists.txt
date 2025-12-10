@@ -1,6 +1,6 @@
 # CMake file for SGEXTN
 
-cmake_minimum_required(VERSION 3.30 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.21 FATAL_ERROR)
 
 set(CMAKE_ERROR_DEPRECATED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
