@@ -46,7 +46,7 @@ jobs:
         run: |
           mkdir build
           cd build
-          ls -R ../../Qt/${{env.QTVERSION}}/macos
+          ls -R ../../Qt/${{env.QTVERSION}}/macos/pkgconfig
           cmake .. -G Ninja -DCMAKE_PREFIX_PATH=../../Qt/${{env.QTVERSION}}/macos/pkgconfig -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" -DCMAKE_FIND_FRAMEWORK=LAST
           cmake --build .
 
