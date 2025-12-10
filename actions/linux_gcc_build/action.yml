@@ -74,9 +74,9 @@ runs:
         mkdir -p build
         cd build
         echo "ls to debug"
-        ls ../../SGEXTN/build
+        ls -l ../../SGEXTN/build/SGEXTNConfig.cmake
         echo "done ls"
-        cmake .. -G "Ninja" -DCMAKE_PREFIX_PATH=../../Qt/${{inputs.qt-version}}/gcc_64 -DSGEXTN_DIR=../../SGEXTN/build -DCMAKE_BUILD_TYPE=Release
+        cmake .. -G "Ninja" -DCMAKE_PREFIX_PATH=../../Qt/${{inputs.qt-version}}/gcc_64 -DSGEXTN_DIR=${{github.workspace}}../SGEXTN/build -DCMAKE_BUILD_TYPE=Release
         cmake --build . --config Release
 
     - name: delete QML tooling
