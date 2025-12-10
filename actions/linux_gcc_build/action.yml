@@ -73,12 +73,10 @@ runs:
     - name: build application binary
       shell: bash
       run: |
+        export PATH="${{github.workspace}}/../SGEXTN_install/lib:${{github.workspace}}/../SGEXTN_install/lib/cmake/SGEXTN:$PATH"
         mkdir -p build
         cd build
-        echo "ls to debug"
-        ls -l ../../SGEXTN/build/SGEXTNConfig.cmake
-        echo "done ls"
-        cmake .. -G "Ninja" -DCMAKE_PREFIX_PATH=../../Qt/${{inputs.qt-version}}/gcc_64:../../SGEXTN_install -DCMAKE_BUILD_TYPE=Release
+        cmake .. -G "Ninja" -DCMAKE_PREFIX_PATH=../../Qt/${{inputs.qt-version}}/gcc_64 -DCMAKE_BUILD_TYPE=Release
         cmake --build . --config Release
 
     - name: delete QML tooling
