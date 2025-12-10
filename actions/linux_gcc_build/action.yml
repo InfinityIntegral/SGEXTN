@@ -73,6 +73,9 @@ runs:
       run: |
         mkdir -p build
         cd build
+        echo "ls to debug"
+        ls ../../SGEXTN/build
+        echo "done ls"
         cmake .. -G "Ninja" -DCMAKE_PREFIX_PATH=../../Qt/${{inputs.qt-version}}/gcc_64 -DSGEXTN_DIR=../../SGEXTN/build -DCMAKE_BUILD_TYPE=Release
         cmake --build . --config Release
 
