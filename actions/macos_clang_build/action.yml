@@ -60,7 +60,7 @@ runs:
       run: |
         mkdir build
         cd build
-        cmake -G Ninja -DCMAKE_PREFIX_PATH=../../Qt/${{inputs.qt-version}}/macos:../../SGEXTN/build -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" -DCMAKE_FIND_FRAMEWORK=LAST -DCMAKE_SYSTEM_NAME=Darwin ..
+        cmake -G Ninja -DCMAKE_PREFIX_PATH=../../Qt/${{inputs.qt-version}}/macos -DSGEXTN_DIR=../../SGEXTN/build -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" -DCMAKE_FIND_FRAMEWORK=LAST -DCMAKE_SYSTEM_NAME=Darwin ..
         cmake --build . --config Release
 
     - name: delete QML tooling

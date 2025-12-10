@@ -62,7 +62,7 @@ runs:
         $env:PATH = "${{github.workspace}}\..\Qt\Tools\CMake_64\bin;${{github.workspace}}\..\Qt\Tools\Ninja;${{github.workspace}}\..\Qt\Tools\llvm-mingw1706_64\bin;" + $env:PATH
         mkdir build
         cd build
-        cmake .. -G "Ninja" -DCMAKE_PREFIX_PATH=../../Qt/${{inputs.qt-version}}/llvm-mingw_64;../../SGEXTN/build -DCMAKE_BUILD_TYPE=Release
+        cmake .. -G "Ninja" -DCMAKE_PREFIX_PATH=../../Qt/${{inputs.qt-version}}/llvm-mingw_64 -DSGEXTN_DIR=../../SGEXTN/build -DCMAKE_BUILD_TYPE=Release
         cmake --build . --config Release
 
     - name: delete QML tooling

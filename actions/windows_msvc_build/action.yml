@@ -64,7 +64,7 @@ runs:
         call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
         mkdir build
         cd build
-        cmake .. -G "Ninja" -DCMAKE_PREFIX_PATH=../../Qt/${{inputs.qt-version}}/msvc2022_64;../../SGEXTN/build -DCMAKE_BUILD_TYPE=Release
+        cmake .. -G "Ninja" -DCMAKE_PREFIX_PATH=../../Qt/${{inputs.qt-version}}/msvc2022_64 -DSGEXTN_DIR=../../SGEXTN/build -DCMAKE_BUILD_TYPE=Release
         cmake --build . --config Release
 
     - name: delete QML tooling
