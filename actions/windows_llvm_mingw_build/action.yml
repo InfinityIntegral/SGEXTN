@@ -1,0 +1,101 @@
+name: Windows LLVM MinGW build
+description: Builds a fully self contained SGEXTN app for Windows AMD64 using LLVM-MinGW compiler. SGEXTN libraries, Qt libraries, and C++ libraries are packaged with the application executable. This action should be run on a windows-latest GitHub Actions runner.
+
+inputs:
+  app-name:
+    required: true
+    description: name of your application executable, example my-application
+    type: string
+  app-version:
+    required: true
+    description: version number of your application, example 1.0.0
+    type: string
+  qt-version:
+    required: true
+    description: version of Qt to use, it is preferred that this matches the Qt version you have on your development machine, example 6.10.1
+    type: string
+  cmake-target-name:
+    required: true
+    description: name of CMake target for your application executable, this is used to locate the executable, the executable will be renamed after that
+    type: string
+
+runs:
+  using: "composite"
+  env:
+    PLATFORM: windows-llvm-mingw
+
+  steps:
+    - name: pull repository
+      uses: actions/checkout@v3
+
+    - name: install Qt
+      uses: jurplel/install-qt-action@v4
+      with:
+        version: ${{inputs.qt-version}}
+        host: windows
+        target: desktop
+        dir: ${{github.workspace}}\..
+        cache: true
+        modules: qtshadertools
+        arch: win64_llvm_mingw
+        tools: 'tools_llvm_mingw1706 tools_cmake tools_ninja'
+
+    - name: delete unnecessary Qt plugins
+      run: |
+        Remove-Item -Recurse -Force "..\Qt\${{inputs.qt-version}}\llvm-mingw_64\plugins\designer"
+        Remove-Item -Recurse -Force "..\Qt\${{inputs.qt-version}}\llvm-mingw_64\plugins\help"
+        Remove-Item -Recurse -Force "..\Qt\${{inputs.qt-version}}\llvm-mingw_64\plugins\sqldrivers"
+
+    - name: build SGEXTN
+      run: |
+        cd ..
+        git clone https://github.com/InfinityIntegral/SGEXTN.git
+        cd SGEXTN
+        $env:PATH = "${{github.workspace}}\..\Qt\Tools\CMake_64\bin;${{github.workspace}}\..\Qt\Tools\Ninja;${{github.workspace}}\..\Qt\Tools\llvm-mingw1706_64\bin;" + $env:PATH
+        mkdir build
+        cd build
+        cmake .. -G "Ninja" -DCMAKE_PREFIX_PATH=../../Qt/${{inputs.qt-version}}/llvm-mingw_64 -DCMAKE_BUILD_TYPE=Release
+        cmake --build . --config Release
+
+    - name: build application binary
+      run: |
+        $env:PATH = "${{github.workspace}}\..\Qt\Tools\CMake_64\bin;${{github.workspace}}\..\Qt\Tools\Ninja;${{github.workspace}}\..\Qt\Tools\llvm-mingw1706_64\bin;" + $env:PATH
+        mkdir build
+        cd build
+        cmake .. -G "Ninja" -DCMAKE_PREFIX_PATH=../../Qt/${{inputs.qt-version}}/llvm-mingw_64 -DCMAKE_BUILD_TYPE=Release
+        cmake --build . --config Release
+
+    - name: delete QML tooling
+      run: |
+        Remove-Item -Recurse -Force "..\Qt\${{inputs.qt-version}}\llvm-mingw_64\plugins\qmllint"
+        Remove-Item -Recurse -Force "..\Qt\${{inputs.qt-version}}\llvm-mingw_64\plugins\qmlls"
+        Remove-Item -Recurse -Force "..\Qt\${{inputs.qt-version}}\llvm-mingw_64\plugins\qmltooling"
+
+    - name: package app using windowsdeployqt
+      run: |
+        mkdir ${{github.workspace}}\${{inputs.app-name}}
+        Copy-Item -Path "build\${{inputs.cmake-target-name}}.exe" -Destination "${{github.workspace}}\${{inputs.app-name}}\${{inputs.app-name}}.exe"
+        Get-ChildItem -Path ..\SGEXTN\build -Filter *.dll -Recurse | ForEach-Object {Copy-Item $_.FullName -Destination ${{github.workspace}}\${{inputs.app-name}} -Force}
+        Get-ChildItem -Path build -Filter *.dll -Recurse | ForEach-Object {Copy-Item $_.FullName -Destination ${{github.workspace}}\${{inputs.app-name}} -Force}
+        & "..\Qt\${{inputs.qt-version}}\llvm-mingw_64\bin\windeployqt.exe" ${{github.workspace}}\${{inputs.app-name}}\${{inputs.app-name}}.exe -qmldir=${{github.workspace}}\..\SGEXTN\SG_Widgets\assets --no-translations --compiler-runtime
+
+    - name: write version file
+      run: |
+        New-Item -Path "${{inputs.app-name}}\version.txt" -ItemType File -Force
+        Add-Content -Path "${{inputs.app-name}}\version.txt" -Value "using Qt version ${{inputs.qt-version}}"
+        $compilerVersion = & "..\Qt\Tools\llvm-mingw1706_64\bin\g++.exe" --version | Select-Object -First 1
+        Add-Content -Path "${{inputs.app-name}}\version.txt" -Value "using compiler $compilerVersion"
+        Add-Content -Path "${{inputs.app-name}}\version.txt" -Value "building application ${{inputs.app-name}} version ${{inputs.app-version}}"
+
+    - name: upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{env.PLATFORM}}-${{inputs.app-name}}-${{inputs.app-version}}-build
+        path: build
+
+    - name: upload binary
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{env.PLATFORM}}-${{inputs.app-name}}-${{inputs.app-version}}-binary
+        path: ${{inputs.app-name}}
