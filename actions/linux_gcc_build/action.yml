@@ -59,7 +59,7 @@ runs:
 
     - name: build SGEXTN
       shell: bash
-      run:
+      run: |
         cd ..
         git clone https://github.com/InfinityIntegral/SGEXTN.git
         cd SGEXTN
@@ -73,7 +73,7 @@ runs:
       run: |
         mkdir -p build
         cd build
-        cmake .. -G "Ninja" -DCMAKE_PREFIX_PATH=../../Qt/${{inputs.qt-version}}/gcc_64 -DCMAKE_BUILD_TYPE=Release
+        cmake .. -G "Ninja" -DCMAKE_PREFIX_PATH=../../Qt/${{inputs.qt-version}}/gcc_64:../../SGEXTN/build -DCMAKE_BUILD_TYPE=Release
         cmake --build . --config Release
 
     - name: delete QML tooling
