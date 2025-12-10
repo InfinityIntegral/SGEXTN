@@ -59,7 +59,19 @@ jobs:
         run: |
           mkdir -p package/${{env.APPNAME}}.app/Contents/MacOS
           mkdir -p package/${{env.APPNAME}}.app/Contents/Frameworks
-          cp $(find build -type f -flags +x -name "${{env.CMAKETARGET}}") package/${{env.APPNAME}}.app/Contents/MacOS/${{env.APPNAME}}
+          mkdir -p package/${APPNAME}.app/Contents/MacOS
+          EXE_FILE=$(find build -type f -name "${CMAKETARGET}" -print0 | while IFS= read -r -d '' f; do
+              if [ -x "$f" ]; then
+                  echo "$f"
+                  break
+              fi
+          done)
+          if [ -n "$EXE_FILE" ]; then
+              cp "$EXE_FILE" package/${APPNAME}.app/Contents/MacOS/${APPNAME}
+          else
+              echo "Error: executable ${CMAKETARGET} not found!"
+              exit 1
+          fi
           find build -type f -name "*.dylib" -exec cp {} package/${{env.APPNAME}}.app/Contents/Frameworks/ \; -exec echo "Copied {} to Contents/Frameworks" \;
           ../Qt/${{env.QTVERSION}}/macos/bin/macdeployqt package/${{env.APPNAME}}.app -qmldir=${{github.workspace}}/../SGEXTN/SG_Widgets/assets -no-translate
           mv package/${{env.APPNAME}}.app/Contents ${{env.APPNAME}}
