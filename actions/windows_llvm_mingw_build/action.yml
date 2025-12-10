@@ -21,9 +21,6 @@ inputs:
 
 runs:
   using: "composite"
-  env:
-    PLATFORM: windows-llvm-mingw
-
   steps:
     - name: pull repository
       uses: actions/checkout@v3
@@ -41,12 +38,14 @@ runs:
         tools: 'tools_llvm_mingw1706 tools_cmake tools_ninja'
 
     - name: delete unnecessary Qt plugins
+      shell: pwsh
       run: |
         Remove-Item -Recurse -Force "..\Qt\${{inputs.qt-version}}\llvm-mingw_64\plugins\designer"
         Remove-Item -Recurse -Force "..\Qt\${{inputs.qt-version}}\llvm-mingw_64\plugins\help"
         Remove-Item -Recurse -Force "..\Qt\${{inputs.qt-version}}\llvm-mingw_64\plugins\sqldrivers"
 
     - name: build SGEXTN
+      shell: pwsh
       run: |
         cd ..
         git clone https://github.com/InfinityIntegral/SGEXTN.git
@@ -58,6 +57,7 @@ runs:
         cmake --build . --config Release
 
     - name: build application binary
+      shell: pwsh
       run: |
         $env:PATH = "${{github.workspace}}\..\Qt\Tools\CMake_64\bin;${{github.workspace}}\..\Qt\Tools\Ninja;${{github.workspace}}\..\Qt\Tools\llvm-mingw1706_64\bin;" + $env:PATH
         mkdir build
@@ -66,12 +66,14 @@ runs:
         cmake --build . --config Release
 
     - name: delete QML tooling
+      shell: pwsh
       run: |
         Remove-Item -Recurse -Force "..\Qt\${{inputs.qt-version}}\llvm-mingw_64\plugins\qmllint"
         Remove-Item -Recurse -Force "..\Qt\${{inputs.qt-version}}\llvm-mingw_64\plugins\qmlls"
         Remove-Item -Recurse -Force "..\Qt\${{inputs.qt-version}}\llvm-mingw_64\plugins\qmltooling"
 
     - name: package app using windowsdeployqt
+      shell: pwsh
       run: |
         mkdir ${{github.workspace}}\${{inputs.app-name}}
         Copy-Item -Path "build\${{inputs.cmake-target-name}}.exe" -Destination "${{github.workspace}}\${{inputs.app-name}}\${{inputs.app-name}}.exe"
@@ -80,6 +82,7 @@ runs:
         & "..\Qt\${{inputs.qt-version}}\llvm-mingw_64\bin\windeployqt.exe" ${{github.workspace}}\${{inputs.app-name}}\${{inputs.app-name}}.exe -qmldir=${{github.workspace}}\..\SGEXTN\SG_Widgets\assets --no-translations --compiler-runtime
 
     - name: write version file
+      shell: pwsh
       run: |
         New-Item -Path "${{inputs.app-name}}\version.txt" -ItemType File -Force
         Add-Content -Path "${{inputs.app-name}}\version.txt" -Value "using Qt version ${{inputs.qt-version}}"
@@ -90,12 +93,12 @@ runs:
     - name: upload build artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: ${{env.PLATFORM}}-${{inputs.app-name}}-${{inputs.app-version}}-build
+        name: windows-llvm-mingw-${{inputs.app-name}}-${{inputs.app-version}}-build
         path: build
 
     - name: upload binary
       if: always()
       uses: actions/upload-artifact@v4
       with:
-        name: ${{env.PLATFORM}}-${{inputs.app-name}}-${{inputs.app-version}}-binary
+        name: windows-llvm-mingw-${{inputs.app-name}}-${{inputs.app-version}}-binary
         path: ${{inputs.app-name}}
