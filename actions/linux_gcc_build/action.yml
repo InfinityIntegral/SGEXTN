@@ -37,6 +37,7 @@ runs:
         tools: 'tools_cmake tools_ninja'
 
     - name: delete unnecessary Qt plugins
+      shell: bash
       run: |
         rm -rf ../Qt/${{inputs.qt-version}}/gcc_64/plugins/designer
         rm -rf ../Qt/${{inputs.qt-version}}/gcc_64/plugins/help
@@ -44,6 +45,7 @@ runs:
         rm -rf ../Qt/${{inputs.qt-version}}/gcc_64/plugins/sqldrivers
 
     - name: build linuxdeployqt
+      shell: bash
       run: |
         cd ..
         git clone https://github.com/probonopd/linuxdeployqt.git
@@ -56,6 +58,7 @@ runs:
         chmod +x tools/linuxdeployqt/qmlimportscanner
 
     - name: build SGEXTN
+      shell: bash
       run:
         cd ..
         git clone https://github.com/InfinityIntegral/SGEXTN.git
@@ -66,6 +69,7 @@ runs:
         cmake --build . --config Release
 
     - name: build application binary
+      shell: bash
       run: |
         mkdir -p build
         cd build
@@ -73,12 +77,14 @@ runs:
         cmake --build . --config Release
 
     - name: delete QML tooling
+      shell: bash
       run: |
         rm -rf ../Qt/${{inputs.qt-version}}/gcc_64/plugins/qmllint
         rm -rf ../Qt/${{inputs.qt-version}}/gcc_64/plugins/qmlls
         rm -rf ../Qt/${{inputs.qt-version}}/gcc_64/plugins/qmltooling
 
     - name: package app
+      shell: bash
       run: |
         mkdir -p package/${{inputs.app-name}}.AppDir/usr/bin
         mkdir -p package/${{inputs.app-name}}.AppDir/usr/lib
@@ -95,6 +101,7 @@ runs:
         chmod +x ${{inputs.app-name}}/bin/${{inputs.app-name}}
 
     - name: write version file
+      shell: bash
       run: |
         echo "" > ${{inputs.app-name}}/version.txt
         echo "using Qt version ${{inputs.qt-version}}" >> ${{inputs.app-name}}/version.txt
