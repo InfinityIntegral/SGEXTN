@@ -59,7 +59,7 @@ jobs:
         run: |
           mkdir -p package/${{env.APPNAME}}.app/Contents/MacOS
           mkdir -p package/${{env.APPNAME}}.app/Contents/Frameworks
-          cp $(find build -type f -perm /111 -name "${{env.CMAKETARGET}}") package/${{env.APPNAME}}.app/Contents/MacOS/${{env.APPNAME}}
+          cp $(find build -type f -flags +x -name "${{env.CMAKETARGET}}") package/${{env.APPNAME}}.app/Contents/MacOS/${{env.APPNAME}}
           find build -type f -name "*.dylib" -exec cp {} package/${{env.APPNAME}}.app/Contents/Frameworks/ \; -exec echo "Copied {} to Contents/Frameworks" \;
           ../Qt/${{env.QTVERSION}}/macos/bin/macdeployqt package/${{env.APPNAME}}.app -qmldir=${{github.workspace}}/../SGEXTN/SG_Widgets/assets -no-translate
           mv package/${{env.APPNAME}}.app/Contents ${{env.APPNAME}}
