@@ -31,6 +31,13 @@ jobs:
           modules: qtshadertools
           tools: 'tools_cmake tools_ninja'
 
+      - name: upload Qt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: qt-install
+          path: ${{github.workspace}}/../Qt
+
       - name: install devtools
         run: |
           brew install git
