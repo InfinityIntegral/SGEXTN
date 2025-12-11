@@ -1,0 +1,119 @@
+name: Android ARM64 Clang build
+description: Builds a fully self contained SGEXTN app for Android ARM64 using Clang compiler. SGEXTN libraries, Qt libraries, and C++ libraries are packaged with the application executable. This action should be run on a ubuntu-latest GitHub Actions runner.
+
+inputs:
+  app-name:
+    required: true
+    description: name of your application executable, example my-application
+    type: string
+  app-version:
+    required: true
+    description: version number of your application, example 1.0.0
+    type: string
+  qt-version:
+    required: true
+    description: version of Qt to use, it is preferred that this matches the Qt version you have on your development machine, example 6.10.1
+    type: string
+  cmake-target-name:
+    required: true
+    description: name of CMake target for your application executable, this is used to locate the executable, the executable will be renamed after that
+    type: string
+
+runs:
+  using: "composite"
+  steps:
+    - name: pull repository
+      uses: actions/checkout@v3
+      with:
+        repository: ${{github.repository}}
+        ref: ${{github.ref}}
+
+    - name: install Qt
+      uses: jurplel/install-qt-action@v4
+      with:
+        version: ${{inputs.qt-version}}
+        host: linux
+        target: android
+        dir: ${{github.workspace}}/..
+        cache: true
+        modules: qtshadertools
+        arch: android_arm64_v8a
+        tools: 'tools_cmake tools_ninja'
+
+    - name: install Android SDK & NDK
+      uses: android-actions/setup-android@v3
+      with:
+        packages: |
+          "platform-tools"
+          "platforms;android-28"
+          "build-tools;36.0.0"
+          "ndk;27.2.12479018"
+        accept-licenses: true
+
+    - name: delete unnecessary Qt plugins
+      shell: bash
+      run: |
+        rm -rf "../Qt/${{inputs.qt-version}}/android_arm64_v8a/plugins/designer"
+        rm -rf "../Qt/${{inputs.qt-version}}/android_arm64_v8a/plugins/help"
+        rm -rf "../Qt/${{inputs.qt-version}}/android_arm64_v8a/plugins/sqldrivers"
+        rm -rf "../Qt/${{inputs.qt-version}}/android_arm64_v8a/plugins/printsupport"
+
+    - name: build SGEXTN
+      shell: bash
+      run: |
+        cd ..
+        git clone https://github.com/InfinityIntegral/SGEXTN.git
+        cd SGEXTN
+        export PATH="${{github.workspace}}/../Qt/${{inputs.qt-version}}/android_arm64_v8a/bin:$PATH"
+        mkdir build
+        cd build
+        cmake .. -G "Ninja" -DCMAKE_TOOLCHAIN_FILE=${{github.workspace}}/../Qt/${{inputs.qt-version}}/android_arm64_v8a/android.toolchain.cmake -DANDROID_ABI=arm64-v8a -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=${{github.workspace}}/../Qt/${{inputs.qt-version}}/android_arm64_v8a
+        cmake --build . --config Release
+        cd ..
+        cmake --install build --config Release --prefix ../SGEXTN_install
+
+    - name: build application binary
+      shell: bash
+      run: |
+        export PATH="${{github.workspace}}/../Qt/${{inputs.qt-version}}/android_arm64_v8a/bin:$PATH"
+        export PATH="${{github.workspace}}/../SGEXTN_install/lib:${{github.workspace}}/../SGEXTN_install/lib/cmake/SGEXTN:$PATH"
+        mkdir build
+        cd build
+        cmake .. -G "Ninja" -DCMAKE_TOOLCHAIN_FILE=${{github.workspace}}/../Qt/${{inputs.qt-version}}/android_arm64_v8a/android.toolchain.cmake -DANDROID_ABI=arm64-v8a -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=${{github.workspace}}/../Qt/${{inputs.qt-version}}/android_arm64_v8a
+        cmake --build . --config Release
+
+    - name: delete QML tooling
+      shell: bash
+      run: |
+        rm -rf "../Qt/${{inputs.qt-version}}/android_arm64_v8a/plugins/qmllint"
+        rm -rf "../Qt/${{inputs.qt-version}}/android_arm64_v8a/plugins/qmlls"
+        rm -rf "../Qt/${{inputs.qt-version}}/android_arm64_v8a/plugins/qmltooling"
+
+    - name: package app using androiddeployqt
+      shell: bash
+      run: |
+        mkdir -p ${{github.workspace}}/${{inputs.app-name}}
+        cat build/${{inputs.cmake-target-name}}.apk-deployment-settings.json
+        ../Qt/${{inputs.qt-version}}/android_arm64_v8a/bin/androiddeployqt --input build/${{inputs.cmake-target-name}}.apk-deployment-settings.json --output ${{github.workspace}}/${{inputs.app-name}} --release --jdk $JAVA_HOME --gradle --android-platform 28 --qml-import-paths ${{github.workspace}}/../SGEXTN/SG_Widgets/assets
+
+    - name: write version file
+      shell: bash
+      run: |
+        echo "" > ${{github.workspace}}/${{inputs.app-name}}/version.txt
+        echo "using Qt version ${{inputs.qt-version}}" >> ${{github.workspace}}/${{inputs.app-name}}/version.txt
+        compilerVersion=$(../Qt/${{inputs.qt-version}}/android_arm64_v8a/bin/clang++ --version | head -n1)
+        echo "using compiler $compilerVersion" >> ${{github.workspace}}/${{inputs.app-name}}/version.txt
+        echo "building application ${{inputs.app-name}} version ${{inputs.app-version}}" >> ${{github.workspace}}/${{inputs.app-name}}/version.txt
+
+    - name: upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: android-arm64-clang-${{inputs.app-name}}-${{inputs.app-version}}-build
+        path: build
+
+    - name: upload binary
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: android-arm64-clang-${{inputs.app-name}}-${{inputs.app-version}}-binary
+        path: ${{inputs.app-name}}
