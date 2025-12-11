@@ -1,0 +1,125 @@
+name: Linux ARM GCC build
+description: Builds a fully self contained SGEXTN app for Linux ARM64 using GCC compiler. SGEXTN libraries and Qt libraries are packaged with the application executable. The target machine must have C++ libraries and glibc installed and with version equal to or newer than the ones found on Ubuntu 22.04. This action should be run on a ubuntu-22.04-arm GitHub Actions runner.
+
+inputs:
+  app-name:
+    required: true
+    description: name of your application executable, example my-application
+    type: string
+  app-version:
+    required: true
+    description: version number of your application, example 1.0.0
+    type: string
+  qt-version:
+    required: true
+    description: version of Qt to use, it is preferred that this matches the Qt version you have on your development machine, example 6.10.1
+    type: string
+  cmake-target-name:
+    required: true
+    description: name of CMake target for your application executable, this is used to locate the executable, the executable will be renamed after that
+    type: string
+
+runs:
+  using: "composite"
+  steps:
+    - name: pull repository
+      uses: actions/checkout@v3
+
+    - name: install Qt
+      uses: jurplel/install-qt-action@v4
+      with:
+        version: ${{inputs.qt-version}}
+        host: linux_arm64
+        target: desktop
+        dir: ${{github.workspace}}/..
+        cache: true
+        modules: qtshadertools
+        tools: 'tools_cmake tools_ninja'
+
+    - name: delete unnecessary Qt plugins
+      shell: bash
+      run: |
+        rm -rf ../Qt/${{inputs.qt-version}}/gcc_64/plugins/designer
+        rm -rf ../Qt/${{inputs.qt-version}}/gcc_64/plugins/help
+        rm -rf ../Qt/${{inputs.qt-version}}/gcc_64/plugins/printsupport
+        rm -rf ../Qt/${{inputs.qt-version}}/gcc_64/plugins/sqldrivers
+
+    - name: build linuxdeployqt
+      shell: bash
+      run: |
+        cd ..
+        git clone https://github.com/probonopd/linuxdeployqt.git
+        cd linuxdeployqt
+        mkdir build
+        cd build
+        cmake .. -G "Ninja" -DCMAKE_PREFIX_PATH=../../Qt/${{inputs.qt-version}}/gcc_64 -DCMAKE_BUILD_TYPE=Release
+        cmake --build . --config Release
+        cp ../../Qt/${{inputs.qt-version}}/gcc_64/libexec/qmlimportscanner tools/linuxdeployqt/qmlimportscanner
+        chmod +x tools/linuxdeployqt/qmlimportscanner
+
+    - name: build SGEXTN
+      shell: bash
+      run: |
+        cd ..
+        git clone https://github.com/InfinityIntegral/SGEXTN.git
+        cd SGEXTN
+        mkdir -p build
+        cd build
+        cmake .. -G "Ninja" -DCMAKE_PREFIX_PATH=../../Qt/${{inputs.qt-version}}/gcc_64 -DCMAKE_BUILD_TYPE=Release
+        cmake --build . --config Release
+        cd ..
+        cmake --install build --config Release --prefix ../SGEXTN_install
+
+    - name: build application binary
+      shell: bash
+      run: |
+        export PATH="${{github.workspace}}/../SGEXTN_install/lib:${{github.workspace}}/../SGEXTN_install/lib/cmake/SGEXTN:$PATH"
+        mkdir -p build
+        cd build
+        cmake .. -G "Ninja" -DCMAKE_PREFIX_PATH=../../Qt/${{inputs.qt-version}}/gcc_64 -DCMAKE_BUILD_TYPE=Release
+        cmake --build . --config Release
+
+    - name: delete QML tooling
+      shell: bash
+      run: |
+        rm -rf ../Qt/${{inputs.qt-version}}/gcc_64/plugins/qmllint
+        rm -rf ../Qt/${{inputs.qt-version}}/gcc_64/plugins/qmlls
+        rm -rf ../Qt/${{inputs.qt-version}}/gcc_64/plugins/qmltooling
+
+    - name: package app
+      shell: bash
+      run: |
+        mkdir -p package/${{inputs.app-name}}.AppDir/usr/bin
+        mkdir -p package/${{inputs.app-name}}.AppDir/usr/lib
+        cp "build/${{inputs.cmake-target-name}}" package/${{inputs.app-name}}.AppDir/usr/bin/${{inputs.app-name}}
+        find ../SGEXTN/build -type f -name "*.so*" -exec cp {} package/${{inputs.app-name}}.AppDir/usr/lib/ \;
+        find build -type f -name "*.so*" -exec cp {} package/${{inputs.app-name}}.AppDir/usr/lib/ \;
+        ../linuxdeployqt/build/tools/linuxdeployqt/linuxdeployqt package/${{inputs.app-name}}.AppDir/usr/bin/${{inputs.app-name}} -qmldir=${{github.workspace}}/../SGEXTN/SG_Widgets/assets -no-translations
+        rm -rf package/${{inputs.app-name}}.AppDir/usr/plugins
+        mkdir -p package/${{inputs.app-name}}.AppDir/usr/plugins
+        cd ${{github.workspace}}/../Qt/${{inputs.qt-version}}/gcc_64/plugins
+        find . -type f -name "*.so*" -exec cp --parents {} "${{github.workspace}}/package/${{inputs.app-name}}.AppDir/usr/plugins" \;
+        cd ${{github.workspace}}
+        mv package/${{inputs.app-name}}.AppDir/usr ${{inputs.app-name}}
+        chmod +x ${{inputs.app-name}}/bin/${{inputs.app-name}}
+
+    - name: write version file
+      shell: bash
+      run: |
+        echo "" > ${{inputs.app-name}}/version.txt
+        echo "using Qt version ${{inputs.qt-version}}" >> ${{inputs.app-name}}/version.txt
+        echo "using compiler $(g++ --version | head -n 1)" >> ${{inputs.app-name}}/version.txt
+        echo "building application ${{inputs.app-name}} version ${{inputs.app-version}}" >> ${{inputs.app-name}}/version.txt
+
+    - name: upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: linux-arm-gcc-${{inputs.app-name}}-${{inputs.app-version}}-build
+        path: build
+
+    - name: upload binary
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: linux-arm-gcc-${{inputs.app-name}}-${{inputs.app-version}}-binary
+        path: ${{inputs.app-name}}
