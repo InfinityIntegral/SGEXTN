@@ -34,7 +34,7 @@ runs:
         dir: ${{github.workspace}}\..
         cache: true
         modules: qtshadertools
-        tools: 'tools_vcredist,qt.tools.vcredist_msvc2022_x64 tools_cmake tools_ninja'
+        tools: 'tools_vcredist,qt.tools.vcredist_msvc2022_arm64 tools_cmake tools_ninja'
 
     - name: delete unnecessary Qt plugins
       shell: pwsh

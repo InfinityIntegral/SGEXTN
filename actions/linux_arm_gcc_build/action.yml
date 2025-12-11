@@ -54,6 +54,7 @@ runs:
         cd build
         cmake .. -G "Ninja" -DCMAKE_PREFIX_PATH=../../Qt/${{inputs.qt-version}}/gcc_64 -DCMAKE_BUILD_TYPE=Release
         cmake --build . --config Release
+        ls ../../Qt/${{inputs.qt-version}}
         cp ../../Qt/${{inputs.qt-version}}/gcc_64/libexec/qmlimportscanner tools/linuxdeployqt/qmlimportscanner
         chmod +x tools/linuxdeployqt/qmlimportscanner
 
