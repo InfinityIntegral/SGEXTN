@@ -39,10 +39,10 @@ runs:
     - name: delete unnecessary Qt plugins
       shell: bash
       run: |
-        rm -rf ../Qt/${{inputs.qt-version}}/gcc_64/plugins/designer
-        rm -rf ../Qt/${{inputs.qt-version}}/gcc_64/plugins/help
-        rm -rf ../Qt/${{inputs.qt-version}}/gcc_64/plugins/printsupport
-        rm -rf ../Qt/${{inputs.qt-version}}/gcc_64/plugins/sqldrivers
+        rm -rf ../Qt/${{inputs.qt-version}}/gcc_arm64/plugins/designer
+        rm -rf ../Qt/${{inputs.qt-version}}/gcc_arm64/plugins/help
+        rm -rf ../Qt/${{inputs.qt-version}}/gcc_arm64/plugins/printsupport
+        rm -rf ../Qt/${{inputs.qt-version}}/gcc_arm64/plugins/sqldrivers
 
     - name: build linuxdeployqt
       shell: bash
@@ -52,10 +52,9 @@ runs:
         cd linuxdeployqt
         mkdir build
         cd build
-        cmake .. -G "Ninja" -DCMAKE_PREFIX_PATH=../../Qt/${{inputs.qt-version}}/gcc_64 -DCMAKE_BUILD_TYPE=Release
+        cmake .. -G "Ninja" -DCMAKE_PREFIX_PATH=../../Qt/${{inputs.qt-version}}/gcc_arm64 -DCMAKE_BUILD_TYPE=Release
         cmake --build . --config Release
-        ls ../../Qt/${{inputs.qt-version}}
-        cp ../../Qt/${{inputs.qt-version}}/gcc_64/libexec/qmlimportscanner tools/linuxdeployqt/qmlimportscanner
+        cp ../../Qt/${{inputs.qt-version}}/gcc_arm64/libexec/qmlimportscanner tools/linuxdeployqt/qmlimportscanner
         chmod +x tools/linuxdeployqt/qmlimportscanner
 
     - name: build SGEXTN
@@ -66,7 +65,7 @@ runs:
         cd SGEXTN
         mkdir -p build
         cd build
-        cmake .. -G "Ninja" -DCMAKE_PREFIX_PATH=../../Qt/${{inputs.qt-version}}/gcc_64 -DCMAKE_BUILD_TYPE=Release
+        cmake .. -G "Ninja" -DCMAKE_PREFIX_PATH=../../Qt/${{inputs.qt-version}}/gcc_arm64 -DCMAKE_BUILD_TYPE=Release
         cmake --build . --config Release
         cd ..
         cmake --install build --config Release --prefix ../SGEXTN_install
@@ -77,15 +76,15 @@ runs:
         export PATH="${{github.workspace}}/../SGEXTN_install/lib:${{github.workspace}}/../SGEXTN_install/lib/cmake/SGEXTN:$PATH"
         mkdir -p build
         cd build
-        cmake .. -G "Ninja" -DCMAKE_PREFIX_PATH=../../Qt/${{inputs.qt-version}}/gcc_64 -DCMAKE_BUILD_TYPE=Release
+        cmake .. -G "Ninja" -DCMAKE_PREFIX_PATH=../../Qt/${{inputs.qt-version}}/gcc_arm64 -DCMAKE_BUILD_TYPE=Release
         cmake --build . --config Release
 
     - name: delete QML tooling
       shell: bash
       run: |
-        rm -rf ../Qt/${{inputs.qt-version}}/gcc_64/plugins/qmllint
-        rm -rf ../Qt/${{inputs.qt-version}}/gcc_64/plugins/qmlls
-        rm -rf ../Qt/${{inputs.qt-version}}/gcc_64/plugins/qmltooling
+        rm -rf ../Qt/${{inputs.qt-version}}/gcc_arm64/plugins/qmllint
+        rm -rf ../Qt/${{inputs.qt-version}}/gcc_arm64/plugins/qmlls
+        rm -rf ../Qt/${{inputs.qt-version}}/gcc_arm64/plugins/qmltooling
 
     - name: package app
       shell: bash
@@ -98,7 +97,7 @@ runs:
         ../linuxdeployqt/build/tools/linuxdeployqt/linuxdeployqt package/${{inputs.app-name}}.AppDir/usr/bin/${{inputs.app-name}} -qmldir=${{github.workspace}}/../SGEXTN/SG_Widgets/assets -no-translations
         rm -rf package/${{inputs.app-name}}.AppDir/usr/plugins
         mkdir -p package/${{inputs.app-name}}.AppDir/usr/plugins
-        cd ${{github.workspace}}/../Qt/${{inputs.qt-version}}/gcc_64/plugins
+        cd ${{github.workspace}}/../Qt/${{inputs.qt-version}}/gcc_arm64/plugins
         find . -type f -name "*.so*" -exec cp --parents {} "${{github.workspace}}/package/${{inputs.app-name}}.AppDir/usr/plugins" \;
         cd ${{github.workspace}}
         mv package/${{inputs.app-name}}.AppDir/usr ${{inputs.app-name}}

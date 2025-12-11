@@ -39,9 +39,9 @@ runs:
     - name: delete unnecessary Qt plugins
       shell: pwsh
       run: |
-        Remove-Item -Recurse -Force "..\Qt\${{inputs.qt-version}}\msvc2022_64\plugins\designer"
-        Remove-Item -Recurse -Force "..\Qt\${{inputs.qt-version}}\msvc2022_64\plugins\help"
-        Remove-Item -Recurse -Force "..\Qt\${{inputs.qt-version}}\msvc2022_64\plugins\sqldrivers"
+        Remove-Item -Recurse -Force "..\Qt\${{inputs.qt-version}}\msvc2022_arm64\plugins\designer"
+        Remove-Item -Recurse -Force "..\Qt\${{inputs.qt-version}}\msvc2022_arm64\plugins\help"
+        Remove-Item -Recurse -Force "..\Qt\${{inputs.qt-version}}\msvc2022_arm64\plugins\sqldrivers"
 
     - name: build SGEXTN
       shell: cmd
@@ -53,7 +53,7 @@ runs:
         call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
         mkdir build
         cd build
-        cmake .. -G "Ninja" -DCMAKE_PREFIX_PATH=../../Qt/${{inputs.qt-version}}/msvc2022_64 -DCMAKE_BUILD_TYPE=Release
+        cmake .. -G "Ninja" -DCMAKE_PREFIX_PATH=../../Qt/${{inputs.qt-version}}/msvc2022_arm64 -DCMAKE_BUILD_TYPE=Release
         cmake --build . --config Release
         cd ..
         cmake --install build --config Release --prefix ../SGEXTN_install
@@ -66,15 +66,15 @@ runs:
         call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
         mkdir build
         cd build
-        cmake .. -G "Ninja" -DCMAKE_PREFIX_PATH=../../Qt/${{inputs.qt-version}}/msvc2022_64 -DCMAKE_BUILD_TYPE=Release
+        cmake .. -G "Ninja" -DCMAKE_PREFIX_PATH=../../Qt/${{inputs.qt-version}}/msvc2022_arm64 -DCMAKE_BUILD_TYPE=Release
         cmake --build . --config Release
 
     - name: delete QML tooling
       shell: pwsh
       run: |
-        Remove-Item -Recurse -Force "..\Qt\${{inputs.qt-version}}\msvc2022_64\plugins\qmllint"
-        Remove-Item -Recurse -Force "..\Qt\${{inputs.qt-version}}\msvc2022_64\plugins\qmlls"
-        Remove-Item -Recurse -Force "..\Qt\${{inputs.qt-version}}\msvc2022_64\plugins\qmltooling"
+        Remove-Item -Recurse -Force "..\Qt\${{inputs.qt-version}}\msvc2022_arm64\plugins\qmllint"
+        Remove-Item -Recurse -Force "..\Qt\${{inputs.qt-version}}\msvc2022_arm64\plugins\qmlls"
+        Remove-Item -Recurse -Force "..\Qt\${{inputs.qt-version}}\msvc2022_arm64\plugins\qmltooling"
 
     - name: package app using windowsdeployqt
       shell: pwsh
@@ -83,7 +83,7 @@ runs:
         Copy-Item -Path "build\${{inputs.cmake-target-name}}.exe" -Destination "${{github.workspace}}\${{inputs.app-name}}\${{inputs.app-name}}.exe"
         Get-ChildItem -Path ..\SGEXTN\build -Filter *.dll -Recurse | ForEach-Object {Copy-Item $_.FullName -Destination ${{github.workspace}}\${{inputs.app-name}} -Force}
         Get-ChildItem -Path build -Filter *.dll -Recurse | ForEach-Object {Copy-Item $_.FullName -Destination ${{github.workspace}}\${{inputs.app-name}} -Force}
-        & "..\Qt\${{inputs.qt-version}}\msvc2022_64\bin\windeployqt.exe" ${{github.workspace}}\${{inputs.app-name}}\${{inputs.app-name}}.exe -qmldir=${{github.workspace}}\..\SGEXTN\SG_Widgets\assets --no-translations --no-compiler-runtime --release
+        & "..\Qt\${{inputs.qt-version}}\msvc2022_arm64\bin\windeployqt.exe" ${{github.workspace}}\${{inputs.app-name}}\${{inputs.app-name}}.exe -qmldir=${{github.workspace}}\..\SGEXTN\SG_Widgets\assets --no-translations --no-compiler-runtime --release
         Copy-Item "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Redist\MSVC\14.44.35112\x64\Microsoft.VC143.CRT\*" ${{inputs.app-name}} -Recurse -Force
 
     - name: write version file
