@@ -1,5 +1,5 @@
 name: Linux ARM GCC build
-description: Builds a fully self contained SGEXTN app for Linux ARM64 using GCC compiler. SGEXTN libraries and Qt libraries are packaged with the application executable. The target machine must have C++ libraries and glibc installed and with version equal to or newer than the ones found on Ubuntu 22.04. This action should be run on a ubuntu-22.04-arm GitHub Actions runner.
+description: Builds a fully self contained SGEXTN app for Linux ARM64 using GCC compiler. SGEXTN libraries and Qt libraries are packaged with the application executable. The target machine must have C++ libraries and glibc installed and with version equal to or newer than the ones found on Ubuntu 24.04. This action should be run on a ubuntu-24.04-arm GitHub Actions runner.
 
 inputs:
   app-name:
