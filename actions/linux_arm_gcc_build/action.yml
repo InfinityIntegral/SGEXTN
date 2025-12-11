@@ -49,6 +49,7 @@ runs:
       run: |
         cd ..
         git clone https://github.com/probonopd/linuxdeployqt.git
+        sed -i '215s/.*/if (false) {/' linuxdeployqt/tools/linuxdeployqt/main.cpp
         cd linuxdeployqt
         mkdir build
         cd build

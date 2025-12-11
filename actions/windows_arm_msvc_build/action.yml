@@ -50,7 +50,7 @@ runs:
         git clone https://github.com/InfinityIntegral/SGEXTN.git
         cd SGEXTN
         $env:PATH = "${{github.workspace}}\..\Qt\Tools\CMake_64\bin;${{github.workspace}}\..\Qt\Tools\Ninja;" + $env:PATH
-        call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+        call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsarm64.bat"
         mkdir build
         cd build
         cmake .. -G "Ninja" -DCMAKE_PREFIX_PATH=../../Qt/${{inputs.qt-version}}/msvc2022_arm64 -DCMAKE_BUILD_TYPE=Release
@@ -63,7 +63,7 @@ runs:
       run: |
         $env:PATH = "${{github.workspace}}\..\Qt\Tools\CMake_64\bin;${{github.workspace}}\..\Qt\Tools\Ninja;" + $env:PATH
         set PATH=${{github.workspace}}\..\SGEXTN_install\lib;${{github.workspace}}\..\SGEXTN_install\lib\cmake\SGEXTN;%PATH%
-        call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+        call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsarm64.bat"
         mkdir build
         cd build
         cmake .. -G "Ninja" -DCMAKE_PREFIX_PATH=../../Qt/${{inputs.qt-version}}/msvc2022_arm64 -DCMAKE_BUILD_TYPE=Release
@@ -89,7 +89,7 @@ runs:
     - name: write version file
       shell: cmd
       run: |
-        call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+        call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsarm64.bat"
         echo. > "${{inputs.app-name}}\version.txt"
         echo using Qt version ${{inputs.qt-version}} >> "${{inputs.app-name}}\version.txt"
         for /f "delims=" %%i in ('cl 2^>^&1 ^| findstr /R /C:".*"') do (
