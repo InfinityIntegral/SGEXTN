@@ -93,7 +93,7 @@ runs:
       shell: bash
       run: |
         mkdir -p ${{github.workspace}}/${{inputs.app-name}}
-        cat build/${{inputs.cmake-target-name}}.apk-deployment-settings.json
+        cat build/android-${{inputs.cmake-target-name}}-deployment-settings.json
         ../Qt/${{inputs.qt-version}}/android_arm64_v8a/bin/androiddeployqt --input build/${{inputs.cmake-target-name}}.apk-deployment-settings.json --output ${{github.workspace}}/${{inputs.app-name}} --release --jdk $JAVA_HOME --gradle --android-platform 28 --qml-import-paths ${{github.workspace}}/../SGEXTN/SG_Widgets/assets
 
     - name: write version file
