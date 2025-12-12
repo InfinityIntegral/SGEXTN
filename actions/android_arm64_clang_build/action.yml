@@ -105,6 +105,7 @@ runs:
         echo "building application ${{inputs.app-name}} version ${{inputs.app-version}}" >> ${{github.workspace}}/${{inputs.app-name}}/version.txt
 
     - name: upload build artifacts
+      if: always()
       uses: actions/upload-artifact@v4
       with:
         name: android-arm64-clang-${{inputs.app-name}}-${{inputs.app-version}}-build
