@@ -94,7 +94,7 @@ runs:
       run: |
         mkdir -p ${{github.workspace}}/${{inputs.app-name}}
         cat build/android-${{inputs.cmake-target-name}}-deployment-settings.json
-        ../Qt/${{inputs.qt-version}}/gcc_64/bin/androiddeployqt --input build/${{inputs.cmake-target-name}}.apk-deployment-settings.json --output ${{github.workspace}}/${{inputs.app-name}} --release --jdk $JAVA_HOME --gradle --android-platform 28 --qml-import-paths ${{github.workspace}}/../SGEXTN/SG_Widgets/assets
+        ../Qt/${{inputs.qt-version}}/gcc_64/bin/androiddeployqt --input build/android-${{inputs.cmake-target-name}}-deployment-settings.json --output ${{github.workspace}}/${{inputs.app-name}} --release --jdk $JAVA_HOME --gradle --android-platform 28 --qml-import-paths ${{github.workspace}}/../SGEXTN/SG_Widgets/assets
 
     - name: write version file
       shell: bash
@@ -118,10 +118,3 @@ runs:
       with:
         name: android-arm64-clang-${{inputs.app-name}}-${{inputs.app-version}}-binary
         path: ${{inputs.app-name}}
-
-    - name: upload Qt
-      if: always()
-      uses: actions/upload-artifact@v4
-      with:
-        name: qt-android
-        path: /home/runner/work/ColoursPlusPlus/Qt
