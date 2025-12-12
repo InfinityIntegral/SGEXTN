@@ -38,7 +38,7 @@ jobs:
           cmake-target-name: ${{inputs.cmake-target-name}}
 
   macos-clang-build:
-    if: contains(format(" {0} ", ${{inputs.platforms}}), " macos-clang ")
+    if: ${{contains(format(' {0} ', inputs.platforms), ' macos-clang ')}}
     runs-on: macos-latest
     steps:
       - name: MacOS Clang build
@@ -50,7 +50,7 @@ jobs:
           cmake-target-name: ${{inputs.cmake-target-name}}
 
   windows-llvm-mingw-build:
-    if: contains(format(" {0} ", ${{inputs.platforms}}), " windows-llvm-mingw ")
+    if: ${{contains(format(' {0} ', inputs.platforms), ' windows-llvm-mingw ')}}
     runs-on: windows-latest
     steps:
       - name: Windows LLVM MinGW build
@@ -62,7 +62,7 @@ jobs:
           cmake-target-name: ${{inputs.cmake-target-name}}
 
   windows-mingw-build:
-    if: contains(format(" {0} ", ${{inputs.platforms}}), " windows-mingw ")
+    if: ${{contains(format(' {0} ', inputs.platforms), ' windows-mingw ')}}
     runs-on: windows-latest
     steps:
       - name: Windows MinGW build
@@ -74,7 +74,7 @@ jobs:
           cmake-target-name: ${{inputs.cmake-target-name}}
 
   windows-msvc-build:
-    if: contains(format(" {0} ", ${{inputs.platforms}}), " windows-msvc ")
+    if: ${{contains(format(' {0} ', inputs.platforms), ' windows-msvc ')}}
     runs-on: windows-latest
     steps:
       - name: Windows MSVC build
@@ -86,7 +86,7 @@ jobs:
           cmake-target-name: ${{inputs.cmake-target-name}}
 
   windows-arm-msvc-build:
-    if: contains(format(" {0} ", ${{inputs.platforms}}), " windows-arm-msvc ")
+    if: ${{contains(format(' {0} ', inputs.platforms), ' windows-arm-msvc ')}}
     runs-on: windows-11-arm
     steps:
       - name: Windows ARM MSVC build
@@ -98,7 +98,7 @@ jobs:
           cmake-target-name: ${{inputs.cmake-target-name}}
 
   linux-arm-gcc-build:
-    if: contains(format(" {0} ", ${{inputs.platforms}}), " linux-arm-gcc ")
+    if: ${{contains(format(' {0} ', inputs.platforms), ' linux-arm-gcc ')}}
     runs-on: ubuntu-24.04-arm
     steps:
       - name: Linux ARM GCC build
@@ -110,7 +110,7 @@ jobs:
           cmake-target-name: ${{inputs.cmake-target-name}}
 
   android-arm64-clang-build:
-    if: contains(format(" {0} ", ${{inputs.platforms}}), " android-arm64-clang ")
+    if: ${{contains(format(' {0} ', inputs.platforms), ' android-arm64-clang ')}}
     runs-on: ubuntu-latest
     steps:
       - name: Android ARM64 Clang build
