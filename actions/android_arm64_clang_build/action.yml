@@ -66,7 +66,7 @@ runs:
         git clone https://github.com/InfinityIntegral/SGEXTN.git
         cd SGEXTN
         export PATH="${{github.workspace}}/../Qt/${{inputs.qt-version}}/android_arm64_v8a/bin:$PATH"
-        export ANDROID_NDK_ROOT="${{github.workspace}}/../Android/Sdk/ndk/27.2.12479018"
+        export ANDROID_NDK_ROOT="$HOME/Android/Sdk/ndk/27.2.12479018"
         mkdir build
         cd build
         cmake .. -G "Ninja" -DANDROID_ABI=arm64-v8a -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=${{github.workspace}}/../Qt/${{inputs.qt-version}}/android_arm64_v8a -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_ROOT/build/cmake/android.toolchain.cmake
