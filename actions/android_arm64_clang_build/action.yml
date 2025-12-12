@@ -42,11 +42,7 @@ runs:
     - name: install Android SDK & NDK
       uses: android-actions/setup-android@v3
       with:
-        packages: |
-          "platform-tools"
-          "platforms;android-28"
-          "build-tools;36.0.0"
-          "ndk;27.2.12479018"
+        packages: platform-tools platforms;android-28 build-tools;36.0.0 ndk;27.2.12479018
         accept-licenses: true
 
     - name: delete unnecessary Qt plugins
