@@ -38,7 +38,6 @@ runs:
         cache: true
         modules: qtshadertools
         arch: android_arm64_v8a
-        tools: 'tools_cmake tools_ninja'
 
     - name: install Android SDK & NDK
       uses: android-actions/setup-android@v3
