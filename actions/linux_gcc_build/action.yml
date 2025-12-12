@@ -55,7 +55,7 @@ runs:
         cd linuxdeployqt
         mkdir build
         cd build
-        cmake .. -G "Ninja" -DCMAKE_PREFIX_PATH=../../Qt/${{inputs.qt-version}}/gcc_64 -DCMAKE_BUILD_TYPE=Release
+        cmake .. -G "Ninja" -DCMAKE_BUILD_TYPE=Release
         cmake --build . --config Release
         cp ../../Qt/${{inputs.qt-version}}/gcc_64/libexec/qmlimportscanner tools/linuxdeployqt/qmlimportscanner
         chmod +x tools/linuxdeployqt/qmlimportscanner
@@ -68,7 +68,7 @@ runs:
         cd SGEXTN
         mkdir -p build
         cd build
-        cmake .. -G "Ninja" -DCMAKE_PREFIX_PATH=../../Qt/${{inputs.qt-version}}/gcc_64 -DCMAKE_BUILD_TYPE=Release
+        cmake .. -G "Ninja" -DCMAKE_BUILD_TYPE=Release
         cmake --build . --config Release
         cd ..
         cmake --install build --config Release --prefix ../SGEXTN_install
@@ -79,7 +79,7 @@ runs:
         export PATH="${{github.workspace}}/../SGEXTN_install/lib:${{github.workspace}}/../SGEXTN_install/lib/cmake/SGEXTN:$PATH"
         mkdir -p build
         cd build
-        cmake .. -G "Ninja" -DCMAKE_PREFIX_PATH=../../Qt/${{inputs.qt-version}}/gcc_64 -DCMAKE_BUILD_TYPE=Release
+        cmake .. -G "Ninja" -DCMAKE_BUILD_TYPE=Release
         cmake --build . --config Release
 
     - name: delete QML tooling
