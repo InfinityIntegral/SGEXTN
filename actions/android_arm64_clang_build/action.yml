@@ -94,11 +94,7 @@ runs:
       run: |
         mkdir -p ${{github.workspace}}/${{inputs.app-name}}
         cat build/android-${{inputs.cmake-target-name}}-deployment-settings.json
-        echo "here is bin"
-        ls ../Qt/${{inputs.qt-version}}/android_arm64_v8a/bin
-        echo "here is libexec"
-        ls ../Qt/${{inputs.qt-version}}/android_arm64_v8a/libexec
-        ../Qt/${{inputs.qt-version}}/android_arm64_v8a/libexec/androiddeployqt --input build/${{inputs.cmake-target-name}}.apk-deployment-settings.json --output ${{github.workspace}}/${{inputs.app-name}} --release --jdk $JAVA_HOME --gradle --android-platform 28 --qml-import-paths ${{github.workspace}}/../SGEXTN/SG_Widgets/assets
+        ../Qt/${{inputs.qt-version}}/gcc_64/bin/androiddeployqt --input build/${{inputs.cmake-target-name}}.apk-deployment-settings.json --output ${{github.workspace}}/${{inputs.app-name}} --release --jdk $JAVA_HOME --gradle --android-platform 28 --qml-import-paths ${{github.workspace}}/../SGEXTN/SG_Widgets/assets
 
     - name: write version file
       shell: bash
