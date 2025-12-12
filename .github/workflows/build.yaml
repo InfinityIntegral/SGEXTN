@@ -26,7 +26,7 @@ on:
 
 jobs:
   linux-gcc-build:
-    if: contains(format(" {0} ", ${{inputs.platforms}}), " linux-gcc ")
+    if: ${{contains(format(" {0} ", inputs.platforms), " linux-gcc ")}
     runs-on: ubuntu-22.04
     steps:
       - name: Linux GCC build
