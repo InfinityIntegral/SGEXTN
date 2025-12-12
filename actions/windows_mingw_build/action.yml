@@ -108,3 +108,13 @@ runs:
       with:
         name: windows-mingw-${{inputs.app-name}}-${{inputs.app-version}}-binary
         path: ${{inputs.app-name}}
+
+    - name: log info
+      if: always()
+      shell: pwsh
+      run: |
+        echo "logging information -------------------"
+        echo "version information:"
+        cat ${{inputs.app-name}}\version.txt
+        echo "packaged executables and libraries:"
+        ls ${{inputs.app-name}}

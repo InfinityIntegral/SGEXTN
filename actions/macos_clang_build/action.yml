@@ -108,3 +108,15 @@ runs:
       with:
         name: macos-clang-${{inputs.app-name}}-${{inputs.app-version}}-binary
         path: ${{inputs.app-name}}
+
+    - name: log info
+      if: always()
+      shell: bash
+      run: |
+        echo "logging information -------------------"
+        echo "version information:"
+        cat ${{inputs.app-name}}/version.txt
+        echo "packaged executables:"
+        ls ${{inputs.app-name}}/MacOS
+        echo "packaged libraries:"
+        ls ${{inputs.app-name}}/Frameworks
