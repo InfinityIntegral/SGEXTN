@@ -89,13 +89,6 @@ runs:
         rm -rf "../Qt/${{inputs.qt-version}}/android_arm64_v8a/plugins/qmlls"
         rm -rf "../Qt/${{inputs.qt-version}}/android_arm64_v8a/plugins/qmltooling"
 
-    - name: package app using androiddeployqt
-      shell: bash
-      run: |
-        mkdir -p ${{github.workspace}}/${{inputs.app-name}}
-        cat build/android-${{inputs.cmake-target-name}}-deployment-settings.json
-        ../Qt/${{inputs.qt-version}}/gcc_64/bin/androiddeployqt --input build/android-${{inputs.cmake-target-name}}-deployment-settings.json --output ${{github.workspace}}/${{inputs.app-name}} --release --jdk $JAVA_HOME --gradle --android-platform 28 --qml-import-paths ${{github.workspace}}/../SGEXTN/SG_Widgets/assets
-
     - name: write version file
       shell: bash
       run: |
