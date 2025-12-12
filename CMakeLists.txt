@@ -326,7 +326,7 @@ target_link_libraries(InternalTest
     PRIVATE Qt6::QuickControls2
     PRIVATE Qt6::GuiPrivate
 )
-qt6_finalize_executable(InternalTest)
+qt6_finalize_target(InternalTest)
 
 install(TARGETS SG_Containers SG_Math SG_Core SG_FileSystem SG_Widgets SG_RI EntryPoint_SG
     EXPORT SG_ALL_Targets
