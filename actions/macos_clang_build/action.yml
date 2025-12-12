@@ -114,9 +114,12 @@ runs:
       shell: bash
       run: |
         echo "logging information -------------------"
+        echo ""
         echo "version information:"
         cat ${{inputs.app-name}}/version.txt
+        echo ""
         echo "packaged executables:"
         ls ${{inputs.app-name}}/MacOS
+        echo ""
         echo "packaged libraries:"
         ls ${{inputs.app-name}}/Frameworks

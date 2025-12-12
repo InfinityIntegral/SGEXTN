@@ -114,7 +114,9 @@ runs:
       shell: pwsh
       run: |
         echo "logging information -------------------"
+        echo ""
         echo "version information:"
         cat ${{inputs.app-name}}\version.txt
+        echo ""
         echo "packaged executables and libraries:"
         ls ${{inputs.app-name}}
