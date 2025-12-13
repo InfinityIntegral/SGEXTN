@@ -58,7 +58,7 @@ if(APPLE)
     endforeach()
 endif()
 
-qt6_add_library(SG_Containers SHARED MANUAL_FINALIZATION)
+add_library(SG_Containers SHARED)
 target_compile_definitions(SG_Containers
     PRIVATE SG_BUILDING_CONTAINERS
     PUBLIC SG_USING_CONTAINERS
@@ -73,9 +73,8 @@ target_sources(SG_Containers
     PRIVATE "SG_Containers/src/SG_Build_Containers.cpp"
     PRIVATE "SG_Containers/src/SGLCrash.cpp"
 )
-qt6_finalize_target(SG_Containers)
 
-qt6_add_library(SG_Math SHARED MANUAL_FINALIZATION)
+add_library(SG_Math SHARED)
 target_compile_definitions(SG_Math
     PRIVATE SG_BUILDING_MATH
     PUBLIC SG_USING_MATH
@@ -95,9 +94,8 @@ target_sources(SG_Math
     PRIVATE "SG_Math/src/SGLLongLongLimits.cpp"
     PRIVATE "SG_Math/src/SGLLongLongMath.cpp"
 )
-qt6_finalize_target(SG_Math)
 
-qt6_add_library(SG_Core SHARED MANUAL_FINALIZATION)
+add_library(SG_Core SHARED)
 target_compile_definitions(SG_Core
     PRIVATE SG_BUILDING_CORE
     PUBLIC SG_USING_CORE
@@ -128,9 +126,8 @@ target_link_libraries(SG_Core
     PRIVATE Qt6::Core
     PRIVATE Qt6::Gui
 )
-qt6_finalize_target(SG_Core)
 
-qt6_add_library(SG_FileSystem SHARED MANUAL_FINALIZATION)
+add_library(SG_FileSystem SHARED)
 target_compile_definitions(SG_FileSystem
     PRIVATE SG_BUILDING_FILESYSTEM
     PUBLIC SG_USING_FILESYSTEM
@@ -151,9 +148,8 @@ target_link_libraries(SG_FileSystem
     PRIVATE SG_Core
     PRIVATE Qt6::Core
 )
-qt6_finalize_target(SG_FileSystem)
 
-qt6_add_library(SG_Widgets SHARED MANUAL_FINALIZATION)
+add_library(SG_Widgets SHARED)
 target_compile_definitions(SG_Widgets
     PRIVATE SG_BUILDING_WIDGETS
     PUBLIC SG_USING_WIDGETS
@@ -250,9 +246,8 @@ target_link_libraries(SG_Widgets
     PRIVATE Qt6::Quick
     PRIVATE Qt6::QuickControls2
 )
-qt6_finalize_target(SG_Widgets)
 
-qt6_add_library(SG_RI SHARED MANUAL_FINALIZATION)
+add_library(SG_RI SHARED)
 target_compile_definitions(SG_RI
     PRIVATE SG_BUILDING_RI
     PUBLIC SG_USING_RI
@@ -303,16 +298,14 @@ target_link_libraries(SG_RI
     PRIVATE Qt6::QuickControls2
     PRIVATE Qt6::GuiPrivate
 )
-qt6_finalize_target(SG_RI)
 
-qt6_add_library(EntryPoint_SG INTERFACE MANUAL_FINALIZATION)
+add_library(EntryPoint_SG INTERFACE)
 target_include_directories(EntryPoint_SG
     INTERFACE "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/EntryPoint_SG>"
     INTERFACE "$<INSTALL_INTERFACE:include/EntryPoint_SG>"
 )
-qt6_finalize_target(EntryPoint_SG)
 
-qt6_add_executable(InternalTest WIN32 MANUAL_FINALIZATION)
+add_executable(InternalTest WIN32)
 target_sources(InternalTest
     PRIVATE "internal_test/src/main.cpp"
     PRIVATE "internal_test/src/clangtidychecks.cpp"
@@ -333,7 +326,6 @@ target_link_libraries(InternalTest
     PRIVATE Qt6::QuickControls2
     PRIVATE Qt6::GuiPrivate
 )
-qt6_finalize_target(InternalTest)
 
 install(TARGETS SG_Containers SG_Math SG_Core SG_FileSystem SG_Widgets SG_RI EntryPoint_SG
     EXPORT SG_ALL_Targets
