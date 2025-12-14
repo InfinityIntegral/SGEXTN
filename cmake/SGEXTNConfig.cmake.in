@@ -1,2 +1,3 @@
 @PACKAGE_INIT@
 include("${CMAKE_CURRENT_LIST_DIR}/SG_ALL_Targets.cmake")
+include("${CMAKE_CURRENT_LIST_DIR}/buildlah.cmake")
