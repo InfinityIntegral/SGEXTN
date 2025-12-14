@@ -46,6 +46,10 @@ macro(BuildLah_use_default_settings)
 endmacro()
 
 macro(BuildLah_find_dependencies)
+    if(NOT ${PROJECT_NAME} STREQUAL "SGEXTN")
+        include("${SGEXTN_INSTALL_FOLDER}/SG_ALL_Targets.cmake")
+    endif()
+
     message(STATUS "BuildLah will now begin checks ensuring Qt libraries are present")
     message(STATUS "if an error occurs, ensure that you installed Qt properly using aqt or the Qt Maintenance Tool, asking a friend to send you their Qt stuff in a zip file is NOT a proper installation")
     message(STATUS "also ensure that you have Shader Tools installed, they are in a separate module")
