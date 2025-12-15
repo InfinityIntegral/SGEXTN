@@ -109,7 +109,7 @@ runs:
         mkdir -p android/res/values
         cat > android/res/values/styles.xml <<EOF
         <resources>
-        <style name="NormalTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <style name="NormalTheme" parent="@android:style/Theme.NoTitleBar">
         <item name="android:windowFullscreen">false</item>
         <item name="android:windowTranslucentStatus">false</item>
         <item name="android:windowTranslucentNavigation">false</item>
