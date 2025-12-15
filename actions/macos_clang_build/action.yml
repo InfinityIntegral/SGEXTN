@@ -83,7 +83,8 @@ runs:
         cp -a build/${{inputs.cmake-target-name}}.app package/${{inputs.app-name}}.app
         mv package/${{inputs.app-name}}.app/Contents/MacOS/${{inputs.cmake-target-name}} package/${{inputs.app-name}}.app/Contents/MacOS/${{inputs.app-name}}
         rm package/${{inputs.app-name}}.app/Contents/Info.plist
-        BUNDLE_ID="${${{inputs.app-name}}//-/}"
+        APP_NAME="${{inputs.app-name}}"
+        BUNDLE_ID="${APP_NAME//-/}"
         cat > package/${{inputs.app-name}}.app/Contents/Info.plist <<EOF
         <?xml version="1.0" encoding="UTF-8"?>
         <!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd"><plist version="1.0"><dict>
@@ -104,6 +105,7 @@ runs:
         find ../SGEXTN/build -type f -name "*.dylib" -exec cp {} package/${{inputs.app-name}}.app/Contents/Frameworks/ \;
         find build -type f -name "*.dylib" -exec cp {} package/${{inputs.app-name}}.app/Contents/Frameworks/ \;
         ../Qt/${{inputs.qt-version}}/macos/bin/macdeployqt package/${{inputs.app-name}}.app -qmldir=${{github.workspace}}/../SGEXTN/SG_Widgets/assets
+        mkdir -p ${{inputs.app-name}}
         mv package/${{inputs.app-name}}.app ${{inputs.app-name}}/${{inputs.app-name}}.app
         chmod +x ${{inputs.app-name}}/${{inputs.app-name}}.app/Contents/MacOS/${{inputs.app-name}}
 
