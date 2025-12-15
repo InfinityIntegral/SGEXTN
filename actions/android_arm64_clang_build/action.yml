@@ -51,6 +51,12 @@ runs:
         packages: platform-tools platforms;android-28 build-tools;36.0.0 ndk;27.2.12479018
         log-accepted-android-sdk-licenses: false
 
+    - name: install Java SDK
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+
     - name: delete unnecessary Qt plugins
       shell: bash
       run: |
@@ -93,6 +99,8 @@ runs:
       run: |
         mkdir -p ${{inputs.app-name}}
         cp build/android-build/${{inputs.cmake-target-name}}.apk ${{inputs.app-name}}/${{inputs.app-name}}.apk
+        $JAVA_HOME/bin/keytool -genkeypair -v -keystore debug.keystore -alias androiddebugkey -keyalg RSA -keysize 2048 -validity 10000 -storepass android -keypass android -dname "CN=SGEXTN debug key,O=SGEXTN_Debug,C=SG"
+        /usr/local/lib/android/sdk/build-tools/36.0.0/apksigner sign --ks debug.keystore --ks-pass pass:android ${{inputs.app-name}}/${{inputs.app-name}}.apk
 
     - name: write version file
       shell: bash
