@@ -80,8 +80,26 @@ runs:
       shell: bash
       run: |
         mkdir -p package
-        mv build/${{inputs.cmake-target-name}}.app package/${{inputs.app-name}}.app
+        cp build/${{inputs.cmake-target-name}}.app package/${{inputs.app-name}}.app
         mv package/${{inputs.app-name}}.app/Contents/MacOS/${{inputs.cmake-target-name}} package/${{inputs.app-name}}.app/Contents/MacOS/${{inputs.app-name}}
+        rm package/${{inputs.app-name}}.app/Contents/Info.plist
+        BUNDLE_ID="${${{inputs.app-name}}//-/}"
+        cat > package/${{inputs.app-name}}.app/Contents/Info.plist <<EOF
+        <?xml version="1.0" encoding="UTF-8"?>
+        <!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd"><plist version="1.0"><dict>
+            <key>CFBundleInfoDictionaryVersion</key><string>6.0</string>
+            <key>CFBundlePackageType</key><string>APPL</string>
+            <key>CFBundleName</key><string>${{inputs.app-name}}</string>
+            <key>CFBundleIdentifier</key><string>com.unknown.${BUNDLE_ID}</string>
+            <key>CFBundleExecutable</key><string>${{inputs.app-name}}</string>
+            <key>CFBundleVersion</key><string>${{inputs.app-version}}</string>
+            <key>CFBundleShortVersionString</key><string>${{inputs.app-version}}</string>
+            <key>CFBundleDevelopmentRegion</key><string>en_SG</string>
+            <key>CFBundleAllowMixedLocalizations</key><true/>
+            <key>NSPrincipalClass</key><string>NSApplication</string>
+            <key>NSSupportsAutomaticGraphicsSwitching</key><true/>
+        </dict></plist>
+        EOF
         mkdir -p package/${{inputs.app-name}}.app/Contents/Frameworks
         find ../SGEXTN/build -type f -name "*.dylib" -exec cp {} package/${{inputs.app-name}}.app/Contents/Frameworks/ \;
         find build -type f -name "*.dylib" -exec cp {} package/${{inputs.app-name}}.app/Contents/Frameworks/ \;
@@ -102,7 +120,7 @@ runs:
       uses: actions/upload-artifact@v4
       with:
         name: macos-clang-${{inputs.app-name}}-${{inputs.app-version}}-build
-        path: build
+        path: package
 
     - name: upload binary
       if: always()
