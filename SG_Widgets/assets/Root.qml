@@ -4,6 +4,6 @@ import ThemeColours 0.0
 
 Window{
     visible: true
-    width: 512
-    height: 512
+    width: Screen.availableGeometry.width
+    height: Screen.availableGeometry.height
 }
