@@ -79,7 +79,7 @@ runs:
     - name: package app using macdeployqt
       shell: bash
       run: |
-        mv build/${{inputs.camke-target-name}}.app build/${{inputs.app-name}}.app
+        mv build/${{inputs.cmake-target-name}}.app build/${{inputs.app-name}}.app
         mv build/${{inputs.app-name}}.app/Contents/MacOS/${{inputs.cmake-target-name}} build/${{inputs.app-name}}.app/Contents/MacOS/${{inputs.app-name}}
         mkdir -p build/${{inputs.app-name}}.app/Contents/Frameworks
         find ../SGEXTN/build -type f -name "*.dylib" -exec cp {} build/${{inputs.app-name}}.app/Contents/Frameworks/ \;
