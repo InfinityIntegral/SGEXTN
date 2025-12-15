@@ -79,6 +79,7 @@ runs:
     - name: package app using macdeployqt
       shell: bash
       run: |
+        mkdir -p package
         mv build/${{inputs.cmake-target-name}}.app package/${{inputs.app-name}}.app
         mv package/${{inputs.app-name}}.app/Contents/MacOS/${{inputs.cmake-target-name}} package/${{inputs.app-name}}.app/Contents/MacOS/${{inputs.app-name}}
         mkdir -p package/${{inputs.app-name}}.app/Contents/Frameworks
