@@ -101,6 +101,7 @@ runs:
         cp build/android-build/${{inputs.cmake-target-name}}.apk ${{inputs.app-name}}/${{inputs.app-name}}.apk
         $JAVA_HOME/bin/keytool -genkeypair -v -keystore debug.keystore -alias androiddebugkey -keyalg RSA -keysize 2048 -validity 10000 -storepass android -keypass android -dname "CN=SGEXTN debug key,O=SGEXTN_Debug,C=SG"
         /usr/local/lib/android/sdk/build-tools/36.0.0/apksigner sign --ks debug.keystore --ks-pass pass:android ${{inputs.app-name}}/${{inputs.app-name}}.apk
+        $/usr/local/lib/android/sdk/build-tools/36.0.0/apksigner verify ${{inputs.app-name}}/${{inputs.app-name}}.apk
 
     - name: write version file
       shell: bash
