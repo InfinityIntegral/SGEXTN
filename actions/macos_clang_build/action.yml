@@ -79,14 +79,14 @@ runs:
     - name: package app using macdeployqt
       shell: bash
       run: |
-        mkdir -p package/${{inputs.app-name}}.app/Contents/MacOS
-        mkdir -p package/${{inputs.app-name}}.app/Contents/Frameworks
-        cp "build/${{inputs.cmake-target-name}}" package/${{inputs.app-name}}.app/Contents/MacOS/${{inputs.app-name}}
-        find ../SGEXTN/build -type f -name "*.dylib" -exec cp {} package/${{inputs.app-name}}.app/Contents/Frameworks/ \;
-        find build -type f -name "*.dylib" -exec cp {} package/${{inputs.app-name}}.app/Contents/Frameworks/ \;
-        ../Qt/${{inputs.qt-version}}/macos/bin/macdeployqt package/${{inputs.app-name}}.app -qmldir=${{github.workspace}}/../SGEXTN/SG_Widgets/assets
-        mv package/${{inputs.app-name}}.app/Contents ${{inputs.app-name}}
-        chmod +x ${{inputs.app-name}}/MacOS/${{inputs.app-name}}
+        mv build/${{inputs.camke-target-name}}.app build/${{inputs.app-name}}.app
+        mv build/${{inputs.app-name}}.app/Contents/MacOS/${{inputs.cmake-target-name}} build/${{inputs.app-name}}.app/Contents/MacOS/${{inputs.app-name}}
+        mkdir -p build/${{inputs.app-name}}.app/Contents/Frameworks
+        find ../SGEXTN/build -type f -name "*.dylib" -exec cp {} build/${{inputs.app-name}}.app/Contents/Frameworks/ \;
+        find build -type f -name "*.dylib" -exec cp {} build/${{inputs.app-name}}.app/Contents/Frameworks/ \;
+        ../Qt/${{inputs.qt-version}}/macos/bin/macdeployqt build/${{inputs.app-name}}.app -qmldir=${{github.workspace}}/../SGEXTN/SG_Widgets/assets
+        mv build/${{inputs.app-name}}.app ${{inputs.app-name}}/${{inputs.app-name}}.app
+        chmod +x ${{inputs.app-name}}/${{inputs.app-name}}.app/Contents/MacOS/${{inputs.app-name}}
 
     - name: write version file
       shell: bash
@@ -120,7 +120,7 @@ runs:
         cat ${{inputs.app-name}}/version.txt
         echo ""
         echo "packaged executables:"
-        ls ${{inputs.app-name}}/MacOS
+        ls ${{inputs.app-name}}/${{inputs.app-name}}.app/Contents/MacOS
         echo ""
         echo "packaged libraries:"
-        ls ${{inputs.app-name}}/Frameworks
+        ls ${{inputs.app-name}}/${{inputs.app-name}}.app/Contents/Frameworks
