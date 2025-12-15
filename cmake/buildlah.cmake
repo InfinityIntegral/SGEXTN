@@ -193,9 +193,8 @@ macro(BuildLah_add_component arg_target_name arg_target_type arg_files_path arg_
     endif()
     if(link_SGWidgets)
         qt6_policy(SET QTP0001 NEW)
-        file(WRITE ${CMAKE_BINARY_DIR}/fakeqml/${arg_target_name}.qml "import QtQuick\nimport QtQuick.Controls\nimport QtQuick.Dialogs\nimport QtQuick.Window\nItem{}")
-        file(RELATIVE_PATH build_folder_relative "${CMAKE_SOURCE_DIR}" "${CMAKE_BINARY_DIR}/fakeqml/${arg_target_name}.qml")
-        qt6_add_qml_module(${arg_target_name} URI ${arg_target_name}_fakeqml OUTPUT_DIRECTORY ${arg_target_name}_fakeqml IMPORTS QtQuick QtQuick.Controls QtQuick.Dialogs QtQuick.Window QML_FILES ${build_folder_relative})
+        file(WRITE ${CMAKE_SOURCE_DIR}/fakeqml/${arg_target_name}.qml "import QtQuick\nimport QtQuick.Controls\nimport QtQuick.Dialogs\nimport QtQuick.Window\nItem{}")
+        qt6_add_qml_module(${arg_target_name} URI ${arg_target_name}_fakeqml OUTPUT_DIRECTORY ${arg_target_name}_fakeqml IMPORTS QtQuick QtQuick.Controls QtQuick.Dialogs QtQuick.Window QML_FILES fakeqml/${arg_target_name}.qml)
         message("${arg_target_name} uses SGWidgets and relevant QML have been set up")
     endif()
 
