@@ -88,6 +88,12 @@ runs:
         rm -rf "../Qt/${{inputs.qt-version}}/android_arm64_v8a/plugins/qmlls"
         rm -rf "../Qt/${{inputs.qt-version}}/android_arm64_v8a/plugins/qmltooling"
 
+    - package app
+      shell: bash
+      run: |
+        mkdir -p ${{inputs.app-name}}
+        cp build/android-build/${{inputs.cmake-target-name}}.apk ${{inputs.app-name}}/${{inputs.app-name}}.apk
+
     - name: write version file
       shell: bash
       run: |
@@ -115,8 +121,11 @@ runs:
       if: always()
       shell: bash
       run: |
+        unzip build/android-build/${{inputs.cmake-target-name}}.apk apk
         echo "logging information -------------------"
         echo ""
         echo "version information:"
         cat ${{inputs.app-name}}/version.txt
         echo ""
+        echo "packaged executables and libraries:"
+        ls apk/lib/arm64-v8a
