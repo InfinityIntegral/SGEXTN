@@ -2,6 +2,7 @@
 #include <private_api_Widgets/SGXQuickInterface.h>
 #include <QQuickItem>
 #include <private_api_Widgets/SGXFontSizeCustomisation.h>
+#include <SGWWidget.h>
 
 SGXQuickResizer::SGXQuickResizer(){
     (*this).renderSpaceWidth = 0.0f;
@@ -37,8 +38,8 @@ void SGXQuickResizer::setSizeUnit(float x){
 }
 
 void SGXQuickResizer::updateAppWindowSize(){
-    setRenderSpaceWidth(static_cast<float>((*SGXQuickInterface::rootWindow).width()));
-    setRenderSpaceHeight(static_cast<float>((*SGXQuickInterface::rootWindow).height()));
+    setRenderSpaceWidth(static_cast<float>((*(*SGWWidget::rootWidget).getTopObject()).width()));
+    setRenderSpaceHeight(static_cast<float>((*(*SGWWidget::rootWidget).getTopObject()).height()));
     if(renderSpaceWidth * SGXFontSizeCustomisation::fontSize < renderSpaceHeight / (1.0f / SGXFontSizeCustomisation::fontSize + 1.0f)){setSizeUnit(renderSpaceWidth * SGXFontSizeCustomisation::fontSize);}
     else{setSizeUnit(renderSpaceHeight / (1.0f / SGXFontSizeCustomisation::fontSize + 1.0f));}
 }
