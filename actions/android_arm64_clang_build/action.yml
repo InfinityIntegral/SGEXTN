@@ -99,7 +99,7 @@ runs:
       run: |
         echo "" > ${{inputs.app-name}}/version.txt
         echo "using Qt version ${{inputs.qt-version}}" >> ${{inputs.app-name}}/version.txt
-        compilerVersion=$(../Qt/${{inputs.qt-version}}/android_arm64_v8a/bin/clang++ --version | head -n1)
+        compilerVersion=$(/usr/local/lib/android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android28-clang --version | head -n1)
         echo "using compiler $compilerVersion" >> ${{inputs.app-name}}/version.txt
         echo "building application ${{inputs.app-name}} version ${{inputs.app-version}}" >> ${{inputs.app-name}}/version.txt
 
@@ -121,7 +121,7 @@ runs:
       if: always()
       shell: bash
       run: |
-        unzip build/android-build/${{inputs.cmake-target-name}}.apk apk
+        unzip build/android-build/${{inputs.cmake-target-name}}.apk -d apk
         echo "logging information -------------------"
         echo ""
         echo "version information:"
