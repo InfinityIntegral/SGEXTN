@@ -88,35 +88,21 @@ runs:
         rm -rf "../Qt/${{inputs.qt-version}}/android_arm64_v8a/plugins/qmlls"
         rm -rf "../Qt/${{inputs.qt-version}}/android_arm64_v8a/plugins/qmltooling"
 
-    - name: package app using androiddeployqt
-      shell: bash
-      run: |
-        mkdir -p ${{github.workspace}}/${{inputs.app-name}}
-        cat build/android-${{inputs.cmake-target-name}}-deployment-settings.json
-        ../Qt/${{inputs.qt-version}}/gcc_64/bin/androiddeployqt --input build/android-${{inputs.cmake-target-name}}-deployment-settings.json --output ${{github.workspace}}/${{inputs.app-name}} --release --jdk $JAVA_HOME --gradle --android-platform 28 --qml-import-paths ${{github.workspace}}/../SGEXTN/SG_Widgets/assets
-
     - name: write version file
       shell: bash
       run: |
-        echo "" > ${{github.workspace}}/${{inputs.app-name}}/version.txt
-        echo "using Qt version ${{inputs.qt-version}}" >> ${{github.workspace}}/${{inputs.app-name}}/version.txt
+        echo "" > ${{inputs.app-name}}/version.txt
+        echo "using Qt version ${{inputs.qt-version}}" >> ${{inputs.app-name}}/version.txt
         compilerVersion=$(../Qt/${{inputs.qt-version}}/android_arm64_v8a/bin/clang++ --version | head -n1)
-        echo "using compiler $compilerVersion" >> ${{github.workspace}}/${{inputs.app-name}}/version.txt
-        echo "building application ${{inputs.app-name}} version ${{inputs.app-version}}" >> ${{github.workspace}}/${{inputs.app-name}}/version.txt
+        echo "using compiler $compilerVersion" >> ${{inputs.app-name}}/version.txt
+        echo "building application ${{inputs.app-name}} version ${{inputs.app-version}}" >> ${{inputs.app-name}}/version.txt
 
     - name: upload build artifacts
       if: always()
       uses: actions/upload-artifact@v4
       with:
-        name: ownself-build
+        name: android-arm64-clang-${{inputs.app-name}}-${{inputs.app-version}}-build
         path: build
-
-    - name: upload build artifacts SGEXTN
-      if: always()
-      uses: actions/upload-artifact@v4
-      with:
-        name: sgextn-build
-        path: /home/runner/work/ColoursPlusPlus/SGEXTN/build
 
     - name: upload binary
       if: always()
@@ -124,3 +110,13 @@ runs:
       with:
         name: android-arm64-clang-${{inputs.app-name}}-${{inputs.app-version}}-binary
         path: ${{inputs.app-name}}
+
+    - name: log info
+      if: always()
+      shell: bash
+      run: |
+        echo "logging information -------------------"
+        echo ""
+        echo "version information:"
+        cat ${{inputs.app-name}}/version.txt
+        echo ""
