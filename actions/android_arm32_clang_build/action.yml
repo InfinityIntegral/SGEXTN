@@ -1,0 +1,140 @@
+name: Android ARM32 Clang build
+description: Builds a fully self contained SGEXTN app for Android ARM32 using Clang compiler. SGEXTN libraries, Qt libraries, and C++ libraries are packaged with the application executable. This action should be run on a ubuntu-latest GitHub Actions runner.
+
+inputs:
+  app-name:
+    required: true
+    description: name of your application executable, example my-application
+    type: string
+  app-version:
+    required: true
+    description: version number of your application, example 1.0.0
+    type: string
+  qt-version:
+    required: true
+    description: version of Qt to use, it is preferred that this matches the Qt version you have on your development machine, example 6.10.1
+    type: string
+  cmake-target-name:
+    required: true
+    description: name of CMake target for your application executable, this is used to locate the executable, the executable will be renamed after that
+    type: string
+
+runs:
+  using: "composite"
+  steps:
+    - name: pull repository
+      uses: actions/checkout@v3
+      with:
+        repository: ${{github.repository}}
+        ref: ${{github.ref}}
+
+    - name: install Ninja
+      shell: bash
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y ninja-build
+
+    - name: install Qt
+      uses: jurplel/install-qt-action@v4
+      with:
+        version: ${{inputs.qt-version}}
+        host: linux
+        target: android
+        dir: ${{github.workspace}}/..
+        cache: true
+        modules: qtshadertools
+        arch: android_armv7
+
+    - name: install Android SDK & NDK
+      uses: android-actions/setup-android@v3
+      with:
+        packages: platform-tools platforms;android-28 build-tools;36.0.0 ndk;27.2.12479018
+        log-accepted-android-sdk-licenses: false
+
+    - name: install Java SDK
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+
+    - name: delete unnecessary Qt plugins
+      shell: bash
+      run: |
+        rm -rf "../Qt/${{inputs.qt-version}}/android_armv7/plugins/designer"
+        rm -rf "../Qt/${{inputs.qt-version}}/android_armv7/plugins/help"
+        rm -rf "../Qt/${{inputs.qt-version}}/android_armv7/plugins/sqldrivers"
+        rm -rf "../Qt/${{inputs.qt-version}}/android_armv7/plugins/printsupport"
+
+    - name: build SGEXTN
+      shell: bash
+      run: |
+        cd ..
+        git clone https://github.com/InfinityIntegral/SGEXTN.git
+        cd SGEXTN
+        mkdir build
+        cd build
+        cmake .. -G "Ninja" -DANDROID_SDK_ROOT=/usr/local/lib/android/sdk -DANDROID_NDK_ROOT=/usr/local/lib/android/sdk/ndk/27.2.12479018 -DANDROID_ABI=armeabi-v7a -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=/usr/local/lib/android/sdk/ndk/27.2.12479018/build/cmake/android.toolchain.cmake -DANDROID_PLATFORM=android-28
+        cmake --build . --config Release
+        cd ..
+        cmake --install build --config Release --prefix ../SGEXTN_install
+
+    - name: build application binary
+      shell: bash
+      run: |
+        export PATH="${{github.workspace}}/../SGEXTN_install/lib:${{github.workspace}}/../SGEXTN_install/lib/cmake/SGEXTN:$PATH"
+        mkdir build
+        cd build
+        cmake .. -G "Ninja" -DANDROID_SDK_ROOT=/usr/local/lib/android/sdk -DANDROID_NDK_ROOT=/usr/local/lib/android/sdk/ndk/27.2.12479018 -DANDROID_ABI=armeabi-v7a -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=/usr/local/lib/android/sdk/ndk/27.2.12479018/build/cmake/android.toolchain.cmake -DANDROID_PLATFORM=android-28
+        cmake --build . --config Release
+
+    - name: delete QML tooling
+      shell: bash
+      run: |
+        rm -rf "../Qt/${{inputs.qt-version}}/android_armv7/plugins/qmllint"
+        rm -rf "../Qt/${{inputs.qt-version}}/android_armv7/plugins/qmlls"
+        rm -rf "../Qt/${{inputs.qt-version}}/android_armv7/plugins/qmltooling"
+
+    - name: package app
+      shell: bash
+      run: |
+        mkdir -p ${{inputs.app-name}}
+        cp build/android-build/${{inputs.cmake-target-name}}.apk ${{inputs.app-name}}/${{inputs.app-name}}.apk
+        $JAVA_HOME/bin/keytool -genkeypair -v -keystore debug.keystore -alias androiddebugkey -keyalg RSA -keysize 2048 -validity 10000 -storepass android -keypass android -dname "CN=SGEXTN debug key,O=SGEXTN_Debug,C=SG"
+        /usr/local/lib/android/sdk/build-tools/36.0.0/apksigner sign --ks debug.keystore --ks-pass pass:android ${{inputs.app-name}}/${{inputs.app-name}}.apk
+        /usr/local/lib/android/sdk/build-tools/36.0.0/apksigner verify ${{inputs.app-name}}/${{inputs.app-name}}.apk
+
+    - name: write version file
+      shell: bash
+      run: |
+        echo "" > ${{inputs.app-name}}/version.txt
+        echo "using Qt version ${{inputs.qt-version}}" >> ${{inputs.app-name}}/version.txt
+        compilerVersion=$(/usr/local/lib/android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/linux-x86_64/bin/armv7a-linux-androideabi28-clang --version | head -n1)
+        echo "using compiler $compilerVersion" >> ${{inputs.app-name}}/version.txt
+        echo "building application ${{inputs.app-name}} version ${{inputs.app-version}}" >> ${{inputs.app-name}}/version.txt
+
+    - name: upload build artifacts
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: android-arm32-clang-${{inputs.app-name}}-${{inputs.app-version}}-build
+        path: build
+
+    - name: upload binary
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: android-arm32-clang-${{inputs.app-name}}-${{inputs.app-version}}-binary
+        path: ${{inputs.app-name}}
+
+    - name: log info
+      if: always()
+      shell: bash
+      run: |
+        unzip build/android-build/${{inputs.cmake-target-name}}.apk -d apk
+        echo "logging information -------------------"
+        echo ""
+        echo "version information:"
+        cat ${{inputs.app-name}}/version.txt
+        echo ""
+        echo "packaged executables and libraries:"
+        ls apk/lib/armeabi-v7a

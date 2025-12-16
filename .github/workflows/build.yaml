@@ -120,3 +120,39 @@ jobs:
           app-version: ${{inputs.app-version}}
           qt-version: ${{inputs.qt-version}}
           cmake-target-name: ${{inputs.cmake-target-name}}
+
+  android-arm32-clang-build:
+    if: ${{contains(format(' {0} ', inputs.platforms), ' android-arm32-clang ')}}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Android ARM32 Clang build
+        uses: InfinityIntegral/SGEXTN/actions/android_arm32_clang_build@main
+        with:
+          app-name: ${{inputs.app-name}}
+          app-version: ${{inputs.app-version}}
+          qt-version: ${{inputs.qt-version}}
+          cmake-target-name: ${{inputs.cmake-target-name}}
+
+  android-amd64-clang-build:
+    if: ${{contains(format(' {0} ', inputs.platforms), ' android-amd64-clang ')}}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Android AMD64 Clang build
+        uses: InfinityIntegral/SGEXTN/actions/android_amd64_clang_build@main
+        with:
+          app-name: ${{inputs.app-name}}
+          app-version: ${{inputs.app-version}}
+          qt-version: ${{inputs.qt-version}}
+          cmake-target-name: ${{inputs.cmake-target-name}}
+
+  android-amd32-clang-build:
+    if: ${{contains(format(' {0} ', inputs.platforms), ' android-amd32-clang ')}}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Android AMD32 Clang build
+        uses: InfinityIntegral/SGEXTN/actions/android_amd32_clang_build@main
+        with:
+          app-name: ${{inputs.app-name}}
+          app-version: ${{inputs.app-version}}
+          qt-version: ${{inputs.qt-version}}
+          cmake-target-name: ${{inputs.cmake-target-name}}
