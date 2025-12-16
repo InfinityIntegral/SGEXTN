@@ -78,7 +78,7 @@ void main(){
     }
     else{outColour = vec4(1.0f, 1.0f, 1.0f, 1.0f);}
     if(addTransparencyGrid == true){
-        float intensity = 0.8f + 0.15f * float((int(5.0f * vertexUnits.x * SG_RI_builtin.width / SG_RI_builtin.height) + int(5.0f * vertexUnits.y)) % 2);
+        float intensity = 0.8f + 0.15f * mod(floor(5.0f * vertexUnits.x * SG_RI_builtin.width / SG_RI_builtin.height) + floor(5.0f * vertexUnits.y), 2.0f);
         outColour = vec4(outColour.a * outColour.r + (1.0f - outColour.a) * intensity, outColour.a * outColour.g + (1.0f - outColour.a) * intensity, outColour.a * outColour.b + (1.0f - outColour.a) * intensity, 1.0f);
     }
 }
