@@ -1,5 +1,6 @@
 #version 310 es
 precision highp float;
+precision highp int;
 layout(std140, binding = 0) uniform SG_RI_builtin_{
     float x;
     float y;

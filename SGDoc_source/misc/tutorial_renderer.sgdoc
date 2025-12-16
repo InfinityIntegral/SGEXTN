@@ -15,6 +15,7 @@ We will start by writing the vertex shader. The vertex shader should look like t
 @SG_STARTCODEBLK
 #version 310 es
 precision highp float;
+precision highp int;
 layout(std140, binding = 0) uniform SG_RI_builtin_{
     float x;
     float y;
@@ -62,6 +63,7 @@ Next we write the fragment shader to tell the GPU how exactly to colour the pixe
 @SG_STARTCODEBLK
 #version 310 es
 precision highp float;
+precision highp int;
 layout(std140, binding = 0) uniform SG_RI_builtin_{
     float x;
     float y;
