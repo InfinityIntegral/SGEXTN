@@ -133,6 +133,16 @@ runs:
         export PATH="${{github.workspace}}/../SGEXTN_install/ARM32/lib:${{github.workspace}}/../SGEXTN_install/ARM32/lib/cmake/SGEXTN:$PATH"
         export PATH="${{github.workspace}}/../SGEXTN_install/AMD64/lib:${{github.workspace}}/../SGEXTN_install/AMD64/lib/cmake/SGEXTN:$PATH"
         export PATH="${{github.workspace}}/../SGEXTN_install/AMD32/lib:${{github.workspace}}/../SGEXTN_install/AMD32/lib/cmake/SGEXTN:$PATH"
+        sed -i '/find(SGEXTN)/c\
+        if(CMAKE_ANDROID_ARCH_ABI STREQUAL "arm64-v8a")\
+            find_package(SGEXTN PATHS ${{github.workspace}}/../SGEXTN_install/ARM64/lib/cmake/SGEXTN/SGEXTNConfig.cmake)\
+        elseif(CMAKE_ANDROID_ARCH_ABI STREQUAL "armeabi-v7a")\
+            find_package(SGEXTN PATHS ${{github.workspace}}/../SGEXTN_install/ARM32/lib/cmake/SGEXTN/SGEXTNConfig.cmake)\
+        elseif(CMAKE_ANDROID_ARCH_ABI STREQUAL "x86_64")\
+            find_package(SGEXTN PATHS ${{github.workspace}}/../SGEXTN_install/AMD64/lib/cmake/SGEXTN/SGEXTNConfig.cmake)\
+        elseif(CMAKE_ANDROID_ARCH_ABI STREQUAL "x86")\
+            find_package(SGEXTN PATHS ${{github.workspace}}/../SGEXTN_install/AMD32/lib/cmake/SGEXTN/SGEXTNConfig.cmake)\
+        endif()' CMakeLists.txt
         mkdir build
         cd build
         ../../Qt/${{inputs.qt-version}}/android_arm64_v8a/bin/qt-cmake -DQT_ANDROID_BUILD_ALL_ABIS=TRUE -DANDROID_SDK_ROOT=/usr/local/lib/android/sdk -DANDROID_NDK_ROOT=/usr/local/lib/android/sdk/ndk/27.2.12479018 -S .. -B . -GNinja -DCMAKE_BUILD_TYPE=Release -DANDROID_PLATFORM=android-28
@@ -158,7 +168,7 @@ runs:
       shell: bash
       run: |
         mkdir -p ${{inputs.app-name}}
-        cp path/to/aab.aab ${{inputs.app-name}}/${{inputs.app-name}}.aab
+        cp build/android-build/build/outputs/bundle/release/android-build-release.aab ${{inputs.app-name}}/${{inputs.app-name}}.aab
 
     - name: write version file
       shell: bash
@@ -166,13 +176,13 @@ runs:
         echo "" > ${{inputs.app-name}}/version.txt
         echo "using Qt version ${{inputs.qt-version}}" >> ${{inputs.app-name}}/version.txt
         compilerVersion=$(/usr/local/lib/android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android28-clang --version | head -n1)
-        echo "using compiler $compilerVersion" >> ${{inputs.app-name}}/version.txt
+        echo "using ARM64 Android compiler $compilerVersion" >> ${{inputs.app-name}}/version.txt
         compilerVersion=$(/usr/local/lib/android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/linux-x86_64/bin/armv7a-linux-androideabi28-clang --version | head -n1)
-        echo "using compiler $compilerVersion" >> ${{inputs.app-name}}/version.txt
+        echo "using ARM32 Android compiler $compilerVersion" >> ${{inputs.app-name}}/version.txt
         compilerVersion=$(/usr/local/lib/android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/linux-x86_64/bin/x86_64-linux-android28-clang --version | head -n1)
-        echo "using compiler $compilerVersion" >> ${{inputs.app-name}}/version.txt
+        echo "using AMD64 Android compiler $compilerVersion" >> ${{inputs.app-name}}/version.txt
         compilerVersion=$(/usr/local/lib/android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/linux-x86_64/bin/i686-linux-android28-clang --version | head -n1)
-        echo "using compiler $compilerVersion" >> ${{inputs.app-name}}/version.txt
+        echo "using AMD32 Android compiler $compilerVersion" >> ${{inputs.app-name}}/version.txt
         echo "building application ${{inputs.app-name}} version ${{inputs.app-version}}" >> ${{inputs.app-name}}/version.txt
 
     - name: upload build artifacts
@@ -180,7 +190,7 @@ runs:
       uses: actions/upload-artifact@v4
       with:
         name: android-aab-clang-${{inputs.app-name}}-${{inputs.app-version}}-build
-        path: /home/runner/work/ColoursPlusPlus
+        path: build
 
     - name: upload binary
       if: always()
@@ -193,7 +203,7 @@ runs:
       if: always()
       shell: bash
       run: |
-        unzip path/to/aab.aab -d aab
+        unzip build/android-build/build/outputs/bundle/release/android-build-release.aab -d aab
         echo "logging information -------------------"
         echo ""
         echo "version information:"
