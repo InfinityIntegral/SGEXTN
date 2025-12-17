@@ -1,0 +1,203 @@
+name: Android AAB Clang build
+description: Builds a fully self contained SGEXTN app for Android AAB using Clang compiler. SGEXTN libraries, Qt libraries, and C++ libraries are packaged with the application executable. The produced AAB will be ready for distribution on Google Play after being signed. This action should be run on a ubuntu-latest GitHub Actions runner.
+
+inputs:
+  app-name:
+    required: true
+    description: name of your application executable, example my-application
+    type: string
+  app-version:
+    required: true
+    description: version number of your application, example 1.0.0
+    type: string
+  qt-version:
+    required: true
+    description: version of Qt to use, it is preferred that this matches the Qt version you have on your development machine, example 6.10.1
+    type: string
+  cmake-target-name:
+    required: true
+    description: name of CMake target for your application executable, this is used to locate the executable, the executable will be renamed after that
+    type: string
+
+runs:
+  using: "composite"
+  steps:
+    - name: pull repository
+      uses: actions/checkout@v3
+      with:
+        repository: ${{github.repository}}
+        ref: ${{github.ref}}
+
+    - name: install Ninja
+      shell: bash
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y ninja-build
+
+    - name: install Qt for Android ARM64
+      uses: jurplel/install-qt-action@v4
+      with:
+        version: ${{inputs.qt-version}}
+        host: linux
+        target: android
+        dir: ${{github.workspace}}/..
+        cache: true
+        modules: qtshadertools
+        arch: android_arm64_v8a
+
+    - name: install Qt for Android ARM32
+      uses: jurplel/install-qt-action@v4
+      with:
+        version: ${{inputs.qt-version}}
+        host: linux
+        target: android
+        dir: ${{github.workspace}}/..
+        cache: true
+        modules: qtshadertools
+        arch: android_armv7
+
+    - name: install Qt for Android AMD64
+      uses: jurplel/install-qt-action@v4
+      with:
+        version: ${{inputs.qt-version}}
+        host: linux
+        target: android
+        dir: ${{github.workspace}}/..
+        cache: true
+        modules: qtshadertools
+        arch: android_x86_64
+
+    - name: install Qt for Android AMD32
+      uses: jurplel/install-qt-action@v4
+      with:
+        version: ${{inputs.qt-version}}
+        host: linux
+        target: android
+        dir: ${{github.workspace}}/..
+        cache: true
+        modules: qtshadertools
+        arch: android_x86
+
+    - name: install Android SDK & NDK
+      uses: android-actions/setup-android@v3
+      with:
+        packages: platform-tools platforms;android-28 build-tools;36.0.0 ndk;27.2.12479018
+        log-accepted-android-sdk-licenses: false
+
+    - name: install Java SDK
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+
+    - name: delete unnecessary Qt plugins
+      shell: bash
+      run: |
+        rm -rf "../Qt/${{inputs.qt-version}}/android_arm64_v8a/plugins/designer"
+        rm -rf "../Qt/${{inputs.qt-version}}/android_arm64_v8a/plugins/help"
+        rm -rf "../Qt/${{inputs.qt-version}}/android_arm64_v8a/plugins/sqldrivers"
+        rm -rf "../Qt/${{inputs.qt-version}}/android_arm64_v8a/plugins/printsupport"
+        rm -rf "../Qt/${{inputs.qt-version}}/android_armv7/plugins/designer"
+        rm -rf "../Qt/${{inputs.qt-version}}/android_armv7/plugins/help"
+        rm -rf "../Qt/${{inputs.qt-version}}/android_armv7/plugins/sqldrivers"
+        rm -rf "../Qt/${{inputs.qt-version}}/android_armv7/plugins/printsupport"
+        rm -rf "../Qt/${{inputs.qt-version}}/android_x86_64/plugins/designer"
+        rm -rf "../Qt/${{inputs.qt-version}}/android_x86_64/plugins/help"
+        rm -rf "../Qt/${{inputs.qt-version}}/android_x86_64/plugins/sqldrivers"
+        rm -rf "../Qt/${{inputs.qt-version}}/android_x86_64/plugins/printsupport"
+        rm -rf "../Qt/${{inputs.qt-version}}/android_x86/plugins/designer"
+        rm -rf "../Qt/${{inputs.qt-version}}/android_x86/plugins/help"
+        rm -rf "../Qt/${{inputs.qt-version}}/android_x86/plugins/sqldrivers"
+        rm -rf "../Qt/${{inputs.qt-version}}/android_x86/plugins/printsupport"
+
+    - name: build SGEXTN
+      shell: bash
+      run: |
+        cd ..
+        git clone https://github.com/InfinityIntegral/SGEXTN.git
+        cd SGEXTN
+        mkdir build
+        cd build
+        ../../Qt/${{inputs.qt-version}}/android_arm64_v8a/bin/qt-cmake -DQT_ANDROID_BUILD_ALL_ABIS=TRUE -DANDROID_SDK_ROOT=/usr/local/lib/android/sdk -DANDROID_NDK_ROOT=/usr/local/lib/android/sdk/ndk/27.2.12479018 -S .. -B . -GNinja
+        cmake --build . --config Release --target aab
+        cd ..
+        cmake --install build --config Release --prefix ../SGEXTN_install
+
+    - name: build application binary
+      shell: bash
+      run: |
+        export PATH="${{github.workspace}}/../SGEXTN_install/lib:${{github.workspace}}/../SGEXTN_install/lib/cmake/SGEXTN:$PATH"
+        mkdir build
+        cd build
+        ../../Qt/${{inputs.qt-version}}/android_arm64_v8a/bin/qt-cmake -DQT_ANDROID_BUILD_ALL_ABIS=TRUE -DANDROID_SDK_ROOT=/usr/local/lib/android/sdk -DANDROID_NDK_ROOT=/usr/local/lib/android/sdk/ndk/27.2.12479018 -S .. -B . -GNinja
+        cmake --build . --config Release --target aab
+
+    - name: delete QML tooling
+      shell: bash
+      run: |
+        rm -rf "../Qt/${{inputs.qt-version}}/android_arm64_v8a/plugins/qmllint"
+        rm -rf "../Qt/${{inputs.qt-version}}/android_arm64_v8a/plugins/qmlls"
+        rm -rf "../Qt/${{inputs.qt-version}}/android_arm64_v8a/plugins/qmltooling"
+        rm -rf "../Qt/${{inputs.qt-version}}/android_armv7/plugins/qmllint"
+        rm -rf "../Qt/${{inputs.qt-version}}/android_armv7/plugins/qmlls"
+        rm -rf "../Qt/${{inputs.qt-version}}/android_armv7/plugins/qmltooling"
+        rm -rf "../Qt/${{inputs.qt-version}}/android_x86_64/plugins/qmllint"
+        rm -rf "../Qt/${{inputs.qt-version}}/android_x86_64/plugins/qmlls"
+        rm -rf "../Qt/${{inputs.qt-version}}/android_x86_64/plugins/qmltooling"
+        rm -rf "../Qt/${{inputs.qt-version}}/android_x86/plugins/qmllint"
+        rm -rf "../Qt/${{inputs.qt-version}}/android_x86/plugins/qmlls"
+        rm -rf "../Qt/${{inputs.qt-version}}/android_x86/plugins/qmltooling"
+
+    - name: package app
+      shell: bash
+      run: |
+        mkdir -p ${{inputs.app-name}}
+        cp path/to/aab.aab ${{inputs.app-name}}/${{inputs.app-name}}.aab
+
+    - name: write version file
+      shell: bash
+      run: |
+        echo "" > ${{inputs.app-name}}/version.txt
+        echo "using Qt version ${{inputs.qt-version}}" >> ${{inputs.app-name}}/version.txt
+        compilerVersion=$(/usr/local/lib/android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android28-clang --version | head -n1)
+        echo "using compiler $compilerVersion" >> ${{inputs.app-name}}/version.txt
+        compilerVersion=$(/usr/local/lib/android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/linux-x86_64/bin/armv7a-linux-androideabi28-clang --version | head -n1)
+        echo "using compiler $compilerVersion" >> ${{inputs.app-name}}/version.txt
+        compilerVersion=$(/usr/local/lib/android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/linux-x86_64/bin/x86_64-linux-android28-clang --version | head -n1)
+        echo "using compiler $compilerVersion" >> ${{inputs.app-name}}/version.txt
+        compilerVersion=$(/usr/local/lib/android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/linux-x86_64/bin/i686-linux-android28-clang --version | head -n1)
+        echo "using compiler $compilerVersion" >> ${{inputs.app-name}}/version.txt
+        echo "building application ${{inputs.app-name}} version ${{inputs.app-version}}" >> ${{inputs.app-name}}/version.txt
+
+    - name: upload build artifacts
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: android-aab-clang-${{inputs.app-name}}-${{inputs.app-version}}-build
+        path: build
+
+    - name: upload binary
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: android-aab-clang-${{inputs.app-name}}-${{inputs.app-version}}-binary
+        path: ${{inputs.app-name}}
+
+    - name: log info
+      if: always()
+      shell: bash
+      run: |
+        unzip path/to/aab.aab -d aab
+        echo "logging information -------------------"
+        echo ""
+        echo "version information:"
+        cat ${{inputs.app-name}}/version.txt
+        echo ""
+        echo "packaged executables and libraries for ARM64:"
+        ls aab/base/lib/arm64-v8a
+        echo "packaged executables and libraries for ARM32:"
+        ls aab/base/lib/armeabi-v7a
+        echo "packaged executables and libraries for AMD64:"
+        ls aab/base/lib/x86_64
+        echo "packaged executables and libraries for AMD32:"
+        ls aab/base/lib/x86
