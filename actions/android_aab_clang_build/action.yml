@@ -143,6 +143,8 @@ runs:
         elseif(CMAKE_ANDROID_ARCH_ABI STREQUAL "x86")\
             find_package(SGEXTN PATHS ${{github.workspace}}/../SGEXTN_install/AMD32/lib/cmake/SGEXTN/SGEXTNConfig.cmake)\
         endif()' CMakeLists.txt
+        echo "patched CMakeLists.txt"
+        cat CMakeLists.txt
         mkdir build
         cd build
         ../../Qt/${{inputs.qt-version}}/android_arm64_v8a/bin/qt-cmake -DQT_ANDROID_BUILD_ALL_ABIS=TRUE -DANDROID_SDK_ROOT=/usr/local/lib/android/sdk -DANDROID_NDK_ROOT=/usr/local/lib/android/sdk/ndk/27.2.12479018 -S .. -B . -GNinja -DCMAKE_BUILD_TYPE=Release -DANDROID_PLATFORM=android-28
