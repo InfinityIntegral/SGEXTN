@@ -1,5 +1,5 @@
 name: Android AAB Clang build
-description: Builds a fully self contained SGEXTN app for Android AAB using Clang compiler. SGEXTN libraries, Qt libraries, and C++ libraries are packaged with the application executable. The produced AAB will be ready for distribution on Google Play after being signed. This action should be run on a ubuntu-latest GitHub Actions runner.
+description: Builds a fully self contained SGEXTN app for Android AAB using Clang compiler. SGEXTN libraries, Qt libraries, and C++ libraries are packaged with the application executable. The produced AAB will be ready for distribution on Google Play after being signed and contains all 4 Android ABIs. This action should be run on a ubuntu-latest GitHub Actions runner.
 
 inputs:
   app-name:
