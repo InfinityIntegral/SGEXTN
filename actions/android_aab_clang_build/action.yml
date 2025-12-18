@@ -125,6 +125,7 @@ runs:
         cmake --install build/android_abi_builds/armeabi-v7a --config Release --prefix ../SGEXTN_install/ARM32
         cmake --install build/android_abi_builds/x86_64 --config Release --prefix ../SGEXTN_install/AMD64
         cmake --install build/android_abi_builds/x86 --config Release --prefix ../SGEXTN_install/AMD32
+        echo "" > .request_arm64
 
     - name: build application binary
       shell: bash
@@ -133,48 +134,28 @@ runs:
         export PATH="${{github.workspace}}/../SGEXTN_install/ARM32/lib:${{github.workspace}}/../SGEXTN_install/ARM32/lib/cmake/SGEXTN:$PATH"
         export PATH="${{github.workspace}}/../SGEXTN_install/AMD64/lib:${{github.workspace}}/../SGEXTN_install/AMD64/lib/cmake/SGEXTN:$PATH"
         export PATH="${{github.workspace}}/../SGEXTN_install/AMD32/lib:${{github.workspace}}/../SGEXTN_install/AMD32/lib/cmake/SGEXTN:$PATH"
-        sed -i '/find_package(SGEXTN REQUIRED COMPONENTS SG_Containers SG_Math SG_Core SG_FileSystem SG_Widgets SG_RI EntryPoint_SG PATHS ${SGEXTN_INSTALL_FOLDER}\/SG_ALL_Targets.cmake)/c\
-        if(DEFINED SGEXTN_INSTALL_FOLDER)\
-            find_package(SGEXTN REQUIRED COMPONENTS SG_Containers SG_Math SG_Core SG_FileSystem SG_Widgets SG_RI EntryPoint_SG PATHS ${SGEXTN_INSTALL_FOLDER}/SG_ALL_Targets.cmake)\
-        else()\
-            message(STATUS "skip finding SGEXTN in top level configure")\
-        endif()' ../SGEXTN_install/ARM64/lib/cmake/SGEXTN/buildlah.cmake
-        sed -i '/find_package(SGEXTN REQUIRED COMPONENTS SG_Containers SG_Math SG_Core SG_FileSystem SG_Widgets SG_RI EntryPoint_SG PATHS ${SGEXTN_INSTALL_FOLDER}\/SG_ALL_Targets.cmake)/c\
-        if(DEFINED SGEXTN_INSTALL_FOLDER)\
-            find_package(SGEXTN REQUIRED COMPONENTS SG_Containers SG_Math SG_Core SG_FileSystem SG_Widgets SG_RI EntryPoint_SG PATHS ${SGEXTN_INSTALL_FOLDER}/SG_ALL_Targets.cmake)\
-        else()\
-            message(STATUS "skip finding SGEXTN in top level configure")\
-        endif()' ../SGEXTN_install/ARM32/lib/cmake/SGEXTN/buildlah.cmake
-        sed -i '/find_package(SGEXTN REQUIRED COMPONENTS SG_Containers SG_Math SG_Core SG_FileSystem SG_Widgets SG_RI EntryPoint_SG PATHS ${SGEXTN_INSTALL_FOLDER}\/SG_ALL_Targets.cmake)/c\
-        if(DEFINED SGEXTN_INSTALL_FOLDER)\
-            find_package(SGEXTN REQUIRED COMPONENTS SG_Containers SG_Math SG_Core SG_FileSystem SG_Widgets SG_RI EntryPoint_SG PATHS ${SGEXTN_INSTALL_FOLDER}/SG_ALL_Targets.cmake)\
-        else()\
-            message(STATUS "skip finding SGEXTN in top level configure")\
-        endif()' ../SGEXTN_install/AMD64/lib/cmake/SGEXTN/buildlah.cmake
-        sed -i '/find_package(SGEXTN REQUIRED COMPONENTS SG_Containers SG_Math SG_Core SG_FileSystem SG_Widgets SG_RI EntryPoint_SG PATHS ${SGEXTN_INSTALL_FOLDER}\/SG_ALL_Targets.cmake)/c\
-        if(DEFINED SGEXTN_INSTALL_FOLDER)\
-            find_package(SGEXTN REQUIRED COMPONENTS SG_Containers SG_Math SG_Core SG_FileSystem SG_Widgets SG_RI EntryPoint_SG PATHS ${SGEXTN_INSTALL_FOLDER}/SG_ALL_Targets.cmake)\
-        else()\
-            message(STATUS "skip finding SGEXTN in top level configure")\
-        endif()' ../SGEXTN_install/AMD32/lib/cmake/SGEXTN/buildlah.cmake
         sed -i '/find_package(SGEXTN REQUIRED)/c\
-        if(${CMAKE_CXX_COMPILER} MATCHES "aarch64-linux-android")\
+        if(EXISTS ".request_arm64")\
             find_package(SGEXTN REQUIRED PATHS ${{github.workspace}}/../SGEXTN_install/ARM64/lib/cmake/SGEXTN/SGEXTNConfig.cmake)\
-        elseif(${CMAKE_CXX_COMPILER} MATCHES "armv7a-linux-android")\
+            file(REMOVE ".request_arm64")\
+            file(WRITE ".request_arm32" "")\
+        elseif(EXISTS ".request_arm32")\
             find_package(SGEXTN REQUIRED PATHS ${{github.workspace}}/../SGEXTN_install/ARM32/lib/cmake/SGEXTN/SGEXTNConfig.cmake)\
-        elseif(${CMAKE_CXX_COMPILER} MATCHES "x86_64-linux-android")\
+            file(REMOVE ".request_arm32")\
+            file(WRITE ".request_amd64" "")\
+        elseif(EXISTS ".request_amd64")\
             find_package(SGEXTN REQUIRED PATHS ${{github.workspace}}/../SGEXTN_install/AMD64/lib/cmake/SGEXTN/SGEXTNConfig.cmake)\
-        elseif(${CMAKE_CXX_COMPILER} MATCHES "i686-linux-android28")\
+            file(REMOVE ".request_amd64")\
+            file(WRITE ".request_amd32" "")\
+        elseif(EXISTS ".request_amd32")\
             find_package(SGEXTN REQUIRED PATHS ${{github.workspace}}/../SGEXTN_install/AMD32/lib/cmake/SGEXTN/SGEXTNConfig.cmake)\
-        else()\
-            message(STATUS "compiler is ${CMAKE_CXX_COMPILER} which isnt any of the above")\
-            include(../SGEXTN_install/ARM64/lib/cmake/SGEXTN/buildlah.cmake)\
+            file(REMOVE ".request_amd32")\
         endif()' CMakeLists.txt
         echo "patched CMakeLists.txt"
         cat CMakeLists.txt
         mkdir build
         cd build
-        ../../Qt/${{inputs.qt-version}}/android_arm64_v8a/bin/qt-cmake -DQT_ANDROID_BUILD_ALL_ABIS=TRUE -DANDROID_SDK_ROOT=/usr/local/lib/android/sdk -DANDROID_NDK_ROOT=/usr/local/lib/android/sdk/ndk/27.2.12479018 -S .. -B . -GNinja -DCMAKE_BUILD_TYPE=Release -DANDROID_PLATFORM=android-28 --log-level=VERBOSE
+        ../../Qt/${{inputs.qt-version}}/android_arm64_v8a/bin/qt-cmake -DQT_ANDROID_ABIS="arm64-v8a;armeabi-v7a;x86_64;x86" -DANDROID_SDK_ROOT=/usr/local/lib/android/sdk -DANDROID_NDK_ROOT=/usr/local/lib/android/sdk/ndk/27.2.12479018 -S .. -B . -GNinja -DCMAKE_BUILD_TYPE=Release -DANDROID_PLATFORM=android-28 --log-level=VERBOSE
         cmake --build . --config Release --target aab --verbose
 
     - name: delete QML tooling
