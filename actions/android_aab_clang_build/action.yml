@@ -133,7 +133,7 @@ runs:
         export PATH="${{github.workspace}}/../SGEXTN_install/ARM32/lib:${{github.workspace}}/../SGEXTN_install/ARM32/lib/cmake/SGEXTN:$PATH"
         export PATH="${{github.workspace}}/../SGEXTN_install/AMD64/lib:${{github.workspace}}/../SGEXTN_install/AMD64/lib/cmake/SGEXTN:$PATH"
         export PATH="${{github.workspace}}/../SGEXTN_install/AMD32/lib:${{github.workspace}}/../SGEXTN_install/AMD32/lib/cmake/SGEXTN:$PATH"
-        sed -i '/find(SGEXTN)/c\
+        sed -i '/find_package(SGEXTN)/c\
         if(CMAKE_ANDROID_ARCH_ABI STREQUAL "arm64-v8a")\
             find_package(SGEXTN PATHS ${{github.workspace}}/../SGEXTN_install/ARM64/lib/cmake/SGEXTN/SGEXTNConfig.cmake)\
         elseif(CMAKE_ANDROID_ARCH_ABI STREQUAL "armeabi-v7a")\
