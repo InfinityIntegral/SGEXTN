@@ -168,6 +168,7 @@ runs:
             find_package(SGEXTN REQUIRED PATHS ${{github.workspace}}/../SGEXTN_install/AMD32/lib/cmake/SGEXTN/SGEXTNConfig.cmake)\
         else()\
             message(STATUS "android ABI is ${CMAKE_ANDROID_ARCH_ABI} which isnt any of the above, this is a top level configure")\
+            include(../SGEXTN_install/ARM64/lib/cmake/SGEXTN/buildlah.cmake)\
         endif()' CMakeLists.txt
         echo "patched CMakeLists.txt"
         cat CMakeLists.txt
