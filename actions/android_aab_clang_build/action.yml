@@ -142,6 +142,8 @@ runs:
             find_package(SGEXTN REQUIRED PATHS ${{github.workspace}}/../SGEXTN_install/AMD64/lib/cmake/SGEXTN/SGEXTNConfig.cmake)\
         elseif(CMAKE_ANDROID_ARCH_ABI STREQUAL "x86")\
             find_package(SGEXTN REQUIRED PATHS ${{github.workspace}}/../SGEXTN_install/AMD32/lib/cmake/SGEXTN/SGEXTNConfig.cmake)\
+        else()\
+            message(FATAL_ERROR "android ABI is ${CMAKE_ANDROID_ARCH_ABI} which isnt any of the above")\
         endif()' CMakeLists.txt
         echo "patched CMakeLists.txt"
         cat CMakeLists.txt
