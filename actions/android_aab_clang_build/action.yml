@@ -133,7 +133,7 @@ runs:
         export PATH="${{github.workspace}}/../SGEXTN_install/ARM32/lib:${{github.workspace}}/../SGEXTN_install/ARM32/lib/cmake/SGEXTN:$PATH"
         export PATH="${{github.workspace}}/../SGEXTN_install/AMD64/lib:${{github.workspace}}/../SGEXTN_install/AMD64/lib/cmake/SGEXTN:$PATH"
         export PATH="${{github.workspace}}/../SGEXTN_install/AMD32/lib:${{github.workspace}}/../SGEXTN_install/AMD32/lib/cmake/SGEXTN:$PATH"
-        sed -i '/find_package(SGEXTN REQUIRED COMPONENTS SG_Containers SG_Math SG_Core SG_FileSystem SG_Widgets SG_RI EntryPoint_SG PATHS ${SGEXTN_INSTALL_FOLDER}/SG_ALL_Targets.cmake)/c\
+        sed -i '/find_package(SGEXTN REQUIRED COMPONENTS SG_Containers SG_Math SG_Core SG_FileSystem SG_Widgets SG_RI EntryPoint_SG PATHS ${SGEXTN_INSTALL_FOLDER}\/SG_ALL_Targets.cmake)/c\
         if(DEFINED SGEXTN_INSTALL_FOLDER)\
             find_package(SGEXTN REQUIRED COMPONENTS SG_Containers SG_Math SG_Core SG_FileSystem SG_Widgets SG_RI EntryPoint_SG PATHS ${SGEXTN_INSTALL_FOLDER}/SG_ALL_Targets.cmake)\
         else()\
