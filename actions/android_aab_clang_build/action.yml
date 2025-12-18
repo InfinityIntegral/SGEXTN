@@ -158,16 +158,16 @@ runs:
             message(STATUS "skip finding SGEXTN in top level configure")\
         endif()' ../SGEXTN_install/AMD32/lib/cmake/SGEXTN/buildlah.cmake
         sed -i '/find_package(SGEXTN REQUIRED)/c\
-        if(CMAKE_ANDROID_ARCH_ABI STREQUAL "arm64-v8a")\
+        if(${ANDROID_ABI} STREQUAL "arm64-v8a")\
             find_package(SGEXTN REQUIRED PATHS ${{github.workspace}}/../SGEXTN_install/ARM64/lib/cmake/SGEXTN/SGEXTNConfig.cmake)\
-        elseif(CMAKE_ANDROID_ARCH_ABI STREQUAL "armeabi-v7a")\
+        elseif(${ANDROID_ABI} STREQUAL "armeabi-v7a")\
             find_package(SGEXTN REQUIRED PATHS ${{github.workspace}}/../SGEXTN_install/ARM32/lib/cmake/SGEXTN/SGEXTNConfig.cmake)\
-        elseif(CMAKE_ANDROID_ARCH_ABI STREQUAL "x86_64")\
+        elseif(${ANDROID_ABI} STREQUAL "x86_64")\
             find_package(SGEXTN REQUIRED PATHS ${{github.workspace}}/../SGEXTN_install/AMD64/lib/cmake/SGEXTN/SGEXTNConfig.cmake)\
-        elseif(CMAKE_ANDROID_ARCH_ABI STREQUAL "x86")\
+        elseif(${ANDROID_ABI} STREQUAL "x86")\
             find_package(SGEXTN REQUIRED PATHS ${{github.workspace}}/../SGEXTN_install/AMD32/lib/cmake/SGEXTN/SGEXTNConfig.cmake)\
         else()\
-            message(STATUS "android ABI is ${CMAKE_ANDROID_ARCH_ABI} which isnt any of the above, this is a top level configure")\
+            message(STATUS "android ABI is ${ANDROID_ABI} which isnt any of the above, this is a top level configure")\
             include(../SGEXTN_install/ARM64/lib/cmake/SGEXTN/buildlah.cmake)\
         endif()' CMakeLists.txt
         echo "patched CMakeLists.txt"
