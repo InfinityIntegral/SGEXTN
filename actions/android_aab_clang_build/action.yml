@@ -119,7 +119,7 @@ runs:
         mkdir build
         cd build
         ../../Qt/${{inputs.qt-version}}/android_arm64_v8a/bin/qt-cmake -DQT_ANDROID_BUILD_ALL_ABIS=TRUE -DANDROID_SDK_ROOT=/usr/local/lib/android/sdk -DANDROID_NDK_ROOT=/usr/local/lib/android/sdk/ndk/27.2.12479018 -S .. -B . -GNinja -DCMAKE_BUILD_TYPE=Release -DANDROID_PLATFORM=android-28 --log-level=VERBOSE
-        cmake --build . --config Release --target aab --verbose
+        cmake --build . --config Release --target aab --verbose -- -j1
         cd ..
         cmake --install build --config Release --prefix ../SGEXTN_install/ARM64
         cmake --install build/android_abi_builds/armeabi-v7a --config Release --prefix ../SGEXTN_install/ARM32
@@ -161,7 +161,7 @@ runs:
         mkdir build
         cd build
         ../../Qt/${{inputs.qt-version}}/android_arm64_v8a/bin/qt-cmake -DQT_ANDROID_ABIS="arm64-v8a;armeabi-v7a;x86_64;x86" -DANDROID_SDK_ROOT=/usr/local/lib/android/sdk -DANDROID_NDK_ROOT=/usr/local/lib/android/sdk/ndk/27.2.12479018 -S .. -B . -GNinja -DCMAKE_BUILD_TYPE=Release -DANDROID_PLATFORM=android-28 --log-level=VERBOSE
-        cmake --build . --config Release --target aab --verbose
+        cmake --build . --config Release --target aab --verbose -- -j1
 
     - name: delete QML tooling
       shell: bash
