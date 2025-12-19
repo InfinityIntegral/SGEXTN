@@ -1,5 +1,5 @@
 name: MacOS Clang build
-description: Builds a fully self contained SGEXTN app for MacOS compatible with both Intel and Apple Silicon using Apple Clang compiler. SGEXTN libraries and Qt libraries are packaged with the application executable. The C++ libraries are guaranteed to exist on any reasonably new Mac. This action should be run on a macos-latest GitHub Actions runner.
+description: Builds a fully self contained SGEXTN app for MacOS compatible with both Intel and Apple Silicon using Apple Clang compiler. SGEXTN libraries and Qt libraries are packaged with the application executable. The C++ libraries are guaranteed to exist on any reasonably new Mac. The application is not signed and must be signed manually. This action should be run on a macos-latest GitHub Actions runner.
 
 inputs:
   app-name:
@@ -102,8 +102,8 @@ runs:
         </dict></plist>
         EOF
         mkdir -p package/${{inputs.app-name}}.app/Contents/Frameworks
-        find ../SGEXTN/build -type f -name "*.dylib" -exec cp {} package/${{inputs.app-name}}.app/Contents/Frameworks/ \;
-        find build -type f -name "*.dylib" -exec cp {} package/${{inputs.app-name}}.app/Contents/Frameworks/ \;
+        find ../SGEXTN/build -type f -name "*.framework" -exec cp {} package/${{inputs.app-name}}.app/Contents/Frameworks/ \;
+        find build -type f -name "*.framework" -exec cp {} package/${{inputs.app-name}}.app/Contents/Frameworks/ \;
         ../Qt/${{inputs.qt-version}}/macos/bin/macdeployqt package/${{inputs.app-name}}.app -qmldir=${{github.workspace}}/../SGEXTN/SG_Widgets/assets
         mkdir -p ${{inputs.app-name}}
         mv package/${{inputs.app-name}}.app ${{inputs.app-name}}/${{inputs.app-name}}.app
