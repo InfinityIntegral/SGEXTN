@@ -135,24 +135,24 @@ runs:
         export PATH="${{github.workspace}}/../SGEXTN_install/AMD64/lib:${{github.workspace}}/../SGEXTN_install/AMD64/lib/cmake/SGEXTN:$PATH"
         export PATH="${{github.workspace}}/../SGEXTN_install/AMD32/lib:${{github.workspace}}/../SGEXTN_install/AMD32/lib/cmake/SGEXTN:$PATH"
         sed -i '/find_package(SGEXTN REQUIRED)/c\
-        if(EXISTS "request_arm64")\
+        if(EXISTS "${CMAKE_SOURCE_DIR}/request_arm64")\
             find_package(SGEXTN REQUIRED PATHS ${{github.workspace}}/../SGEXTN_install/ARM64/lib/cmake/SGEXTN/SGEXTNConfig.cmake)\
-            file(REMOVE "request_arm64")\
-            file(WRITE "request_arm32" "")\
+            file(REMOVE "${CMAKE_SOURCE_DIR}/request_arm64")\
+            file(WRITE "${CMAKE_SOURCE_DIR}/request_arm32" "")\
             message(STATUS "requested and found ARM64 SGEXTN pre built")\
-        elseif(EXISTS "request_arm32")\
+        elseif(EXISTS "${CMAKE_SOURCE_DIR}/request_arm32")\
             find_package(SGEXTN REQUIRED PATHS ${{github.workspace}}/../SGEXTN_install/ARM32/lib/cmake/SGEXTN/SGEXTNConfig.cmake)\
-            file(REMOVE "request_arm32")\
-            file(WRITE "request_amd64" "")\
+            file(REMOVE "${CMAKE_SOURCE_DIR}/request_arm32")\
+            file(WRITE "${CMAKE_SOURCE_DIR}/request_amd64" "")\
             message(STATUS "requested and found ARM32 SGEXTN pre built")\
-        elseif(EXISTS "request_amd64")\
+        elseif(EXISTS "${CMAKE_SOURCE_DIR}/request_amd64")\
             find_package(SGEXTN REQUIRED PATHS ${{github.workspace}}/../SGEXTN_install/AMD64/lib/cmake/SGEXTN/SGEXTNConfig.cmake)\
-            file(REMOVE "request_amd64")\
-            file(WRITE "request_amd32" "")\
+            file(REMOVE "${CMAKE_SOURCE_DIR}/request_amd64")\
+            file(WRITE "${CMAKE_SOURCE_DIR}/request_amd32" "")\
             message(STATUS "requested and found AMD64 SGEXTN pre built")\
-        elseif(EXISTS "request_amd32")\
+        elseif(EXISTS "${CMAKE_SOURCE_DIR}/request_amd32")\
             find_package(SGEXTN REQUIRED PATHS ${{github.workspace}}/../SGEXTN_install/AMD32/lib/cmake/SGEXTN/SGEXTNConfig.cmake)\
-            file(REMOVE "request_amd32")\
+            file(REMOVE "${CMAKE_SOURCE_DIR}/request_amd32")\
             message(STATUS "requested and found AMD32 SGEXTN pre built")\
         else()\
             message(FATAL_ERROR "no ABI found?")\
