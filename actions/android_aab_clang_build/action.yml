@@ -130,29 +130,25 @@ runs:
     - name: build application binary
       shell: bash
       run: |
-        export PATH="${{github.workspace}}/../SGEXTN_install/ARM64/lib:${{github.workspace}}/../SGEXTN_install/ARM64/lib/cmake/SGEXTN:$PATH"
-        export PATH="${{github.workspace}}/../SGEXTN_install/ARM32/lib:${{github.workspace}}/../SGEXTN_install/ARM32/lib/cmake/SGEXTN:$PATH"
-        export PATH="${{github.workspace}}/../SGEXTN_install/AMD64/lib:${{github.workspace}}/../SGEXTN_install/AMD64/lib/cmake/SGEXTN:$PATH"
-        export PATH="${{github.workspace}}/../SGEXTN_install/AMD32/lib:${{github.workspace}}/../SGEXTN_install/AMD32/lib/cmake/SGEXTN:$PATH"
         sed -i '/find_package(SGEXTN REQUIRED)/c\
         if(EXISTS "${CMAKE_SOURCE_DIR}/request_arm64")\
             include(${{github.workspace}}/../SGEXTN_install/ARM64/lib/cmake/SGEXTN/SGEXTNConfig.cmake)\
             file(REMOVE "${CMAKE_SOURCE_DIR}/request_arm64")\
-            file(WRITE "${CMAKE_SOURCE_DIR}/request_arm32" "")\
+            file(WRITE "${CMAKE_SOURCE_DIR}/request_amd32" "")\
             message(STATUS "requested and found ARM64 SGEXTN pre built")\
         elseif(EXISTS "${CMAKE_SOURCE_DIR}/request_arm32")\
             include(${{github.workspace}}/../SGEXTN_install/ARM32/lib/cmake/SGEXTN/SGEXTNConfig.cmake)\
             file(REMOVE "${CMAKE_SOURCE_DIR}/request_arm32")\
-            file(WRITE "${CMAKE_SOURCE_DIR}/request_amd64" "")\
             message(STATUS "requested and found ARM32 SGEXTN pre built")\
         elseif(EXISTS "${CMAKE_SOURCE_DIR}/request_amd64")\
             include(${{github.workspace}}/../SGEXTN_install/AMD64/lib/cmake/SGEXTN/SGEXTNConfig.cmake)\
             file(REMOVE "${CMAKE_SOURCE_DIR}/request_amd64")\
-            file(WRITE "${CMAKE_SOURCE_DIR}/request_amd32" "")\
+            file(WRITE "${CMAKE_SOURCE_DIR}/request_arm32" "")\
             message(STATUS "requested and found AMD64 SGEXTN pre built")\
         elseif(EXISTS "${CMAKE_SOURCE_DIR}/request_amd32")\
             include(${{github.workspace}}/../SGEXTN_install/AMD32/lib/cmake/SGEXTN/SGEXTNConfig.cmake)\
             file(REMOVE "${CMAKE_SOURCE_DIR}/request_amd32")\
+            file(WRITE "${CMAKE_SOURCE_DIR}/request_amd64" "")\
             message(STATUS "requested and found AMD32 SGEXTN pre built")\
         else()\
             message(FATAL_ERROR "no ABI found?")\
@@ -160,7 +156,7 @@ runs:
         ls .
         mkdir build
         cd build
-        ../../Qt/${{inputs.qt-version}}/android_arm64_v8a/bin/qt-cmake -DQT_ANDROID_ABIS="arm64-v8a;armeabi-v7a;x86_64;x86" -DANDROID_SDK_ROOT=/usr/local/lib/android/sdk -DANDROID_NDK_ROOT=/usr/local/lib/android/sdk/ndk/27.2.12479018 -S .. -B . -GNinja -DCMAKE_BUILD_TYPE=Release -DANDROID_PLATFORM=android-28 --log-level=VERBOSE
+        ../../Qt/${{inputs.qt-version}}/android_arm64_v8a/bin/qt-cmake -DQT_ANDROID_BUILD_ALL_ABIS=TRUE -DANDROID_SDK_ROOT=/usr/local/lib/android/sdk -DANDROID_NDK_ROOT=/usr/local/lib/android/sdk/ndk/27.2.12479018 -S .. -B . -GNinja -DCMAKE_BUILD_TYPE=Release -DANDROID_PLATFORM=android-28 --log-level=VERBOSE
         cmake --build . --config Release --target aab --verbose -- -j1
 
     - name: delete QML tooling
