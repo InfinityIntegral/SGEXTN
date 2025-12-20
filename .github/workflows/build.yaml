@@ -169,7 +169,7 @@ jobs:
           qt-version: ${{inputs.qt-version}}
           cmake-target-name: ${{inputs.cmake-target-name}}
 
-    ios-clang-build:
+  ios-clang-build:
     if: ${{contains(format(' {0} ', inputs.platforms), ' ios-clang ')}}
     runs-on: macos-latest
     steps:
