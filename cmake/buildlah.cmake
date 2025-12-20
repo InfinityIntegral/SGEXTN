@@ -130,6 +130,8 @@ macro(BuildLah_add_component arg_target_name arg_target_type arg_files_path arg_
         qt6_add_library(${arg_target_name} SHARED MANUAL_FINALIZATION)
         if(APPLE)
             set_target_properties(${arg_target_name} PROPERTIES FRAMEWORK TRUE FRAMEWORK_VERSION A MACOSX_FRAMEWORK_IDENTIFIER com.${PROJECT_NAME}.${arg_target_name} CMAKE_XCODE_ATTRIBUTE_EMBEDDED_CONTENT_CONTAINS_SWIFT ON)
+        endif()
+        if(IOS)
             qt_import_plugins(${arg_target_name} EXCLUDE_BY_TYPE platforms)
         endif()
         message(STATUS "added ${arg_target_name} as shared library")
