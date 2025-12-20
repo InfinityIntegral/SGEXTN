@@ -168,15 +168,3 @@ jobs:
           app-version: ${{inputs.app-version}}
           qt-version: ${{inputs.qt-version}}
           cmake-target-name: ${{inputs.cmake-target-name}}
-
-  ios-clang-build:
-    if: ${{contains(format(' {0} ', inputs.platforms), ' ios-clang ')}}
-    runs-on: macos-latest
-    steps:
-      - name: iOS Clang build
-        uses: InfinityIntegral/SGEXTN/actions/ios_clang_build@main
-        with:
-          app-name: ${{inputs.app-name}}
-          app-version: ${{inputs.app-version}}
-          qt-version: ${{inputs.qt-version}}
-          cmake-target-name: ${{inputs.cmake-target-name}}
