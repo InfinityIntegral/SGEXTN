@@ -54,7 +54,7 @@ runs:
         mkdir build
         cd build
         ../../Qt/${{inputs.qt-version}}/ios/bin/qt-cmake .. -DCMAKE_BUILD_TYPE=Release
-        xcodebuild build -project SGEXTN.xcodeproj -target ALL_BUILD -configuration Release -destination "platform=iOS Simulator" -sdk iphonesimulator ENABLE_ONLY_ACTIVE_RESOURCES=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY=""
+        xcodebuild build -project SGEXTN.xcodeproj -target ALL_BUILD -configuration Release -destination "platform=iOS Simulator" -sdk iphonesimulator ENABLE_ONLY_ACTIVE_RESOURCES=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" ONLY_ACTIVE_ARCH=YES ENABLE_BITCODE=NO
         cd ..
         cmake --install build --config Release --prefix ../SGEXTN_install
 
