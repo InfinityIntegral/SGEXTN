@@ -18,9 +18,10 @@ qt6_finalize_target(EntryPoint_SG)
 BuildLah_add_component(InternalTest GUI "internal_test" "" "" "SGEXTN" SG_Containers SG_Math SG_Core SG_FileSystem SG_Widgets SG_RI EntryPoint_SG)
 install(TARGETS SG_Containers SG_Math SG_Core SG_FileSystem SG_Widgets SG_RI EntryPoint_SG
     EXPORT SG_ALL_Targets
-    RUNTIME DESTINATION "../SGEXTN_install/lib"
-    ARCHIVE DESTINATION "../SGEXTN_install/lib"
-    LIBRARY DESTINATION "../SGEXTN_install/lib"
+    RUNTIME DESTINATION lib
+    ARCHIVE DESTINATION lib
+    LIBRARY DESTINATION lib
+    FRAMEWORK DESTINATION lib
     INCLUDES DESTINATION include
 )
 install(DIRECTORY dll_defines/ DESTINATION include/dll_defines)
