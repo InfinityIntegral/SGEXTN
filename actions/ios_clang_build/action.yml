@@ -54,7 +54,7 @@ runs:
         cd SGEXTN
         mkdir build
         cd build
-        ../../Qt/${{inputs.qt-version}}/ios/bin/qt-cmake ..
+        ../../Qt/${{inputs.qt-version}}/ios/bin/qt-cmake .. -DCMAKE_BUILD_TYPE=Release
         xcodebuild build -project SGEXTN.xcodeproj -scheme SGEXTN -configuration Release -destination "generic/platform=iOS" -destination-timeout 1 ENABLE_ONLY_ACTIVE_RESOURCES=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" -sdk iphoneos
         cd ..
         cmake --install build --config Release --prefix ../SGEXTN_install
@@ -65,7 +65,7 @@ runs:
         export PATH="${{github.workspace}}/../SGEXTN_install/lib:${{github.workspace}}/../SGEXTN_install/lib/cmake/SGEXTN:$PATH"
         mkdir build
         cd build
-        ../../Qt/${{inputs.qt-version}}/ios/bin/qt-cmake ..
+        ../../Qt/${{inputs.qt-version}}/ios/bin/qt-cmake .. -DCMAKE_BUILD_TYPE=Release
         xcodebuild build -project ${{inputs.app-name}}.xcodeproj -scheme ${{inputs.app-name}} -configuration Release -destination "generic/platform=iOS" -destination-timeout 1 ENABLE_ONLY_ACTIVE_RESOURCES=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" -sdk iphoneos
 
     - name: delete QML tooling
