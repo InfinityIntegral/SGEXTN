@@ -43,7 +43,6 @@ runs:
       run: |
         rm -rf ../Qt/${{inputs.qt-version}}/ios/plugins/designer
         rm -rf ../Qt/${{inputs.qt-version}}/ios/plugins/help
-        rm -rf ../Qt/${{inputs.qt-version}}/ios/plugins/sqldrivers
         rm -rf ../Qt/${{inputs.qt-version}}/ios/plugins/printsupport
 
     - name: build SGEXTN
@@ -74,6 +73,7 @@ runs:
         rm -rf ../Qt/${{inputs.qt-version}}/ios/plugins/qmllint
         rm -rf ../Qt/${{inputs.qt-version}}/ios/plugins/qmlls
         rm -rf ../Qt/${{inputs.qt-version}}/ios/plugins/qmltooling
+        rm -rf ../Qt/${{inputs.qt-version}}/ios/plugins/sqldrivers
 
     - name: package app using macdeployqt
       shell: bash
