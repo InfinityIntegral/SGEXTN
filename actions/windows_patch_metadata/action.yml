@@ -77,6 +77,8 @@ runs:
         mkdir icons
         cp "${{inputs.app-icon}}" "icons\original.png"
         cd icons
+        ls "C:\Program Files"
+        $env:MAGICK_CODER_MODULE_PATH="C:\Program Files\ImageMagick-7.1.1-Q16-HDRI\modules\coders"
         magick original.png -background "rgba(1,1,1,0)" -gravity center -extent "%[fx:max(w,h)]x%[fx:max(w,h)]" square.png
         magick square.png -resize 16x16 16.png
         magick square.png -resize 24x24 24.png
