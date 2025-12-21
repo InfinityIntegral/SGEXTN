@@ -123,7 +123,7 @@ jobs:
           app-version: ${{inputs.app-version}}
           qt-version: ${{inputs.qt-version}}
           cmake-target-name: ${{inputs.cmake-target-name}}
-       - name: Windows patch metadata
+      - name: Windows patch metadata
         uses: InfinityIntegral/SGEXTN/actions/windows_patch_metadata@main
         with:
           app-name: ${{inputs.app-name}}
@@ -150,7 +150,7 @@ jobs:
           app-version: ${{inputs.app-version}}
           qt-version: ${{inputs.qt-version}}
           cmake-target-name: ${{inputs.cmake-target-name}}
-       - name: Windows patch metadata
+      - name: Windows patch metadata
         uses: InfinityIntegral/SGEXTN/actions/windows_patch_metadata@main
         with:
           app-name: ${{inputs.app-name}}
@@ -177,7 +177,7 @@ jobs:
           app-version: ${{inputs.app-version}}
           qt-version: ${{inputs.qt-version}}
           cmake-target-name: ${{inputs.cmake-target-name}}
-       - name: Windows patch metadata
+      - name: Windows patch metadata
         uses: InfinityIntegral/SGEXTN/actions/windows_patch_metadata@main
         with:
           app-name: ${{inputs.app-name}}
