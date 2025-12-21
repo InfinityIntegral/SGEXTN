@@ -95,7 +95,7 @@ runs:
       run: |
         cp "${{inputs.license-file}}" "${{inputs.app-name}}\LICENSE.txt" -ErrorAction SilentlyContinue
         cp README.md "${{inputs.app-name}}\info.md" -ErrorAction SilentlyContinue
-        echo "This app is built and packaged using SGEXTN automated GitHub Actions workflows`nFor more information, see info.md if it exists`nRun install.vbs to install the application properly`nRun uninstall.vbs to uninstall the application and delete it from your computer`nOnce the app is installed, do not move it in the file system" > "${{inputs.app-name}}\README.md"
+        echo "This app is built and packaged using SGEXTN automated GitHub Actions workflows`nFor more information, see info.md if it exists`nRun install.vbs to install the application properly`nRun uninstall.vbs to uninstall the application and delete it from your computer`nOnce the app is installed, do not move it in the file system" > "${{inputs.app-name}}\README.txt"
 
     - name: create install and uninstall scripts
       shell: pwsh
@@ -118,7 +118,7 @@ runs:
         sc.WorkingDirectory = objFSO.GetParentFolderName(appPath)
         sc.Save
         End Sub
-        "@ | Set-Content "install.vbs"
+        "@ | Set-Content "${{inputs.app-name}}\install.vbs"
         echo @"
         Option Explicit
         Dim objShell, objFSO
@@ -132,7 +132,7 @@ runs:
         On Error Resume Next
         objFSO.DeleteFolder objFSO.GetParentFolderName(WScript.ScriptFullName), True
         On Error GoTo 0
-        "@ | Set-Content "uninstall.vbs"
+        "@ | Set-Content "${{inputs.app-name}}\uninstall.vbs"
 
     - name: upload binary
       if: always()
