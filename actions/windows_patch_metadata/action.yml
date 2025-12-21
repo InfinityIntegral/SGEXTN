@@ -107,8 +107,8 @@ runs:
         Set objShell = CreateObject("WScript.Shell")
         Set objFSO = CreateObject("Scripting.FileSystemObject")
         strAppPath = objFSO.GetAbsolutePathName(".") & "\${{inputs.app-name}}.exe"
-        strDesktop = objShell.SpecialFolders("Desktop") & "\${{inputs.app-name}}.lnk"
-        strStartMenu = objShell.SpecialFolders("StartMenu") & "\Programs\${{inputs.app-name}}.lnk"
+        strDesktop = objShell.SpecialFolders("Desktop") & "\${{inputs.user-facing-app-name}}.lnk"
+        strStartMenu = objShell.SpecialFolders("StartMenu") & "\Programs\${{inputs.user-facing-app-name}}.lnk"
         Call CreateShortcut(strDesktop, strAppPath)
         Call CreateShortcut(strStartMenu, strAppPath)
         Sub CreateShortcut(targetPath, appPath)
@@ -125,8 +125,8 @@ runs:
         Dim strDesktop, strStartMenu
         Set objShell = CreateObject("WScript.Shell")
         Set objFSO = CreateObject("Scripting.FileSystemObject")
-        strDesktop = objShell.SpecialFolders("Desktop") & "\${{inputs.app-name}}.lnk"
-        strStartMenu = objShell.SpecialFolders("StartMenu") & "\Programs\${{inputs.app-name}}.lnk"
+        strDesktop = objShell.SpecialFolders("Desktop") & "\${{inputs.user-facing-app-name}}.lnk"
+        strStartMenu = objShell.SpecialFolders("StartMenu") & "\Programs\${{inputs.user-facing-app-name}}.lnk"
         If objFSO.FileExists(strDesktop) Then objFSO.DeleteFile strDesktop, True
         If objFSO.FileExists(strStartMenu) Then objFSO.DeleteFile strStartMenu, True
         On Error Resume Next
