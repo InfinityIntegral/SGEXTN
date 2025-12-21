@@ -77,9 +77,9 @@ runs:
         mkdir icons
         cp "${{inputs.app-icon}}" "icons\original.png"
         cd icons
-        convert original.png -background "rgba(1,1,1,0)" -gravity center -extent "%[fx:max(w,h)]x%[fx:max(w,h)]" square.png
-        convert square.png -resize 16x16 16.png -resize 24x24 24.png -resize 32x32 32.png -resize 48x48 48.png -resize 256x256 256.png
-        convert 16.png 24.png 32.png 48.png 256.png icon.ico
+        magick original.png -background "rgba(1,1,1,0)" -gravity center -extent "%[fx:max(w,h)]x%[fx:max(w,h)]" square.png
+        magick square.png -resize 16x16 16.png -resize 24x24 24.png -resize 32x32 32.png -resize 48x48 48.png -resize 256x256 256.png
+        magick 16.png 24.png 32.png 48.png 256.png icon.ico
 
     - name: write metadata
       shell: pwsh
