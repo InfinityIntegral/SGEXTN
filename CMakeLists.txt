@@ -51,3 +51,4 @@ install(FILES
     DESTINATION lib/cmake/SGEXTN
 )
 # cmake --install build/Desktop_Qt_6_10_1-Release --config Release --prefix ../SGEXTN_install
+
