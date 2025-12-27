@@ -18,6 +18,42 @@ inputs:
     required: true
     description: name of CMake target for your application executable, this is used to locate the executable, the executable will be renamed after that
     type: string
+  user-facing-app-name:
+    required: true
+    description: application name as how you want the user to see it, this does not need to be a valid file name, example My Application
+    type: string
+  user-facing-app-version:
+    required: true
+    description: application version as how you want the user to see it, this does not need to be numerical, example version 1.0.0
+    type: string
+  app-icon:
+    required: true
+    description: location of the application icon PNG image as a path in your GitHub repository, example resources/icon.png
+    type: string
+  user-facing-organisation-name:
+    required: true
+    description: your organisation name as how you want the user to see it, example 05524F.sg
+    type: string
+  bundle-id:
+    required: true
+    description: application bundle identifier, only used on MacOS, iOS, and Android, must be a reverse URL style dot separated list, with every entry containing only lowercase letters and numbers and must start with a lowercase letter, example sg.singapore05524f.myapplication
+    type: string
+  app-category:
+    required: true
+    description: one from the list AudioVideo, Audio, Video, Development, Education, Game, Graphics, Network, Office, Science, Settings, System, Utility, only used on Linux, example Utility
+    type: string
+  licensing:
+    required: true
+    description: software licensing for your application, you are strongly recommended to use General Public License version 3 (GPLv3), the license file from your GitHub repository will always be copied regardless of this input, example GPLv3
+    type: string
+  license-file:
+    required: true
+    description: path to the license file in your GitHub repository, typically LICENSE.txt, example LICENSE.txt
+    type: string
+  app-description:
+    required: true
+    description: a short explanatory note to the user what the app is about
+    type: string
 
 runs:
   using: "composite"
@@ -113,6 +149,51 @@ runs:
         echo "using Qt version ${{inputs.qt-version}}" >> ${{inputs.app-name}}/version.txt
         echo "using compiler $(g++ --version | head -n 1)" >> ${{inputs.app-name}}/version.txt
         echo "building application ${{inputs.app-name}} version ${{inputs.app-version}}" >> ${{inputs.app-name}}/version.txt
+
+    - name: create desktop file
+      shell: bash
+      run: |
+        echo -e "[Desktop Entry]\nType=Application\nName=${{inputs.user-facing-app-name}}\nComment=${{inputs.app-description}}\nIcon=\"@SG_OWNSELF_PATH/icon.png\"\nExec=\"@SG_OWNSELF_PATH/bin/${{inputs.app-name}}\"\nCategories=${{inputs.app-category}}\nPrefersNonDefaultGPU=true" > ${{inputs.app-name}}/${{inputs.bundle-id}}.desktop
+
+    - name: copy over resources
+      shell: bash
+      run: |
+        mkdir -p icons
+        cp "${{inputs.app-icon}}" "icons/original.png"
+        magick icons/original.png -background "rgba(1,1,1,0)" -gravity center -extent "%[fx:max(w,h)]x%[fx:max(w,h)]" icons/square.png
+        mv icons/square.png ${{inputs.app-name}}/icon.png
+        [ -e "${{inputs.license-file}}" ] && cp "${{inputs.license-file}}" "${{inputs.app-name}}/LICENSE.txt"
+        [ -e README.md ] && cp README.md "${{inputs.app-name}}/info.md"
+        echo -e "This app is built and packaged using SGEXTN automated GitHub Actions workflows\nFor more information, see info.md if it exists\nRun install.sh to install the application properly\nRun uninstall.sh to uninstall the application and delete it from your computer\nOnce the app is installed, do not move it in the file system" > "${{inputs.app-name}}/README.txt"
+
+    - name: create install and uninstall scripts
+      shell: bash
+      run: |
+        cat > "${{inputs.app-name}}/install.sh" <<EOF
+        #!/bin/bash
+        APP_DIR="\$(cd "\$(dirname "\$0")" && pwd)"
+        DESKTOP_SRC="\$APP_DIR/${{inputs.bundle-id}}.desktop"
+        DESKTOP_USER="\$HOME/.local/share/applications/${{inputs.bundle-id}}.desktop"
+        DESKTOP_SHORTCUT="\$HOME/Desktop/${{inputs.bundle-id}}.desktop"
+        TEMP_DESKTOP="\$HOME/.local/share/applications/${{inputs.bundle-id}}.temp"
+        sed "s|@SG_OWNSELF_PATH|\$APP_DIR|g" "\$DESKTOP_SRC" > "\$TEMP_DESKTOP"
+        mkdir -p "\$HOME/.local/share/applications"
+        mkdir -p "\$HOME/Desktop"
+        cp "\$TEMP_DESKTOP" "\$DESKTOP_USER"
+        chmod +x "\$DESKTOP_USER"
+        cp "\$TEMP_DESKTOP" "\$DESKTOP_SHORTCUT"
+        chmod +x "\$DESKTOP_SHORTCUT"
+        rm "\$TEMP_DESKTOP"
+        EOF
+        cat > "${{inputs.app-name}}/uninstall.sh" <<EOF
+        #!/bin/bash
+        APP_DIR="\$(cd "\$(dirname "\$0")" && pwd)"
+        DESKTOP_USER="\$HOME/.local/share/applications/${{inputs.bundle-id}}.desktop"
+        DESKTOP_SHORTCUT="\$HOME/Desktop/${{inputs.bundle-id}}.desktop"
+        rm -f "\$DESKTOP_USER"
+        rm -f "\$DESKTOP_SHORTCUT"
+        rm -rf "\$APP_DIR"
+        EOF
 
     - name: upload build artifacts
       if: always()
