@@ -96,11 +96,6 @@ jobs:
           app-version: ${{inputs.app-version}}
           qt-version: ${{inputs.qt-version}}
           cmake-target-name: ${{inputs.cmake-target-name}}
-      - name: Windows patch metadata
-        uses: InfinityIntegral/SGEXTN/actions/windows_patch_metadata@main
-        with:
-          app-name: ${{inputs.app-name}}
-          cmake-target-name: ${{inputs.cmake-target-name}}
           user-facing-app-name: ${{inputs.user-facing-app-name}}
           user-facing-app-version: ${{inputs.user-facing-app-version}}
           app-icon: ${{inputs.app-icon}}
@@ -110,7 +105,6 @@ jobs:
           licensing: ${{inputs.licensing}}
           license-file: ${{inputs.license-file}}
           app-description: ${{inputs.app-description}}
-          artifact: windows-llvm-mingw-${{inputs.app-name}}-${{inputs.app-version}}-binary
 
   windows-mingw:
     if: ${{contains(format(' {0} ', inputs.platforms), ' windows-mingw ')}}
@@ -123,11 +117,6 @@ jobs:
           app-version: ${{inputs.app-version}}
           qt-version: ${{inputs.qt-version}}
           cmake-target-name: ${{inputs.cmake-target-name}}
-      - name: Windows patch metadata
-        uses: InfinityIntegral/SGEXTN/actions/windows_patch_metadata@main
-        with:
-          app-name: ${{inputs.app-name}}
-          cmake-target-name: ${{inputs.cmake-target-name}}
           user-facing-app-name: ${{inputs.user-facing-app-name}}
           user-facing-app-version: ${{inputs.user-facing-app-version}}
           app-icon: ${{inputs.app-icon}}
@@ -137,7 +126,6 @@ jobs:
           licensing: ${{inputs.licensing}}
           license-file: ${{inputs.license-file}}
           app-description: ${{inputs.app-description}}
-          artifact: windows-mingw-${{inputs.app-name}}-${{inputs.app-version}}-binary
 
   windows-msvc:
     if: ${{contains(format(' {0} ', inputs.platforms), ' windows-msvc ')}}
@@ -150,11 +138,6 @@ jobs:
           app-version: ${{inputs.app-version}}
           qt-version: ${{inputs.qt-version}}
           cmake-target-name: ${{inputs.cmake-target-name}}
-      - name: Windows patch metadata
-        uses: InfinityIntegral/SGEXTN/actions/windows_patch_metadata@main
-        with:
-          app-name: ${{inputs.app-name}}
-          cmake-target-name: ${{inputs.cmake-target-name}}
           user-facing-app-name: ${{inputs.user-facing-app-name}}
           user-facing-app-version: ${{inputs.user-facing-app-version}}
           app-icon: ${{inputs.app-icon}}
@@ -164,7 +147,6 @@ jobs:
           licensing: ${{inputs.licensing}}
           license-file: ${{inputs.license-file}}
           app-description: ${{inputs.app-description}}
-          artifact: windows-msvc-${{inputs.app-name}}-${{inputs.app-version}}-binary
 
   windows-arm-msvc:
     if: ${{contains(format(' {0} ', inputs.platforms), ' windows-arm-msvc ')}}
@@ -177,11 +159,6 @@ jobs:
           app-version: ${{inputs.app-version}}
           qt-version: ${{inputs.qt-version}}
           cmake-target-name: ${{inputs.cmake-target-name}}
-      - name: Windows patch metadata
-        uses: InfinityIntegral/SGEXTN/actions/windows_patch_metadata@main
-        with:
-          app-name: ${{inputs.app-name}}
-          cmake-target-name: ${{inputs.cmake-target-name}}
           user-facing-app-name: ${{inputs.user-facing-app-name}}
           user-facing-app-version: ${{inputs.user-facing-app-version}}
           app-icon: ${{inputs.app-icon}}
@@ -191,7 +168,6 @@ jobs:
           licensing: ${{inputs.licensing}}
           license-file: ${{inputs.license-file}}
           app-description: ${{inputs.app-description}}
-          artifact: windows-arm-msvc-${{inputs.app-name}}-${{inputs.app-version}}-binary
 
   linux-arm-gcc:
     if: ${{contains(format(' {0} ', inputs.platforms), ' linux-arm-gcc ')}}

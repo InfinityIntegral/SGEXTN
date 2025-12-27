@@ -18,6 +18,42 @@ inputs:
     required: true
     description: name of CMake target for your application executable, this is used to locate the executable, the executable will be renamed after that
     type: string
+  user-facing-app-name:
+    required: true
+    description: application name as how you want the user to see it, this does not need to be a valid file name, example My Application
+    type: string
+  user-facing-app-version:
+    required: true
+    description: application version as how you want the user to see it, this does not need to be numerical, example version 1.0.0
+    type: string
+  app-icon:
+    required: true
+    description: location of the application icon PNG image as a path in your GitHub repository, example resources/icon.png
+    type: string
+  user-facing-organisation-name:
+    required: true
+    description: your organisation name as how you want the user to see it, example 05524F.sg
+    type: string
+  bundle-id:
+    required: true
+    description: application bundle identifier, only used on MacOS, iOS, and Android, must be a reverse URL style dot separated list, with every entry containing only lowercase letters and numbers and must start with a lowercase letter, example sg.singapore05524f.myapplication
+    type: string
+  app-category:
+    required: true
+    description: one from the list AudioVideo, Audio, Video, Development, Education, Game, Graphics, Network, Office, Science, Settings, System, Utility, only used on Linux, example Utility
+    type: string
+  licensing:
+    required: true
+    description: software licensing for your application, you are strongly recommended to use General Public License version 3 (GPLv3), the license file from your GitHub repository will always be copied regardless of this input, example GPLv3
+    type: string
+  license-file:
+    required: true
+    description: path to the license file in your GitHub repository, typically LICENSE.txt, example LICENSE.txt
+    type: string
+  app-description:
+    required: true
+    description: a short explanatory note to the user what the app is about
+    type: string
 
 runs:
   using: "composite"
@@ -99,6 +135,75 @@ runs:
         )
         :donecompiler
         echo building application ${{inputs.app-name}} version ${{inputs.app-version}} >> "${{inputs.app-name}}\version.txt"
+
+    - name: install rcedit
+      shell: pwsh
+      run: |
+        choco install rcedit -y
+
+    - name: generate icon file
+      shell: pwsh
+      run: |
+        mkdir icons
+        cp "${{inputs.app-icon}}" "icons\original.png"
+        cd icons
+        $env:MAGICK_CODER_MODULE_PATH="C:\Program Files (x86)\ImageMagick-7.1.2-Q16-HDRI\modules\coders"
+        magick original.png -background "rgba(1,1,1,0)" -gravity center -extent "%[fx:max(w,h)]x%[fx:max(w,h)]" square.png
+        magick square.png -resize 16x16 16.png
+        magick square.png -resize 24x24 24.png
+        magick square.png -resize 32x32 32.png
+        magick square.png -resize 48x48 48.png
+        magick square.png -resize 256x256 256.png
+        magick 16.png 24.png 32.png 48.png 256.png icon.ico
+
+    - name: write metadata
+      shell: pwsh
+      run: |
+        rcedit.exe "${{inputs.app-name}}\${{inputs.app-name}}.exe" --set-icon "icons\icon.ico" --set-version-string "ProductName" "${{inputs.user-facing-app-name}}" --set-version-string "FileVersion" "${{inputs.user-facing-app-version}}" --set-version-string "CompanyName" "${{inputs.user-facing-organisation-name}}" --set-version-string "FileDescription" "${{inputs.app-description}}" --set-version-string "LegalCopyright" "${{inputs.licensing}}"
+
+    - name: copy README and license
+      shell: pwsh
+      run: |
+        cp "${{inputs.license-file}}" "${{inputs.app-name}}\LICENSE.txt" -ErrorAction SilentlyContinue
+        cp README.md "${{inputs.app-name}}\info.md" -ErrorAction SilentlyContinue
+        echo "This app is built and packaged using SGEXTN automated GitHub Actions workflows`nFor more information, see info.md if it exists`nRun install.vbs to install the application properly`nRun uninstall.vbs to uninstall the application and delete it from your computer`nOnce the app is installed, do not move it in the file system" > "${{inputs.app-name}}\README.txt"
+
+    - name: create install and uninstall scripts
+      shell: pwsh
+      run: |
+        echo @"
+        Option Explicit
+        Dim objShell, objFSO
+        Dim strAppPath, strDesktop, strStartMenu
+        Set objShell = CreateObject("WScript.Shell")
+        Set objFSO = CreateObject("Scripting.FileSystemObject")
+        strAppPath = objFSO.GetAbsolutePathName(".") & "\${{inputs.app-name}}.exe"
+        strDesktop = objShell.SpecialFolders("Desktop") & "\${{inputs.user-facing-app-name}}.lnk"
+        strStartMenu = objShell.SpecialFolders("StartMenu") & "\Programs\${{inputs.user-facing-app-name}}.lnk"
+        Call CreateShortcut(strDesktop, strAppPath)
+        Call CreateShortcut(strStartMenu, strAppPath)
+        Sub CreateShortcut(targetPath, appPath)
+        Dim sc
+        Set sc = objShell.CreateShortcut(targetPath)
+        sc.TargetPath = appPath
+        sc.WorkingDirectory = objFSO.GetParentFolderName(appPath)
+        sc.Save
+        End Sub
+        "@ | Set-Content "${{inputs.app-name}}\install.vbs"
+        echo @"
+        Option Explicit
+        Dim objShell, objFSO
+        Dim strDesktop, strStartMenu
+        Set objShell = CreateObject("WScript.Shell")
+        Set objFSO = CreateObject("Scripting.FileSystemObject")
+        strDesktop = objShell.SpecialFolders("Desktop") & "\${{inputs.user-facing-app-name}}.lnk"
+        strStartMenu = objShell.SpecialFolders("StartMenu") & "\Programs\${{inputs.user-facing-app-name}}.lnk"
+        If objFSO.FileExists(strDesktop) Then objFSO.DeleteFile strDesktop, True
+        If objFSO.FileExists(strStartMenu) Then objFSO.DeleteFile strStartMenu, True
+        On Error Resume Next
+        objFSO.DeleteFolder objFSO.GetParentFolderName(WScript.ScriptFullName), True
+        On Error GoTo 0
+        "@ | Set-Content "${{inputs.app-name}}\uninstall.vbs"
 
     - name: upload build artifacts
       if: always()
