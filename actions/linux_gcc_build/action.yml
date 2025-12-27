@@ -197,6 +197,8 @@ runs:
         rm -f "\$DESKTOP_SHORTCUT"
         rm -rf "\$APP_DIR"
         EOF
+        chmod +x "${{inputs.app-name}}/install.sh"
+        chmod +x "${{inputs.app-name}}/uninstall.sh"
 
     - name: upload build artifacts
       if: always()
