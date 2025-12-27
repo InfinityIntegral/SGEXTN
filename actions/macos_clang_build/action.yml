@@ -153,6 +153,11 @@ runs:
         echo "using compiler $(clang --version | head -n1)" >> ${{inputs.app-name}}/version.txt
         echo "building application ${{inputs.app-name}} version ${{inputs.app-version}}" >> ${{inputs.app-name}}/version.txt
 
+    - name: install ImageMagick
+      shell: bash
+      run: |
+        brew install imagemagick
+
     - name: create app icon
       shell: bash
       run: |
