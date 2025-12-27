@@ -155,18 +155,12 @@ runs:
       run: |
         echo -e "[Desktop Entry]\nType=Application\nName=${{inputs.user-facing-app-name}}\nComment=${{inputs.app-description}}\nIcon=\"@SG_OWNSELF_PATH/icon.png\"\nExec=\"@SG_OWNSELF_PATH/bin/${{inputs.app-name}}\"\nCategories=${{inputs.app-category}}\nPrefersNonDefaultGPU=true" > ${{inputs.app-name}}/${{inputs.bundle-id}}.desktop
 
-    - name: install ImageMagick
-      shell: bash
-      run: |
-        sudo apt update
-        sudo apt install imagemagick
-
     - name: copy over resources
       shell: bash
       run: |
         mkdir -p icons
         cp "${{inputs.app-icon}}" "icons/original.png"
-        magick icons/original.png -background "rgba(1,1,1,0)" -gravity center -extent "%[fx:max(w,h)]x%[fx:max(w,h)]" icons/square.png
+        convert icons/original.png -background "rgba(1,1,1,0)" -gravity center -extent "%[fx:max(w,h)]x%[fx:max(w,h)]" icons/square.png
         mv icons/square.png ${{inputs.app-name}}/icon.png
         [ -e "${{inputs.license-file}}" ] && cp "${{inputs.license-file}}" "${{inputs.app-name}}/LICENSE.txt"
         [ -e README.md ] && cp README.md "${{inputs.app-name}}/info.md"
