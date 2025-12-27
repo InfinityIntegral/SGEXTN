@@ -167,7 +167,10 @@ runs:
       run: |
         mkdir -p icons
         cp "${{inputs.app-icon}}" "icons/original.png"
-        convert icons/original.png -background "rgba(1,1,1,0)" -gravity center -extent "%[fx:max(w,h)]x%[fx:max(w,h)]" icons/square.png
+        w=$(identify -format "%w" icons/original.png)
+        h=$(identify -format "%h" icons/original.png)
+        size=$(( w>h ? w : h ))
+        convert icons/original.png -background "rgba(1,1,1,0)" -gravity center -extent ${size}x${size} icons/square.png
         mv icons/square.png ${{inputs.app-name}}/icon.png
         [ -e "${{inputs.license-file}}" ] && cp "${{inputs.license-file}}" "${{inputs.app-name}}/LICENSE.txt"
         [ -e README.md ] && cp README.md "${{inputs.app-name}}/info.md"
