@@ -18,6 +18,42 @@ inputs:
     required: true
     description: name of CMake target for your application executable, this is used to locate the executable, the executable will be renamed after that
     type: string
+  user-facing-app-name:
+    required: true
+    description: application name as how you want the user to see it, this does not need to be a valid file name, example My Application
+    type: string
+  user-facing-app-version:
+    required: true
+    description: application version as how you want the user to see it, this does not need to be numerical, example version 1.0.0
+    type: string
+  app-icon:
+    required: true
+    description: location of the application icon PNG image as a path in your GitHub repository, example resources/icon.png
+    type: string
+  user-facing-organisation-name:
+    required: true
+    description: your organisation name as how you want the user to see it, example 05524F.sg
+    type: string
+  bundle-id:
+    required: true
+    description: application bundle identifier, only used on MacOS, iOS, and Android, must be a reverse URL style dot separated list, with every entry containing only lowercase letters and numbers and must start with a lowercase letter, example sg.singapore05524f.myapplication
+    type: string
+  app-category:
+    required: true
+    description: one from the list AudioVideo, Audio, Video, Development, Education, Game, Graphics, Network, Office, Science, Settings, System, Utility, only used on Linux, example Utility
+    type: string
+  licensing:
+    required: true
+    description: software licensing for your application, you are strongly recommended to use General Public License version 3 (GPLv3), the license file from your GitHub repository will always be copied regardless of this input, example GPLv3
+    type: string
+  license-file:
+    required: true
+    description: path to the license file in your GitHub repository, typically LICENSE.txt, example LICENSE.txt
+    type: string
+  app-description:
+    required: true
+    description: a short explanatory note to the user what the app is about
+    type: string
 
 runs:
   using: "composite"
@@ -83,19 +119,19 @@ runs:
         cp -a build/${{inputs.cmake-target-name}}.app package/${{inputs.app-name}}.app
         mv package/${{inputs.app-name}}.app/Contents/MacOS/${{inputs.cmake-target-name}} package/${{inputs.app-name}}.app/Contents/MacOS/${{inputs.app-name}}
         rm package/${{inputs.app-name}}.app/Contents/Info.plist
-        APP_NAME="${{inputs.app-name}}"
-        BUNDLE_ID="${APP_NAME//-/}"
         cat > package/${{inputs.app-name}}.app/Contents/Info.plist <<EOF
         <?xml version="1.0" encoding="UTF-8"?>
         <!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd"><plist version="1.0"><dict>
             <key>CFBundleInfoDictionaryVersion</key><string>6.0</string>
             <key>CFBundlePackageType</key><string>APPL</string>
             <key>CFBundleName</key><string>${{inputs.app-name}}</string>
-            <key>CFBundleIdentifier</key><string>com.unknown.${BUNDLE_ID}</string>
+            <key>CFBundleDisplayName</key><string>${{inputs.user-facing-app-name}}</string>
+            <key>CFBundleIdentifier</key><string>${{inputs.bundle-id}}</string>
             <key>CFBundleExecutable</key><string>${{inputs.app-name}}</string>
             <key>CFBundleVersion</key><string>${{inputs.app-version}}</string>
-            <key>CFBundleShortVersionString</key><string>${{inputs.app-version}}</string>
-            <key>CFBundleDevelopmentRegion</key><string>en_SG</string>
+            <key>CFBundleShortVersionString</key><string>${{inputs.user-facing-app-version}}</string>
+            <key>CFBundleDevelopmentRegion</key><string>en</string>
+            <key>CFBundleIconFile</key><string>AppIcon.icns</string>
             <key>CFBundleAllowMixedLocalizations</key><true/>
             <key>NSPrincipalClass</key><string>NSApplication</string>
             <key>NSSupportsAutomaticGraphicsSwitching</key><true/>
@@ -116,6 +152,34 @@ runs:
         echo "using Qt version ${{inputs.qt-version}}" >> ${{inputs.app-name}}/version.txt
         echo "using compiler $(clang --version | head -n1)" >> ${{inputs.app-name}}/version.txt
         echo "building application ${{inputs.app-name}} version ${{inputs.app-version}}" >> ${{inputs.app-name}}/version.txt
+
+    - name: create app icon
+      shell: bash
+      run: |
+        mkdir -p icons/AppIcon.iconset
+        cp "${{inputs.app-icon}}" "icons/original.png"
+        cd icons
+        magick original.png -background "rgba(1,1,1,0)" -gravity center -extent "%[fx:max(w,h)]x%[fx:max(w,h)]" square.png
+        magick square.png -resize 16x16 AppIcon.iconset/icon_16x16.png
+        magick square.png -resize 32x32 AppIcon.iconset/icon_16x16@2x.png
+        magick square.png -resize 32x32 AppIcon.iconset/icon_32x32.png
+        magick square.png -resize 64x64 AppIcon.iconset/icon_32x32@2x.png
+        magick square.png -resize 128x128 AppIcon.iconset/icon_128x128.png
+        magick square.png -resize 256x256 AppIcon.iconset/icon_128x128@2x.png
+        magick square.png -resize 256x256 AppIcon.iconset/icon_256x256.png
+        magick square.png -resize 512x512 AppIcon.iconset/icon_256x256@2x.png
+        magick square.png -resize 512x512 AppIcon.iconset/icon_512x512.png
+        magick square.png -resize 1024x1024 AppIcon.iconset/icon_512x512@2x.png
+        iconutil -c icns AppIcon.iconset
+        mkdir -p "../${{inputs.app-name}}/${{inputs.app-name}}.app/Contents/Resources"
+        mv AppIcon.icns "../${{inputs.app-name}}/${{inputs.app-name}}.app/Contents/Resources/AppIcon.icns"
+
+    - name: copy README and license
+      shell: bash
+      run: |
+        [ -e "${{inputs.license-file}}" ] && cp "${{inputs.license-file}}" "${{inputs.app-name}}/${{inputs.app-name}}.app/Contents/Resources/LICENSE.txt"
+        [ -e README.md ] && cp README.md "${{inputs.app-name}}/${{inputs.app-name}}.app/Contents/Resources/info.md"
+        echo -e "This app is built and packaged using SGEXTN automated GitHub Actions workflows\nFor more information, see info.md if it exists" > "${{inputs.app-name}}/${{inputs.app-name}}.app/Contents/Resources/README.txt"
 
     - name: upload build artifacts
       if: always()
