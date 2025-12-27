@@ -155,6 +155,12 @@ runs:
       run: |
         echo -e "[Desktop Entry]\nType=Application\nName=${{inputs.user-facing-app-name}}\nComment=${{inputs.app-description}}\nIcon=\"@SG_OWNSELF_PATH/icon.png\"\nExec=\"@SG_OWNSELF_PATH/bin/${{inputs.app-name}}\"\nCategories=${{inputs.app-category}}\nPrefersNonDefaultGPU=true" > ${{inputs.app-name}}/${{inputs.bundle-id}}.desktop
 
+    - name: install ImageMagick
+      shell: bash
+      run: |
+        sudo apt update
+        sudo apt install imagemagick
+
     - name: copy over resources
       shell: bash
       run: |
