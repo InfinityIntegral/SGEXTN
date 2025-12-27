@@ -153,7 +153,7 @@ runs:
     - name: create desktop file
       shell: bash
       run: |
-        echo -e "[Desktop Entry]\nType=Application\nName=${{inputs.user-facing-app-name}}\nComment=${{inputs.app-description}}\nIcon=\"@SG_OWNSELF_PATH/icon.png\"\nExec=\"@SG_OWNSELF_PATH/bin/${{inputs.app-name}}\"\nCategories=${{inputs.app-category}}\nPrefersNonDefaultGPU=true" > ${{inputs.app-name}}/${{inputs.bundle-id}}.desktop
+        echo -e "[Desktop Entry]\nType=Application\nName=${{inputs.user-facing-app-name}}\nComment=${{inputs.app-description}}\nIcon=@SG_OWNSELF_PATH/icon.png\nExec=@SG_OWNSELF_PATH/bin/${{inputs.app-name}}\nCategories=${{inputs.app-category}}\nPrefersNonDefaultGPU=true" > ${{inputs.app-name}}/${{inputs.bundle-id}}.desktop
 
     - name: copy over resources
       shell: bash
@@ -167,7 +167,7 @@ runs:
         mv icons/square.png ${{inputs.app-name}}/icon.png
         [ -e "${{inputs.license-file}}" ] && cp "${{inputs.license-file}}" "${{inputs.app-name}}/LICENSE.txt"
         [ -e README.md ] && cp README.md "${{inputs.app-name}}/info.md"
-        echo -e "This app is built and packaged using SGEXTN automated GitHub Actions workflows\nFor more information, see info.md if it exists\nRun install.sh to install the application properly\nRun uninstall.sh to uninstall the application and delete it from your computer\nOnce the app is installed, do not move it in the file system" > "${{inputs.app-name}}/README.txt"
+        echo -e "This app is built and packaged using SGEXTN automated GitHub Actions workflows\nFor more information, see info.md if it exists\nRun install.sh to install the application properly\nRun uninstall.sh to uninstall the application and delete it from your computer\nOnce the app is installed, do not move it in the file system\nInstalling the application in a folder whose path contain spaces is undefined behaviour" > "${{inputs.app-name}}/README.txt"
 
     - name: create install and uninstall scripts
       shell: bash
