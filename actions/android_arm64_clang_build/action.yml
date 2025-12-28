@@ -108,6 +108,18 @@ runs:
         git clone https://github.com/InfinityIntegral/SGEXTN.git
         cd SGEXTN
         cp -a ../Qt/${{inputs.qt-version}}/android_arm64_v8a/src/android/templates android
+        mkdir -p android/res/mipmap-ldpi
+        mkdir -p android/res/mipmap-mdpi
+        mkdir -p android/res/mipmap-hdpi
+        mkdir -p android/res/mipmap-xhdpi
+        mkdir -p android/res/mipmap-xxhdpi
+        mkdir -p android/res/mipmap-xxxhdpi
+        convert -size 1x1 xc:none android/res/mipmap-ldpi/icon.png
+        convert -size 1x1 xc:none android/res/mipmap-mdpi/icon.png
+        convert -size 1x1 xc:none android/res/mipmap-hdpi/icon.png
+        convert -size 1x1 xc:none android/res/mipmap-xhdpi/icon.png
+        convert -size 1x1 xc:none android/res/mipmap-xxhdpi/icon.png
+        convert -size 1x1 xc:none android/res/mipmap-xxxhdpi/icon.png
         mkdir build
         cd build
         cmake .. -G "Ninja" -DANDROID_SDK_ROOT=/usr/local/lib/android/sdk -DANDROID_NDK_ROOT=/usr/local/lib/android/sdk/ndk/27.2.12479018 -DANDROID_ABI=arm64-v8a -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=/usr/local/lib/android/sdk/ndk/27.2.12479018/build/cmake/android.toolchain.cmake -DANDROID_PLATFORM=android-28
