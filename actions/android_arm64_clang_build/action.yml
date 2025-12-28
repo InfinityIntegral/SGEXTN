@@ -124,6 +124,12 @@ runs:
         [ -e README.md ] && cp README.md "android/assets/info.md"
         echo -e "This app is built and packaged using SGEXTN automated GitHub Actions workflows\nFor more information, see info.md if it exists" > "android/assets/README.txt"
 
+    - name: install ImageMagick
+      shell: bash
+      run: |
+        sudo apt update
+        sudo apt install imagemagick
+
     - name: generate app icons
       shell: bash
       run: |
