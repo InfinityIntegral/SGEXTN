@@ -145,12 +145,12 @@ runs:
     - name: generate app icons
       shell: bash
       run: |
-        mkdir -p android/res/drawable-ldpi
-        mkdir -p android/res/drawable-mdpi
-        mkdir -p android/res/drawable-hdpi
-        mkdir -p android/res/drawable-xhdpi
-        mkdir -p android/res/drawable-xxhdpi
-        mkdir -p android/res/drawable-xxxhdpi
+        mkdir -p android/res/mipmap-ldpi
+        mkdir -p android/res/mipmap-mdpi
+        mkdir -p android/res/mipmap-hdpi
+        mkdir -p android/res/mipmap-xhdpi
+        mkdir -p android/res/mipmap-xxhdpi
+        mkdir -p android/res/mipmap-xxxhdpi
         mkdir -p icons
         cp "${{inputs.app-icon}}" "icons/original.png"
         w=$(identify -format "%w" icons/original.png)
