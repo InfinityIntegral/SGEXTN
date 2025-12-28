@@ -114,6 +114,11 @@ runs:
         cd ..
         cmake --install build --config Release --prefix ../SGEXTN_install
 
+    - name: copy over Qt Android template
+      shell: bash
+      run: |
+        cp -a ../Qt/${{inputs.qt-version}}/android_arm64_v8a/src/android/templates android
+
     - name: copy over README and license
       shell: bash
       run: |
@@ -188,13 +193,6 @@ runs:
       with:
         name: android-arm64-clang-${{inputs.app-name}}-${{inputs.app-version}}-binary
         path: ${{inputs.app-name}}
-
-    - name: upload Qt
-      if: always()
-      uses: actions/upload-artifact@v4
-      with:
-        name: qt-install-folder
-        path: /home/runner/work/ColoursPlusPlus/Qt
 
     - name: log info
       if: always()
