@@ -1,4 +1,4 @@
-name: deploy SGEXTN application
+name: BuildLah cross platform build and package workflow
 
 on:
   workflow_call:
@@ -312,3 +312,11 @@ jobs:
           licensing: ${{inputs.licensing}}
           license-file: ${{inputs.license-file}}
           app-description: ${{inputs.app-description}}
+
+  pull-source:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull source
+        uses: InfinityIntegral/SGEXTN/actions/pull_source@main
+        with:
+          qt-version: ${{inputs.qt-version}}
