@@ -156,9 +156,14 @@ runs:
       shell: bash
       run: |
         export PATH="${{github.workspace}}/../SGEXTN_install/lib:${{github.workspace}}/../SGEXTN_install/lib/cmake/SGEXTN:$PATH"
+        VERSION=${{inputs.app-version}}
+        read MAJOR MINOR PATCH <<< $(echo "$VERSION" | tr '.' ' ')
+        [[ $MINOR -lt 10 ]] && MINOR="0$MINOR"
+        [[ $PATCH -lt 10 ]] && PATCH="0$PATCH"
+        VERSION_CODE="${MAJOR}${MINOR}${PATCH}"
         mkdir build
         cd build
-        cmake .. -G "Ninja" -DANDROID_SDK_ROOT=/usr/local/lib/android/sdk -DANDROID_NDK_ROOT=/usr/local/lib/android/sdk/ndk/27.2.12479018 -DANDROID_ABI=arm64-v8a -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=/usr/local/lib/android/sdk/ndk/27.2.12479018/build/cmake/android.toolchain.cmake -DANDROID_PLATFORM=android-28 -DSGEXTN_ANDROID_BUNDLE_ID="${{inputs.bundle-id}}" -DSGEXTN_ANDROID_USER_FACING_APP_NAME="${{inputs.user-facing-app-name}}" -DSGEXTN_ANDROID_APP_VERSION="${{inputs.app-version}}" -DSGEXTN_ANDROID_USER_FACING_APP_VERSION="${{inputs.user-facing-app-version}}"
+        cmake .. -G "Ninja" -DANDROID_SDK_ROOT=/usr/local/lib/android/sdk -DANDROID_NDK_ROOT=/usr/local/lib/android/sdk/ndk/27.2.12479018 -DANDROID_ABI=arm64-v8a -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=/usr/local/lib/android/sdk/ndk/27.2.12479018/build/cmake/android.toolchain.cmake -DANDROID_PLATFORM=android-28 -DSGEXTN_ANDROID_BUNDLE_ID="${{inputs.bundle-id}}" -DSGEXTN_ANDROID_USER_FACING_APP_NAME="${{inputs.user-facing-app-name}}" -DSGEXTN_ANDROID_APP_VERSION=$VERSION_CODE -DSGEXTN_ANDROID_USER_FACING_APP_VERSION="${{inputs.user-facing-app-version}}"
         cmake --build . --config Release
 
     - name: delete QML tooling
