@@ -145,12 +145,12 @@ runs:
         h=$(identify -format "%h" icons/original.png)
         size=$(( w>h ? w : h ))
         convert icons/original.png -background "rgba(1,1,1,0)" -gravity center -extent ${size}x${size} icons/square.png
-        convert icons/square.png -resize 36x36 android/res/drawable-ldpi/icon.png
-        convert icons/square.png -resize 48x48 android/res/drawable-mdpi/icon.png
-        convert icons/square.png -resize 72x72 android/res/drawable-hdpi/icon.png
-        convert icons/square.png -resize 96x96 android/res/drawable-xhdpi/icon.png
-        convert icons/square.png -resize 144x144 android/res/drawable-xxhdpi/icon.png
-        convert icons/square.png -resize 192x192 android/res/drawable-xxxhdpi/icon.png
+        convert icons/square.png -resize 36x36 android/res/mipmap-ldpi/icon.png
+        convert icons/square.png -resize 48x48 android/res/mipmap-mdpi/icon.png
+        convert icons/square.png -resize 72x72 android/res/mipmap-hdpi/icon.png
+        convert icons/square.png -resize 96x96 android/res/mipmap-xhdpi/icon.png
+        convert icons/square.png -resize 144x144 android/res/mipmap-xxhdpi/icon.png
+        convert icons/square.png -resize 192x192 android/res/mipmap-xxxhdpi/icon.png
 
     - name: build application binary
       shell: bash
