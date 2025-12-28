@@ -101,6 +101,12 @@ runs:
         rm -rf "../Qt/${{inputs.qt-version}}/android_arm64_v8a/plugins/sqldrivers"
         rm -rf "../Qt/${{inputs.qt-version}}/android_arm64_v8a/plugins/printsupport"
 
+    - name: copy over Qt Android templates
+      shell: bash
+      run: |
+        cp -a ../Qt/${{inputs.qt-version}}/android_arm64_v8a/src/android/templates ../SGEXTN/android
+        cp -a ../Qt/${{inputs.qt-version}}/android_arm64_v8a/src/android/templates android
+
     - name: build SGEXTN
       shell: bash
       run: |
@@ -113,12 +119,6 @@ runs:
         cmake --build . --config Release
         cd ..
         cmake --install build --config Release --prefix ../SGEXTN_install
-
-    - name: copy over Qt Android template
-      shell: bash
-      run: |
-        cp -a ../Qt/${{inputs.qt-version}}/android_arm64_v8a/src/android/templates ../SGEXTN/android
-        cp -a ../Qt/${{inputs.qt-version}}/android_arm64_v8a/src/android/templates android
 
     - name: copy over README and license
       shell: bash
