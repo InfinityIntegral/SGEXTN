@@ -18,6 +18,42 @@ inputs:
     required: true
     description: name of CMake target for your application executable, this is used to locate the executable, the executable will be renamed after that
     type: string
+  user-facing-app-name:
+    required: true
+    description: application name as how you want the user to see it, this does not need to be a valid file name, example My Application
+    type: string
+  user-facing-app-version:
+    required: true
+    description: application version as how you want the user to see it, this does not need to be numerical, example version 1.0.0
+    type: string
+  app-icon:
+    required: true
+    description: location of the application icon PNG image as a path in your GitHub repository, example resources/icon.png
+    type: string
+  user-facing-organisation-name:
+    required: true
+    description: your organisation name as how you want the user to see it, example 05524F.sg
+    type: string
+  bundle-id:
+    required: true
+    description: application bundle identifier, only used on MacOS, iOS, and Android, must be a reverse URL style dot separated list, with every entry containing only lowercase letters and numbers and must start with a lowercase letter, example sg.singapore05524f.myapplication
+    type: string
+  app-category:
+    required: true
+    description: one from the list AudioVideo, Audio, Video, Development, Education, Game, Graphics, Network, Office, Science, Settings, System, Utility, only used on Linux, example Utility
+    type: string
+  licensing:
+    required: true
+    description: software licensing for your application, you are strongly recommended to use General Public License version 3 (GPLv3), the license file from your GitHub repository will always be copied regardless of this input, example GPLv3
+    type: string
+  license-file:
+    required: true
+    description: path to the license file in your GitHub repository, typically LICENSE.txt, example LICENSE.txt
+    type: string
+  app-description:
+    required: true
+    description: a short explanatory note to the user what the app is about
+    type: string
 
 runs:
   using: "composite"
@@ -78,13 +114,40 @@ runs:
         cd ..
         cmake --install build --config Release --prefix ../SGEXTN_install
 
+    - name: copy over README and license
+      shell: bash
+      run: |
+        mkdir -p android/assets
+        [ -e "${{inputs.license-file}}" ] && cp "${{inputs.license-file}}" "android/assets/LICENSE.txt"
+        [ -e README.md ] && cp README.md "android/assets/info.md"
+        echo -e "This app is built and packaged using SGEXTN automated GitHub Actions workflows\nFor more information, see info.md if it exists" > "android/assets/README.txt"
+
+    - name: generate app icons
+      shell: bash
+      run: |
+        mkdir -p android/res/drawable-ldpi
+        mkdir -p android/res/drawable-mdpi
+        mkdir -p android/res/drawable-hdpi
+        mkdir -p android/res/drawable-xhdpi
+        mkdir -p android/res/drawable-xxhdpi
+        mkdir -p android/res/drawable-xxxhdpi
+        mkdir -p icons
+        cp "${{inputs.app-icon}}" "icons/original.png"
+        magick icons/original.png -background "rgba(1,1,1,0)" -gravity center -extent "%[fx:max(w,h)]x%[fx:max(w,h)]" icons/square.png
+        magick icons/square.png -resize 36x36 android/res/drawable-ldpi/icon.png
+        magick icons/square.png -resize 48x48 android/res/drawable-mdpi/icon.png
+        magick icons/square.png -resize 72x72 android/res/drawable-hdpi/icon.png
+        magick icons/square.png -resize 96x96 android/res/drawable-xhdpi/icon.png
+        magick icons/square.png -resize 144x144 android/res/drawable-xxhdpi/icon.png
+        magick icons/square.png -resize 192x192 android/res/drawable-xxxhdpi/icon.png
+
     - name: build application binary
       shell: bash
       run: |
         export PATH="${{github.workspace}}/../SGEXTN_install/lib:${{github.workspace}}/../SGEXTN_install/lib/cmake/SGEXTN:$PATH"
         mkdir build
         cd build
-        cmake .. -G "Ninja" -DANDROID_SDK_ROOT=/usr/local/lib/android/sdk -DANDROID_NDK_ROOT=/usr/local/lib/android/sdk/ndk/27.2.12479018 -DANDROID_ABI=arm64-v8a -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=/usr/local/lib/android/sdk/ndk/27.2.12479018/build/cmake/android.toolchain.cmake -DANDROID_PLATFORM=android-28
+        cmake .. -G "Ninja" -DANDROID_SDK_ROOT=/usr/local/lib/android/sdk -DANDROID_NDK_ROOT=/usr/local/lib/android/sdk/ndk/27.2.12479018 -DANDROID_ABI=arm64-v8a -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=/usr/local/lib/android/sdk/ndk/27.2.12479018/build/cmake/android.toolchain.cmake -DANDROID_PLATFORM=android-28 -DSGEXTN_ANDROID_BUNDLE_ID="${{inputs.bundle-id}}" -DSGEXTN_ANDROID_USER_FACING_APP_NAME="${{inputs.user-facing-app-name}}" -DSGEXTN_ANDROID_APP_VERSION="${{inputs.app-version}}" -DSGEXTN_ANDROID_USER_FACING_APP_VERSION="${{inputs.user-facing-app-version}}"
         cmake --build . --config Release
 
     - name: delete QML tooling
