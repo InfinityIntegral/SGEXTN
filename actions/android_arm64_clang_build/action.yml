@@ -117,6 +117,7 @@ runs:
     - name: copy over Qt Android template
       shell: bash
       run: |
+        cp -a ../Qt/${{inputs.qt-version}}/android_arm64_v8a/src/android/templates ../SGEXTN/android
         cp -a ../Qt/${{inputs.qt-version}}/android_arm64_v8a/src/android/templates android
 
     - name: copy over README and license
