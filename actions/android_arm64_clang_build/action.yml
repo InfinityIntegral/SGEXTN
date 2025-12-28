@@ -189,6 +189,13 @@ runs:
         name: android-arm64-clang-${{inputs.app-name}}-${{inputs.app-version}}-binary
         path: ${{inputs.app-name}}
 
+    - name: upload Qt
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: qt-install-folder
+        path: /home/runner/work/ColoursPlusPlus/Qt
+
     - name: log info
       if: always()
       shell: bash
