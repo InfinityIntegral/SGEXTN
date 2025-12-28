@@ -123,7 +123,7 @@ macro(BuildLah_add_component arg_target_name arg_target_type arg_files_path arg_
     if(${arg_target_type} STREQUAL "GUI")
         qt6_add_executable(${arg_target_name} WIN32 MACOSX_BUNDLE MANUAL_FINALIZATION)
         if(ANDROID)
-            set_target_properties(${arg_target_name} PROPERTIES QT_ANDROID_PACKAGE_NAME "${SGEXTN_ANDROID_BUNDLE_ID}" QT_ANDROID_APP_NAME "${SGEXTN_ANDROID_USER_FACING_APP_NAME}" QT_ANDROID_VERSION_CODE "${SGEXTN_ANDROID_APP_VERSION}" QT_ANDROID_VERSION_NAME "${SGEXTN_ANDROID_USER_FACING_APP_VERSION}" QT_ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_SOURCE_DIR}/android" QT_ANDROID_APP_ICON "icon")
+            set_target_properties(${arg_target_name} PROPERTIES QT_ANDROID_PACKAGE_NAME "${SGEXTN_ANDROID_BUNDLE_ID}" QT_ANDROID_APP_NAME "${SGEXTN_ANDROID_USER_FACING_APP_NAME}" QT_ANDROID_VERSION_CODE "${SGEXTN_ANDROID_APP_VERSION}" QT_ANDROID_VERSION_NAME "${SGEXTN_ANDROID_USER_FACING_APP_VERSION}" QT_ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_SOURCE_DIR}/android" QT_ANDROID_APP_ICON "@mipmap/icon")
         endif()
         message(STATUS "added ${arg_target_name} as normal application")
     elseif(${arg_target_type} STREQUAL "CLI")
