@@ -15,4 +15,4 @@ Returns the font name AppIcons.sg. This is a user supplied font for @SG_FINDREP_
 Imports the ttf or otf formatted font found at $fileName.
 @SG_NOTE This should be used in SGXCentral::importCustomFonts if the font need to be used upon application startup.
 @SG_WARN Importing multiple fonts with the same family name is undefined behaviour. If your font is modular, merge everything first.
-@SG_WARN The matching file must exist in the resource system. To ensure that, use relevant CMake commands. @SG_FINDREP_RESOURCE
+@SG_WARN The matching file must exist in the resource system. To ensure that, place the font file in the resources folder. @SG_FINDREP_RESOURCE

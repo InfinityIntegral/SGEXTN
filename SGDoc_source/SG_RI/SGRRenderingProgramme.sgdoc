@@ -14,8 +14,7 @@ Creates a SGRRenderingProgramme associated with the @SG_FINDREP_RENDERER rendere
 @SG_PRIVATE_API QRhiShaderStage* fragmentShader;
 @SG_FUNC void setShaderQSBFiles(const SGXString& vertexShaderPath, const SGXString& fragmentShaderPath);
 Sets this SGRRenderingProgramme to use the vertex shader at $vertexShaderPath and the fragment shader at $fragmentShaderPath.
-@SG_WARN The shaders must be pre compiled using the Qt shader binary compiler. To ensure that, use relevant CMake commands. @SG_FINDREP_SHADER
-@SG_WARN The matching file must exist in the resource system. To ensure that, use relevant CMake commands. @SG_FINDREP_RESOURCE
+@SG_WARN The compiled shader must exist in the resource system. To ensure that, put the shader GLSL source code in the shaders folder. @SG_FINDREP_SHADER
 @SG_PRIVATE_API bool vertexFormattingIsSet;
 @SG_PRIVATE_API SGLVector<int>* vertexBufferObjects;
 @SG_FUNC void addVertexBufferObject(int vertexSize) const;

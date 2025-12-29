@@ -13,9 +13,8 @@ part of SGEXTN module @SG_ML_L00A015SG_Widgets../modules/sg_widgets
 @SG_ML_L016019implementation details#sg_implementationdetails
 @SG_ML_BLANKLINE
 preprocessor file inclusion directive: #include ‹SGWTextButton.h›
-CMake commands:
-&#9;find_package(@SG_ML_L006010SGEXTN../readme/readme REQUIRED COMPONENTS @SG_ML_L00A015SG_Widgets../modules/sg_widgets)
-&#9;target_link_libraries(yourCMakeTarget PRIVATE @SG_ML_L012015SGEXTN::SG_Widgets../modules/sg_widgets)
+CMake target for BuildLah: @SG_ML_L012015SGEXTN::SG_Widgets../modules/sg_widgets
+see @SG_ML_L009015this link../tutorials/buildlah for more information about BuildLah
 parent class: @SG_ML_L009009SGWButtonsgwbutton
 children classes: (none)
 @SG_ML_BLANKLINE

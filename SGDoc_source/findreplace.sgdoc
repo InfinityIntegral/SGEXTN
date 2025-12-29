@@ -12,12 +12,16 @@
 @SG_FINDREPSOURCE RENDERER @SG_ML_L017015SG - RI ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/renderer
 @SG_FINDREPSOURCE WIDGET @SG_ML_L018015SGWidget ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/sgwidget
 @SG_FINDREPSOURCE WDIST @SG_ML_L01A016w-distance ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/wdistance
+@SG_FINDREPSOURCE BUILDLAH @SG_ML_L018015BuildLah ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/buildlah
 @SG_NOAUTOLINK SGEXTN
 @SG_NOAUTOLINK SGWidget
 @SG_NOAUTOLINK SG
 @SG_NOAUTOLINK SG60
 @SG_NOAUTOLINK SG_RI
+@SG_NOAUTOLINK SGEXTN:
+@SG_NOAUTOLINK SG_ALL_Targets
+@SG_NOAUTOLINK SG_FileSystem
 @SG_NOAUTOLINK SG_RI_builtin
-@SG_NOAUTOLINK SG_RI_builtin_
+@SG_NOAUTOLINK SGEXTN::EntryPoint_SG
 @SG_GITHUBPREFIX https://github.com/InfinityIntegral/SGEXTN/tree/main/
 @SG_PROJECTNAME SGEXTN

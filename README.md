@@ -4,7 +4,7 @@ The [HTML version](https://infinityintegral.github.io/SGEXTN/readme/readme) of t
 
 SGEXTN is 05524F's own C++ framework for application development with an emphasis on pure C++ code.
 
-This version of SGEXTN is designed to work with Qt version 6.10.1, though anything at or above Qt 6.9.1 is likely fine.
+This version of SGEXTN is designed to work with Qt version 6.10.1 and prebuilt SGEXTN are built using Qt 6.10.1
 
 Current version of SGEXTN: v6.1.0
 
@@ -12,7 +12,6 @@ published on: 12 December, SG60
 
 [list of features](https://infinityintegral.github.io/SGEXTN/readme/readme#featurelist)  
 [setting up SGEXTN](https://infinityintegral.github.io/SGEXTN/readme/readme#setup)  
-[demo app](https://infinityintegral.github.io/SGEXTN/readme/readme#demo)  
 [credits and legal info](https://infinityintegral.github.io/SGEXTN/readme/readme#legal)  
 
 ## List of modules

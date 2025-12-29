@@ -1,6 +1,9 @@
 @SG_OTHERFILE_readme/readme SGEXTN README
 SGEXTN is 05524F's own C++ framework for application development with an emphasis on pure C++ code. Users of SGEXTN will only need to write C++ (and GLSL if you need custom shaders). There is also an emphasis on clean header files for fast clang-tidy passes and easy availability of the source code which is linked on every documentation page.
 If you came here from somewhere other than GitHub, here is the @SG_ML_L01102AGitHub repositoryhttps://github.com/InfinityIntegral/SGEXTN.
+This version of SGEXTN is designed to work with Qt 6.10.1 and prebuilt SGEXTN are built using Qt 6.10.1
+Current version of SGEXTN: v6.2.0
+published on: 30 December, SG60
 @SG_ML_BLANKLINE
 @SG_ML_L01000Clist of features#featurelist
 @SG_ML_L011006setting up SGEXTN#setup
@@ -16,28 +19,24 @@ SGEXTN contains 6 modules. Each module is described in detail in their own docum
 @SG_ML_L008015SGWidget../modules/sg_widgets - graphical user interface
 @SG_ML_L007010SG - RI../modules/sg_ri - custom rendering
 @SG_ML_BLANKLINE
-No compiled binaries are available for SGEXTN but it is very easy to build one yourself. See @SG_ML_L011006setting up SGEXTN#setup for more information. You need Qt, CMake and Qt Shader Tools to build SGEXTN.
+See @SG_ML_L011006setting up SGEXTN#setup for how to set up SGEXTN. In addition to SGEXTN, you also need Qt, CMake, Ninja and Qt Shader Tools to build SGEXTN apps. @SG_FINDREP_BUILDLAH is included inside SGEXTN.
 When developing SGEXTN applications, you are strongly encouraged to use the Qt Creator IDE. Qt Creator has tooling that SGEXTN uses either builtin or easily available through the Qt Maintenance Tool. You are strongly recommended to use Git, GitHub, and clang-tidy when building your applications.
-This version of SGEXTN is designed to work with Qt version 6.10.1, though anything at or above Qt 6.9.1 is likely fine.
-SGEXTN uses Qt Quick and QRhi for rendering, however users do not need to care at all about QML, JavaScript, and any other such nonsense. There is also no need to care about Qt's macros, the Qt meta object system, or signal-slot. In fact, your application does not even need to link Qt to run. However, it is strongly encouraged to link against the Qt modules Qt6::Core, Qt6::Gui, Qt6::Quick, Qt6::Qml, Qt6::QuickControls2, Qt6::GuiPrivate so that packaging tools can package your app correctly.
+SGEXTN uses Qt Quick and QRhi for rendering, however users do not need to care at all about QML, JavaScript, and any other such nonsense. There is also no need to care about Qt's macros, the Qt meta object system, or signal-slot. Linking Qt will be handled automatically by the @SG_FINDREP_BUILDLAH CMake integration.
 SGEXTN exposes private API, so as long as you know exactly what you are doing, you can extend SGEXTN by using its private API, or even linking to Qt libraries and using Qt features side by side with SGEXTN. For example building a custom @SG_FINDREP_WIDGET that uses your own QQuickItem is completely feasible. Note that doing this will require deep understanding of the source code, since private API is not documented.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_setup Setting up SGEXTN
-There are no compiled binaries for SGEXTN as supporting all possible operating system and compiler combinations is unfeasible. However, building SGEXTN yourself is really easy.
-First ensure that you have CMake (at least version 3.21) available. Then you can simply download the entire repository and open the top level CMakeLists.txt in Qt Creator as a project and click the "build" button 2 spaces below the run button. After that, run the CMake command
+Before setting up SGEXTN, first ensure that you have Qt installed properly on your computer. The Qt Shader Tools module is required for using SGEXTN as otherwise SGEXTN apps will not build. You can get Qt from their official website and install the shader tools module using the Qt Maintenance Tool. Make sure that your Qt version matches the intended Qt version for this SGEXTN version, the version information can be found at the top of this README.
+You will also need CMake, Ninja, and Qt Creator to build SGEXTN apps. These can be obtained through the Qt Maintenance Tool. Also ensure that Git is set up properly on your computer.
+On Linux, the compiler is present by default on your computer. On MacOS it can be easily installed using XCode. When building for Windows, you can obtain a compiler through the Qt Maintenance Tool. You need to get the compiler and Android SDK + NDK separately when building for Android.
+Once these are set up, you can download the prebuilt SGEXTN binaries from the latest SGEXTN release on GitHub and unzip the file to a folder. The folder you unzip it to will be refered to as the SGEXTN install folder, and it should contain SGEXTN's CMakeLists.txt
+Then add these to your system PATH.
 @SG_STARTCODEBLK
-cmake --install [folder where you find the DLLs] --config Release --prefix [folder where you want to install SGEXTN to]
-@SG_ENDCODEBLK
-in the Qt Creator terminal and add these to your system PATH.
-@SG_STARTCODEBLK
-[folder where you want to install SGEXTN to]/lib
-[folder where you want to install SGEXTN to]/lib/cmake/SGEXTN
+[SGEXTN install folder]/lib
+[SGEXTN install folder]/lib/cmake/SGEXTN
 @SG_ENDCODEBLK
 Now your computer is ready for building SGEXTN apps. To learn how to build one, see this @SG_ML_L008011tutorial../tutorials/full.
+Note that SGEXTN uses @SG_FINDREP_BUILDLAH instead of raw CMake to simplify the build process. For more information see the dedicated @SG_FINDREP_BUILDLAH tutorial.
 When naming classes in your applications, ensure that the names start with "SG", followed by 3 capital letters indicating your application, followed by the actual class name. This ensures that different developers using SGEXTN would not have conflicting class names and that your application is compatible with SGEXTN tooling.
-@SG_ML_BLANKLINE
-@SG_ML_HEADER_demo Demo app
-The SGEXTN demo app has not been built yet.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_legal Credits and legal information
 SGEXTN uses @SG_ML_L002011Qthttps://www.qt.io under the Lesser General Public License version 3.

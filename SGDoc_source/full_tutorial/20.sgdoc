@@ -1,0 +1,57 @@
+@SG_OTHERFILE_tutorials/full20 Full Tutorial Part 20
+See @SG_ML_L004006herefull19 for the previous part of the tutorial.
+In the previous part, we built the fractal display.
+@SG_ML_BLANKLINE
+@SG_ML_HEADER_ writing a release
+Our app is completed now and we are ready to make a release for it on GitHub. Before we do that, we will first need to build and package it. This can be done very easily using @SG_FINDREP_BUILDLAH GitHub Actions. Without BuildLah, getting the app to build on all platforms can take weeks.
+You may want to read through the @SG_FINDREP_BUILDLAH tutorial again.
+We need to write a GitHub Actions workflow at .github/workflows/build.yaml which invokes the BuildLah reusable workflow. The file should look like this.
+@SG_STARTCODEBLK
+name: build app
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    uses: InfinityIntegral/SGEXTN/.github/workflows/BuildLah.yaml@main
+    with:
+      app-name: colours-plus-plus
+      app-version: 2.0.0
+      qt-version: 6.10.1
+      cmake-target-name: ColoursPlusPlus_app
+      user-facing-app-name: Colours++
+      user-facing-app-version: v2.0.0
+      app-icon: resources/SGEXTN_icon.png
+      user-facing-organisation-name: 05524F.sg
+      bundle-id: sg.singapore05524f.coloursplusplus
+      app-category: Development
+      licensing: GPLv3
+      license-file: LICENSE.txt
+      app-description: demo app from SGEXTN tutorial
+      platforms: linux-gcc windows-llvm-mingw macos-clang android-arm64-clang
+@SG_ENDCODEBLK
+See @SG_FINDREP_BUILDLAH for more information what each input means.
+We are building 1 binary of the application for each of Windows, MacOS, Linux, and Android. The on: workflow_dispatch: means that the workflow will be used manually. This avoids unnecessary runs when a release is not needed.
+@SG_ML_BLANKLINE
+To let GitHub see the workflow, we need to commit first. After that you should be able to see the workflow on the left menu on the actions tab of your repository. After clicking it in the menu, there should be a blue banner saying "This workflow has a workflow_dispatch event trigger.", clicking "run workflow" on the right side of the banner will run it.
+You may need to wait for about 10 minutes for the workflow to finish. Once it is done, click into the most recent run and scroll all the way down. You should see the following files.
+@SG_STARTCODEBLK
+qt-source-code
+sgextn-source-code
+linux-gcc-build
+linux-gcc-binary
+windows-llvm-mingw-build
+windows-llvm-mingw-binary
+macos-clang-build
+macos-clang-binary
+android-arm64-clang-build
+android-arm64-clang-binary
+@SG_ENDCODEBLK
+The -binary files are what we want, so we should download them. To comply with licensing, you need to download the qt-source-code and sgextn-source-code also. You can make a release with these files.
+For actual apps that you intend to distribute, you should sign the binaries if possible, for MacOS and Android you should also consider using their official application distribution platforms.
+@SG_ML_BLANKLINE
+To make a release, first click "Draft a new release" in the releases tab. The releases tab should be on the right hand side menu of the code tab. You can then write the release according to the instructions there.
+For the tag, choose "create new tag" and make the tag name "v" followed by the version number, so something like v2.0.0 makes sense. The title should be the application name followed by the tag. You can write a short description for the release describing what it is about, and if there is a previous version, what changed. Remember to upload all the files along with the release.
+@SG_ML_BLANKLINE
+You have now successfully completed the tutorial.

@@ -20,7 +20,7 @@ Name of the folder where your application stores data. This must be set in the e
 @SG_FUNC static SGXString pathToAppIcon;
 Path to the application icon which is shown when users run the application. This must be set in the entry point.
 @SG_NOTE Setting this after the entry point has no effect.
-@SG_WARN The matching file must exist in the resource system. To ensure that, use relevant CMake commands. @SG_FINDREP_RESOURCE
+@SG_WARN The matching file must exist in the resource system. To ensure that, put the app icon in the resources folder. @SG_FINDREP_RESOURCE
 @SG_WARN If the icon file cannot be found, this is undefined behaviour. However not setting this does not cause undefined behaviour.
 @SG_FUNC static void (*interpretCmdArgs)(int, char**);
 Function pointer to function interpreting command line arguments. This must be set in the entry point.

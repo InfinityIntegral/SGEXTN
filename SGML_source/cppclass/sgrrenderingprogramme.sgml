@@ -13,9 +13,8 @@ provides interface for custom renderers to interact with the rendering pipeline
 @SG_ML_L016019implementation details#sg_implementationdetails
 @SG_ML_BLANKLINE
 preprocessor file inclusion directive: #include ‹SGRRenderingProgramme.h›
-CMake commands:
-&#9;find_package(@SG_ML_L006010SGEXTN../readme/readme REQUIRED COMPONENTS @SG_ML_L005010SG_RI../modules/sg_ri)
-&#9;target_link_libraries(yourCMakeTarget PRIVATE @SG_ML_L00D010SGEXTN::SG_RI../modules/sg_ri)
+CMake target for BuildLah: @SG_ML_L00D010SGEXTN::SG_RI../modules/sg_ri
+see @SG_ML_L009015this link../tutorials/buildlah for more information about BuildLah
 parent class: (none)
 children classes: (none)
 @SG_ML_BLANKLINE
@@ -92,8 +91,7 @@ Completes registering vertex related properties.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_setShaderQSBFiles_const_SGXString_ref_const_SGXString_ref_ void @SG_ML_L011040setShaderQSBFiles#void_setShaderQSBFiles_const_SGXString_ref_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& vertexShaderPath, const @SG_ML_L009009SGXStringsgxstring& fragmentShaderPath);
 Sets this @SG_ML_L015021SGRRenderingProgramme../cppclass/sgrrenderingprogramme to use the vertex shader at @SG_ML_B010vertexShaderPath and the fragment shader at @SG_ML_B012fragmentShaderPath.
-@SG_ML_WARN The shaders must be pre compiled using the Qt shader binary compiler. To ensure that, use relevant CMake commands. For more information about compiling and using shaders, see this @SG_ML_L008014tutorial../tutorials/shaders.
-@SG_ML_WARN The matching file must exist in the resource system. To ensure that, use relevant CMake commands. For more information about the resource system, see this @SG_ML_L008016tutorial../tutorials/resources.
+@SG_ML_WARN The compiled shader must exist in the resource system. To ensure that, put the shader GLSL source code in the shaders folder. For more information about compiling and using shaders, see this @SG_ML_L008014tutorial../tutorials/shaders.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_updateDataBuffer_SGRDataBuffer_ptr_int_int_void_ptr_const_ void @SG_ML_L010040updateDataBuffer#void_updateDataBuffer_SGRDataBuffer_ptr_int_int_void_ptr_const_(@SG_ML_L00D00DSGRDataBuffersgrdatabuffer* buffer, int startLocation, int dataSize, void* pointerToData) const;
 Uploads @SG_ML_B008dataSize bytes of data from @SG_ML_B00DpointerToData to an offset of @SG_ML_B00DstartLocation bytes into the buffer @SG_ML_B006buffer.

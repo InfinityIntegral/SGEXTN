@@ -1,0 +1,133 @@
+@SG_OTHERFILE_tutorials/full05 Full Tutorial Part 5
+See @SG_ML_L004006herefull04 for the previous part of the tutorial.
+In the previous part, we debugged and tested the introduction page.
+@SG_ML_BLANKLINE
+@SG_ML_HEADER_ building the options page
+If we look back at our features list, we need to let the user choose how the app will display stuff. So we can build that UI page now.
+Before we actually start coding, we should first plan out what the UI page should look like.
+Since we want the user to see all options and not click submit without knowing that there are more things to change, we can put the submit button inside the scroll view.
+The page background can then be a SGWScrollView that contains all the UI, and with the submit button at the bottom.
+We can let the UI look like this, the [] indicate the type of element and the w() indicate the 0 coordinate of the @SG_FINDREP_WDIST of the top edge of the UI element from the top of the scroll view.
+@SG_STARTCODEBLK
+Preferences [title] w(0.5)
+use preset [button] w(2.5)
+foreground colour [label + colour picker] w(4.5)
+background colour (choose from below) [label] w(6.0)
+custom [button + colour picker] w(7.5)
+complementary / H / S / L [4 buttons] w(8.5)
+choose pattern [label] w(10.5)
+circle / regular polygon [2 buttons] w(12.0)
+star / fractal [2 buttons] w(13.0)
+number of sides: input [label + input field with validation] w(14.5)
+save current setting as preset [button] w(17.0)
+save preferences and continue [button] w(18.5)
+[end scroll view] w(20.0)
+@SG_ENDCODEBLK
+@SG_ML_BLANKLINE
+Now that we know what our UI for this page should look like, we can write a function to create it. We will put this in a new class, SGCLPOptionsPage, and call the function SGCLPOptionsPage::initialise. The process of creating a class is similar to what we have done with SGCLPIntroductionPage.
+Similar to last time, we also define SGCLPOptionsPage::instance to be a pointer to the page background. and SGCLPOptionsPage::activate which can be used as a @SG_FINDREP_FUNCPTR to turn on the page.
+Do not forget to add the source file to your CMakeLists.txt.
+Note that we have to store pointers to everything accepting user input, including colour pickers and selectable buttons and input fields, as we will need to retrieve this input later. Also store pointers to stuff that you will need to dynamically turn on and off.
+Remember to declare all static variables in the source file, if not the linker will complain.
+We can declare and implement the static member function SGCLPIntroductionPage::terminate, also used as a @SG_FINDREP_FUNCPTR, which turns off the introduction page and turns on the options page.
+@SG_STARTCODEBLK
+void SGCLPIntroductionPage::terminate(){
+    SGWBackground::disable(SGCLPIntroductionPage::instance);
+    SGCLPOptionsPage::activate();
+}
+@SG_ENDCODEBLK
+We then go to SGCLPIntroductionPage and change the @SG_FINDREP_FUNCPTR attached to the "continue" button from nullptr to &SGCLPOptionsPage::activate, like in the code below.
+@SG_STARTCODEBLK
+new SGWTextButton(bg, "continue", &SGCLPIntroductionPage::terminate, 0.0f, 0.0f, 1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f);
+@SG_ENDCODEBLK
+It is very likely that some of the UI elements are misplaced on the first try, you can fix this easily by adjusting the @SG_FINDREP_WDIST that you entered. The proper code is presented below for you to check against your work.
+@SG_ML_BLANKLINE
+include/SGCLPOptionsPage.h
+@SG_STARTCODEBLK
+#ifndef SGCLPOPTIONSPAGE_H
+#define SGCLPOPTIONSPAGE_H
+
+class SGWColourPickerWidget;
+class SGWButton;
+class SGWInput;
+class SGWBackground;
+class SGCLPOptionsPage {
+public:
+    static SGWBackground* instance;
+    static SGWBackground* initialise();
+    static void activate();
+    static SGWColourPickerWidget* foregroundColourPicker;
+    static SGWButton* backgroundUseCustomButton;
+    static SGWColourPickerWidget* backgroundColourPicker;
+    static SGWButton* backgroundUseComplementaryButton;
+    static SGWButton* backgroundComplementaryHueButton;
+    static SGWButton* backgroundComplementarySaturationButton;
+    static SGWButton* backgroundComplementaryLightnessButton;
+    static SGWButton* patternCircleButton;
+    static SGWButton* patternPolygonButton;
+    static SGWButton* patternStarButton;
+    static SGWButton* patternFractalButton;
+    static SGWInput* polygonSideCountInput;
+};
+
+#endif // SGCLPOPTIONSPAGE_H
+@SG_ENDCODEBLK
+src/SGCLPOptionsPage.cpp
+@SG_STARTCODEBLK
+#include <SGCLPOptionsPage.h>
+#include <SGWBackground.h>
+#include <SGWWidget.h>
+#include <SGWScrollView.h>
+#include <SGWTextLabel.h>
+#include <SGWHorizontalAlignment.h>
+#include <SGWTextButton.h>
+#include <SGWColourPickerWidget.h>
+#include <SGXColourRGBA.h>
+#include <SGWTextInput.h>
+
+SGWBackground* SGCLPOptionsPage::instance = nullptr;
+SGWColourPickerWidget* SGCLPOptionsPage::foregroundColourPicker = nullptr;
+SGWButton* SGCLPOptionsPage::backgroundUseCustomButton = nullptr;
+SGWColourPickerWidget* SGCLPOptionsPage::backgroundColourPicker = nullptr;
+SGWButton* SGCLPOptionsPage::backgroundUseComplementaryButton = nullptr;
+SGWButton* SGCLPOptionsPage::backgroundComplementaryHueButton = nullptr;
+SGWButton* SGCLPOptionsPage::backgroundComplementarySaturationButton = nullptr;
+SGWButton* SGCLPOptionsPage::backgroundComplementaryLightnessButton = nullptr;
+SGWButton* SGCLPOptionsPage::patternCircleButton = nullptr;
+SGWButton* SGCLPOptionsPage::patternPolygonButton = nullptr;
+SGWButton* SGCLPOptionsPage::patternStarButton = nullptr;
+SGWButton* SGCLPOptionsPage::patternFractalButton = nullptr;
+SGWInput* SGCLPOptionsPage::polygonSideCountInput = nullptr;
+
+void SGCLPOptionsPage::activate(){
+    SGWBackground::enable(SGCLPOptionsPage::instance, &SGCLPOptionsPage::initialise, nullptr);
+}
+
+SGWBackground* SGCLPOptionsPage::initialise(){
+    SGWBackground* bg = new SGWScrollView(SGWWidget::parentWidget, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 20.0f, 0.0f, 0.5f, 8);
+    new SGWTextLabel(bg, "Preferences", 0.0f, 0.5f, 0.0f, 0.5f, 1.0f, -1.0f, 0.0f, 1.5f, SGWHorizontalAlignment::Center, false);
+    new SGWTextButton(bg, "use preset", nullptr, 0.0f, 0.5f, 0.0f, 2.5f, 1.0f, -1.0f, 0.0f, 1.0f);
+    new SGWTextLabel(bg, "foreground colour:", 0.0f, 0.5f, 0.0f, 4.5f, 0.5f, -0.6f, 0.0f, 1.0f, SGWHorizontalAlignment::Right, false);
+    SGCLPOptionsPage::foregroundColourPicker = new SGWColourPickerWidget(bg, 0.5f, 0.1f, 0.0f, 4.5f, 0.5f, -0.6f, 0.0f, 1.0f, SGXColourRGBA(255, 0, 200));
+    new SGWTextLabel(bg, "background colour (choose from below)", 0.0f, 0.5f, 0.0f, 6.0f, 1.0f, -1.0f, 0.0f, 1.0f, SGWHorizontalAlignment::Center, false);
+    SGCLPOptionsPage::backgroundColourPicker = new SGWColourPickerWidget(bg, 0.5f, 0.0f, 0.0f, 7.5f, 0.5f, -0.5f, 0.0f, 1.0f, SGXColourRGBA(255, 255, 255));
+    SGCLPOptionsPage::backgroundUseCustomButton = new SGWTextButton(bg, "custom", nullptr, 0.0f, 0.5f, 0.0f, 7.5f, 0.5f, -0.5f, 0.0f, 1.0f);
+    SGCLPOptionsPage::backgroundComplementaryHueButton = new SGWTextButton(bg, "H", nullptr, 0.5f, 0.0f, 0.0f, 8.5f, 1.0f / 6.0f, -1.0f / 6.0f, 0.0f, 1.0f);
+    SGCLPOptionsPage::backgroundComplementarySaturationButton = new SGWTextButton(bg, "S", nullptr, 2.0f / 3.0f, -1.0f / 6.0f, 0.0f, 8.5f, 1.0f / 6.0f, -1.0f / 6.0f, 0.0f, 1.0f);
+    SGCLPOptionsPage::backgroundComplementaryLightnessButton = new SGWTextButton(bg, "L", nullptr, 5.0f / 6.0f, -1.0f / 3.0f, 0.0f, 8.5f, 1.0f / 6.0f, -1.0f / 6.0f, 0.0f, 1.0f);
+    SGCLPOptionsPage::backgroundUseComplementaryButton = new SGWTextButton(bg, "complementary", nullptr, 0.0f, 0.5f, 0.0f, 8.5f, 1.0f, -1.0f, 0.0f, 1.0f);
+    new SGWTextLabel(bg, "choose pattern", 0.0f, 0.5f, 0.0f, 10.5f, 1.0f, -1.0f, 0.0f, 1.0f, SGWHorizontalAlignment::Center, false);
+    SGCLPOptionsPage::patternCircleButton = new SGWTextButton(bg, "circle", nullptr, 0.0f, 0.5f, 0.0f, 12.0f, 0.5f, -0.5f, 0.0f, 1.0f);
+    SGCLPOptionsPage::patternPolygonButton = new SGWTextButton(bg, "regular polygon", nullptr, 0.5f, 0.0f, 0.0f, 12.0f, 0.5f, -0.5f, 0.0f, 1.0f);
+    SGCLPOptionsPage::patternStarButton = new SGWTextButton(bg, "star", nullptr, 0.0f, 0.5f, 0.0f, 13.0f, 0.5f, -0.5f, 0.0f, 1.0f);
+    SGCLPOptionsPage::patternFractalButton = new SGWTextButton(bg, "fractal", nullptr, 0.5f, 0.0f, 0.0f, 13.0f, 0.5f, -0.5f, 0.0f, 1.0f);
+    new SGWTextLabel(bg, "number of vertices:", 0.0f, 0.5f, 0.0f, 14.5f, 0.5f, -0.6f, 0.0f, 1.0f, SGWHorizontalAlignment::Right, false);
+    new SGWTextLabel(bg, "(not applicable)", 0.5f, 0.1f, 0.0f, 14.5f, 0.5f, -0.6f, 0.0f, 1.0f, SGWHorizontalAlignment::Left, false);
+    SGCLPOptionsPage::polygonSideCountInput = new SGWTextInput(bg, nullptr, 0.5f, 0.1f, 0.0f, 14.5f, 0.5f, -0.6f, 0.0f, 1.0f);
+    new SGWTextButton(bg, "save current settings as preset", nullptr, 0.0f, 0.5f, 0.0f, 17.0f, 1.0f, -1.0f, 0.0f, 1.0f);
+    new SGWTextButton(bg, "save preferences and continue", nullptr, 0.0f, 0.5f, 0.0f, 18.5f, 1.0f, -1.0f, 0.0f, 1.0f);
+    return bg;
+}
+@SG_ENDCODEBLK
+@SG_ML_BLANKLINE
+See @SG_ML_L004006herefull06 for the next part of the tutorial.

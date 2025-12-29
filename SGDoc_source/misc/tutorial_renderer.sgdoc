@@ -43,7 +43,7 @@ All the code logic that you will write is only in the positions of the 2 comment
 Input variables are sourced from the vertex buffer object. This must include the coordinates of the vertices of the triangles.
 The output variables will be passed to the fragment shader. This can be used so that a pixel knows where it is inside the @SG_FINDREP_WIDGET.
 Since the renderer that we are building just draws a rectangle with some colours on it, the vertex shader will do nothing except telling the GPU where the triangles should be and sending the coordinates to the fragment shader. The triangles will not be transformed.
-We can replace the first commend with
+We can replace the first comment with
 @SG_STARTCODEBLK
 layout(location = 0) in vec2 vertex;
 layout(location = 0) out vec2 vertexUnits;
@@ -178,15 +178,9 @@ We have a uniform buffer object at binding point 0 called @SG_ML_B00DSG_RI_built
 The binding point indicates the location of the uniform buffer object.
 The @SG_ML_B00DSG_RI_builtin uniform buffer object must always be present and declared in exactly that form. @SG_ML_B009selection is our custom uniform buffer object which we can use to pass data to the shader.
 @SG_ML_BLANKLINE
-Now that we have our shaders ready, we can add them to our project. For more information about this step, you can see @SG_ML_L009007this linkshaders, but here is the CMake commands.
-@SG_STARTCODEBLK
-qt6_add_shaders(SG_RI SG_RI_shaders PREFIX "SGEXTN" BASE "SG_RI/assets" FILES
-    "SG_RI/assets/colourpicker.vert"
-    "SG_RI/assets/colourpicker.frag"
-)
-@SG_ENDCODEBLK
-This assumes that your vertex shader is at path SG_RI/assets/colourpicker.vert and your fragment shader is at path SG_RI/assets/colourpicker.frag
-After doing these, the shaders will be automatically compiled by QSB and you can access the compiled shaders at :/SGEXTN/colourpicker.vert.qsb and :/SGEXTN/colourpicker.frag.qsb respectively.
+Now that we have our shaders ready, we can add them to our project. For more information about this step, you can see @SG_ML_L009007this linkshaders, but essentially, they just need to be in the shaders folder.
+We can place the vertex shader at path shaders/colourpicker.vert and the fragment shader is at path shaders/colourpicker.frag
+After doing these, the shaders will be automatically compiled by QSB and you can access the compiled shaders at :/SGEXTN/colourpicker.vert.qsb and :/SGEXTN/colourpicker.frag.qsb respectively. This assumes that you are using "SGEXTN" for the resource system prefix. Again, see @SG_ML_L009007this linkshaders for more information.
 @SG_ML_BLANKLINE
 Finally we can work on the C++ side.
 We will need a renderer that uses GPU commands, and a syncer that sends information to the renderer. The renderer runs on a separate thread and it is not allowed to directly use information outside its thread, since that will cause data race.

@@ -1,0 +1,50 @@
+@SG_OTHERFILE_tutorials/full13 Full Tutorial Part 13
+See @SG_ML_L004006herefull12 for the previous part of the tutorial.
+In the previous part, we scanned our code using clang-tidy and committed to GitHub
+@SG_ML_BLANKLINE
+@SG_ML_HEADER_ building the progress bar
+The display page will show whatever pattern you chose in the options page for 10 seconds before going back to the options page for you to choose another pattern. During that 10 seconds, there will be a progress bar at the top of the display page to show how much time is left. In this part of the tutorial, we will be building the progress bar.
+We need to declare a variable inside include/SGCLPDisplayPage.h for the progress bar widget.
+Since we need to wait for 10 seconds before turning off the display page and we need to update the progress bar every second, we will need a SGXTimer instance and a int keeping track of the time already passed. That will need to be declared also. Additionally we need to declare the function that the SGXTimer runs automatically.
+@SG_STARTCODEBLK
+static int time;
+static SGXTimer* timer;
+static SGWWidget* progressBar;
+static void updateProgressBar();
+@SG_ENDCODEBLK
+We can modify the existing implementation of SGCLPDisplayPage::initialise to create the progress bar and start the timer.
+@SG_STARTCODEBLK
+SGWBackground* SGCLPDisplayPage::initialise(){
+    SGWBackground* bg = new SGWPageBackground(SGWWidget::parentWidget, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 8);
+    SGCLPDisplayPage::time = 0;
+    SGCLPDisplayPage::progressBar = new SGWBlankWidget(bg, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 6);
+    SGCLPDisplayPage::timer = new SGXTimer(1.0f, &SGCLPDisplayPage::updateProgressBar);
+    return bg;
+}
+@SG_ENDCODEBLK
+And then inside the SGCLPDisplayPage::updateProgressBar function which the timer calls every second, we can update the progress bar and turn off the page when time is up. When this page is disabled, we send the user back to the options page.
+@SG_STARTCODEBLK
+void SGCLPDisplayPage::updateProgressBar(){
+    SGCLPDisplayPage::time++;
+    (*SGCLPDisplayPage::progressBar).setW1(static_cast<float>(SGCLPDisplayPage::time) / 10.0f);
+    if(SGCLPDisplayPage::time == 10){
+        SGCLPDisplayPage::time = 0;
+        (*SGCLPDisplayPage::timer).deleteTimer();
+        SGCLPDisplayPage::progressBar = nullptr;
+        SGCLPDisplayPage::timer = nullptr;
+        SGWBackground::disable(SGCLPDisplayPage::instance);
+        SGCLPOptionsPage::activate();
+    }
+}
+@SG_ENDCODEBLK
+Again, we are using @SG_FINDREP_WDIST and SGWBackground::disable (opposite of SGWBackground::enable) here.
+Note how instead of directly deleting the timer object, we call SGXTimer::deleteTimer on it. This is because directly deleting it will lead to a use after free bug which is undefined behaviour, so to prevent it, a runtime error will be thrown if you try. SGXTimer::deleteTimer is the safe way to delete it.
+Testing through the UI a few times would reveal that it actually works.
+Now that the progress bar is done, we can commit our work onto GitHub.
+@SG_STARTCODEBLK
+git add .
+git commit -m "done progress bar"
+git push
+@SG_ENDCODEBLK
+@SG_ML_BLANKLINE
+See @SG_ML_L004006herefull14 for the next part of the tutorial.

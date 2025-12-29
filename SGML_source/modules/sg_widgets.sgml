@@ -2,9 +2,8 @@
 @SG_ML_PAGENAME SG_Widgets Module Documentation
 @SG_ML_TITLE SG_Widgets
 @SG_ML_L01E00Dlist of classes in this module#sg_classlist
-CMake commands:
-&#9;find_package(@SG_ML_L006010SGEXTN../readme/readme REQUIRED COMPONENTS SG_Widgets)
-&#9;target_link_libraries(yourCMakeTarget PRIVATE @SG_ML_L006010SGEXTN../readme/readme::SG_Widgets)
+CMake target for BuildLah: @SG_ML_L006010SGEXTN../readme/readme::SG_Widgets
+see @SG_ML_L009015this link../tutorials/buildlah for more information about BuildLah
 @SG_ML_BLANKLINE
 &#9;The SGWidget module provides access to the @SG_ML_L018015SGWidget ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/sgwidget system and allows you to build graphical user interfaces (GUIs). This is needed for all non command line applications.
 &#9;The SGWidget module uses Qt Quick internally to render, so all rendering is GPU accelerated and works on all GPUs. However, everything Qt is abstracted away, so you would never need to touch signal-slot, QML, or JavaScript. Note that @SG_ML_L018015SGWidget ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/sgwidget is a imperative, not declarative, GUI toolkit, making it more familiar to C++ developers. @SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback is used instead of signal-slot for event listening and callback functions.

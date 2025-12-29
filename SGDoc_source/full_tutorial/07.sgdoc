@@ -1,0 +1,38 @@
+@SG_OTHERFILE_tutorials/full07 Full Tutorial Part 7
+See @SG_ML_L004006herefull06 for the previous part of the tutorial.
+In the previous part, we wrote behaviours for the options page buttons controlling background mode.
+@SG_ML_BLANKLINE
+@SG_ML_HEADER_ writing options page behaviour (part 2)
+Next, we will write the behaviour for the "H", "S", and "L" under the "complementary" background colour mode. These simply need to tiggle when clicked. We can write 3 functions for the 3 buttons.
+However, there is actually a simpler way. @SG_FINDREP_WIDGET UI elements that are interactive always have 4 versions for every @SG_FINDREP_FUNCPTR. 1 takes nothing as argument, which is what we have been using so far (SGWButton::clickFunction). The other 3 takes a int (SGWButton::clickFunctionWithInt), a SGXString (SGWButton::clickFunctionWithString), and a pointer to the UI element (SGWButton::clickFunctionWithPointer) respectively.
+We can write a single function taking a pointer and simply toggles the selection state of whatever SGWButton that the pointer points to.
+
+First declare the function inside SGCLPOptionsPage
+@SG_STARTCODEBLK
+static void backgroundComplementaryChannelToggle(SGWButton* x);
+@SG_ENDCODEBLK
+then implement it
+@SG_STARTCODEBLK
+void SGCLPOptionsPage::backgroundComplementaryChannelToggle(SGWButton *x){
+    if((*x).getSelected() == true){(*x).setSelected(false);}
+    else{(*x).setSelected(true);}
+}
+@SG_ENDCODEBLK
+actually make the buttons use it when creating the buttons in SGCLPOptionsPage::initialise
+@SG_STARTCODEBLK
+SGCLPOptionsPage::backgroundComplementaryHueButton = new SGWTextButton(bg, "H", nullptr, 0.5f, 0.0f, 0.0f, 8.5f, 1.0f / 6.0f, -1.0f / 6.0f, 0.0f, 1.0f);
+(*SGCLPOptionsPage::backgroundComplementaryHueButton).clickFunctionWithPointer = &SGCLPOptionsPage::backgroundComplementaryChannelToggle;
+SGCLPOptionsPage::backgroundComplementarySaturationButton = new SGWTextButton(bg, "S", nullptr, 2.0f / 3.0f, -1.0f / 6.0f, 0.0f, 8.5f, 1.0f / 6.0f, -1.0f / 6.0f, 0.0f, 1.0f);
+(*SGCLPOptionsPage::backgroundComplementarySaturationButton).clickFunctionWithPointer = &SGCLPOptionsPage::backgroundComplementaryChannelToggle;
+SGCLPOptionsPage::backgroundComplementaryLightnessButton = new SGWTextButton(bg, "L", nullptr, 5.0f / 6.0f, -1.0f / 3.0f, 0.0f, 8.5f, 1.0f / 6.0f, -1.0f / 6.0f, 0.0f, 1.0f);
+(*SGCLPOptionsPage::backgroundComplementaryLightnessButton).clickFunctionWithPointer = &SGCLPOptionsPage::backgroundComplementaryChannelToggle;
+@SG_ENDCODEBLK
+and set up reasonable default choices in SGCLPOptionsPage::reset
+@SG_STARTCODEBLK
+(*SGCLPOptionsPage::backgroundComplementaryHueButton).setSelected(false);
+(*SGCLPOptionsPage::backgroundComplementarySaturationButton).setSelected(false);
+(*SGCLPOptionsPage::backgroundComplementaryLightnessButton).setSelected(true);
+@SG_ENDCODEBLK
+Testing the code confirms that it works.
+@SG_ML_BLANKLINE
+See @SG_ML_L004006herefull08 for the next part of the tutorial.

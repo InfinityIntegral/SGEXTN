@@ -1,0 +1,83 @@
+@SG_OTHERFILE_tutorials/full09 Full Tutorial Part 9
+See @SG_ML_L004006herefull08 for the previous part of the tutorial.
+In the previous part, we wrote behaviours for the options page buttons that select which pattern to use.
+@SG_ML_BLANKLINE
+@SG_ML_HEADER_ writing options page behaviour (part 4)
+We can now try to get the input field working and worry about presets later.
+The input field in the options page is used for the user to input how many vertices they want in their star or polygon. Obviously this must be a integer that is at least 3, so we need to detect if that is the case.
+@SG_ML_BLANKLINE
+SGEXTN input fields (SGWInput) have 3 @SG_FINDREP_FUNCPTR attached (not including versions that pass stuff in arguments), that is SGWInput::focusStartFunction, SGWInput::focusEndFunction, and SGWInput::textChangedFunction.
+SGWInput::focusStartFunction triggers when the user clicks into the input field, SGWInput::focusEndFunction triggers when the user clicks out of the input field, and SGWInput::textChangedFunction triggers when the text in the input field is edited.
+For input validation, SGWInput::focusEndFunction should be used. The @SG_FINDREP_FUNCPTR argument in the constructor actually exists for you to pass a SGWInput::focusEndFunction.
+@SG_ML_BLANKLINE
+In the @SG_FINDREP_FUNCPTR attached to the input field, we should check if the text inside represents a integer at least 3. If it is not, we should mark the input field as invalid using SGWInput::setInvalid and also show a warning below. Otherwise we hide the warning and mark the input field as not invalid.
+Before we implement the function, we first need to make a warning. A warning is just a SGWTextLabel with a darker colour, and can be created by passing true to the isWarning argument in the SGWTextLabel constructor.
+We declare a new variable in SGCLPOptionsPage
+@SG_STARTCODEBLK
+static SGWWidget* polygonSideCountWarning;
+@SG_ENDCODEBLK
+initialise it
+@SG_STARTCODEBLK
+SGWWidget* SGCLPOptionsPage::polygonSideCountWarning = nullptr;
+@SG_ENDCODEBLK
+and create it in SGCLPOptionsPage::initialise
+@SG_STARTCODEBLK
+SGCLPOptionsPage::polygonSideCountWarning = new SGWTextLabel(bg, "integer 3 or above", 0.5f, 0.1f, 0.0f, 15.5f, 0.5f, -0.6f, 0.0f, 0.75f, SGWHorizontalAlignment::Left, true);
+@SG_ENDCODEBLK
+Note that the font size is @SG_FINDREP_WDIST (0.0, 0.75) instead of the usual (0.0, 1.0). Also this is placed immediately below the input field. The warning is disabled upon creation and need to be manually enabled using SGWWidget::setItemVisibility when necessary.
+@SG_ML_BLANKLINE
+Then we can implement input validation.
+First we declare the function
+@SG_STARTCODEBLK
+static void polygonSideCountCheck();
+@SG_ENDCODEBLK
+We then change the line creating the input field in SGCLPOptionsPage::initialise to use the function
+@SG_STARTCODEBLK
+SGCLPOptionsPage::polygonSideCountInput = new SGWTextInput(bg, &SGCLPOptionsPage::polygonSideCountCheck, 0.5f, 0.1f, 0.0f, 14.5f, 0.5f, -0.6f, 0.0f, 1.0f);
+@SG_ENDCODEBLK
+then we give a reasonable default of 3 vertices in SGCLPOptionsPage::reset
+@SG_STARTCODEBLK
+(*SGCLPOptionsPage::polygonSideCountInput).setTextFromInt(3);
+@SG_ENDCODEBLK
+Note that SGWInput::setTextFromInt directly sets the string representation of a integer to the input field. There is also SGWInput::setTextFromFloat and the usual SGWInput::setTextFromString.
+Finally we implement the function. SGWInput::getTextAsInt has built in range validation. There is also SGWInput::getTextAsFloat and SGWInput::getTextAsString.
+@SG_STARTCODEBLK
+void SGCLPOptionsPage::polygonSideCountCheck(){
+    bool isValid = true;
+    (void)((*SGCLPOptionsPage::polygonSideCountInput).getTextAsInt(&isValid, 3, SGLIntLimits::maximum()));
+    if(isValid == false){
+        (*SGCLPOptionsPage::polygonSideCountInput).setInvalid(true);
+        (*SGCLPOptionsPage::polygonSideCountWarning).setItemVisibility(true);
+    }
+    else{
+        (*SGCLPOptionsPage::polygonSideCountInput).setInvalid(false);
+        (*SGCLPOptionsPage::polygonSideCountWarning).setItemVisibility(false);
+    }
+}
+@SG_ENDCODEBLK
+Note that in this code we use SGLIntLimits so we need to have
+@SG_STARTCODEBLK
+#include <SGLIntLimits.h>
+@SG_ENDCODEBLK
+SGLIntLimits, SGLFloatLimits, and SGLLongLongLimits give the numeric limits of each data type. That includes the maximum representable number, minimum representable number, accuracy, etc.
+@SG_ML_BLANKLINE
+This almost works, but after testing we find 1 issue. If the input field contained invalid text but then is disabled by choosing another pattern, the warning still shows. To fix this we can modify the enabling and disabling logic.
+@SG_STARTCODEBLK
+void SGCLPOptionsPage::patternSelect(SGWButton *x){
+    (*SGCLPOptionsPage::patternCircleButton).setSelected(false);
+    (*SGCLPOptionsPage::patternPolygonButton).setSelected(false);
+    (*SGCLPOptionsPage::patternStarButton).setSelected(false);
+    (*SGCLPOptionsPage::patternFractalButton).setSelected(false);
+    (*x).setSelected(true);
+    if((*x).attachedInt == 0){
+        (*SGCLPOptionsPage::polygonSideCountInput).setItemVisibility(false);
+        (*SGCLPOptionsPage::polygonSideCountWarning).setItemVisibility(false);
+    }
+    else{
+        (*SGCLPOptionsPage::polygonSideCountInput).setItemVisibility(true);
+        if((*SGCLPOptionsPage::polygonSideCountInput).getInvalid() == true){(*SGCLPOptionsPage::polygonSideCountWarning).setItemVisibility(true);}
+    }
+}
+@SG_ENDCODEBLK
+@SG_ML_BLANKLINE
+See @SG_ML_L004006herefull10 for the next part of the tutorial.

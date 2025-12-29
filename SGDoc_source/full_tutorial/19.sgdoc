@@ -1,0 +1,49 @@
+@SG_OTHERFILE_tutorials/full19 Full Tutorial Part 19
+See @SG_ML_L004006herefull18 for the previous part of the tutorial.
+In the previous part, we built the star display.
+@SG_ML_BLANKLINE
+@SG_ML_HEADER_ shaders (part 4)
+Now we will build the last component of the application, the fractal display.
+We will use the fragment shader to render a Mandelbrot set on a full screen quad. This is to demonstrate the capability of SG - RI custom renderers.
+The code on the C++ side will be really similar to the circle display except that there is no image texture this time. As practise, you can implement that yourself. We will be focusing on the shaders instead.
+@SG_ML_BLANKLINE
+@SG_STARTCODEBLK
+void main(){
+    gl_Position = vec4(vertex.x, vertex.y, 0.0f, 1.0f);
+    vertexCoords = vec2(2.0f * vertex.x - 1.0f, 2.0f * vertex.y - 1.0f);
+    if(SG_RI_builtin.width > SG_RI_builtin.height){vertexCoords = vec2(vertexCoords.x * SG_RI_builtin.width / SG_RI_builtin.height, vertexCoords.y);}
+    else{vertexCoords = vec2(vertexCoords.x, vertexCoords.y * SG_RI_builtin.height / SG_RI_builtin.width);}
+    vertexCoords = vec2(1.5f * vertexCoords.x - 0.5f, 1.5f * vertexCoords.y);
+
+    gl_Position = SG_RI_transform(gl_Position);
+}
+@SG_ENDCODEBLK
+The vertex shader is almost the same as the one used for the circle display, with only 1 difference. Instead of [-1.0, 1.0] on both directions being guranteed to be inside the display, we use [-2.0, 1.0] on the x axis and [-1.5, 1.5] on the y axis to fit the dimensions of the Mandelbrot set.
+@SG_ML_BLANKLINE
+And here is the fragment shader where the computation is done.
+@SG_STARTCODEBLK
+#version 310 es
+precision highp float;
+precision highp int;
+layout(std140, binding = 1) uniform data_{
+    vec4 foregroundColour;
+    vec4 backgroundColour;
+} data;
+
+layout(location = 0) in vec2 vertexCoords;
+layout(location = 0) out vec4 outColour;
+
+void main(){
+    vec2 currentValue = vec2(0.0f, 0.0f);
+    for(int i=0; i<500; i++){
+        currentValue = vec2(currentValue.x * currentValue.x - currentValue.y * currentValue.y, 2.0f * currentValue.x * currentValue.y) + vertexCoords;
+        if(currentValue.x * currentValue.x + currentValue.y * currentValue.y > 4.0f){break;}
+    }
+    if(currentValue.x * currentValue.x + currentValue.y * currentValue.y > 4.0f){outColour = data.backgroundColour;}
+    else{outColour = data.foregroundColour;}
+}
+@SG_ENDCODEBLK
+Note that GLSL also has conditionals and loops, just that using them slows down your shader slightly.
+Testing your application should show that the shader works as expected, so we can proceed with a final clang-tidy check and Git commit.
+@SG_ML_BLANKLINE
+See @SG_ML_L004006herefull20 for the next part of the tutorial.

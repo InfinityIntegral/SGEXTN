@@ -2,9 +2,8 @@
 @SG_ML_PAGENAME SG_Core Module Documentation
 @SG_ML_TITLE SG_Core
 @SG_ML_L01E00Dlist of classes in this module#sg_classlist
-CMake commands:
-&#9;find_package(@SG_ML_L006010SGEXTN../readme/readme REQUIRED COMPONENTS SG_Core)
-&#9;target_link_libraries(yourCMakeTarget PRIVATE @SG_ML_L006010SGEXTN../readme/readme::SG_Core)
+CMake target for BuildLah: @SG_ML_L006010SGEXTN../readme/readme::SG_Core
+see @SG_ML_L009015this link../tutorials/buildlah for more information about BuildLah
 @SG_ML_BLANKLINE
 &#9;This is the core SGEXTN module providing access to structs, the application entry point, and debugging.
 &#9;The module contains structs for colours in both RGBA and HSLA format, timestamps for date and time, 2 dimensional vectors, and identifiers with a registration system builtin. There is also a random number generator and a timer system that operates using @SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback.

@@ -1,0 +1,149 @@
+@SG_OTHERFILE_tutorials/buildlah BuildLah Tutorial
+BuildLah is SGEXTN's system of CMake macros combined with a collection of GitHub Actions reusable actions that simplify building and packaging applications. This tutorial will cover all these features.
+@SG_ML_BLANKLINE
+@SG_ML_HEADER_ Contents
+@SG_ML_L015006BuildLah CMake macros#cmake
+@SG_ML_L017007BuildLah GitHub Actions#github
+@SG_ML_BLANKLINE
+@SG_ML_HEADER_cmake BuildLah CMake macros
+Before you can use BuildLah, you first have to set it up so that it can be used by CMake. This can be done using the following commands.
+@SG_STARTCODEBLK
+cmake_minimum_required(VERSION 3.21 FATAL_ERROR)
+find_package(SGEXTN)
+BuildLah_use_default_settings()
+project([your project name] VERSION [your project version] LANGUAGES CXX)
+BuildLah_find_dependencies()
+@SG_ENDCODEBLK
+Remember to replace [your project name] and [your project version] with the actual project name and version.
+You are strongly recommended to set the CMake behaviour to 3.21 as BuildLah was tested using that version. Using other versions can cause issues with the build.
+There is no need to set any CMake setting manually or patch improperly configured Qt CMake targets, that is done automatically. Finding the Qt and SGEXTN targets is also done automatically and there is no need for additional find_package commands unless you intend to use additional Qt modules or 3rd party libraries.
+If you want to specify a specific path to SGEXTN, you can directly include the SG_ALL_Targets.cmake file instead of running find_package, though normally that should not be necessary unless your copy of SGEXTN is improperly installed.
+@SG_ML_BLANKLINE
+Next we can use the BuildLah_add_component macro to define targets. The syntax is
+BuildLah_add_component(TARGET_NAME TARGET_TYPE ROOT_FOLDER BUILD_DEFINE USE_DEFINE RESOURCE_PREFIX DEPENDENCY1 DEPENDENCY2 DEPENDENCY3 ...)
+TARGET_NAME - name of the CMake target created, make sure that you do not have 2 targets with the same name
+TARGET_TYPE - GUI for normal applications, CLI for command line applications, and DLL for shared libraries (on all platforms, not just Windows)
+ROOT_FOLDER - root folder of this CMake target, this will determine where BuildLah searches for relevant files
+BUILD_DEFINE - preprocessor #define directive defined when compiling source files in the CMake target, this can be used to export shared library symbols
+USE_DEFINE - preprocessor #define directive defined when compiling source files in CMake targets that link to this CMake target, this can be used to import shared library symbols
+RESOURCE_PREFIX - prefix used in the resource system, the resource file ROOT_FOLDER/resources/something.png will be accessible in the resource system as :/RESOURCE_PREFIX/something.png, the shader ROOT_FOLDER/shaders/something.vert will be accessible in the resource system as :/RESOURCE_PREFIX/something.vert.qsb
+DEPENDENCY1 DEPENDENCY2 DEPENDENCY3 ... - space separated list of shared libraries to link to, can be empty if there is no need to link to anything, the Standard Template Library is always linked by default and does not have to be included here
+@SG_ML_BLANKLINE
+BuildLah defines 4 special folders, the headers folder at ROOT_FOLDER/include, the sources folder at ROOT_FOLDER/src, the resources folder at ROOT_FOLDER/resources, and the shaders folder at ROOT_FOLDER/shaders. All files in the headers folder will be made available for the preprocessor include directive, all files in the sources folder will be compiled, all files in the resources folder will be added to the resource system, and all files in the shaders folder will be compiled as GLSL shaders and added to the resource system.
+If files change in any of the 4 folders, the build commands will be updated automatically. There is no need to manually reconfigure CMake.
+If something is not supposed to be included in the build, do not put it in any of the 4 folders. If you really want to, you can put it inside ROOT_FOLDER/others, but it is best to not put it in ROOT_FOLDER at all.
+This version of BuildLah does not support preparing the build results for installation, support may be added in a future version.
+@SG_ML_BLANKLINE
+To build the SGEXTN app for testing locally, simply click the "build" or "run" button at the bottom left of Qt Creator. Note that this will not package the application properly and it should not be distributed. To build and package your application for distribution, use the BuildLah GitHub Actions instead.
+@SG_ML_BLANKLINE
+@SG_ML_HEADER_github BuildLah GitHub Actions
+There is also a collection of GitHub Actions provided as part of BuildLah and they should be used to build and package applications for distribution. Using the BuildLah GitHub Actions ensures a consistent build environment. Starting from likely SGEXTN version 6.4.0, the application will also be tested.
+To use these GitHub Actions, you will need to write a workflow that invokes the BuildLah workflow. This should be in a file .github/workflows/build.yaml in the repository. The script should look like this.
+@SG_STARTCODEBLK
+name: build app
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    uses: InfinityIntegral/SGEXTN/.github/workflows/BuildLah.yaml@main
+    with:
+      app-name: ...
+      app-version: ...
+      qt-version: ...
+      cmake-target-name: ...
+      user-facing-app-name: ...
+      user-facing-app-version: ...
+      app-icon: ...
+      user-facing-organisation-name: ...
+      bundle-id: ...
+      app-category: ...
+      licensing: ...
+      license-file: ...
+      app-description: ...
+      platforms: ...
+@SG_ENDCODEBLK
+Remember to replace the ... with the actual value for each input. The meaning of each input is shown below.
+@SG_STARTCODEBLK
+inputs:
+  app-name:
+    required: true
+    description: name of your application executable, example my-application
+    type: string
+  app-version:
+    required: true
+    description: version number of your application, example 1.0.0
+    type: string
+  qt-version:
+    required: true
+    description: version of Qt to use, it is preferred that this matches the Qt version you have on your development machine, example 6.10.1
+    type: string
+  cmake-target-name:
+    required: true
+    description: name of CMake target for your application executable, this is used to locate the executable, the executable will be renamed after that
+    type: string
+  user-facing-app-name:
+    required: true
+    description: application name as how you want the user to see it, this does not need to be a valid file name, example My Application
+    type: string
+  user-facing-app-version:
+    required: true
+    description: application version as how you want the user to see it, this does not need to be numerical, example version 1.0.0
+    type: string
+  app-icon:
+    required: true
+    description: location of the application icon PNG image as a path in your GitHub repository, example resources/icon.png
+    type: string
+  user-facing-organisation-name:
+    required: true
+    description: your organisation name as how you want the user to see it, example 05524F.sg
+    type: string
+  bundle-id:
+    required: true
+    description: application bundle identifier, only used on MacOS, iOS, and Android, must be a reverse URL style dot separated list, with every entry containing only lowercase letters and numbers and must start with a lowercase letter, example sg.singapore05524f.myapplication
+    type: string
+  app-category:
+    required: true
+    description: one from the list AudioVideo, Audio, Video, Development, Education, Game, Graphics, Network, Office, Science, Settings, System, Utility, only used on Linux, example Utility
+    type: string
+  licensing:
+    required: true
+    description: software licensing for your application, you are strongly recommended to use General Public License version 3 (GPLv3), the license file from your GitHub repository will always be copied regardless of this input, example GPLv3
+    type: string
+  license-file:
+    required: true
+    description: path to the license file in your GitHub repository, typically LICENSE.txt, example LICENSE.txt
+    type: string
+  app-description:
+    required: true
+    description: a short explanatory note to the user what the app is about
+    type: string
+  platforms:
+    required: true
+    description: space separated list of platforms to build for paired with compiler to use, each job in this workflow corresponds to a supported platform, example linux-gcc windows-llvm-mingw
+    type: string
+@SG_ENDCODEBLK
+@SG_ML_BLANKLINE
+After this finishes running, if your code compiles successfully, you should see a [platform]-binary and a [platform]-build artifact produced for each platform that you selected. The [platform]-binary artifact is the output of the build process, and the [platform]-build artifact is included for debugging purposes.
+For Windows: the [platform]-binary zip file can be distributed directly, though you may want to sign it first if you have the relevant certificates so that user machines do not complain
+For MacOS: you must sign the .app bundle inside the unzipped [platform]-binary folder and distribute the bundle through the App Store
+For Linux: the [platform]-binary zip file can be distributed directly
+For Android: the APK in the unzipped [platform]-binary folder can be distributed directly since it was signed with a debug key, but it is recommended that you re sign it with a real key. For distribution via Google Play, build for Android AAB instead
+For Android AAB: you must sign the AAB in the unzipped [platform]-binary folder and distribute it through Google Play
+For iOS: currently unsupported as 05524F does not have a Apple Developer subscription and cannot test it
+For WebASM: currently unsupported due to licensing concerns, support may be added in future if SGEXTN gets dual licensed between LGPL and GPL
+@SG_ML_BLANKLINE
+You should pass a space separated list of platform names to the platforms input. The list of all currently supported platforms is below.
+linux-gcc: Linux AMD64, uses builtin compiler, compatible with anything with glibc newer than or equal to the one on Ubuntu 22.04
+linux-arm-gcc: Linux ARM64, uses builtin compiler, compatible with anything with glibc newer than or equal to the one on Ubuntu 24.04
+macos-clang: MacOS, uses AppleClang compiler, compatible with both Intel and Apple Silicon Macs
+windows-llvm-mingw: Windows AMD64, uses LLVM-MinGW compiler that comes with Windows Qt
+windows-mingw: Windows AMD64, uses MinGW compiler that comes with Windows Qt
+windows-msvc: Windows AMD64, uses MSVC compiler that comes with Windows Qt
+windows-arm-msvc: Windows ARM64, uses MSVC compiler that comes with Windows Qt
+android-arm64-clang: Android ARM64, uses Android SDK + NDK
+android-arm32clang: Android ARM32, uses Android SDK + NDK
+android-amd64-clang: Android AMD64, uses Android SDK + NDK
+android-amd32-clang: Android AMD32, uses Android SDK + NDK
+android-aab-clang: Android AAB for Google Play, uses Android SDK + NDK

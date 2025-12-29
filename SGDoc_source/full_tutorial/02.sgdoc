@@ -1,0 +1,43 @@
+@SG_OTHERFILE_tutorials/full02 Full Tutorial Part 2
+See @SG_ML_L004006herefull01 for the previous part of the tutorial.
+In the previous part, we set up our CMakeLists.txt
+@SG_ML_BLANKLINE
+@SG_ML_HEADER_ writing main.cpp
+Now we can click the run button on the bottom left of Qt Creator which looks like a green triangle.
+@SG_STARTCODEBLK
+:-1: error: ld.lld: error: undefined symbol: WinMain
+@SG_ENDCODEBLK
+oh... We forgot to write the main function... That was blur...
+@SG_ML_BLANKLINE
+The main function in SGEXTN apps must use the SGEXTN entry point. If you have not done so already, first read this tutorial @SG_ML_L00400Ahereentrypoint.
+For now, we just want to confirm that the CMake works, so we will not specify SGXCentral::customInitialise.
+@SG_STARTCODEBLK
+#include <SGEXTN_EntryPoint.h>
+#include <SGXCentral.h>
+
+void init(){
+    SGXCentral::applicationName = "Colours++ - a SGEXTN demo app";
+    SGXCentral::applicationVersion = "v2.0.0";
+    SGXCentral::organisationName = "05524F.sg (Singapore)";
+    SGXCentral::folderName = "ColoursPlusPlus";
+}
+
+int main(int argc, char** argv){
+    return SGEXTN(argc, argv, &init);
+}
+@SG_ENDCODEBLK
+This code should go to src/main.cpp, since it is in the sources folder, @SG_FINDREP_BUILDLAH ensures that it is automatically added to the CMake target.
+We just set the basic information of our app using SGXCentral static variables in our entry point for now. We can then click the "run" button.
+If you see a window appearing, it means we did everything correctly. Excellent.
+Fun fact: did you know that the status bar timer in every SGEXTN app displays the amount of time since the independence of Singapore in years?
+@SG_ML_BLANKLINE
+Having a working SGEXTN powered window is a great achievement, so we should commit it onto Git. We use these commands below.
+@SG_STARTCODEBLK
+git add .
+git commit -m "initialise repository"
+git push
+@SG_ENDCODEBLK
+The add command adds all your changes to the stage, which is the group of changes to be committed. The commit command actually commits the changes, and the -m allows you to write a commit message describing what this commit is about. The push command syncs the remote repository (GitHub) with the copy on your computer.
+In future parts of the tutorial, we will not be going through how to commit to Git again, instead the instructions would be something like "commit this to Git".
+@SG_ML_BLANKLINE
+See @SG_ML_L004006herefull03 for the next part of the tutorial.

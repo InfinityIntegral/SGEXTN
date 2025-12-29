@@ -13,9 +13,8 @@ provides infromation about the type of a @SG_ML_L018015SGWidget ⁽㈳㈴㈳㈮�
 @SG_ML_L016019implementation details#sg_implementationdetails
 @SG_ML_BLANKLINE
 preprocessor file inclusion directive: #include ‹SGWType.h›
-CMake commands:
-&#9;find_package(@SG_ML_L006010SGEXTN../readme/readme REQUIRED COMPONENTS @SG_ML_L00A015SG_Widgets../modules/sg_widgets)
-&#9;target_link_libraries(yourCMakeTarget PRIVATE @SG_ML_L012015SGEXTN::SG_Widgets../modules/sg_widgets)
+CMake target for BuildLah: @SG_ML_L012015SGEXTN::SG_Widgets../modules/sg_widgets
+see @SG_ML_L009015this link../tutorials/buildlah for more information about BuildLah
 parent class: (none)
 children classes: (none)
 @SG_ML_BLANKLINE

@@ -1,16 +1,9 @@
 @SG_OTHERFILE_tutorials/shaders Shader Compilation Tutorial
 This tutorial is about compiling shaders and including compiled shaders in the built application. For information about how to write shaders, see this @SG_ML_L008008tutorialrenderer instead.
 @SG_ML_BLANKLINE
-GLSL vertex and fragment shaders must be built using QSB, the Qt Shader Binary compiler, before they can be used with QRhi which is used by SGEXTN's @SG_FINDREP_RENDERER module. This process is very similar to adding resource files and it is assumed that you know how to add resource files. If not, read this @SG_ML_L008009tutorialresources first.
+GLSL vertex and fragment shaders must be built using QSB, the Qt Shader Binary compiler, before they can be used with QRhi which is used by SGEXTN's @SG_FINDREP_RENDERER module.
 Note that although you only write the shaders in GLSL, they are automatically translated to other shader languages by Qt for best performance across a wide range of hardware.
 Firstly, make sure you have QSB installed. You can check by opening the Qt Maintenance Tool and looking for "Qt Shader Tools" under "Additional Libraries" of your Qt version. If you do not have it installed yet, you need to install it.
-After that, add these to your CMake file.
-@SG_STARTCODEBLK
-find_package(Qt6 REQUIRED COMPONENTS ShaderTools)
-qt6_add_shaders(yourCMakeTarget shadersFileName PREFIX "prefix" BASE "shaders" FILES
-    "shaders/vertexshader.vert"
-    "shaders/fragmentshaders.frag"
-)
-@SG_ENDCODEBLK
-The shadersFileName, similar to assetsFileName for adding QRC resources, is not used in your code. You are recommended to leave it to the target name with "_shaders" added behind.
-The PREFIX and BASE behave identically to the corresponding arguments when adding QRC files. After shaders are compiled, the extension .qsb is added to their names. So after applying all changes to the file paths, shaders/vertexshader.vert would end up as prefix/vertexshader.vert.qsb in the resource file system and that path should be passed to SGRRenderingProgramme::setShaderQSBFiles.
+After that, you just have to put the shaders inside the shaders folder and @SG_FINDREP_BUILDLAH will do the rest. For more information pls see @SG_ML_L009008this linkbuildlah.
+@SG_ML_BLANKLINE
+If you are not using @SG_FINDREP_BUILDLAH, you can use the CMake command qt6_add_shaders to add shaders also, but that is more complicated and you will have to specify each file manually.

@@ -13,9 +13,8 @@ class controlling initialisation and termination of the application
 @SG_ML_L016019implementation details#sg_implementationdetails
 @SG_ML_BLANKLINE
 preprocessor file inclusion directive: #include ‹SGXCentral.h›
-CMake commands:
-&#9;find_package(@SG_ML_L006010SGEXTN../readme/readme REQUIRED COMPONENTS @SG_ML_L007012SG_Core../modules/sg_core)
-&#9;target_link_libraries(yourCMakeTarget PRIVATE @SG_ML_L00F012SGEXTN::SG_Core../modules/sg_core)
+CMake target for BuildLah: @SG_ML_L00F012SGEXTN::SG_Core../modules/sg_core
+see @SG_ML_L009015this link../tutorials/buildlah for more information about BuildLah
 parent class: (none)
 children classes: (none)
 @SG_ML_BLANKLINE
@@ -82,7 +81,7 @@ Name of your company or yourself. This must be set in the entry point.
 @SG_ML_HEADER_static_SGXString_pathToAppIcon_ static @SG_ML_L009009SGXStringsgxstring @SG_ML_L00D020pathToAppIcon#static_SGXString_pathToAppIcon_;
 Path to the application icon which is shown when users run the application. This must be set in the entry point.
 @SG_ML_NOTE Setting this after the entry point has no effect.
-@SG_ML_WARN The matching file must exist in the resource system. To ensure that, use relevant CMake commands. For more information about the resource system, see this @SG_ML_L008016tutorial../tutorials/resources.
+@SG_ML_WARN The matching file must exist in the resource system. To ensure that, put the app icon in the resources folder. For more information about the resource system, see this @SG_ML_L008016tutorial../tutorials/resources.
 @SG_ML_WARN If the icon file cannot be found, this is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour. However not setting this does not cause @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_void_ptr_setCustomTheme_func_ static void (*@SG_ML_L00E025setCustomTheme#static_void_ptr_setCustomTheme_func_)();

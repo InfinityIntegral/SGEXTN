@@ -2,9 +2,8 @@
 @SG_ML_PAGENAME SG_FileSystem Module Documentation
 @SG_ML_TITLE SG_FileSystem
 @SG_ML_L01E00Dlist of classes in this module#sg_classlist
-CMake commands:
-&#9;find_package(@SG_ML_L006010SGEXTN../readme/readme REQUIRED COMPONENTS SG_FileSystem)
-&#9;target_link_libraries(yourCMakeTarget PRIVATE @SG_ML_L006010SGEXTN../readme/readme::SG_FileSystem)
+CMake target for BuildLah: @SG_ML_L006010SGEXTN../readme/readme::SG_FileSystem
+see @SG_ML_L009015this link../tutorials/buildlah for more information about BuildLah
 @SG_ML_BLANKLINE
 &#9;The SGEXTN FileSystem modules allows you to interact with the file system, such as by reading, writing, creating, moving and deleting files. This module is primarily meant for binary files, though there is limited support for text files also.
 &#9;For anything that does not need to be directly edited by the user (essentially everything that is not a developer tool), binary file formats should be used for easier parsing and to save space.

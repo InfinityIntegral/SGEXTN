@@ -2,9 +2,8 @@
 @SG_ML_PAGENAME SG_Math Module Documentation
 @SG_ML_TITLE SG_Math
 @SG_ML_L01E00Dlist of classes in this module#sg_classlist
-CMake commands:
-&#9;find_package(@SG_ML_L006010SGEXTN../readme/readme REQUIRED COMPONENTS SG_Math)
-&#9;target_link_libraries(yourCMakeTarget PRIVATE @SG_ML_L006010SGEXTN../readme/readme::SG_Math)
+CMake target for BuildLah: @SG_ML_L006010SGEXTN../readme/readme::SG_Math
+see @SG_ML_L009015this link../tutorials/buildlah for more information about BuildLah
 @SG_ML_BLANKLINE
 &#9;The SGEXTN Math module provides mathematical operations, mathematical constants, and data type specific limits for int, float, and long long. This replaces the ‹cmath›, ‹numbers›, and ‹numeric_limits› Standard Template Library headers.
 &#9;Internally, the SGEXTN Math module uses these Standard Template Library headers, so the behaviour is identical. However, using the same functions through the SGEXTN Math module gives much cleaner header files and allow for significant speedup in clang-tidy passes.
