@@ -1,0 +1,533 @@
+name: workflow for building SGEXTN binaries
+
+on:
+  workflow_dispatch:
+
+env:
+  qt-version: 6.10.1
+  sgextn-version: 6.2.0
+
+jobs:
+  pull-source:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull source
+        uses: InfinityIntegral/SGEXTN/actions/pull_source@main
+        with:
+          qt-version: ${{env.qt-version}}
+
+  windows-llvm-mingw:
+    runs-on: windows-latest
+    steps:
+      - name: pull repository
+        uses: actions/checkout@v3
+
+      - name: install Qt
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: ${{env.qt-version}}
+          host: windows
+          target: desktop
+          dir: ${{github.workspace}}\..
+          cache: true
+          modules: qtshadertools
+          arch: win64_llvm_mingw
+          tools: 'tools_llvm_mingw1706 tools_cmake tools_ninja'
+
+      - name: build SGEXTN
+        shell: pwsh
+        run: |
+          mkdir build
+          cd build
+          cmake .. -G "Ninja" -DCMAKE_BUILD_TYPE=Release
+          cmake --build . --config Release
+          cd ..
+          cmake --install build --config Release --prefix SGEXTN_install
+
+      - name: upload binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: SGEXTN-v${{env.sgextn-version}}-windows-llvm-mingw
+          path: SGEXTN_install
+
+  windows-mingw:
+    runs-on: windows-latest
+    steps:
+      - name: pull repository
+        uses: actions/checkout@v3
+
+      - name: install Qt
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: ${{env.qt-version}}
+          host: windows
+          target: desktop
+          dir: ${{github.workspace}}\..
+          cache: true
+          modules: qtshadertools
+          arch: win64_mingw
+          tools: 'tools_mingw1310 tools_cmake tools_ninja'
+
+      - name: build SGEXTN
+        shell: pwsh
+        run: |
+          mkdir build
+          cd build
+          cmake .. -G "Ninja" -DCMAKE_BUILD_TYPE=Release
+          cmake --build . --config Release
+          cd ..
+          cmake --install build --config Release --prefix SGEXTN_install
+
+      - name: upload binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: SGEXTN-v${{env.sgextn-version}}-windows-mingw
+          path: SGEXTN_install
+
+  windows-msvc:
+    runs-on: windows-latest
+    steps:
+      - name: pull repository
+        uses: actions/checkout@v3
+
+      - name: install Qt
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: ${{env.qt-version}}
+          host: windows
+          target: desktop
+          dir: ${{github.workspace}}\..
+          cache: true
+          modules: qtshadertools
+          arch: win64_msvc2022_64
+          tools: 'tools_vcredist,qt.tools.vcredist_msvc2022_x64 tools_cmake tools_ninja'
+
+      - name: build SGEXTN
+        shell: cmd
+        run: |
+          call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+          mkdir build
+          cd build
+          cmake .. -G "Ninja" -DCMAKE_BUILD_TYPE=Release
+          cmake --build . --config Release
+          cd ..
+          cmake --install build --config Release --prefix SGEXTN_install
+
+      - name: upload binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: SGEXTN-v${{env.sgextn-version}}-windows-msvc
+          path: SGEXTN_install
+
+  windows-arm-msvc:
+    runs-on: windows-11-arm
+    steps:
+      - name: pull repository
+        uses: actions/checkout@v3
+
+      - name: install Qt
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: ${{env.qt-version}}
+          host: windows_arm64
+          target: desktop
+          dir: ${{github.workspace}}\..
+          cache: true
+          modules: qtshadertools
+          tools: 'tools_vcredist,qt.tools.vcredist_msvc2022_arm64 tools_cmake tools_ninja'
+
+      - name: build SGEXTN
+        shell: cmd
+        run: |
+          call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsarm64.bat"
+          mkdir build
+          cd build
+          cmake .. -G "Ninja" -DCMAKE_BUILD_TYPE=Release
+          cmake --build . --config Release
+          cd ..
+          cmake --install build --config Release --prefix SGEXTN_install
+
+      - name: upload binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: SGEXTN-v${{env.sgextn-version}}-windows-arm-msvc
+          path: SGEXTN_install
+
+  macos-clang:
+    runs-on: macos-latest
+    steps:
+      - name: pull repository
+        uses: actions/checkout@v3
+
+      - name: install Qt
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: ${{env.qt-version}}
+          host: mac
+          target: desktop
+          dir: ${{github.workspace}}/..
+          cache: true
+          modules: qtshadertools
+          tools: 'tools_cmake tools_ninja'
+
+      - name: build SGEXTN
+        shell: bash
+        run: |
+          mkdir build
+          cd build
+          cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" -DCMAKE_FIND_FRAMEWORK=LAST -DCMAKE_SYSTEM_NAME=Darwin ..
+          cmake --build . --config Release
+          cd ..
+          cmake --install build --config Release --prefix SGEXTN_install
+
+      - name: upload binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: SGEXTN-v${{env.sgextn-version}}-macos-clang
+          path: SGEXTN_install
+
+  linux-gcc:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: pull repository
+        uses: actions/checkout@v3
+
+      - name: install Qt
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: ${{env.qt-version}}
+          host: linux
+          target: desktop
+          dir: ${{github.workspace}}/..
+          cache: true
+          modules: qtshadertools
+          tools: 'tools_cmake tools_ninja'
+
+      - name: build SGEXTN
+        shell: bash
+        run: |
+          mkdir -p build
+          cd build
+          cmake .. -G "Ninja" -DCMAKE_BUILD_TYPE=Release
+          cmake --build . --config Release
+          cd ..
+          cmake --install build --config Release --prefix SGEXTN_install
+
+      - name: upload binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: SGEXTN-v${{env.sgextn-version}}-linux-gcc
+          path: SGEXTN_install
+
+  linux-arm-gcc:
+    runs-on: ubuntu-24.04-arm
+    steps:
+      - name: pull repository
+        uses: actions/checkout@v3
+
+      - name: install Qt
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: ${{env.qt-version}}
+          host: linux_arm64
+          target: desktop
+          dir: ${{github.workspace}}/..
+          cache: true
+          modules: qtshadertools
+          tools: 'tools_cmake tools_ninja'
+
+      - name: build SGEXTN
+        shell: bash
+        run: |
+          mkdir -p build
+          cd build
+          cmake .. -G "Ninja" -DCMAKE_BUILD_TYPE=Release
+          cmake --build . --config Release
+          cd ..
+          cmake --install build --config Release --prefix SGEXTN_install
+
+      - name: upload binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: SGEXTN-v${{env.sgextn-version}}-linux-arm-gcc
+          path: SGEXTN_install
+
+  android-arm64-clang:
+    runs-on: ubuntu-latest
+    steps:
+      - name: pull repository
+        uses: actions/checkout@v3
+
+      - name: install Ninja
+        shell: bash
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ninja-build
+
+      - name: install Qt
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: ${{env.qt-version}}
+          host: linux
+          target: android
+          dir: ${{github.workspace}}/..
+          cache: true
+          modules: qtshadertools
+          arch: android_arm64_v8a
+
+      - name: install Android SDK & NDK
+        uses: android-actions/setup-android@v3
+        with:
+          packages: platform-tools platforms;android-28 build-tools;36.0.0 ndk;27.2.12479018
+          log-accepted-android-sdk-licenses: false
+
+      - name: install Java SDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: install ImageMagick
+        shell: bash
+        run: |
+          sudo apt update
+          sudo apt install imagemagick
+
+      - name: build SGEXTN
+        shell: bash
+        run: |
+          cp -a ../Qt/${{env.qt-version}}/android_arm64_v8a/src/android/templates android
+          mkdir -p android/res/mipmap-ldpi
+          mkdir -p android/res/mipmap-mdpi
+          mkdir -p android/res/mipmap-hdpi
+          mkdir -p android/res/mipmap-xhdpi
+          mkdir -p android/res/mipmap-xxhdpi
+          mkdir -p android/res/mipmap-xxxhdpi
+          convert -size 1x1 xc:none android/res/mipmap-ldpi/icon.png
+          convert -size 1x1 xc:none android/res/mipmap-mdpi/icon.png
+          convert -size 1x1 xc:none android/res/mipmap-hdpi/icon.png
+          convert -size 1x1 xc:none android/res/mipmap-xhdpi/icon.png
+          convert -size 1x1 xc:none android/res/mipmap-xxhdpi/icon.png
+          convert -size 1x1 xc:none android/res/mipmap-xxxhdpi/icon.png
+          mkdir build
+          cd build
+          cmake .. -G "Ninja" -DANDROID_SDK_ROOT=/usr/local/lib/android/sdk -DANDROID_NDK_ROOT=/usr/local/lib/android/sdk/ndk/27.2.12479018 -DANDROID_ABI=arm64-v8a -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=/usr/local/lib/android/sdk/ndk/27.2.12479018/build/cmake/android.toolchain.cmake -DANDROID_PLATFORM=android-28
+          cmake --build . --config Release
+          cd ..
+          cmake --install build --config Release --prefix SGEXTN_install
+
+      - name: upload binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: SGEXTN-v${{env.sgextn-version}}-android-arm64-clang
+          path: SGEXTN_install
+
+  android-arm32-clang:
+    runs-on: ubuntu-latest
+    steps:
+      - name: pull repository
+        uses: actions/checkout@v3
+
+      - name: install Ninja
+        shell: bash
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ninja-build
+
+      - name: install Qt
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: ${{env.qt-version}}
+          host: linux
+          target: android
+          dir: ${{github.workspace}}/..
+          cache: true
+          modules: qtshadertools
+          arch: android_armv7
+
+      - name: install Android SDK & NDK
+        uses: android-actions/setup-android@v3
+        with:
+          packages: platform-tools platforms;android-28 build-tools;36.0.0 ndk;27.2.12479018
+          log-accepted-android-sdk-licenses: false
+
+      - name: install Java SDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: install ImageMagick
+        shell: bash
+        run: |
+          sudo apt update
+          sudo apt install imagemagick
+
+      - name: build SGEXTN
+        shell: bash
+        run: |
+          cp -a ../Qt/${{env.qt-version}}/android_armv7/src/android/templates android
+          mkdir -p android/res/mipmap-ldpi
+          mkdir -p android/res/mipmap-mdpi
+          mkdir -p android/res/mipmap-hdpi
+          mkdir -p android/res/mipmap-xhdpi
+          mkdir -p android/res/mipmap-xxhdpi
+          mkdir -p android/res/mipmap-xxxhdpi
+          convert -size 1x1 xc:none android/res/mipmap-ldpi/icon.png
+          convert -size 1x1 xc:none android/res/mipmap-mdpi/icon.png
+          convert -size 1x1 xc:none android/res/mipmap-hdpi/icon.png
+          convert -size 1x1 xc:none android/res/mipmap-xhdpi/icon.png
+          convert -size 1x1 xc:none android/res/mipmap-xxhdpi/icon.png
+          convert -size 1x1 xc:none android/res/mipmap-xxxhdpi/icon.png
+          mkdir build
+          cd build
+          cmake .. -G "Ninja" -DANDROID_SDK_ROOT=/usr/local/lib/android/sdk -DANDROID_NDK_ROOT=/usr/local/lib/android/sdk/ndk/27.2.12479018 -DANDROID_ABI=armeabi-v7a -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=/usr/local/lib/android/sdk/ndk/27.2.12479018/build/cmake/android.toolchain.cmake -DANDROID_PLATFORM=android-28
+          cmake --build . --config Release
+          cd ..
+          cmake --install build --config Release --prefix SGEXTN_install
+
+      - name: upload binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: SGEXTN-v${{env.sgextn-version}}-android-arm32-clang
+          path: SGEXTN_install
+
+  android-amd64-clang:
+    runs-on: ubuntu-latest
+    steps:
+      - name: pull repository
+        uses: actions/checkout@v3
+
+      - name: install Ninja
+        shell: bash
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ninja-build
+
+      - name: install Qt
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: ${{env.qt-version}}
+          host: linux
+          target: android
+          dir: ${{github.workspace}}/..
+          cache: true
+          modules: qtshadertools
+          arch: android_x86_64
+
+      - name: install Android SDK & NDK
+        uses: android-actions/setup-android@v3
+        with:
+          packages: platform-tools platforms;android-28 build-tools;36.0.0 ndk;27.2.12479018
+          log-accepted-android-sdk-licenses: false
+
+      - name: install Java SDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: install ImageMagick
+        shell: bash
+        run: |
+          sudo apt update
+          sudo apt install imagemagick
+
+      - name: build SGEXTN
+        shell: bash
+        run: |
+          cp -a ../Qt/${{env.qt-version}}/android_x86_64/src/android/templates android
+          mkdir -p android/res/mipmap-ldpi
+          mkdir -p android/res/mipmap-mdpi
+          mkdir -p android/res/mipmap-hdpi
+          mkdir -p android/res/mipmap-xhdpi
+          mkdir -p android/res/mipmap-xxhdpi
+          mkdir -p android/res/mipmap-xxxhdpi
+          convert -size 1x1 xc:none android/res/mipmap-ldpi/icon.png
+          convert -size 1x1 xc:none android/res/mipmap-mdpi/icon.png
+          convert -size 1x1 xc:none android/res/mipmap-hdpi/icon.png
+          convert -size 1x1 xc:none android/res/mipmap-xhdpi/icon.png
+          convert -size 1x1 xc:none android/res/mipmap-xxhdpi/icon.png
+          convert -size 1x1 xc:none android/res/mipmap-xxxhdpi/icon.png
+          mkdir build
+          cd build
+          cmake .. -G "Ninja" -DANDROID_SDK_ROOT=/usr/local/lib/android/sdk -DANDROID_NDK_ROOT=/usr/local/lib/android/sdk/ndk/27.2.12479018 -DANDROID_ABI=x86_64 -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=/usr/local/lib/android/sdk/ndk/27.2.12479018/build/cmake/android.toolchain.cmake -DANDROID_PLATFORM=android-28
+          cmake --build . --config Release
+          cd ..
+          cmake --install build --config Release --prefix SGEXTN_install
+
+      - name: upload binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: SGEXTN-v${{env.sgextn-version}}-android-amd64-clang
+          path: SGEXTN_install
+
+  android-amd32-clang:
+    runs-on: ubuntu-latest
+    steps:
+      - name: pull repository
+        uses: actions/checkout@v3
+
+      - name: install Ninja
+        shell: bash
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ninja-build
+
+      - name: install Qt
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: ${{env.qt-version}}
+          host: linux
+          target: android
+          dir: ${{github.workspace}}/..
+          cache: true
+          modules: qtshadertools
+          arch: android_x86
+
+      - name: install Android SDK & NDK
+        uses: android-actions/setup-android@v3
+        with:
+          packages: platform-tools platforms;android-28 build-tools;36.0.0 ndk;27.2.12479018
+          log-accepted-android-sdk-licenses: false
+
+      - name: install Java SDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: install ImageMagick
+        shell: bash
+        run: |
+          sudo apt update
+          sudo apt install imagemagick
+
+      - name: build SGEXTN
+        shell: bash
+        run: |
+          cp -a ../Qt/${{env.qt-version}}/android_x86/src/android/templates android
+          mkdir -p android/res/mipmap-ldpi
+          mkdir -p android/res/mipmap-mdpi
+          mkdir -p android/res/mipmap-hdpi
+          mkdir -p android/res/mipmap-xhdpi
+          mkdir -p android/res/mipmap-xxhdpi
+          mkdir -p android/res/mipmap-xxxhdpi
+          convert -size 1x1 xc:none android/res/mipmap-ldpi/icon.png
+          convert -size 1x1 xc:none android/res/mipmap-mdpi/icon.png
+          convert -size 1x1 xc:none android/res/mipmap-hdpi/icon.png
+          convert -size 1x1 xc:none android/res/mipmap-xhdpi/icon.png
+          convert -size 1x1 xc:none android/res/mipmap-xxhdpi/icon.png
+          convert -size 1x1 xc:none android/res/mipmap-xxxhdpi/icon.png
+          mkdir build
+          cd build
+          cmake .. -G "Ninja" -DANDROID_SDK_ROOT=/usr/local/lib/android/sdk -DANDROID_NDK_ROOT=/usr/local/lib/android/sdk/ndk/27.2.12479018 -DANDROID_ABI=x86 -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=/usr/local/lib/android/sdk/ndk/27.2.12479018/build/cmake/android.toolchain.cmake -DANDROID_PLATFORM=android-28
+          cmake --build . --config Release
+          cd ..
+          cmake --install build --config Release --prefix SGEXTN_install
+
+      - name: upload binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: SGEXTN-v${{env.sgextn-version}}-android-amd32-clang
+          path: SGEXTN_install

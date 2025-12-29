@@ -17,7 +17,7 @@ BuildLah_find_dependencies()
 Remember to replace [your project name] and [your project version] with the actual project name and version.
 You are strongly recommended to set the CMake behaviour to 3.21 as BuildLah was tested using that version. Using other versions can cause issues with the build.
 There is no need to set any CMake setting manually or patch improperly configured Qt CMake targets, that is done automatically. Finding the Qt and SGEXTN targets is also done automatically and there is no need for additional find_package commands unless you intend to use additional Qt modules or 3rd party libraries.
-If you want to specify a specific path to SGEXTN, you can directly include the SG_ALL_Targets.cmake file instead of running find_package, though normally that should not be necessary unless your copy of SGEXTN is improperly installed.
+If you want to specify a specific path to SGEXTN, you can directly include the SG_ALL_Targets.cmake file instead of running find_package. This can be helpful if you have SGEXTN for multiple platforms installed on your computer.
 @SG_ML_BLANKLINE
 Next we can use the BuildLah_add_component macro to define targets. The syntax is
 BuildLah_add_component(TARGET_NAME TARGET_TYPE ROOT_FOLDER BUILD_DEFINE USE_DEFINE RESOURCE_PREFIX DEPENDENCY1 DEPENDENCY2 DEPENDENCY3 ...)
