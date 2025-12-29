@@ -6,6 +6,10 @@ inputs:
     required: true
     description: version of Qt to use, it is preferred that this matches the Qt version you have on your development machine, example 6.10.1
     type: string
+  sgextn-version:
+    required: true
+    description: version of SGEXTN to use, it is preferred that this matches the SGEXTN version you have on your development machine, example 6.2.0
+    type: string
 
 runs:
   using: "composite"
@@ -13,7 +17,7 @@ runs:
     - name: pull everything
       shell: bash
       run: |
-        git clone --depth 1 https://github.com/InfinityIntegral/SGEXTN.git
+        git clone --depth 1 --branch v${{inputs.sgextn-version}} https://github.com/InfinityIntegral/SGEXTN.git
         rm -rf SGEXTN/.git
         mkdir -p Qt
         cd Qt

@@ -14,6 +14,10 @@ inputs:
     required: true
     description: version of Qt to use, it is preferred that this matches the Qt version you have on your development machine, example 6.10.1
     type: string
+  sgextn-version:
+    required: true
+    description: version of SGEXTN to use, it is preferred that this matches the SGEXTN version you have on your development machine, example 6.2.0
+    type: string
   cmake-target-name:
     required: true
     description: name of CMake target for your application executable, this is used to locate the executable, the executable will be renamed after that
@@ -86,7 +90,7 @@ runs:
       shell: cmd
       run: |
         cd ..
-        git clone https://github.com/InfinityIntegral/SGEXTN.git
+        git clone --depth 1 --branch v${{inputs.sgextn-version}} https://github.com/InfinityIntegral/SGEXTN.git
         cd SGEXTN
         call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsarm64.bat"
         mkdir build
@@ -164,6 +168,7 @@ runs:
     - name: copy README and license
       shell: pwsh
       run: |
+        cp "..\SGEXTN\LICENSE.txt" "${{inputs.app-name}}\SGEXTN_LICENSE.txt"
         cp "${{inputs.license-file}}" "${{inputs.app-name}}\LICENSE.txt" -ErrorAction SilentlyContinue
         cp README.md "${{inputs.app-name}}\info.md" -ErrorAction SilentlyContinue
         echo "This app is built and packaged using SGEXTN automated GitHub Actions workflows`nFor more information, see info.md if it exists`nRun install.vbs to install the application properly`nRun uninstall.vbs to uninstall the application and delete it from your computer`nOnce the app is installed, do not move it in the file system" > "${{inputs.app-name}}\README.txt"

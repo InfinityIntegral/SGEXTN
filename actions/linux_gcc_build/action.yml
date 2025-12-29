@@ -14,6 +14,10 @@ inputs:
     required: true
     description: version of Qt to use, it is preferred that this matches the Qt version you have on your development machine, example 6.10.1
     type: string
+  sgextn-version:
+    required: true
+    description: version of SGEXTN to use, it is preferred that this matches the SGEXTN version you have on your development machine, example 6.2.0
+    type: string
   cmake-target-name:
     required: true
     description: name of CMake target for your application executable, this is used to locate the executable, the executable will be renamed after that
@@ -100,7 +104,7 @@ runs:
       shell: bash
       run: |
         cd ..
-        git clone https://github.com/InfinityIntegral/SGEXTN.git
+        git clone --depth 1 --branch v${{inputs.sgextn-version}} https://github.com/InfinityIntegral/SGEXTN.git
         cd SGEXTN
         mkdir -p build
         cd build
@@ -165,6 +169,7 @@ runs:
         size=$(( w>h ? w : h ))
         convert icons/original.png -background "rgba(1,1,1,0)" -gravity center -extent ${size}x${size} icons/square.png
         mv icons/square.png ${{inputs.app-name}}/icon.png
+        cp "../SGEXTN/LICENSE.txt" "${{inputs.app-name}}/SGEXTN_LICENSE.txt"
         [ -e "${{inputs.license-file}}" ] && cp "${{inputs.license-file}}" "${{inputs.app-name}}/LICENSE.txt"
         [ -e README.md ] && cp README.md "${{inputs.app-name}}/info.md"
         echo -e "This app is built and packaged using SGEXTN automated GitHub Actions workflows\nFor more information, see info.md if it exists\nRun install.sh to install the application properly\nRun uninstall.sh to uninstall the application and delete it from your computer\nOnce the app is installed, do not move it in the file system\nInstalling the application in a folder whose path contain spaces is undefined behaviour" > "${{inputs.app-name}}/README.txt"

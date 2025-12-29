@@ -43,6 +43,7 @@ jobs:
           cmake --build . --config Release
           cd ..
           cmake --install build --config Release --prefix SGEXTN_install
+          mv LICENSE.txt SGEXTN_install\LICENSE.txt
 
       - name: upload binary
         uses: actions/upload-artifact@v4
@@ -77,6 +78,7 @@ jobs:
           cmake --build . --config Release
           cd ..
           cmake --install build --config Release --prefix SGEXTN_install
+          mv LICENSE.txt SGEXTN_install\LICENSE.txt
 
       - name: upload binary
         uses: actions/upload-artifact@v4
@@ -112,6 +114,7 @@ jobs:
           cmake --build . --config Release
           cd ..
           cmake --install build --config Release --prefix SGEXTN_install
+          mv LICENSE.txt SGEXTN_install\LICENSE.txt
 
       - name: upload binary
         uses: actions/upload-artifact@v4
@@ -146,6 +149,7 @@ jobs:
           cmake --build . --config Release
           cd ..
           cmake --install build --config Release --prefix SGEXTN_install
+          mv LICENSE.txt SGEXTN_install\LICENSE.txt
 
       - name: upload binary
         uses: actions/upload-artifact@v4
@@ -179,6 +183,7 @@ jobs:
           cmake --build . --config Release
           cd ..
           cmake --install build --config Release --prefix SGEXTN_install
+          mv LICENSE.txt SGEXTN_install/LICENSE.txt
 
       - name: upload binary
         uses: actions/upload-artifact@v4
@@ -212,6 +217,7 @@ jobs:
           cmake --build . --config Release
           cd ..
           cmake --install build --config Release --prefix SGEXTN_install
+          mv LICENSE.txt SGEXTN_install/LICENSE.txt
 
       - name: upload binary
         uses: actions/upload-artifact@v4
@@ -245,6 +251,7 @@ jobs:
           cmake --build . --config Release
           cd ..
           cmake --install build --config Release --prefix SGEXTN_install
+          mv LICENSE.txt SGEXTN_install/LICENSE.txt
 
       - name: upload binary
         uses: actions/upload-artifact@v4
@@ -315,6 +322,7 @@ jobs:
           cmake --build . --config Release
           cd ..
           cmake --install build --config Release --prefix SGEXTN_install
+          mv LICENSE.txt SGEXTN_install/LICENSE.txt
 
       - name: upload binary
         uses: actions/upload-artifact@v4
@@ -385,6 +393,7 @@ jobs:
           cmake --build . --config Release
           cd ..
           cmake --install build --config Release --prefix SGEXTN_install
+          mv LICENSE.txt SGEXTN_install/LICENSE.txt
 
       - name: upload binary
         uses: actions/upload-artifact@v4
@@ -455,6 +464,7 @@ jobs:
           cmake --build . --config Release
           cd ..
           cmake --install build --config Release --prefix SGEXTN_install
+          mv LICENSE.txt SGEXTN_install/LICENSE.txt
 
       - name: upload binary
         uses: actions/upload-artifact@v4
@@ -525,6 +535,7 @@ jobs:
           cmake --build . --config Release
           cd ..
           cmake --install build --config Release --prefix SGEXTN_install
+          mv LICENSE.txt SGEXTN_install/LICENSE.txt
 
       - name: upload binary
         uses: actions/upload-artifact@v4

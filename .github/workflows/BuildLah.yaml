@@ -15,6 +15,10 @@ on:
         required: true
         description: version of Qt to use, it is preferred that this matches the Qt version you have on your development machine, example 6.10.1
         type: string
+      sgextn-version:
+        required: true
+        description: version of SGEXTN to use, it is preferred that this matches the SGEXTN version you have on your development machine, example 6.2.0
+        type: string
       cmake-target-name:
         required: true
         description: name of CMake target for your application executable, this is used to locate the executable, the executable will be renamed after that
@@ -71,6 +75,7 @@ jobs:
           app-name: ${{inputs.app-name}}
           app-version: ${{inputs.app-version}}
           qt-version: ${{inputs.qt-version}}
+          sgextn-version: ${{inputs.sgextn-version}}
           cmake-target-name: ${{inputs.cmake-target-name}}
           user-facing-app-name: ${{inputs.user-facing-app-name}}
           user-facing-app-version: ${{inputs.user-facing-app-version}}
@@ -92,6 +97,7 @@ jobs:
           app-name: ${{inputs.app-name}}
           app-version: ${{inputs.app-version}}
           qt-version: ${{inputs.qt-version}}
+          sgextn-version: ${{inputs.sgextn-version}}
           cmake-target-name: ${{inputs.cmake-target-name}}
           user-facing-app-name: ${{inputs.user-facing-app-name}}
           user-facing-app-version: ${{inputs.user-facing-app-version}}
@@ -113,6 +119,7 @@ jobs:
           app-name: ${{inputs.app-name}}
           app-version: ${{inputs.app-version}}
           qt-version: ${{inputs.qt-version}}
+          sgextn-version: ${{inputs.sgextn-version}}
           cmake-target-name: ${{inputs.cmake-target-name}}
           user-facing-app-name: ${{inputs.user-facing-app-name}}
           user-facing-app-version: ${{inputs.user-facing-app-version}}
@@ -134,6 +141,7 @@ jobs:
           app-name: ${{inputs.app-name}}
           app-version: ${{inputs.app-version}}
           qt-version: ${{inputs.qt-version}}
+          sgextn-version: ${{inputs.sgextn-version}}
           cmake-target-name: ${{inputs.cmake-target-name}}
           user-facing-app-name: ${{inputs.user-facing-app-name}}
           user-facing-app-version: ${{inputs.user-facing-app-version}}
@@ -155,6 +163,7 @@ jobs:
           app-name: ${{inputs.app-name}}
           app-version: ${{inputs.app-version}}
           qt-version: ${{inputs.qt-version}}
+          sgextn-version: ${{inputs.sgextn-version}}
           cmake-target-name: ${{inputs.cmake-target-name}}
           user-facing-app-name: ${{inputs.user-facing-app-name}}
           user-facing-app-version: ${{inputs.user-facing-app-version}}
@@ -176,6 +185,7 @@ jobs:
           app-name: ${{inputs.app-name}}
           app-version: ${{inputs.app-version}}
           qt-version: ${{inputs.qt-version}}
+          sgextn-version: ${{inputs.sgextn-version}}
           cmake-target-name: ${{inputs.cmake-target-name}}
           user-facing-app-name: ${{inputs.user-facing-app-name}}
           user-facing-app-version: ${{inputs.user-facing-app-version}}
@@ -197,6 +207,7 @@ jobs:
           app-name: ${{inputs.app-name}}
           app-version: ${{inputs.app-version}}
           qt-version: ${{inputs.qt-version}}
+          sgextn-version: ${{inputs.sgextn-version}}
           cmake-target-name: ${{inputs.cmake-target-name}}
           user-facing-app-name: ${{inputs.user-facing-app-name}}
           user-facing-app-version: ${{inputs.user-facing-app-version}}
@@ -218,6 +229,7 @@ jobs:
           app-name: ${{inputs.app-name}}
           app-version: ${{inputs.app-version}}
           qt-version: ${{inputs.qt-version}}
+          sgextn-version: ${{inputs.sgextn-version}}
           cmake-target-name: ${{inputs.cmake-target-name}}
           user-facing-app-name: ${{inputs.user-facing-app-name}}
           user-facing-app-version: ${{inputs.user-facing-app-version}}
@@ -239,6 +251,7 @@ jobs:
           app-name: ${{inputs.app-name}}
           app-version: ${{inputs.app-version}}
           qt-version: ${{inputs.qt-version}}
+          sgextn-version: ${{inputs.sgextn-version}}
           cmake-target-name: ${{inputs.cmake-target-name}}
           user-facing-app-name: ${{inputs.user-facing-app-name}}
           user-facing-app-version: ${{inputs.user-facing-app-version}}
@@ -260,6 +273,7 @@ jobs:
           app-name: ${{inputs.app-name}}
           app-version: ${{inputs.app-version}}
           qt-version: ${{inputs.qt-version}}
+          sgextn-version: ${{inputs.sgextn-version}}
           cmake-target-name: ${{inputs.cmake-target-name}}
           user-facing-app-name: ${{inputs.user-facing-app-name}}
           user-facing-app-version: ${{inputs.user-facing-app-version}}
@@ -281,6 +295,7 @@ jobs:
           app-name: ${{inputs.app-name}}
           app-version: ${{inputs.app-version}}
           qt-version: ${{inputs.qt-version}}
+          sgextn-version: ${{inputs.sgextn-version}}
           cmake-target-name: ${{inputs.cmake-target-name}}
           user-facing-app-name: ${{inputs.user-facing-app-name}}
           user-facing-app-version: ${{inputs.user-facing-app-version}}
@@ -302,6 +317,7 @@ jobs:
           app-name: ${{inputs.app-name}}
           app-version: ${{inputs.app-version}}
           qt-version: ${{inputs.qt-version}}
+          sgextn-version: ${{inputs.sgextn-version}}
           cmake-target-name: ${{inputs.cmake-target-name}}
           user-facing-app-name: ${{inputs.user-facing-app-name}}
           user-facing-app-version: ${{inputs.user-facing-app-version}}
@@ -320,3 +336,4 @@ jobs:
         uses: InfinityIntegral/SGEXTN/actions/pull_source@main
         with:
           qt-version: ${{inputs.qt-version}}
+          sgextn-version: ${{inputs.sgextn-version}}
