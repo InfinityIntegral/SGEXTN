@@ -16,7 +16,6 @@
 #include <SGWNotify.h>
 #include <SGXDebug.h>
 #include <SGWHorizontalAlignment.h>
-#include <SGLSort.h>
 
 #include <SGEXTN_EntryPoint.h>
 
@@ -62,12 +61,6 @@ void test(){
     const SGXString textPath = SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "text.txt");
     if(SGXFileSystem::fileExists(textPath)){SG(SGXFile::readAllText(textPath));}
     SGXFile::writeAllText(textPath, SGXTimeStamp::now().getString());
-    SG("--------------------------------------");
-    SGLArray<SGXString> files = SGXFileSystem::getFilesList(SGXFileSystem::userDataFilePath);
-    SGLSort<SGXString, SGXNumberAwareFilePathLesserThan>::sort(files.pointerToData(0), files.pointerToData(files.length()));
-    for(int i=0; i<files.length(); i++){
-        SG(files.at(i));
-    }
 }
 
 void init(){

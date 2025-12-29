@@ -41,7 +41,14 @@ SGXString SGXFileSystem::userDataFilePath = "";
 SGXString SGXFileSystem::configFilePath = "";
 
 SGXString SGXFileSystem::joinFilePaths(const SGXString &a, const SGXString &b){
-    return (a + "/" + b);
+    SGXString a0 = a;
+    SGXString b0 = b;
+    SGXChar pathSeparator = SGXChar(QDir::separator().toLatin1());
+    a0 = a0.replace('/', pathSeparator).replace('\\', pathSeparator);
+    b0 = b0.replace('/', pathSeparator).replace('\\', pathSeparator);
+    if(a0.at(a0.length() - 1) != pathSeparator){a0 += pathSeparator;}
+    if(b0.at(0) == pathSeparator){b0 = b0.substringRight(b0.length() - 1);}
+    return (a0 + b0);
 }
 
 SGXString SGXFileSystem::encodeBase16(const SGXString &s){
