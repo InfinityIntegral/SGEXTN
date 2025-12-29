@@ -26,10 +26,10 @@ TARGET_TYPE - GUI for normal applications, CLI for command line applications, an
 ROOT_FOLDER - root folder of this CMake target, this will determine where BuildLah searches for relevant files
 BUILD_DEFINE - preprocessor #define directive defined when compiling source files in the CMake target, this can be used to export shared library symbols
 USE_DEFINE - preprocessor #define directive defined when compiling source files in CMake targets that link to this CMake target, this can be used to import shared library symbols
-RESOURCE_PREFIX - prefix used in the resource system, the resource file ROOT_FOLDER/resources/something.png will be accessible in the resource system as :/RESOURCE_PREFIX/something.png, the shader ROOT_FOLDER/shaders/something.vert will be accessible in the resource system as :/RESOURCE_PREFIX/something.vert.qsb
+RESOURCE_PREFIX - prefix used in the resource system, the resource file ROOT_FOLDER/assets/something.png will be accessible in the resource system as :/RESOURCE_PREFIX/something.png, the shader ROOT_FOLDER/shaders/something.vert will be accessible in the resource system as :/RESOURCE_PREFIX/something.vert.qsb
 DEPENDENCY1 DEPENDENCY2 DEPENDENCY3 ... - space separated list of shared libraries to link to, can be empty if there is no need to link to anything, the Standard Template Library is always linked by default and does not have to be included here
 @SG_ML_BLANKLINE
-BuildLah defines 4 special folders, the headers folder at ROOT_FOLDER/include, the sources folder at ROOT_FOLDER/src, the resources folder at ROOT_FOLDER/resources, and the shaders folder at ROOT_FOLDER/shaders. All files in the headers folder will be made available for the preprocessor include directive, all files in the sources folder will be compiled, all files in the resources folder will be added to the resource system, and all files in the shaders folder will be compiled as GLSL shaders and added to the resource system.
+BuildLah defines 4 special folders, the headers folder at ROOT_FOLDER/include, the sources folder at ROOT_FOLDER/src, the assets folder at ROOT_FOLDER/assets, and the shaders folder at ROOT_FOLDER/shaders. All files in the headers folder will be made available for the preprocessor include directive, all files in the sources folder will be compiled, all files in the resources folder will be added to the resource system, and all files in the shaders folder will be compiled as GLSL shaders and added to the resource system.
 If files change in any of the 4 folders, the build commands will be updated automatically. There is no need to manually reconfigure CMake.
 If something is not supposed to be included in the build, do not put it in any of the 4 folders. If you really want to, you can put it inside ROOT_FOLDER/others, but it is best to not put it in ROOT_FOLDER at all.
 This version of BuildLah does not support preparing the build results for installation, support may be added in a future version.
@@ -93,7 +93,7 @@ inputs:
     type: string
   app-icon:
     required: true
-    description: location of the application icon PNG image as a path in your GitHub repository, example resources/icon.png
+    description: location of the application icon PNG image as a path in your GitHub repository, example assets/icon.png
     type: string
   user-facing-organisation-name:
     required: true

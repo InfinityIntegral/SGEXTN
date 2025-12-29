@@ -152,7 +152,7 @@ void SGCLPCircleDisplay::initialise(){
 @SG_ENDCODEBLK
 Here we create the vertex buffer object, element buffer object, and texture. We then upload these to the GPU. Since these do not change throughout the rendering process, they are created and uploaded once inside SGRBaseRenderer::initialise and not touched inside SGRBaseRenderer::uploadShaderData.
 Note that the values used for the vertex buffer object and element buffer object here will give a fullscreen quad in SG - RI.
-The image is a random image I found on my computer, anything will work as long as it is inside the resources/ folder so @SG_FINDREP_BUILDLAH will include it.
+The image is a random image I found on my computer, anything will work as long as it is inside the assets/ folder so @SG_FINDREP_BUILDLAH will include it.
 Since the background colour does not change, we can also write the uniform buffer object here with the background colour data. However note that in most shader setups, uniforms constantly update and will need to be written to every frame in SGRBaseRenderer::uploadShaderData.
 @SG_ML_BLANKLINE
 Lastly we tell the GPU what to do every frame.

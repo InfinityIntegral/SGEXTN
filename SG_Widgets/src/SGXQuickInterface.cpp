@@ -11,6 +11,8 @@
 #include <SGLQueue.h>
 #include <qcontainerfwd.h>
 #include <QQuickItem>
+#include <SGWTextButton.h>
+#include <private_api_Widgets/SGWLicensingInfoWindow.h>
 
 QQmlComponent* SGXQuickInterface::root = nullptr;
 QQmlApplicationEngine* SGXQuickInterface::e = nullptr;
@@ -61,6 +63,7 @@ void SGXQuickInterface::buildBase(){
     SGWWidget::rootWidget = new SGWRoot();
     SGWWidget::parentWidget = new SGWParent();
     SGWStatusBar::instance = new SGWStatusBar();
+    new SGWTextButton(SGWWidget::rootWidget, "LGPL info", &SGWLicensingInfoWindow::activate, 1.0f, -3.5f, 0.0f, 0.0f, 0.0f, 3.5f, 0.0f, 1.0f);
 }
 
 QQuickItem* SGXQuickInterface::getBottomObject(QQuickItem *topObject){

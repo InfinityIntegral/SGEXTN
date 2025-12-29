@@ -22,7 +22,7 @@ jobs:
       cmake-target-name: ColoursPlusPlus_app
       user-facing-app-name: Colours++
       user-facing-app-version: v2.0.0
-      app-icon: resources/SGEXTN_icon.png
+      app-icon: assets/SGEXTN_icon.png
       user-facing-organisation-name: 05524F.sg
       bundle-id: sg.singapore05524f.coloursplusplus
       app-category: Development

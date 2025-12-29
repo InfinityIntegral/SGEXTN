@@ -221,7 +221,7 @@ void SGXFile::writeBytes(const SGLArray<char> &x) const {
 
 SGXString SGXFile::readAllText(const SGXString &filePath){
     QFile file(*filePath.data);
-    (void)file.open(QIODevice::ReadWrite | QIODevice::Text);
+    (void)file.open(QIODevice::ReadOnly | QIODevice::Text);
     QTextStream stream(&file);
     SGXString contents = "";
     (*contents.data) = stream.readAll();

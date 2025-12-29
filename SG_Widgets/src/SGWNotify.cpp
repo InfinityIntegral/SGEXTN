@@ -7,6 +7,7 @@
 #include <SGXString.h>
 #include <SGWHorizontalAlignment.h>
 #include <SGWVerticalAlignment.h>
+#include <private_api_Widgets/SGWStatusBar.h>
 
 float SGWNotify::timeShown = 3.0f;
 SGLQueue<const SGWWidget*>* SGWNotify::instance = nullptr;
@@ -22,7 +23,7 @@ void SGWNotify::terminate(){
 }
 
 void SGWNotify::notify(const SGXString &s){
-    const SGWLabel* x = new SGWTextLabel(SGWWidget::rootWidget, s, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, SGWHorizontalAlignment::Center, false);
+    const SGWLabel* x = new SGWTextLabel(SGWStatusBar::instance, s, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, SGWHorizontalAlignment::Center, false);
     if(SGWNotify::instance == nullptr){SGWNotify::instance = new SGLQueue<const SGWWidget*>();}
     (*SGWNotify::instance).push(x);
     SGXTimer::singleCall(SGWNotify::timeShown, &SGWNotify::terminate);
@@ -54,7 +55,7 @@ void SGWNotify::pullDownNotify(const SGXString &s){
     SGWNotify::pullDownTimer = nullptr;
     SGWNotify::animationStage = 0;
     SGWNotify::animationState = false;
-    SGWNotify::pullDownInstance = new SGWTextLabel(SGWWidget::rootWidget, s, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, SGWHorizontalAlignment::Center, false);
+    SGWNotify::pullDownInstance = new SGWTextLabel(SGWStatusBar::instance, s, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, SGWHorizontalAlignment::Center, false);
     (*SGWNotify::pullDownInstance).setVerticalAlignment(SGWVerticalAlignment::Bottom);
     SGWNotify::pullDownTimer = new SGXTimer(SGWNotify::animationLength / 48.0f, &SGWNotify::animate);
 }

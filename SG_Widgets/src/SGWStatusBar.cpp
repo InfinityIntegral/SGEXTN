@@ -16,7 +16,7 @@ SGWStatusBar::SGWStatusBar() : SGWWidget(SGWWidget::rootWidget, 0.0f, 0.0f, 0.0f
     (*thisItem).setParent((*SGWWidget::rootWidget).getBottomObject());
     (*this).type = SGWType::StatusBar;
     (*this).topObject = thisItem;
-    (*this).bottomObject = SGXQuickInterface::getBottomObject(thisItem);
+    (*this).bottomObject = thisItem;
     SGWStatusBar::timer = new SGXTimer(1.0f, &SGWStatusBar::updateTime);
     SGXTimer::singleCall(0.0f, &SGWStatusBar::updateTime);
 }

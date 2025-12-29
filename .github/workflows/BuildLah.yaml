@@ -29,7 +29,7 @@ on:
         type: string
       app-icon:
         required: true
-        description: location of the application icon PNG image as a path in your GitHub repository, example resources/icon.png
+        description: location of the application icon PNG image as a path in your GitHub repository, example assets/icon.png
         type: string
       user-facing-organisation-name:
         required: true
