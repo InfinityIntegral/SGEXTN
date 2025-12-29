@@ -71,11 +71,9 @@ Returns the time at which the folder at $s was created in the form of a SGXTimeS
 @SG_FUNC static SGXTimeStamp getFileLastEditTime(const SGXString& s);
 Returns the time at which the file at $s was last opened in a write capable mode.
 @SG_NOTE If there is no file at $s, this returns SGXTimeStamp::zero.
-@SG_NOTE Using SGXFile for reading a file also causes this to change as SGXFile always opens files in read-write mode.
 @SG_FUNC static SGXTimeStamp getFolderLastEditTime(const SGXString& s);
 Returns the time at which the folder at $s was last opened in a write capable mode.
 @SG_NOTE If there is no folder at $s, this returns SGXTimeStamp::zero.
-@SG_NOTE Using SGXFile for reading a file in the folder also causes this to change as SGXFile always opens files in read-write mode.
 @SG_FUNC static SGXString getFolderName(const SGXString& s);
 Returns the name of the folder at path $s.
 @SG_FUNC static SGXString getFileName(const SGXString& s);

@@ -41,13 +41,13 @@ void test(){
     SG(SGXFileSystem::userDataFilePath);
     SG(SGXFileSystem::getFolderSize(SGXFileSystem::configFilePath));
     if(SGXFileSystem::fileExists(SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "testing.txt")) == true){
-        const SGXFile fileReader(SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "testing.txt"));
+        const SGXFile fileReader(SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "testing.txt"), SGXFile::ReadOnly);
         SG(fileReader.readString());
     }
     {
         if(SGXFileSystem::fileExists(SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "testing.txt")) == false){SGXFileSystem::createFile(SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "testing.txt"));}
-        const SGXFile fileWriter(SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "testing.txt"));
-        if(fileWriter.isValid == true){fileWriter.writeString(SGXTimeStamp::now().getString());}
+        const SGXFile fileWriter(SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "testing.txt"), SGXFile::WriteOnly);
+        if(fileWriter.openStatus == SGXFile::WriteOnly){fileWriter.writeString(SGXTimeStamp::now().getString());}
     }
     SGWWidget* w = new SGWBlankWidget(SGWWidget::parentWidget, 0.0f, 0.5f, 0.0f, 0.5f, 1.0f, -1.0f, 1.0f, -1.0f, 6);
     new SGWTextLabel(w, "built with CMake", 0.0f, 0.5f, 0.0f, 0.5f, 1.0f, -1.0f, 0.0f, 1.0f, SGWHorizontalAlignment::Center, false);

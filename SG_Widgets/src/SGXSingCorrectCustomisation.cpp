@@ -17,7 +17,7 @@ void SGXSingCorrectCustomisation::loadFileData(){
     SGXSingCorrectCustomisation::database = new SGLUnorderedMap<SGXString, SGXChar, SGLEqualsTo<SGXString>, SGLHash<SGXString>>();
     if(SGXFileSystem::fileExists(path) == false){return;}
     {
-        const SGXFile fileReader = SGXFile(path);
+        const SGXFile fileReader = SGXFile(path, SGXFile::ReadOnly);
         SGXSingCorrectCustomisation::moduleEnabled = fileReader.readBool();
         SGXSingCorrectCore::correctionPrefix = fileReader.readString();
         const int n = fileReader.readInt();
@@ -34,7 +34,7 @@ void SGXSingCorrectCustomisation::syncFileData(){
     if(SGXFileSystem::fileExists(path) == true){SGXFileSystem::permanentDeleteFile(path);}
     SGXFileSystem::createFile(path);
     {
-        const SGXFile fileWriter = SGXFile(path);
+        const SGXFile fileWriter = SGXFile(path, SGXFile::WriteOnly);
         fileWriter.writeBool(SGXSingCorrectCustomisation::moduleEnabled);
         fileWriter.writeString(SGXSingCorrectCore::correctionPrefix);
         if(SGXSingCorrectCustomisation::database != nullptr){

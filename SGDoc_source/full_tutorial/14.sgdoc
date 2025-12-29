@@ -4,7 +4,7 @@ In the previous part, we built the progress bar on the display page
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_ saving user data
 Most applications will need to save user data across sessions. The dedicated SG_FileSystem module in SGEXTN makes this very convenient.
-The user data in the case of Colours++ is the options that the user chose in the options page. These can be saved to a binary file using SGXFile. Although SGEXTN technically supports saving to a text file, support is not good (at least in version 6.2.0) and binary files occupy less space and are faster to read and write compared to text files containing the same information. The only reason why you would consider storing user data in a text file is if you are building a tool for software engineers who would need to write configuration files.
+The user data in the case of Colours++ is the options that the user chose in the options page. These can be saved to a binary file using SGXFile. Although SGEXTN technically supports saving to a text file, support is not good and binary files occupy less space and are faster to read and write compared to text files containing the same information. The only reason why you would consider storing user data in a text file is if you are building a tool for software engineers who would need to write configuration files.
 The file system can be easily accessed through SGXFileSystem, and SGXFile is used to read from and write to binary files.
 @SG_ML_BLANKLINE
 We will implement a function that is called whenever "save current settings to preset" is clicked. For convenience, we will set the name of the preset to the current date. In a actual consumer facing app, it is likely better to let the user decide the name of files, but here we will leave out that to avoid being repetitive about UI.
@@ -84,7 +84,7 @@ After these checks, we can be sure that the preset needs to be saved and also wh
 SGXFile has a lot of commands for reading and writing a wide variety of data types. This includes both C++ stuff such as int and float, and also SGEXTN structs such as SGXColourRGBA and SGXIdentifier.
 @SG_STARTCODEBLK
 SGXFileSystem::createFile(fileName);
-SGXFile file(fileName);
+SGXFile file(fileName, SGXFile::WriteOnly);
 file.writeColourRGBA(SGCLPOptionsPage::chosenForegroundColour);
 file.writeColourRGBA(SGCLPOptionsPage::chosenBackgroundColour);
 if(SGCLPOptionsPage::chosenPattern == SGCLPOptionsPage::Circle){file.writeInt(1);}

@@ -28,8 +28,8 @@ void SGXFileDownloader::checkDownloadedFile(){
     if(urlPath != ""){
         (*urlPath.data) = QUrl(*urlPath.data).toLocalFile();
         {
-            const SGXFile fileReader(sourcePath);
-            const SGXFile fileWriter(urlPath);
+            const SGXFile fileReader(sourcePath, SGXFile::ReadOnly);
+            const SGXFile fileWriter(urlPath, SGXFile::WriteOnly);
             fileWriter.writeBytes(fileReader.readAllBytes());
         }
     }

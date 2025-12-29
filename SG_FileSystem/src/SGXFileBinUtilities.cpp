@@ -22,7 +22,7 @@ void SGXFileBinUtilities::loadBinData(){
     if(SGXFileSystem::fileExists(SGXFileBinUtilities::pathToMetadataFile) == false){SGXFileBinUtilities::createEmptyBin();}
     SGXFileBinUtilities::deletedFiles = new SGLUnorderedMap<SGXIdentifier, SGLPair<SGXString, SGXTimeStamp>, SGLEqualsTo<SGXIdentifier>, SGLHash<SGXIdentifier>>();
     {
-        const SGXFile fileReader(SGXFileBinUtilities::pathToMetadataFile);
+        const SGXFile fileReader(SGXFileBinUtilities::pathToMetadataFile, SGXFile::ReadOnly);
         SGXFileBinUtilities::lifespan = fileReader.readInt();
         const int deletedFilesNumber = fileReader.readInt();
         for(int i=0; i<deletedFilesNumber; i++){
@@ -41,7 +41,7 @@ void SGXFileBinUtilities::createEmptyBin(){
     if(SGXFileSystem::folderExists(SGXFileBinUtilities::binFilePath) == true){SGXFileSystem::permanentDeleteFolder(SGXFileBinUtilities::binFilePath);}
     SGXFileSystem::createFile(SGXFileBinUtilities::pathToMetadataFile);
     {
-        const SGXFile fileWriter(SGXFileBinUtilities::pathToMetadataFile);
+        const SGXFile fileWriter(SGXFileBinUtilities::pathToMetadataFile, SGXFile::WriteOnly);
         fileWriter.writeInt(SGXFileBinUtilities::lifespan);
         fileWriter.writeInt(0);
     }
@@ -49,7 +49,7 @@ void SGXFileBinUtilities::createEmptyBin(){
 
 void SGXFileBinUtilities::syncMetadata(){
     {
-        const SGXFile fileWriter(SGXFileBinUtilities::pathToMetadataFile);
+        const SGXFile fileWriter(SGXFileBinUtilities::pathToMetadataFile, SGXFile::WriteOnly);
         fileWriter.writeInt(SGXFileBinUtilities::lifespan);
         fileWriter.writeInt((*SGXFileBinUtilities::deletedFiles).length());
         for(SGLUnorderedMap<SGXIdentifier, SGLPair<SGXString, SGXTimeStamp>, SGLEqualsTo<SGXIdentifier>, SGLHash<SGXIdentifier>>::ConstIterator i = (*SGXFileBinUtilities::deletedFiles).constBegin(); i != (*SGXFileBinUtilities::deletedFiles).constEnd(); i++){
@@ -121,7 +121,7 @@ int SGXFileBinUtilities::getLifespan(){
 void SGXFileBinUtilities::setLifespan(int x){
     SGXFileBinUtilities::lifespan = x;
     {
-        const SGXFile fileWriter(SGXFileBinUtilities::pathToMetadataFile);
+        const SGXFile fileWriter(SGXFileBinUtilities::pathToMetadataFile, SGXFile::WriteOnly);
         fileWriter.writeInt(SGXFileBinUtilities::lifespan);
     }
 }
