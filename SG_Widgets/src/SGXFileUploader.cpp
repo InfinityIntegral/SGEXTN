@@ -29,8 +29,8 @@ void SGXFileUploader::checkUploadedFile(){
         const SGXString realPath = SGXFileSystem::getFreePath(SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "SGEXTN/temp"), "temp", ".sg");
         SGXFileSystem::createFile(realPath);
         {
-            const SGXFile fileReader(urlPath);
-            const SGXFile fileWriter(realPath);
+            const SGXFile fileReader(urlPath, SGXFile::ReadOnly);
+            const SGXFile fileWriter(realPath, SGXFile::WriteOnly);
             fileWriter.writeBytes(fileReader.readAllBytes());
         }
         SGXFileUploader::fileAcceptor(realPath);

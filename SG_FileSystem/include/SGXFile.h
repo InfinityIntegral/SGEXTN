@@ -17,7 +17,13 @@ class QDataStream;
 class SG_FILESYSTEM_DLL SGXFile
 {
 public:
-    SGXFile(const SGXString& s);
+    enum OpenStatus {
+        NotOpen,
+        ReadOnly,
+        WriteOnly,
+        FullAccess
+    };
+    SGXFile(const SGXString& s, SGXFile::OpenStatus openMode);
     SGXFile(const SGXFile&) = delete;
     SGXFile(const SGXFile&&) = delete;
     SGXFile& operator=(const SGXFile&) = delete;
@@ -25,7 +31,7 @@ public:
     ~SGXFile();
     QFile* fileControl;
     QDataStream* fileData;
-    bool isValid;
+    SGXFile::OpenStatus openStatus;
     [[nodiscard]] bool readBool() const;
     [[nodiscard]] char readChar() const;
     [[nodiscard]] SGXChar readSGEXTNChar() const;

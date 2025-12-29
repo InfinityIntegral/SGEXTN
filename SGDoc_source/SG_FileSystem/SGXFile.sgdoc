@@ -2,191 +2,194 @@
 @SG_SHORT_DESCRP file access in the form of reading and writing
 @SG_LONG_DESCRP SGXFile provides access to the file system by mainly reading from and writing into binary files. Support for text files exist but you can only read the whole file at a time. You should use binary files to store user data. The current location of the SGXFile pointer within the file is maintained and is moved automatically when reading or writing. This pointer can also be moved manually to follow offsets provided in the file.
 @SG_IMPLE SGXFile wraps QFile and QDataStream with custom handling for SGEXTN structs.
-@SG_FUNC SGXFile(const SGXString& s);
-Creates a SGXFile associated with the file at path $s.
-@SG_NOTE If the file does not exist or for whatever other reason cannot be opened, SGXFile::isValid is set to false.
+@SG_FUNC enum OpenStatus { NotOpen, ReadOnly, WriteOnly, FullAccess };
+Modes in which the file can be opened in. ReadOnly and FullAccess are read capable, WriteOnly and FullAccess are write capable.
+@SG_WARN Reading from the file in a non read capable mode or writing to the file in a non write capable mode are undefined behaviour. Using the file in any way, including moving to a certain pointer offset, when it is in NotOpen mode is undefined behaviour.
+@SG_FUNC SGXFile(const SGXString& s, SGXFile::OpenStatus openMode);
+Creates a SGXFile object pointing to the file at path $s and attempts to open it using the mode $openMode.
+@SG_NOTE If the file does not exist or cannot be opened due to a file system error, its SGXFile::openStatus will be set to NotOpen.
 @SG_PRIVATE_API QFile* fileControl;
 @SG_PRIVATE_API QDataStream* fileData;
-@SG_FUNC bool isValid;
-If the file can be used.
-@SG_WARN Reading from, writing to, and modifying the pointer in a SGXFile with SGXFile::isValid false is undefined behaviour.
+@SG_FUNC SGXFile::OpenStatus openStatus;
+The mode that the file is currently open in.
+@SG_WARN Reading from, writing to, and modifying the pointer in a SGXFile with SGXFile::openStatus being NotOpen is undefined behaviour.
 @SG_FUNC [[nodiscard]] bool readBool() const;
 Reads a bool from the current position in the file.
 @SG_NOTE This moves the file pointer forward.
 @SG_WARN There is no guarantee on the size of the bool. This may be changed in a future SGEXTN version.
-@SG_WARN If SGXFile::isValid is false, this leads to undefined behaviour.
+@SG_WARN If the file is not open in a read capable mode, this leads to undefined behaviour.
 @SG_FUNC [[nodiscard]] char readChar() const;
 Reads a C++ char from the current position in the file.
 @SG_NOTE This moves the file pointer forward.
 @SG_WARN There is no guarantee on the size of the C++ char. This may be changed in a future SGEXTN version.
-@SG_WARN If SGXFile::isValid is false, this leads to undefined behaviour.
+@SG_WARN If the file is not open in a read capable mode, this leads to undefined behaviour.
 @SG_FUNC [[nodiscard]] SGXChar readSGEXTNChar() const;
 Reads a SGXChar from the current position in the file.
 @SG_NOTE This moves the file pointer forward.
 @SG_WARN There is no guarantee on the size of the SGXChar. This may be changed in a future SGEXTN version.
-@SG_WARN If SGXFile::isValid is false, this leads to undefined behaviour.
+@SG_WARN If the file is not open in a read capable mode, this leads to undefined behaviour.
 @SG_FUNC [[nodiscard]] int readInt() const;
 Reads a int from the current position in the file.
 @SG_NOTE This moves the file pointer forward.
 @SG_WARN There is no guarantee on the size of the int. This may be changed in a future SGEXTN version.
-@SG_WARN If SGXFile::isValid is false, this leads to undefined behaviour.
+@SG_WARN If the file is not open in a read capable mode, this leads to undefined behaviour.
 @SG_FUNC [[nodiscard]] unsigned int readUnsignedInt() const;
 Reads a unsigned int from the current position in the file.
 @SG_NOTE This moves the file pointer forward.
 @SG_WARN There is no guarantee on the size of the unsigned int. This may be changed in a future SGEXTN version.
-@SG_WARN If SGXFile::isValid is false, this leads to undefined behaviour.
+@SG_WARN If the file is not open in a read capable mode, this leads to undefined behaviour.
 @SG_FUNC [[nodiscard]] long long readLongLong() const;
 Reads a long long from the current position in the file.
 @SG_NOTE This moves the file pointer forward.
 @SG_WARN There is no guarantee on the size of the long long. This may be changed in a future SGEXTN version.
-@SG_WARN If SGXFile::isValid is false, this leads to undefined behaviour.
+@SG_WARN If the file is not open in a read capable mode, this leads to undefined behaviour.
 @SG_FUNC [[nodiscard]] unsigned long long readUnsignedLongLong() const;
 Reads a unsigned long long from the current position in the file.
 @SG_NOTE This moves the file pointer forward.
 @SG_WARN There is no guarantee on the size of the unsigned long long. This may be changed in a future SGEXTN version.
-@SG_WARN If SGXFile::isValid is false, this leads to undefined behaviour.
+@SG_WARN If the file is not open in a read capable mode, this leads to undefined behaviour.
 @SG_FUNC [[nodiscard]] float readFloat() const;
 Reads a floating point number from the current position in the file.
 @SG_NOTE This moves the file pointer forward.
 @SG_WARN There is no guarantee on the size of the floating point number. This may be changed in a future SGEXTN version.
-@SG_WARN If SGXFile::isValid is false, this leads to undefined behaviour.
+@SG_WARN If the file is not open in a read capable mode, this leads to undefined behaviour.
 @SG_FUNC [[nodiscard]] double readDouble() const;
 Reads a double precision floating point number from the current position in the file.
 @SG_NOTE This moves the file pointer forward.
 @SG_WARN There is no guarantee on the size of the double precision floating point number. This may be changed in a future SGEXTN version.
-@SG_WARN If SGXFile::isValid is false, this leads to undefined behaviour.
+@SG_WARN If the file is not open in a read capable mode, this leads to undefined behaviour.
 @SG_FUNC [[nodiscard]] SGXString readString() const;
 Reads a SGXString from the current position in the file.
 @SG_NOTE This moves the file pointer forward.
 @SG_WARN There is no guarantee on the size of the SGXString. This may be changed in a future SGEXTN version.
-@SG_WARN If SGXFile::isValid is false, this leads to undefined behaviour.
+@SG_WARN If the file is not open in a read capable mode, this leads to undefined behaviour.
 @SG_FUNC [[nodiscard]] SGXColourRGBA readColourRGBA() const;
 Reads a SGXColourRGBA from the current position in the file.
 @SG_NOTE This moves the file pointer forward.
 @SG_WARN There is no guarantee on the size of the SGXColourRGBA. This may be changed in a future SGEXTN version.
-@SG_WARN If SGXFile::isValid is false, this leads to undefined behaviour.
+@SG_WARN If the file is not open in a read capable mode, this leads to undefined behaviour.
 @SG_FUNC [[nodiscard]] SGXColourHSLA readColourHSLA() const;
 Reads a SGXColourHSLA from the current position in the file.
 @SG_NOTE This moves the file pointer forward.
 @SG_WARN There is no guarantee on the size of the SGXColourHSLA. This may be changed in a future SGEXTN version.
-@SG_WARN If SGXFile::isValid is false, this leads to undefined behaviour.
+@SG_WARN If the file is not open in a read capable mode, this leads to undefined behaviour.
 @SG_FUNC [[nodiscard]] SGXTimeStamp readTimeStamp() const;
 Reads a SGXTimeStamp from the current position in the file.
 @SG_NOTE This moves the file pointer forward.
 @SG_WARN There is no guarantee on the size of the SGXTimeStamp. This may be changed in a future SGEXTN version.
-@SG_WARN If SGXFile::isValid is false, this leads to undefined behaviour.
+@SG_WARN If the file is not open in a read capable mode, this leads to undefined behaviour.
 @SG_FUNC [[nodiscard]] SGXIdentifier readIdentifier() const;
 Reads a SGXIdentifier from the current position in the file.
 @SG_NOTE This moves the file pointer forward.
 @SG_WARN There is no guarantee on the size of the SGXIdentifier. This may be changed in a future SGEXTN version.
-@SG_WARN If SGXFile::isValid is false, this leads to undefined behaviour.
+@SG_WARN If the file is not open in a read capable mode, this leads to undefined behaviour.
 @SG_FUNC [[nodiscard]] SGXVector2 readVector2() const;
 Reads a SGXVector2 from the current position in the file.
 @SG_NOTE This moves the file pointer forward.
 @SG_WARN There is no guarantee on the size of the SGXVector2. This may be changed in a future SGEXTN version.
-@SG_WARN If SGXFile::isValid is false, this leads to undefined behaviour.
+@SG_WARN If the file is not open in a read capable mode, this leads to undefined behaviour.
 @SG_FUNC void writeBool(bool x) const;
 Writes the bool $x at the current position in the file.
 @SG_NOTE This moves the file pointer forward.
 @SG_WARN There is no guarantee on the size of the bool. This may be changed in a future SGEXTN version.
-@SG_WARN If SGXFile::isValid is false, this leads to undefined behaviour.
+@SG_WARN If the file is not open in a write capable mode, this leads to undefined behaviour.
 @SG_FUNC void writeChar(char x) const;
 Writes the C++ char $x at the current position in the file.
 @SG_NOTE This moves the file pointer forward.
 @SG_WARN There is no guarantee on the size of the C++ char. This may be changed in a future SGEXTN version.
-@SG_WARN If SGXFile::isValid is false, this leads to undefined behaviour.
+@SG_WARN If the file is not open in a write capable mode, this leads to undefined behaviour.
 @SG_FUNC void writeSGEXTNChar(SGXChar x) const;
 Writes the SGXChar $x at the current position in the file.
 @SG_NOTE This moves the file pointer forward.
 @SG_WARN There is no guarantee on the size of the SGXChar. This may be changed in a future SGEXTN version.
-@SG_WARN If SGXFile::isValid is false, this leads to undefined behaviour.
+@SG_WARN If the file is not open in a write capable mode, this leads to undefined behaviour.
 @SG_FUNC void writeInt(int x) const;
 Writes the int $x at the current position in the file.
 @SG_NOTE This moves the file pointer forward.
 @SG_WARN There is no guarantee on the size of the int. This may be changed in a future SGEXTN version.
-@SG_WARN If SGXFile::isValid is false, this leads to undefined behaviour.
+@SG_WARN IIf the file is not open in a write capable mode, this leads to undefined behaviour.
 @SG_FUNC void writeUnsignedInt(unsigned int x) const;
 Writes the unsigned int $x at the current position in the file.
 @SG_NOTE This moves the file pointer forward.
 @SG_WARN There is no guarantee on the size of the unsigned int. This may be changed in a future SGEXTN version.
-@SG_WARN If SGXFile::isValid is false, this leads to undefined behaviour.
+@SG_WARN If the file is not open in a write capable mode, this leads to undefined behaviour.
 @SG_FUNC void writeLongLong(long long x) const;
 Writes the long long $x at the current position in the file.
 @SG_NOTE This moves the file pointer forward.
 @SG_WARN There is no guarantee on the size of the long long. This may be changed in a future SGEXTN version.
-@SG_WARN If SGXFile::isValid is false, this leads to undefined behaviour.
+@SG_WARN If the file is not open in a write capable mode, this leads to undefined behaviour.
 @SG_FUNC void writeUnsignedLongLong(unsigned long long x) const;
 Writes the unsigned long long $x at the current position in the file.
 @SG_NOTE This moves the file pointer forward.
 @SG_WARN There is no guarantee on the size of the unsigned long long. This may be changed in a future SGEXTN version.
-@SG_WARN If SGXFile::isValid is false, this leads to undefined behaviour.
+@SG_WARN If the file is not open in a write capable mode, this leads to undefined behaviour.
 @SG_FUNC void writeFloat(float x) const;
 Writes the floating point number $x at the current position in the file.
 @SG_NOTE This moves the file pointer forward.
 @SG_WARN There is no guarantee on the size of the floating point number. This may be changed in a future SGEXTN version.
-@SG_WARN If SGXFile::isValid is false, this leads to undefined behaviour.
+@SG_WARN If the file is not open in a write capable mode, this leads to undefined behaviour.
 @SG_FUNC void writeDouble(double x) const;
 Writes the double precision floating point number $x at the current position in the file.
 @SG_NOTE This moves the file pointer forward.
 @SG_WARN There is no guarantee on the size of the double precision floating point number. This may be changed in a future SGEXTN version.
-@SG_WARN If SGXFile::isValid is false, this leads to undefined behaviour.
+@SG_WARN If the file is not open in a write capable mode, this leads to undefined behaviour.
 @SG_FUNC void writeString(const SGXString& x) const;
 Writes the SGXString $x at the current position in the file.
 @SG_NOTE This moves the file pointer forward.
 @SG_WARN There is no guarantee on the size of the SGXString. This may be changed in a future SGEXTN version.
-@SG_WARN If SGXFile::isValid is false, this leads to undefined behaviour.
+@SG_WARN If the file is not open in a write capable mode, this leads to undefined behaviour.
 @SG_FUNC void writeColourRGBA(SGXColourRGBA x) const;
 Writes the SGXColourRGBA $x at the current position in the file.
 @SG_NOTE This moves the file pointer forward.
 @SG_WARN There is no guarantee on the size of the SGXColourRGBA. This may be changed in a future SGEXTN version.
-@SG_WARN If SGXFile::isValid is false, this leads to undefined behaviour.
+@SG_WARN If the file is not open in a write capable mode, this leads to undefined behaviour.
 @SG_FUNC void writeColourHSLA(SGXColourHSLA x) const;
 Writes the SGXColourHSLA $x at the current position in the file.
 @SG_NOTE This moves the file pointer forward.
 @SG_WARN There is no guarantee on the size of the SGXColourHSLA. This may be changed in a future SGEXTN version.
-@SG_WARN If SGXFile::isValid is false, this leads to undefined behaviour.
+@SG_WARN If the file is not open in a write capable mode, this leads to undefined behaviour.
 @SG_FUNC void writeTimeStamp(SGXTimeStamp x) const;
 Writes the SGXTimeStamp $x at the current position in the file.
 @SG_NOTE This moves the file pointer forward.
 @SG_WARN There is no guarantee on the size of the SGXTimeStamp. This may be changed in a future SGEXTN version.
-@SG_WARN If SGXFile::isValid is false, this leads to undefined behaviour.
+@SG_WARN If the file is not open in a write capable mode, this leads to undefined behaviour.
 @SG_FUNC void writeIdentifier(SGXIdentifier x) const;
 Writes the SGXIdentifier $x at the current position in the file.
 @SG_NOTE This moves the file pointer forward.
 @SG_WARN There is no guarantee on the size of the SGXIdentifier. This may be changed in a future SGEXTN version.
-@SG_WARN If SGXFile::isValid is false, this leads to undefined behaviour.
+@SG_WARN If the file is not open in a write capable mode, this leads to undefined behaviour.
 @SG_FUNC void writeVector2(SGXVector2 x) const;
 Writes the SGXVector2 $x at the current position in the file.
 @SG_NOTE This moves the file pointer forward.
 @SG_WARN There is no guarantee on the size of the SGXVector2. This may be changed in a future SGEXTN version.
-@SG_WARN If SGXFile::isValid is false, this leads to undefined behaviour.
+@SG_WARN If the file is not open in a write capable mode, this leads to undefined behaviour.
 @SG_FUNC [[nodiscard]] long long getPointerLocation() const;
 Returns the current location of the file pointer as a byte offset from the start of the file.
-@SG_WARN If SGXFile::isValid is false, this leads to undefined behaviour.
+@SG_WARN If SGXFile::openStatus is NotOpen, this leads to undefined behaviour.
 @SG_FUNC void setPointerLocation(long long x) const;
 Moves the file pointer to $x bytes from the start of the file.
-@SG_WARN If SGXFile::isValid is false, this leads to undefined behaviour.
+@SG_WARN If SGXFile::openStatus is NotOpen, this leads to undefined behaviour.
 @SG_WARN Negative $x is undefined behaviour.
 @SG_FUNC [[nodiscard]] SGLArray<char> readBytes(long long n) const;
 Reads $n bytes at the current position in the file.
 @SG_NOTE This moves the file pointer forward.
 @SG_WARN There is no guarantee on the size of the $n bytes. This may be changed in a future SGEXTN version.
-@SG_WARN If SGXFile::isValid is false, this leads to undefined behaviour.
+@SG_WARN If the file is not open in a read capable mode, this leads to undefined behaviour.
 @SG_FUNC [[nodiscard]] SGLArray<char> readAllBytes() const;
 Reads all data in the file as bytes.
 @SG_NOTE This ignores the file pointer.
-@SG_WARN If SGXFile::isValid is false, this leads to undefined behaviour.
+@SG_WARN If the file is not open in a read capable mode, this leads to undefined behaviour.
 @SG_FUNC void writeBytes(const SGLArray<char>& x) const;
 Writes all bytes in $x at the current position in the file
 @SG_NOTE This moves the file pointer forwards.
 @SG_WARN There is no guarantee on the size of $x. This may be changed in a future SGEXTN version.
-@SG_WARN If SGXFile::isValid is false, this leads to undefined behaviour.
+@SG_WARN If the file is not open in a write capable mode, this leads to undefined behaviour.
 @SG_FUNC static SGXString readAllText(const SGXString& filePath);
 Reads all text in the file at $filePath and returns the text as a SGXString.
 @SG_NOTE You are strongly encouraged to use binary files instead for better support and simplicity.
-@SG_WARN If $filePath cannot be opened, this is undefined behaviour. There is no error handling.
+@SG_NOTE If $filePath cannot be opened in a read only mode, this returns an empty string.
 @SG_FUNC static void writeAllText(const SGXString& filePath, const SGXString& contents);
 Overwrite the contents of the file at $filePath with $contents.
 @SG_NOTE You are strongly encouraged to use binary files instead for better support and simplicity.
+@SG_NOTE If $filePath cannot be opened in a write only mode, this does nothing.
 @SG_WARN This irreversibly overwrites all data previously stored in the file.
-@SG_WARN If $filePath cannot be opened, this is undefined behaviour. There is no error handling.

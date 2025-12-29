@@ -12,7 +12,7 @@ void SGXFontSizeCustomisation::loadFontSize(){
     const SGXString path = SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "SGEXTN/fontsize.sg");
     if(SGXFileSystem::fileExists(path) == false){return;}
     {
-        const SGXFile fileReader(path);
+        const SGXFile fileReader(path, SGXFile::ReadOnly);
         SGXFontSizeCustomisation::fontSize = fileReader.readFloat() * SGXFontSizeCustomisation::defaultFontSize;
     }
 }
@@ -22,7 +22,7 @@ void SGXFontSizeCustomisation::syncFontSize(){
     if(SGXFileSystem::fileExists(path) == true){SGXFileSystem::permanentDeleteFile(path);}
     SGXFileSystem::createFile(path);
     {
-        const SGXFile fileWriter(path);
+        const SGXFile fileWriter(path, SGXFile::WriteOnly);
         fileWriter.writeFloat(SGXFontSizeCustomisation::fontSize / SGXFontSizeCustomisation::defaultFontSize);
     }
 }

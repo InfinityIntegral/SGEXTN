@@ -16,19 +16,24 @@
 #include <cstring>
 #include <QTextStream>
 
-SGXFile::SGXFile(const SGXString &s){
+SGXFile::SGXFile(const SGXString &s, OpenStatus openMode){
     fileControl = nullptr;
     fileData = nullptr;
-    if(SGXFileSystem::fileExists(s) == false){isValid = false;}
+    if(SGXFileSystem::fileExists(s) == false){openStatus = SGXFile::NotOpen;}
     else{
         fileControl = new QFile((*s.data));
-        isValid = (*fileControl).open(QIODevice::ReadWrite);
+        bool isValid = false;
+        if(openMode == SGXFile::FullAccess){isValid = (*fileControl).open(QIODevice::ReadWrite);}
+        else if(openMode == SGXFile::ReadOnly){isValid = (*fileControl).open(QIODevice::ReadOnly);}
+        else if(openMode == SGXFile::WriteOnly){isValid = (*fileControl).open(QIODevice::WriteOnly);}
         if(isValid == true){
             fileData = new QDataStream(fileControl);
             (*fileData).setByteOrder(QDataStream::LittleEndian);
             (*fileData).setVersion(QDataStream::Qt_6_9);
             (*fileData).setFloatingPointPrecision(QDataStream::SinglePrecision);
+            openStatus = openMode;
         }
+        else{openStatus = SGXFile::NotOpen;}
     }
 }
 
@@ -221,7 +226,8 @@ void SGXFile::writeBytes(const SGLArray<char> &x) const {
 
 SGXString SGXFile::readAllText(const SGXString &filePath){
     QFile file(*filePath.data);
-    (void)file.open(QIODevice::ReadOnly | QIODevice::Text);
+    bool isValid = file.open(QIODevice::ReadOnly | QIODevice::Text);
+    if(isValid == false){return "";}
     QTextStream stream(&file);
     SGXString contents = "";
     (*contents.data) = stream.readAll();
@@ -231,7 +237,8 @@ SGXString SGXFile::readAllText(const SGXString &filePath){
 
 void SGXFile::writeAllText(const SGXString &filePath, const SGXString &contents){
     QFile file(*filePath.data);
-    (void)file.open(QIODevice::ReadWrite | QIODevice::Text);
+    bool isValid = file.open(QIODevice::WriteOnly | QIODevice::Text);
+    if(isValid == false){return;}
     QTextStream stream(&file);
     stream << (*contents.data);
     file.close();

@@ -31,7 +31,7 @@ void SGXThemeColoursCustomisation::loadThemeColours(){
     const SGXString path = SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "SGEXTN/themecolours.sg");
     if(SGXFileSystem::fileExists(path) == false){return;}
     {
-        const SGXFile fileReader(path);
+        const SGXFile fileReader(path, SGXFile::ReadOnly);
         SGXThemeColoursCustomisation::themeColour0 = fileReader.readColourRGBA();
         SGXThemeColoursCustomisation::themeColour1 = fileReader.readColourRGBA();
         SGXThemeColoursCustomisation::themeColour2 = fileReader.readColourRGBA();
@@ -49,7 +49,7 @@ void SGXThemeColoursCustomisation::syncThemeColours(){
     if(SGXFileSystem::fileExists(path) == true){SGXFileSystem::permanentDeleteFile(path);}
     SGXFileSystem::createFile(path);
     {
-        const SGXFile fileWriter(path);
+        const SGXFile fileWriter(path, SGXFile::WriteOnly);
         fileWriter.writeColourRGBA(SGXThemeColoursCustomisation::themeColour0);
         fileWriter.writeColourRGBA(SGXThemeColoursCustomisation::themeColour1);
         fileWriter.writeColourRGBA(SGXThemeColoursCustomisation::themeColour2);

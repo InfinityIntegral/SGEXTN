@@ -110,7 +110,6 @@ Returns the extension of the file at path @SG_ML_B001s. This does not include th
 @SG_ML_HEADER_static_SGXTimeStamp_getFileLastEditTime_const_SGXString_ref_ static @SG_ML_L00C00CSGXTimeStampsgxtimestamp @SG_ML_L01303DgetFileLastEditTime#static_SGXTimeStamp_getFileLastEditTime_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& s);
 Returns the time at which the file at @SG_ML_B001s was last opened in a write capable mode.
 @SG_ML_NOTE If there is no file at @SG_ML_B001s, this returns @SG_ML_L012038SGXTimeStamp::zero../cppclass/sgxtimestamp#static_const_SGXTimeStamp_zero_.
-@SG_ML_NOTE Using @SG_ML_L007013SGXFile../cppclass/sgxfile for reading a file also causes this to change as @SG_ML_L007013SGXFile../cppclass/sgxfile always opens files in read-write mode.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_SGXString_getFileName_const_SGXString_ref_ static @SG_ML_L009009SGXStringsgxstring @SG_ML_L00B032getFileName#static_SGXString_getFileName_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& s);
 Returns the name of the file at path @SG_ML_B001s.
@@ -153,7 +152,6 @@ Returns the time at which the folder at @SG_ML_B001s was created in the form of 
 @SG_ML_HEADER_static_SGXTimeStamp_getFolderLastEditTime_const_SGXString_ref_ static @SG_ML_L00C00CSGXTimeStampsgxtimestamp @SG_ML_L01503FgetFolderLastEditTime#static_SGXTimeStamp_getFolderLastEditTime_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& s);
 Returns the time at which the folder at @SG_ML_B001s was last opened in a write capable mode.
 @SG_ML_NOTE If there is no folder at @SG_ML_B001s, this returns @SG_ML_L012038SGXTimeStamp::zero../cppclass/sgxtimestamp#static_const_SGXTimeStamp_zero_.
-@SG_ML_NOTE Using @SG_ML_L007013SGXFile../cppclass/sgxfile for reading a file in the folder also causes this to change as @SG_ML_L007013SGXFile../cppclass/sgxfile always opens files in read-write mode.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_SGXString_getFolderName_const_SGXString_ref_ static @SG_ML_L009009SGXStringsgxstring @SG_ML_L00D034getFolderName#static_SGXString_getFolderName_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& s);
 Returns the name of the folder at path @SG_ML_B001s.
