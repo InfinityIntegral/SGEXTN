@@ -3,7 +3,7 @@
 @SG_ML_TITLE Resource File Tutorial
 @SG_ML_BLANKLINE
 &#9;SGEXTN uses the Qt QRC system to add resources into your application. Resources can be fonts, images, and even default configuration files. Resource files behave like any other file in the file system.
-&#9;Resource files are automatically added using @SG_ML_L018015BuildLah ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/buildlah if they are placed in the resources folder. For more information pls see @SG_ML_L009008this linkbuildlah.
+&#9;Resource files are automatically added using @SG_ML_L018015BuildLah ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/buildlah if they are placed in the assets folder. For more information pls see @SG_ML_L009008this linkbuildlah.
 @SG_ML_BLANKLINE
 &#9;You may have heard that you need a dedicated .qrc file to add files to the resource file system. That is only necessary for QMake, a Qt alternative build system that SGEXTN does not support.
 &#9;If you are not using @SG_ML_L018015BuildLah ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/buildlah, you can use the CMake command qt6_add_resources to add resource files also, but that is more complicated and you will have to specify each file manually.

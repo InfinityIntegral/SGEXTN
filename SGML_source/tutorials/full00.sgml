@@ -31,7 +31,7 @@
 @SG_ML_BLANKLINE
 &#9;We can then write our .gitignore and License.txt
 &#9;.gitignore tells GitHub which files should not be commited to the repository. These are automatically generated and do not contain any significant code. For SGEXTN projects, this is a safe default to copy.
-@SG_ML_WARN build*/&#10;*.o&#10;*.exe&#10;*.user&#10;*.pro.user&#10;*.qmake.stash&#10;*.autosave&#10;.DS_Store&#10;.qtcreator/*
+@SG_ML_WARN build*/&#10;fakeqml*/&#10;*.o&#10;*.exe&#10;*.user&#10;*.pro.user&#10;*.qmake.stash&#10;*.autosave&#10;.DS_Store&#10;.qtcreator/*
 &#9;The License.txt would depend on what license you want to use. For software that provide an existing feature (for example SGEXTN, because there are other C++ frameworks available), you should use the Lesser General Public License to encourage user adoption. For software that provide a new feature, such as _ocu_entation, the application processing .sgdoc files, use General Public License version 3 and later to promote open source software.
 &#9;For the README, you can either leave it blank for now or write a placeholder one saying that this is a work in progress.
 @SG_ML_BLANKLINE

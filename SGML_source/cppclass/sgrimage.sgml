@@ -42,7 +42,7 @@ Creates a @SG_ML_L008014SGRImage../cppclass/sgrimage with width @SG_ML_B001w pix
 @SG_ML_HEADER_SGRImage_const_SGXString_ref_ @SG_ML_L00801ESGRImage#SGRImage_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& filePath);
 Creates a @SG_ML_L008014SGRImage../cppclass/sgrimage using the image found at @SG_ML_B008filePath.
 @SG_ML_WARN Nonexistent @SG_ML_B008filePath is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
-@SG_ML_WARN The matching file must exist in the resource system. To ensure that, put the image in the resources folder. For more information about the resource system, see this @SG_ML_L008016tutorial../tutorials/resources.
+@SG_ML_WARN The matching file must exist in the resource system. To ensure that, put the image in the assets folder. For more information about the resource system, see this @SG_ML_L008016tutorial../tutorials/resources.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_SGRImage_int_int_ @SG_ML_L008012SGRImage#SGRImage_int_int_(int w, int h);
 Creates a @SG_ML_L008014SGRImage../cppclass/sgrimage with width @SG_ML_B001w pixels, height @SG_ML_B001h pixels, containing uninitialised nonsense.

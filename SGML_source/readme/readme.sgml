@@ -31,7 +31,7 @@
 &#9;Before setting up SGEXTN, first ensure that you have Qt installed properly on your computer. The Qt Shader Tools module is required for using SGEXTN as otherwise SGEXTN apps will not build. You can get Qt from their official website and install the shader tools module using the Qt Maintenance Tool. Make sure that your Qt version matches the intended Qt version for this SGEXTN version, the version information can be found at the top of this README.
 &#9;You will also need CMake, Ninja, and Qt Creator to build SGEXTN apps. These can be obtained through the Qt Maintenance Tool. Also ensure that Git is set up properly on your computer.
 &#9;On Linux, the compiler is present by default on your computer. On MacOS it can be easily installed using XCode. When building for Windows, you can obtain a compiler through the Qt Maintenance Tool. You need to get the compiler and Android SDK + NDK separately when building for Android.
-&#9;Once these are set up, you can download the prebuilt SGEXTN binaries from the latest SGEXTN release on GitHub and unzip the file to a folder. The folder you unzip it to will be refered to as the SGEXTN install folder, and it should contain SGEXTN's CMakeLists.txt
+&#9;Once these are set up, you can download the prebuilt SGEXTN binaries from the latest SGEXTN release on GitHub and unzip the file to a folder. The folder you unzip it to will be refered to as the SGEXTN install folder, and it should contain the folders include/ and lib/
 &#9;Then add these to your system PATH.
 @SG_ML_WARN [SGEXTN install folder]/lib&#10;[SGEXTN install folder]/lib/cmake/SGEXTN
 &#9;Now your computer is ready for building SGEXTN apps. To learn how to build one, see this @SG_ML_L008011tutorial../tutorials/full.

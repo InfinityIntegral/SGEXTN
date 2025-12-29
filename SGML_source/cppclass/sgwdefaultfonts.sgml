@@ -46,5 +46,5 @@ Returns the font name SingScript.sg. This is the default font for SGEXTN and dis
 Imports the ttf or otf formatted font found at @SG_ML_B008fileName.
 @SG_ML_NOTE This should be used in @SG_ML_L01D03ESGXCentral::importCustomFonts../cppclass/sgxcentral#static_void_ptr_importCustomFonts_func_ if the font need to be used upon application startup.
 @SG_ML_WARN Importing multiple fonts with the same family name is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour. If your font is modular, merge everything first.
-@SG_ML_WARN The matching file must exist in the resource system. To ensure that, place the font file in the resources folder. For more information about the resource system, see this @SG_ML_L008016tutorial../tutorials/resources.
+@SG_ML_WARN The matching file must exist in the resource system. To ensure that, place the font file in the assets folder. For more information about the resource system, see this @SG_ML_L008016tutorial../tutorials/resources.
 @SG_ML_BLANKLINE
