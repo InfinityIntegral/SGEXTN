@@ -492,13 +492,12 @@ SGLArray<SGXString> SGXFileSystem::getFilesListContainingNameRecursive(const SGX
 }
 
 bool SGXFileSystem::numberAwareLesserThan(const SGXString &s1, const SGXString &s2){
-    if(s1.at(s1.length()-1).isDigit() == false || s2.at(s2.length()-1).isDigit() == false){return (s1 < s2);}
+    SGXString s1NoExtension = SGXFileSystem::joinFilePaths(SGXFileSystem::getParentPath(s1), SGXFileSystem::getFileNameNoExtension(s1));
     int s1Number = -1;
-    SGXString s1CleanedName = s1;
-    {
+    if(s1NoExtension.at(s1NoExtension.length() - 1).isDigit() == true){
         SGXString reversedNumber = "";
-        for(int i=s1.length()-1; i>=0; i--){
-            if(s1.at(i).isDigit() == true){reversedNumber += s1.at(i);}
+        for(int i=s1NoExtension.length()-1; i>=0; i--){
+            if(s1NoExtension.at(i).isDigit() == true){reversedNumber += s1NoExtension.at(i);}
             else{break;}
         }
         SGXString correctNumber = "";
@@ -506,14 +505,14 @@ bool SGXFileSystem::numberAwareLesserThan(const SGXString &s1, const SGXString &
             correctNumber += reversedNumber.at(i);
         }
         s1Number = correctNumber.parseToInt(nullptr);
-        s1CleanedName = s1.substringLeft(s1.length() - correctNumber.length());
+        s1NoExtension = s1NoExtension.substringLeft(s1NoExtension.length() - correctNumber.length());
     }
+    SGXString s2NoExtension = SGXFileSystem::joinFilePaths(SGXFileSystem::getParentPath(s2), SGXFileSystem::getFileNameNoExtension(s2));
     int s2Number = -1;
-    SGXString s2CleanedName = s2;
-    {
+    if(s2NoExtension.at(s2NoExtension.length() - 1).isDigit() == true){
         SGXString reversedNumber = "";
-        for(int i=s2.length()-1; i>=0; i--){
-            if(s2.at(i).isDigit() == true){reversedNumber += s2.at(i);}
+        for(int i=s2NoExtension.length()-1; i>=0; i--){
+            if(s2NoExtension.at(i).isDigit() == true){reversedNumber += s2NoExtension.at(i);}
             else{break;}
         }
         SGXString correctNumber = "";
@@ -521,46 +520,47 @@ bool SGXFileSystem::numberAwareLesserThan(const SGXString &s1, const SGXString &
             correctNumber += reversedNumber.at(i);
         }
         s2Number = correctNumber.parseToInt(nullptr);
-        s2CleanedName = s2.substringLeft(s2.length() - correctNumber.length());
+        s2NoExtension = s2NoExtension.substringLeft(s2NoExtension.length() - correctNumber.length());
     }
-    if(s1CleanedName != s2CleanedName){return (s1CleanedName < s2CleanedName);}
-    return (s1Number < s2Number);
+    if(s1NoExtension != s2NoExtension){return (s1NoExtension < s2NoExtension);}
+    if(s1Number != s2Number){return (s1Number < s2Number);}
+    return (SGXFileSystem::getFileExtension(s1) < SGXFileSystem::getFileExtension(s2));
 }
 
 bool SGXFileSystem::numberAwareLesserThanBase16(const SGXString &s1, const SGXString &s2){
-    if(s1.at(s1.length()-1).isDigitBase16() == false || s2.at(s2.length()-1).isDigitBase16() == false){return (s1 < s2);}
+    SGXString s1NoExtension = SGXFileSystem::joinFilePaths(SGXFileSystem::getParentPath(s1), SGXFileSystem::getFileNameNoExtension(s1));
     int s1Number = -1;
-    SGXString s1CleanedName = s1;
-    {
+    if(s1NoExtension.at(s1NoExtension.length() - 1).isDigitBase16() == true){
         SGXString reversedNumber = "";
-        for(int i=s1.length()-1; i>=0; i--){
-            if(s1.at(i).isDigitBase16() == true){reversedNumber += s1.at(i);}
+        for(int i=s1NoExtension.length()-1; i>=0; i--){
+            if(s1NoExtension.at(i).isDigitBase16() == true){reversedNumber += s1NoExtension.at(i);}
             else{break;}
         }
         SGXString correctNumber = "";
         for(int i=reversedNumber.length()-1; i>=0; i--){
             correctNumber += reversedNumber.at(i);
         }
-        s1Number = correctNumber.parseToIntBase16(nullptr);
-        s1CleanedName = s1.substringLeft(s1.length() - correctNumber.length());
+        s1Number = correctNumber.parseToInt(nullptr);
+        s1NoExtension = s1NoExtension.substringLeft(s1NoExtension.length() - correctNumber.length());
     }
+    SGXString s2NoExtension = SGXFileSystem::joinFilePaths(SGXFileSystem::getParentPath(s2), SGXFileSystem::getFileNameNoExtension(s2));
     int s2Number = -1;
-    SGXString s2CleanedName = s2;
-    {
+    if(s2NoExtension.at(s2NoExtension.length() - 1).isDigitBase16() == true){
         SGXString reversedNumber = "";
-        for(int i=s2.length()-1; i>=0; i--){
-            if(s2.at(i).isDigitBase16() == true){reversedNumber += s2.at(i);}
+        for(int i=s2NoExtension.length()-1; i>=0; i--){
+            if(s2NoExtension.at(i).isDigitBase16() == true){reversedNumber += s2NoExtension.at(i);}
             else{break;}
         }
         SGXString correctNumber = "";
         for(int i=reversedNumber.length()-1; i>=0; i--){
             correctNumber += reversedNumber.at(i);
         }
-        s2Number = correctNumber.parseToIntBase16(nullptr);
-        s2CleanedName = s2.substringLeft(s2.length() - correctNumber.length());
+        s2Number = correctNumber.parseToInt(nullptr);
+        s2NoExtension = s2NoExtension.substringLeft(s2NoExtension.length() - correctNumber.length());
     }
-    if(s1CleanedName != s2CleanedName){return (s1CleanedName < s2CleanedName);}
-    return (s1Number < s2Number);
+    if(s1NoExtension != s2NoExtension){return (s1NoExtension < s2NoExtension);}
+    if(s1Number != s2Number){return (s1Number < s2Number);}
+    return (SGXFileSystem::getFileExtension(s1) < SGXFileSystem::getFileExtension(s2));
 }
 
 bool SGXNumberAwareFilePathLesserThan::operator()(const SGXString& a, const SGXString& b){
