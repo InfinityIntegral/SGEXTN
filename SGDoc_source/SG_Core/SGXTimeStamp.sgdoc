@@ -64,30 +64,30 @@ See explanation of SGXTimeStamp::getTimeFromSecondPart. The corresponding parame
 @SG_FUNC [[nodiscard]] int getTimeFromYearPart(SGXTimeStamp x) const;
 See explanation of SGXTimeStamp::getTimeFromSecondPart. The corresponding parameter to $x is still named x.
 @SG_PRIVATE_API [[nodiscard]] SGXString getFullSGCalendar() const;
-@SG_FUNC void addSeconds(long long x);
-Moves this SGXTimeStamp forwards by $x seconds.
-@SG_FUNC void addMinutes(long long x);
-Moves this SGXTimeStamp forwards by $x minutes.
-@SG_FUNC void addHours(long long x);
-Moves this SGXTimeStamp forwards by $x hours.
-@SG_FUNC void addDays(long long x);
-Moves this SGXTimeStamp forwards by $x days.
-@SG_FUNC void addMonths(long long x);
-Moves this SGXTimeStamp forwards by $x months.
-@SG_FUNC void addYears(long long x);
-Moves this SGXTimeStamp forwards by $x years.
-@SG_FUNC void subtractSeconds(long long x);
-Moves this SGXTimeStamp backwards by $x seconds.
-@SG_FUNC void subtractMinutes(long long x);
-Moves this SGXTimeStamp backwards by $x minutes.
-@SG_FUNC void subtractHours(long long x);
-Moves this SGXTimeStamp backwards by $x hours.
-@SG_FUNC void subtractDays(long long x);
-Moves this SGXTimeStamp backwards by $x days.
-@SG_FUNC void subtractMonths(long long x);
-Moves this SGXTimeStamp backwards by $x months.
-@SG_FUNC void subtractYears(long long x);
-Moves this SGXTimeStamp backwards by $x years.
+@SG_FUNC SGXTimeStamp& addSeconds(long long x);
+Moves this SGXTimeStamp forwards by $x seconds and returns a reference to this SGXTimeStamp to allow operation chaining.
+@SG_FUNC SGXTimeStamp& addMinutes(long long x);
+Moves this SGXTimeStamp forwards by $x minutes and returns a reference to this SGXTimeStamp to allow operation chaining.
+@SG_FUNC SGXTimeStamp& addHours(long long x);
+Moves this SGXTimeStamp forwards by $x hours and returns a reference to this SGXTimeStamp to allow operation chaining.
+@SG_FUNC SGXTimeStamp& addDays(long long x);
+Moves this SGXTimeStamp forwards by $x days and returns a reference to this SGXTimeStamp to allow operation chaining.
+@SG_FUNC SGXTimeStamp& addMonths(long long x);
+Moves this SGXTimeStamp forwards by $x months and returns a reference to this SGXTimeStamp to allow operation chaining.
+@SG_FUNC SGXTimeStamp& addYears(long long x);
+Moves this SGXTimeStamp forwards by $x years and returns a reference to this SGXTimeStamp to allow operation chaining.
+@SG_FUNC SGXTimeStamp& subtractSeconds(long long x);
+Moves this SGXTimeStamp backwards by $x seconds and returns a reference to this SGXTimeStamp to allow operation chaining.
+@SG_FUNC SGXTimeStamp& subtractMinutes(long long x);
+Moves this SGXTimeStamp backwards by $x minutes and returns a reference to this SGXTimeStamp to allow operation chaining.
+@SG_FUNC SGXTimeStamp& subtractHours(long long x);
+Moves this SGXTimeStamp backwards by $x hours and returns a reference to this SGXTimeStamp to allow operation chaining.
+@SG_FUNC SGXTimeStamp& subtractDays(long long x);
+Moves this SGXTimeStamp backwards by $x days and returns a reference to this SGXTimeStamp to allow operation chaining.
+@SG_FUNC SGXTimeStamp& subtractMonths(long long x);
+Moves this SGXTimeStamp backwards by $x months and returns a reference to this SGXTimeStamp to allow operation chaining.
+@SG_FUNC SGXTimeStamp& subtractYears(long long x);
+Moves this SGXTimeStamp backwards by $x years and returns a reference to this SGXTimeStamp to allow operation chaining.
 @SG_FUNC [[nodiscard]] static SGXTimeStamp now();
 Returns a SGXTimeStamp representing the time at which the function was called.
 @SG_FUNC [[nodiscard]] int getDayOfWeek() const;
