@@ -25,6 +25,7 @@ children classes: (none)
 &#9;static void (*@SG_ML_L00F026customTerminate#static_void_ptr_customTerminate_func_)();
 &#9;static @SG_ML_L009009SGXStringsgxstring @SG_ML_L00A01DfolderName#static_SGXString_folderName_;
 &#9;static void (*@SG_ML_L011028importCustomFonts#static_void_ptr_importCustomFonts_func_)();
+&#9;static @SG_ML_L009009SGXStringsgxstring @SG_ML_L00B01EinfoWebsite#static_SGXString_infoWebsite_;
 &#9;static void (*@SG_ML_L010033interpretCmdArgs#static_void_ptr_interpretCmdArgs_int_char_ptr_ptr_)(int, char**);
 &#9;static @SG_ML_L009009SGXStringsgxstring @SG_ML_L010023organisationName#static_SGXString_organisationName_;
 &#9;static @SG_ML_L009009SGXStringsgxstring @SG_ML_L00D020pathToAppIcon#static_SGXString_pathToAppIcon_;
@@ -68,6 +69,12 @@ Function pointer to the function import custom fonts. This must be set in the en
 @SG_ML_NOTE SGEXTN will warn if the @SG_ML_L020014application icon ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/appicon font is not found by the end of this function's execution.
 @SG_ML_WARN Using @SG_ML_L00C018SGWIconLabel../cppclass/sgwiconlabel or @SG_ML_L00D019SGWIconButton../cppclass/sgwiconbutton when there is no @SG_ML_L020014application icon ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/appicon font is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
 @SG_ML_BLANKLINE
+@SG_ML_HEADER_static_SGXString_infoWebsite_ static @SG_ML_L009009SGXStringsgxstring @SG_ML_L00B01EinfoWebsite#static_SGXString_infoWebsite_;
+link to the website with information about this application
+@SG_ML_NOTE Setting this after the entry point has no effect.
+@SG_ML_NOTE If the application does not have a information website, use the GitHub repository link instead. If it also does not have a GitHub repository link, you can leave this unset.
+@SG_ML_NOTE The website link should not include the https:// part
+@SG_ML_BLANKLINE
 @SG_ML_HEADER_static_void_ptr_interpretCmdArgs_int_char_ptr_ptr_ static void (*@SG_ML_L010033interpretCmdArgs#static_void_ptr_interpretCmdArgs_int_char_ptr_ptr_)(int, char**);
 Function pointer to function interpreting command line arguments. This must be set in the entry point.
 @SG_ML_NOTE Setting this after the entry point has no effect.
@@ -82,7 +89,7 @@ Name of your company or yourself. This must be set in the entry point.
 Path to the application icon which is shown when users run the application. This must be set in the entry point.
 @SG_ML_NOTE Setting this after the entry point has no effect.
 @SG_ML_WARN The matching file must exist in the resource system. To ensure that, put the app icon in the assets folder. For more information about the resource system, see this @SG_ML_L008016tutorial../tutorials/resources.
-@SG_ML_WARN If the icon file cannot be found, this is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour. However not setting this does not cause @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
+@SG_ML_WARN If the icon file cannot be found, this is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour. However not setting this does not cause @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour, if this is not set then the app will use the SGEXTN icon.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_void_ptr_setCustomTheme_func_ static void (*@SG_ML_L00E025setCustomTheme#static_void_ptr_setCustomTheme_func_)();
 Function pointer to the function setting custom @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour for your application. This must be set in the entry point if needed.

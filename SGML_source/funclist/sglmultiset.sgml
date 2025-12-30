@@ -10,8 +10,8 @@
 &#9;[[nodiscard]] int @SG_ML_L00B017SGLMultiSet../cppclass/sglmultiset::@SG_ML_L00503Ecount../cppclass/sglmultiset#nodiscard_int_count_const_T_ref_const_(const T& x) const;
 &#9;[[nodiscard]] const T& @SG_ML_L00B017SGLMultiSet../cppclass/sglmultiset::@SG_ML_L009042elementAt../cppclass/sglmultiset#nodiscard_const_T_ref_elementAt_int_const_(int n) const;
 &#9;[[nodiscard]] @SG_ML_L015015SGLMultiSet::Iteratorsglmultiset__iterator @SG_ML_L00B017SGLMultiSet../cppclass/sglmultiset::@SG_ML_L003043end../cppclass/sglmultiset#nodiscard_SGLMultiSet_mc_Iterator_end_func_();
-&#9;void @SG_ML_L00B017SGLMultiSet../cppclass/sglmultiset::@SG_ML_L00502Ferase../cppclass/sglmultiset#void_erase_const_T_ref_(const T& x);
-&#9;void @SG_ML_L00B017SGLMultiSet../cppclass/sglmultiset::@SG_ML_L00503Ferase../cppclass/sglmultiset#void_erase_SGLMultiSet_mc_Iterator_ref_(@SG_ML_L015015SGLMultiSet::Iteratorsglmultiset__iterator& i);
+&#9;bool @SG_ML_L00B017SGLMultiSet../cppclass/sglmultiset::@SG_ML_L00503Ferase../cppclass/sglmultiset#bool_erase_SGLMultiSet_mc_Iterator_ref_(@SG_ML_L015015SGLMultiSet::Iteratorsglmultiset__iterator& i);
+&#9;bool @SG_ML_L00B017SGLMultiSet../cppclass/sglmultiset::@SG_ML_L00502Ferase../cppclass/sglmultiset#bool_erase_const_T_ref_(const T& x);
 &#9;[[nodiscard]] @SG_ML_L01A01ASGLMultiSet::ConstIteratorsglmultiset__constiterator @SG_ML_L00B017SGLMultiSet../cppclass/sglmultiset::@SG_ML_L004056find../cppclass/sglmultiset#nodiscard_SGLMultiSet_mc_ConstIterator_find_const_T_ref_const_(const T& x) const;
 &#9;[[nodiscard]] @SG_ML_L015015SGLMultiSet::Iteratorsglmultiset__iterator @SG_ML_L00B017SGLMultiSet../cppclass/sglmultiset::@SG_ML_L00404Bfind../cppclass/sglmultiset#nodiscard_SGLMultiSet_mc_Iterator_find_const_T_ref_(const T& x);
 &#9;[[nodiscard]] int @SG_ML_L00B017SGLMultiSet../cppclass/sglmultiset::@SG_ML_L007040indexOf../cppclass/sglmultiset#nodiscard_int_indexOf_const_T_ref_const_(const T& x) const;
@@ -22,5 +22,5 @@
 &#9;[[nodiscard]] int @SG_ML_L00B017SGLMultiSet../cppclass/sglmultiset::@SG_ML_L006038length../cppclass/sglmultiset#nodiscard_int_length_func_const_() const;
 &#9;[[nodiscard]] @SG_ML_L01A01ASGLMultiSet::ConstIteratorsglmultiset__constiterator @SG_ML_L00B017SGLMultiSet../cppclass/sglmultiset::@SG_ML_L00A05ClowerBound../cppclass/sglmultiset#nodiscard_SGLMultiSet_mc_ConstIterator_lowerBound_const_T_ref_const_(const T& x) const;
 &#9;[[nodiscard]] @SG_ML_L015015SGLMultiSet::Iteratorsglmultiset__iterator @SG_ML_L00B017SGLMultiSet../cppclass/sglmultiset::@SG_ML_L00A051lowerBound../cppclass/sglmultiset#nodiscard_SGLMultiSet_mc_Iterator_lowerBound_const_T_ref_(const T& x);
-&#9;[[nodiscard]] @SG_ML_L01A01ASGLMultiSet::ConstIteratorsglmultiset__constiterator @SG_ML_L00B017SGLMultiSet../cppclass/sglmultiset::@SG_ML_L00A05CupperBound../cppclass/sglmultiset#nodiscard_SGLMultiSet_mc_ConstIterator_upperBound_const_T_ref_const_(const T& x) const;
 &#9;[[nodiscard]] @SG_ML_L015015SGLMultiSet::Iteratorsglmultiset__iterator @SG_ML_L00B017SGLMultiSet../cppclass/sglmultiset::@SG_ML_L00A051upperBound../cppclass/sglmultiset#nodiscard_SGLMultiSet_mc_Iterator_upperBound_const_T_ref_(const T& x);
+&#9;[[nodiscard]] @SG_ML_L01A01ASGLMultiSet::ConstIteratorsglmultiset__constiterator @SG_ML_L00B017SGLMultiSet../cppclass/sglmultiset::@SG_ML_L00A05CupperBound../cppclass/sglmultiset#nodiscard_SGLMultiSet_mc_ConstIterator_upperBound_const_T_ref_const_(const T& x) const;

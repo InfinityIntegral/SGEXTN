@@ -7,6 +7,7 @@
 &#9;static void (*@SG_ML_L00A016SGXCentral../cppclass/sgxcentral::@SG_ML_L00F03CcustomTerminate../cppclass/sgxcentral#static_void_ptr_customTerminate_func_)();
 &#9;static @SG_ML_L009009SGXStringsgxstring @SG_ML_L00A016SGXCentral../cppclass/sgxcentral::@SG_ML_L00A033folderName../cppclass/sgxcentral#static_SGXString_folderName_;
 &#9;static void (*@SG_ML_L00A016SGXCentral../cppclass/sgxcentral::@SG_ML_L01103EimportCustomFonts../cppclass/sgxcentral#static_void_ptr_importCustomFonts_func_)();
+&#9;static @SG_ML_L009009SGXStringsgxstring @SG_ML_L00A016SGXCentral../cppclass/sgxcentral::@SG_ML_L00B034infoWebsite../cppclass/sgxcentral#static_SGXString_infoWebsite_;
 &#9;static void (*@SG_ML_L00A016SGXCentral../cppclass/sgxcentral::@SG_ML_L010049interpretCmdArgs../cppclass/sgxcentral#static_void_ptr_interpretCmdArgs_int_char_ptr_ptr_)(int, char**);
 &#9;static @SG_ML_L009009SGXStringsgxstring @SG_ML_L00A016SGXCentral../cppclass/sgxcentral::@SG_ML_L010039organisationName../cppclass/sgxcentral#static_SGXString_organisationName_;
 &#9;static @SG_ML_L009009SGXStringsgxstring @SG_ML_L00A016SGXCentral../cppclass/sgxcentral::@SG_ML_L00D036pathToAppIcon../cppclass/sgxcentral#static_SGXString_pathToAppIcon_;

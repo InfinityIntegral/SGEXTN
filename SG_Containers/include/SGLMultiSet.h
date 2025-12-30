@@ -1,8 +1,6 @@
 #ifndef SGLMULTISET_H
 #define SGLMULTISET_H
 
-#include <private_api_Containers/SGLCrash.h>
-
 template <typename T, typename Comparator> class SGLMultiSet {
 protected:
     class Node;
@@ -40,7 +38,7 @@ public:
     ~SGLMultiSet();
     [[nodiscard]] int length() const;
     void insert(const T& x);
-    void erase(const T& x);
+    bool erase(const T& x);
     [[nodiscard]] bool contains(const T& x) const;
     [[nodiscard]] int count(const T& x) const;
     
@@ -51,7 +49,7 @@ public:
     [[nodiscard]] ConstIterator constBegin() const;
     [[nodiscard]] Iterator end();
     [[nodiscard]] ConstIterator constEnd() const;
-    void erase(Iterator& i);
+    bool erase(Iterator& i);
     [[nodiscard]] Iterator find(const T& x);
     [[nodiscard]] ConstIterator find(const T& x) const;
     
@@ -320,9 +318,9 @@ template <typename T, typename Comparator> void SGLMultiSet<T, Comparator>::inse
     updateHeightRecurseToRoot(currentNode);
 }
 
-template <typename T, typename Comparator> void SGLMultiSet<T, Comparator>::erase(const T& x){
+template <typename T, typename Comparator> bool SGLMultiSet<T, Comparator>::erase(const T& x){
     Iterator i = find(x);
-    erase(i);
+    return erase(i);
 }
 
 template <typename T, typename Comparator> bool SGLMultiSet<T, Comparator>::contains(const T& x) const {
@@ -584,14 +582,14 @@ template <typename T, typename Comparator> void SGLMultiSet<T, Comparator>::repl
     (*child).parent = newParent;
 }
 
-template <typename T, typename Comparator> void SGLMultiSet<T, Comparator>::erase(Iterator& i){
+template <typename T, typename Comparator> bool SGLMultiSet<T, Comparator>::erase(Iterator& i){
     Node* nodeToDelete = i.node;
-    if(nodeToDelete == nullptr){SGLCrash::crashOnRemove();}
+    if(nodeToDelete == nullptr){return false;}
     if((*i.node).count > 1){
         (*i.node).count--;
         updateHeightRecurseToRoot(i.node);
         i--;
-        return;
+        return true;
     }
     i++;
     if((*nodeToDelete).leftChild == nullptr && (*nodeToDelete).rightChild == nullptr){
@@ -641,6 +639,7 @@ template <typename T, typename Comparator> void SGLMultiSet<T, Comparator>::eras
         delete nodeToDelete;
     }
     i--;
+    return true;
 }
 
 template <typename T, typename Comparator> typename SGLMultiSet<T, Comparator>::Node* SGLMultiSet<T, Comparator>::findNode(const T& x) const {

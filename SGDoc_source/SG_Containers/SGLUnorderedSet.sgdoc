@@ -8,7 +8,7 @@
 @SG_PRIVATE_API int memoryLengthInternal;
 @SG_PRIVATE_API EqualityCheck equalityCheckInstance;
 @SG_PRIVATE_API HashFunction hashFunctionInstance;
-@SG_PRIVATE_API void rehash(const T& x);
+@SG_PRIVATE_API bool rehash(const T& x);
 @SG_FUNC SGLUnorderedSet();
 Creates an empty SGLUnorderedSet.
 @SG_FUNC [[nodiscard]] int length() const;
@@ -16,12 +16,12 @@ Returns the length of the SGLUnorderedSet, which is the number of elements curre
 @SG_FUNC void reserve(int newMemoryLength);
 Pre allocates enough memory to store ($newMemoryLength / 3) - 1 elements in the SGLUnorderedSet without resizing.
 @SG_NOTE If the existing memory is sufficient, this does nothing.
-@SG_FUNC void insert(const T& x);
+@SG_FUNC bool insert(const T& x);
 Inserts $x into the SGLUnorderedSet.
-@SG_NOTE If the SGLUnorderedSet already contains $x, this function will crash. If you cannot guarantee that the SGLUnorderedSet does not already contain $x, use SGLUnorderedSet::contains to check before insertion. This is a intentional design choice to avoid silent bugs.
-@SG_FUNC void erase(const T& x);
+@SG_NOTE If the SGLUnorderedSet already contains $x, this function will return false, otherwise this returns true.
+@SG_FUNC bool erase(const T& x);
 Removes $x from the SGLUnorderedSet.
-@SG_NOTE If the SGLUnorderedSet does not contain $x, this function will crash. If you cannot guarantee that the SGLUnorderedSet already contains $x, use SGLUnorderedSet::contains to check before removal. This is a intentional design choice to avoid silent bugs.
+@SG_NOTE If the SGLUnorderedSet does not contain $x, this function will return false, otherwise this returns true.
 @SG_FUNC [[nodiscard]] bool contains(const T& x) const;
 Returns if the SGLUnorderedSet contains $x.
 @SG_FUNC [[nodiscard]] int count(const T& x) const;
@@ -45,9 +45,10 @@ Returns a constant iterator to the first element in the SGLUnorderedSet.
 Returns a null constant iterator associated to this SGLUnorderedSet.
 @SG_NOTE SGLUnorderedSet iterators behave circularly. This is equivalent to running operator-- on SGLUnorderedSet::constBegin.
 @SG_WARN Attempting to access the element that this iterator points to is undefined behaviour.
-@SG_FUNC void erase(SGLUnorderedSet::Iterator& x);
+@SG_FUNC bool erase(SGLUnorderedSet::Iterator& x);
 Removes the element associated with $x from the SGLUnorderedSet.
 After the removal, $x which is passed as a reference, is decremented. This means that you do not have to do any special handling for removed elements when iterating over a SGLUnorderedSet.
+@SG_NOTE This returns false if $x is SGLUnorderedSet::end and true otherwise.
 @SG_WARN Do not write any special logic to modify iterators while removing elements from a SGLUnorderedSet in a loop, SGLUnorderedSet::erase handles this for you automatically.
 @SG_FUNC [[nodiscard]] SGLUnorderedSet::Iterator find(const T& x);
 Returns the iterator pointing to element $x.

@@ -32,10 +32,10 @@ Returns the length of the SGLMultiSet, that is the number of elements in the SGL
 @SG_FUNC void insert(const T& x);
 Inserts $x into the SGLMultiSet.
 @SG_NOTE Inserting multiple elements is allowed. If there is already a copy of $x, a new copy is added.
-@SG_FUNC void erase(const T& x);
+@SG_FUNC bool erase(const T& x);
 Removes $x from the SGLMultiSet.
 @SG_NOTE If there is more than 1 copies of $x, the last added copy is removed and other copies remain in the set.
-@SG_WARN If the SGLMultiSet does not contain any copy of $x, this will cause a crash. If you cannot guarantee that SGLMultiSet contains $x, use SGLMultiSet::contains to check before removal. This is a intentional design choice to avoid silent bugs.
+@SG_NOTE If the SGLMultiSet does not contain any copy of $x, this will return false, otherwise this returns true.
 @SG_FUNC [[nodiscard]] bool contains(const T& x) const;
 Returns if the SGLMultiSet contains any copy of $x.
 @SG_FUNC [[nodiscard]] int count(const T& x) const;
@@ -58,9 +58,10 @@ Returns a null iterator associated to this SGLMultiSet.
 Returns a null constant iterator associated to this SGLMultiSet.
 @SG_NOTE SGLMultiSet iterators behave circularly. This is equivalent to running operator-- on SGLMultiSet::constBegin.
 @SG_WARN Attempting to access the element that this iterator points to is undefined behaviour.
-@SG_FUNC void erase(SGLMultiSet::Iterator& i);
+@SG_FUNC bool erase(SGLMultiSet::Iterator& i);
 Removes the element associated with $i from the SGLMultiSet.
 After the removal, $i which is passed as a reference, is decremented. This means that you do not have to do any special handling for removed elements when iterating over a SGLMultiSet.
+@SG_NOTE This returns false if $i is SGLMultiSet::end and true otherwise.
 @SG_WARN Do not write any special logic to modify iterators while removing elements from a SGLMultiSet in a loop, SGLMultiSet::erase handles this for you automatically.
 @SG_FUNC [[nodiscard]] SGLMultiSet::Iterator find(const T& x);
 Returns the iterator pointing to element $x.

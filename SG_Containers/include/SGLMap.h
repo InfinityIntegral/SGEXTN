@@ -1,8 +1,6 @@
 #ifndef SGLMAP_H
 #define SGLMAP_H
 
-#include <private_api_Containers/SGLCrash.h>
-
 template <typename K, typename V, typename Comparator> class SGLMap{
 protected:
     class Node;
@@ -39,8 +37,8 @@ public:
     SGLMap& operator=(SGLMap&& x) noexcept;
     ~SGLMap();
     [[nodiscard]] int length() const;
-    void insert(const K& xKey, const V& xValue);
-    void erase(const K& x);
+    bool insert(const K& xKey, const V& xValue);
+    bool erase(const K& x);
     [[nodiscard]] bool contains(const K& x) const;
     [[nodiscard]] int count(const K& x) const;
     [[nodiscard]] V& at(const K& x);
@@ -53,7 +51,7 @@ public:
     [[nodiscard]] ConstIterator constBegin() const;
     [[nodiscard]] Iterator end();
     [[nodiscard]] ConstIterator constEnd() const;
-    void erase(Iterator& i);
+    bool erase(Iterator& i);
     [[nodiscard]] Iterator find(const K& x);
     [[nodiscard]] ConstIterator find(const K& x) const;
     
@@ -292,11 +290,11 @@ template <typename K, typename V, typename Comparator> void SGLMap<K, V, Compara
     }
 }
 
-template <typename K, typename V, typename Comparator> void SGLMap<K, V, Comparator>::insert(const K& xKey, const V& xValue){
+template <typename K, typename V, typename Comparator> bool SGLMap<K, V, Comparator>::insert(const K& xKey, const V& xValue){
     Node* currentNode = root;
     if(root == nullptr){
         root = new Node(xKey, xValue, nullptr);
-        return;
+        return true;
     }
     while(true){
         if(comparatorInstance(xKey, (*currentNode).key) == true){
@@ -315,14 +313,15 @@ template <typename K, typename V, typename Comparator> void SGLMap<K, V, Compara
             }
             currentNode = (*currentNode).rightChild;
         }
-        else{SGLCrash::crashOnInsert();}
+        else{return false;}
     }
     updateHeightRecurseToRoot(currentNode);
+    return true;
 }
 
-template <typename K, typename V, typename Comparator> void SGLMap<K, V, Comparator>::erase(const K& x){
+template <typename K, typename V, typename Comparator> bool SGLMap<K, V, Comparator>::erase(const K& x){
     Iterator i = find(x);
-    erase(i);
+    return erase(i);
 }
 
 template <typename K, typename V, typename Comparator> bool SGLMap<K, V, Comparator>::contains(const K& x) const {
@@ -499,9 +498,9 @@ template <typename K, typename V, typename Comparator> void SGLMap<K, V, Compara
 }
 
 
-template <typename K, typename V, typename Comparator> void SGLMap<K, V, Comparator>::erase(Iterator& i){
+template <typename K, typename V, typename Comparator> bool SGLMap<K, V, Comparator>::erase(Iterator& i){
     Node* nodeToDelete = i.node;
-    if(nodeToDelete == nullptr){SGLCrash::crashOnRemove();}
+    if(nodeToDelete == nullptr){return false;}
     i++;
     if((*nodeToDelete).leftChild == nullptr && (*nodeToDelete).rightChild == nullptr){
         replaceChildren((*nodeToDelete).parent, nodeToDelete, nullptr);
@@ -550,6 +549,7 @@ template <typename K, typename V, typename Comparator> void SGLMap<K, V, Compara
         delete nodeToDelete;
     }
     i--;
+    return true;
 }
 
 template <typename K, typename V, typename Comparator> typename SGLMap<K, V, Comparator>::Node* SGLMap<K, V, Comparator>::findNode(const K& x) const {

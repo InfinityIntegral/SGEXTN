@@ -7,8 +7,6 @@ class SG_CONTAINERS_DLL SGLCrash
 {
 public:
     static void crash();
-    static void crashOnInsert();
-    static void crashOnRemove();
     static void crashOnDeleteTimer();
 };
 

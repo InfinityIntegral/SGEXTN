@@ -13,7 +13,7 @@
 &#9;The background of UI pages should be direct children of @SG_ML_L017038SGWWidget::parentWidget../cppclass/sgwwidget#static_SGWWidget_ptr_parentWidget_. The UI elements on a UI page should be children of the page background.
 @SG_ML_BLANKLINE
 &#9;The following UI layout recommendations will use @SG_ML_L01A016w-distance ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/wdistance.
-&#9;As much as possible, keep the height of the average text at (0.0, 1.0). Remember to provide a way to open the font size customisation page (@SG_ML_L03C059SGWCustomisationPageControl::enableFontSizeCustomisationPage../cppclass/sgwcustomisationpagecontrol#static_void_enableFontSizeCustomisationPage_func_) so that the user can adjust the font size if they want to.
+&#9;As much as possible, keep the height of the average text at (0.0, 1.0).
 &#9;Try not to put anything within (0.0, 0.5) of the edge of the screen.
 &#9;Leave a gap of at least (0.0, 0.2) between any 2 UI elements.
 &#9;Warning text for when the user enters invalid input should have a height of (0.0, 0.75).
