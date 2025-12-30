@@ -2,12 +2,12 @@
 @SG_ML_PAGENAME SGXTimeStamp Function List
 @SG_ML_TITLE @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp
 &#9;@SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp::@SG_ML_L00C03ESGXTimeStamp../cppclass/sgxtimestamp#SGXTimeStamp_int_int_int_int_int_int_(int year, int month, int day, int hour, int minute, int second);
-&#9;void @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp::@SG_ML_L007030addDays../cppclass/sgxtimestamp#void_addDays_long_long_(long long x);
-&#9;void @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp::@SG_ML_L008031addHours../cppclass/sgxtimestamp#void_addHours_long_long_(long long x);
-&#9;void @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp::@SG_ML_L00A033addMinutes../cppclass/sgxtimestamp#void_addMinutes_long_long_(long long x);
-&#9;void @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp::@SG_ML_L009032addMonths../cppclass/sgxtimestamp#void_addMonths_long_long_(long long x);
-&#9;void @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp::@SG_ML_L00A033addSeconds../cppclass/sgxtimestamp#void_addSeconds_long_long_(long long x);
-&#9;void @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp::@SG_ML_L008031addYears../cppclass/sgxtimestamp#void_addYears_long_long_(long long x);
+&#9;@SG_ML_L00C00CSGXTimeStampsgxtimestamp& @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp::@SG_ML_L00703CaddDays../cppclass/sgxtimestamp#SGXTimeStamp_ref_addDays_long_long_(long long x);
+&#9;@SG_ML_L00C00CSGXTimeStampsgxtimestamp& @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp::@SG_ML_L00803DaddHours../cppclass/sgxtimestamp#SGXTimeStamp_ref_addHours_long_long_(long long x);
+&#9;@SG_ML_L00C00CSGXTimeStampsgxtimestamp& @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp::@SG_ML_L00A03FaddMinutes../cppclass/sgxtimestamp#SGXTimeStamp_ref_addMinutes_long_long_(long long x);
+&#9;@SG_ML_L00C00CSGXTimeStampsgxtimestamp& @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp::@SG_ML_L00903EaddMonths../cppclass/sgxtimestamp#SGXTimeStamp_ref_addMonths_long_long_(long long x);
+&#9;@SG_ML_L00C00CSGXTimeStampsgxtimestamp& @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp::@SG_ML_L00A03FaddSeconds../cppclass/sgxtimestamp#SGXTimeStamp_ref_addSeconds_long_long_(long long x);
+&#9;@SG_ML_L00C00CSGXTimeStampsgxtimestamp& @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp::@SG_ML_L00803DaddYears../cppclass/sgxtimestamp#SGXTimeStamp_ref_addYears_long_long_(long long x);
 &#9;[[nodiscard]] int @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp::@SG_ML_L006039getDay../cppclass/sgxtimestamp#nodiscard_int_getDay_func_const_() const;
 &#9;[[nodiscard]] int @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp::@SG_ML_L00C03FgetDayOfWeek../cppclass/sgxtimestamp#nodiscard_int_getDayOfWeek_func_const_() const;
 &#9;[[nodiscard]] int @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp::@SG_ML_L00C03FgetDayOfYear../cppclass/sgxtimestamp#nodiscard_int_getDayOfYear_func_const_() const;
@@ -52,10 +52,10 @@
 &#9;[[nodiscard]] bool @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp::@SG_ML_L00A047operator==../cppclass/sgxtimestamp#nodiscard_bool_operator_eq_SGXTimeStamp_const_(@SG_ML_L00C00CSGXTimeStampsgxtimestamp x) const;
 &#9;[[nodiscard]] bool @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp::@SG_ML_L009047operator›../cppclass/sgxtimestamp#nodiscard_bool_operator_gt_SGXTimeStamp_const_(@SG_ML_L00C00CSGXTimeStampsgxtimestamp x) const;
 &#9;[[nodiscard]] bool @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp::@SG_ML_L00A048operator›=../cppclass/sgxtimestamp#nodiscard_bool_operator_geq_SGXTimeStamp_const_(@SG_ML_L00C00CSGXTimeStampsgxtimestamp x) const;
-&#9;void @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp::@SG_ML_L00C035subtractDays../cppclass/sgxtimestamp#void_subtractDays_long_long_(long long x);
-&#9;void @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp::@SG_ML_L00D036subtractHours../cppclass/sgxtimestamp#void_subtractHours_long_long_(long long x);
-&#9;void @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp::@SG_ML_L00F038subtractMinutes../cppclass/sgxtimestamp#void_subtractMinutes_long_long_(long long x);
-&#9;void @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp::@SG_ML_L00E037subtractMonths../cppclass/sgxtimestamp#void_subtractMonths_long_long_(long long x);
-&#9;void @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp::@SG_ML_L00F038subtractSeconds../cppclass/sgxtimestamp#void_subtractSeconds_long_long_(long long x);
-&#9;void @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp::@SG_ML_L00D036subtractYears../cppclass/sgxtimestamp#void_subtractYears_long_long_(long long x);
+&#9;@SG_ML_L00C00CSGXTimeStampsgxtimestamp& @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp::@SG_ML_L00C041subtractDays../cppclass/sgxtimestamp#SGXTimeStamp_ref_subtractDays_long_long_(long long x);
+&#9;@SG_ML_L00C00CSGXTimeStampsgxtimestamp& @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp::@SG_ML_L00D042subtractHours../cppclass/sgxtimestamp#SGXTimeStamp_ref_subtractHours_long_long_(long long x);
+&#9;@SG_ML_L00C00CSGXTimeStampsgxtimestamp& @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp::@SG_ML_L00F044subtractMinutes../cppclass/sgxtimestamp#SGXTimeStamp_ref_subtractMinutes_long_long_(long long x);
+&#9;@SG_ML_L00C00CSGXTimeStampsgxtimestamp& @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp::@SG_ML_L00E043subtractMonths../cppclass/sgxtimestamp#SGXTimeStamp_ref_subtractMonths_long_long_(long long x);
+&#9;@SG_ML_L00C00CSGXTimeStampsgxtimestamp& @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp::@SG_ML_L00F044subtractSeconds../cppclass/sgxtimestamp#SGXTimeStamp_ref_subtractSeconds_long_long_(long long x);
+&#9;@SG_ML_L00C00CSGXTimeStampsgxtimestamp& @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp::@SG_ML_L00D042subtractYears../cppclass/sgxtimestamp#SGXTimeStamp_ref_subtractYears_long_long_(long long x);
 &#9;static const @SG_ML_L00C00CSGXTimeStampsgxtimestamp @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp::@SG_ML_L004038zero../cppclass/sgxtimestamp#static_const_SGXTimeStamp_zero_;

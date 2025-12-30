@@ -12,5 +12,5 @@
 &#9;[[nodiscard]] bool @SG_ML_L00D019SGXIdentifier../cppclass/sgxidentifier::@SG_ML_L009049operator‹../cppclass/sgxidentifier#nodiscard_bool_operator_lt_SGXIdentifier_const_(@SG_ML_L00D00DSGXIdentifiersgxidentifier x) const;
 &#9;[[nodiscard]] bool @SG_ML_L00D019SGXIdentifier../cppclass/sgxidentifier::@SG_ML_L00A049operator==../cppclass/sgxidentifier#nodiscard_bool_operator_eq_SGXIdentifier_const_(@SG_ML_L00D00DSGXIdentifiersgxidentifier x) const;
 &#9;[[nodiscard]] bool @SG_ML_L00D019SGXIdentifier../cppclass/sgxidentifier::@SG_ML_L009049operator›../cppclass/sgxidentifier#nodiscard_bool_operator_gt_SGXIdentifier_const_(@SG_ML_L00D00DSGXIdentifiersgxidentifier x) const;
-&#9;[[nodiscard]] int @SG_ML_L00D019SGXIdentifier../cppclass/sgxidentifier::@SG_ML_L012046registerIdentifier../cppclass/sgxidentifier#nodiscard_int_registerIdentifier_func_const_() const;
-&#9;[[nodiscard]] int @SG_ML_L00D019SGXIdentifier../cppclass/sgxidentifier::@SG_ML_L014048unregisterIdentifier../cppclass/sgxidentifier#nodiscard_int_unregisterIdentifier_func_const_() const;
+&#9;static bool @SG_ML_L00D019SGXIdentifier../cppclass/sgxidentifier::@SG_ML_L012047registerIdentifier../cppclass/sgxidentifier#static_bool_registerIdentifier_SGXIdentifier_(@SG_ML_L00D00DSGXIdentifiersgxidentifier x);
+&#9;static bool @SG_ML_L00D019SGXIdentifier../cppclass/sgxidentifier::@SG_ML_L014049unregisterIdentifier../cppclass/sgxidentifier#static_bool_unregisterIdentifier_SGXIdentifier_(@SG_ML_L00D00DSGXIdentifiersgxidentifier x);
