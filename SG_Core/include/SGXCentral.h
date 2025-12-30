@@ -16,6 +16,7 @@ public:
     static SGXString organisationName;
     static SGXString folderName;
     static SGXString pathToAppIcon;
+    static SGXString infoWebsite;
     static void (*interpretCmdArgs)(int, char**);
     static void (*customInitialise)();
     static void (*customTerminate)();

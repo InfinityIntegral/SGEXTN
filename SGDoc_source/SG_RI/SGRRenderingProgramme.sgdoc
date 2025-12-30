@@ -67,14 +67,14 @@ Prepares the SGRRenderingProgramme for usage.
 @SG_PRIVATE_API QRhiResourceUpdateBatch* resourceUpdateOperation;
 @SG_FUNC void updateDataBuffer(SGRDataBuffer* buffer, int startLocation, int dataSize, void* pointerToData) const;
 Uploads $dataSize bytes of data from $pointerToData to an offset of $startLocation bytes into the buffer $buffer.
-@SG_WARN Using this outside of SGRBaseRenderer::uploadShaderData is undefined behaviour.
+@SG_WARN Using this outside of SGRBaseRenderer::uploadShaderData or SGRBaseRenderer::initialise is undefined behaviour.
 @SG_WARN $buffer being nullptr is undefined behaviour.
 @SG_WARN Negative $startLocation or $startLocation + $dataSize being more than or equal to length of $buffer is undefined behaviour.
 @SG_WARN SGLArray or SGLVector where $pointerToData came from having a byte length below $dataSize is undefined behaviour.
 @SG_WARN $pointerToData being nullptr is undefined behaviour.
 @SG_FUNC void updateShaderUniforms(int shaderDeclaredBinding, int startLocation, int dataSize, void* pointerToData) const;
 Uploads $dataSize bytes of data from $pointerToData to an offset of $startLocation bytes into the uniform buffer object at binding point $shaderDeclaredBinding.
-@SG_WARN Using this outside of SGRBaseRenderer::uploadShaderData is undefined behaviour.
+@SG_WARN Using this outside of SGRBaseRenderer::uploadShaderData or SGRBaseRenderer::initialise is undefined behaviour.
 @SG_WARN Nonexistent $shaderDeclaredBinding is undefined behaviour.
 @SG_WARN Negative $startLocation or $startLocation + $dataSize being more than or equal to length of the uniform buffer object at $shaderDeclaredBinding is undefined behaviour.
 @SG_WARN SGLArray or SGLVector where $pointerToData came from having a byte length below $dataSize is undefined behaviour.
@@ -82,6 +82,6 @@ Uploads $dataSize bytes of data from $pointerToData to an offset of $startLocati
 @SG_FUNC void updateTexture(int shaderDeclaredBinding, SGRImage* sourceImage) const;
 Uploads $sourceImage to the texture at $shaderDeclaredBinding.
 @SG_NOTE $sourceImage does not need to have the same size as the previously bound texture.
-@SG_WARN Using this outside of SGRBaseRenderer::uploadShaderData is undefined behaviour.
+@SG_WARN Using this outside of SGRBaseRenderer::uploadShaderData or SGRBaseRenderer::initialise is undefined behaviour.
 @SG_WARN Nonexistent $shaderDeclaredBinding is undefined behaviour.
 @SG_WARN $sourceImage being nullptr is undefined behaviour.
