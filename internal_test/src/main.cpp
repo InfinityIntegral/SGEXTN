@@ -68,7 +68,6 @@ void init(){
     SGXCentral::organisationName = "05524F (Singapore)";
     SGXCentral::customInitialise = &test;
     SGXCentral::folderName = "SGEXTN";
-    SGXCentral::infoWebsite = "infinityintegral.github.io/SGEXTN/readme/readme";
 }
 }
 
