@@ -20,12 +20,12 @@ Generates a SGXIdentifier storing information from $a, $b, $c, $d, this can be u
 Generates a SGXIdentifier from the string representation $s, this can be used for generating SGXIdentifier objects consistently from a set of data. If $ifValid is true, it is checked if the SGXIdentifier is already registered. In that case, if the constructed SGXIdentifier is the null identifier, the int pointed to by $errCode is set to 2. If the constructed SGXIdentifier overlaps with an existing registered SGXIdentifier, the int pointed to by $errCode is set to 1. Otherwise the int pointed to by $errCode is set to 0. Pass $errCode as nullptr if you do not need existence checking.
 @SG_NOTE Setting $ifValid to true does not register the generated SGXIdentifier, it has to be registered using SGXIdentifier::registerIdentifier separately.
 @SG_WARN This only works if $s was generated using SGXIdentifier::getStringForPrinting. If $s does not represent a valid SGXIdentifier in the defined format, a null identifier is constructed.
-@SG_FUNC [[nodiscard]] int registerIdentifier() const;
-Registers this SGXIdentifier. The function returns 1 if the SGXIdentifier is already registered and 0 otherwise.
-@SG_NOTE Attempting to register a SGXIdentifier that is already registered does NOT cause a crash or undefined behaviour, it just gives a return value of 1.
-@SG_FUNC [[nodiscard]] int unregisterIdentifier() const;
-Unregisters this SGXIdentifier. The function returns 1 if the SGXIdentifier was never registered and 0 otherwise.
-@SG_NOTE Attempting to deregister a SGXIdentifier that has never been registered does NOT cause a crash or undefined behaviour, it just gives a return value of 1.
+@SG_FUNC static bool registerIdentifier(SGXIdentifier x);
+Registers the SGXIdentifier $x. The function returns false if the SGXIdentifier is already registered (nothing is done) and true otherwise.
+@SG_NOTE Attempting to register a SGXIdentifier that is already registered does NOT cause a crash or undefined behaviour, it just gives a return value of false.
+@SG_FUNC static bool unregisterIdentifier(SGXIdentifier x);
+Unregisters the SGXIdentifier $x. The function returns false if the SGXIdentifier was never registered (nothing is done) and true otherwise.
+@SG_NOTE Attempting to deregister a SGXIdentifier that has never been registered does NOT cause a crash or undefined behaviour, it just gives a return value of false.
 @SG_FUNC [[nodiscard]] bool exists() const;
 Returns if the SGXIdentifier has already been registered.
 @SG_NOTE There is no need to use SGXIdentifier::exists before SGXIdentifier::registerIdentifier or SGXIdentifier::unregisterIdentifier as the check is done internally.

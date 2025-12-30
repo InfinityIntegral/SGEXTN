@@ -22,8 +22,8 @@ public:
     SGXIdentifier(int);
     SGXIdentifier(unsigned int a, unsigned int b, unsigned int c, unsigned int d, bool ifValid, int* errCode);
     SGXIdentifier(const SGXString& s, bool ifValid, int* errCode);
-    [[nodiscard]] int registerIdentifier() const;
-    [[nodiscard]] int unregisterIdentifier() const;
+    static bool registerIdentifier(SGXIdentifier x);
+    static bool unregisterIdentifier(SGXIdentifier x);
     [[nodiscard]] bool exists() const;
     [[nodiscard]] bool operator==(SGXIdentifier x) const;
     [[nodiscard]] bool operator!=(SGXIdentifier x) const;
