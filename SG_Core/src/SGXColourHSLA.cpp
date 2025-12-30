@@ -114,52 +114,63 @@ int SGXColourHSLA::hash() const {
     return SGLHashAlgorithm::wyHash32(SGLSpan<const unsigned char>(reinterpret_cast<const unsigned char*>(hashArray.pointerToData(0)), 4 * sizeof(int)));
 }
 
-void SGXColourHSLA::setHue(float h){
+SGXColourHSLA& SGXColourHSLA::setHue(float h){
     temp_limitto360(h);
     (*this).h = h;
+    return (*this);
 }
 
-void SGXColourHSLA::setSaturation(float s){
+SGXColourHSLA& SGXColourHSLA::setSaturation(float s){
     temp_limitto100(s);
     (*this).s = s;
+    return (*this);
 }
 
-void SGXColourHSLA::setLightness(float l){
+SGXColourHSLA& SGXColourHSLA::setLightness(float l){
     temp_limitto100(l);
     (*this).l = l;
+    return (*this);
 }
 
-void SGXColourHSLA::setTransparency(float a){
+SGXColourHSLA& SGXColourHSLA::setTransparency(float a){
     temp_limitto100(a);
     (*this).a = a;
+    return (*this);
 }
 
-void SGXColourHSLA::invertHue(){
+SGXColourHSLA& SGXColourHSLA::invertHue(){
     setHue(h + 180.0f);
+    return (*this);
 }
 
-void SGXColourHSLA::invertSaturation(){
+SGXColourHSLA& SGXColourHSLA::invertSaturation(){
     setSaturation(100.0f - s);
+    return (*this);
 }
 
-void SGXColourHSLA::invertLightness(){
+SGXColourHSLA& SGXColourHSLA::invertLightness(){
     setLightness(100.0f - s);
+    return (*this);
 }
 
-void SGXColourHSLA::linearTransformSaturation(float m, float c){
+SGXColourHSLA& SGXColourHSLA::linearTransformSaturation(float m, float c){
     setSaturation(m * s + c);
+    return (*this);
 }
 
-void SGXColourHSLA::linearTransformLightness(float m, float c){
+SGXColourHSLA& SGXColourHSLA::linearTransformLightness(float m, float c){
     setLightness(m * l + c);
+    return (*this);
 }
 
-void SGXColourHSLA::linearTransformTransparency(float m, float c){
+SGXColourHSLA& SGXColourHSLA::linearTransformTransparency(float m, float c){
     setTransparency(m * a + c);
+    return (*this);
 }
 
-void SGXColourHSLA::offsetHue(float c){
+SGXColourHSLA& SGXColourHSLA::offsetHue(float c){
     setHue(h + c);
+    return (*this);
 }
 
 SGXColourRGBA SGXColourHSLA::toRGBA() const {

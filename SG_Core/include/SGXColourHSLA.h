@@ -20,17 +20,17 @@ public:
     [[nodiscard]] bool operator<(SGXColourHSLA x) const;
     [[nodiscard]] bool operator>(SGXColourHSLA x) const;
     [[nodiscard]] int hash() const;
-    void setHue(float h);
-    void setSaturation(float s);
-    void setLightness(float l);
-    void setTransparency(float a);
-    void invertHue();
-    void invertSaturation();
-    void invertLightness();
-    void linearTransformSaturation(float m, float c);
-    void linearTransformLightness(float m, float c);
-    void linearTransformTransparency(float m, float c);
-    void offsetHue(float c);
+    SGXColourHSLA& setHue(float h);
+    SGXColourHSLA& setSaturation(float s);
+    SGXColourHSLA& setLightness(float l);
+    SGXColourHSLA& setTransparency(float a);
+    SGXColourHSLA& invertHue();
+    SGXColourHSLA& invertSaturation();
+    SGXColourHSLA& invertLightness();
+    SGXColourHSLA& linearTransformSaturation(float m, float c);
+    SGXColourHSLA& linearTransformLightness(float m, float c);
+    SGXColourHSLA& linearTransformTransparency(float m, float c);
+    SGXColourHSLA& offsetHue(float c);
     [[nodiscard]] SGXColourRGBA toRGBA() const;
 };
 
