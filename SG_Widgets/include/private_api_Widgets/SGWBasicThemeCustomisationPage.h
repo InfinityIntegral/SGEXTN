@@ -11,7 +11,6 @@ class SGWBackground;
 class SGWButton;
 class SGWLabel;
 class SGWBlankWidget;
-class SGWColourPickerWidget;
 class SG_WIDGETS_DLL SGWBasicThemeCustomisationPage {
 public:
     SGWBasicThemeCustomisationPage() = delete;

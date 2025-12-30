@@ -6,6 +6,7 @@
 class SGWBackground;
 class SG_WIDGETS_DLL SGWLicensingInfoWindow {
 public:
+    SGWLicensingInfoWindow() = delete;
     static SGWBackground* instance;
     static SGWBackground* initialise();
     static void activate();
