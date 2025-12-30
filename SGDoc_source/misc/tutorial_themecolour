@@ -15,7 +15,6 @@ These meanings are used by default. The colours on a specific @SG_FINDREP_WIDGET
 It is recommended that the theme colours form a gradient.
 @SG_ML_BLANKLINE
 By default, SGEXTN provides 3 themes. The Be the Light and Shine From Within, both inspired by the 2020 song "Be the Light" from the Singapore Ministry of Education, act as light mode and dark mode. The For Our Nation theme is used around National Day to celebrate our country's birthday.
-Users can also make their own themes. To allow them to do that, you can call SGWCustomisationPageControl::enableThemeColoursCustomisationPage but that only works if you have the @SG_FINDREP_RENDERER module linked.
 To align with your personal preferences or company branding, you can use a different default theme colour by writing to SGXThemeColoursCustomisation static member variables inside SGXCentral::setCustomTheme.
 @SG_ML_BLANKLINE
 Every widget in the @SG_FINDREP_WIDGET system keeps track of if it uses theme colours at all. If you set a theme colour to anything on the widget, this is automatically turned on. If you set a colour directly, this is automatically turned off.

@@ -10,7 +10,7 @@ Always use SGWBackground::enable and SGWBackground::disable when showing and hid
 The background of UI pages should be direct children of SGWWidget::parentWidget. The UI elements on a UI page should be children of the page background.
 @SG_ML_BLANKLINE
 The following UI layout recommendations will use @SG_FINDREP_WDIST.
-As much as possible, keep the height of the average text at (0.0, 1.0). Remember to provide a way to open the font size customisation page (SGWCustomisationPageControl::enableFontSizeCustomisationPage) so that the user can adjust the font size if they want to.
+As much as possible, keep the height of the average text at (0.0, 1.0).
 Try not to put anything within (0.0, 0.5) of the edge of the screen.
 Leave a gap of at least (0.0, 0.2) between any 2 UI elements.
 Warning text for when the user enters invalid input should have a height of (0.0, 0.75).
