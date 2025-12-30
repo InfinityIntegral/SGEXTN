@@ -1,8 +1,6 @@
 #ifndef SGLSET_H
 #define SGLSET_H
 
-#include <private_api_Containers/SGLCrash.h>
-
 template <typename T, typename Comparator> class SGLSet{
 protected:
     class Node;
@@ -39,8 +37,8 @@ public:
     SGLSet& operator=(SGLSet&& x) noexcept;
     ~SGLSet();
     [[nodiscard]] int length() const;
-    void insert(const T& x);
-    void erase(const T& x);
+    bool insert(const T& x);
+    bool erase(const T& x);
     [[nodiscard]] bool contains(const T& x) const;
     [[nodiscard]] int count(const T& x) const;
     
@@ -51,7 +49,7 @@ public:
     [[nodiscard]] ConstIterator constBegin() const;
     [[nodiscard]] Iterator end();
     [[nodiscard]] ConstIterator constEnd() const;
-    void erase(Iterator& i);
+    bool erase(Iterator& i);
     [[nodiscard]] Iterator find(const T& x);
     [[nodiscard]] ConstIterator find(const T& x) const;
     
@@ -284,11 +282,11 @@ template <typename T, typename Comparator> void SGLSet<T, Comparator>::updateHei
     }
 }
 
-template <typename T, typename Comparator> void SGLSet<T, Comparator>::insert(const T& x){
+template <typename T, typename Comparator> bool SGLSet<T, Comparator>::insert(const T& x){
     Node* currentNode = root;
     if(root == nullptr){
         root = new Node(x, nullptr);
-        return;
+        return true;
     }
     while(true){
         if(comparatorInstance(x, (*currentNode).value) == true){
@@ -307,14 +305,15 @@ template <typename T, typename Comparator> void SGLSet<T, Comparator>::insert(co
             }
             currentNode = (*currentNode).rightChild;
         }
-        else{SGLCrash::crashOnInsert();}
+        else{return false;}
     }
     updateHeightRecurseToRoot(currentNode);
+    return true;
 }
 
-template <typename T, typename Comparator> void SGLSet<T, Comparator>::erase(const T& x){
+template <typename T, typename Comparator> bool SGLSet<T, Comparator>::erase(const T& x){
     Iterator i = find(x);
-    erase(i);
+    return erase(i);
 }
 
 template <typename T, typename Comparator> bool SGLSet<T, Comparator>::contains(const T& x) const {
@@ -483,9 +482,9 @@ template <typename T, typename Comparator> void SGLSet<T, Comparator>::replacePa
 }
 
 
-template <typename T, typename Comparator> void SGLSet<T, Comparator>::erase(Iterator& i){
+template <typename T, typename Comparator> bool SGLSet<T, Comparator>::erase(Iterator& i){
     Node* nodeToDelete = i.node;
-    if(nodeToDelete == nullptr){SGLCrash::crashOnRemove();}
+    if(nodeToDelete == nullptr){return false;}
     i++;
     if((*nodeToDelete).leftChild == nullptr && (*nodeToDelete).rightChild == nullptr){
         replaceChildren((*nodeToDelete).parent, nodeToDelete, nullptr);
@@ -534,6 +533,7 @@ template <typename T, typename Comparator> void SGLSet<T, Comparator>::erase(Ite
         delete nodeToDelete;
     }
     i--;
+    return true;
 }
 
 template <typename T, typename Comparator> typename SGLSet<T, Comparator>::Node* SGLSet<T, Comparator>::findNode(const T& x) const {

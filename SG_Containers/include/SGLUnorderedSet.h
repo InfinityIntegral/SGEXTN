@@ -1,8 +1,6 @@
 #ifndef SGLUNORDEREDSET_H
 #define SGLUNORDEREDSET_H
 
-#include <private_api_Containers/SGLCrash.h>
-
 template <typename T, typename EqualityCheck, typename HashFunction> class SGLUnorderedSet {
 protected:
     class Slot;
@@ -12,7 +10,7 @@ protected:
     int memoryLengthInternal;
     EqualityCheck equalityCheckInstance;
     HashFunction hashFunctionInstance;
-    void rehash(const T& x);
+    bool rehash(const T& x);
     
 public:
     SGLUnorderedSet();
@@ -23,8 +21,8 @@ public:
     ~SGLUnorderedSet();
     [[nodiscard]] int length() const;
     void reserve(int newMemoryLength);
-    void insert(const T& x);
-    void erase(const T& x);
+    bool insert(const T& x);
+    bool erase(const T& x);
     [[nodiscard]] bool contains(const T& x) const;
     [[nodiscard]] int count(const T& x) const;
     
@@ -35,7 +33,7 @@ public:
     [[nodiscard]] Iterator end();
     [[nodiscard]] ConstIterator constBegin() const;
     [[nodiscard]] ConstIterator constEnd() const;
-    void erase(Iterator& x);
+    bool erase(Iterator& x);
     [[nodiscard]] Iterator find(const T& x);
     [[nodiscard]] ConstIterator find(const T& x) const;
 };
@@ -176,32 +174,36 @@ template <typename T, typename EqualityCheck, typename HashFunction> void SGLUno
     delete[] oldPointer;
 }
 
-template <typename T, typename EqualityCheck, typename HashFunction> void SGLUnorderedSet<T, EqualityCheck, HashFunction>::rehash(const T& x){
+template <typename T, typename EqualityCheck, typename HashFunction> bool SGLUnorderedSet<T, EqualityCheck, HashFunction>::rehash(const T& x){
     int hash = hashFunctionInstance(x) % memoryLengthInternal;
     if(hash < 0){hash += memoryLengthInternal;}
     while(true){
         if(hash == memoryLengthInternal){hash = 0;}
-        if((*(dataInternal + hash)).usageStatus == Slot::active && equalityCheckInstance((*(dataInternal + hash)).value, x) == true){SGLCrash::crashOnInsert();}
+        if((*(dataInternal + hash)).usageStatus == Slot::active && equalityCheckInstance((*(dataInternal + hash)).value, x) == true){return false;}
         if((*(dataInternal + hash)).usageStatus != Slot::active){
             (*(dataInternal + hash)).value = x;
             (*(dataInternal + hash)).usageStatus = Slot::active;
-            return;
+            return true;
         }
         hash++;
     }
+    return true;
 }
 
-template <typename T, typename EqualityCheck, typename HashFunction> void SGLUnorderedSet<T, EqualityCheck, HashFunction>::insert(const T& x){
+template <typename T, typename EqualityCheck, typename HashFunction> bool SGLUnorderedSet<T, EqualityCheck, HashFunction>::insert(const T& x){
     if(memoryLengthInternal == 0){reserve(3);}
     else if(3 * memoryUsedInternal >= memoryLengthInternal){reserve(3 * memoryLengthInternal);}
-    rehash(x);
-    memoryUsedInternal++;
-    lengthInternal++;
+    bool result = rehash(x);
+    if(result == true){
+        memoryUsedInternal++;
+        lengthInternal++;
+    }
+    return result;
 }
 
-template <typename T, typename EqualityCheck, typename HashFunction> void SGLUnorderedSet<T, EqualityCheck, HashFunction>::erase(const T& x){
+template <typename T, typename EqualityCheck, typename HashFunction> bool SGLUnorderedSet<T, EqualityCheck, HashFunction>::erase(const T& x){
     Iterator i = find(x);
-    erase(i);
+    return erase(i);
 }
 
 template <typename T, typename EqualityCheck, typename HashFunction> bool SGLUnorderedSet<T, EqualityCheck, HashFunction>::contains(const T& x) const {
@@ -396,8 +398,8 @@ template <typename T, typename EqualityCheck, typename HashFunction> typename SG
     return ConstIterator(-1, this);
 }
 
-template <typename T, typename EqualityCheck, typename HashFunction> void SGLUnorderedSet<T, EqualityCheck, HashFunction>::erase(Iterator& x){
-    if(x.slot < 0 || x.slot >= memoryLengthInternal){SGLCrash::crashOnRemove();}
+template <typename T, typename EqualityCheck, typename HashFunction> bool SGLUnorderedSet<T, EqualityCheck, HashFunction>::erase(Iterator& x){
+    if(x.slot < 0 || x.slot >= memoryLengthInternal){return false;}
     int pos = x.slot;
     x.slot--;
     (*(dataInternal + pos)).usageStatus = Slot::deleted;
@@ -448,6 +450,7 @@ template <typename T, typename EqualityCheck, typename HashFunction> void SGLUno
         memoryUsedInternal -= deleted;
     }
     lengthInternal--;
+    return true;
 }
 
 template <typename T, typename EqualityCheck, typename HashFunction> typename SGLUnorderedSet<T, EqualityCheck, HashFunction>::Iterator SGLUnorderedSet<T, EqualityCheck, HashFunction>::find(const T& x){

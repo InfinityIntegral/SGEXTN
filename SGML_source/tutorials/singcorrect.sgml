@@ -2,7 +2,7 @@
 @SG_ML_PAGENAME SingCorrect Tutorial
 @SG_ML_TITLE SingCorrect Tutorial
 @SG_ML_BLANKLINE
-&#9;SingCorrect allows SGEXTN input fields (subclasses of @SG_ML_L008014SGWInput../cppclass/sgwinput) to autocorrect LaTeX style commands to the corresponding Unicode character. This is highly customisable and you can call @SG_ML_L03F05CSGWCustomisationPageControl::enableSingCorrectCustomisationPage../cppclass/sgwcustomisationpagecontrol#static_void_enableSingCorrectCustomisationPage_func_ to show the customisation page to the user.
+&#9;SingCorrect allows SGEXTN input fields (subclasses of @SG_ML_L008014SGWInput../cppclass/sgwinput) to autocorrect LaTeX style commands to the corresponding Unicode character. This is highly customisable by the user.
 &#9;SingCorrect works by detecting the SingCorrect prefix in user input and replacing every command found with the correct character. By default, the prefix is SG-\
 @SG_ML_BLANKLINE
 &#9;For example, the below text

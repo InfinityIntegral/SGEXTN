@@ -8,7 +8,7 @@
 @SG_PRIVATE_API int memoryLengthInternal;
 @SG_PRIVATE_API EqualityCheck equalityCheckInstance;
 @SG_PRIVATE_API HashFunction hashFunctionInstance;
-@SG_PRIVATE_API void rehash(const K& xKey, const V& xValue);
+@SG_PRIVATE_API bool rehash(const K& xKey, const V& xValue);
 @SG_FUNC SGLUnorderedMap();
 Creates an empty SGLUnorderedMap.
 @SG_FUNC [[nodiscard]] int length() const;
@@ -16,12 +16,12 @@ Returns the length of the SGLUnorderedMap, which is the number of key value pair
 @SG_FUNC void reserve(int newMemoryLength);
 Pre allocates enough space for ($newMemoryLength / 3) - 1 elements to be stored in the SGLUnorderedMap without exceeding the load factor.
 @SG_NOTE If there is already sufficient memory allocated, this is ignored.
-@SG_FUNC void insert(const K& xKey, const V& xValue);
+@SG_FUNC bool insert(const K& xKey, const V& xValue);
 Inserts the key value pair ($xKey, $xValue) into the SGLUnorderedMap.
-@SG_WARN If $xKey already exists in the SGLUnorderedMap, this will crash. If you cannot guarantee that the SGLUnorderedMap does not already contain the key, use SGLUnorderedMap::contains to check before insertion. This is a intentional design choice to avoid silent bugs.
-@SG_FUNC void erase(const K& x);
+@SG_NOTE If $xKey already exists in the SGLUnorderedMap, this will return false, otherwise this returns true.
+@SG_FUNC bool erase(const K& x);
 Removes the key $x and its associated value from the SGLUnorderedMap.
-@SG_WARN If $x is not in the SGLUnorderedMap, this will crash. If you cannot guarantee that the SGLUnorderedMap already contains the key, use SGLUnorderedMap::contains to check before removal. This is a intentional design choice to avoid silent bugs.
+@SG_NOTE If $x is not in the SGLUnorderedMap, this will return false, otherwise this returns true.
 @SG_FUNC [[nodiscard]] bool contains(const K& x) const;
 Returns if the SGLUnorderedMap contains $x as a key
 @SG_FUNC [[nodiscard]] int count(const K& x) const;
@@ -52,9 +52,10 @@ Returns a constant iterator to the first key value pair in the SGLUnorderedMap.
 Returns a null constant iterator associated to this SGLUnorderedMap.
 @SG_NOTE SGLUnorderedMap iterators behave circularly. This is equivalent to running operator-- on SGLUnorderedMap::constBegin.
 @SG_WARN Attempting to access the key or value that this iterator points to is undefined behaviour.
-@SG_FUNC void erase(SGLUnorderedMap::Iterator& x);
+@SG_FUNC bool erase(SGLUnorderedMap::Iterator& x);
 Removes the key value pair associated with $x from the SGLUnorderedMap.
 After the removal, $x which is passed as a reference, is decremented. This means that you do not have to do any special handling for removed elements when iterating over a SGLUnorderedMap.
+@SG_NOTE This return false if $x is SGLUnorderedMap::end and true otherwise.
 @SG_WARN Do not write any special logic to modify iterators while removing elements from a SGLUnorderedMap in a loop, SGLUnorderedMap::erase handles this for you automatically.
 @SG_FUNC [[nodiscard]] SGLUnorderedMap::Iterator find(const K& x);
 Returns the iterator pointing to key $x.

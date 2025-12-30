@@ -1,8 +1,6 @@
 #ifndef SGLUNORDEREDMULTISET_H
 #define SGLUNORDEREDMULTISET_H
 
-#include <private_api_Containers/SGLCrash.h>
-
 template <typename T, typename EqualityCheck, typename HashFunction> class SGLUnorderedMultiSet {
 protected:
     class Slot;
@@ -24,7 +22,7 @@ public:
     [[nodiscard]] int length() const;
     void reserve(int newMemoryLength);
     void insert(const T& x);
-    void erase(const T& x);
+    bool erase(const T& x);
     [[nodiscard]] bool contains(const T& x) const;
     [[nodiscard]] int count(const T& x) const;
     
@@ -35,7 +33,7 @@ public:
     [[nodiscard]] Iterator end();
     [[nodiscard]] ConstIterator constBegin() const;
     [[nodiscard]] ConstIterator constEnd() const;
-    void erase(Iterator& x);
+    bool erase(Iterator& x);
     [[nodiscard]] Iterator find(const T& x);
     [[nodiscard]] ConstIterator find(const T& x) const;
 };
@@ -207,9 +205,9 @@ template <typename T, typename EqualityCheck, typename HashFunction> void SGLUno
     lengthInternal++;
 }
 
-template <typename T, typename EqualityCheck, typename HashFunction> void SGLUnorderedMultiSet<T, EqualityCheck, HashFunction>::erase(const T& x){
+template <typename T, typename EqualityCheck, typename HashFunction> bool SGLUnorderedMultiSet<T, EqualityCheck, HashFunction>::erase(const T& x){
     Iterator i = find(x);
-    erase(i);
+    return erase(i);
 }
 
 template <typename T, typename EqualityCheck, typename HashFunction> bool SGLUnorderedMultiSet<T, EqualityCheck, HashFunction>::contains(const T& x) const {
@@ -486,14 +484,14 @@ template <typename T, typename EqualityCheck, typename HashFunction> typename SG
     return ConstIterator(-1, 0, this);
 }
 
-template <typename T, typename EqualityCheck, typename HashFunction> void SGLUnorderedMultiSet<T, EqualityCheck, HashFunction>::erase(Iterator& x){
-    if(x.slot < 0 || x.slot >= memoryLengthInternal){SGLCrash::crashOnRemove();}
+template <typename T, typename EqualityCheck, typename HashFunction> bool SGLUnorderedMultiSet<T, EqualityCheck, HashFunction>::erase(Iterator& x){
+    if(x.slot < 0 || x.slot >= memoryLengthInternal){return false;}
     int pos = x.slot;
     x.slot--;
     if((*(dataInternal + pos)).count > 1){
         (*(dataInternal + pos)).count--;
         lengthInternal--;
-        return;
+        return true;
     }
     (*(dataInternal + pos)).usageStatus = Slot::deleted;
     (*(dataInternal + pos)).count = 0;
@@ -544,6 +542,7 @@ template <typename T, typename EqualityCheck, typename HashFunction> void SGLUno
         memoryUsedInternal -= deleted;
     }
     lengthInternal--;
+    return true;
 }
 
 template <typename T, typename EqualityCheck, typename HashFunction> typename SGLUnorderedMultiSet<T, EqualityCheck, HashFunction>::Iterator SGLUnorderedMultiSet<T, EqualityCheck, HashFunction>::find(const T& x){

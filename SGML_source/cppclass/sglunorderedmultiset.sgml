@@ -26,8 +26,8 @@ children classes: (none)
 &#9;[[nodiscard]] bool @SG_ML_L00802Bcontains#nodiscard_bool_contains_const_T_ref_const_(const T& x) const;
 &#9;[[nodiscard]] int @SG_ML_L005027count#nodiscard_int_count_const_T_ref_const_(const T& x) const;
 &#9;[[nodiscard]] @SG_ML_L01E01ESGLUnorderedMultiSet::Iteratorsglunorderedmultiset__iterator @SG_ML_L003035end#nodiscard_SGLUnorderedMultiSet_mc_Iterator_end_func_();
-&#9;void @SG_ML_L005018erase#void_erase_const_T_ref_(const T& x);
-&#9;void @SG_ML_L005031erase#void_erase_SGLUnorderedMultiSet_mc_Iterator_ref_(@SG_ML_L01E01ESGLUnorderedMultiSet::Iteratorsglunorderedmultiset__iterator& x);
+&#9;bool @SG_ML_L005018erase#bool_erase_const_T_ref_(const T& x);
+&#9;bool @SG_ML_L005031erase#bool_erase_SGLUnorderedMultiSet_mc_Iterator_ref_(@SG_ML_L01E01ESGLUnorderedMultiSet::Iteratorsglunorderedmultiset__iterator& x);
 &#9;[[nodiscard]] @SG_ML_L023023SGLUnorderedMultiSet::ConstIteratorsglunorderedmultiset__constiterator @SG_ML_L004048find#nodiscard_SGLUnorderedMultiSet_mc_ConstIterator_find_const_T_ref_const_(const T& x) const;
 &#9;[[nodiscard]] @SG_ML_L01E01ESGLUnorderedMultiSet::Iteratorsglunorderedmultiset__iterator @SG_ML_L00403Dfind#nodiscard_SGLUnorderedMultiSet_mc_Iterator_find_const_T_ref_(const T& x);
 &#9;void @SG_ML_L006019insert#void_insert_const_T_ref_(const T& x);
@@ -71,15 +71,16 @@ Returns a null iterator associated to this @SG_ML_L014020SGLUnorderedMultiSet../
 @SG_ML_NOTE @SG_ML_L01E02ASGLUnorderedMultiSet::Iterator../cppclass/sglunorderedmultiset__iterator allows modifying the @SG_ML_L014020SGLUnorderedMultiSet../cppclass/sglunorderedmultiset through it. If modification is not needed, use @SG_ML_L02302FSGLUnorderedMultiSet::ConstIterator../cppclass/sglunorderedmultiset__constiterator instead. The @SG_ML_L02302FSGLUnorderedMultiSet::ConstIterator../cppclass/sglunorderedmultiset__constiterator equivalent to this function is @SG_ML_L01E065SGLUnorderedMultiSet::constEnd../cppclass/sglunorderedmultiset#nodiscard_SGLUnorderedMultiSet_mc_ConstIterator_constEnd_func_const_.
 @SG_ML_WARN Attempting to access the element that this iterator points to is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_void_erase_const_T_ref_ void @SG_ML_L005018erase#void_erase_const_T_ref_(const T& x);
+@SG_ML_HEADER_bool_erase_const_T_ref_ bool @SG_ML_L005018erase#bool_erase_const_T_ref_(const T& x);
 Removes @SG_ML_B001x from the @SG_ML_L014020SGLUnorderedMultiSet../cppclass/sglunorderedmultiset.
 @SG_ML_NOTE If there is more than 1 copies of @SG_ML_B001x, the last added copy is removed and other copies remain in the set.
-@SG_ML_WARN If the @SG_ML_L014020SGLUnorderedMultiSet../cppclass/sglunorderedmultiset does not contain any copy of @SG_ML_B001x, this will cause a crash. If you cannot guarantee that @SG_ML_L014020SGLUnorderedMultiSet../cppclass/sglunorderedmultiset contains @SG_ML_B001x, use @SG_ML_L01E04BSGLUnorderedMultiSet::contains../cppclass/sglunorderedmultiset#nodiscard_bool_contains_const_T_ref_const_ to check before removal. This is a intentional design choice to avoid silent bugs.
+@SG_ML_WARN If the @SG_ML_L014020SGLUnorderedMultiSet../cppclass/sglunorderedmultiset does not contain any copy of @SG_ML_B001x, this will return false, otherwise this returns true.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_void_erase_SGLUnorderedMultiSet_mc_Iterator_ref_ void @SG_ML_L005031erase#void_erase_SGLUnorderedMultiSet_mc_Iterator_ref_(@SG_ML_L01E01ESGLUnorderedMultiSet::Iteratorsglunorderedmultiset__iterator& x);
+@SG_ML_HEADER_bool_erase_SGLUnorderedMultiSet_mc_Iterator_ref_ bool @SG_ML_L005031erase#bool_erase_SGLUnorderedMultiSet_mc_Iterator_ref_(@SG_ML_L01E01ESGLUnorderedMultiSet::Iteratorsglunorderedmultiset__iterator& x);
 Removes the element associated with @SG_ML_B001x from the @SG_ML_L014020SGLUnorderedMultiSet../cppclass/sglunorderedmultiset.
 After the removal, @SG_ML_B001x which is passed as a reference, is decremented. This means that you do not have to do any special handling for removed elements when iterating over a @SG_ML_L014020SGLUnorderedMultiSet../cppclass/sglunorderedmultiset.
-@SG_ML_WARN Do not write any special logic to modify iterators while removing elements from a @SG_ML_L014020SGLUnorderedMultiSet../cppclass/sglunorderedmultiset in a loop, @SG_ML_L01B038SGLUnorderedMultiSet::erase../cppclass/sglunorderedmultiset#void_erase_const_T_ref_@SG_ML_L01B051SGLUnorderedMultiSet::erase../cppclass/sglunorderedmultiset#void_erase_SGLUnorderedMultiSet_mc_Iterator_ref_ handles this for you automatically.
+@SG_ML_NOTE This returns false if @SG_ML_B001x is @SG_ML_L019055SGLUnorderedMultiSet::end../cppclass/sglunorderedmultiset#nodiscard_SGLUnorderedMultiSet_mc_Iterator_end_func_ and true otherwise.
+@SG_ML_WARN Do not write any special logic to modify iterators while removing elements from a @SG_ML_L014020SGLUnorderedMultiSet../cppclass/sglunorderedmultiset in a loop, @SG_ML_L01B038SGLUnorderedMultiSet::erase../cppclass/sglunorderedmultiset#bool_erase_const_T_ref_@SG_ML_L01B051SGLUnorderedMultiSet::erase../cppclass/sglunorderedmultiset#bool_erase_SGLUnorderedMultiSet_mc_Iterator_ref_ handles this for you automatically.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGLUnorderedMultiSet_mc_ConstIterator_find_const_T_ref_const_ [[nodiscard]] @SG_ML_L023023SGLUnorderedMultiSet::ConstIteratorsglunorderedmultiset__constiterator @SG_ML_L004048find#nodiscard_SGLUnorderedMultiSet_mc_ConstIterator_find_const_T_ref_const_(const T& x) const;
 Returns the constant iterator pointing to element @SG_ML_B001x.

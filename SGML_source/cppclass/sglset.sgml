@@ -28,18 +28,18 @@ children classes: (none)
 &#9;[[nodiscard]] int @SG_ML_L005027count#nodiscard_int_count_const_T_ref_const_(const T& x) const;
 &#9;[[nodiscard]] const T& @SG_ML_L00902BelementAt#nodiscard_const_T_ref_elementAt_int_const_(int n) const;
 &#9;[[nodiscard]] @SG_ML_L010010SGLSet::Iteratorsglset__iterator @SG_ML_L003027end#nodiscard_SGLSet_mc_Iterator_end_func_();
-&#9;void @SG_ML_L005023erase#void_erase_SGLSet_mc_Iterator_ref_(@SG_ML_L010010SGLSet::Iteratorsglset__iterator& i);
-&#9;void @SG_ML_L005018erase#void_erase_const_T_ref_(const T& x);
+&#9;bool @SG_ML_L005023erase#bool_erase_SGLSet_mc_Iterator_ref_(@SG_ML_L010010SGLSet::Iteratorsglset__iterator& i);
+&#9;bool @SG_ML_L005018erase#bool_erase_const_T_ref_(const T& x);
 &#9;[[nodiscard]] @SG_ML_L015015SGLSet::ConstIteratorsglset__constiterator @SG_ML_L00403Afind#nodiscard_SGLSet_mc_ConstIterator_find_const_T_ref_const_(const T& x) const;
 &#9;[[nodiscard]] @SG_ML_L010010SGLSet::Iteratorsglset__iterator @SG_ML_L00402Ffind#nodiscard_SGLSet_mc_Iterator_find_const_T_ref_(const T& x);
 &#9;[[nodiscard]] int @SG_ML_L007035indexOf#nodiscard_int_indexOf_SGLSet_mc_ConstIterator_const_(@SG_ML_L015015SGLSet::ConstIteratorsglset__constiterator i) const;
 &#9;[[nodiscard]] int @SG_ML_L007029indexOf#nodiscard_int_indexOf_const_T_ref_const_(const T& x) const;
 &#9;[[nodiscard]] int @SG_ML_L007030indexOf#nodiscard_int_indexOf_SGLSet_mc_Iterator_const_(@SG_ML_L010010SGLSet::Iteratorsglset__iterator i) const;
-&#9;void @SG_ML_L006019insert#void_insert_const_T_ref_(const T& x);
+&#9;bool @SG_ML_L006019insert#bool_insert_const_T_ref_(const T& x);
 &#9;[[nodiscard]] @SG_ML_L010010SGLSet::Iteratorsglset__iterator @SG_ML_L00A02DiteratorAt#nodiscard_SGLSet_mc_Iterator_iteratorAt_int_(int n);
 &#9;[[nodiscard]] int @SG_ML_L006021length#nodiscard_int_length_func_const_() const;
-&#9;[[nodiscard]] @SG_ML_L015015SGLSet::ConstIteratorsglset__constiterator @SG_ML_L00A040lowerBound#nodiscard_SGLSet_mc_ConstIterator_lowerBound_const_T_ref_const_(const T& x) const;
 &#9;[[nodiscard]] @SG_ML_L010010SGLSet::Iteratorsglset__iterator @SG_ML_L00A035lowerBound#nodiscard_SGLSet_mc_Iterator_lowerBound_const_T_ref_(const T& x);
+&#9;[[nodiscard]] @SG_ML_L015015SGLSet::ConstIteratorsglset__constiterator @SG_ML_L00A040lowerBound#nodiscard_SGLSet_mc_ConstIterator_lowerBound_const_T_ref_const_(const T& x) const;
 &#9;[[nodiscard]] @SG_ML_L015015SGLSet::ConstIteratorsglset__constiterator @SG_ML_L00A040upperBound#nodiscard_SGLSet_mc_ConstIterator_upperBound_const_T_ref_const_(const T& x) const;
 &#9;[[nodiscard]] @SG_ML_L010010SGLSet::Iteratorsglset__iterator @SG_ML_L00A035upperBound#nodiscard_SGLSet_mc_Iterator_upperBound_const_T_ref_(const T& x);
 @SG_ML_BLANKLINE
@@ -89,14 +89,15 @@ Returns a null iterator associated to this @SG_ML_L006012SGLSet../cppclass/sglse
 @SG_ML_NOTE @SG_ML_L01001CSGLSet::Iterator../cppclass/sglset__iterator allows modifying the @SG_ML_L006012SGLSet../cppclass/sglset through it. If modification is not needed, use @SG_ML_L015021SGLSet::ConstIterator../cppclass/sglset__constiterator instead. The @SG_ML_L015021SGLSet::ConstIterator../cppclass/sglset__constiterator equivalent to this function is @SG_ML_L010049SGLSet::constEnd../cppclass/sglset#nodiscard_SGLSet_mc_ConstIterator_constEnd_func_const_.
 @SG_ML_WARN Attempting to access the element that this iterator points to is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_void_erase_SGLSet_mc_Iterator_ref_ void @SG_ML_L005023erase#void_erase_SGLSet_mc_Iterator_ref_(@SG_ML_L010010SGLSet::Iteratorsglset__iterator& i);
+@SG_ML_HEADER_bool_erase_SGLSet_mc_Iterator_ref_ bool @SG_ML_L005023erase#bool_erase_SGLSet_mc_Iterator_ref_(@SG_ML_L010010SGLSet::Iteratorsglset__iterator& i);
 Removes the element associated with @SG_ML_B001i from the @SG_ML_L006012SGLSet../cppclass/sglset.
 After the removal, @SG_ML_B001i which is passed as a reference, is decremented. This means that you do not have to do any special handling for removed elements when iterating over a @SG_ML_L006012SGLSet../cppclass/sglset.
-@SG_ML_WARN Do not write any special logic to modify iterators while removing elements from a @SG_ML_L006012SGLSet../cppclass/sglset in a loop, @SG_ML_L00D035SGLSet::erase../cppclass/sglset#void_erase_SGLSet_mc_Iterator_ref_@SG_ML_L00D02ASGLSet::erase../cppclass/sglset#void_erase_const_T_ref_ handles this for you automatically.
+@SG_ML_NOTE This returns false if @SG_ML_B001i is @SG_ML_L00B039SGLSet::end../cppclass/sglset#nodiscard_SGLSet_mc_Iterator_end_func_ and true otherwise.
+@SG_ML_WARN Do not write any special logic to modify iterators while removing elements from a @SG_ML_L006012SGLSet../cppclass/sglset in a loop, @SG_ML_L00D02ASGLSet::erase../cppclass/sglset#bool_erase_const_T_ref_@SG_ML_L00D035SGLSet::erase../cppclass/sglset#bool_erase_SGLSet_mc_Iterator_ref_ handles this for you automatically.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_void_erase_const_T_ref_ void @SG_ML_L005018erase#void_erase_const_T_ref_(const T& x);
+@SG_ML_HEADER_bool_erase_const_T_ref_ bool @SG_ML_L005018erase#bool_erase_const_T_ref_(const T& x);
 Removes @SG_ML_B001x from the @SG_ML_L006012SGLSet../cppclass/sglset.
-@SG_ML_NOTE If the @SG_ML_L006012SGLSet../cppclass/sglset does not contain @SG_ML_B001x, this function will crash. If you cannot guarantee that the @SG_ML_L006012SGLSet../cppclass/sglset already contains @SG_ML_B001x, use @SG_ML_L01003DSGLSet::contains../cppclass/sglset#nodiscard_bool_contains_const_T_ref_const_ to check before removal. This is a intentional design choice to avoid silent bugs.
+@SG_ML_NOTE If the @SG_ML_L006012SGLSet../cppclass/sglset does not contain @SG_ML_B001x, this function will return false, otherwise this returns true.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGLSet_mc_ConstIterator_find_const_T_ref_const_ [[nodiscard]] @SG_ML_L015015SGLSet::ConstIteratorsglset__constiterator @SG_ML_L00403Afind#nodiscard_SGLSet_mc_ConstIterator_find_const_T_ref_const_(const T& x) const;
 Returns the constant iterator pointing to element @SG_ML_B001x.
@@ -121,9 +122,9 @@ Returns the index of the element in the @SG_ML_L006012SGLSet../cppclass/sglset t
 @SG_ML_NOTE -1 is returned if @SG_ML_B001i is @SG_ML_L00B039SGLSet::end../cppclass/sglset#nodiscard_SGLSet_mc_Iterator_end_func_.
 @SG_ML_WARN The index may change if elements are inserted into or removed from @SG_ML_L006012SGLSet../cppclass/sglset to keep the @SG_ML_L006012SGLSet../cppclass/sglset always sorted.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_void_insert_const_T_ref_ void @SG_ML_L006019insert#void_insert_const_T_ref_(const T& x);
+@SG_ML_HEADER_bool_insert_const_T_ref_ bool @SG_ML_L006019insert#bool_insert_const_T_ref_(const T& x);
 Inserts @SG_ML_B001x into the @SG_ML_L006012SGLSet../cppclass/sglset.
-@SG_ML_NOTE If the @SG_ML_L006012SGLSet../cppclass/sglset already contains @SG_ML_B001x, this function will crash. If you cannot guarantee that the @SG_ML_L006012SGLSet../cppclass/sglset does not already contain @SG_ML_B001x, use @SG_ML_L01003DSGLSet::contains../cppclass/sglset#nodiscard_bool_contains_const_T_ref_const_ to check before insertion. This is a intentional design choice to avoid silent bugs.
+@SG_ML_NOTE If the @SG_ML_L006012SGLSet../cppclass/sglset already contains @SG_ML_B001x, this function will return false, otherwise this returns true.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGLSet_mc_Iterator_iteratorAt_int_ [[nodiscard]] @SG_ML_L010010SGLSet::Iteratorsglset__iterator @SG_ML_L00A02DiteratorAt#nodiscard_SGLSet_mc_Iterator_iteratorAt_int_(int n);
 Returns the iterator pointing towards the element at index @SG_ML_B001n in the @SG_ML_L006012SGLSet../cppclass/sglset.
@@ -133,13 +134,13 @@ Returns the iterator pointing towards the element at index @SG_ML_B001n in the @
 @SG_ML_HEADER_nodiscard_int_length_func_const_ [[nodiscard]] int @SG_ML_L006021length#nodiscard_int_length_func_const_() const;
 Returns the length of the @SG_ML_L006012SGLSet../cppclass/sglset, this is the number of elements stored inside it.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_nodiscard_SGLSet_mc_ConstIterator_lowerBound_const_T_ref_const_ [[nodiscard]] @SG_ML_L015015SGLSet::ConstIteratorsglset__constiterator @SG_ML_L00A040lowerBound#nodiscard_SGLSet_mc_ConstIterator_lowerBound_const_T_ref_const_(const T& x) const;
-Returns a constant iterator to the first element in the @SG_ML_L006012SGLSet../cppclass/sglset more than or equal to @SG_ML_B001x.
-@SG_ML_NOTE @SG_ML_L010049SGLSet::constEnd../cppclass/sglset#nodiscard_SGLSet_mc_ConstIterator_constEnd_func_const_ is returned if no such iterator exists.
-@SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGLSet_mc_Iterator_lowerBound_const_T_ref_ [[nodiscard]] @SG_ML_L010010SGLSet::Iteratorsglset__iterator @SG_ML_L00A035lowerBound#nodiscard_SGLSet_mc_Iterator_lowerBound_const_T_ref_(const T& x);
 Returns a iterator to the first element in the @SG_ML_L006012SGLSet../cppclass/sglset more than or equal to @SG_ML_B001x.
 @SG_ML_NOTE @SG_ML_L00B039SGLSet::end../cppclass/sglset#nodiscard_SGLSet_mc_Iterator_end_func_ is returned if no such iterator exists.
+@SG_ML_BLANKLINE
+@SG_ML_HEADER_nodiscard_SGLSet_mc_ConstIterator_lowerBound_const_T_ref_const_ [[nodiscard]] @SG_ML_L015015SGLSet::ConstIteratorsglset__constiterator @SG_ML_L00A040lowerBound#nodiscard_SGLSet_mc_ConstIterator_lowerBound_const_T_ref_const_(const T& x) const;
+Returns a constant iterator to the first element in the @SG_ML_L006012SGLSet../cppclass/sglset more than or equal to @SG_ML_B001x.
+@SG_ML_NOTE @SG_ML_L010049SGLSet::constEnd../cppclass/sglset#nodiscard_SGLSet_mc_ConstIterator_constEnd_func_const_ is returned if no such iterator exists.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGLSet_mc_ConstIterator_upperBound_const_T_ref_const_ [[nodiscard]] @SG_ML_L015015SGLSet::ConstIteratorsglset__constiterator @SG_ML_L00A040upperBound#nodiscard_SGLSet_mc_ConstIterator_upperBound_const_T_ref_const_(const T& x) const;
 Returns a constant iterator to the first element in the @SG_ML_L006012SGLSet../cppclass/sglset strictly more than @SG_ML_B001x.

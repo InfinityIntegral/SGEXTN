@@ -29,12 +29,12 @@
 Creates an empty SGLMap.
 @SG_FUNC [[nodiscard]] int length() const;
 Returns the length of the SGLMap, which is the number of elements currently stored inside it.
-@SG_FUNC void insert(const K& xKey, const V& xValue);
+@SG_FUNC bool insert(const K& xKey, const V& xValue);
 Inserts the key value pair ($xKey, $xValue) into the SGLMap.
-@SG_WARN If $xKey already exists in the SGLMap, this will crash. If you cannot guarantee that the SGLMap does not already contain the key, use SGLMap::contains to check before insertion. This is a intentional design choice to avoid silent bugs.
-@SG_FUNC void erase(const K& x);
+@SG_NOTE If $xKey already exists in the SGLMap, this will return false, otherwise this returns true.
+@SG_FUNC bool erase(const K& x);
 Removes the key $x and its associated value from the SGLMap.
-@SG_WARN If $x is not in the SGLMap, this will crash. If you cannot guarantee that the SGLMap already contains the key, use SGLMap::contains to check before removal. This is a intentional design choice to avoid silent bugs.
+@SG_NOTE If $x is not in the SGLMap, this will return false, otherwise this returns true.
 @SG_FUNC [[nodiscard]] bool contains(const K& x) const;
 Returns if the SGLMap contains $x as a key
 @SG_FUNC [[nodiscard]] int count(const K& x) const;
@@ -65,9 +65,10 @@ Returns a null iterator associated to this SGLMap.
 Returns a null constant iterator associated to this SGLMap.
 @SG_NOTE SGLMap iterators behave circularly. This is equivalent to running operator-- on SGLMap::constBegin.
 @SG_WARN Attempting to access the key or value that this iterator points to is undefined behaviour.
-@SG_FUNC void erase(SGLMap::Iterator& i);
+@SG_FUNC bool erase(SGLMap::Iterator& i);
 Removes the key value pair associated with $i from the SGLMap.
 After the removal, $i which is passed as a reference, is decremented. This means that you do not have to do any special handling for removed elements when iterating over a SGLMap.
+@SG_NOTE This returns false if $i is SGLMap::end and true otherwise.
 @SG_WARN Do not write any special logic to modify iterators while removing elements from a SGLMap in a loop, SGLMap::erase handles this for you automatically.
 @SG_FUNC [[nodiscard]] SGLMap::Iterator find(const K& x);
 Returns the iterator pointing to key $x.
