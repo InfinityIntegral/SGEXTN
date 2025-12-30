@@ -21,7 +21,12 @@ Name of the folder where your application stores data. This must be set in the e
 Path to the application icon which is shown when users run the application. This must be set in the entry point.
 @SG_NOTE Setting this after the entry point has no effect.
 @SG_WARN The matching file must exist in the resource system. To ensure that, put the app icon in the assets folder. @SG_FINDREP_RESOURCE
-@SG_WARN If the icon file cannot be found, this is undefined behaviour. However not setting this does not cause undefined behaviour.
+@SG_WARN If the icon file cannot be found, this is undefined behaviour. However not setting this does not cause undefined behaviour, if this is not set then the app will use the SGEXTN icon.
+@SG_FUNC static SGXString infoWebsite;
+link to the website with information about this application
+@SG_NOTE Setting this after the entry point has no effect.
+@SG_NOTE If the application does not have a information website, use the GitHub repository link instead. If it also does not have a GitHub repository link, you can leave this unset.
+@SG_NOTE The website link should not include the https:// part
 @SG_FUNC static void (*interpretCmdArgs)(int, char**);
 Function pointer to function interpreting command line arguments. This must be set in the entry point.
 @SG_NOTE Setting this after the entry point has no effect.

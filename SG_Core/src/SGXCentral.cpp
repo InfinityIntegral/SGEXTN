@@ -12,8 +12,9 @@
 SGXString SGXCentral::applicationName = "app name not set";
 SGXString SGXCentral::applicationVersion = "app version not set";
 SGXString SGXCentral::organisationName = "organisation name not set";
-SGXString SGXCentral::folderName = "folder name not set";
-SGXString SGXCentral::pathToAppIcon = "";
+SGXString SGXCentral::folderName = "SGEXTN_app";
+SGXString SGXCentral::pathToAppIcon = ":/SGEXTN/SGEXTN_icon.png";
+SGXString SGXCentral::infoWebsite = "";
 void (*SGXCentral::interpretCmdArgs)(int, char**) = nullptr;
 void (*SGXCentral::customInitialise)() = nullptr;
 void (*SGXCentral::customTerminate)() = nullptr;
@@ -45,7 +46,7 @@ void SGXCentral::initialise(){
     QCoreApplication::setApplicationName(*SGXCentral::applicationName.data);
     QCoreApplication::setApplicationVersion(*SGXCentral::applicationVersion.data);
     QCoreApplication::setOrganizationName(*SGXCentral::organisationName.data);
-    if(SGXCentral::pathToAppIcon != ""){QGuiApplication::setWindowIcon(QIcon(*SGXCentral::pathToAppIcon.data));}
+    QGuiApplication::setWindowIcon(QIcon(*SGXCentral::pathToAppIcon.data));
     
     if(SGXCentral::sgFileSystemInitFolders != nullptr){SGXCentral::sgFileSystemInitFolders();}
     if(SGXCentral::setCustomTheme != nullptr){SGXCentral::setCustomTheme();}

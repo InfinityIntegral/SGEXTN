@@ -11,6 +11,7 @@ The folder that you should keep application settings files in.
 @SG_WARN Setting this manually is undefined behaviour.
 @SG_FUNC static SGXString joinFilePaths(const SGXString& a, const SGXString& b);
 Returns the file path $a/$b
+@SG_WARN If either $a or $b is an empty string, this leads to undefined behaviour.
 @SG_FUNC static SGXString encodeBase16(const SGXString& s);
 Encodes $s to base16, the SGEXTN provided encoding that is guaranteed to be safe on all file systems, including case insensitive ones.
 @SG_NOTE As of this SGEXTN version, base16 is not human readable. This likely will be changed in a future version.

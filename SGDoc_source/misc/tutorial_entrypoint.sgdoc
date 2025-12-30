@@ -35,5 +35,7 @@ void init(){
     SGXCentral::organisationName = "05524F (Singapore)";
     SGXCentral::customInitialise = &initUI; // will be run after SGEXTN is set up
     SGXCentral::folderName = "someFolder";
+    SGXCentral::pathToAppIcon = ":/resource/system/path/to/app/icon/image";
+    SGXCentral::infoWebsite = "link.to.your.website.sg/page/about/this/application";
 }
 @SG_ENDCODEBLK
