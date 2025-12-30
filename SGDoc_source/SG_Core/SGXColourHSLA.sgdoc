@@ -29,36 +29,36 @@ Lesser than operator with $x defined for SGLLesserThan and SGLMoreThan.
 More than operator with $x defined for SGLLesserThan and SGLMoreThan.
 @SG_FUNC [[nodiscard]] int hash() const;
 Hash function defined for SGLLesserThan and SGLMoreThan.
-@SG_FUNC void setHue(float h);
-Sets the hue of this SGXColourHSLA to $h.
+@SG_FUNC SGXColourHSLA& setHue(float h);
+Sets the hue of this SGXColourHSLA to $h and returns a reference to this SGXColourHSLA to allow operation chaining.
 @SG_NOTE If $h is out of bounds, it is corrected automatically.
-@SG_FUNC void setSaturation(float s);
-Sets the saturation of this SGXColourHSLA to $s.
+@SG_FUNC SGXColourHSLA& setSaturation(float s);
+Sets the saturation of this SGXColourHSLA to $s and returns a reference to this SGXColourHSLA to allow operation chaining.
 @SG_NOTE If $s is out of bounds, it is corrected automatically.
-@SG_FUNC void setLightness(float l);
-Sets the lightness of this SGXColourHSLA to $l.
+@SG_FUNC SGXColourHSLA& setLightness(float l);
+Sets the lightness of this SGXColourHSLA to $l and returns a reference to this SGXColourHSLA to allow operation chaining.
 @SG_NOTE If $l is out of bounds, it is corrected automatically.
-@SG_FUNC void setTransparency(float a);
-Sets the transparency of this SGXColourHSLA to $a.
+@SG_FUNC SGXColourHSLA& setTransparency(float a);
+Sets the transparency of this SGXColourHSLA to $a and returns a reference to this SGXColourHSLA to allow operation chaining.
 @SG_NOTE If $a is out of bounds, it is corrected automatically.
-@SG_FUNC void invertHue();
-Inverts the hue of this SGXColourHSLA.
-@SG_FUNC void invertSaturation();
-Inverts the saturation of this SGXColourHSLA.
-@SG_FUNC void invertLightness();
-Inverts the lightness of this SGXColourHSLA.
+@SG_FUNC SGXColourHSLA& invertHue();
+Inverts the hue of this SGXColourHSLA and returns a reference to this SGXColourHSLA to allow operation chaining.
+@SG_FUNC SGXColourHSLA& invertSaturation();
+Inverts the saturation of this SGXColourHSLA and returns a reference to this SGXColourHSLA to allow operation chaining.
+@SG_FUNC SGXColourHSLA& invertLightness();
+Inverts the lightness of this SGXColourHSLA and returns a reference to this SGXColourHSLA to allow operation chaining.
 @SG_NOTE This can be used to change between light mode and dark mode for custom UI.
-@SG_FUNC void linearTransformSaturation(float m, float c);
-Replaces the saturation of this SGXColourHSLA with $m * saturation + $c.
+@SG_FUNC SGXColourHSLA& linearTransformSaturation(float m, float c);
+Replaces the saturation of this SGXColourHSLA with $m * saturation + $c and returns a reference to this SGXColourHSLA to allow operation chaining.
 @SG_NOTE If the new saturation is out of bounds, it is corrected automatically.
-@SG_FUNC void linearTransformLightness(float m, float c);
-Replaces the lightness of this SGXColourHSLA with $m * lightness + $c.
+@SG_FUNC SGXColourHSLA& linearTransformLightness(float m, float c);
+Replaces the lightness of this SGXColourHSLA with $m * lightness + $c and returns a reference to this SGXColourHSLA to allow operation chaining.
 @SG_NOTE If the new lightness is out of bounds, it is corrected automatically.
-@SG_FUNC void linearTransformTransparency(float m, float c);
-Replaces the transparency of this SGXColourHSLA with $m * transparency + $c.
+@SG_FUNC SGXColourHSLA& linearTransformTransparency(float m, float c);
+Replaces the transparency of this SGXColourHSLA with $m * transparency + $c and returns a reference to this SGXColourHSLA to allow operation chaining.
 @SG_NOTE If the new transparency is out of bounds, it is corrected automatically.
-@SG_FUNC void offsetHue(float c);
-Replaces the hue of this SGXColourHSLA with hue + $c.
+@SG_FUNC SGXColourHSLA& offsetHue(float c);
+Replaces the hue of this SGXColourHSLA with hue + $c and returns a reference to this SGXColourHSLA to allow operation chaining.
 @SG_NOTE If the new hue is out of bounds, it is corrected automatically.
 @SG_FUNC [[nodiscard]] SGXColourRGBA toRGBA() const;
 Returns this SGXColourHSLA converted to a SGXColourRGBA.
