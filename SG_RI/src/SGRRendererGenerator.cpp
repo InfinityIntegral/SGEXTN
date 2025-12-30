@@ -8,27 +8,19 @@
 #include <SGRBaseRenderer.h>
 #include<private_api_Widgets/SGXQuickInterface.h>
 #include <QQuickWindow>
+#include <QTimer>
 
-SGRRendererGenerator::SGRRendererGenerator(SGRBaseRenderer* renderControl, SGRBaseSyncer* syncControl, SGWWidget *attachedWidget) : QQuickItem(nullptr){
+SGRRendererGenerator::SGRRendererGenerator(SGRBaseRenderer* renderControl, SGRBaseSyncer* syncControl, SGWWidget *attachedWidget, QQuickItem *parentItem) : QQuickItem(parentItem){
     setFlag(ItemHasContents, true);
     (*this).renderControl = renderControl;
     (*this).syncControl = syncControl;
     (*this).attachedWidget = attachedWidget;
-    (*this).syncSize();
     (*this).node = nullptr;
-    connect(SGXQuickInterface::applicationWindow, &QQuickWindow::widthChanged, this, &SGRRendererGenerator::syncSize);
-    connect(SGXQuickInterface::applicationWindow, &QQuickWindow::heightChanged, this, &SGRRendererGenerator::syncSize);
-}
-
-SGRRendererGenerator::SGRRendererGenerator(SGRBaseRenderer *renderControl, SGRBaseSyncer *syncControl, QQuickItem *parentItem) : QQuickItem(parentItem){
-    setFlag(ItemHasContents, true);
-    (*this).renderControl = renderControl;
-    (*this).syncControl = syncControl;
-    (*this).attachedWidget = nullptr;
     (*this).syncSize();
-    (*this).node = nullptr;
-    connect(SGXQuickInterface::applicationWindow, &QQuickWindow::widthChanged, this, &SGRRendererGenerator::syncSize);
-    connect(SGXQuickInterface::applicationWindow, &QQuickWindow::heightChanged, this, &SGRRendererGenerator::syncSize);
+    connect(SGXQuickInterface::rootWindow, &QQuickItem::widthChanged, this, &SGRRendererGenerator::syncSize);
+    connect(SGXQuickInterface::rootWindow, &QQuickItem::heightChanged, this, &SGRRendererGenerator::syncSize);
+    connect(parentItem, &QQuickItem::widthChanged, this, &SGRRendererGenerator::syncSize);
+    connect(parentItem, &QQuickItem::heightChanged, this, &SGRRendererGenerator::syncSize);
 }
 
 QSGNode* SGRRendererGenerator::updatePaintNode(QSGNode *old, UpdatePaintNodeData */*unused*/){
