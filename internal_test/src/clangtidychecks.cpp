@@ -50,7 +50,6 @@
 #include <SGWBackground.h> // NOLINT(misc-include-cleaner)
 #include <SGWBlankWidget.h> // NOLINT(misc-include-cleaner)
 #include <SGWButton.h> // NOLINT(misc-include-cleaner)
-#include <SGWCustomisationPageControl.h> // NOLINT(misc-include-cleaner)
 #include <SGWDefaultFonts.h> // NOLINT(misc-include-cleaner)
 #include <SGWHorizontalAlignment.h> // NOLINT(misc-include-cleaner)
 #include <SGWIconButton.h> // NOLINT(misc-include-cleaner)

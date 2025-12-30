@@ -1,5 +1,5 @@
 @SG_OTHERFILE_tutorials/singcorrect SingCorrect Tutorial
-SingCorrect allows SGEXTN input fields (subclasses of SGWInput) to autocorrect LaTeX style commands to the corresponding Unicode character. This is highly customisable and you can call SGWCustomisationPageControl::enableSingCorrectCustomisationPage to show the customisation page to the user.
+SingCorrect allows SGEXTN input fields (subclasses of SGWInput) to autocorrect LaTeX style commands to the corresponding Unicode character. This is highly customisable by the user.
 SingCorrect works by detecting the SingCorrect prefix in user input and replacing every command found with the correct character. By default, the prefix is SG-\
 @SG_ML_BLANKLINE
 For example, the below text
