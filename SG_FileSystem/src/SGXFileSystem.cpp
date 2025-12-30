@@ -16,6 +16,8 @@
 #include <SGXFileBinUtilities.h>
 #include <QStandardPaths>
 #include <SGXCentral.h>
+#include <QDesktopServices>
+#include <QUrl>
 
 namespace{
 inline SGXString temp_stdStringToSGXString(const std::string& s){
@@ -596,4 +598,8 @@ void SGXFileSystem::initialiseAppFolder(){
     if(SGXFileSystem::folderExists(SGXFileSystem::userDataFilePath) == false){SGXFileSystem::createFolder(SGXFileSystem::userDataFilePath);}
     if(SGXFileSystem::folderExists(SGXFileSystem::configFilePath) == false){SGXFileSystem::createFolder(SGXFileSystem::configFilePath);}
     SGXFileBinUtilities::loadBinData();
+}
+
+void SGXFileSystem::openLink(const SGXString &link){
+    QDesktopServices::openUrl(static_cast<QUrl>(QString("https://") + (*link.data)));
 }

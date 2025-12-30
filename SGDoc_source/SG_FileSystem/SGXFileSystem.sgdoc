@@ -99,6 +99,9 @@ Comparator used by SGXNumberAwareFilePathLesserThan and SGXNumberAwareFilePathMo
 @SG_FUNC static bool numberAwareLesserThanBase16(const SGXString& s1, const SGXString& s2);
 Comparator used by SGXNumberAwareFilePathLesserThanBase16 and SGXNumberAwareFilePathMoreThanBase16, returns if a file with name $s1 should be displayed in front of a file with name $s2 when base16 number aware lesser than sorting is used.
 @SG_PRIVATE_API static void initialiseAppFolder();
+@SG_FUNC static void openLink(const SGXString& link);
+Opens the website link $link in the system default browser.
+@SG_NOTE There is no need to put the https:// in front of the link, just the website link itself is sufficient.
 
 @SG_CPP_CLASS SGXNumberAwareFilePathLesserThan
 @SG_SHORT_DESCRP sorts file paths in alphabetical order taking into account numbers in file names
