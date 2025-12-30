@@ -106,12 +106,12 @@ float SGXVector2::getMagnitude() const {
     return SGLFloatMath::squareRoot(getMagnitudeSquare());
 }
 
-float SGXVector2::getDistanceSquare(SGXVector2 x) const {
-    return (((*this).x - x.x) * ((*this).x - x.x) + ((*this).y - x.y) * ((*this).y - x.y));
+float SGXVector2::getDistanceSquare(SGXVector2 a, SGXVector2 b){
+    return ((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
 }
 
-float SGXVector2::getDistance(SGXVector2 x) const {
-    return SGLFloatMath::squareRoot(getDistanceSquare(x));
+float SGXVector2::getDistance(SGXVector2 a, SGXVector2 b){
+    return SGLFloatMath::squareRoot(SGXVector2::getDistanceSquare(a, b));
 }
 
 SGXVector2& SGXVector2::normalise(){
@@ -128,8 +128,8 @@ float SGXVector2::getArgument() const {
     return (SGLFloatMath::arctangentQuadrantAware(y, x) * 180.0f / SGLFloatConstants::pi());
 }
 
-float SGXVector2::getAngleBetween(SGXVector2 x) const {
-    float f = x.getArgument() - getArgument();
+float SGXVector2::getAngleBetween(SGXVector2 a, SGXVector2 b){
+    float f = b.getArgument() - a.getArgument();
     f = SGLFloatMath::modulo(f, 360.0f);
     if(f <= -180.0f){f += 360.0f;}
     else if(f > 180.0f){f -= 360.0f;}
@@ -177,8 +177,8 @@ SGXVector2& SGXVector2::rotateClockwise(float a){
     return (*this);
 }
 
-bool SGXVector2::isCollinear(SGXVector2 a, SGXVector2 b, float limit) const {
-    float arg = (a - (*this)).getArgument() - (b - (*this)).getArgument();
+bool SGXVector2::isCollinear(SGXVector2 x, SGXVector2 a, SGXVector2 b, float limit){
+    float arg = (a - x).getArgument() - (b - x).getArgument();
     arg = SGLFloatMath::modulo(arg, 180.0f);
     if(arg < -90.0f){arg += 180.0f;}
     else if(arg > 90.0f){arg -= 180.0f;}
@@ -186,8 +186,8 @@ bool SGXVector2::isCollinear(SGXVector2 a, SGXVector2 b, float limit) const {
     return false;
 }
 
-bool SGXVector2::isParallel(SGXVector2 a2, SGXVector2 b1, SGXVector2 b2, float limit) const {
-    float arg = (a2 - (*this)).getArgument() - (b2 - b1).getArgument();
+bool SGXVector2::isParallel(SGXVector2 a1, SGXVector2 a2, SGXVector2 b1, SGXVector2 b2, float limit){
+    float arg = (a2 - a1).getArgument() - (b2 - b1).getArgument();
     arg = SGLFloatMath::modulo(arg, 180.0f);
     if(arg < -90.0f){arg += 180.0f;}
     else if(arg > 90.0f){arg -= 180.0f;}
@@ -195,8 +195,8 @@ bool SGXVector2::isParallel(SGXVector2 a2, SGXVector2 b1, SGXVector2 b2, float l
     return false;
 }
 
-bool SGXVector2::isPerpendicular(SGXVector2 a, SGXVector2 b, float limit) const {
-    float arg = (a - (*this)).getArgument() - (b - (*this)).getArgument() + 90.0f;
+bool SGXVector2::isPerpendicular(SGXVector2 x, SGXVector2 a, SGXVector2 b, float limit){
+    float arg = (a - x).getArgument() - (b - x).getArgument() + 90.0f;
     arg = SGLFloatMath::modulo(arg, 180.0f);
     if(arg < -90.0f){arg += 180.0f;}
     else if(arg > 90.0f){arg -= 180.0f;}
@@ -204,12 +204,12 @@ bool SGXVector2::isPerpendicular(SGXVector2 a, SGXVector2 b, float limit) const 
     return false;
 }
 
-SGXVector2 SGXVector2::midpoint(SGXVector2 x) const {
-    return (0.5f * ((*this) + x));
+SGXVector2 SGXVector2::midpoint(SGXVector2 a, SGXVector2 b){
+    return (0.5f * (a + b));
 }
 
-SGXVector2 SGXVector2::linearInterpolate(SGXVector2 x, float f) const {
-    return (f * (*this) + (1.0f - f) * x);
+SGXVector2 SGXVector2::linearInterpolate(SGXVector2 a, SGXVector2 b, float f){
+    return (f * a + (1.0f - f) * b);
 }
 
 SGXVector2& SGXVector2::reflectAcrossX(){
@@ -228,12 +228,12 @@ SGXVector2& SGXVector2::reflectAcrossPoint(SGXVector2 x){
 }
 
 SGXVector2 SGXVector2::getNearestPointOnLine(SGXVector2 a, SGXVector2 b) const {
-    const float f = ((x - a.x) * (b.x - a.x) + (y - a.y) * (b.y - a.y)) / a.getDistanceSquare(b);
+    const float f = ((x - a.x) * (b.x - a.x) + (y - a.y) * (b.y - a.y)) / SGXVector2::getDistanceSquare(a, b);
     return SGXVector2(a.x + f * (b.x - a.x), a.y + f * (b.y - a.y));
 }
 
 SGXVector2& SGXVector2::projectToLine(SGXVector2 a, SGXVector2 b){
-    const float f = ((x - a.x) * (b.x - a.x) + (y - a.y) * (b.y - a.y)) / a.getDistanceSquare(b);
+    const float f = ((x - a.x) * (b.x - a.x) + (y - a.y) * (b.y - a.y)) / SGXVector2::getDistanceSquare(a, b);
     (*this) = SGXVector2(a.x + f * (b.x - a.x), a.y + f * (b.y - a.y));
     return (*this);
 }
@@ -254,14 +254,14 @@ SGXVector2& SGXVector2::projectToY(){
 }
 
 float SGXVector2::getDistanceToLine(SGXVector2 a, SGXVector2 b) const {
-    return getDistance(getNearestPointOnLine(a, b));
+    return SGXVector2::getDistance((*this), getNearestPointOnLine(a, b));
 }
 
 float SGXVector2::getDistanceToSegment(SGXVector2 a, SGXVector2 b) const {
     const SGXVector2 v = getNearestPointOnLine(a, b);
-    if(temp_isBetween(v.x, a.x, b.x) || temp_isBetween(v.y, a.y, b.y)){return getDistance(v);}
-    if(getDistance(a) < getDistance(b)){return getDistance(a);}
-    return getDistance(b);
+    if(temp_isBetween(v.x, a.x, b.x) || temp_isBetween(v.y, a.y, b.y)){return SGXVector2::getDistance((*this), v);}
+    if(SGXVector2::getDistanceSquare((*this), a) < SGXVector2::getDistanceSquare((*this), b)){return SGXVector2::getDistance((*this), a);}
+    return SGXVector2::getDistance((*this), b);
 }
 
 float SGXVector2::getDistanceToCircle(float a, float b, float r) const {
@@ -273,7 +273,7 @@ float SGXVector2::getDistanceToCircle(float a, float b, float r) const {
 SGXVector2 SGXVector2::getNearestPointOnSegment(SGXVector2 a, SGXVector2 b) const {
     SGXVector2 v = getNearestPointOnLine(a, b);
     if(temp_isBetween(v.x, a.x, b.x) || temp_isBetween(v.y, a.y, b.y)){return v;}
-    if(getDistanceSquare(a) <= getDistanceSquare(b)){return a;}
+    if(SGXVector2::getDistanceSquare((*this), a) <= SGXVector2::getDistanceSquare((*this), b)){return a;}
     return b;
 }
 
@@ -283,10 +283,10 @@ SGXVector2 SGXVector2::getNearestPointOnCircle(float a, float b, float r) const 
     return (v + SGXVector2(a, b));
 }
 
-float SGXVector2::dotProduct(SGXVector2 x) const {
-    return ((*this).x * x.x + (*this).y * x.y);
+float SGXVector2::dotProduct(SGXVector2 a, SGXVector2 b){
+    return (a.x * b.x + a.y * b.y);
 }
 
-float SGXVector2::crossProduct(SGXVector2 x) const {
-    return ((*this).x * x.y + (*this).y * x.x);
+float SGXVector2::crossProduct(SGXVector2 a, SGXVector2 b){
+    return (a.x * b.y + a.y * b.x);
 }
