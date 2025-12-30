@@ -51,6 +51,7 @@ public:
     static bool numberAwareLesserThan(const SGXString& s1, const SGXString& s2);
     static bool numberAwareLesserThanBase16(const SGXString& s1, const SGXString& s2);
     static void initialiseAppFolder();
+    static void openLink(const SGXString& link);
 };
 
 class SG_FILESYSTEM_DLL SGXNumberAwareFilePathLesserThan {
