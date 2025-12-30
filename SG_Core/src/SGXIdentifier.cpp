@@ -80,17 +80,17 @@ SGXIdentifier::SGXIdentifier(const SGXString &s, bool ifValid, int *errCode){
     }
 }
 
-int SGXIdentifier::registerIdentifier() const {
-    if(SGXIdentifier::identifiersList != nullptr && (*SGXIdentifier::identifiersList).contains((*this))){return 1;}
+bool SGXIdentifier::registerIdentifier(SGXIdentifier x){
+    if(SGXIdentifier::identifiersList != nullptr && (*SGXIdentifier::identifiersList).contains(x)){return false;}
     if(SGXIdentifier::identifiersList == nullptr){SGXIdentifier::identifiersList = new SGLUnorderedSet<SGXIdentifier, SGLEqualsTo<SGXIdentifier>, SGLHash<SGXIdentifier>>();}
-    (*SGXIdentifier::identifiersList).insert((*this));
-    return 0;
+    (*SGXIdentifier::identifiersList).insert(x);
+    return true;
 }
 
-int SGXIdentifier::unregisterIdentifier() const {
-    if(SGXIdentifier::identifiersList == nullptr || (*SGXIdentifier::identifiersList).contains((*this)) == false){return 1;}
-    (*SGXIdentifier::identifiersList).erase((*this));
-    return 0;
+bool SGXIdentifier::unregisterIdentifier(SGXIdentifier x){
+    if(SGXIdentifier::identifiersList == nullptr || (*SGXIdentifier::identifiersList).contains(x) == false){return false;}
+    (*SGXIdentifier::identifiersList).erase(x);
+    return true;
 }
 
 bool SGXIdentifier::exists() const {

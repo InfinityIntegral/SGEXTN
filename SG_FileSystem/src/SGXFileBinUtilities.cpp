@@ -27,7 +27,7 @@ void SGXFileBinUtilities::loadBinData(){
         const int deletedFilesNumber = fileReader.readInt();
         for(int i=0; i<deletedFilesNumber; i++){
             const SGXIdentifier id = fileReader.readIdentifier();
-            static_cast<void>(id.registerIdentifier());
+            SGXIdentifier::registerIdentifier(id);
             (*SGXFileBinUtilities::deletedFiles).insert(id, SGLPair<SGXString, SGXTimeStamp>(fileReader.readString(), fileReader.readTimeStamp()));
         }
     }
@@ -66,7 +66,7 @@ int SGXFileBinUtilities::deleteFile(const SGXString &s){
     const SGXTimeStamp t = SGXTimeStamp::now();
     const SGXString endPath = SGXFileSystem::joinFilePaths(SGXFileBinUtilities::binFilePath, id.getStringForPrinting() + ".sg");
     if(SGXFileSystem::moveFile(s, endPath) != 1){return -2;}
-    static_cast<void>(id.registerIdentifier());
+    SGXIdentifier::registerIdentifier(id);
     (*SGXFileBinUtilities::deletedFiles).insert(id, SGLPair<SGXString, SGXTimeStamp>(s, t));
     SGXFileBinUtilities::syncMetadata();
     return 1;
@@ -82,7 +82,7 @@ int SGXFileBinUtilities::deleteFolder(const SGXString &s){
         const SGXString fileName = "";
         (*fileName.data) = f.at(i).absoluteFilePath();
         if(SGXFileSystem::moveFile(fileName, endPath) != 1){return -2;}
-        static_cast<void>(id.registerIdentifier());
+        SGXIdentifier::registerIdentifier(id);
         (*SGXFileBinUtilities::deletedFiles).insert(id, SGLPair<SGXString, SGXTimeStamp>(fileName, t));
     }
     SGXFileSystem::permanentDeleteFolder(s);
