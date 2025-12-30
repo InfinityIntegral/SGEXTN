@@ -183,52 +183,64 @@ SGXString SGXTimeStamp::getFullSGCalendar() const {
     return (SGXString("SG") + SGXString::intToString(getTimeFromYearPart(SGXTimeStamp::zero)).fillLeftToLength(2, '0') + " " + SGXString::intToString(getTimeFromMonthPart(SGXTimeStamp::zero)).fillLeftToLength(2, '0') + SGXString::intToString(getTimeFromDayPart(SGXTimeStamp::zero)).fillLeftToLength(2, '0') + " " + SGXString::intToString(getTimeFromHourPart(SGXTimeStamp::zero)).fillLeftToLength(2, '0') + SGXString::intToString(getTimeFromMinutePart(SGXTimeStamp::zero)).fillLeftToLength(2, '0') + SGXString::intToString(getTimeFromSecondPart(SGXTimeStamp::zero)).fillLeftToLength(2, '0'));
 }
 
-void SGXTimeStamp::addSeconds(long long x){
+SGXTimeStamp& SGXTimeStamp::addSeconds(long long x){
     t += x;
+    return (*this);
 }
 
-void SGXTimeStamp::addMinutes(long long x){
+SGXTimeStamp& SGXTimeStamp::addMinutes(long long x){
     t += (60ll * x);
+    return (*this);
 }
 
-void SGXTimeStamp::addHours(long long x){
+SGXTimeStamp& SGXTimeStamp::addHours(long long x){
     t += (60ll * 60ll * x);
+    return (*this);
 }
 
-void SGXTimeStamp::addDays(long long x){
+SGXTimeStamp& SGXTimeStamp::addDays(long long x){
     t += (60ll * 60ll * 24ll * x);
+    return (*this);
 }
 
-void SGXTimeStamp::addMonths(long long x){
+SGXTimeStamp& SGXTimeStamp::addMonths(long long x){
     (*this) = temp_qDateTimeToSGXTimeStamp(temp_sgxTimeStampToQDateTime(*this).addMonths(static_cast<int>(x)));
+    return (*this);
 }
 
-void SGXTimeStamp::addYears(long long x){
+SGXTimeStamp& SGXTimeStamp::addYears(long long x){
     (*this) = temp_qDateTimeToSGXTimeStamp(temp_sgxTimeStampToQDateTime(*this).addYears(static_cast<int>(x)));
+    return (*this);
 }
 
-void SGXTimeStamp::subtractSeconds(long long x){
+SGXTimeStamp& SGXTimeStamp::subtractSeconds(long long x){
     addSeconds((-1ll) * x);
+    return (*this);
 }
 
-void SGXTimeStamp::subtractMinutes(long long x){
+SGXTimeStamp& SGXTimeStamp::subtractMinutes(long long x){
     addMinutes((-1ll) * x);
+    return (*this);
 }
 
-void SGXTimeStamp::subtractHours(long long x){
+SGXTimeStamp& SGXTimeStamp::subtractHours(long long x){
     addHours((-1ll) * x);
+    return (*this);
 }
 
-void SGXTimeStamp::subtractDays(long long x){
+SGXTimeStamp& SGXTimeStamp::subtractDays(long long x){
     addDays((-1ll) * x);
+    return (*this);
 }
 
-void SGXTimeStamp::subtractMonths(long long x){
+SGXTimeStamp& SGXTimeStamp::subtractMonths(long long x){
     addMonths((-1ll) * x);
+    return (*this);
 }
 
-void SGXTimeStamp::subtractYears(long long x){
+SGXTimeStamp& SGXTimeStamp::subtractYears(long long x){
     addYears((-1ll) * x);
+    return (*this);
 }
 
 SGXTimeStamp SGXTimeStamp::now(){
