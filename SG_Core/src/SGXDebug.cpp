@@ -8,7 +8,6 @@
 #include <SGXTimeStamp.h>
 #include <SGXVector2.h>
 #include <QString>
-#include <cstdio>
 #include <qlogging.h>
 #include <QFile>
 #include <QIODevice>
@@ -122,14 +121,6 @@ SGXDebug& SGXDebug::operator()(const SGXTimeStamp& x){
 
 SGXDebug& SGXDebug::operator()(const SGXVector2& x){
     debugInfo += (SGXString(" - ") + "(" + SGXString::floatToString(x.x) + ", " + SGXString::floatToString(x.y) + ")");
-    return (*this);
-}
-
-SGXDebug& SGXDebug::operator()(void* x){
-    char* pointerAsCString = new char[20];
-    std::sprintf(pointerAsCString, "%p", x); // NOLINT(cppcoreguidelines-pro-type-vararg)
-    debugInfo += (SGXString(" - ") + pointerAsCString);
-    delete[] pointerAsCString;
     return (*this);
 }
 

@@ -29,5 +29,6 @@ children classes: (none)
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_SGXString_logFile_ static @SG_ML_L009009SGXStringsgxstring @SG_ML_L00701AlogFile#static_SGXString_logFile_;
 Contains path to file used to store @SG_ML_L008014SGXDebug../cppclass/sgxdebug logs, set using the --SG-log-file command line argument
-@SG_ML_NOTE If the command line argument is not passed, this would be an empty string
+@SG_ML_NOTE If the command line argument is not passed, this would be an empty string, in which case the logs would be discarded
+@SG_ML_WARN Manually setting this can lead to @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour
 @SG_ML_BLANKLINE
