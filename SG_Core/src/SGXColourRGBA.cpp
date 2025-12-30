@@ -86,44 +86,52 @@ float SGXColourRGBA::getTransparencyAsFloat() const {
     return (static_cast<float>(getTransparency()) / 255.0f);
 }
 
-void SGXColourRGBA::setRed(int r){
+SGXColourRGBA& SGXColourRGBA::setRed(int r){
     temp_boundInt(r);
     (*this).x = ((*this).x & 0xFFFFFFu) | (static_cast<unsigned int>(r) << 24u);
+    return (*this);
 }
 
-void SGXColourRGBA::setGreen(int g){
+SGXColourRGBA& SGXColourRGBA::setGreen(int g){
     temp_boundInt(g);
     (*this).x = ((*this).x & 0xFF00FFFFu) | (static_cast<unsigned int>(g) << 16u);
+    return (*this);
 }
 
-void SGXColourRGBA::setBlue(int b){
+SGXColourRGBA& SGXColourRGBA::setBlue(int b){
     temp_boundInt(b);
     (*this).x = ((*this).x & 0xFFFF00FFu) | (static_cast<unsigned int>(b) << 8u);
+    return (*this);
 }
 
-void SGXColourRGBA::setTransparency(int a){
+SGXColourRGBA& SGXColourRGBA::setTransparency(int a){
     temp_boundInt(a);
     (*this).x = ((*this).x & 0xFFFFFF00u) | static_cast<unsigned int>(a);
+    return (*this);
 }
 
-void SGXColourRGBA::setRedUsingFloat(float r){
+SGXColourRGBA& SGXColourRGBA::setRedUsingFloat(float r){
     temp_boundFloat(r);
     (*this).x = ((*this).x & 0xFFFFFFu) | (temp_floatToUnsignedInt(r) << 24u);
+    return (*this);
 }
 
-void SGXColourRGBA::setGreenUsingFloat(float g){
+SGXColourRGBA& SGXColourRGBA::setGreenUsingFloat(float g){
     temp_boundFloat(g);
     (*this).x = ((*this).x & 0xFF00FFFFu) | (temp_floatToUnsignedInt(g) << 16u);
+    return (*this);
 }
 
-void SGXColourRGBA::setBlueUsingFloat(float b){
+SGXColourRGBA& SGXColourRGBA::setBlueUsingFloat(float b){
     temp_boundFloat(b);
     (*this).x = ((*this).x & 0xFFFF00FFu) | (temp_floatToUnsignedInt(b) << 8u);
+    return (*this);
 }
 
-void SGXColourRGBA::setTransparencyUsingFloat(float a){
+SGXColourRGBA& SGXColourRGBA::setTransparencyUsingFloat(float a){
     temp_boundFloat(a);
     (*this).x = ((*this).x & 0xFFFFFF00u) | temp_floatToUnsignedInt(a);
+    return (*this);
 }
 
 SGXString SGXColourRGBA::getStringForPrintingRGBHTML() const {
@@ -170,28 +178,32 @@ int SGXColourRGBA::hash() const {
     return SGLHash<unsigned int>()(x);
 }
 
-void SGXColourRGBA::linearTransformRed(float m, float c){
+SGXColourRGBA& SGXColourRGBA::linearTransformRed(float m, float c){
     float r = getRedAsFloat();
     r = m * r + c;
     setRedUsingFloat(r);
+    return (*this);
 }
 
-void SGXColourRGBA::linearTransformGreen(float m, float c){
+SGXColourRGBA& SGXColourRGBA::linearTransformGreen(float m, float c){
     float g = getGreenAsFloat();
     g = m * g + c;
     setGreenUsingFloat(g);
+    return (*this);
 }
 
-void SGXColourRGBA::linearTransformBlue(float m, float c){
+SGXColourRGBA& SGXColourRGBA::linearTransformBlue(float m, float c){
     float b = getBlueAsFloat();
     b = m * b + c;
     setBlueUsingFloat(b);
+    return (*this);
 }
 
-void SGXColourRGBA::linearTransformTransparency(float m, float c){
+SGXColourRGBA& SGXColourRGBA::linearTransformTransparency(float m, float c){
     float a = getTransparencyAsFloat();
     a = m * a + c;
     setTransparencyUsingFloat(a);
+    return (*this);
 }
 
 void SGXColourRGBA::gammaCorrectBegin(float &r, float &g, float &b) const {
@@ -206,34 +218,37 @@ void SGXColourRGBA::gammaCorrectEnd(float r, float g, float b){
     setBlueUsingFloat(SGLFloatMath::aToThePowerOfB(b, 1.0f / 2.2f));
 }
 
-void SGXColourRGBA::linearTransformRedWithGamma(float m, float c){
+SGXColourRGBA& SGXColourRGBA::linearTransformRedWithGamma(float m, float c){
     float r = 0.0f;
     float g = 0.0f;
     float b = 0.0f;
     gammaCorrectBegin(r, g, b);
     r = m * r + c;
     gammaCorrectEnd(r, g, b);
+    return (*this);
 }
 
-void SGXColourRGBA::linearTransformGreenWithGamma(float m, float c){
+SGXColourRGBA& SGXColourRGBA::linearTransformGreenWithGamma(float m, float c){
     float r = 0.0f;
     float g = 0.0f;
     float b = 0.0f;
     gammaCorrectBegin(r, g, b);
     g = m * g + c;
     gammaCorrectEnd(r, g, b);
+    return (*this);
 }
 
-void SGXColourRGBA::linearTransformBlueWithGamma(float m, float c){
+SGXColourRGBA& SGXColourRGBA::linearTransformBlueWithGamma(float m, float c){
     float r = 0.0f;
     float g = 0.0f;
     float b = 0.0f;
     gammaCorrectBegin(r, g, b);
     b = m * b + c;
     gammaCorrectEnd(r, g, b);
+    return (*this);
 }
 
-void SGXColourRGBA::applyTint(SGXColourRGBA x){
+SGXColourRGBA& SGXColourRGBA::applyTint(SGXColourRGBA x){
     float r1 = 0.0f;
     float g1 = 0.0f;
     float b1 = 0.0f;
@@ -248,9 +263,10 @@ void SGXColourRGBA::applyTint(SGXColourRGBA x){
     g1 = g1 * a1 + g2 * a2;
     b1 = b1 * a1 + b2 * a2;
     gammaCorrectEnd(r1, g1, b1);
+    return (*this);
 }
 
-void SGXColourRGBA::applyTintSeparateTransparency(SGXColourRGBA x, int a){
+SGXColourRGBA& SGXColourRGBA::applyTintSeparateTransparency(SGXColourRGBA x, int a){
     float r1 = 0.0f;
     float g1 = 0.0f;
     float b1 = 0.0f;
@@ -265,9 +281,10 @@ void SGXColourRGBA::applyTintSeparateTransparency(SGXColourRGBA x, int a){
     g1 = g1 * a1 + g2 * a2;
     b1 = b1 * a1 + b2 * a2;
     gammaCorrectEnd(r1, g1, b1);
+    return (*this);
 }
 
-void SGXColourRGBA::applyTintSeparateTransparencyUsingFloat(SGXColourRGBA x, float a){
+SGXColourRGBA& SGXColourRGBA::applyTintSeparateTransparencyUsingFloat(SGXColourRGBA x, float a){
     float r1 = 0.0f;
     float g1 = 0.0f;
     float b1 = 0.0f;
@@ -282,9 +299,10 @@ void SGXColourRGBA::applyTintSeparateTransparencyUsingFloat(SGXColourRGBA x, flo
     g1 = g1 * a1 + g2 * a2;
     b1 = b1 * a1 + b2 * a2;
     gammaCorrectEnd(r1, g1, b1);
+    return (*this);
 }
 
-void SGXColourRGBA::applyTintNoGammaCorrection(SGXColourRGBA x){
+SGXColourRGBA& SGXColourRGBA::applyTintNoGammaCorrection(SGXColourRGBA x){
     float r1 = getRedAsFloat();
     float g1 = getGreenAsFloat();
     float b1 = getBlueAsFloat();
@@ -299,9 +317,10 @@ void SGXColourRGBA::applyTintNoGammaCorrection(SGXColourRGBA x){
     setRedUsingFloat(r1);
     setGreenUsingFloat(g1);
     setBlueUsingFloat(b1);
+    return (*this);
 }
 
-void SGXColourRGBA::applyTintNoGammaCorrectionSeparateTransparency(SGXColourRGBA x, int a){
+SGXColourRGBA& SGXColourRGBA::applyTintNoGammaCorrectionSeparateTransparency(SGXColourRGBA x, int a){
     float r1 = getRedAsFloat();
     float g1 = getGreenAsFloat();
     float b1 = getBlueAsFloat();
@@ -316,9 +335,10 @@ void SGXColourRGBA::applyTintNoGammaCorrectionSeparateTransparency(SGXColourRGBA
     setRedUsingFloat(r1);
     setGreenUsingFloat(g1);
     setBlueUsingFloat(b1);
+    return (*this);
 }
 
-void SGXColourRGBA::applyTintNoGammaCorrectionSeparateTransparencyUsingFloat(SGXColourRGBA x, float a){
+SGXColourRGBA& SGXColourRGBA::applyTintNoGammaCorrectionSeparateTransparencyUsingFloat(SGXColourRGBA x, float a){
     float r1 = getRedAsFloat();
     float g1 = getGreenAsFloat();
     float b1 = getBlueAsFloat();
@@ -333,6 +353,7 @@ void SGXColourRGBA::applyTintNoGammaCorrectionSeparateTransparencyUsingFloat(SGX
     setRedUsingFloat(r1);
     setGreenUsingFloat(g1);
     setBlueUsingFloat(b1);
+    return (*this);
 }
 
 SGXColourRGBA SGXColourRGBA::linearInterpolate(SGXColourRGBA x, float f) const {
@@ -373,8 +394,9 @@ SGXColourRGBA SGXColourRGBA::linearInterpolateGammaCorrection(SGXColourRGBA x, f
     return x;
 }
 
-void SGXColourRGBA::toComplementColour(){
+SGXColourRGBA& SGXColourRGBA::toComplementColour(){
     setRed(255 - getRed());
     setGreen(255 - getGreen());
     setBlue(255 - getBlue());
+    return (*this);
 }
