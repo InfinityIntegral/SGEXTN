@@ -13,5 +13,5 @@ Creates a SGRRendererWidget with parent @SG_FINDREP_WIDGET $parent, @SG_FINDREP_
 @SG_PRIVATE_API SGRBaseSyncer* syncControl;
 @SG_FUNC void updateCustomRenderer() const;
 Calls for the SGRRendererWidget to be redrawn. The SGRRendererWidget will not be redrawn until this is called due to Qt Quick's power usage optimisations.
-@SG_NOTE If a syncer is being used, call SGRBaseSyncer::sync before requesting for redraw.
+@SG_NOTE If a syncer is being used, SGRBaseSyncer::sync will be automatically called, do NOT manually call it.
 @SG_NOTE Only request a redraw if the contents really changed. This can save a lot of battery especially on mobile devices.

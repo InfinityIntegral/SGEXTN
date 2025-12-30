@@ -42,7 +42,7 @@ SGWColourPickerWidget::SGWColourPickerWidget(SGWWidget *parent, float x1, float 
     SGWColourPickerWidget::syncQuickProperties();
     quickInterface = new SGWColourPickerWidgetQuickInterface(this);
     renderControl = new SGRTransparencyIndicatorRenderer();
-    new SGRRendererGenerator(renderControl, nullptr, bottomObject);
+    new SGRRendererGenerator(renderControl, nullptr, nullptr, bottomObject);
 }
 
 SGXColourRGBA SGWColourPickerWidget::getColour() const {

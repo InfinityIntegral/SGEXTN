@@ -14,8 +14,7 @@ class SGRRendererNode;
 class SG_RI_DLL SGRRendererGenerator : public QQuickItem
 {
 public:
-    SGRRendererGenerator(SGRBaseRenderer* renderControl, SGRBaseSyncer* syncControl, SGWWidget* attachedWidget);
-    SGRRendererGenerator(SGRBaseRenderer* renderControl, SGRBaseSyncer* syncControl, QQuickItem* parentItem);
+    SGRRendererGenerator(SGRBaseRenderer* renderControl, SGRBaseSyncer* syncControl, SGWWidget* attachedWidget, QQuickItem* parentItem);
     QSGNode* updatePaintNode(QSGNode* old, UpdatePaintNodeData* /*unused*/) override;
     SGRBaseRenderer* renderControl;
     SGRBaseSyncer* syncControl;
