@@ -1,11 +1,10 @@
 #include <SGWCustomisationPageControl.h>
 #include <private_api_Widgets/SGWSingCorrectCustomisationPage.h>
 #include <private_api_Widgets/SGWFontSizeCustomisationPage.h>
-
-void (*SGWCustomisationPageControl::themeColoursCustomisationPageActivationFunction)() = nullptr;
+#include <private_api_Widgets/SGWBasicThemeCustomisationPage.h>
 
 void SGWCustomisationPageControl::enableThemeColoursCustomisationPage(){
-    if(SGWCustomisationPageControl::themeColoursCustomisationPageActivationFunction != nullptr){SGWCustomisationPageControl::themeColoursCustomisationPageActivationFunction();}
+    SGWBasicThemeCustomisationPage::activate();
 }
 
 void SGWCustomisationPageControl::enableFontSizeCustomisationPage(){

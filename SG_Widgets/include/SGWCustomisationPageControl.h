@@ -10,7 +10,6 @@ public:
     static void enableThemeColoursCustomisationPage();
     static void enableFontSizeCustomisationPage();
     static void enableSingCorrectCustomisationPage();
-    static void (*themeColoursCustomisationPageActivationFunction)();
 };
 
 #endif // SGWCUSTOMISATIONPAGECONTROL_H
