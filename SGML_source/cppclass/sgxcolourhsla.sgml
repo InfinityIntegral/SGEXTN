@@ -28,21 +28,21 @@ children classes: (none)
 &#9;@SG_ML_L00D01DSGXColourHSLA#SGXColourHSLA_SGXColourRGBA_(@SG_ML_L00D00DSGXColourRGBAsgxcolourrgba x);
 &#9;@SG_ML_L00D027SGXColourHSLA#SGXColourHSLA_float_float_float_float_(float h, float s, float l, float a);
 &#9;[[nodiscard]] int @SG_ML_L00401Fhash#nodiscard_int_hash_func_const_() const;
-&#9;void @SG_ML_L009015invertHue#void_invertHue_func_();
-&#9;void @SG_ML_L00F01BinvertLightness#void_invertLightness_func_();
-&#9;void @SG_ML_L01001CinvertSaturation#void_invertSaturation_func_();
-&#9;void @SG_ML_L01802BlinearTransformLightness#void_linearTransformLightness_float_float_(float m, float c);
-&#9;void @SG_ML_L01902ClinearTransformSaturation#void_linearTransformSaturation_float_float_(float m, float c);
-&#9;void @SG_ML_L01B02ElinearTransformTransparency#void_linearTransformTransparency_float_float_(float m, float c);
-&#9;void @SG_ML_L009016offsetHue#void_offsetHue_float_(float c);
+&#9;@SG_ML_L00D00DSGXColourHSLAsgxcolourhsla& @SG_ML_L009022invertHue#SGXColourHSLA_ref_invertHue_func_();
+&#9;@SG_ML_L00D00DSGXColourHSLAsgxcolourhsla& @SG_ML_L00F028invertLightness#SGXColourHSLA_ref_invertLightness_func_();
+&#9;@SG_ML_L00D00DSGXColourHSLAsgxcolourhsla& @SG_ML_L010029invertSaturation#SGXColourHSLA_ref_invertSaturation_func_();
+&#9;@SG_ML_L00D00DSGXColourHSLAsgxcolourhsla& @SG_ML_L018038linearTransformLightness#SGXColourHSLA_ref_linearTransformLightness_float_float_(float m, float c);
+&#9;@SG_ML_L00D00DSGXColourHSLAsgxcolourhsla& @SG_ML_L019039linearTransformSaturation#SGXColourHSLA_ref_linearTransformSaturation_float_float_(float m, float c);
+&#9;@SG_ML_L00D00DSGXColourHSLAsgxcolourhsla& @SG_ML_L01B03BlinearTransformTransparency#SGXColourHSLA_ref_linearTransformTransparency_float_float_(float m, float c);
+&#9;@SG_ML_L00D00DSGXColourHSLAsgxcolourhsla& @SG_ML_L009023offsetHue#SGXColourHSLA_ref_offsetHue_float_(float c);
 &#9;[[nodiscard]] bool @SG_ML_L00A031operator!=#nodiscard_bool_operator_neq_SGXColourHSLA_const_(@SG_ML_L00D00DSGXColourHSLAsgxcolourhsla x) const;
 &#9;[[nodiscard]] bool @SG_ML_L009030operator‹#nodiscard_bool_operator_lt_SGXColourHSLA_const_(@SG_ML_L00D00DSGXColourHSLAsgxcolourhsla x) const;
 &#9;[[nodiscard]] bool @SG_ML_L00A030operator==#nodiscard_bool_operator_eq_SGXColourHSLA_const_(@SG_ML_L00D00DSGXColourHSLAsgxcolourhsla x) const;
 &#9;[[nodiscard]] bool @SG_ML_L009030operator›#nodiscard_bool_operator_gt_SGXColourHSLA_const_(@SG_ML_L00D00DSGXColourHSLAsgxcolourhsla x) const;
-&#9;void @SG_ML_L006013setHue#void_setHue_float_(float h);
-&#9;void @SG_ML_L00C019setLightness#void_setLightness_float_(float l);
-&#9;void @SG_ML_L00D01AsetSaturation#void_setSaturation_float_(float s);
-&#9;void @SG_ML_L00F01CsetTransparency#void_setTransparency_float_(float a);
+&#9;@SG_ML_L00D00DSGXColourHSLAsgxcolourhsla& @SG_ML_L006020setHue#SGXColourHSLA_ref_setHue_float_(float h);
+&#9;@SG_ML_L00D00DSGXColourHSLAsgxcolourhsla& @SG_ML_L00C026setLightness#SGXColourHSLA_ref_setLightness_float_(float l);
+&#9;@SG_ML_L00D00DSGXColourHSLAsgxcolourhsla& @SG_ML_L00D027setSaturation#SGXColourHSLA_ref_setSaturation_float_(float s);
+&#9;@SG_ML_L00D00DSGXColourHSLAsgxcolourhsla& @SG_ML_L00F029setTransparency#SGXColourHSLA_ref_setTransparency_float_(float a);
 &#9;[[nodiscard]] @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba @SG_ML_L00602BtoRGBA#nodiscard_SGXColourRGBA_toRGBA_func_const_() const;
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_sg_detaileddescription Detailed Description
@@ -77,30 +77,30 @@ Creates a @SG_ML_L00D019SGXColourHSLA../cppclass/sgxcolourhsla with hue @SG_ML_B
 @SG_ML_HEADER_nodiscard_int_hash_func_const_ [[nodiscard]] int @SG_ML_L00401Fhash#nodiscard_int_hash_func_const_() const;
 Hash function defined for @SG_ML_L00D019SGLLesserThan../cppclass/sgllesserthan and @SG_ML_L00B017SGLMoreThan../cppclass/sglmorethan.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_void_invertHue_func_ void @SG_ML_L009015invertHue#void_invertHue_func_();
-Inverts the hue of this @SG_ML_L00D019SGXColourHSLA../cppclass/sgxcolourhsla.
+@SG_ML_HEADER_SGXColourHSLA_ref_invertHue_func_ @SG_ML_L00D00DSGXColourHSLAsgxcolourhsla& @SG_ML_L009022invertHue#SGXColourHSLA_ref_invertHue_func_();
+Inverts the hue of this @SG_ML_L00D019SGXColourHSLA../cppclass/sgxcolourhsla and returns a reference to this @SG_ML_L00D019SGXColourHSLA../cppclass/sgxcolourhsla to allow operation chaining.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_void_invertLightness_func_ void @SG_ML_L00F01BinvertLightness#void_invertLightness_func_();
-Inverts the lightness of this @SG_ML_L00D019SGXColourHSLA../cppclass/sgxcolourhsla.
+@SG_ML_HEADER_SGXColourHSLA_ref_invertLightness_func_ @SG_ML_L00D00DSGXColourHSLAsgxcolourhsla& @SG_ML_L00F028invertLightness#SGXColourHSLA_ref_invertLightness_func_();
+Inverts the lightness of this @SG_ML_L00D019SGXColourHSLA../cppclass/sgxcolourhsla and returns a reference to this @SG_ML_L00D019SGXColourHSLA../cppclass/sgxcolourhsla to allow operation chaining.
 @SG_ML_NOTE This can be used to change between light mode and dark mode for custom UI.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_void_invertSaturation_func_ void @SG_ML_L01001CinvertSaturation#void_invertSaturation_func_();
-Inverts the saturation of this @SG_ML_L00D019SGXColourHSLA../cppclass/sgxcolourhsla.
+@SG_ML_HEADER_SGXColourHSLA_ref_invertSaturation_func_ @SG_ML_L00D00DSGXColourHSLAsgxcolourhsla& @SG_ML_L010029invertSaturation#SGXColourHSLA_ref_invertSaturation_func_();
+Inverts the saturation of this @SG_ML_L00D019SGXColourHSLA../cppclass/sgxcolourhsla and returns a reference to this @SG_ML_L00D019SGXColourHSLA../cppclass/sgxcolourhsla to allow operation chaining.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_void_linearTransformLightness_float_float_ void @SG_ML_L01802BlinearTransformLightness#void_linearTransformLightness_float_float_(float m, float c);
-Replaces the lightness of this @SG_ML_L00D019SGXColourHSLA../cppclass/sgxcolourhsla with @SG_ML_B001m * lightness + @SG_ML_B001c.
+@SG_ML_HEADER_SGXColourHSLA_ref_linearTransformLightness_float_float_ @SG_ML_L00D00DSGXColourHSLAsgxcolourhsla& @SG_ML_L018038linearTransformLightness#SGXColourHSLA_ref_linearTransformLightness_float_float_(float m, float c);
+Replaces the lightness of this @SG_ML_L00D019SGXColourHSLA../cppclass/sgxcolourhsla with @SG_ML_B001m * lightness + @SG_ML_B001c and returns a reference to this @SG_ML_L00D019SGXColourHSLA../cppclass/sgxcolourhsla to allow operation chaining.
 @SG_ML_NOTE If the new lightness is out of bounds, it is corrected automatically.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_void_linearTransformSaturation_float_float_ void @SG_ML_L01902ClinearTransformSaturation#void_linearTransformSaturation_float_float_(float m, float c);
-Replaces the saturation of this @SG_ML_L00D019SGXColourHSLA../cppclass/sgxcolourhsla with @SG_ML_B001m * saturation + @SG_ML_B001c.
+@SG_ML_HEADER_SGXColourHSLA_ref_linearTransformSaturation_float_float_ @SG_ML_L00D00DSGXColourHSLAsgxcolourhsla& @SG_ML_L019039linearTransformSaturation#SGXColourHSLA_ref_linearTransformSaturation_float_float_(float m, float c);
+Replaces the saturation of this @SG_ML_L00D019SGXColourHSLA../cppclass/sgxcolourhsla with @SG_ML_B001m * saturation + @SG_ML_B001c and returns a reference to this @SG_ML_L00D019SGXColourHSLA../cppclass/sgxcolourhsla to allow operation chaining.
 @SG_ML_NOTE If the new saturation is out of bounds, it is corrected automatically.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_void_linearTransformTransparency_float_float_ void @SG_ML_L01B02ElinearTransformTransparency#void_linearTransformTransparency_float_float_(float m, float c);
-Replaces the transparency of this @SG_ML_L00D019SGXColourHSLA../cppclass/sgxcolourhsla with @SG_ML_B001m * transparency + @SG_ML_B001c.
+@SG_ML_HEADER_SGXColourHSLA_ref_linearTransformTransparency_float_float_ @SG_ML_L00D00DSGXColourHSLAsgxcolourhsla& @SG_ML_L01B03BlinearTransformTransparency#SGXColourHSLA_ref_linearTransformTransparency_float_float_(float m, float c);
+Replaces the transparency of this @SG_ML_L00D019SGXColourHSLA../cppclass/sgxcolourhsla with @SG_ML_B001m * transparency + @SG_ML_B001c and returns a reference to this @SG_ML_L00D019SGXColourHSLA../cppclass/sgxcolourhsla to allow operation chaining.
 @SG_ML_NOTE If the new transparency is out of bounds, it is corrected automatically.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_void_offsetHue_float_ void @SG_ML_L009016offsetHue#void_offsetHue_float_(float c);
-Replaces the hue of this @SG_ML_L00D019SGXColourHSLA../cppclass/sgxcolourhsla with hue + @SG_ML_B001c.
+@SG_ML_HEADER_SGXColourHSLA_ref_offsetHue_float_ @SG_ML_L00D00DSGXColourHSLAsgxcolourhsla& @SG_ML_L009023offsetHue#SGXColourHSLA_ref_offsetHue_float_(float c);
+Replaces the hue of this @SG_ML_L00D019SGXColourHSLA../cppclass/sgxcolourhsla with hue + @SG_ML_B001c and returns a reference to this @SG_ML_L00D019SGXColourHSLA../cppclass/sgxcolourhsla to allow operation chaining.
 @SG_ML_NOTE If the new hue is out of bounds, it is corrected automatically.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_bool_operator_neq_SGXColourHSLA_const_ [[nodiscard]] bool @SG_ML_L00A031operator!=#nodiscard_bool_operator_neq_SGXColourHSLA_const_(@SG_ML_L00D00DSGXColourHSLAsgxcolourhsla x) const;
@@ -115,20 +115,20 @@ Equality check with @SG_ML_B001x defined for @SG_ML_L00B017SGLEqualsTo../cppclas
 @SG_ML_HEADER_nodiscard_bool_operator_gt_SGXColourHSLA_const_ [[nodiscard]] bool @SG_ML_L009030operator›#nodiscard_bool_operator_gt_SGXColourHSLA_const_(@SG_ML_L00D00DSGXColourHSLAsgxcolourhsla x) const;
 More than operator with @SG_ML_B001x defined for @SG_ML_L00D019SGLLesserThan../cppclass/sgllesserthan and @SG_ML_L00B017SGLMoreThan../cppclass/sglmorethan.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_void_setHue_float_ void @SG_ML_L006013setHue#void_setHue_float_(float h);
-Sets the hue of this @SG_ML_L00D019SGXColourHSLA../cppclass/sgxcolourhsla to @SG_ML_B001h.
+@SG_ML_HEADER_SGXColourHSLA_ref_setHue_float_ @SG_ML_L00D00DSGXColourHSLAsgxcolourhsla& @SG_ML_L006020setHue#SGXColourHSLA_ref_setHue_float_(float h);
+Sets the hue of this @SG_ML_L00D019SGXColourHSLA../cppclass/sgxcolourhsla to @SG_ML_B001h and returns a reference to this @SG_ML_L00D019SGXColourHSLA../cppclass/sgxcolourhsla to allow operation chaining.
 @SG_ML_NOTE If @SG_ML_B001h is out of bounds, it is corrected automatically.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_void_setLightness_float_ void @SG_ML_L00C019setLightness#void_setLightness_float_(float l);
-Sets the lightness of this @SG_ML_L00D019SGXColourHSLA../cppclass/sgxcolourhsla to @SG_ML_B001l.
+@SG_ML_HEADER_SGXColourHSLA_ref_setLightness_float_ @SG_ML_L00D00DSGXColourHSLAsgxcolourhsla& @SG_ML_L00C026setLightness#SGXColourHSLA_ref_setLightness_float_(float l);
+Sets the lightness of this @SG_ML_L00D019SGXColourHSLA../cppclass/sgxcolourhsla to @SG_ML_B001l and returns a reference to this @SG_ML_L00D019SGXColourHSLA../cppclass/sgxcolourhsla to allow operation chaining.
 @SG_ML_NOTE If @SG_ML_B001l is out of bounds, it is corrected automatically.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_void_setSaturation_float_ void @SG_ML_L00D01AsetSaturation#void_setSaturation_float_(float s);
-Sets the saturation of this @SG_ML_L00D019SGXColourHSLA../cppclass/sgxcolourhsla to @SG_ML_B001s.
+@SG_ML_HEADER_SGXColourHSLA_ref_setSaturation_float_ @SG_ML_L00D00DSGXColourHSLAsgxcolourhsla& @SG_ML_L00D027setSaturation#SGXColourHSLA_ref_setSaturation_float_(float s);
+Sets the saturation of this @SG_ML_L00D019SGXColourHSLA../cppclass/sgxcolourhsla to @SG_ML_B001s and returns a reference to this @SG_ML_L00D019SGXColourHSLA../cppclass/sgxcolourhsla to allow operation chaining.
 @SG_ML_NOTE If @SG_ML_B001s is out of bounds, it is corrected automatically.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_void_setTransparency_float_ void @SG_ML_L00F01CsetTransparency#void_setTransparency_float_(float a);
-Sets the transparency of this @SG_ML_L00D019SGXColourHSLA../cppclass/sgxcolourhsla to @SG_ML_B001a.
+@SG_ML_HEADER_SGXColourHSLA_ref_setTransparency_float_ @SG_ML_L00D00DSGXColourHSLAsgxcolourhsla& @SG_ML_L00F029setTransparency#SGXColourHSLA_ref_setTransparency_float_(float a);
+Sets the transparency of this @SG_ML_L00D019SGXColourHSLA../cppclass/sgxcolourhsla to @SG_ML_B001a and returns a reference to this @SG_ML_L00D019SGXColourHSLA../cppclass/sgxcolourhsla to allow operation chaining.
 @SG_ML_NOTE If @SG_ML_B001a is out of bounds, it is corrected automatically.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGXColourRGBA_toRGBA_func_const_ [[nodiscard]] @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba @SG_ML_L00602BtoRGBA#nodiscard_SGXColourRGBA_toRGBA_func_const_() const;

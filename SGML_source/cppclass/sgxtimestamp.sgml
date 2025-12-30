@@ -20,12 +20,12 @@ children classes: (none)
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_ instance member functions
 &#9;@SG_ML_L00C026SGXTimeStamp#SGXTimeStamp_int_int_int_int_int_int_(int year, int month, int day, int hour, int minute, int second);
-&#9;void @SG_ML_L007018addDays#void_addDays_long_long_(long long x);
-&#9;void @SG_ML_L008019addHours#void_addHours_long_long_(long long x);
-&#9;void @SG_ML_L00A01BaddMinutes#void_addMinutes_long_long_(long long x);
-&#9;void @SG_ML_L00901AaddMonths#void_addMonths_long_long_(long long x);
-&#9;void @SG_ML_L00A01BaddSeconds#void_addSeconds_long_long_(long long x);
-&#9;void @SG_ML_L008019addYears#void_addYears_long_long_(long long x);
+&#9;@SG_ML_L00C00CSGXTimeStampsgxtimestamp& @SG_ML_L007024addDays#SGXTimeStamp_ref_addDays_long_long_(long long x);
+&#9;@SG_ML_L00C00CSGXTimeStampsgxtimestamp& @SG_ML_L008025addHours#SGXTimeStamp_ref_addHours_long_long_(long long x);
+&#9;@SG_ML_L00C00CSGXTimeStampsgxtimestamp& @SG_ML_L00A027addMinutes#SGXTimeStamp_ref_addMinutes_long_long_(long long x);
+&#9;@SG_ML_L00C00CSGXTimeStampsgxtimestamp& @SG_ML_L009026addMonths#SGXTimeStamp_ref_addMonths_long_long_(long long x);
+&#9;@SG_ML_L00C00CSGXTimeStampsgxtimestamp& @SG_ML_L00A027addSeconds#SGXTimeStamp_ref_addSeconds_long_long_(long long x);
+&#9;@SG_ML_L00C00CSGXTimeStampsgxtimestamp& @SG_ML_L008025addYears#SGXTimeStamp_ref_addYears_long_long_(long long x);
 &#9;[[nodiscard]] int @SG_ML_L006021getDay#nodiscard_int_getDay_func_const_() const;
 &#9;[[nodiscard]] int @SG_ML_L00C027getDayOfWeek#nodiscard_int_getDayOfWeek_func_const_() const;
 &#9;[[nodiscard]] int @SG_ML_L00C027getDayOfYear#nodiscard_int_getDayOfYear_func_const_() const;
@@ -69,12 +69,12 @@ children classes: (none)
 &#9;[[nodiscard]] bool @SG_ML_L00A02Foperator==#nodiscard_bool_operator_eq_SGXTimeStamp_const_(@SG_ML_L00C00CSGXTimeStampsgxtimestamp x) const;
 &#9;[[nodiscard]] bool @SG_ML_L00902Foperator›#nodiscard_bool_operator_gt_SGXTimeStamp_const_(@SG_ML_L00C00CSGXTimeStampsgxtimestamp x) const;
 &#9;[[nodiscard]] bool @SG_ML_L00A030operator›=#nodiscard_bool_operator_geq_SGXTimeStamp_const_(@SG_ML_L00C00CSGXTimeStampsgxtimestamp x) const;
-&#9;void @SG_ML_L00C01DsubtractDays#void_subtractDays_long_long_(long long x);
-&#9;void @SG_ML_L00D01EsubtractHours#void_subtractHours_long_long_(long long x);
-&#9;void @SG_ML_L00F020subtractMinutes#void_subtractMinutes_long_long_(long long x);
-&#9;void @SG_ML_L00E01FsubtractMonths#void_subtractMonths_long_long_(long long x);
-&#9;void @SG_ML_L00F020subtractSeconds#void_subtractSeconds_long_long_(long long x);
-&#9;void @SG_ML_L00D01EsubtractYears#void_subtractYears_long_long_(long long x);
+&#9;@SG_ML_L00C00CSGXTimeStampsgxtimestamp& @SG_ML_L00C029subtractDays#SGXTimeStamp_ref_subtractDays_long_long_(long long x);
+&#9;@SG_ML_L00C00CSGXTimeStampsgxtimestamp& @SG_ML_L00D02AsubtractHours#SGXTimeStamp_ref_subtractHours_long_long_(long long x);
+&#9;@SG_ML_L00C00CSGXTimeStampsgxtimestamp& @SG_ML_L00F02CsubtractMinutes#SGXTimeStamp_ref_subtractMinutes_long_long_(long long x);
+&#9;@SG_ML_L00C00CSGXTimeStampsgxtimestamp& @SG_ML_L00E02BsubtractMonths#SGXTimeStamp_ref_subtractMonths_long_long_(long long x);
+&#9;@SG_ML_L00C00CSGXTimeStampsgxtimestamp& @SG_ML_L00F02CsubtractSeconds#SGXTimeStamp_ref_subtractSeconds_long_long_(long long x);
+&#9;@SG_ML_L00C00CSGXTimeStampsgxtimestamp& @SG_ML_L00D02AsubtractYears#SGXTimeStamp_ref_subtractYears_long_long_(long long x);
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_ static member variables
 &#9;static const @SG_ML_L00C00CSGXTimeStampsgxtimestamp @SG_ML_L004020zero#static_const_SGXTimeStamp_zero_;
@@ -92,23 +92,23 @@ Stores the number of seconds after @SG_ML_L012038SGXTimeStamp::zero../cppclass/s
 Constructs a @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp object with the year, month, day, hour, minute, and second set to @SG_ML_B004year, @SG_ML_B005month, @SG_ML_B003day, @SG_ML_B004hour, @SG_ML_B006minute, @SG_ML_B006second respectively.
 @SG_ML_NOTE @SG_ML_B004year should be the year on the corresponding National Day logo. For example, 2025 should be passed in as 60 because 2025 is when we celebrate SG60.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_void_addDays_long_long_ void @SG_ML_L007018addDays#void_addDays_long_long_(long long x);
-Moves this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp forwards by @SG_ML_B001x days.
+@SG_ML_HEADER_SGXTimeStamp_ref_addDays_long_long_ @SG_ML_L00C00CSGXTimeStampsgxtimestamp& @SG_ML_L007024addDays#SGXTimeStamp_ref_addDays_long_long_(long long x);
+Moves this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp forwards by @SG_ML_B001x days and returns a reference to this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp to allow operation chaining.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_void_addHours_long_long_ void @SG_ML_L008019addHours#void_addHours_long_long_(long long x);
-Moves this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp forwards by @SG_ML_B001x hours.
+@SG_ML_HEADER_SGXTimeStamp_ref_addHours_long_long_ @SG_ML_L00C00CSGXTimeStampsgxtimestamp& @SG_ML_L008025addHours#SGXTimeStamp_ref_addHours_long_long_(long long x);
+Moves this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp forwards by @SG_ML_B001x hours and returns a reference to this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp to allow operation chaining.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_void_addMinutes_long_long_ void @SG_ML_L00A01BaddMinutes#void_addMinutes_long_long_(long long x);
-Moves this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp forwards by @SG_ML_B001x minutes.
+@SG_ML_HEADER_SGXTimeStamp_ref_addMinutes_long_long_ @SG_ML_L00C00CSGXTimeStampsgxtimestamp& @SG_ML_L00A027addMinutes#SGXTimeStamp_ref_addMinutes_long_long_(long long x);
+Moves this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp forwards by @SG_ML_B001x minutes and returns a reference to this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp to allow operation chaining.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_void_addMonths_long_long_ void @SG_ML_L00901AaddMonths#void_addMonths_long_long_(long long x);
-Moves this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp forwards by @SG_ML_B001x months.
+@SG_ML_HEADER_SGXTimeStamp_ref_addMonths_long_long_ @SG_ML_L00C00CSGXTimeStampsgxtimestamp& @SG_ML_L009026addMonths#SGXTimeStamp_ref_addMonths_long_long_(long long x);
+Moves this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp forwards by @SG_ML_B001x months and returns a reference to this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp to allow operation chaining.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_void_addSeconds_long_long_ void @SG_ML_L00A01BaddSeconds#void_addSeconds_long_long_(long long x);
-Moves this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp forwards by @SG_ML_B001x seconds.
+@SG_ML_HEADER_SGXTimeStamp_ref_addSeconds_long_long_ @SG_ML_L00C00CSGXTimeStampsgxtimestamp& @SG_ML_L00A027addSeconds#SGXTimeStamp_ref_addSeconds_long_long_(long long x);
+Moves this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp forwards by @SG_ML_B001x seconds and returns a reference to this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp to allow operation chaining.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_void_addYears_long_long_ void @SG_ML_L008019addYears#void_addYears_long_long_(long long x);
-Moves this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp forwards by @SG_ML_B001x years.
+@SG_ML_HEADER_SGXTimeStamp_ref_addYears_long_long_ @SG_ML_L00C00CSGXTimeStampsgxtimestamp& @SG_ML_L008025addYears#SGXTimeStamp_ref_addYears_long_long_(long long x);
+Moves this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp forwards by @SG_ML_B001x years and returns a reference to this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp to allow operation chaining.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_int_getDay_func_const_ [[nodiscard]] int @SG_ML_L006021getDay#nodiscard_int_getDay_func_const_() const;
 See explanation of @SG_ML_L01703CSGXTimeStamp::getSecond../cppclass/sgxtimestamp#nodiscard_int_getSecond_func_const_.
@@ -274,23 +274,23 @@ Returns if this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp refers to a t
 @SG_ML_HEADER_nodiscard_bool_operator_geq_SGXTimeStamp_const_ [[nodiscard]] bool @SG_ML_L00A030operator›=#nodiscard_bool_operator_geq_SGXTimeStamp_const_(@SG_ML_L00C00CSGXTimeStampsgxtimestamp x) const;
 Returns if this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp refers to a time after or equal to @SG_ML_B001x.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_void_subtractDays_long_long_ void @SG_ML_L00C01DsubtractDays#void_subtractDays_long_long_(long long x);
-Moves this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp backwards by @SG_ML_B001x days.
+@SG_ML_HEADER_SGXTimeStamp_ref_subtractDays_long_long_ @SG_ML_L00C00CSGXTimeStampsgxtimestamp& @SG_ML_L00C029subtractDays#SGXTimeStamp_ref_subtractDays_long_long_(long long x);
+Moves this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp backwards by @SG_ML_B001x days and returns a reference to this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp to allow operation chaining.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_void_subtractHours_long_long_ void @SG_ML_L00D01EsubtractHours#void_subtractHours_long_long_(long long x);
-Moves this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp backwards by @SG_ML_B001x hours.
+@SG_ML_HEADER_SGXTimeStamp_ref_subtractHours_long_long_ @SG_ML_L00C00CSGXTimeStampsgxtimestamp& @SG_ML_L00D02AsubtractHours#SGXTimeStamp_ref_subtractHours_long_long_(long long x);
+Moves this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp backwards by @SG_ML_B001x hours and returns a reference to this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp to allow operation chaining.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_void_subtractMinutes_long_long_ void @SG_ML_L00F020subtractMinutes#void_subtractMinutes_long_long_(long long x);
-Moves this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp backwards by @SG_ML_B001x minutes.
+@SG_ML_HEADER_SGXTimeStamp_ref_subtractMinutes_long_long_ @SG_ML_L00C00CSGXTimeStampsgxtimestamp& @SG_ML_L00F02CsubtractMinutes#SGXTimeStamp_ref_subtractMinutes_long_long_(long long x);
+Moves this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp backwards by @SG_ML_B001x minutes and returns a reference to this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp to allow operation chaining.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_void_subtractMonths_long_long_ void @SG_ML_L00E01FsubtractMonths#void_subtractMonths_long_long_(long long x);
-Moves this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp backwards by @SG_ML_B001x months.
+@SG_ML_HEADER_SGXTimeStamp_ref_subtractMonths_long_long_ @SG_ML_L00C00CSGXTimeStampsgxtimestamp& @SG_ML_L00E02BsubtractMonths#SGXTimeStamp_ref_subtractMonths_long_long_(long long x);
+Moves this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp backwards by @SG_ML_B001x months and returns a reference to this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp to allow operation chaining.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_void_subtractSeconds_long_long_ void @SG_ML_L00F020subtractSeconds#void_subtractSeconds_long_long_(long long x);
-Moves this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp backwards by @SG_ML_B001x seconds.
+@SG_ML_HEADER_SGXTimeStamp_ref_subtractSeconds_long_long_ @SG_ML_L00C00CSGXTimeStampsgxtimestamp& @SG_ML_L00F02CsubtractSeconds#SGXTimeStamp_ref_subtractSeconds_long_long_(long long x);
+Moves this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp backwards by @SG_ML_B001x seconds and returns a reference to this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp to allow operation chaining.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_void_subtractYears_long_long_ void @SG_ML_L00D01EsubtractYears#void_subtractYears_long_long_(long long x);
-Moves this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp backwards by @SG_ML_B001x years.
+@SG_ML_HEADER_SGXTimeStamp_ref_subtractYears_long_long_ @SG_ML_L00C00CSGXTimeStampsgxtimestamp& @SG_ML_L00D02AsubtractYears#SGXTimeStamp_ref_subtractYears_long_long_(long long x);
+Moves this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp backwards by @SG_ML_B001x years and returns a reference to this @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp to allow operation chaining.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_const_SGXTimeStamp_zero_ static const @SG_ML_L00C00CSGXTimeStampsgxtimestamp @SG_ML_L004020zero#static_const_SGXTimeStamp_zero_;
 Reference time of @SG_ML_L00C018SGXTimeStamp../cppclass/sgxtimestamp. This corresponds to 1000, 9 August 1965, when PM Lee Kuan Yew signed the Proclamation of Singapore.
