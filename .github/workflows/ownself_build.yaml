@@ -11,10 +11,39 @@ jobs:
   pull-source:
     runs-on: ubuntu-latest
     steps:
-      - name: Pull source
-        uses: InfinityIntegral/SGEXTN/actions/pull_source@main
+      - name: pull everything
+        shell: bash
+        run: |
+          git clone --depth 1 https://github.com/InfinityIntegral/SGEXTN.git
+          rm -rf SGEXTN/.git
+          mkdir -p Qt
+          cd Qt
+          git clone --depth 1 --branch v${{inputs.qt-version}} https://github.com/qt/qtbase.git
+          git clone --depth 1 --branch v${{inputs.qt-version}} https://github.com/qt/qtdeclarative.git
+          git clone --depth 1 --branch v${{inputs.qt-version}} https://github.com/qt/qtsvg.git
+          git clone --depth 1 --branch v${{inputs.qt-version}} https://github.com/qt/qttools.git
+          git clone --depth 1 --branch v${{inputs.qt-version}} https://github.com/qt/qttranslations.git
+          git clone --depth 1 --branch v${{inputs.qt-version}} https://github.com/qt/qtwayland.git
+          git clone --depth 1 --branch v${{inputs.qt-version}} https://github.com/qt/qtshadertools.git
+          rm -rf qtbase/.git
+          rm -rf qtdeclarative/.git
+          rm -rf qtsvg/.git
+          rm -rf qttools/.git
+          rm -rf qttranslations/.git
+          rm -rf qtwayland/.git
+          rm -rf qtshadertools/.git
+
+      - name: upload SGEXTN
+        uses: actions/upload-artifact@v4
         with:
-          qt-version: ${{env.qt-version}}
+          name: sgextn-source-code
+          path: SGEXTN
+
+      - name: upload Qt
+        uses: actions/upload-artifact@v4
+        with:
+          name: qt-source-code
+          path: Qt
 
   windows-llvm-mingw:
     runs-on: windows-latest
