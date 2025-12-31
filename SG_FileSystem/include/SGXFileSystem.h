@@ -15,8 +15,8 @@ public:
     static SGXString userDataFilePath;
     static SGXString configFilePath;
     static SGXString joinFilePaths(const SGXString& a, const SGXString& b);
-    static SGXString encodeBase16(const SGXString& s);
-    static SGXString decodeBase16(const SGXString& str);
+    static SGXString encodeToFileName(const SGXString& s);
+    static SGXString decodeFromFileName(const SGXString& s);
     static bool pathIsSubfolder(const SGXString& childPath, const SGXString& parentPath);
     static bool fileExists(const SGXString& s);
     static bool folderExists(const SGXString& s);

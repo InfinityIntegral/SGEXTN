@@ -53,117 +53,48 @@ SGXString SGXFileSystem::joinFilePaths(const SGXString &a, const SGXString &b){
     return (a0 + b0);
 }
 
-SGXString SGXFileSystem::encodeBase16(const SGXString &s){
-    SGXString s0 = "";
+SGXString SGXFileSystem::encodeToFileName(const SGXString &s){
+    SGXString output = "sg0";
     for(int i=0; i<s.length(); i++){
-        std::string thisChar = temp_sgxStringToStdString(SGXString(s.at(i)));
-        if(thisChar.length() == 1){
-            std::string stringToAdd = {'0', '0'};
-            const uint8_t c = thisChar.at(0);
-            stringToAdd.at(0) = static_cast<char>((c & 0xF0) / 0xF + 97);
-            stringToAdd.at(1) = static_cast<char>((c & 0xF) + 97);
-            s0 += temp_stdStringToSGXString(stringToAdd);
-        }
-        else if(thisChar.length() == 2){
-            std::string stringToAdd = {'x', '0', '0', '0', '0'};
-            uint8_t c = thisChar.at(0);
-            stringToAdd.at(1) = static_cast<char>((c & 0xF0) / 0xF + 97);
-            stringToAdd.at(2) = static_cast<char>((c & 0xF) + 97);
-            c = thisChar.at(1);
-            stringToAdd.at(3) = static_cast<char>((c & 0xF0) / 0xF + 97);
-            stringToAdd.at(4) = static_cast<char>((c & 0xF) + 97);
-            s0 += temp_stdStringToSGXString(stringToAdd);
-        }
-        else if(thisChar.length() == 3){
-            std::string stringToAdd = {'y', '0', '0', '0', '0', '0', '0'};
-            uint8_t c = thisChar.at(0);
-            stringToAdd.at(1) = static_cast<char>((c & 0xF0) / 0xF + 97);
-            stringToAdd.at(2) = static_cast<char>((c & 0xF) + 97);
-            c = thisChar.at(1);
-            stringToAdd.at(3) = static_cast<char>((c & 0xF0) / 0xF + 97);
-            stringToAdd.at(4) = static_cast<char>((c & 0xF) + 97);
-            c = thisChar.at(2);
-            stringToAdd.at(5) = static_cast<char>((c & 0xF0) / 0xF + 97);
-            stringToAdd.at(6) = static_cast<char>((c & 0xF) + 97);
-            s0 += temp_stdStringToSGXString(stringToAdd);
-        }
-        else{
-            std::string stringToAdd = {'z', '0', '0', '0', '0', '0', '0', '0', '0'};
-            uint8_t c = thisChar.at(0);
-            stringToAdd.at(1) = static_cast<char>(((c & 0xF0) >> 4) + 97);
-            stringToAdd.at(2) = static_cast<char>((c & 0xF) + 97);
-            c = thisChar.at(1);
-            stringToAdd.at(3) = static_cast<char>(((c & 0xF0) >> 4) + 97);
-            stringToAdd.at(4) = static_cast<char>((c & 0xF) + 97);
-            c = thisChar.at(2);
-            stringToAdd.at(5) = static_cast<char>(((c & 0xF0) >> 4) + 97);
-            stringToAdd.at(6) = static_cast<char>((c & 0xF) + 97);
-            c = thisChar.at(3);
-            stringToAdd.at(7) = static_cast<char>(((c & 0xF0) >> 4) + 97);
-            stringToAdd.at(8) = static_cast<char>((c & 0xF) + 97);
-            s0 += temp_stdStringToSGXString(stringToAdd);
-        }
+        if(s.at(i).isEnglishLowercase() == true || (s.at(i).isDigit() == true && s.at(i) != '0')){output += s.at(i);}
+        else if(s.at(i).isEnglishUppercase() == true){output += (SGXString("0") + s.at(i).getLowerLanguageAware());}
+        else{output += (SGXString("00") + SGXString::intToStringBase16(s.at(i).getUnicode()).getLowerLanguageAware().fillLeftToLength(4, '0'));}
     }
-    return s0;
+    return output;
 }
 
-SGXString SGXFileSystem::decodeBase16(const SGXString &str){
-    int i = 0;
-    std::string s = temp_sgxStringToStdString(str);
-    SGXString s0 = "";
-    while(i < static_cast<int>(s.length())){
-        if(s.at(i) == 'x'){
-            std::string stringToAdd = {'0', '0'};
-            uint8_t a = s.at(i+1);
-            uint8_t b = s.at(i+2);
-            stringToAdd.at(0) = static_cast<char>(((a - 97) << 4) | (b - 97));
-            a = s.at(i+3);
-            b = s.at(i+4);
-            stringToAdd.at(1) = static_cast<char>(((a - 97) << 4) | (b - 97));
-            s0 += temp_stdStringToSGXString(stringToAdd);
-            i += 5;
-        }
-        else if(s.at(i) == 'y'){
-            std::string stringToAdd = {'0', '0', '0'};
-            uint8_t a = s.at(i+1);
-            uint8_t b = s.at(i+2);
-            stringToAdd.at(0) = static_cast<char>(((a - 97) << 4) | (b - 97));
-            a = s.at(i+3);
-            b = s.at(i+4);
-            stringToAdd.at(1) = static_cast<char>(((a - 97) << 4) | (b - 97));
-            a = s.at(i+5);
-            b = s.at(i+6);
-            stringToAdd.at(2) = static_cast<char>(((a - 97) << 4) | (b - 97));
-            s0 += temp_stdStringToSGXString(stringToAdd);
-            i += 7;
-        }
-        else if(s.at(i) == 'z'){
-            std::string stringToAdd = {'0', '0', '0', '0'};
-            uint8_t a = s.at(i+1);
-            uint8_t b = s.at(i+2);
-            stringToAdd.at(0) = static_cast<char>(((a - 97) << 4) | (b - 97));
-            a = s.at(i+3);
-            b = s.at(i+4);
-            stringToAdd.at(1) = static_cast<char>(((a - 97) << 4) | (b - 97));
-            a = s.at(i+5);
-            b = s.at(i+6);
-            stringToAdd.at(2) = static_cast<char>(((a - 97) << 4) | (b - 97));
-            a = s.at(i+7);
-            b = s.at(i+8);
-            stringToAdd.at(3) = static_cast<char>(((a - 97) << 4) | (b - 97));
-            s0 += temp_stdStringToSGXString(stringToAdd);
-            i += 9;
-        }
-        else{
-            std::string stringToAdd = {'0'};
-            const uint8_t a = s.at(i);
-            const uint8_t b = s.at(i+1);
-            stringToAdd.at(0) = static_cast<char>(((a - 97) << 4) | (b - 97));
-            s0 += temp_stdStringToSGXString(stringToAdd);
+SGXString SGXFileSystem::decodeFromFileName(const SGXString &s){
+    SGXString output = "";
+    for(int i=0; i<s.length(); i++){
+        if(i == 0){
+            if(s.length() < 3 || s.substringLeft(3) != "sg0"){return s;}
             i += 2;
+            continue;
         }
+        if(s.at(i) == '0'){
+            if(i + 1 >= s.length()){return s;}
+            i += 1;
+            if(s.at(i).isEnglishLowercase() == true){output += s.at(i).getUpperLanguageAware();}
+            else if(s.at(i) == '0'){
+                if(i + 1 >= s.length()){return s;}
+                i += 1;
+                if(i + 3 >= s.length()){return s;}
+                SGXString unicodeAsString = s.substring(i, 4);
+                i += 3;
+                for(int j=0; j<unicodeAsString.length(); j++){
+                    if(unicodeAsString.at(j).isEnglishUppercase() == true){return s;}
+                }
+                bool isValid = false;
+                int unicode = unicodeAsString.parseToIntBase16(&isValid);
+                if(isValid == false){return s;}
+                else{output += SGXChar(unicode);}
+            }
+            else{return s;}
+        }
+        else if(s.at(i).isEnglishLowercase() == true || s.at(i).isDigit() == true){output += s.at(i);}
+        else{return s;}
     }
-    return s0;
+    return output;
 }
 
 bool SGXFileSystem::pathIsSubfolder(const SGXString &childPath, const SGXString &parentPath){
@@ -202,12 +133,12 @@ SGXString SGXFileSystem::getFreePath(const SGXString &prefix, const SGXString &u
         }
     }
     if(endsWithNumber == false){
-        SGXString path = SGXFileSystem::joinFilePaths(prefix, SGXFileSystem::encodeBase16(unencodedName) + postfix);
+        SGXString path = SGXFileSystem::joinFilePaths(prefix, SGXFileSystem::encodeToFileName(unencodedName) + postfix);
         if(SGXFileSystem::fileExists(path) == false && SGXFileSystem::folderExists(path) == false){return path;}
     }
     int i = startIndex;
     while(true){
-        SGXString path = SGXFileSystem::joinFilePaths(prefix, SGXFileSystem::encodeBase16(cleanedName + SGXString::intToString(i)) + postfix);
+        SGXString path = SGXFileSystem::joinFilePaths(prefix, SGXFileSystem::encodeToFileName(cleanedName + SGXString::intToString(i)) + postfix);
         if(SGXFileSystem::fileExists(path) == false && SGXFileSystem::folderExists(path) == false){return path;}
         i++;
     }
@@ -501,7 +432,7 @@ SGLArray<SGXString> SGXFileSystem::getFilesListContainingNameRecursive(const SGX
 }
 
 bool SGXFileSystem::numberAwareLesserThan(const SGXString &s1, const SGXString &s2){
-    SGXString s1NoExtension = SGXFileSystem::joinFilePaths(SGXFileSystem::getParentPath(s1), SGXFileSystem::getFileNameNoExtension(s1));
+    SGXString s1NoExtension = SGXFileSystem::joinFilePaths(SGXFileSystem::getParentPath(s1), SGXFileSystem::decodeFromFileName(SGXFileSystem::getFileNameNoExtension(s1)));
     int s1Number = -1;
     if(s1NoExtension.at(s1NoExtension.length() - 1).isDigit() == true){
         SGXString reversedNumber = "";
@@ -516,7 +447,7 @@ bool SGXFileSystem::numberAwareLesserThan(const SGXString &s1, const SGXString &
         s1Number = correctNumber.parseToInt(nullptr);
         s1NoExtension = s1NoExtension.substringLeft(s1NoExtension.length() - correctNumber.length());
     }
-    SGXString s2NoExtension = SGXFileSystem::joinFilePaths(SGXFileSystem::getParentPath(s2), SGXFileSystem::getFileNameNoExtension(s2));
+    SGXString s2NoExtension = SGXFileSystem::joinFilePaths(SGXFileSystem::getParentPath(s2), SGXFileSystem::decodeFromFileName(SGXFileSystem::getFileNameNoExtension(s2)));
     int s2Number = -1;
     if(s2NoExtension.at(s2NoExtension.length() - 1).isDigit() == true){
         SGXString reversedNumber = "";
@@ -537,7 +468,7 @@ bool SGXFileSystem::numberAwareLesserThan(const SGXString &s1, const SGXString &
 }
 
 bool SGXFileSystem::numberAwareLesserThanBase16(const SGXString &s1, const SGXString &s2){
-    SGXString s1NoExtension = SGXFileSystem::joinFilePaths(SGXFileSystem::getParentPath(s1), SGXFileSystem::getFileNameNoExtension(s1));
+    SGXString s1NoExtension = SGXFileSystem::joinFilePaths(SGXFileSystem::getParentPath(s1), SGXFileSystem::decodeFromFileName(SGXFileSystem::getFileNameNoExtension(s1)));
     int s1Number = -1;
     if(s1NoExtension.at(s1NoExtension.length() - 1).isDigitBase16() == true){
         SGXString reversedNumber = "";
@@ -552,7 +483,7 @@ bool SGXFileSystem::numberAwareLesserThanBase16(const SGXString &s1, const SGXSt
         s1Number = correctNumber.parseToInt(nullptr);
         s1NoExtension = s1NoExtension.substringLeft(s1NoExtension.length() - correctNumber.length());
     }
-    SGXString s2NoExtension = SGXFileSystem::joinFilePaths(SGXFileSystem::getParentPath(s2), SGXFileSystem::getFileNameNoExtension(s2));
+    SGXString s2NoExtension = SGXFileSystem::joinFilePaths(SGXFileSystem::getParentPath(s2), SGXFileSystem::decodeFromFileName(SGXFileSystem::getFileNameNoExtension(s2)));
     int s2Number = -1;
     if(s2NoExtension.at(s2NoExtension.length() - 1).isDigitBase16() == true){
         SGXString reversedNumber = "";
