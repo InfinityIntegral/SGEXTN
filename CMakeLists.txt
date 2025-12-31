@@ -1,7 +1,7 @@
 include("${CMAKE_CURRENT_SOURCE_DIR}/cmake/buildlah.cmake")
 cmake_minimum_required(VERSION 3.21 FATAL_ERROR)
 BuildLah_use_default_settings()
-project(SGEXTN VERSION 6.2.0 LANGUAGES CXX)
+project(SGEXTN VERSION 6.3.0 LANGUAGES CXX)
 BuildLah_find_dependencies()
 BuildLah_add_component(SG_Containers DLL "SG_Containers" SG_BUILDING_CONTAINERS SG_USING_CONTAINERS "SGEXTN")
 BuildLah_add_component(SG_Math DLL "SG_Math" SG_BUILDING_MATH SG_USING_MATH "SGEXTN")
