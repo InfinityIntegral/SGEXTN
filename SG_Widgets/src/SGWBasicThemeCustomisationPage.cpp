@@ -12,12 +12,9 @@
 #include <SGWBlankWidget.h>
 #include <SGXString.h>
 #include <SGWTextLabel.h>
-#include <SGWHorizontalAlignment.h>
-#include <SGXColourHSLA.h>
 #include <SGXThemeColoursCustomisation.h>
 #include <SGWLongLabel.h>
 #include <SGWNotify.h>
-#include <SGXRandomNumberGenerator.h>
 
 SGWBackground* SGWBasicThemeCustomisationPage::menuInstance = nullptr;
 SGWBackground* SGWBasicThemeCustomisationPage::detailsInstance = nullptr;

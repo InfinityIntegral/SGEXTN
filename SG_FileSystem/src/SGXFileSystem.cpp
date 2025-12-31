@@ -1,6 +1,5 @@
 #include <SGXFileSystem.h>
 #include <string>
-#include <cstdint>
 #include <SGXString.h>
 #include <QFile>
 #include <QDir>
@@ -45,7 +44,7 @@ SGXString SGXFileSystem::configFilePath = "";
 SGXString SGXFileSystem::joinFilePaths(const SGXString &a, const SGXString &b){
     SGXString a0 = a;
     SGXString b0 = b;
-    SGXChar pathSeparator = SGXChar(QDir::separator().toLatin1());
+    const SGXChar pathSeparator = SGXChar(QDir::separator().toLatin1());
     a0 = a0.replace('/', pathSeparator).replace('\\', pathSeparator);
     b0 = b0.replace('/', pathSeparator).replace('\\', pathSeparator);
     if(a0.at(a0.length() - 1) != pathSeparator){a0 += pathSeparator;}
@@ -79,15 +78,15 @@ SGXString SGXFileSystem::decodeFromFileName(const SGXString &s){
                 if(i + 1 >= s.length()){return s;}
                 i += 1;
                 if(i + 3 >= s.length()){return s;}
-                SGXString unicodeAsString = s.substring(i, 4);
+                const SGXString unicodeAsString = s.substring(i, 4);
                 i += 3;
                 for(int j=0; j<unicodeAsString.length(); j++){
                     if(unicodeAsString.at(j).isEnglishUppercase() == true){return s;}
                 }
                 bool isValid = false;
-                int unicode = unicodeAsString.parseToIntBase16(&isValid);
+                const int unicode = unicodeAsString.parseToIntBase16(&isValid);
                 if(isValid == false){return s;}
-                else{output += SGXChar(unicode);}
+                output += SGXChar(unicode);
             }
             else{return s;}
         }

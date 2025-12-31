@@ -5,8 +5,8 @@
 &#9;SGEXTN is 05524F's own C++ framework for application development with an emphasis on pure C++ code. Users of SGEXTN will only need to write C++ (and GLSL if you need custom shaders). There is also an emphasis on clean header files for fast clang-tidy passes and easy availability of the source code which is linked on every documentation page.
 &#9;If you came here from somewhere other than GitHub, here is the @SG_ML_L01102AGitHub repositoryhttps://github.com/InfinityIntegral/SGEXTN.
 &#9;This version of SGEXTN is designed to work with Qt 6.10.1 and prebuilt SGEXTN are built using Qt 6.10.1
-&#9;Current version of SGEXTN: v6.2.0
-&#9;published on: 30 December, SG60
+&#9;Current version of SGEXTN: v6.3.0
+&#9;published on: 31 December, SG60
 @SG_ML_BLANKLINE
 &#9;@SG_ML_L01000Clist of features#featurelist
 &#9;@SG_ML_L011006setting up SGEXTN#setup

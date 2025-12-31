@@ -226,7 +226,7 @@ void SGXFile::writeBytes(const SGLArray<char> &x) const {
 
 SGXString SGXFile::readAllText(const SGXString &filePath){
     QFile file(*filePath.data);
-    bool isValid = file.open(QIODevice::ReadOnly | QIODevice::Text);
+    const bool isValid = file.open(QIODevice::ReadOnly | QIODevice::Text);
     if(isValid == false){return "";}
     QTextStream stream(&file);
     SGXString contents = "";
@@ -237,7 +237,7 @@ SGXString SGXFile::readAllText(const SGXString &filePath){
 
 void SGXFile::writeAllText(const SGXString &filePath, const SGXString &contents){
     QFile file(*filePath.data);
-    bool isValid = file.open(QIODevice::WriteOnly | QIODevice::Text);
+    const bool isValid = file.open(QIODevice::WriteOnly | QIODevice::Text);
     if(isValid == false){return;}
     QTextStream stream(&file);
     stream << (*contents.data);
