@@ -31,4 +31,5 @@ Uses @SG_ML_L02A06ASGXFileSystem::numberAwareLesserThanBase16../cppclass/sgxfile
 Returns if @SG_ML_B001a should be in front of @SG_ML_B001b.
 @SG_ML_NOTE The presence of operator() makes @SG_ML_L024030SGXNumberAwareFilePathMoreThanBase16../cppclass/sgxnumberawarefilepathmorethanbase16 a functor.
 @SG_ML_NOTE Both uppercase and lowercase representations of non numerical base16 digits are accepted.
+@SG_ML_NOTE The file names are decoded before comparison.
 @SG_ML_BLANKLINE

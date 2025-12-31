@@ -30,4 +30,5 @@ Uses @SG_ML_L024064SGXFileSystem::numberAwareLesserThan../cppclass/sgxfilesystem
 @SG_ML_HEADER_nodiscard_bool_operator_func_const_SGXString_ref_const_SGXString_ref_ [[nodiscard]] bool @SG_ML_L00A046operator()#nodiscard_bool_operator_func_const_SGXString_ref_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& a, const @SG_ML_L009009SGXStringsgxstring& b);
 Returns if @SG_ML_B001a should be in front of @SG_ML_B001b.
 @SG_ML_NOTE The presence of operator() makes @SG_ML_L02002CSGXNumberAwareFilePathLesserThan../cppclass/sgxnumberawarefilepathlesserthan a functor.
+@SG_ML_NOTE The file names are decoded before comparison.
 @SG_ML_BLANKLINE
