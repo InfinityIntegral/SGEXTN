@@ -25,10 +25,10 @@ children classes: (none)
 @SG_ML_HEADER_ static member functions
 &#9;static int @SG_ML_L00A02BcreateFile#static_int_createFile_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& s);
 &#9;static int @SG_ML_L00C02DcreateFolder#static_int_createFolder_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& s);
-&#9;static @SG_ML_L009009SGXStringsgxstring @SG_ML_L00C033decodeBase16#static_SGXString_decodeBase16_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& str);
+&#9;static @SG_ML_L009009SGXStringsgxstring @SG_ML_L012039decodeFromFileName#static_SGXString_decodeFromFileName_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& s);
 &#9;static int @SG_ML_L00D042duplicateFile#static_int_duplicateFile_const_SGXString_ref_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& startPath, const @SG_ML_L009009SGXStringsgxstring& endPath);
 &#9;static int @SG_ML_L00F044duplicateFolder#static_int_duplicateFolder_const_SGXString_ref_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& startPath, const @SG_ML_L009009SGXStringsgxstring& endPath);
-&#9;static @SG_ML_L009009SGXStringsgxstring @SG_ML_L00C033encodeBase16#static_SGXString_encodeBase16_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& s);
+&#9;static @SG_ML_L009009SGXStringsgxstring @SG_ML_L010037encodeToFileName#static_SGXString_encodeToFileName_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& s);
 &#9;static bool @SG_ML_L00A02CfileExists#static_bool_fileExists_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& s);
 &#9;static bool @SG_ML_L00C02EfolderExists#static_bool_folderExists_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& s);
 &#9;static @SG_ML_L00C00CSGXTimeStampsgxtimestamp @SG_ML_L01303DgetFileCreationTime#static_SGXTimeStamp_getFileCreationTime_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& s);
@@ -81,9 +81,9 @@ Creates a file at @SG_ML_B001s. This returns -2 if a file system error caused th
 @SG_ML_HEADER_static_int_createFolder_const_SGXString_ref_ static int @SG_ML_L00C02DcreateFolder#static_int_createFolder_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& s);
 Creates a folder at @SG_ML_B001s. This returns -2 if a file system error caused the operation to fail, 0 if the file already exists, and 1 if the operation was successful.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_static_SGXString_decodeBase16_const_SGXString_ref_ static @SG_ML_L009009SGXStringsgxstring @SG_ML_L00C033decodeBase16#static_SGXString_decodeBase16_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& str);
-Decodes @SG_ML_B003str which is currently in base16, the SGEXTN provided encoding that is guaranteed to be safe on all file systems, including case insensitive ones.
-@SG_ML_NOTE As of this SGEXTN version, base16 is not human readable. This likely will be changed in a future version.
+@SG_ML_HEADER_static_SGXString_decodeFromFileName_const_SGXString_ref_ static @SG_ML_L009009SGXStringsgxstring @SG_ML_L012039decodeFromFileName#static_SGXString_decodeFromFileName_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& s);
+Reverses @SG_ML_L01F050SGXFileSystem::encodeToFileName../cppclass/sgxfilesystem#static_SGXString_encodeToFileName_const_SGXString_ref_ for @SG_ML_B001s.
+@SG_ML_NOTE If @SG_ML_B001s is not a valid encoded file name, this will return @SG_ML_B001s.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_int_duplicateFile_const_SGXString_ref_const_SGXString_ref_ static int @SG_ML_L00D042duplicateFile#static_int_duplicateFile_const_SGXString_ref_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& startPath, const @SG_ML_L009009SGXStringsgxstring& endPath);
 Copies the file at @SG_ML_B009startPath to @SG_ML_B007endPath. This returns -2 if a file system error caused the operation to fail, 0 if there is already a file at @SG_ML_B007endPath or if there is no file at @SG_ML_B009startPath, and 1 if the operation was successful.
@@ -91,9 +91,8 @@ Copies the file at @SG_ML_B009startPath to @SG_ML_B007endPath. This returns -2 i
 @SG_ML_HEADER_static_int_duplicateFolder_const_SGXString_ref_const_SGXString_ref_ static int @SG_ML_L00F044duplicateFolder#static_int_duplicateFolder_const_SGXString_ref_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& startPath, const @SG_ML_L009009SGXStringsgxstring& endPath);
 Copies the folder at @SG_ML_B009startPath to @SG_ML_B007endPath. This returns -2 if a file system error caused the operation to fail, 0 if there is already a folder at @SG_ML_B007endPath or if there is no folder at @SG_ML_B009startPath, and 1 if the operation was successful.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_static_SGXString_encodeBase16_const_SGXString_ref_ static @SG_ML_L009009SGXStringsgxstring @SG_ML_L00C033encodeBase16#static_SGXString_encodeBase16_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& s);
-Encodes @SG_ML_B001s to base16, the SGEXTN provided encoding that is guaranteed to be safe on all file systems, including case insensitive ones.
-@SG_ML_NOTE As of this SGEXTN version, base16 is not human readable. This likely will be changed in a future version.
+@SG_ML_HEADER_static_SGXString_encodeToFileName_const_SGXString_ref_ static @SG_ML_L009009SGXStringsgxstring @SG_ML_L010037encodeToFileName#static_SGXString_encodeToFileName_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& s);
+Encodes @SG_ML_B001s to a file name, the SGEXTN provided encoding that is guaranteed to be safe on all file systems, including case insensitive ones. The file name is as readable as reasonably possible while allowing all Unicode characters.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_bool_fileExists_const_SGXString_ref_ static bool @SG_ML_L00A02CfileExists#static_bool_fileExists_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& s);
 Returns if any file exists at @SG_ML_B001s.
@@ -166,7 +165,7 @@ Returns a list of subfolders inside folder @SG_ML_B001s by their paths.
 @SG_ML_NOTE If @SG_ML_B001s does not exist, an empty list is returned.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_SGXString_getFreePath_const_SGXString_ref_const_SGXString_ref_const_SGXString_ref_ static @SG_ML_L009009SGXStringsgxstring @SG_ML_L00B05AgetFreePath#static_SGXString_getFreePath_const_SGXString_ref_const_SGXString_ref_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& prefix, const @SG_ML_L009009SGXStringsgxstring& unencodedName, const @SG_ML_L009009SGXStringsgxstring& postfix);
-This should be used to replace directly setting the path as @SG_ML_B006prefix/@SG_ML_L01B04CSGXFileSystem::encodeBase16../cppclass/sgxfilesystem#static_SGXString_encodeBase16_const_SGXString_ref_(@SG_ML_B00DunencodedName)@SG_ML_B007postfix to avoid file name collisions causing accidental overwrite.
+This should be used to replace directly setting the path as @SG_ML_B006prefix/@SG_ML_L01F050SGXFileSystem::encodeToFileName../cppclass/sgxfilesystem#static_SGXString_encodeToFileName_const_SGXString_ref_(@SG_ML_B00DunencodedName)@SG_ML_B007postfix to avoid file name collisions causing accidental overwrite.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_SGXString_getParentName_const_SGXString_ref_ static @SG_ML_L009009SGXStringsgxstring @SG_ML_L00D034getParentName#static_SGXString_getParentName_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& s);
 Returns the name of the parent folder of @SG_ML_B001s.
@@ -186,9 +185,11 @@ Moves the folder at @SG_ML_B009startPath to @SG_ML_B007endPath. This returns -2 
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_bool_numberAwareLesserThan_const_SGXString_ref_const_SGXString_ref_ static bool @SG_ML_L01504BnumberAwareLesserThan#static_bool_numberAwareLesserThan_const_SGXString_ref_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& s1, const @SG_ML_L009009SGXStringsgxstring& s2);
 Comparator used by @SG_ML_L02002CSGXNumberAwareFilePathLesserThan../cppclass/sgxnumberawarefilepathlesserthan and @SG_ML_L01E02ASGXNumberAwareFilePathMoreThan../cppclass/sgxnumberawarefilepathmorethan, returns if a file with name @SG_ML_B002s1 should be displayed in front of a file with name @SG_ML_B002s2 when number aware lesser than sorting is used.
+@SG_ML_NOTE The file names are decoded before comparison.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_bool_numberAwareLesserThanBase16_const_SGXString_ref_const_SGXString_ref_ static bool @SG_ML_L01B051numberAwareLesserThanBase16#static_bool_numberAwareLesserThanBase16_const_SGXString_ref_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& s1, const @SG_ML_L009009SGXStringsgxstring& s2);
 Comparator used by @SG_ML_L026032SGXNumberAwareFilePathLesserThanBase16../cppclass/sgxnumberawarefilepathlesserthanbase16 and @SG_ML_L024030SGXNumberAwareFilePathMoreThanBase16../cppclass/sgxnumberawarefilepathmorethanbase16, returns if a file with name @SG_ML_B002s1 should be displayed in front of a file with name @SG_ML_B002s2 when base16 number aware lesser than sorting is used.
+@SG_ML_NOTE The file names are decoded before comparison.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_void_openLink_const_SGXString_ref_ static void @SG_ML_L00802AopenLink#static_void_openLink_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& link);
 Opens the website link @SG_ML_B004link in the system default browser.
