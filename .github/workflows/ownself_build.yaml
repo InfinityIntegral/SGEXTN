@@ -18,13 +18,13 @@ jobs:
           rm -rf SGEXTN/.git
           mkdir -p Qt
           cd Qt
-          git clone --depth 1 --branch v${{inputs.qt-version}} https://github.com/qt/qtbase.git
-          git clone --depth 1 --branch v${{inputs.qt-version}} https://github.com/qt/qtdeclarative.git
-          git clone --depth 1 --branch v${{inputs.qt-version}} https://github.com/qt/qtsvg.git
-          git clone --depth 1 --branch v${{inputs.qt-version}} https://github.com/qt/qttools.git
-          git clone --depth 1 --branch v${{inputs.qt-version}} https://github.com/qt/qttranslations.git
-          git clone --depth 1 --branch v${{inputs.qt-version}} https://github.com/qt/qtwayland.git
-          git clone --depth 1 --branch v${{inputs.qt-version}} https://github.com/qt/qtshadertools.git
+          git clone --depth 1 --branch v${{env.qt-version}} https://github.com/qt/qtbase.git
+          git clone --depth 1 --branch v${{env.qt-version}} https://github.com/qt/qtdeclarative.git
+          git clone --depth 1 --branch v${{env.qt-version}} https://github.com/qt/qtsvg.git
+          git clone --depth 1 --branch v${{env.qt-version}} https://github.com/qt/qttools.git
+          git clone --depth 1 --branch v${{env.qt-version}} https://github.com/qt/qttranslations.git
+          git clone --depth 1 --branch v${{env.qt-version}} https://github.com/qt/qtwayland.git
+          git clone --depth 1 --branch v${{env.qt-version}} https://github.com/qt/qtshadertools.git
           rm -rf qtbase/.git
           rm -rf qtdeclarative/.git
           rm -rf qtsvg/.git
@@ -36,13 +36,13 @@ jobs:
       - name: upload SGEXTN
         uses: actions/upload-artifact@v4
         with:
-          name: sgextn-source-code
+          name: sgextn-v${{env.sgextn-version}}-source-code
           path: SGEXTN
 
       - name: upload Qt
         uses: actions/upload-artifact@v4
         with:
-          name: qt-source-code
+          name: qt-v${{env.qt-version}}-source-code
           path: Qt
 
   windows-llvm-mingw:
