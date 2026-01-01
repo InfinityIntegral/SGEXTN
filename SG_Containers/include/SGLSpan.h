@@ -29,12 +29,12 @@ template <typename T> int SGLSpan<T>::length() const {
 }
 
 template <typename T> T& SGLSpan<T>::at(int i){
-    if(i < 0 || i >= lengthInternal){SGLCrash::crash();}
+    if(i < 0 || i >= lengthInternal){SGLCrash::crash("");}
     return (*(dataInternal + i));
 }
 
 template <typename T> const T& SGLSpan<T>::at(int i) const {
-    if(i < 0 || i >= lengthInternal){SGLCrash::crash();}
+    if(i < 0 || i >= lengthInternal){SGLCrash::crash("");}
     return (*(dataInternal + i));
 }
 

@@ -5,10 +5,10 @@
 @SG_FUNC SGLArray(int count);
 Creates a SGLArray of size $count, with every element default initialised.
 @SG_WARN The type stored in the SGLArray must have a default constructor (the one taking no arguments) for this to compile.
-@SG_WARN You must ensure that $count is nonnegative. Negative $count results in undefined behaviour.
+@SG_WARN You must ensure that $count is nonnegative. Negative $count will crash.
 @SG_FUNC SGLArray(int count, const T& defaultValue);
 Creates a SGLArray of size $count, with every element initialised to $defaultValue.
-@SG_WARN You must ensure that $count is nonnegative. Negative $count results in undefined behaviour.
+@SG_WARN You must ensure that $count is nonnegative. Negative $count will crash.
 @SG_FUNC SGLArray(Ts... data);
 SGLArray does not support initialisation using initialiser lists. This is the closest that you can get to using a initialiser list.
 This constructor of SGLArray takes a variable number of arguments corresponding to what the data inside should be set to. The length of the SGLArray is determined automatically from the number of arguments passed.
@@ -18,7 +18,7 @@ The produced SGLArray will contain all the arguments passed in order to the vari
 @SG_FUNC void assign(int count, const T& defaultValue);
 Assigns a SGLArray($count, $defaultValue) to this SGLArray.
 @SG_NOTE arr.assign($count, $defaultValue); is identical in functionality to arr = SGLArray<T>($count, $defaultValue); Choosing one over the other is purely coding style.
-@SG_WARN You must ensure that $count is nonnegative. Negative $count results in undefined behaviour.
+@SG_WARN You must ensure that $count is nonnegative. Negative $count will crash.
 @SG_FUNC void fill(const T& defaultValue);
 Sets every element in the existing SGLArray to $defaultValue without resizing the SGLArray.
 @SG_NOTE If the SGLArray may need to be resized, use SGLArray::assign instead.

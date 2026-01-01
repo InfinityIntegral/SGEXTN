@@ -26,11 +26,13 @@ protected:
 };
 
 template <typename T> SGLArray<T>::SGLArray(int count){
+    if(count < 0){SGLCrash::crash("SGLArray constructor crashed because count cannot be negative");}
     dataInternal = new T[count];
     lengthInternal = count;
 }
 
 template <typename T> SGLArray<T>::SGLArray(int count, const T& defaultValue){
+    if(count < 0){SGLCrash::crash("SGLArray constructor crashed because count cannot be negative");}
     dataInternal = new T[count];
     lengthInternal = count;
     for(int i=0; i<lengthInternal; i++){
@@ -83,6 +85,7 @@ template <typename T> SGLArray<T>::~SGLArray(){
 }
 
 template <typename T> void SGLArray<T>::assign(int count, const T& defaultValue){
+    if(count < 0){SGLCrash::crash("SGLArray::assign crashed because count is negative");}
     delete[] dataInternal;
     dataInternal = new T[count];
     lengthInternal = count;
@@ -102,12 +105,14 @@ template <typename T> int SGLArray<T>::length() const {
 }
 
 template <typename T> T& SGLArray<T>::at(int i){
-    if(i < 0 || i >= lengthInternal){SGLCrash::crash();}
+    if(i < 0){SGLCrash::crash("SGLArray::at crashed because index is negative");}
+    if(i >= lengthInternal){SGLCrash::crash("SGLArray::at crashed because index points beyond the end of the array");}
     return (*(dataInternal + i)); // NOLINT(clang-analyzer-security.ArrayBound)
 }
 
 template <typename T> const T& SGLArray<T>::at(int i) const {
-    if(i < 0 || i >= lengthInternal){SGLCrash::crash();}
+    if(i < 0){SGLCrash::crash("SGLArray::at crashed because index is negative");}
+    if(i >= lengthInternal){SGLCrash::crash("SGLArray::at crashed because index points beyond the end of the array");}
     return (*(dataInternal + i));
 }
 

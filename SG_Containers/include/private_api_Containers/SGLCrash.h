@@ -6,8 +6,7 @@
 class SG_CONTAINERS_DLL SGLCrash
 {
 public:
-    static void crash();
-    static void crashOnDeleteTimer();
+    static void crash(const char* msg);
 };
 
 #endif // SGLCRASH_H

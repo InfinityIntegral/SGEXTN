@@ -28,7 +28,7 @@ SGXTimer::SGXTimer(bool x, float t, void (*attachedFunction)()){
 }
 
 SGXTimer::~SGXTimer(){
-    if((*this).deleted == false){SGLCrash::crashOnDeleteTimer();}
+    if((*this).deleted == false){SGLCrash::crash("no delete timer");}
     (*(*this).timer).deleteLater();
     (*(*this).quickInterface).deleteLater();
 }

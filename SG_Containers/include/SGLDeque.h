@@ -127,12 +127,12 @@ template <typename T> void SGLDeque<T>::fill(const T& defaultValue){
 }
 
 template <typename T> T& SGLDeque<T>::at(int i){
-    if(i < 0 || i >= endInternal - startInternal){SGLCrash::crash();}
+    if(i < 0 || i >= endInternal - startInternal){SGLCrash::crash("");}
     return (*(dataInternal + startInternal + i));
 }
 
 template <typename T> const T& SGLDeque<T>::at(int i) const {
-    if(i < 0 || i >= endInternal - startInternal){SGLCrash::crash();}
+    if(i < 0 || i >= endInternal - startInternal){SGLCrash::crash("");}
     return (*(dataInternal + startInternal + i));
 }
 

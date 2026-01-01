@@ -97,12 +97,12 @@ template <typename T> SGLVector<T>::~SGLVector(){
 }
 
 template <typename T> T& SGLVector<T>::at(int i){
-    if(i < 0 || i > lengthInternal){SGLCrash::crash();}
+    if(i < 0 || i > lengthInternal){SGLCrash::crash("");}
     return (*(dataInternal + i));
 }
 
 template <typename T> const T& SGLVector<T>::at(int i) const {
-    if(i < 0 || i > lengthInternal){SGLCrash::crash();}
+    if(i < 0 || i > lengthInternal){SGLCrash::crash("");}
     return (*(dataInternal + i));
 }
 
