@@ -42,6 +42,7 @@ template <typename T> SGLDeque<T>::SGLDeque(){
 }
 
 template <typename T> SGLDeque<T>::SGLDeque(int count){
+    if(count < 0){SGLCrash::crash("SGLDeque constructor crashed because count is negative");}
     dataInternal = new T[count];
     startInternal = 0;
     endInternal = count;
@@ -49,6 +50,7 @@ template <typename T> SGLDeque<T>::SGLDeque(int count){
 }
 
 template <typename T> SGLDeque<T>::SGLDeque(int count, const T& defaultValue){
+    if(count < 0){SGLCrash::crash("SGLDeque constructor crashed because count is negative");}
     dataInternal = new T[count];
     startInternal = 0;
     endInternal = count;
@@ -110,6 +112,7 @@ template <typename T> SGLDeque<T>::~SGLDeque(){
 }
 
 template <typename T> void SGLDeque<T>::assign(int count, const T& defaultValue){
+    if(count < 0){SGLCrash::crash("SGLDeque::assign crashed because count is negative");}
     delete[] dataInternal;
     dataInternal = new T[count];
     startInternal = 0;
@@ -127,20 +130,24 @@ template <typename T> void SGLDeque<T>::fill(const T& defaultValue){
 }
 
 template <typename T> T& SGLDeque<T>::at(int i){
-    if(i < 0 || i >= endInternal - startInternal){SGLCrash::crash("");}
+    if(i < 0){SGLCrash::crash("SGLDeque::at crashed because index is negative");}
+    if(i >= endInternal - startInternal){SGLCrash::crash("SGLDeque::at crashed because index points beyond the end of the data structure");}
     return (*(dataInternal + startInternal + i));
 }
 
 template <typename T> const T& SGLDeque<T>::at(int i) const {
-    if(i < 0 || i >= endInternal - startInternal){SGLCrash::crash("");}
+    if(i < 0){SGLCrash::crash("SGLDeque::at crashed because index is negative");}
+    if(i >= endInternal - startInternal){SGLCrash::crash("SGLDeque::at crashed because index points beyond the end of the data structure");}
     return (*(dataInternal + startInternal + i));
 }
 
 template <typename T> const T& SGLDeque<T>::front() const {
+    if(endInternal - startInternal == 0){SGLCrash::crash("SGLDeque::front crashed because the data structure is empty");}
     return (*(dataInternal + startInternal));
 }
 
 template <typename T> const T& SGLDeque<T>::back() const {
+    if(endInternal - startInternal == 0){SGLCrash::crash("SGLDeque::back crashed because the data structure is empty");}
     return (*(dataInternal + endInternal - 1));
 }
 
@@ -179,6 +186,7 @@ template <typename T> void SGLDeque<T>::pushBack(const T& x){
 }
 
 template <typename T> void SGLDeque<T>::popBack(){
+    if(endInternal - startInternal == 0){SGLCrash::crash("SGLDeque::popBack crashed because the data structure is empty");}
     endInternal--;
 }
 
@@ -190,6 +198,7 @@ template <typename T> void SGLDeque<T>::pushFront(const T& x){
 }
 
 template <typename T> void SGLDeque<T>::popFront(){
+    if(endInternal - startInternal == 0){SGLCrash::crash("SGLDeque::popFront crashed because the data structure is empty");}
     startInternal++;
 }
 

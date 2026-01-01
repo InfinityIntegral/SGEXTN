@@ -7,34 +7,34 @@ Creates a SGLDeque containing no elements.
 @SG_FUNC SGLDeque(int count);
 Creates a SGLDeque containing $count elements which are default initialised.
 @SG_WARN The type stored in the SGLDeque must have a default constructor (the one taking no arguments) for this to compile.
-@SG_WARN You must ensure that $count is nonnegative. Negative $count results in undefined behaviour.
+@SG_WARN You must ensure that $count is nonnegative. Negative $count will crash.
 @SG_FUNC SGLDeque(int count, const T& defaultValue);
 Creates a SGLDeque containing $count copies of $defaultValue.
-@SG_WARN You must ensure that $count is nonnegative. Negative $count results in undefined behaviour.
+@SG_WARN You must ensure that $count is nonnegative. Negative $count will crash.
 @SG_FUNC void assign(int count, const T& defaultValue);
 Resets the SGLDeque to have $count copies of $defaultValue.
 dq.assign($count, $defaultValue); is functionally identical to dq = SGLDeque<T>($count, $defaultValue);
-@SG_WARN You must ensure that $count is nonnegative. Negative $count results in undefined behaviour.
+@SG_WARN You must ensure that $count is nonnegative. Negative $count will crash.
 @SG_FUNC void fill(const T& defaultValue);
 Sets every element in the SGLDeque to $defaultValue. This does not resize the SGLDeque.
 @SG_NOTE If the SGLDeque needs to be resized, use SGLDeque::assign.
 @SG_FUNC [[nodiscard]] T& at(int i);
 Returns a reference to element $i of the SGLDeque.
 @SG_NOTE Since this returns a reference and not a copy, assigning to it directly (using it as a lvalue) would modify the SGLDeque.
-@SG_WARN This crashes for out of bounds $i.
+@SG_WARN This will crash for out of bounds $i.
 @SG_FUNC [[nodiscard]] const T& at(int i) const;
 Returns a constant reference to element $i of the SGLDeque.
-@SG_WARN This crashes for out of bounds $i.
+@SG_WARN This will crash for out of bounds $i.
 @SG_FUNC [[nodiscard]] const T& front() const;
 Returns a constant reference to the first element of SGLDeque.
 @SG_NOTE dq.front() has the same effect as dq.at(0)
 @SG_NOTE Use SGLDeque::at if the element needs to be modified.
-@SG_WARN If the SGLDeque has a size of 0, accessing SGLDeque::front is undefined behaviour.
+@SG_WARN If the SGLDeque has a size of 0, this will crash.
 @SG_FUNC [[nodiscard]] const T& back() const;
 Returns a constant reference to the last element of SGLDeque.
 @SG_NOTE dq.back() has the same effect as dq.at(dq.length() - 1)
 @SG_NOTE Use SGLDeque::at if the element needs to be modified.
-@SG_WARN If the SGLDeque has a size of 0, accessing SGLDeque::back is undefined behaviour.
+@SG_WARN If the SGLDeque has a size of 0, this will crash.
 @SG_FUNC [[nodiscard]] int length() const;
 Returns the length of the SGLDeque, which is the number of elements currently stored inside it.
 @SG_FUNC void pushBack(const T& x);
@@ -44,7 +44,7 @@ Appends $x at the end of the SGLDeque.
 Removes the last element of the SGLDeque.
 @SG_NOTE This runs in truly constant time.
 @SG_NOTE This does not return the last element. If you need the last element, access it with SGLDeque::back before running this.
-@SG_WARN Running SGLDeque::popBack on an empty SGLDeque is undefined behaviour.
+@SG_WARN Running SGLDeque::popBack on an empty SGLDeque will crash.
 @SG_FUNC void pushFront(const T& x);
 Prepends $x at the start of the SGLDeque.
 @SG_NOTE This runs in amortised O(1) per use. To make it run in truly constant time, use SGLDeque::reserve to pre allocate the internal memory buffer with 3 times the required memory.
@@ -52,7 +52,7 @@ Prepends $x at the start of the SGLDeque.
 Removes the first element of the SGLDeque.
 @SG_NOTE This runs in truly constant time.
 @SG_NOTE This does not return the first element. If you need the first element, access it with SGLDeque::front before running this.
-@SG_WARN Running SGLDeque::popFront on an empty SGLDeque is undefined behaviour.
+@SG_WARN Running SGLDeque::popFront on an empty SGLDeque will crash.
 @SG_FUNC void reserve(int newMemoryLength);
 Pre allocates the internal memory buffer to a size sufficient to store $newMemoryLength elements in the SGLDeque.
 @SG_NOTE Pre allocate 3 times the required memory to avoid resizing. This is only necessary for SGLDeque and not SGLVector as only SGLDeque permits insertion on both ends.
