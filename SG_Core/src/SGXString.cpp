@@ -9,6 +9,7 @@
 #include <QByteArray>
 #include <QStringList>
 #include <qcontainerfwd.h>
+#include <private_api_Containers/SGLCrash.h>
 
 SGXString::SGXString(){
     (*this).data = new QString("");
@@ -108,6 +109,8 @@ int SGXString::hash() const {
 }
 
 SGXChar SGXString::at(int i) const {
+    if(i < 0){SGLCrash::crash("SGXString::at crashed as the index is negative");}
+    if(i >= length()){SGLCrash::crash("SGXString::at crashed as the index points beyond the end of the string");}
     return SGXChar((*(*this).data).at(i).unicode());
 }
 
@@ -126,11 +129,15 @@ SGXString& SGXString::replace(const SGXString &oldText, const SGXString &newText
 }
 
 SGXString& SGXString::insert(int pos, SGXChar c){
+    if(pos < 0){SGLCrash::crash("SGXString::insert crashed as the target position is negative");}
+    if(pos >= length()){SGLCrash::crash("SGXString::insert crashed as the target position points beyond the end of the string");}
     (*(*this).data).insert(pos, QChar(c.data));
     return (*this);
 }
 
 SGXString& SGXString::insert(int pos, const SGXString &s){
+    if(pos < 0){SGLCrash::crash("SGXString::insert crashed as the target position is negative");}
+    if(pos >= length()){SGLCrash::crash("SGXString::insert crashed as the target position points beyond the end of the string");}
     (*(*this).data).insert(pos, (*s.data));
     return (*this);
 }
@@ -152,10 +159,14 @@ int SGXString::findFirstFromLeft(const SGXString &s) const {
 }
 
 int SGXString::findFirstFromLeftCustomStart(SGXChar c, int start) const {
+    if(start < 0){SGLCrash::crash("SGXString::findFirstFromLeftCustomStart crashed as the starting position is negative");}
+    if(start >= length()){SGLCrash::crash("SGXString::findFirstFromLeftCustomStart crashed as the starting position points beyond the end of the string");}
     return static_cast<int>((*(*this).data).indexOf(QChar(c.data), start));
 }
 
 int SGXString::findFirstFromLeftCustomStart(const SGXString &s, int start) const {
+    if(start < 0){SGLCrash::crash("SGXString::findFirstFromLeftCustomStart crashed as the starting position is negative");}
+    if(start >= length()){SGLCrash::crash("SGXString::findFirstFromLeftCustomStart crashed as the starting position points beyond the end of the string");}
     return static_cast<int>((*(*this).data).indexOf((*s.data), start));
 }
 
@@ -168,10 +179,14 @@ int SGXString::findFirstFromRight(const SGXString &s) const {
 }
 
 int SGXString::findFirstFromRightCustomStart(SGXChar c, int start) const {
+    if(start < 0){SGLCrash::crash("SGXString::findFirstFromRightCustomStart crashed as the starting position is negative");}
+    if(start >= length()){SGLCrash::crash("SGXString::findFirstFromRightCustomStart crashed as the starting position points beyond the end of the string");}
     return static_cast<int>((*(*this).data).lastIndexOf(QChar(c.data), start));
 }
 
 int SGXString::findFirstFromRightCustomStart(const SGXString &s, int start) const {
+    if(start < 0){SGLCrash::crash("SGXString::findFirstFromRightCustomStart crashed as the starting position is negative");}
+    if(start >= length()){SGLCrash::crash("SGXString::findFirstFromRightCustomStart crashed as the starting position points beyond the end of the string");}
     return static_cast<int>((*(*this).data).lastIndexOf((*s.data), start));
 }
 
@@ -184,18 +199,25 @@ int SGXString::count(const SGXString &s) const {
 }
 
 SGXString SGXString::substring(int start, int length) const {
+    if(length < 0){SGLCrash::crash("SGXString::substring crashed as the length is negative");}
+    if(start < 0){SGLCrash::crash("SGXString::substring crashed as the starting position is negative");}
+    if(start + length > (*this).length()){SGLCrash::crash("SGXString::substring crashed as the ending position, which is start + length - 1, points beyond the end of this string");}
     SGXString output = "";
     (*output.data) = (*(*this).data).mid(start, length);
     return output;
 }
 
 SGXString SGXString::substringLeft(int length) const {
+    if(length < 0){SGLCrash::crash("SGXString::substringLeft crashed as the length is negative");}
+    if(length > (*this).length()){SGLCrash::crash("SGXString::substringLeft crashed as the length exceeds the length of this string");}
     SGXString output = "";
     (*output.data) = (*(*this).data).left(length);
     return output;
 }
 
 SGXString SGXString::substringRight(int length) const {
+    if(length < 0){SGLCrash::crash("SGXString::substringRight crashed as the length is negative");}
+    if(length > (*this).length()){SGLCrash::crash("SGXString::substringRight crashed as the length exceeds the length of this string");}
     SGXString output = "";
     (*output.data) = (*(*this).data).right(length);
     return output;
@@ -354,12 +376,14 @@ SGXString SGXString::floatToStringDecimalPlaces(float x, int dp){
 }
 
 SGXString SGXString::floatToStringSignificantFigures(float x, int sf){
+    if(sf <= 0){SGLCrash::crash("SGXString::floatToStringSignificantFigures crashed as a nonpositive amount of significant figures was requested");}
     SGXString output = "";
     (*output.data) = QString::number(x, 'g', sf);
     return output;
 }
 
 SGXString SGXString::floatToStringScientificNotation(float x, int sf){
+    if(sf <= 0){SGLCrash::crash("SGXString::floatToStringScientificNotation crashed as a nonpositive amount of significant figures was requested");}
     SGXString output = "";
     (*output.data) = QString::number(x, 'e', sf-1);
     return output;
@@ -378,18 +402,21 @@ SGXString SGXString::doubleToStringDecimalPlaces(double x, int dp){
 }
 
 SGXString SGXString::doubleToStringSignificantFigures(double x, int sf){
+    if(sf <= 0){SGLCrash::crash("SGXString::doubleToStringSignificantFigures crashed as a nonpositive amount of significant figures was requested");}
     SGXString output = "";
     (*output.data) = QString::number(x, 'g', sf);
     return output;
 }
 
 SGXString SGXString::doubleToStringScientificNotation(double x, int sf){
+    if(sf <= 0){SGLCrash::crash("SGXString::doubleToStringScientificNotation crashed as a nonpositive amount of significant figures was requested");}
     SGXString output = "";
     (*output.data) = QString::number(x, 'e', sf-1);
     return output;
 }
 
 SGXString SGXString::repeatChar(SGXChar c, int count){
+    if(count < 0){SGLCrash::crash("SGXString::repeatChar crashed as count is negative");}
     SGXString output = "";
     (*output.data) = QString(count, QChar(c.data));
     return output;

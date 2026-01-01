@@ -1,6 +1,7 @@
 #include <SGXChar.h>
 #include <QChar>
 #include <SGLHash.h>
+#include <private_api_Containers/SGLCrash.h>
 
 SGXChar::SGXChar(char c){
     (*this).data = static_cast<unsigned char>(static_cast<unsigned short>(c));
@@ -11,6 +12,7 @@ SGXChar::SGXChar(unsigned short data){
 }
 
 SGXChar::SGXChar(int unicode){
+    if(unicode < 0 || unicode > 65535){SGLCrash::crash("SGXChar constructor crashed because unicode value used is not between 0 and 65535 inclusive");}
     (*this).data = static_cast<unsigned short>(unicode);
 }
 

@@ -20,8 +20,8 @@ Name of the folder where your application stores data. This must be set in the e
 @SG_FUNC static SGXString pathToAppIcon;
 Path to the application icon which is shown when users run the application. This must be set in the entry point.
 @SG_NOTE Setting this after the entry point has no effect.
-@SG_WARN The matching file must exist in the resource system. To ensure that, put the app icon in the assets folder. @SG_FINDREP_RESOURCE
-@SG_WARN If the icon file cannot be found, this is undefined behaviour. However not setting this does not cause undefined behaviour, if this is not set then the app will use the SGEXTN icon.
+@SG_NOTE The matching file must exist in the resource system. To ensure that, put the app icon in the assets folder. @SG_FINDREP_RESOURCE
+@SG_NOTE If this is not set then the app will use the SGEXTN icon.
 @SG_FUNC static SGXString infoWebsite;
 link to the website with information about this application
 @SG_NOTE Setting this after the entry point has no effect.
@@ -52,7 +52,7 @@ Function pointer to the function import custom fonts. This must be set in the en
 @SG_NOTE Use SGWDefaultFonts::addFont to import custom fonts.
 @SG_NOTE You may import custom fonts outside this function.
 @SG_NOTE SGEXTN will warn if the @SG_FINDREP_ICONFONT font is not found by the end of this function's execution.
-@SG_WARN Using SGWIconLabel or SGWIconButton when there is no @SG_FINDREP_ICONFONT font is undefined behaviour.
+@SG_WARN Using SGWIconLabel or SGWIconButton when there is no @SG_FINDREP_ICONFONT font will render nonsense.
 @SG_PRIVATE_API static void createApplication(int argc, char** argv, void (*initialiseFunction)());
 @SG_PRIVATE_API static int startEventLoop();
 @SG_PRIVATE_API static void (*sgFileSystemInitFolders)();

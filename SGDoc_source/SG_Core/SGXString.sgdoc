@@ -35,6 +35,7 @@ Appends the SGXString $x behind this SGXString.
 Appends the SGXChar $x behind this SGXString.
 @SG_FUNC [[nodiscard]] SGXChar at(int i) const;
 Returns the SGXChar at index $i of this SGXString.
+@SG_WARN If $i is out of bounds, this will crash.
 @SG_FUNC [[nodiscard]] int length() const;
 Returns the length of this SGXString, which is the number of SGXChar it contains.
 @SG_FUNC SGXString& replace(SGXChar oldChar, SGXChar newChar);
@@ -45,10 +46,10 @@ Replaces every instance of $oldText in this SGXString with $newText, then return
 @SG_NOTE If this SGXString does not contain $oldText, nothing is done.
 @SG_FUNC SGXString& insert(int pos, SGXChar c);
 Inserts $c into this SGXString such that $c will start at index $pos of this SGXString after insertion, then returns a reference to this SGXString to enable expression chaining.
-@SG_WARN Out of bounds $pos causes undefined behaviour.
+@SG_WARN Out of bounds $pos will crash.
 @SG_FUNC SGXString& insert(int pos, const SGXString& s);
 Inserts $s into this SGXString such that $s will start at index $pos of this SGXString after insertion, then returns a reference to this SGXString to enable expression chaining.
-@SG_WARN Out of bounds $pos causes undefined behaviour.
+@SG_WARN Out of bounds $pos will crash.
 @SG_FUNC [[nodiscard]] bool contains(SGXChar c) const;
 Returns if this SGXString contains the character $c.
 @SG_FUNC [[nodiscard]] bool contains(const SGXString& s) const;
@@ -62,11 +63,11 @@ Returns the index of the first index of substring $s found in this SGXString whe
 @SG_FUNC [[nodiscard]] int findFirstFromLeftCustomStart(SGXChar c, int start) const;
 Returns the index of the first index of character $c found in this SGXString when searching from the left starting at $start.
 @SG_NOTE This returns -1 if the character $c is not in this SGXString.
-@SG_WARN This is undefined behaviour if $start is out of bounds.
+@SG_WARN This will crash if $start is out of bounds.
 @SG_FUNC [[nodiscard]] int findFirstFromLeftCustomStart(const SGXString& s, int start) const;
 Returns the index of the first index of substring $s found in this SGXString when searching from the left starting at $start.
 @SG_NOTE This returns -1 if the substring $s is not in this SGXString.
-@SG_WARN This is undefined behaviour if $start is out of bounds.
+@SG_WARN This will crash if $start is out of bounds.
 @SG_FUNC [[nodiscard]] int findFirstFromRight(SGXChar c) const;
 Returns the index of the first index of character $c found in this SGXString when searching from the right.
 @SG_NOTE This returns -1 if the character $c is not in this SGXString.
@@ -76,25 +77,25 @@ Returns the index of the first index of substring $s found in this SGXString whe
 @SG_FUNC [[nodiscard]] int findFirstFromRightCustomStart(SGXChar c, int start) const;
 Returns the index of the first index of character $c found in this SGXString when searching from the right starting at $start.
 @SG_NOTE This returns -1 if the character $c is not in this SGXString.
-@SG_WARN This is undefined behaviour if $start is out of bounds.
+@SG_WARN This will crash if $start is out of bounds.
 @SG_FUNC [[nodiscard]] int findFirstFromRightCustomStart(const SGXString& s, int start) const;
 Returns the index of the first index of substring $s found in this SGXString when searching from the right starting at $start.
 @SG_NOTE This returns -1 if the substring $s is not in this SGXString.
-@SG_WARN This is undefined behaviour if $start is out of bounds.
+@SG_WARN This will crash if $start is out of bounds.
 @SG_FUNC [[nodiscard]] int count(SGXChar c) const;
 Returns the number of characters $c in this SGXString.
 @SG_FUNC [[nodiscard]] int count(const SGXString& s) const;
 Returns the number of substrings $s in this SGXString.
 @SG_FUNC [[nodiscard]] SGXString substring(int start, int length) const;
 Returns the substring of this SGXString starting at $start with a length of $length.
-@SG_WARN This is undefined behaviour if $start or $start + $length - 1 is out of bounds.
-@SG_WARN This is undefined behaviour if $length is negative.
+@SG_WARN This will crash if $start or $start + $length - 1 is out of bounds.
+@SG_WARN This will crash if $length is negative.
 @SG_FUNC [[nodiscard]] SGXString substringLeft(int length) const;
 Returns the substring of this SGXString containing the first $length letters from the left.
-@SG_WARN This is undefined behaviour is $length is negative or greater than the length of this SGXString.
+@SG_WARN This will crash is $length is negative or greater than the length of this SGXString.
 @SG_FUNC [[nodiscard]] SGXString substringRight(int length) const;
 Returns the substring of this SGXString containing the first $length letters from the right.
-@SG_WARN This is undefined behaviour is $length is negative or greater than the length of this SGXString.
+@SG_WARN This will crash is $length is negative or greater than the length of this SGXString.
 @SG_FUNC [[nodiscard]] SGXString fillLeftToLength(int length, SGXChar fillChar) const;
 Returns the string formed when this SGXString is prefixed with $fillChar until its length is at least $length.
 @SG_NOTE This SGXString is returned if its length is already more than or equal to $length.
@@ -186,11 +187,11 @@ Returns the SGXString that represents $x rounded to $dp decimal places.
 @SG_WARN In this version of SGEXTN, negative $dp is undefined behaviour. Support is likely to be added in a future version.
 @SG_FUNC static SGXString floatToStringSignificantFigures(float x, int sf);
 Returns the SGXString that represents $x rounds to $sf significant figures.
-@SG_WARN Negative $sf is undefined behaviour.
+@SG_WARN Negative or zero $sf will crash.
 @SG_FUNC static SGXString floatToStringScientificNotation(float x, int sf);
 Returns the SGXString that represents $x rounds to $sf significant figures, expressed in scientific notation.
 @SG_NOTE The exponent is prefixed with English lowercase letter e, this is likely to be changed to the x10 Unicode character in a future version of SGEXTN.
-@SG_WARN Negative $sf is undefined behaviour.
+@SG_WARN Negative or zero $sf will crash.
 @SG_FUNC static SGXString doubleToString(double x);
 Returns the SGXString that represents $x.
 @SG_FUNC static SGXString doubleToStringDecimalPlaces(double x, int dp);
@@ -198,14 +199,14 @@ Returns the SGXString that represents $x rounded to $dp decimal places.
 @SG_WARN In this version of SGEXTN, negative $dp is undefined behaviour. Support is likely to be added in a future version.
 @SG_FUNC static SGXString doubleToStringSignificantFigures(double x, int sf);
 Returns the SGXString that represents $x rounds to $sf significant figures.
-@SG_WARN Negative $sf is undefined behaviour.
+@SG_WARN Negative or zero $sf will crash.
 @SG_FUNC static SGXString doubleToStringScientificNotation(double x, int sf);
 Returns the SGXString that represents $x rounds to $sf significant figures, expressed in scientific notation.
 @SG_NOTE The exponent is prefixed with English lowercase letter e, this is likely to be changed to the x10 Unicode character in a future version of SGEXTN.
-@SG_WARN Negative $sf is undefined behaviour.
+@SG_WARN Negative or zero $sf will crash.
 @SG_FUNC static SGXString repeatChar(SGXChar c, int count);
 Returns the SGXString formed by putting together $count copies of $c.
-@SG_WARN Negative $count is undefined behaviour.
+@SG_WARN Negative $count will crash.
 @SG_FUNC void removeLeadingTrailingWhitespace() const;
 Removes leading and trailing whitespace from this SGXString.
 @SG_NOTE Whitespace is defined by SGXChar::isWhitespace.
