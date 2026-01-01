@@ -31,20 +31,20 @@ Returns the number of copies of $x in the SGLUnorderedSet, this is either 0 or 1
 Returns a iterator to the first element in the SGLUnorderedSet.
 @SG_NOTE SGLUnorderedSet iterators behave circularly. This is equivalent to running operator++ on SGLUnorderedSet::end.
 @SG_NOTE SGLUnorderedSet::Iterator allows modifying the SGLUnorderedSet through it. If modification is not needed, use SGLUnorderedSet::ConstIterator instead. The SGLUnorderedSet::ConstIterator equivalent to this function is SGLUnorderedSet::constBegin.
-@SG_WARN If the SGLUnorderedSet is empty, this is the same as SGLUnorderedSet::end.
+@SG_NOTE If the SGLUnorderedSet is empty, this is the same as SGLUnorderedSet::end.
 @SG_FUNC [[nodiscard]] SGLUnorderedSet::Iterator end();
 Returns a null iterator associated to this SGLUnorderedSet.
 @SG_NOTE SGLUnorderedSet iterators behave circularly. This is equivalent to running operator-- on SGLUnorderedSet::begin.
 @SG_NOTE SGLUnorderedSet::Iterator allows modifying the SGLUnorderedSet through it. If modification is not needed, use SGLUnorderedSet::ConstIterator instead. The SGLUnorderedSet::ConstIterator equivalent to this function is SGLUnorderedSet::constEnd.
-@SG_WARN Attempting to access the element that this iterator points to is undefined behaviour.
+@SG_WARN Attempting to access the element that this iterator points to will crash.
 @SG_FUNC [[nodiscard]] SGLUnorderedSet::ConstIterator constBegin() const;
 Returns a constant iterator to the first element in the SGLUnorderedSet.
 @SG_NOTE SGLUnorderedSet iterators behave circularly. This is equivalent to running operator++ on SGLUnorderedSet::constEnd.
-@SG_WARN If the SGLUnorderedSet is empty, this is the same as SGLUnorderedSet::constEnd.
+@SG_NOTE If the SGLUnorderedSet is empty, this is the same as SGLUnorderedSet::constEnd.
 @SG_FUNC [[nodiscard]] SGLUnorderedSet::ConstIterator constEnd() const;
 Returns a null constant iterator associated to this SGLUnorderedSet.
 @SG_NOTE SGLUnorderedSet iterators behave circularly. This is equivalent to running operator-- on SGLUnorderedSet::constBegin.
-@SG_WARN Attempting to access the element that this iterator points to is undefined behaviour.
+@SG_WARN Attempting to access the element that this iterator points to will crash.
 @SG_FUNC bool erase(SGLUnorderedSet::Iterator& x);
 Removes the element associated with $x from the SGLUnorderedSet.
 After the removal, $x which is passed as a reference, is decremented. This means that you do not have to do any special handling for removed elements when iterating over a SGLUnorderedSet.
@@ -79,7 +79,7 @@ Checks if this iterator points to the same element as $x.
 Checks if this iterator points to a different element from $x.
 @SG_FUNC const T& operator*();
 Returns the element that this iterator points to.
-@SG_WARN If this iterator is SGLUnorderedSet::end, using this function results in undefined behaviour.
+@SG_WARN If this iterator is SGLUnorderedSet::end, using this function will crash.
 @SG_PRIVATE_API int slot;
 @SG_PRIVATE_API SGLUnorderedSet* associatedSet;
 @SG_PRIVATE_API SGLUnorderedSet::Iterator(int x, SGLUnorderedSet* s);
@@ -106,7 +106,7 @@ Checks if this constant iterator points to the same element as $x.
 Checks if this constant iterator points to a different element from $x.
 @SG_FUNC const T& operator*();
 Returns the element that this constant iterator points to.
-@SG_WARN If this iterator is SGLUnorderedSet::constEnd, using this function results in undefined behaviour.
+@SG_WARN If this iterator is SGLUnorderedSet::constEnd, using this function will crash.
 @SG_PRIVATE_API int slot;
 @SG_PRIVATE_API const SGLUnorderedSet* associatedSet;
 @SG_PRIVATE_API SGLUnorderedSet::ConstIterator(int x, const SGLUnorderedSet* s);
