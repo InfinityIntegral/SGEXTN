@@ -1,6 +1,8 @@
 #ifndef SGLUNORDEREDMAP_H
 #define SGLUNORDEREDMAP_H
 
+#include <private_api_Containers/SGLCrash.h>
+
 template <typename K, typename V, typename EqualityCheck, typename HashFunction> class SGLUnorderedMap {
 protected:
     class Slot;
@@ -381,18 +383,22 @@ template <typename K, typename V, typename EqualityCheck, typename HashFunction>
 }
 
 template <typename K, typename V, typename EqualityCheck, typename HashFunction> const K& SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::Iterator::key(){
+    if(slot == -1){SGLCrash::crash("SGLUnorderedMap::Iterator::key crashed as the iterator is the end iterator");}
     return (*((*associatedSet).dataInternal + slot)).key;
 }
 
 template <typename K, typename V, typename EqualityCheck, typename HashFunction> V& SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::Iterator::value(){
+    if(slot == -1){SGLCrash::crash("SGLUnorderedMap::Iterator::value crashed as the iterator is the end iterator");}
     return (*((*associatedSet).dataInternal + slot)).value;
 }
 
 template <typename K, typename V, typename EqualityCheck, typename HashFunction> const K& SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::ConstIterator::key(){
+    if(slot == -1){SGLCrash::crash("SGLUnorderedMap::ConstIterator::key crashed as the iterator is the end iterator");}
     return (*((*associatedSet).dataInternal + slot)).key;
 }
 
 template <typename K, typename V, typename EqualityCheck, typename HashFunction> const V& SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::ConstIterator::value(){
+    if(slot == -1){SGLCrash::crash("SGLUnorderedMap::ConstIterator::value crashed as the iterator is the end iterator");}
     return (*((*associatedSet).dataInternal + slot)).value;
 }
 
@@ -493,13 +499,13 @@ template <typename K, typename V, typename EqualityCheck, typename HashFunction>
 
 template <typename K, typename V, typename EqualityCheck, typename HashFunction> V& SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::at(const K& x){
     Iterator i = find(x);
-    if(i == end()){SGLCrash::crash("");}
+    if(i == end()){SGLCrash::crash("SGLUnorderedMap::at crashed as the provided key is not in the unordered map");}
     return i.value();
 }
 
 template <typename K, typename V, typename EqualityCheck, typename HashFunction> const V& SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::at(const K& x) const {
     ConstIterator i = find(x);
-    if(i == constEnd()){SGLCrash::crash("");}
+    if(i == constEnd()){SGLCrash::crash("SGLUnorderedMap::at crashed as the provided key is not in the unordered map");}
     return i.value();
 }
 
