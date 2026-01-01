@@ -44,20 +44,20 @@ Returns the number of copies of $x in the SGLSet, this is either 0 or 1.
 Returns a iterator to the first element in the SGLSet.
 @SG_NOTE SGLSet iterators behave circularly. This is equivalent to running operator++ on SGLSet::end.
 @SG_NOTE SGLSet::Iterator allows modifying the SGLSet through it. If modification is not needed, use SGLSet::ConstIterator instead. The SGLSet::ConstIterator equivalent to this function is SGLSet::constBegin.
-@SG_WARN If the SGLSet is empty, this is the same as SGLSet::end.
+@SG_NOTE If the SGLSet is empty, this is the same as SGLSet::end.
 @SG_FUNC [[nodiscard]] SGLSet::ConstIterator constBegin() const;
 Returns a constant iterator to the first element in the SGLSet.
 @SG_NOTE SGLSet iterators behave circularly. This is equivalent to running operator++ on SGLSet::constEnd.
-@SG_WARN If the SGLSet is empty, this is the same as SGLSet::constEnd.
+@SG_NOTE If the SGLSet is empty, this is the same as SGLSet::constEnd.
 @SG_FUNC [[nodiscard]] SGLSet::Iterator end();
 Returns a null iterator associated to this SGLSet.
 @SG_NOTE SGLSet iterators behave circularly. This is equivalent to running operator-- on SGLSet::begin.
 @SG_NOTE SGLSet::Iterator allows modifying the SGLSet through it. If modification is not needed, use SGLSet::ConstIterator instead. The SGLSet::ConstIterator equivalent to this function is SGLSet::constEnd.
-@SG_WARN Attempting to access the element that this iterator points to is undefined behaviour.
+@SG_WARN Attempting to access the element that this iterator points to will crash.
 @SG_FUNC [[nodiscard]] SGLSet::ConstIterator constEnd() const;
 Returns a null constant iterator associated to this SGLSet.
 @SG_NOTE SGLSet iterators behave circularly. This is equivalent to running operator-- on SGLSet::constBegin.
-@SG_WARN Attempting to access the element that this iterator points to is undefined behaviour.
+@SG_WARN Attempting to access the element that this iterator points to will crash.
 @SG_FUNC bool erase(SGLSet::Iterator& i);
 Removes the element associated with $i from the SGLSet.
 After the removal, $i which is passed as a reference, is decremented. This means that you do not have to do any special handling for removed elements when iterating over a SGLSet.
@@ -126,7 +126,7 @@ Checks if this iterator points to the same element as $x.
 Checks if this iterator points to a different element from $x.
 @SG_FUNC const T& operator*();
 Returns the element that this iterator points to.
-@SG_WARN If this iterator is SGLSet::end, using this function results in undefined behaviour.
+@SG_WARN If this iterator is SGLSet::end, using this function will crash.
 @SG_PRIVATE_API SGLSet::Iterator(Node* x, SGLSet* s);
 @SG_PRIVATE_API Node* node;
 @SG_PRIVATE_API SGLSet* associatedSet;
@@ -153,7 +153,7 @@ Checks if this constant iterator points to the same element as $x.
 Checks if this constant iterator points to a different element from $x.
 @SG_FUNC const T& operator*();
 Returns the element that this constant iterator points to.
-@SG_WARN If this iterator is SGLSet::constEnd, using this function results in undefined behaviour.
+@SG_WARN If this iterator is SGLSet::constEnd, using this function will crash.
 @SG_PRIVATE_API SGLSet::ConstIterator(Node* x, const SGLSet* s);
 @SG_PRIVATE_API Node* node;
 @SG_PRIVATE_API const SGLSet* associatedSet;
