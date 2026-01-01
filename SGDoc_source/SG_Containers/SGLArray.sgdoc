@@ -28,10 +28,10 @@ Returns the length of the SGLArray, which is the number of elements stored insid
 @SG_FUNC [[nodiscard]] T& at(int i);
 Returns a reference to element $i of the SGLArray.
 @SG_NOTE Since this returns a reference and not a copy, assigning to it directly (using it as a lvalue) would modify the SGLArray.
-@SG_WARN This crashes for out of bounds $i.
+@SG_WARN This will crash for out of bounds $i.
 @SG_FUNC [[nodiscard]] const T& at(int i) const;
 Returns a constant reference to element $i of the SGLArray.
-@SG_WARN This crashes for out of bounds $i.
+@SG_WARN This will crash for out of bounds $i.
 @SG_FUNC [[nodiscard]] T* pointerToData(int n);
 Returns a pointer to element $n of the SGLArray. This does not dereference the returned pointer.
 @SG_NOTE Using an out of bounds value for $n is ok for this function as long as the returned pointer is not dereferenced. Out of bounds values for $n may be used intentionally to specify parts of the SGLArray to run SGLSort on.
