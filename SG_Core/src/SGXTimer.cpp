@@ -5,6 +5,8 @@
 #include <private_api_Containers/SGLCrash.h>
 
 SGXTimer::SGXTimer(float t, void (*attachedFunction)()){
+    if(t < 0.0f){SGLCrash::crash("SGXTimer constructor crashed as time interval is negative");}
+    if(attachedFunction == nullptr){SGLCrash::crash("SGXTimer constructor crashed as function attached is nullptr");}
     (*this).onceOnly = false;
     (*this).deleted = false;
     (*this).interval = t;
@@ -28,7 +30,7 @@ SGXTimer::SGXTimer(bool x, float t, void (*attachedFunction)()){
 }
 
 SGXTimer::~SGXTimer(){
-    if((*this).deleted == false){SGLCrash::crash("no delete timer");}
+    if((*this).deleted == false){SGLCrash::crash("SGXTimer destructor crashed as you attempted to directly delete the timer, use SGXTimer::deleteTimer instead to safely delete it");}
     (*(*this).timer).deleteLater();
     (*(*this).quickInterface).deleteLater();
 }
@@ -47,6 +49,8 @@ void SGXTimer::runFunction(){
 }
 
 void SGXTimer::singleCall(float t, void (*attachedFunction)()){
+    if(t < 0.0f){SGLCrash::crash("SGXTimer::singleCall crashed as time delay is negative");}
+    if(attachedFunction == nullptr){SGLCrash::crash("SGXTimer::singleCall crashed as function attached is nullptr");}
     new SGXTimer(true, t, attachedFunction);
 }
 

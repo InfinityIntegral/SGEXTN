@@ -6,8 +6,8 @@
 Creates and starts a SGXTimer running $attachedFunction every $t seconds.
 @SG_NOTE Pass 0 to $t to run $attachedFunction on every frame, this may significantly increase power consumption of your application.
 @SG_NOTE The timer is automatically started upon creation.
-@SG_WARN $attachedFunction being nullptr is undefined behaviour.
-@SG_WARN $t being negative is undefined behaviour.
+@SG_WARN $attachedFunction being nullptr will crash.
+@SG_WARN $t being negative will crash.
 @SG_WARN Directly deleting a SGXTimer will crash as not preventing it would lead to a use after free bug.
 @SG_PRIVATE_API SGXTimer(bool x, float t, void (*attachedFunction)());
 @SG_FUNC void stop() const;
@@ -25,8 +25,8 @@ Restarts this SGXTimer which is previously paused.
 Runs $attachedFunction after $t seconds once without repeating it.
 @SG_NOTE Pass 0 to $t to run $attachedFunction immediately after this frame.
 @SG_NOTE The SGXTimer object controlling this is not exposed, so you cannot stop or restart this timer.
-@SG_WARN $attachedFunction being nullptr is undefined behaviour.
-@SG_WARN $t being negative is undefined behaviour.
+@SG_WARN $attachedFunction being nullptr will crash.
+@SG_WARN $t being negative will crash.
 @SG_FUNC void deleteTimer();
 Deletes the SGXTimer safely.
 @SG_WARN Directly deleting a SGXTimer will crash as not preventing it would lead to a use after free bug.
