@@ -44,20 +44,20 @@ Returns the number of copies of $x found in the SGLMultiSet.
 Returns a iterator to the first element in the SGLMultiSet.
 @SG_NOTE SGLMultiSet iterators behave circularly. This is equivalent to running operator++ on SGLMultiSet::end.
 @SG_NOTE SGLMultiSet::Iterator allows modifying the SGLMultiSet through it. If modification is not needed, use SGLMultiSet::ConstIterator instead. The SGLMultiSet::ConstIterator equivalent to this function is SGLMultiSet::constBegin.
-@SG_WARN If the SGLMultiSet is empty, this is the same as SGLMultiSet::end.
+@SG_NOTE If the SGLMultiSet is empty, this is the same as SGLMultiSet::end.
 @SG_FUNC [[nodiscard]] SGLMultiSet::ConstIterator constBegin() const;
 Returns a constant iterator to the first element in the SGLMultiSet.
 @SG_NOTE SGLMultiSet iterators behave circularly. This is equivalent to running operator++ on SGLMultiSet::constEnd.
-@SG_WARN If the SGLMultiSet is empty, this is the same as SGLMultiSet::constEnd.
+@SG_NOTE If the SGLMultiSet is empty, this is the same as SGLMultiSet::constEnd.
 @SG_FUNC [[nodiscard]] SGLMultiSet::Iterator end();
 Returns a null iterator associated to this SGLMultiSet.
 @SG_NOTE SGLMultiSet iterators behave circularly. This is equivalent to running operator-- on SGLMultiSet::begin.
 @SG_NOTE SGLMultiSet::Iterator allows modifying the SGLMultiSet through it. If modification is not needed, use SGLMultiSet::ConstIterator instead. The SGLMultiSet::ConstIterator equivalent to this function is SGLMultiSet::constEnd.
-@SG_WARN Attempting to access the element that this iterator points to is undefined behaviour.
+@SG_WARN Attempting to access the element that this iterator points to will crash.
 @SG_FUNC [[nodiscard]] SGLMultiSet::ConstIterator constEnd() const;
 Returns a null constant iterator associated to this SGLMultiSet.
 @SG_NOTE SGLMultiSet iterators behave circularly. This is equivalent to running operator-- on SGLMultiSet::constBegin.
-@SG_WARN Attempting to access the element that this iterator points to is undefined behaviour.
+@SG_WARN Attempting to access the element that this iterator points to will crash.
 @SG_FUNC bool erase(SGLMultiSet::Iterator& i);
 Removes the element associated with $i from the SGLMultiSet.
 After the removal, $i which is passed as a reference, is decremented. This means that you do not have to do any special handling for removed elements when iterating over a SGLMultiSet.
@@ -95,7 +95,7 @@ Returns the index of the element in the SGLMultiSet that $i points to.
 @SG_WARN The index may change if elements are inserted into or removed from SGLMultiSet to keep the SGLMultiSet always sorted.
 @SG_FUNC [[nodiscard]] const T& elementAt(int n) const;
 Returns the element at index $n in the SGLMultiSet.
-@SG_WARN If $n is out of bounds, this is undefined behaviour.
+@SG_WARN If $n is out of bounds, this will crash.
 @SG_FUNC [[nodiscard]] SGLMultiSet::Iterator iteratorAt(int n);
 Returns the iterator pointing towards the element at index $n in the SGLMultiSet.
 @SG_NOTE SGLMultiSet::Iterator allows modifying the SGLMultiSet through it. If modification is not needed, use SGLMultiSet::ConstIterator instead. The SGLMultiSet::ConstIterator equivalent to this function is SGLMultiSet::constIteratorAt.
@@ -126,7 +126,7 @@ Checks if this iterator points to the same element as $x.
 Checks if this iterator points to a different element from $x.
 @SG_FUNC const T& operator*();
 Returns the element that this iterator points to.
-@SG_WARN If this iterator is SGLMultiSet::end, using this function results in undefined behaviour.
+@SG_WARN If this iterator is SGLMultiSet::end, using this function will crash.
 @SG_PRIVATE_API SGLMultiSet::Iterator(Node* x, int c, SGLMultiSet* s);
 @SG_PRIVATE_API Node* node;
 @SG_PRIVATE_API SGLMultiSet* associatedSet;
@@ -154,7 +154,7 @@ Checks if this constant iterator points to the same element as $x.
 Checks if this constant iterator points to a different element from $x.
 @SG_FUNC const T& operator*();
 Returns the element that this constant iterator points to.
-@SG_WARN If this iterator is SGLMultiSet::constEnd, using this function results in undefined behaviour.
+@SG_WARN If this iterator is SGLMultiSet::constEnd, using this function will crash.
 @SG_PRIVATE_API SGLMultiSet::ConstIterator(Node* x, int c, const SGLMultiSet* s);
 @SG_PRIVATE_API Node* node;
 @SG_PRIVATE_API const SGLMultiSet* associatedSet;

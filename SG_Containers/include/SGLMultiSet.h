@@ -1,6 +1,8 @@
 #ifndef SGLMULTISET_H
 #define SGLMULTISET_H
 
+#include <private_api_Containers/SGLCrash.h>
+
 template <typename T, typename Comparator> class SGLMultiSet {
 protected:
     class Node;
@@ -532,10 +534,12 @@ template <typename T, typename Comparator> typename SGLMultiSet<T, Comparator>::
 }
 
 template <typename T, typename Comparator> const T& SGLMultiSet<T, Comparator>::Iterator::operator*(){
+    if(node == nullptr){SGLCrash::crash("SGLMultiSet::Iterator::operator* crashed because the iterator is the end iterator");}
     return (*node).value;
 }
 
 template <typename T, typename Comparator> const T& SGLMultiSet<T, Comparator>::ConstIterator::operator*(){
+    if(node == nullptr){SGLCrash::crash("SGLMultiSet::ConstIterator::operator* crashed because the iterator is the end iterator");}
     return (*node).value;
 }
 
@@ -735,6 +739,8 @@ template <typename T, typename Comparator> int SGLMultiSet<T, Comparator>::getIn
 }
 
 template <typename T, typename Comparator> const T& SGLMultiSet<T, Comparator>::elementAt(int n) const {
+    if(n < 0){SGLCrash::crash("SGLMultiSet::elementAt crashed as the index is negative");}
+    if(n > length()){SGLCrash::crash("SGLMultiSet::elementAt crashed as the index points beyond the end of the data structure");}
     return (*constIteratorAt(n));
 }
 

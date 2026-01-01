@@ -60,11 +60,11 @@ Returns a constant iterator to the first key value pair in the SGLMap.
 Returns a null iterator associated to this SGLMap.
 @SG_NOTE SGLMap iterators behave circularly. This is equivalent to running operator-- on SGLMap::begin.
 @SG_NOTE SGLMap::Iterator allows modifying the SGLMap through it. If modification is not needed, use SGLMap::ConstIterator instead. The SGLMap::ConstIterator equivalent to this function is SGLMap::constEnd.
-@SG_WARN Attempting to access the key or value that this iterator points to is undefined behaviour.
+@SG_WARN Attempting to access the key or value that this iterator points to will crash.
 @SG_FUNC [[nodiscard]] SGLMap::ConstIterator constEnd() const;
 Returns a null constant iterator associated to this SGLMap.
 @SG_NOTE SGLMap iterators behave circularly. This is equivalent to running operator-- on SGLMap::constBegin.
-@SG_WARN Attempting to access the key or value that this iterator points to is undefined behaviour.
+@SG_WARN Attempting to access the key or value that this iterator points to will crash.
 @SG_FUNC bool erase(SGLMap::Iterator& i);
 Removes the key value pair associated with $i from the SGLMap.
 After the removal, $i which is passed as a reference, is decremented. This means that you do not have to do any special handling for removed elements when iterating over a SGLMap.
