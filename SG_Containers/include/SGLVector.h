@@ -37,12 +37,14 @@ template <typename T> SGLVector<T>::SGLVector(){
 }
 
 template <typename T> SGLVector<T>::SGLVector(int count){
+    if(count < 0){SGLCrash::crash("SGLVector constructor crashed because count is negative");}
     dataInternal = new T[count];
     lengthInternal = count;
     memoryLengthInternal = count;
 }
 
 template <typename T> SGLVector<T>::SGLVector(int count, const T& defaultValue){
+    if(count < 0){SGLCrash::crash("SGLVector constructor crashed because count is negative");}
     dataInternal = new T[count];
     lengthInternal = count;
     memoryLengthInternal = count;
@@ -97,16 +99,19 @@ template <typename T> SGLVector<T>::~SGLVector(){
 }
 
 template <typename T> T& SGLVector<T>::at(int i){
-    if(i < 0 || i > lengthInternal){SGLCrash::crash("");}
+    if(i < 0){SGLCrash::crash("SGLVector::at crashed because the index is negative");}
+    if(i >= lengthInternal){SGLCrash::crash("SGLVector::at crashed because the index points beyond the end of the vector");}
     return (*(dataInternal + i));
 }
 
 template <typename T> const T& SGLVector<T>::at(int i) const {
-    if(i < 0 || i > lengthInternal){SGLCrash::crash("");}
+    if(i < 0){SGLCrash::crash("SGLVector::at crashed because the index is negative");}
+    if(i >= lengthInternal){SGLCrash::crash("SGLVector::at crashed because the index points beyond the end of the vector");}
     return (*(dataInternal + i));
 }
 
 template <typename T> const T& SGLVector<T>::back() const {
+    if(lengthInternal == 0){SGLCrash::crash("SGLVector::back crashed because the vector is empty");}
     return (*(dataInternal + lengthInternal - 1));
 }
 
@@ -115,6 +120,7 @@ template <typename T> int SGLVector<T>::length() const {
 }
 
 template <typename T> void SGLVector<T>::assign(int count, const T& defaultValue){
+    if(count < 0){SGLCrash::crash("SGLVector::assign crashed because count is negative");}
     delete[] dataInternal;
     dataInternal = new T[count];
     lengthInternal = count;
@@ -149,6 +155,7 @@ template <typename T> void SGLVector<T>::pushBack(const T& x){
 }
 
 template <typename T> void SGLVector<T>::popBack(){
+    if(lengthInternal == 0){SGLCrash::crash("SGLVector::popBack crashed because the vector is empty");}
     lengthInternal--;
 }
 
