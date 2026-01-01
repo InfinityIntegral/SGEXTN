@@ -6,7 +6,7 @@
 Creates an empty priority queue.
 @SG_FUNC [[nodiscard]] const T& top() const;
 Returns the first element of the SGLPriorityQueue.
-@SG_WARN Using this when the priority queue is empty results in undefined behaviour.
+@SG_WARN Using this when the priority queue is empty will crash.
 @SG_FUNC [[nodiscard]] int length() const;
 Returns the length of the SGLPriorityQueue, which is the number of elements currently stored inside it.
 @SG_FUNC void push(const T& x);
@@ -16,7 +16,7 @@ Inserts $x into the SGLPriorityQueue.
 Removes the most in front element of the SGLPriorityQueue.
 @SG_NOTE This function has truly logarithmic time complexity.
 @SG_NOTE This function does not return the first element before removing it. To access the element being removed, use SGLPriorityQueue::top before removal.
-@SG_WARN Removing from an empty SGLPriorityQueue is undefined behaviour.
+@SG_WARN Removing from an empty SGLPriorityQueue will crash.
 @SG_FUNC void reserve(int newMemoryLength);
 Pre allocates memory sufficient for $newMemoryLength elements to be stored in the SGLPriorityQueue without resizing the memory buffer.
 @SG_NOTE Nothing is done if the memory buffer is already enough to store $newMemoryLength elements.
