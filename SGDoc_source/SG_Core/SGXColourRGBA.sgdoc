@@ -99,6 +99,7 @@ Converts the SGXColourRGBA to linear colour space for physically accurate colour
 @SG_WARN Putting linear colour space values into a SGXColourRGBA is not recommended, instead use SGXColourRGBA::gammaCorrectEnd to convert it back.
 @SG_FUNC void gammaCorrectEnd(float r, float g, float b);
 Converts the RGB values $r, $g, $b in linear colour space back into the SGXColourRGBA colour space and apply them to this SGXColourRGBA.
+@SG_NOTE If the any component is out of bounds, it is corrected automatically.
 @SG_FUNC SGXColourRGBA& linearTransformRedWithGamma(float m, float c);
 Replaces the red component of this SGXColourRGBA with $m * red + $c, with computation done in linear colour space and returns a reference to this SGXColourRGBA to allow operation chaining.
 @SG_NOTE If the new red component is out of bounds, it is corrected automatically.
@@ -113,30 +114,30 @@ Sets this SGXColourRGBA to the resulting colour if this SGXColourRGBA is viewed 
 @SG_NOTE This does not change the transparency of this SGXColourRGBA.
 @SG_FUNC SGXColourRGBA& applyTintSeparateTransparency(SGXColourRGBA x, int a);
 Sets this SGXColourRGBA to the resulting colour if this SGXColourRGBA is viewed behind a screen with colour c, where c has equal RGB channels as $x but a transparency of $a between 0 and 255 inclusive, with computation done in linear colour space and returns a reference to this SGXColourRGBA to allow operation chaining.
-@SG_NOTE The computation proceeds anyways if $a is out of bounds, this is NOT undefined behaviour. This can be useful for effects that remove a certain colour.
+@SG_NOTE The computation proceeds anyways if $a is out of bounds. This can be useful for effects that remove a certain colour.
 @SG_NOTE This does not change the transparency of this SGXColourRGBA.
 @SG_FUNC SGXColourRGBA& applyTintSeparateTransparencyUsingFloat(SGXColourRGBA x, float a);
 Sets this SGXColourRGBA to the resulting colour if this SGXColourRGBA is viewed behind a screen with colour c, where c has equal RGB channels as $x but a transparency of $a between 0 and 1 inclusive, with computation done in linear colour space and returns a reference to this SGXColourRGBA to allow operation chaining.
-@SG_NOTE The computation proceeds anyways if $a is out of bounds, this is NOT undefined behaviour. This can be useful for effects that remove a certain colour.
+@SG_NOTE The computation proceeds anyways if $a is out of bounds. This can be useful for effects that remove a certain colour.
 @SG_NOTE This does not change the transparency of this SGXColourRGBA.
 @SG_FUNC SGXColourRGBA& applyTintNoGammaCorrection(SGXColourRGBA x);
 Sets this SGXColourRGBA to the resulting colour if this SGXColourRGBA is viewed behind a screen with colour $x and returns a reference to this SGXColourRGBA to allow operation chaining.
 @SG_NOTE This does not change the transparency of this SGXColourRGBA.
 @SG_FUNC SGXColourRGBA& applyTintNoGammaCorrectionSeparateTransparency(SGXColourRGBA x, int a);
 Sets this SGXColourRGBA to the resulting colour if this SGXColourRGBA is viewed behind a screen with colour c, where c has equal RGB channels as $x but a transparency of $a between 0 and 255 inclusive and returns a reference to this SGXColourRGBA to allow operation chaining.
-@SG_NOTE The computation proceeds anyways if $a is out of bounds, this is NOT undefined behaviour. This can be useful for effects that remove a certain colour.
+@SG_NOTE The computation proceeds anyways if $a is out of bounds. This can be useful for effects that remove a certain colour.
 @SG_NOTE This does not change the transparency of this SGXColourRGBA.
 @SG_FUNC SGXColourRGBA& applyTintNoGammaCorrectionSeparateTransparencyUsingFloat(SGXColourRGBA x, float a);
 Sets this SGXColourRGBA to the resulting colour if this SGXColourRGBA is viewed behind a screen with colour c, where c has equal RGB channels as $x but a transparency of $a between 0 and 1 inclusive and returns a reference to this SGXColourRGBA to allow operation chaining.
-@SG_NOTE The computation proceeds anyways if $a is out of bounds, this is NOT undefined behaviour. This can be useful for effects that remove a certain colour.
+@SG_NOTE The computation proceeds anyways if $a is out of bounds. This can be useful for effects that remove a certain colour.
 @SG_NOTE This does not change the transparency of this SGXColourRGBA.
 @SG_FUNC [[nodiscard]] SGXColourRGBA linearInterpolate(SGXColourRGBA x, float f) const;
 Returns the resulting colour if $f of this SGXColourRGBA is mixed with (1 - $f) of $x, where $f is between 0 and 1 inclusive.
-@SG_NOTE The computation proceeds anyways if $f is out of bounds, this is NOT undefined behaviour. This can be useful for effects that remove a certain colour.
+@SG_NOTE The computation proceeds anyways if $f is out of bounds. This can be useful for effects that remove a certain colour.
 @SG_NOTE The returned colour has the same transparency as this SGXColourRGBA.
 @SG_FUNC [[nodiscard]] SGXColourRGBA linearInterpolateGammaCorrection(SGXColourRGBA x, float f) const;
 Returns the resulting colour if $f of this SGXColourRGBA is mixed with (1 - $f) of $x, where $f is between 0 and 1 inclusive, computation done in linear colour space.
-@SG_NOTE The computation proceeds anyways if $f is out of bounds, this is NOT undefined behaviour. This can be useful for effects that remove a certain colour.
+@SG_NOTE The computation proceeds anyways if $f is out of bounds. This can be useful for effects that remove a certain colour.
 @SG_NOTE The returned colour has the same transparency as this SGXColourRGBA.
 @SG_FUNC SGXColourRGBA& toComplementColour();
 Sets this SGXColourRGBA to its complementary colour, with RGB channels inverted and returns a reference to this SGXColourRGBA to allow operation chaining.
