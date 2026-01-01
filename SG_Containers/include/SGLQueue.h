@@ -1,6 +1,8 @@
 #ifndef SGLQUEUE_H
 #define SGLQUEUE_H
 
+#include <private_api_Containers/SGLCrash.h>
+
 template <typename T> class SGLQueue {
 public:
     SGLQueue();
@@ -88,10 +90,12 @@ template <typename T> SGLQueue<T>::~SGLQueue(){
 }
 
 template <typename T> const T& SGLQueue<T>::front() const {
+    if(endInternal - startInternal == 0){SGLCrash::crash("SGLQueue::front crashed because the queue is empty");}
     return (*(dataInternal + startInternal));
 }
 
 template <typename T> const T& SGLQueue<T>::back() const {
+    if(endInternal - startInternal == 0){SGLCrash::crash("SGLQueue::back crashed because the queue is empty");}
     return (*(dataInternal + endInternal - 1));
 }
 
@@ -122,6 +126,7 @@ template <typename T> void SGLQueue<T>::push(const T& x){
 }
 
 template <typename T> void SGLQueue<T>::pop(){
+    if(endInternal - startInternal == 0){SGLCrash::crash("SGLQueue::pop crashed because the queue is empty");}
     startInternal++;
 }
 

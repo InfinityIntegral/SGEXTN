@@ -6,10 +6,10 @@
 Creates an empty SGLQueue.
 @SG_FUNC [[nodiscard]] const T& front() const;
 Returns the element at the front of the SGLQueue.
-@SG_WARN This is undefined behaviour if the SGLQueue is empty.
+@SG_WARN This will crash if the SGLQueue is empty.
 @SG_FUNC [[nodiscard]] const T& back() const;
 Returns the element at the back of the SGLQueue.
-@SG_WARN This is undefined behaviour if the SGLQueue is empty.
+@SG_WARN This will crash if the SGLQueue is empty.
 @SG_FUNC [[nodiscard]] int length() const;
 Returns the length of the SGLQueue.
 @SG_FUNC void push(const T& x);
@@ -19,7 +19,7 @@ Appends $x at the back of the SGLQueue.
 Removes the front element of the SGLQueue.
 @SG_NOTE This has truly constant time complexity.
 @SG_NOTE This does not return the removed element. To access the removed element, use SGLQueue::front before removal.
-@SG_WARN This is undefined behaviour if the SGLQueue is empty.
+@SG_WARN This will crash if the SGLQueue is empty.
 @SG_FUNC void reserve(int newMemoryLength);
 Pre allocates sufficient memory to store $newMemoryLength elements in the SGLQueue.
 @SG_NOTE If there is already sufficient memory to store $newMemoryLength elements, this is ignored.
