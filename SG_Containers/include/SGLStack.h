@@ -1,6 +1,8 @@
 #ifndef SGLSTACK_H
 #define SGLSTACK_H
 
+#include <private_api_Containers/SGLCrash.h>
+
 template <typename T> class SGLStack {
 public:
     SGLStack();
@@ -72,6 +74,7 @@ template <typename T> SGLStack<T>::~SGLStack(){
 }
 
 template <typename T> const T& SGLStack<T>::top() const {
+    if(lengthInternal == 0){SGLCrash::crash("SGLStack::top crashed as the stack is empty");}
     return (*(dataInternal + lengthInternal - 1));
 }
 
@@ -98,6 +101,7 @@ template <typename T> void SGLStack<T>::push(const T& x){
 }
 
 template <typename T> void SGLStack<T>::pop(){
+    if(lengthInternal == 0){SGLCrash::crash("SGLStack::pop crashed as the stack is empty");}
     lengthInternal--;
 }
 
