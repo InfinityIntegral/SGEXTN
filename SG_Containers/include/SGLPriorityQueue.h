@@ -1,6 +1,8 @@
 #ifndef SGLPRIORITYQUEUE_H
 #define SGLPRIORITYQUEUE_H
 
+#include <private_api_Containers/SGLCrash.h>
+
 template <typename T, typename Comparator> class SGLPriorityQueue {
 public:
     SGLPriorityQueue();
@@ -78,6 +80,7 @@ template <typename T, typename Comparator> SGLPriorityQueue<T, Comparator>::~SGL
 }
 
 template <typename T, typename Comparator> const T& SGLPriorityQueue<T, Comparator>::top() const {
+    if(lengthInternal == 0){SGLCrash::crash("SGLPriorityQueue::top crashed as the priority queue is empty");}
     return (*dataInternal);
 }
 
@@ -121,6 +124,7 @@ template <typename T, typename Comparator> void SGLPriorityQueue<T, Comparator>:
 }
 
 template <typename T, typename Comparator> void SGLPriorityQueue<T, Comparator>::pop(){
+    if(lengthInternal == 0){SGLCrash::crash("SGLPriorityQueue::pop crashed as the priority queue is empty");}
     (*dataInternal) = (*(dataInternal + lengthInternal - 1));
     lengthInternal--;
     int i = 0;
