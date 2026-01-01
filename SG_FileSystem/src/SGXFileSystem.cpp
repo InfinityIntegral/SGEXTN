@@ -17,6 +17,7 @@
 #include <SGXCentral.h>
 #include <QDesktopServices>
 #include <QUrl>
+#include <private_api_Containers/SGLCrash.h>
 
 namespace{
 inline SGXString temp_stdStringToSGXString(const std::string& s){
@@ -42,6 +43,8 @@ SGXString SGXFileSystem::userDataFilePath = "";
 SGXString SGXFileSystem::configFilePath = "";
 
 SGXString SGXFileSystem::joinFilePaths(const SGXString &a, const SGXString &b){
+    if(a == ""){SGLCrash::crash("SGXFileSystem::joinFilePaths crashed because the first argument is a empty string");}
+    if(b == ""){SGLCrash::crash("SGXFileSystem::joinFilePaths crashed because the second argument is a empty string");}
     SGXString a0 = a;
     SGXString b0 = b;
     const SGXChar pathSeparator = SGXChar(QDir::separator().toLatin1());

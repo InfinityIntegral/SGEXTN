@@ -10,10 +10,11 @@ The folder that you should keep user data in.
 The folder that you should keep application settings files in.
 @SG_WARN Setting this manually is undefined behaviour.
 @SG_FUNC static SGXString joinFilePaths(const SGXString& a, const SGXString& b);
-Returns the file path $a/$b
-@SG_WARN If either $a or $b is an empty string, this leads to undefined behaviour.
+Returns the file path $a/$b, this handles automatically trailing slash in $a and leading slash in $b if any are present.
+@SG_WARN If either $a or $b is an empty string, this will crash.
 @SG_FUNC static SGXString encodeToFileName(const SGXString& s);
 Encodes $s to a file name, the SGEXTN provided encoding that is guaranteed to be safe on all file systems, including case insensitive ones. The file name is as readable as reasonably possible while allowing all Unicode characters.
+@SG_NOTE Encoded file names always start with sg0
 @SG_FUNC static SGXString decodeFromFileName(const SGXString& s);
 Reverses SGXFileSystem::encodeToFileName for $s.
 @SG_NOTE If $s is not a valid encoded file name, this will return $s.
@@ -83,10 +84,10 @@ Returns the extension of the file at path $s. This does not include the dot.
 @SG_FUNC static SGXString getFileNameNoExtension(const SGXString& s);
 Returns the file name of the file at path $s with the extension removed.
 @SG_FUNC static SGLArray<SGXString> getFilesListWithExtension(const SGXString& s, const SGXString& ext);
-Returns a list of paths to files in folder $s with extension matching $ext.
+Returns a list of paths to files in folder $s with extension matching $ext. $ext should not include the dot.
 @SG_NOTE An empty list is returned if there is no folder at $s.
 @SG_FUNC static SGLArray<SGXString> getFilesListWithExtensionRecursive(const SGXString& s, const SGXString& ext);
-Returns a list of paths to files in folder $s including recursive subfolders, with extension matching $ext.
+Returns a list of paths to files in folder $s including recursive subfolders, with extension matching $ext. $ext should not include the dot.
 @SG_NOTE An empty list is returned if there is no folder at $s.
 @SG_FUNC static SGLArray<SGXString> getFilesListContainingName(const SGXString& s, const SGXString& name);
 Returns a list of paths to files in folder $s containing a substring of $name in their names.
@@ -104,6 +105,7 @@ Comparator used by SGXNumberAwareFilePathLesserThanBase16 and SGXNumberAwareFile
 @SG_FUNC static void openLink(const SGXString& link);
 Opens the website link $link in the system default browser.
 @SG_NOTE There is no need to put the https:// in front of the link, just the website link itself is sufficient.
+@SG_NOTE If the link is invalid or does not exist, the user's browser will see the error, this will not affect the application.
 
 @SG_CPP_CLASS SGXNumberAwareFilePathLesserThan
 @SG_SHORT_DESCRP sorts file paths in alphabetical order taking into account numbers in file names
