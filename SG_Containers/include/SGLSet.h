@@ -1,6 +1,8 @@
 #ifndef SGLSET_H
 #define SGLSET_H
 
+#include <private_api_Containers/SGLCrash.h>
+
 template <typename T, typename Comparator> class SGLSet{
 protected:
     class Node;
@@ -431,10 +433,12 @@ template <typename T, typename Comparator> typename SGLSet<T, Comparator>::Const
 }
 
 template <typename T, typename Comparator> const T& SGLSet<T, Comparator>::Iterator::operator*(){
+    if(node == nullptr){SGLCrash::crash("SGLSet::Iterator::operator* crashed as the iterator is the end iterator");}
     return (*node).value;
 }
 
 template <typename T, typename Comparator> const T& SGLSet<T, Comparator>::ConstIterator::operator*(){
+    if(node == nullptr){SGLCrash::crash("SGLSet::ConstIterator::operator* crashed as the iterator is the end iterator");}
     return (*node).value;
 }
 
@@ -629,6 +633,8 @@ template <typename T, typename Comparator> int SGLSet<T, Comparator>::getIndexOf
 }
 
 template <typename T, typename Comparator> const T& SGLSet<T, Comparator>::elementAt(int n) const {
+    if(n < 0){SGLCrash::crash("SGLSet::elementAt crashed because the index is negative");}
+    if(n >= length()){SGLCrash::crash("SGLSet::elementAt crashed because the index points beyond the end of the set");}
     return (*constIteratorAt(n));
 }
 
