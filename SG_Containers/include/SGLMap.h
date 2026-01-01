@@ -1,6 +1,8 @@
 #ifndef SGLMAP_H
 #define SGLMAP_H
 
+#include <private_api_Containers/SGLCrash.h>
+
 template <typename K, typename V, typename Comparator> class SGLMap{
 protected:
     class Node;
@@ -439,18 +441,22 @@ template <typename K, typename V, typename Comparator> typename SGLMap<K, V, Com
 }
 
 template <typename K, typename V, typename Comparator> const K& SGLMap<K, V, Comparator>::Iterator::key(){
+    if(node == nullptr){SGLCrash::crash("SGLMap::Iterator::key crashed because the iterator is the end iterator");}
     return (*node).key;
 }
 
 template <typename K, typename V, typename Comparator> V& SGLMap<K, V, Comparator>::Iterator::value(){
+    if(node == nullptr){SGLCrash::crash("SGLMap::Iterator::value crashed because the iterator is the end iterator");}
     return (*node).value;
 }
 
 template <typename K, typename V, typename Comparator> const K& SGLMap<K, V, Comparator>::ConstIterator::key(){
+    if(node == nullptr){SGLCrash::crash("SGLMap::ConstIterator::key crashed because the iterator is the end iterator");}
     return (*node).key;
 }
 
 template <typename K, typename V, typename Comparator> const V& SGLMap<K, V, Comparator>::ConstIterator::value(){
+    if(node == nullptr){SGLCrash::crash("SGLMap::ConstIterator::value crashed because the iterator is the end iterator");}
     return (*node).value;
 }
 
@@ -645,10 +651,14 @@ template <typename K, typename V, typename Comparator> int SGLMap<K, V, Comparat
 }
 
 template <typename K, typename V, typename Comparator> const K& SGLMap<K, V, Comparator>::keyAt(int n) const {
+    if(n < 0){SGLCrash::crash("SGLMap::keyAt crashed because index is negative");}
+    if(n >= length()){SGLCrash::crash("SGLMap::keyAt crashed because index points beyond the end of the data structure");}
     return iteratorAt(n).key();
 }
 
 template <typename K, typename V, typename Comparator> V& SGLMap<K, V, Comparator>::valueAt(int n){
+    if(n < 0){SGLCrash::crash("SGLMap::valueAt crashed because index is negative");}
+    if(n >= length()){SGLCrash::crash("SGLMap::valueAt crashed because index points beyond the end of the data structure");}
     return iteratorAt(n).value();
 }
 
@@ -677,13 +687,13 @@ template <typename K, typename V, typename Comparator> typename SGLMap<K, V, Com
 
 template <typename K, typename V, typename Comparator> V& SGLMap<K, V, Comparator>::at(const K& x){
     Iterator i = find(x);
-    if(i == end()){SGLCrash::crash("");}
+    if(i == end()){SGLCrash::crash("SGLMap::at crashed because the key is not in the map");}
     return i.value();
 }
 
 template <typename K, typename V, typename Comparator> const V& SGLMap<K, V, Comparator>::at(const K& x) const {
     ConstIterator i = find(x);
-    if(i == constEnd()){SGLCrash::crash("");}
+    if(i == constEnd()){SGLCrash::crash("SGLMap::at crashed because the key is not in the map");}
     return i.value();
 }
 

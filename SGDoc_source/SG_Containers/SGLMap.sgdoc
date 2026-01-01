@@ -43,19 +43,19 @@ Returns the number of copies of the key $x is found inside the SGLMap.
 @SG_FUNC [[nodiscard]] V& at(const K& x);
 Returns a reference to the value associated with key $x in the SGLMap.
 @SG_NOTE Since this returns a reference and not a copy, assigning to it directly (using it as a lvalue) would modify the SGLMap.
-@SG_WARN This crashes if $x is not in the SGLMap. Use SGLMap::contains to check if $x is in the SGLMap if unsure.
+@SG_WARN This will crash if $x is not in the SGLMap. Use SGLMap::contains to check if $x is in the SGLMap if unsure.
 @SG_FUNC [[nodiscard]] const V& at(const K& x) const;
 Returns a constant reference to the value associated with key $x in the SGLMap.
-@SG_WARN This crashes if $x is not in the SGLMap. Use SGLMap::contains to check if $x is in the SGLMap if unsure.
+@SG_WARN This will crash if $x is not in the SGLMap. Use SGLMap::contains to check if $x is in the SGLMap if unsure.
 @SG_FUNC [[nodiscard]] SGLMap::Iterator begin();
 Returns a iterator to the first key value pair in the SGLMap.
 @SG_NOTE SGLMap iterators behave circularly. This is equivalent to running operator++ on SGLMap::end.
 @SG_NOTE SGLMap::Iterator allows modifying the SGLMap through it. If modification is not needed, use SGLMap::ConstIterator instead. The SGLMap::ConstIterator equivalent to this function is SGLMap::constBegin.
-@SG_WARN If the SGLMap is empty, this is the same as SGLMap::end.
+@SG_NOTE If the SGLMap is empty, this is the same as SGLMap::end.
 @SG_FUNC [[nodiscard]] SGLMap::ConstIterator constBegin() const;
 Returns a constant iterator to the first key value pair in the SGLMap.
 @SG_NOTE SGLMap iterators behave circularly. This is equivalent to running operator++ on SGLMap::constEnd.
-@SG_WARN If the SGLMap is empty, this is the same as SGLMap::constEnd.
+@SG_NOTE If the SGLMap is empty, this is the same as SGLMap::constEnd.
 @SG_FUNC [[nodiscard]] SGLMap::Iterator end();
 Returns a null iterator associated to this SGLMap.
 @SG_NOTE SGLMap iterators behave circularly. This is equivalent to running operator-- on SGLMap::begin.
@@ -102,11 +102,11 @@ Returns the index of the key value pair in the SGLMap that $i points to.
 @SG_WARN The index may change if elements are inserted into or removed from SGLMap to keep the SGLMap always sorted by key.
 @SG_FUNC [[nodiscard]] const K& keyAt(int n) const;
 Returns the key at index $n in the SGLMap.
-@SG_WARN If $n is out of bounds, this is undefined behaviour.
+@SG_WARN If $n is out of bounds, this will crash.
 @SG_FUNC [[nodiscard]] V& valueAt(int n);
 Returns the value associated with the key at index $n in the SGLMap.
 @SG_NOTE The value is returned as a reference and not a copy. Assigning to it (using it as a lvalue) modifies the SGLMap.
-@SG_WARN If $n is out of bounds, this is undefined behaviour.
+@SG_WARN If $n is out of bounds, this will crash.
 @SG_FUNC [[nodiscard]] SGLMap::Iterator iteratorAt(int n);
 Returns the iterator pointing towards the key value pair, the key of which is at index $n in the SGLMap.
 @SG_NOTE SGLMap::Iterator allows modifying the SGLMap through it. If modification is not needed, use SGLMap::ConstIterator instead. The SGLMap::ConstIterator equivalent to this function is SGLMap::constIteratorAt.
@@ -137,11 +137,11 @@ Checks if this iterator points to the same key value pair as $x.
 Checks if this iterator points to a different key value pair from $x.
 @SG_FUNC const K& key();
 Returns the key in the key value pair that this iterator points to.
-@SG_WARN If this iterator is SGLMap::end, using this function results in undefined behaviour.
+@SG_WARN If this iterator is SGLMap::end, using this function will crash.
 @SG_FUNC V& value();
 Returns a reference to the value in the key value pair that this iterator points to.
 @SG_NOTE This returns a reference and not a copy. Assigning to the returned reference (using it as a lvalue) modifies the SGLMap.
-@SG_WARN If this iterator is SGLMap::end, using this function results in undefined behaviour.
+@SG_WARN If this iterator is SGLMap::end, using this function will crash.
 @SG_PRIVATE_API SGLMap::Iterator(Node* x, SGLMap* s);
 @SG_PRIVATE_API Node* node;
 @SG_PRIVATE_API SGLMap* associatedSet;
@@ -168,10 +168,10 @@ Checks if this constant iterator points to the same key value pair as $x.
 Checks if this constant iterator points to a different key value pair from $x.
 @SG_FUNC const K& key();
 Returns the key in the key value pair that this constant iterator points to.
-@SG_WARN If this iterator is SGLMap::constEnd, using this function results in undefined behaviour.
+@SG_WARN If this iterator is SGLMap::constEnd, using this function will crash.
 @SG_FUNC const V& value();
 Returns the value in the key value pair that this constant iterator points to.
-@SG_WARN If this iterator is SGLMap::constEnd, using this function results in undefined behaviour.
+@SG_WARN If this iterator is SGLMap::constEnd, using this function will crash.
 @SG_PRIVATE_API SGLMap::ConstIterator(Node* x, const SGLMap* s);
 @SG_PRIVATE_API Node* node;
 @SG_PRIVATE_API const SGLMap* associatedSet;
