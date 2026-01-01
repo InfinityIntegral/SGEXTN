@@ -30,10 +30,10 @@ Returns the number of copies of the key $x is found inside the SGLMap.
 @SG_FUNC [[nodiscard]] V& at(const K& x);
 Returns a reference to the value associated with key $x in the SGLUnorderedMap.
 @SG_NOTE Since this returns a reference and not a copy, assigning to it directly (using it as a lvalue) would modify the SGLUnorderedMap.
-@SG_WARN This crashes if $x is not in the SGLUnorderedMap. Use SGLUnorderedMap::contains to check if $x is in the SGLUnorderedMap if unsure.
+@SG_WARN This will crash if $x is not in the SGLUnorderedMap. Use SGLUnorderedMap::contains to check if $x is in the SGLUnorderedMap if unsure.
 @SG_FUNC [[nodiscard]] const V& at(const K &x) const;
 Returns a constant reference to the value associated with key $x in the SGLUnorderedMap.
-@SG_WARN This crashes if $x is not in the SGLUnorderedMap. Use SGLUnorderedMap::contains to check if $x is in the SGLUnorderedMap if unsure.
+@SG_WARN This will crash if $x is not in the SGLUnorderedMap. Use SGLUnorderedMap::contains to check if $x is in the SGLUnorderedMap if unsure.
 @SG_FUNC [[nodiscard]] SGLUnorderedMap::Iterator begin();
 Returns a iterator to the first key value pair in the SGLUnorderedMap.
 @SG_NOTE SGLUnorderedMap iterators behave circularly. This is equivalent to running operator++ on SGLUnorderedMap::end.

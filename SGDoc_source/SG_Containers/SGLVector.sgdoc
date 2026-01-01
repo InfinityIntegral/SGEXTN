@@ -7,28 +7,28 @@ Creates an empty SGLVector.
 @SG_FUNC SGLVector(int count);
 Creates a SGLVector of size $count with every element default initialised.
 @SG_WARN This will not compile if the data in the SGLVector do not have a default constructor (the one taking no arguments).
-@SG_WARN Negative $count is undefined behaviour.
+@SG_WARN Negative $count will crash.
 @SG_FUNC SGLVector(int count, const T& defaultValue);
 Creates a SGLVector of size $count with every element set to $defaultValue.
-@SG_WARN Negative $count is undefined behaviour.
+@SG_WARN Negative $count will crash.
 @SG_FUNC [[nodiscard]] T& at(int i);
 Returns a reference to element $i of the SGLVector.
 @SG_NOTE Since this returns a reference and not a copy, assigning to it directly (using it as a lvalue) would modify the SGLVector.
-@SG_WARN This crashes for out of bounds $i.
+@SG_WARN This will crash for out of bounds $i.
 @SG_FUNC [[nodiscard]] const T& at(int i) const;
 Returns a constant reference to element $i of the SGLVector.
-@SG_WARN This crashes for out of bounds $i.
+@SG_WARN This will crash for out of bounds $i.
 @SG_FUNC [[nodiscard]] const T& back() const;
 Returns a constant reference to the last element of the SGLVector.
 @SG_NOTE v.back() has the same effect as v.at(v.length() - 1)
 @SG_NOTE Use SGLVector::at if the element needs to be modified.
-@SG_WARN This crashes if the SGLVector is empty.
+@SG_WARN This will crash if the SGLVector is empty.
 @SG_FUNC [[nodiscard]] int length() const;
 Returns the length of the SGLVector, which is the number of elements currently stored in it.
 @SG_FUNC void assign(int count, const T& defaultValue);
 Assigns a SGLVector($count, $defaultValue) to this SGLVector.
 @SG_NOTE v.assign($count, $defaultValue); is identical in functionality to v = SGLVector<T>($count, $defaultValue); Choosing one over the other is purely coding style.
-@SG_WARN Negative $count is undefined behaviour.
+@SG_WARN Negative $count will crash.
 @SG_FUNC void fill(const T& defaultValue);
 Sets every element in the existing SGLVector to $defaultValue without resizing the SGLVector.
 @SG_NOTE If the SGLVector may need to be resized, use SGLVector::assign instead.
@@ -42,7 +42,7 @@ Appends $x to the SGLVector.
 Removes the last element of the SGLVector.
 @SG_NOTE This does not return the removed element. Use SGLVector::back before removal to access the element.
 @SG_NOTE This runs at true constant time complexity.
-@SG_WARN Removing from empty SGLVector is undefined behaviour.
+@SG_WARN Removing from empty SGLVector will crash.
 @SG_FUNC [[nodiscard]] T* pointerToData(int n);
 Returns a pointer to element $n of the SGLVector. This does not dereference the returned pointer.
 @SG_NOTE Using an out of bounds value for $n is ok for this function as long as the returned pointer is not dereferenced. Out of bounds values for $n may be used intentionally to specify parts of the SGLVector to run SGLSort on.
