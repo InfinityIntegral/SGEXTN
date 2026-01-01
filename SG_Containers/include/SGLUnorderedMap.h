@@ -493,13 +493,13 @@ template <typename K, typename V, typename EqualityCheck, typename HashFunction>
 
 template <typename K, typename V, typename EqualityCheck, typename HashFunction> V& SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::at(const K& x){
     Iterator i = find(x);
-    if(i == end()){SGLCrash::crash();}
+    if(i == end()){SGLCrash::crash("");}
     return i.value();
 }
 
 template <typename K, typename V, typename EqualityCheck, typename HashFunction> const V& SGLUnorderedMap<K, V, EqualityCheck, HashFunction>::at(const K& x) const {
     ConstIterator i = find(x);
-    if(i == constEnd()){SGLCrash::crash();}
+    if(i == constEnd()){SGLCrash::crash("");}
     return i.value();
 }
 

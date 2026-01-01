@@ -677,13 +677,13 @@ template <typename K, typename V, typename Comparator> typename SGLMap<K, V, Com
 
 template <typename K, typename V, typename Comparator> V& SGLMap<K, V, Comparator>::at(const K& x){
     Iterator i = find(x);
-    if(i == end()){SGLCrash::crash();}
+    if(i == end()){SGLCrash::crash("");}
     return i.value();
 }
 
 template <typename K, typename V, typename Comparator> const V& SGLMap<K, V, Comparator>::at(const K& x) const {
     ConstIterator i = find(x);
-    if(i == constEnd()){SGLCrash::crash();}
+    if(i == constEnd()){SGLCrash::crash("");}
     return i.value();
 }
 
