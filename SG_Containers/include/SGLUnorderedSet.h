@@ -1,6 +1,8 @@
 #ifndef SGLUNORDEREDSET_H
 #define SGLUNORDEREDSET_H
 
+#include <private_api_Containers/SGLCrash.h>
+
 template <typename T, typename EqualityCheck, typename HashFunction> class SGLUnorderedSet {
 protected:
     class Slot;
@@ -375,10 +377,12 @@ template <typename T, typename EqualityCheck, typename HashFunction> bool SGLUno
 }
 
 template <typename T, typename EqualityCheck, typename HashFunction> const T& SGLUnorderedSet<T, EqualityCheck, HashFunction>::Iterator::operator*(){
+    if(slot == -1){SGLCrash::crash("SGLUnorderedSet::Iterator::operator* crashed because the iterator is the end iterator");}
     return (*((*associatedSet).dataInternal + slot)).value;
 }
 
 template <typename T, typename EqualityCheck, typename HashFunction> const T& SGLUnorderedSet<T, EqualityCheck, HashFunction>::ConstIterator::operator*(){
+    if(slot == -1){SGLCrash::crash("SGLUnorderedSet::ConstIterator::operator* crashed because the iterator is the end iterator");}
     return (*((*associatedSet).dataInternal + slot)).value;
 }
 
