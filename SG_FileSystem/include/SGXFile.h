@@ -32,6 +32,8 @@ public:
     QFile* fileControl;
     QDataStream* fileData;
     SGXFile::OpenStatus openStatus;
+    [[nodiscard]] bool canRead() const;
+    [[nodiscard]] bool canWrite() const;
     [[nodiscard]] bool readBool() const;
     [[nodiscard]] char readChar() const;
     [[nodiscard]] SGXChar readSGEXTNChar() const;
