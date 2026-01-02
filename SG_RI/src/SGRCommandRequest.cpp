@@ -28,8 +28,8 @@ void SGRCommandRequest::chooseElementBufferObject(SGRElementBufferObject *ebo){
 }
 
 void SGRCommandRequest::finaliseForDraw(){
-    if((*vbos).length() == 0){throw std::runtime_error("you forgot to bind vertex buffer objects, use SGRCommandRequest::addVertexBufferObject to bind them, you can bind multiple vertex buffer objects");}
-    if(ebo == nullptr){throw std::runtime_error("you forgot to bind a element buffer object, use SGRCommandRequest::chooseElementBufferObject to bind it, SG RI forces use of element buffer objects even when the performance gain is not significant");}
+    if((*vbos).length() == 0){SGLCrash::crash("SGRCommandRequest::finaliseForDraw crashed because you forgot to bind vertex buffer objects, use SGRCommandRequest::addVertexBufferObject to bind them, you can bind multiple vertex buffer objects");}
+    if(ebo == nullptr){SGLCrash::crash("SGRCommandRequest::finaliseForDraw crashed because you forgot to bind a element buffer object, use SGRCommandRequest::chooseElementBufferObject to bind it, SG RI forces use of element buffer objects even when the performance gain is not significant");}
     SGLVector<QRhiCommandBuffer::VertexInput> vboBindings;
     for(int i=0; i<(*vbos).length(); i++){
         vboBindings.pushBack(QRhiCommandBuffer::VertexInput((*(*vbos).at(i).second).data, (*vbos).at(i).first));

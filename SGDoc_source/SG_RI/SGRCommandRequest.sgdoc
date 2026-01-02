@@ -17,6 +17,7 @@ Selects $ebo to be used for the next draw command. If you want to only use the e
 @SG_NOTE Specify the offset into the element buffer object inside SGRCommandRequest::drawTriangles.
 @SG_FUNC void finaliseForDraw();
 Prepares the vertex buffer objects added using SGRCommandRequest::addVertexBufferObject and the element buffer object selected using SGRCommandRequest::chooseElementBufferObject for drawing.
+@SG_WARN Forgetting to bind vertex buffer objects and a element buffer object will crash.
 @SG_WARN Adding more vertex buffer objects or changing the element buffer object after this is called is undefined behaviour.
 @SG_FUNC void drawTriangles(int numberOfTriangles, int startLocation) const;
 Draws $numberOfTriangles triangles using indices found in the chosen element buffer object starting at $startLocation bytes into the buffer.
