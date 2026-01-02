@@ -7,6 +7,6 @@
 @SG_FUNC static void downloadFile(const SGXString& s);
 Offers the user to download the file at path $s.
 @SG_NOTE This does not delete the file at $s.
-@SG_WARN Nonexistent file at path $s results in undefined behaviour.
+@SG_NOTE Nonexistent file at path $s will cause this to do nothing.
 @SG_PRIVATE_API static void checkDownloadedFile();
 @SG_PRIVATE_API static SGXString sourcePath;

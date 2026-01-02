@@ -8,12 +8,14 @@
 #include <SGXFile.h>
 #include <private_api_Widgets/SGXQuickInterface.h>
 #include <QQmlApplicationEngine>
+#include <private_api_Containers/SGLCrash.h>
 
 QQmlComponent* SGXFileUploader::fileUploadTemplate = nullptr;
 QObject* SGXFileUploader::fileUploadInstance = nullptr;
 void (*SGXFileUploader::fileAcceptor)(const SGXString&) = nullptr;
 
 void SGXFileUploader::uploadFile(void (*attachedFunction)(const SGXString &)){
+    if(attachedFunction == nullptr){SGLCrash::crash("SGXFileUploader::uploadFile crashed because the attached function is nullptr");}
     if(SGXFileUploader::fileUploadTemplate == nullptr){SGXFileUploader::fileUploadTemplate = new QQmlComponent(SGXQuickInterface::e, ":/SGEXTN/FileUpload.qml");}
     SGXFileUploader::fileUploadInstance = (*SGXFileUploader::fileUploadTemplate).create();
     QObject::connect(SGXFileUploader::fileUploadInstance, &QObject::objectNameChanged, &SGXFileUploader::checkUploadedFile);

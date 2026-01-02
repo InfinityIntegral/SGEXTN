@@ -6,6 +6,7 @@
 #include <SGWSequentialScrollView.h>
 #include <SGLArray.h>
 #include <private_api_Widgets/SGRScreenshotCallback.h>
+#include <private_api_Containers/SGLCrash.h>
 
 SGWWidget* SGWWidget::rootWidget = nullptr;
 SGWWidget* SGWWidget::parentWidget = nullptr;
@@ -256,5 +257,6 @@ void SGWWidget::setItemVisibility(bool x){
 }
 
 void SGWWidget::screenshot(void (*callback)(SGRImage *)) const {
+    if(callback == nullptr){SGLCrash::crash("SGWWidget::screenshot crashed because the callback function is nullptr");}
     new SGRScreenshotCallback(callback, getTopObject());
 }
