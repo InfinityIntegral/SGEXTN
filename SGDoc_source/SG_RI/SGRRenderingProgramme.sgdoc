@@ -5,7 +5,7 @@
 @SG_FUNC SGRRenderingProgramme(SGRBaseRenderer* renderControl);
 Creates a SGRRenderingProgramme associated with the @SG_FINDREP_RENDERER renderer $renderControl.
 @SG_NOTE $renderControl owns this SGRRenderingProgramme and will delete it when no longer needed.
-@SG_WARN Passing nullptr to $renderControl is undefined behaviour.
+@SG_WARN Passing nullptr to $renderControl will crash.
 @SG_PRIVATE_API QRhiGraphicsPipeline* pipeline;
 @SG_PRIVATE_API SGRRendererNode* node;
 @SG_PRIVATE_API QRhi* rhi;
@@ -21,7 +21,7 @@ Sets this SGRRenderingProgramme to use the vertex shader at $vertexShaderPath an
 Registers a vertex buffer object with each vertex having a size of $vertexSize bytes.
 @SG_NOTE This does not create anything, it only tells the SGRRenderingProgramme that such a vertex buffer object will be used later.
 @SG_NOTE The index of vertex buffer objects corresponds to the order in which they are declared using SGRRenderingProgramme::addVertexBufferObject, with the first one having index 0.
-@SG_WARN Zero or negative $vertexSize is undefined behaviour.
+@SG_WARN Zero or negative $vertexSize will crash.
 @SG_PRIVATE_API SGLVector<SGRVertexProperty>* vertexProperties;
 @SG_FUNC void addVertexProperty(int vertexBufferObjectIndex, int offsetFromVertexStart, int shaderDeclaredLocation, SGRGraphicsLanguageType::Type propertyType, int vectorLength) const;
 Registers a vertex property corresponding to the in variable at location $shaderDeclaredLocation in the input shader, which is sourced from vertex buffer object number $vertexBufferObjectIndex at a offset of $offsetFromVertexStart bytes. This vertex shader in variable contains $vectorLength of the GLSL data type $propertyType.
@@ -30,9 +30,9 @@ Registers a vertex property corresponding to the in variable at location $shader
 @SG_WARN Forgetting to bind the vertex buffer object before drawing is undefined behaviour.
 @SG_WARN Passing a vertex buffer object that does not match the layout is undefined behaviour.
 @SG_WARN Registering a vertex property that does not exist in the vertex shader is undefined behaviour.
-@SG_WARN Negative $offsetFromVertexStart is undefined behaviour.
-@SG_WARN Negative $vertexBufferObjectIndex is undefined behaviour.
-@SG_WARN $vectorLength below 1 or above 4 is undefined behaviour.
+@SG_WARN Negative $offsetFromVertexStart will crash.
+@SG_WARN Negative $vertexBufferObjectIndex will crash.
+@SG_WARN $vectorLength below 1 or above 4 will crash.
 @SG_FUNC void finaliseVertices();
 Completes registering vertex related properties.
 @SG_WARN Registering more vertex buffer objects or vertex properties after this has been called is undefined behaviour.
@@ -68,20 +68,24 @@ Prepares the SGRRenderingProgramme for usage.
 @SG_FUNC void updateDataBuffer(SGRDataBuffer* buffer, int startLocation, int dataSize, void* pointerToData) const;
 Uploads $dataSize bytes of data from $pointerToData to an offset of $startLocation bytes into the buffer $buffer.
 @SG_WARN Using this outside of SGRBaseRenderer::uploadShaderData or SGRBaseRenderer::initialise is undefined behaviour.
-@SG_WARN $buffer being nullptr is undefined behaviour.
-@SG_WARN Negative $startLocation or $startLocation + $dataSize being more than or equal to length of $buffer is undefined behaviour.
+@SG_WARN $buffer being nullptr will crash.
+@SG_WARN Negative $startLocation or $startLocation + $dataSize - 1 being more than or equal to length of $buffer will crash.
 @SG_WARN SGLArray or SGLVector where $pointerToData came from having a byte length below $dataSize is undefined behaviour.
-@SG_WARN $pointerToData being nullptr is undefined behaviour.
+@SG_WARN $pointerToData being nullptr will crash.
 @SG_FUNC void updateShaderUniforms(int shaderDeclaredBinding, int startLocation, int dataSize, void* pointerToData) const;
 Uploads $dataSize bytes of data from $pointerToData to an offset of $startLocation bytes into the uniform buffer object at binding point $shaderDeclaredBinding.
 @SG_WARN Using this outside of SGRBaseRenderer::uploadShaderData or SGRBaseRenderer::initialise is undefined behaviour.
 @SG_WARN Nonexistent $shaderDeclaredBinding is undefined behaviour.
-@SG_WARN Negative $startLocation or $startLocation + $dataSize being more than or equal to length of the uniform buffer object at $shaderDeclaredBinding is undefined behaviour.
+@SG_WARN $startLocation + $dataSize being more than or equal to length of the uniform buffer object at $shaderDeclaredBinding is undefined behaviour.
 @SG_WARN SGLArray or SGLVector where $pointerToData came from having a byte length below $dataSize is undefined behaviour.
-@SG_WARN $pointerToData being nullptr is undefined behaviour.
+@SG_WARN $pointerToData being nullptr will crash.
+@SG_WARN $shaderDeclaredBinding being negative will crash.
+@SG_WARN $startLocation being negative will crash.
+@SG_WARN $dataSize being negative will crash.
 @SG_FUNC void updateTexture(int shaderDeclaredBinding, SGRImage* sourceImage) const;
 Uploads $sourceImage to the texture at $shaderDeclaredBinding.
 @SG_NOTE $sourceImage does not need to have the same size as the previously bound texture.
 @SG_WARN Using this outside of SGRBaseRenderer::uploadShaderData or SGRBaseRenderer::initialise is undefined behaviour.
 @SG_WARN Nonexistent $shaderDeclaredBinding is undefined behaviour.
-@SG_WARN $sourceImage being nullptr is undefined behaviour.
+@SG_WARN $shaderDeclaredBinding being negative will crash.
+@SG_WARN $sourceImage being nullptr will crash.

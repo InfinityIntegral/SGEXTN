@@ -10,11 +10,13 @@
 @SG_FUNC void addVertexBufferObject(SGRVertexBufferObject *vbo, int bufferOffsetInBytes) const;
 Adds the vertex buffer object $vbo starting at $bufferOffsetInBytes bytes into the buffer. Data before the $bufferOffsetInBytes is ignored. Vertex buffer objects are added sequentially, so the first added vertex buffer object will have a binding point of 0, the second added vertex buffer object will have a binding point of 1, etc.
 @SG_NOTE @SG_FINDREP_RENDERER permits binding multiple vertex buffer objects.
+@SG_WARN Out of bounds offset will cause a crash.
 @SG_FUNC void chooseElementBufferObject(SGRElementBufferObject* ebo);
 Selects $ebo to be used for the next draw command. If you want to only use the element buffer object starting at a certain index, set that in SGRCommandRequest::drawTriangles.
 @SG_NOTE @SG_FINDREP_RENDERER forces you to use a element buffer object even if it is not really needed.
+@SG_NOTE Specify the offset into the element buffer object inside SGRCommandRequest::drawTriangles.
 @SG_FUNC void finaliseForDraw();
-Prepares the vertex buffer objects added using SGRCommandRequest::addVertexBufferObject amd the element buffer object selected using SGRCommandRequest::chooseElementBufferObject for drawing.
+Prepares the vertex buffer objects added using SGRCommandRequest::addVertexBufferObject and the element buffer object selected using SGRCommandRequest::chooseElementBufferObject for drawing.
 @SG_WARN Adding more vertex buffer objects or changing the element buffer object after this is called is undefined behaviour.
 @SG_FUNC void drawTriangles(int numberOfTriangles, int startLocation) const;
 Draws $numberOfTriangles triangles using indices found in the chosen element buffer object starting at $startLocation bytes into the buffer.
