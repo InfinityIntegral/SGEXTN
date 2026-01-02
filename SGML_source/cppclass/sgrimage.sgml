@@ -37,7 +37,7 @@ wraps QImage
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_SGRImage_int_int_SGXColourRGBA_ @SG_ML_L008020SGRImage#SGRImage_int_int_SGXColourRGBA_(int w, int h, @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba c);
 Creates a @SG_ML_L008014SGRImage../cppclass/sgrimage with width @SG_ML_B001w pixels, height @SG_ML_B001h pixels, and with every pixel initialised to @SG_ML_B001c.
-@SG_ML_WARN Negative or 0 @SG_ML_B001w or @SG_ML_B001h is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
+@SG_ML_WARN Negative @SG_ML_B001w or @SG_ML_B001h will crash.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_SGRImage_const_SGXString_ref_ @SG_ML_L00801ESGRImage#SGRImage_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& filePath);
 Creates a @SG_ML_L008014SGRImage../cppclass/sgrimage using the image found at @SG_ML_B008filePath.
@@ -47,11 +47,11 @@ Creates a @SG_ML_L008014SGRImage../cppclass/sgrimage using the image found at @S
 @SG_ML_HEADER_SGRImage_int_int_ @SG_ML_L008012SGRImage#SGRImage_int_int_(int w, int h);
 Creates a @SG_ML_L008014SGRImage../cppclass/sgrimage with width @SG_ML_B001w pixels, height @SG_ML_B001h pixels, containing uninitialised nonsense.
 @SG_ML_WARN Accessing the colours of this @SG_ML_L008014SGRImage../cppclass/sgrimage before setting them is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
-@SG_ML_WARN Negative or 0 @SG_ML_B001w or @SG_ML_B001h is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
+@SG_ML_WARN Negative @SG_ML_B001w or @SG_ML_B001h will crash.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGXColourRGBA_colourAt_int_int_const_ [[nodiscard]] @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba @SG_ML_L008030colourAt#nodiscard_SGXColourRGBA_colourAt_int_int_const_(int x, int y) const;
 Returns the @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba of the pixel at (@SG_ML_B001x, @SG_ML_B001y).
-@SG_ML_WARN @SG_ML_B001x below zero, @SG_ML_B001x more than or equal to the width, @SG_ML_B001y below zero, @SG_ML_B001y more than or equal to the height is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour. If you want image sampling, use @SG_ML_L01E054SGRImage::interpolatedColourAt../cppclass/sgrimage#nodiscard_SGXColourRGBA_interpolatedColourAt_float_float_const_ instead.
+@SG_ML_WARN @SG_ML_B001x below zero, @SG_ML_B001x more than or equal to the width, @SG_ML_B001y below zero, @SG_ML_B001y more than or equal to the height will crash. If you want image sampling, use @SG_ML_L01E054SGRImage::interpolatedColourAt../cppclass/sgrimage#nodiscard_SGXColourRGBA_interpolatedColourAt_float_float_const_ instead.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_int_height_func_const_ [[nodiscard]] int @SG_ML_L006021height#nodiscard_int_height_func_const_() const;
 Returns the height of this @SG_ML_L008014SGRImage../cppclass/sgrimage.
@@ -62,10 +62,11 @@ Returns the @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba of the pixel at
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_saveToFile_const_SGXString_ref_const_ void @SG_ML_L00A02BsaveToFile#void_saveToFile_const_SGXString_ref_const_(const @SG_ML_L009009SGXStringsgxstring& filePath) const;
 Saves this @SG_ML_L008014SGRImage../cppclass/sgrimage to file at @SG_ML_B008filePath in PNG format.
+@SG_ML_WARN If @SG_ML_B008filePath is not a valid file path, this is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_setColourAt_int_int_SGXColourRGBA_const_ void @SG_ML_L00B02EsetColourAt#void_setColourAt_int_int_SGXColourRGBA_const_(int x, int y, @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba c) const;
 Sets the @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba of the pixel at (@SG_ML_B001x, @SG_ML_B001y) to @SG_ML_B001c.
-@SG_ML_WARN @SG_ML_B001x below zero, @SG_ML_B001x more than or equal to the width, @SG_ML_B001y below zero, @SG_ML_B001y more than or equal to the height is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
+@SG_ML_WARN @SG_ML_B001x below zero, @SG_ML_B001x more than or equal to the width, @SG_ML_B001y below zero, @SG_ML_B001y more than or equal to the height will crash
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_int_width_func_const_ [[nodiscard]] int @SG_ML_L005020width#nodiscard_int_width_func_const_() const;
 Returns the width of this @SG_ML_L008014SGRImage../cppclass/sgrimage.

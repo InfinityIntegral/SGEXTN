@@ -25,7 +25,7 @@ Returns the base 10 logarithm of $x.
 @SG_NOTE For negative $x, the behaviour follows whatever is defined by the Standard Template Library.
 @SG_FUNC static float aToThePowerOfB(float a, float b);
 Returns $a^$b.
-@SG_NOTE For negative $x, the behaviour follows whatever is defined by the Standard Template Library.
+@SG_NOTE For negative $b, the behaviour follows whatever is defined by the Standard Template Library.
 @SG_FUNC static float squareRoot(float x);
 Returns sqrt($x).
 @SG_NOTE For negative $x, the behaviour follows whatever is defined by the Standard Template Library.

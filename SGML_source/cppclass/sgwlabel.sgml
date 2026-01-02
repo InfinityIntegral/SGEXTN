@@ -108,6 +108,7 @@ Sets the 1 coordinate of the font size as a @SG_ML_L01A016w-distance ⁽㈳㈴�
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_setFont_const_SGXString_ref_ void @SG_ML_L007022setFont#void_setFont_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& font);
 Sets the @SG_ML_L008014SGWLabel../cppclass/sgwlabel to use @SG_ML_B004font to display text.
+@SG_ML_WARN If @SG_ML_B004font is not a valid font, this is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_setForegroundColour_SGXColourRGBA_ void @SG_ML_L013028setForegroundColour#void_setForegroundColour_SGXColourRGBA_(@SG_ML_L00D00DSGXColourRGBAsgxcolourrgba colour);
 Sets the @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba of the foreground of this @SG_ML_L008014SGWLabel../cppclass/sgwlabel to @SG_ML_B006colour and turns off @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour mode.

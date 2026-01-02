@@ -62,20 +62,20 @@ Uses ‹cmath› from Standard Template Library
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_float_aToThePowerOfB_float_float_ static float @SG_ML_L00E029aToThePowerOfB#static_float_aToThePowerOfB_float_float_(float a, float b);
 Returns @SG_ML_B001a^@SG_ML_B001b.
-@SG_ML_NOTE The behaviour is not defined for negative @SG_ML_B001a, but it will not crash.
+@SG_ML_NOTE For negative @SG_ML_B001b, the behaviour follows whatever is defined by the Standard Template Library.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_float_absoluteValue_float_ static float @SG_ML_L00D022absoluteValue#static_float_absoluteValue_float_(float x);
 Returns absolute value of @SG_ML_B001x.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_float_arccosine_float_ static float @SG_ML_L00901Earccosine#static_float_arccosine_float_(float x);
 Returns the angle in radians, the cosine of which is @SG_ML_B001x.
-@SG_ML_NOTE The behaviour is undefined for @SG_ML_B001x less than -1 or more than 1, but it will not crash.
+@SG_ML_NOTE For @SG_ML_B001x less than -1 or more than 1, the behaviour follows whatever is defined by the Standard Template Library.
 @SG_ML_NOTE Multiply by 180 / pi to convert from radians to degrees.
 @SG_ML_NOTE This is the inverse function of cosine.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_float_arcsine_float_ static float @SG_ML_L00701Carcsine#static_float_arcsine_float_(float x);
 Returns the angle in radians, the sine of which is @SG_ML_B001x.
-@SG_ML_NOTE The behaviour is undefined for @SG_ML_B001x less than -1 or more than 1, but it will not crash.
+@SG_ML_NOTE For @SG_ML_B001x less than -1 or more than 1, the behaviour follows whatever is defined by the Standard Template Library.
 @SG_ML_NOTE Multiply by 180 / pi to convert from radians to degrees.
 @SG_ML_NOTE This is the inverse function of sine.
 @SG_ML_BLANKLINE
@@ -113,7 +113,7 @@ Returns the cotangent of a @SG_ML_B001x radians angle.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_float_cubeRoot_float_ static float @SG_ML_L00801DcubeRoot#static_float_cubeRoot_float_(float x);
 Returns cbrt(@SG_ML_B001x).
-@SG_ML_NOTE The behaviour is not defined for negative @SG_ML_B001x, but it will not crash.
+@SG_ML_NOTE For negative @SG_ML_B001x, the behaviour follows whatever is defined by the Standard Template Library.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_float_eToThePowerOfThis_float_ static float @SG_ML_L011026eToThePowerOfThis#static_float_eToThePowerOfThis_float_(float x);
 Returns e^@SG_ML_B001x where e is Euler's Number.
@@ -138,11 +138,11 @@ Returns the integral of a normal distribution from @SG_ML_B001x to positive infi
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_float_logarithmBase10_float_ static float @SG_ML_L00F024logarithmBase10#static_float_logarithmBase10_float_(float x);
 Returns the base 10 logarithm of @SG_ML_B001x.
-@SG_ML_NOTE The behaviour is not defined for negative @SG_ML_B001x, but it will not crash.
+@SG_ML_NOTE For negative @SG_ML_B001x, the behaviour follows whatever is defined by the Standard Template Library.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_float_logarithmBase2_float_ static float @SG_ML_L00E023logarithmBase2#static_float_logarithmBase2_float_(float x);
 Returns the base 2 logarithm of @SG_ML_B001x.
-@SG_ML_NOTE The behaviour is not defined for negative @SG_ML_B001x, but it will not crash.
+@SG_ML_NOTE For negative @SG_ML_B001x, the behaviour follows whatever is defined by the Standard Template Library.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_float_maximum_float_float_ static float @SG_ML_L007022maximum#static_float_maximum_float_float_(float a, float b);
 Returns maximum of @SG_ML_B001a and @SG_ML_B001b.
@@ -155,7 +155,7 @@ Returns remainder of @SG_ML_B001a when divided by @SG_ML_B001b.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_float_naturalLogarithm_float_ static float @SG_ML_L010025naturalLogarithm#static_float_naturalLogarithm_float_(float x);
 Returns ln(@SG_ML_B001x).
-@SG_ML_NOTE The behaviour is not defined for negative @SG_ML_B001x, but it will not crash.
+@SG_ML_NOTE For negative @SG_ML_B001x, the behaviour follows whatever is defined by the Standard Template Library.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_float_round_float_ static float @SG_ML_L00501Around#static_float_round_float_(float x);
 Returns @SG_ML_B001x rounded to the nearest integer.
@@ -177,7 +177,7 @@ Returns the sine of a @SG_ML_B001x radians angle.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_float_squareRoot_float_ static float @SG_ML_L00A01FsquareRoot#static_float_squareRoot_float_(float x);
 Returns sqrt(@SG_ML_B001x).
-@SG_ML_NOTE The behaviour is not defined for negative @SG_ML_B001x, but it will not crash.
+@SG_ML_NOTE For negative @SG_ML_B001x, the behaviour follows whatever is defined by the Standard Template Library.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_float_tangent_float_ static float @SG_ML_L00701Ctangent#static_float_tangent_float_(float x);
 Returns the tangent of a @SG_ML_B001x radians angle.

@@ -38,7 +38,7 @@ children classes: (none)
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_SGLArray_int_const_T_ref_ @SG_ML_L00801ASGLArray#SGLArray_int_const_T_ref_(int count, const T& defaultValue);
 Creates a @SG_ML_L008014SGLArray../cppclass/sglarray of size @SG_ML_B005count, with every element initialised to @SG_ML_B00CdefaultValue.
-@SG_ML_WARN You must ensure that @SG_ML_B005count is nonnegative. Negative @SG_ML_B005count results in @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
+@SG_ML_WARN You must ensure that @SG_ML_B005count is nonnegative. Negative @SG_ML_B005count will crash.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_SGLArray_Ts_ @SG_ML_L00800DSGLArray#SGLArray_Ts_(Ts... data);
 @SG_ML_L008014SGLArray../cppclass/sglarray does not support initialisation using initialiser lists. This is the closest that you can get to using a initialiser list.
@@ -50,21 +50,21 @@ The produced @SG_ML_L008014SGLArray../cppclass/sglarray will contain all the arg
 @SG_ML_HEADER_SGLArray_int_ @SG_ML_L00800ESGLArray#SGLArray_int_(int count);
 Creates a @SG_ML_L008014SGLArray../cppclass/sglarray of size @SG_ML_B005count, with every element default initialised.
 @SG_ML_WARN The type stored in the @SG_ML_L008014SGLArray../cppclass/sglarray must have a default constructor (the one taking no arguments) for this to compile.
-@SG_ML_WARN You must ensure that @SG_ML_B005count is nonnegative. Negative @SG_ML_B005count results in @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
+@SG_ML_WARN You must ensure that @SG_ML_B005count is nonnegative. Negative @SG_ML_B005count will crash.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_assign_int_const_T_ref_ void @SG_ML_L00601Dassign#void_assign_int_const_T_ref_(int count, const T& defaultValue);
 Assigns a @SG_ML_L008014SGLArray../cppclass/sglarray(@SG_ML_B005count, @SG_ML_B00CdefaultValue) to this @SG_ML_L008014SGLArray../cppclass/sglarray.
 @SG_ML_NOTE arr.assign(@SG_ML_B005count, @SG_ML_B00CdefaultValue); is identical in functionality to arr = @SG_ML_L008014SGLArray../cppclass/sglarray‹T›(@SG_ML_B005count, @SG_ML_B00CdefaultValue); Choosing one over the other is purely coding style.
-@SG_ML_WARN You must ensure that @SG_ML_B005count is nonnegative. Negative @SG_ML_B005count results in @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
+@SG_ML_WARN You must ensure that @SG_ML_B005count is nonnegative. Negative @SG_ML_B005count will crash.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_const_T_ref_at_int_const_ [[nodiscard]] const T& @SG_ML_L002024at#nodiscard_const_T_ref_at_int_const_(int i) const;
 Returns a constant reference to element @SG_ML_B001i of the @SG_ML_L008014SGLArray../cppclass/sglarray.
-@SG_ML_WARN This crashes for out of bounds @SG_ML_B001i.
+@SG_ML_WARN This will crash for out of bounds @SG_ML_B001i.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_T_ref_at_int_ [[nodiscard]] T& @SG_ML_L002018at#nodiscard_T_ref_at_int_(int i);
 Returns a reference to element @SG_ML_B001i of the @SG_ML_L008014SGLArray../cppclass/sglarray.
 @SG_ML_NOTE Since this returns a reference and not a copy, assigning to it directly (using it as a lvalue) would modify the @SG_ML_L008014SGLArray../cppclass/sglarray.
-@SG_ML_WARN This crashes for out of bounds @SG_ML_B001i.
+@SG_ML_WARN This will crash for out of bounds @SG_ML_B001i.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_fill_const_T_ref_ void @SG_ML_L004017fill#void_fill_const_T_ref_(const T& defaultValue);
 Sets every element in the existing @SG_ML_L008014SGLArray../cppclass/sglarray to @SG_ML_B00CdefaultValue without resizing the @SG_ML_L008014SGLArray../cppclass/sglarray.

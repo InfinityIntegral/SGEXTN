@@ -93,6 +93,7 @@ Copies the folder at @SG_ML_B009startPath to @SG_ML_B007endPath. This returns -2
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_SGXString_encodeToFileName_const_SGXString_ref_ static @SG_ML_L009009SGXStringsgxstring @SG_ML_L010037encodeToFileName#static_SGXString_encodeToFileName_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& s);
 Encodes @SG_ML_B001s to a file name, the SGEXTN provided encoding that is guaranteed to be safe on all file systems, including case insensitive ones. The file name is as readable as reasonably possible while allowing all Unicode characters.
+@SG_ML_NOTE Encoded file names always start with sg0
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_bool_fileExists_const_SGXString_ref_ static bool @SG_ML_L00A02CfileExists#static_bool_fileExists_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& s);
 Returns if any file exists at @SG_ML_B001s.
@@ -138,11 +139,11 @@ Returns a list of files inside folder @SG_ML_B001s and its recursive subfolders 
 @SG_ML_NOTE If @SG_ML_B001s does not exist, an empty list is returned.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_SGLArray_lt_SGXString_gt_getFilesListWithExtension_const_SGXString_ref_const_SGXString_ref_ static @SG_ML_L008008SGLArraysglarray‹@SG_ML_L009009SGXStringsgxstring› @SG_ML_L019063getFilesListWithExtension#static_SGLArray_lt_SGXString_gt_getFilesListWithExtension_const_SGXString_ref_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& s, const @SG_ML_L009009SGXStringsgxstring& ext);
-Returns a list of paths to files in folder @SG_ML_B001s with extension matching @SG_ML_B003ext.
+Returns a list of paths to files in folder @SG_ML_B001s with extension matching @SG_ML_B003ext. @SG_ML_B003ext should not include the dot.
 @SG_ML_NOTE An empty list is returned if there is no folder at @SG_ML_B001s.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_SGLArray_lt_SGXString_gt_getFilesListWithExtensionRecursive_const_SGXString_ref_const_SGXString_ref_ static @SG_ML_L008008SGLArraysglarray‹@SG_ML_L009009SGXStringsgxstring› @SG_ML_L02206CgetFilesListWithExtensionRecursive#static_SGLArray_lt_SGXString_gt_getFilesListWithExtensionRecursive_const_SGXString_ref_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& s, const @SG_ML_L009009SGXStringsgxstring& ext);
-Returns a list of paths to files in folder @SG_ML_B001s including recursive subfolders, with extension matching @SG_ML_B003ext.
+Returns a list of paths to files in folder @SG_ML_B001s including recursive subfolders, with extension matching @SG_ML_B003ext. @SG_ML_B003ext should not include the dot.
 @SG_ML_NOTE An empty list is returned if there is no folder at @SG_ML_B001s.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_SGXTimeStamp_getFolderCreationTime_const_SGXString_ref_ static @SG_ML_L00C00CSGXTimeStampsgxtimestamp @SG_ML_L01503FgetFolderCreationTime#static_SGXTimeStamp_getFolderCreationTime_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& s);
@@ -174,8 +175,8 @@ Returns the name of the parent folder of @SG_ML_B001s.
 Returns the path to the parent folder of @SG_ML_B001s.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_SGXString_joinFilePaths_const_SGXString_ref_const_SGXString_ref_ static @SG_ML_L009009SGXStringsgxstring @SG_ML_L00D048joinFilePaths#static_SGXString_joinFilePaths_const_SGXString_ref_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& a, const @SG_ML_L009009SGXStringsgxstring& b);
-Returns the file path @SG_ML_B001a/@SG_ML_B001b
-@SG_ML_WARN If either @SG_ML_B001a or @SG_ML_B001b is an empty string, this leads to @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
+Returns the file path @SG_ML_B001a/@SG_ML_B001b, this handles automatically trailing slash in @SG_ML_B001a and leading slash in @SG_ML_B001b if any are present.
+@SG_ML_WARN If either @SG_ML_B001a or @SG_ML_B001b is an empty string, this will crash.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_int_moveFile_const_SGXString_ref_const_SGXString_ref_ static int @SG_ML_L00803DmoveFile#static_int_moveFile_const_SGXString_ref_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& startPath, const @SG_ML_L009009SGXStringsgxstring& endPath);
 Moves the file at @SG_ML_B009startPath to @SG_ML_B007endPath. This returns -2 if a file system error caused the operation to fail, 0 if there is already a file at @SG_ML_B007endPath or if there is no file at @SG_ML_B009startPath, and 1 if the operation was successful.
@@ -194,6 +195,7 @@ Comparator used by @SG_ML_L026032SGXNumberAwareFilePathLesserThanBase16../cppcla
 @SG_ML_HEADER_static_void_openLink_const_SGXString_ref_ static void @SG_ML_L00802AopenLink#static_void_openLink_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& link);
 Opens the website link @SG_ML_B004link in the system default browser.
 @SG_ML_NOTE There is no need to put the https:// in front of the link, just the website link itself is sufficient.
+@SG_ML_NOTE If the link is invalid or does not exist, the user's browser will see the error, this will not affect the application.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_bool_pathIsSubfolder_const_SGXString_ref_const_SGXString_ref_ static bool @SG_ML_L00F045pathIsSubfolder#static_bool_pathIsSubfolder_const_SGXString_ref_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& childPath, const @SG_ML_L009009SGXStringsgxstring& parentPath);
 Returns if @SG_ML_B009childPath is a possibly recursive subfolder of @SG_ML_B00AparentPath.

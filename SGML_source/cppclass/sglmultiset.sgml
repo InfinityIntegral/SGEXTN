@@ -56,17 +56,17 @@ Creates an empty @SG_ML_L00B017SGLMultiSet../cppclass/sglmultiset.
 Returns a iterator to the first element in the @SG_ML_L00B017SGLMultiSet../cppclass/sglmultiset.
 @SG_ML_NOTE @SG_ML_L00B017SGLMultiSet../cppclass/sglmultiset iterators behave circularly. This is equivalent to running operator++ on @SG_ML_L010043SGLMultiSet::end../cppclass/sglmultiset#nodiscard_SGLMultiSet_mc_Iterator_end_func_.
 @SG_ML_NOTE @SG_ML_L015021SGLMultiSet::Iterator../cppclass/sglmultiset__iterator allows modifying the @SG_ML_L00B017SGLMultiSet../cppclass/sglmultiset through it. If modification is not needed, use @SG_ML_L01A026SGLMultiSet::ConstIterator../cppclass/sglmultiset__constiterator instead. The @SG_ML_L01A026SGLMultiSet::ConstIterator../cppclass/sglmultiset__constiterator equivalent to this function is @SG_ML_L017055SGLMultiSet::constBegin../cppclass/sglmultiset#nodiscard_SGLMultiSet_mc_ConstIterator_constBegin_func_const_.
-@SG_ML_WARN If the @SG_ML_L00B017SGLMultiSet../cppclass/sglmultiset is empty, this is the same as @SG_ML_L010043SGLMultiSet::end../cppclass/sglmultiset#nodiscard_SGLMultiSet_mc_Iterator_end_func_.
+@SG_ML_NOTE If the @SG_ML_L00B017SGLMultiSet../cppclass/sglmultiset is empty, this is the same as @SG_ML_L010043SGLMultiSet::end../cppclass/sglmultiset#nodiscard_SGLMultiSet_mc_Iterator_end_func_.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGLMultiSet_mc_ConstIterator_constBegin_func_const_ [[nodiscard]] @SG_ML_L01A01ASGLMultiSet::ConstIteratorsglmultiset__constiterator @SG_ML_L00A03EconstBegin#nodiscard_SGLMultiSet_mc_ConstIterator_constBegin_func_const_() const;
 Returns a constant iterator to the first element in the @SG_ML_L00B017SGLMultiSet../cppclass/sglmultiset.
 @SG_ML_NOTE @SG_ML_L00B017SGLMultiSet../cppclass/sglmultiset iterators behave circularly. This is equivalent to running operator++ on @SG_ML_L015053SGLMultiSet::constEnd../cppclass/sglmultiset#nodiscard_SGLMultiSet_mc_ConstIterator_constEnd_func_const_.
-@SG_ML_WARN If the @SG_ML_L00B017SGLMultiSet../cppclass/sglmultiset is empty, this is the same as @SG_ML_L015053SGLMultiSet::constEnd../cppclass/sglmultiset#nodiscard_SGLMultiSet_mc_ConstIterator_constEnd_func_const_.
+@SG_ML_NOTE If the @SG_ML_L00B017SGLMultiSet../cppclass/sglmultiset is empty, this is the same as @SG_ML_L015053SGLMultiSet::constEnd../cppclass/sglmultiset#nodiscard_SGLMultiSet_mc_ConstIterator_constEnd_func_const_.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGLMultiSet_mc_ConstIterator_constEnd_func_const_ [[nodiscard]] @SG_ML_L01A01ASGLMultiSet::ConstIteratorsglmultiset__constiterator @SG_ML_L00803CconstEnd#nodiscard_SGLMultiSet_mc_ConstIterator_constEnd_func_const_() const;
 Returns a null constant iterator associated to this @SG_ML_L00B017SGLMultiSet../cppclass/sglmultiset.
 @SG_ML_NOTE @SG_ML_L00B017SGLMultiSet../cppclass/sglmultiset iterators behave circularly. This is equivalent to running operator-- on @SG_ML_L017055SGLMultiSet::constBegin../cppclass/sglmultiset#nodiscard_SGLMultiSet_mc_ConstIterator_constBegin_func_const_.
-@SG_ML_WARN Attempting to access the element that this iterator points to is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
+@SG_ML_WARN Attempting to access the element that this iterator points to will crash.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGLMultiSet_mc_ConstIterator_constIteratorAt_int_const_ [[nodiscard]] @SG_ML_L01A01ASGLMultiSet::ConstIteratorsglmultiset__constiterator @SG_ML_L00F042constIteratorAt#nodiscard_SGLMultiSet_mc_ConstIterator_constIteratorAt_int_const_(int n) const;
 Returns the constant iterator pointing towards the element at index @SG_ML_B001n in the @SG_ML_L00B017SGLMultiSet../cppclass/sglmultiset.
@@ -80,13 +80,13 @@ Returns the number of copies of @SG_ML_B001x found in the @SG_ML_L00B017SGLMulti
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_const_T_ref_elementAt_int_const_ [[nodiscard]] const T& @SG_ML_L00902BelementAt#nodiscard_const_T_ref_elementAt_int_const_(int n) const;
 Returns the element at index @SG_ML_B001n in the @SG_ML_L00B017SGLMultiSet../cppclass/sglmultiset.
-@SG_ML_WARN If @SG_ML_B001n is out of bounds, this is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
+@SG_ML_WARN If @SG_ML_B001n is out of bounds, this will crash.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGLMultiSet_mc_Iterator_end_func_ [[nodiscard]] @SG_ML_L015015SGLMultiSet::Iteratorsglmultiset__iterator @SG_ML_L00302Cend#nodiscard_SGLMultiSet_mc_Iterator_end_func_();
 Returns a null iterator associated to this @SG_ML_L00B017SGLMultiSet../cppclass/sglmultiset.
 @SG_ML_NOTE @SG_ML_L00B017SGLMultiSet../cppclass/sglmultiset iterators behave circularly. This is equivalent to running operator-- on @SG_ML_L012045SGLMultiSet::begin../cppclass/sglmultiset#nodiscard_SGLMultiSet_mc_Iterator_begin_func_.
 @SG_ML_NOTE @SG_ML_L015021SGLMultiSet::Iterator../cppclass/sglmultiset__iterator allows modifying the @SG_ML_L00B017SGLMultiSet../cppclass/sglmultiset through it. If modification is not needed, use @SG_ML_L01A026SGLMultiSet::ConstIterator../cppclass/sglmultiset__constiterator instead. The @SG_ML_L01A026SGLMultiSet::ConstIterator../cppclass/sglmultiset__constiterator equivalent to this function is @SG_ML_L015053SGLMultiSet::constEnd../cppclass/sglmultiset#nodiscard_SGLMultiSet_mc_ConstIterator_constEnd_func_const_.
-@SG_ML_WARN Attempting to access the element that this iterator points to is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
+@SG_ML_WARN Attempting to access the element that this iterator points to will crash.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_bool_erase_SGLMultiSet_mc_Iterator_ref_ bool @SG_ML_L005028erase#bool_erase_SGLMultiSet_mc_Iterator_ref_(@SG_ML_L015015SGLMultiSet::Iteratorsglmultiset__iterator& i);
 Removes the element associated with @SG_ML_B001i from the @SG_ML_L00B017SGLMultiSet../cppclass/sglmultiset.

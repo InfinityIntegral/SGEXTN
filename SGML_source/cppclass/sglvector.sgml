@@ -42,12 +42,12 @@ children classes: (none)
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_SGLVector_int_const_T_ref_ @SG_ML_L00901BSGLVector#SGLVector_int_const_T_ref_(int count, const T& defaultValue);
 Creates a @SG_ML_L009015SGLVector../cppclass/sglvector of size @SG_ML_B005count with every element set to @SG_ML_B00CdefaultValue.
-@SG_ML_WARN Negative @SG_ML_B005count is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
+@SG_ML_WARN Negative @SG_ML_B005count will crash.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_SGLVector_int_ @SG_ML_L00900FSGLVector#SGLVector_int_(int count);
 Creates a @SG_ML_L009015SGLVector../cppclass/sglvector of size @SG_ML_B005count with every element default initialised.
 @SG_ML_WARN This will not compile if the data in the @SG_ML_L009015SGLVector../cppclass/sglvector do not have a default constructor (the one taking no arguments).
-@SG_ML_WARN Negative @SG_ML_B005count is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
+@SG_ML_WARN Negative @SG_ML_B005count will crash.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_SGLVector_func_ @SG_ML_L009010SGLVector#SGLVector_func_();
 Creates an empty @SG_ML_L009015SGLVector../cppclass/sglvector.
@@ -55,22 +55,22 @@ Creates an empty @SG_ML_L009015SGLVector../cppclass/sglvector.
 @SG_ML_HEADER_void_assign_int_const_T_ref_ void @SG_ML_L00601Dassign#void_assign_int_const_T_ref_(int count, const T& defaultValue);
 Assigns a @SG_ML_L009015SGLVector../cppclass/sglvector(@SG_ML_B005count, @SG_ML_B00CdefaultValue) to this @SG_ML_L009015SGLVector../cppclass/sglvector.
 @SG_ML_NOTE v.assign(@SG_ML_B005count, @SG_ML_B00CdefaultValue); is identical in functionality to v = @SG_ML_L009015SGLVector../cppclass/sglvector‹T›(@SG_ML_B005count, @SG_ML_B00CdefaultValue); Choosing one over the other is purely coding style.
-@SG_ML_WARN Negative @SG_ML_B005count is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
+@SG_ML_WARN Negative @SG_ML_B005count will crash.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_const_T_ref_at_int_const_ [[nodiscard]] const T& @SG_ML_L002024at#nodiscard_const_T_ref_at_int_const_(int i) const;
 Returns a constant reference to element @SG_ML_B001i of the @SG_ML_L009015SGLVector../cppclass/sglvector.
-@SG_ML_WARN This crashes for out of bounds @SG_ML_B001i.
+@SG_ML_WARN This will crash for out of bounds @SG_ML_B001i.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_T_ref_at_int_ [[nodiscard]] T& @SG_ML_L002018at#nodiscard_T_ref_at_int_(int i);
 Returns a reference to element @SG_ML_B001i of the @SG_ML_L009015SGLVector../cppclass/sglvector.
 @SG_ML_NOTE Since this returns a reference and not a copy, assigning to it directly (using it as a lvalue) would modify the @SG_ML_L009015SGLVector../cppclass/sglvector.
-@SG_ML_WARN This crashes for out of bounds @SG_ML_B001i.
+@SG_ML_WARN This will crash for out of bounds @SG_ML_B001i.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_const_T_ref_back_func_const_ [[nodiscard]] const T& @SG_ML_L004027back#nodiscard_const_T_ref_back_func_const_() const;
 Returns a constant reference to the last element of the @SG_ML_L009015SGLVector../cppclass/sglvector.
 @SG_ML_NOTE v.back() has the same effect as v.at(v.length() - 1)
 @SG_ML_NOTE Use @SG_ML_L00D039SGLVector::at../cppclass/sglvector#nodiscard_const_T_ref_at_int_const_@SG_ML_L00D02DSGLVector::at../cppclass/sglvector#nodiscard_T_ref_at_int_ if the element needs to be modified.
-@SG_ML_WARN This crashes if the @SG_ML_L009015SGLVector../cppclass/sglvector is empty.
+@SG_ML_WARN This will crash if the @SG_ML_L009015SGLVector../cppclass/sglvector is empty.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_fill_const_T_ref_ void @SG_ML_L004017fill#void_fill_const_T_ref_(const T& defaultValue);
 Sets every element in the existing @SG_ML_L009015SGLVector../cppclass/sglvector to @SG_ML_B00CdefaultValue without resizing the @SG_ML_L009015SGLVector../cppclass/sglvector.
@@ -96,7 +96,7 @@ Returns a pointer to element @SG_ML_B001n of the @SG_ML_L009015SGLVector../cppcl
 Removes the last element of the @SG_ML_L009015SGLVector../cppclass/sglvector.
 @SG_ML_NOTE This does not return the removed element. Use @SG_ML_L00F03CSGLVector::back../cppclass/sglvector#nodiscard_const_T_ref_back_func_const_ before removal to access the element.
 @SG_ML_NOTE This runs at true constant time complexity.
-@SG_ML_WARN Removing from empty @SG_ML_L009015SGLVector../cppclass/sglvector is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
+@SG_ML_WARN Removing from empty @SG_ML_L009015SGLVector../cppclass/sglvector will crash.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_pushBack_const_T_ref_ void @SG_ML_L00801BpushBack#void_pushBack_const_T_ref_(const T& x);
 Appends @SG_ML_B001x to the @SG_ML_L009015SGLVector../cppclass/sglvector.

@@ -45,8 +45,8 @@ wrapper of QTimer
 Creates and starts a @SG_ML_L008014SGXTimer../cppclass/sgxtimer running @SG_ML_B010attachedFunction every @SG_ML_B001t seconds.
 @SG_ML_NOTE Pass 0 to @SG_ML_B001t to run @SG_ML_B010attachedFunction on every frame, this may significantly increase power consumption of your application.
 @SG_ML_NOTE The timer is automatically started upon creation.
-@SG_ML_WARN @SG_ML_B010attachedFunction being nullptr is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
-@SG_ML_WARN @SG_ML_B001t being negative is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
+@SG_ML_WARN @SG_ML_B010attachedFunction being nullptr will crash.
+@SG_ML_WARN @SG_ML_B001t being negative will crash.
 @SG_ML_WARN Directly deleting a @SG_ML_L008014SGXTimer../cppclass/sgxtimer will crash as not preventing it would lead to a use after free bug.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_deleteTimer_func_ void @SG_ML_L00B017deleteTimer#void_deleteTimer_func_();
@@ -65,6 +65,6 @@ Pauses this @SG_ML_L008014SGXTimer../cppclass/sgxtimer. The timer can be resumed
 Runs @SG_ML_B010attachedFunction after @SG_ML_B001t seconds once without repeating it.
 @SG_ML_NOTE Pass 0 to @SG_ML_B001t to run @SG_ML_B010attachedFunction immediately after this frame.
 @SG_ML_NOTE The @SG_ML_L008014SGXTimer../cppclass/sgxtimer object controlling this is not exposed, so you cannot stop or restart this timer.
-@SG_ML_WARN @SG_ML_B010attachedFunction being nullptr is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
-@SG_ML_WARN @SG_ML_B001t being negative is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
+@SG_ML_WARN @SG_ML_B010attachedFunction being nullptr will crash.
+@SG_ML_WARN @SG_ML_B001t being negative will crash.
 @SG_ML_BLANKLINE

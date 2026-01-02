@@ -57,6 +57,6 @@ Turn on a @SG_ML_L00D019SGWBackground../cppclass/sgwbackground using a initialis
 @SG_ML_NOTE If no @SG_ML_B00DresetFunction is needed, pass nullptr to it.
 @SG_ML_NOTE This hides all other UI pages to ensure that keyboard focus (pressing tab) works as expected.
 @SG_ML_WARN Forgetting to return a valid @SG_ML_L00D019SGWBackground../cppclass/sgwbackground in @SG_ML_B00CinitFunction is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
-@SG_ML_WARN Passing nullptr to @SG_ML_B00CinitFunction is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
+@SG_ML_WARN Passing nullptr to @SG_ML_B00CinitFunction will crash.
 @SG_ML_WARN If @SG_ML_B00BthisPointer is not nullptr when the function is called, it is assumed that the UI page is already on so nothing is done. If the UI page was previously turned off using @SG_ML_L016044SGWBackground::disable../cppclass/sgwbackground#static_void_disable_SGWBackground_ptr_ref_, this is not a concern.
 @SG_ML_BLANKLINE

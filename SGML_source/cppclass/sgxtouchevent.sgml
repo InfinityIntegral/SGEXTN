@@ -101,16 +101,21 @@ Y coordinate in pixels of the @SG_ML_L00D019SGXTouchEvent../cppclass/sgxtoucheve
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_int_hash_func_const_ [[nodiscard]] int @SG_ML_L00401Fhash#nodiscard_int_hash_func_const_() const;
 Hash function for @SG_ML_L007013SGLHash../cppclass/sglhash.
+@SG_ML_WARN This only takes into account the index number, comparing @SG_ML_L00D019SGXTouchEvent../cppclass/sgxtouchevent from different touch receivers is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_bool_operator_neq_SGXTouchEvent_const_ [[nodiscard]] bool @SG_ML_L00A031operator!=#nodiscard_bool_operator_neq_SGXTouchEvent_const_(@SG_ML_L00D00DSGXTouchEventsgxtouchevent x) const;
 Inequality check with @SG_ML_B001x for @SG_ML_L00B017SGLEqualsTo../cppclass/sglequalsto.
+@SG_ML_WARN This only takes into account the index number, comparing @SG_ML_L00D019SGXTouchEvent../cppclass/sgxtouchevent from different touch receivers is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_bool_operator_lt_SGXTouchEvent_const_ [[nodiscard]] bool @SG_ML_L009030operator‹#nodiscard_bool_operator_lt_SGXTouchEvent_const_(@SG_ML_L00D00DSGXTouchEventsgxtouchevent x) const;
 Lesser than operator with @SG_ML_B001x for @SG_ML_L00D019SGLLesserThan../cppclass/sgllesserthan and @SG_ML_L00B017SGLMoreThan../cppclass/sglmorethan.
+@SG_ML_WARN This only takes into account the index number, comparing @SG_ML_L00D019SGXTouchEvent../cppclass/sgxtouchevent from different touch receivers is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_bool_operator_eq_SGXTouchEvent_const_ [[nodiscard]] bool @SG_ML_L00A030operator==#nodiscard_bool_operator_eq_SGXTouchEvent_const_(@SG_ML_L00D00DSGXTouchEventsgxtouchevent x) const;
 Equality check with @SG_ML_B001x for @SG_ML_L00B017SGLEqualsTo../cppclass/sglequalsto.
+@SG_ML_WARN This only takes into account the index number, comparing @SG_ML_L00D019SGXTouchEvent../cppclass/sgxtouchevent from different touch receivers is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_bool_operator_gt_SGXTouchEvent_const_ [[nodiscard]] bool @SG_ML_L009030operator›#nodiscard_bool_operator_gt_SGXTouchEvent_const_(@SG_ML_L00D00DSGXTouchEventsgxtouchevent x) const;
 More than operator with @SG_ML_B001x for @SG_ML_L00D019SGLLesserThan../cppclass/sgllesserthan and @SG_ML_L00B017SGLMoreThan../cppclass/sglmorethan.
+@SG_ML_WARN This only takes into account the index number, comparing @SG_ML_L00D019SGXTouchEvent../cppclass/sgxtouchevent from different touch receivers is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
 @SG_ML_BLANKLINE

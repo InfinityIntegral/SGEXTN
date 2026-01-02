@@ -132,6 +132,7 @@ Creates a @SG_ML_L009015SGXString../cppclass/sgxstring containing a single chara
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGXChar_at_int_const_ [[nodiscard]] @SG_ML_L007007SGXCharsgxchar @SG_ML_L002020at#nodiscard_SGXChar_at_int_const_(int i) const;
 Returns the @SG_ML_L007013SGXChar../cppclass/sgxchar at index @SG_ML_B001i of this @SG_ML_L009015SGXString../cppclass/sgxstring.
+@SG_ML_WARN If @SG_ML_B001i is out of bounds, this will crash.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_cleanWhitespace_func_const_ void @SG_ML_L00F021cleanWhitespace#void_cleanWhitespace_func_const_() const;
 Removes leading and trailing whitespace from this @SG_ML_L009015SGXString../cppclass/sgxstring and replaces all consecutive groups of whitespace characters with a single space.
@@ -168,12 +169,12 @@ Returns the index of the first index of character @SG_ML_B001c found in this @SG
 @SG_ML_HEADER_nodiscard_int_findFirstFromLeftCustomStart_const_SGXString_ref_int_const_ [[nodiscard]] int @SG_ML_L01C04AfindFirstFromLeftCustomStart#nodiscard_int_findFirstFromLeftCustomStart_const_SGXString_ref_int_const_(const @SG_ML_L009009SGXStringsgxstring& s, int start) const;
 Returns the index of the first index of substring @SG_ML_B001s found in this @SG_ML_L009015SGXString../cppclass/sgxstring when searching from the left starting at @SG_ML_B005start.
 @SG_ML_NOTE This returns -1 if the substring @SG_ML_B001s is not in this @SG_ML_L009015SGXString../cppclass/sgxstring.
-@SG_ML_WARN This is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour if @SG_ML_B005start is out of bounds.
+@SG_ML_WARN This will crash if @SG_ML_B005start is out of bounds.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_int_findFirstFromLeftCustomStart_SGXChar_int_const_ [[nodiscard]] int @SG_ML_L01C03EfindFirstFromLeftCustomStart#nodiscard_int_findFirstFromLeftCustomStart_SGXChar_int_const_(@SG_ML_L007007SGXCharsgxchar c, int start) const;
 Returns the index of the first index of character @SG_ML_B001c found in this @SG_ML_L009015SGXString../cppclass/sgxstring when searching from the left starting at @SG_ML_B005start.
 @SG_ML_NOTE This returns -1 if the character @SG_ML_B001c is not in this @SG_ML_L009015SGXString../cppclass/sgxstring.
-@SG_ML_WARN This is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour if @SG_ML_B005start is out of bounds.
+@SG_ML_WARN This will crash if @SG_ML_B005start is out of bounds.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_int_findFirstFromRight_SGXChar_const_ [[nodiscard]] int @SG_ML_L012030findFirstFromRight#nodiscard_int_findFirstFromRight_SGXChar_const_(@SG_ML_L007007SGXCharsgxchar c) const;
 Returns the index of the first index of character @SG_ML_B001c found in this @SG_ML_L009015SGXString../cppclass/sgxstring when searching from the right.
@@ -186,12 +187,12 @@ Returns the index of the first index of substring @SG_ML_B001s found in this @SG
 @SG_ML_HEADER_nodiscard_int_findFirstFromRightCustomStart_const_SGXString_ref_int_const_ [[nodiscard]] int @SG_ML_L01D04BfindFirstFromRightCustomStart#nodiscard_int_findFirstFromRightCustomStart_const_SGXString_ref_int_const_(const @SG_ML_L009009SGXStringsgxstring& s, int start) const;
 Returns the index of the first index of substring @SG_ML_B001s found in this @SG_ML_L009015SGXString../cppclass/sgxstring when searching from the right starting at @SG_ML_B005start.
 @SG_ML_NOTE This returns -1 if the substring @SG_ML_B001s is not in this @SG_ML_L009015SGXString../cppclass/sgxstring.
-@SG_ML_WARN This is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour if @SG_ML_B005start is out of bounds.
+@SG_ML_WARN This will crash if @SG_ML_B005start is out of bounds.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_int_findFirstFromRightCustomStart_SGXChar_int_const_ [[nodiscard]] int @SG_ML_L01D03FfindFirstFromRightCustomStart#nodiscard_int_findFirstFromRightCustomStart_SGXChar_int_const_(@SG_ML_L007007SGXCharsgxchar c, int start) const;
 Returns the index of the first index of character @SG_ML_B001c found in this @SG_ML_L009015SGXString../cppclass/sgxstring when searching from the right starting at @SG_ML_B005start.
 @SG_ML_NOTE This returns -1 if the character @SG_ML_B001c is not in this @SG_ML_L009015SGXString../cppclass/sgxstring.
-@SG_ML_WARN This is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour if @SG_ML_B005start is out of bounds.
+@SG_ML_WARN This will crash if @SG_ML_B005start is out of bounds.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGXString_getLowerLanguageAware_func_const_ [[nodiscard]] @SG_ML_L009009SGXStringsgxstring @SG_ML_L015036getLowerLanguageAware#nodiscard_SGXString_getLowerLanguageAware_func_const_() const;
 Returns the language aware lowercase version of this @SG_ML_L009015SGXString../cppclass/sgxstring.
@@ -206,11 +207,11 @@ Hash function for @SG_ML_L007013SGLHash../cppclass/sglhash.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_SGXString_ref_insert_int_SGXChar_ @SG_ML_L009009SGXStringsgxstring& @SG_ML_L006022insert#SGXString_ref_insert_int_SGXChar_(int pos, @SG_ML_L007007SGXCharsgxchar c);
 Inserts @SG_ML_B001c into this @SG_ML_L009015SGXString../cppclass/sgxstring such that @SG_ML_B001c will start at index @SG_ML_B003pos of this @SG_ML_L009015SGXString../cppclass/sgxstring after insertion, then returns a reference to this @SG_ML_L009015SGXString../cppclass/sgxstring to enable expression chaining.
-@SG_ML_WARN Out of bounds @SG_ML_B003pos causes @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
+@SG_ML_WARN Out of bounds @SG_ML_B003pos will crash.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_SGXString_ref_insert_int_const_SGXString_ref_ @SG_ML_L009009SGXStringsgxstring& @SG_ML_L00602Einsert#SGXString_ref_insert_int_const_SGXString_ref_(int pos, const @SG_ML_L009009SGXStringsgxstring& s);
 Inserts @SG_ML_B001s into this @SG_ML_L009015SGXString../cppclass/sgxstring such that @SG_ML_B001s will start at index @SG_ML_B003pos of this @SG_ML_L009015SGXString../cppclass/sgxstring after insertion, then returns a reference to this @SG_ML_L009015SGXString../cppclass/sgxstring to enable expression chaining.
-@SG_ML_WARN Out of bounds @SG_ML_B003pos causes @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
+@SG_ML_WARN Out of bounds @SG_ML_B003pos will crash.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_bool_isASCII_func_const_ [[nodiscard]] bool @SG_ML_L007023isASCII#nodiscard_bool_isASCII_func_const_() const;
 Returns if all characters in this @SG_ML_L009015SGXString../cppclass/sgxstring are ASCII characters.
@@ -377,16 +378,16 @@ Returns a @SG_ML_L008014SGLArray../cppclass/sglarray of @SG_ML_L009015SGXString.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGXString_substring_int_int_const_ [[nodiscard]] @SG_ML_L009009SGXStringsgxstring @SG_ML_L00902Dsubstring#nodiscard_SGXString_substring_int_int_const_(int start, int length) const;
 Returns the substring of this @SG_ML_L009015SGXString../cppclass/sgxstring starting at @SG_ML_B005start with a length of @SG_ML_B006length.
-@SG_ML_WARN This is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour if @SG_ML_B005start or @SG_ML_B005start + @SG_ML_B006length - 1 is out of bounds.
-@SG_ML_WARN This is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour if @SG_ML_B006length is negative.
+@SG_ML_WARN This will crash if @SG_ML_B005start or @SG_ML_B005start + @SG_ML_B006length - 1 is out of bounds.
+@SG_ML_WARN This will crash if @SG_ML_B006length is negative.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGXString_substringLeft_int_const_ [[nodiscard]] @SG_ML_L009009SGXStringsgxstring @SG_ML_L00D02DsubstringLeft#nodiscard_SGXString_substringLeft_int_const_(int length) const;
 Returns the substring of this @SG_ML_L009015SGXString../cppclass/sgxstring containing the first @SG_ML_B006length letters from the left.
-@SG_ML_WARN This is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour is @SG_ML_B006length is negative or greater than the length of this @SG_ML_L009015SGXString../cppclass/sgxstring.
+@SG_ML_WARN This will crash is @SG_ML_B006length is negative or greater than the length of this @SG_ML_L009015SGXString../cppclass/sgxstring.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGXString_substringRight_int_const_ [[nodiscard]] @SG_ML_L009009SGXStringsgxstring @SG_ML_L00E02EsubstringRight#nodiscard_SGXString_substringRight_int_const_(int length) const;
 Returns the substring of this @SG_ML_L009015SGXString../cppclass/sgxstring containing the first @SG_ML_B006length letters from the right.
-@SG_ML_WARN This is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour is @SG_ML_B006length is negative or greater than the length of this @SG_ML_L009015SGXString../cppclass/sgxstring.
+@SG_ML_WARN This will crash is @SG_ML_B006length is negative or greater than the length of this @SG_ML_L009015SGXString../cppclass/sgxstring.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_toLowerLanguageAware_func_const_ void @SG_ML_L014026toLowerLanguageAware#void_toLowerLanguageAware_func_const_() const;
 Converts this @SG_ML_L009015SGXString../cppclass/sgxstring to its language aware lowercase form.
@@ -400,33 +401,31 @@ Converts this @SG_ML_L009015SGXString../cppclass/sgxstring to its language aware
 Returns the @SG_ML_L009015SGXString../cppclass/sgxstring that represents @SG_ML_B001x.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_SGXString_doubleToStringDecimalPlaces_double_int_ static @SG_ML_L009009SGXStringsgxstring @SG_ML_L01B039doubleToStringDecimalPlaces#static_SGXString_doubleToStringDecimalPlaces_double_int_(double x, int dp);
-Returns the @SG_ML_L009015SGXString../cppclass/sgxstring that represents @SG_ML_B001x rounded to @SG_ML_B002dp decimal places.
-@SG_ML_WARN In this version of SGEXTN, negative @SG_ML_B002dp is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour. Support is likely to be added in a future version.
+Returns the @SG_ML_L009015SGXString../cppclass/sgxstring that represents @SG_ML_B001x rounded to @SG_ML_B002dp decimal places. Negative @SG_ML_B002dp rounds @SG_ML_B001x to nearest 10 ^ ( - @SG_ML_B002dp )
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_SGXString_doubleToStringScientificNotation_double_int_ static @SG_ML_L009009SGXStringsgxstring @SG_ML_L02003EdoubleToStringScientificNotation#static_SGXString_doubleToStringScientificNotation_double_int_(double x, int sf);
 Returns the @SG_ML_L009015SGXString../cppclass/sgxstring that represents @SG_ML_B001x rounds to @SG_ML_B002sf significant figures, expressed in scientific notation.
-@SG_ML_NOTE The exponent is prefixed with English lowercase letter e, this is likely to be changed to the x10 Unicode character in a future version of SGEXTN.
-@SG_ML_WARN Negative @SG_ML_B002sf is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
+@SG_ML_NOTE The exponent is prefixed with English lowercase letter e.
+@SG_ML_WARN Negative or zero @SG_ML_B002sf will crash.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_SGXString_doubleToStringSignificantFigures_double_int_ static @SG_ML_L009009SGXStringsgxstring @SG_ML_L02003EdoubleToStringSignificantFigures#static_SGXString_doubleToStringSignificantFigures_double_int_(double x, int sf);
 Returns the @SG_ML_L009015SGXString../cppclass/sgxstring that represents @SG_ML_B001x rounds to @SG_ML_B002sf significant figures.
-@SG_ML_WARN Negative @SG_ML_B002sf is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
+@SG_ML_WARN Negative or zero @SG_ML_B002sf will crash.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_SGXString_floatToString_float_ static @SG_ML_L009009SGXStringsgxstring @SG_ML_L00D026floatToString#static_SGXString_floatToString_float_(float x);
 Returns the @SG_ML_L009015SGXString../cppclass/sgxstring that represents @SG_ML_B001x.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_SGXString_floatToStringDecimalPlaces_float_int_ static @SG_ML_L009009SGXStringsgxstring @SG_ML_L01A037floatToStringDecimalPlaces#static_SGXString_floatToStringDecimalPlaces_float_int_(float x, int dp);
-Returns the @SG_ML_L009015SGXString../cppclass/sgxstring that represents @SG_ML_B001x rounded to @SG_ML_B002dp decimal places.
-@SG_ML_WARN In this version of SGEXTN, negative @SG_ML_B002dp is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour. Support is likely to be added in a future version.
+Returns the @SG_ML_L009015SGXString../cppclass/sgxstring that represents @SG_ML_B001x rounded to @SG_ML_B002dp decimal places. Negative @SG_ML_B002dp rounds @SG_ML_B001x to nearest 10 ^ ( - @SG_ML_B002dp )
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_SGXString_floatToStringScientificNotation_float_int_ static @SG_ML_L009009SGXStringsgxstring @SG_ML_L01F03CfloatToStringScientificNotation#static_SGXString_floatToStringScientificNotation_float_int_(float x, int sf);
 Returns the @SG_ML_L009015SGXString../cppclass/sgxstring that represents @SG_ML_B001x rounds to @SG_ML_B002sf significant figures, expressed in scientific notation.
-@SG_ML_NOTE The exponent is prefixed with English lowercase letter e, this is likely to be changed to the x10 Unicode character in a future version of SGEXTN.
-@SG_ML_WARN Negative @SG_ML_B002sf is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
+@SG_ML_NOTE The exponent is prefixed with English lowercase letter e.
+@SG_ML_WARN Negative or zero @SG_ML_B002sf will crash.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_SGXString_floatToStringSignificantFigures_float_int_ static @SG_ML_L009009SGXStringsgxstring @SG_ML_L01F03CfloatToStringSignificantFigures#static_SGXString_floatToStringSignificantFigures_float_int_(float x, int sf);
 Returns the @SG_ML_L009015SGXString../cppclass/sgxstring that represents @SG_ML_B001x rounds to @SG_ML_B002sf significant figures.
-@SG_ML_WARN Negative @SG_ML_B002sf is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
+@SG_ML_WARN Negative or zero @SG_ML_B002sf will crash.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_SGXString_intToString_int_ static @SG_ML_L009009SGXStringsgxstring @SG_ML_L00B022intToString#static_SGXString_intToString_int_(int x);
 Returns the @SG_ML_L009015SGXString../cppclass/sgxstring that represents @SG_ML_B001x.
@@ -448,7 +447,7 @@ Returns the @SG_ML_L009015SGXString../cppclass/sgxstring that represents @SG_ML_
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_SGXString_repeatChar_SGXChar_int_ static @SG_ML_L009009SGXStringsgxstring @SG_ML_L00A029repeatChar#static_SGXString_repeatChar_SGXChar_int_(@SG_ML_L007007SGXCharsgxchar c, int count);
 Returns the @SG_ML_L009015SGXString../cppclass/sgxstring formed by putting together @SG_ML_B005count copies of @SG_ML_B001c.
-@SG_ML_WARN Negative @SG_ML_B005count is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
+@SG_ML_WARN Negative @SG_ML_B005count will crash.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_SGXString_unsignedIntToString_unsigned_int_ static @SG_ML_L009009SGXStringsgxstring @SG_ML_L013033unsignedIntToString#static_SGXString_unsignedIntToString_unsigned_int_(unsigned int x);
 Returns the @SG_ML_L009015SGXString../cppclass/sgxstring that represents @SG_ML_B001x.

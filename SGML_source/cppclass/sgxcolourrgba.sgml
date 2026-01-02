@@ -105,22 +105,22 @@ Sets this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba to the resulting 
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_SGXColourRGBA_ref_applyTintNoGammaCorrectionSeparateTransparency_SGXColourRGBA_int_ @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba& @SG_ML_L02E054applyTintNoGammaCorrectionSeparateTransparency#SGXColourRGBA_ref_applyTintNoGammaCorrectionSeparateTransparency_SGXColourRGBA_int_(@SG_ML_L00D00DSGXColourRGBAsgxcolourrgba x, int a);
 Sets this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba to the resulting colour if this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba is viewed behind a screen with colour c, where c has equal RGB channels as @SG_ML_B001x but a transparency of @SG_ML_B001a between 0 and 255 inclusive and returns a reference to this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba to allow operation chaining.
-@SG_ML_NOTE The computation proceeds anyways if @SG_ML_B001a is out of bounds, this is NOT @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour. This can be useful for effects that remove a certain colour.
+@SG_ML_NOTE The computation proceeds anyways if @SG_ML_B001a is out of bounds. This can be useful for effects that remove a certain colour.
 @SG_ML_NOTE This does not change the transparency of this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_SGXColourRGBA_ref_applyTintNoGammaCorrectionSeparateTransparencyUsingFloat_SGXColourRGBA_float_ @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba& @SG_ML_L038060applyTintNoGammaCorrectionSeparateTransparencyUsingFloat#SGXColourRGBA_ref_applyTintNoGammaCorrectionSeparateTransparencyUsingFloat_SGXColourRGBA_float_(@SG_ML_L00D00DSGXColourRGBAsgxcolourrgba x, float a);
 Sets this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba to the resulting colour if this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba is viewed behind a screen with colour c, where c has equal RGB channels as @SG_ML_B001x but a transparency of @SG_ML_B001a between 0 and 1 inclusive and returns a reference to this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba to allow operation chaining.
-@SG_ML_NOTE The computation proceeds anyways if @SG_ML_B001a is out of bounds, this is NOT @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour. This can be useful for effects that remove a certain colour.
+@SG_ML_NOTE The computation proceeds anyways if @SG_ML_B001a is out of bounds. This can be useful for effects that remove a certain colour.
 @SG_ML_NOTE This does not change the transparency of this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_SGXColourRGBA_ref_applyTintSeparateTransparency_SGXColourRGBA_int_ @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba& @SG_ML_L01D043applyTintSeparateTransparency#SGXColourRGBA_ref_applyTintSeparateTransparency_SGXColourRGBA_int_(@SG_ML_L00D00DSGXColourRGBAsgxcolourrgba x, int a);
 Sets this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba to the resulting colour if this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba is viewed behind a screen with colour c, where c has equal RGB channels as @SG_ML_B001x but a transparency of @SG_ML_B001a between 0 and 255 inclusive, with computation done in linear colour space and returns a reference to this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba to allow operation chaining.
-@SG_ML_NOTE The computation proceeds anyways if @SG_ML_B001a is out of bounds, this is NOT @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour. This can be useful for effects that remove a certain colour.
+@SG_ML_NOTE The computation proceeds anyways if @SG_ML_B001a is out of bounds. This can be useful for effects that remove a certain colour.
 @SG_ML_NOTE This does not change the transparency of this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_SGXColourRGBA_ref_applyTintSeparateTransparencyUsingFloat_SGXColourRGBA_float_ @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba& @SG_ML_L02704FapplyTintSeparateTransparencyUsingFloat#SGXColourRGBA_ref_applyTintSeparateTransparencyUsingFloat_SGXColourRGBA_float_(@SG_ML_L00D00DSGXColourRGBAsgxcolourrgba x, float a);
 Sets this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba to the resulting colour if this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba is viewed behind a screen with colour c, where c has equal RGB channels as @SG_ML_B001x but a transparency of @SG_ML_B001a between 0 and 1 inclusive, with computation done in linear colour space and returns a reference to this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba to allow operation chaining.
-@SG_ML_NOTE The computation proceeds anyways if @SG_ML_B001a is out of bounds, this is NOT @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour. This can be useful for effects that remove a certain colour.
+@SG_ML_NOTE The computation proceeds anyways if @SG_ML_B001a is out of bounds. This can be useful for effects that remove a certain colour.
 @SG_ML_NOTE This does not change the transparency of this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_gammaCorrectBegin_float_ref_float_ref_float_ref_const_ void @SG_ML_L01103CgammaCorrectBegin#void_gammaCorrectBegin_float_ref_float_ref_float_ref_const_(float& r, float& g, float& b) const;
@@ -129,6 +129,7 @@ Converts the @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba to linear colo
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_gammaCorrectEnd_float_float_float_ void @SG_ML_L00F028gammaCorrectEnd#void_gammaCorrectEnd_float_float_float_(float r, float g, float b);
 Converts the RGB values @SG_ML_B001r, @SG_ML_B001g, @SG_ML_B001b in linear colour space back into the @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba colour space and apply them to this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba.
+@SG_ML_NOTE If the any component is out of bounds, it is corrected automatically.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_int_getBlue_func_const_ [[nodiscard]] int @SG_ML_L007022getBlue#nodiscard_int_getBlue_func_const_() const;
 Returns the blue component of this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba as a int between 0 and 255 inclusive.
@@ -177,12 +178,12 @@ Hash function defined for @SG_ML_L007013SGLHash../cppclass/sglhash.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGXColourRGBA_linearInterpolate_SGXColourRGBA_float_const_ [[nodiscard]] @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba @SG_ML_L011045linearInterpolate#nodiscard_SGXColourRGBA_linearInterpolate_SGXColourRGBA_float_const_(@SG_ML_L00D00DSGXColourRGBAsgxcolourrgba x, float f) const;
 Returns the resulting colour if @SG_ML_B001f of this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba is mixed with (1 - @SG_ML_B001f) of @SG_ML_B001x, where @SG_ML_B001f is between 0 and 1 inclusive.
-@SG_ML_NOTE The computation proceeds anyways if @SG_ML_B001f is out of bounds, this is NOT @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour. This can be useful for effects that remove a certain colour.
+@SG_ML_NOTE The computation proceeds anyways if @SG_ML_B001f is out of bounds. This can be useful for effects that remove a certain colour.
 @SG_ML_NOTE The returned colour has the same transparency as this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGXColourRGBA_linearInterpolateGammaCorrection_SGXColourRGBA_float_const_ [[nodiscard]] @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba @SG_ML_L020054linearInterpolateGammaCorrection#nodiscard_SGXColourRGBA_linearInterpolateGammaCorrection_SGXColourRGBA_float_const_(@SG_ML_L00D00DSGXColourRGBAsgxcolourrgba x, float f) const;
 Returns the resulting colour if @SG_ML_B001f of this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba is mixed with (1 - @SG_ML_B001f) of @SG_ML_B001x, where @SG_ML_B001f is between 0 and 1 inclusive, computation done in linear colour space.
-@SG_ML_NOTE The computation proceeds anyways if @SG_ML_B001f is out of bounds, this is NOT @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour. This can be useful for effects that remove a certain colour.
+@SG_ML_NOTE The computation proceeds anyways if @SG_ML_B001f is out of bounds. This can be useful for effects that remove a certain colour.
 @SG_ML_NOTE The returned colour has the same transparency as this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_SGXColourRGBA_ref_linearTransformBlue_float_float_ @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba& @SG_ML_L013033linearTransformBlue#SGXColourRGBA_ref_linearTransformBlue_float_float_(float m, float c);

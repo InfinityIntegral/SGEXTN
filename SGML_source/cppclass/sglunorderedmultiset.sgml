@@ -47,17 +47,17 @@ Creates an empty @SG_ML_L014020SGLUnorderedMultiSet../cppclass/sglunorderedmulti
 Returns a iterator to the first element in the @SG_ML_L014020SGLUnorderedMultiSet../cppclass/sglunorderedmultiset.
 @SG_ML_NOTE @SG_ML_L014020SGLUnorderedMultiSet../cppclass/sglunorderedmultiset iterators behave circularly. This is equivalent to running operator++ on @SG_ML_L019055SGLUnorderedMultiSet::end../cppclass/sglunorderedmultiset#nodiscard_SGLUnorderedMultiSet_mc_Iterator_end_func_.
 @SG_ML_NOTE @SG_ML_L01E02ASGLUnorderedMultiSet::Iterator../cppclass/sglunorderedmultiset__iterator allows modifying the @SG_ML_L014020SGLUnorderedMultiSet../cppclass/sglunorderedmultiset through it. If modification is not needed, use @SG_ML_L02302FSGLUnorderedMultiSet::ConstIterator../cppclass/sglunorderedmultiset__constiterator instead. The @SG_ML_L02302FSGLUnorderedMultiSet::ConstIterator../cppclass/sglunorderedmultiset__constiterator equivalent to this function is @SG_ML_L020067SGLUnorderedMultiSet::constBegin../cppclass/sglunorderedmultiset#nodiscard_SGLUnorderedMultiSet_mc_ConstIterator_constBegin_func_const_.
-@SG_ML_WARN If the @SG_ML_L014020SGLUnorderedMultiSet../cppclass/sglunorderedmultiset is empty, this is the same as @SG_ML_L019055SGLUnorderedMultiSet::end../cppclass/sglunorderedmultiset#nodiscard_SGLUnorderedMultiSet_mc_Iterator_end_func_.
+@SG_ML_NOTE If the @SG_ML_L014020SGLUnorderedMultiSet../cppclass/sglunorderedmultiset is empty, this is the same as @SG_ML_L019055SGLUnorderedMultiSet::end../cppclass/sglunorderedmultiset#nodiscard_SGLUnorderedMultiSet_mc_Iterator_end_func_.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGLUnorderedMultiSet_mc_ConstIterator_constBegin_func_const_ [[nodiscard]] @SG_ML_L023023SGLUnorderedMultiSet::ConstIteratorsglunorderedmultiset__constiterator @SG_ML_L00A047constBegin#nodiscard_SGLUnorderedMultiSet_mc_ConstIterator_constBegin_func_const_() const;
 Returns a constant iterator to the first element in the @SG_ML_L014020SGLUnorderedMultiSet../cppclass/sglunorderedmultiset.
 @SG_ML_NOTE @SG_ML_L014020SGLUnorderedMultiSet../cppclass/sglunorderedmultiset iterators behave circularly. This is equivalent to running operator++ on @SG_ML_L01E065SGLUnorderedMultiSet::constEnd../cppclass/sglunorderedmultiset#nodiscard_SGLUnorderedMultiSet_mc_ConstIterator_constEnd_func_const_.
-@SG_ML_WARN If the @SG_ML_L014020SGLUnorderedMultiSet../cppclass/sglunorderedmultiset is empty, this is the same as @SG_ML_L01E065SGLUnorderedMultiSet::constEnd../cppclass/sglunorderedmultiset#nodiscard_SGLUnorderedMultiSet_mc_ConstIterator_constEnd_func_const_.
+@SG_ML_NOTE If the @SG_ML_L014020SGLUnorderedMultiSet../cppclass/sglunorderedmultiset is empty, this is the same as @SG_ML_L01E065SGLUnorderedMultiSet::constEnd../cppclass/sglunorderedmultiset#nodiscard_SGLUnorderedMultiSet_mc_ConstIterator_constEnd_func_const_.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGLUnorderedMultiSet_mc_ConstIterator_constEnd_func_const_ [[nodiscard]] @SG_ML_L023023SGLUnorderedMultiSet::ConstIteratorsglunorderedmultiset__constiterator @SG_ML_L008045constEnd#nodiscard_SGLUnorderedMultiSet_mc_ConstIterator_constEnd_func_const_() const;
 Returns a null constant iterator associated to this @SG_ML_L014020SGLUnorderedMultiSet../cppclass/sglunorderedmultiset.
 @SG_ML_NOTE @SG_ML_L014020SGLUnorderedMultiSet../cppclass/sglunorderedmultiset iterators behave circularly. This is equivalent to running operator-- on @SG_ML_L020067SGLUnorderedMultiSet::constBegin../cppclass/sglunorderedmultiset#nodiscard_SGLUnorderedMultiSet_mc_ConstIterator_constBegin_func_const_.
-@SG_ML_WARN Attempting to access the element that this iterator points to is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
+@SG_ML_WARN Attempting to access the element that this iterator points will crash.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_bool_contains_const_T_ref_const_ [[nodiscard]] bool @SG_ML_L00802Bcontains#nodiscard_bool_contains_const_T_ref_const_(const T& x) const;
 Returns if the @SG_ML_L014020SGLUnorderedMultiSet../cppclass/sglunorderedmultiset contains any copy of @SG_ML_B001x.
@@ -69,7 +69,7 @@ Returns the number of copies of @SG_ML_B001x found in the @SG_ML_L014020SGLUnord
 Returns a null iterator associated to this @SG_ML_L014020SGLUnorderedMultiSet../cppclass/sglunorderedmultiset.
 @SG_ML_NOTE @SG_ML_L014020SGLUnorderedMultiSet../cppclass/sglunorderedmultiset iterators behave circularly. This is equivalent to running operator-- on @SG_ML_L01B057SGLUnorderedMultiSet::begin../cppclass/sglunorderedmultiset#nodiscard_SGLUnorderedMultiSet_mc_Iterator_begin_func_.
 @SG_ML_NOTE @SG_ML_L01E02ASGLUnorderedMultiSet::Iterator../cppclass/sglunorderedmultiset__iterator allows modifying the @SG_ML_L014020SGLUnorderedMultiSet../cppclass/sglunorderedmultiset through it. If modification is not needed, use @SG_ML_L02302FSGLUnorderedMultiSet::ConstIterator../cppclass/sglunorderedmultiset__constiterator instead. The @SG_ML_L02302FSGLUnorderedMultiSet::ConstIterator../cppclass/sglunorderedmultiset__constiterator equivalent to this function is @SG_ML_L01E065SGLUnorderedMultiSet::constEnd../cppclass/sglunorderedmultiset#nodiscard_SGLUnorderedMultiSet_mc_ConstIterator_constEnd_func_const_.
-@SG_ML_WARN Attempting to access the element that this iterator points to is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
+@SG_ML_WARN Attempting to access the element that this iterator points to will crash.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_bool_erase_const_T_ref_ bool @SG_ML_L005018erase#bool_erase_const_T_ref_(const T& x);
 Removes @SG_ML_B001x from the @SG_ML_L014020SGLUnorderedMultiSet../cppclass/sglunorderedmultiset.

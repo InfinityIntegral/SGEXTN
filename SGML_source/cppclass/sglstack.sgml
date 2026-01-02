@@ -42,7 +42,7 @@ Returns the length of the @SG_ML_L008014SGLStack../cppclass/sglstack, that is th
 Removes the top element of the @SG_ML_L008014SGLStack../cppclass/sglstack.
 @SG_ML_NOTE This does not return the removed element. To access the removed element, use @SG_ML_L00D03ASGLStack::top../cppclass/sglstack#nodiscard_const_T_ref_top_func_const_ before removal.
 @SG_ML_NOTE This runs in truly constant time complexity.
-@SG_ML_WARN Removing from an empty @SG_ML_L008014SGLStack../cppclass/sglstack is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
+@SG_ML_WARN Removing from an empty @SG_ML_L008014SGLStack../cppclass/sglstack will crash.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_push_const_T_ref_ void @SG_ML_L004017push#void_push_const_T_ref_(const T& x);
 Appends @SG_ML_B001x to the top of the @SG_ML_L008014SGLStack../cppclass/sglstack.
@@ -54,5 +54,5 @@ Pre allocates sufficient memory to store @SG_ML_B00FnewMemoryLength elements in 
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_const_T_ref_top_func_const_ [[nodiscard]] const T& @SG_ML_L003026top#nodiscard_const_T_ref_top_func_const_() const;
 Returns the topmost element of the @SG_ML_L008014SGLStack../cppclass/sglstack.
-@SG_ML_WARN Using this when the @SG_ML_L008014SGLStack../cppclass/sglstack is empty results in @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
+@SG_ML_WARN Using this when the @SG_ML_L008014SGLStack../cppclass/sglstack is empty will crash.
 @SG_ML_BLANKLINE
