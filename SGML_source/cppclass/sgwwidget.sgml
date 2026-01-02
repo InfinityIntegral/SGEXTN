@@ -91,7 +91,7 @@ Returns the 1 coordinate of the @SG_ML_L01A016w-distance ⁽㈳㈴㈳㈮㈱㈨�
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_screenshot_void_ptr_SGRImage_ptr_const_ void @SG_ML_L00A02Dscreenshot#void_screenshot_void_ptr_SGRImage_ptr_const_(void (*callback)(@SG_ML_L008008SGRImagesgrimage*)) const;
 Requests a screenshot of the current @SG_ML_L009015SGWWidget../cppclass/sgwwidget and all of its children. @SG_ML_B008callback which is a @SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback will be called with the @SG_ML_L008014SGRImage../cppclass/sgrimage produced as argument when the screenshot is taken.
-@SG_ML_WARN @SG_ML_B008callback being nullptr is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
+@SG_ML_WARN @SG_ML_B008callback being nullptr will crash.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_setH0_float_ void @SG_ML_L005012setH0#void_setH0_float_(float h0);
 Sets the 0 coordinate of the @SG_ML_L01A016w-distance ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/wdistance controlling the height of this @SG_ML_L009015SGWWidget../cppclass/sgwwidget to @SG_ML_B002h0.

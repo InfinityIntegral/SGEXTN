@@ -34,7 +34,7 @@ Creates a @SG_ML_L01101DSGRRendererWidget../cppclass/sgrrendererwidget with pare
 @SG_ML_NOTE The @SG_ML_L01101DSGRRendererWidget../cppclass/sgrrendererwidget owns the renderer and syncer, they do not need to be deleted manually.
 @SG_ML_NOTE Keep references to the @SG_ML_L017015SG - RI ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/renderer renderer and syncer elsewhere in your code since they cannot be accessed using public API provided by @SG_ML_L01101DSGRRendererWidget../cppclass/sgrrendererwidget.
 @SG_ML_WARN @SG_ML_B006parent being nullptr is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
-@SG_ML_WARN @SG_ML_B00DrenderControl being nullptr is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
+@SG_ML_WARN @SG_ML_B00DrenderControl being nullptr will crash.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_updateCustomRenderer_func_const_ void @SG_ML_L014026updateCustomRenderer#void_updateCustomRenderer_func_const_() const;
 Calls for the @SG_ML_L01101DSGRRendererWidget../cppclass/sgrrendererwidget to be redrawn. The @SG_ML_L01101DSGRRendererWidget../cppclass/sgrrendererwidget will not be redrawn until this is called due to Qt Quick's power usage optimisations.

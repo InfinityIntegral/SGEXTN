@@ -38,7 +38,7 @@ Checks if this constant iterator points to a different element from @SG_ML_B001x
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_const_T_ref_operator_ptr_func_ const T& @SG_ML_L00901Foperator*#const_T_ref_operator_ptr_func_();
 Returns the element that this constant iterator points to.
-@SG_ML_WARN If this iterator is @SG_ML_L015053SGLMultiSet::constEnd../cppclass/sglmultiset#nodiscard_SGLMultiSet_mc_ConstIterator_constEnd_func_const_, using this function results in @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
+@SG_ML_WARN If this iterator is @SG_ML_L015053SGLMultiSet::constEnd../cppclass/sglmultiset#nodiscard_SGLMultiSet_mc_ConstIterator_constEnd_func_const_, using this function will crash.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_SGLMultiSet_mc_ConstIterator_operator_increment_int_ @SG_ML_L01A01ASGLMultiSet::ConstIteratorsglmultiset__constiterator @SG_ML_L00A035operator++#SGLMultiSet_mc_ConstIterator_operator_increment_int_(int);
 Increments the constant iterator to point towards the next element and returns the old constant iterator.

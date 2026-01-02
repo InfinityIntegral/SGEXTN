@@ -49,31 +49,31 @@ Creates a @SG_ML_L008014SGLDeque../cppclass/sgldeque containing no elements.
 @SG_ML_HEADER_SGLDeque_int_ @SG_ML_L00800ESGLDeque#SGLDeque_int_(int count);
 Creates a @SG_ML_L008014SGLDeque../cppclass/sgldeque containing @SG_ML_B005count elements which are default initialised.
 @SG_ML_WARN The type stored in the @SG_ML_L008014SGLDeque../cppclass/sgldeque must have a default constructor (the one taking no arguments) for this to compile.
-@SG_ML_WARN You must ensure that @SG_ML_B005count is nonnegative. Negative @SG_ML_B005count results in @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
+@SG_ML_WARN You must ensure that @SG_ML_B005count is nonnegative. Negative @SG_ML_B005count will crash.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_SGLDeque_int_const_T_ref_ @SG_ML_L00801ASGLDeque#SGLDeque_int_const_T_ref_(int count, const T& defaultValue);
 Creates a @SG_ML_L008014SGLDeque../cppclass/sgldeque containing @SG_ML_B005count copies of @SG_ML_B00CdefaultValue.
-@SG_ML_WARN You must ensure that @SG_ML_B005count is nonnegative. Negative @SG_ML_B005count results in @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
+@SG_ML_WARN You must ensure that @SG_ML_B005count is nonnegative. Negative @SG_ML_B005count will crash.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_assign_int_const_T_ref_ void @SG_ML_L00601Dassign#void_assign_int_const_T_ref_(int count, const T& defaultValue);
 Resets the @SG_ML_L008014SGLDeque../cppclass/sgldeque to have @SG_ML_B005count copies of @SG_ML_B00CdefaultValue.
 dq.assign(@SG_ML_B005count, @SG_ML_B00CdefaultValue); is functionally identical to dq = @SG_ML_L008014SGLDeque../cppclass/sgldeque‹T›(@SG_ML_B005count, @SG_ML_B00CdefaultValue);
-@SG_ML_WARN You must ensure that @SG_ML_B005count is nonnegative. Negative @SG_ML_B005count results in @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
+@SG_ML_WARN You must ensure that @SG_ML_B005count is nonnegative. Negative @SG_ML_B005count will crash.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_const_T_ref_at_int_const_ [[nodiscard]] const T& @SG_ML_L002024at#nodiscard_const_T_ref_at_int_const_(int i) const;
 Returns a constant reference to element @SG_ML_B001i of the @SG_ML_L008014SGLDeque../cppclass/sgldeque.
-@SG_ML_WARN This crashes for out of bounds @SG_ML_B001i.
+@SG_ML_WARN This will crash for out of bounds @SG_ML_B001i.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_T_ref_at_int_ [[nodiscard]] T& @SG_ML_L002018at#nodiscard_T_ref_at_int_(int i);
 Returns a reference to element @SG_ML_B001i of the @SG_ML_L008014SGLDeque../cppclass/sgldeque.
 @SG_ML_NOTE Since this returns a reference and not a copy, assigning to it directly (using it as a lvalue) would modify the @SG_ML_L008014SGLDeque../cppclass/sgldeque.
-@SG_ML_WARN This crashes for out of bounds @SG_ML_B001i.
+@SG_ML_WARN This will crash for out of bounds @SG_ML_B001i.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_const_T_ref_back_func_const_ [[nodiscard]] const T& @SG_ML_L004027back#nodiscard_const_T_ref_back_func_const_() const;
 Returns a constant reference to the last element of @SG_ML_L008014SGLDeque../cppclass/sgldeque.
 @SG_ML_NOTE dq.back() has the same effect as dq.at(dq.length() - 1)
 @SG_ML_NOTE Use @SG_ML_L00C038SGLDeque::at../cppclass/sgldeque#nodiscard_const_T_ref_at_int_const_@SG_ML_L00C02CSGLDeque::at../cppclass/sgldeque#nodiscard_T_ref_at_int_ if the element needs to be modified.
-@SG_ML_WARN If the @SG_ML_L008014SGLDeque../cppclass/sgldeque has a size of 0, accessing @SG_ML_L00E03BSGLDeque::back../cppclass/sgldeque#nodiscard_const_T_ref_back_func_const_ is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
+@SG_ML_WARN If the @SG_ML_L008014SGLDeque../cppclass/sgldeque has a size of 0, this will crash.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_fill_const_T_ref_ void @SG_ML_L004017fill#void_fill_const_T_ref_(const T& defaultValue);
 Sets every element in the @SG_ML_L008014SGLDeque../cppclass/sgldeque to @SG_ML_B00CdefaultValue. This does not resize the @SG_ML_L008014SGLDeque../cppclass/sgldeque.
@@ -83,7 +83,7 @@ Sets every element in the @SG_ML_L008014SGLDeque../cppclass/sgldeque to @SG_ML_B
 Returns a constant reference to the first element of @SG_ML_L008014SGLDeque../cppclass/sgldeque.
 @SG_ML_NOTE dq.front() has the same effect as dq.at(0)
 @SG_ML_NOTE Use @SG_ML_L00C038SGLDeque::at../cppclass/sgldeque#nodiscard_const_T_ref_at_int_const_@SG_ML_L00C02CSGLDeque::at../cppclass/sgldeque#nodiscard_T_ref_at_int_ if the element needs to be modified.
-@SG_ML_WARN If the @SG_ML_L008014SGLDeque../cppclass/sgldeque has a size of 0, accessing @SG_ML_L00F03CSGLDeque::front../cppclass/sgldeque#nodiscard_const_T_ref_front_func_const_ is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
+@SG_ML_WARN If the @SG_ML_L008014SGLDeque../cppclass/sgldeque has a size of 0, this will crash.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_int_length_func_const_ [[nodiscard]] int @SG_ML_L006021length#nodiscard_int_length_func_const_() const;
 Returns the length of the @SG_ML_L008014SGLDeque../cppclass/sgldeque, which is the number of elements currently stored inside it.
@@ -105,13 +105,13 @@ Returns a pointer to element @SG_ML_B001n of the @SG_ML_L008014SGLDeque../cppcla
 Removes the last element of the @SG_ML_L008014SGLDeque../cppclass/sgldeque.
 @SG_ML_NOTE This runs in truly constant time.
 @SG_ML_NOTE This does not return the last element. If you need the last element, access it with @SG_ML_L00E03BSGLDeque::back../cppclass/sgldeque#nodiscard_const_T_ref_back_func_const_ before running this.
-@SG_ML_WARN Running @SG_ML_L011027SGLDeque::popBack../cppclass/sgldeque#void_popBack_func_ on an empty @SG_ML_L008014SGLDeque../cppclass/sgldeque is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
+@SG_ML_WARN Running @SG_ML_L011027SGLDeque::popBack../cppclass/sgldeque#void_popBack_func_ on an empty @SG_ML_L008014SGLDeque../cppclass/sgldeque will crash.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_popFront_func_ void @SG_ML_L008014popFront#void_popFront_func_();
 Removes the first element of the @SG_ML_L008014SGLDeque../cppclass/sgldeque.
 @SG_ML_NOTE This runs in truly constant time.
 @SG_ML_NOTE This does not return the first element. If you need the first element, access it with @SG_ML_L00F03CSGLDeque::front../cppclass/sgldeque#nodiscard_const_T_ref_front_func_const_ before running this.
-@SG_ML_WARN Running @SG_ML_L012028SGLDeque::popFront../cppclass/sgldeque#void_popFront_func_ on an empty @SG_ML_L008014SGLDeque../cppclass/sgldeque is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
+@SG_ML_WARN Running @SG_ML_L012028SGLDeque::popFront../cppclass/sgldeque#void_popFront_func_ on an empty @SG_ML_L008014SGLDeque../cppclass/sgldeque will crash.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_pushBack_const_T_ref_ void @SG_ML_L00801BpushBack#void_pushBack_const_T_ref_(const T& x);
 Appends @SG_ML_B001x at the end of the @SG_ML_L008014SGLDeque../cppclass/sgldeque.

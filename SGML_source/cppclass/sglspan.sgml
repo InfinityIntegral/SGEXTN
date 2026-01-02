@@ -37,7 +37,8 @@ children classes: (none)
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_SGLSpan_T_ptr_int_ @SG_ML_L007013SGLSpan#SGLSpan_T_ptr_int_(T* dataInternal, int lengthInternal);
 Creates a @SG_ML_L007013SGLSpan../cppclass/sglspan starting from @SG_ML_B00CdataInternal with a length of @SG_ML_B00ElengthInternal.
-@SG_ML_WARN Negative @SG_ML_B00ElengthInternal is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
+@SG_ML_WARN Negative @SG_ML_B00ElengthInternal will cause a crash.
+@SG_ML_WARN @SG_ML_B00CdataInternal being nullptr will cause a crash.
 @SG_ML_WARN If any memory between @SG_ML_B00CdataInternal (inclusive) and @SG_ML_B00CdataInternal + @SG_ML_B00ElengthInternal (exclusive) is not allocated, have been deleted, or if the 2 endpoints come from different data structures, creating the span is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
 @SG_ML_WARN Using the span in any way after the host data structure is deleted is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour
 @SG_ML_WARN To avoid @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour, do not allocate any @SG_ML_L007013SGLSpan../cppclass/sglspan on the heap.
@@ -69,14 +70,16 @@ Returns a pointer to the element at index @SG_ML_B001n of the original span.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGLSpan_subspan_int_int_const_ [[nodiscard]] @SG_ML_L007007SGLSpansglspan @SG_ML_L007029subspan#nodiscard_SGLSpan_subspan_int_int_const_(int start, int length) const;
 Returns a subspan starting at index @SG_ML_B005start of the original span with a length of @SG_ML_B006length.
-@SG_ML_WARN Negative @SG_ML_B006length is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
-@SG_ML_WARN If @SG_ML_B005start or @SG_ML_B005start + @SG_ML_B006length - 1 is out of bounds, this results in @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
+@SG_ML_WARN Negative @SG_ML_B006length will crash.
+@SG_ML_WARN If @SG_ML_B005start or @SG_ML_B005start + @SG_ML_B006length - 1 is out of bounds, this will crash.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGLSpan_subspanLeft_int_const_ [[nodiscard]] @SG_ML_L007007SGLSpansglspan @SG_ML_L00B029subspanLeft#nodiscard_SGLSpan_subspanLeft_int_const_(int length) const;
 Returns a subspan containing the first @SG_ML_B006length elements of the original span.
-@SG_ML_WARN Negative @SG_ML_B006length is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
+@SG_ML_WARN Negative @SG_ML_B006length will crash.
+@SG_ML_WARN If @SG_ML_B006length is greater than the length of the span, this will crash.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGLSpan_subspanRight_int_const_ [[nodiscard]] @SG_ML_L007007SGLSpansglspan @SG_ML_L00C02AsubspanRight#nodiscard_SGLSpan_subspanRight_int_const_(int length) const;
 Returns a subspan containing the last @SG_ML_B006length elements of the original span.
-@SG_ML_WARN Negative @SG_ML_B006length is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
+@SG_ML_WARN Negative @SG_ML_B006length will crash.
+@SG_ML_WARN If @SG_ML_B006length is greater than the length of the span, this will crash.
 @SG_ML_BLANKLINE

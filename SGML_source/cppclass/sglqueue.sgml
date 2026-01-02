@@ -38,11 +38,11 @@ Creates an empty @SG_ML_L008014SGLQueue../cppclass/sglqueue.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_const_T_ref_back_func_const_ [[nodiscard]] const T& @SG_ML_L004027back#nodiscard_const_T_ref_back_func_const_() const;
 Returns the element at the back of the @SG_ML_L008014SGLQueue../cppclass/sglqueue.
-@SG_ML_WARN This is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour if the @SG_ML_L008014SGLQueue../cppclass/sglqueue is empty.
+@SG_ML_WARN This will crash if the @SG_ML_L008014SGLQueue../cppclass/sglqueue is empty.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_const_T_ref_front_func_const_ [[nodiscard]] const T& @SG_ML_L005028front#nodiscard_const_T_ref_front_func_const_() const;
 Returns the element at the front of the @SG_ML_L008014SGLQueue../cppclass/sglqueue.
-@SG_ML_WARN This is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour if the @SG_ML_L008014SGLQueue../cppclass/sglqueue is empty.
+@SG_ML_WARN This will crash if the @SG_ML_L008014SGLQueue../cppclass/sglqueue is empty.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_int_length_func_const_ [[nodiscard]] int @SG_ML_L006021length#nodiscard_int_length_func_const_() const;
 Returns the length of the @SG_ML_L008014SGLQueue../cppclass/sglqueue.
@@ -51,7 +51,7 @@ Returns the length of the @SG_ML_L008014SGLQueue../cppclass/sglqueue.
 Removes the front element of the @SG_ML_L008014SGLQueue../cppclass/sglqueue.
 @SG_ML_NOTE This has truly constant time complexity.
 @SG_ML_NOTE This does not return the removed element. To access the removed element, use @SG_ML_L00F03CSGLQueue::front../cppclass/sglqueue#nodiscard_const_T_ref_front_func_const_ before removal.
-@SG_ML_WARN This is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour if the @SG_ML_L008014SGLQueue../cppclass/sglqueue is empty.
+@SG_ML_WARN This will crash if the @SG_ML_L008014SGLQueue../cppclass/sglqueue is empty.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_push_const_T_ref_ void @SG_ML_L004017push#void_push_const_T_ref_(const T& x);
 Appends @SG_ML_B001x at the back of the @SG_ML_L008014SGLQueue../cppclass/sglqueue.

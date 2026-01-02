@@ -3,6 +3,8 @@
 @SG_ML_TITLE @SG_ML_L007013SGXFile../cppclass/sgxfile
 &#9;@SG_ML_L007013SGXFile../cppclass/sgxfile::@SG_ML_L007046SGXFile../cppclass/sgxfile#SGXFile_const_SGXString_ref_SGXFile_mc_OpenStatus_(const @SG_ML_L009009SGXStringsgxstring& s, SGXFile::OpenStatus openMode);
 &#9;enum @SG_ML_L007013SGXFile../cppclass/sgxfile::@SG_ML_L00A04AOpenStatus../cppclass/sgxfile#enum_OpenStatus_NotOpen_ReadOnly_WriteOnly_FullAccess_ { NotOpen, ReadOnly, WriteOnly, FullAccess };
+&#9;[[nodiscard]] bool @SG_ML_L007013SGXFile../cppclass/sgxfile::@SG_ML_L007036canRead../cppclass/sgxfile#nodiscard_bool_canRead_func_const_() const;
+&#9;[[nodiscard]] bool @SG_ML_L007013SGXFile../cppclass/sgxfile::@SG_ML_L008037canWrite../cppclass/sgxfile#nodiscard_bool_canWrite_func_const_() const;
 &#9;[[nodiscard]] long long @SG_ML_L007013SGXFile../cppclass/sgxfile::@SG_ML_L012046getPointerLocation../cppclass/sgxfile#nodiscard_long_long_getPointerLocation_func_const_() const;
 &#9;SGXFile::OpenStatus @SG_ML_L007013SGXFile../cppclass/sgxfile::@SG_ML_L00A035openStatus../cppclass/sgxfile#SGXFile_mc_OpenStatus_openStatus_;
 &#9;[[nodiscard]] @SG_ML_L008008SGLArraysglarray‹char› @SG_ML_L007013SGXFile../cppclass/sgxfile::@SG_ML_L00C04AreadAllBytes../cppclass/sgxfile#nodiscard_SGLArray_lt_char_gt_readAllBytes_func_const_() const;

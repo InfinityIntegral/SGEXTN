@@ -189,7 +189,7 @@ Returns the SGXString that represents $x rounds to $sf significant figures.
 @SG_WARN Negative or zero $sf will crash.
 @SG_FUNC static SGXString floatToStringScientificNotation(float x, int sf);
 Returns the SGXString that represents $x rounds to $sf significant figures, expressed in scientific notation.
-@SG_NOTE The exponent is prefixed with English lowercase letter e, this is likely to be changed to the x10 Unicode character in a future version of SGEXTN.
+@SG_NOTE The exponent is prefixed with English lowercase letter e.
 @SG_WARN Negative or zero $sf will crash.
 @SG_FUNC static SGXString doubleToString(double x);
 Returns the SGXString that represents $x.
@@ -200,7 +200,7 @@ Returns the SGXString that represents $x rounds to $sf significant figures.
 @SG_WARN Negative or zero $sf will crash.
 @SG_FUNC static SGXString doubleToStringScientificNotation(double x, int sf);
 Returns the SGXString that represents $x rounds to $sf significant figures, expressed in scientific notation.
-@SG_NOTE The exponent is prefixed with English lowercase letter e, this is likely to be changed to the x10 Unicode character in a future version of SGEXTN.
+@SG_NOTE The exponent is prefixed with English lowercase letter e.
 @SG_WARN Negative or zero $sf will crash.
 @SG_FUNC static SGXString repeatChar(SGXChar c, int count);
 Returns the SGXString formed by putting together $count copies of $c.

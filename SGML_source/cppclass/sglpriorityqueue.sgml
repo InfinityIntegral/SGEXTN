@@ -42,7 +42,7 @@ Returns the length of the @SG_ML_L01001CSGLPriorityQueue../cppclass/sglpriorityq
 Removes the most in front element of the @SG_ML_L01001CSGLPriorityQueue../cppclass/sglpriorityqueue.
 @SG_ML_NOTE This function has truly logarithmic time complexity.
 @SG_ML_NOTE This function does not return the first element before removing it. To access the element being removed, use @SG_ML_L015042SGLPriorityQueue::top../cppclass/sglpriorityqueue#nodiscard_const_T_ref_top_func_const_ before removal.
-@SG_ML_WARN Removing from an empty @SG_ML_L01001CSGLPriorityQueue../cppclass/sglpriorityqueue is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
+@SG_ML_WARN Removing from an empty @SG_ML_L01001CSGLPriorityQueue../cppclass/sglpriorityqueue will crash.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_push_const_T_ref_ void @SG_ML_L004017push#void_push_const_T_ref_(const T& x);
 Inserts @SG_ML_B001x into the @SG_ML_L01001CSGLPriorityQueue../cppclass/sglpriorityqueue.
@@ -54,5 +54,5 @@ Pre allocates memory sufficient for @SG_ML_B00FnewMemoryLength elements to be st
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_const_T_ref_top_func_const_ [[nodiscard]] const T& @SG_ML_L003026top#nodiscard_const_T_ref_top_func_const_() const;
 Returns the first element of the @SG_ML_L01001CSGLPriorityQueue../cppclass/sglpriorityqueue.
-@SG_ML_WARN Using this when the priority queue is empty results in @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
+@SG_ML_WARN Using this when the priority queue is empty will crash.
 @SG_ML_BLANKLINE

@@ -30,5 +30,5 @@ Uses QML file downloader.
 @SG_ML_HEADER_static_void_downloadFile_const_SGXString_ref_ static void @SG_ML_L00C02EdownloadFile#static_void_downloadFile_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& s);
 Offers the user to download the file at path @SG_ML_B001s.
 @SG_ML_NOTE This does not delete the file at @SG_ML_B001s.
-@SG_ML_WARN Nonexistent file at path @SG_ML_B001s results in @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
+@SG_ML_NOTE Nonexistent file at path @SG_ML_B001s will cause this to do nothing.
 @SG_ML_BLANKLINE

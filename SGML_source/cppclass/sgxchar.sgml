@@ -57,7 +57,7 @@ children classes: (none)
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_SGXChar_int_ @SG_ML_L00700DSGXChar#SGXChar_int_(int unicode);
 Converts Unicode index @SG_ML_B007unicode to its corresponding @SG_ML_L007013SGXChar../cppclass/sgxchar.
-@SG_ML_WARN If @SG_ML_B007unicode is below 0 or above 65535, this is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
+@SG_ML_WARN If @SG_ML_B007unicode is below 0 or above 65535, this will crash.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_SGXChar_char_ @SG_ML_L00700ESGXChar#SGXChar_char_(char c);
 Converts C++ char @SG_ML_B001c to a @SG_ML_L007013SGXChar../cppclass/sgxchar.

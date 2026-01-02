@@ -36,7 +36,7 @@ children classes: (none)
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_const_K_ref_key_func_ const K& @SG_ML_L003016key#const_K_ref_key_func_();
 Returns the key in the key value pair that this constant iterator points to.
-@SG_ML_WARN If this iterator is @SG_ML_L010049SGLMap::constEnd../cppclass/sglmap#nodiscard_SGLMap_mc_ConstIterator_constEnd_func_const_, using this function results in @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
+@SG_ML_WARN If this iterator is @SG_ML_L010049SGLMap::constEnd../cppclass/sglmap#nodiscard_SGLMap_mc_ConstIterator_constEnd_func_const_, using this function will crash.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_bool_operator_neq_SGLMap_mc_ConstIterator_ bool @SG_ML_L00A02Boperator!=#bool_operator_neq_SGLMap_mc_ConstIterator_(@SG_ML_L015015SGLMap::ConstIteratorsglmap__constiterator x);
 Checks if this constant iterator points to a different key value pair from @SG_ML_B001x.
@@ -62,5 +62,5 @@ Checks if this constant iterator points to the same key value pair as @SG_ML_B00
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_const_V_ref_value_func_ const V& @SG_ML_L005018value#const_V_ref_value_func_();
 Returns the value in the key value pair that this constant iterator points to.
-@SG_ML_WARN If this iterator is @SG_ML_L010049SGLMap::constEnd../cppclass/sglmap#nodiscard_SGLMap_mc_ConstIterator_constEnd_func_const_, using this function results in @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
+@SG_ML_WARN If this iterator is @SG_ML_L010049SGLMap::constEnd../cppclass/sglmap#nodiscard_SGLMap_mc_ConstIterator_constEnd_func_const_, using this function will crash.
 @SG_ML_BLANKLINE
