@@ -4,5 +4,5 @@
 @SG_IMPLE @SG_FINDREP_RENDERER internally uses QRhi.
 @SG_FUNC SGRVertexBufferObject(SGRBaseRenderer* renderControl, int bufferSize);
 Creates a SGRVertexBufferObject with a size of $bufferSize bytes associated to the @SG_FINDREP_RENDERER renderer $renderControl.
-@SG_WARN Negative $bufferSize is undefined behaviour.
-@SG_WARN Passing nullptr to $renderControl is undefined behaviour.
+@SG_WARN Negative $bufferSize will crash.
+@SG_WARN Passing nullptr to $renderControl will crash.

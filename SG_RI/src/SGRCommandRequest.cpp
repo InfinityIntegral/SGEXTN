@@ -4,7 +4,7 @@
 #include <SGLVector.h>
 #include <SGRVertexBufferObject.h>
 #include <SGRElementBufferObject.h>
-#include <stdexcept>
+#include <private_api_Containers/SGLCrash.h>
 
 SGRCommandRequest::SGRCommandRequest(QRhiCommandBuffer *commandBuffer){
     (*this).commandBuffer = commandBuffer;
@@ -18,6 +18,8 @@ SGRCommandRequest::~SGRCommandRequest(){
 }
 
 void SGRCommandRequest::addVertexBufferObject(SGRVertexBufferObject *vbo, int bufferOffsetInBytes) const {
+    if(bufferOffsetInBytes < 0){SGLCrash::crash("SGRCommandRequest::addVertexBufferObject crashed because the offset is negative");}
+    if(bufferOffsetInBytes >= (*vbo).length()){SGLCrash::crash("SGRCommandRequest::addVertexBufferObject crashed because the offset points beyond the end of the buffer");}
     (*vbos).pushBack(SGLPair<int, SGRVertexBufferObject*>(bufferOffsetInBytes, vbo));
 }
 
@@ -37,6 +39,6 @@ void SGRCommandRequest::finaliseForDraw(){
 }
 
 void SGRCommandRequest::drawTriangles(int numberOfTriangles, int startLocation) const {
-    if(buffersAttached == false){throw std::runtime_error("you forgot to attach the vertex buffer objects and element buffer objects by finalising the command request before drawing, use SGRCommandRequest::finaliseForDraw to attach the buffers");}
+    if(buffersAttached == false){SGLCrash::crash("SGRCommandRequest::drawTriangles crashed because you forgot finalise the command request before drawing, use SGRCommandRequest::finaliseForDraw to attach the buffers");}
     (*commandBuffer).drawIndexed(3 * numberOfTriangles, 1, startLocation, 0, 0);
 }

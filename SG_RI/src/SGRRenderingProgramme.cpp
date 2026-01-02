@@ -6,7 +6,6 @@
 #include <SGLVector.h>
 #include <private_api_RI/SGRVertexProperty.h>
 #include <SGLPair.h>
-#include <stdexcept>
 #include <SGRCommandRequest.h>
 #include <SGRDataBuffer.h>
 #include <SGRBaseRenderer.h>
@@ -15,6 +14,7 @@
 #include <SGRGraphicsLanguageType.h>
 #include <QIODevice>
 #include <rhi/qshader.h>
+#include <private_api_Containers/SGLCrash.h>
 
 namespace {
 QRhiVertexInputAttribute::Format temp_getVertexAttributeType(SGRGraphicsLanguageType::Type type, int vectorLength){
@@ -38,6 +38,8 @@ QRhiVertexInputAttribute::Format temp_getVertexAttributeType(SGRGraphicsLanguage
 }
 
 SGRRenderingProgramme::SGRRenderingProgramme(SGRBaseRenderer *renderControl){
+    if(renderControl == nullptr){SGLCrash::crash("SGRRenderingProgramme constructor crashed because the associated render control object is nullptr");}
+
     (*this).vertexShader = nullptr;
     (*this).fragmentShader = nullptr;
     (*this).shaderResources = nullptr;
@@ -105,10 +107,14 @@ void SGRRenderingProgramme::setShaderQSBFiles(const SGXString &vertexShaderPath,
 }
 
 void SGRRenderingProgramme::addVertexBufferObject(int vertexSize) const {
+    if(vertexSize <= 0){SGLCrash::crash("SGRRenderingProgramme::addVertexBufferObject crashed because the vertex size is zero or negative");}
     (*vertexBufferObjects).pushBack(vertexSize);
 }
 
 void SGRRenderingProgramme::addVertexProperty(int vertexBufferObjectIndex, int offsetFromVertexStart, int shaderDeclaredLocation, SGRGraphicsLanguageType::Type propertyType, int vectorLength) const {
+    if(offsetFromVertexStart < 0){SGLCrash::crash("SGRRenderingProgramme::addVertexProperty crashed because the offset from the start of the vertex is negative");}
+    if(vertexBufferObjectIndex < 0){SGLCrash::crash("SGRRenderingProgramme::addVertexProperty crashed because the index of the vertex buffer object is negative");}
+    if(vectorLength < 1 || vectorLength > 4){SGLCrash::crash("SGRRenderingProgramme::addVertexProperty crashed because the vector length is not between 1 to 4 inclusive");}
     (*vertexProperties).pushBack(SGRVertexProperty(vertexBufferObjectIndex, offsetFromVertexStart, shaderDeclaredLocation, propertyType, vectorLength));
 }
 
@@ -145,7 +151,7 @@ void SGRRenderingProgramme::finaliseShaderResource(){
         (*uniformBuffers).pushBack(SGLPair<int, QRhiBuffer*>(0, uniformBuffer));
     }
     for(int i=0; i<(*uniformBufferObjects).length(); i++){
-        if((*uniformBufferObjects).at(i).second == 0){throw std::runtime_error("uniform buffer binding point 0 is reserved for the SG RI internal uniform buffer object which stores information about the custom renderer, pls attach your own uniform buffer objects to binding points starting from 1");}
+        if((*uniformBufferObjects).at(i).second == 0){SGLCrash::crash("SGRRenderingProgramme::finaliseShaderResource crashed because a uniform buffer object has been attached at binding point 0, uniform buffer binding point 0 is reserved for the SG RI internal uniform buffer object which stores information about the custom renderer, pls attach your own uniform buffer objects to binding points starting from 1");}
         QRhiBuffer* uniformBuffer = (*rhi).newBuffer(QRhiBuffer::Dynamic, QRhiBuffer::UniformBuffer, (*uniformBufferObjects).at(i).first);
         (*uniformBuffer).create();
         resourceBindings.pushBack(QRhiShaderResourceBinding::uniformBuffer((*uniformBufferObjects).at(i).second, QRhiShaderResourceBinding::VertexStage | QRhiShaderResourceBinding::FragmentStage, uniformBuffer));
@@ -164,25 +170,28 @@ void SGRRenderingProgramme::finaliseShaderResource(){
 }
 
 void SGRRenderingProgramme::finaliseRenderingProgramme(){
-    if(shadersAreSet == false){
-        throw std::runtime_error("you forgot to attach QSB shader binaries to the rendering programme, use SGRRenderingProgramme::setShaderQSBFiles to attach them");
-    }
-    if(vertexFormattingIsSet == false){
-        throw std::runtime_error("you forgot to specify the type of data taken as input by your vertex shader and the location of that data, use SGRRenderingProgramme::finaliseVertices to specify these, you must finalise vertex properties after adding them");
-    }
-    if(shaderResourceIsSet == false){
-        throw std::runtime_error("you forgot to specify the shader resources (uniform buffers, textures, storage buffers) used by the shaders, use SGRRenderingProgramme::finaliseShaderResources to specify this, you must finalise shader resources after adding them, and you still must finalise these even if you did not add anything");
-    }
+    if(shadersAreSet == false){SGLCrash::crash("SGRRenderingProgramme::finaliseRenderingProgramme crashed because you forgot to attach QSB shader binaries to the rendering programme, use SGRRenderingProgramme::setShaderQSBFiles to attach them");}
+    if(vertexFormattingIsSet == false){SGLCrash::crash("SGRRenderingProgramme::finaliseRenderingProgramme crashed because you forgot to specify the type of data taken as input by your vertex shader and the location of that data, use SGRRenderingProgramme::finaliseVertices to specify these, you must finalise vertex properties after adding them");}
+    if(shaderResourceIsSet == false){SGLCrash::crash("SGRRenderingProgramme::finaliseRenderingProgramme crashed because you forgot to specify the shader resources (uniform buffers, textures, storage buffers) used by the shaders, use SGRRenderingProgramme::finaliseShaderResources to specify this, you must finalise shader resources after adding them, and you still must finalise these even if you did not add anything");}
     (*pipeline).setRenderPassDescriptor((*(*node).renderTarget()).renderPassDescriptor());
     (*pipeline).create();
     isFinalised = true;
 }
 
 void SGRRenderingProgramme::updateDataBuffer(SGRDataBuffer *buffer, int startLocation, int dataSize, void *pointerToData) const {
+    if(buffer == nullptr){SGLCrash::crash("SGRRenderingProgramme::updateDataBuffer crashed because the target buffer is nullptr");}
+    if(pointerToData == nullptr){SGLCrash::crash("SGRRenderingProgramme::updateDataBuffer crashed because the source data is nullptr");}
+    if(startLocation < 0){SGLCrash::crash("SGRRenderingProgramme::updateDataBuffer crashed because the starting location is negative");}
+    if(dataSize < 0){SGLCrash::crash("SGRRenderingProgramme::updateDataBuffer crashed because the length of the data to update is negative");}
+    if(startLocation + dataSize > (*buffer).length()){SGLCrash::crash("SGRRenderingProgramme::updateDataBuffer crashed because the ending location, or starting location + length - 1, points beyond the end of the buffer");}
     (*resourceUpdateOperation).updateDynamicBuffer((*buffer).data, startLocation, dataSize, pointerToData);
 }
 
 void SGRRenderingProgramme::updateShaderUniforms(int shaderDeclaredBinding, int startLocation, int dataSize, void *pointerToData) const {
+    if(shaderDeclaredBinding < 0){SGLCrash::crash("SGRRenderingProgramme::updateShaderUniforms crashed because the specified binding point is negative");}
+    if(pointerToData == nullptr){SGLCrash::crash("SGRRenderingProgramme::updateShaderUniforms crashed because the source data is nullptr");}
+    if(startLocation < 0){SGLCrash::crash("SGRRenderingProgramme::updateShaderUniforms crashed because the starting location is negative");}
+    if(dataSize < 0){SGLCrash::crash("SGRRenderingProgramme::updateShaderUniforms crashed because the length of the data to update is negative");}
     QRhiBuffer* buffer = nullptr;
     for(int i=0; i<(*uniformBuffers).length(); i++){
         if((*uniformBuffers).at(i).first == shaderDeclaredBinding){
@@ -195,6 +204,8 @@ void SGRRenderingProgramme::updateShaderUniforms(int shaderDeclaredBinding, int 
 }
 
 void SGRRenderingProgramme::updateTexture(int shaderDeclaredBinding, SGRImage *sourceImage) const {
+    if(shaderDeclaredBinding < 0){SGLCrash::crash("SGRRenderingProgramme::updateTexture crashed because the specified binding point is negative");}
+    if(sourceImage == nullptr){SGLCrash::crash("SGRRenderingProgramme::updateTexture crashed because the source image is nullptr");}
     const SGRTexture* texture = nullptr;
     for(int i=0; i<(*textures).length(); i++){
         if((*textures).at(i).first == shaderDeclaredBinding){
