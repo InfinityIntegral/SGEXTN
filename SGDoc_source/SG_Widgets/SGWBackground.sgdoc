@@ -18,7 +18,7 @@ Turn on a SGWBackground using a initialisation function and a reset function. $i
 @SG_NOTE If no $resetFunction is needed, pass nullptr to it.
 @SG_NOTE This hides all other UI pages to ensure that keyboard focus (pressing tab) works as expected.
 @SG_WARN Forgetting to return a valid SGWBackground in $initFunction is undefined behaviour.
-@SG_WARN Passing nullptr to $initFunction is undefined behaviour.
+@SG_WARN Passing nullptr to $initFunction will crash.
 @SG_WARN If $thisPointer is not nullptr when the function is called, it is assumed that the UI page is already on so nothing is done. If the UI page was previously turned off using SGWBackground::disable, this is not a concern.
 @SG_FUNC static void disable(SGWBackground*& thisPointer);
 Turns off the UI page referenced by $thisPointer then set $thisPointer, which is passed by reference, to nullptr.
