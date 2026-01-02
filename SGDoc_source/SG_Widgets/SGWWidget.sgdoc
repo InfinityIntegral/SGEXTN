@@ -65,7 +65,7 @@ Returns if the SGWWidget is currently visible on screen.
 Shows the SGWWidget if $x is true and hides it otherwise.
 @SG_FUNC void screenshot(void (*callback)(SGRImage*)) const;
 Requests a screenshot of the current SGWWidget and all of its children. $callback which is a @SG_FINDREP_FUNCPTR will be called with the SGRImage produced as argument when the screenshot is taken.
-@SG_WARN $callback being nullptr is undefined behaviour.
+@SG_WARN $callback being nullptr will crash.
 @SG_PRIVATE_API SGWWidget(SGWWidget* parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0);
 @SG_PRIVATE_API SGWType::Type type;
 @SG_PRIVATE_API SGWWidget* parent;

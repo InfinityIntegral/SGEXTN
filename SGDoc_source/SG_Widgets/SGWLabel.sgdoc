@@ -31,6 +31,7 @@ Sets the text currently displayed in the SGWLabel to the string representation o
 Returns the current font used to display text in the SGWLabel.
 @SG_FUNC void setFont(const SGXString& font);
 Sets the SGWLabel to use $font to display text.
+@SG_WARN If $font is not a valid font, this is undefined behaviour.
 @SG_FUNC [[nodiscard]] SGWHorizontalAlignment::Flag getHorizontalAlignment() const;
 Returns the current SGWHorizontalAlignment mode used to display text in this SGWLabel.
 @SG_FUNC void setHorizontalAlignment(SGWHorizontalAlignment::Flag alignment);

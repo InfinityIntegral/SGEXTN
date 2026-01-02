@@ -42,11 +42,16 @@ Radius of contact point in pixels.
 @SG_NOTE This can be used for palm detection.
 @SG_FUNC [[nodiscard]] bool operator==(SGXTouchEvent x) const;
 Equality check with $x for SGLEqualsTo.
+@SG_WARN This only takes into account the index number, comparing SGXTouchEvent from different touch receivers is undefined behaviour.
 @SG_FUNC [[nodiscard]] bool operator!=(SGXTouchEvent x) const;
 Inequality check with $x for SGLEqualsTo.
+@SG_WARN This only takes into account the index number, comparing SGXTouchEvent from different touch receivers is undefined behaviour.
 @SG_FUNC [[nodiscard]] bool operator<(SGXTouchEvent x) const;
 Lesser than operator with $x for SGLLesserThan and SGLMoreThan.
+@SG_WARN This only takes into account the index number, comparing SGXTouchEvent from different touch receivers is undefined behaviour.
 @SG_FUNC [[nodiscard]] bool operator>(SGXTouchEvent x) const;
 More than operator with $x for SGLLesserThan and SGLMoreThan.
+@SG_WARN This only takes into account the index number, comparing SGXTouchEvent from different touch receivers is undefined behaviour.
 @SG_FUNC [[nodiscard]] int hash() const;
 Hash function for SGLHash.
+@SG_WARN This only takes into account the index number, comparing SGXTouchEvent from different touch receivers is undefined behaviour.
