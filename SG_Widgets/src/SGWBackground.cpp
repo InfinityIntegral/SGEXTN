@@ -67,7 +67,7 @@ void SGWBackground::enable(SGWBackground *&thisPointer, SGWBackground *(*initFun
 
 void SGWBackground::disable(SGWBackground *&thisPointer){
     if(thisPointer == nullptr){return;}
-    if(SGWBackground::activePages == nullptr || (*SGWBackground::activePages).length() == 0 || (*SGWBackground::activePages).top() != thisPointer){throw std::out_of_range("you must disable application pages in the reverse order of when they were enabled");}
+    if(SGWBackground::activePages == nullptr || (*SGWBackground::activePages).length() == 0 || (*SGWBackground::activePages).top() != thisPointer){SGLCrash::crash("SGWBackground::disable crashed because the UI page specified does not match the topmost UI page, you must disable application pages in the reverse order of when they were enabled");}
     delete thisPointer;
     thisPointer = nullptr;
     (*SGWBackground::activePages).pop();

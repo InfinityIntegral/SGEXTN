@@ -32,7 +32,7 @@ void SGRRendererNode::prepare(){
     QRhiResourceUpdateBatch* resourceUpdate = (*rhi).nextResourceUpdateBatch();
     if(renderingProgramme == nullptr){
         renderingProgramme = (*renderControl).createRenderingProgramme();
-        if((*renderingProgramme).isFinalised == false){throw std::runtime_error("you forgot to finalise your rendering programme before use, use SGRRenderingProgramme::finaliseRenderingProgramme to finalise it");}
+        if((*renderingProgramme).isFinalised == false){SGLCrash::crash("An SGEXTN internal API crashed because you forgot to finalise your rendering programme before use, use SGRRenderingProgramme::finaliseRenderingProgramme to finalise it");}
     }
     (*renderingProgramme).resourceUpdateOperation = resourceUpdate;
     SGLArray<float> builtins((*renderControl).internalX, (*renderControl).internalY, (*renderControl).internalW, (*renderControl).internalH, (*renderControl).internalWindowW, (*renderControl).internalWindowH);

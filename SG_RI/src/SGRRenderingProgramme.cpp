@@ -199,7 +199,7 @@ void SGRRenderingProgramme::updateShaderUniforms(int shaderDeclaredBinding, int 
             break;
         }
     }
-    if(buffer == nullptr){throw std::runtime_error("you attempted to upload uniforms to a nonexistent binding point");}
+    if(buffer == nullptr){SGLCrash::crash("SGRRenderingProgramme::updateShaderUniforms crashed because you attempted to upload uniforms to a nonexistent binding point");}
     (*resourceUpdateOperation).updateDynamicBuffer(buffer, startLocation, dataSize, pointerToData);
 }
 
@@ -213,7 +213,7 @@ void SGRRenderingProgramme::updateTexture(int shaderDeclaredBinding, SGRImage *s
             break;
         }
     }
-    if(texture == nullptr){throw std::runtime_error("you attempted to upload a texture to a nonexistent binding point");}
+    if(texture == nullptr){SGLCrash::crash("SGRRenderingProgramme::updateTexture crashed because you attempted to upload a texture to a nonexistent binding point");}
     (*(*texture).data).setPixelSize(QSize((*sourceImage).width(), (*sourceImage).height()));
     (*(*texture).data).create();
     (*resourceUpdateOperation).uploadTexture((*texture).data, (*(*sourceImage).data));

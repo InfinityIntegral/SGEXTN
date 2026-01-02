@@ -20,18 +20,7 @@
 #include <private_api_Containers/SGLCrash.h>
 
 namespace{
-inline SGXString temp_stdStringToSGXString(const std::string& s){
-    SGXString o = "";
-    (*o.data) = QString::fromStdString(s);
-    return o;
-}
-
-std::string temp_sgxStringToStdString(const SGXString& s){
-    return (*s.data).toUtf8().toStdString();
-}
-
 QDateTime temp_zeroAsQDateTime = QDateTime(QDate(1965, 8, 9), QTime(10, 30, 0), QTimeZone("Asia/Singapore"));
-
 SGXTimeStamp temp_qDateTimeToSGXTimeStamp(const QDateTime& dt){
     if(dt.isValid() == false || dt.isNull() == true){return SGXTimeStamp::zero;}
     return SGXTimeStamp((temp_zeroAsQDateTime).secsTo(dt));
