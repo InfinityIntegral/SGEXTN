@@ -3,6 +3,7 @@
 #include <QColor>
 #include <SGLFloatMath.h>
 #include <SGXColourRGBA.h>
+#include <private_api_Containers/SGLCrash.h>
 
 SGRImage::SGRImage(const SGRImage &x){
     (*this).data = new QImage();
@@ -32,10 +33,14 @@ SGRImage::~SGRImage(){
 }
 
 SGRImage::SGRImage(int w, int h){
+    if(w < 0){SGLCrash::crash("SGRImage constructor crashed because width is negative");}
+    if(h < 0){SGLCrash::crash("SGRImage constructor crashed because height is negative");}
     data = new QImage(w, h, QImage::Format_RGBA8888);
 }
 
 SGRImage::SGRImage(int w, int h, SGXColourRGBA c){
+    if(w < 0){SGLCrash::crash("SGRImage constructor crashed because width is negative");}
+    if(h < 0){SGLCrash::crash("SGRImage constructor crashed because height is negative");}
     data = new QImage(w, h, QImage::Format_RGBA8888);
     (*data).fill(QColor(c.getRed(), c.getGreen(), c.getBlue(), c.getTransparency()));
 }
@@ -54,11 +59,19 @@ int SGRImage::height() const {
 }
 
 SGXColourRGBA SGRImage::colourAt(int x, int y) const {
+    if(x < 0){SGLCrash::crash("SGRImage::colourAt crashed because x coordinate is less than 0");}
+    if(x >= width()){SGLCrash::crash("SGRImage::colourAt crashed because x coordinate points beyond the image width");}
+    if(y < 0){SGLCrash::crash("SGRImage::colourAt crashed because y coordinate is less than 0");}
+    if(y >= height()){SGLCrash::crash("SGRImage::colourAt crashed because y coordinate points beyond the image height");}
     const QColor c = (*data).pixelColor(x, y);
     return SGXColourRGBA(c.red(), c.green(), c.blue(), c.alpha());
 }
 
 void SGRImage::setColourAt(int x, int y, SGXColourRGBA c) const {
+    if(x < 0){SGLCrash::crash("SGRImage::setColourAt crashed because x coordinate is less than 0");}
+    if(x >= width()){SGLCrash::crash("SGRImage::setColourAt crashed because x coordinate points beyond the image width");}
+    if(y < 0){SGLCrash::crash("SGRImage::setColourAt crashed because y coordinate is less than 0");}
+    if(y >= height()){SGLCrash::crash("SGRImage::setColourAt crashed because y coordinate points beyond the image height");}
     const QColor col(c.getRed(), c.getGreen(), c.getBlue(), c.getTransparency());
     (*data).setPixelColor(x, y, col);
 }
@@ -82,8 +95,8 @@ SGXColourRGBA SGRImage::interpolatedColourAt(float x, float y) const {
     const SGXColourRGBA c01 = colourAt(x0, y1);
     const SGXColourRGBA c10 = colourAt(x1, y0);
     const SGXColourRGBA c11 = colourAt(x1, y1);
-    const SGXColourRGBA c0 = c01.linearInterpolate(c00, dy);
-    const SGXColourRGBA c1 = c11.linearInterpolate(c10, dy);
+    const SGXColourRGBA c0 = c01.linearInterpolateGammaCorrection(c00, dy);
+    const SGXColourRGBA c1 = c11.linearInterpolateGammaCorrection(c10, dy);
     return c1.linearInterpolate(c0, dx);
 }
 
