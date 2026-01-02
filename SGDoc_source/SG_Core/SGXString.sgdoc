@@ -183,8 +183,7 @@ Returns the SGXString that represents $x in base $base.
 @SG_FUNC static SGXString floatToString(float x);
 Returns the SGXString that represents $x.
 @SG_FUNC static SGXString floatToStringDecimalPlaces(float x, int dp);
-Returns the SGXString that represents $x rounded to $dp decimal places.
-@SG_WARN In this version of SGEXTN, negative $dp is undefined behaviour. Support is likely to be added in a future version.
+Returns the SGXString that represents $x rounded to $dp decimal places. Negative $dp rounds $x to nearest 10 ^ ( - $dp )
 @SG_FUNC static SGXString floatToStringSignificantFigures(float x, int sf);
 Returns the SGXString that represents $x rounds to $sf significant figures.
 @SG_WARN Negative or zero $sf will crash.
@@ -195,8 +194,7 @@ Returns the SGXString that represents $x rounds to $sf significant figures, expr
 @SG_FUNC static SGXString doubleToString(double x);
 Returns the SGXString that represents $x.
 @SG_FUNC static SGXString doubleToStringDecimalPlaces(double x, int dp);
-Returns the SGXString that represents $x rounded to $dp decimal places.
-@SG_WARN In this version of SGEXTN, negative $dp is undefined behaviour. Support is likely to be added in a future version.
+Returns the SGXString that represents $x rounded to $dp decimal places. Negative $dp rounds $x to nearest 10 ^ ( - $dp )
 @SG_FUNC static SGXString doubleToStringSignificantFigures(double x, int sf);
 Returns the SGXString that represents $x rounds to $sf significant figures.
 @SG_WARN Negative or zero $sf will crash.

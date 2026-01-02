@@ -10,6 +10,8 @@
 #include <QStringList>
 #include <qcontainerfwd.h>
 #include <private_api_Containers/SGLCrash.h>
+#include <SGLFloatMath.h>
+#include <cmath>
 
 SGXString::SGXString(){
     (*this).data = new QString("");
@@ -371,6 +373,11 @@ SGXString SGXString::floatToString(float x){
 
 SGXString SGXString::floatToStringDecimalPlaces(float x, int dp){
     SGXString output = "";
+    if(dp < 0){
+        float powerOf10 = SGLFloatMath::aToThePowerOfB(10.0f, -1.0f * static_cast<float>(dp));
+        dp = 0;
+        x = powerOf10 * SGLFloatMath::round(x / powerOf10);
+    }
     (*output.data) = QString::number(x, 'f', dp);
     return output;
 }
@@ -397,6 +404,11 @@ SGXString SGXString::doubleToString(double x){
 
 SGXString SGXString::doubleToStringDecimalPlaces(double x, int dp){
     SGXString output = "";
+    if(dp < 0){
+        double powerOf10 = static_cast<double>(SGLFloatMath::aToThePowerOfB(10.0f, -1.0f * static_cast<float>(dp)));
+        dp = 0;
+        x = powerOf10 * std::round(x / powerOf10);
+    }
     (*output.data) = QString::number(x, 'f', dp);
     return output;
 }
