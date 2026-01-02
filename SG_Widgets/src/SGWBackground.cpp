@@ -6,6 +6,7 @@
 #include <QQuickItem>
 #include <SGLStack.h>
 #include <stdexcept>
+#include <private_api_Containers/SGLCrash.h>
 
 SGLStack<SGWBackground*>* SGWBackground::activePages = nullptr;
 
@@ -52,6 +53,7 @@ void SGWBackground::syncQuickProperties(){
 }
 
 void SGWBackground::enable(SGWBackground *&thisPointer, SGWBackground *(*initFunction)(), void (*resetFunction)()){
+    if(initFunction == nullptr){SGLCrash::crash("SGWBackground::enable crashed because init function is nullptr");}
     if(thisPointer != nullptr){return;}
     thisPointer = initFunction();
     (*(*thisPointer).getTopObject()).setVisible(true);
