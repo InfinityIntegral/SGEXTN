@@ -7,12 +7,17 @@
 #include <SGLArray.h>
 #include <private_api_Widgets/SGRScreenshotCallback.h>
 #include <private_api_Containers/SGLCrash.h>
+#include <private_api_Widgets/SGWWidgetDeletionQuickInterface.h>
+#include <QTimer>
+#include <SGLStack.h>
 
 SGWWidget* SGWWidget::rootWidget = nullptr;
 SGWWidget* SGWWidget::parentWidget = nullptr;
 
 SGWWidget::SGWWidget(SGWWidget* parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0){
     (*this).type = SGWType::Undefined;
+    (*this).deleted = false;
+    (*this).deletionQuickInterface = new SGWWidgetDeletionQuickInterface(this);
     (*this).children = SGLArray<SGWWidget*>(0);
     (*this).topObject = nullptr;
     (*this).bottomObject = nullptr;
@@ -41,7 +46,14 @@ SGWWidget::SGWWidget(SGWWidget* parent, float x1, float x0, float y1, float y0, 
 }
 
 SGWWidget::~SGWWidget(){
-    for(int i=0; i<children.length(); i++){delete children.at(i);}
+    if((*this).deleted == false){SGLCrash::crash("SGWWidget destructor crashed as you attempted to directly delete the widget, use SGWWidget::deleteWidget instead to safely delete it");}
+    (*(*this).deletionQuickInterface).deleteLater();
+    for(int i=0; i<children.length(); i++){
+        delete children.at(i);
+    }
+}
+
+void SGWWidget::deleteWidget(){
     (*topObject).deleteLater();
     if(parent != nullptr){
         SGLArray<SGWWidget*> newChildren((*(*this).parent).children.length() - 1);
@@ -53,6 +65,20 @@ SGWWidget::~SGWWidget(){
         }
         (*(*this).parent).children = newChildren;
     }
+    (*this).deleted = true;
+    SGLStack<SGWWidget*> recursiveChildren;
+    for(int i=0; i<children.length(); i++){
+        recursiveChildren.push(children.at(i));
+    }
+    while(recursiveChildren.length() > 0){
+        SGWWidget* thisChild = recursiveChildren.top();
+        recursiveChildren.pop();
+        (*thisChild).deleted = true;
+        for(int i=0; i<(*thisChild).children.length(); i++){
+            recursiveChildren.push((*thisChild).children.at(i));
+        }
+    }
+    QTimer::singleShot(0, deletionQuickInterface, &SGWWidgetDeletionQuickInterface::actuallyDeleteWidget);
 }
 
 void SGWWidget::initialiseQuickItemReferences(QQuickItem *thisItem){

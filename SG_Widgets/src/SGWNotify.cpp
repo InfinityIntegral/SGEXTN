@@ -18,7 +18,8 @@ SGWLabel* SGWNotify::pullDownInstance = nullptr;
 SGXTimer* SGWNotify::pullDownTimer = nullptr;
 
 void SGWNotify::terminate(){
-    delete (*SGWNotify::instance).front();
+    SGWWidget* frontMost = const_cast<SGWWidget*>((*SGWNotify::instance).front());
+    (*frontMost).deleteWidget();
     (*SGWNotify::instance).pop();
 }
 
@@ -35,9 +36,9 @@ void SGWNotify::animate(){
     if(SGWNotify::animationStage == 24){SGWNotify::animationState = true;}
     if(SGWNotify::animationStage == 0){
         SGWNotify::notify((*SGWNotify::pullDownInstance).getTextAsString());
-        delete SGWNotify::pullDownInstance;
+        (*SGWNotify::pullDownInstance).deleteWidget();
         SGWNotify::pullDownInstance = nullptr;
-        delete SGWNotify::pullDownTimer;
+        (*SGWNotify::pullDownTimer).deleteTimer();
         SGWNotify::pullDownTimer = nullptr;
         SGWNotify::animationStage = 0;
         SGWNotify::animationState = false;
@@ -49,7 +50,7 @@ void SGWNotify::animate(){
 }
 
 void SGWNotify::pullDownNotify(const SGXString &s){
-    delete SGWNotify::pullDownInstance;
+    (*SGWNotify::pullDownInstance).deleteWidget();
     SGWNotify::pullDownInstance = nullptr;
     (*SGWNotify::pullDownTimer).deleteTimer();
     SGWNotify::pullDownTimer = nullptr;

@@ -12,6 +12,7 @@
 
 class QQuickItem;
 class SGRImage;
+class SGWWidgetDeletionQuickInterface;
 class SG_WIDGETS_DLL SGWWidget
 {
 public:
@@ -56,6 +57,7 @@ public:
     [[nodiscard]] bool getItemVisibility() const;
     void setItemVisibility(bool x);
     void screenshot(void (*callback)(SGRImage*)) const;
+    void deleteWidget();
 protected:
     SGWWidget(SGWWidget* parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0);
     SGWType::Type type;
@@ -75,6 +77,8 @@ protected:
     float parentW0;
     float parentH1;
     float parentH0;
+    bool deleted;
+    SGWWidgetDeletionQuickInterface* deletionQuickInterface;
 };
 
 #endif // SGWWIDGET_H
