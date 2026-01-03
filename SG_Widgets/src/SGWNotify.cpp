@@ -50,7 +50,7 @@ void SGWNotify::animate(){
 }
 
 void SGWNotify::pullDownNotify(const SGXString &s){
-    (*SGWNotify::pullDownInstance).deleteWidget();
+    if(SGWNotify::pullDownInstance != nullptr){(*SGWNotify::pullDownInstance).deleteWidget();}
     SGWNotify::pullDownInstance = nullptr;
     (*SGWNotify::pullDownTimer).deleteTimer();
     SGWNotify::pullDownTimer = nullptr;
