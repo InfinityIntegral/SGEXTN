@@ -189,7 +189,7 @@ void SGWSingCorrectCustomisationPage::addCustomCommand(){
 void SGWSingCorrectCustomisationPage::refreshList(){
     const SGLArray<SGWWidget*> c = (*SGWSingCorrectCustomisationPage::listParent).getChildren();
     for(int i=0; i<c.length(); i++){
-        delete c.at(i);
+        (*c.at(i)).deleteWidget();
     }
     for(SGLUnorderedMap<SGXString, SGXChar, SGLEqualsTo<SGXString>, SGLHash<SGXString>>::ConstIterator i = (*SGXSingCorrectCustomisation::database).constBegin(); i != (*SGXSingCorrectCustomisation::database).constEnd(); i++){
         SGWWidget* x = new SGWBlankWidget(SGWSingCorrectCustomisationPage::listParent, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 8);
