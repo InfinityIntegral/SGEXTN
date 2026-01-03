@@ -24,8 +24,7 @@ SGRRendererNode::SGRRendererNode(SGRBaseRenderer *renderControl){
 }
 
 SGRRendererNode::~SGRRendererNode(){
-    (*renderControl).cleanResourcesOnDestruction();
-    delete renderingProgramme;
+    releaseResources();
 }
 
 void SGRRendererNode::prepare(){
@@ -63,6 +62,10 @@ void SGRRendererNode::releaseResources(){
     delete renderingProgramme;
     delete rendererToDelete;
     delete syncerToDelete;
+    renderingProgramme = nullptr;
+    rendererToDelete = nullptr;
+    syncerToDelete = nullptr;
+    renderControl = nullptr;
 }
 
 QSGRenderNode::RenderingFlags SGRRendererNode::flags() const {

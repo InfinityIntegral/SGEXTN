@@ -187,5 +187,4 @@ void SGWColourPickerWidget::setE0(float e0){
 
 SGWColourPickerWidget::~SGWColourPickerWidget(){
     (*quickInterface).deleteLater();
-    delete renderControl;
 }
