@@ -45,8 +45,7 @@ Creates a @SG_ML_L015021SGRRenderingProgramme../cppclass/sgrrenderingprogramme a
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_addTexture_int_const_ void @SG_ML_L00A01BaddTexture#void_addTexture_int_const_(int shaderDeclaredBinding) const;
 Adds a texture attached to the binding point @SG_ML_B015shaderDeclaredBinding.
-@SG_ML_NOTE The actual texture is internally managed by @SG_ML_L017015SG - RI ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/renderer, images can be uploaded using @SG_ML_L008014SGRImage../cppclass/sgrimage.
-@SG_ML_NOTE Efficiently swapping textures frequently would need access to private API. This is likely to be changed in a future SGEXTN version.
+@SG_ML_NOTE The actual texture is internally managed by @SG_ML_L017015SG - RI ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/renderer, images can be uploaded as @SG_ML_L008014SGRImage../cppclass/sgrimage using @SG_ML_L02404CSGRRenderingProgramme::updateTexture../cppclass/sgrrenderingprogramme#void_updateTexture_int_SGRImage_ptr_const_.
 @SG_ML_WARN @SG_ML_B015shaderDeclaredBinding not being in the shaders or wrong binding point being passed is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_addUniformBufferObject_int_int_const_ void @SG_ML_L01602BaddUniformBufferObject#void_addUniformBufferObject_int_int_const_(int std140AlignedSize, int shaderDeclaredBinding) const;
@@ -115,6 +114,7 @@ Uploads @SG_ML_B008dataSize bytes of data from @SG_ML_B00DpointerToData to an of
 @SG_ML_HEADER_void_updateTexture_int_SGRImage_ptr_const_ void @SG_ML_L00D02BupdateTexture#void_updateTexture_int_SGRImage_ptr_const_(int shaderDeclaredBinding, @SG_ML_L008008SGRImagesgrimage* sourceImage) const;
 Uploads @SG_ML_B00BsourceImage to the texture at @SG_ML_B015shaderDeclaredBinding.
 @SG_ML_NOTE @SG_ML_B00BsourceImage does not need to have the same size as the previously bound texture.
+@SG_ML_NOTE @SG_ML_B00BsourceImage is uploaded to the GPU every time this function is used. To swap between multiple textures, consider creating separate @SG_ML_L01101DSGRRendererWidget../cppclass/sgrrendererwidget for them and using @SG_ML_L01C032SGWWidget::setItemVisibility../cppclass/sgwwidget#void_setItemVisibility_bool_ to control the active @SG_ML_L018015SGWidget ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/sgwidget.
 @SG_ML_WARN Using this outside of @SG_ML_L021046SGRBaseRenderer::uploadShaderData../cppclass/sgrbaserenderer#virtual_void_uploadShaderData_func_assign_ or @SG_ML_L01B040SGRBaseRenderer::initialise../cppclass/sgrbaserenderer#virtual_void_initialise_func_assign_ is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
 @SG_ML_WARN Nonexistent @SG_ML_B015shaderDeclaredBinding will crash.
 @SG_ML_WARN @SG_ML_B015shaderDeclaredBinding being negative will crash.

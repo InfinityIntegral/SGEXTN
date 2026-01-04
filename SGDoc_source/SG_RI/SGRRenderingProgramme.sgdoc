@@ -48,8 +48,7 @@ Adds a uniform buffer object with a size of $std140AlignedSize bytes attached to
 @SG_WARN Adding a texture as a uniform buffer object is undefined behaviour.
 @SG_FUNC void addTexture(int shaderDeclaredBinding) const;
 Adds a texture attached to the binding point $shaderDeclaredBinding.
-@SG_NOTE The actual texture is internally managed by @SG_FINDREP_RENDERER, images can be uploaded using SGRImage.
-@SG_NOTE Efficiently swapping textures frequently would need access to private API. This is likely to be changed in a future SGEXTN version.
+@SG_NOTE The actual texture is internally managed by @SG_FINDREP_RENDERER, images can be uploaded as SGRImage using SGRRenderingProgramme::updateTexture.
 @SG_WARN $shaderDeclaredBinding not being in the shaders or wrong binding point being passed is undefined behaviour.
 @SG_PRIVATE_API QRhiShaderResourceBindings* shaderResources;
 @SG_PRIVATE_API SGLVector<SGLPair<int, QRhiBuffer*>>* uniformBuffers;
@@ -85,6 +84,7 @@ Uploads $dataSize bytes of data from $pointerToData to an offset of $startLocati
 @SG_FUNC void updateTexture(int shaderDeclaredBinding, SGRImage* sourceImage) const;
 Uploads $sourceImage to the texture at $shaderDeclaredBinding.
 @SG_NOTE $sourceImage does not need to have the same size as the previously bound texture.
+@SG_NOTE $sourceImage is uploaded to the GPU every time this function is used. To swap between multiple textures, consider creating separate SGRRendererWidget for them and using SGWWidget::setItemVisibility to control the active @SG_FINDREP_WIDGET.
 @SG_WARN Using this outside of SGRBaseRenderer::uploadShaderData or SGRBaseRenderer::initialise is undefined behaviour.
 @SG_WARN Nonexistent $shaderDeclaredBinding will crash.
 @SG_WARN $shaderDeclaredBinding being negative will crash.
