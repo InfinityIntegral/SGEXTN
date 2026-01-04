@@ -6,3 +6,4 @@
 Creates a SGWSequentialLongLabel with parent @SG_FINDREP_WIDGET $parent, @SG_FINDREP_WDIST coordinates ($x1, $x0, $y1, $y0, $w1, $w0, ?, ?), text displayed $s, and font size as a @SG_FINDREP_WDIST ($h1, $h0).
 @SG_NOTE Only place this inside a SGWSequentialScrollView.
 @SG_WARN $parent being nullptr is undefined behaviour.
+@SG_WARN To avoid use after free bugs, deleting a SGWWidget directly will cause a crash. Use SGWWidget::deleteWidget to delete it safely.

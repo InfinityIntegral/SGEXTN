@@ -19,6 +19,7 @@ parent class: (none)
 children classes: @SG_ML_L011011SGRRendererWidgetsgrrendererwidget, @SG_ML_L00D00DSGWBackgroundsgwbackground, @SG_ML_L00E00ESGWBlankWidgetsgwblankwidget, @SG_ML_L009009SGWButtonsgwbutton, @SG_ML_L015015SGWColourPickerWidgetsgwcolourpickerwidget, @SG_ML_L008008SGWInputsgwinput, @SG_ML_L008008SGWLabelsgwlabel, @SG_ML_L015015SGWMultiTouchReceiversgwmultitouchreceiver, @SG_ML_L016016SGWSingleTouchReceiversgwsingletouchreceiver
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_ instance member functions
+&#9;void @SG_ML_L00C018deleteWidget#void_deleteWidget_func_();
 &#9;[[nodiscard]] @SG_ML_L008008SGLArraysglarray‹@SG_ML_L009009SGWWidgetsgwwidget*› @SG_ML_L00B03FgetChildren#nodiscard_SGLArray_lt_SGWWidget_ptr_gt_getChildren_func_const_() const;
 &#9;[[nodiscard]] float @SG_ML_L005022getH0#nodiscard_float_getH0_func_const_() const;
 &#9;[[nodiscard]] float @SG_ML_L005022getH1#nodiscard_float_getH1_func_const_() const;
@@ -51,6 +52,10 @@ children classes: @SG_ML_L011011SGRRendererWidgetsgrrendererwidget, @SG_ML_L00D0
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_sg_implementationdetails Implementation Details
 Stores information about the @SG_ML_L009015SGWWidget../cppclass/sgwwidget
+@SG_ML_BLANKLINE
+@SG_ML_HEADER_void_deleteWidget_func_ void @SG_ML_L00C018deleteWidget#void_deleteWidget_func_();
+Deletes a @SG_ML_L009015SGWWidget../cppclass/sgwwidget safely.
+@SG_ML_WARN To avoid use after delete bugs, deleting a @SG_ML_L009015SGWWidget../cppclass/sgwwidget directly will cause a crash.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGLArray_lt_SGWWidget_ptr_gt_getChildren_func_const_ [[nodiscard]] @SG_ML_L008008SGLArraysglarray‹@SG_ML_L009009SGWWidgetsgwwidget*› @SG_ML_L00B03FgetChildren#nodiscard_SGLArray_lt_SGWWidget_ptr_gt_getChildren_func_const_() const;
 Returns the children of this @SG_ML_L009015SGWWidget../cppclass/sgwwidget as a @SG_ML_L008014SGLArray../cppclass/sglarray of @SG_ML_L009015SGWWidget../cppclass/sgwwidget.
