@@ -61,6 +61,7 @@ String attached to this @SG_ML_L015021SGWMultiTouchReceiver../cppclass/sgwmultit
 Creates a @SG_ML_L015021SGWMultiTouchReceiver../cppclass/sgwmultitouchreceiver with parent @SG_ML_L018015SGWidget ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/sgwidget @SG_ML_B006parent, @SG_ML_L01A016w-distance ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/wdistance coordinates (@SG_ML_B002x1, @SG_ML_B002x0, @SG_ML_B002y1, @SG_ML_B002y0, @SG_ML_B002w1, @SG_ML_B002w0, @SG_ML_B002h1, @SG_ML_B002h0), and @SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback @SG_ML_B008function.
 @SG_ML_NOTE 5 touch events will be sent to the @SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback @SG_ML_B008function, but this may change in a future SGEXTN version.
 @SG_ML_WARN @SG_ML_B006parent being nullptr is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
+@SG_ML_WARN To avoid use after free bugs, deleting a @SG_ML_L009015SGWWidget../cppclass/sgwwidget directly will cause a crash. Use @SG_ML_L01702DSGWWidget::deleteWidget../cppclass/sgwwidget#void_deleteWidget_func_ to delete it safely.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_float_getHeight_func_const_ [[nodiscard]] float @SG_ML_L009026getHeight#nodiscard_float_getHeight_func_const_() const;
 Returns the height in pixels of this @SG_ML_L015021SGWMultiTouchReceiver../cppclass/sgwmultitouchreceiver.

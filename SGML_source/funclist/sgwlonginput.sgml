@@ -4,6 +4,7 @@
 &#9;@SG_ML_L00C018SGWLongInput../cppclass/sgwlonginput::@SG_ML_L00C08ASGWLongInput../cppclass/sgwlonginput#SGWLongInput_SGWWidget_ptr_void_ptr_func_float_float_float_float_float_float_float_float_float_float_float_float_(@SG_ML_L009009SGWWidgetsgwwidget* parent, void (*validationFunction)(), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float f1, float f0, float s1, float s0);
 &#9;int @SG_ML_L008014SGWInput../cppclass/sgwinput::@SG_ML_L00B025attachedInt../cppclass/sgwinput#int_attachedInt_;
 &#9;@SG_ML_L009009SGXStringsgxstring @SG_ML_L008014SGWInput../cppclass/sgwinput::@SG_ML_L00E02EattachedString../cppclass/sgwinput#SGXString_attachedString_;
+&#9;void @SG_ML_L009015SGWWidget../cppclass/sgwwidget::@SG_ML_L00C02DdeleteWidget../cppclass/sgwwidget#void_deleteWidget_func_();
 &#9;void (*@SG_ML_L008014SGWInput../cppclass/sgwinput::@SG_ML_L010034focusEndFunction../cppclass/sgwinput#void_ptr_focusEndFunction_func_)();
 &#9;void (*@SG_ML_L008014SGWInput../cppclass/sgwinput::@SG_ML_L01703AfocusEndFunctionWithInt../cppclass/sgwinput#void_ptr_focusEndFunctionWithInt_int_)(int);
 &#9;void (*@SG_ML_L008014SGWInput../cppclass/sgwinput::@SG_ML_L01B047focusEndFunctionWithPointer../cppclass/sgwinput#void_ptr_focusEndFunctionWithPointer_SGWInput_ptr_)(@SG_ML_L008008SGWInputsgwinput*);

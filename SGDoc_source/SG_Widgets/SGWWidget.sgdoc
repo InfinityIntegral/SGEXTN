@@ -84,3 +84,8 @@ Requests a screenshot of the current SGWWidget and all of its children. $callbac
 @SG_PRIVATE_API float parentW0;
 @SG_PRIVATE_API float parentH1;
 @SG_PRIVATE_API float parentH0;
+@SG_PRIVATE_API bool deleted;
+@SG_PRIVATE_API SGWWidgetDeletionQuickInterface* deletionQuickInterface;
+@SG_FUNC void deleteWidget();
+Deletes a SGWWidget safely.
+@SG_WARN To avoid use after delete bugs, deleting a SGWWidget directly will cause a crash.

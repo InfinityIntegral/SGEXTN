@@ -8,6 +8,7 @@
 &#9;void (*@SG_ML_L015021SGWColourPickerWidget../cppclass/sgwcolourpickerwidget::@SG_ML_L01A05AattachedFunctionWithString../cppclass/sgwcolourpickerwidget#void_ptr_attachedFunctionWithString_const_SGXString_ref_)(const @SG_ML_L009009SGXStringsgxstring&);
 &#9;int @SG_ML_L015021SGWColourPickerWidget../cppclass/sgwcolourpickerwidget::@SG_ML_L00B032attachedInt../cppclass/sgwcolourpickerwidget#int_attachedInt_;
 &#9;@SG_ML_L009009SGXStringsgxstring @SG_ML_L015021SGWColourPickerWidget../cppclass/sgwcolourpickerwidget::@SG_ML_L00E03BattachedString../cppclass/sgwcolourpickerwidget#SGXString_attachedString_;
+&#9;void @SG_ML_L009015SGWWidget../cppclass/sgwwidget::@SG_ML_L00C02DdeleteWidget../cppclass/sgwwidget#void_deleteWidget_func_();
 &#9;[[nodiscard]] @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba @SG_ML_L015021SGWColourPickerWidget../cppclass/sgwcolourpickerwidget::@SG_ML_L01305DgetBackgroundColour../cppclass/sgwcolourpickerwidget#nodiscard_SGXColourRGBA_getBackgroundColour_bool_ptr_const_(bool* isUsing) const;
 &#9;[[nodiscard]] @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba @SG_ML_L015021SGWColourPickerWidget../cppclass/sgwcolourpickerwidget::@SG_ML_L018062getBackgroundFocusColour../cppclass/sgwcolourpickerwidget#nodiscard_SGXColourRGBA_getBackgroundFocusColour_bool_ptr_const_(bool* isUsing) const;
 &#9;[[nodiscard]] int @SG_ML_L015021SGWColourPickerWidget../cppclass/sgwcolourpickerwidget::@SG_ML_L01D05DgetBackgroundFocusThemeColour../cppclass/sgwcolourpickerwidget#nodiscard_int_getBackgroundFocusThemeColour_bool_ptr_const_(bool* isUsing) const;

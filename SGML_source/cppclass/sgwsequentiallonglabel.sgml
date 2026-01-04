@@ -31,4 +31,5 @@ Stores information about the @SG_ML_L016022SGWSequentialLongLabel../cppclass/sgw
 Creates a @SG_ML_L016022SGWSequentialLongLabel../cppclass/sgwsequentiallonglabel with parent @SG_ML_L018015SGWidget ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/sgwidget @SG_ML_B006parent, @SG_ML_L01A016w-distance ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/wdistance coordinates (@SG_ML_B002x1, @SG_ML_B002x0, @SG_ML_B002y1, @SG_ML_B002y0, @SG_ML_B002w1, @SG_ML_B002w0, ?, ?), text displayed @SG_ML_B001s, and font size as a @SG_ML_L01A016w-distance ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/wdistance (@SG_ML_B002h1, @SG_ML_B002h0).
 @SG_ML_NOTE Only place this inside a @SG_ML_L017023SGWSequentialScrollView../cppclass/sgwsequentialscrollview.
 @SG_ML_WARN @SG_ML_B006parent being nullptr is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
+@SG_ML_WARN To avoid use after free bugs, deleting a @SG_ML_L009015SGWWidget../cppclass/sgwwidget directly will cause a crash. Use @SG_ML_L01702DSGWWidget::deleteWidget../cppclass/sgwwidget#void_deleteWidget_func_ to delete it safely.
 @SG_ML_BLANKLINE

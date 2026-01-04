@@ -19,9 +19,9 @@ parent class: (none)
 children classes: (none)
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_ instance member functions
+&#9;[[nodiscard]] operator char() const;
 &#9;@SG_ML_L00700DSGXChar#SGXChar_int_(int unicode);
 &#9;@SG_ML_L00700ESGXChar#SGXChar_char_(char c);
-&#9;[[nodiscard]] operator char() const;
 &#9;[[nodiscard]] @SG_ML_L007007SGXCharsgxchar @SG_ML_L015034getLowerLanguageAware#nodiscard_SGXChar_getLowerLanguageAware_func_const_() const;
 &#9;[[nodiscard]] int @SG_ML_L00A025getUnicode#nodiscard_int_getUnicode_func_const_() const;
 &#9;[[nodiscard]] @SG_ML_L007007SGXCharsgxchar @SG_ML_L015034getUpperLanguageAware#nodiscard_SGXChar_getUpperLanguageAware_func_const_() const;
@@ -55,16 +55,16 @@ children classes: (none)
 @SG_ML_HEADER_sg_implementationdetails Implementation Details
 @SG_ML_L007013SGXChar../cppclass/sgxchar stores the Unicode value of the character. When language aware features are needed, it uses QChar internally.
 @SG_ML_BLANKLINE
+@SG_ML_HEADER_nodiscard_operator_char_func_const_ [[nodiscard]] operator char() const;
+Converts @SG_ML_L007013SGXChar../cppclass/sgxchar to a C++ char.
+@SG_ML_WARN If the @SG_ML_L007013SGXChar../cppclass/sgxchar is not a ASCII character, this causes @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
+@SG_ML_BLANKLINE
 @SG_ML_HEADER_SGXChar_int_ @SG_ML_L00700DSGXChar#SGXChar_int_(int unicode);
 Converts Unicode index @SG_ML_B007unicode to its corresponding @SG_ML_L007013SGXChar../cppclass/sgxchar.
 @SG_ML_WARN If @SG_ML_B007unicode is below 0 or above 65535, this will crash.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_SGXChar_char_ @SG_ML_L00700ESGXChar#SGXChar_char_(char c);
 Converts C++ char @SG_ML_B001c to a @SG_ML_L007013SGXChar../cppclass/sgxchar.
-@SG_ML_BLANKLINE
-@SG_ML_HEADER_nodiscard_operator_char_func_const_ [[nodiscard]] operator char() const;
-Converts @SG_ML_L007013SGXChar../cppclass/sgxchar to a C++ char.
-@SG_ML_WARN If the @SG_ML_L007013SGXChar../cppclass/sgxchar is not a ASCII character, this causes @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGXChar_getLowerLanguageAware_func_const_ [[nodiscard]] @SG_ML_L007007SGXCharsgxchar @SG_ML_L015034getLowerLanguageAware#nodiscard_SGXChar_getLowerLanguageAware_func_const_() const;
 Returns the language aware lowercase version of this @SG_ML_L007013SGXChar../cppclass/sgxchar.

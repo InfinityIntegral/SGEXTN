@@ -8,6 +8,7 @@
 &#9;void (*@SG_ML_L009015SGWButton../cppclass/sgwbutton::@SG_ML_L014038clickFunctionWithInt../cppclass/sgwbutton#void_ptr_clickFunctionWithInt_int_)(int);
 &#9;void (*@SG_ML_L009015SGWButton../cppclass/sgwbutton::@SG_ML_L018046clickFunctionWithPointer../cppclass/sgwbutton#void_ptr_clickFunctionWithPointer_SGWButton_ptr_)(@SG_ML_L009009SGWButtonsgwbutton*);
 &#9;void (*@SG_ML_L009015SGWButton../cppclass/sgwbutton::@SG_ML_L01704BclickFunctionWithString../cppclass/sgwbutton#void_ptr_clickFunctionWithString_const_SGXString_ref_)(const @SG_ML_L009009SGXStringsgxstring&);
+&#9;void @SG_ML_L009015SGWWidget../cppclass/sgwwidget::@SG_ML_L00C02DdeleteWidget../cppclass/sgwwidget#void_deleteWidget_func_();
 &#9;[[nodiscard]] @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba @SG_ML_L009015SGWButton../cppclass/sgwbutton::@SG_ML_L013051getBackgroundColour../cppclass/sgwbutton#nodiscard_SGXColourRGBA_getBackgroundColour_bool_ptr_const_(bool* isUsing) const;
 &#9;[[nodiscard]] @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba @SG_ML_L009015SGWButton../cppclass/sgwbutton::@SG_ML_L018056getBackgroundFocusColour../cppclass/sgwbutton#nodiscard_SGXColourRGBA_getBackgroundFocusColour_bool_ptr_const_(bool* isUsing) const;
 &#9;[[nodiscard]] @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba @SG_ML_L009015SGWButton../cppclass/sgwbutton::@SG_ML_L02005EgetBackgroundFocusSelectedColour../cppclass/sgwbutton#nodiscard_SGXColourRGBA_getBackgroundFocusSelectedColour_bool_ptr_const_(bool* isUsing) const;

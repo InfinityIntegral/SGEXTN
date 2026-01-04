@@ -9,6 +9,7 @@ Creates a SGRRendererWidget with parent @SG_FINDREP_WIDGET $parent, @SG_FINDREP_
 @SG_NOTE Keep references to the @SG_FINDREP_RENDERER renderer and syncer elsewhere in your code since they cannot be accessed using public API provided by SGRRendererWidget.
 @SG_WARN $parent being nullptr is undefined behaviour.
 @SG_WARN $renderControl being nullptr will crash.
+@SG_WARN To avoid use after free bugs, deleting a SGWWidget directly will cause a crash. Use SGWWidget::deleteWidget to delete it safely.
 @SG_PRIVATE_API SGRBaseRenderer* renderControl;
 @SG_PRIVATE_API SGRBaseSyncer* syncControl;
 @SG_FUNC void updateCustomRenderer() const;

@@ -33,6 +33,7 @@ Stores information about the @SG_ML_L00C018SGWIconLabel../cppclass/sgwiconlabel.
 Creates a @SG_ML_L00C018SGWIconLabel../cppclass/sgwiconlabel with parent @SG_ML_L018015SGWidget ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/sgwidget @SG_ML_B006parent, @SG_ML_L01A016w-distance ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/wdistance coordinates (@SG_ML_B002x1, @SG_ML_B002x0, @SG_ML_B002y1, @SG_ML_B002y0, @SG_ML_B002w1, @SG_ML_B002w0, ?, ?), and @SG_ML_L020014application icon ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/appicon @SG_ML_B001s. The height of the @SG_ML_L00C018SGWIconLabel../cppclass/sgwiconlabel is always equal to its width.
 @SG_ML_NOTE @SG_ML_B001s should be present in the @SG_ML_L020014application icon ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/appicon font. It is recommended that it be in the Unicode private use range.
 @SG_ML_WARN @SG_ML_B006parent being nullptr is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
+@SG_ML_WARN To avoid use after free bugs, deleting a @SG_ML_L009015SGWWidget../cppclass/sgwwidget directly will cause a crash. Use @SG_ML_L01702DSGWWidget::deleteWidget../cppclass/sgwwidget#void_deleteWidget_func_ to delete it safely.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_SGXChar_getChar_func_const_ [[nodiscard]] @SG_ML_L007007SGXCharsgxchar @SG_ML_L007026getChar#nodiscard_SGXChar_getChar_func_const_() const;
 Returns the @SG_ML_L007013SGXChar../cppclass/sgxchar currently being displayed by the @SG_ML_L00C018SGWIconLabel../cppclass/sgwiconlabel.

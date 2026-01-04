@@ -6,6 +6,7 @@
 Creates a SGWSingleTouchReceiver with parent @SG_FINDREP_WIDGET $parent, @SG_FINDREP_WDIST coordinates ($x1, $x0, $y1, $y0, $w1, $w0, $h1, $h0), and @SG_FINDREP_FUNCPTR $function.
 @SG_NOTE Only the first touch event will be sent, the others will be ignored.
 @SG_WARN $parent being nullptr is undefined behaviour.
+@SG_WARN To avoid use after free bugs, deleting a SGWWidget directly will cause a crash. Use SGWWidget::deleteWidget to delete it safely.
 @SG_FUNC int attachedInt;
 Int attached to this SGWSingleTouchReceiver.
 @SG_NOTE This is used to identify the source of the callback in @SG_FINDREP_FUNCPTR.

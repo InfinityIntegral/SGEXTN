@@ -2,6 +2,7 @@
 @SG_ML_PAGENAME SGWScrollView Function List
 @SG_ML_TITLE @SG_ML_L00D019SGWScrollView../cppclass/sgwscrollview
 &#9;@SG_ML_L00D019SGWScrollView../cppclass/sgwscrollview::@SG_ML_L00D082SGWScrollView../cppclass/sgwscrollview#SGWScrollView_SGWWidget_ptr_float_float_float_float_float_float_float_float_float_float_float_float_int_(@SG_ML_L009009SGWWidgetsgwwidget* parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float i1, float i0, float s1, float s0, int themeColour);
+&#9;void @SG_ML_L009015SGWWidget../cppclass/sgwwidget::@SG_ML_L00C02DdeleteWidget../cppclass/sgwwidget#void_deleteWidget_func_();
 &#9;static void @SG_ML_L00D019SGWBackground../cppclass/sgwbackground::@SG_ML_L007044disable../cppclass/sgwbackground#static_void_disable_SGWBackground_ptr_ref_(@SG_ML_L00D00DSGWBackgroundsgwbackground*& thisPointer);
 &#9;static void @SG_ML_L00D019SGWBackground../cppclass/sgwbackground::@SG_ML_L00606Cenable../cppclass/sgwbackground#static_void_enable_SGWBackground_ptr_ref_SGWBackground_ptr_ptr_func_void_ptr_func_(@SG_ML_L00D00DSGWBackgroundsgwbackground*& thisPointer, @SG_ML_L00D00DSGWBackgroundsgwbackground* (*initFunction)(), void (*resetFunction)());
 &#9;[[nodiscard]] @SG_ML_L008008SGLArraysglarray‹@SG_ML_L009009SGWWidgetsgwwidget*› @SG_ML_L009015SGWWidget../cppclass/sgwwidget::@SG_ML_L00B054getChildren../cppclass/sgwwidget#nodiscard_SGLArray_lt_SGWWidget_ptr_gt_getChildren_func_const_() const;

@@ -6,6 +6,7 @@
 Creates a SGWIconButton with parent @SG_FINDREP_WIDGET $parent, @SG_FINDREP_WDIST coordinates ($x1, $x0, $y1, $y0, $w1, $w0, ?, ?), @SG_FINDREP_FUNCPTR when clicked as $attachedFunction, and @SG_FINDREP_ICONFONT $s. The height of the SGWIconButton is always equal to its width.
 @SG_NOTE $s should be present in the @SG_FINDREP_ICONFONT font. It is recommended that it be in the Unicode private use range.
 @SG_WARN $parent being nullptr is undefined behaviour.
+@SG_WARN To avoid use after free bugs, deleting a SGWWidget directly will cause a crash. Use SGWWidget::deleteWidget to delete it safely.
 @SG_FUNC [[nodiscard]] SGXChar getChar() const;
 Returns the SGXChar currently being displayed by the SGWIconButton.
 @SG_FUNC void setChar(SGXChar c);
