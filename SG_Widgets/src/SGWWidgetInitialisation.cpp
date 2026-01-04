@@ -21,6 +21,7 @@
 #include <QObject>
 #include <QCoreApplication>
 #include <QEventLoop>
+#include <SGXDebug.h>
 
 void SGWWidgetInitialisation::init0(){
     QQuickStyle::setStyle("Basic");
@@ -48,7 +49,7 @@ void SGWWidgetInitialisation::init3(){
     QFontDatabase::addApplicationFallbackFontFamily(QChar::Script_Latin, (*SGWDefaultFonts::textFont.data));
     if(SGXCentral::importCustomFonts != nullptr){SGXCentral::importCustomFonts();}
     if(QFontDatabase::families().contains(*SGWDefaultFonts::textFont.data) == false){qWarning() << "SingScript.sg font is not found, the application will not display text and symbols used in Mathematics, Science, and Informatics correctly, to fix this, do not clear the QFontDatabase";}
-    if(QFontDatabase::families().contains(*SGWDefaultFonts::iconsFont.data) == false){qWarning() << "AppIcons.sg font is not found, application icons will not be displayed correctly, to fix this, use the static function SGWDefaultFont::addFont to add the correct font from its file path when importing extra fonts. You may ignore this warning if you are not using SGWidget icons or icon buttons";}
+    if(QFontDatabase::families().contains(*SGWDefaultFonts::iconsFont.data) == false){SG("AppIcons.sg font is not found, application icons will not be displayed correctly, to fix this, use the static function SGWDefaultFont::addFont to add the correct font from its file path when importing extra fonts. You may ignore this warning if you are not using SGWidget icons or icon buttons");}
 }
 
 void SGWWidgetInitialisation::init4(){
