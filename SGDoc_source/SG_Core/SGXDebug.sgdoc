@@ -21,7 +21,4 @@
 @SG_PRIVATE_API SGXDebug& operator()(const SGXTimeStamp& x);
 @SG_PRIVATE_API SGXDebug& operator()(const SGXVector2& x);
 @SG_PRIVATE_API SGXDebug& operator()(const char* x);
-@SG_FUNC static SGXString logFile;
-Contains path to file used to store SGXDebug logs, set using the --SG-log-file command line argument
-@SG_NOTE If the command line argument is not passed, this would be an empty string, in which case the logs would be discarded
-@SG_WARN Manually setting this can lead to undefined behaviour
+@SG_PRIVATE_API static SGXString logFile;

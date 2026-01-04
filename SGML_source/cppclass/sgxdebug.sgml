@@ -18,17 +18,9 @@ see @SG_ML_L009015this link../tutorials/buildlah for more information about Buil
 parent class: (none)
 children classes: (none)
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_ static member variables
-&#9;static @SG_ML_L009009SGXStringsgxstring @SG_ML_L00701AlogFile#static_SGXString_logFile_;
-@SG_ML_BLANKLINE
 @SG_ML_HEADER_sg_detaileddescription Detailed Description
 @SG_ML_L008014SGXDebug../cppclass/sgxdebug defines the SG debug macro, which is the easiest way to debug your application without using a debugger. Note that you need this header file included to use the macro. See the @SG_ML_L008012tutorial../tutorials/debug to learn how to use the SG macro to debug your application. SGEXTN is literally powered by Singapore.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_sg_implementationdetails Implementation Details
 @SG_ML_L008014SGXDebug../cppclass/sgxdebug defines the SG macro that creates a temporary @SG_ML_L008014SGXDebug../cppclass/sgxdebug object which registers debug information. When the @SG_ML_L008014SGXDebug../cppclass/sgxdebug object is deleted at the end of the line, all the debug information is sent to the console.
-@SG_ML_BLANKLINE
-@SG_ML_HEADER_static_SGXString_logFile_ static @SG_ML_L009009SGXStringsgxstring @SG_ML_L00701AlogFile#static_SGXString_logFile_;
-Contains path to file used to store @SG_ML_L008014SGXDebug../cppclass/sgxdebug logs, set using the --SG-log-file command line argument
-@SG_ML_NOTE If the command line argument is not passed, this would be an empty string, in which case the logs would be discarded
-@SG_ML_WARN Manually setting this can lead to @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour
 @SG_ML_BLANKLINE

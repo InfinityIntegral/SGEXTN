@@ -18,6 +18,7 @@
 #include <QDesktopServices>
 #include <QUrl>
 #include <private_api_Containers/SGLCrash.h>
+#include <SGXDebug.h>
 
 namespace{
 QDateTime temp_zeroAsQDateTime = QDateTime(QDate(1965, 8, 9), QTime(10, 30, 0), QTimeZone("Asia/Singapore"));
@@ -514,6 +515,8 @@ void SGXFileSystem::initialiseAppFolder(){
     const SGXString standardPath = "";
     (*standardPath.data) = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
     SGXFileSystem::rootFilePath = SGXFileSystem::joinFilePaths(standardPath, SGXCentral::folderName);
+    SGXDebug::logFile = SGXFileSystem::joinFilePaths(SGXFileSystem::rootFilePath, "logs.txt");
+    if(SGXFileSystem::fileExists(SGXDebug::logFile)){SGXFileSystem::permanentDeleteFile(SGXDebug::logFile);}
     SGXFileSystem::userDataFilePath = SGXFileSystem::joinFilePaths(SGXFileSystem::rootFilePath, "yourdata");
     SGXFileSystem::configFilePath = SGXFileSystem::joinFilePaths(SGXFileSystem::rootFilePath, "settings");
     SGXFileBinUtilities::binFilePath = SGXFileSystem::joinFilePaths(SGXFileSystem::rootFilePath, "recyclebin");
