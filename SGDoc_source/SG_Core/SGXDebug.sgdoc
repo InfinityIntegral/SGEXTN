@@ -22,3 +22,4 @@
 @SG_PRIVATE_API SGXDebug& operator()(const SGXVector2& x);
 @SG_PRIVATE_API SGXDebug& operator()(const char* x);
 @SG_PRIVATE_API static SGXString logFile;
+@SG_PRIVATE_API static void logCrashMessage(const char* msg);

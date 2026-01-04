@@ -33,6 +33,8 @@ void (*SGXCentral::sgWidgetsInit4)() = nullptr;
 void (*SGXCentral::sgWidgetsInit5)() = nullptr;
 
 void SGXCentral::initialise(){
+    SGLCrash::logCrashMessage = &SGXDebug::logCrashMessage;
+
     bool isTest = false;
     for(int i=0; i<SGXCentral::actualArgc; i++){
         const SGXString arg(const_cast<const char*>(SGXCentral::actualArgv[i])); // NOLINT(cppcoreguidelines-pro-bounds-pointer-arithmetic)

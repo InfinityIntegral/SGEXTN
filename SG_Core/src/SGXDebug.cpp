@@ -128,3 +128,7 @@ SGXDebug& SGXDebug::operator()(const char* x){
     debugInfo += (SGXString(" - ") + x);
     return (*this);
 }
+
+void SGXDebug::logCrashMessage(const char *msg){
+    SG(SGXString(msg));
+}
