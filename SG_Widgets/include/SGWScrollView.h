@@ -10,7 +10,7 @@ class SGWWidget;
 class SG_WIDGETS_DLL SGWScrollView : public SGWBackground
 {
 public:
-    SGWScrollView(SGWWidget* parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float i1, float i0, float s1, float s0, int themeColour);
+    SGWScrollView(SGWWidget* parent, float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float i1, float i0, float s1, float s0);
     void syncQuickProperties();
     [[nodiscard]] float getI1() const;
     void setI1(float i1);
