@@ -32,7 +32,7 @@ void SGWBasicThemeCustomisationPage::activate(){
 }
 
 SGWBackground* SGWBasicThemeCustomisationPage::initialise(){
-    SGWBackground* bg = new SGWPageBackground(SGWWidget::parentWidget, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 6);
+    SGWBackground* bg = new SGWPageBackground(SGWWidget::parentWidget, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f);
     SGWButton* b = nullptr;
     b = new SGWTextButton(bg, "Be the Light", &SGWBasicThemeCustomisationPage::showThemeDefaultLight, 0.0f, 0.0f, 0.5f, -3.0f, 1.0f, 0.0f, 0.0f, 1.0f);
     (*b).setBackgroundColour(SGXColourRGBA(255, 0, 200));
@@ -59,18 +59,19 @@ SGWBackground* SGWBasicThemeCustomisationPage::initialise(){
 }
 
 SGWBackground* SGWBasicThemeCustomisationPage::initialiseDetailsPage(){
-    SGWBackground* bg = new SGWPageBackground(SGWWidget::parentWidget, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 8);
-    SGWBasicThemeCustomisationPage::detailsScroll = new SGWSequentialScrollView(bg, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, -1.0f, 0.0f, 0.5f, 8);
+    SGWBackground* bg = new SGWPageBackground(SGWWidget::parentWidget, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f);
+    SGWBasicThemeCustomisationPage::detailsScroll = new SGWSequentialScrollView(bg, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, -1.0f, 0.0f, 0.5f);
     SGWBasicThemeCustomisationPage::cancelButton = new SGWTextButton(bg, "cancel", &SGWBasicThemeCustomisationPage::cancelChanges, 0.0f, 0.0f, 1.0f, -1.0f, 0.5f, 0.0f, 0.0f, 1.0f);
     SGWBasicThemeCustomisationPage::confirmButton = new SGWTextButton(bg, "apply theme", &SGWBasicThemeCustomisationPage::confirmChanges, 0.5f, 0.0f, 1.0f, -1.0f, 0.5f, 0.0f, 0.0f, 1.0f);
-    new SGWBlankWidget(SGWBasicThemeCustomisationPage::detailsScroll, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 0.5f, -1);
-    SGWWidget* s = new SGWBlankWidget(SGWBasicThemeCustomisationPage::detailsScroll, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 2.5f, -1);
+    new SGWBlankWidget(SGWBasicThemeCustomisationPage::detailsScroll, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 0.5f);
+    SGWWidget* s = new SGWBlankWidget(SGWBasicThemeCustomisationPage::detailsScroll, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 2.5f);
     SGWBasicThemeCustomisationPage::detailsInfo = new SGWSequentialLongLabel(SGWBasicThemeCustomisationPage::detailsScroll, "", 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.0f);
     float x = 0.0f;
     for(int i=0; i<9; i++){
         float w = 1.0f;
         if(i == 4 || i == 6 || i == 8){w = 3.0f;}
-        SGWBasicThemeCustomisationPage::coloursDisplay.at(i) = new SGWBlankWidget(s, x / 15.0f, 0.0f, 0.0f, 0.0f, w / 15.0f, 0.0f, 0.0f, 2.0f, i);
+        SGWBasicThemeCustomisationPage::coloursDisplay.at(i) = new SGWBlankWidget(s, x / 15.0f, 0.0f, 0.0f, 0.0f, w / 15.0f, 0.0f, 0.0f, 2.0f);
+        (*SGWBasicThemeCustomisationPage::coloursDisplay.at(i)).setThemeColour(i);
         x += w;
     }
     return bg;
@@ -171,7 +172,7 @@ void SGWBasicThemeCustomisationPage::confirmChanges(){
 }
 
 SGWBackground* SGWBasicThemeCustomisationPage::notifInitialise(){
-    SGWBackground* bg = new SGWPageBackground(SGWWidget::parentWidget, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 8);
+    SGWBackground* bg = new SGWPageBackground(SGWWidget::parentWidget, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f);
     const SGXString s = "Theme colours are not updated immediately, you must restart the app for changes to take effect.\n\nDuring the National Day period, the theme is locked at For Our Nation to celebrate. Any theme changes applied during that duration will take effect after the period ends.";
     new SGWLongLabel(bg, s, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.0f, 0.0f, 0.5f, 0.0f, 0.5f);
     new SGWTextButton(bg, "ok", &SGWBasicThemeCustomisationPage::closeNotif, 0.0f, 0.0f, 1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f);

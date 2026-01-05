@@ -45,8 +45,8 @@ SGWColourPickerWidget* SGWColourPicker::colourReceiver = nullptr;
 SGWButton* SGWColourPicker::completeButton = nullptr;
 
 SGWBackground* SGWColourPicker::initialise(){
-    SGWBackground* bg = new SGWPageBackground(SGWWidget::parentWidget, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 6);
-    SGWWidget* realBg = new SGWBlankWidget(bg, 0.5f, -5.75f, 0.5f, -6.0f, 0.0f, 11.5f, 0.0f, 11.0f, 8);
+    SGWBackground* bg = new SGWPageBackground(SGWWidget::parentWidget, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f);
+    SGWWidget* realBg = new SGWBlankWidget(bg, 0.5f, -5.75f, 0.5f, -6.0f, 0.0f, 11.5f, 0.0f, 11.0f);
     SGWColourPicker::hueSync = new SGRColourPickerSyncer();
     SGWColourPicker::hueChoice = new SGRRendererWidget(realBg, 0.0f, 0.5f, 0.0f, 0.5f, 1.0f, -1.0f, 0.0f, 1.25f, new SGRColourPickerRenderer(1), SGWColourPicker::hueSync);
     SGWColourPicker::hueTouchReceiver = new SGWSingleTouchReceiver(SGWColourPicker::hueChoice, &SGWColourPicker::updateHue, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f);
@@ -75,7 +75,7 @@ SGWBackground* SGWColourPicker::initialise(){
     SGWColourPicker::hexCodeInput = new SGWTextInput(realBg, nullptr, 0.0f, 3.5f, 0.0f, 9.5f, 0.0f, 5.0f, 0.0f, 1.0f);
     (*SGWColourPicker::hexCodeInput).textChangedFunction = (&SGWColourPicker::updateHexCode);
     new SGRRendererWidget(realBg, 0.0f, 9.0f, 0.0f, 6.5f, 0.0f, 2.0f, 0.0f, 1.0f, new SGRTransparencyIndicatorRenderer(), nullptr);
-    SGWColourPicker::colourDisplay = new SGWBlankWidget(realBg, 0.0f, 9.0f, 0.0f, 6.5f, 0.0f, 2.0f, 0.0f, 1.0f, -1);
+    SGWColourPicker::colourDisplay = new SGWBlankWidget(realBg, 0.0f, 9.0f, 0.0f, 6.5f, 0.0f, 2.0f, 0.0f, 1.0f);
     SGWColourPicker::completeButton = new SGWTextButton(realBg, "ok", &SGWColourPicker::completeColourSelection, 0.0f, 9.0f, 0.0f, 9.5f, 0.0f, 1.5f, 0.0f, 1.0f);
     return bg;
 }

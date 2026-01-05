@@ -28,22 +28,24 @@ void SGWFontSizeCustomisationPage::activate(){
 }
 
 SGWBackground* SGWFontSizeCustomisationPage::initialise(){
-    SGWBackground* bg = new SGWPageBackground(SGWWidget::parentWidget, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 8);
-    SGWWidget* realBg = new SGWSequentialScrollView(bg, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, -3.0f, 0.0f, 0.5f, 8);
+    SGWBackground* bg = new SGWPageBackground(SGWWidget::parentWidget, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f);
+    SGWWidget* realBg = new SGWSequentialScrollView(bg, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, -3.0f, 0.0f, 0.5f);
     SGWFontSizeCustomisationPage::exitButton = new SGWTextButton(bg, "done", &SGWFontSizeCustomisationPage::exit, 0.0f, 0.0f, 1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f);
     new SGWTextLabel(realBg, "Adjust text size", 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 2.0f, SGWHorizontalAlignment::Center, false);
     const SGXString s = "Use the slider and input field below to adjust the font size for the application. The font size can be set to a minimum of half the default font size and a maximum of double the default font size. Font size is automatically saved.";
     new SGWSequentialLongLabel(realBg, s, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.0f);
-    new SGWBlankWidget(realBg, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.5f, 8);
-    SGWWidget* p = new SGWBlankWidget(realBg, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 2.0f, 8);
+    new SGWBlankWidget(realBg, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.5f);
+    SGWWidget* p = new SGWBlankWidget(realBg, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 2.0f);
     new SGWTextLabel(p, "font size:", 0.5f, -3.6f, 0.0f, 0.0f, 0.0f, 3.5f, 0.0f, 1.0f, SGWHorizontalAlignment::Left, false);
     SGWFontSizeCustomisationPage::sizeInput = new SGWTextInput(p, &SGWFontSizeCustomisationPage::sizeValidityCheck, 0.5f, 0.1f, 0.0f, 0.0f, 0.0f, 4.0f, 0.0f, 1.0f);
     (*SGWFontSizeCustomisationPage::sizeInput).textChangedFunction = (&SGWFontSizeCustomisationPage::sizeUnsavedCheck);
     SGWFontSizeCustomisationPage::sizeUnsavedMessage = new SGWTextLabel(p, "press tab to save", 0.5f, 0.1f, 0.0f, 1.0f, 0.5f, -0.6f, 0.0f, 0.75f, SGWHorizontalAlignment::Left, true);
     SGWFontSizeCustomisationPage::sizeInvalidMessage = new SGWTextLabel(p, "number between 0.5 and 2", 0.5f, 0.1f, 0.0f, 1.0f, 0.5f, -0.6f, 0.0f, 0.75f, SGWHorizontalAlignment::Left, true);
-    p = new SGWBlankWidget(bg, 0.0f, 0.0f, 1.0f, -3.0f, 1.0f, 0.0f, 0.0f, 2.0f, 8);
-    new SGWBlankWidget(p, 0.0f, 0.5f, 0.0f, 0.25f, 1.0f, -1.0f, 0.0f, 0.5f, 6);
-    SGWFontSizeCustomisationPage::sliderForeground = new SGWBlankWidget(p, 0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 4);
+    p = new SGWBlankWidget(bg, 0.0f, 0.0f, 1.0f, -3.0f, 1.0f, 0.0f, 0.0f, 2.0f);
+    SGWBlankWidget* p0 = new SGWBlankWidget(p, 0.0f, 0.5f, 0.0f, 0.25f, 1.0f, -1.0f, 0.0f, 0.5f);
+    (*p0).setThemeColour(6);
+    SGWFontSizeCustomisationPage::sliderForeground = new SGWBlankWidget(p, 0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f);
+    (*SGWFontSizeCustomisationPage::sliderForeground).setThemeColour(4);
     new SGWTextLabel(p, "0.5", 0.0f, 0.5f, 0.0f, 1.0f, 0.0f, 1.5f, 0.0f, 1.0f, SGWHorizontalAlignment::Left, false);
     new SGWTextLabel(p, "2.0", 1.0f, -2.0f, 0.0f, 1.0f, 0.0f, 1.5f, 0.0f, 1.0f, SGWHorizontalAlignment::Right, false);
     SGWFontSizeCustomisationPage::sliderInput = new SGWSingleTouchReceiver(p, &SGWFontSizeCustomisationPage::sliderChange, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 2.0f);
