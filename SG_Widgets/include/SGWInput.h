@@ -25,9 +25,11 @@ public:
     [[nodiscard]] float getF0() const;
     void setF0(float f0);
     [[nodiscard]] SGXString getTextAsString() const;
+    [[nodiscard]] SGXString getPlaceholderText() const;
     [[nodiscard]] int getTextAsInt(bool* isValid, int minimum, int maximum) const;
     [[nodiscard]] float getTextAsFloat(bool* isValid, float minimum, float maximum) const;
     void setTextFromString(const SGXString& s);
+    void setPlaceholderText(const SGXString& s);
     void setTextFromInt(int x);
     void setTextFromFloat(float x);
     [[nodiscard]] SGXString getFont() const;
@@ -94,10 +96,11 @@ public:
     void setForegroundHoverInvalidColour(SGXColourRGBA colour);
     void eventReceived(const SGXString& s);
 protected:
-    SGWInput(SGWWidget* parent, void (*validationFunction)(), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float f1, float f0, SGWHorizontalAlignment::Flag horizontalAlignment, SGWVerticalAlignment::Flag verticalAlignment);
+    SGWInput(SGWWidget* parent, const SGXString& placeholder, void (*validationFunction)(), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float f1, float f0, SGWHorizontalAlignment::Flag horizontalAlignment, SGWVerticalAlignment::Flag verticalAlignment);
     float f1;
     float f0;
     SGXString text;
+    SGXString placeholderText;
     SGXString font;
     SGWHorizontalAlignment::Flag horizontalAlignment;
     SGWVerticalAlignment::Flag verticalAlignment;

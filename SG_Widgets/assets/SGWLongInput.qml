@@ -55,6 +55,7 @@ ScrollView{
 	property real ph1: 0.0
 	property real ph0: 0.0
 	property string s: ""
+    property string p: ""
 	property string f: "SingScript.sg"
 	property int ha: 0
 	property int va: 0
@@ -124,6 +125,10 @@ ScrollView{
 			}
 		}
 	}
+
+    function getTranslucent(col){
+        return Qt.rgba(col.r, col.g, col.b, 0.5);
+    }
 	
 	Column{
 		width: parent.width
@@ -175,6 +180,8 @@ ScrollView{
 			horizontalAlignment: ha
 			verticalAlignment: va
 			color: getFg(utc, vh, vf, inv, fg, fgc, fgh, fghc, fgf, fgfc, fgi, fgic, fghi, fghic)
+            placeholderText: p
+            placeholderTextColor: getTranslucent(getFg(utc, vh, vf, inv, fg, fgc, fgh, fghc, fgf, fgfc, fgi, fgic, fghi, fghic))
 			selectionColor: getFg(utc, vh, vf, inv, fg, fgc, fgh, fghc, fgf, fgfc, fgi, fgic, fghi, fghic)
 			selectedTextColor: getBg(utc, vh, vf, inv, bg, bgc, bgh, bghc, bgf, bgfc, bgi, bgic, bghi, bghic)
 		
