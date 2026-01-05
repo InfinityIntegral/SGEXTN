@@ -16,7 +16,7 @@ inline QColor temp_getQColour(SGXColourRGBA x){
 }
 }
 
-SGWLongInput::SGWLongInput(SGWWidget *parent, void (*validationFunction)(), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float f1, float f0, float s1, float s0) : SGWInput(parent, validationFunction, x1, x0, y1, y0, w1, w0, h1, h0, f1, f0, SGWHorizontalAlignment::Left, SGWVerticalAlignment::Top){
+SGWLongInput::SGWLongInput(SGWWidget *parent, const SGXString& placeholder, void (*validationFunction)(), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float f1, float f0, float s1, float s0) : SGWInput(parent, placeholder, validationFunction, x1, x0, y1, y0, w1, w0, h1, h0, f1, f0, SGWHorizontalAlignment::Left, SGWVerticalAlignment::Top){
     (*this).s1 = s1;
     (*this).s0 = s0;
     (*this).scrollbarBackgroundThemeColour = 4;

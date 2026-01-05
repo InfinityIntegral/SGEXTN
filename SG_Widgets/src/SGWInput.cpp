@@ -30,10 +30,11 @@ inline Qt::AlignmentFlag temp_getQtFlag(SGWVerticalAlignment::Flag x){
 }
 }
 
-SGWInput::SGWInput(SGWWidget *parent, void (*validationFunction)(), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float f1, float f0, SGWHorizontalAlignment::Flag horizontalAlignment, SGWVerticalAlignment::Flag verticalAlignment) : SGWWidget(parent, x1, x0, y1, y0, w1, w0, h1, h0){
+SGWInput::SGWInput(SGWWidget *parent, const SGXString &placeholder, void (*validationFunction)(), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float f1, float f0, SGWHorizontalAlignment::Flag horizontalAlignment, SGWVerticalAlignment::Flag verticalAlignment) : SGWWidget(parent, x1, x0, y1, y0, w1, w0, h1, h0){
     (*this).f1 = f1;
     (*this).f0 = f0;
     (*this).text = "";
+    (*this).placeholderText = placeholder;
     (*this).font = SGWDefaultFonts::textFont;
     (*this).horizontalAlignment = horizontalAlignment;
     (*this).verticalAlignment = verticalAlignment;
@@ -80,6 +81,7 @@ void SGWInput::syncQuickProperties(){
     (*topObject).setProperty("f1", f1);
     (*topObject).setProperty("f0", f0);
     (*topObject).setProperty("text", (*text.data));
+    (*topObject).setProperty("p", (*placeholderText.data));
     (*topObject).setProperty("f", (*font.data));
     (*topObject).setProperty("ha", temp_getQtFlag(horizontalAlignment));
     (*topObject).setProperty("va", temp_getQtFlag(verticalAlignment));
@@ -152,6 +154,10 @@ SGXString SGWInput::getTextAsString() const {
     return text;
 }
 
+SGXString SGWInput::getPlaceholderText() const {
+    return placeholderText;
+}
+
 int SGWInput::getTextAsInt(bool *isValid, int minimum, int maximum) const {
     int x = text.parseToInt(isValid);
     if(x < minimum || x > maximum){
@@ -173,6 +179,11 @@ float SGWInput::getTextAsFloat(bool *isValid, float minimum, float maximum) cons
 void SGWInput::setTextFromString(const SGXString& s){
     (*this).text = s;
     (*(*this).topObject).setProperty("text", (*(*this).text.data));
+}
+
+void SGWInput::setPlaceholderText(const SGXString &s){
+    (*this).text = s;
+    (*(*this).topObject).setProperty("p", (*(*this).placeholderText.data));
 }
 
 void SGWInput::setTextFromInt(int x){

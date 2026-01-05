@@ -37,7 +37,7 @@ SGWBackground* SGWFontSizeCustomisationPage::initialise(){
     new SGWBlankWidget(realBg, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.5f);
     SGWWidget* p = new SGWBlankWidget(realBg, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 2.0f);
     new SGWTextLabel(p, "font size:", 0.5f, -3.6f, 0.0f, 0.0f, 0.0f, 3.5f, 0.0f, 1.0f, SGWHorizontalAlignment::Left, false);
-    SGWFontSizeCustomisationPage::sizeInput = new SGWTextInput(p, &SGWFontSizeCustomisationPage::sizeValidityCheck, 0.5f, 0.1f, 0.0f, 0.0f, 0.0f, 4.0f, 0.0f, 1.0f);
+    SGWFontSizeCustomisationPage::sizeInput = new SGWTextInput(p, "font size", &SGWFontSizeCustomisationPage::sizeValidityCheck, 0.5f, 0.1f, 0.0f, 0.0f, 0.0f, 4.0f, 0.0f, 1.0f);
     (*SGWFontSizeCustomisationPage::sizeInput).textChangedFunction = (&SGWFontSizeCustomisationPage::sizeUnsavedCheck);
     SGWFontSizeCustomisationPage::sizeUnsavedMessage = new SGWTextLabel(p, "press tab to save", 0.5f, 0.1f, 0.0f, 1.0f, 0.5f, -0.6f, 0.0f, 0.75f, SGWHorizontalAlignment::Left, true);
     SGWFontSizeCustomisationPage::sizeInvalidMessage = new SGWTextLabel(p, "number between 0.5 and 2", 0.5f, 0.1f, 0.0f, 1.0f, 0.5f, -0.6f, 0.0f, 0.75f, SGWHorizontalAlignment::Left, true);

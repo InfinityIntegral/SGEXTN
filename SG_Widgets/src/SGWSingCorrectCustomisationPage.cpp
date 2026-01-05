@@ -44,7 +44,7 @@ SGWBackground* SGWSingCorrectCustomisationPage::initialise(){
     SGXString s = "    SingCorrect is a module builtin to SGEXTN that allows you to type special characters, including mathematical and scientific symbols, superscripts and subscripts, Optical Answer Sheet bubbles, and emojis in any SGEXTN input field. This is done by inputting LaTeX style commands, but the prefix is not fixed at \\, instead it is user-configurable and default set to SG-\\. After entering the command, press space to show the symbol.\n    This page is used to configure SingCorrect. Changes are applied immediately and can be verified in the input field provided below. (Try to enter: SG-\\SGhome )";
     new SGWSequentialLongLabel(x, s, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.0f);
     new SGWBlankWidget(x, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 0.5f);
-    new SGWTextInput(x, nullptr, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.0f);
+    new SGWTextInput(x, "try entering text here...", nullptr, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.0f);
     new SGWBlankWidget(x, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.0f);
     new SGWTextButton(x, "builtin command list", &SGWSingCorrectCustomisationPage::showCommandList, 0.5f, -4.0f, 0.0f, 0.0f, 0.0f, 8.0f, 0.0f, 1.0f);
     new SGWBlankWidget(x, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.0f);
@@ -56,7 +56,7 @@ SGWBackground* SGWSingCorrectCustomisationPage::initialise(){
     new SGWSequentialLongLabel(x, s, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.0f);
     p = new SGWBlankWidget(x, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 2.0f);
     new SGWTextLabel(p, "prefix:", 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 2.0f, 0.0f, 1.0f, SGWHorizontalAlignment::Right, false);
-    SGWSingCorrectCustomisationPage::prefixInput = new SGWTextInput(p, &SGWSingCorrectCustomisationPage::prefixSaved, 0.0f, 2.1f, 0.0f, 0.0f, 1.0f, -2.1f, 0.0f, 1.0f);
+    SGWSingCorrectCustomisationPage::prefixInput = new SGWTextInput(p, "SingCorrect prefix", &SGWSingCorrectCustomisationPage::prefixSaved, 0.0f, 2.1f, 0.0f, 0.0f, 1.0f, -2.1f, 0.0f, 1.0f);
     (*SGWSingCorrectCustomisationPage::prefixInput).textChangedFunction = (&SGWSingCorrectCustomisationPage::prefixUpdated);
     SGWSingCorrectCustomisationPage::prefixInvalidMessage = new SGWTextLabel(p, "prefix cannot be blank", 0.0f, 2.1f, 0.0f, 1.0f, 1.0f, -2.1f, 0.0f, 0.75f, SGWHorizontalAlignment::Left, true);
     SGWSingCorrectCustomisationPage::prefixUnsavedMessage = new SGWTextLabel(p, "press tab to save", 0.0f, 2.1f, 0.0f, 1.0f, 1.0f, -2.1f, 0.0f, 0.75f, SGWHorizontalAlignment::Left, true);
@@ -65,8 +65,8 @@ SGWBackground* SGWSingCorrectCustomisationPage::initialise(){
     p = new SGWBlankWidget(x, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 3.0f);
     new SGWTextLabel(p, "symbol", 0.25f, -2.6f, 0.0f, 0.0f, 0.0f, 2.5f, 0.0f, 1.0f, SGWHorizontalAlignment::Center, false);
     new SGWTextLabel(p, "command", 0.25f, 0.1f, 0.0f, 0.0f, 0.5f, -0.2f, 0.0f, 1.0f, SGWHorizontalAlignment::Center, false);
-    SGWSingCorrectCustomisationPage::customCharInput = new SGWTextInput(p, &SGWSingCorrectCustomisationPage::customCharCheck, 0.25f, -2.6f, 0.0f, 1.0f, 0.0f, 2.5f, 0.0f, 1.0f);
-    SGWSingCorrectCustomisationPage::customCommandInput = new SGWTextInput(p, &SGWSingCorrectCustomisationPage::customCommandCheck, 0.25f, 0.1f, 0.0f, 1.0f, 0.5f, 0.3f, 0.0f, 1.0f);
+    SGWSingCorrectCustomisationPage::customCharInput = new SGWTextInput(p, "char", &SGWSingCorrectCustomisationPage::customCharCheck, 0.25f, -2.6f, 0.0f, 1.0f, 0.0f, 2.5f, 0.0f, 1.0f);
+    SGWSingCorrectCustomisationPage::customCommandInput = new SGWTextInput(p, "command to replace", &SGWSingCorrectCustomisationPage::customCommandCheck, 0.25f, 0.1f, 0.0f, 1.0f, 0.5f, 0.3f, 0.0f, 1.0f);
     new SGWTextButton(p, "add", &SGWSingCorrectCustomisationPage::addCustomCommand, 0.75f, 0.6f, 0.0f, 1.0f, 0.0f, 2.0f, 0.0f, 1.0f);
     SGWSingCorrectCustomisationPage::customCharError = new SGWTextLabel(p, "single symbol", 0.25f, -2.1f, 0.0f, 2.0f, 0.0f, 4.0f, 0.0f, 0.75f, SGWHorizontalAlignment::Left, true);
     SGWSingCorrectCustomisationPage::customCommandError = new SGWTextLabel(p, "only letters, not blank", 0.5f, -1.5f, 0.0f, 2.0f, 0.0f, 6.0f, 0.0f, 0.75f, SGWHorizontalAlignment::Left, true);
