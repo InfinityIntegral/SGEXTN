@@ -1,6 +1,7 @@
 import QtQuick
 import ThemeColours 0.0
 import Resizer 0.0
+import QtQuick.Controls
 
 Rectangle{
 	property bool utc: true
@@ -43,7 +44,7 @@ Rectangle{
     height: h1 * (ph1 * Resizer.renderSpaceHeight + ph0 * Resizer.sizeUnit) + h0 * Resizer.sizeUnit
     color: getBg(utc, bg, bgc)
 	
-	Text{
+    TextEdit{
 		x: 0
 		y: 0
 		width: parent.width
@@ -54,8 +55,11 @@ Rectangle{
 		horizontalAlignment: ha
 		verticalAlignment: va
 		color: getFg(utc, fg, fgc)
-		clip: true
-		elide: Text.ElideRight
+        clip: true
 		property bool canParent: true
+        readOnly: true
+        selectByMouse: true
+        selectedTextColor : getBg(utc, bg, bgc)
+        selectionColor : getFg(utc, fg, fgc)
 	}
 }

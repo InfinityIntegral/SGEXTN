@@ -103,7 +103,7 @@ ScrollView{
 			height: 0
 			color: getBg(utc, bg, bgc)
 
-			Text{
+            TextEdit{
 				property bool canParent: true
 				x: p1 * (pw1 * Resizer.renderSpaceWidth + pw0 * Resizer.sizeUnit) + p0 * Resizer.sizeUnit
 				y: 0
@@ -116,6 +116,10 @@ ScrollView{
 				verticalAlignment: va
 				color: getFg(utc, fg, fgc)
 				wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                readOnly: true
+                selectByMouse: true
+                selectedTextColor : getBg(utc, bg, bgc)
+                selectionColor : getFg(utc, fg, fgc)
 
 				function updateParentHeight(){
 					parent.height = Math.max(implicitHeight, h1 * (ph1 * Resizer.renderSpaceHeight + ph0 * Resizer.sizeUnit) + h0 * Resizer.sizeUnit)

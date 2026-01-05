@@ -45,7 +45,7 @@ Rectangle{
 	
 	color: getBg(utc, bg, bgc)
 
-	Text{
+    TextEdit{
 		property bool canParent: true
 		x: 0
 		y: 0
@@ -58,6 +58,10 @@ Rectangle{
 		verticalAlignment: va
 		color: getFg(utc, fg, fgc)
 		wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+        readOnly: true
+        selectByMouse: true
+        selectedTextColor : getBg(utc, bg, bgc)
+        selectionColor : getFg(utc, fg, fgc)
 
 		function updateParentHeight(){
 			parent.height = implicitHeight;
