@@ -9,9 +9,8 @@ Sincerity UI is WCAG compliant and based on the iconic 05524F pink. There are 6 
 4 - hover background
 5 - focus background
 These meanings are used by default. The colours on a specific @SG_FINDREP_WIDGET can be changed.
-It is recommended that the theme colours form a gradient.
 @SG_ML_BLANKLINE
-By default, Sincerity UI has 3 variations, Standard, Light, and Dark. These are accessible to the user in the configuration menu.
+By default, Sincerity UI has 2 variations, Light, and Dark. These are accessible to the user in the configuration menu.
 To align with your personal preferences or company branding, you can use a different default theme colour by writing to SGXThemeColoursCustomisation::themeColours inside SGXCentral::setCustomTheme.
 @SG_ML_BLANKLINE
 Every widget in the @SG_FINDREP_WIDGET system keeps track of if it uses theme colours at all. If you set a theme colour to anything on the widget, this is automatically turned on. If you set a colour directly, this is automatically turned off.

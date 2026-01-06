@@ -19,17 +19,17 @@ inline QColor temp_getQColour(SGXColourRGBA x){
 SGWLongInput::SGWLongInput(SGWWidget *parent, const SGXString& placeholder, void (*validationFunction)(), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float f1, float f0, float s1, float s0) : SGWInput(parent, placeholder, validationFunction, x1, x0, y1, y0, w1, w0, h1, h0, f1, f0, SGWHorizontalAlignment::Left, SGWVerticalAlignment::Top){
     (*this).s1 = s1;
     (*this).s0 = s0;
-    (*this).scrollbarBackgroundThemeColour = 4;
+    (*this).scrollbarBackgroundThemeColour = 3;
     (*this).scrollbarBackgroundColour = SGXThemeColours::getThemeColour((*this).scrollbarBackgroundThemeColour);
-    (*this).scrollbarForegroundThemeColour = 6;
+    (*this).scrollbarForegroundThemeColour = 0;
     (*this).scrollbarForegroundColour = SGXThemeColours::getThemeColour((*this).scrollbarForegroundThemeColour);
-    (*this).scrollbarBackgroundHoverThemeColour = 3;
+    (*this).scrollbarBackgroundHoverThemeColour = 4;
     (*this).scrollbarBackgroundHoverColour = SGXThemeColours::getThemeColour((*this).scrollbarBackgroundHoverThemeColour);
-    (*this).scrollbarForegroundHoverThemeColour = 5;
+    (*this).scrollbarForegroundHoverThemeColour = 1;
     (*this).scrollbarForegroundHoverColour = SGXThemeColours::getThemeColour((*this).scrollbarForegroundHoverThemeColour);
-    (*this).scrollbarBackgroundFocusThemeColour = 2;
+    (*this).scrollbarBackgroundFocusThemeColour = 5;
     (*this).scrollbarBackgroundFocusColour = SGXThemeColours::getThemeColour((*this).scrollbarBackgroundFocusThemeColour);
-    (*this).scrollbarForegroundFocusThemeColour = 4;
+    (*this).scrollbarForegroundFocusThemeColour = 2;
     (*this).scrollbarForegroundFocusColour = SGXThemeColours::getThemeColour((*this).scrollbarForegroundFocusThemeColour);
     QQuickItem* thisItem = static_cast<QQuickItem*>((*SGXQuickInterface::longInput).create());
     (*this).initialiseQuickItemReferences(thisItem);

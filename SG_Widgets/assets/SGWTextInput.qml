@@ -149,8 +149,7 @@ TextField{
 	}
 	
 	font.pixelSize: f1 * (ph1 * Resizer.renderSpaceHeight + ph0 * Resizer.sizeUnit) + f0 * Resizer.sizeUnit
-	font.family: f
-	font.bold: true
+    font.family: f
 	horizontalAlignment: ha
 	verticalAlignment: va
 	color: getFg(utc, vh, vf, inv, fg, fgc, fgh, fghc, fgf, fgfc, fgi, fgic, fghi, fghic)

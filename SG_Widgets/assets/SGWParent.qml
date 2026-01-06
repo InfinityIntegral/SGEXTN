@@ -7,5 +7,5 @@ Rectangle{
 	y: Resizer.sizeUnit
     width: Resizer.renderSpaceWidth
     height: Resizer.renderSpaceHeight - Resizer.sizeUnit
-    color: ThemeColours.getThemeColour(8)
+    color: ThemeColours.getThemeColour(3)
 }

@@ -29,11 +29,11 @@ SGWColourPickerWidget::SGWColourPickerWidget(SGWWidget *parent, float x1, float 
     (*this).attachedFunctionWithString = nullptr;
     (*this).attachedFunctionWithPointer = nullptr;
     (*this).usingTheme = true;
-    (*this).backgroundThemeColour = 4;
+    (*this).backgroundThemeColour = 3;
     (*this).backgroundColour = SGXThemeColours::getThemeColour((*this).backgroundThemeColour);
-    (*this).backgroundHoverThemeColour = 3;
+    (*this).backgroundHoverThemeColour = 4;
     (*this).backgroundHoverColour = SGXThemeColours::getThemeColour((*this).backgroundHoverThemeColour);
-    (*this).backgroundFocusThemeColour = 2;
+    (*this).backgroundFocusThemeColour = 5;
     (*this).backgroundFocusColour = SGXThemeColours::getThemeColour((*this).backgroundFocusThemeColour);
     QQuickItem* thisItem = static_cast<QQuickItem*>((*SGXQuickInterface::colourPicker).create());
     (*this).initialiseQuickItemReferences(thisItem);
