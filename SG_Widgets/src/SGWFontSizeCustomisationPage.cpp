@@ -43,9 +43,9 @@ SGWBackground* SGWFontSizeCustomisationPage::initialise(){
     SGWFontSizeCustomisationPage::sizeInvalidMessage = new SGWTextLabel(p, "number between 0.5 and 2", 0.5f, 0.1f, 0.0f, 1.0f, 0.5f, -0.6f, 0.0f, 0.75f, SGWHorizontalAlignment::Left, true);
     p = new SGWBlankWidget(bg, 0.0f, 0.0f, 1.0f, -3.0f, 1.0f, 0.0f, 0.0f, 2.0f);
     SGWBlankWidget* p0 = new SGWBlankWidget(p, 0.0f, 0.5f, 0.0f, 0.25f, 1.0f, -1.0f, 0.0f, 0.5f);
-    (*p0).setThemeColour(6);
+    (*p0).setThemeColour(5);
     SGWFontSizeCustomisationPage::sliderForeground = new SGWBlankWidget(p, 0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f);
-    (*SGWFontSizeCustomisationPage::sliderForeground).setThemeColour(4);
+    (*SGWFontSizeCustomisationPage::sliderForeground).setThemeColour(0);
     new SGWTextLabel(p, "0.5", 0.0f, 0.5f, 0.0f, 1.0f, 0.0f, 1.5f, 0.0f, 1.0f, SGWHorizontalAlignment::Left, false);
     new SGWTextLabel(p, "2.0", 1.0f, -2.0f, 0.0f, 1.0f, 0.0f, 1.5f, 0.0f, 1.0f, SGWHorizontalAlignment::Right, false);
     SGWFontSizeCustomisationPage::sliderInput = new SGWSingleTouchReceiver(p, &SGWFontSizeCustomisationPage::sliderChange, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 2.0f);
@@ -91,7 +91,7 @@ void SGWFontSizeCustomisationPage::sizeValidityCheck(){
 
 void SGWFontSizeCustomisationPage::sliderChange(const SGXTouchEvent &x){
     if(x.phase == SGXTouchEvent::TouchEnd){
-        (*SGWFontSizeCustomisationPage::sliderForeground).setThemeColour(4);
+        (*SGWFontSizeCustomisationPage::sliderForeground).setThemeColour(0);
         (*SGWFontSizeCustomisationPage::sliderInput).setH1(0.0f);
         return;
     }
