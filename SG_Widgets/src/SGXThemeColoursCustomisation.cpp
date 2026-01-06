@@ -4,43 +4,20 @@
 #include <SGXTimeStamp.h>
 #include <SGXColourRGBA.h>
 #include <SGXString.h>
+#include <SGLArray.h>
 
-SGXColourRGBA SGXThemeColoursCustomisation::themeColour0 = SGXColourRGBA(0, 0, 0);
-SGXColourRGBA SGXThemeColoursCustomisation::themeColour1 = SGXColourRGBA(64, 0, 50);
-SGXColourRGBA SGXThemeColoursCustomisation::themeColour2 = SGXColourRGBA(128, 0, 100);
-SGXColourRGBA SGXThemeColoursCustomisation::themeColour3 = SGXColourRGBA(191, 0, 150);
-SGXColourRGBA SGXThemeColoursCustomisation::themeColour4 = SGXColourRGBA(255, 0, 200);
-SGXColourRGBA SGXThemeColoursCustomisation::themeColour5 = SGXColourRGBA(255, 64, 214);
-SGXColourRGBA SGXThemeColoursCustomisation::themeColour6 = SGXColourRGBA(255, 128, 227);
-SGXColourRGBA SGXThemeColoursCustomisation::themeColour7 = SGXColourRGBA(255, 191, 241);
-SGXColourRGBA SGXThemeColoursCustomisation::themeColour8 = SGXColourRGBA(255, 255, 255);
+SGLArray<SGXColourRGBA> SGXThemeColoursCustomisation::themeColours = SGLArray<SGXColourRGBA>(SGXColourRGBA(77, 0, 60), SGXColourRGBA(115, 0, 90), SGXColourRGBA(153, 0, 120), SGXColourRGBA(255, 153, 233), SGXColourRGBA(255, 204, 244), SGXColourRGBA(255, 255, 255));
 
 void SGXThemeColoursCustomisation::loadThemeColours(){
-    if(SGXTimeStamp::now().isNationalDayPeriod()){
-        SGXThemeColoursCustomisation::themeColour0 = SGXColourRGBA(0, 0, 0);
-        SGXThemeColoursCustomisation::themeColour1 = SGXColourRGBA(60, 9, 14);
-        SGXThemeColoursCustomisation::themeColour2 = SGXColourRGBA(119, 19, 27);
-        SGXThemeColoursCustomisation::themeColour3 = SGXColourRGBA(179, 28, 41);
-        SGXThemeColoursCustomisation::themeColour4 = SGXColourRGBA(238, 37, 54);
-        SGXThemeColoursCustomisation::themeColour5 = SGXColourRGBA(242, 92, 104);
-        SGXThemeColoursCustomisation::themeColour6 = SGXColourRGBA(247, 146, 155);
-        SGXThemeColoursCustomisation::themeColour7 = SGXColourRGBA(251, 201, 205);
-        SGXThemeColoursCustomisation::themeColour8 = SGXColourRGBA(255, 255, 255);
-        return;
-    }
     const SGXString path = SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "SGEXTN/themecolours.sg");
     if(SGXFileSystem::fileExists(path) == false){return;}
     {
         const SGXFile fileReader(path, SGXFile::ReadOnly);
-        SGXThemeColoursCustomisation::themeColour0 = fileReader.readColourRGBA();
-        SGXThemeColoursCustomisation::themeColour1 = fileReader.readColourRGBA();
-        SGXThemeColoursCustomisation::themeColour2 = fileReader.readColourRGBA();
-        SGXThemeColoursCustomisation::themeColour3 = fileReader.readColourRGBA();
-        SGXThemeColoursCustomisation::themeColour4 = fileReader.readColourRGBA();
-        SGXThemeColoursCustomisation::themeColour5 = fileReader.readColourRGBA();
-        SGXThemeColoursCustomisation::themeColour6 = fileReader.readColourRGBA();
-        SGXThemeColoursCustomisation::themeColour7 = fileReader.readColourRGBA();
-        SGXThemeColoursCustomisation::themeColour8 = fileReader.readColourRGBA();
+        int colourCount = fileReader.readInt();
+        SGLArray<SGXColourRGBA> arr(colourCount);
+        for(int i=0; i<colourCount; i++){
+            arr.at(i) = fileReader.readColourRGBA();
+        }
     }
 }
 
@@ -50,14 +27,9 @@ void SGXThemeColoursCustomisation::syncThemeColours(){
     SGXFileSystem::createFile(path);
     {
         const SGXFile fileWriter(path, SGXFile::WriteOnly);
-        fileWriter.writeColourRGBA(SGXThemeColoursCustomisation::themeColour0);
-        fileWriter.writeColourRGBA(SGXThemeColoursCustomisation::themeColour1);
-        fileWriter.writeColourRGBA(SGXThemeColoursCustomisation::themeColour2);
-        fileWriter.writeColourRGBA(SGXThemeColoursCustomisation::themeColour3);
-        fileWriter.writeColourRGBA(SGXThemeColoursCustomisation::themeColour4);
-        fileWriter.writeColourRGBA(SGXThemeColoursCustomisation::themeColour5);
-        fileWriter.writeColourRGBA(SGXThemeColoursCustomisation::themeColour6);
-        fileWriter.writeColourRGBA(SGXThemeColoursCustomisation::themeColour7);
-        fileWriter.writeColourRGBA(SGXThemeColoursCustomisation::themeColour8);
+        fileWriter.writeInt(SGXThemeColoursCustomisation::themeColours.length());
+        for(int i=0; i<SGXThemeColoursCustomisation::themeColours.length(); i++){
+            fileWriter.writeColourRGBA(SGXThemeColoursCustomisation::themeColours.at(i));
+        }
     }
 }
