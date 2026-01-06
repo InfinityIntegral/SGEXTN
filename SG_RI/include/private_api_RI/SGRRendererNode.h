@@ -22,7 +22,7 @@ public:
     SGRRendererNode& operator=(SGRRendererNode&& x) = delete;
     ~SGRRendererNode() override;
     void prepare() override;
-    void render(const RenderState* /*unused*/) override;
+    void render(const RenderState* renderState) override;
     void releaseResources() override;
     [[nodiscard]] RenderingFlags flags() const override;
     [[nodiscard]] QSGRenderNode::StateFlags changedStates() const override;

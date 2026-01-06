@@ -16,11 +16,11 @@ SGRRendererGenerator::SGRRendererGenerator(SGRBaseRenderer* renderControl, SGRBa
     (*this).syncControl = syncControl;
     (*this).attachedWidget = attachedWidget;
     (*this).node = nullptr;
+    (*this).setClip(true);
     (*this).syncSize();
-    connect(SGXQuickInterface::rootWindow, &QQuickItem::widthChanged, this, &SGRRendererGenerator::syncSize);
-    connect(SGXQuickInterface::rootWindow, &QQuickItem::heightChanged, this, &SGRRendererGenerator::syncSize);
-    connect(parentItem, &QQuickItem::widthChanged, this, &SGRRendererGenerator::syncSize);
-    connect(parentItem, &QQuickItem::heightChanged, this, &SGRRendererGenerator::syncSize);
+    QTimer* refreshTimer = new QTimer(this);
+    connect(refreshTimer, &QTimer::timeout, this, &SGRRendererGenerator::syncSize);
+    (*refreshTimer).start(0);
 }
 
 QSGNode* SGRRendererGenerator::updatePaintNode(QSGNode *old, UpdatePaintNodeData */*unused*/){
@@ -33,12 +33,15 @@ QSGNode* SGRRendererGenerator::updatePaintNode(QSGNode *old, UpdatePaintNodeData
     (*renderControl).internalWindowW = static_cast<float>((*SGXQuickInterface::applicationWindow).width());
     (*renderControl).internalWindowH = static_cast<float>((*SGXQuickInterface::applicationWindow).height());
     if(syncControl != nullptr){(*syncControl).sync(renderControl);}
-    (*node).markDirty(QSGRenderNode::DirtyForceUpdate);
     (*this).node = node;
     return node;
 }
 
 void SGRRendererGenerator::syncSize(){
+    float prevX = (*this).mapToGlobal(0, 0).x();
+    float prevY = (*this).mapToGlobal(0, 0).y();
+    float prevW = width();
+    float prevH = height();
     if(attachedWidget == nullptr){
         setWidth((*parentItem()).width());
         setHeight((*parentItem()).height());
@@ -49,6 +52,7 @@ void SGRRendererGenerator::syncSize(){
     setY((*attachedWidget).getY1() * ((*attachedWidget).getParentH1() * SGXResizer::getRenderSpaceHeight() + (*attachedWidget).getParentH0() * SGXResizer::getSizeUnit()) + (*attachedWidget).getY0() * SGXResizer::getSizeUnit());
     setWidth((*attachedWidget).getW1() * ((*attachedWidget).getParentW1() * SGXResizer::getRenderSpaceWidth() + (*attachedWidget).getParentW0() * SGXResizer::getSizeUnit()) + (*attachedWidget).getW0() * SGXResizer::getSizeUnit());
     setHeight((*attachedWidget).getH1() * ((*attachedWidget).getParentH1() * SGXResizer::getRenderSpaceHeight() + (*attachedWidget).getParentH0() * SGXResizer::getSizeUnit()) + (*attachedWidget).getH0() * SGXResizer::getSizeUnit());
+    if(prevX == (*this).mapToGlobal(0, 0).x() && prevY == (*this).mapToGlobal(0, 0).y() && prevW == width() && prevH == height()){return;}
     update();
 }
 
