@@ -54,6 +54,8 @@ SGRRenderingProgramme::SGRRenderingProgramme(SGRBaseRenderer *renderControl){
     QRhiGraphicsPipeline::TargetBlend blendFunction;
     blendFunction.enable = true;
     (*pipeline).setTargetBlends({blendFunction});
+
+    (*pipeline).setFlags(QRhiGraphicsPipeline::UsesScissor);
     
     vertexBufferObjects = new SGLVector<int>();
     vertexProperties = new SGLVector<SGRVertexProperty>();

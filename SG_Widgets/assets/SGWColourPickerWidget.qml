@@ -78,7 +78,7 @@ Button{
 				width: parent.width
 				height: parent.height
 				color: ThemeColours.getThemeColour(-1);
-				property bool canParent: true
+                property bool canParent: true
 			}
 		
 			Rectangle{

@@ -48,10 +48,12 @@ void SGRRendererNode::prepare(){
     (*renderingProgramme).resourceUpdateOperation = nullptr;
 }
 
-void SGRRendererNode::render(const RenderState */*unused*/){
+void SGRRendererNode::render(const RenderState *renderState){
     QRhiCommandBuffer* commands = commandBuffer();
     (*commands).setGraphicsPipeline((*renderingProgramme).pipeline);
-    (*commands).setViewport(QRhiViewport(0, 0, static_cast<float>((*renderTarget()).pixelSize().width()), static_cast<float>((*renderTarget()).pixelSize().height())));    
+    (*commands).setViewport(QRhiViewport(0, 0, static_cast<float>((*renderTarget()).pixelSize().width()), static_cast<float>((*renderTarget()).pixelSize().height())));
+    QRect renderSpace = (*renderState).scissorRect();
+    (*commands).setScissor(QRhiScissor(renderSpace.x(), renderSpace.y(), renderSpace.width(), renderSpace.height()));
     (*commands).setShaderResources();
     SGRCommandRequest commandRequest(commands);
     (*renderControl).requestRenderCommands(&commandRequest);
