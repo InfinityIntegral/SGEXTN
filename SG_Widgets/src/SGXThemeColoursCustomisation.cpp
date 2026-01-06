@@ -6,7 +6,7 @@
 #include <SGXString.h>
 #include <SGLArray.h>
 
-SGLArray<SGXColourRGBA> SGXThemeColoursCustomisation::themeColours = SGLArray<SGXColourRGBA>(SGXColourRGBA(77, 0, 60), SGXColourRGBA(115, 0, 90), SGXColourRGBA(153, 0, 120), SGXColourRGBA(255, 153, 233), SGXColourRGBA(255, 204, 244), SGXColourRGBA(255, 255, 255));
+SGLArray<SGXColourRGBA> SGXThemeColoursCustomisation::themeColours = SGLArray<SGXColourRGBA>(SGXColourRGBA(153, 0, 120), SGXColourRGBA(115, 0, 90), SGXColourRGBA(77, 0, 60), SGXColourRGBA(255, 242, 252), SGXColourRGBA(255, 217, 247), SGXColourRGBA(255, 191, 241));
 
 void SGXThemeColoursCustomisation::loadThemeColours(){
     const SGXString path = SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "SGEXTN/themecolours.sg");

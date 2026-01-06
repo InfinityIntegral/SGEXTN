@@ -146,8 +146,7 @@ Button{
 		height: parent.height
 		text: s
 		font.pixelSize: f1 * (ph1 * Resizer.renderSpaceHeight + ph0 * Resizer.sizeUnit) + f0 * Resizer.sizeUnit
-		font.family: f
-		font.bold: true
+        font.family: f
 		horizontalAlignment: ha
 		verticalAlignment: va
 		color: getFg(utc, vh, vf, sel, fg, fgc, fgh, fghc, fgf, fgfc, fgs, fgsc, fghs, fghsc, fgfs, fgfsc)

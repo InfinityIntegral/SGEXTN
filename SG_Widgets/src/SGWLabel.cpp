@@ -36,9 +36,9 @@ SGWLabel::SGWLabel(SGWWidget *parent, const SGXString &s, float x1, float x0, fl
     (*this).horizontalAlignment = horizontalAlignment;
     (*this).verticalAlignment = verticalAlignment;
     (*this).usingTheme = true;
-    (*this).backgroundThemeColour = 8;
+    (*this).backgroundThemeColour = 3;
     (*this).backgroundColour = SGXThemeColours::getThemeColour((*this).backgroundThemeColour);
-    (*this).foregroundThemeColour = 4;
+    (*this).foregroundThemeColour = 0;
     (*this).foregroundColour = SGXThemeColours::getThemeColour((*this).foregroundThemeColour);
 }
 

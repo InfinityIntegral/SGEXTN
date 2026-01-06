@@ -11,8 +11,8 @@ Rectangle{
 	y: 0
 	width: Resizer.renderSpaceWidth
 	height: Resizer.sizeUnit
-	property int bg: 8
-	property int fg: 4
+    property int bg: 3
+    property int fg: 0
 	
 	function getBg(bg){
 		return ThemeColours.getThemeColour(bg);
