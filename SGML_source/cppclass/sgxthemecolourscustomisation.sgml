@@ -19,15 +19,7 @@ parent class: (none)
 children classes: (none)
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_ static member variables
-&#9;static @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba @SG_ML_L00C023themeColour0#static_SGXColourRGBA_themeColour0_;
-&#9;static @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba @SG_ML_L00C023themeColour1#static_SGXColourRGBA_themeColour1_;
-&#9;static @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba @SG_ML_L00C023themeColour2#static_SGXColourRGBA_themeColour2_;
-&#9;static @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba @SG_ML_L00C023themeColour3#static_SGXColourRGBA_themeColour3_;
-&#9;static @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba @SG_ML_L00C023themeColour4#static_SGXColourRGBA_themeColour4_;
-&#9;static @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba @SG_ML_L00C023themeColour5#static_SGXColourRGBA_themeColour5_;
-&#9;static @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba @SG_ML_L00C023themeColour6#static_SGXColourRGBA_themeColour6_;
-&#9;static @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba @SG_ML_L00C023themeColour7#static_SGXColourRGBA_themeColour7_;
-&#9;static @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba @SG_ML_L00C023themeColour8#static_SGXColourRGBA_themeColour8_;
+&#9;static @SG_ML_L008008SGLArraysglarray‹@SG_ML_L00D00DSGXColourRGBAsgxcolourrgba› @SG_ML_L00C032themeColours#static_SGLArray_lt_SGXColourRGBA_gt_themeColours_;
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_sg_detaileddescription Detailed Description
 @SG_ML_L01C028SGXThemeColoursCustomisation../cppclass/sgxthemecolourscustomisation allows you to set custom @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour for your application.
@@ -35,57 +27,6 @@ children classes: (none)
 @SG_ML_HEADER_sg_implementationdetails Implementation Details
 Sets @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour at start of application.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_static_SGXColourRGBA_themeColour0_ static @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba @SG_ML_L00C023themeColour0#static_SGXColourRGBA_themeColour0_;
-@SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour number 0.
-@SG_ML_NOTE Setting this outside @SG_ML_L01A03BSGXCentral::setCustomTheme../cppclass/sgxcentral#static_void_ptr_setCustomTheme_func_ has no effect.
-@SG_ML_NOTE This does not override the automatic theme change to celebrate National Day.
-@SG_ML_NOTE After @SG_ML_L01A03BSGXCentral::setCustomTheme../cppclass/sgxcentral#static_void_ptr_setCustomTheme_func_ is called, this may not match the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour being used.
-@SG_ML_BLANKLINE
-@SG_ML_HEADER_static_SGXColourRGBA_themeColour1_ static @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba @SG_ML_L00C023themeColour1#static_SGXColourRGBA_themeColour1_;
-@SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour number 1.
-@SG_ML_NOTE Setting this outside @SG_ML_L01A03BSGXCentral::setCustomTheme../cppclass/sgxcentral#static_void_ptr_setCustomTheme_func_ has no effect.
-@SG_ML_NOTE This does not override the automatic theme change to celebrate National Day.
-@SG_ML_NOTE After @SG_ML_L01A03BSGXCentral::setCustomTheme../cppclass/sgxcentral#static_void_ptr_setCustomTheme_func_ is called, this may not match the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour being used.
-@SG_ML_BLANKLINE
-@SG_ML_HEADER_static_SGXColourRGBA_themeColour2_ static @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba @SG_ML_L00C023themeColour2#static_SGXColourRGBA_themeColour2_;
-@SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour number 2.
-@SG_ML_NOTE Setting this outside @SG_ML_L01A03BSGXCentral::setCustomTheme../cppclass/sgxcentral#static_void_ptr_setCustomTheme_func_ has no effect.
-@SG_ML_NOTE This does not override the automatic theme change to celebrate National Day.
-@SG_ML_NOTE After @SG_ML_L01A03BSGXCentral::setCustomTheme../cppclass/sgxcentral#static_void_ptr_setCustomTheme_func_ is called, this may not match the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour being used.
-@SG_ML_BLANKLINE
-@SG_ML_HEADER_static_SGXColourRGBA_themeColour3_ static @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba @SG_ML_L00C023themeColour3#static_SGXColourRGBA_themeColour3_;
-@SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour number 3.
-@SG_ML_NOTE Setting this outside @SG_ML_L01A03BSGXCentral::setCustomTheme../cppclass/sgxcentral#static_void_ptr_setCustomTheme_func_ has no effect.
-@SG_ML_NOTE This does not override the automatic theme change to celebrate National Day.
-@SG_ML_NOTE After @SG_ML_L01A03BSGXCentral::setCustomTheme../cppclass/sgxcentral#static_void_ptr_setCustomTheme_func_ is called, this may not match the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour being used.
-@SG_ML_BLANKLINE
-@SG_ML_HEADER_static_SGXColourRGBA_themeColour4_ static @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba @SG_ML_L00C023themeColour4#static_SGXColourRGBA_themeColour4_;
-@SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour number 4.
-@SG_ML_NOTE Setting this outside @SG_ML_L01A03BSGXCentral::setCustomTheme../cppclass/sgxcentral#static_void_ptr_setCustomTheme_func_ has no effect.
-@SG_ML_NOTE This does not override the automatic theme change to celebrate National Day.
-@SG_ML_NOTE After @SG_ML_L01A03BSGXCentral::setCustomTheme../cppclass/sgxcentral#static_void_ptr_setCustomTheme_func_ is called, this may not match the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour being used.
-@SG_ML_BLANKLINE
-@SG_ML_HEADER_static_SGXColourRGBA_themeColour5_ static @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba @SG_ML_L00C023themeColour5#static_SGXColourRGBA_themeColour5_;
-@SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour number 5.
-@SG_ML_NOTE Setting this outside @SG_ML_L01A03BSGXCentral::setCustomTheme../cppclass/sgxcentral#static_void_ptr_setCustomTheme_func_ has no effect.
-@SG_ML_NOTE This does not override the automatic theme change to celebrate National Day.
-@SG_ML_NOTE After @SG_ML_L01A03BSGXCentral::setCustomTheme../cppclass/sgxcentral#static_void_ptr_setCustomTheme_func_ is called, this may not match the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour being used.
-@SG_ML_BLANKLINE
-@SG_ML_HEADER_static_SGXColourRGBA_themeColour6_ static @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba @SG_ML_L00C023themeColour6#static_SGXColourRGBA_themeColour6_;
-@SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour number 6.
-@SG_ML_NOTE Setting this outside @SG_ML_L01A03BSGXCentral::setCustomTheme../cppclass/sgxcentral#static_void_ptr_setCustomTheme_func_ has no effect.
-@SG_ML_NOTE This does not override the automatic theme change to celebrate National Day.
-@SG_ML_NOTE After @SG_ML_L01A03BSGXCentral::setCustomTheme../cppclass/sgxcentral#static_void_ptr_setCustomTheme_func_ is called, this may not match the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour being used.
-@SG_ML_BLANKLINE
-@SG_ML_HEADER_static_SGXColourRGBA_themeColour7_ static @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba @SG_ML_L00C023themeColour7#static_SGXColourRGBA_themeColour7_;
-@SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour number 7.
-@SG_ML_NOTE Setting this outside @SG_ML_L01A03BSGXCentral::setCustomTheme../cppclass/sgxcentral#static_void_ptr_setCustomTheme_func_ has no effect.
-@SG_ML_NOTE This does not override the automatic theme change to celebrate National Day.
-@SG_ML_NOTE After @SG_ML_L01A03BSGXCentral::setCustomTheme../cppclass/sgxcentral#static_void_ptr_setCustomTheme_func_ is called, this may not match the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour being used.
-@SG_ML_BLANKLINE
-@SG_ML_HEADER_static_SGXColourRGBA_themeColour8_ static @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba @SG_ML_L00C023themeColour8#static_SGXColourRGBA_themeColour8_;
-@SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour number 8.
-@SG_ML_NOTE Setting this outside @SG_ML_L01A03BSGXCentral::setCustomTheme../cppclass/sgxcentral#static_void_ptr_setCustomTheme_func_ has no effect.
-@SG_ML_NOTE This does not override the automatic theme change to celebrate National Day.
-@SG_ML_NOTE After @SG_ML_L01A03BSGXCentral::setCustomTheme../cppclass/sgxcentral#static_void_ptr_setCustomTheme_func_ is called, this may not match the @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour being used.
+@SG_ML_HEADER_static_SGLArray_lt_SGXColourRGBA_gt_themeColours_ static @SG_ML_L008008SGLArraysglarray‹@SG_ML_L00D00DSGXColourRGBAsgxcolourrgba› @SG_ML_L00C032themeColours#static_SGLArray_lt_SGXColourRGBA_gt_themeColours_;
+list of @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour for the application.
 @SG_ML_BLANKLINE

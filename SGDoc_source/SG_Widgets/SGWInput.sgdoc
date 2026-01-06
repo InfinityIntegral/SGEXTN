@@ -174,11 +174,16 @@ Returns the SGXColourRGBA currently being used for the foreground of this SGWInp
 @SG_NOTE If you are not interested in the current @SG_FINDREP_THEME mode, pass nullptr to $isUsing.
 @SG_FUNC void setForegroundHoverInvalidColour(SGXColourRGBA colour);
 Sets the SGXColourRGBA of the foreground of this SGWInput when marked as invalid and hovered over to $colour and turns off @SG_FINDREP_THEME mode.
+@SG_FUNC void setPlaceholderText(const SGXString& s);
+Sets the placeholder text for the SGWInput to $s.
+@SG_FUNC [[nodiscard]] SGXString getPlaceholderText() const;
+Returns the current placeholder text used by this SGWInput.
 @SG_PRIVATE_API void eventReceived(const SGXString& s);
-@SG_PRIVATE_API SGWInput(SGWWidget* parent, void (*validationFunction)(), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float f1, float f0, SGWHorizontalAlignment::Flag horizontalAlignment, SGWVerticalAlignment::Flag verticalAlignment);
+@SG_PRIVATE_API SGWInput(SGWWidget* parent, const SGXString& placeholder, void (*validationFunction)(), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0, float f1, float f0, SGWHorizontalAlignment::Flag horizontalAlignment, SGWVerticalAlignment::Flag verticalAlignment);
 @SG_PRIVATE_API float f1;
 @SG_PRIVATE_API float f0;
 @SG_PRIVATE_API SGXString text;
+@SG_PRIVATE_API SGXString placeholderText;
 @SG_PRIVATE_API SGXString font;
 @SG_PRIVATE_API SGWHorizontalAlignment::Flag horizontalAlignment;
 @SG_PRIVATE_API SGWVerticalAlignment::Flag verticalAlignment;

@@ -19,7 +19,7 @@ parent class: @SG_ML_L008008SGWInputsgwinput
 children classes: (none)
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_ instance member functions
-&#9;@SG_ML_L00C05ASGWTextInput#SGWTextInput_SGWWidget_ptr_void_ptr_func_float_float_float_float_float_float_float_float_(@SG_ML_L009009SGWWidgetsgwwidget* parent, void (*validationFunction)(), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0);
+&#9;@SG_ML_L00C06ESGWTextInput#SGWTextInput_SGWWidget_ptr_const_SGXString_ref_void_ptr_func_float_float_float_float_float_float_float_float_(@SG_ML_L009009SGWWidgetsgwwidget* parent, const @SG_ML_L009009SGXStringsgxstring& placeholder, void (*validationFunction)(), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0);
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_sg_detaileddescription Detailed Description
 @SG_ML_L00C018SGWTextInput../cppclass/sgwtextinput provides a @SG_ML_L018015SGWidget ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/sgwidget text input field. The input field is interactive and sends out @SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback.
@@ -27,8 +27,8 @@ children classes: (none)
 @SG_ML_HEADER_sg_implementationdetails Implementation Details
 Stores information about the @SG_ML_L00C018SGWTextInput../cppclass/sgwtextinput.
 @SG_ML_BLANKLINE
-@SG_ML_HEADER_SGWTextInput_SGWWidget_ptr_void_ptr_func_float_float_float_float_float_float_float_float_ @SG_ML_L00C05ASGWTextInput#SGWTextInput_SGWWidget_ptr_void_ptr_func_float_float_float_float_float_float_float_float_(@SG_ML_L009009SGWWidgetsgwwidget* parent, void (*validationFunction)(), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0);
-Creates a @SG_ML_L00C018SGWTextInput../cppclass/sgwtextinput with parent @SG_ML_L018015SGWidget ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/sgwidget @SG_ML_B006parent, @SG_ML_L01A016w-distance ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/wdistance coordinates (@SG_ML_B002x1, @SG_ML_B002x0, @SG_ML_B002y1, @SG_ML_B002y0, @SG_ML_B002w1, @SG_ML_B002w0, @SG_ML_B002h1, @SG_ML_B002h0), and @SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback when unfocused as @SG_ML_B012validationFunction.
+@SG_ML_HEADER_SGWTextInput_SGWWidget_ptr_const_SGXString_ref_void_ptr_func_float_float_float_float_float_float_float_float_ @SG_ML_L00C06ESGWTextInput#SGWTextInput_SGWWidget_ptr_const_SGXString_ref_void_ptr_func_float_float_float_float_float_float_float_float_(@SG_ML_L009009SGWWidgetsgwwidget* parent, const @SG_ML_L009009SGXStringsgxstring& placeholder, void (*validationFunction)(), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0);
+Creates a @SG_ML_L00C018SGWTextInput../cppclass/sgwtextinput with parent @SG_ML_L018015SGWidget ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/sgwidget @SG_ML_B006parent, @SG_ML_L01A016w-distance ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/wdistance coordinates (@SG_ML_B002x1, @SG_ML_B002x0, @SG_ML_B002y1, @SG_ML_B002y0, @SG_ML_B002w1, @SG_ML_B002w0, @SG_ML_B002h1, @SG_ML_B002h0), placeholder text @SG_ML_B00Bplaceholder, and @SG_ML_L021015callback function ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/callback when unfocused as @SG_ML_B012validationFunction.
 @SG_ML_WARN @SG_ML_B006parent being nullptr is @SG_ML_L01301Fundefined behaviour../tutorials/undefinedbehaviour.
 @SG_ML_WARN To avoid use after free bugs, deleting a @SG_ML_L009015SGWWidget../cppclass/sgwwidget directly will cause a crash. Use @SG_ML_L01702DSGWWidget::deleteWidget../cppclass/sgwwidget#void_deleteWidget_func_ to delete it safely.
 @SG_ML_BLANKLINE

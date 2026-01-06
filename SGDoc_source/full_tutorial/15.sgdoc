@@ -22,8 +22,8 @@ static void cancelPresetSelection();
 We then can implement SGCLPPresetsSelectionPage::initialise, SGCLPPresetsSelectionPage::activate, and SGCLPPresetsSelectionPage::cancelPresetSelection.
 @SG_STARTCODEBLK
 SGWBackground* SGCLPPresetsSelectionPage::initialise(){
-    SGWBackground* bg = new SGWPageBackground(SGWWidget::parentWidget, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 8);
-    SGCLPPresetsSelectionPage::listBackground = new SGWScrollView(bg, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, -1.0f, 0.0f, 0.0f, 0.0f, 0.5f, 8);
+    SGWBackground* bg = new SGWPageBackground(SGWWidget::parentWidget, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f);
+    SGCLPPresetsSelectionPage::listBackground = new SGWScrollView(bg, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, -1.0f, 0.0f, 0.0f, 0.0f, 0.5f);
     new SGWTextButton(bg, "cancel", &SGCLPPresetsSelectionPage::cancelPresetSelection, 0.0f, 0.0f, 1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f);
     return bg;
 }
@@ -51,8 +51,8 @@ static void useSavedPreset(const SGXString& filePath);
 Then we modify the implementation of SGCLPPresetsSelectionPage::initialise and write the implementation of SGCLPPresetsSelectionPage::useSavedPreset as below.
 @SG_STARTCODEBLK
 SGWBackground* SGCLPPresetsSelectionPage::initialise(){
-    SGWBackground* bg = new SGWPageBackground(SGWWidget::parentWidget, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 8);
-    SGWScrollView* scrollView = new SGWScrollView(bg, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, -1.0f, 0.0f, 0.0f, 0.0f, 0.5f, 8);
+    SGWBackground* bg = new SGWPageBackground(SGWWidget::parentWidget, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f);
+    SGWScrollView* scrollView = new SGWScrollView(bg, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, -1.0f, 0.0f, 0.0f, 0.0f, 0.5f);
     SGCLPPresetsSelectionPage::listBackground = scrollView;
     new SGWTextButton(bg, "cancel", &SGCLPPresetsSelectionPage::cancelPresetSelection, 0.0f, 0.0f, 1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f);
     SGLArray<SGXString> filesList = SGXFileSystem::getFilesListWithExtension(SGXFileSystem::userDataFilePath, "sg");

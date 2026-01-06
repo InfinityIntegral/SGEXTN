@@ -172,7 +172,7 @@ From the code in the second part of the implementation, we can see that the tria
 Now we can add these lines to SGCLPDisplayPage::initialise
 @SG_STARTCODEBLK
 else if(SGCLPOptionsPage::chosenPattern == SGCLPOptionsPage::Polygon){
-    SGWBlankWidget* w = new SGWBlankWidget(bg, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f, -1.0f, -1);
+    SGWBlankWidget* w = new SGWBlankWidget(bg, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f, -1.0f);
     (*w).setColour(SGCLPOptionsPage::chosenBackgroundColour);
     new SGRRendererWidget(bg, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f, -1.0f, new SGCLPPolygonDisplay(SGCLPOptionsPage::chosenVertexCount, SGCLPOptionsPage::chosenForegroundColour), nullptr);
 }

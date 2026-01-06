@@ -18,7 +18,7 @@ static void activate();
 Implementation of SGCLPDisplayPage::initialise
 @SG_STARTCODEBLK
 SGWBackground* SGCLPDisplayPage::initialise(){
-    return new SGWPageBackground(SGWWidget::parentWidget, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 8);
+    return new SGWPageBackground(SGWWidget::parentWidget, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f);
 }
 @SG_ENDCODEBLK
 We will put more stuff here later
