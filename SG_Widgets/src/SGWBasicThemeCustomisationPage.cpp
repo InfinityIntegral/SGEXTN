@@ -155,6 +155,7 @@ void SGWBasicThemeCustomisationPage::cancelChanges(){
 }
 
 void SGWBasicThemeCustomisationPage::confirmChanges(){
+    /*
     SGXThemeColoursCustomisation::themeColour0 = SGWBasicThemeCustomisationPage::themeColours.at(0);
     SGXThemeColoursCustomisation::themeColour1 = SGWBasicThemeCustomisationPage::themeColours.at(1);
     SGXThemeColoursCustomisation::themeColour2 = SGWBasicThemeCustomisationPage::themeColours.at(2);
@@ -164,6 +165,7 @@ void SGWBasicThemeCustomisationPage::confirmChanges(){
     SGXThemeColoursCustomisation::themeColour6 = SGWBasicThemeCustomisationPage::themeColours.at(6);
     SGXThemeColoursCustomisation::themeColour7 = SGWBasicThemeCustomisationPage::themeColours.at(7);
     SGXThemeColoursCustomisation::themeColour8 = SGWBasicThemeCustomisationPage::themeColours.at(8);
+    */
     SGXThemeColoursCustomisation::syncThemeColours();
     SGWBackground::disable(SGWBasicThemeCustomisationPage::detailsInstance);
     SGWBackground::disable(SGWBasicThemeCustomisationPage::menuInstance);
