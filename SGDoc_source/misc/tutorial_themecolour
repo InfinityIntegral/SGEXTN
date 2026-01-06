@@ -1,21 +1,18 @@
 @SG_OTHERFILE_tutorials/themecolour Theme Colours Tutorial
 The @SG_FINDREP_WIDGET module of SGEXTN has theme colours builtin. This makes it very easy to change the colour of the UI both by you and by the user.
-There are 9 theme colours labelled from 0 to 8. Each one is used for a different purpose.
--1 - transparent, not really a theme colour
-0 - background of invalid input fields, attract attention
-1 - background of invalid input fields when hovered over, attract attention
-2 - background of focused interactive elements
-3 - background of hovered over interactive elements
-4 - text, background of interactive elements, scrollbar handle when focused
-5 - scrollbar handle when hovered over
-6 - some background areas, text of interactive elements when focused, scrollbar handle
-7 - text of interactive elements when hovered over
-8 - most background areas, text of interactive elements
+By default, starting from SGEXTN 6.4.0, applications will use Sincerity UI.
+Sincerity UI is WCAG compliant and based on the iconic 05524F pink. There are 6 colours.
+0 - normal foreground
+1 - hover foreground
+2 - focus foreground
+3 - normal background
+4 - hover background
+5 - focus background
 These meanings are used by default. The colours on a specific @SG_FINDREP_WIDGET can be changed.
 It is recommended that the theme colours form a gradient.
 @SG_ML_BLANKLINE
-By default, SGEXTN provides 3 themes. The Be the Light and Shine From Within, both inspired by the 2020 song "Be the Light" from the Singapore Ministry of Education, act as light mode and dark mode. The For Our Nation theme is used around National Day to celebrate our country's birthday.
-To align with your personal preferences or company branding, you can use a different default theme colour by writing to SGXThemeColoursCustomisation static member variables inside SGXCentral::setCustomTheme.
+By default, Sincerity UI has 3 variations, Standard, Light, and Dark. These are accessible to the user in the configuration menu.
+To align with your personal preferences or company branding, you can use a different default theme colour by writing to SGXThemeColoursCustomisation::themeColours inside SGXCentral::setCustomTheme.
 @SG_ML_BLANKLINE
 Every widget in the @SG_FINDREP_WIDGET system keeps track of if it uses theme colours at all. If you set a theme colour to anything on the widget, this is automatically turned on. If you set a colour directly, this is automatically turned off.
 This means that a widget cannot use theme colours and custom colour simultaneously. However you can mimic the effect by setting a custom colour equal to the theme colour. Theme colours can be accessed through SGXThemeColours::getThemeColour.

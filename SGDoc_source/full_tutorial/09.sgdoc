@@ -33,7 +33,7 @@ static void polygonSideCountCheck();
 @SG_ENDCODEBLK
 We then change the line creating the input field in SGCLPOptionsPage::initialise to use the function
 @SG_STARTCODEBLK
-SGCLPOptionsPage::polygonSideCountInput = new SGWTextInput(bg, &SGCLPOptionsPage::polygonSideCountCheck, 0.5f, 0.1f, 0.0f, 14.5f, 0.5f, -0.6f, 0.0f, 1.0f);
+SGCLPOptionsPage::polygonSideCountInput = new SGWTextInput(bg, "vertex count", &SGCLPOptionsPage::polygonSideCountCheck, 0.5f, 0.1f, 0.0f, 14.5f, 0.5f, -0.6f, 0.0f, 1.0f);
 @SG_ENDCODEBLK
 then we give a reasonable default of 3 vertices in SGCLPOptionsPage::reset
 @SG_STARTCODEBLK

@@ -4,4 +4,4 @@
 @SG_IMPLE Returns @SG_FINDREP_THEME.
 @SG_FUNC static SGXColourRGBA getThemeColour(int themeColour);
 Returns @SG_FINDREP_THEME number $themeColour.
-@SG_NOTE If $themeColour is between 0 to 8 inclusive, this returns an actual colour. Otherwise it gives fully transparent black.
+@SG_NOTE If $themeColour is in range, this returns an actual colour. Otherwise it gives fully transparent black.

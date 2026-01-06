@@ -15,9 +15,10 @@ static void updateProgressBar();
 We can modify the existing implementation of SGCLPDisplayPage::initialise to create the progress bar and start the timer.
 @SG_STARTCODEBLK
 SGWBackground* SGCLPDisplayPage::initialise(){
-    SGWBackground* bg = new SGWPageBackground(SGWWidget::parentWidget, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 8);
+    SGWBackground* bg = new SGWPageBackground(SGWWidget::parentWidget, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f);
     SGCLPDisplayPage::time = 0;
-    SGCLPDisplayPage::progressBar = new SGWBlankWidget(bg, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 6);
+    SGCLPDisplayPage::progressBar = new SGWBlankWidget(bg, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
+    (*SGCLPDisplayPage::progressBar).setThemeColour(5);
     SGCLPDisplayPage::timer = new SGXTimer(1.0f, &SGCLPDisplayPage::updateProgressBar);
     return bg;
 }

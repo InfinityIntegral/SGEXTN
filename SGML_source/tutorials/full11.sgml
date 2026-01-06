@@ -15,7 +15,7 @@
 &#9;Declarations:
 @SG_ML_WARN static SGWBackground* instance;&#10;static SGWBackground* initialise();&#10;static void activate();
 &#9;Implementation of SGCLPDisplayPage::initialise
-@SG_ML_WARN SGWBackground* SGCLPDisplayPage::initialise(){&#10;    return new SGWPageBackground(SGWWidget::parentWidget, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 8);&#10;}
+@SG_ML_WARN SGWBackground* SGCLPDisplayPage::initialise(){&#10;    return new SGWPageBackground(SGWWidget::parentWidget, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f);&#10;}
 &#9;We will put more stuff here later
 &#9;Implementation of SGCLPDisplayPage::activate
 @SG_ML_WARN void SGCLPDisplayPage::activate(){&#10;    SGWBackground::enable(SGCLPDisplayPage::instance, &SGCLPDisplayPage::initialise, nullptr);&#10;}

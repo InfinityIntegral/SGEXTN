@@ -29,5 +29,5 @@ Returns @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾..
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_SGXColourRGBA_getThemeColour_int_ static @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba @SG_ML_L00E029getThemeColour#static_SGXColourRGBA_getThemeColour_int_(int themeColour);
 Returns @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour number @SG_ML_B00BthemeColour.
-@SG_ML_NOTE If @SG_ML_B00BthemeColour is between 0 to 8 inclusive, this returns an actual colour. Otherwise it gives fully transparent black.
+@SG_ML_NOTE If @SG_ML_B00BthemeColour is in range, this returns an actual colour. Otherwise it gives fully transparent black.
 @SG_ML_BLANKLINE

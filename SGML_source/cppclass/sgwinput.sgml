@@ -60,6 +60,7 @@ children classes: @SG_ML_L00C00CSGWLongInputsgwlonginput, @SG_ML_L00C00CSGWTextI
 &#9;[[nodiscard]] int @SG_ML_L018037getForegroundThemeColour#nodiscard_int_getForegroundThemeColour_bool_ptr_const_(bool* isUsing) const;
 &#9;[[nodiscard]] SGWHorizontalAlignment::Flag @SG_ML_L01604CgetHorizontalAlignment#nodiscard_SGWHorizontalAlignment_mc_Flag_getHorizontalAlignment_func_const_() const;
 &#9;[[nodiscard]] bool @SG_ML_L00A026getInvalid#nodiscard_bool_getInvalid_func_const_() const;
+&#9;[[nodiscard]] @SG_ML_L009009SGXStringsgxstring @SG_ML_L012033getPlaceholderText#nodiscard_SGXString_getPlaceholderText_func_const_() const;
 &#9;[[nodiscard]] float @SG_ML_L00E03BgetTextAsFloat#nodiscard_float_getTextAsFloat_bool_ptr_float_float_const_(bool* isValid, float minimum, float maximum) const;
 &#9;[[nodiscard]] int @SG_ML_L00C033getTextAsInt#nodiscard_int_getTextAsInt_bool_ptr_int_int_const_(bool* isValid, int minimum, int maximum) const;
 &#9;[[nodiscard]] @SG_ML_L009009SGXStringsgxstring @SG_ML_L00F030getTextAsString#nodiscard_SGXString_getTextAsString_func_const_() const;
@@ -89,6 +90,7 @@ children classes: @SG_ML_L00C00CSGWLongInputsgwlonginput, @SG_ML_L00C00CSGWTextI
 &#9;void @SG_ML_L018023setForegroundThemeColour#void_setForegroundThemeColour_int_(int themeColour);
 &#9;void @SG_ML_L01603CsetHorizontalAlignment#void_setHorizontalAlignment_SGWHorizontalAlignment_mc_Flag_(SGWHorizontalAlignment::Flag alignment);
 &#9;void @SG_ML_L00A016setInvalid#void_setInvalid_bool_(bool invalid);
+&#9;void @SG_ML_L01202DsetPlaceholderText#void_setPlaceholderText_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& s);
 &#9;void @SG_ML_L01001DsetTextFromFloat#void_setTextFromFloat_float_(float x);
 &#9;void @SG_ML_L00E019setTextFromInt#void_setTextFromInt_int_(int x);
 &#9;void @SG_ML_L01102CsetTextFromString#void_setTextFromString_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& s);
@@ -239,6 +241,9 @@ Returns the current @SG_ML_L016022SGWHorizontalAlignment../cppclass/sgwhorizonta
 @SG_ML_HEADER_nodiscard_bool_getInvalid_func_const_ [[nodiscard]] bool @SG_ML_L00A026getInvalid#nodiscard_bool_getInvalid_func_const_() const;
 Returns if the @SG_ML_L008014SGWInput../cppclass/sgwinput is currently set to invalid.
 @SG_ML_BLANKLINE
+@SG_ML_HEADER_nodiscard_SGXString_getPlaceholderText_func_const_ [[nodiscard]] @SG_ML_L009009SGXStringsgxstring @SG_ML_L012033getPlaceholderText#nodiscard_SGXString_getPlaceholderText_func_const_() const;
+Returns the current placeholder text used by this @SG_ML_L008014SGWInput../cppclass/sgwinput.
+@SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_float_getTextAsFloat_bool_ptr_float_float_const_ [[nodiscard]] float @SG_ML_L00E03BgetTextAsFloat#nodiscard_float_getTextAsFloat_bool_ptr_float_float_const_(bool* isValid, float minimum, float maximum) const;
 Returns the text displayed in the @SG_ML_L008014SGWInput../cppclass/sgwinput as a number between @SG_ML_B007minimum and @SG_ML_B007maximum inclusive. If the text does not represent a number or if it is out of bounds, @SG_ML_B007isValid is set to false and 0 is returned, otherwise @SG_ML_B007isValid is set to true.
 @SG_ML_NOTE Pass nullptr to @SG_ML_B007isValid if you are not interested if the text represents a number and the integer is in bounds.
@@ -330,6 +335,9 @@ Sets the @SG_ML_L016022SGWHorizontalAlignment../cppclass/sgwhorizontalalignment 
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_setInvalid_bool_ void @SG_ML_L00A016setInvalid#void_setInvalid_bool_(bool invalid);
 If @SG_ML_B007invalid is true, set the @SG_ML_L008014SGWInput../cppclass/sgwinput to invalid, otherwise set the @SG_ML_L008014SGWInput../cppclass/sgwinput to not invalid.
+@SG_ML_BLANKLINE
+@SG_ML_HEADER_void_setPlaceholderText_const_SGXString_ref_ void @SG_ML_L01202DsetPlaceholderText#void_setPlaceholderText_const_SGXString_ref_(const @SG_ML_L009009SGXStringsgxstring& s);
+Sets the placeholder text for the @SG_ML_L008014SGWInput../cppclass/sgwinput to @SG_ML_B001s.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_void_setTextFromFloat_float_ void @SG_ML_L01001DsetTextFromFloat#void_setTextFromFloat_float_(float x);
 Sets the text currently displayed in the @SG_ML_L008014SGWInput../cppclass/sgwinput to the string representation of @SG_ML_B001x.

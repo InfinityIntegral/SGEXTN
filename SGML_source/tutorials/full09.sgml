@@ -27,7 +27,7 @@
 &#9;First we declare the function
 @SG_ML_WARN static void polygonSideCountCheck();
 &#9;We then change the line creating the input field in SGCLPOptionsPage::initialise to use the function
-@SG_ML_WARN SGCLPOptionsPage::polygonSideCountInput = new SGWTextInput(bg, &SGCLPOptionsPage::polygonSideCountCheck, 0.5f, 0.1f, 0.0f, 14.5f, 0.5f, -0.6f, 0.0f, 1.0f);
+@SG_ML_WARN SGCLPOptionsPage::polygonSideCountInput = new SGWTextInput(bg, "vertex count", &SGCLPOptionsPage::polygonSideCountCheck, 0.5f, 0.1f, 0.0f, 14.5f, 0.5f, -0.6f, 0.0f, 1.0f);
 &#9;then we give a reasonable default of 3 vertices in SGCLPOptionsPage::reset
 @SG_ML_WARN (*SGCLPOptionsPage::polygonSideCountInput).setTextFromInt(3);
 &#9;Note that @SG_ML_L01802DSGWInput::setTextFromInt../cppclass/sgwinput#void_setTextFromInt_int_ directly sets the string representation of a integer to the input field. There is also @SG_ML_L01A031SGWInput::setTextFromFloat../cppclass/sgwinput#void_setTextFromFloat_float_ and the usual @SG_ML_L01B040SGWInput::setTextFromString../cppclass/sgwinput#void_setTextFromString_const_SGXString_ref_.
