@@ -70,6 +70,10 @@ Rectangle{
 	width: w1 * (pw1 * Resizer.renderSpaceWidth + pw0 * Resizer.sizeUnit) + w0 * Resizer.sizeUnit
 	height: h1 * (ph1 * Resizer.renderSpaceHeight + ph0 * Resizer.sizeUnit) + h0 * Resizer.sizeUnit
 	color: getBg(utc, bg, bgc)
+
+    function getTranslucent(col){
+        return Qt.rgba(col.r, col.g, col.b, 0.5);
+    }
 	
 	ScrollView{
 		x: 0
@@ -99,8 +103,10 @@ Rectangle{
 			padding: 0
 		
 			contentItem: Rectangle{
-				color: getFS(utc, parent.vh, parent.vf, fs, fsc, fsh, fshc, fsf, fsfc)
+                color: getBS(utc, parent.vh, parent.vf, bs, bsc, bsh, bshc, bsf, bsfc)
 				width: parent.width
+                border.width: 0.1 * Resizer.sizeUnit
+                border.color: getTranslucent(getFS(utc, parent.vh, parent.vf, fs, fsc, fsh, fshc, fsf, fsfc))
 			}
 			background: Rectangle{
 				color: getBS(utc, parent.vh, parent.vf, bs, bsc, bsh, bshc, bsf, bsfc)

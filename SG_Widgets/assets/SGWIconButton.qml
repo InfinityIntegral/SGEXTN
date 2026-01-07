@@ -130,6 +130,10 @@ Button{
 			}
 		}
 	}
+
+    function getTranslucent(col){
+        return Qt.rgba(col.r, col.g, col.b, 0.5);
+    }
 	
 	background: Rectangle{
 		x: 0
@@ -137,6 +141,8 @@ Button{
 		width: parent.width
 		height: parent.height
 		color: getBg(utc, vh, vf, sel, bg, bgc, bgh, bghc, bgf, bgfc, bgs, bgsc, bghs, bghsc, bgfs, bgfsc)
+        border.width: 0.1 * Resizer.sizeUnit
+        border.color: getTranslucent(getFg(utc, vh, vf, sel, fg, fgc, fgh, fghc, fgf, fgfc, fgs, fgsc, fghs, fghsc, fgfs, fgfsc))
 	}
 	
 	contentItem: Text{
