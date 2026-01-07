@@ -146,6 +146,13 @@ TextField{
 		width: parent.width
 		height: parent.height
 		color: getBg(utc, vh, vf, inv, bg, bgc, bgh, bghc, bgf, bgfc, bgi, bgic, bghi, bghic)
+        Rectangle{
+            x: 0
+            y: parent.height - 0.1 * Resizer.sizeUnit
+            width: parent.width
+            height: 0.1 * Resizer.sizeUnit
+            color: getTranslucent(getFg(utc, vh, vf, inv, fg, fgc, fgh, fghc, fgf, fgfc, fgi, fgic, fghi, fghic))
+        }
 	}
 	
 	font.pixelSize: f1 * (ph1 * Resizer.renderSpaceHeight + ph0 * Resizer.sizeUnit) + f0 * Resizer.sizeUnit
