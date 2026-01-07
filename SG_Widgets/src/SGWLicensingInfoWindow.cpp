@@ -13,7 +13,7 @@ SGWBackground* SGWLicensingInfoWindow::instance = nullptr;
 SGWBackground* SGWLicensingInfoWindow::initialise(){
     SGWBackground* bg = new SGWPageBackground(SGWWidget::parentWidget, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f);
     new SGWTextLabel(bg, "SGEXTN License (LGPL)", 0.0f, 0.5f, 0.0f, 0.5f, 1.0f, -1.0f, 0.0f, 1.5f, SGWHorizontalAlignment::Center, false);
-    new SGWLongLabel(bg, SGXFile::readAllText(":/SGEXTN/LICENSE.txt"), 0.0f, 0.0f, 0.0f, 2.0f, 1.0f, 0.0f, 1.0f, -3.0f, 0.0f, 1.0f, 0.0f, 0.5f, 0.0f, 0.5f);
+    new SGWLongLabel(bg, SGXFile::readAllText(":/SGEXTN/LICENSE.txt"), 0.0f, 0.0f, 0.0f, 2.5f, 1.0f, 0.0f, 1.0f, -4.0f, 0.0f, 1.0f, 0.0f, 0.5f, 0.0f, 0.5f);
     new SGWTextButton(bg, "ok", &SGWLicensingInfoWindow::disable, 0.0f, 0.0f, 1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f);
     return bg;
 }
