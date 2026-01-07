@@ -17,14 +17,14 @@ SGWBackground* SGWConfigsWindow::instance = nullptr;
 SGWBackground* SGWConfigsWindow::initialise(){
     SGWBackground* bg = new SGWPageBackground(SGWWidget::parentWidget, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f);
     new SGWTextLabel(bg, "SGEXTN configs", 0.0f, 0.5f, 0.0f, 0.5f, 1.0f, -1.0f, 0.0f, 1.5f, SGWHorizontalAlignment::Center, false);
-    SGWWidget* sv = new SGWScrollView(bg, 0.0f, 0.0f, 0.0f, 2.5f, 1.0f, 0.0f, 1.0f, -3.5f, 0.0f, 8.5f, 0.0f, 0.5f);
+    SGWWidget* sv = new SGWScrollView(bg, 0.0f, 0.0f, 0.0f, 2.5f, 1.0f, 0.0f, 1.0f, -4.0f, 0.0f, 8.5f, 0.0f, 0.5f);
     new SGWTextButton(sv, "change theme", &SGWBasicThemeCustomisationPage::activate, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.0f);
     new SGWTextButton(sv, "change font size", &SGWFontSizeCustomisationPage::activate, 0.0f, 0.5f, 0.0f, 1.5f, 1.0f, -1.0f, 0.0f, 1.0f);
     new SGWTextButton(sv, "configure SingCorrect", &SGWSingCorrectCustomisationPage::activate, 0.0f, 0.5f, 0.0f, 3.0f, 1.0f, -1.0f, 0.0f, 1.0f);
     new SGWTextButton(sv, "view 05524F website", &SGWConfigsWindow::view05524FHomePage, 0.0f, 0.5f, 0.0f, 4.5f, 1.0f, -1.0f, 0.0f, 1.0f);
     new SGWTextButton(sv, "view SGEXTN website", &SGWConfigsWindow::viewSGEXTNPage, 0.0f, 0.5f, 0.0f, 6.0f, 1.0f, -1.0f, 0.0f, 1.0f);
     if(SGXCentral::infoWebsite != ""){new SGWTextButton(sv, "view app info website", &SGWConfigsWindow::viewApplicationInfoPage, 0.0f, 0.5f, 0.0f, 7.5f, 1.0f, -1.0f, 0.0f, 1.0f);}
-    new SGWTextButton(bg, "done", &SGWConfigsWindow::disable, 0.0f, 0.5f, 1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f);
+    new SGWTextButton(bg, "done", &SGWConfigsWindow::disable, 0.0f, 0.0f, 1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f);
     return bg;
 }
 

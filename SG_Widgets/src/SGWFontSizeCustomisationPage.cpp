@@ -29,7 +29,7 @@ void SGWFontSizeCustomisationPage::activate(){
 
 SGWBackground* SGWFontSizeCustomisationPage::initialise(){
     SGWBackground* bg = new SGWPageBackground(SGWWidget::parentWidget, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f);
-    SGWWidget* realBg = new SGWSequentialScrollView(bg, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, -3.0f, 0.0f, 0.5f);
+    SGWWidget* realBg = new SGWSequentialScrollView(bg, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, -3.5f, 0.0f, 0.5f);
     SGWFontSizeCustomisationPage::exitButton = new SGWTextButton(bg, "done", &SGWFontSizeCustomisationPage::exit, 0.0f, 0.0f, 1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f);
     new SGWTextLabel(realBg, "Adjust text size", 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 2.0f, SGWHorizontalAlignment::Center, false);
     const SGXString s = "Use the slider and input field below to adjust the font size for the application. The font size can be set to a minimum of half the default font size and a maximum of double the default font size. Font size is automatically saved.";
