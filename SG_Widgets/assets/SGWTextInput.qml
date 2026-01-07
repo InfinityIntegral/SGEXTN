@@ -110,7 +110,7 @@ TextField{
 	}
 
     function getTranslucent(col){
-        return Qt.rgba(col.r, col.g, col.b, 0.5);
+        return Qt.rgba(col.r, col.g, col.b, 0.75);
     }
 	
 	function getFg(vutc, vvh, vvf, vinv, vfg, vfgc, vfgh, vfghc, vfgf, vfgfc, vfgi, vfgic, vfghi, vfghic){
@@ -148,10 +148,10 @@ TextField{
 		color: getBg(utc, vh, vf, inv, bg, bgc, bgh, bghc, bgf, bgfc, bgi, bgic, bghi, bghic)
         Rectangle{
             x: 0
-            y: parent.height - 0.1 * Resizer.sizeUnit
+            y: parent.height - 0.075 * Resizer.sizeUnit
             width: parent.width
-            height: 0.1 * Resizer.sizeUnit
-            color: getTranslucent(getFg(utc, vh, vf, inv, fg, fgc, fgh, fghc, fgf, fgfc, fgi, fgic, fghi, fghic))
+            height: 0.075 * Resizer.sizeUnit
+            color: getFg(utc, vh, vf, inv, fg, fgc, fgh, fghc, fgf, fgfc, fgi, fgic, fghi, fghic)
         }
 	}
 	

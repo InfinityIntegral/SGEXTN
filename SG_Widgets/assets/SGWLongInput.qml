@@ -120,7 +120,7 @@ function getFg(vutc, vvh, vvf, vinv, vfg, vfgc, vfgh, vfghc, vfgf, vfgfc, vfgi, 
 }
 
 function getTranslucent(col){
-    return Qt.rgba(col.r, col.g, col.b, 0.5);
+    return Qt.rgba(col.r, col.g, col.b, 0.75);
 }
 
 function getBS(vutc, vvh, vvf, vbs, vbsc, vbsh, vbshc, vbsf, vbsfc){
@@ -244,8 +244,8 @@ ScrollView{
 		contentItem: Rectangle{
             color: getBS(utc, parent.vhs, parent.vfs, bs, bsc, bsh, bshc, bsf, bsfc)
 			width: parent.width
-            border.width: 0.1 * Resizer.sizeUnit
-            border.color: getTranslucent(getFS(utc, parent.vhs, parent.vfs, fs, fsc, fsh, fshc, fsf, fsfc))
+            border.width: 0.075 * Resizer.sizeUnit
+            border.color: getFS(utc, parent.vhs, parent.vfs, fs, fsc, fsh, fshc, fsf, fsfc)
 		}
 		background: Rectangle{
             color: getBS(utc, parent.vhs, parent.vfs, bs, bsc, bsh, bshc, bsf, bsfc)
@@ -256,9 +256,9 @@ ScrollView{
 
 Rectangle{
     x: 0
-    y: parent.height - 0.1 * Resizer.sizeUnit
+    y: parent.height - 0.075 * Resizer.sizeUnit
     width: parent.width - (s1 * (pw1 * Resizer.renderSpaceWidth + pw0 * Resizer.sizeUnit) + s0 * Resizer.sizeUnit)
-    height: 0.1 * Resizer.sizeUnit
-    color: getTranslucent(getFg(utc, vh, vf, inv, fg, fgc, fgh, fghc, fgf, fgfc, fgi, fgic, fghi, fghic))
+    height: 0.075 * Resizer.sizeUnit
+    color: getFg(utc, vh, vf, inv, fg, fgc, fgh, fghc, fgf, fgfc, fgi, fgic, fghi, fghic)
 }
 }
