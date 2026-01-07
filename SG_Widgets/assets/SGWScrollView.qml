@@ -74,10 +74,6 @@ ScrollView{
 			else if(vvh == true){return vfshc;}
 			else{return vfsc;}
 		}
-	}
-
-    function getTranslucent(col){
-        return Qt.rgba(col.r, col.g, col.b, 0.5);
     }
 	
 	Column{
@@ -105,8 +101,8 @@ ScrollView{
 		contentItem: Rectangle{
             color: getBS(utc, parent.vh, parent.vf, bs, bsc, bsh, bshc, bsf, bsfc)
 			width: parent.width
-            border.width: 0.1 * Resizer.sizeUnit
-            border.color: getTranslucent(getFS(utc, parent.vh, parent.vf, fs, fsc, fsh, fshc, fsf, fsfc))
+            border.width: 0.075 * Resizer.sizeUnit
+            border.color: getFS(utc, parent.vh, parent.vf, fs, fsc, fsh, fshc, fsf, fsfc)
 		}
 		background: Rectangle{
 			color: getBS(utc, parent.vh, parent.vf, bs, bsc, bsh, bshc, bsf, bsfc)
