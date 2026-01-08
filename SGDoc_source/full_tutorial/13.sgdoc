@@ -9,7 +9,7 @@ Since we need to wait for 10 seconds before turning off the display page and we 
 @SG_STARTCODEBLK
 static int time;
 static SGXTimer* timer;
-static SGWWidget* progressBar;
+static SGWBlankWidget* progressBar;
 static void updateProgressBar();
 @SG_ENDCODEBLK
 We can modify the existing implementation of SGCLPDisplayPage::initialise to create the progress bar and start the timer.
