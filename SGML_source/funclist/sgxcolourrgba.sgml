@@ -41,6 +41,7 @@
 &#9;[[nodiscard]] bool @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba::@SG_ML_L009049operator‹../cppclass/sgxcolourrgba#nodiscard_bool_operator_lt_SGXColourRGBA_const_(@SG_ML_L00D00DSGXColourRGBAsgxcolourrgba x) const;
 &#9;[[nodiscard]] bool @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba::@SG_ML_L00A049operator==../cppclass/sgxcolourrgba#nodiscard_bool_operator_eq_SGXColourRGBA_const_(@SG_ML_L00D00DSGXColourRGBAsgxcolourrgba x) const;
 &#9;[[nodiscard]] bool @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba::@SG_ML_L009049operator›../cppclass/sgxcolourrgba#nodiscard_bool_operator_gt_SGXColourRGBA_const_(@SG_ML_L00D00DSGXColourRGBAsgxcolourrgba x) const;
+&#9;[[nodiscard]] float @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba::@SG_ML_L010046relativeContrast../cppclass/sgxcolourrgba#nodiscard_float_relativeContrast_func_const_() const;
 &#9;@SG_ML_L00D00DSGXColourRGBAsgxcolourrgba& @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba::@SG_ML_L007038setBlue../cppclass/sgxcolourrgba#SGXColourRGBA_ref_setBlue_int_(int b);
 &#9;@SG_ML_L00D00DSGXColourRGBAsgxcolourrgba& @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba::@SG_ML_L011044setBlueUsingFloat../cppclass/sgxcolourrgba#SGXColourRGBA_ref_setBlueUsingFloat_float_(float b);
 &#9;@SG_ML_L00D00DSGXColourRGBAsgxcolourrgba& @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba::@SG_ML_L008039setGreen../cppclass/sgxcolourrgba#SGXColourRGBA_ref_setGreen_int_(int g);

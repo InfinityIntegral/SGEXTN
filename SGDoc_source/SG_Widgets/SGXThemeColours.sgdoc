@@ -5,3 +5,6 @@
 @SG_FUNC static SGXColourRGBA getThemeColour(int themeColour);
 Returns @SG_FINDREP_THEME number $themeColour.
 @SG_NOTE If $themeColour is in range, this returns an actual colour. Otherwise it gives fully transparent black.
+@SG_FUNC static SGLArray<SGXColourRGBA> generateSincerityUIThemeSet(SGXColourRGBA baseColour, bool darkMode);
+Returns a SGLArray of SGXColourRGBA representing a Sincerity UI compatible theme with hue and saturation following that of $baseColour. This is a light mode theme if $darkMode is false, and dark mode otherwise.
+@SG_NOTE All Sincerity UI compatible themes are WCAG AAA compliant.

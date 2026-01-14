@@ -27,6 +27,7 @@ children classes: (none)
 @SG_ML_HEADER_ instance member functions
 &#9;@SG_ML_L00D01DSGXColourHSLA#SGXColourHSLA_SGXColourRGBA_(@SG_ML_L00D00DSGXColourRGBAsgxcolourrgba x);
 &#9;@SG_ML_L00D027SGXColourHSLA#SGXColourHSLA_float_float_float_float_(float h, float s, float l, float a);
+&#9;[[nodiscard]] @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba @SG_ML_L01503BgetColourWithContrast#nodiscard_SGXColourRGBA_getColourWithContrast_float_const_(float c) const;
 &#9;[[nodiscard]] int @SG_ML_L00401Fhash#nodiscard_int_hash_func_const_() const;
 &#9;@SG_ML_L00D00DSGXColourHSLAsgxcolourhsla& @SG_ML_L009022invertHue#SGXColourHSLA_ref_invertHue_func_();
 &#9;@SG_ML_L00D00DSGXColourHSLAsgxcolourhsla& @SG_ML_L00F028invertLightness#SGXColourHSLA_ref_invertLightness_func_();
@@ -73,6 +74,9 @@ Creates a @SG_ML_L00D019SGXColourHSLA../cppclass/sgxcolourhsla from the @SG_ML_L
 @SG_ML_HEADER_SGXColourHSLA_float_float_float_float_ @SG_ML_L00D027SGXColourHSLA#SGXColourHSLA_float_float_float_float_(float h, float s, float l, float a);
 Creates a @SG_ML_L00D019SGXColourHSLA../cppclass/sgxcolourhsla with hue @SG_ML_B001h, saturation @SG_ML_B001s, lightness @SG_ML_B001l, and transparency @SG_ML_B001a.
 @SG_ML_NOTE If any argument is out of bounds, the constructor corrects it automatically.
+@SG_ML_BLANKLINE
+@SG_ML_HEADER_nodiscard_SGXColourRGBA_getColourWithContrast_float_const_ [[nodiscard]] @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba @SG_ML_L01503BgetColourWithContrast#nodiscard_SGXColourRGBA_getColourWithContrast_float_const_(float c) const;
+Returns a @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba with the same hue and saturation as this @SG_ML_L00D019SGXColourHSLA../cppclass/sgxcolourhsla and its @SG_ML_L01F046SGXColourRGBA::relativeContrast../cppclass/sgxcolourrgba#nodiscard_float_relativeContrast_func_const_ being @SG_ML_B001c.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_int_hash_func_const_ [[nodiscard]] int @SG_ML_L00401Fhash#nodiscard_int_hash_func_const_() const;
 Hash function defined for @SG_ML_L00D019SGLLesserThan../cppclass/sgllesserthan and @SG_ML_L00B017SGLMoreThan../cppclass/sglmorethan.
