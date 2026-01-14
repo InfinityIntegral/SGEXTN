@@ -63,3 +63,5 @@ Replaces the hue of this SGXColourHSLA with hue + $c and returns a reference to 
 @SG_FUNC [[nodiscard]] SGXColourRGBA toRGBA() const;
 Returns this SGXColourHSLA converted to a SGXColourRGBA.
 @SG_NOTE This is necessary to use the colour for display.
+@SG_FUNC [[nodiscard]] SGXColourRGBA getColourWithContrast(float c) const;
+Returns a SGXColourRGBA with the same hue and saturation as this SGXColourHSLA and its SGXColourRGBA::relativeContrast being $c.

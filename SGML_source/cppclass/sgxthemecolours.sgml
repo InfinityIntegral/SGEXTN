@@ -19,6 +19,7 @@ parent class: (none)
 children classes: (none)
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_ static member functions
+&#9;static @SG_ML_L008008SGLArraysglarray‹@SG_ML_L00D00DSGXColourRGBAsgxcolourrgba› @SG_ML_L01B054generateSincerityUIThemeSet#static_SGLArray_lt_SGXColourRGBA_gt_generateSincerityUIThemeSet_SGXColourRGBA_bool_(@SG_ML_L00D00DSGXColourRGBAsgxcolourrgba baseColour, bool darkMode);
 &#9;static @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba @SG_ML_L00E029getThemeColour#static_SGXColourRGBA_getThemeColour_int_(int themeColour);
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_sg_detaileddescription Detailed Description
@@ -26,6 +27,10 @@ children classes: (none)
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_sg_implementationdetails Implementation Details
 Returns @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour.
+@SG_ML_BLANKLINE
+@SG_ML_HEADER_static_SGLArray_lt_SGXColourRGBA_gt_generateSincerityUIThemeSet_SGXColourRGBA_bool_ static @SG_ML_L008008SGLArraysglarray‹@SG_ML_L00D00DSGXColourRGBAsgxcolourrgba› @SG_ML_L01B054generateSincerityUIThemeSet#static_SGLArray_lt_SGXColourRGBA_gt_generateSincerityUIThemeSet_SGXColourRGBA_bool_(@SG_ML_L00D00DSGXColourRGBAsgxcolourrgba baseColour, bool darkMode);
+Returns a @SG_ML_L008014SGLArray../cppclass/sglarray of @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba representing a Sincerity UI compatible theme with hue and saturation following that of @SG_ML_B00AbaseColour. This is a light mode theme if @SG_ML_B008darkMode is false, and dark mode otherwise.
+@SG_ML_NOTE All Sincerity UI compatible themes are WCAG AAA compliant.
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_static_SGXColourRGBA_getThemeColour_int_ static @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba @SG_ML_L00E029getThemeColour#static_SGXColourRGBA_getThemeColour_int_(int themeColour);
 Returns @SG_ML_L01C018theme colour ⁽㈳㈴㈳㈮㈱㈨㈠㈫ ㈧㈤㈱㈤⁾../tutorials/themecolour number @SG_ML_B00BthemeColour.

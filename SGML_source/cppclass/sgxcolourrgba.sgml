@@ -59,6 +59,7 @@ children classes: (none)
 &#9;[[nodiscard]] bool @SG_ML_L009030operator‹#nodiscard_bool_operator_lt_SGXColourRGBA_const_(@SG_ML_L00D00DSGXColourRGBAsgxcolourrgba x) const;
 &#9;[[nodiscard]] bool @SG_ML_L00A030operator==#nodiscard_bool_operator_eq_SGXColourRGBA_const_(@SG_ML_L00D00DSGXColourRGBAsgxcolourrgba x) const;
 &#9;[[nodiscard]] bool @SG_ML_L009030operator›#nodiscard_bool_operator_gt_SGXColourRGBA_const_(@SG_ML_L00D00DSGXColourRGBAsgxcolourrgba x) const;
+&#9;[[nodiscard]] float @SG_ML_L01002DrelativeContrast#nodiscard_float_relativeContrast_func_const_() const;
 &#9;@SG_ML_L00D00DSGXColourRGBAsgxcolourrgba& @SG_ML_L00701FsetBlue#SGXColourRGBA_ref_setBlue_int_(int b);
 &#9;@SG_ML_L00D00DSGXColourRGBAsgxcolourrgba& @SG_ML_L01102BsetBlueUsingFloat#SGXColourRGBA_ref_setBlueUsingFloat_float_(float b);
 &#9;@SG_ML_L00D00DSGXColourRGBAsgxcolourrgba& @SG_ML_L008020setGreen#SGXColourRGBA_ref_setGreen_int_(int g);
@@ -225,6 +226,11 @@ Equality check with @SG_ML_B001x defined for @SG_ML_L00B017SGLEqualsTo../cppclas
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_nodiscard_bool_operator_gt_SGXColourRGBA_const_ [[nodiscard]] bool @SG_ML_L009030operator›#nodiscard_bool_operator_gt_SGXColourRGBA_const_(@SG_ML_L00D00DSGXColourRGBAsgxcolourrgba x) const;
 More than operator with @SG_ML_B001x defined for @SG_ML_L00D019SGLLesserThan../cppclass/sgllesserthan and @SG_ML_L00B017SGLMoreThan../cppclass/sglmorethan.
+@SG_ML_BLANKLINE
+@SG_ML_HEADER_nodiscard_float_relativeContrast_func_const_ [[nodiscard]] float @SG_ML_L01002DrelativeContrast#nodiscard_float_relativeContrast_func_const_() const;
+Returns the contrast value of this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba. Text and background in any UI element must have a contrast difference of at least 1 to be compatible with WCAG AA.
+@SG_ML_NOTE This is not the WCAG contrast ratio.
+@SG_ML_NOTE For WCAG AAA compatibility, a contrast difference of 1.3 is required
 @SG_ML_BLANKLINE
 @SG_ML_HEADER_SGXColourRGBA_ref_setBlue_int_ @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba& @SG_ML_L00701FsetBlue#SGXColourRGBA_ref_setBlue_int_(int b);
 Sets the blue component of this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba to @SG_ML_B001b and returns a reference to this @SG_ML_L00D019SGXColourRGBA../cppclass/sgxcolourrgba to allow operation chaining.

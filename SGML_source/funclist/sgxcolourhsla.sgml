@@ -4,6 +4,7 @@
 &#9;@SG_ML_L00D019SGXColourHSLA../cppclass/sgxcolourhsla::@SG_ML_L00D036SGXColourHSLA../cppclass/sgxcolourhsla#SGXColourHSLA_SGXColourRGBA_(@SG_ML_L00D00DSGXColourRGBAsgxcolourrgba x);
 &#9;@SG_ML_L00D019SGXColourHSLA../cppclass/sgxcolourhsla::@SG_ML_L00D040SGXColourHSLA../cppclass/sgxcolourhsla#SGXColourHSLA_float_float_float_float_(float h, float s, float l, float a);
 &#9;float @SG_ML_L00D019SGXColourHSLA../cppclass/sgxcolourhsla::@SG_ML_L001022a../cppclass/sgxcolourhsla#float_a_;
+&#9;[[nodiscard]] @SG_ML_L00D00DSGXColourRGBAsgxcolourrgba @SG_ML_L00D019SGXColourHSLA../cppclass/sgxcolourhsla::@SG_ML_L015054getColourWithContrast../cppclass/sgxcolourhsla#nodiscard_SGXColourRGBA_getColourWithContrast_float_const_(float c) const;
 &#9;float @SG_ML_L00D019SGXColourHSLA../cppclass/sgxcolourhsla::@SG_ML_L001022h../cppclass/sgxcolourhsla#float_h_;
 &#9;[[nodiscard]] int @SG_ML_L00D019SGXColourHSLA../cppclass/sgxcolourhsla::@SG_ML_L004038hash../cppclass/sgxcolourhsla#nodiscard_int_hash_func_const_() const;
 &#9;@SG_ML_L00D00DSGXColourHSLAsgxcolourhsla& @SG_ML_L00D019SGXColourHSLA../cppclass/sgxcolourhsla::@SG_ML_L00903BinvertHue../cppclass/sgxcolourhsla#SGXColourHSLA_ref_invertHue_func_();
