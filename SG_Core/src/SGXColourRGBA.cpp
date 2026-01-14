@@ -400,3 +400,11 @@ SGXColourRGBA& SGXColourRGBA::toComplementColour(){
     setBlue(255 - getBlue());
     return (*this);
 }
+
+float SGXColourRGBA::relativeContrast() const {
+    float r = 0.0f;
+    float g = 0.0f;
+    float b = 0.0f;
+    gammaCorrectBegin(r, g, b);
+    return SGLFloatMath::naturalLogarithm(20.0f * (0.2126f * r + 0.7152f * g + 0.0722f * b) + 1.0f) / SGLFloatMath::naturalLogarithm(4.5f);
+}

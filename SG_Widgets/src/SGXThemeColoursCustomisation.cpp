@@ -5,8 +5,9 @@
 #include <SGXColourRGBA.h>
 #include <SGXString.h>
 #include <SGLArray.h>
+#include <SGXThemeColours.h>
 
-SGLArray<SGXColourRGBA> SGXThemeColoursCustomisation::themeColours = SGLArray<SGXColourRGBA>(SGXColourRGBA(202, 0, 159), SGXColourRGBA(177, 0, 139), SGXColourRGBA(148, 0, 116), SGXColourRGBA(255, 249, 253), SGXColourRGBA(255, 237, 248), SGXColourRGBA(255, 224, 243));
+SGLArray<SGXColourRGBA> SGXThemeColoursCustomisation::themeColours = SGXThemeColours::generateSincerityUIThemeSet(SGXColourRGBA(255, 0, 200), false);
 
 void SGXThemeColoursCustomisation::loadThemeColours(){
     const SGXString path = SGXFileSystem::joinFilePaths(SGXFileSystem::configFilePath, "SGEXTN/themecolours.sg");
@@ -18,6 +19,7 @@ void SGXThemeColoursCustomisation::loadThemeColours(){
         for(int i=0; i<colourCount; i++){
             arr.at(i) = fileReader.readColourRGBA();
         }
+        SGXThemeColoursCustomisation::themeColours = arr;
     }
 }
 

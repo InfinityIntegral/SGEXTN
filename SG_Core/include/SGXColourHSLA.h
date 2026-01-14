@@ -32,6 +32,7 @@ public:
     SGXColourHSLA& linearTransformTransparency(float m, float c);
     SGXColourHSLA& offsetHue(float c);
     [[nodiscard]] SGXColourRGBA toRGBA() const;
+    [[nodiscard]] SGXColourRGBA getColourWithContrast(float c) const;
 };
 
 #endif // SGXCOLOURHSLA_H
