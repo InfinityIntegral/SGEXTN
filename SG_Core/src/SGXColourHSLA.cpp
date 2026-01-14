@@ -202,3 +202,13 @@ SGXColourRGBA SGXColourHSLA::toRGBA() const {
     x.gammaCorrectEnd(r, g, b);
     return x;
 }
+
+SGXColourRGBA SGXColourHSLA::getColourWithContrast(float c) const {
+    float low = 0.0f;
+    float high = 100.0f;
+    while(high - low > 0.00001f){
+        if(SGXColourHSLA(h, s, 0.5f * (low + high), a).toRGBA().relativeContrast() <= c){low = 0.5f * (low + high);}
+        else{high = 0.5f * (low + high);}
+    }
+    return SGXColourHSLA(h, s, low, a).toRGBA();
+}

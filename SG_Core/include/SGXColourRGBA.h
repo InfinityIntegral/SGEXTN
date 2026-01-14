@@ -60,6 +60,7 @@ public:
     [[nodiscard]] SGXColourRGBA linearInterpolate(SGXColourRGBA x, float f) const;
     [[nodiscard]] SGXColourRGBA linearInterpolateGammaCorrection(SGXColourRGBA x, float f) const;
     SGXColourRGBA& toComplementColour();
+    [[nodiscard]] float relativeContrast() const;
 };
 
 #endif // SGXCOLOURRGBA_H
