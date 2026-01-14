@@ -15,19 +15,19 @@ SGLArray<SGXColourRGBA> SGXThemeColours::generateSincerityUIThemeSet(SGXColourRG
     SGLArray<SGXColourRGBA> arr(6);
     if(darkMode == false){
         arr.at(0) = SGXColourHSLA(baseColour).getColourWithContrast(0.9f);
-        arr.at(1) = SGXColourHSLA(baseColour).getColourWithContrast(0.6f);
-        arr.at(2) = SGXColourHSLA(baseColour).getColourWithContrast(0.3f);
+        arr.at(1) = SGXColourHSLA(baseColour).getColourWithContrast(0.5f);
+        arr.at(2) = SGXColourHSLA(baseColour).getColourWithContrast(0.1f);
         arr.at(3) = SGXColourHSLA(baseColour).getColourWithContrast(2.0f);
         arr.at(4) = SGXColourHSLA(baseColour).getColourWithContrast(1.85f);
         arr.at(5) = SGXColourHSLA(baseColour).getColourWithContrast(1.7f);
     }
     else{
-        arr.at(0) = SGXColourHSLA(baseColour).getColourWithContrast(2.0f);
-        arr.at(1) = SGXColourHSLA(baseColour).getColourWithContrast(1.85f);
-        arr.at(2) = SGXColourHSLA(baseColour).getColourWithContrast(1.7f);
-        arr.at(3) = SGXColourHSLA(baseColour).getColourWithContrast(0.9f);
-        arr.at(4) = SGXColourHSLA(baseColour).getColourWithContrast(0.6f);
-        arr.at(5) = SGXColourHSLA(baseColour).getColourWithContrast(0.3f);
+        arr.at(0) = SGXColourHSLA(baseColour).getColourWithContrast(1.7f);
+        arr.at(1) = SGXColourHSLA(baseColour).getColourWithContrast(2.1f);
+        arr.at(2) = SGXColourHSLA(baseColour).getColourWithContrast(2.5f);
+        arr.at(3) = SGXColourHSLA(baseColour).getColourWithContrast(0.1f);
+        arr.at(4) = SGXColourHSLA(baseColour).getColourWithContrast(0.25f);
+        arr.at(5) = SGXColourHSLA(baseColour).getColourWithContrast(0.4f);
     }
     return arr;
 }
