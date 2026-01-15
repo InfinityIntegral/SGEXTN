@@ -5,7 +5,7 @@
 #include <SGWTextLabel.h>
 #include <SGWTextButton.h>
 #include <SGWHorizontalAlignment.h>
-#include <private_api_Widgets/SGWBasicThemeCustomisationPage.h>
+#include <private_api_Widgets/SGWThemeCustomisationPage.h>
 #include <private_api_Widgets/SGWFontSizeCustomisationPage.h>
 #include <private_api_Widgets/SGWSingCorrectCustomisationPage.h>
 #include <SGXFileSystem.h>
@@ -18,7 +18,7 @@ SGWBackground* SGWConfigsWindow::initialise(){
     SGWBackground* bg = new SGWPageBackground(SGWWidget::parentWidget, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f);
     new SGWTextLabel(bg, "SGEXTN configs", 0.0f, 0.5f, 0.0f, 0.5f, 1.0f, -1.0f, 0.0f, 1.5f, SGWHorizontalAlignment::Center, false);
     SGWWidget* sv = new SGWScrollView(bg, 0.0f, 0.0f, 0.0f, 2.5f, 1.0f, 0.0f, 1.0f, -4.0f, 0.0f, 8.5f, 0.0f, 0.5f);
-    new SGWTextButton(sv, "change theme", &SGWBasicThemeCustomisationPage::activate, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.0f);
+    new SGWTextButton(sv, "change theme", &SGWThemeCustomisationPage::activate, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.0f);
     new SGWTextButton(sv, "change font size", &SGWFontSizeCustomisationPage::activate, 0.0f, 0.5f, 0.0f, 1.5f, 1.0f, -1.0f, 0.0f, 1.0f);
     new SGWTextButton(sv, "configure SingCorrect", &SGWSingCorrectCustomisationPage::activate, 0.0f, 0.5f, 0.0f, 3.0f, 1.0f, -1.0f, 0.0f, 1.0f);
     new SGWTextButton(sv, "view 05524F website", &SGWConfigsWindow::view05524FHomePage, 0.0f, 0.5f, 0.0f, 4.5f, 1.0f, -1.0f, 0.0f, 1.0f);
