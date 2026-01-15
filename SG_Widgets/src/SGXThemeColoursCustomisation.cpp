@@ -1,7 +1,6 @@
 #include <SGXThemeColoursCustomisation.h>
 #include <SGXFileSystem.h>
 #include <SGXFile.h>
-#include <SGXTimeStamp.h>
 #include <SGXColourRGBA.h>
 #include <SGXString.h>
 #include <SGLArray.h>
@@ -14,7 +13,7 @@ void SGXThemeColoursCustomisation::loadThemeColours(){
     if(SGXFileSystem::fileExists(path) == false){return;}
     {
         const SGXFile fileReader(path, SGXFile::ReadOnly);
-        int colourCount = fileReader.readInt();
+        const int colourCount = fileReader.readInt();
         SGLArray<SGXColourRGBA> arr(colourCount);
         for(int i=0; i<colourCount; i++){
             arr.at(i) = fileReader.readColourRGBA();

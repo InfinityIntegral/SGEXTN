@@ -9,7 +9,7 @@ inline QColor temp_getQColour(SGXColourRGBA x){
 }
 }
 
-QColor SGXThemeColourSetting::getThemeColour(int x) const {
+QColor SGXThemeColourSetting::getThemeColour(int x) const { // NOLINT(readability-convert-member-functions-to-static)
     if(x < 0 || x >= SGXThemeColoursCustomisation::themeColours.length()){return temp_getQColour(SGXColourRGBA(0, 0, 0, 0));}
     return temp_getQColour(SGXThemeColoursCustomisation::themeColours.at(x));
 }

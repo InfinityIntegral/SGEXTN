@@ -38,10 +38,10 @@ QSGNode* SGRRendererGenerator::updatePaintNode(QSGNode *old, UpdatePaintNodeData
 }
 
 void SGRRendererGenerator::syncSize(){
-    float prevX = (*this).mapToGlobal(0, 0).x();
-    float prevY = (*this).mapToGlobal(0, 0).y();
-    float prevW = width();
-    float prevH = height();
+    const float prevX = static_cast<float>((*this).mapToGlobal(0, 0).x());
+    const float prevY = static_cast<float>((*this).mapToGlobal(0, 0).y());
+    const float prevW = static_cast<float>(width());
+    const float prevH = static_cast<float>(height());
     if(attachedWidget == nullptr){
         setWidth((*parentItem()).width());
         setHeight((*parentItem()).height());

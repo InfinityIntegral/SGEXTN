@@ -18,7 +18,7 @@ SGWLabel* SGWNotify::pullDownInstance = nullptr;
 SGXTimer* SGWNotify::pullDownTimer = nullptr;
 
 void SGWNotify::terminate(){
-    SGWWidget* frontMost = const_cast<SGWWidget*>((*SGWNotify::instance).front());
+    SGWWidget* frontMost = const_cast<SGWWidget*>((*SGWNotify::instance).front()); // NOLINT(cppcoreguidelines-pro-type-const-cast)
     (*frontMost).deleteWidget();
     (*SGWNotify::instance).pop();
 }

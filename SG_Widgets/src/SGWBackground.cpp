@@ -5,7 +5,6 @@
 #include <SGXThemeColours.h>
 #include <QQuickItem>
 #include <SGLStack.h>
-#include <stdexcept>
 #include <private_api_Containers/SGLCrash.h>
 
 SGLStack<SGWBackground*>* SGWBackground::activePages = nullptr;

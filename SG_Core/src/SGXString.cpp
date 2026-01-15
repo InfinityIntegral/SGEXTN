@@ -374,7 +374,7 @@ SGXString SGXString::floatToString(float x){
 SGXString SGXString::floatToStringDecimalPlaces(float x, int dp){
     SGXString output = "";
     if(dp < 0){
-        float powerOf10 = SGLFloatMath::aToThePowerOfB(10.0f, -1.0f * static_cast<float>(dp));
+        const float powerOf10 = SGLFloatMath::aToThePowerOfB(10.0f, -1.0f * static_cast<float>(dp));
         dp = 0;
         x = powerOf10 * SGLFloatMath::round(x / powerOf10);
     }
@@ -405,7 +405,7 @@ SGXString SGXString::doubleToString(double x){
 SGXString SGXString::doubleToStringDecimalPlaces(double x, int dp){
     SGXString output = "";
     if(dp < 0){
-        double powerOf10 = static_cast<double>(SGLFloatMath::aToThePowerOfB(10.0f, -1.0f * static_cast<float>(dp)));
+        const double powerOf10 = static_cast<double>(SGLFloatMath::aToThePowerOfB(10.0f, -1.0f * static_cast<float>(dp)));
         dp = 0;
         x = powerOf10 * std::round(x / powerOf10);
     }
