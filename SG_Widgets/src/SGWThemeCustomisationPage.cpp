@@ -18,6 +18,7 @@
 #include <SGWTextInput.h>
 #include <SGWInput.h>
 #include <SGXThemeColours.h>
+#include <SGWLabel.h>
 
 SGWBackground* SGWThemeCustomisationPage::optionsInstance = nullptr;
 SGWBackground* SGWThemeCustomisationPage::testPageInstance = nullptr;
@@ -164,19 +165,19 @@ void SGWThemeCustomisationPage::confirmCustomBaseThemeChange(){
 void SGWThemeCustomisationPage::updateColoursCustomBase(){
     bool isValid = false;
     bool canContinue = true;
-    int r = (*SGWThemeCustomisationPage::customThemeBaseRedInput).getTextAsInt(&isValid, 0, 255);
+    const int r = (*SGWThemeCustomisationPage::customThemeBaseRedInput).getTextAsInt(&isValid, 0, 255);
     if(isValid == false){
         canContinue = false;
         (*SGWThemeCustomisationPage::customThemeBaseRedInput).setInvalid(true);
     }
     else{(*SGWThemeCustomisationPage::customThemeBaseRedInput).setInvalid(false);}
-    int g = (*SGWThemeCustomisationPage::customThemeBaseGreenInput).getTextAsInt(&isValid, 0, 255);
+    const int g = (*SGWThemeCustomisationPage::customThemeBaseGreenInput).getTextAsInt(&isValid, 0, 255);
     if(isValid == false){
         canContinue = false;
         (*SGWThemeCustomisationPage::customThemeBaseGreenInput).setInvalid(true);
     }
     else{(*SGWThemeCustomisationPage::customThemeBaseGreenInput).setInvalid(false);}
-    int b = (*SGWThemeCustomisationPage::customThemeBaseBlueInput).getTextAsInt(&isValid, 0, 255);
+    const int b = (*SGWThemeCustomisationPage::customThemeBaseBlueInput).getTextAsInt(&isValid, 0, 255);
     if(isValid == false){
         canContinue = false;
         (*SGWThemeCustomisationPage::customThemeBaseBlueInput).setInvalid(true);

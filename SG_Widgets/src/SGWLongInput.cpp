@@ -9,6 +9,7 @@
 #include <SGXColourRGBA.h>
 #include <SGXThemeColours.h>
 #include <QColor>
+#include <SGXString.h>
 
 namespace {
 inline QColor temp_getQColour(SGXColourRGBA x){

@@ -6,7 +6,7 @@
 class SG_CONTAINERS_DLL SGLCrash
 {
 public:
-    static void crash(const char* msg);
+    [[noreturn]] static void crash(const char* msg);
     static void (*logCrashMessage)(const char*);
 };
 

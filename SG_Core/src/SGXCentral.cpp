@@ -8,6 +8,7 @@
 #include <SGXTimer.h>
 #include <cstring>
 #include <SGXDebug.h>
+#include <private_api_Containers/SGLCrash.h>
 
 SGXString SGXCentral::applicationName = "app name not set";
 SGXString SGXCentral::applicationVersion = "app version not set";

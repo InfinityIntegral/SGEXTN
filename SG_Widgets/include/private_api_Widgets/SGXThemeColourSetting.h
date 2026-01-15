@@ -3,9 +3,7 @@
 
 #include <QObject>
 #include <QColor>
-#include <SGXColourRGBA.h>
 #include <qtmetamacros.h>
-#include <SGLArray.h>
 
 #include <private_api_Widgets/SG_Build_Widgets.h>
 

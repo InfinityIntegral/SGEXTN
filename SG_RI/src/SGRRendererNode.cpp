@@ -5,13 +5,13 @@
 #include <rhi/qrhi.h>
 #include <QQuickItem>
 #include <SGRRenderingProgramme.h>
-#include <stdexcept>
 #include <SGRCommandRequest.h>
 #include <QSGRenderNode>
 #include <QRectF>
 #include <SGLArray.h>
 #include <SGRBaseSyncer.h>
 #include <QSGNode>
+#include <private_api_Containers/SGLCrash.h>
 
 SGRRendererNode::SGRRendererNode(SGRBaseRenderer *renderControl){
     (*this).rhi = (*SGXQuickInterface::applicationWindow).rhi();
@@ -24,7 +24,14 @@ SGRRendererNode::SGRRendererNode(SGRBaseRenderer *renderControl){
 }
 
 SGRRendererNode::~SGRRendererNode(){
-    releaseResources();
+    (*renderControl).cleanResourcesOnDestruction();
+    delete renderingProgramme;
+    delete rendererToDelete;
+    delete syncerToDelete;
+    renderingProgramme = nullptr;
+    rendererToDelete = nullptr;
+    syncerToDelete = nullptr;
+    renderControl = nullptr;
 }
 
 void SGRRendererNode::prepare(){
@@ -52,7 +59,7 @@ void SGRRendererNode::render(const RenderState *renderState){
     QRhiCommandBuffer* commands = commandBuffer();
     (*commands).setGraphicsPipeline((*renderingProgramme).pipeline);
     (*commands).setViewport(QRhiViewport(0, 0, static_cast<float>((*renderTarget()).pixelSize().width()), static_cast<float>((*renderTarget()).pixelSize().height())));
-    QRect renderSpace = (*renderState).scissorRect();
+    const QRect renderSpace = (*renderState).scissorRect();
     (*commands).setScissor(QRhiScissor(renderSpace.x(), renderSpace.y(), renderSpace.width(), renderSpace.height()));
     (*commands).setShaderResources();
     SGRCommandRequest commandRequest(commands);

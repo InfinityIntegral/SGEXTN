@@ -1,5 +1,4 @@
 #include <SGXFileSystem.h>
-#include <string>
 #include <SGXString.h>
 #include <QFile>
 #include <QDir>
