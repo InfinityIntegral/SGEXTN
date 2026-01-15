@@ -8,6 +8,9 @@
 
 class SGWBackground;
 class SGXString;
+class SGWBlankWidget;
+class SGWInput;
+class SGWWidget;
 class SGWThemeCustomisationPage {
 public:
     static SGWBackground* optionsInstance;
@@ -22,6 +25,20 @@ public:
     static SGLArray<SGXColourRGBA> previousTheme;
     static void cancelThemeChange();
     static void confirmThemeChange();
+
+    static SGWBackground* customBasePageInstance;
+    static SGWBackground* initialiseCustomBasePage();
+    static void cancelCustomBaseThemeChange();
+    static void confirmCustomBaseThemeChange();
+    static SGLArray<SGXColourRGBA> customThemeColours;
+    static SGLArray<SGWBlankWidget*> customThemeColourDisplays;
+    static SGWInput* customThemeBaseRedInput;
+    static SGWInput* customThemeBaseGreenInput;
+    static SGWInput* customThemeBaseBlueInput;
+    static SGWWidget* customThemeBaseWarn;
+    static void updateColoursCustomBase();
+    static bool customThemeBaseDarkMode;
+    static void resetCustomThemeBasePage();
 };
 
 #endif // SGWTHEMECUSTOMISATIONPAGE_H

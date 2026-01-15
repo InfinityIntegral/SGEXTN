@@ -120,7 +120,7 @@ function getFg(vutc, vvh, vvf, vinv, vfg, vfgc, vfgh, vfghc, vfgf, vfgfc, vfgi, 
 }
 
 function getTranslucent(col){
-    return Qt.rgba(col.r, col.g, col.b, 0.75);
+    return Qt.rgba(col.r, col.g, col.b, 0.5);
 }
 
 function getBS(vutc, vvh, vvf, vbs, vbsc, vbsh, vbshc, vbsf, vbsfc){
