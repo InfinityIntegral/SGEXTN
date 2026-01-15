@@ -25,7 +25,6 @@ public:
     static SGLArray<SGXColourRGBA> previousTheme;
     static void cancelThemeChange();
     static void confirmThemeChange();
-
     static SGWBackground* customBasePageInstance;
     static SGWBackground* initialiseCustomBasePage();
     static void cancelCustomBaseThemeChange();

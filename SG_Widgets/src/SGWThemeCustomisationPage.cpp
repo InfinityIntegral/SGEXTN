@@ -36,7 +36,7 @@ SGWBackground* SGWThemeCustomisationPage::initialiseOptions(){
     new SGWTextLabel(pageBg, "Choose Theme", 0.0f, 0.5f, 0.0f, 0.5f, 1.0f, -1.0f, 0.0f, 2.0f, SGWHorizontalAlignment::Center, false);
     new SGWTextButton(pageBg, "cancel", &SGWThemeCustomisationPage::hideOptionsPage, 0.0f, 0.0f, 1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f);
     SGLArray<SGXThemeSet> themes(SGXThemeSet::standardLight, SGXThemeSet::standardDark, SGXThemeSet::mathLight, SGXThemeSet::mathDark, SGXThemeSet::scienceLight, SGXThemeSet::scienceDark, SGXThemeSet::englishLight, SGXThemeSet::englishDark, SGXThemeSet::chineseLight, SGXThemeSet::chineseDark, SGXThemeSet::malayLight, SGXThemeSet::malayDark, SGXThemeSet::tamilLight, SGXThemeSet::tamilDark);
-    SGWWidget* bg = new SGWScrollView(pageBg, 0.0f, 0.0f, 0.0f, 3.0f, 1.0f, 0.0f, 1.0f, -4.5f, 0.0f, 3.0f + static_cast<float>(themes.length()), 0.0f, 0.5f);
+    SGWWidget* bg = new SGWScrollView(pageBg, 0.0f, 0.0f, 0.0f, 3.0f, 1.0f, 0.0f, 1.0f, -4.5f, 0.0f, 2.0f + static_cast<float>(themes.length()), 0.0f, 0.5f);
     for(int i=0; i<themes.length(); i++){
         SGWButton* themeButton = new SGWTextButton(bg, themes.at(i).themeName, nullptr, 0.0f, 0.0f, 0.0f, static_cast<float>(i), 1.0f, 0.0f, 0.0f, 1.0f);
         SGXString themeCode = "";
@@ -55,18 +55,13 @@ SGWBackground* SGWThemeCustomisationPage::initialiseOptions(){
         (*themeButton).setForegroundFocusColour(themes.at(i).colours.at(2));
     }
     {
-        SGWButton* themeButton = new SGWTextButton(bg, "custom light", nullptr, 0.0f, 0.0f, 0.0f, static_cast<float>(themes.length()), 1.0f, 0.0f, 0.0f, 1.0f);
+        SGWButton* themeButton = new SGWTextButton(bg, "custom (light)", nullptr, 0.0f, 0.0f, 0.0f, static_cast<float>(themes.length()), 1.0f, 0.0f, 0.0f, 1.0f);
         (*themeButton).attachedString = "C1L";
         (*themeButton).clickFunctionWithString = &SGWThemeCustomisationPage::useOption;
     }
     {
-        SGWButton* themeButton = new SGWTextButton(bg, "custom dark", nullptr, 0.0f, 0.0f, 0.0f, static_cast<float>(themes.length()) + 1.0f, 1.0f, 0.0f, 0.0f, 1.0f);
+        SGWButton* themeButton = new SGWTextButton(bg, "custom (dark)", nullptr, 0.0f, 0.0f, 0.0f, static_cast<float>(themes.length()) + 1.0f, 1.0f, 0.0f, 0.0f, 1.0f);
         (*themeButton).attachedString = "C1D";
-        (*themeButton).clickFunctionWithString = &SGWThemeCustomisationPage::useOption;
-    }
-    {
-        SGWButton* themeButton = new SGWTextButton(bg, "custom anything", nullptr, 0.0f, 0.0f, 0.0f, static_cast<float>(themes.length()) + 2.0f, 1.0f, 0.0f, 0.0f, 1.0f);
-        (*themeButton).attachedString = "C2";
         (*themeButton).clickFunctionWithString = &SGWThemeCustomisationPage::useOption;
     }
     return pageBg;
@@ -104,7 +99,6 @@ void SGWThemeCustomisationPage::useOption(const SGXString &x){
         SGWBackground::enable(SGWThemeCustomisationPage::customBasePageInstance, &SGWThemeCustomisationPage::initialiseCustomBasePage, &SGWThemeCustomisationPage::resetCustomThemeBasePage);
         return;
     }
-    if(x == "C2"){return;}
     SGWThemeCustomisationPage::previousTheme = SGXThemeColoursCustomisation::themeColours;
     SGXThemeColoursCustomisation::themeColours = SGWThemeCustomisationPage::parseAttachedString(x);
     SGWThemeCustomisationPage::showTestPage();
