@@ -5,7 +5,7 @@ on:
 
 env:
   qt-version: 6.10.1
-  sgextn-version: 6.3.0
+  sgextn-version: 6.4.0
 
 jobs:
   pull-source:

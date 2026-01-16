@@ -19,7 +19,7 @@ jobs:
       app-name: colours-plus-plus
       app-version: 2.0.0
       qt-version: 6.10.1
-      sgextn-version: 6.3.0
+      sgextn-version: 6.4.0
       cmake-target-name: ColoursPlusPlus_app
       user-facing-app-name: Colours++
       user-facing-app-version: v2.0.0

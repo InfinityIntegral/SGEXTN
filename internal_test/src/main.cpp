@@ -8,7 +8,7 @@ void test(){
 
 void init(){
     SGXCentral::applicationName = "internal test";
-    SGXCentral::applicationVersion = "v6.3.0";
+    SGXCentral::applicationVersion = "v6.4.0";
     SGXCentral::organisationName = "05524F (Singapore)";
     SGXCentral::customInitialise = &test;
     SGXCentral::folderName = "SGEXTN";
