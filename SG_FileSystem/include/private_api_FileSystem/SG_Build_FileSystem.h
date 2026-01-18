@@ -1,5 +1,4 @@
-#ifndef SG_BUILD_FILESYSTEM_H
-#define SG_BUILD_FILESYSTEM_H
+#pragma once
 
 #include <SG_DLL.h>
 
@@ -8,5 +7,3 @@
 #else
     #define SG_FILESYSTEM_DLL SG_DLL_IMPORT
 #endif
-
-#endif // SG_BUILD_FILESYSTEM_H

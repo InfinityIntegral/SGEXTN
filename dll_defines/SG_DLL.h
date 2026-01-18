@@ -1,5 +1,4 @@
-#ifndef SG_DLL_H
-#define SG_DLL_H
+#pragma once
 
 #if defined(_WIN32) || defined(_WIN64)
   #define SG_DLL_EXPORT __declspec(dllexport)
@@ -13,5 +12,3 @@
     #define SG_DLL_IMPORT
   #endif
 #endif
-
-#endif // SG_DLL_H
