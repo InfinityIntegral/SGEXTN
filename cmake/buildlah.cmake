@@ -181,7 +181,7 @@ macro(BuildLah_add_component arg_target_name arg_target_type arg_files_path arg_
     file(GLOB_RECURSE SOURCE_FILES_ABSOLUTE CONFIGURE_DEPENDS "${arg_files_path}/src/*")
     list(TRANSFORM SOURCE_FILES_ABSOLUTE REPLACE "^${CMAKE_CURRENT_SOURCE_DIR}/" "" OUTPUT_VARIABLE SOURCE_FILES)
     if(${arg_target_name} STREQUAL "SG_Widgets")
-        list(APPEND SOURCE_FILES SG_Widgets/include/private_api_Widgets/SGXQuickResizer.h SG_Widgets/include/private_api_Widgets/SGXThemeColourSetting.h SG_Widgets/include/private_api_Widgets/SGXSingCorrectQuickInterface.h)
+        # list(APPEND SOURCE_FILES SG_Widgets/include/private_api_Widgets/SGXQuickResizer.h SG_Widgets/include/private_api_Widgets/SGXThemeColourSetting.h SG_Widgets/include/private_api_Widgets/SGXSingCorrectQuickInterface.h)
     endif()
     target_sources(${arg_target_name} PRIVATE ${SOURCE_FILES})
     foreach(source_file ${SOURCE_FILES})
@@ -228,5 +228,22 @@ macro(BuildLah_add_component arg_target_name arg_target_type arg_files_path arg_
     qt6_import_plugins(${arg_target_name} INCLUDE_BY_TYPE ${QT_PLUGIN_NAMES} EXCLUDE_BY_TYPE ${EXCLUDE_PLUGINS})
 
     qt6_finalize_target(${arg_target_name})
+
+    install(TARGETS ${arg_target_name} EXPORT ${PROJECT_NAME}_install_targets RUNTIME DESTINATION lib ARCHIVE DESTINATION lib LIBRARY DESTINATION lib FRAMEWORK DESTINATION lib INCLUDES DESTINATION include)
+    install(DIRECTORY ${arg_files_path}/include/ DESTINATION include/${arg_files_path}/include)
+
     message(STATUS "${arg_target_name} has been successfully set up")
+endmacro()
+
+macro(BuildLah_finalise_project)
+    if(EXISTS dll_defines)
+        install(DIRECTORY dll_defines/ DESTINATION include/dll_defines)
+    endif()
+    install(EXPORT ${PROJECT_NAME}_install_targets NAMESPACE ${PROJECT_NAME}:: DESTINATION lib/cmake/${PROJECT_NAME})
+    include(CMakePackageConfigHelpers)
+    configure_package_config_file("${CMAKE_CURRENT_SOURCE_DIR}/cmake/${PROJECT_NAME}Config.cmake.in" "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake" INSTALL_DESTINATION lib/cmake/${PROJECT_NAME})
+    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake" DESTINATION lib/cmake/${PROJECT_NAME})
+    if(${PROJECT_NAME} STREQUAL "SGEXTN")
+        install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/cmake/buildlah.cmake" DESTINATION lib/cmake/SGEXTN)
+    endif()
 endmacro()

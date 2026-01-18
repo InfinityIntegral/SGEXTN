@@ -1,92 +1,22 @@
 Copyright (C) 2025 Project 05524F.sg (Singapore)
 
-Chinese, Malay, and Tamil versions of the copyright text are translated using ChatGPT.
-In case of any discrepancies, the English (Singapore) version shall prevail.
-
-[English (Singapore)]
 You may use, distribute and copy @SG_APP_NAME under the terms of GNU General Public License Version 3. The license is displayed below.
 You may use, distribute and copy all @SG_APP_NAME documentation under the terms of GNU Free Documentation License Version 1.3. This license is also displayed below.
-@SG_APP_NAME uses the SGEXTN framework under the terms of the GNU Lesser General Public License v3 (LGPL v3) through dynamically linking against the SGEXTN framework. In compliance with LGPL v3, users may relink or replace the SGEXTN libraries.
-See https://github.com/InfinityIntegral/ColoursPlusPlus for @SG_APP_NAME source code.
+@SG_APP_NAME uses the SGEXTN framework under the terms of the GNU Lesser General Public License v3 (LGPL v3), also found below, through linking against the SGEXTN framework. In compliance with LGPL v3, users may relink or replace the SGEXTN libraries.
+The provided links lead to the newest version of the source code and documentation. The version used to build the binary that this license is packaged with (if any exist) can be found on the releases page where you downloaded the binary.
+See https://doc.qt.io/qt-6/lgpl.html for more information about Qt licensing.
 See https://github.com/InfinityIntegral/SGEXTN for SGEXTN source code.
-See https://infinityintegral.github.io for SGEXTN and @SG_APP_NAME documentation if any is provided.
+See https://infinityintegral.github.io/SGEXTN/readme/readme for SGEXTN documentation.
+See https://github.com/qt for Qt source code.
+See @SG_LINK_HERE for @SG_APP_NAME source code.
 
 RELINKING INSTRUCTIONS
 Dynamic linking is used to link SGEXTN applications to both Qt and SGEXTN if it was built using a SGEXTN BuildLah GitHub Action. This makes relinking trivial.
 To relink your application, simply replace the existing shared library with your own modified version. It should run as long as your modified version is ABI compatible. SGEXTN apps by default do not and should not check for the integrity of shared libraries, so this will work.
-Searching for "SG_Core" in a file manager from the root folder of the application will show you where all the shared libraries are.
 You are allowed to relink Qt and SGEXTN for any purpose. In particular, relinking using modified libraries for debugging and reverse engineering is allowed, but remember that all the source code is already available.
 
 No restrictions on LGPL conditions are imposed.
 Majulah, open source.
-
-[Singlish]
-You can use @SG_APP_NAME under GPLv3, I copy license below liao.
-@SG_APP_NAME docs is under GNU-FDLv1.3 one, also got copy below.
-@SG_APP_NAME uses SGEXTN which is under LGPLv3, relinking or replacing SGEXTN libraries dynamically linked to @SG_APP_NAME is ok.
-See https://github.com/InfinityIntegral/ColoursPlusPlus for @SG_APP_NAME source code.
-See https://github.com/InfinityIntegral/SGEXTN for SGEXTN source code.
-See https://infinityintegral.github.io for SGEXTN and @SG_APP_NAME docs if got.
-
-RELINKING INSTRUCTIONS
-If app use BuildLah GitHub Actions to build one, then is dynamic link liao. If so then relink is easy one.
-Copy paste modified libraries to overwrite original then ok one, just confirm your modified one is ABI compatible lah. App got no check library one, so this ok.
-To find where got libraries, search "SG_Core" in file manager from app root folder can liao.
-Relink Qt and SGEXTN for any purpose all can one. Debug and reverse engineer is can, but you got source code already need do that for what?
-
-We put no restrictions on LGPL one.
-Majulah, open source.
-
-[华文 （新加坡）]
-您可以根据 GNU 通用公共许可证第 3 版（GPL v3）的条款使用、分发和复制 @SG_APP_NAME，该许可证内容如下所示。
-您可以根据 GNU 自由文档许可证第 1.3 版（GFDL v1.3）的条款使用、分发和复制所有 @SG_APP_NAME 文档。该许可证内容亦在下方显示。
-@SG_APP_NAME 通过与 SGEXTN 框架进行动态链接，依照 GNU 较宽松通用公共许可证第 3 版（LGPL v3）的条款使用 SGEXTN 框架。根据 LGPL v3 的要求，用户可以重新链接或替换 SGEXTN 库。
-@SG_APP_NAME 源代码请见：https://github.com/InfinityIntegral/ColoursPlusPlus
-SGEXTN 源代码请见：https://github.com/InfinityIntegral/SGEXTN
-SGEXTN 与 @SG_APP_NAME 文档（如有）请见：https://infinityintegral.github.io
-
-重新链接说明
-如果应用是通过 SGEXTN BuildLah GitHub Action 构建的，SGEXTN 应用会通过动态链接方式同时链接 Qt 与 SGEXTN，这使得重新链接变得非常简单。
-要重新链接您的应用，只需将现有的共享库替换为您自行修改的版本即可。只要您的修改版本在 ABI 上保持兼容，应用即可正常运行。SGEXTN 应用在默认情况下不会也不应当对共享库的完整性进行校验，因此此操作是可行的。
-在应用程序的根目录中使用文件管理器搜索 “SG_Core”，即可找到所有相关的共享库位置。
-您可以出于任何目的重新链接 Qt 与 SGEXTN。特别是，为调试或逆向工程而使用修改后的库是被允许的，但请注意，所有源代码本身已经是公开可获取的。
-
-未对 LGPL 的任何条件施加额外限制。
-Majulah，开源
-
-[Bahasa Melayu (Singapura)]
-Anda boleh menggunakan, mengedar dan menyalin @SG_APP_NAME di bawah terma Lesen Awam Am GNU versi 3 (GPL v3). Lesen ini dipaparkan di bawah.
-Anda boleh menggunakan, mengedar dan menyalin semua dokumentasi @SG_APP_NAME di bawah terma Lesen Dokumentasi Bebas GNU versi 1.3 (GFDL v1.3). Lesen ini juga dipaparkan di bawah.
-@SG_APP_NAME menggunakan rangka kerja SGEXTN di bawah terma Lesen Awam Am Lesser GNU versi 3 (LGPL v3) melalui pautan dinamik kepada rangka kerja SGEXTN. Selaras dengan keperluan LGPL v3, pengguna boleh memaut semula atau menggantikan pustaka SGEXTN.
-Kod sumber @SG_APP_NAME boleh didapati di: https://github.com/InfinityIntegral/ColoursPlusPlus
-Kod sumber SGEXTN boleh didapati di: https://github.com/InfinityIntegral/SGEXTN
-Dokumentasi SGEXTN dan @SG_APP_NAME (jika ada) boleh didapati di: https://infinityintegral.github.io
-
-ARAHAN MENYAMBUNG SEMULA
-Jika aplikasi dibina menggunakan SGEXTN BuildLah GitHub Action, aplikasi SGEXTN akan menggunakan pautan dinamik untuk menyambungkan Qt dan SGEXTN, menjadikan proses menyambung semula sangat mudah.
-Untuk menyambung semula aplikasi anda, gantikan sahaja pustaka bersama sedia ada dengan versi yang telah anda ubah. Selagi versi yang diubah adalah ABI kompatibel, aplikasi akan berjalan dengan baik. Secara lalai, aplikasi SGEXTN tidak memeriksa dan tidak sepatutnya memeriksa integriti pustaka bersama, jadi ini akan berfungsi.
-Cari “SG_Core” di pengurus fail dari folder root aplikasi untuk melihat lokasi semua pustaka bersama.
-Anda dibenarkan menyambung semula Qt dan SGEXTN untuk sebarang tujuan. Terutamanya, menyambung semula menggunakan pustaka yang diubah untuk debugging atau reverse engineering adalah dibenarkan, tetapi ingat bahawa semua kod sumber telah tersedia.
-
-Tiada sekatan tambahan ke atas syarat-syarat LGPL dikenakan.
-Majulah, sumber terbuka
-
-[தமிழ் (சிங்கப்பூர்)]
-நீங்கள் @SG_APP_NAME ஐ GNU General Public License பதிப்பு 3 (GPL v3) விதிமுறைகளின் கீழ் பயன்படுத்தவும், பகிரவும், நகலெடுக்கவும் முடியும். இந்த உரிமம் கீழே காட்டப்பட்டுள்ளது.
-நீங்கள் அனைத்து @SG_APP_NAME ஆவணங்களையும் GNU Free Documentation License பதிப்பு 1.3 (GFDL v1.3) விதிமுறைகளின் கீழ் பயன்படுத்தவும், பகிரவும், நகலெடுக்கவும் முடியும். இந்த உரிமமும் கீழே காட்டப்பட்டுள்ளது.
-@SG_APP_NAME, SGEXTN கட்டமைப்புடன் (framework) இயக்கமாக இணைக்கப்பட்டு, GNU Lesser General Public License பதிப்பு 3 (LGPL v3) விதிமுறைகளின் கீழ் SGEXTN கட்டமைப்பைப் பயன்படுத்துகிறது. LGPL v3 விதிகளுக்கு இணங்க, பயனர்கள் SGEXTN நூலகங்களை (libraries) மீண்டும் இணைக்கவோ அல்லது மாற்றவோ முடியும்.
-@SG_APP_NAME மூல குறியீடு: https://github.com/InfinityIntegral/ColoursPlusPlus
-SGEXTN மூல குறியீடு: https://github.com/InfinityIntegral/SGEXTN
-SGEXTN மற்றும் @SG_APP_NAME ஆவணங்கள் (இருப்பின்): https://infinityintegral.github.io
-
-மீண்டும் இணைக்கும் வழிமுறைகள்
-SGEXTN BuildLah GitHub Action மூலம் பயன்பாடு கட்டப்பட்டிருந்தால், SGEXTN பயன்பாடுகள் Qt மற்றும் SGEXTN உடன் டையனமிக் இணைப்பை பயன்படுத்தும், இதனால் மீண்டும் இணைப்பது மிகவும் எளிதாக இருக்கும்.
-உங்கள் பயன்பாட்டை மீண்டும் இணைக்க, தற்போதைய பகிரப்பட்ட நூலகத்தை உங்கள் மாற்றிய பதிப்புடன் மாற்றவும். உங்கள் மாற்றிய பதிப்பு ABI உடன்படக்கமாக இருந்தால், பயன்பாடு செயல்படும். SGEXTN பயன்பாடுகள் இயல்பாக பகிரப்பட்ட நூலகங்களின் ஒருங்கிணைப்பை சோதிக்காது அல்லது சோதிக்க கூடாது, எனவே இது வேலை செய்யும்.
-பயன்பாட்டின் ரூட் கோப்பகத்தில் கோப்பு மேலாளரை பயன்படுத்தி “SG_Core” என்பதை தேடுங்கள்; எல்லா பகிரப்பட்ட நூலகங்களின் இடங்களும் காணப்படும்.
-Qt மற்றும் SGEXTN ஐ எந்த நோக்கத்திற்கும் மீண்டும் இணைக்கலாம். குறிப்பாக, டீபக்கிங் அல்லது ரிவர்ஸ் என்ஜினீயரிங் க்காக மாற்றிய நூலகங்களை பயன்படுத்தி மீண்டும் இணைக்கலாம், ஆனால் அனைத்து மூலக் கோடுகளும் ஏற்கனவே பொதுவாக கிடைக்கும் என்பதை நினைவில் வையுங்கள்.
-
-LGPL விதிமுறைகளுக்கு மேலதிக எந்த கட்டுப்பாடுகளும் விதிக்கப்படவில்லை.
-Majulah, திறந்த மூல
 
 -------------------------------------------------------
 GNU GENERAL PUBLIC LICENSE

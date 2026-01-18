@@ -1,8 +1,0 @@
-@SG_CPP_CLASS SGWTextInput
-@SG_SHORT_DESCRP @SG_FINDREP_WIDGET text input field
-@SG_LONG_DESCRP SGWTextInput provides a @SG_FINDREP_WIDGET text input field. The input field is interactive and sends out @SG_FINDREP_FUNCPTR.
-@SG_IMPLE Stores information about the SGWTextInput.
-@SG_FUNC SGWTextInput(SGWWidget* parent, const SGXString& placeholder, void (*validationFunction)(), float x1, float x0, float y1, float y0, float w1, float w0, float h1, float h0);
-Creates a SGWTextInput with parent @SG_FINDREP_WIDGET $parent, @SG_FINDREP_WDIST coordinates ($x1, $x0, $y1, $y0, $w1, $w0, $h1, $h0), placeholder text $placeholder, and @SG_FINDREP_FUNCPTR when unfocused as $validationFunction.
-@SG_WARN $parent being nullptr is undefined behaviour.
-@SG_WARN To avoid use after free bugs, deleting a SGWWidget directly will cause a crash. Use SGWWidget::deleteWidget to delete it safely.

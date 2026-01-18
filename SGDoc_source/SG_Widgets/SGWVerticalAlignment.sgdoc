@@ -1,6 +1,0 @@
-@SG_CPP_CLASS SGWVerticalAlignment
-@SG_SHORT_DESCRP defines @SG_FINDREP_WIDGET text vertical alignment
-@SG_LONG_DESCRP SGWVerticalAlignment provides an enum describing the vertical alignment mode of text in the @SG_FINDREP_WIDGET system. This is used by SGWLabel, SGWButton, and SGWInput.
-@SG_IMPLE provides an enum
-@SG_FUNC enum Flag{ Top, Center, Bottom };
-Defines if to top align, center align, or bottom align text.

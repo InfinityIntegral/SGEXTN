@@ -1,8 +1,0 @@
-@SG_CPP_CLASS SGXThemeColoursCustomisation
-@SG_SHORT_DESCRP allows setting custom @SG_FINDREP_THEME
-@SG_LONG_DESCRP SGXThemeColoursCustomisation allows you to set custom @SG_FINDREP_THEME for your application.
-@SG_IMPLE Sets @SG_FINDREP_THEME at start of application.
-@SG_PRIVATE_API static void loadThemeColours();
-@SG_PRIVATE_API static void syncThemeColours();
-@SG_FUNC static SGLArray<SGXColourRGBA> themeColours;
-list of @SG_FINDREP_THEME for the application.

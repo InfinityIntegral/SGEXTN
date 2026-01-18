@@ -1,4 +1,0 @@
-@SG_MODULE SG_Math
-The SGEXTN Math module provides mathematical operations, mathematical constants, and data type specific limits for int, float, and long long. This replaces the <cmath>, <numbers>, and <numeric_limits> Standard Template Library headers.
-Internally, the SGEXTN Math module uses these Standard Template Library headers, so the behaviour is identical. However, using the same functions through the SGEXTN Math module gives much cleaner header files and allow for significant speedup in clang-tidy passes.
-You will need to use the Standard Template Library directly for any other data types.
