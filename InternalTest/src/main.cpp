@@ -1,6 +1,6 @@
 //#include <SGEXTN_EntryPoint.h>
 //#include <SGXCentral.h>
-#include <iostream>
+#include <private_api/SGEXTN_Containers_UnitTests.h>
 
 namespace {
 void test(){
@@ -16,7 +16,8 @@ void init(){
 }
 }
 
-int main(int argc, char** argv){
+int main(int /*argc*/, char** /*argv*/){
     //return SGEXTN(argc, argv, &init);
-    std::cout << "is ok";
+    SGEXTN::Containers::UnitTests::testEqualTo();
+    SGEXTN::Containers::UnitTests::testArray();
 }
