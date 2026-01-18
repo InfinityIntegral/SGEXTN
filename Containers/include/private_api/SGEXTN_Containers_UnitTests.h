@@ -6,6 +6,9 @@ class BUILDLAH_DLL_SGEXTN_Containers UnitTests {
 public:
     static void testEqualTo();
     static void testArray();
+    static void testSpan();
+    static void testLessThan();
+    static void testMoreThan();
 };
 }
 }

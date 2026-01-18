@@ -20,4 +20,7 @@ int main(int /*argc*/, char** /*argv*/){
     //return SGEXTN(argc, argv, &init);
     SGEXTN::Containers::UnitTests::testEqualTo();
     SGEXTN::Containers::UnitTests::testArray();
+    SGEXTN::Containers::UnitTests::testSpan();
+    SGEXTN::Containers::UnitTests::testLessThan();
+    SGEXTN::Containers::UnitTests::testMoreThan();
 }
