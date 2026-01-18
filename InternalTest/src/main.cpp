@@ -18,5 +18,5 @@ void init(){
 
 int main(int argc, char** argv){
     //return SGEXTN(argc, argv, &init);
-    std::cout << "is ok\n";
+    std::cout << "is ok";
 }
