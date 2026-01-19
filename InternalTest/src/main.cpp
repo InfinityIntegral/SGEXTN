@@ -23,4 +23,6 @@ int main(int /*argc*/, char** /*argv*/){
     SGEXTN::Containers::UnitTests::testSpan();
     SGEXTN::Containers::UnitTests::testLessThan();
     SGEXTN::Containers::UnitTests::testMoreThan();
+    SGEXTN::Containers::UnitTests::testPair();
+    SGEXTN::Containers::UnitTests::testTuple3();
 }

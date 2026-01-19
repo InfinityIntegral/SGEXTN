@@ -5,6 +5,8 @@
 #include <SGEXTN_Containers_Span.h>
 #include <SGEXTN_Containers_LessThan.h>
 #include <SGEXTN_Containers_MoreThan.h>
+#include <SGEXTN_Containers_Pair.h>
+#include <SGEXTN_Containers_Tuple3.h>
 
 void SGEXTN::Containers::UnitTests::testEqualTo(){
     const SGEXTN::Containers::EqualTo<int> comparator;
@@ -68,4 +70,40 @@ void SGEXTN::Containers::UnitTests::testMoreThan(){
     const int j = 0;
     if(pointerComparator(&i, &j) == false && pointerComparator(&j, &i) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MoreThan - different pointer point to same result");}
     if(pointerComparator(&i, &i) == true){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MoreThan - same pointer point to different result");}
+}
+
+void SGEXTN::Containers::UnitTests::testPair(){
+    const SGEXTN::Containers::Pair<int, int> pair(0, 0);
+    if(pair.first != 0 || pair.second != 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Pair - constructor init fail");}
+    if(SGEXTN::Containers::Pair<int, int>(0, 0) == SGEXTN::Containers::Pair<int, int>(0, 1)){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Pair - (0, 0) equals (0, 1)");}
+    if((SGEXTN::Containers::Pair<int, int>(0, 0) == SGEXTN::Containers::Pair<int, int>(0, 0)) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Pair - (0, 0) not equal to (0, 0)");}
+    if((SGEXTN::Containers::Pair<int, int>(0, 0) != SGEXTN::Containers::Pair<int, int>(0, 1)) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Pair - (0, 0) equals (0, 1)");}
+    if(SGEXTN::Containers::Pair<int, int>(0, 0) != SGEXTN::Containers::Pair<int, int>(0, 0)){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Pair - (0, 0) not equal to (0, 0)");}
+    if(SGEXTN::Containers::Pair<int, int>(1, 0) < SGEXTN::Containers::Pair<int, int>(0, 0)){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Pair - (1, 0) less than (0, 0)");}
+    if(SGEXTN::Containers::Pair<int, int>(0, 1) < SGEXTN::Containers::Pair<int, int>(0, 0)){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Pair - (0, 1) less than (0, 0)");}
+    if(SGEXTN::Containers::Pair<int, int>(1, 0) < SGEXTN::Containers::Pair<int, int>(0, 1)){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Pair - (1, 0) less than (0, 1)");}
+    if(SGEXTN::Containers::Pair<int, int>(0, 0) < SGEXTN::Containers::Pair<int, int>(0, 0)){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Pair - (0, 0) less than (0, 0)");}
+    if(SGEXTN::Containers::Pair<int, int>(0, 0) > SGEXTN::Containers::Pair<int, int>(1, 0)){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Pair - (0, 0) more than (1, 0)");}
+    if(SGEXTN::Containers::Pair<int, int>(0, 0) > SGEXTN::Containers::Pair<int, int>(0, 1)){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Pair - (0, 0) more than (0, 1)");}
+    if(SGEXTN::Containers::Pair<int, int>(0, 1) > SGEXTN::Containers::Pair<int, int>(1, 0)){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Pair - (0, 1) more than (1, 0)");}
+    if(SGEXTN::Containers::Pair<int, int>(0, 0) > SGEXTN::Containers::Pair<int, int>(0, 0)){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Pair - (0, 0) more than (0, 0)");}
+}
+
+void SGEXTN::Containers::UnitTests::testTuple3(){
+    const SGEXTN::Containers::Tuple3<int, int, int> tuple(0, 0, 0);
+    if(tuple.first != 0 || tuple.second != 0 || tuple.third != 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Tuple3 - constructor init fail");}
+    if(SGEXTN::Containers::Tuple3<int, int, int>(0, 0, 0) == SGEXTN::Containers::Tuple3<int, int, int>(0, 0, 1)){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Tuple3 - (0, 0, 0) equals (0, 0, 1)");}
+    if((SGEXTN::Containers::Tuple3<int, int, int>(0, 0, 0) == SGEXTN::Containers::Tuple3<int, int, int>(0, 0, 0)) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Tuple3 - (0, 0, 0) not equal to (0, 0, 0)");}
+    if(SGEXTN::Containers::Tuple3<int, int, int>(0, 0, 0) != SGEXTN::Containers::Tuple3<int, int, int>(0, 0, 0)){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Tuple3 - (0, 0, 0) not equal to (0, 0, 0)");}
+    if((SGEXTN::Containers::Tuple3<int, int, int>(0, 0, 0) != SGEXTN::Containers::Tuple3<int, int, int>(0, 0, 1)) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Tuple3 - (0, 0, 0) equals to (0, 0, 1)");}
+    if(SGEXTN::Containers::Tuple3<int, int, int>(1, 0, 0) < SGEXTN::Containers::Tuple3<int, int, int>(0, 0, 0)){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Tuple3 - (1, 0, 0) less than (0, 0, 0)");}
+    if(SGEXTN::Containers::Tuple3<int, int, int>(0, 1, 0) < SGEXTN::Containers::Tuple3<int, int, int>(0, 0, 0)){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Tuple3 - (0, 1, 0) less than (0, 0, 0)");}
+    if(SGEXTN::Containers::Tuple3<int, int, int>(0, 0, 1) < SGEXTN::Containers::Tuple3<int, int, int>(0, 0, 0)){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Tuple3 - (0, 0, 1) less than (0, 0, 0)");}
+    if(SGEXTN::Containers::Tuple3<int, int, int>(0, 0, 0) < SGEXTN::Containers::Tuple3<int, int, int>(0, 0, 0)){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Tuple3 - (0, 0, 0) less than (0, 0, 0)");}
+    if(SGEXTN::Containers::Tuple3<int, int, int>(1, 0, 0) < SGEXTN::Containers::Tuple3<int, int, int>(0, 1, 1)){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Tuple3 - (1, 0, 0) less than (0, 1, 1)");}
+    if(SGEXTN::Containers::Tuple3<int, int, int>(0, 0, 0) > SGEXTN::Containers::Tuple3<int, int, int>(1, 0, 0)){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Tuple3 - (0, 0, 0) more than (1, 0, 0)");}
+    if(SGEXTN::Containers::Tuple3<int, int, int>(0, 0, 0) > SGEXTN::Containers::Tuple3<int, int, int>(0, 1, 0)){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Tuple3 - (0, 0, 0) more than (0, 1, 0)");}
+    if(SGEXTN::Containers::Tuple3<int, int, int>(0, 0, 0) > SGEXTN::Containers::Tuple3<int, int, int>(0, 0, 1)){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Tuple3 - (0, 0, 0) more than (0, 0, 1)");}
+    if(SGEXTN::Containers::Tuple3<int, int, int>(0, 0, 0) > SGEXTN::Containers::Tuple3<int, int, int>(0, 0, 0)){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Tuple3 - (0, 0, 0) more than (0, 0, 0)");}
+    if(SGEXTN::Containers::Tuple3<int, int, int>(0, 1, 1) > SGEXTN::Containers::Tuple3<int, int, int>(1, 0, 0)){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Tuple3 - (0, 1, 1) more than (1, 0, 0)");}
 }

@@ -9,6 +9,8 @@ public:
     static void testSpan();
     static void testLessThan();
     static void testMoreThan();
+    static void testPair();
+    static void testTuple3();
 };
 }
 }
