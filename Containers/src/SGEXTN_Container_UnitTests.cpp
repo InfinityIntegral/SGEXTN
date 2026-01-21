@@ -8,6 +8,7 @@
 #include <SGEXTN_Containers_Pair.h>
 #include <SGEXTN_Containers_Tuple3.h>
 #include <SGEXTN_Containers_Vector.h>
+#include <SGEXTN_Containers_Queue.h>
 
 void SGEXTN::Containers::UnitTests::testEqualTo(){
     const SGEXTN::Containers::EqualTo<int> comparator;
@@ -125,4 +126,17 @@ void SGEXTN::Containers::UnitTests::testVector(){
     if(v.at(0) != 0 || v.at(1) != 0 || v.at(2) != 0 || v.at(3) != 0 || v.at(4) != 0 || v.length() != 5){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Vector - construct fail");}
     v = SGEXTN::Containers::Vector<int>(100);
     if(v.length() != 100){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Vector - blank construct fail");}
+}
+
+void SGEXTN::Containers::UnitTests::testQueue(){
+    SGEXTN::Containers::Queue<int> queue;
+    queue.push(1);
+    queue.push(2);
+    if(queue.length() != 2){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Queue - length check fail");}
+    if(queue.front() != 1){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Queue - front element check fail");}
+    if(queue.back() != 2){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Queue - back element check fail");}
+    queue.pop();
+    if(queue.length() != 1 || queue.front() != 2 || queue.back() != 2){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Queue - pop fail");}
+    queue.push(3);
+    if(queue.length() != 2 || queue.back() != 3){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Queue - push fail");}
 }
