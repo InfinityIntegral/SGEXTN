@@ -4,6 +4,11 @@ BuildLah_use_default_settings()
 project(SGEXTN VERSION 6.4.0 LANGUAGES CXX)
 BuildLah_find_dependencies()
 BuildLah_add_component(Containers DLL "Containers")
+
+target_sources(Containers
+  PRIVATE
+    Containers/include/private_api/SGEXTN_Containers_PriorityQueue_impl.h
+)
 BuildLah_add_component(Math DLL "Math")
 BuildLah_add_component(Core DLL "Core" Containers Math Qt6::Core Qt6::Gui)
 BuildLah_add_component(FileSystem DLL "FileSystem" Containers Core Qt6::Core)

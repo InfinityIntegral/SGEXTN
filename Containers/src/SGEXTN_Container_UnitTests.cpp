@@ -11,6 +11,7 @@
 #include <SGEXTN_Containers_Queue.h>
 #include <SGEXTN_Containers_Stack.h>
 #include <SGEXTN_Containers_Deque.h>
+#include <SGEXTN_Containers_PriorityQueue.h>
 
 void SGEXTN::Containers::UnitTests::testEqualTo(){
     const SGEXTN::Containers::EqualTo<int> comparator;
@@ -174,4 +175,31 @@ void SGEXTN::Containers::UnitTests::testDeque(){
     if(dq.length() != 4 || dq.front() != 1 || dq.back() != 26){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Deque - push front fail");}
     dq.popFront();
     if(dq.length() != 3 || dq.front() != 26 || dq.back() != 26){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Deque - pop front fail");}
+}
+
+void SGEXTN::Containers::UnitTests::testPriorityQueue(){
+    SGEXTN::Containers::PriorityQueue<int, SGEXTN::Containers::LessThan<int>> pq;
+    pq.push(1);
+    pq.push(2);
+    pq.push(3);
+    if(pq.length() != 3){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::PriorityQueue - length check fail");}
+    if(pq.top() != 3){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::PriorityQueue - top check fail");}
+    pq.push(5);
+    if(pq.length() != 4 || pq.top() != 5){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::PriorityQueue - push bigger element fail");}
+    pq.push(4);
+    if(pq.length() != 5 || pq.top() != 5){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::PriorityQueue - push in range element fail");}
+    pq.pop();
+    if(pq.length() != 4 || pq.top() != 4){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::PriorityQueue - pop fail");}
+    pq.push(-1);
+    if(pq.length() != 5 || pq.top() != 4){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::PriorityQueue - push smaller element fail");}
+    pq.pop();
+    if(pq.length() != 4 || pq.top() != 3){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::PriorityQueue - pop fail 2");}
+    pq.pop();
+    if(pq.length() != 3 || pq.top() != 2){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::PriorityQueue - pop fail 3");}
+    pq.pop();
+    if(pq.length() != 2 || pq.top() != 1){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::PriorityQueue - pop fail 4");}
+    pq.pop();
+    if(pq.length() != 1 || pq.top() != -1){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::PriorityQueue - pop fail 5");}
+    pq.pop();
+    if(pq.length() != 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::PriorityQueue - pop fail 6");}
 }
