@@ -7,6 +7,7 @@
 #include <SGEXTN_Containers_MoreThan.h>
 #include <SGEXTN_Containers_Pair.h>
 #include <SGEXTN_Containers_Tuple3.h>
+#include <SGEXTN_Containers_Vector.h>
 
 void SGEXTN::Containers::UnitTests::testEqualTo(){
     const SGEXTN::Containers::EqualTo<int> comparator;
@@ -106,4 +107,22 @@ void SGEXTN::Containers::UnitTests::testTuple3(){
     if(SGEXTN::Containers::Tuple3<int, int, int>(0, 0, 0) > SGEXTN::Containers::Tuple3<int, int, int>(0, 0, 1)){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Tuple3 - (0, 0, 0) more than (0, 0, 1)");}
     if(SGEXTN::Containers::Tuple3<int, int, int>(0, 0, 0) > SGEXTN::Containers::Tuple3<int, int, int>(0, 0, 0)){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Tuple3 - (0, 0, 0) more than (0, 0, 0)");}
     if(SGEXTN::Containers::Tuple3<int, int, int>(0, 1, 1) > SGEXTN::Containers::Tuple3<int, int, int>(1, 0, 0)){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Tuple3 - (0, 1, 1) more than (1, 0, 0)");}
+}
+
+void SGEXTN::Containers::UnitTests::testVector(){
+    SGEXTN::Containers::Vector<int> v;
+    v.pushBack(0);
+    if(v.length() != 1){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Vector - length check fail");}
+    if(v.at(0) != 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Vector - push back fail");}
+    v.pushBack(2);
+    v.pushBack(3);
+    if(v.length() != 3){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Vector - length update fail");}
+    v.popBack();
+    if(v.length() != 2 || v.at(1) != 2){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Vector - pop back fail");}
+    v.fill(26);
+    if(v.at(0) != 26 || v.at(1) != 26 || v.length() != 2){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Vector - fill fail");}
+    v = SGEXTN::Containers::Vector(5, 0);
+    if(v.at(0) != 0 || v.at(1) != 0 || v.at(2) != 0 || v.at(3) != 0 || v.at(4) != 0 || v.length() != 5){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Vector - construct fail");}
+    v = SGEXTN::Containers::Vector<int>(100);
+    if(v.length() != 100){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Vector - blank construct fail");}
 }

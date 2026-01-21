@@ -11,6 +11,7 @@ public:
     static void testMoreThan();
     static void testPair();
     static void testTuple3();
+    static void testVector();
 };
 }
 }
