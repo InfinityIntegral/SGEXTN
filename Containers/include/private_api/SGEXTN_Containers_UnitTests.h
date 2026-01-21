@@ -13,6 +13,7 @@ public:
     static void testTuple3();
     static void testVector();
     static void testQueue();
+    static void testStack();
 };
 }
 }

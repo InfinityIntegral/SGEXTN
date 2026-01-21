@@ -9,6 +9,7 @@
 #include <SGEXTN_Containers_Tuple3.h>
 #include <SGEXTN_Containers_Vector.h>
 #include <SGEXTN_Containers_Queue.h>
+#include <SGEXTN_Containers_Stack.h>
 
 void SGEXTN::Containers::UnitTests::testEqualTo(){
     const SGEXTN::Containers::EqualTo<int> comparator;
@@ -139,4 +140,16 @@ void SGEXTN::Containers::UnitTests::testQueue(){
     if(queue.length() != 1 || queue.front() != 2 || queue.back() != 2){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Queue - pop fail");}
     queue.push(3);
     if(queue.length() != 2 || queue.back() != 3){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Queue - push fail");}
+}
+
+void SGEXTN::Containers::UnitTests::testStack(){
+    SGEXTN::Containers::Stack<int> stack;
+    stack.push(1);
+    stack.push(2);
+    if(stack.length() != 2){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Stack - length check fail");}
+    if(stack.top() != 2){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Stack - top element check fail");}
+    stack.pop();
+    if(stack.length() != 1 || stack.top() != 1){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Stack - pop fail");}
+    stack.push(3);
+    if(stack.length() != 2 || stack.top() != 3){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Stack - push element fail");}
 }
