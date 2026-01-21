@@ -10,6 +10,7 @@
 #include <SGEXTN_Containers_Vector.h>
 #include <SGEXTN_Containers_Queue.h>
 #include <SGEXTN_Containers_Stack.h>
+#include <SGEXTN_Containers_Deque.h>
 
 void SGEXTN::Containers::UnitTests::testEqualTo(){
     const SGEXTN::Containers::EqualTo<int> comparator;
@@ -152,4 +153,25 @@ void SGEXTN::Containers::UnitTests::testStack(){
     if(stack.length() != 1 || stack.top() != 1){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Stack - pop fail");}
     stack.push(3);
     if(stack.length() != 2 || stack.top() != 3){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Stack - push element fail");}
+}
+
+void SGEXTN::Containers::UnitTests::testDeque(){
+    SGEXTN::Containers::Deque<int> dq;
+    dq.pushBack(1);
+    dq.pushBack(2);
+    dq.pushBack(3);
+    if(dq.length() != 3){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Deque - length check fail");}
+    if(dq.front() != 1){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Deque - front element check fail");}
+    if(dq.back() != 3){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Deque - back element check fail");}
+    if(dq.at(0) != 1 || dq.at(1) != 2 || dq.at(2) != 3){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Deque - index access fail");}
+    dq.fill(26);
+    if(dq.at(0) != 26 || dq.at(1) != 26 || dq.at(2) != 26 || dq.length() != 3){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Deque - fill reset fail");}
+    dq.pushBack(1);
+    if(dq.length() != 4 || dq.back() != 1 || dq.front() != 26){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Deque - push back fail");}
+    dq.popBack();
+    if(dq.length() != 3 || dq.back() != 26 || dq.front() != 26){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Deque - pop back fail");}
+    dq.pushFront(1);
+    if(dq.length() != 4 || dq.front() != 1 || dq.back() != 26){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Deque - push front fail");}
+    dq.popFront();
+    if(dq.length() != 3 || dq.front() != 26 || dq.back() != 26){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Deque - pop front fail");}
 }

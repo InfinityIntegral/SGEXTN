@@ -14,6 +14,7 @@ public:
     static void testVector();
     static void testQueue();
     static void testStack();
+    static void testDeque();
 };
 }
 }

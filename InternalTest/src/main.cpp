@@ -28,4 +28,5 @@ int main(int /*argc*/, char** /*argv*/){
     SGEXTN::Containers::UnitTests::testVector();
     SGEXTN::Containers::UnitTests::testQueue();
     SGEXTN::Containers::UnitTests::testStack();
+    SGEXTN::Containers::UnitTests::testDeque();
 }
