@@ -15,6 +15,7 @@
 #include <SGEXTN_Containers_Set.h>
 #include <SGEXTN_Containers_MultiSet.h>
 #include <SGEXTN_Containers_Map.h>
+#include <SGEXTN_Containers_MultiMap.h>
 
 void SGEXTN::Containers::UnitTests::testEqualTo(){
     const SGEXTN::Containers::EqualTo<int> comparator;
@@ -307,11 +308,50 @@ void SGEXTN::Containers::UnitTests::testMap(){
     if(s.upperBound(4).value() != 5){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Map - upper bound fail");}
     if(s.indexOf(5) != 2){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Map - index of element fail");}
     if(s.indexOf(s.find(5)) != 2){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Map - index of iterator fail");}
-    if(s.keyAt(3) != 6){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Map - element at fail");}
-    if(s.valueAt(3) != 6){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Map - element at fail");}
+    if(s.keyAt(3) != 6){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Map - key at fail");}
+    if(s.valueAt(3) != 6){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Map - value at fail");}
     if(s.iteratorAt(1) != s.find(4)){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Map - iterator at fail");}
     for(SGEXTN::Containers::MapIterator<int, int, SGEXTN::Containers::LessThan<int>> i = s.begin(); i != s.end(); i++){
         s.erase(i);
     }
     if(s.length() != 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Map - in order traversal erase fail");}
+}
+
+void SGEXTN::Containers::UnitTests::testMultiMap(){
+    SGEXTN::Containers::MultiMap<int, int, SGEXTN::Containers::LessThan<int>> s;
+    s.insert(1, 1);
+    s.insert(2, 2);
+    s.insert(3, 3);
+    s.insert(4, 4);
+    s.insert(5, 5);
+    s.insert(6, 6);
+    if(s.length() != 6 || s.contains(6) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiMap - insert fail");}
+    s.insert(5, 0);
+    if(s.length() != 7 || s.contains(5) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiMap - duplicate insert fail");}
+    if(s.length() != 7){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiMap - length check fail");}
+    bool x = s.erase(7);
+    if(x == true){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiMap - erase nonexistent fail");}
+    x = s.erase(2);
+    if(s.length() != 6 || s.contains(2) == true || x == false){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiMap - erase fail");}
+    if(s.contains(1) == false || s.contains(2) == true || s.contains(3) == false || s.contains(4) == false || s.contains(5) == false || s.contains(6) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Set - contains check fail");}
+    if(s.count(1) != 1 || s.count(3) != 1 || s.count(5) != 2){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Set - count check fail");}
+    s.at(3) = 0;
+    if(s.at(1) != 1 || s.at(3) != 0 || s.at(4) != 4 || s.at(6) != 6){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiMap - at key fail");}
+    if(s.begin().key() != 1){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiMap - begin iterator fail");}
+    if((++s.end()).value() != 1){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiMap - end iterator fail");}
+    SGEXTN::Containers::MultiMapIterator<int, int, SGEXTN::Containers::LessThan<int>> itr = s.find(1);
+    if(itr != s.begin()){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiMap - find fail");}
+    x = s.erase(itr);
+    if(s.length() != 5 || s.contains(1) == true || x == false){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiMap - erase iterator fail");}
+    if(s.lowerBound(4).key() != 4){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiMap - lower bound fail");}
+    if(s.upperBound(4).value() != 5){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiMap - upper bound fail");}
+    if(s.indexOf(5) != 2 && s.indexOf(5) != 3){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiMap - index of element fail");}
+    if(s.indexOf(s.find(5)) != 2 && s.indexOf(s.find(5)) != 3){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiMap - index of iterator fail");}
+    if(s.keyAt(3) != 5){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiMap - key at fail");}
+    if(s.valueAt(3) != 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiMap - value at fail");}
+    if(s.iteratorAt(1) != s.find(4)){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiMap - iterator at fail");}
+    for(SGEXTN::Containers::MultiMapIterator<int, int, SGEXTN::Containers::LessThan<int>> i = s.begin(); i != s.end(); i++){
+        s.erase(i);
+    }
+    if(s.length() != 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiMap - in order traversal erase fail");}
 }

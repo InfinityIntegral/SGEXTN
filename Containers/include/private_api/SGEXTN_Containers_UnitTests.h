@@ -19,6 +19,7 @@ public:
     static void testSet();
     static void testMultiSet();
     static void testMap();
+    static void testMultiMap();
 };
 }
 }
