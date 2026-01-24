@@ -18,6 +18,7 @@ public:
     static void testPriorityQueue();
     static void testSet();
     static void testMultiSet();
+    static void testMap();
 };
 }
 }
