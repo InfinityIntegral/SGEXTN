@@ -17,6 +17,7 @@ public:
     static void testDeque();
     static void testPriorityQueue();
     static void testSet();
+    static void testMultiSet();
 };
 }
 }

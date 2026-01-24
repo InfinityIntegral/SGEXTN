@@ -69,7 +69,7 @@ template <typename T, typename Comparator> int SGEXTN::Containers::Set<T, Compar
     return private_avlTree.indexOf(x);
 }
 
-template <typename T, typename Comparator> int SGEXTN::Containers::Set<T, Comparator>::indexOf(SetIterator<T, Comparator> i) const {
+template <typename T, typename Comparator> int SGEXTN::Containers::Set<T, Comparator>::indexOf(SGEXTN::Containers::SetIterator<T, Comparator> i) const {
     return private_avlTree.indexOf(i.private_avlTreeIterator);
 }
 
@@ -142,7 +142,7 @@ template <typename T, typename Comparator> SGEXTN::Containers::SetConstIterator<
 template <typename T, typename Comparator> SGEXTN::Containers::SetConstIterator<T, Comparator> SGEXTN::Containers::SetConstIterator<T, Comparator>::operator++(int){
     SGEXTN::Containers::SetConstIterator prev = (*this);
     private_avlTreeIterator++;
-    return (*this);
+    return prev;
 }
 
 template <typename T, typename Comparator> SGEXTN::Containers::SetConstIterator<T, Comparator>& SGEXTN::Containers::SetConstIterator<T, Comparator>::operator--(){
