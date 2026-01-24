@@ -1,6 +1,7 @@
 //#include <SGEXTN_EntryPoint.h>
 //#include <SGXCentral.h>
 #include <private_api/SGEXTN_Containers_UnitTests.h>
+#include <SGEXTN_Containers_Set.h>
 
 namespace {
 void test(){
@@ -30,4 +31,5 @@ int main(int /*argc*/, char** /*argv*/){
     SGEXTN::Containers::UnitTests::testStack();
     SGEXTN::Containers::UnitTests::testDeque();
     SGEXTN::Containers::UnitTests::testPriorityQueue();
+    SGEXTN::Containers::UnitTests::testSet();
 }

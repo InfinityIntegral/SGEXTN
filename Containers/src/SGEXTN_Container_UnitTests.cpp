@@ -12,6 +12,7 @@
 #include <SGEXTN_Containers_Stack.h>
 #include <SGEXTN_Containers_Deque.h>
 #include <SGEXTN_Containers_PriorityQueue.h>
+#include <SGEXTN_Containers_Set.h>
 
 void SGEXTN::Containers::UnitTests::testEqualTo(){
     const SGEXTN::Containers::EqualTo<int> comparator;
@@ -202,4 +203,39 @@ void SGEXTN::Containers::UnitTests::testPriorityQueue(){
     if(pq.length() != 1 || pq.top() != -1){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::PriorityQueue - pop fail 5");}
     pq.pop();
     if(pq.length() != 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::PriorityQueue - pop fail 6");}
+}
+
+void SGEXTN::Containers::UnitTests::testSet(){
+    SGEXTN::Containers::Set<int, SGEXTN::Containers::LessThan<int>> s;
+    s.insert(1);
+    s.insert(2);
+    s.insert(3);
+    s.insert(4);
+    s.insert(5);
+    bool x = s.insert(6);
+    if(s.length() != 6 || s.contains(6) == false || x == false){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Set - insert fail");}
+    x = s.insert(5);
+    if(x == true){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Set - duplicate insert fail");}
+    if(s.length() != 6){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Set - length check fail");}
+    x = s.erase(7);
+    if(x == true){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Set - erase nonexistent fail");}
+    x = s.erase(2);
+    if(s.length() != 5 || s.contains(2) == true || x == false){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Set - erase fail");}
+    if(s.contains(1) == false || s.contains(2) == true || s.contains(3) == false || s.contains(4) == false || s.contains(5) == false || s.contains(6) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Set - contains check fail");}
+    if((*s.begin()) != 1){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Set - begin iterator fail");}
+    if((*(++s.end())) != 1){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Set - end iterator fail");}
+    SGEXTN::Containers::SetIterator<int, SGEXTN::Containers::LessThan<int>> itr = s.find(1);
+    if(itr != s.begin()){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Set - find fail");}
+    x = s.erase(itr);
+    if(s.length() != 4 || s.contains(1) == true || x == false){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Set - erase iterator fail");}
+    if((*s.lowerBound(4)) != 4){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Set - lower bound fail");}
+    if((*s.upperBound(4)) != 5){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Set - upper bound fail");}
+    if(s.indexOf(5) != 2){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Set - index of element fail");}
+    if(s.indexOf(s.find(5)) != 2){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Set - index of iterator fail");}
+    if(s.elementAt(3) != 6){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Set - element at fail");}
+    if(s.iteratorAt(1) != s.find(4)){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Set - iterator at fail");}
+    for(SGEXTN::Containers::SetIterator<int, SGEXTN::Containers::LessThan<int>> i = s.begin(); i != s.end(); i++){
+        s.erase(i);
+    }
+    if(s.length() != 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Set - in order traversal erase fail");}
 }
