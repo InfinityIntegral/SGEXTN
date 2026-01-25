@@ -34,4 +34,5 @@ int main(int /*argc*/, char** /*argv*/){
     SGEXTN::Containers::UnitTests::testMultiSet();
     SGEXTN::Containers::UnitTests::testMap();
     SGEXTN::Containers::UnitTests::testMultiMap();
+    SGEXTN::Containers::UnitTests::testUnorderedMap();
 }

@@ -212,8 +212,7 @@ template <typename Key, typename Value, typename Comparator> bool SGEXTN::Contai
 }
 
 template <typename Key, typename Value, typename Comparator> bool SGEXTN::Containers::AVLTree<Key, Value, Comparator>::contains(const Key& x) const {
-    if(find(x) == end()){return false;}
-    return true;
+    return (find(x) != end());
 }
 
 template <typename Key, typename Value, typename Comparator> int SGEXTN::Containers::AVLTree<Key, Value, Comparator>::count(const Key& x) const {

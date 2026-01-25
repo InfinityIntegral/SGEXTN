@@ -20,6 +20,7 @@ public:
     static void testMultiSet();
     static void testMap();
     static void testMultiMap();
+    static void testUnorderedMap();
 };
 }
 }
