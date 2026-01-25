@@ -39,7 +39,7 @@ template <typename Key, typename Value, typename EqualityCheck, typename HashFun
     return SGEXTN::Containers::UnorderedMapIterator(private_hashMap.begin());
 }
 
-template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> SGEXTN::Containers::UnorderedMapConstIterator<Key, Value, EqualityCheck, HashFunction> SGEXTN::Containers::UnorderedMap<Key, Value, EqualityCheck, HashFunction>::begin() const {
+template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> SGEXTN::Containers::UnorderedMapConstIterator<Key, Value, EqualityCheck, HashFunction> SGEXTN::Containers::UnorderedMap<Key, Value, EqualityCheck, HashFunction>::constBegin() const {
     return SGEXTN::Containers::UnorderedMapConstIterator(private_hashMap.begin());
 }
 
@@ -47,7 +47,7 @@ template <typename Key, typename Value, typename EqualityCheck, typename HashFun
     return SGEXTN::Containers::UnorderedMapIterator(private_hashMap.end());
 }
 
-template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> SGEXTN::Containers::UnorderedMapConstIterator<Key, Value, EqualityCheck, HashFunction> SGEXTN::Containers::UnorderedMap<Key, Value, EqualityCheck, HashFunction>::end() const {
+template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> SGEXTN::Containers::UnorderedMapConstIterator<Key, Value, EqualityCheck, HashFunction> SGEXTN::Containers::UnorderedMap<Key, Value, EqualityCheck, HashFunction>::constEnd() const {
     return SGEXTN::Containers::UnorderedMapConstIterator(private_hashMap.end());
 }
 
@@ -59,7 +59,7 @@ template <typename Key, typename Value, typename EqualityCheck, typename HashFun
     return SGEXTN::Containers::UnorderedMapIterator(private_hashMap.find(x));
 }
 
-template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> SGEXTN::Containers::UnorderedMapConstIterator<Key, Value, EqualityCheck, HashFunction> SGEXTN::Containers::UnorderedMap<Key, Value, EqualityCheck, HashFunction>::find(const Key& x) const {
+template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> SGEXTN::Containers::UnorderedMapConstIterator<Key, Value, EqualityCheck, HashFunction> SGEXTN::Containers::UnorderedMap<Key, Value, EqualityCheck, HashFunction>::constFind(const Key& x) const {
     return SGEXTN::Containers::UnorderedMapConstIterator(private_hashMap.find(x));
 }
 

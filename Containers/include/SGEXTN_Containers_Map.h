@@ -17,16 +17,16 @@ public:
     [[nodiscard]] Value& at(const Key& x);
     [[nodiscard]] const Value& at(const Key& x) const;
     [[nodiscard]] MapIterator<Key, Value, Comparator> begin();
-    [[nodiscard]] MapConstIterator<Key, Value, Comparator> begin() const;
+    [[nodiscard]] MapConstIterator<Key, Value, Comparator> constBegin() const;
     [[nodiscard]] MapIterator<Key, Value, Comparator> end();
-    [[nodiscard]] MapConstIterator<Key, Value, Comparator> end() const;
+    [[nodiscard]] MapConstIterator<Key, Value, Comparator> constEnd() const;
     bool erase(MapIterator<Key, Value, Comparator>& i);
     [[nodiscard]] MapIterator<Key, Value, Comparator> find(const Key& x);
-    [[nodiscard]] MapConstIterator<Key, Value, Comparator> find(const Key& x) const;
+    [[nodiscard]] MapConstIterator<Key, Value, Comparator> constFind(const Key& x) const;
     [[nodiscard]] MapIterator<Key, Value, Comparator> lowerBound(const Key& x);
-    [[nodiscard]] MapConstIterator<Key, Value, Comparator> lowerBound(const Key& x) const;
+    [[nodiscard]] MapConstIterator<Key, Value, Comparator> constLowerBound(const Key& x) const;
     [[nodiscard]] MapIterator<Key, Value, Comparator> upperBound(const Key& x);
-    [[nodiscard]] MapConstIterator<Key, Value, Comparator> upperBound(const Key& x) const;
+    [[nodiscard]] MapConstIterator<Key, Value, Comparator> constUpperBound(const Key& x) const;
     [[nodiscard]] int indexOf(const Key& x) const;
     [[nodiscard]] int indexOf(MapIterator<Key, Value, Comparator> i) const;
     [[nodiscard]] int indexOf(MapConstIterator<Key, Value, Comparator> i) const;
@@ -34,7 +34,7 @@ public:
     [[nodiscard]] Value& valueAt(int n);
     [[nodiscard]] const Value& valueAt(int n) const;
     [[nodiscard]] MapIterator<Key, Value, Comparator> iteratorAt(int n);
-    [[nodiscard]] MapConstIterator<Key, Value, Comparator> iteratorAt(int n) const;
+    [[nodiscard]] MapConstIterator<Key, Value, Comparator> constIteratorAt(int n) const;
 };
 
 template <typename Key, typename Value, typename Comparator> class MapIterator {

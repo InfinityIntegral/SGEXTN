@@ -15,22 +15,22 @@ public:
     bool erase(const T& x);
     [[nodiscard]] bool contains(const T& x) const;
     [[nodiscard]] SetIterator<T, Comparator> begin();
-    [[nodiscard]] SetConstIterator<T, Comparator> begin() const;
+    [[nodiscard]] SetConstIterator<T, Comparator> constBegin() const;
     [[nodiscard]] SetIterator<T, Comparator> end();
-    [[nodiscard]] SetConstIterator<T, Comparator> end() const;
+    [[nodiscard]] SetConstIterator<T, Comparator> constEnd() const;
     bool erase(SetIterator<T, Comparator>& i);
     [[nodiscard]] SetIterator<T, Comparator> find(const T& x);
-    [[nodiscard]] SetConstIterator<T, Comparator> find(const T& x) const;
+    [[nodiscard]] SetConstIterator<T, Comparator> constFind(const T& x) const;
     [[nodiscard]] SetIterator<T, Comparator> lowerBound(const T& x);
-    [[nodiscard]] SetConstIterator<T, Comparator> lowerBound(const T& x) const;
+    [[nodiscard]] SetConstIterator<T, Comparator> constLowerBound(const T& x) const;
     [[nodiscard]] SetIterator<T, Comparator> upperBound(const T& x);
-    [[nodiscard]] SetConstIterator<T, Comparator> upperBound(const T& x) const;
+    [[nodiscard]] SetConstIterator<T, Comparator> constUpperBound(const T& x) const;
     [[nodiscard]] int indexOf(const T& x) const;
     [[nodiscard]] int indexOf(SetIterator<T, Comparator> i) const;
     [[nodiscard]] int indexOf(SetConstIterator<T, Comparator> i) const;
     [[nodiscard]] const T& elementAt(int n) const;
     [[nodiscard]] SetIterator<T, Comparator> iteratorAt(int n);
-    [[nodiscard]] SetConstIterator<T, Comparator> iteratorAt(int n) const;
+    [[nodiscard]] SetConstIterator<T, Comparator> constIteratorAt(int n) const;
 };
 
 template <typename T, typename Comparator> class SetIterator {

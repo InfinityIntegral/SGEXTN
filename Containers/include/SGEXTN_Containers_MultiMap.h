@@ -18,16 +18,16 @@ public:
     [[nodiscard]] Value& at(const Key& x);
     [[nodiscard]] const Value& at(const Key& x) const;
     [[nodiscard]] MultiMapIterator<Key, Value, Comparator> begin();
-    [[nodiscard]] MultiMapConstIterator<Key, Value, Comparator> begin() const;
+    [[nodiscard]] MultiMapConstIterator<Key, Value, Comparator> constBegin() const;
     [[nodiscard]] MultiMapIterator<Key, Value, Comparator> end();
-    [[nodiscard]] MultiMapConstIterator<Key, Value, Comparator> end() const;
+    [[nodiscard]] MultiMapConstIterator<Key, Value, Comparator> constEnd() const;
     bool erase(MultiMapIterator<Key, Value, Comparator>& i);
     [[nodiscard]] MultiMapIterator<Key, Value, Comparator> find(const Key& x);
-    [[nodiscard]] MultiMapConstIterator<Key, Value, Comparator> find(const Key& x) const;
+    [[nodiscard]] MultiMapConstIterator<Key, Value, Comparator> constFind(const Key& x) const;
     [[nodiscard]] MultiMapIterator<Key, Value, Comparator> lowerBound(const Key& x);
-    [[nodiscard]] MultiMapConstIterator<Key, Value, Comparator> lowerBound(const Key& x) const;
+    [[nodiscard]] MultiMapConstIterator<Key, Value, Comparator> constLowerBound(const Key& x) const;
     [[nodiscard]] MultiMapIterator<Key, Value, Comparator> upperBound(const Key& x);
-    [[nodiscard]] MultiMapConstIterator<Key, Value, Comparator> upperBound(const Key& x) const;
+    [[nodiscard]] MultiMapConstIterator<Key, Value, Comparator> constUpperBound(const Key& x) const;
     [[nodiscard]] int indexOf(const Key& x) const;
     [[nodiscard]] int indexOf(MultiMapIterator<Key, Value, Comparator> i) const;
     [[nodiscard]] int indexOf(MultiMapConstIterator<Key, Value, Comparator> i) const;
@@ -35,7 +35,7 @@ public:
     [[nodiscard]] Value& valueAt(int n);
     [[nodiscard]] const Value& valueAt(int n) const;
     [[nodiscard]] MultiMapIterator<Key, Value, Comparator> iteratorAt(int n);
-    [[nodiscard]] MultiMapConstIterator<Key, Value, Comparator> iteratorAt(int n) const;
+    [[nodiscard]] MultiMapConstIterator<Key, Value, Comparator> constIteratorAt(int n) const;
 };
 
 template <typename Key, typename Value, typename Comparator> class MultiMapIterator {

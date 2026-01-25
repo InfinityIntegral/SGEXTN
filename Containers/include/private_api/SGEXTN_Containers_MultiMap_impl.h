@@ -40,7 +40,7 @@ template <typename Key, typename Value, typename Comparator> SGEXTN::Containers:
     return SGEXTN::Containers::MultiMapIterator(private_avlTree.begin());
 }
 
-template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MultiMapConstIterator<Key, Value, Comparator> SGEXTN::Containers::MultiMap<Key, Value, Comparator>::begin() const {
+template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MultiMapConstIterator<Key, Value, Comparator> SGEXTN::Containers::MultiMap<Key, Value, Comparator>::constBegin() const {
     return SGEXTN::Containers::MultiMapConstIterator(private_avlTree.begin());
 }
 
@@ -48,7 +48,7 @@ template <typename Key, typename Value, typename Comparator> SGEXTN::Containers:
     return SGEXTN::Containers::MultiMapIterator(private_avlTree.end());
 }
 
-template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MultiMapConstIterator<Key, Value, Comparator> SGEXTN::Containers::MultiMap<Key, Value, Comparator>::end() const {
+template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MultiMapConstIterator<Key, Value, Comparator> SGEXTN::Containers::MultiMap<Key, Value, Comparator>::constEnd() const {
     return SGEXTN::Containers::MultiMapConstIterator(private_avlTree.end());
 }
 
@@ -60,7 +60,7 @@ template <typename Key, typename Value, typename Comparator> SGEXTN::Containers:
     return SGEXTN::Containers::MultiMapIterator(private_avlTree.find(x));
 }
 
-template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MultiMapConstIterator<Key, Value, Comparator> SGEXTN::Containers::MultiMap<Key, Value, Comparator>::find(const Key& x) const {
+template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MultiMapConstIterator<Key, Value, Comparator> SGEXTN::Containers::MultiMap<Key, Value, Comparator>::constFind(const Key& x) const {
     return SGEXTN::Containers::MultiMapConstIterator(private_avlTree.find(x));
 }
 
@@ -68,7 +68,7 @@ template <typename Key, typename Value, typename Comparator> SGEXTN::Containers:
     return SGEXTN::Containers::MultiMapIterator(private_avlTree.lowerBound(x));
 }
 
-template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MultiMapConstIterator<Key, Value, Comparator> SGEXTN::Containers::MultiMap<Key, Value, Comparator>::lowerBound(const Key& x) const {
+template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MultiMapConstIterator<Key, Value, Comparator> SGEXTN::Containers::MultiMap<Key, Value, Comparator>::constLowerBound(const Key& x) const {
     return SGEXTN::Containers::MultiMapConstIterator(private_avlTree.lowerBound(x));
 }
 
@@ -76,7 +76,7 @@ template <typename Key, typename Value, typename Comparator> SGEXTN::Containers:
     return SGEXTN::Containers::MultiMapIterator(private_avlTree.upperBound(x));
 }
 
-template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MultiMapConstIterator<Key, Value, Comparator> SGEXTN::Containers::MultiMap<Key, Value, Comparator>::upperBound(const Key& x) const {
+template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MultiMapConstIterator<Key, Value, Comparator> SGEXTN::Containers::MultiMap<Key, Value, Comparator>::constUpperBound(const Key& x) const {
     return SGEXTN::Containers::MultiMapConstIterator(private_avlTree.upperBound(x));
 }
 
@@ -114,7 +114,7 @@ template <typename Key, typename Value, typename Comparator> SGEXTN::Containers:
     return SGEXTN::Containers::MultiMapIterator(private_avlTree.iteratorAt(n));
 }
 
-template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MultiMapConstIterator<Key, Value, Comparator> SGEXTN::Containers::MultiMap<Key, Value, Comparator>::iteratorAt(int n) const {
+template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MultiMapConstIterator<Key, Value, Comparator> SGEXTN::Containers::MultiMap<Key, Value, Comparator>::constIteratorAt(int n) const {
     return SGEXTN::Containers::MultiMapConstIterator(private_avlTree.iteratorAt(n));
 }
 

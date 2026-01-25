@@ -18,12 +18,12 @@ public:
     [[nodiscard]] Value& at(const Key& x);
     [[nodiscard]] const Value& at(const Key& x) const;
     [[nodiscard]] UnorderedMapIterator<Key, Value, EqualityCheck, HashFunction> begin();
-    [[nodiscard]] UnorderedMapConstIterator<Key, Value, EqualityCheck, HashFunction> begin() const;
+    [[nodiscard]] UnorderedMapConstIterator<Key, Value, EqualityCheck, HashFunction> constBegin() const;
     [[nodiscard]] UnorderedMapIterator<Key, Value, EqualityCheck, HashFunction> end();
-    [[nodiscard]] UnorderedMapConstIterator<Key, Value, EqualityCheck, HashFunction> end() const;
+    [[nodiscard]] UnorderedMapConstIterator<Key, Value, EqualityCheck, HashFunction> constEnd() const;
     bool erase(UnorderedMapIterator<Key, Value, EqualityCheck, HashFunction>& i);
     [[nodiscard]] UnorderedMapIterator<Key, Value, EqualityCheck, HashFunction> find(const Key& x);
-    [[nodiscard]] UnorderedMapConstIterator<Key, Value, EqualityCheck, HashFunction> find(const Key& x) const;
+    [[nodiscard]] UnorderedMapConstIterator<Key, Value, EqualityCheck, HashFunction> constFind(const Key& x) const;
 };
 
 template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> class UnorderedMapIterator {

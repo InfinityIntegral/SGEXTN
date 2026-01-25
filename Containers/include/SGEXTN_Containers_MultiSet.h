@@ -16,22 +16,22 @@ public:
     [[nodiscard]] bool contains(const T& x) const;
     [[nodiscard]] int count(const T& x) const;
     [[nodiscard]] MultiSetIterator<T, Comparator> begin();
-    [[nodiscard]] MultiSetConstIterator<T, Comparator> begin() const;
+    [[nodiscard]] MultiSetConstIterator<T, Comparator> constBegin() const;
     [[nodiscard]] MultiSetIterator<T, Comparator> end();
-    [[nodiscard]] MultiSetConstIterator<T, Comparator> end() const;
+    [[nodiscard]] MultiSetConstIterator<T, Comparator> constEnd() const;
     bool erase(MultiSetIterator<T, Comparator>& i);
     [[nodiscard]] MultiSetIterator<T, Comparator> find(const T& x);
-    [[nodiscard]] MultiSetConstIterator<T, Comparator> find(const T& x) const;
+    [[nodiscard]] MultiSetConstIterator<T, Comparator> constFind(const T& x) const;
     [[nodiscard]] MultiSetIterator<T, Comparator> lowerBound(const T& x);
-    [[nodiscard]] MultiSetConstIterator<T, Comparator> lowerBound(const T& x) const;
+    [[nodiscard]] MultiSetConstIterator<T, Comparator> constLowerBound(const T& x) const;
     [[nodiscard]] MultiSetIterator<T, Comparator> upperBound(const T& x);
-    [[nodiscard]] MultiSetConstIterator<T, Comparator> upperBound(const T& x) const;
+    [[nodiscard]] MultiSetConstIterator<T, Comparator> constUpperBound(const T& x) const;
     [[nodiscard]] int indexOf(const T& x) const;
     [[nodiscard]] int indexOf(MultiSetIterator<T, Comparator> i) const;
     [[nodiscard]] int indexOf(MultiSetConstIterator<T, Comparator> i) const;
     [[nodiscard]] const T& elementAt(int n) const;
     [[nodiscard]] MultiSetIterator<T, Comparator> iteratorAt(int n);
-    [[nodiscard]] MultiSetConstIterator<T, Comparator> iteratorAt(int n) const;
+    [[nodiscard]] MultiSetConstIterator<T, Comparator> constIteratorAt(int n) const;
 };
 
 template <typename T, typename Comparator> class MultiSetIterator {

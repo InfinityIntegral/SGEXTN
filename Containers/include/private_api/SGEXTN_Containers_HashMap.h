@@ -29,7 +29,6 @@ public:
     bool rehash(const Key& key, const Value& value, bool allowDuplicate);
     void rehashAll(int newMemoryLength);
     HashMapSlot<Key, Value, EqualityCheck, HashFunction>* getSlotFromKey(const Key& x) const;
-    HashMapSlot<Key, Value, EqualityCheck, HashFunction>* getLastSlotFromKey(const Key& x) const;
     HashMapSlot<Key, Value, EqualityCheck, HashFunction>* getPreviousSlot(HashMapSlot<Key, Value, EqualityCheck, HashFunction>* x);
     HashMapSlot<Key, Value, EqualityCheck, HashFunction>* getNextSlot(HashMapSlot<Key, Value, EqualityCheck, HashFunction>* x);
     HashMap();

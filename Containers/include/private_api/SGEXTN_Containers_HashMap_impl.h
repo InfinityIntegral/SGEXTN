@@ -224,20 +224,6 @@ template <typename Key, typename Value, typename EqualityCheck, typename HashFun
     return SGEXTN::Containers::HashMapConstIterator(getSlotFromKey(x), this);
 }
 
-template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> SGEXTN::Containers::HashMapSlot<Key, Value, EqualityCheck, HashFunction>* SGEXTN::Containers::HashMap<Key, Value, EqualityCheck, HashFunction>::getLastSlotFromKey(const Key& x) const {
-    if(memoryTotalLength == 0){return nullptr;}
-    int hash = getHashIndex(x);
-    int lastMatchingHash = -1;
-    while(true){
-        if(hash == memoryTotalLength){hash = 0;}
-        if((*(data + hash)).status == SGEXTN::Containers::HashMapSlotStatus::Active && equalityCheckInstance((*(data + hash)).key, x) == true){lastMatchingHash = hash;}
-        if((*(data + hash)).status == SGEXTN::Containers::HashMapSlotStatus::Unused){break;}
-        hash++;
-    }
-    if(lastMatchingHash == -1){return nullptr;}
-    return (data + lastMatchingHash);
-}
-
 template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> SGEXTN::Containers::HashMapIterator<Key, Value, EqualityCheck, HashFunction> SGEXTN::Containers::HashMap<Key, Value, EqualityCheck, HashFunction>::findLast(const Key& x){
     return SGEXTN::Containers::HashMapIterator(getLastSlotFromKey(x), this);
 }
