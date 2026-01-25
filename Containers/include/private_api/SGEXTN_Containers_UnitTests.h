@@ -21,6 +21,7 @@ public:
     static void testMap();
     static void testMultiMap();
     static void testUnorderedMap();
+    static void testUnorderedMultiMap();
 };
 }
 }

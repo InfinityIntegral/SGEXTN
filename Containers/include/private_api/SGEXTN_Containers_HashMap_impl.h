@@ -119,6 +119,7 @@ template <typename Key, typename Value, typename EqualityCheck, typename HashFun
 template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> void SGEXTN::Containers::HashMap<Key, Value, EqualityCheck, HashFunction>::rehashAll(int newMemoryLength){
     SGEXTN::Containers::HashMapSlot<Key, Value, EqualityCheck, HashFunction>* oldPointer = data;
     int oldMemoryLength = memoryTotalLength;
+    memoryTotalLength = newMemoryLength;
     data = new SGEXTN::Containers::HashMapSlot<Key, Value, EqualityCheck, HashFunction>[newMemoryLength];
     memoryUsedLength = 0;
     for(int i=0; i<oldMemoryLength; i++){
@@ -140,8 +141,8 @@ template <typename Key, typename Value, typename EqualityCheck, typename HashFun
 }
 
 template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> bool SGEXTN::Containers::HashMap<Key, Value, EqualityCheck, HashFunction>::insert(const Key& key, const Value& value, bool allowDuplicate){
-    if(static_cast<float>(memoryUsedLength) / static_cast<float>(memoryTotalLength) >= loadFactor){rehashAll(3 * memoryTotalLength + 3);}
-    if(static_cast<float>(memoryUsedLength - activeLength) / static_cast<float>(memoryUsedLength) >= efficiencyFactor){rehashAll(memoryTotalLength);}
+    if(memoryTotalLength == 0 || static_cast<float>(memoryUsedLength) / static_cast<float>(memoryTotalLength) >= loadFactor){rehashAll(3 * memoryTotalLength + 3);}
+    if(memoryUsedLength > 0 && static_cast<float>(memoryUsedLength - activeLength) / static_cast<float>(memoryUsedLength) >= efficiencyFactor){rehashAll(memoryTotalLength);}
     bool result = rehash(key, value, allowDuplicate);
     if(result == true){
         memoryUsedLength++;

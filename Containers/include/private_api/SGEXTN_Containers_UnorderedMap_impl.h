@@ -90,11 +90,11 @@ template <typename Key, typename Value, typename EqualityCheck, typename HashFun
 }
 
 template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> bool SGEXTN::Containers::UnorderedMapIterator<Key, Value, EqualityCheck, HashFunction>::operator==(const SGEXTN::Containers::UnorderedMapIterator<Key, Value, EqualityCheck, HashFunction>& x){
-    return (private_hashMapIterator == private_hashMapIterator);
+    return (private_hashMapIterator == x.private_hashMapIterator);
 }
 
 template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> bool SGEXTN::Containers::UnorderedMapIterator<Key, Value, EqualityCheck, HashFunction>::operator!=(const SGEXTN::Containers::UnorderedMapIterator<Key, Value, EqualityCheck, HashFunction>& x){
-    return (private_hashMapIterator != private_hashMapIterator);
+    return (private_hashMapIterator != x.private_hashMapIterator);
 }
 
 template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> const Key& SGEXTN::Containers::UnorderedMapIterator<Key, Value, EqualityCheck, HashFunction>::key(){
@@ -134,11 +134,11 @@ template <typename Key, typename Value, typename EqualityCheck, typename HashFun
 }
 
 template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> bool SGEXTN::Containers::UnorderedMapConstIterator<Key, Value, EqualityCheck, HashFunction>::operator==(const SGEXTN::Containers::UnorderedMapConstIterator<Key, Value, EqualityCheck, HashFunction>& x){
-    return (private_hashMapIterator == private_hashMapIterator);
+    return (private_hashMapIterator == x.private_hashMapIterator);
 }
 
 template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> bool SGEXTN::Containers::UnorderedMapConstIterator<Key, Value, EqualityCheck, HashFunction>::operator!=(const SGEXTN::Containers::UnorderedMapConstIterator<Key, Value, EqualityCheck, HashFunction>& x){
-    return (private_hashMapIterator != private_hashMapIterator);
+    return (private_hashMapIterator != x.private_hashMapIterator);
 }
 
 template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> const Key& SGEXTN::Containers::UnorderedMapConstIterator<Key, Value, EqualityCheck, HashFunction>::key(){
