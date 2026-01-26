@@ -22,6 +22,7 @@ public:
     static void testMultiMap();
     static void testUnorderedSet();
     static void testUnorderedMap();
+    static void testSort();
 };
 }
 }

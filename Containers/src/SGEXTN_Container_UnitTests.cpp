@@ -19,6 +19,7 @@
 #include <SGEXTN_Containers_UnorderedSet.h>
 #include <SGEXTN_Containers_UnorderedMap.h>
 #include <SGEXTN_Containers_Hash.h>
+#include <SGEXTN_Containers_Sort.h>
 
 void SGEXTN::Containers::UnitTests::testEqualTo(){
     const SGEXTN::Containers::EqualTo<int> comparator;
@@ -413,4 +414,15 @@ void SGEXTN::Containers::UnitTests::testUnorderedMap(){
         s.erase(i);
     }
     if(s.length() != 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::UnorderedMap - in order traversal erase fail");}
+}
+
+void SGEXTN::Containers::UnitTests::testSort(){
+    SGEXTN::Containers::Array<int> arr(1000);
+    for(int i=0; i<1000; i++){
+        arr.at(i) = 1000 - i;
+    }
+    SGEXTN::Containers::Sort<int, SGEXTN::Containers::LessThan<int>>(arr.pointerToData(0), arr.length()).sort();
+    for(int i=0; i<1000; i++){
+        if(arr.at(i) != i + 1){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Sort - sort failed");}
+    }
 }
