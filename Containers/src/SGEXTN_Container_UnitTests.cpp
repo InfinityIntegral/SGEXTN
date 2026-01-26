@@ -426,3 +426,25 @@ void SGEXTN::Containers::UnitTests::testSort(){
         if(arr.at(i) != i + 1){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Sort - sort failed");}
     }
 }
+
+void SGEXTN::Containers::UnitTests::testAll(){
+    SGEXTN::Containers::UnitTests::testEqualTo();
+    SGEXTN::Containers::UnitTests::testArray();
+    SGEXTN::Containers::UnitTests::testSpan();
+    SGEXTN::Containers::UnitTests::testLessThan();
+    SGEXTN::Containers::UnitTests::testMoreThan();
+    SGEXTN::Containers::UnitTests::testPair();
+    SGEXTN::Containers::UnitTests::testTuple3();
+    SGEXTN::Containers::UnitTests::testVector();
+    SGEXTN::Containers::UnitTests::testQueue();
+    SGEXTN::Containers::UnitTests::testStack();
+    SGEXTN::Containers::UnitTests::testDeque();
+    SGEXTN::Containers::UnitTests::testPriorityQueue();
+    SGEXTN::Containers::UnitTests::testSet();
+    SGEXTN::Containers::UnitTests::testMultiSet();
+    SGEXTN::Containers::UnitTests::testMap();
+    SGEXTN::Containers::UnitTests::testMultiMap();
+    SGEXTN::Containers::UnitTests::testUnorderedSet();
+    SGEXTN::Containers::UnitTests::testUnorderedMap();
+    SGEXTN::Containers::UnitTests::testSort();
+}

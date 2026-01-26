@@ -18,23 +18,5 @@ void init(){
 
 int main(int /*argc*/, char** /*argv*/){
     //return SGEXTN(argc, argv, &init);
-    SGEXTN::Containers::UnitTests::testEqualTo();
-    SGEXTN::Containers::UnitTests::testArray();
-    SGEXTN::Containers::UnitTests::testSpan();
-    SGEXTN::Containers::UnitTests::testLessThan();
-    SGEXTN::Containers::UnitTests::testMoreThan();
-    SGEXTN::Containers::UnitTests::testPair();
-    SGEXTN::Containers::UnitTests::testTuple3();
-    SGEXTN::Containers::UnitTests::testVector();
-    SGEXTN::Containers::UnitTests::testQueue();
-    SGEXTN::Containers::UnitTests::testStack();
-    SGEXTN::Containers::UnitTests::testDeque();
-    SGEXTN::Containers::UnitTests::testPriorityQueue();
-    SGEXTN::Containers::UnitTests::testSet();
-    SGEXTN::Containers::UnitTests::testMultiSet();
-    SGEXTN::Containers::UnitTests::testMap();
-    SGEXTN::Containers::UnitTests::testMultiMap();
-    SGEXTN::Containers::UnitTests::testUnorderedSet();
-    SGEXTN::Containers::UnitTests::testUnorderedMap();
-    SGEXTN::Containers::UnitTests::testSort();
+    SGEXTN::Containers::UnitTests::testAll();
 }
