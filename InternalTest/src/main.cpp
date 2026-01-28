@@ -1,6 +1,6 @@
 //#include <SGEXTN_EntryPoint.h>
 //#include <SGXCentral.h>
-#include <private_api/SGEXTN_Containers_UnitTests.h>
+#include <private_api/SGEXTN_Math_UnitTests.h>
 
 namespace {
 void test(){
@@ -18,5 +18,5 @@ void init(){
 
 int main(int /*argc*/, char** /*argv*/){
     //return SGEXTN(argc, argv, &init);
-    SGEXTN::Containers::UnitTests::testAll();
+    SGEXTN::Math::UnitTests::checkDataSizes();
 }
