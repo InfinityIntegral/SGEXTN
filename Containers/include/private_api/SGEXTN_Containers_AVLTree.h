@@ -60,16 +60,16 @@ public:
     [[nodiscard]] Value& at(const Key& x);
     [[nodiscard]] const Value& at(const Key& x) const;
     [[nodiscard]] AVLTreeIterator<Key, Value, Comparator> begin();
-    [[nodiscard]] AVLTreeConstIterator<Key, Value, Comparator> begin() const;
+    [[nodiscard]] AVLTreeConstIterator<Key, Value, Comparator> constBegin() const;
     [[nodiscard]] AVLTreeIterator<Key, Value, Comparator> end();
-    [[nodiscard]] AVLTreeConstIterator<Key, Value, Comparator> end() const;
+    [[nodiscard]] AVLTreeConstIterator<Key, Value, Comparator> constEnd() const;
     bool erase(AVLTreeIterator<Key, Value, Comparator>& i);
     [[nodiscard]] AVLTreeIterator<Key, Value, Comparator> find(const Key& x);
-    [[nodiscard]] AVLTreeConstIterator<Key, Value, Comparator> find(const Key& x) const;
+    [[nodiscard]] AVLTreeConstIterator<Key, Value, Comparator> constFind(const Key& x) const;
     [[nodiscard]] AVLTreeIterator<Key, Value, Comparator> lowerBound(const Key& x);
-    [[nodiscard]] AVLTreeConstIterator<Key, Value, Comparator> lowerBound(const Key& x) const;
+    [[nodiscard]] AVLTreeConstIterator<Key, Value, Comparator> constLowerBound(const Key& x) const;
     [[nodiscard]] AVLTreeIterator<Key, Value, Comparator> upperBound(const Key& x);
-    [[nodiscard]] AVLTreeConstIterator<Key, Value, Comparator> upperBound(const Key& x) const;
+    [[nodiscard]] AVLTreeConstIterator<Key, Value, Comparator> constUpperBound(const Key& x) const;
     [[nodiscard]] int indexOf(const Key& x) const;
     [[nodiscard]] int indexOf(AVLTreeIterator<Key, Value, Comparator> i) const;
     [[nodiscard]] int indexOf(AVLTreeConstIterator<Key, Value, Comparator> i) const;
@@ -77,7 +77,7 @@ public:
     [[nodiscard]] Value& valueAt(int n);
     [[nodiscard]] const Value& valueAt(int n) const;
     [[nodiscard]] AVLTreeIterator<Key, Value, Comparator> iteratorAt(int n);
-    [[nodiscard]] AVLTreeConstIterator<Key, Value, Comparator> iteratorAt(int n) const;
+    [[nodiscard]] AVLTreeConstIterator<Key, Value, Comparator> constIteratorAt(int n) const;
 };
 
 template <typename Key, typename Value, typename Comparator> class AVLTreeIterator {

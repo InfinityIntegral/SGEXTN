@@ -157,7 +157,7 @@ template <typename Key, typename Value, typename EqualityCheck, typename HashFun
 }
 
 template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> bool SGEXTN::Containers::HashMap<Key, Value, EqualityCheck, HashFunction>::contains(const Key& x) const {
-    return (find(x) != end());
+    return (constFind(x) != constEnd());
 }
 
 template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> int SGEXTN::Containers::HashMap<Key, Value, EqualityCheck, HashFunction>::count(const Key& x) const {
@@ -178,22 +178,22 @@ template <typename Key, typename Value, typename EqualityCheck, typename HashFun
 }
 
 template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> const Value& SGEXTN::Containers::HashMap<Key, Value, EqualityCheck, HashFunction>::at(const Key& x) const {
-    return find(x).value();
+    return constFind(x).value();
 }
 
 template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> SGEXTN::Containers::HashMapIterator<Key, Value, EqualityCheck, HashFunction> SGEXTN::Containers::HashMap<Key, Value, EqualityCheck, HashFunction>::begin(){
     return (++end());
 }
 
-template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> SGEXTN::Containers::HashMapConstIterator<Key, Value, EqualityCheck, HashFunction> SGEXTN::Containers::HashMap<Key, Value, EqualityCheck, HashFunction>::begin() const {
-    return (++end());
+template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> SGEXTN::Containers::HashMapConstIterator<Key, Value, EqualityCheck, HashFunction> SGEXTN::Containers::HashMap<Key, Value, EqualityCheck, HashFunction>::constBegin() const {
+    return (++constEnd());
 }
 
 template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> SGEXTN::Containers::HashMapIterator<Key, Value, EqualityCheck, HashFunction> SGEXTN::Containers::HashMap<Key, Value, EqualityCheck, HashFunction>::end(){
     return SGEXTN::Containers::HashMapIterator<Key, Value, EqualityCheck, HashFunction>(nullptr, this);
 }
 
-template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> SGEXTN::Containers::HashMapConstIterator<Key, Value, EqualityCheck, HashFunction> SGEXTN::Containers::HashMap<Key, Value, EqualityCheck, HashFunction>::end() const {
+template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> SGEXTN::Containers::HashMapConstIterator<Key, Value, EqualityCheck, HashFunction> SGEXTN::Containers::HashMap<Key, Value, EqualityCheck, HashFunction>::constEnd() const {
     return SGEXTN::Containers::HashMapConstIterator<Key, Value, EqualityCheck, HashFunction>(nullptr, this);
 }
 
@@ -220,16 +220,8 @@ template <typename Key, typename Value, typename EqualityCheck, typename HashFun
     return SGEXTN::Containers::HashMapIterator(getSlotFromKey(x), this);
 }
 
-template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> SGEXTN::Containers::HashMapConstIterator<Key, Value, EqualityCheck, HashFunction> SGEXTN::Containers::HashMap<Key, Value, EqualityCheck, HashFunction>::find(const Key& x) const {
+template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> SGEXTN::Containers::HashMapConstIterator<Key, Value, EqualityCheck, HashFunction> SGEXTN::Containers::HashMap<Key, Value, EqualityCheck, HashFunction>::constFind(const Key& x) const {
     return SGEXTN::Containers::HashMapConstIterator(getSlotFromKey(x), this);
-}
-
-template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> SGEXTN::Containers::HashMapIterator<Key, Value, EqualityCheck, HashFunction> SGEXTN::Containers::HashMap<Key, Value, EqualityCheck, HashFunction>::findLast(const Key& x){
-    return SGEXTN::Containers::HashMapIterator(getLastSlotFromKey(x), this);
-}
-
-template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> SGEXTN::Containers::HashMapConstIterator<Key, Value, EqualityCheck, HashFunction> SGEXTN::Containers::HashMap<Key, Value, EqualityCheck, HashFunction>::findLast(const Key& x) const {
-    return SGEXTN::Containers::HashMapConstIterator(getLastSlotFromKey(x), this);
 }
 
 template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> SGEXTN::Containers::HashMapIterator<Key, Value, EqualityCheck, HashFunction>::HashMapIterator(SGEXTN::Containers::HashMapSlot<Key, Value, EqualityCheck, HashFunction>* slot, SGEXTN::Containers::HashMap<Key, Value, EqualityCheck, HashFunction>* map){
@@ -242,7 +234,7 @@ template <typename Key, typename Value, typename EqualityCheck, typename HashFun
     associatedMap = map;
 }
 
-template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> SGEXTN::Containers::HashMapSlot<Key, Value, EqualityCheck, HashFunction>* SGEXTN::Containers::HashMap<Key, Value, EqualityCheck, HashFunction>::getPreviousSlot(SGEXTN::Containers::HashMapSlot<Key, Value, EqualityCheck, HashFunction>* x){
+template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> SGEXTN::Containers::HashMapSlot<Key, Value, EqualityCheck, HashFunction>* SGEXTN::Containers::HashMap<Key, Value, EqualityCheck, HashFunction>::getPreviousSlot(SGEXTN::Containers::HashMapSlot<Key, Value, EqualityCheck, HashFunction>* x) const {
     if(memoryTotalLength == 0){return nullptr;}
     int offset = memoryTotalLength;
     if(x != nullptr){offset = x - data;}
@@ -254,7 +246,7 @@ template <typename Key, typename Value, typename EqualityCheck, typename HashFun
     return nullptr;
 }
 
-template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> SGEXTN::Containers::HashMapSlot<Key, Value, EqualityCheck, HashFunction>* SGEXTN::Containers::HashMap<Key, Value, EqualityCheck, HashFunction>::getNextSlot(SGEXTN::Containers::HashMapSlot<Key, Value, EqualityCheck, HashFunction>* x){
+template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> SGEXTN::Containers::HashMapSlot<Key, Value, EqualityCheck, HashFunction>* SGEXTN::Containers::HashMap<Key, Value, EqualityCheck, HashFunction>::getNextSlot(SGEXTN::Containers::HashMapSlot<Key, Value, EqualityCheck, HashFunction>* x) const {
     if(memoryTotalLength == 0){return nullptr;}
     int offset = -1;
     if(x != nullptr){offset = x - data;}

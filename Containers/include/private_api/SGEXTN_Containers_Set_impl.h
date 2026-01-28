@@ -26,7 +26,7 @@ template <typename T, typename Comparator> SGEXTN::Containers::SetIterator<T, Co
 }
 
 template <typename T, typename Comparator> SGEXTN::Containers::SetConstIterator<T, Comparator> SGEXTN::Containers::Set<T, Comparator>::constBegin() const {
-    return SGEXTN::Containers::SetConstIterator(private_avlTree.begin());
+    return SGEXTN::Containers::SetConstIterator(private_avlTree.constBegin());
 }
 
 template <typename T, typename Comparator> SGEXTN::Containers::SetIterator<T, Comparator> SGEXTN::Containers::Set<T, Comparator>::end(){
@@ -34,7 +34,7 @@ template <typename T, typename Comparator> SGEXTN::Containers::SetIterator<T, Co
 }
 
 template <typename T, typename Comparator> SGEXTN::Containers::SetConstIterator<T, Comparator> SGEXTN::Containers::Set<T, Comparator>::constEnd() const {
-    return SGEXTN::Containers::SetConstIterator(private_avlTree.end());
+    return SGEXTN::Containers::SetConstIterator(private_avlTree.constEnd());
 }
 
 template <typename T, typename Comparator> bool SGEXTN::Containers::Set<T, Comparator>::erase(SGEXTN::Containers::SetIterator<T, Comparator>& i){
@@ -46,7 +46,7 @@ template <typename T, typename Comparator> SGEXTN::Containers::SetIterator<T, Co
 }
 
 template <typename T, typename Comparator> SGEXTN::Containers::SetConstIterator<T, Comparator> SGEXTN::Containers::Set<T, Comparator>::constFind(const T& x) const {
-    return SGEXTN::Containers::SetConstIterator(private_avlTree.find(x));
+    return SGEXTN::Containers::SetConstIterator(private_avlTree.constFind(x));
 }
 
 template <typename T, typename Comparator> SGEXTN::Containers::SetIterator<T, Comparator> SGEXTN::Containers::Set<T, Comparator>::lowerBound(const T& x){
@@ -54,7 +54,7 @@ template <typename T, typename Comparator> SGEXTN::Containers::SetIterator<T, Co
 }
 
 template <typename T, typename Comparator> SGEXTN::Containers::SetConstIterator<T, Comparator> SGEXTN::Containers::Set<T, Comparator>::constLowerBound(const T& x) const {
-    return SGEXTN::Containers::SetConstIterator(private_avlTree.lowerBound(x));
+    return SGEXTN::Containers::SetConstIterator(private_avlTree.constLowerBound(x));
 }
 
 template <typename T, typename Comparator> SGEXTN::Containers::SetIterator<T, Comparator> SGEXTN::Containers::Set<T, Comparator>::upperBound(const T& x){
@@ -62,7 +62,7 @@ template <typename T, typename Comparator> SGEXTN::Containers::SetIterator<T, Co
 }
 
 template <typename T, typename Comparator> SGEXTN::Containers::SetConstIterator<T, Comparator> SGEXTN::Containers::Set<T, Comparator>::constUpperBound(const T& x) const {
-    return SGEXTN::Containers::SetConstIterator(private_avlTree.upperBound(x));
+    return SGEXTN::Containers::SetConstIterator(private_avlTree.constUpperBound(x));
 }
 
 template <typename T, typename Comparator> int SGEXTN::Containers::Set<T, Comparator>::indexOf(const T& x) const {
@@ -88,7 +88,7 @@ template <typename T, typename Comparator> SGEXTN::Containers::SetIterator<T, Co
 }
 
 template <typename T, typename Comparator> SGEXTN::Containers::SetConstIterator<T, Comparator> SGEXTN::Containers::Set<T, Comparator>::constIteratorAt(int n) const {
-    return SGEXTN::Containers::SetConstIterator(private_avlTree.iteratorAt(n));
+    return SGEXTN::Containers::SetConstIterator(private_avlTree.constIteratorAt(n));
 }
 
 template <typename T, typename Comparator> SGEXTN::Containers::SetIterator<T, Comparator>::SetIterator(AVLTreeIterator<T, bool, Comparator> i){

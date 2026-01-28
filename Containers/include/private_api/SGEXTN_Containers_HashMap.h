@@ -29,8 +29,8 @@ public:
     bool rehash(const Key& key, const Value& value, bool allowDuplicate);
     void rehashAll(int newMemoryLength);
     HashMapSlot<Key, Value, EqualityCheck, HashFunction>* getSlotFromKey(const Key& x) const;
-    HashMapSlot<Key, Value, EqualityCheck, HashFunction>* getPreviousSlot(HashMapSlot<Key, Value, EqualityCheck, HashFunction>* x);
-    HashMapSlot<Key, Value, EqualityCheck, HashFunction>* getNextSlot(HashMapSlot<Key, Value, EqualityCheck, HashFunction>* x);
+    HashMapSlot<Key, Value, EqualityCheck, HashFunction>* getPreviousSlot(HashMapSlot<Key, Value, EqualityCheck, HashFunction>* x) const;
+    HashMapSlot<Key, Value, EqualityCheck, HashFunction>* getNextSlot(HashMapSlot<Key, Value, EqualityCheck, HashFunction>* x) const;
     HashMap();
     HashMap(const HashMap& x);
     HashMap& operator=(const HashMap& x);
@@ -46,14 +46,12 @@ public:
     [[nodiscard]] Value& at(const Key& x);
     [[nodiscard]] const Value& at(const Key& x) const;
     [[nodiscard]] HashMapIterator<Key, Value, EqualityCheck, HashFunction> begin();
-    [[nodiscard]] HashMapConstIterator<Key, Value, EqualityCheck, HashFunction> begin() const;
+    [[nodiscard]] HashMapConstIterator<Key, Value, EqualityCheck, HashFunction> constBegin() const;
     [[nodiscard]] HashMapIterator<Key, Value, EqualityCheck, HashFunction> end();
-    [[nodiscard]] HashMapConstIterator<Key, Value, EqualityCheck, HashFunction> end() const;
+    [[nodiscard]] HashMapConstIterator<Key, Value, EqualityCheck, HashFunction> constEnd() const;
     bool erase(HashMapIterator<Key, Value, EqualityCheck, HashFunction>& i);
     [[nodiscard]] HashMapIterator<Key, Value, EqualityCheck, HashFunction> find(const Key& x);
-    [[nodiscard]] HashMapConstIterator<Key, Value, EqualityCheck, HashFunction> find(const Key& x) const;
-    [[nodiscard]] HashMapIterator<Key, Value, EqualityCheck, HashFunction> findLast(const Key& x);
-    [[nodiscard]] HashMapConstIterator<Key, Value, EqualityCheck, HashFunction> findLast(const Key& x) const;
+    [[nodiscard]] HashMapConstIterator<Key, Value, EqualityCheck, HashFunction> constFind(const Key& x) const;
 };
 
 template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> class HashMapIterator {

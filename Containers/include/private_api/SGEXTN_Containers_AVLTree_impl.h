@@ -28,7 +28,7 @@ template <typename Key, typename Value, typename Comparator> SGEXTN::Containers:
 }
 
 template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTree<Key, Value, Comparator>::AVLTree(const AVLTree& x){
-    if(x.root != nullptr){root = new AVLTreeNode(x.root, nullptr);}
+    if(x.root != nullptr){root = new AVLTreeNode<Key, Value, Comparator>(x.root, nullptr);}
     else{root = nullptr;}
     comparatorInstance = x.comparatorInstance;
 }
@@ -42,7 +42,7 @@ template <typename Key, typename Value, typename Comparator> void SGEXTN::Contai
 template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTree<Key, Value, Comparator>& SGEXTN::Containers::AVLTree<Key, Value, Comparator>::operator=(const AVLTree& x){
     if(this == &x){return (*this);}
     if(root != nullptr){(*root).recursiveDelete();}
-    if(x.root != nullptr){root = new AVLTreeNode(x.root, nullptr);}
+    if(x.root != nullptr){root = new AVLTreeNode<Key, Value, Comparator>(x.root, nullptr);}
     else{root = nullptr;}
     comparatorInstance = x.comparatorInstance;
     return (*this);
@@ -212,24 +212,24 @@ template <typename Key, typename Value, typename Comparator> bool SGEXTN::Contai
 }
 
 template <typename Key, typename Value, typename Comparator> bool SGEXTN::Containers::AVLTree<Key, Value, Comparator>::contains(const Key& x) const {
-    return (find(x) != end());
+    return (constFind(x) != constEnd());
 }
 
 template <typename Key, typename Value, typename Comparator> int SGEXTN::Containers::AVLTree<Key, Value, Comparator>::count(const Key& x) const {
-    AVLTreeConstIterator i = find(x);
-    if(i == end()){return 0;}
+    AVLTreeConstIterator i = constFind(x);
+    if(i == constEnd()){return 0;}
     int count = 1;
     AVLTreeConstIterator currentNode = i;
     while(true){
         currentNode--;
-        if(currentNode == end()){break;}
+        if(currentNode == constEnd()){break;}
         if(comparatorInstance(currentNode.key(), x) == false && comparatorInstance(x, currentNode.key()) == false){count++;}
         else{break;}
     }
     currentNode = i;
     while(true){
         currentNode++;
-        if(currentNode == end()){break;}
+        if(currentNode == constEnd()){break;}
         if(comparatorInstance(currentNode.key(), x) == false && comparatorInstance(x, currentNode.key()) == false){count++;}
         else{break;}
     }
@@ -374,7 +374,7 @@ template <typename Key, typename Value, typename Comparator> SGEXTN::Containers:
     return AVLTreeIterator<Key, Value, Comparator>(getLeftMostSubchild(root), this);
 }
 
-template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTreeConstIterator<Key, Value, Comparator> SGEXTN::Containers::AVLTree<Key, Value, Comparator>::begin() const {
+template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTreeConstIterator<Key, Value, Comparator> SGEXTN::Containers::AVLTree<Key, Value, Comparator>::constBegin() const {
     return AVLTreeConstIterator<Key, Value, Comparator>(getLeftMostSubchild(root), this);
 }
 
@@ -382,7 +382,7 @@ template <typename Key, typename Value, typename Comparator> SGEXTN::Containers:
     return AVLTreeIterator<Key, Value, Comparator>(nullptr, this);
 }
 
-template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTreeConstIterator<Key, Value, Comparator> SGEXTN::Containers::AVLTree<Key, Value, Comparator>::end() const {
+template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTreeConstIterator<Key, Value, Comparator> SGEXTN::Containers::AVLTree<Key, Value, Comparator>::constEnd() const {
     return AVLTreeConstIterator<Key, Value, Comparator>(nullptr, this);
 }
 
@@ -471,7 +471,7 @@ template <typename Key, typename Value, typename Comparator> SGEXTN::Containers:
     return AVLTreeIterator(findNode(x), this);
 }
 
-template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTreeConstIterator<Key, Value, Comparator> SGEXTN::Containers::AVLTree<Key, Value, Comparator>::find(const Key& x) const {
+template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTreeConstIterator<Key, Value, Comparator> SGEXTN::Containers::AVLTree<Key, Value, Comparator>::constFind(const Key& x) const {
     return AVLTreeConstIterator<Key, Value, Comparator>(findNode(x), this);
 }
 
@@ -492,7 +492,7 @@ template <typename Key, typename Value, typename Comparator> SGEXTN::Containers:
     return AVLTreeIterator(lowerBoundNode(x), this);
 }
 
-template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTreeConstIterator<Key, Value, Comparator> SGEXTN::Containers::AVLTree<Key, Value, Comparator>::lowerBound(const Key& x) const {
+template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTreeConstIterator<Key, Value, Comparator> SGEXTN::Containers::AVLTree<Key, Value, Comparator>::constLowerBound(const Key& x) const {
     return AVLTreeConstIterator(lowerBoundNode(x), this);
 }
 
@@ -513,7 +513,7 @@ template <typename Key, typename Value, typename Comparator> SGEXTN::Containers:
     return AVLTreeIterator(upperBoundNode(x), this);
 }
 
-template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTreeConstIterator<Key, Value, Comparator> SGEXTN::Containers::AVLTree<Key, Value, Comparator>::upperBound(const Key& x) const {
+template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTreeConstIterator<Key, Value, Comparator> SGEXTN::Containers::AVLTree<Key, Value, Comparator>::constUpperBound(const Key& x) const {
     return AVLTreeConstIterator(upperBoundNode(x), this);
 }
 
@@ -529,7 +529,7 @@ template <typename Key, typename Value, typename Comparator> int SGEXTN::Contain
 }
 
 template <typename Key, typename Value, typename Comparator> int SGEXTN::Containers::AVLTree<Key, Value, Comparator>::indexOf(const Key& x) const {
-    return indexOf(find(x));
+    return indexOf(constFind(x));
 }
 
 template <typename Key, typename Value, typename Comparator> int SGEXTN::Containers::AVLTree<Key, Value, Comparator>::indexOf(AVLTreeIterator<Key, Value, Comparator> i) const {
@@ -555,18 +555,22 @@ template <typename Key, typename Value, typename Comparator> SGEXTN::Containers:
 }
 
 template <typename Key, typename Value, typename Comparator> const Key& SGEXTN::Containers::AVLTree<Key, Value, Comparator>::keyAt(int n) const {
-    return iteratorAt(n).key();
+    return constIteratorAt(n).key();
 }
 
 template <typename Key, typename Value, typename Comparator> Value& SGEXTN::Containers::AVLTree<Key, Value, Comparator>::valueAt(int n){
     return iteratorAt(n).value();
 }
 
+template <typename Key, typename Value, typename Comparator> const Value& SGEXTN::Containers::AVLTree<Key, Value, Comparator>::valueAt(int n) const {
+    return constIteratorAt(n).value();
+}
+
 template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTreeIterator<Key, Value, Comparator> SGEXTN::Containers::AVLTree<Key, Value, Comparator>::iteratorAt(int n){
     return AVLTreeIterator(getNodeByIndex(n), this);
 }
 
-template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTreeConstIterator<Key, Value, Comparator> SGEXTN::Containers::AVLTree<Key, Value, Comparator>::iteratorAt(int n) const {
+template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTreeConstIterator<Key, Value, Comparator> SGEXTN::Containers::AVLTree<Key, Value, Comparator>::constIteratorAt(int n) const {
     return AVLTreeConstIterator<Key, Value, Comparator>(getNodeByIndex(n), this);
 }
 
@@ -575,5 +579,5 @@ template <typename Key, typename Value, typename Comparator> Value& SGEXTN::Cont
 }
 
 template <typename Key, typename Value, typename Comparator> const Value& SGEXTN::Containers::AVLTree<Key, Value, Comparator>::at(const Key& x) const {
-    return find(x).value();
+    return constFind(x).value();
 }

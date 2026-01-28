@@ -41,7 +41,7 @@ template <typename Key, typename Value, typename Comparator> SGEXTN::Containers:
 }
 
 template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MultiMapConstIterator<Key, Value, Comparator> SGEXTN::Containers::MultiMap<Key, Value, Comparator>::constBegin() const {
-    return SGEXTN::Containers::MultiMapConstIterator(private_avlTree.begin());
+    return SGEXTN::Containers::MultiMapConstIterator(private_avlTree.constBegin());
 }
 
 template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MultiMapIterator<Key, Value, Comparator> SGEXTN::Containers::MultiMap<Key, Value, Comparator>::end(){
@@ -49,7 +49,7 @@ template <typename Key, typename Value, typename Comparator> SGEXTN::Containers:
 }
 
 template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MultiMapConstIterator<Key, Value, Comparator> SGEXTN::Containers::MultiMap<Key, Value, Comparator>::constEnd() const {
-    return SGEXTN::Containers::MultiMapConstIterator(private_avlTree.end());
+    return SGEXTN::Containers::MultiMapConstIterator(private_avlTree.constEnd());
 }
 
 template <typename Key, typename Value, typename Comparator> bool SGEXTN::Containers::MultiMap<Key, Value, Comparator>::erase(SGEXTN::Containers::MultiMapIterator<Key, Value, Comparator>& i){
@@ -61,7 +61,7 @@ template <typename Key, typename Value, typename Comparator> SGEXTN::Containers:
 }
 
 template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MultiMapConstIterator<Key, Value, Comparator> SGEXTN::Containers::MultiMap<Key, Value, Comparator>::constFind(const Key& x) const {
-    return SGEXTN::Containers::MultiMapConstIterator(private_avlTree.find(x));
+    return SGEXTN::Containers::MultiMapConstIterator(private_avlTree.constFind(x));
 }
 
 template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MultiMapIterator<Key, Value, Comparator> SGEXTN::Containers::MultiMap<Key, Value, Comparator>::lowerBound(const Key& x){
@@ -69,7 +69,7 @@ template <typename Key, typename Value, typename Comparator> SGEXTN::Containers:
 }
 
 template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MultiMapConstIterator<Key, Value, Comparator> SGEXTN::Containers::MultiMap<Key, Value, Comparator>::constLowerBound(const Key& x) const {
-    return SGEXTN::Containers::MultiMapConstIterator(private_avlTree.lowerBound(x));
+    return SGEXTN::Containers::MultiMapConstIterator(private_avlTree.constLowerBound(x));
 }
 
 template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MultiMapIterator<Key, Value, Comparator> SGEXTN::Containers::MultiMap<Key, Value, Comparator>::upperBound(const Key& x){
@@ -77,7 +77,7 @@ template <typename Key, typename Value, typename Comparator> SGEXTN::Containers:
 }
 
 template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MultiMapConstIterator<Key, Value, Comparator> SGEXTN::Containers::MultiMap<Key, Value, Comparator>::constUpperBound(const Key& x) const {
-    return SGEXTN::Containers::MultiMapConstIterator(private_avlTree.upperBound(x));
+    return SGEXTN::Containers::MultiMapConstIterator(private_avlTree.constUpperBound(x));
 }
 
 template <typename Key, typename Value, typename Comparator> int SGEXTN::Containers::MultiMap<Key, Value, Comparator>::indexOf(const Key& x) const {
@@ -115,7 +115,7 @@ template <typename Key, typename Value, typename Comparator> SGEXTN::Containers:
 }
 
 template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MultiMapConstIterator<Key, Value, Comparator> SGEXTN::Containers::MultiMap<Key, Value, Comparator>::constIteratorAt(int n) const {
-    return SGEXTN::Containers::MultiMapConstIterator(private_avlTree.iteratorAt(n));
+    return SGEXTN::Containers::MultiMapConstIterator(private_avlTree.constIteratorAt(n));
 }
 
 template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MultiMapIterator<Key, Value, Comparator>::MultiMapIterator(SGEXTN::Containers::AVLTreeIterator<Key, Value, Comparator> i){
