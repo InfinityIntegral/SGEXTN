@@ -7,6 +7,7 @@ public:
     static bool checkDataSizes();
     static void testIntegerLimits();
     static void testIntegerMath();
+    static void testFloatConstants();
     static void testAll();
 };
 }

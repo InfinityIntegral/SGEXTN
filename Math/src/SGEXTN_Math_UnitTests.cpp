@@ -2,6 +2,11 @@
 #include <private_api/SGEXTN_Containers_Crash.h>
 #include <SGEXTN_Math_IntegerLimits.h>
 #include <SGEXTN_Math_IntegerMath.h>
+#include <SGEXTN_Math_FloatConstants.h>
+
+bool isCloseEnough(float a, float b){
+    return (a > 0.999f * b && a < 1.001f * b);
+}
 
 bool SGEXTN::Math::UnitTests::checkDataSizes(){
     if(sizeof(char) != 1){SGEXTN::Containers::Crash::warn("unexpected char size");}
@@ -32,10 +37,23 @@ void SGEXTN::Math::UnitTests::testIntegerMath(){
     if(SGEXTN::Math::IntegerMath<int>::lowestCommonMultiple(10, 24) != 120){SGEXTN::Containers::Crash::crash("SGEXTN::Math::IntegerMath - LCM fail");}
 }
 
+void SGEXTN::Math::UnitTests::testFloatConstants(){
+    if(isCloseEnough(SGEXTN::Math::FloatConstants<float>::eulerNumber(), 2.718281828f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatConstants - retrieve e fail");}
+    if(isCloseEnough(SGEXTN::Math::FloatConstants<float>::eulerNumberLog2(), 1.442695041f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatConstants - retrieve log 2 of e fail");}
+    if(isCloseEnough(SGEXTN::Math::FloatConstants<float>::eulerNumberLog10(), 0.4342944819f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatConstants - retrieve log 10 of e fail");}
+    if(isCloseEnough(SGEXTN::Math::FloatConstants<float>::goldenRatio(), 1.618033989f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatConstants - retrieve golden ratio fail");}
+    if(isCloseEnough(SGEXTN::Math::FloatConstants<float>::naturalLog2(), 0.6931471806f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatConstants - retrieve ln 2 fail");}
+    if(isCloseEnough(SGEXTN::Math::FloatConstants<float>::naturalLog10(), 2.302585093f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatConstants - retrieve ln 10 fail");}
+    if(isCloseEnough(SGEXTN::Math::FloatConstants<float>::pi(), 3.14159265358f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatConstants - retrieve pi fail");}
+    if(isCloseEnough(SGEXTN::Math::FloatConstants<float>::squareRoot2(), 1.414213562f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatConstants - retrieve sqrt 2 fail");}
+    if(isCloseEnough(SGEXTN::Math::FloatConstants<float>::squareRoot3(), 1.732050808f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatConstants - retrieve sqrt 3 fail");}
+}
+
 void SGEXTN::Math::UnitTests::testAll(){
     bool x = SGEXTN::Math::UnitTests::checkDataSizes();
     if(x == true){
         SGEXTN::Math::UnitTests::testIntegerLimits();
         SGEXTN::Math::UnitTests::testIntegerMath();
     }
+    SGEXTN::Math::UnitTests::testFloatConstants();
 }
