@@ -18,5 +18,5 @@ void init(){
 
 int main(int /*argc*/, char** /*argv*/){
     //return SGEXTN(argc, argv, &init);
-    SGEXTN::Math::UnitTests::checkDataSizes();
+    SGEXTN::Math::UnitTests::testAll();
 }
