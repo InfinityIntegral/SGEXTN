@@ -4,10 +4,12 @@
 #include <SGEXTN_Math_IntegerMath.h>
 #include <SGEXTN_Math_FloatConstants.h>
 #include <SGEXTN_Math_FloatLimits.h>
+#include <SGEXTN_Math_FloatMath.h>
 
 namespace {
 bool isCloseEnough(float a, float b){
-    return (a > 0.999f * b && a < 1.001f * b);
+    if(b > 0.0f){return (a > 0.999f * b && a < 1.001f * b);}
+    return (a < 0.999f * b && a > 1.001f * b);
 }
 }
 
@@ -71,6 +73,37 @@ void SGEXTN::Math::UnitTests::testFloatLimits(){
     if(SGEXTN::Math::FloatLimits<float>::isNotANumber(SGEXTN::Math::FloatLimits<float>::notANumber()) == false || SGEXTN::Math::FloatLimits<float>::isNotANumber(0.0f) == true){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatLimits - NaN detection fail");}
 }
 
+void SGEXTN::Math::UnitTests::testFloatMath(){
+    if(isCloseEnough(SGEXTN::Math::FloatMath<float>::absoluteValue(-1.0f), 1.0f) == false || isCloseEnough(SGEXTN::Math::FloatMath<float>::absoluteValue(1.0f), 1.0f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatMath - absolute value fail");}
+    if(isCloseEnough(SGEXTN::Math::FloatMath<float>::modulo(5.0f, 2.0f), 1.0f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatMath - modulo fail");}
+    if(SGEXTN::Math::FloatMath<float>::maximum(0.0f, 1.0f) != 1.0f || SGEXTN::Math::FloatMath<float>::maximum(1.0f, 0.0f) != 1.0f){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatMath - maximum fail");}
+    if(SGEXTN::Math::FloatMath<float>::minimum(0.0f, 1.0f) != 0.0f || SGEXTN::Math::FloatMath<float>::minimum(1.0f, 0.0f) != 0.0f){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatMath - minimum fail");}
+    if(isCloseEnough(SGEXTN::Math::FloatMath<float>::powerOfE(1.0f), SGEXTN::Math::FloatConstants<float>::eulerNumber()) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatMath - power of e fail");}
+    if(isCloseEnough(SGEXTN::Math::FloatMath<float>::powerOf2(4.0f), 16.0f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatMath - power of 2 fail");}
+    if(isCloseEnough(SGEXTN::Math::FloatMath<float>::naturalLog(SGEXTN::Math::FloatConstants<float>::eulerNumber()), 1.0f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatMath - natural log fail");}
+    if(isCloseEnough(SGEXTN::Math::FloatMath<float>::logBase2(0.5f), -1.0f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatMath - log base 2 fail");}
+    if(isCloseEnough(SGEXTN::Math::FloatMath<float>::logBase10(0.01f), -2.0f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatMath - log base 10 fail");}
+    if(isCloseEnough(SGEXTN::Math::FloatMath<float>::powerOf(9.0f, 0.5f), 3.0f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatMath - power fail");}
+    if(isCloseEnough(SGEXTN::Math::FloatMath<float>::squareRoot(9.0f), 3.0f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatMath - sqrt fail");}
+    if(isCloseEnough(SGEXTN::Math::FloatMath<float>::cubeRoot(8.0f), 2.0f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatMath - cbrt fail");}
+    if(isCloseEnough(SGEXTN::Math::FloatMath<float>::sine(SGEXTN::Math::FloatConstants<float>::pi() / 2.0f), 1.0f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatMath - sine fail");}
+    if(isCloseEnough(SGEXTN::Math::FloatMath<float>::cosine(SGEXTN::Math::FloatConstants<float>::pi()), -1.0f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatMath - cosine fail");}
+    if(isCloseEnough(SGEXTN::Math::FloatMath<float>::tangent(SGEXTN::Math::FloatConstants<float>::pi() / 3.0f), SGEXTN::Math::FloatConstants<float>::squareRoot3()) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatMath - tangent fail");}
+    if(isCloseEnough(SGEXTN::Math::FloatMath<float>::arcsine(0.5f), SGEXTN::Math::FloatConstants<float>::pi() / 6.0f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatMath - arcsine fail");}
+    if(isCloseEnough(SGEXTN::Math::FloatMath<float>::arccosine(0.5f), SGEXTN::Math::FloatConstants<float>::pi() / 3.0f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatMath - arccosine fail");}
+    if(isCloseEnough(SGEXTN::Math::FloatMath<float>::arctangent(1.0f), SGEXTN::Math::FloatConstants<float>::pi() / 4.0f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatMath - arctangent fail");}
+    if(isCloseEnough(SGEXTN::Math::FloatMath<float>::arctangentQuadrantAware(5.0f, 5.0f), SGEXTN::Math::FloatConstants<float>::pi() / 4.0f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatMath - quadrant aware arctangent fail");}
+    if(isCloseEnough(SGEXTN::Math::FloatMath<float>::extendedFactorial(4.0f), 24.0f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatMath - extended factorial fail");}
+    if(isCloseEnough(SGEXTN::Math::FloatMath<float>::errorFunction(0.5f), 0.52050f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatMath - normal distribution left side fail");}
+    if(isCloseEnough(SGEXTN::Math::FloatMath<float>::complementaryErrorFunction(0.5f), 0.47950f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatMath - normal distribution right side fail");}
+    if(SGEXTN::Math::FloatMath<float>::ceiling(0.5f) != 1.0f){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatMath - ceiling function fail");}
+    if(SGEXTN::Math::FloatMath<float>::ceilingToInt(0.5f) != 1){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatMath - ceiling to int function fail");}
+    if(SGEXTN::Math::FloatMath<float>::floor(0.5f) != 0.0f){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatMath - floor function fail");}
+    if(SGEXTN::Math::FloatMath<float>::floorToInt(0.5f) != 0){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatMath - floor to int function fail");}
+    if(SGEXTN::Math::FloatMath<float>::round(0.4f) != 0.0f){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatMath - round function fail");}
+    if(SGEXTN::Math::FloatMath<float>::roundToInt(0.4f) != 0){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatMath - round to int function fail");}
+}
+
 void SGEXTN::Math::UnitTests::testAll(){
     const bool x = SGEXTN::Math::UnitTests::checkDataSizes();
     if(x == true){
@@ -79,4 +112,5 @@ void SGEXTN::Math::UnitTests::testAll(){
     }
     SGEXTN::Math::UnitTests::testFloatConstants();
     SGEXTN::Math::UnitTests::testFloatLimits();
+    SGEXTN::Math::UnitTests::testFloatMath();
 }
