@@ -157,9 +157,6 @@ macro(BuildLah_add_component arg_target_name arg_target_type arg_files_path)
     endif()
     message(STATUS "BUILDLAH_DLL_${PROJECT_NAME}_${arg_target_name} preprocessor macro has been defined for shared library symbols visibility")
 
-    target_compile_definitions(${arg_target_name} PUBLIC BUILDLAH_USING_${PROJECT_NAME}_${arg_target_name})
-    message(STATUS "BUILDLAH_USING_${PROJECT_NAME}_${arg_target_name} preprocessor macro has been defined whenever the CMake target is used")
-
     if(NOT IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/${arg_files_path}")
         message(FATAL_ERROR "there is no folder at ${arg_files_path} which resolves to ${CMAKE_CURRENT_SOURCE_DIR}/${arg_files_path} so it cannot be used to create ${arg_target_name}, pls ensure that the folder you specify exists and that its path consists of only alphanumeric characters and underscores")
     endif()
