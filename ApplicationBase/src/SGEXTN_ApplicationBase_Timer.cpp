@@ -4,8 +4,6 @@
 #include <private_api/SGEXTN_ApplicationBase_QObjTimerInterface.h>
 #include <private_api/SGEXTN_Containers_Crash.h>
 
-void nothing(){} // TO DO: write tests for timer
-
 SGEXTN::ApplicationBase::Timer::Timer(float t, void (*attachedFunction)()){
     if(t < 0.0f){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Timer constructor crashed as time interval is negative");}
     if(attachedFunction == nullptr){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Timer constructor crashed as function attached is nullptr");}
