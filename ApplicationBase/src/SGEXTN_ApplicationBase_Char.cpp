@@ -4,7 +4,7 @@
 #include <private_api/SGEXTN_Containers_Crash.h>
 
 SGEXTN::ApplicationBase::Char::Char(char c){
-    (*this).private_data = static_cast<unsigned short>(c);
+    (*this).private_data = static_cast<unsigned short>(static_cast<unsigned char>(c));
 }
 
 SGEXTN::ApplicationBase::Char::Char(unsigned short data){

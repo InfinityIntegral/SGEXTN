@@ -1,7 +1,7 @@
 #pragma once
 #include <SGEXTN_Containers_Span.h>
 
-int SGEXTN::Containers::HashAlgorithm::wyHash32(const SGEXTN::Containers::Span<const unsigned char> &span){
+inline int SGEXTN::Containers::HashAlgorithm::wyHash32(const SGEXTN::Containers::Span<const unsigned char> &span){
     const unsigned int num0 = 0xA0761D65;
     const unsigned int num1 = 0xE7037ED1;
     const unsigned int num2 = 0x8EBC6AF1;
