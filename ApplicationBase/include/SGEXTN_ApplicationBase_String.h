@@ -29,10 +29,10 @@ public:
     [[nodiscard]] int hash() const;
     String& operator+=(const String& x);
     [[nodiscard]] SGEXTN::ApplicationBase::Char getCharAt(int i) const;
-    void setCharAt(int i, SGEXTN::ApplicationBase::Char c) const;
+    void setCharAt(int i, SGEXTN::ApplicationBase::Char c);
     [[nodiscard]] int length() const;
-    [[nodiscard]] String replace(const String& oldText, const String& newText);
-    [[nodiscard]] String insert(int pos, const String& s);
+    [[nodiscard]] String replace(const String& oldText, const String& newText) const;
+    [[nodiscard]] String insert(int pos, const String& s) const;
     [[nodiscard]] bool contains(const String& s) const;
     [[nodiscard]] int findFirstFromLeft(const String& s) const;
     [[nodiscard]] int findFirstFromRight(const String& s) const;

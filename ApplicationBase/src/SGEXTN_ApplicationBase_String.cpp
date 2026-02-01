@@ -108,7 +108,7 @@ SGEXTN::ApplicationBase::Char SGEXTN::ApplicationBase::String::getCharAt(int i) 
     return SGEXTN::ApplicationBase::Char((*private_data).at(i).unicode());
 }
 
-void SGEXTN::ApplicationBase::String::setCharAt(int i, SGEXTN::ApplicationBase::Char c) const {
+void SGEXTN::ApplicationBase::String::setCharAt(int i, SGEXTN::ApplicationBase::Char c){ // NOLINT(readability-make-member-function-const)
     if(i < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::setCharAt crashed as the index is negative");}
     if(i >= length()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::setCharAt crashed as the index points beyond the end of the string");}
     (*private_data)[i] = QChar(c.private_data);
@@ -118,13 +118,13 @@ int SGEXTN::ApplicationBase::String::length() const {
     return static_cast<int>((*private_data).length());
 }
 
-SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::replace(const SGEXTN::ApplicationBase::String& oldText, const SGEXTN::ApplicationBase::String& newText){
+SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::replace(const SGEXTN::ApplicationBase::String& oldText, const SGEXTN::ApplicationBase::String& newText) const {
     SGEXTN::ApplicationBase::String output(*this);
     (*output.private_data).replace((*oldText.private_data), (*newText.private_data));
     return output;
 }
 
-SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::insert(int pos, const SGEXTN::ApplicationBase::String& s){
+SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::insert(int pos, const SGEXTN::ApplicationBase::String& s) const {
     if(pos < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::insert crashed as the target position is negative");}
     if(pos > length()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::insert crashed as the target position points beyond the end of the string");}
     SGEXTN::ApplicationBase::String output(*this);
