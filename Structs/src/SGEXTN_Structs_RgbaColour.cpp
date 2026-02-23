@@ -337,3 +337,18 @@ SGEXTN::Structs::RgbaColour SGEXTN::Structs::RgbaColour::complement(bool gammaCo
     }
     return SGEXTN::Structs::RgbaColour(r, g, b, getTransparencyFloat());
 }
+
+float SGEXTN::Structs::RgbaColour::wcag2ContrastRatio(RgbaColour bg, RgbaColour fg){
+    float rfg = 0.0f;
+    float gfg = 0.0f;
+    float bfg = 0.0f;
+    float rbg = 0.0f;
+    float gbg = 0.0f;
+    float bbg = 0.0f;
+    fg.gammaCorrectBegin(rfg, gfg, bfg);
+    bg.gammaCorrectBegin(rbg, gbg, bbg);
+    float fgLuminance = 0.2126f * rfg + 0.7152f * gfg + 0.0722f * bfg;
+    float bgLuminance = 0.2126f * rbg + 0.7152f * gbg + 0.0722f * bbg;
+    float ans = (fgLuminance + 0.05f) / (bgLuminance + 0.05f);
+    return SGEXTN::Math::FloatMath<float>::maximum(ans, 1.0f / ans);
+}
