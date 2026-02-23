@@ -3,6 +3,7 @@
 #include <private_api/SGEXTN_Containers_UnitTests.h>
 #include <private_api/SGEXTN_Math_UnitTests.h>
 #include <private_api/SGEXTN_ApplicationBase_UnitTests.h>
+#include <private_api/SGEXTN_Structs_UnitTests.h>
 #include <SGEXTN_ApplicationBase_Debug.h>
 
 namespace {
@@ -24,5 +25,6 @@ int main(int /*argc*/, char** /*argv*/){
     SGEXTN::Containers::UnitTests::testAll();
     SGEXTN::Math::UnitTests::testAll();
     SGEXTN::ApplicationBase::UnitTests::testAll();
+    SGEXTN::Structs::UnitTests::testAll();
     SG("all tests pass");
 }

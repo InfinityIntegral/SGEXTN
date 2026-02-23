@@ -280,12 +280,12 @@ SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::stringFromUnsig
 }
 
 SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::stringFromFloat(float x, SGEXTN::ApplicationBase::FloatDisplayFormat format, int precision){
-    if(precision < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::stringFromFloat crashed as the precision is nonpositive");}
-    if(format == SGEXTN::ApplicationBase::FloatDisplayFormat::DecimalPlace){
+    if(format == SGEXTN::ApplicationBase::FloatDisplayFormat::DecimalPlace && precision < 0){
         const float powerOf10 = SGEXTN::Math::FloatMath<float>::powerOf(10.0f, -1.0f * static_cast<float>(precision));
         precision = 0;
         x = powerOf10 * SGEXTN::Math::FloatMath<float>::round(x / powerOf10);
     }
+    else if(precision < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::stringFromFloat crashed as the number of significant figures is nonpositive");}
     if(format == SGEXTN::ApplicationBase::FloatDisplayFormat::ScientificNotation){precision--;}
     SGEXTN::ApplicationBase::String output = "";
     (*output.private_data) = QString::number(x, floatDisplayFormatToQStringFormatSpecifier(format), precision);
@@ -293,12 +293,12 @@ SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::stringFromFloat
 }
 
 SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::stringFromDouble(double x, SGEXTN::ApplicationBase::FloatDisplayFormat format, int precision){
-    if(precision < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::stringFromDouble crashed as the precision is nonpositive");}
-    if(format == SGEXTN::ApplicationBase::FloatDisplayFormat::DecimalPlace){
+    if(format == SGEXTN::ApplicationBase::FloatDisplayFormat::DecimalPlace && precision < 0){
         const double powerOf10 = SGEXTN::Math::FloatMath<double>::powerOf(10.0, -1.0 * static_cast<double>(precision));
         precision = 0;
         x = powerOf10 * SGEXTN::Math::FloatMath<double>::round(x / powerOf10);
     }
+    else if(precision < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::stringFromDouble crashed as the number of significant figures is nonpositive");}
     SGEXTN::ApplicationBase::String output = "";
     (*output.private_data) = QString::number(x, floatDisplayFormatToQStringFormatSpecifier(format), precision);
     return output;
