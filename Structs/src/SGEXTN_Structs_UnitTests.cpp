@@ -6,6 +6,10 @@ namespace {
 bool isCloseEnough(float a, float b){
     return ((a > b - 0.001f) && (a < b + 0.001f));
 }
+
+bool isCloseEnoughWCAG3(float a, float b){
+    return ((a > b - 0.1f) && (a < b + 0.1f));
+}
 }
 
 void SGEXTN::Structs::UnitTests::testAll(){
@@ -94,4 +98,11 @@ void SGEXTN::Structs::UnitTests::testRgbaColour(){
     if(isCloseEnough(SGEXTN::Structs::RgbaColour::wcag2ContrastRatio(SGEXTN::Structs::RgbaColour(123, 131, 222), SGEXTN::Structs::RgbaColour(34, 45, 67)), 4.0301f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::RgbaColour - WCAG2 test 5 fail");}
     if(isCloseEnough(SGEXTN::Structs::RgbaColour::wcag2ContrastRatio(SGEXTN::Structs::RgbaColour(23, 162, 184), SGEXTN::Structs::RgbaColour(255, 255, 255)), 3.0449f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::RgbaColour - WCAG2 test 6 fail");}
     if(isCloseEnough(SGEXTN::Structs::RgbaColour::wcag2ContrastRatio(SGEXTN::Structs::RgbaColour(255, 255, 255), SGEXTN::Structs::RgbaColour(183, 21, 64)), 6.5733f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::RgbaColour - WCAG2 test 7 fail");}
+    if(isCloseEnoughWCAG3(SGEXTN::Structs::RgbaColour::wcag3ContrastRatio(SGEXTN::Structs::RgbaColour(255, 255, 255), SGEXTN::Structs::RgbaColour(0, 0, 0)), 106.0f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::RgbaColour - WCAG3 test 1 fail");}
+    if(isCloseEnoughWCAG3(SGEXTN::Structs::RgbaColour::wcag3ContrastRatio(SGEXTN::Structs::RgbaColour(0, 0, 0), SGEXTN::Structs::RgbaColour(0, 0, 0)), 0.0f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::RgbaColour - WCAG3 test 2 fail");}
+    if(isCloseEnoughWCAG3(SGEXTN::Structs::RgbaColour::wcag3ContrastRatio(SGEXTN::Structs::RgbaColour(255, 255, 255), SGEXTN::Structs::RgbaColour(118, 118, 118)), 71.6f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::RgbaColour - WCAG3 test 3 fail");}
+    if(isCloseEnoughWCAG3(SGEXTN::Structs::RgbaColour::wcag3ContrastRatio(SGEXTN::Structs::RgbaColour(255, 100, 0), SGEXTN::Structs::RgbaColour(20, 20, 20)), 47.9f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::RgbaColour - WCAG3 test 4 fail");}
+    if(isCloseEnoughWCAG3(SGEXTN::Structs::RgbaColour::wcag3ContrastRatio(SGEXTN::Structs::RgbaColour(123, 131, 222), SGEXTN::Structs::RgbaColour(34, 45, 67)), 36.8f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::RgbaColour - WCAG3 test 5 fail");}
+    if(isCloseEnoughWCAG3(SGEXTN::Structs::RgbaColour::wcag3ContrastRatio(SGEXTN::Structs::RgbaColour(23, 162, 184), SGEXTN::Structs::RgbaColour(255, 255, 255)), -62.1f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::RgbaColour - WCAG3 test 6 fail");}
+    if(isCloseEnoughWCAG3(SGEXTN::Structs::RgbaColour::wcag3ContrastRatio(SGEXTN::Structs::RgbaColour(255, 255, 255), SGEXTN::Structs::RgbaColour(183, 21, 64)), 80.6f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::RgbaColour - WCAG3 test 7 fail");}
 }
