@@ -50,8 +50,6 @@ public:
     [[nodiscard]] RgbaColour applyTintSeparateTransparency(RgbaColour x, float transparency, bool gammaCorrect) const;
     [[nodiscard]] RgbaColour interpolate(RgbaColour other, float thisStrength, bool gammaCorrect) const;
     [[nodiscard]] RgbaColour complement(bool gammaCorrect) const;
-    static float wcag2ContrastRatio(RgbaColour bg, RgbaColour fg);
-    static float wcag3ContrastRatio(RgbaColour bg, RgbaColour fg);
 };
 }
 }
