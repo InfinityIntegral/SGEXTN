@@ -37,5 +37,6 @@ public:
 }
 
 template <typename T> SGEXTN::ApplicationBase::Debug& SGEXTN::ApplicationBase::Debug::operator()(const T& x){
-    return x.debugLog();
+    debugInfo += SGEXTN::ApplicationBase::String(" - ") + x.debugLog();
+    return (*this);
 }

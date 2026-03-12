@@ -12,6 +12,7 @@ public:
     float private_transparency;
     HslaColour() = default;
     HslaColour(SGEXTN::Structs::RgbaColour x);
+    HslaColour(float h, float s, float l);
     HslaColour(float h, float s, float l, float a);
     [[nodiscard]] bool operator==(HslaColour x) const;
     [[nodiscard]] bool operator!=(HslaColour x) const;
@@ -19,6 +20,10 @@ public:
     [[nodiscard]] bool operator>(HslaColour x) const;
     [[nodiscard]] int hash() const;
     [[nodiscard]] SGEXTN::ApplicationBase::String debugLog() const;
+    float getHue() const;
+    float getSaturation() const;
+    float getLightness() const;
+    float getTransparency() const;
     void setHue(float h);
     void setSaturation(float s);
     void setLightness(float l);

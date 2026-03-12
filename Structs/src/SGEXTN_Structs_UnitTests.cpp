@@ -1,6 +1,7 @@
 #include <private_api/SGEXTN_Structs_UnitTests.h>
 #include <private_api/SGEXTN_Containers_Crash.h>
 #include <SGEXTN_Structs_RgbaColour.h>
+#include <SGEXTN_Structs_HslaColour.h>
 #include <SGEXTN_Structs_ContrastUtilities.h>
 
 namespace {
@@ -15,6 +16,8 @@ bool isCloseEnoughWCAG3(float a, float b){
 
 void SGEXTN::Structs::UnitTests::testAll(){
     SGEXTN::Structs::UnitTests::testRgbaColour();
+    SGEXTN::Structs::UnitTests::testHslaColour();
+    SGEXTN::Structs::UnitTests::testContrastUtilities();
 }
 
 void SGEXTN::Structs::UnitTests::testRgbaColour(){
@@ -92,6 +95,47 @@ void SGEXTN::Structs::UnitTests::testRgbaColour(){
     if(col.interpolate(SGEXTN::Structs::RgbaColour(255, 0, 200), 1.2f, true) != SGEXTN::Structs::RgbaColour(0, 163, 200)){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::RgbaColour - interpolate very high strength fail");}
     if(SGEXTN::Structs::RgbaColour(255, 0, 200).complement(false) != SGEXTN::Structs::RgbaColour(0, 255, 55)){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::RgbaColour - complement no gamma correct fail");}
     if(SGEXTN::Structs::RgbaColour(255, 0, 200).complement(true) != SGEXTN::Structs::RgbaColour(0, 255, 174)){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::RgbaColour - complement fail");}
+}
+
+void SGEXTN::Structs::UnitTests::testHslaColour(){
+    SGEXTN::Structs::HslaColour col = SGEXTN::Structs::HslaColour(313.0f, 100.0f, 50.0f);
+    if(col.getHue() != 313.0f || col.getSaturation() != 100.0f || col.getLightness() != 50.0f || col.getTransparency() != 100.0f){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::HslaColour - getters or constructor from HSLA values fail");}
+    col = SGEXTN::Structs::HslaColour(SGEXTN::Structs::RgbaColour(255, 0, 200));
+    if(isCloseEnoughWCAG3(col.getHue(), 313.0f) == false || isCloseEnoughWCAG3(col.getSaturation(), 100.0f) == false || isCloseEnoughWCAG3(col.getLightness(), 50.0f) == false || isCloseEnough(col.getTransparency(), 100.0f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::HslaColour - RGBA constructor fail");}
+    if(SGEXTN::Structs::HslaColour(SGEXTN::Structs::RgbaColour(255, 0, 200, 0)) == SGEXTN::Structs::HslaColour(SGEXTN::Structs::RgbaColour(255, 0, 200))){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::HslaColour - equality check fail");}
+    if(SGEXTN::Structs::HslaColour(313.0f, 0.0f, 100.0f, 100.0f) != SGEXTN::Structs::HslaColour(313.0f, 0.0f, 100.0f)){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::HslaColour - inequality check fail");}
+    if(SGEXTN::Structs::HslaColour(313.0f, 0.0f, 100.0f).debugLog() != "hsla(313, 0, 100, 100)"){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::HslaColour - debug log fail");}
+    col.setHue(40.0f);
+    col.setSaturation(10.0f);
+    col.setLightness(20.0f);
+    col.setTransparency(30.0f);
+    if(col.getHue() != 40.0f || col.getSaturation() != 10.0f || col.getLightness() != 20.0f || col.getTransparency() != 30.0f){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::HslaColour - setter fail");}
+    if(isCloseEnough(col.invertHue().getHue(), 220.0f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::HslaColour - invert hue fail");}
+    if(isCloseEnough(col.invertSaturation().getSaturation(), 90.0f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::HslaColour - invert saturation fail");}
+    if(isCloseEnough(col.invertLightness().getLightness(), 80.0f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::HslaColour - invert lightness fail");}
+    if(isCloseEnough(col.offsetHue(50.0f).getHue(), 90.0f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::HslaColour - offset hue fail");}
+    if(isCloseEnough(col.offsetHue(330.0f).getHue(), 10.0f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::HslaColour - offset hue overflow fail");}
+    if(isCloseEnough(col.offsetHue(-50.0f).getHue(), 350.0f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::HslaColour - offset hue underflow fail");}
+    if(isCloseEnough(col.linearTransformSaturation(0.5f, 50.0f).getSaturation(), 55.0f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::HslaColour - linear transform saturation fail");}
+    if(isCloseEnough(col.linearTransformSaturation(4.0f, 90.0f).getSaturation(), 100.0f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::HslaColour - linear transform saturation overflow fail");}
+    if(isCloseEnough(col.linearTransformSaturation(-2.0f, 0.0f).getSaturation(), 0.0f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::HslaColour - linear transform saturation underflow fail");}
+    if(isCloseEnough(col.linearTransformLightness(0.5f, 50.0f).getLightness(), 60.0f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::HslaColour - linear transform lightness fail");}
+    if(isCloseEnough(col.linearTransformLightness(4.0f, 90.0f).getLightness(), 100.0f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::HslaColour - linear transform lightness overflow fail");}
+    if(isCloseEnough(col.linearTransformLightness(-2.0f, 0.0f).getLightness(), 0.0f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::HslaColour - linear transform lightness underflow fail");}
+    if(isCloseEnough(col.linearTransformTransparency(0.5f, 50.0f).getTransparency(), 65.0f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::HslaColour - linear transform transparency fail");}
+    if(isCloseEnough(col.linearTransformTransparency(4.0f, 90.0f).getTransparency(), 100.0f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::HslaColour - linear transform transparency overflow fail");}
+    if(isCloseEnough(col.linearTransformTransparency(-2.0f, 0.0f).getTransparency(), 0.0f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::HslaColour - linear transform transparency underflow fail");}
+    if(SGEXTN::Structs::HslaColour(313.0f, 100.0f, 0.0f).toRGBA() != SGEXTN::Structs::RgbaColour(0, 0, 0)){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::HslaColour - hsl to rgb test case 0 fail");}
+    if(SGEXTN::Structs::HslaColour(313.0f, 100.0f, 10.0f).toRGBA() != SGEXTN::Structs::RgbaColour(51, 0, 40)){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::HslaColour - hsl to rgb test case 1 fail");}
+    if(SGEXTN::Structs::HslaColour(313.0f, 100.0f, 20.0f).toRGBA() != SGEXTN::Structs::RgbaColour(102, 0, 80)){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::HslaColour - hsl to rgb test case 2 fail");}
+    if(SGEXTN::Structs::HslaColour(313.0f, 100.0f, 30.0f).toRGBA() != SGEXTN::Structs::RgbaColour(153, 0, 120)){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::HslaColour - hsl to rgb test case 3 fail");}
+    if(SGEXTN::Structs::HslaColour(313.0f, 100.0f, 40.0f).toRGBA() != SGEXTN::Structs::RgbaColour(204, 0, 160)){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::HslaColour - hsl to rgb test case 4 fail");}
+    if(SGEXTN::Structs::HslaColour(313.0f, 100.0f, 50.0f).toRGBA() != SGEXTN::Structs::RgbaColour(255, 0, 200)){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::HslaColour - hsl to rgb test case 5 fail");}
+    if(SGEXTN::Structs::HslaColour(313.0f, 100.0f, 60.0f).toRGBA() != SGEXTN::Structs::RgbaColour(255, 51, 211)){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::HslaColour - hsl to rgb test case 6 fail");}
+    if(SGEXTN::Structs::HslaColour(313.0f, 100.0f, 70.0f).toRGBA() != SGEXTN::Structs::RgbaColour(255, 102, 222)){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::HslaColour - hsl to rgb test case 7 fail");}
+    if(SGEXTN::Structs::HslaColour(313.0f, 100.0f, 80.0f).toRGBA() != SGEXTN::Structs::RgbaColour(255, 153, 233)){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::HslaColour - hsl to rgb test case 8 fail");}
+    if(SGEXTN::Structs::HslaColour(313.0f, 100.0f, 90.0f).toRGBA() != SGEXTN::Structs::RgbaColour(255, 204, 244)){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::HslaColour - hsl to rgb test case 9 fail");}
+    if(SGEXTN::Structs::HslaColour(313.0f, 100.0f, 100.0f).toRGBA() != SGEXTN::Structs::RgbaColour(255, 255, 255)){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::HslaColour - hsl to rgb test case 10 fail");}
 }
 
 void SGEXTN::Structs::UnitTests::testContrastUtilities(){
