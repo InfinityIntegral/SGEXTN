@@ -8,6 +8,8 @@ public:
     static void testRgbaColour();
     static void testHslaColour();
     static void testContrastUtilities();
+    static void testIdentifier();
+    static void testIdentifierRegistry();
 };
 }
 }

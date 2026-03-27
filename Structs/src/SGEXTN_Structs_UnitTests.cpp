@@ -3,6 +3,8 @@
 #include <SGEXTN_Structs_RgbaColour.h>
 #include <SGEXTN_Structs_HslaColour.h>
 #include <SGEXTN_Structs_ContrastUtilities.h>
+#include <SGEXTN_Structs_Identifier.h>
+#include <SGEXTN_Structs_IdentifierRegistry.h>
 
 namespace {
 bool isCloseEnough(float a, float b){
@@ -18,6 +20,8 @@ void SGEXTN::Structs::UnitTests::testAll(){
     SGEXTN::Structs::UnitTests::testRgbaColour();
     SGEXTN::Structs::UnitTests::testHslaColour();
     SGEXTN::Structs::UnitTests::testContrastUtilities();
+    SGEXTN::Structs::UnitTests::testIdentifier();
+    SGEXTN::Structs::UnitTests::testIdentifierRegistry();
 }
 
 void SGEXTN::Structs::UnitTests::testRgbaColour(){
@@ -164,4 +168,39 @@ void SGEXTN::Structs::UnitTests::testContrastUtilities(){
     if(SGEXTN::Structs::ContrastUtilities::getBackgroundLightMode(SGEXTN::Structs::RgbaColour(255, 204, 244), 60.0f, &isPossible) != SGEXTN::Structs::RgbaColour(255, 255, 255) || isPossible == true){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::ContrastUtilities - get background light impossible fail");}
     if(SGEXTN::Structs::ContrastUtilities::getBackgroundDarkMode(SGEXTN::Structs::RgbaColour(255, 204, 244), 60.0f, &isPossible) != SGEXTN::Structs::RgbaColour(185, 0, 145) || isPossible == false){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::ContrastUtilities - get background dark possible fail");}
     if(SGEXTN::Structs::ContrastUtilities::getBackgroundDarkMode(SGEXTN::Structs::RgbaColour(102, 0, 80), 60.0f, &isPossible) != SGEXTN::Structs::RgbaColour(0, 0, 0) || isPossible == true){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::ContrastUtilities - get background dark impossible fail");}
+}
+
+void SGEXTN::Structs::UnitTests::testIdentifier(){
+    if(SGEXTN::Structs::Identifier::nullIdentifier().private_data != 0u){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::Identifier - null identifier generation fail");}
+    SGEXTN::Structs::Identifier a;
+    a.private_data = 1u;
+    SGEXTN::Structs::Identifier b;
+    b.private_data = 0u;
+    if(a == b){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::Identifier - equality check fail");}
+    if(SGEXTN::Structs::Identifier::nullIdentifier() != b){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::Identifier - inequality check fail");}
+    a.private_data = 726726u;
+    if(a.getStringForPrinting() != "000b16c6"){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::Identifier - print string fail");}
+    if(b.debugLog() != "00000000"){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::Identifier - debug log fail");}
+}
+
+void SGEXTN::Structs::UnitTests::testIdentifierRegistry(){
+    SGEXTN::Structs::IdentifierRegistry registry;
+    bool isValid = false;
+    SGEXTN::Structs::Identifier id = registry.parseAndRegisterIdentifier(1u, &isValid);
+    if(isValid == false){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::IdentifierRegistry parse valid fail");}
+    id = registry.parseAndRegisterIdentifier(0u, &isValid);
+    if(isValid == true){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::IdentifierRegistry parse zero fail");}
+    isValid = true;
+    id = registry.parseAndRegisterIdentifier(1u, &isValid);
+    if(isValid == true){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::IdentifierRegistry parse invalid fail");}
+    if(registry.contains(id) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::IdentifierRegistry contains check existing identifier fail");}
+    if(registry.contains(SGEXTN::Structs::Identifier::nullIdentifier()) == true){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::IdentifierRegistry contains check null identifier fail");}
+    id.private_data = 2u;
+    if(registry.contains(id) == true){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::IdentifierRegistry contains check nonexistent identifier fail");}
+    if(registry.unregister(id) == true){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::IdentifierRegistry unregister nonexistent identifier fail");}
+    if(registry.unregister(SGEXTN::Structs::Identifier::nullIdentifier()) == true){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::IdentifierRegistry unregister null identifier fail");}
+    id.private_data = 1u;
+    if(registry.unregister(id) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::IdentifierRegistry unregister existing identifier fail");}
+    if(registry.contains(id) == true){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::IdentifierRegistry contains unregistered identifier fail");}
+    if(registry.generateAndRegisterIdentifier() == SGEXTN::Structs::Identifier::nullIdentifier()){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::IdentifierRegistry identifier generation fail");}
 }
