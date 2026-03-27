@@ -421,7 +421,7 @@ void SGEXTN::Containers::UnitTests::testSort(){
     for(int i=0; i<1000; i++){
         arr.at(i) = 1000 - i;
     }
-    SGEXTN::Containers::Sort<int, SGEXTN::Containers::LessThan<int>>(arr.pointerToData(0), arr.length()).sort();
+    SGEXTN::Containers::Sort<int, SGEXTN::Containers::LessThan<int>>::sort(arr.pointerToData(0), arr.length());
     for(int i=0; i<1000; i++){
         if(arr.at(i) != i + 1){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Sort - sort failed");}
     }

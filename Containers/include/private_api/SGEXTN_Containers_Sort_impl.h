@@ -53,7 +53,7 @@ template <typename T, typename Comparator> void SGEXTN::Containers::Sort<T, Comp
     else{private_mergeTwoBlocks(initialLocation + remainderStart, finalLocation + remainderStart, remainderLength, 0);}
 }
 
-template <typename T, typename Comparator> void SGEXTN::Containers::Sort<T, Comparator>::sort(){
+template <typename T, typename Comparator> void SGEXTN::Containers::Sort<T, Comparator>::doSort(){
     for(int i=0; i<private_length/private_minimumBlockSize; i++){
         private_insertSort(i * private_minimumBlockSize, (i + 1) * private_minimumBlockSize);
     }
@@ -75,4 +75,8 @@ template <typename T, typename Comparator> void SGEXTN::Containers::Sort<T, Comp
             (*(private_firstBuffer + i)) = (*(private_secondBuffer + i));
         }
     }
+}
+
+template <typename T, typename Comparator> void SGEXTN::Containers::Sort<T, Comparator>::sort(T* start, int length){
+    SGEXTN::Containers::Sort<T, Comparator>(start, length).doSort();
 }

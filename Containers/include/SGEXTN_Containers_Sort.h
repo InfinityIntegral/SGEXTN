@@ -19,7 +19,8 @@ public:
     void private_insertSort(int left, int right);
     void private_mergeTwoBlocks(T* initialLocation, T* finalLocation, int firstBlockSize, int secondBlockSize);
     void private_mergeAllBlocks(T* initialLocation, T* finalLocation, int blockSize);
-    void sort();
+    void doSort();
+    static void sort(T* start, int length);
 };
 }
 }

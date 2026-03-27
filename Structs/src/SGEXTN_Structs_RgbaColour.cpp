@@ -172,19 +172,19 @@ SGEXTN::ApplicationBase::String SGEXTN::Structs::RgbaColour::rgbaFloatHtmlString
     return (SGEXTN::ApplicationBase::String("rgba(") + SGEXTN::ApplicationBase::String::stringFromFloat(getRedFloat(), SGEXTN::ApplicationBase::FloatDisplayFormat::DecimalPlace, 3) + ", " + SGEXTN::ApplicationBase::String::stringFromFloat(getGreenFloat(), SGEXTN::ApplicationBase::FloatDisplayFormat::DecimalPlace, 3) + ", " + SGEXTN::ApplicationBase::String::stringFromFloat(getBlueFloat(), SGEXTN::ApplicationBase::FloatDisplayFormat::DecimalPlace, 3) + ", " + SGEXTN::ApplicationBase::String::stringFromFloat(getTransparencyFloat(), SGEXTN::ApplicationBase::FloatDisplayFormat::DecimalPlace, 3) +  ")");
 }
 
-bool SGEXTN::Structs::RgbaColour::operator==(const SGEXTN::Structs::RgbaColour& x) const {
+bool SGEXTN::Structs::RgbaColour::operator==(SGEXTN::Structs::RgbaColour x) const {
     return (private_data == x.private_data);
 }
 
-bool SGEXTN::Structs::RgbaColour::operator!=(const SGEXTN::Structs::RgbaColour& x) const {
+bool SGEXTN::Structs::RgbaColour::operator!=(SGEXTN::Structs::RgbaColour x) const {
     return (private_data != x.private_data);
 }
 
-bool SGEXTN::Structs::RgbaColour::operator<(const SGEXTN::Structs::RgbaColour& x) const {
+bool SGEXTN::Structs::RgbaColour::operator<(SGEXTN::Structs::RgbaColour x) const {
     return (private_data < x.private_data);
 }
 
-bool SGEXTN::Structs::RgbaColour::operator>(const SGEXTN::Structs::RgbaColour& x) const {
+bool SGEXTN::Structs::RgbaColour::operator>(SGEXTN::Structs::RgbaColour x) const {
     return (private_data > x.private_data);
 }
 

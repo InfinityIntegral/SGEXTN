@@ -34,10 +34,10 @@ public:
     [[nodiscard]] SGEXTN::ApplicationBase::String rgbaHexString() const;
     [[nodiscard]] SGEXTN::ApplicationBase::String rgbFloatHtmlString() const;
     [[nodiscard]] SGEXTN::ApplicationBase::String rgbaFloatHtmlString() const;
-    [[nodiscard]] bool operator==(const RgbaColour& x) const;
-    [[nodiscard]] bool operator!=(const RgbaColour& x) const;
-    [[nodiscard]] bool operator<(const RgbaColour& x) const;
-    [[nodiscard]] bool operator>(const RgbaColour& x) const;
+    [[nodiscard]] bool operator==(RgbaColour x) const;
+    [[nodiscard]] bool operator!=(RgbaColour x) const;
+    [[nodiscard]] bool operator<(RgbaColour x) const;
+    [[nodiscard]] bool operator>(RgbaColour x) const;
     [[nodiscard]] int hash() const;
     [[nodiscard]] SGEXTN::ApplicationBase::String debugLog() const;
     void gammaCorrectBegin(float& r, float& g, float& b) const;
