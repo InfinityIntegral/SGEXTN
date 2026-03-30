@@ -5,7 +5,7 @@ namespace ApplicationBase {
 class BUILDLAH_DLL_SGEXTN_ApplicationBase Char {
 public:
     unsigned short private_data;
-    Char() = default;
+    Char();
     Char(char c);
     Char(unsigned short data);
     Char(int unicode);

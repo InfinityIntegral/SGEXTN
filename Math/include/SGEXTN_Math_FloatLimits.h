@@ -4,18 +4,18 @@ namespace SGEXTN {
 namespace Math {
 template <typename T> class BUILDLAH_DLL_SGEXTN_Math FloatLimits {
 public:
-    static T minimumPositive();
-    static T maximumNegative();
-    static T maximumFinite();
-    static T minimumFinite();
-    static T denormalisedMinimumPositive();
-    static T denormalisedMaximumNegative();
-    static T relativeIncrementGap();
-    static T positiveInfinity();
-    static T negativeInfinity();
-    static T notANumber();
-    static bool isInfinite(T x);
-    static bool isNotANumber(T x);
+    [[nodiscard]] static T minimumPositive();
+    [[nodiscard]] static T maximumNegative();
+    [[nodiscard]] static T maximumFinite();
+    [[nodiscard]] static T minimumFinite();
+    [[nodiscard]] static T denormalisedMinimumPositive();
+    [[nodiscard]] static T denormalisedMaximumNegative();
+    [[nodiscard]] static T relativeIncrementGap();
+    [[nodiscard]] static T positiveInfinity();
+    [[nodiscard]] static T negativeInfinity();
+    [[nodiscard]] static T notANumber();
+    [[nodiscard]] static bool isInfinite(T x);
+    [[nodiscard]] static bool isNotANumber(T x);
 };
 }
 }

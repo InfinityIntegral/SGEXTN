@@ -4,6 +4,12 @@
 #include <SGEXTN_Containers_Array.h>
 #include <SGEXTN_Containers_HashAlgorithm.h>
 
+template <typename T1, typename T2, typename T3> SGEXTN::Containers::Tuple3<T1, T2, T3>::Tuple3(){
+    (*this).first = T1();
+    (*this).second = T2();
+    (*this).third = T3();
+}
+
 template <typename T1, typename T2, typename T3> SGEXTN::Containers::Tuple3<T1, T2, T3>::Tuple3(T1 first, T2 second, T3 third){
     (*this).first = first;
     (*this).second = second;

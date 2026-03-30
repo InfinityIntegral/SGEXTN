@@ -2,6 +2,10 @@
 #include <SGEXTN_Containers_Hash.h>
 #include <SGEXTN_ApplicationBase_String.h>
 
+SGEXTN::Structs::Identifier::Identifier(){
+    private_data = 0u;
+}
+
 SGEXTN::Structs::Identifier SGEXTN::Structs::Identifier::nullIdentifier(){
     SGEXTN::Structs::Identifier x;
     x.private_data = 0u;

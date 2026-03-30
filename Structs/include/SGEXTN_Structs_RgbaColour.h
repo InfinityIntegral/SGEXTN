@@ -6,7 +6,7 @@ namespace Structs {
 class BUILDLAH_DLL_SGEXTN_Structs RgbaColour {
 public:
     unsigned int private_data;
-    RgbaColour() = default;
+    RgbaColour();
     RgbaColour(unsigned int data);
     RgbaColour(int r, int g, int b, int a);
     RgbaColour(int r, int g, int b);

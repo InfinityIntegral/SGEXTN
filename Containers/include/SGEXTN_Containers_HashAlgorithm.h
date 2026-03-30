@@ -5,7 +5,7 @@ namespace SGEXTN {
 namespace Containers {
 class HashAlgorithm {
 public:
-    static int wyHash32(const SGEXTN::Containers::Span<const unsigned char>& span);
+    [[nodiscard]] static int wyHash32(const SGEXTN::Containers::Span<const unsigned char>& span);
 };
 }
 }

@@ -35,6 +35,13 @@ float hueIntermediatesToRGB(float p, float q, float t){
 }
 }
 
+SGEXTN::Structs::HslaColour::HslaColour(){
+    private_hue = 313.0f;
+    private_saturation = 100.0f;
+    private_lightness = 50.0f;
+    private_transparency = 255.0f;
+}
+
 SGEXTN::Structs::HslaColour::HslaColour(SGEXTN::Structs::RgbaColour x){
     private_transparency = x.getTransparencyFloat() * 100.0f;
     float r = x.getRedFloat();

@@ -42,6 +42,10 @@ float linearToSrgb(float x){
 }
 }
 
+SGEXTN::Structs::RgbaColour::RgbaColour(){
+    private_data = 0xff00c8ff;
+}
+
 SGEXTN::Structs::RgbaColour::RgbaColour(unsigned int data){
     private_data = data;
 }

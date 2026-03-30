@@ -8,7 +8,7 @@ namespace SGEXTN {
 namespace Structs {
 class BUILDLAH_DLL_SGEXTN_Structs IdentifierRegistry{
 public:
-    IdentifierRegistry() = default;
+    IdentifierRegistry();
     SGEXTN::Containers::UnorderedSet<unsigned int, SGEXTN::Containers::EqualTo<unsigned int>, SGEXTN::Containers::Hash<unsigned int>> private_contents;
     [[nodiscard]] SGEXTN::Structs::Identifier generateAndRegisterIdentifier();
     [[nodiscard]] SGEXTN::Structs::Identifier parseAndRegisterIdentifier(unsigned int data, bool* isValid);

@@ -10,7 +10,7 @@ public:
     float private_saturation;
     float private_lightness;
     float private_transparency;
-    HslaColour() = default;
+    HslaColour();
     HslaColour(SGEXTN::Structs::RgbaColour x);
     HslaColour(float h, float s, float l);
     HslaColour(float h, float s, float l, float a);

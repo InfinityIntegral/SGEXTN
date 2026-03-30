@@ -4,6 +4,11 @@
 #include <SGEXTN_Containers_Array.h>
 #include <SGEXTN_Containers_HashAlgorithm.h>
 
+template <typename T1, typename T2> SGEXTN::Containers::Pair<T1, T2>::Pair(){
+    (*this).first = T1();
+    (*this).second = T2();
+}
+
 template <typename T1, typename T2> SGEXTN::Containers::Pair<T1, T2>::Pair(T1 first, T2 second){
     (*this).first = first;
     (*this).second = second;

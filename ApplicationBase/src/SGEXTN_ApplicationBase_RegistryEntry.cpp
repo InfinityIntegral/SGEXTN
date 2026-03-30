@@ -1,7 +1,14 @@
 #include <SGEXTN_ApplicationBase_RegistryEntry.h>
 #include <SGEXTN_Containers_PriorityQueue.h>
+#include <private_api/SGEXTN_Containers_Crash.h>
+
+SGEXTN::ApplicationBase::RegistryEntry::RegistryEntry(){
+    private_attachedFunction = nullptr;
+    private_priority = 0;
+}
 
 SGEXTN::ApplicationBase::RegistryEntry::RegistryEntry(SGEXTN::Containers::PriorityQueue<SGEXTN::ApplicationBase::RegistryEntry, SGEXTN::ApplicationBase::RegistryEntryComparator>*& functionQueue, int priority, void (*attachedFunction)()){
+    if(attachedFunction == nullptr){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::RegistryEntry constructor crashed because attached function is nullptr");}
     private_priority = priority;
     private_attachedFunction = attachedFunction;
     if(functionQueue == nullptr){

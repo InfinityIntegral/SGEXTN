@@ -7,7 +7,7 @@ public:
     T1 first;
     T2 second;
     T3 third;
-    Tuple3() = default;
+    Tuple3();
     Tuple3(T1 first, T2 second, T3 third);
     [[nodiscard]] bool operator==(const Tuple3& x) const;
     [[nodiscard]] bool operator!=(const Tuple3& x) const;

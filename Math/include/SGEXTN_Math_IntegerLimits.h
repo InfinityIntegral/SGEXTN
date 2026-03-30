@@ -4,8 +4,8 @@ namespace SGEXTN {
 namespace Math {
 template <typename T> class BUILDLAH_DLL_SGEXTN_Math IntegerLimits {
 public:
-    static T maximum();
-    static T minimum();
+    [[nodiscard]] static T maximum();
+    [[nodiscard]] static T minimum();
 };
 }
 }

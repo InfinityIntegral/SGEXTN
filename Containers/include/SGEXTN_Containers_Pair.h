@@ -6,7 +6,7 @@ template <typename T1, typename T2> class Pair {
 public:
     T1 first;
     T2 second;
-    Pair() = default;
+    Pair();
     Pair(T1 first, T2 second);
     [[nodiscard]] bool operator==(const Pair& x) const;
     [[nodiscard]] bool operator!=(const Pair& x) const;

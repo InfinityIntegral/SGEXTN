@@ -4,11 +4,11 @@ namespace SGEXTN {
 namespace Math {
 template <typename T> class BUILDLAH_DLL_SGEXTN_Math IntegerMath {
 public:
-    static T absoluteValue(T x);
-    static T minimum(T a, T b);
-    static T maximum(T a, T b);
-    static T highestCommonFactor(T a, T b);
-    static T lowestCommonMultiple(T a, T b);
+    [[nodiscard]] static T absoluteValue(T x);
+    [[nodiscard]] static T minimum(T a, T b);
+    [[nodiscard]] static T maximum(T a, T b);
+    [[nodiscard]] static T highestCommonFactor(T a, T b);
+    [[nodiscard]] static T lowestCommonMultiple(T a, T b);
 };
 }
 }

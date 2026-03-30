@@ -3,6 +3,10 @@
 #include <SGEXTN_Containers_Hash.h>
 #include <private_api/SGEXTN_Containers_Crash.h>
 
+SGEXTN::ApplicationBase::Char::Char(){
+    (*this).private_data = static_cast<unsigned short>(0);
+}
+
 SGEXTN::ApplicationBase::Char::Char(char c){
     (*this).private_data = static_cast<unsigned short>(static_cast<unsigned char>(c));
 }

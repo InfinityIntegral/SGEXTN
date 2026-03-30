@@ -7,7 +7,7 @@ class RegistryEntryComparator;
 
 class BUILDLAH_DLL_SGEXTN_ApplicationBase RegistryEntry {
 public:
-    RegistryEntry() = default;
+    RegistryEntry();
     RegistryEntry(SGEXTN::Containers::PriorityQueue<RegistryEntry, SGEXTN::ApplicationBase::RegistryEntryComparator>*& functionQueue, int priority, void (*attachedFunction)());
     int private_priority;
     void (*private_attachedFunction)();

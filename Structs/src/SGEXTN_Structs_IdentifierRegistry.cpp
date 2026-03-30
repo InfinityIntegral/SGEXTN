@@ -1,6 +1,10 @@
 #include <SGEXTN_Structs_IdentifierRegistry.h>
 #include <SGEXTN_ApplicationBase_Random.h>
 
+SGEXTN::Structs::IdentifierRegistry::IdentifierRegistry(){
+    private_contents = SGEXTN::Containers::UnorderedSet<unsigned int, SGEXTN::Containers::EqualTo<unsigned int>, SGEXTN::Containers::Hash<unsigned int>>();
+}
+
 SGEXTN::Structs::Identifier SGEXTN::Structs::IdentifierRegistry::generateAndRegisterIdentifier(){
     while(true){
         unsigned int n = SGEXTN::ApplicationBase::Random::unsignedInt32();
