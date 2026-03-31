@@ -5,6 +5,7 @@
 #include <SGEXTN_Containers_Hash.h>
 #include <SGEXTN_Containers_HashAlgorithm.h>
 #include <SGEXTN_ApplicationBase_String.h>
+#include <SGEXTN_Containers_Span.h>
 
 namespace {
 float maximumOf3(float a, float b, float c){
@@ -44,9 +45,9 @@ SGEXTN::Structs::HslaColour::HslaColour(){
 
 SGEXTN::Structs::HslaColour::HslaColour(SGEXTN::Structs::RgbaColour x){
     private_transparency = x.getTransparencyFloat() * 100.0f;
-    float r = x.getRedFloat();
-    float g = x.getGreenFloat();
-    float b = x.getBlueFloat();
+    const float r = x.getRedFloat();
+    const float g = x.getGreenFloat();
+    const float b = x.getBlueFloat();
     const float h = maximumOf3(r, g, b);
     const float l = minimumOf3(r, g, b);
     private_hue = 313.0f;
@@ -210,9 +211,9 @@ SGEXTN::Structs::RgbaColour SGEXTN::Structs::HslaColour::toRGBA() const {
     float r = 0.0f;
     float g = 0.0f;
     float b = 0.0f;
-    float xh = private_hue / 360.0f;
-    float xs = private_saturation / 100.0f;
-    float xl = private_lightness / 100.0f;
+    const float xh = private_hue / 360.0f;
+    const float xs = private_saturation / 100.0f;
+    const float xl = private_lightness / 100.0f;
     if(xs == 0.0f){
         r = xl;
         g = xl;

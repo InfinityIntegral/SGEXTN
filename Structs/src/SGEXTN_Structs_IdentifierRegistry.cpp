@@ -1,5 +1,9 @@
 #include <SGEXTN_Structs_IdentifierRegistry.h>
 #include <SGEXTN_ApplicationBase_Random.h>
+#include <SGEXTN_Containers_UnorderedSet.h>
+#include <SGEXTN_Containers_EqualTo.h>
+#include <SGEXTN_Containers_Hash.h>
+#include <SGEXTN_Structs_Identifier.h>
 
 SGEXTN::Structs::IdentifierRegistry::IdentifierRegistry(){
     private_contents = SGEXTN::Containers::UnorderedSet<unsigned int, SGEXTN::Containers::EqualTo<unsigned int>, SGEXTN::Containers::Hash<unsigned int>>();
@@ -7,7 +11,7 @@ SGEXTN::Structs::IdentifierRegistry::IdentifierRegistry(){
 
 SGEXTN::Structs::Identifier SGEXTN::Structs::IdentifierRegistry::generateAndRegisterIdentifier(){
     while(true){
-        unsigned int n = SGEXTN::ApplicationBase::Random::unsignedInt32();
+        const unsigned int n = SGEXTN::ApplicationBase::Random::unsignedInt32();
         if(n != 0u && private_contents.contains(n) == false){
             SGEXTN::Structs::Identifier id;
             id.private_data = n;

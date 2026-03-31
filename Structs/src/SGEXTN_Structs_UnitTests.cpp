@@ -62,7 +62,7 @@ void SGEXTN::Structs::UnitTests::testRgbaColour(){
     float g = 0.0f;
     float b = 0.0f;
     col.gammaCorrectBegin(r, g, b);
-    if(isCloseEnough(r, 1.0f) == false || isCloseEnough(g, 0.0f) == false || isCloseEnough(b, 0.57758f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::RgbaColour - gamma correct begin fail");}
+    if(isCloseEnough(r, 1.0f) == false || isCloseEnough(g, 0.0f) == false || isCloseEnough(b, 0.57758f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::RgbaColour - gamma correct begin fail");} // NOLINT(modernize-use-std-numbers)
     col.gammaCorrectEnd(0.001f, 0.4f, 0.6f);
     if(col.getRed() != 3 || col.getGreen() != 170 || col.getBlue() != 203){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::RgbaColour - gamma correct end fail");}
     col = SGEXTN::Structs::RgbaColour(100, 150, 200);

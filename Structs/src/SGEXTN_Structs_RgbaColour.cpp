@@ -266,8 +266,8 @@ SGEXTN::Structs::RgbaColour SGEXTN::Structs::RgbaColour::applyTintSeparateTransp
     float r2 = x.getRedFloat();
     float g2 = x.getGreenFloat();
     float b2 = x.getBlueFloat();
-    float a1 = getTransparencyFloat();
-    float a2 = transparency;
+    const float a1 = getTransparencyFloat();
+    const float a2 = transparency;
     if(gammaCorrect == true){
         r1 = srgbToLinear(r1);
         g1 = srgbToLinear(g1);
@@ -276,7 +276,7 @@ SGEXTN::Structs::RgbaColour SGEXTN::Structs::RgbaColour::applyTintSeparateTransp
         g2 = srgbToLinear(g2);
         b2 = srgbToLinear(b2);
     }
-    float a = a2 + a1 * (1.0f - a2);
+    const float a = a2 + a1 * (1.0f - a2);
     if(a == 0.0f){return SGEXTN::Structs::RgbaColour(0, 0, 0, 0);}
     float r = (r2 * a2 + r1 * a1 * (1.0f - a2)) / a;
     float g = (g2 * a2 + g1 * a1 * (1.0f - a2)) / a;
@@ -318,7 +318,7 @@ SGEXTN::Structs::RgbaColour SGEXTN::Structs::RgbaColour::interpolate(RgbaColour 
         g = linearToSrgb(g);
         b = linearToSrgb(b);
     }
-    float a = other.getTransparencyFloat() * (1.0f - thisStrength) + getTransparencyFloat() * thisStrength;
+    const float a = other.getTransparencyFloat() * (1.0f - thisStrength) + getTransparencyFloat() * thisStrength;
     return SGEXTN::Structs::RgbaColour(r, g, b, a);
 }
 

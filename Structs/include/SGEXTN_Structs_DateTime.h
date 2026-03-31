@@ -7,6 +7,8 @@ enum class BUILDLAH_DLL_SGEXTN_Structs TimeUnit {Year, Month, Day, Hour, Minute,
 
 enum class BUILDLAH_DLL_SGEXTN_Structs TimeFormat {Display, FileName, FileNameSpaceSeparated, FileNameUnderscoreSeparated, FileNameHyphenSeparated};
 
+enum class BUILDLAH_DLL_SGEXTN_Structs SignificantDates {NationalDay, DayBeforeNationalDay, DayAfterNationalDay, TotalDefenceDay, RacialHarmonyDay};
+
 class BUILDLAH_DLL_SGEXTN_Structs DateTime {
 public:
     long long private_data;
@@ -31,11 +33,7 @@ public:
     [[nodiscard]] int getPart(SGEXTN::Structs::TimeUnit unit) const;
     [[nodiscard]] static int convertToGlobalYear(int standardYear);
     [[nodiscard]] bool isNationalDayPeriod() const;
-    [[nodiscard]] bool isNationalDay() const;
-    [[nodiscard]] bool isDayBeforeNationalDay() const;
-    [[nodiscard]] bool isDayAfterNationalDay() const;
-    [[nodiscard]] bool isTotalDefenceDay() const;
-    [[nodiscard]] bool isRacialHarmonyDay() const;
+    [[nodiscard]] bool isSignificantDate(SGEXTN::Structs::SignificantDates date) const;
     [[nodiscard]] SGEXTN::ApplicationBase::String getDisplayString(SGEXTN::Structs::TimeFormat format, bool global, bool correctToSecond) const;
     [[nodiscard]] SGEXTN::ApplicationBase::String getDisplayString(const SGEXTN::ApplicationBase::String& customFormat) const;
 };
