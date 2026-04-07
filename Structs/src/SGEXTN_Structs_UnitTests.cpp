@@ -5,6 +5,13 @@
 #include <SGEXTN_Structs_ContrastUtilities.h>
 #include <SGEXTN_Structs_Identifier.h>
 #include <SGEXTN_Structs_IdentifierRegistry.h>
+#include <QDateTime>
+#include <QDate>
+#include <QTime>
+#include <QTimeZone>
+#include <SGEXTN_Structs_DateTime.h>
+#include <SGEXTN_ApplicationBase_Random.h>
+#include <SGEXTN_ApplicationBase_Debug.h>
 
 namespace {
 bool isCloseEnough(float a, float b){
@@ -22,6 +29,40 @@ void SGEXTN::Structs::UnitTests::testAll(){
     SGEXTN::Structs::UnitTests::testContrastUtilities();
     SGEXTN::Structs::UnitTests::testIdentifier();
     SGEXTN::Structs::UnitTests::testIdentifierRegistry();
+
+    for(int year=-1000; year<1000; year++){
+        for(int month=1; month<=12; month++){
+            for(int day=1; day<=31; day++){
+                bool isLeapYear = false;
+                if((year - 35) % 4 == 0 && (year - 35) % 100 != 0){isLeapYear = true;}
+                if((year - 35) % 400 == 0){isLeapYear = true;}
+                if(day > 28 && month == 2 && isLeapYear == false){continue;}
+                if(day > 29 && month == 2 && isLeapYear == true){continue;}
+                if(day == 31 && (month == 4 || month == 6 || month == 9 || month == 11)){continue;}
+                int hour = (year % 24 + 24) % 24;
+                int minute = ((year + month + day) % 60 + 60) % 60;
+                int second = ((year + month + day) % 60 + 60) % 60;
+                long long expected = QDateTime(QDate(1965, 8, 9), QTime(10, 30, 0), QTimeZone::UTC).secsTo(QDateTime(QDate(year + 1965, month, day), QTime(hour, minute, second), QTimeZone::UTC));
+                SGEXTN::Structs::DateTime thisDateTime(year, month, day, hour, minute, second);
+                long long actual = thisDateTime.private_data;
+                if(expected != actual){SG(year)(month)(day)(expected - actual);}
+                if(thisDateTime.getPart(SGEXTN::Structs::TimeUnit::Year) != year){SG("year")(year)(thisDateTime.getPart(SGEXTN::Structs::TimeUnit::Year));}
+                if(thisDateTime.getPart(SGEXTN::Structs::TimeUnit::Month) != month){SG("month")(month)(thisDateTime.getPart(SGEXTN::Structs::TimeUnit::Month));}
+                if(thisDateTime.getPart(SGEXTN::Structs::TimeUnit::Day) != day){SG("day")(day)(thisDateTime.getPart(SGEXTN::Structs::TimeUnit::Day));}
+                if(thisDateTime.getPart(SGEXTN::Structs::TimeUnit::Hour) != hour){SG("hour")(hour)(thisDateTime.getPart(SGEXTN::Structs::TimeUnit::Hour));}
+                if(thisDateTime.getPart(SGEXTN::Structs::TimeUnit::Minute) != minute){SG("minute")(minute)(thisDateTime.getPart(SGEXTN::Structs::TimeUnit::Minute));}
+                if(thisDateTime.getPart(SGEXTN::Structs::TimeUnit::Second) != second){SG("second")(second)(thisDateTime.getPart(SGEXTN::Structs::TimeUnit::Second));}
+            }
+        }
+    }
+    SG(SGEXTN::Structs::DateTime::now().getDisplayString(SGEXTN::Structs::TimeFormat::Display, false, true));
+    SG(SGEXTN::Structs::DateTime::now().getDisplayString(SGEXTN::Structs::TimeFormat::Display, false, false));
+    SG(SGEXTN::Structs::DateTime::now().getDisplayString(SGEXTN::Structs::TimeFormat::Display, true, true));
+    SG(SGEXTN::Structs::DateTime::now().getDisplayString(SGEXTN::Structs::TimeFormat::Display, true, false));
+    SG(SGEXTN::Structs::DateTime::now().getDisplayString(SGEXTN::Structs::TimeFormat::FileName, false, true));
+    SG(SGEXTN::Structs::DateTime::now().getDisplayString(SGEXTN::Structs::TimeFormat::FileName, false, false));
+    SG(SGEXTN::Structs::DateTime::now().getDisplayString(SGEXTN::Structs::TimeFormat::FileName, true, true));
+    SG(SGEXTN::Structs::DateTime::now().getDisplayString(SGEXTN::Structs::TimeFormat::FileName, true, false));
 }
 
 void SGEXTN::Structs::UnitTests::testRgbaColour(){

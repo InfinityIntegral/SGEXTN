@@ -5,7 +5,7 @@ namespace SGEXTN {
 namespace Structs {
 enum class BUILDLAH_DLL_SGEXTN_Structs TimeUnit {Year, Month, Day, Hour, Minute, Second};
 
-enum class BUILDLAH_DLL_SGEXTN_Structs TimeFormat {Display, FileName, FileNameSpaceSeparated, FileNameUnderscoreSeparated, FileNameHyphenSeparated};
+enum class BUILDLAH_DLL_SGEXTN_Structs TimeFormat {Display, FileName};
 
 enum class BUILDLAH_DLL_SGEXTN_Structs SignificantDates {NationalDay, DayBeforeNationalDay, DayAfterNationalDay, TotalDefenceDay, RacialHarmonyDay};
 
@@ -24,13 +24,16 @@ public:
     [[nodiscard]] int hash() const;
     [[nodiscard]] SGEXTN::ApplicationBase::String debugLog() const;
     [[nodiscard]] double getTimeAfter(DateTime x, SGEXTN::Structs::TimeUnit unit) const;
-    [[nodiscard]] int getTimeAfterFlooredPart(DateTime x, SGEXTN::Structs::TimeUnit unit) const;
-    void advanceTime(long long x, SGEXTN::Structs::TimeUnit unit);
     [[nodiscard]] static DateTime beginningOfTime();
     [[nodiscard]] static DateTime now();
+    [[nodiscard]] int getPart(SGEXTN::Structs::TimeUnit unit) const;
+    void setPart(SGEXTN::Structs::TimeUnit unit, int x);
     [[nodiscard]] int getDayOfWeek() const;
     [[nodiscard]] int getDayOfYear() const;
-    [[nodiscard]] int getPart(SGEXTN::Structs::TimeUnit unit) const;
+    [[nodiscard]] int countDaysInMonth() const;
+    [[nodiscard]] int countDaysInYear() const;
+    [[nodiscard]] int getTimeAfterDisplayPart(DateTime x, SGEXTN::Structs::TimeUnit unit) const;
+    void advanceTime(long long x, SGEXTN::Structs::TimeUnit unit);
     [[nodiscard]] static int convertToGlobalYear(int standardYear);
     [[nodiscard]] bool isNationalDayPeriod() const;
     [[nodiscard]] bool isSignificantDate(SGEXTN::Structs::SignificantDates date) const;
