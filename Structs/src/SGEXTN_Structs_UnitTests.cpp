@@ -10,8 +10,6 @@
 #include <QTime>
 #include <QTimeZone>
 #include <SGEXTN_Structs_DateTime.h>
-#include <SGEXTN_ApplicationBase_Random.h>
-#include <SGEXTN_ApplicationBase_Debug.h>
 
 namespace {
 bool isCloseEnough(float a, float b){
@@ -29,40 +27,7 @@ void SGEXTN::Structs::UnitTests::testAll(){
     SGEXTN::Structs::UnitTests::testContrastUtilities();
     SGEXTN::Structs::UnitTests::testIdentifier();
     SGEXTN::Structs::UnitTests::testIdentifierRegistry();
-
-    for(int year=-1000; year<1000; year++){
-        for(int month=1; month<=12; month++){
-            for(int day=1; day<=31; day++){
-                bool isLeapYear = false;
-                if((year - 35) % 4 == 0 && (year - 35) % 100 != 0){isLeapYear = true;}
-                if((year - 35) % 400 == 0){isLeapYear = true;}
-                if(day > 28 && month == 2 && isLeapYear == false){continue;}
-                if(day > 29 && month == 2 && isLeapYear == true){continue;}
-                if(day == 31 && (month == 4 || month == 6 || month == 9 || month == 11)){continue;}
-                int hour = (year % 24 + 24) % 24;
-                int minute = ((year + month + day) % 60 + 60) % 60;
-                int second = ((year + month + day) % 60 + 60) % 60;
-                long long expected = QDateTime(QDate(1965, 8, 9), QTime(10, 30, 0), QTimeZone::UTC).secsTo(QDateTime(QDate(year + 1965, month, day), QTime(hour, minute, second), QTimeZone::UTC));
-                SGEXTN::Structs::DateTime thisDateTime(year, month, day, hour, minute, second);
-                long long actual = thisDateTime.private_data;
-                if(expected != actual){SG(year)(month)(day)(expected - actual);}
-                if(thisDateTime.getPart(SGEXTN::Structs::TimeUnit::Year) != year){SG("year")(year)(thisDateTime.getPart(SGEXTN::Structs::TimeUnit::Year));}
-                if(thisDateTime.getPart(SGEXTN::Structs::TimeUnit::Month) != month){SG("month")(month)(thisDateTime.getPart(SGEXTN::Structs::TimeUnit::Month));}
-                if(thisDateTime.getPart(SGEXTN::Structs::TimeUnit::Day) != day){SG("day")(day)(thisDateTime.getPart(SGEXTN::Structs::TimeUnit::Day));}
-                if(thisDateTime.getPart(SGEXTN::Structs::TimeUnit::Hour) != hour){SG("hour")(hour)(thisDateTime.getPart(SGEXTN::Structs::TimeUnit::Hour));}
-                if(thisDateTime.getPart(SGEXTN::Structs::TimeUnit::Minute) != minute){SG("minute")(minute)(thisDateTime.getPart(SGEXTN::Structs::TimeUnit::Minute));}
-                if(thisDateTime.getPart(SGEXTN::Structs::TimeUnit::Second) != second){SG("second")(second)(thisDateTime.getPart(SGEXTN::Structs::TimeUnit::Second));}
-            }
-        }
-    }
-    SG(SGEXTN::Structs::DateTime::now().getDisplayString(SGEXTN::Structs::TimeFormat::Display, false, true));
-    SG(SGEXTN::Structs::DateTime::now().getDisplayString(SGEXTN::Structs::TimeFormat::Display, false, false));
-    SG(SGEXTN::Structs::DateTime::now().getDisplayString(SGEXTN::Structs::TimeFormat::Display, true, true));
-    SG(SGEXTN::Structs::DateTime::now().getDisplayString(SGEXTN::Structs::TimeFormat::Display, true, false));
-    SG(SGEXTN::Structs::DateTime::now().getDisplayString(SGEXTN::Structs::TimeFormat::FileName, false, true));
-    SG(SGEXTN::Structs::DateTime::now().getDisplayString(SGEXTN::Structs::TimeFormat::FileName, false, false));
-    SG(SGEXTN::Structs::DateTime::now().getDisplayString(SGEXTN::Structs::TimeFormat::FileName, true, true));
-    SG(SGEXTN::Structs::DateTime::now().getDisplayString(SGEXTN::Structs::TimeFormat::FileName, true, false));
+    SGEXTN::Structs::UnitTests::testDateTime();
 }
 
 void SGEXTN::Structs::UnitTests::testRgbaColour(){
@@ -244,4 +209,110 @@ void SGEXTN::Structs::UnitTests::testIdentifierRegistry(){
     if(registry.unregister(id) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::IdentifierRegistry unregister existing identifier fail");}
     if(registry.contains(id) == true){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::IdentifierRegistry contains unregistered identifier fail");}
     if(registry.generateAndRegisterIdentifier() == SGEXTN::Structs::Identifier::nullIdentifier()){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::IdentifierRegistry identifier generation fail");}
+}
+#include <SGEXTN_ApplicationBase_Debug.h>
+void SGEXTN::Structs::UnitTests::testDateTime(){
+    if(SGEXTN::Structs::DateTime() != SGEXTN::Structs::DateTime(0, 8, 9, 10, 30, 0)){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime default constructor fail");}
+    SGEXTN::Structs::DateTime zero;
+    SGEXTN::Structs::DateTime a;
+    SGEXTN::Structs::DateTime b(21, 1, 1, 0, 0, 0);
+    if(a == b){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime equality check fail");}
+    if(a != SGEXTN::Structs::DateTime(0, 8, 9, 10, 30, 0)){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime inequality check fail");}
+    if(b < a){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime less than operator fail");}
+    if(a > b){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime more than operator fail");}
+    if(b <= a){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime less than equal to operator fail");}
+    if(a >= b){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime more than equal to operator fail");}
+    if(a.debugLog() != "SG00-08-09 10:30:00"){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime debug log print fail");}
+    if(a != SGEXTN::Structs::DateTime::beginningOfTime()){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime beginning of time fail");}
+    for(int year=-100; year<100; year++){
+        for(int month=1; month<=12; month++){
+            for(int day=1; day<=31; day++){
+                bool isLeapYear = false;
+                if((year - 35) % 4 == 0 && (year - 35) % 100 != 0){isLeapYear = true;}
+                if((year - 35) % 400 == 0){isLeapYear = true;}
+                if(day > 28 && month == 2 && isLeapYear == false){continue;}
+                if(day > 29 && month == 2 && isLeapYear == true){continue;}
+                if(day == 31 && (month == 4 || month == 6 || month == 9 || month == 11)){continue;}
+                int hour = (year % 24 + 24) % 24;
+                int minute = ((year + month + day) % 60 + 60) % 60;
+                int second = ((year + month + day) % 60 + 60) % 60;
+                QDateTime qDateTime = QDateTime(QDate(year + 1965, month, day), QTime(hour, minute, second), QTimeZone::UTC);
+                long long expected = QDateTime(QDate(1965, 8, 9), QTime(10, 30, 0), QTimeZone::UTC).secsTo(qDateTime);
+                SGEXTN::Structs::DateTime thisDateTime(year, month, day, hour, minute, second);
+                if(expected != thisDateTime.private_data){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime components constructor fail");}
+                if(thisDateTime.getPart(SGEXTN::Structs::TimeUnit::Year) != year){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime get year fail");}
+                if(thisDateTime.getPart(SGEXTN::Structs::TimeUnit::Month) != month){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime get month fail");}
+                if(thisDateTime.getPart(SGEXTN::Structs::TimeUnit::Day) != day){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime get day fail");}
+                if(thisDateTime.getPart(SGEXTN::Structs::TimeUnit::Hour) != hour){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime get hour fail");}
+                if(thisDateTime.getPart(SGEXTN::Structs::TimeUnit::Minute) != minute){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime get minute fail");}
+                if(thisDateTime.getPart(SGEXTN::Structs::TimeUnit::Second) != second){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime get second fail");}
+                SGEXTN::Structs::DateTime originalDateTime = thisDateTime;
+                thisDateTime.setPart(SGEXTN::Structs::TimeUnit::Year, 0);
+                if(thisDateTime != SGEXTN::Structs::DateTime(0, month, day, hour, minute, second)){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime set year fail");}
+                thisDateTime = originalDateTime;
+                thisDateTime.setPart(SGEXTN::Structs::TimeUnit::Month, 8);
+                if(thisDateTime != SGEXTN::Structs::DateTime(year, 8, day, hour, minute, second)){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime set month fail");}
+                thisDateTime = originalDateTime;
+                thisDateTime.setPart(SGEXTN::Structs::TimeUnit::Day, 9);
+                if(thisDateTime != SGEXTN::Structs::DateTime(year, month, 9, hour, minute, second)){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime set day fail");}
+                thisDateTime = originalDateTime;
+                thisDateTime.setPart(SGEXTN::Structs::TimeUnit::Hour, 10);
+                if(thisDateTime != SGEXTN::Structs::DateTime(year, month, day, 10, minute, second)){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime set hour fail");}
+                thisDateTime = originalDateTime;
+                thisDateTime.setPart(SGEXTN::Structs::TimeUnit::Minute, 30);
+                if(thisDateTime != SGEXTN::Structs::DateTime(year, month, day, hour, 30, second)){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime set minute fail");}
+                thisDateTime = originalDateTime;
+                thisDateTime.setPart(SGEXTN::Structs::TimeUnit::Second, 0);
+                if(thisDateTime != SGEXTN::Structs::DateTime(year, month, day, hour, minute, 0)){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime set second fail");}
+                thisDateTime = originalDateTime;
+                if(thisDateTime.getDayOfWeek() != qDateTime.date().dayOfWeek()){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime get day of week fail");}
+                if(thisDateTime.getDayOfYear() != qDateTime.date().dayOfYear()){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime get day of year fail");}
+                if(thisDateTime.countDaysInMonth() != qDateTime.date().daysInMonth()){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime count days in month fail");}
+                if(thisDateTime.countDaysInYear() != qDateTime.date().daysInYear()){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime count days in year fail");}
+                if(thisDateTime.getStartOfDay().private_data != QDateTime(QDate(1965, 8, 9), QTime(10, 30, 0), QTimeZone::UTC).secsTo(qDateTime.date().startOfDay(QTimeZone::UTC))){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime start of day fail");}
+                if(thisDateTime.getEndOfDay().private_data != QDateTime(QDate(1965, 8, 9), QTime(10, 30, 0), QTimeZone::UTC).secsTo(qDateTime.date().startOfDay(QTimeZone::UTC)) + 86400ll){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime end of day fail");}
+                if(thisDateTime.getWeekOfYear() != qDateTime.date().weekNumber()){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime week count fail");}
+                int diffYear = thisDateTime.getTimeAfterDisplayPart(SGEXTN::Structs::DateTime::beginningOfTime(), SGEXTN::Structs::TimeUnit::Year);
+                int diffMonth = thisDateTime.getTimeAfterDisplayPart(SGEXTN::Structs::DateTime::beginningOfTime(), SGEXTN::Structs::TimeUnit::Month);
+                if(diffMonth < 0 || diffMonth > 11){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime time after display part month fail");}
+                int diffDay = thisDateTime.getTimeAfterDisplayPart(SGEXTN::Structs::DateTime::beginningOfTime(), SGEXTN::Structs::TimeUnit::Day);
+                if(diffDay < 0 || diffDay > 30){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime time after display part day fail");}
+                int diffHour = thisDateTime.getTimeAfterDisplayPart(SGEXTN::Structs::DateTime::beginningOfTime(), SGEXTN::Structs::TimeUnit::Hour);
+                if(diffHour < 0 || diffHour > 23){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime time after display part hour fail");}
+                int diffMinute = thisDateTime.getTimeAfterDisplayPart(SGEXTN::Structs::DateTime::beginningOfTime(), SGEXTN::Structs::TimeUnit::Minute);
+                if(diffMinute < 0 || diffMinute > 59){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime time after display part minute fail");}
+                int diffSecond = thisDateTime.getTimeAfterDisplayPart(SGEXTN::Structs::DateTime::beginningOfTime(), SGEXTN::Structs::TimeUnit::Second);
+                if(diffSecond < 0 || diffSecond > 59){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime time after display part second fail");}
+                zero = SGEXTN::Structs::DateTime::beginningOfTime();
+                zero.advanceTime(diffYear, SGEXTN::Structs::TimeUnit::Year);
+                zero.advanceTime(diffMonth, SGEXTN::Structs::TimeUnit::Month);
+                zero.advanceTime(diffDay, SGEXTN::Structs::TimeUnit::Day);
+                zero.advanceTime(diffHour, SGEXTN::Structs::TimeUnit::Hour);
+                zero.advanceTime(diffMinute, SGEXTN::Structs::TimeUnit::Minute);
+                zero.advanceTime(diffSecond, SGEXTN::Structs::TimeUnit::Second);
+                if(zero != thisDateTime){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime advance time fail");}
+            }
+        }
+    }
+    if(SGEXTN::Structs::DateTime::convertToGlobalYear(0) != 1965){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime standard to global year fail");}
+    if(SGEXTN::Structs::DateTime(60, 6, 15, 0, 0, 0).isNationalDayPeriod() == true || SGEXTN::Structs::DateTime(60, 7, 15, 0, 0, 0).isNationalDayPeriod() == false || SGEXTN::Structs::DateTime(60, 8, 15, 0, 0, 0).isNationalDayPeriod() == false || SGEXTN::Structs::DateTime(60, 9, 15, 0, 0, 0).isNationalDayPeriod() == false || SGEXTN::Structs::DateTime(60, 10, 15, 0, 0, 0).isNationalDayPeriod() == true){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime National Day period check fail");}
+    if(SGEXTN::Structs::DateTime(60, 1, 1, 0, 0, 0).isSignificantDate(SGEXTN::Structs::SignificantDates::NationalDay) == true || SGEXTN::Structs::DateTime(60, 8, 9, 0, 0, 0).isSignificantDate(SGEXTN::Structs::SignificantDates::NationalDay) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime significant day check National Day fail");}
+    if(SGEXTN::Structs::DateTime(60, 1, 1, 0, 0, 0).isSignificantDate(SGEXTN::Structs::SignificantDates::DayBeforeNationalDay) == true || SGEXTN::Structs::DateTime(60, 8, 8, 0, 0, 0).isSignificantDate(SGEXTN::Structs::SignificantDates::DayBeforeNationalDay) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime significant day check day before National Day fail");}
+    if(SGEXTN::Structs::DateTime(60, 1, 1, 0, 0, 0).isSignificantDate(SGEXTN::Structs::SignificantDates::DayAfterNationalDay) == true || SGEXTN::Structs::DateTime(60, 8, 10, 0, 0, 0).isSignificantDate(SGEXTN::Structs::SignificantDates::DayAfterNationalDay) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime significant day check day after National Day fail");}
+    if(SGEXTN::Structs::DateTime(60, 1, 1, 0, 0, 0).isSignificantDate(SGEXTN::Structs::SignificantDates::TotalDefenceDay) == true || SGEXTN::Structs::DateTime(60, 2, 15, 0, 0, 0).isSignificantDate(SGEXTN::Structs::SignificantDates::TotalDefenceDay) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime significant day check Total Defence Day fail");}
+    if(SGEXTN::Structs::DateTime(60, 1, 1, 0, 0, 0).isSignificantDate(SGEXTN::Structs::SignificantDates::RacialHarmonyDay) == true || SGEXTN::Structs::DateTime(60, 7, 21, 0, 0, 0).isSignificantDate(SGEXTN::Structs::SignificantDates::RacialHarmonyDay) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime significant day check Racial Harmony Day fail");}
+    zero = SGEXTN::Structs::DateTime::beginningOfTime();
+    if(zero.getDisplayString(SGEXTN::Structs::TimeFormat::Display, false, true) != "SG00-08-09 10:30:00"){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime display string display format standard year correct to second fail");}
+    if(zero.getDisplayString(SGEXTN::Structs::TimeFormat::Display, false, false) != "SG00-08-09"){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime display string display format standard year fail");}
+    if(zero.getDisplayString(SGEXTN::Structs::TimeFormat::Display, true, true) != "1965-08-09 10:30:00"){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime display string display format global year correct to second fail");}
+    if(zero.getDisplayString(SGEXTN::Structs::TimeFormat::Display, true, false) != "1965-08-09"){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime display string display format global year fail");}
+    if(zero.getDisplayString(SGEXTN::Structs::TimeFormat::FileName, false, true) != "000809103000"){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime display string file name format standard year correct to second fail");}
+    if(zero.getDisplayString(SGEXTN::Structs::TimeFormat::FileName, false, false) != "000809"){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime display string file name format standard year fail");}
+    if(zero.getDisplayString(SGEXTN::Structs::TimeFormat::FileName, true, true) != "19650809103000"){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime display string file name format global year correct to second fail");}
+    if(zero.getDisplayString(SGEXTN::Structs::TimeFormat::FileName, true, false) != "19650809"){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime display string file name format global year fail");}
+    if(zero.getDisplayString(SGEXTN::Structs::TimeFormat::ShortestReadable, false, true) != "SG00 0809 103000"){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime display string shortest readable format standard year correct to second fail");}
+    if(zero.getDisplayString(SGEXTN::Structs::TimeFormat::ShortestReadable, false, false) != "SG00 0809"){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime display string shortest readable format standard year fail");}
+    if(zero.getDisplayString(SGEXTN::Structs::TimeFormat::ShortestReadable, true, true) != "19650809 103000"){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime display string shortest readable format global year correct to second fail");}
+    if(zero.getDisplayString(SGEXTN::Structs::TimeFormat::ShortestReadable, true, false) != "19650809"){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime display string shortest readable format global year fail");}
+    if(zero.getDisplayString("%\\SG%2year%\\ %2month%2day%\\ %2hour%2minute%2second") != "SG00 0809 103000"){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime display string custom format fail");}
 }

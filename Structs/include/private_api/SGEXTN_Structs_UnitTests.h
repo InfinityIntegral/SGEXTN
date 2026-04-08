@@ -10,6 +10,7 @@ public:
     static void testContrastUtilities();
     static void testIdentifier();
     static void testIdentifierRegistry();
+    static void testDateTime();
 };
 }
 }

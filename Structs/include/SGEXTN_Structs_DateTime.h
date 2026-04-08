@@ -5,7 +5,7 @@ namespace SGEXTN {
 namespace Structs {
 enum class BUILDLAH_DLL_SGEXTN_Structs TimeUnit {Year, Month, Day, Hour, Minute, Second};
 
-enum class BUILDLAH_DLL_SGEXTN_Structs TimeFormat {Display, FileName};
+enum class BUILDLAH_DLL_SGEXTN_Structs TimeFormat {Display, FileName, ShortestReadable};
 
 enum class BUILDLAH_DLL_SGEXTN_Structs SignificantDates {NationalDay, DayBeforeNationalDay, DayAfterNationalDay, TotalDefenceDay, RacialHarmonyDay};
 
@@ -32,6 +32,9 @@ public:
     [[nodiscard]] int getDayOfYear() const;
     [[nodiscard]] int countDaysInMonth() const;
     [[nodiscard]] int countDaysInYear() const;
+    [[nodiscard]] SGEXTN::Structs::DateTime getStartOfDay() const;
+    [[nodiscard]] SGEXTN::Structs::DateTime getEndOfDay() const;
+    [[nodiscard]] int getWeekOfYear() const;
     [[nodiscard]] int getTimeAfterDisplayPart(DateTime x, SGEXTN::Structs::TimeUnit unit) const;
     void advanceTime(long long x, SGEXTN::Structs::TimeUnit unit);
     [[nodiscard]] static int convertToGlobalYear(int standardYear);

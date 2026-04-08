@@ -280,6 +280,32 @@ int SGEXTN::Structs::DateTime::countDaysInYear() const {
     return 365;
 }
 
+SGEXTN::Structs::DateTime SGEXTN::Structs::DateTime::getStartOfDay() const {
+    int year = 0;
+    int month = 0;
+    int day = 0;
+    offsetToParts(private_data, &year, &month, &day, nullptr, nullptr, nullptr);
+    return SGEXTN::Structs::DateTime(year, month, day, 0, 0, 0);
+}
+
+SGEXTN::Structs::DateTime SGEXTN::Structs::DateTime::getEndOfDay() const {
+    int year = 0;
+    int month = 0;
+    int day = 0;
+    offsetToParts(private_data + 86400ll, &year, &month, &day, nullptr, nullptr, nullptr);
+    return SGEXTN::Structs::DateTime(year, month, day, 0, 0, 0);
+}
+
+int SGEXTN::Structs::DateTime::getWeekOfYear() const {
+    int dayOfYearThisThursday = getDayOfYear() - getDayOfWeek() + 3;
+    if(dayOfYearThisThursday >= countDaysInYear()){return 1;}
+    if(dayOfYearThisThursday >= 0){return (dayOfYearThisThursday / 7 + 1);}
+    bool previousIsLeapYear = checkLeapYear(getPart(SGEXTN::Structs::TimeUnit::Year) - 1);
+    if(previousIsLeapYear == false){dayOfYearThisThursday += 365;}
+    else{dayOfYearThisThursday += 366;}
+    return (dayOfYearThisThursday / 7 + 1);
+}
+
 int SGEXTN::Structs::DateTime::getTimeAfterDisplayPart(SGEXTN::Structs::DateTime x, SGEXTN::Structs::TimeUnit unit) const {
     int year1 = 0;
     int month1 = 0;
@@ -368,10 +394,10 @@ void SGEXTN::Structs::DateTime::advanceTime(long long x, SGEXTN::Structs::TimeUn
     int second = 0;
     offsetToParts(private_data, &year, &month, &day, &hour, &minute, &second);
     if(unit == SGEXTN::Structs::TimeUnit::Year){
-        year += x;
+        year += static_cast<int>(x);
     }
     else if(unit == SGEXTN::Structs::TimeUnit::Month){
-        month += x;
+        month += static_cast<int>(x);
         month--;
         year += properDivision(month, 12);
         month = properRemainder(month, 12) + 1;
@@ -403,15 +429,34 @@ bool SGEXTN::Structs::DateTime::isSignificantDate(SGEXTN::Structs::SignificantDa
 
 SGEXTN::ApplicationBase::String SGEXTN::Structs::DateTime::getDisplayString(const SGEXTN::Structs::TimeFormat format, bool global, bool correctToSecond) const {
     SGEXTN::ApplicationBase::String formatString = "";
-    if(format == SGEXTN::Structs::TimeFormat::Display){
-        if(correctToSecond == true){formatString = "%\\SG%2year%\\-%2month%\\-%2day%\\ %2hour%\\:%2minute%\\:%2second";}
-        else{formatString = "%\\SG%2year%\\-%2month%\\-%2day";}
+    if(global == false){
+        if(format == SGEXTN::Structs::TimeFormat::Display){
+            if(correctToSecond == true){formatString = "%\\SG%2year%\\-%2month%\\-%2day%\\ %2hour%\\:%2minute%\\:%2second";}
+            else{formatString = "%\\SG%2year%\\-%2month%\\-%2day";}
+        }
+        else if(format == SGEXTN::Structs::TimeFormat::FileName){
+            if(correctToSecond == true){formatString = "%2year%2month%2day%2hour%2minute%2second";}
+            else{formatString = "%2year%2month%2day";}
+        }
+        else if(format == SGEXTN::Structs::TimeFormat::ShortestReadable){
+            if(correctToSecond == true){formatString = "%\\SG%2year%\\ %2month%2day%\\ %2hour%2minute%2second";}
+            else{formatString = "%\\SG%2year%\\ %2month%2day";}
+        }
     }
-    else if(format == SGEXTN::Structs::TimeFormat::FileName){
-        if(correctToSecond == true){formatString = "%2year%2month%2day%2hour%2minute%2second";}
-        else{formatString = "%2year%2month%2day";}
+    else{
+        if(format == SGEXTN::Structs::TimeFormat::Display){
+            if(correctToSecond == true){formatString = "%4globalyear%\\-%2month%\\-%2day%\\ %2hour%\\:%2minute%\\:%2second";}
+            else{formatString = "%4globalyear%\\-%2month%\\-%2day";}
+        }
+        else if(format == SGEXTN::Structs::TimeFormat::FileName){
+            if(correctToSecond == true){formatString = "%4globalyear%2month%2day%2hour%2minute%2second";}
+            else{formatString = "%4globalyear%2month%2day";}
+        }
+        else if(format == SGEXTN::Structs::TimeFormat::ShortestReadable){
+            if(correctToSecond == true){formatString = "%4globalyear%2month%2day%\\ %2hour%2minute%2second";}
+            else{formatString = "%4globalyear%2month%2day";}
+        }
     }
-    if(global == true){formatString = formatString.replace("%\\SG", "").replace("2year", "4globalyear");}
     return getDisplayString(formatString);
 }
 
