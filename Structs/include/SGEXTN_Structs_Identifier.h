@@ -1,5 +1,5 @@
 #pragma once
-#include <SGEXTN_ApplicationBase_String.h>
+#include <SGEXTN_ApplicationBase_OldString.h>
 
 namespace SGEXTN {
 namespace Structs {
@@ -14,8 +14,8 @@ public:
     [[nodiscard]] bool operator<(Identifier x) const;
     [[nodiscard]] bool operator>(Identifier x) const;
     [[nodiscard]] int hash() const;
-    [[nodiscard]] SGEXTN::ApplicationBase::String getStringForPrinting() const;
-    [[nodiscard]] SGEXTN::ApplicationBase::String debugLog() const;
+    [[nodiscard]] SGEXTN::ApplicationBase::OldString getStringForPrinting() const;
+    [[nodiscard]] SGEXTN::ApplicationBase::OldString debugLog() const;
 };
 }
 }

@@ -1,6 +1,6 @@
 #include <SGEXTN_Structs_DateTime.h>
 #include <SGEXTN_Containers_Hash.h>
-#include <SGEXTN_ApplicationBase_String.h>
+#include <SGEXTN_ApplicationBase_OldString.h>
 #include <chrono>
 #include <private_api/SGEXTN_Containers_Crash.h>
 
@@ -180,7 +180,7 @@ int SGEXTN::Structs::DateTime::hash() const {
     return SGEXTN::Containers::Hash<long long>()(private_data);
 }
 
-SGEXTN::ApplicationBase::String SGEXTN::Structs::DateTime::debugLog() const {
+SGEXTN::ApplicationBase::OldString SGEXTN::Structs::DateTime::debugLog() const {
     return getDisplayString(SGEXTN::Structs::TimeFormat::Display, false, true);
 }
 
@@ -428,8 +428,8 @@ bool SGEXTN::Structs::DateTime::isSignificantDate(SGEXTN::Structs::SignificantDa
     return false;
 }
 
-SGEXTN::ApplicationBase::String SGEXTN::Structs::DateTime::getDisplayString(const SGEXTN::Structs::TimeFormat format, bool global, bool correctToSecond) const {
-    SGEXTN::ApplicationBase::String formatString = "";
+SGEXTN::ApplicationBase::OldString SGEXTN::Structs::DateTime::getDisplayString(const SGEXTN::Structs::TimeFormat format, bool global, bool correctToSecond) const {
+    SGEXTN::ApplicationBase::OldString formatString = "";
     if(global == false){
         if(format == SGEXTN::Structs::TimeFormat::Display){
             if(correctToSecond == true){formatString = "%\\SG%2year%\\-%2month%\\-%2day%\\ %2hour%\\:%2minute%\\:%2second";}
@@ -461,13 +461,13 @@ SGEXTN::ApplicationBase::String SGEXTN::Structs::DateTime::getDisplayString(cons
     return getDisplayString(formatString);
 }
 
-SGEXTN::ApplicationBase::String SGEXTN::Structs::DateTime::getDisplayString(const SGEXTN::ApplicationBase::String& customFormat) const {
-    SGEXTN::ApplicationBase::String format = customFormat;
-    SGEXTN::ApplicationBase::String output = "";
+SGEXTN::ApplicationBase::OldString SGEXTN::Structs::DateTime::getDisplayString(const SGEXTN::ApplicationBase::OldString& customFormat) const {
+    SGEXTN::ApplicationBase::OldString format = customFormat;
+    SGEXTN::ApplicationBase::OldString output = "";
     while(format.length() > 0){
         int tokenEnd = format.findFirstFromLeftCustomStart("%", 1);
         if(tokenEnd == -1){tokenEnd = format.length();}
-        SGEXTN::ApplicationBase::String thisToken = format.substringLeft(tokenEnd);
+        SGEXTN::ApplicationBase::OldString thisToken = format.substringLeft(tokenEnd);
         format = format.substringRight(format.length() - tokenEnd);
         if(thisToken.length() == 0 || thisToken.getCharAt(0) != '%'){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime::getDisplayString crashed because a token does not start with %");}
         if(thisToken.length() > 1 && thisToken.getCharAt(1) == '\\'){
@@ -475,7 +475,7 @@ SGEXTN::ApplicationBase::String SGEXTN::Structs::DateTime::getDisplayString(cons
             continue;
         }
         if(thisToken.length() == 1 || thisToken.getCharAt(1).isDigit() == false){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime::getDisplayString crashed because the precision specifier, which is the character after the %, in a token is not a number");}
-        const int precision = SGEXTN::ApplicationBase::String(thisToken.getCharAt(1)).parseToInt(nullptr, 10);
+        const int precision = SGEXTN::ApplicationBase::OldString(thisToken.getCharAt(1)).parseToInt(nullptr, 10);
         int component = 0;
         thisToken = thisToken.substringRight(thisToken.length() - 2);
         if(thisToken == "year"){component = getPart(SGEXTN::Structs::TimeUnit::Year);}
@@ -486,7 +486,7 @@ SGEXTN::ApplicationBase::String SGEXTN::Structs::DateTime::getDisplayString(cons
         else if(thisToken == "minute"){component = getPart(SGEXTN::Structs::TimeUnit::Minute);}
         else if(thisToken == "second"){component = getPart(SGEXTN::Structs::TimeUnit::Second);}
         else{SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime::getDisplayString crashed because the component name is invalid, custom strings must not contain % and must be prefixed with a \\ sign");}
-        SGEXTN::ApplicationBase::String componentString = SGEXTN::ApplicationBase::String::stringFromInt(component, 10);
+        SGEXTN::ApplicationBase::OldString componentString = SGEXTN::ApplicationBase::OldString::stringFromInt(component, 10);
         if(componentString.length() > precision){componentString = componentString.substringRight(precision);}
         output += componentString.fillLeftToLength(precision, '0');
     }

@@ -1,25 +1,25 @@
 #include <SGEXTN_ApplicationBase_Debug.h>
-#include <SGEXTN_ApplicationBase_String.h>
-#include <SGEXTN_ApplicationBase_Char.h>
+#include <SGEXTN_ApplicationBase_OldString.h>
+#include <SGEXTN_ApplicationBase_OldChar.h>
 #include <QFile>
 #include <QIODevice>
 #include <QTextStream>
 #include <iostream>
 #include <QString>
 
-SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::Debug::logFile = "";
+SGEXTN::ApplicationBase::OldString SGEXTN::ApplicationBase::Debug::logFile = "";
 
-SGEXTN::ApplicationBase::Debug::Debug(const SGEXTN::ApplicationBase::String& fileName, int lineNumber){
+SGEXTN::ApplicationBase::Debug::Debug(const SGEXTN::ApplicationBase::OldString& fileName, int lineNumber){
     debugInfo = "";
-    SGEXTN::ApplicationBase::String actualFileName = fileName.replace("\\", "/");
+    SGEXTN::ApplicationBase::OldString actualFileName = fileName.replace("\\", "/");
     actualFileName = actualFileName.substringRight(actualFileName.length() - actualFileName.findFirstFromRight("/") - 1);
-    metaInfo = actualFileName + ", line " + SGEXTN::ApplicationBase::String::stringFromInt(lineNumber, 10);
+    metaInfo = actualFileName + ", line " + SGEXTN::ApplicationBase::OldString::stringFromInt(lineNumber, 10);
 }
 
 SGEXTN::ApplicationBase::Debug::~Debug(){
-    SGEXTN::ApplicationBase::String logData = "";
-    if(debugInfo == ""){logData = SGEXTN::ApplicationBase::String("SG - ") + metaInfo;}
-    else{logData = SGEXTN::ApplicationBase::String("SG") + debugInfo;}
+    SGEXTN::ApplicationBase::OldString logData = "";
+    if(debugInfo == ""){logData = SGEXTN::ApplicationBase::OldString("SG - ") + metaInfo;}
+    else{logData = SGEXTN::ApplicationBase::OldString("SG") + debugInfo;}
     std::cerr << (*logData.private_data).toUtf8().constData() << "\n";
     if(SGEXTN::ApplicationBase::Debug::logFile != ""){
         QFile file(*SGEXTN::ApplicationBase::Debug::logFile.private_data);
@@ -38,72 +38,72 @@ SGEXTN::ApplicationBase::Debug& SGEXTN::ApplicationBase::Debug::operator()(bool 
 }
 
 SGEXTN::ApplicationBase::Debug& SGEXTN::ApplicationBase::Debug::operator()(char x){
-    debugInfo += SGEXTN::ApplicationBase::String(" - ") + SGEXTN::ApplicationBase::String::stringFromInt(static_cast<int>(x), 10) + " or " + SGEXTN::ApplicationBase::Char(x);
+    debugInfo += SGEXTN::ApplicationBase::OldString(" - ") + SGEXTN::ApplicationBase::OldString::stringFromInt(static_cast<int>(x), 10) + " or " + SGEXTN::ApplicationBase::OldChar(x);
     return (*this);
 }
 
 SGEXTN::ApplicationBase::Debug& SGEXTN::ApplicationBase::Debug::operator()(signed char x){
-    debugInfo += SGEXTN::ApplicationBase::String(" - ") + SGEXTN::ApplicationBase::String::stringFromInt(static_cast<int>(x), 10) + " or " + SGEXTN::ApplicationBase::Char(static_cast<char>(x));
+    debugInfo += SGEXTN::ApplicationBase::OldString(" - ") + SGEXTN::ApplicationBase::OldString::stringFromInt(static_cast<int>(x), 10) + " or " + SGEXTN::ApplicationBase::OldChar(static_cast<char>(x));
     return (*this);
 }
 
 SGEXTN::ApplicationBase::Debug& SGEXTN::ApplicationBase::Debug::operator()(unsigned char x){
-    debugInfo += SGEXTN::ApplicationBase::String(" - ") + SGEXTN::ApplicationBase::String::stringFromInt(static_cast<int>(x), 10) + " or " + SGEXTN::ApplicationBase::Char(static_cast<char>(x));
+    debugInfo += SGEXTN::ApplicationBase::OldString(" - ") + SGEXTN::ApplicationBase::OldString::stringFromInt(static_cast<int>(x), 10) + " or " + SGEXTN::ApplicationBase::OldChar(static_cast<char>(x));
     return (*this);
 }
 
 SGEXTN::ApplicationBase::Debug& SGEXTN::ApplicationBase::Debug::operator()(short x){
-    debugInfo += SGEXTN::ApplicationBase::String(" - ") + SGEXTN::ApplicationBase::String::stringFromShort(x, 10);
+    debugInfo += SGEXTN::ApplicationBase::OldString(" - ") + SGEXTN::ApplicationBase::OldString::stringFromShort(x, 10);
     return (*this);
 }
 
 SGEXTN::ApplicationBase::Debug& SGEXTN::ApplicationBase::Debug::operator()(unsigned short x){
-    debugInfo += SGEXTN::ApplicationBase::String(" - ") + SGEXTN::ApplicationBase::String::stringFromUnsignedShort(x, 10);
+    debugInfo += SGEXTN::ApplicationBase::OldString(" - ") + SGEXTN::ApplicationBase::OldString::stringFromUnsignedShort(x, 10);
     return (*this);
 }
 
 SGEXTN::ApplicationBase::Debug& SGEXTN::ApplicationBase::Debug::operator()(int x){
-    debugInfo += SGEXTN::ApplicationBase::String(" - ") + SGEXTN::ApplicationBase::String::stringFromInt(x, 10);
+    debugInfo += SGEXTN::ApplicationBase::OldString(" - ") + SGEXTN::ApplicationBase::OldString::stringFromInt(x, 10);
     return (*this);
 }
 
 SGEXTN::ApplicationBase::Debug& SGEXTN::ApplicationBase::Debug::operator()(unsigned int x){
-    debugInfo += SGEXTN::ApplicationBase::String(" - ") + SGEXTN::ApplicationBase::String::stringFromUnsignedInt(x, 10);
+    debugInfo += SGEXTN::ApplicationBase::OldString(" - ") + SGEXTN::ApplicationBase::OldString::stringFromUnsignedInt(x, 10);
     return (*this);
 }
 
 SGEXTN::ApplicationBase::Debug& SGEXTN::ApplicationBase::Debug::operator()(long long x){
-    debugInfo += SGEXTN::ApplicationBase::String(" - ") + SGEXTN::ApplicationBase::String::stringFromLongLong(x, 10);
+    debugInfo += SGEXTN::ApplicationBase::OldString(" - ") + SGEXTN::ApplicationBase::OldString::stringFromLongLong(x, 10);
     return (*this);
 }
 
 SGEXTN::ApplicationBase::Debug& SGEXTN::ApplicationBase::Debug::operator()(unsigned long long x){
-    debugInfo += SGEXTN::ApplicationBase::String(" - ") + SGEXTN::ApplicationBase::String::stringFromUnsignedLongLong(x, 10);
+    debugInfo += SGEXTN::ApplicationBase::OldString(" - ") + SGEXTN::ApplicationBase::OldString::stringFromUnsignedLongLong(x, 10);
     return (*this);
 }
 
 SGEXTN::ApplicationBase::Debug& SGEXTN::ApplicationBase::Debug::operator()(float x){
-    debugInfo += SGEXTN::ApplicationBase::String(" - ") + SGEXTN::ApplicationBase::String::stringFromFloat(x, SGEXTN::ApplicationBase::FloatDisplayFormat::Default, 5);
+    debugInfo += SGEXTN::ApplicationBase::OldString(" - ") + SGEXTN::ApplicationBase::OldString::stringFromFloat(x, SGEXTN::ApplicationBase::FloatDisplayFormat::Default, 5);
     return (*this);
 }
 
 SGEXTN::ApplicationBase::Debug& SGEXTN::ApplicationBase::Debug::operator()(double x){
-    debugInfo += SGEXTN::ApplicationBase::String(" - ") + SGEXTN::ApplicationBase::String::stringFromDouble(x, SGEXTN::ApplicationBase::FloatDisplayFormat::Default, 5);
+    debugInfo += SGEXTN::ApplicationBase::OldString(" - ") + SGEXTN::ApplicationBase::OldString::stringFromDouble(x, SGEXTN::ApplicationBase::FloatDisplayFormat::Default, 5);
     return (*this);
 }
 
-SGEXTN::ApplicationBase::Debug& SGEXTN::ApplicationBase::Debug::operator()(const SGEXTN::ApplicationBase::Char& x){
-    debugInfo += SGEXTN::ApplicationBase::String(" - ") + x;
+SGEXTN::ApplicationBase::Debug& SGEXTN::ApplicationBase::Debug::operator()(const SGEXTN::ApplicationBase::OldChar& x){
+    debugInfo += SGEXTN::ApplicationBase::OldString(" - ") + x;
     return (*this);
 }
 
-SGEXTN::ApplicationBase::Debug& SGEXTN::ApplicationBase::Debug::operator()(const SGEXTN::ApplicationBase::String& x){
-    debugInfo += SGEXTN::ApplicationBase::String(" - ") + x;
+SGEXTN::ApplicationBase::Debug& SGEXTN::ApplicationBase::Debug::operator()(const SGEXTN::ApplicationBase::OldString& x){
+    debugInfo += SGEXTN::ApplicationBase::OldString(" - ") + x;
     return (*this);
 }
 
 SGEXTN::ApplicationBase::Debug& SGEXTN::ApplicationBase::Debug::operator()(const char* x){
-    debugInfo += SGEXTN::ApplicationBase::String(" - ") + x;
+    debugInfo += SGEXTN::ApplicationBase::OldString(" - ") + x;
     return (*this);
 }
 

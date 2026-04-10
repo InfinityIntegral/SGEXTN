@@ -2,22 +2,22 @@
 
 namespace SGEXTN {
 namespace ApplicationBase {
-class BUILDLAH_DLL_SGEXTN_ApplicationBase Char {
+class BUILDLAH_DLL_SGEXTN_ApplicationBase OldChar {
 public:
     unsigned short private_data;
-    Char();
-    Char(char c);
-    Char(unsigned short data);
-    Char(int unicode);
+    OldChar();
+    OldChar(char c);
+    OldChar(unsigned short data);
+    OldChar(int unicode);
     [[nodiscard]] char toChar() const;
     [[nodiscard]] signed char toSignedChar() const;
     [[nodiscard]] unsigned char toUnsignedChar() const;
-    [[nodiscard]] bool operator==(Char x) const;
-    [[nodiscard]] bool operator!=(Char x) const;
-    [[nodiscard]] bool operator<(Char x) const;
-    [[nodiscard]] bool operator>(Char x) const;
-    [[nodiscard]] bool operator<=(Char x) const;
-    [[nodiscard]] bool operator>=(Char x) const;
+    [[nodiscard]] bool operator==(OldChar x) const;
+    [[nodiscard]] bool operator!=(OldChar x) const;
+    [[nodiscard]] bool operator<(OldChar x) const;
+    [[nodiscard]] bool operator>(OldChar x) const;
+    [[nodiscard]] bool operator<=(OldChar x) const;
+    [[nodiscard]] bool operator>=(OldChar x) const;
     [[nodiscard]] int hash() const;
     [[nodiscard]] bool isDigit() const;
     [[nodiscard]] bool isDigitBase16() const;
@@ -28,8 +28,8 @@ public:
     [[nodiscard]] bool isASCII() const;
     [[nodiscard]] bool isWhitespace() const;
     [[nodiscard]] int getUnicode() const;
-    [[nodiscard]] Char uppercaseLanguageAware() const;
-    [[nodiscard]] Char lowercaseLanguageAware() const;
+    [[nodiscard]] OldChar uppercaseLanguageAware() const;
+    [[nodiscard]] OldChar lowercaseLanguageAware() const;
 };
 }
 }

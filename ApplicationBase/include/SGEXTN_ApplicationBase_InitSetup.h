@@ -1,5 +1,5 @@
 #pragma once
-#include <SGEXTN_ApplicationBase_String.h>
+#include <SGEXTN_ApplicationBase_OldString.h>
 
 namespace SGEXTN {
 namespace Containers { template <typename T, typename Comparator> class PriorityQueue; }
@@ -9,21 +9,21 @@ class RegistryEntry;
 class RegistryEntryComparator;
 class BUILDLAH_DLL_SGEXTN_ApplicationBase InitSetup {
 public:
-    static SGEXTN::ApplicationBase::String applicationName;
-    static SGEXTN::ApplicationBase::String applicationVersion;
-    static SGEXTN::ApplicationBase::String organisationName;
-    static SGEXTN::ApplicationBase::String organisationDomain;
-    static SGEXTN::ApplicationBase::String folderName;
-    static SGEXTN::ApplicationBase::String applicationDisplayName;
-    static SGEXTN::ApplicationBase::String pathToAppIcon;
+    static SGEXTN::ApplicationBase::OldString applicationName;
+    static SGEXTN::ApplicationBase::OldString applicationVersion;
+    static SGEXTN::ApplicationBase::OldString organisationName;
+    static SGEXTN::ApplicationBase::OldString organisationDomain;
+    static SGEXTN::ApplicationBase::OldString folderName;
+    static SGEXTN::ApplicationBase::OldString applicationDisplayName;
+    static SGEXTN::ApplicationBase::OldString pathToAppIcon;
     static bool isConsoleApp;
-    static void addInfoWebsite(const SGEXTN::ApplicationBase::String& link);
+    static void addInfoWebsite(const SGEXTN::ApplicationBase::OldString& link);
     static int (*userMain)(int, char**);
     static SGEXTN::Containers::PriorityQueue<SGEXTN::ApplicationBase::RegistryEntry, SGEXTN::ApplicationBase::RegistryEntryComparator>* private_initialiseFunctionQueue;
     static SGEXTN::Containers::PriorityQueue<SGEXTN::ApplicationBase::RegistryEntry, SGEXTN::ApplicationBase::RegistryEntryComparator>* private_terminationFunctionQueue;
     static void private_initialise();
     static void private_terminate();
-    static SGEXTN::Containers::Vector<SGEXTN::ApplicationBase::String>* private_infoWebsites;
+    static SGEXTN::Containers::Vector<SGEXTN::ApplicationBase::OldString>* private_infoWebsites;
     static int private_argc;
     static char** private_argv;
     static int private_priorityGap;

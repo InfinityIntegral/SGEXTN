@@ -1,5 +1,5 @@
 #include <SGEXTN_ApplicationBase_InitSetup.h>
-#include <SGEXTN_ApplicationBase_String.h>
+#include <SGEXTN_ApplicationBase_OldString.h>
 #include <SGEXTN_Containers_Vector.h>
 #include <SGEXTN_Containers_PriorityQueue.h>
 #include <SGEXTN_ApplicationBase_RegistryEntry.h>
@@ -7,18 +7,18 @@
 #include <private_api/SGEXTN_Containers_Crash.h>
 #include <QCoreApplication>
 
-SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::InitSetup::applicationName = "";
-SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::InitSetup::applicationVersion = "";
-SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::InitSetup::organisationName = "";
-SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::InitSetup::organisationDomain = "";
-SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::InitSetup::folderName = "";
-SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::InitSetup::applicationDisplayName = "";
-SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::InitSetup::pathToAppIcon = "";
+SGEXTN::ApplicationBase::OldString SGEXTN::ApplicationBase::InitSetup::applicationName = "";
+SGEXTN::ApplicationBase::OldString SGEXTN::ApplicationBase::InitSetup::applicationVersion = "";
+SGEXTN::ApplicationBase::OldString SGEXTN::ApplicationBase::InitSetup::organisationName = "";
+SGEXTN::ApplicationBase::OldString SGEXTN::ApplicationBase::InitSetup::organisationDomain = "";
+SGEXTN::ApplicationBase::OldString SGEXTN::ApplicationBase::InitSetup::folderName = "";
+SGEXTN::ApplicationBase::OldString SGEXTN::ApplicationBase::InitSetup::applicationDisplayName = "";
+SGEXTN::ApplicationBase::OldString SGEXTN::ApplicationBase::InitSetup::pathToAppIcon = "";
 bool SGEXTN::ApplicationBase::InitSetup::isConsoleApp = false;
 int (*SGEXTN::ApplicationBase::InitSetup::userMain)(int, char**) = nullptr;
 constinit SGEXTN::Containers::PriorityQueue<SGEXTN::ApplicationBase::RegistryEntry, SGEXTN::ApplicationBase::RegistryEntryComparator>* SGEXTN::ApplicationBase::InitSetup::private_initialiseFunctionQueue = nullptr;
 constinit SGEXTN::Containers::PriorityQueue<SGEXTN::ApplicationBase::RegistryEntry, SGEXTN::ApplicationBase::RegistryEntryComparator>* SGEXTN::ApplicationBase::InitSetup::private_terminationFunctionQueue = nullptr;
-SGEXTN::Containers::Vector<SGEXTN::ApplicationBase::String>* SGEXTN::ApplicationBase::InitSetup::private_infoWebsites = nullptr;
+SGEXTN::Containers::Vector<SGEXTN::ApplicationBase::OldString>* SGEXTN::ApplicationBase::InitSetup::private_infoWebsites = nullptr;
 int SGEXTN::ApplicationBase::InitSetup::private_argc = 0;
 char** SGEXTN::ApplicationBase::InitSetup::private_argv = nullptr;
 int SGEXTN::ApplicationBase::InitSetup::private_priorityGap = 1000000;
@@ -30,9 +30,9 @@ SGEXTN::ApplicationBase::RegistryEntry SGEXTN::ApplicationBase::InitSetup::priva
 SGEXTN::ApplicationBase::RegistryEntry SGEXTN::ApplicationBase::InitSetup::private_createConsoleAppInit = SGEXTN::ApplicationBase::RegistryEntry(SGEXTN::ApplicationBase::InitSetup::private_initialiseFunctionQueue, 2 * SGEXTN::ApplicationBase::InitSetup::private_priorityGap, &SGEXTN::ApplicationBase::InitSetup::private_createConsoleApp);
 SGEXTN::ApplicationBase::RegistryEntry SGEXTN::ApplicationBase::InitSetup::private_runUserMainInit = SGEXTN::ApplicationBase::RegistryEntry(SGEXTN::ApplicationBase::InitSetup::private_initialiseFunctionQueue, 0, &SGEXTN::ApplicationBase::InitSetup::private_runUserMain);
 
-void SGEXTN::ApplicationBase::InitSetup::addInfoWebsite(const SGEXTN::ApplicationBase::String& link){
+void SGEXTN::ApplicationBase::InitSetup::addInfoWebsite(const SGEXTN::ApplicationBase::OldString& link){
     if(SGEXTN::ApplicationBase::InitSetup::private_infoWebsites == nullptr){
-        SGEXTN::ApplicationBase::InitSetup::private_infoWebsites = new SGEXTN::Containers::Vector<SGEXTN::ApplicationBase::String>();
+        SGEXTN::ApplicationBase::InitSetup::private_infoWebsites = new SGEXTN::Containers::Vector<SGEXTN::ApplicationBase::OldString>();
     }
     (*SGEXTN::ApplicationBase::InitSetup::private_infoWebsites).pushBack(link);
 }

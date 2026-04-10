@@ -1,6 +1,6 @@
 #pragma once
 #include <SGEXTN_Structs_RgbaColour.h>
-#include <SGEXTN_ApplicationBase_String.h>
+#include <SGEXTN_ApplicationBase_OldString.h>
 
 namespace SGEXTN {
 namespace Structs {
@@ -19,7 +19,7 @@ public:
     [[nodiscard]] bool operator<(HslaColour x) const;
     [[nodiscard]] bool operator>(HslaColour x) const;
     [[nodiscard]] int hash() const;
-    [[nodiscard]] SGEXTN::ApplicationBase::String debugLog() const;
+    [[nodiscard]] SGEXTN::ApplicationBase::OldString debugLog() const;
     float getHue() const;
     float getSaturation() const;
     float getLightness() const;

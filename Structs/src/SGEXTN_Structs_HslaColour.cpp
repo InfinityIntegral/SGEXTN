@@ -4,7 +4,7 @@
 #include <SGEXTN_Containers_Array.h>
 #include <SGEXTN_Containers_Hash.h>
 #include <SGEXTN_Containers_HashAlgorithm.h>
-#include <SGEXTN_ApplicationBase_String.h>
+#include <SGEXTN_ApplicationBase_OldString.h>
 #include <SGEXTN_Containers_Span.h>
 
 namespace {
@@ -125,8 +125,8 @@ int SGEXTN::Structs::HslaColour::hash() const {
     return SGEXTN::Containers::HashAlgorithm::wyHash32(SGEXTN::Containers::Span<const unsigned char>(reinterpret_cast<const unsigned char*>(hashArray.pointerToData(0)), 4 * sizeof(int)));
 }
 
-SGEXTN::ApplicationBase::String SGEXTN::Structs::HslaColour::debugLog() const {
-    return SGEXTN::ApplicationBase::String("hsla(") + SGEXTN::ApplicationBase::String::stringFromFloat(private_hue, SGEXTN::ApplicationBase::FloatDisplayFormat::DecimalPlace, 0) + ", " + SGEXTN::ApplicationBase::String::stringFromFloat(private_saturation, SGEXTN::ApplicationBase::FloatDisplayFormat::DecimalPlace, 0) + ", " + SGEXTN::ApplicationBase::String::stringFromFloat(private_lightness, SGEXTN::ApplicationBase::FloatDisplayFormat::DecimalPlace, 0) + ", " + SGEXTN::ApplicationBase::String::stringFromFloat(private_transparency, SGEXTN::ApplicationBase::FloatDisplayFormat::DecimalPlace, 0) + ")";
+SGEXTN::ApplicationBase::OldString SGEXTN::Structs::HslaColour::debugLog() const {
+    return SGEXTN::ApplicationBase::OldString("hsla(") + SGEXTN::ApplicationBase::OldString::stringFromFloat(private_hue, SGEXTN::ApplicationBase::FloatDisplayFormat::DecimalPlace, 0) + ", " + SGEXTN::ApplicationBase::OldString::stringFromFloat(private_saturation, SGEXTN::ApplicationBase::FloatDisplayFormat::DecimalPlace, 0) + ", " + SGEXTN::ApplicationBase::OldString::stringFromFloat(private_lightness, SGEXTN::ApplicationBase::FloatDisplayFormat::DecimalPlace, 0) + ", " + SGEXTN::ApplicationBase::OldString::stringFromFloat(private_transparency, SGEXTN::ApplicationBase::FloatDisplayFormat::DecimalPlace, 0) + ")";
 }
 
 float SGEXTN::Structs::HslaColour::getHue() const {
