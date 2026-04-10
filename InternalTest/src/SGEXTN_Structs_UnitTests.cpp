@@ -210,12 +210,12 @@ void SGEXTN::Structs::UnitTests::testIdentifierRegistry(){
     if(registry.contains(id) == true){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::IdentifierRegistry contains unregistered identifier fail");}
     if(registry.generateAndRegisterIdentifier() == SGEXTN::Structs::Identifier::nullIdentifier()){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::IdentifierRegistry identifier generation fail");}
 }
-#include <SGEXTN_ApplicationBase_Debug.h>
+
 void SGEXTN::Structs::UnitTests::testDateTime(){
     if(SGEXTN::Structs::DateTime() != SGEXTN::Structs::DateTime(0, 8, 9, 10, 30, 0)){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime default constructor fail");}
     SGEXTN::Structs::DateTime zero;
-    SGEXTN::Structs::DateTime a;
-    SGEXTN::Structs::DateTime b(21, 1, 1, 0, 0, 0);
+    const SGEXTN::Structs::DateTime a;
+    const SGEXTN::Structs::DateTime b(21, 1, 1, 0, 0, 0);
     if(a == b){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime equality check fail");}
     if(a != SGEXTN::Structs::DateTime(0, 8, 9, 10, 30, 0)){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime inequality check fail");}
     if(b < a){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime less than operator fail");}
@@ -233,11 +233,11 @@ void SGEXTN::Structs::UnitTests::testDateTime(){
                 if(day > 28 && month == 2 && isLeapYear == false){continue;}
                 if(day > 29 && month == 2 && isLeapYear == true){continue;}
                 if(day == 31 && (month == 4 || month == 6 || month == 9 || month == 11)){continue;}
-                int hour = (year % 24 + 24) % 24;
-                int minute = ((year + month + day) % 60 + 60) % 60;
-                int second = ((year + month + day) % 60 + 60) % 60;
-                QDateTime qDateTime = QDateTime(QDate(year + 1965, month, day), QTime(hour, minute, second), QTimeZone::UTC);
-                long long expected = QDateTime(QDate(1965, 8, 9), QTime(10, 30, 0), QTimeZone::UTC).secsTo(qDateTime);
+                const int hour = (year % 24 + 24) % 24;
+                const int minute = ((year + month + day) % 60 + 60) % 60;
+                const int second = ((year + month + day) % 60 + 60) % 60;
+                const QDateTime qDateTime = QDateTime(QDate(year + 1965, month, day), QTime(hour, minute, second), QTimeZone::UTC);
+                const long long expected = QDateTime(QDate(1965, 8, 9), QTime(10, 30, 0), QTimeZone::UTC).secsTo(qDateTime);
                 SGEXTN::Structs::DateTime thisDateTime(year, month, day, hour, minute, second);
                 if(expected != thisDateTime.private_data){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime components constructor fail");}
                 if(thisDateTime.getPart(SGEXTN::Structs::TimeUnit::Year) != year){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime get year fail");}
@@ -246,7 +246,7 @@ void SGEXTN::Structs::UnitTests::testDateTime(){
                 if(thisDateTime.getPart(SGEXTN::Structs::TimeUnit::Hour) != hour){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime get hour fail");}
                 if(thisDateTime.getPart(SGEXTN::Structs::TimeUnit::Minute) != minute){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime get minute fail");}
                 if(thisDateTime.getPart(SGEXTN::Structs::TimeUnit::Second) != second){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime get second fail");}
-                SGEXTN::Structs::DateTime originalDateTime = thisDateTime;
+                const SGEXTN::Structs::DateTime originalDateTime = thisDateTime;
                 thisDateTime.setPart(SGEXTN::Structs::TimeUnit::Year, 0);
                 if(thisDateTime != SGEXTN::Structs::DateTime(0, month, day, hour, minute, second)){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime set year fail");}
                 thisDateTime = originalDateTime;
@@ -272,16 +272,16 @@ void SGEXTN::Structs::UnitTests::testDateTime(){
                 if(thisDateTime.getStartOfDay().private_data != QDateTime(QDate(1965, 8, 9), QTime(10, 30, 0), QTimeZone::UTC).secsTo(qDateTime.date().startOfDay(QTimeZone::UTC))){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime start of day fail");}
                 if(thisDateTime.getEndOfDay().private_data != QDateTime(QDate(1965, 8, 9), QTime(10, 30, 0), QTimeZone::UTC).secsTo(qDateTime.date().startOfDay(QTimeZone::UTC)) + 86400ll){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime end of day fail");}
                 if(thisDateTime.getWeekOfYear() != qDateTime.date().weekNumber()){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime week count fail");}
-                int diffYear = thisDateTime.getTimeAfterDisplayPart(SGEXTN::Structs::DateTime::beginningOfTime(), SGEXTN::Structs::TimeUnit::Year);
-                int diffMonth = thisDateTime.getTimeAfterDisplayPart(SGEXTN::Structs::DateTime::beginningOfTime(), SGEXTN::Structs::TimeUnit::Month);
+                const int diffYear = thisDateTime.getTimeAfterDisplayPart(SGEXTN::Structs::DateTime::beginningOfTime(), SGEXTN::Structs::TimeUnit::Year);
+                const int diffMonth = thisDateTime.getTimeAfterDisplayPart(SGEXTN::Structs::DateTime::beginningOfTime(), SGEXTN::Structs::TimeUnit::Month);
                 if(diffMonth < 0 || diffMonth > 11){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime time after display part month fail");}
-                int diffDay = thisDateTime.getTimeAfterDisplayPart(SGEXTN::Structs::DateTime::beginningOfTime(), SGEXTN::Structs::TimeUnit::Day);
+                const int diffDay = thisDateTime.getTimeAfterDisplayPart(SGEXTN::Structs::DateTime::beginningOfTime(), SGEXTN::Structs::TimeUnit::Day);
                 if(diffDay < 0 || diffDay > 30){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime time after display part day fail");}
-                int diffHour = thisDateTime.getTimeAfterDisplayPart(SGEXTN::Structs::DateTime::beginningOfTime(), SGEXTN::Structs::TimeUnit::Hour);
+                const int diffHour = thisDateTime.getTimeAfterDisplayPart(SGEXTN::Structs::DateTime::beginningOfTime(), SGEXTN::Structs::TimeUnit::Hour);
                 if(diffHour < 0 || diffHour > 23){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime time after display part hour fail");}
-                int diffMinute = thisDateTime.getTimeAfterDisplayPart(SGEXTN::Structs::DateTime::beginningOfTime(), SGEXTN::Structs::TimeUnit::Minute);
+                const int diffMinute = thisDateTime.getTimeAfterDisplayPart(SGEXTN::Structs::DateTime::beginningOfTime(), SGEXTN::Structs::TimeUnit::Minute);
                 if(diffMinute < 0 || diffMinute > 59){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime time after display part minute fail");}
-                int diffSecond = thisDateTime.getTimeAfterDisplayPart(SGEXTN::Structs::DateTime::beginningOfTime(), SGEXTN::Structs::TimeUnit::Second);
+                const int diffSecond = thisDateTime.getTimeAfterDisplayPart(SGEXTN::Structs::DateTime::beginningOfTime(), SGEXTN::Structs::TimeUnit::Second);
                 if(diffSecond < 0 || diffSecond > 59){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime time after display part second fail");}
                 zero = SGEXTN::Structs::DateTime::beginningOfTime();
                 zero.advanceTime(diffYear, SGEXTN::Structs::TimeUnit::Year);

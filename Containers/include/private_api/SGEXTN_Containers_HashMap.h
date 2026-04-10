@@ -2,7 +2,7 @@
 
 namespace SGEXTN {
 namespace Containers {
-enum class HashMapSlotStatus {Active, Unused, Deleted};
+enum class HashMapSlotStatus : unsigned char {Active, Unused, Deleted};
 
 template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> class HashMapSlot {
 public:

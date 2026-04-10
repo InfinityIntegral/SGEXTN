@@ -5,7 +5,7 @@
 class QString;
 namespace SGEXTN {
 namespace ApplicationBase {
-enum class BUILDLAH_DLL_SGEXTN_ApplicationBase FloatDisplayFormat {Default, DecimalPlace, ScientificNotation};
+enum class BUILDLAH_DLL_SGEXTN_ApplicationBase FloatDisplayFormat : unsigned char {Default, DecimalPlace, ScientificNotation};
 
 class BUILDLAH_DLL_SGEXTN_ApplicationBase String {
 public:

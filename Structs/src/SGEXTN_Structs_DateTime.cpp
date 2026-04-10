@@ -2,6 +2,7 @@
 #include <SGEXTN_Containers_Hash.h>
 #include <SGEXTN_ApplicationBase_String.h>
 #include <chrono>
+#include <private_api/SGEXTN_Containers_Crash.h>
 
 namespace {
 int monthOffset(int month, bool isLeapYear){
@@ -70,7 +71,7 @@ long long properDivision(long long dividend, long long divisor){
 }
 
 long long partsToOffset(int year, int month, int day, int hour, int minute, int second){
-    bool isLeapYear = checkLeapYear(year);
+    const bool isLeapYear = checkLeapYear(year);
     year -= 36;
     long long t36 = static_cast<long long>(properDivision(year, 400)) * 12622780800ll;
     year = properRemainder(year, 400);
@@ -82,7 +83,7 @@ long long partsToOffset(int year, int month, int day, int hour, int minute, int 
     if(month < 1){month = 1;}
     else if(month > 12){month = 12;}
     t36 += 86400ll * static_cast<long long>(monthOffset(month, isLeapYear));
-    int lengthOfMonth = monthLength(month, isLeapYear);
+    const int lengthOfMonth = monthLength(month, isLeapYear);
     if(day < 1){day = 1;}
     else if(day > lengthOfMonth){day = lengthOfMonth;}
     t36 += 86400ll * static_cast<long long>(day - 1);
@@ -125,12 +126,12 @@ void offsetToParts(long long offset, int* yearOutput, int* monthOutput, int* day
     year += cycleCount;
     setOutput(yearOutput, year);
     if(dayOutput == nullptr && monthOutput == nullptr){return;}
-    bool isLeapYear = checkLeapYear(year);
+    const bool isLeapYear = checkLeapYear(year);
     t36 -= static_cast<long long>(cycleCount) * 365ll;
     int lowMonth = 1;
     int highMonth = 13;
     while(highMonth - lowMonth > 1){
-        int mid = (lowMonth + highMonth) / 2;
+        const int mid = (lowMonth + highMonth) / 2;
         if(monthOffset(mid, isLeapYear) <= t36){lowMonth = mid;}
         else{highMonth = mid;}
     }
@@ -228,8 +229,8 @@ void SGEXTN::Structs::DateTime::setPart(SGEXTN::Structs::TimeUnit unit, int x){
         month = x;
     }
     else if(unit == SGEXTN::Structs::TimeUnit::Day){
-        bool isLeapYear = checkLeapYear(year);
-        int maxDays = monthLength(month, isLeapYear);
+        const bool isLeapYear = checkLeapYear(year);
+        const int maxDays = monthLength(month, isLeapYear);
         if(x < 1){x = 1;}
         else if(x > maxDays){x = maxDays;}
         day = x;
@@ -300,7 +301,7 @@ int SGEXTN::Structs::DateTime::getWeekOfYear() const {
     int dayOfYearThisThursday = getDayOfYear() - getDayOfWeek() + 3;
     if(dayOfYearThisThursday >= countDaysInYear()){return 1;}
     if(dayOfYearThisThursday >= 0){return (dayOfYearThisThursday / 7 + 1);}
-    bool previousIsLeapYear = checkLeapYear(getPart(SGEXTN::Structs::TimeUnit::Year) - 1);
+    const bool previousIsLeapYear = checkLeapYear(getPart(SGEXTN::Structs::TimeUnit::Year) - 1);
     if(previousIsLeapYear == false){dayOfYearThisThursday += 365;}
     else{dayOfYearThisThursday += 366;}
     return (dayOfYearThisThursday / 7 + 1);
@@ -326,21 +327,21 @@ int SGEXTN::Structs::DateTime::getTimeAfterDisplayPart(SGEXTN::Structs::DateTime
     offsetToParts(x.private_data, &year2, &month2, &day2, &hour2, &minute2, &second2);
     if(unit == SGEXTN::Structs::TimeUnit::Year){
         answer = year1 - year2;
-        int carry1 = 2678400 * month1 + 86400 * day1 + 3600 * hour1 + 60 * minute1 + second1;
-        int carry2 = 2678400 * month2 + 86400 * day2 + 3600 * hour2 + 60 * minute2 + second2;
+        const int carry1 = 2678400 * month1 + 86400 * day1 + 3600 * hour1 + 60 * minute1 + second1;
+        const int carry2 = 2678400 * month2 + 86400 * day2 + 3600 * hour2 + 60 * minute2 + second2;
         if(carry2 > carry1){carryBelow = -1;}
     }
     else if(unit == SGEXTN::Structs::TimeUnit::Month){
         answer = month1 - month2;
-        int carry1 = 86400 * day1 + 3600 * hour1 + 60 * minute1 + second1;
-        int carry2 = 86400 * day2 + 3600 * hour2 + 60 * minute2 + second2;
+        const int carry1 = 86400 * day1 + 3600 * hour1 + 60 * minute1 + second1;
+        const int carry2 = 86400 * day2 + 3600 * hour2 + 60 * minute2 + second2;
         if(carry2 > carry1){carryBelow = -1;}
         if(answer + carryBelow < 0){carryAbove = 12;}
     }
     else if(unit == SGEXTN::Structs::TimeUnit::Day){
         answer = day1 - day2;
-        int carry1 = 3600 * hour1 + 60 * minute1 + second1;
-        int carry2 = 3600 * hour2 + 60 * minute2 + second2;
+        const int carry1 = 3600 * hour1 + 60 * minute1 + second1;
+        const int carry2 = 3600 * hour2 + 60 * minute2 + second2;
         if(carry2 > carry1){carryBelow = -1;}
         int carryYear = year1;
         int carryMonth = month1 - 1;
@@ -352,8 +353,8 @@ int SGEXTN::Structs::DateTime::getTimeAfterDisplayPart(SGEXTN::Structs::DateTime
     }
     else if(unit == SGEXTN::Structs::TimeUnit::Hour){
         answer = hour1 - hour2;
-        int carry1 = 60 * minute1 + second1;
-        int carry2 = 60 * minute2 + second2;
+        const int carry1 = 60 * minute1 + second1;
+        const int carry2 = 60 * minute2 + second2;
         if(carry2 > carry1){carryBelow = -1;}
         if(answer + carryBelow < 0){carryAbove = 24;}
     }
@@ -410,7 +411,7 @@ int SGEXTN::Structs::DateTime::convertToGlobalYear(int standardYear){
 }
 
 bool SGEXTN::Structs::DateTime::isNationalDayPeriod() const {
-    int month = getPart(SGEXTN::Structs::TimeUnit::Month);
+    const int month = getPart(SGEXTN::Structs::TimeUnit::Month);
     if(month >= 7 && month <= 9){return true;}
     return false;
 }
@@ -474,7 +475,7 @@ SGEXTN::ApplicationBase::String SGEXTN::Structs::DateTime::getDisplayString(cons
             continue;
         }
         if(thisToken.length() == 1 || thisToken.getCharAt(1).isDigit() == false){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime::getDisplayString crashed because the precision specifier, which is the character after the %, in a token is not a number");}
-        int precision = SGEXTN::ApplicationBase::String(thisToken.getCharAt(1)).parseToInt(nullptr, 10);
+        const int precision = SGEXTN::ApplicationBase::String(thisToken.getCharAt(1)).parseToInt(nullptr, 10);
         int component = 0;
         thisToken = thisToken.substringRight(thisToken.length() - 2);
         if(thisToken == "year"){component = getPart(SGEXTN::Structs::TimeUnit::Year);}

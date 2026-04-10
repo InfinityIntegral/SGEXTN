@@ -3,11 +3,11 @@
 
 namespace SGEXTN {
 namespace Structs {
-enum class BUILDLAH_DLL_SGEXTN_Structs TimeUnit {Year, Month, Day, Hour, Minute, Second};
+enum class BUILDLAH_DLL_SGEXTN_Structs TimeUnit : unsigned char {Year, Month, Day, Hour, Minute, Second};
 
-enum class BUILDLAH_DLL_SGEXTN_Structs TimeFormat {Display, FileName, ShortestReadable};
+enum class BUILDLAH_DLL_SGEXTN_Structs TimeFormat : unsigned char {Display, FileName, ShortestReadable};
 
-enum class BUILDLAH_DLL_SGEXTN_Structs SignificantDates {NationalDay, DayBeforeNationalDay, DayAfterNationalDay, TotalDefenceDay, RacialHarmonyDay};
+enum class BUILDLAH_DLL_SGEXTN_Structs SignificantDates : unsigned char {NationalDay, DayBeforeNationalDay, DayAfterNationalDay, TotalDefenceDay, RacialHarmonyDay};
 
 class BUILDLAH_DLL_SGEXTN_Structs DateTime {
 public:
