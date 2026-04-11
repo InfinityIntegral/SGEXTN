@@ -10,6 +10,7 @@
 #include <QTime>
 #include <QTimeZone>
 #include <SGEXTN_Structs_DateTime.h>
+#include <SGEXTN_ApplicationBase_OldString.h>
 
 namespace {
 bool isCloseEnough(float a, float b){

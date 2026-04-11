@@ -1,7 +1,10 @@
 #pragma once
-#include <SGEXTN_ApplicationBase_OldString.h>
 
 namespace SGEXTN {
+namespace ApplicationBase {
+class OldString;
+}
+
 namespace Structs {
 enum class BUILDLAH_DLL_SGEXTN_Structs TimeUnit : unsigned char {Year, Month, Day, Hour, Minute, Second};
 

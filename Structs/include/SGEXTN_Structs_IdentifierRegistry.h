@@ -2,10 +2,11 @@
 #include <SGEXTN_Containers_UnorderedSet.h>
 #include <SGEXTN_Containers_EqualTo.h>
 #include <SGEXTN_Containers_Hash.h>
-#include <SGEXTN_Structs_Identifier.h>
 
 namespace SGEXTN {
 namespace Structs {
+class Identifier;
+
 class BUILDLAH_DLL_SGEXTN_Structs IdentifierRegistry{
 public:
     IdentifierRegistry();

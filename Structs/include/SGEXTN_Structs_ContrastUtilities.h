@@ -1,8 +1,9 @@
 #pragma once
-#include <SGEXTN_Structs_RgbaColour.h>
 
 namespace SGEXTN {
 namespace Structs {
+class RgbaColour;
+
 class BUILDLAH_DLL_SGEXTN_Structs ContrastUtilities {
 public:
     [[nodiscard]] static float getContrast(SGEXTN::Structs::RgbaColour bg, SGEXTN::Structs::RgbaColour fg);

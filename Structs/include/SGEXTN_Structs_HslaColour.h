@@ -1,9 +1,13 @@
 #pragma once
-#include <SGEXTN_Structs_RgbaColour.h>
-#include <SGEXTN_ApplicationBase_OldString.h>
 
 namespace SGEXTN {
+namespace ApplicationBase {
+class OldString;
+}
+
 namespace Structs {
+class RgbaColour;
+
 class BUILDLAH_DLL_SGEXTN_Structs HslaColour {
 public:
     float private_hue;
