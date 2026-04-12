@@ -1,5 +1,18 @@
 #pragma once
 
+namespace {
+int acceptableCapacity(int i){
+    if(i < 16){return 16;}
+    int n = i - 1;
+    n |= n >> 1;
+    n |= n >> 2;
+    n |= n >> 4;
+    n |= n >> 8;
+    n |= n >> 16;
+    return (n + 1);
+}
+}
+
 template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> SGEXTN::Containers::HashMapSlot<Key, Value, EqualityCheck, HashFunction>::HashMapSlot(){
     status = HashMapSlotStatus::Unused;
 }
@@ -95,8 +108,7 @@ template <typename Key, typename Value, typename EqualityCheck, typename HashFun
 }
 
 template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> int SGEXTN::Containers::HashMap<Key, Value, EqualityCheck, HashFunction>::getHashIndex(const Key& x) const {
-    int hash = hashFunctionInstance(x) % memoryTotalLength;
-    if(hash < 0){hash += memoryTotalLength;}
+    int hash = hashFunctionInstance(x) & (memoryTotalLength - 1);
     return hash;
 }
 
@@ -117,6 +129,7 @@ template <typename Key, typename Value, typename EqualityCheck, typename HashFun
 }
 
 template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> void SGEXTN::Containers::HashMap<Key, Value, EqualityCheck, HashFunction>::rehashAll(int newMemoryLength){
+    newMemoryLength = acceptableCapacity(newMemoryLength);
     SGEXTN::Containers::HashMapSlot<Key, Value, EqualityCheck, HashFunction>* oldPointer = data;
     int oldMemoryLength = memoryTotalLength;
     memoryTotalLength = newMemoryLength;

@@ -449,7 +449,6 @@ void SGEXTN::Containers::UnitTests::testAll(){
     SGEXTN::Containers::UnitTests::testSort();
 }
 
-// instantiation tests
 // NOLINTBEGIN
 
 class RegularStruct {

@@ -116,7 +116,7 @@ template <typename T> int SGEXTN::Containers::RingBuffer<T>::length() const {
 }
 
 template <typename T> void SGEXTN::Containers::RingBuffer<T>::pushBack(const T& x){
-    if(private_length == private_memoryLength){reserve(2 * private_memoryLength + 1);}
+    if(private_length == private_memoryLength){reserve(3 * private_memoryLength / 2 + 1);}
     private_length++;
     back() = x;
 }
@@ -126,7 +126,7 @@ template <typename T> void SGEXTN::Containers::RingBuffer<T>::popBack(){
 }
 
 template <typename T> void SGEXTN::Containers::RingBuffer<T>::pushFront(const T& x){
-    if(private_length == private_memoryLength){reserve(2 * private_memoryLength + 1);}
+    if(private_length == private_memoryLength){reserve(3 * private_memoryLength / 2 + 1);}
     private_length++;
     private_start--;
     if(private_start < 0){private_start += private_memoryLength;}
