@@ -6,9 +6,6 @@ namespace ApplicationBase {
 class BUILDLAH_DLL_SGEXTN_ApplicationBase TextBuffer {
 public:
     TextBuffer();
-    TextBuffer(char c);
-    TextBuffer(const char* s);
-    TextBuffer(const TextBuffer& data, int start, int length);
     TextBuffer(const TextBuffer& x);
     TextBuffer& operator=(const TextBuffer& x);
     TextBuffer(TextBuffer&& x) noexcept;
@@ -28,6 +25,13 @@ public:
     void pushBack(char c);
     void pushBack(const char* s);
     void pushBack(const TextBuffer& data, int start, int length);
+    [[nodiscard]] bool operator==(const TextBuffer& x) const;
+    [[nodiscard]] bool operator!=(const TextBuffer& x) const;
+    [[nodiscard]] bool operator<(const TextBuffer& x) const;
+    [[nodiscard]] bool operator>(const TextBuffer& x) const;
+    [[nodiscard]] bool operator<=(const TextBuffer& x) const;
+    [[nodiscard]] bool operator>=(const TextBuffer& x) const;
+    [[nodiscard]] int hash() const;
 };
 }
 }

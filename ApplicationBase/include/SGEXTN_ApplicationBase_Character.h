@@ -5,7 +5,7 @@ namespace SGEXTN {
 namespace ApplicationBase {
 class String;
 
-enum class BUILDLAH_DLL_SGEXTN_ApplicationBase SimplifiedCharacterType : unsigned char {Letter, Punctuation, Symbol, Mark, Number, Separator, Other};
+enum class BUILDLAH_DLL_SGEXTN_ApplicationBase SimplifiedCharacterType : unsigned char {Letter, Punctuation, Symbol, Mark, Number, Whitespace, Other};
 
 enum class BUILDLAH_DLL_SGEXTN_ApplicationBase FullCharacterType : unsigned char {NonspacingMark, CombiningMark, EnclosingMark, NumericalDigit, LetterNumber, OtherNumber, SpaceBreak, LineBreak, ParagraphBreak, ControlCharacter, FormatCharacter, SurrogateCharacter, PrivateUseCharacter, UnassignedCharacter, UppercaseLetter, LowercaseLetter, TitlecaseLetter, ModifierLetter, OtherLetter, ConnectorPunctuation, DashPunctuation, OpeningPunctuation, ClosingPunctuation, OpeningQuote, ClosingQuote, OtherPunctuation, MathSymbol, CurrencySymbol, ModifierSymbol, OtherSymbol};
 
@@ -29,7 +29,6 @@ public:
     [[nodiscard]] const unsigned char& byteAt(int i) const;
     [[nodiscard]] char baseToChar() const;
     [[nodiscard]] bool isDigit() const;
-    [[nodiscard]] bool isDigit(int base) const;
     [[nodiscard]] bool isEnglishLowercase() const;
     [[nodiscard]] bool isEnglishUppercase() const;
     [[nodiscard]] bool isEnglishLetter() const;
@@ -37,19 +36,19 @@ public:
     [[nodiscard]] bool isASCII() const;
     [[nodiscard]] bool isWhitespace() const;
     [[nodiscard]] int getUnicode() const;
-    [[nodiscard]] Character getUppercase() const;
-    [[nodiscard]] Character getLowercase() const;
-    [[nodiscard]] Character getTitlecase() const;
     [[nodiscard]] bool isUppercase() const;
     [[nodiscard]] bool isLowercase() const;
     [[nodiscard]] bool isTitlecase() const;
-    [[nodiscard]] Character getNormalised() const;
     [[nodiscard]] bool isNormalised() const;
-    [[nodiscard]] SGEXTN::ApplicationBase::FullCharacterType getBaseFullType() const;
-    [[nodiscard]] SGEXTN::ApplicationBase::String getSimplestEquivalent(bool ignoreCase) const;
-    [[nodiscard]] int parseToNumber() const;
-    [[nodiscard]] SGEXTN::ApplicationBase::WritingDirection getWritingDirection() const;
+    [[nodiscard]] Character getUppercase() const;
+    [[nodiscard]] Character getLowercase() const;
+    [[nodiscard]] Character getTitlecase() const;
+    [[nodiscard]] Character getNormalised() const;
     [[nodiscard]] Character getMirrorImage() const;
+    [[nodiscard]] SGEXTN::ApplicationBase::FullCharacterType getBaseFullType() const;
+    [[nodiscard]] SGEXTN::ApplicationBase::SimplifiedCharacterType getBaseSimplifiedType() const;
+    [[nodiscard]] SGEXTN::ApplicationBase::String getSimplestEquivalent(bool ignoreCase) const;
+    [[nodiscard]] SGEXTN::ApplicationBase::WritingDirection getWritingDirection() const;
 };
 }
 }
