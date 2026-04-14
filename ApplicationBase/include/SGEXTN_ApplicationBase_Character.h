@@ -2,6 +2,10 @@
 #include <private_api/SGEXTN_ApplicationBase_TextBuffer.h>
 
 namespace SGEXTN {
+namespace Containers {
+template <typename T> class Array;
+}
+
 namespace ApplicationBase {
 class String;
 
@@ -35,20 +39,19 @@ public:
     [[nodiscard]] bool isEnglishAlphanumeric() const;
     [[nodiscard]] bool isASCII() const;
     [[nodiscard]] bool isWhitespace() const;
-    [[nodiscard]] int getUnicode() const;
+    [[nodiscard]] SGEXTN::Containers::Array<int> getUnicode() const;
     [[nodiscard]] bool isUppercase() const;
     [[nodiscard]] bool isLowercase() const;
     [[nodiscard]] bool isTitlecase() const;
-    [[nodiscard]] bool isNormalised() const;
     [[nodiscard]] Character getUppercase() const;
     [[nodiscard]] Character getLowercase() const;
     [[nodiscard]] Character getTitlecase() const;
+    [[nodiscard]] bool isNormalised() const;
     [[nodiscard]] Character getNormalised() const;
-    [[nodiscard]] Character getMirrorImage() const;
     [[nodiscard]] SGEXTN::ApplicationBase::FullCharacterType getBaseFullType() const;
     [[nodiscard]] SGEXTN::ApplicationBase::SimplifiedCharacterType getBaseSimplifiedType() const;
-    [[nodiscard]] SGEXTN::ApplicationBase::String getSimplestEquivalent(bool ignoreCase) const;
-    [[nodiscard]] SGEXTN::ApplicationBase::WritingDirection getWritingDirection() const;
+    [[nodiscard]] SGEXTN::ApplicationBase::WritingDirection getBaseWritingDirection() const;
+    [[nodiscard]] SGEXTN::ApplicationBase::String getSimplestEquivalent() const;
 };
 }
 }
