@@ -12,6 +12,8 @@ class Character;
 
 enum class BUILDLAH_DLL_SGEXTN_ApplicationBase FloatPrecisionFormat : unsigned char {SignificantFigure, DecimalPlace, ScientificNotation};
 
+enum class BUILDLAH_DLL_SGEXTN_ApplicationBase NormalisationFormat : unsigned char {Join, Separate, LossyJoin, LossySeparate};
+
 class BUILDLAH_DLL_SGEXTN_ApplicationBase String {
 public:
     SGEXTN::ApplicationBase::TextBuffer private_data;
@@ -106,14 +108,13 @@ public:
     [[nodiscard]] bool isEnglishAlphanumeric() const;
     [[nodiscard]] bool isASCII() const;
     [[nodiscard]] bool isWhitespace() const;
-    [[nodiscard]] String getUppercase() const;
-    [[nodiscard]] String getLowercase() const;
-    [[nodiscard]] String getTitlecase() const;
     [[nodiscard]] bool isUppercase() const;
     [[nodiscard]] bool isLowercase() const;
     [[nodiscard]] bool isTitlecase() const;
-    [[nodiscard]] String getNormalised() const;
-    [[nodiscard]] bool isNormalised() const;
+    [[nodiscard]] String getUppercase() const;
+    [[nodiscard]] String getLowercase() const;
+    [[nodiscard]] String getTitlecase() const;
+    [[nodiscard]] String getNormalised(SGEXTN::ApplicationBase::NormalisationFormat format) const;
     [[nodiscard]] SGEXTN::ApplicationBase::String getSimplestEquivalent(bool ignoreCase) const;
 };
 }

@@ -852,15 +852,6 @@ SGEXTN::ApplicationBase::Character SGEXTN::ApplicationBase::Character::getTitlec
     return output;
 }
 
-bool SGEXTN::ApplicationBase::Character::isNormalised() const {
-    // run fast check path
-    //return ((*this) == getNormalised());
-}
-
-SGEXTN::ApplicationBase::Character SGEXTN::ApplicationBase::Character::getNormalised() const {
-
-}
-
 SGEXTN::ApplicationBase::FullCharacterType SGEXTN::ApplicationBase::Character::getBaseFullType() const {
 
 }
@@ -870,9 +861,5 @@ SGEXTN::ApplicationBase::SimplifiedCharacterType SGEXTN::ApplicationBase::Charac
 }
 
 SGEXTN::ApplicationBase::WritingDirection SGEXTN::ApplicationBase::Character::getBaseWritingDirection() const {
-
-}
-
-SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::Character::getSimplestEquivalent() const {
 
 }

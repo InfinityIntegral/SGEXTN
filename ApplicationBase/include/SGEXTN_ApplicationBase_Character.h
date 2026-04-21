@@ -51,7 +51,7 @@ public:
     [[nodiscard]] SGEXTN::ApplicationBase::FullCharacterType getBaseFullType() const;
     [[nodiscard]] SGEXTN::ApplicationBase::SimplifiedCharacterType getBaseSimplifiedType() const;
     [[nodiscard]] SGEXTN::ApplicationBase::WritingDirection getBaseWritingDirection() const;
-    [[nodiscard]] SGEXTN::ApplicationBase::String getSimplestEquivalent() const;
+    // add script of origin, numerical value, decimal digit value, visual digit value, mirror, unicode block
 };
 }
 }
