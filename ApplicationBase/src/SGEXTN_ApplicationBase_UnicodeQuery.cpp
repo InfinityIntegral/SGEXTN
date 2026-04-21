@@ -644,7 +644,7 @@ int getTitlecaseOffset(int i){
 
 SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
     if(i < 0x20){return SGEXTN::ApplicationBase::FullCharacterType::ControlCharacter;}
-    if(i >= 0x30 && i < 0x3a){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+    if(i >= 0x30 && i < 0x3a){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
     if(i >= 0x20 && i < 0x41){
         if(i == 0x20){return SGEXTN::ApplicationBase::FullCharacterType::SpaceBreak;}
         if(i >= 0x21 && i < 0x24){return SGEXTN::ApplicationBase::FullCharacterType::OtherPunctuation;}
@@ -693,7 +693,7 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
         if(i == 0xbcd){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
         if(i == 0xbd0){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         if(i == 0xbd7){return SGEXTN::ApplicationBase::FullCharacterType::SpacingCombiningMark;}
-        if(i >= 0xbe6 && i < 0xbf0){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0xbe6 && i < 0xbf0){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         if(i >= 0xbf0 && i < 0xbf3){return SGEXTN::ApplicationBase::FullCharacterType::OtherNumber;}
         if(i >= 0xbf3 && i < 0xbf9){return SGEXTN::ApplicationBase::FullCharacterType::OtherSymbol;}
         if(i == 0xbf9){return SGEXTN::ApplicationBase::FullCharacterType::CurrencySymbol;}
@@ -923,7 +923,7 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
         if(i == 0x640){return SGEXTN::ApplicationBase::FullCharacterType::ModifierLetter;}
         if(i >= 0x641 && i < 0x64b){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         if(i >= 0x64b && i < 0x660){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
-        if(i >= 0x660 && i < 0x66a){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0x660 && i < 0x66a){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         if(i >= 0x66a && i < 0x66e){return SGEXTN::ApplicationBase::FullCharacterType::OtherPunctuation;}
         if(i >= 0x66e && i < 0x670){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         if(i == 0x670){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
@@ -939,7 +939,7 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
         if(i == 0x6e9){return SGEXTN::ApplicationBase::FullCharacterType::OtherSymbol;}
         if(i >= 0x6ea && i < 0x6ee){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
         if(i >= 0x6ee && i < 0x6f0){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
-        if(i >= 0x6f0 && i < 0x6fa){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0x6f0 && i < 0x6fa){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         if(i >= 0x6fa && i < 0x6fd){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         if(i >= 0x6fd && i < 0x6ff){return SGEXTN::ApplicationBase::FullCharacterType::OtherSymbol;}
         if(i == 0x6ff){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
@@ -963,7 +963,7 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
         return SGEXTN::ApplicationBase::FullCharacterType::UnassignedCharacter;
     }
     if(i >= 0x7c0 && i <= 0x7ff){
-        if(i >= 0x7c0 && i < 0x7ca){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0x7c0 && i < 0x7ca){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         if(i >= 0x7ca && i < 0x7eb){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         if(i >= 0x7eb && i < 0x7f4){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
         if(i >= 0x7f4 && i < 0x7f6){return SGEXTN::ApplicationBase::FullCharacterType::ModifierLetter;}
@@ -1029,7 +1029,7 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
         if(i >= 0x958 && i < 0x962){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         if(i >= 0x962 && i < 0x964){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
         if(i >= 0x964 && i < 0x966){return SGEXTN::ApplicationBase::FullCharacterType::OtherPunctuation;}
-        if(i >= 0x966 && i < 0x970){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0x966 && i < 0x970){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         if(i == 0x970){return SGEXTN::ApplicationBase::FullCharacterType::OtherPunctuation;}
         if(i == 0x971){return SGEXTN::ApplicationBase::FullCharacterType::ModifierLetter;}
         if(i >= 0x972 && i < 0x980){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
@@ -1057,7 +1057,7 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
         if(i >= 0x9dc && i < 0x9de){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         if(i >= 0x9df && i < 0x9e2){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         if(i >= 0x9e2 && i < 0x9e4){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
-        if(i >= 0x9e6 && i < 0x9f0){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0x9e6 && i < 0x9f0){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         if(i >= 0x9f0 && i < 0x9f2){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         if(i >= 0x9f2 && i < 0x9f4){return SGEXTN::ApplicationBase::FullCharacterType::CurrencySymbol;}
         if(i >= 0x9f4 && i < 0x9fa){return SGEXTN::ApplicationBase::FullCharacterType::OtherNumber;}
@@ -1086,7 +1086,7 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
         if(i == 0xa51){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
         if(i >= 0xa59 && i < 0xa5d){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         if(i == 0xa5e){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
-        if(i >= 0xa66 && i < 0xa70){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0xa66 && i < 0xa70){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         if(i >= 0xa70 && i < 0xa72){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
         if(i >= 0xa72 && i < 0xa75){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         if(i == 0xa75){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
@@ -1113,7 +1113,7 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
         if(i == 0xad0){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         if(i >= 0xae0 && i < 0xae2){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         if(i >= 0xae2 && i < 0xae4){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
-        if(i >= 0xae6 && i < 0xaf0){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0xae6 && i < 0xaf0){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         if(i == 0xaf0){return SGEXTN::ApplicationBase::FullCharacterType::OtherPunctuation;}
         if(i == 0xaf1){return SGEXTN::ApplicationBase::FullCharacterType::CurrencySymbol;}
         if(i == 0xaf9){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
@@ -1141,7 +1141,7 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
         if(i >= 0xb5c && i < 0xb5e){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         if(i >= 0xb5f && i < 0xb62){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         if(i >= 0xb62 && i < 0xb64){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
-        if(i >= 0xb66 && i < 0xb70){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0xb66 && i < 0xb70){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         if(i == 0xb70){return SGEXTN::ApplicationBase::FullCharacterType::OtherSymbol;}
         if(i == 0xb71){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         if(i >= 0xb72 && i < 0xb78){return SGEXTN::ApplicationBase::FullCharacterType::OtherNumber;}
@@ -1166,7 +1166,7 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
         if(i >= 0xc5c && i < 0xc5e){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         if(i >= 0xc60 && i < 0xc62){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         if(i >= 0xc62 && i < 0xc64){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
-        if(i >= 0xc66 && i < 0xc70){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0xc66 && i < 0xc70){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         if(i == 0xc77){return SGEXTN::ApplicationBase::FullCharacterType::OtherPunctuation;}
         if(i >= 0xc78 && i < 0xc7f){return SGEXTN::ApplicationBase::FullCharacterType::OtherNumber;}
         if(i == 0xc7f){return SGEXTN::ApplicationBase::FullCharacterType::OtherSymbol;}
@@ -1195,7 +1195,7 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
         if(i >= 0xcdc && i < 0xcdf){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         if(i >= 0xce0 && i < 0xce2){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         if(i >= 0xce2 && i < 0xce4){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
-        if(i >= 0xce6 && i < 0xcf0){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0xce6 && i < 0xcf0){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         if(i >= 0xcf1 && i < 0xcf3){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         if(i == 0xcf3){return SGEXTN::ApplicationBase::FullCharacterType::SpacingCombiningMark;}
         return SGEXTN::ApplicationBase::FullCharacterType::UnassignedCharacter;
@@ -1220,7 +1220,7 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
         if(i >= 0xd58 && i < 0xd5f){return SGEXTN::ApplicationBase::FullCharacterType::OtherNumber;}
         if(i >= 0xd5f && i < 0xd62){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         if(i >= 0xd62 && i < 0xd64){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
-        if(i >= 0xd66 && i < 0xd70){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0xd66 && i < 0xd70){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         if(i >= 0xd70 && i < 0xd79){return SGEXTN::ApplicationBase::FullCharacterType::OtherNumber;}
         if(i == 0xd79){return SGEXTN::ApplicationBase::FullCharacterType::OtherSymbol;}
         if(i >= 0xd7a && i < 0xd80){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
@@ -1239,7 +1239,7 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
         if(i >= 0xdd2 && i < 0xdd5){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
         if(i == 0xdd6){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
         if(i >= 0xdd8 && i < 0xde0){return SGEXTN::ApplicationBase::FullCharacterType::SpacingCombiningMark;}
-        if(i >= 0xde6 && i < 0xdf0){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0xde6 && i < 0xdf0){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         if(i >= 0xdf2 && i < 0xdf4){return SGEXTN::ApplicationBase::FullCharacterType::SpacingCombiningMark;}
         if(i == 0xdf4){return SGEXTN::ApplicationBase::FullCharacterType::OtherPunctuation;}
         return SGEXTN::ApplicationBase::FullCharacterType::UnassignedCharacter;
@@ -1254,7 +1254,7 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
         if(i == 0xe46){return SGEXTN::ApplicationBase::FullCharacterType::ModifierLetter;}
         if(i >= 0xe47 && i < 0xe4f){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
         if(i == 0xe4f){return SGEXTN::ApplicationBase::FullCharacterType::OtherPunctuation;}
-        if(i >= 0xe50 && i < 0xe5a){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0xe50 && i < 0xe5a){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         if(i >= 0xe5a && i < 0xe5c){return SGEXTN::ApplicationBase::FullCharacterType::OtherPunctuation;}
         return SGEXTN::ApplicationBase::FullCharacterType::UnassignedCharacter;
     }
@@ -1272,7 +1272,7 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
         if(i >= 0xec0 && i < 0xec5){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         if(i == 0xec6){return SGEXTN::ApplicationBase::FullCharacterType::ModifierLetter;}
         if(i >= 0xec8 && i < 0xecf){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
-        if(i >= 0xed0 && i < 0xeda){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0xed0 && i < 0xeda){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         if(i >= 0xedc && i < 0xee0){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         return SGEXTN::ApplicationBase::FullCharacterType::UnassignedCharacter;
     }
@@ -1285,7 +1285,7 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
         if(i >= 0xf15 && i < 0xf18){return SGEXTN::ApplicationBase::FullCharacterType::OtherSymbol;}
         if(i >= 0xf18 && i < 0xf1a){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
         if(i >= 0xf1a && i < 0xf20){return SGEXTN::ApplicationBase::FullCharacterType::OtherSymbol;}
-        if(i >= 0xf20 && i < 0xf2a){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0xf20 && i < 0xf2a){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         if(i >= 0xf2a && i < 0xf34){return SGEXTN::ApplicationBase::FullCharacterType::OtherNumber;}
         if(i == 0xf34 || i == 0xf36 || i == 0xf38){return SGEXTN::ApplicationBase::FullCharacterType::OtherSymbol;}
         if(i == 0xf35 || i == 0xf37 || i == 0xf39){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
@@ -1322,7 +1322,7 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
         if(i >= 0x103b && i < 0x103d){return SGEXTN::ApplicationBase::FullCharacterType::SpacingCombiningMark;}
         if(i >= 0x103d && i < 0x103f){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
         if(i == 0x103f){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
-        if(i >= 0x1040 && i < 0x104a){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0x1040 && i < 0x104a){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         if(i >= 0x104a && i < 0x1050){return SGEXTN::ApplicationBase::FullCharacterType::OtherPunctuation;}
         if(i >= 0x1050 && i < 0x1056){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         if(i >= 0x1056 && i < 0x1058){return SGEXTN::ApplicationBase::FullCharacterType::SpacingCombiningMark;}
@@ -1343,7 +1343,7 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
         if(i == 0x108d){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
         if(i == 0x108e){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         if(i == 0x108f){return SGEXTN::ApplicationBase::FullCharacterType::SpacingCombiningMark;}
-        if(i >= 0x1090 && i < 0x109a){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0x1090 && i < 0x109a){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         if(i >= 0x109a && i < 0x109d){return SGEXTN::ApplicationBase::FullCharacterType::SpacingCombiningMark;}
         if(i == 0x109d){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
         if(i >= 0x109e && i < 0x10a0){return SGEXTN::ApplicationBase::FullCharacterType::OtherSymbol;}
@@ -1453,7 +1453,7 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
         if(i == 0x17db){return SGEXTN::ApplicationBase::FullCharacterType::CurrencySymbol;}
         if(i == 0x17dc){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         if(i == 0x17dd){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
-        if(i >= 0x17e0 && i < 0x17ea){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0x17e0 && i < 0x17ea){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         if(i >= 0x17f0 && i < 0x17fa){return SGEXTN::ApplicationBase::FullCharacterType::OtherNumber;}
         return SGEXTN::ApplicationBase::FullCharacterType::UnassignedCharacter;
     }
@@ -1464,7 +1464,7 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
         if(i >= 0x180b && i < 0x180e){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
         if(i == 0x180e){return SGEXTN::ApplicationBase::FullCharacterType::FormatCharacter;}
         if(i == 0x180f){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
-        if(i >= 0x1810 && i < 0x181a){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0x1810 && i < 0x181a){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         if(i >= 0x1820 && i < 0x1843){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         if(i == 0x1843){return SGEXTN::ApplicationBase::FullCharacterType::ModifierLetter;}
         if(i >= 0x1844 && i < 0x1879){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
@@ -1491,7 +1491,7 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
         if(i >= 0x1939 && i < 0x193c){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
         if(i == 0x1940){return SGEXTN::ApplicationBase::FullCharacterType::OtherSymbol;}
         if(i >= 0x1944 && i < 0x1946){return SGEXTN::ApplicationBase::FullCharacterType::OtherPunctuation;}
-        if(i >= 0x1946 && i < 0x1950){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0x1946 && i < 0x1950){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         return SGEXTN::ApplicationBase::FullCharacterType::UnassignedCharacter;
     }
     if(i >= 0x1950 && i <= 0x197f){
@@ -1502,7 +1502,7 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
     if(i >= 0x1980 && i <= 0x19df){
         if(i >= 0x1980 && i < 0x19ac){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         if(i >= 0x19b0 && i < 0x19ca){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
-        if(i >= 0x19d0 && i < 0x19da){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0x19d0 && i < 0x19da){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         if(i == 0x19da){return SGEXTN::ApplicationBase::FullCharacterType::OtherNumber;}
         if(i >= 0x19de && i < 0x19e0){return SGEXTN::ApplicationBase::FullCharacterType::OtherSymbol;}
         return SGEXTN::ApplicationBase::FullCharacterType::UnassignedCharacter;
@@ -1528,8 +1528,8 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
         if(i >= 0x1a6d && i < 0x1a73){return SGEXTN::ApplicationBase::FullCharacterType::SpacingCombiningMark;}
         if(i >= 0x1a73 && i < 0x1a7d){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
         if(i == 0x1a7f){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
-        if(i >= 0x1a80 && i < 0x1a8a){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
-        if(i >= 0x1a90 && i < 0x1a9a){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0x1a80 && i < 0x1a8a){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
+        if(i >= 0x1a90 && i < 0x1a9a){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         if(i >= 0x1aa0 && i < 0x1aa7){return SGEXTN::ApplicationBase::FullCharacterType::OtherPunctuation;}
         if(i == 0x1aa7){return SGEXTN::ApplicationBase::FullCharacterType::ModifierLetter;}
         if(i >= 0x1aa8 && i < 0x1aae){return SGEXTN::ApplicationBase::FullCharacterType::OtherPunctuation;}
@@ -1556,7 +1556,7 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
         if(i >= 0x1b43 && i < 0x1b45){return SGEXTN::ApplicationBase::FullCharacterType::SpacingCombiningMark;}
         if(i >= 0x1b45 && i < 0x1b4d){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         if(i >= 0x1b4e && i < 0x1b50){return SGEXTN::ApplicationBase::FullCharacterType::OtherPunctuation;}
-        if(i >= 0x1b50 && i < 0x1b5a){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0x1b50 && i < 0x1b5a){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         if(i >= 0x1b5a && i < 0x1b61){return SGEXTN::ApplicationBase::FullCharacterType::OtherPunctuation;}
         if(i >= 0x1b61 && i < 0x1b6b){return SGEXTN::ApplicationBase::FullCharacterType::OtherSymbol;}
         if(i >= 0x1b6b && i < 0x1b74){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
@@ -1575,7 +1575,7 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
         if(i == 0x1baa){return SGEXTN::ApplicationBase::FullCharacterType::SpacingCombiningMark;}
         if(i >= 0x1bab && i < 0x1bae){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
         if(i >= 0x1bae && i < 0x1bb0){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
-        if(i >= 0x1bb0 && i < 0x1bba){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0x1bb0 && i < 0x1bba){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         if(i >= 0x1bba && i < 0x1bc0){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         return SGEXTN::ApplicationBase::FullCharacterType::UnassignedCharacter;
     }
@@ -1599,12 +1599,12 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
         if(i >= 0x1c34 && i < 0x1c36){return SGEXTN::ApplicationBase::FullCharacterType::SpacingCombiningMark;}
         if(i >= 0x1c36 && i < 0x1c38){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
         if(i >= 0x1c3b && i < 0x1c40){return SGEXTN::ApplicationBase::FullCharacterType::OtherPunctuation;}
-        if(i >= 0x1c40 && i < 0x1c4a){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0x1c40 && i < 0x1c4a){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         if(i >= 0x1c4d && i < 0x1c50){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         return SGEXTN::ApplicationBase::FullCharacterType::UnassignedCharacter;
     }
     if(i >= 0x1c50 && i <= 0x1c7f){
-        if(i >= 0x1c50 && i < 0x1c5a){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0x1c50 && i < 0x1c5a){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         if(i >= 0x1c5a && i < 0x1c78){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         if(i >= 0x1c78 && i < 0x1c7e){return SGEXTN::ApplicationBase::FullCharacterType::ModifierLetter;}
         if(i >= 0x1c7e && i < 0x1c80){return SGEXTN::ApplicationBase::FullCharacterType::OtherPunctuation;}
@@ -2144,7 +2144,7 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
         if(i == 0xa60c){return SGEXTN::ApplicationBase::FullCharacterType::ModifierLetter;}
         if(i >= 0xa60d && i < 0xa610){return SGEXTN::ApplicationBase::FullCharacterType::OtherPunctuation;}
         if(i >= 0xa610 && i < 0xa620){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
-        if(i >= 0xa620 && i < 0xa62a){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0xa620 && i < 0xa62a){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         if(i >= 0xa62a && i < 0xa62c){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         return SGEXTN::ApplicationBase::FullCharacterType::UnassignedCharacter;
     }
@@ -2253,7 +2253,7 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
         if(i >= 0xa8b4 && i < 0xa8c4){return SGEXTN::ApplicationBase::FullCharacterType::SpacingCombiningMark;}
         if(i >= 0xa8c4 && i < 0xa8c6){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
         if(i >= 0xa8ce && i < 0xa8d0){return SGEXTN::ApplicationBase::FullCharacterType::OtherPunctuation;}
-        if(i >= 0xa8d0 && i < 0xa8da){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0xa8d0 && i < 0xa8da){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         return SGEXTN::ApplicationBase::FullCharacterType::UnassignedCharacter;
     }
     if(i >= 0xa8e0 && i <= 0xa8ff){
@@ -2267,7 +2267,7 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
         return SGEXTN::ApplicationBase::FullCharacterType::UnassignedCharacter;
     }
     if(i >= 0xa900 && i <= 0xa92f){
-        if(i >= 0xa900 && i < 0xa90a){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0xa900 && i < 0xa90a){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         if(i >= 0xa90a && i < 0xa926){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         if(i >= 0xa926 && i < 0xa92e){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
         if(i >= 0xa92e && i < 0xa930){return SGEXTN::ApplicationBase::FullCharacterType::OtherPunctuation;}
@@ -2296,7 +2296,7 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
         if(i >= 0xa9be && i < 0xa9c1){return SGEXTN::ApplicationBase::FullCharacterType::SpacingCombiningMark;}
         if(i >= 0xa9c1 && i < 0xa9ce){return SGEXTN::ApplicationBase::FullCharacterType::OtherPunctuation;}
         if(i == 0xa9cf){return SGEXTN::ApplicationBase::FullCharacterType::ModifierLetter;}
-        if(i >= 0xa9d0 && i < 0xa9da){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0xa9d0 && i < 0xa9da){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         if(i >= 0xa9de && i < 0xa9e0){return SGEXTN::ApplicationBase::FullCharacterType::OtherPunctuation;}
         return SGEXTN::ApplicationBase::FullCharacterType::UnassignedCharacter;
     }
@@ -2305,7 +2305,7 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
         if(i == 0xa9e5){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
         if(i == 0xa9e6){return SGEXTN::ApplicationBase::FullCharacterType::ModifierLetter;}
         if(i >= 0xa9e7 && i < 0xa9f0){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
-        if(i >= 0xa9f0 && i < 0xa9fa){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0xa9f0 && i < 0xa9fa){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         if(i >= 0xa9fa && i < 0xa9ff){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         return SGEXTN::ApplicationBase::FullCharacterType::UnassignedCharacter;
     }
@@ -2321,7 +2321,7 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
         if(i >= 0xaa44 && i < 0xaa4c){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         if(i == 0xaa4c){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
         if(i == 0xaa4d){return SGEXTN::ApplicationBase::FullCharacterType::SpacingCombiningMark;}
-        if(i >= 0xaa50 && i < 0xaa5a){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0xaa50 && i < 0xaa5a){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         if(i >= 0xaa5c && i < 0xaa60){return SGEXTN::ApplicationBase::FullCharacterType::OtherPunctuation;}
         return SGEXTN::ApplicationBase::FullCharacterType::UnassignedCharacter;
     }
@@ -2392,7 +2392,7 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
         if(i == 0xabeb){return SGEXTN::ApplicationBase::FullCharacterType::OtherPunctuation;}
         if(i == 0xabec){return SGEXTN::ApplicationBase::FullCharacterType::SpacingCombiningMark;}
         if(i == 0xabed){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
-        if(i >= 0xabf0 && i < 0xabfa){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0xabf0 && i < 0xabfa){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         return SGEXTN::ApplicationBase::FullCharacterType::UnassignedCharacter;
     }
     if(i >= 0xac00 && i <= 0xd7af){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
@@ -2493,7 +2493,7 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
         if(i == 0xff0b){return SGEXTN::ApplicationBase::FullCharacterType::MathSymbol;}
         if(i == 0xff0d){return SGEXTN::ApplicationBase::FullCharacterType::DashPunctuation;}
         if(i >= 0xff0e && i < 0xff10){return SGEXTN::ApplicationBase::FullCharacterType::OtherPunctuation;}
-        if(i >= 0xff10 && i < 0xff1a){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0xff10 && i < 0xff1a){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         if(i >= 0xff1a && i < 0xff1c){return SGEXTN::ApplicationBase::FullCharacterType::OtherPunctuation;}
         if(i >= 0xff1c && i < 0xff1f){return SGEXTN::ApplicationBase::FullCharacterType::MathSymbol;}
         if(i >= 0xff1f && i < 0xff21){return SGEXTN::ApplicationBase::FullCharacterType::OtherPunctuation;}
@@ -2623,7 +2623,7 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
     if(i >= 0x10450 && i <= 0x1047f){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
     if(i >= 0x10480 && i <= 0x104af){
         if(i >= 0x10480 && i < 0x1049e){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
-        if(i >= 0x104a0 && i < 0x104aa){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0x104a0 && i < 0x104aa){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         return SGEXTN::ApplicationBase::FullCharacterType::UnassignedCharacter;
     }
     if(i >= 0x104b0 && i <= 0x104ff){
@@ -2789,11 +2789,11 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
     if(i >= 0x10d00 && i <= 0x10d3f){
         if(i >= 0x10d00 && i < 0x10d24){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         if(i >= 0x10d24 && i < 0x10d28){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
-        if(i >= 0x10d30 && i < 0x10d3a){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0x10d30 && i < 0x10d3a){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         return SGEXTN::ApplicationBase::FullCharacterType::UnassignedCharacter;
     }
     if(i >= 0x10d40 && i <= 0x10d8f){
-        if(i >= 0x10d40 && i < 0x10d4a){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0x10d40 && i < 0x10d4a){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         if(i >= 0x10d4a && i < 0x10d4e){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         if(i == 0x10d4e){return SGEXTN::ApplicationBase::FullCharacterType::ModifierLetter;}
         if(i == 0x10d4f){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
@@ -2860,7 +2860,7 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
         if(i >= 0x11038 && i < 0x11047){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
         if(i >= 0x11047 && i < 0x1104e){return SGEXTN::ApplicationBase::FullCharacterType::OtherPunctuation;}
         if(i >= 0x11052 && i < 0x11066){return SGEXTN::ApplicationBase::FullCharacterType::OtherNumber;}
-        if(i >= 0x11066 && i < 0x11070){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0x11066 && i < 0x11070){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         if(i == 0x11070){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
         if(i >= 0x11071 && i < 0x11073){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         if(i >= 0x11073 && i < 0x11075){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
@@ -2885,7 +2885,7 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
     }
     if(i >= 0x110d0 && i <= 0x110ff){
         if(i >= 0x110d0 && i < 0x110e9){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
-        if(i >= 0x110f0 && i < 0x110fa){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0x110f0 && i < 0x110fa){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         return SGEXTN::ApplicationBase::FullCharacterType::UnassignedCharacter;
     }
     if(i >= 0x11100 && i <= 0x1114f){
@@ -2894,7 +2894,7 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
         if(i >= 0x11127 && i < 0x1112c){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
         if(i == 0x1112c){return SGEXTN::ApplicationBase::FullCharacterType::SpacingCombiningMark;}
         if(i >= 0x1112d && i < 0x11135){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
-        if(i >= 0x11136 && i < 0x11140){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0x11136 && i < 0x11140){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         if(i >= 0x11140 && i < 0x11144){return SGEXTN::ApplicationBase::FullCharacterType::OtherPunctuation;}
         if(i == 0x11144 || i == 0x11147){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         if(i >= 0x11145 && i < 0x11147){return SGEXTN::ApplicationBase::FullCharacterType::SpacingCombiningMark;}
@@ -2920,7 +2920,7 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
         if(i == 0x111cd){return SGEXTN::ApplicationBase::FullCharacterType::OtherPunctuation;}
         if(i == 0x111ce){return SGEXTN::ApplicationBase::FullCharacterType::SpacingCombiningMark;}
         if(i == 0x111cf){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
-        if(i >= 0x111d0 && i < 0x111da){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0x111d0 && i < 0x111da){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         if(i == 0x111da || i == 0x111dc){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         if(i == 0x111db){return SGEXTN::ApplicationBase::FullCharacterType::OtherPunctuation;}
         if(i >= 0x111dd && i < 0x111e0){return SGEXTN::ApplicationBase::FullCharacterType::OtherPunctuation;}
@@ -2959,7 +2959,7 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
         if(i == 0x112df){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
         if(i >= 0x112e0 && i < 0x112e3){return SGEXTN::ApplicationBase::FullCharacterType::SpacingCombiningMark;}
         if(i >= 0x112e3 && i < 0x112eb){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
-        if(i >= 0x112f0 && i < 0x112fa){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0x112f0 && i < 0x112fa){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         return SGEXTN::ApplicationBase::FullCharacterType::UnassignedCharacter;
     }
     if(i >= 0x11300 && i <= 0x1137f){
@@ -3014,7 +3014,7 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
         if(i == 0x11446){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
         if(i >= 0x11447 && i < 0x1144b){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         if(i >= 0x1144b && i < 0x11450){return SGEXTN::ApplicationBase::FullCharacterType::OtherPunctuation;}
-        if(i >= 0x11450 && i < 0x1145a){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0x11450 && i < 0x1145a){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         if(i >= 0x1145a && i < 0x1145c){return SGEXTN::ApplicationBase::FullCharacterType::OtherPunctuation;}
         if(i == 0x1145d){return SGEXTN::ApplicationBase::FullCharacterType::OtherPunctuation;}
         if(i == 0x1145e){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
@@ -3034,7 +3034,7 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
         if(i >= 0x114c4 && i < 0x114c6){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         if(i == 0x114c6){return SGEXTN::ApplicationBase::FullCharacterType::OtherPunctuation;}
         if(i == 0x114c7){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
-        if(i >= 0x114d0 && i < 0x114da){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0x114d0 && i < 0x114da){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         return SGEXTN::ApplicationBase::FullCharacterType::UnassignedCharacter;
     }
     if(i >= 0x11580 && i <= 0x115ff){
@@ -3060,7 +3060,7 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
         if(i >= 0x1163f && i < 0x11641){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
         if(i >= 0x11641 && i < 0x11644){return SGEXTN::ApplicationBase::FullCharacterType::OtherPunctuation;}
         if(i == 0x11644){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
-        if(i >= 0x11650 && i < 0x1165a){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0x11650 && i < 0x1165a){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         return SGEXTN::ApplicationBase::FullCharacterType::UnassignedCharacter;
     }
     if(i >= 0x11660 && i <= 0x1167f){
@@ -3077,11 +3077,11 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
         if(i == 0x116b7){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
         if(i == 0x116b8){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         if(i == 0x116b9){return SGEXTN::ApplicationBase::FullCharacterType::OtherPunctuation;}
-        if(i >= 0x116c0 && i < 0x116ca){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0x116c0 && i < 0x116ca){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         return SGEXTN::ApplicationBase::FullCharacterType::UnassignedCharacter;
     }
     if(i >= 0x116d0 && i <= 0x116ff){
-        if(i >= 0x116d0 && i < 0x116e4){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0x116d0 && i < 0x116e4){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         return SGEXTN::ApplicationBase::FullCharacterType::UnassignedCharacter;
     }
     if(i >= 0x11700 && i <= 0x1174f){
@@ -3092,7 +3092,7 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
         if(i >= 0x11722 && i < 0x11726){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
         if(i == 0x11726){return SGEXTN::ApplicationBase::FullCharacterType::SpacingCombiningMark;}
         if(i >= 0x11727 && i < 0x1172c){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
-        if(i >= 0x11730 && i < 0x1173a){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0x11730 && i < 0x1173a){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         if(i >= 0x1173a && i < 0x1173c){return SGEXTN::ApplicationBase::FullCharacterType::OtherNumber;}
         if(i >= 0x1173c && i < 0x1173f){return SGEXTN::ApplicationBase::FullCharacterType::OtherPunctuation;}
         if(i == 0x1173f){return SGEXTN::ApplicationBase::FullCharacterType::OtherSymbol;}
@@ -3111,7 +3111,7 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
     if(i >= 0x118a0 && i <= 0x118ff){
         if(i >= 0x118a0 && i < 0x118c0){return SGEXTN::ApplicationBase::FullCharacterType::UppercaseLetter;}
         if(i >= 0x118c0 && i < 0x118e0){return SGEXTN::ApplicationBase::FullCharacterType::LowercaseLetter;}
-        if(i >= 0x118e0 && i < 0x118ea){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0x118e0 && i < 0x118ea){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         if(i >= 0x118ea && i < 0x118f3){return SGEXTN::ApplicationBase::FullCharacterType::OtherNumber;}
         if(i == 0x118ff){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         return SGEXTN::ApplicationBase::FullCharacterType::UnassignedCharacter;
@@ -3129,7 +3129,7 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
         if(i == 0x1193e || i == 0x11943){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
         if(i == 0x1193f || i == 0x11941){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         if(i >= 0x11944 && i < 0x11947){return SGEXTN::ApplicationBase::FullCharacterType::OtherPunctuation;}
-        if(i >= 0x11950 && i < 0x1195a){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0x11950 && i < 0x1195a){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         return SGEXTN::ApplicationBase::FullCharacterType::UnassignedCharacter;
     }
     if(i >= 0x119a0 && i <= 0x119ff){
@@ -3191,7 +3191,7 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
     if(i >= 0x11bc0 && i <= 0x11bff){
         if(i >= 0x11bc0 && i < 0x11be1){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         if(i == 0x11be1){return SGEXTN::ApplicationBase::FullCharacterType::OtherPunctuation;}
-        if(i >= 0x11bf0 && i < 0x11bfa){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0x11bf0 && i < 0x11bfa){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         return SGEXTN::ApplicationBase::FullCharacterType::UnassignedCharacter;
     }
     if(i >= 0x11c00 && i <= 0x11c6f){
@@ -3204,7 +3204,7 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
         if(i == 0x11c3f){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
         if(i == 0x11c40){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         if(i >= 0x11c41 && i < 0x11c46){return SGEXTN::ApplicationBase::FullCharacterType::OtherPunctuation;}
-        if(i >= 0x11c50 && i < 0x11c5a){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0x11c50 && i < 0x11c5a){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         if(i >= 0x11c5a && i < 0x11c6d){return SGEXTN::ApplicationBase::FullCharacterType::OtherNumber;}
         return SGEXTN::ApplicationBase::FullCharacterType::UnassignedCharacter;
     }
@@ -3230,7 +3230,7 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
         if(i >= 0x11d3f && i < 0x11d46){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
         if(i == 0x11d46){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         if(i == 0x11d47){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
-        if(i >= 0x11d50 && i < 0x11d5a){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0x11d50 && i < 0x11d5a){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         return SGEXTN::ApplicationBase::FullCharacterType::UnassignedCharacter;
     }
     if(i >= 0x11d60 && i <= 0x11daf){
@@ -3243,14 +3243,14 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
         if(i == 0x11d95 || i == 0x11d97){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
         if(i == 0x11d96){return SGEXTN::ApplicationBase::FullCharacterType::SpacingCombiningMark;}
         if(i == 0x11d98){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
-        if(i >= 0x11da0 && i < 0x11daa){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0x11da0 && i < 0x11daa){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         return SGEXTN::ApplicationBase::FullCharacterType::UnassignedCharacter;
     }
     if(i >= 0x11db0 && i <= 0x11def){
         if(i >= 0x11db0 && i < 0x11dd9){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         if(i == 0x11dd9){return SGEXTN::ApplicationBase::FullCharacterType::ModifierLetter;}
         if(i >= 0x11dda && i < 0x11ddc){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
-        if(i >= 0x11de0 && i < 0x11dea){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0x11de0 && i < 0x11dea){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         {return SGEXTN::ApplicationBase::FullCharacterType::UnassignedCharacter;}
     }
     if(i >= 0x11ee0 && i <= 0x11eff){
@@ -3272,7 +3272,7 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
         if(i == 0x11f40 || i == 0x11f42){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
         if(i == 0x11f41){return SGEXTN::ApplicationBase::FullCharacterType::SpacingCombiningMark;}
         if(i >= 0x11f43 && i < 0x11f50){return SGEXTN::ApplicationBase::FullCharacterType::OtherPunctuation;}
-        if(i >= 0x11f50 && i < 0x11f5a){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0x11f50 && i < 0x11f5a){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         if(i == 0x11f5a){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
         return SGEXTN::ApplicationBase::FullCharacterType::UnassignedCharacter;
     }
@@ -3327,7 +3327,7 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
         if(i >= 0x1611e && i < 0x1612a){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
         if(i >= 0x1612a && i < 0x1612d){return SGEXTN::ApplicationBase::FullCharacterType::SpacingCombiningMark;}
         if(i >= 0x1612d && i < 0x16130){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
-        if(i >= 0x16130 && i < 0x1613a){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0x16130 && i < 0x1613a){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         return SGEXTN::ApplicationBase::FullCharacterType::UnassignedCharacter;
     }
     if(i >= 0x16800 && i <= 0x16a3f){
@@ -3336,13 +3336,13 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
     }
     if(i >= 0x16a40 && i <= 0x16a6f){
         if(i >= 0x16a40 && i < 0x16a5f){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
-        if(i >= 0x16a60 && i < 0x16a6a){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0x16a60 && i < 0x16a6a){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         if(i >= 0x16a6e && i < 0x16b00){return SGEXTN::ApplicationBase::FullCharacterType::OtherPunctuation;}
         return SGEXTN::ApplicationBase::FullCharacterType::UnassignedCharacter;
     }
     if(i >= 0x16a70 && i <= 0x16acf){
         if(i >= 0x16a70 && i < 0x16abf){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
-        if(i >= 0x16ac0 && i < 0x16aca){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0x16ac0 && i < 0x16aca){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         return SGEXTN::ApplicationBase::FullCharacterType::UnassignedCharacter;
     }
     if(i >= 0x16ad0 && i <= 0x16aff){
@@ -3359,7 +3359,7 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
         if(i >= 0x16b40 && i < 0x16b44){return SGEXTN::ApplicationBase::FullCharacterType::ModifierLetter;}
         if(i == 0x16b44){return SGEXTN::ApplicationBase::FullCharacterType::OtherPunctuation;}
         if(i == 0x16b45){return SGEXTN::ApplicationBase::FullCharacterType::OtherSymbol;}
-        if(i >= 0x16b50 && i < 0x16b5a){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0x16b50 && i < 0x16b5a){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         if(i >= 0x16b5b && i < 0x16b62){return SGEXTN::ApplicationBase::FullCharacterType::OtherNumber;}
         if(i >= 0x16b63 && i < 0x16b78){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         if(i >= 0x16b7d && i < 0x16b90){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
@@ -3370,7 +3370,7 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
         if(i >= 0x16d43 && i < 0x16d6b){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         if(i >= 0x16b6b && i < 0x16d6d){return SGEXTN::ApplicationBase::FullCharacterType::ModifierLetter;}
         if(i >= 0x16b6d && i < 0x16d70){return SGEXTN::ApplicationBase::FullCharacterType::OtherPunctuation;}
-        if(i >= 0x16d70 && i < 0x16d7a){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0x16d70 && i < 0x16d7a){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         return SGEXTN::ApplicationBase::FullCharacterType::UnassignedCharacter;
     }
     if(i >= 0x16e40 && i <= 0x16e9f){
@@ -3457,7 +3457,7 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
     }
     if(i >= 0x1cc00 && i <= 0x1cebf){
         if(i >= 0x1cc00 && i < 0x1ccf0){return SGEXTN::ApplicationBase::FullCharacterType::OtherSymbol;}
-        if(i >= 0x1ccf0 && i < 0x1ccfa){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0x1ccf0 && i < 0x1ccfa){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         if(i >= 0x1ccfa && i < 0x1ccfd){return SGEXTN::ApplicationBase::FullCharacterType::OtherSymbol;}
         if(i >= 0x1cd00 && i < 0x1ceb4){return SGEXTN::ApplicationBase::FullCharacterType::OtherSymbol;}
         if(i >= 0x1ceba && i < 0x1cec0){return SGEXTN::ApplicationBase::FullCharacterType::OtherSymbol;}
@@ -3587,7 +3587,7 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
         if(i >= 0x1d7c4 && i < 0x1d7ca){return SGEXTN::ApplicationBase::FullCharacterType::LowercaseLetter;}
         if(i == 0x1d7ca){return SGEXTN::ApplicationBase::FullCharacterType::UppercaseLetter;}
         if(i == 0x1d7cb){return SGEXTN::ApplicationBase::FullCharacterType::LowercaseLetter;}
-        if(i >= 0x1d7ce && i < 0x1d800){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0x1d7ce && i < 0x1d800){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         return SGEXTN::ApplicationBase::FullCharacterType::UnassignedCharacter;
     }
     if(i >= 0x1d800 && i <= 0x1daaf){
@@ -3629,7 +3629,7 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
         if(i >= 0x1e100 && i < 0x1e12d){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         if(i >= 0x1e130 && i < 0x1e137){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
         if(i >= 0x1e137 && i < 0x1e13e){return SGEXTN::ApplicationBase::FullCharacterType::ModifierLetter;}
-        if(i >= 0x1e140 && i < 0x1e14a){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0x1e140 && i < 0x1e14a){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         if(i == 0x1e14e){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         if(i == 0x1e14f){return SGEXTN::ApplicationBase::FullCharacterType::OtherSymbol;}
         return SGEXTN::ApplicationBase::FullCharacterType::UnassignedCharacter;
@@ -3642,7 +3642,7 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
     if(i >= 0x1e2c0 && i <= 0x1e2ff){
         if(i >= 0x1e2c0 && i < 0x1e2ec){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         if(i >= 0x1e2ec && i < 0x1e2f0){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
-        if(i >= 0x1e2f0 && i < 0x1e2fa){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0x1e2f0 && i < 0x1e2fa){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         if(i == 0x1e2ff){return SGEXTN::ApplicationBase::FullCharacterType::CurrencySymbol;}
         return SGEXTN::ApplicationBase::FullCharacterType::UnassignedCharacter;
     }
@@ -3650,14 +3650,14 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
         if(i >= 0x1e4d0 && i < 0x1e4eb){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         if(i == 0x1e4eb){return SGEXTN::ApplicationBase::FullCharacterType::ModifierLetter;}
         if(i >= 0x1e4ec && i < 0x1e4f0){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
-        if(i >= 0x1e4f0 && i < 0x1e4fa){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0x1e4f0 && i < 0x1e4fa){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         return SGEXTN::ApplicationBase::FullCharacterType::UnassignedCharacter;
     }
     if(i >= 0x1e5d0 && i <= 0x1e5ff){
         if(i >= 0x1e5d0 && i < 0x1e5ee){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         if(i >= 0x1e5ee && i < 0x1e5f0){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
         if(i == 0x1e5f0){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
-        if(i >= 0x1e5f1 && i < 0x1e5fb){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0x1e5f1 && i < 0x1e5fb){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         if(i == 0x1e5ff){return SGEXTN::ApplicationBase::FullCharacterType::OtherPunctuation;}
         return SGEXTN::ApplicationBase::FullCharacterType::UnassignedCharacter;
     }
@@ -3693,7 +3693,7 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
         if(i >= 0x1e922 && i < 0x1e944){return SGEXTN::ApplicationBase::FullCharacterType::LowercaseLetter;}
         if(i >= 0x1e944 && i < 0x1e94b){return SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark;}
         if(i == 0x1e94b){return SGEXTN::ApplicationBase::FullCharacterType::ModifierLetter;}
-        if(i >= 0x1e950 && i < 0x1e95a){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0x1e950 && i < 0x1e95a){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         if(i >= 0x1e95e && i < 0x1e960){return SGEXTN::ApplicationBase::FullCharacterType::OtherPunctuation;}
         return SGEXTN::ApplicationBase::FullCharacterType::UnassignedCharacter;
     }
@@ -3818,7 +3818,7 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
     if(i >= 0x1fb00 && i <= 0x1fbff){
         if(i >= 0x1fb00 && i < 0x1fb93){return SGEXTN::ApplicationBase::FullCharacterType::OtherSymbol;}
         if(i >= 0x1fb94 && i < 0x1fbf0){return SGEXTN::ApplicationBase::FullCharacterType::OtherSymbol;}
-        if(i >= 0x1fbf0 && i < 0x1fbfa){return SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit;}
+        if(i >= 0x1fbf0 && i < 0x1fbfa){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         if(i == 0x1fbfa){return SGEXTN::ApplicationBase::FullCharacterType::OtherSymbol;}
         return SGEXTN::ApplicationBase::FullCharacterType::UnassignedCharacter;
     }
@@ -3865,7 +3865,7 @@ SGEXTN::ApplicationBase::SimplifiedCharacterType getUnicodeSimplifiedCategory(in
     if(generalCategory == SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark){return SGEXTN::ApplicationBase::SimplifiedCharacterType::Mark;}
     if(generalCategory == SGEXTN::ApplicationBase::FullCharacterType::SpacingCombiningMark){return SGEXTN::ApplicationBase::SimplifiedCharacterType::Mark;}
     if(generalCategory == SGEXTN::ApplicationBase::FullCharacterType::EnclosingMark){return SGEXTN::ApplicationBase::SimplifiedCharacterType::Mark;}
-    if(generalCategory == SGEXTN::ApplicationBase::FullCharacterType::NumericalDigit){return SGEXTN::ApplicationBase::SimplifiedCharacterType::Number;}
+    if(generalCategory == SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit){return SGEXTN::ApplicationBase::SimplifiedCharacterType::Number;}
     if(generalCategory == SGEXTN::ApplicationBase::FullCharacterType::LetterNumber){return SGEXTN::ApplicationBase::SimplifiedCharacterType::Number;}
     if(generalCategory == SGEXTN::ApplicationBase::FullCharacterType::OtherNumber){return SGEXTN::ApplicationBase::SimplifiedCharacterType::Number;}
     if(generalCategory == SGEXTN::ApplicationBase::FullCharacterType::SpaceBreak){return SGEXTN::ApplicationBase::SimplifiedCharacterType::Whitespace;}
