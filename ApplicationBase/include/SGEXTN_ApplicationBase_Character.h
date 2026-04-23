@@ -41,7 +41,8 @@ public:
     [[nodiscard]] Character getUppercase() const;
     [[nodiscard]] Character getLowercase() const;
     [[nodiscard]] Character getTitlecase() const;
-    // add decimal digit value, visual digit value, numerical value
+    [[nodiscard]] int getDecimalDigitValue() const;
+    [[nodiscard]] float getNumericalValue() const;
 };
 }
 }

@@ -19,7 +19,7 @@ void init(){
     //SGXCentral::folderName = "SGEXTN";
 }
 }
-#include <../misc/unicodecategory.h>
+
 int main(int /*argc*/, char** /*argv*/){
     //return SGEXTN(argc, argv, &init);
     SGEXTN::Containers::UnitTests::testAll();
@@ -27,8 +27,4 @@ int main(int /*argc*/, char** /*argv*/){
     SGEXTN::ApplicationBase::UnitTests::testAll();
     SGEXTN::Structs::UnitTests::testAll();
     SG("all tests pass");
-    parseFile();
-    extractCategory();
-    //printCategory(0x20000);
-    checkCategory(0x10ffff);
 }

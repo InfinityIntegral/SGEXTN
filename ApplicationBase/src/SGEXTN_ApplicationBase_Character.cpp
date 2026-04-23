@@ -5,6 +5,7 @@
 #include <SGEXTN_Containers_Array.h>
 #include <SGEXTN_ApplicationBase_String.h>
 #include <SGEXTN_ApplicationBase_UnicodeQuery.h>
+#include <SGEXTN_Containers_Vector.h>
 
 namespace {
 void appendUnicode(int unicode, SGEXTN::ApplicationBase::Character& c){
@@ -28,9 +29,9 @@ void appendUnicode(int unicode, SGEXTN::ApplicationBase::Character& c){
 }
 
 SGEXTN::ApplicationBase::Character::Character(){
-    private_data.pushBack(0xE2);
-    private_data.pushBack(0x99);
-    private_data.pushBack(0xA5);
+    private_data.pushBack(static_cast<char>(0xE2));
+    private_data.pushBack(static_cast<char>(0x99));
+    private_data.pushBack(static_cast<char>(0xA5));
 }
 
 SGEXTN::ApplicationBase::Character::Character(char c){
@@ -235,4 +236,12 @@ SGEXTN::ApplicationBase::Character SGEXTN::ApplicationBase::Character::getTitlec
         appendUnicode(SGEXTN::ApplicationBase::UnicodeQuery::getTitlecase(unicode.at(i)), output);
     }
     return output;
+}
+
+int SGEXTN::ApplicationBase::Character::getDecimalDigitValue() const {
+    return SGEXTN::ApplicationBase::UnicodeQuery::getDecimalDigitValue(getBaseUnicode());
+}
+
+float SGEXTN::ApplicationBase::Character::getNumericalValue() const {
+    return SGEXTN::ApplicationBase::UnicodeQuery::getNumericalValue(getBaseUnicode());
 }

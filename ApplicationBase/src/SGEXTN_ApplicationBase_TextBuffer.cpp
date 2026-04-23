@@ -14,11 +14,11 @@ int cStringLength(const char* s){
 }
 
 int memoryCompare(const unsigned char* a, int aLength, const unsigned char* b, int bLength){
-    int lengthCompare = aLength - bLength;
+    const int lengthCompare = aLength - bLength;
     int shorterLength = 0;
     if(lengthCompare <= 0){shorterLength = aLength;}
     else{shorterLength = bLength;}
-    int equalLengthCompare = std::memcmp(a, b, shorterLength);
+    const int equalLengthCompare = std::memcmp(a, b, shorterLength);
     if(equalLengthCompare < 0){return -1;}
     if(equalLengthCompare > 0){return 1;}
     if(lengthCompare < 0){return -1;}
