@@ -4438,6 +4438,189 @@ float getUnicodeNumerical(int i){
     if(i == 0x2f890){return 9.0f;}
     return SGEXTN::Math::FloatLimits<float>::negativeInfinity();
 }
+
+bool getUnicodeOtherGraphemeExtendProperty(int i){
+    if(i < 0x80){return false;}
+    if(i >= 0x4e00 && i <= 0x9fff){return false;}
+    if(i == 0xbbe || i == 0xbd7){return true;}
+    if(i >= 0xb80 && i <= 0xbff){return false;}
+    if(i >= 0x2190 && i <= 0x23ff){return false;}
+    if(i == 0x9be || i == 0x9d7){return true;}
+    if(i == 0xb3e || i == 0xb57){return true;}
+    if(i >= 0xcc0 && i <= 0xcdf){
+        if(i == 0xcc0){return true;}
+        if(i == 0xcc2){return true;}
+        if(i >= 0xcc7 && i <= 0xcc8){return true;}
+        if(i >= 0xcca && i <= 0xccb){return true;}
+        if(i >= 0xcd5 && i <= 0xcd6){return true;}
+    }
+    if(i == 0xd3e || i == 0xd57){return true;}
+    if(i == 0xdcf || i == 0xddf){return true;}
+    if(i == 0x1715 || i == 0x1734){return true;}
+    if(i >= 0x1b00 && i <= 0x1bff){
+        if(i == 0x1b35){return true;}
+        if(i == 0x1b3b){return true;}
+        if(i == 0x1b3d){return true;}
+        if(i >= 0x1b43 && i <= 0x1b44){return true;}
+        if(i == 0x1baa){return true;}
+        if(i >= 0x1bf2 && i <= 0x1bf3){return true;}
+    }
+    if(i == 0x200c){return true;}
+    if(i >= 0x302e && i <= 0x302f){return true;}
+    if(i == 0xa953){return true;}
+    if(i == 0xa9c0){return true;}
+    if(i >= 0xff9e && i <= 0xff9f){return true;}
+    if(i == 0x111c0){return true;}
+    if(i == 0x11235){return true;}
+    if(i >= 0x11300 && i <= 0x113ff){
+        if(i == 0x1133e){return true;}
+        if(i == 0x1134d){return true;}
+        if(i == 0x11357){return true;}
+        if(i == 0x113b8){return true;}
+        if(i == 0x113c2){return true;}
+        if(i == 0x113c5){return true;}
+        if(i >= 0x113c7 && i <= 0x113c9){return true;}
+        if(i == 0x113cf){return true;}
+    }
+    if(i == 0x114b0 || i == 0x114bd){return true;}
+    if(i == 0x115af){return true;}
+    if(i == 0x116b6){return true;}
+    if(i == 0x11930 || i == 0x1193d){return true;}
+    if(i == 0x11f41){return true;}
+    if(i >= 0x16ff0 && i <= 0x16ff1){return true;}
+    if(i >= 0x1d165 && i <= 0x1d166){return true;}
+    if(i >= 0x1d16d && i <= 0x1d172){return true;}
+    if(i >= 0xe0020 && i <= 0xe007f){return true;}
+    return false;
+}
+
+bool getUnicodeDefaultInvisibleUnassigned(int i){
+    if(i < 0x80){return false;}
+    if(i >= 0x4e00 && i <= 0x9fff){return false;}
+    if(i >= 0xb80 && i <= 0xbff){return false;}
+    if(i >= 0x2190 && i <= 0x23ff){return false;}
+    if(i == 0x2065){return true;}
+    if(i >= 0xfff0 && i <= 0xfff8){return true;}
+    if(i == 0xe0000){return true;}
+    if(i >= 0xe0002 && i <= 0xe001f){return true;}
+    if(i >= 0xe0080 && i <= 0xe00ff){return true;}
+    if(i >= 0xe01f0 && i <= 0xe0fff){return true;}
+    return false;
+}
+
+bool getUnicodePrependConcatenationMark(int i){
+    if(i < 0x80){return false;}
+    if(i >= 0x4e00 && i <= 0x9fff){return false;}
+    if(i >= 0xb80 && i <= 0xbff){return false;}
+    if(i >= 0x2190 && i <= 0x23ff){return false;}
+    if(i >= 0x600 && i <= 0x605){return true;}
+    if(i == 0x6dd){return true;}
+    if(i == 0x70f){return true;}
+    if(i >= 0x890 && i <= 0x891){return true;}
+    if(i == 0x8e2){return true;}
+    if(i == 0x110bd){return true;}
+    if(i == 0x110cd){return true;}
+    return false;
+}
+
+bool getUnicodeIndicSyllabicPrepend(int i){
+    if(i < 0x80){return false;}
+    if(i >= 0x4e00 && i <= 0x9fff){return false;}
+    if(i >= 0xb80 && i <= 0xbff){return false;}
+    if(i >= 0x2190 && i <= 0x23ff){return false;}
+    if(i == 0xd4e){return true;}
+    if(i == 0x113d1){return true;}
+    if(i == 0x11941){return true;}
+    if(i == 0x11a86){return true;}
+    if(i == 0x11d46){return true;}
+    if(i == 0x11f02){return true;}
+    if(i >= 0x111c2 && i <= 0x111c3){return true;}
+    if(i == 0x1193f){return true;}
+    if(i >= 0x11a84 && i <= 0x11a85){return true;}
+    if(i >= 0x11a87 && i <= 0x11a89){return true;}
+    return false;
+}
+
+bool getUnicodeSpacingCombiningMarkGraphemeClusterExtendProperty(int i){
+    if(i < 0x80){return false;}
+    if(i >= 0x4e00 && i <= 0x9fff){return false;}
+    if(i == 0xbbe || i == 0xbd7){return true;}
+    if(i >= 0xb80 && i <= 0xbff){return false;}
+    if(i >= 0x2190 && i <= 0x23ff){return false;}
+    if(i == 0x9be){return true;}
+    if(i == 0x9d7){return true;}
+    if(i == 0xb3e){return true;}
+    if(i == 0xb57){return true;}
+    if(i >= 0xcc0 && i <= 0xdff){
+        if(i == 0xcc0){return true;}
+        if(i == 0xcc2){return true;}
+        if(i >= 0xcc7 && i <= 0xcc8){return true;}
+        if(i >= 0xcca && i <= 0xccb){return true;}
+        if(i >= 0xcd5 && i <= 0xcd6){return true;}
+        if(i == 0xd3e){return true;}
+        if(i == 0xd57){return true;}
+        if(i == 0xdcf){return true;}
+        if(i == 0xddf){return true;}
+    }
+    if(i == 0x1715){return true;}
+    if(i == 0x1734){return true;}
+    if(i >= 0x1b00 && i <= 0x1bff){
+        if(i == 0x1b35){return true;}
+        if(i == 0x1b3b){return true;}
+        if(i == 0x1b3d){return true;}
+        if(i >= 0x1b43 && i <= 0x1b44){return true;}
+        if(i == 0x1baa){return true;}
+        if(i >= 0x1bf2 && i <= 0x1bf3){return true;}
+    }
+    if(i >= 0x302e && i <= 0x302f){return true;}
+    if(i == 0xa953){return true;}
+    if(i == 0xa9c0){return true;}
+    if(i == 0x111c0){return true;}
+    if(i == 0x11235){return true;}
+    if(i >= 0x11300 && i <= 0x113ff){
+        if(i == 0x1133e){return true;}
+        if(i == 0x1134d){return true;}
+        if(i == 0x11357){return true;}
+        if(i == 0x113b8){return true;}
+        if(i == 0x113c2){return true;}
+        if(i == 0x113c5){return true;}
+        if(i >= 0x113c7 && i <= 0x113c9){return true;}
+        if(i == 0x113cf){return true;}
+    }
+    if(i == 0x114b0){return true;}
+    if(i == 0x114bd){return true;}
+    if(i == 0x115af){return true;}
+    if(i == 0x116b6){return true;}
+    if(i == 0x11930){return true;}
+    if(i == 0x1193d){return true;}
+    if(i == 0x11f41){return true;}
+    if(i >= 0x16ff0 && i <= 0x16ff1){return true;}
+    if(i >= 0x1d165 && i <= 0x1d166){return true;}
+    if(i >= 0x1d16d && i <= 0x1d172){return true;}
+    return false;
+}
+
+bool getUnicodeGraphemeSegmentationSpacingCombiningMarkException(int i){
+    if(i < 0x80){return false;}
+    if(i >= 0x4e00 && i <= 0x9fff){return false;}
+    if(i >= 0xb80 && i <= 0xbff){return false;}
+    if(i >= 0x2190 && i <= 0x23ff){return false;}
+    if(i >= 0x1000 && i <= 0x109f){
+        if(i == 0x102b){return true;}
+        if(i == 0x102c){return true;}
+        if(i == 0x1038){return true;}
+        if(i >= 0x1062 && i <= 0x1064){return true;}
+        if(i >= 0x1067 && i <= 0x106d){return true;}
+        if(i == 0x1083){return true;}
+        if(i >= 0x1087 && i <= 0x108c){return true;}
+        if(i == 0x108f){return true;}
+        if(i >= 0x109a && i <= 0x109c){return true;}
+    }
+    if(i == 0x1a61 || i == 0x1a63 || i == 0x1a64){return true;}
+    if(i == 0xaa7b || i == 0xaa7d){return true;}
+    if(i == 0x11720 || i == 0x11721){return true;}
+    return false;
+}
 }
 
 int SGEXTN::ApplicationBase::UnicodeQuery::getUppercase(int c){
@@ -4466,4 +4649,29 @@ int SGEXTN::ApplicationBase::UnicodeQuery::getDecimalDigitValue(int c){
 
 float SGEXTN::ApplicationBase::UnicodeQuery::getNumericalValue(int c){
     return getUnicodeNumerical(c);
+}
+
+SGEXTN::ApplicationBase::GraphemeSegmentationType SGEXTN::ApplicationBase::UnicodeQuery::getGraphemeSegmentationType(int c){
+    if(c == 0xd){return SGEXTN::ApplicationBase::GraphemeSegmentationType::Return;}
+    if(c == 0xa){return SGEXTN::ApplicationBase::GraphemeSegmentationType::NewLine;}
+    if(c == 0x200d){return SGEXTN::ApplicationBase::GraphemeSegmentationType::ZeroWidthJoiner;}
+    if(c >= 0x1f1e6 && c <= 0x1f1ff){return SGEXTN::ApplicationBase::GraphemeSegmentationType::RegionalIndicator;}
+    if((c >= 0x1100 && c <= 0x115f) || (c >= 0xa960 && c <= 0xa97c)){return SGEXTN::ApplicationBase::GraphemeSegmentationType::HangulLeading;}
+    if((c >= 0x1160 && c <= 0x11a7) || (c >= 0xd7b0 && c <= 0xd7c6)){return SGEXTN::ApplicationBase::GraphemeSegmentationType::HangulVowel;}
+    if((c >= 0x11a8 && c <= 0x11ff) || (c >= 0xd7cb && c <= 0xd7fb)){return SGEXTN::ApplicationBase::GraphemeSegmentationType::HangulTrailing;}
+    if(c >= 0xac00 && c <= 0xd7a3){
+        if((c - 0xac00) % 0x1c == 0){return SGEXTN::ApplicationBase::GraphemeSegmentationType::HangulLeadingAndVowel;}
+        return SGEXTN::ApplicationBase::GraphemeSegmentationType::HangulLeadingAndVowelAndTrailing;
+    }
+    if(c >= 0x1f3fb && c <= 0x1f3ff){return SGEXTN::ApplicationBase::GraphemeSegmentationType::Extend;}
+    SGEXTN::ApplicationBase::FullCharacterType generalCategory = getUnicodeGeneralCategory(c);
+    if(generalCategory == SGEXTN::ApplicationBase::FullCharacterType::EnclosingMark || generalCategory == SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark){return SGEXTN::ApplicationBase::GraphemeSegmentationType::Extend;}
+    if(getUnicodeOtherGraphemeExtendProperty(c) == true){return SGEXTN::ApplicationBase::GraphemeSegmentationType::Extend;}
+    if(getUnicodePrependConcatenationMark(c) == true){return SGEXTN::ApplicationBase::GraphemeSegmentationType::Prepend;}
+    if(getUnicodeIndicSyllabicPrepend(c) == true){return SGEXTN::ApplicationBase::GraphemeSegmentationType::Prepend;}
+    if(generalCategory == SGEXTN::ApplicationBase::FullCharacterType::LineBreak || generalCategory == SGEXTN::ApplicationBase::FullCharacterType::ParagraphBreak || generalCategory == SGEXTN::ApplicationBase::FullCharacterType::ControlCharacter || generalCategory == SGEXTN::ApplicationBase::FullCharacterType::FormatCharacter){return SGEXTN::ApplicationBase::GraphemeSegmentationType::ControlCharacter;}
+    if(generalCategory == SGEXTN::ApplicationBase::FullCharacterType::UnassignedCharacter && getUnicodeDefaultInvisibleUnassigned(c) == true){return SGEXTN::ApplicationBase::GraphemeSegmentationType::ControlCharacter;}
+    if(c == 0xe33 || c == 0xeb3){return SGEXTN::ApplicationBase::GraphemeSegmentationType::SpacingCombiningMark;}
+    if(generalCategory == SGEXTN::ApplicationBase::FullCharacterType::SpacingCombiningMark && getUnicodeSpacingCombiningMarkGraphemeClusterExtendProperty(c) == false && getUnicodeGraphemeSegmentationSpacingCombiningMarkException(c) == false){return SGEXTN::ApplicationBase::GraphemeSegmentationType::SpacingCombiningMark;}
+    return SGEXTN::ApplicationBase::GraphemeSegmentationType::Other;
 }

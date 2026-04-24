@@ -6,6 +6,10 @@ enum class BUILDLAH_DLL_SGEXTN_ApplicationBase SimplifiedCharacterType : unsigne
 
 enum class BUILDLAH_DLL_SGEXTN_ApplicationBase FullCharacterType : unsigned char {NonspacingCombiningMark, SpacingCombiningMark, EnclosingMark, DecimalDigit, LetterNumber, OtherNumber, SpaceBreak, LineBreak, ParagraphBreak, ControlCharacter, FormatCharacter, SurrogateCharacter, PrivateUseCharacter, UnassignedCharacter, UppercaseLetter, LowercaseLetter, TitlecaseLetter, ModifierLetter, OtherLetter, ConnectorPunctuation, DashPunctuation, OpeningPunctuation, ClosingPunctuation, OpeningQuote, ClosingQuote, OtherPunctuation, MathSymbol, CurrencySymbol, ModifierSymbol, OtherSymbol};
 
+enum class BUILDLAH_DLL_SGEXTN_ApplicationBase GraphemeSegmentationType : unsigned char {Return, NewLine, ControlCharacter, Extend, ZeroWidthJoiner, RegionalIndicator, Prepend, SpacingCombiningMark, HangulLeading, HangulVowel, HangulTrailing, HangulLeadingAndVowel, HangulLeadingAndVowelAndTrailing, Other};
+
+enum class BUILDLAH_DLL_SGEXTN_ApplicationBase GraphemeRuleRelatedType : unsigned char {None, Rule11Emoji, Rule9cConsonant, Rule9cExtend, Rule9cLinker};
+
 class BUILDLAH_DLL_SGEXTN_ApplicationBase UnicodeQuery {
 public:
     [[nodiscard]] static int getUppercase(int c);
@@ -15,6 +19,8 @@ public:
     [[nodiscard]] static SGEXTN::ApplicationBase::SimplifiedCharacterType getSimplifiedType(int c);
     [[nodiscard]] static int getDecimalDigitValue(int c);
     [[nodiscard]] static float getNumericalValue(int c);
+    [[nodiscard]] static SGEXTN::ApplicationBase::GraphemeSegmentationType getGraphemeSegmentationType(int c);
+    [[nodiscard]] static SGEXTN::ApplicationBase::GraphemeRuleRelatedType getGraphemeRuleRelatedType(int c);
 };
 }
 }

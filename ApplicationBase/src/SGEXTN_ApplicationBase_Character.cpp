@@ -130,27 +130,12 @@ bool SGEXTN::ApplicationBase::Character::isWhitespace() const {
 
 int SGEXTN::ApplicationBase::Character::getBaseUnicode() const {
     if((byteAt(0) & 0x80) == 0){return static_cast<int>(byteAt(0));}
-    if((byteAt(0) & 0xE0) == 0xC0){
-        int unicode = 0;
-        unicode += (static_cast<int>(byteAt(0) & 0x1f) << 6);
-        unicode += static_cast<int>(byteAt(1) & 0x3f);
-        return unicode;
+    SGEXTN::Containers::Array<int> codePoints = getUnicode();
+    for(int i=0; i<codePoints.length(); i++){
+        SGEXTN::ApplicationBase::GraphemeSegmentationType graphemeCategory = SGEXTN::ApplicationBase::UnicodeQuery::getGraphemeSegmentationType(codePoints.at(i));
+        if(graphemeCategory == SGEXTN::ApplicationBase::GraphemeSegmentationType::Other || graphemeCategory == SGEXTN::ApplicationBase::GraphemeSegmentationType::RegionalIndicator || graphemeCategory == SGEXTN::ApplicationBase::GraphemeSegmentationType::HangulLeading || graphemeCategory == SGEXTN::ApplicationBase::GraphemeSegmentationType::HangulVowel || graphemeCategory == SGEXTN::ApplicationBase::GraphemeSegmentationType::HangulTrailing || graphemeCategory == SGEXTN::ApplicationBase::GraphemeSegmentationType::HangulLeadingAndVowel || graphemeCategory == SGEXTN::ApplicationBase::GraphemeSegmentationType::HangulLeadingAndVowelAndTrailing){return codePoints.at(i);}
     }
-    if((byteAt(0) & 0xF0) == 0xE0){
-        int unicode = 0;
-        unicode += (static_cast<int>(byteAt(0) & 0x0f) << 12);
-        unicode += (static_cast<int>(byteAt(1) & 0x3f) << 6);
-        unicode += static_cast<int>(byteAt(2) & 0x3f);
-        return unicode;
-    }
-    {
-        int unicode = 0;
-        unicode += (static_cast<int>(byteAt(0) & 0x07) << 18);
-        unicode += (static_cast<int>(byteAt(1) & 0x3f) << 12);
-        unicode += (static_cast<int>(byteAt(2) & 0x3f) << 6);
-        unicode += static_cast<int>(byteAt(3) & 0x3f);
-        return unicode;
-    }
+    return codePoints.at(0);
 }
 
 SGEXTN::Containers::Array<int> SGEXTN::ApplicationBase::Character::getUnicode() const {
