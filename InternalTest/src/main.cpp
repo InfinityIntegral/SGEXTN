@@ -19,7 +19,7 @@ void init(){
     //SGXCentral::folderName = "SGEXTN";
 }
 }
-
+#include <../../ApplicationBase/misc/unicodeindicgrapheme.h>
 int main(int /*argc*/, char** /*argv*/){
     //return SGEXTN(argc, argv, &init);
     SGEXTN::Containers::UnitTests::testAll();
