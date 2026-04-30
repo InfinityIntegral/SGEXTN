@@ -187,3 +187,17 @@ bool SGEXTN::ApplicationBase::TextBuffer::operator>=(const SGEXTN::ApplicationBa
 int SGEXTN::ApplicationBase::TextBuffer::hash() const {
     return SGEXTN::Containers::HashAlgorithm::wyHash32(SGEXTN::Containers::Span<const unsigned char>(&byteAt(0), length()));
 }
+
+SGEXTN::ApplicationBase::TextBuffer SGEXTN::ApplicationBase::TextBuffer::substring(int start, int length) const {
+    SGEXTN::ApplicationBase::TextBuffer output;
+    output.pushBack((*this), start, length);
+    return output;
+}
+
+SGEXTN::ApplicationBase::TextBuffer SGEXTN::ApplicationBase::TextBuffer::substringLeft(int length) const {
+    return substring(0, length);
+}
+
+SGEXTN::ApplicationBase::TextBuffer SGEXTN::ApplicationBase::TextBuffer::substringRight(int length) const {
+    return substring((*this).length() - length, length);
+}

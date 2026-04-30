@@ -1,0 +1,560 @@
+#include <SGEXTN_ApplicationBase_String.h>
+#include <SGEXTN_Containers_Vector.h>
+#include <SGEXTN_ApplicationBase_Character.h>
+#include <SGEXTN_Containers_Array.h>
+#include <SGEXTN_ApplicationBase_UnicodeQuery.h>
+
+SGEXTN::ApplicationBase::String::String(){
+
+}
+
+SGEXTN::ApplicationBase::String::String(const SGEXTN::ApplicationBase::String& x){
+    private_data = x.private_data;
+}
+
+SGEXTN::ApplicationBase::String& SGEXTN::ApplicationBase::String::operator=(const SGEXTN::ApplicationBase::String& x){
+    if(this == &x){return (*this);}
+    private_data = x.private_data;
+    if(private_characterOffsets.length() > 0){private_characterOffsets = SGEXTN::Containers::Vector<int>();}
+    return (*this);
+}
+
+SGEXTN::ApplicationBase::String::String(SGEXTN::ApplicationBase::String&& x) noexcept {
+    private_data = static_cast<SGEXTN::ApplicationBase::TextBuffer&&>(x.private_data);
+    private_characterOffsets = static_cast<SGEXTN::Containers::Vector<int>&&>(x.private_characterOffsets);
+}
+
+SGEXTN::ApplicationBase::String& SGEXTN::ApplicationBase::String::operator=(SGEXTN::ApplicationBase::String&& x) noexcept {
+    private_data = static_cast<SGEXTN::ApplicationBase::TextBuffer&&>(x.private_data);
+    private_characterOffsets = static_cast<SGEXTN::Containers::Vector<int>&&>(x.private_characterOffsets);
+    return (*this);
+}
+
+SGEXTN::ApplicationBase::String::~String(){
+
+}
+
+SGEXTN::ApplicationBase::String::String(char c){
+    private_data.pushBack(c);
+}
+
+SGEXTN::ApplicationBase::String::String(const char* s){
+    private_data.pushBack(s);
+}
+
+SGEXTN::ApplicationBase::String::String(const SGEXTN::ApplicationBase::Character& c){
+    private_data.pushBack(c.private_data, 0, c.private_data.length());
+}
+
+bool SGEXTN::ApplicationBase::String::operator==(const SGEXTN::ApplicationBase::String& x) const {
+    return (private_data == x.private_data);
+}
+
+bool SGEXTN::ApplicationBase::String::operator!=(const SGEXTN::ApplicationBase::String& x) const {
+    return (private_data != x.private_data);
+}
+
+bool SGEXTN::ApplicationBase::String::operator<(const SGEXTN::ApplicationBase::String& x) const {
+    return (private_data < x.private_data);
+}
+
+bool SGEXTN::ApplicationBase::String::operator>(const SGEXTN::ApplicationBase::String& x) const {
+    return (private_data > x.private_data);
+}
+
+bool SGEXTN::ApplicationBase::String::operator<=(const SGEXTN::ApplicationBase::String& x) const {
+    return (private_data <= x.private_data);
+}
+
+bool SGEXTN::ApplicationBase::String::operator>=(const SGEXTN::ApplicationBase::String& x) const {
+    return (private_data >= x.private_data);
+}
+
+int SGEXTN::ApplicationBase::String::hash() const {
+    return private_data.hash();
+}
+
+SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::debugLog() const {
+    return (*this);
+}
+
+SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::operator+(const SGEXTN::ApplicationBase::String& x) const {
+    SGEXTN::ApplicationBase::String output = (*this);
+    output += x;
+    return output;
+}
+
+SGEXTN::ApplicationBase::String& SGEXTN::ApplicationBase::String::operator+=(const SGEXTN::ApplicationBase::String& x){
+    private_invalidateOffsets();
+    private_data.pushBack(x.private_data, 0, x.private_data.length());
+    return (*this);
+}
+
+int SGEXTN::ApplicationBase::String::byteLength() const {
+    return private_data.length();
+}
+
+int SGEXTN::ApplicationBase::String::characterLength() const {
+    private_computeOffsets();
+    return (private_characterOffsets.length() - 1);
+}
+
+unsigned char& SGEXTN::ApplicationBase::String::byteAt(int i){
+    if(i < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::byteAt crashed because the index is negative");}
+    if(i >= byteLength()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::byteAt crashed because the index points beyond the end of the string");}
+    private_invalidateOffsets();
+    return private_data.byteAt(i);
+}
+
+const unsigned char& SGEXTN::ApplicationBase::String::byteAt(int i) const {
+    if(i < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::byteAt crashed because the index is negative");}
+    if(i >= byteLength()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::byteAt crashed because the index points beyond the end of the string");}
+    return private_data.byteAt(i);
+}
+
+void SGEXTN::ApplicationBase::String::private_computeOffsets() const {
+    if(private_characterOffsets.length() > 0){return;}
+    SGEXTN::ApplicationBase::Character unicodeExtractor;
+    unicodeExtractor.private_data = private_data;
+    SGEXTN::Containers::Array<int> unicodeList = unicodeExtractor.getUnicode();
+    SGEXTN::Containers::Array<SGEXTN::ApplicationBase::GraphemeSegmentationType> segmentationTypes(unicodeList.length());
+    SGEXTN::Containers::Array<SGEXTN::ApplicationBase::GraphemeRuleRelatedType> ruleRelatedTypes(unicodeList.length());
+    for(int i=0; i<unicodeList.length(); i++){
+        segmentationTypes.at(i) = SGEXTN::ApplicationBase::UnicodeQuery::getGraphemeSegmentationType(unicodeList.at(i));
+        ruleRelatedTypes.at(i) = SGEXTN::ApplicationBase::UnicodeQuery::getGraphemeRuleRelatedType(unicodeList.at(i));
+    }
+    for(int i=0; i<=unicodeList.length(); i++){
+        if(i == 0 || i == unicodeList.length()){
+            private_characterOffsets.pushBack(i);
+            continue;
+        }
+        if(segmentationTypes.at(i - 1) == SGEXTN::ApplicationBase::GraphemeSegmentationType::Return && segmentationTypes.at(i) == SGEXTN::ApplicationBase::GraphemeSegmentationType::NewLine){continue;}
+        if(segmentationTypes.at(i - 1) == SGEXTN::ApplicationBase::GraphemeSegmentationType::Return || segmentationTypes.at(i - 1) == SGEXTN::ApplicationBase::GraphemeSegmentationType::NewLine || segmentationTypes.at(i - 1) == SGEXTN::ApplicationBase::GraphemeSegmentationType::ControlCharacter){
+            private_characterOffsets.pushBack(i);
+            continue;
+        }
+        if(segmentationTypes.at(i) == SGEXTN::ApplicationBase::GraphemeSegmentationType::Return || segmentationTypes.at(i) == SGEXTN::ApplicationBase::GraphemeSegmentationType::NewLine || segmentationTypes.at(i) == SGEXTN::ApplicationBase::GraphemeSegmentationType::ControlCharacter){
+            private_characterOffsets.pushBack(i);
+            continue;
+        }
+        if(segmentationTypes.at(i - 1) == SGEXTN::ApplicationBase::GraphemeSegmentationType::HangulLeading && (segmentationTypes.at(i) == SGEXTN::ApplicationBase::GraphemeSegmentationType::HangulLeading || segmentationTypes.at(i) == SGEXTN::ApplicationBase::GraphemeSegmentationType::HangulVowel || segmentationTypes.at(i) == SGEXTN::ApplicationBase::GraphemeSegmentationType::HangulLeadingAndVowel || segmentationTypes.at(i) == SGEXTN::ApplicationBase::GraphemeSegmentationType::HangulLeadingAndVowelAndTrailing)){continue;}
+        if((segmentationTypes.at(i - 1) == SGEXTN::ApplicationBase::GraphemeSegmentationType::HangulLeadingAndVowel || segmentationTypes.at(i - 1) == SGEXTN::ApplicationBase::GraphemeSegmentationType::HangulVowel) && (segmentationTypes.at(i) == SGEXTN::ApplicationBase::GraphemeSegmentationType::HangulVowel || segmentationTypes.at(i) == SGEXTN::ApplicationBase::GraphemeSegmentationType::HangulTrailing)){continue;}
+        if(segmentationTypes.at(i) == SGEXTN::ApplicationBase::GraphemeSegmentationType::HangulTrailing && (segmentationTypes.at(i - 1) == SGEXTN::ApplicationBase::GraphemeSegmentationType::HangulLeadingAndVowelAndTrailing || segmentationTypes.at(i - 1) == SGEXTN::ApplicationBase::GraphemeSegmentationType::HangulTrailing)){continue;}
+        if(segmentationTypes.at(i) == SGEXTN::ApplicationBase::GraphemeSegmentationType::ZeroWidthJoiner || segmentationTypes.at(i) == SGEXTN::ApplicationBase::GraphemeSegmentationType::Extend){continue;}
+        if(segmentationTypes.at(i) == SGEXTN::ApplicationBase::GraphemeSegmentationType::SpacingCombiningMark){continue;}
+        if(segmentationTypes.at(i - 1) == SGEXTN::ApplicationBase::GraphemeSegmentationType::Prepend){continue;}
+        if(ruleRelatedTypes.at(i) == SGEXTN::ApplicationBase::GraphemeRuleRelatedType::Rule9cConsonant){
+            bool foundLinker = false;
+            bool foundConsonant = false;
+            for(int j=i-1; j>=0; j--){
+                if(ruleRelatedTypes.at(j) == SGEXTN::ApplicationBase::GraphemeRuleRelatedType::Rule9cLinker){foundLinker = true;}
+                if(ruleRelatedTypes.at(j) == SGEXTN::ApplicationBase::GraphemeRuleRelatedType::Rule9cConsonant){foundConsonant = true;}
+                if(ruleRelatedTypes.at(j) != SGEXTN::ApplicationBase::GraphemeRuleRelatedType::Rule9cLinker && ruleRelatedTypes.at(j) != SGEXTN::ApplicationBase::GraphemeRuleRelatedType::Rule9cExtend){break;}
+            }
+            if(foundConsonant == true && foundLinker == true){continue;}
+        }
+        if(ruleRelatedTypes.at(i) == SGEXTN::ApplicationBase::GraphemeRuleRelatedType::Rule11Emoji && segmentationTypes.at(i - 1) == SGEXTN::ApplicationBase::GraphemeSegmentationType::ZeroWidthJoiner){
+            bool foundStartEmoji = false;
+            for(int j=i-2; j>=0; j--){
+                if(ruleRelatedTypes.at(j) == SGEXTN::ApplicationBase::GraphemeRuleRelatedType::Rule11Emoji){foundStartEmoji = true;}
+                if(segmentationTypes.at(j) != SGEXTN::ApplicationBase::GraphemeSegmentationType::Extend){break;}
+            }
+            if(foundStartEmoji == true){continue;}
+        }
+        if(segmentationTypes.at(i) == SGEXTN::ApplicationBase::GraphemeSegmentationType::RegionalIndicator && segmentationTypes.at(i - 1) == SGEXTN::ApplicationBase::GraphemeSegmentationType::RegionalIndicator){
+            if(i - 2 < 0 || segmentationTypes.at(i - 2) != SGEXTN::ApplicationBase::GraphemeSegmentationType::RegionalIndicator){continue;}
+            if(private_characterOffsets.at(private_characterOffsets.length() - 1) == i - 2){continue;}
+        }
+        private_characterOffsets.pushBack(i);
+    }
+}
+
+void SGEXTN::ApplicationBase::String::private_invalidateOffsets() const {
+    if(private_characterOffsets.length() > 0){private_characterOffsets = SGEXTN::Containers::Vector<int>();}
+}
+
+SGEXTN::ApplicationBase::Character SGEXTN::ApplicationBase::String::getCharacterAt(int i) const {
+    if(i < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::getCharacterAt crashed because index is negative");}
+    if(i >= characterLength()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::getCharacterAt crashed because index points beyond the end of the string");}
+    private_computeOffsets();
+    SGEXTN::ApplicationBase::Character c;
+    c.private_data = SGEXTN::ApplicationBase::TextBuffer();
+    c.private_data.pushBack(private_data, private_characterOffsets.at(i), private_characterOffsets.at(i + 1) - private_characterOffsets.at(i));
+    return c;
+}
+
+void SGEXTN::ApplicationBase::String::setCharacterAt(int i, const SGEXTN::ApplicationBase::Character& c){
+    if(i < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::setCharacterAt crashed because index is negative");}
+    if(i >= characterLength()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::setCharacterAt crashed because index points beyond the end of the string");}
+    private_computeOffsets();
+    SGEXTN::ApplicationBase::TextBuffer newBuffer;
+    newBuffer.pushBack(private_data, 0, private_characterOffsets.at(i));
+    newBuffer.pushBack(c.private_data, 0, c.byteLength());
+    newBuffer.pushBack(private_data, private_characterOffsets.at(i + 1), byteLength() - private_characterOffsets.at(i + 1));
+    private_invalidateOffsets();
+    private_data = newBuffer;
+}
+
+SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::fillBytes(unsigned char c) const {
+    SGEXTN::ApplicationBase::String output(*this);
+    for(int i=0; i<output.byteLength(); i++){
+        output.byteAt(i) = c;
+    }
+    return output;
+}
+
+SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::fillCharacters(const SGEXTN::ApplicationBase::Character& c) const {
+    SGEXTN::ApplicationBase::String output;
+    for(int i=0; i<characterLength(); i++){
+        output.private_data.pushBack(c.private_data, 0, c.byteLength());
+    }
+    return output;
+}
+
+int SGEXTN::ApplicationBase::String::findFirstBytesFromLeftBounded(int start, const SGEXTN::ApplicationBase::String& s) const {
+    if(start < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::findFirstBytesFromLeftBounded crashed because the starting point is negative");}
+    if(start >= byteLength()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::findFirstBytesFromLeftBounded crashed because the starting point is beyond the end of the string");}
+    if(s == ""){return start;}
+    for(int i=start; i <= byteLength() - s.byteLength(); i++){
+        for(int j=0; j<s.byteLength(); j++){
+            if(byteAt(i + j) != s.byteAt(j)){break;}
+            if(j == s.byteLength() - 1){return i;}
+        }
+    }
+    return -1;
+}
+
+int SGEXTN::ApplicationBase::String::findFirstBytesFromRightBounded(int start, const SGEXTN::ApplicationBase::String& s) const {
+    if(start < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::findFirstBytesFromRightBounded crashed because the starting point is negative");}
+    if(start >= byteLength()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::findFirstBytesFromRightBounded crashed because the starting point is beyond the end of the string");}
+    if(s == ""){return start;}
+    if(start > byteLength() - s.byteLength()){start = byteLength() - s.byteLength();}
+    for(int i=start; i>=0; i--){
+        for(int j=0; j<s.byteLength(); j++){
+            if(byteAt(i + j) != s.byteAt(j)){break;}
+            if(j == s.byteLength() - 1){return i;}
+        }
+    }
+    return -1;
+}
+
+int SGEXTN::ApplicationBase::String::findFirstBytesFromLeft(const SGEXTN::ApplicationBase::String& s) const {
+    return findFirstBytesFromLeftBounded(0, s);
+}
+
+int SGEXTN::ApplicationBase::String::findFirstBytesFromRight(const SGEXTN::ApplicationBase::String& s) const {
+    return findFirstBytesFromRightBounded(byteLength() - 1, s);
+}
+
+int SGEXTN::ApplicationBase::String::findFirstCharactersFromLeftBounded(int start, const SGEXTN::ApplicationBase::String& s) const {
+    if(start < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::findFirstCharactersFromLeftBounded crashed because the starting point is negative");}
+    if(start >= characterLength()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::findFirstCharactersFromLeftBounded crashed because the starting point is beyond the end of the string");}
+    if(s == ""){return start;}
+    for(int i=start; i <= characterLength() - s.characterLength(); i++){
+        for(int j=0; j<s.characterLength(); j++){
+            if(getCharacterAt(i + j) != s.getCharacterAt(j)){break;}
+            if(j == s.characterLength() - 1){return i;}
+        }
+    }
+    return -1;
+}
+
+int SGEXTN::ApplicationBase::String::findFirstCharactersFromRightBounded(int start, const SGEXTN::ApplicationBase::String& s) const {
+    if(start < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::findFirstCharactersFromRightBounded crashed because the starting point is negative");}
+    if(start >= characterLength()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::findFirstCharactersFromRightBounded crashed because the starting point is beyond the end of the string");}
+    if(s == ""){return start;}
+    if(start > characterLength() - s.characterLength()){start = characterLength() - s.characterLength();}
+    for(int i=start; i>=0; i--){
+        for(int j=0; j<s.characterLength(); j++){
+            if(getCharacterAt(i + j) != s.getCharacterAt(j)){break;}
+            if(j == s.characterLength() - 1){return i;}
+        }
+    }
+    return -1;
+}
+
+int SGEXTN::ApplicationBase::String::findFirstCharactersFromLeft(const SGEXTN::ApplicationBase::String& s) const {
+    return findFirstCharactersFromLeftBounded(0, s);
+}
+
+int SGEXTN::ApplicationBase::String::findFirstCharactersFromRight(const SGEXTN::ApplicationBase::String& s) const {
+    return findFirstCharactersFromRightBounded(characterLength() - 1, s);
+}
+
+SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::substringBytes(int start, int length) const {
+    if(start < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::substringBytes crashed because the starting point is negative");}
+    if(start >= byteLength()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::substringBytes crashed because the starting point is beyond the end of the string");}
+    if(length < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::substringBytes crashed because the length is negative");}
+    if(length + start > byteLength()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::substringBytes crashed because the substring is too long to fit inside the string");}
+    SGEXTN::ApplicationBase::String output;
+    output.private_data.pushBack(private_data, start, length);
+    return output;
+}
+
+SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::substringBytesLeft(int length) const {
+    if(length < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::substringBytesLeft crashed because the length is negative");}
+    if(length > byteLength()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::substringBytesLeft crashed because the substring is too long to fit inside the string");}
+    return substringBytes(0, length);
+}
+
+SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::substringBytesRight(int length) const {
+    if(length < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::substringBytesRight crashed because the length is negative");}
+    if(length > byteLength()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::substringBytesRight crashed because the substring is too long to fit inside the string");}
+    return substringBytes(byteLength() - length, length);
+}
+
+SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::substringCharacters(int start, int length) const {
+    if(start < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::substringCharacters crashed because the starting point is negative");}
+    if(start >= characterLength()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::substringCharacters crashed because the starting point is beyond the end of the string");}
+    if(length < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::substringCharacters crashed because the length is negative");}
+    if(length + start > characterLength()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::substringCharacters crashed because the substring is too long to fit inside the string");}
+    private_computeOffsets();
+    SGEXTN::ApplicationBase::String output;
+    output.private_data.pushBack(private_data, private_characterOffsets.at(start), private_characterOffsets.at(start + length + 1) - private_characterOffsets.at(start));
+    return output;
+}
+
+SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::substringCharactersLeft(int length) const {
+    if(length < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::substringCharactersLeft crashed because the length is negative");}
+    if(length > characterLength()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::substringCharactersLeft crashed because the substring is too long to fit inside the string");}
+    return substringCharacters(0, length);
+}
+
+SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::substringCharactersRight(int length) const {
+    if(length < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::substringCharactersRight crashed because the length is negative");}
+    if(length > characterLength()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::substringCharactersRight crashed because the substring is too long to fit inside the string");}
+    return substringCharacters(characterLength() - length, length);
+}
+
+SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::replaceBytes(const SGEXTN::ApplicationBase::String& oldText, const SGEXTN::ApplicationBase::String& newText) const {
+    if(oldText == ""){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::replaceBytes crashed because string to replace is empty");}
+    SGEXTN::ApplicationBase::String output;
+    int lastCheck = 0;
+    while(lastCheck != -1){
+        int nextIndex = findFirstBytesFromLeftBounded(lastCheck, oldText);
+        if(nextIndex == -1){
+            output.private_data.pushBack(private_data, lastCheck, byteLength() - lastCheck);
+            lastCheck = -1;
+        }
+        else{
+            output.private_data.pushBack(private_data, lastCheck, nextIndex - lastCheck);
+            output.private_data.pushBack(newText.private_data, 0, newText.byteLength());
+            lastCheck = nextIndex + oldText.byteLength();
+            if(lastCheck == byteLength()){lastCheck = -1;}
+        }
+    }
+    return output;
+}
+
+SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::replaceCharacters(const SGEXTN::ApplicationBase::String& oldText, const SGEXTN::ApplicationBase::String& newText) const {
+    if(oldText == ""){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::replaceCharacters crashed because string to replace is empty");}
+    private_computeOffsets();
+    SGEXTN::ApplicationBase::String output;
+    int lastCheck = 0;
+    while(lastCheck != -1){
+        int nextIndex = findFirstCharactersFromLeftBounded(lastCheck, oldText);
+        if(nextIndex == -1){
+            output.private_data.pushBack(private_data, private_characterOffsets.at(lastCheck), byteLength() - private_characterOffsets.at(lastCheck));
+            lastCheck = -1;
+        }
+        else{
+            output.private_data.pushBack(private_data, private_characterOffsets.at(lastCheck), private_characterOffsets.at(nextIndex) - private_characterOffsets.at(lastCheck));
+            output.private_data.pushBack(newText.private_data, 0, newText.byteLength());
+            lastCheck = nextIndex + oldText.characterLength();
+            if(lastCheck == characterLength()){lastCheck = -1;}
+        }
+    }
+    return output;
+}
+
+SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::removeBytes(const SGEXTN::ApplicationBase::String& s) const {
+    if(s == ""){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::removeBytes crashed because string to replace is empty");}
+    return replaceBytes(s, "");
+}
+
+SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::removeCharacters(const SGEXTN::ApplicationBase::String& s) const {
+    if(s == ""){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::removeCharacters crashed because string to replace is empty");}
+    return replaceCharacters(s, "");
+}
+
+SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::insertAtByteIndex(int pos, const SGEXTN::ApplicationBase::String& s) const {
+    if(pos < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::insertAtByteIndex crashed because position of insertion is negative");}
+    if(pos > byteLength()){SGEXTN::Containers::Crash::crash("SGEXTN::Application::String::insertAtByteIndex crashed because position of insertion points to more than 1 space beyond the end of the string");}
+    SGEXTN::ApplicationBase::String output;
+    if(pos > 0){output.private_data.pushBack(private_data, 0, pos);}
+    output.private_data.pushBack(s.private_data, 0, s.byteLength());
+    if(pos < byteLength()){output.private_data.pushBack(private_data, pos, byteLength() - pos);}
+    return output;
+}
+
+SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::insertAtCharacterIndex(int pos, const SGEXTN::ApplicationBase::String& s) const {
+    if(pos < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::insertAtCharacterIndex crashed because position of insertion is negative");}
+    if(pos > characterLength()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::insertAtCharacterIndex crashed because position of insertion points to more than 1 space beyond the end of the string");}
+    private_computeOffsets();
+    SGEXTN::ApplicationBase::String output;
+    if(pos > 0){output.private_data.pushBack(private_data, 0, private_characterOffsets.at(pos));}
+    output.private_data.pushBack(s.private_data, 0, s.byteLength());
+    if(pos < characterLength()){output.private_data.pushBack(private_data, private_characterOffsets.at(pos), byteLength() - private_characterOffsets.at(pos));}
+    return output;
+}
+
+SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::removeAtByteIndex(int pos, int length) const {
+    if(pos < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::removeAtByteIndex crashed because position of removal is negative");}
+    if(pos >= byteLength()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::removeAtByteIndex crashed because position of removal points beyond the end of the string");}
+    if(length < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::removeAtByteIndex crashed because the length to remove is negative");}
+    if(pos + length > byteLength()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::removeAtByteIndex crashed because the end of the range to remove points beyond the end of the string");}
+    SGEXTN::ApplicationBase::String output;
+    if(pos > 0){output.private_data.pushBack(private_data, 0, pos);}
+    if(pos + length < byteLength()){output.private_data.pushBack(private_data, pos + length, byteLength() - pos - length);}
+    return output;
+}
+
+SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::removeAtCharacterIndex(int pos, int length) const {
+    if(pos < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::removeAtCharacterIndex crashed because position of removal is negative");}
+    if(pos >= characterLength()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::removeAtCharacterIndex crashed because position of removal points beyond the end of the string");}
+    if(length < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::removeAtCharacterIndex crashed because the length to remove is negative");}
+    if(pos + length > characterLength()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::removeAtCharacterIndex crashed because the end of the range to remove points beyond the end of the string");}
+    private_computeOffsets();
+    SGEXTN::ApplicationBase::String output;
+    if(pos > 0){output.private_data.pushBack(private_data, 0, private_characterOffsets.at(pos));}
+    if(pos + length < characterLength()){output.private_data.pushBack(private_data, private_characterOffsets.at(pos + length), byteLength() - private_characterOffsets.at(pos + length));}
+    return output;
+}
+
+bool SGEXTN::ApplicationBase::String::containsBytes(const SGEXTN::ApplicationBase::String& s) const {
+    return (findFirstBytesFromLeft(s) != -1);
+}
+
+bool SGEXTN::ApplicationBase::String::containsCharacters(const SGEXTN::ApplicationBase::String& s) const {
+    return (findFirstCharactersFromLeft(s) != -1);
+}
+
+bool SGEXTN::ApplicationBase::String::startsWithBytes(const SGEXTN::ApplicationBase::String& s) const {
+    if(s.byteLength() > byteLength()){return false;}
+    return (substringBytesLeft(s.byteLength()) == s);
+}
+
+bool SGEXTN::ApplicationBase::String::startsWithCharacters(const SGEXTN::ApplicationBase::String& s) const {
+    if(s.characterLength() > characterLength()){return false;}
+    return (substringCharactersLeft(s.characterLength()) == s);
+}
+
+bool SGEXTN::ApplicationBase::String::endsWithBytes(const SGEXTN::ApplicationBase::String& s) const {
+    if(s.byteLength() > byteLength()){return false;}
+    return (substringBytesRight(s.byteLength()) == s);
+}
+
+bool SGEXTN::ApplicationBase::String::endsWithCharacters(const SGEXTN::ApplicationBase::String& s) const {
+    if(s.characterLength() > characterLength()){return false;}
+    return (substringCharactersRight(s.characterLength()) == s);
+}
+
+int SGEXTN::ApplicationBase::String::countBytes(const SGEXTN::ApplicationBase::String& s) const {
+    if(s == ""){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::countBytes crashed because string to count is empty");}
+    int lastCheck = 0;
+    int count = 0;
+    while(true){
+        int nextIndex = findFirstBytesFromLeftBounded(lastCheck, s);
+        if(nextIndex == -1){break;}
+        count++;
+        if(nextIndex == byteLength() - 1){break;}
+        lastCheck = nextIndex + s.byteLength();
+    }
+    return count;
+}
+
+int SGEXTN::ApplicationBase::String::countCharacters(const SGEXTN::ApplicationBase::String& s) const {
+    if(s == ""){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::countCharacters crashed because string to count is empty");}
+    int lastCheck = 0;
+    int count = 0;
+    while(true){
+        int nextIndex = findFirstCharactersFromLeftBounded(lastCheck, s);
+        if(nextIndex == -1){break;}
+        count++;
+        if(nextIndex == characterLength() - 1){break;}
+        lastCheck = nextIndex + s.characterLength();
+    }
+    return count;
+}
+
+int SGEXTN::ApplicationBase::String::countBytesAllowOverlap(const SGEXTN::ApplicationBase::String& s) const {
+    if(s == ""){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::countBytesAllowOverlap crashed because string to count is empty");}
+    int lastCheck = 0;
+    int count = 0;
+    while(true){
+        int nextIndex = findFirstBytesFromLeftBounded(lastCheck, s);
+        if(nextIndex == -1){break;}
+        count++;
+        if(nextIndex == byteLength() - 1){break;}
+        lastCheck = nextIndex + 1;
+    }
+    return count;
+}
+
+int SGEXTN::ApplicationBase::String::countCharactersAllowOverlap(const SGEXTN::ApplicationBase::String& s) const {
+    if(s == ""){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::countCharactersAllowOverlap crashed because string to count is empty");}
+    int lastCheck = 0;
+    int count = 0;
+    while(true){
+        int nextIndex = findFirstCharactersFromLeftBounded(lastCheck, s);
+        if(nextIndex == -1){break;}
+        count++;
+        if(nextIndex == characterLength() - 1){break;}
+        lastCheck = nextIndex + 1;
+    }
+    return count;
+}
+
+SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::repeat(const SGEXTN::ApplicationBase::String& s, int count){
+    if(count < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::repeat crashed because count is negative");}
+    SGEXTN::ApplicationBase::String output;
+    for(int i=0; i<count; i++){
+        output.private_data.pushBack(s.private_data, 0, s.byteLength());
+    }
+    return output;
+}
+
+SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::fillLeftToByteLength(int length, unsigned char fillChar) const {
+    if(length < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::fillLeftToByteLength crashed because target length is negative");}
+    if(byteLength() >= length){return (*this);}
+    return (SGEXTN::ApplicationBase::String::repeat(fillChar, length - byteLength()) + (*this));
+}
+
+SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::fillLeftToCharacterLength(int length, const SGEXTN::ApplicationBase::Character& fillChar) const {
+    if(length < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::fillLeftToCharacterLength crashed because target length is negative");}
+    if(characterLength() >= length){return (*this);}
+    return (SGEXTN::ApplicationBase::String::repeat(fillChar, length - characterLength()) + (*this));
+}
+
+SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::fillRightToByteLength(int length, unsigned char fillChar) const {
+    if(length < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::fillRightToByteLength crashed because target length is negative");}
+    if(byteLength() >= length){return (*this);}
+    return ((*this) + SGEXTN::ApplicationBase::String::repeat(fillChar, length - byteLength()));
+}
+
+SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::fillRightToCharacterLength(int length, const SGEXTN::ApplicationBase::Character& fillChar) const {
+    if(length < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::fillRightToCharacterLength crashed because target length is negative");}
+    if(characterLength() >= length){return (*this);}
+    return ((*this) + SGEXTN::ApplicationBase::String::repeat(fillChar, length - characterLength()));
+}
+
+int SGEXTN::ApplicationBase::String::byteIndexToCharacterIndex(int i) const {
+    if(i < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::byteIndexToCharacterIndex crashed because the index is negative");}
+    if(i >= byteLength()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::byteIndexToCharacterIndex crashed because the index points beyond the end of the string");}
+    private_computeOffsets();
+    int low = 0;
+    int high = characterLength();
+    while(high - low > 1){
+        int mid = (low + high) / 2;
+        if(private_characterOffsets.at(mid) > i){high = mid;}
+        else{low = mid;}
+    }
+    return low;
+}
+
+int SGEXTN::ApplicationBase::String::characterIndexToByteIndex(int i) const {
+    if(i < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::characterIndexToByteIndex crashed because the index is negative");}
+    if(i >= characterLength()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::characterIndexToByteIndex crashed because the index points beyond the end of the string");}
+    private_computeOffsets();
+    return private_characterOffsets.at(i);
+}

@@ -6,6 +6,7 @@
 #include <SGEXTN_ApplicationBase_String.h>
 #include <SGEXTN_ApplicationBase_UnicodeQuery.h>
 #include <SGEXTN_Containers_Vector.h>
+#include <SGEXTN_ApplicationBase_String.h>
 
 namespace {
 void appendUnicode(int unicode, SGEXTN::ApplicationBase::Character& c){
@@ -36,6 +37,11 @@ SGEXTN::ApplicationBase::Character::Character(){
 
 SGEXTN::ApplicationBase::Character::Character(char c){
     private_data.pushBack(c);
+}
+
+SGEXTN::ApplicationBase::Character::Character(const char* s){
+    SGEXTN::ApplicationBase::String validityTest(s);
+    if(validityTest.characterLength() != 1){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character constructor crashed as passed string literal does not represent a single character");}
 }
 
 SGEXTN::ApplicationBase::Character::Character(int unicode){

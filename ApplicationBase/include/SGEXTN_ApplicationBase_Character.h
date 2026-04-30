@@ -14,6 +14,7 @@ public:
     SGEXTN::ApplicationBase::TextBuffer private_data;
     Character();
     Character(char c);
+    Character(const char* s);
     Character(int unicode);
     [[nodiscard]] bool operator==(const Character& x) const;
     [[nodiscard]] bool operator!=(const Character& x) const;
