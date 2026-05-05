@@ -86,7 +86,6 @@ public:
     [[nodiscard]] String fillRightToCharacterLength(int length, const SGEXTN::ApplicationBase::Character& fillChar) const;
     [[nodiscard]] int byteIndexToCharacterIndex(int i) const;
     [[nodiscard]] int characterIndexToByteIndex(int i) const;
-
     [[nodiscard]] short parseToShort(bool* isValid, int base) const;
     [[nodiscard]] unsigned short parseToUnsignedShort(bool* isValid, int base) const;
     [[nodiscard]] int parseToInt(bool* isValid, int base) const;

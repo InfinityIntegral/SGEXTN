@@ -7,6 +7,7 @@
 #include <SGEXTN_ApplicationBase_UnicodeQuery.h>
 #include <SGEXTN_Containers_Vector.h>
 #include <SGEXTN_ApplicationBase_String.h>
+#include <SGEXTN_Math_FloatLimits.h>
 
 namespace {
 void appendUnicode(int unicode, SGEXTN::ApplicationBase::Character& c){
@@ -137,6 +138,7 @@ bool SGEXTN::ApplicationBase::Character::isWhitespace() const {
 int SGEXTN::ApplicationBase::Character::getBaseUnicode() const {
     if((byteAt(0) & 0x80) == 0){return static_cast<int>(byteAt(0));}
     SGEXTN::Containers::Array<int> codePoints = getUnicode();
+    if(codePoints.length() == 1){return codePoints.at(0);}
     for(int i=0; i<codePoints.length(); i++){
         SGEXTN::ApplicationBase::GraphemeSegmentationType graphemeCategory = SGEXTN::ApplicationBase::UnicodeQuery::getGraphemeSegmentationType(codePoints.at(i));
         if(graphemeCategory == SGEXTN::ApplicationBase::GraphemeSegmentationType::Other || graphemeCategory == SGEXTN::ApplicationBase::GraphemeSegmentationType::RegionalIndicator || graphemeCategory == SGEXTN::ApplicationBase::GraphemeSegmentationType::HangulLeading || graphemeCategory == SGEXTN::ApplicationBase::GraphemeSegmentationType::HangulVowel || graphemeCategory == SGEXTN::ApplicationBase::GraphemeSegmentationType::HangulTrailing || graphemeCategory == SGEXTN::ApplicationBase::GraphemeSegmentationType::HangulLeadingAndVowel || graphemeCategory == SGEXTN::ApplicationBase::GraphemeSegmentationType::HangulLeadingAndVowelAndTrailing){return codePoints.at(i);}
@@ -230,9 +232,13 @@ SGEXTN::ApplicationBase::Character SGEXTN::ApplicationBase::Character::getTitlec
 }
 
 int SGEXTN::ApplicationBase::Character::getDecimalDigitValue() const {
-    return SGEXTN::ApplicationBase::UnicodeQuery::getDecimalDigitValue(getBaseUnicode());
+    SGEXTN::Containers::Array<int> codePoints = getUnicode();
+    if(codePoints.length() > 1){return -1;}
+    return SGEXTN::ApplicationBase::UnicodeQuery::getDecimalDigitValue(codePoints.at(0));
 }
 
 float SGEXTN::ApplicationBase::Character::getNumericalValue() const {
-    return SGEXTN::ApplicationBase::UnicodeQuery::getNumericalValue(getBaseUnicode());
+    SGEXTN::Containers::Array<int> codePoints = getUnicode();
+    if(codePoints.length() > 1){return SGEXTN::Math::FloatLimits<float>::negativeInfinity();}
+    return SGEXTN::ApplicationBase::UnicodeQuery::getNumericalValue(codePoints.at(0));
 }

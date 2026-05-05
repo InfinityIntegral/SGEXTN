@@ -3,6 +3,151 @@
 #include <SGEXTN_ApplicationBase_Character.h>
 #include <SGEXTN_Containers_Array.h>
 #include <SGEXTN_ApplicationBase_UnicodeQuery.h>
+#include <SGEXTN_Math_IntegerLimits.h>
+#include <SGEXTN_Math_FloatMath.h>
+
+namespace {
+int getValueAsDigit(const SGEXTN::ApplicationBase::Character& c, int base){
+    if(base != 10){
+        if(c.isDigit() == true){return (static_cast<int>(c.byteAt(0)) - static_cast<int>('0'));}
+        if(c.isEnglishLowercase() == true){return (10 + static_cast<int>(c.byteAt(0)) - static_cast<int>('a'));}
+        if(c.isEnglishUppercase() == true){return (10 + static_cast<int>(c.byteAt(0)) - static_cast<int>('A'));}
+        return -1;
+    }
+    else{return c.getDecimalDigitValue();}
+}
+
+bool parseStringToInteger(const SGEXTN::ApplicationBase::String& s, int base, unsigned long long& output){
+    if(s == "" || s == "+"){return false;}
+    unsigned long long ans = 0;
+    for(int i=0; i<s.characterLength(); i++){
+        if(i == 0 && s.getCharacterAt(i) == '+'){continue;}
+        int digit = getValueAsDigit(s.getCharacterAt(i), base);
+        if(digit == -1 || digit >= base){return false;}
+        if(SGEXTN::Math::IntegerLimits<unsigned long long>::maximum() / base < ans){return false;}
+        ans *= base;
+        if(SGEXTN::Math::IntegerLimits<unsigned long long>::maximum() - digit < ans){return false;}
+        ans += digit;
+    }
+    output = ans;
+    return true;
+}
+
+bool parseStringToSignedInteger(const SGEXTN::ApplicationBase::String& s, int base, long long& output){
+    if(s == "" || s == "+" || s == "-"){return false;}
+    if(s.characterLength() >= 2 && s.substringCharactersLeft(2) == "-+"){return false;}
+    bool isNegative = false;
+    if(s.getCharacterAt(0) == '-'){isNegative = true;}
+    unsigned long long absValue = 0;
+    bool isValid = false;
+    if(isNegative == false){isValid = parseStringToInteger(s, base, absValue);}
+    else{isValid = parseStringToInteger(s.substringCharactersRight(s.characterLength() - 1), base, absValue);}
+    if(isValid == false){return false;}
+    if(absValue == static_cast<unsigned long long>(SGEXTN::Math::IntegerLimits<long long>::maximum()) + 1){
+        output = SGEXTN::Math::IntegerLimits<long long>::minimum();
+        return true;
+    }
+    if(absValue > static_cast<unsigned long long>(SGEXTN::Math::IntegerLimits<long long>::maximum())){return false;}
+    if(isNegative == false){output = static_cast<long long>(absValue);}
+    else{output = (-1) * static_cast<long long>(absValue);}
+    return true;
+}
+
+bool parseMantissa(const SGEXTN::ApplicationBase::String& s, int base, unsigned long long& mantissa, int& exponent){
+    if(s == ""){return false;}
+    int digitLimit = static_cast<int>(SGEXTN::Math::FloatMath<double>::naturalLog(static_cast<double>(SGEXTN::Math::IntegerLimits<unsigned long long>::maximum())) / SGEXTN::Math::FloatMath<double>::naturalLog(static_cast<double>(base)));
+    int decimalPointIndex = -1;
+    int lastIndex = -1;
+    int digitCount = 0;
+    unsigned long long ans = 0;
+    for(int i=0; i<s.characterLength(); i++){
+        if(s.getCharacterAt(i) == '.'){
+            if(decimalPointIndex != -1){return false;}
+            if(i != s.characterLength() - 1){decimalPointIndex = i;}
+            continue;
+        }
+        if(digitCount >= digitLimit){
+            for(int j=i; j<s.characterLength(); j++){
+                int verifyDigit = getValueAsDigit(s.getCharacterAt(j), base);
+                if(verifyDigit == -1 || verifyDigit >= base){return false;}
+            }
+            if(decimalPointIndex != -1){lastIndex = i;}
+            break;
+        }
+        int digit = getValueAsDigit(s.getCharacterAt(i), base);
+        if(digit == -1 || digit >= base){return false;}
+        ans = base * ans + digit;
+        if(ans != 0 || decimalPointIndex != -1){digitCount++;}
+    }
+    if(decimalPointIndex == -1){exponent = 0;}
+    else if(lastIndex != -1){exponent = decimalPointIndex - lastIndex;}
+    else{exponent = decimalPointIndex - s.characterLength() + 1;}
+    mantissa = ans;
+    return true;
+}
+
+bool parseScientificNotationExponent(const SGEXTN::ApplicationBase::String& s, int base, int& exponent){
+    if(s == "" || s == "+" || s == "-"){return false;}
+    bool isNegative = false;
+    int ans = 0;
+    for(int i=0; i<s.characterLength(); i++){
+        if(i == 0){
+            if(s.getCharacterAt(i) == '+'){continue;}
+            if(s.getCharacterAt(i) == '-'){
+                isNegative = true;
+                continue;
+            }
+        }
+        if(i >= 5){
+            for(int j=i; j<s.characterLength(); j++){
+                int verifyDigit = getValueAsDigit(s.getCharacterAt(j), base);
+                if(verifyDigit == -1 || verifyDigit >= base){return false;}
+            }
+            if(isNegative == false){exponent = 100000;}
+            else{exponent = -100000;}
+            return true;
+        }
+        int digit = getValueAsDigit(s.getCharacterAt(i), base);
+        if(digit == -1 || digit >= base){return false;}
+        ans = base * ans + digit;
+    }
+    if(isNegative == false){exponent = ans;}
+    else{exponent = (-1) * ans;}
+    return true;
+}
+
+bool parseStringToFloatingPoint(const SGEXTN::ApplicationBase::String& s, int base, double& output){
+    if(s == ""){return false;}
+    int start = 0;
+    int end = -1;
+    bool isNegative = false;
+    if(s.getCharacterAt(0) == '+'){start = 1;}
+    else if(s.getCharacterAt(0) == '-'){
+        isNegative = true;
+        start = 1;
+    }
+    if(s.containsCharacters('e') == true){end = s.findFirstCharactersFromRight('e');}
+    else if(s.containsCharacters('E') == true){end = s.findFirstCharactersFromRight('E');}
+    else if(base == 10 && s.containsCharacters("⏨") == true){end = s.findFirstCharactersFromRight("⏨");}
+    unsigned long long mantissa = 0;
+    int additionalExponent = 0;
+    bool mantissaIsValid = false;
+    if(end == -1){mantissaIsValid = parseMantissa(s.substringCharactersRight(s.characterLength() - start), base, mantissa, additionalExponent);}
+    else{mantissaIsValid = parseMantissa(s.substringCharacters(start, end - start), base, mantissa, additionalExponent);}
+    if(mantissaIsValid == false){return false;}
+    if(end != -1){
+        bool exponentIsValid = false;
+        int exponent = 0;
+        exponentIsValid = parseScientificNotationExponent(s.substringCharactersRight(s.characterLength() - end - 1), base, exponent);
+        if(exponentIsValid == false){return false;}
+        additionalExponent += exponent;
+    }
+    double finalAns = static_cast<double>(mantissa) * SGEXTN::Math::FloatMath<double>::powerOf(static_cast<double>(base), static_cast<double>(additionalExponent));
+    if(isNegative == true){finalAns = (-1) * finalAns;}
+    output = finalAns;
+    return true;
+}
+}
 
 SGEXTN::ApplicationBase::String::String(){
 
@@ -557,4 +702,80 @@ int SGEXTN::ApplicationBase::String::characterIndexToByteIndex(int i) const {
     if(i >= characterLength()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::characterIndexToByteIndex crashed because the index points beyond the end of the string");}
     private_computeOffsets();
     return private_characterOffsets.at(i);
+}
+
+short SGEXTN::ApplicationBase::String::parseToShort(bool* isValid, int base) const {
+    if(base < 2 || base > 36){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::parseToShort crashed because base is not within 2 to 36 inclusive");}
+    long long value = 0;
+    bool valid = parseStringToSignedInteger((*this), base, value);
+    if(value < static_cast<long long>(SGEXTN::Math::IntegerLimits<short>::minimum()) || value > static_cast<long long>(SGEXTN::Math::IntegerLimits<short>::maximum())){valid = false;}
+    if(isValid != nullptr){(*isValid) = valid;}
+    if(valid == false){return 0;}
+    return static_cast<short>(value);
+}
+
+unsigned short SGEXTN::ApplicationBase::String::parseToUnsignedShort(bool* isValid, int base) const {
+    if(base < 2 || base > 36){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::parseToUnsignedShort crashed because base is not within 2 to 36 inclusive");}
+    unsigned long long value = 0;
+    bool valid = parseStringToInteger((*this), base, value);
+    if(value > static_cast<unsigned long long>(SGEXTN::Math::IntegerLimits<unsigned short>::maximum())){valid = false;}
+    if(isValid != nullptr){(*isValid) = valid;}
+    if(valid == false){return 0;}
+    return static_cast<unsigned short>(value);
+}
+
+int SGEXTN::ApplicationBase::String::parseToInt(bool* isValid, int base) const {
+    if(base < 2 || base > 36){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::parseToInt crashed because base is not within 2 to 36 inclusive");}
+    long long value = 0;
+    bool valid = parseStringToSignedInteger((*this), base, value);
+    if(value < static_cast<long long>(SGEXTN::Math::IntegerLimits<int>::minimum()) || value > static_cast<long long>(SGEXTN::Math::IntegerLimits<int>::maximum())){valid = false;}
+    if(isValid != nullptr){(*isValid) = valid;}
+    if(valid == false){return 0;}
+    return static_cast<int>(value);
+}
+
+unsigned int SGEXTN::ApplicationBase::String::parseToUnsignedInt(bool* isValid, int base) const {
+    if(base < 2 || base > 36){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::parseToUnsignedInt crashed because base is not within 2 to 36 inclusive");}
+    unsigned long long value = 0;
+    bool valid = parseStringToInteger((*this), base, value);
+    if(value > static_cast<unsigned long long>(SGEXTN::Math::IntegerLimits<unsigned int>::maximum())){valid = false;}
+    if(isValid != nullptr){(*isValid) = valid;}
+    if(valid == false){return 0;}
+    return static_cast<unsigned int>(value);
+}
+
+long long SGEXTN::ApplicationBase::String::parseToLongLong(bool* isValid, int base) const {
+    if(base < 2 || base > 36){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::parseToLongLong crashed because base is not within 2 to 36 inclusive");}
+    long long value = 0;
+    bool valid = parseStringToSignedInteger((*this), base, value);
+    if(isValid != nullptr){(*isValid) = valid;}
+    if(valid == false){return 0;}
+    return value;
+}
+
+unsigned long long SGEXTN::ApplicationBase::String::parseToUnsignedLongLong(bool* isValid, int base) const {
+    if(base < 2 || base > 36){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::parseToUnsignedLongLong crashed because base is not within 2 to 36 inclusive");}
+    unsigned long long value = 0;
+    bool valid = parseStringToInteger((*this), base, value);
+    if(isValid != nullptr){(*isValid) = valid;}
+    if(valid == false){return 0;}
+    return value;
+}
+
+float SGEXTN::ApplicationBase::String::parseToFloat(bool* isValid, int base) const {
+    if(base < 2 || base > 36){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::parseToFloat crashed because base is not within 2 to 36 inclusive");}
+    double value = 0.0f;
+    bool valid = parseStringToFloatingPoint((*this), base, value);
+    if(isValid != nullptr){(*isValid) = valid;}
+    if(valid == false){return 0.0f;}
+    return static_cast<float>(value);
+}
+
+double SGEXTN::ApplicationBase::String::parseToDouble(bool* isValid, int base) const {
+    if(base < 2 || base > 36){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::parseToDouble crashed because base is not within 2 to 36 inclusive");}
+    double value = 0.0f;
+    bool valid = parseStringToFloatingPoint((*this), base, value);
+    if(isValid != nullptr){(*isValid) = valid;}
+    if(valid == false){return 0.0f;}
+    return value;
 }
