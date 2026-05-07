@@ -102,7 +102,6 @@ public:
     [[nodiscard]] static String stringFromUnsignedLongLong(unsigned long long x, int base);
     [[nodiscard]] static String stringFromFloat(float x, int base, SGEXTN::ApplicationBase::FloatPrecisionFormat format, int precision);
     [[nodiscard]] static String stringFromDouble(double x, int base, SGEXTN::ApplicationBase::FloatPrecisionFormat format, int precision);
-
     [[nodiscard]] String prettierScientificNotation() const;
     [[nodiscard]] String convertNumericSystem(const SGEXTN::ApplicationBase::Character& zeroRepresentation) const;
     [[nodiscard]] String prepareInnerHtmlText() const;
@@ -123,6 +122,7 @@ public:
     [[nodiscard]] bool isLowercase() const;
     [[nodiscard]] bool isTitlecase() const;
 
+    // first make setCharacterAt use fast path if initial and final character have same length
     [[nodiscard]] String getUppercase() const;
     [[nodiscard]] String getLowercase() const;
     [[nodiscard]] String getTitlecase() const;

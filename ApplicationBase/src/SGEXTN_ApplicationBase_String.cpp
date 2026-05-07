@@ -913,14 +913,101 @@ SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::stringFromUnsig
 
 SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::stringFromFloat(float x, int base, SGEXTN::ApplicationBase::FloatPrecisionFormat format, int precision){
     if(base < 2 || base > 36){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::stringFromFloat crashed because base is not within 2 to 36 inclusive");}
-    if(format != SGEXTN::ApplicationBase::FloatPrecisionFormat::DecimalPlace && format <= 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::stringFromFloat crashed because precision is nonpositive");}
+    if(format != SGEXTN::ApplicationBase::FloatPrecisionFormat::DecimalPlace && precision <= 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::stringFromFloat crashed because precision is nonpositive");}
     if(static_cast<float>(precision) * SGEXTN::Math::FloatMath<float>::logBase2(base) > 24.0f){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::stringFromFloat crashed because precision exceeds maximum numerical precision that a float can represent");}
     return makeStringFromFloatingPoint(static_cast<double>(x), base, format, precision);
 }
 
 SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::stringFromDouble(double x, int base, SGEXTN::ApplicationBase::FloatPrecisionFormat format, int precision){
     if(base < 2 || base > 36){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::stringFromDouble crashed because base is not within 2 to 36 inclusive");}
-    if(format != SGEXTN::ApplicationBase::FloatPrecisionFormat::DecimalPlace && format <= 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::stringFromDouble crashed because precision is nonpositive");}
+    if(format != SGEXTN::ApplicationBase::FloatPrecisionFormat::DecimalPlace && precision <= 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::stringFromDouble crashed because precision is nonpositive");}
     if(static_cast<float>(precision) * SGEXTN::Math::FloatMath<float>::logBase2(base) > 53.0f){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::stringFromDouble crashed because precision exceeds maximum numerical precision that a double precision float can represent");}
     return makeStringFromFloatingPoint(x, base, format, precision);
+}
+
+SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::prettierScientificNotation() const {
+    if(containsCharacters("e") == false){return (*this);}
+    int exponentIndex = findFirstCharactersFromLeft("e");
+    SGEXTN::ApplicationBase::String mantissa = substringCharactersLeft(exponentIndex);
+    int exponent = substringCharactersRight(characterLength() - 1 - exponentIndex).parseToInt(nullptr, 10);
+    SGEXTN::ApplicationBase::String exponentString = SGEXTN::ApplicationBase::String::stringFromInt(exponent, 10);
+    SGEXTN::ApplicationBase::String formattedExponent;
+    for(int i=0; i<exponentString.characterLength(); i++){
+        if(exponentString.getCharacterAt(i) == '2' || exponentString.getCharacterAt(i) == '3'){formattedExponent += SGEXTN::ApplicationBase::Character(0x00b0 + exponentString.getCharacterAt(i).getDecimalDigitValue());}
+        else if(exponentString.getCharacterAt(i) == '1'){formattedExponent += SGEXTN::ApplicationBase::Character(0x00b9);}
+        else if(exponentString.getCharacterAt(i) == '-'){formattedExponent += SGEXTN::ApplicationBase::Character(0x207b);}
+        else{formattedExponent += SGEXTN::ApplicationBase::Character(0x2070 + exponentString.getCharacterAt(i).getDecimalDigitValue());}
+    }
+    return (mantissa + SGEXTN::ApplicationBase::Character(0x00d7) + "10" + formattedExponent);
+}
+
+SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::convertNumericSystem(const SGEXTN::ApplicationBase::Character& zeroRepresentation) const {
+    if(zeroRepresentation.getDecimalDigitValue() != 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::convertNumericSystem crashed because the zero character does not represent a value of 0 in any decimal place value system");}
+    int newZero = zeroRepresentation.getBaseUnicode();
+    SGEXTN::ApplicationBase::String output;
+    for(int i=0; i<characterLength(); i++){
+        int unicode = getCharacterAt(i).getBaseUnicode();
+        if(unicode >= 0x0030 && unicode <= 0x0039){output += SGEXTN::ApplicationBase::Character(unicode - 0x0030 + newZero);}
+        else{output += SGEXTN::ApplicationBase::Character(unicode);}
+    }
+    return output;
+}
+
+SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::prepareInnerHtmlText() const {
+    return (*this).replaceBytes("&", "&amp;").replaceBytes("<", "&lt;").replaceBytes(">", "&gt;");
+}
+
+SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::removeLeadingTrailingWhitespace() const {
+    int start = 0;
+    for(int i=0; i<characterLength(); i++){
+        if(getCharacterAt(i).isWhitespace() == true){start++;}
+        else{break;}
+    }
+    if(start == characterLength()){return "";}
+    int end = characterLength() - 1;
+    for(int i=characterLength()-1; i>=0; i--){
+        if(getCharacterAt(i).isWhitespace() == true){end--;}
+        else{break;}
+    }
+    return substringCharacters(start, end - start + 1);
+}
+
+SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::cleanWhitespace() const {
+    int lastCopy = 0;
+    SGEXTN::ApplicationBase::String output;
+    for(int i=0; i<characterLength(); i++){
+        if(getCharacterAt(i).isWhitespace() == true){
+            if(i - lastCopy > 0){
+                if(output != ""){output += " ";}
+                output += substringCharacters(lastCopy, i - lastCopy);
+            }
+            lastCopy = i + 1;
+        }
+    }
+    if(lastCopy != characterLength()){
+        output += " ";
+        output += substringCharactersRight(characterLength() - lastCopy);
+    }
+    return output;
+}
+
+SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::removeAllWhitespace() const {
+    return cleanWhitespace().replaceCharacters(" ", "");
+}
+
+SGEXTN::Containers::Array<SGEXTN::ApplicationBase::String> SGEXTN::ApplicationBase::String::split(const SGEXTN::ApplicationBase::String& separator) const {
+    if(separator == ""){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::split crashed because separator is empty");}
+    int currentIndex = 0;
+    SGEXTN::Containers::Vector<SGEXTN::ApplicationBase::String> splitStrings;
+    while(currentIndex < characterLength()){
+        int index = findFirstCharactersFromLeftBounded(currentIndex, separator);
+        if(index == -1){index = characterLength();}
+        splitStrings.pushBack(substringCharacters(currentIndex, index - currentIndex));
+        currentIndex = index + separator.characterLength();
+    }
+    SGEXTN::Containers::Array<SGEXTN::ApplicationBase::String> output(splitStrings.length());
+    for(int i=0; i<splitStrings.length(); i++){
+        output.at(i) = splitStrings.at(i);
+    }
+    return output;
 }
