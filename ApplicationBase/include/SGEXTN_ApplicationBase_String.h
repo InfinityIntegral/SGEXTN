@@ -94,7 +94,6 @@ public:
     [[nodiscard]] unsigned long long parseToUnsignedLongLong(bool* isValid, int base) const;
     [[nodiscard]] float parseToFloat(bool* isValid, int base) const;
     [[nodiscard]] double parseToDouble(bool* isValid, int base) const;
-
     [[nodiscard]] static String stringFromShort(short x, int base);
     [[nodiscard]] static String stringFromUnsignedShort(unsigned short x, int base);
     [[nodiscard]] static String stringFromInt(int x, int base);
@@ -104,6 +103,8 @@ public:
     [[nodiscard]] static String stringFromFloat(float x, int base, SGEXTN::ApplicationBase::FloatPrecisionFormat format, int precision);
     [[nodiscard]] static String stringFromDouble(double x, int base, SGEXTN::ApplicationBase::FloatPrecisionFormat format, int precision);
 
+    [[nodiscard]] String prettierScientificNotation() const;
+    [[nodiscard]] String convertNumericSystem(const SGEXTN::ApplicationBase::Character& zeroRepresentation) const;
     [[nodiscard]] String prepareInnerHtmlText() const;
     [[nodiscard]] String removeLeadingTrailingWhitespace() const;
     [[nodiscard]] String cleanWhitespace() const;

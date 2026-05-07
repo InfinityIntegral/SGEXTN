@@ -5,6 +5,7 @@
 #include <SGEXTN_ApplicationBase_UnicodeQuery.h>
 #include <SGEXTN_Math_IntegerLimits.h>
 #include <SGEXTN_Math_FloatMath.h>
+#include <SGEXTN_Math_FloatLimits.h>
 
 namespace {
 int getValueAsDigit(const SGEXTN::ApplicationBase::Character& c, int base){
@@ -55,7 +56,7 @@ bool parseStringToSignedInteger(const SGEXTN::ApplicationBase::String& s, int ba
 
 bool parseMantissa(const SGEXTN::ApplicationBase::String& s, int base, unsigned long long& mantissa, int& exponent){
     if(s == ""){return false;}
-    int digitLimit = static_cast<int>(SGEXTN::Math::FloatMath<double>::naturalLog(static_cast<double>(SGEXTN::Math::IntegerLimits<unsigned long long>::maximum())) / SGEXTN::Math::FloatMath<double>::naturalLog(static_cast<double>(base)));
+    int digitLimit = static_cast<int>(SGEXTN::Math::FloatMath<double>::logBase2(static_cast<double>(SGEXTN::Math::IntegerLimits<unsigned long long>::maximum())) / SGEXTN::Math::FloatMath<double>::logBase2(static_cast<double>(base)));
     int decimalPointIndex = -1;
     int lastIndex = -1;
     int digitCount = 0;
@@ -146,6 +147,106 @@ bool parseStringToFloatingPoint(const SGEXTN::ApplicationBase::String& s, int ba
     if(isNegative == true){finalAns = (-1) * finalAns;}
     output = finalAns;
     return true;
+}
+
+SGEXTN::ApplicationBase::Character getDigitStringRepresentation(int x){
+    if(x >= 0 && x <= 9){return SGEXTN::ApplicationBase::Character(static_cast<int>('0') + x);}
+    if(x >= 10 && x < 36){return SGEXTN::ApplicationBase::Character(static_cast<int>('a' + x - 10));}
+    return SGEXTN::ApplicationBase::Character();
+}
+
+SGEXTN::ApplicationBase::String makeStringFromInteger(unsigned long long x, int base){
+    if(x == 0){return "0";}
+    SGEXTN::ApplicationBase::String reverseNum = "";
+    while(x > 0){
+        int thisDigit = x % static_cast<unsigned long long>(base);
+        reverseNum += getDigitStringRepresentation(thisDigit);
+        x /= static_cast<unsigned long long>(base);
+    }
+    for(int i=0; i<reverseNum.byteLength()/2; i++){
+        unsigned char temp = reverseNum.byteAt(i);
+        reverseNum.byteAt(i) = reverseNum.byteAt(reverseNum.byteLength() - 1 - i);
+        reverseNum.byteAt(reverseNum.byteLength() - 1 - i) = temp;
+    }
+    return reverseNum;
+}
+
+SGEXTN::ApplicationBase::String makeStringFromSignedInteger(long long x, int base){
+    bool isNegative = false;
+    if(x == SGEXTN::Math::IntegerLimits<long long>::minimum()){return (SGEXTN::ApplicationBase::String("-") + makeStringFromInteger(static_cast<unsigned long long>(SGEXTN::Math::IntegerLimits<long long>::maximum()) + 1, base));}
+    if(x < 0){
+        isNegative = true;
+        x *= -1;
+    }
+    SGEXTN::ApplicationBase::String positiveOutput = makeStringFromInteger(static_cast<unsigned long long>(x), base);
+    if(isNegative == false){return positiveOutput;}
+    return (SGEXTN::ApplicationBase::String("-") + positiveOutput);
+}
+
+SGEXTN::ApplicationBase::String makeStringFromFloatingPoint(double x, int base, SGEXTN::ApplicationBase::FloatPrecisionFormat format, int precision){
+    if(x == SGEXTN::Math::FloatLimits<double>::notANumber()){return "not a number";}
+    if(x == SGEXTN::Math::FloatLimits<double>::positiveInfinity()){return "+infinity";}
+    if(x == SGEXTN::Math::FloatLimits<double>::negativeInfinity()){return "-infinity";}
+    if(x == 0.0){
+        if(format == SGEXTN::ApplicationBase::FloatPrecisionFormat::ScientificNotation){
+            if(precision == 1){return "0e+00";}
+            return (SGEXTN::ApplicationBase::String("0.") + SGEXTN::ApplicationBase::String::repeat("0", precision - 1) + "e+00");
+        }
+        if(format == SGEXTN::ApplicationBase::FloatPrecisionFormat::DecimalPlace){
+            if(precision <= 0){return "0";}
+            return (SGEXTN::ApplicationBase::String("0.") + SGEXTN::ApplicationBase::String::repeat("0", precision));
+        }
+        if(format == SGEXTN::ApplicationBase::FloatPrecisionFormat::SignificantFigure){
+            if(precision == 1){return "0";}
+            return (SGEXTN::ApplicationBase::String("0.") + SGEXTN::ApplicationBase::String::repeat("0", precision - 1));
+        }
+    }
+    bool isNegative = false;
+    if(x < 0){
+        isNegative = true;
+        x *= -1;
+    }
+    SGEXTN::ApplicationBase::String mantissa;
+    int exponent = 0;
+    double logarithm = SGEXTN::Math::FloatMath<double>::floor(SGEXTN::Math::FloatMath<double>::logBase2(x) / SGEXTN::Math::FloatMath<double>::logBase2(base));
+    if(format == SGEXTN::ApplicationBase::FloatPrecisionFormat::DecimalPlace){
+        precision += (logarithm + 1);
+        if(precision <= 0){
+            if(x < 0.5 * SGEXTN::Math::FloatMath<double>::powerOf(base, precision - logarithm - 1)){return "0";}
+            precision = 1;
+        }
+    }
+    double roundUpError = 0.5 * SGEXTN::Math::FloatMath<double>::powerOf(base, logarithm + 1 - precision);
+    if(x + roundUpError >= SGEXTN::Math::FloatMath<double>::powerOf(base, logarithm + 1)){
+        exponent = logarithm + 1;
+        mantissa = "1";
+    }
+    else{
+        exponent = logarithm;
+        x /= SGEXTN::Math::FloatMath<double>::powerOf(base, logarithm - precision);
+        mantissa = makeStringFromInteger(static_cast<unsigned long long>(SGEXTN::Math::FloatMath<double>::round(x)), base);
+    }
+    SGEXTN::ApplicationBase::String sign;
+    if(isNegative == true){sign = "-";}
+    if(format == SGEXTN::ApplicationBase::FloatPrecisionFormat::ScientificNotation){
+        mantissa = mantissa.fillRightToCharacterLength(precision, '0').substringCharactersLeft(precision);
+        mantissa = SGEXTN::ApplicationBase::String((mantissa.getCharacterAt(0))) + "." + mantissa.substringCharactersRight(mantissa.characterLength() - 1);
+        SGEXTN::ApplicationBase::String exponentString = "+";
+        if(exponent < 0){
+            exponentString = "-";
+            exponent *= -1;
+        }
+        exponentString += makeStringFromInteger(exponent, base).fillLeftToCharacterLength(2, '0');
+        return (sign + mantissa + "e" + exponentString);
+    }
+    else{
+        mantissa = mantissa.fillRightToCharacterLength(precision, '0').substringCharactersLeft(precision);
+        if(exponent < 0){return (sign + "0." + SGEXTN::ApplicationBase::String::repeat("0", (-1) * exponent - 1) + mantissa);}
+        else{
+            if(mantissa.characterLength() <= exponent + 1){return (sign + mantissa + SGEXTN::ApplicationBase::String::repeat("0", exponent + 1 - mantissa.characterLength()));}
+            return (sign + mantissa.substringCharactersLeft(exponent + 1) + "." + mantissa.substringCharactersRight(mantissa.characterLength() - exponent - 1));
+        }
+    }
 }
 }
 
@@ -778,4 +879,48 @@ double SGEXTN::ApplicationBase::String::parseToDouble(bool* isValid, int base) c
     if(isValid != nullptr){(*isValid) = valid;}
     if(valid == false){return 0.0f;}
     return value;
+}
+
+SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::stringFromShort(short x, int base){
+    if(base < 2 || base > 36){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::stringFromShort crashed because base is not within 2 to 36 inclusive");}
+    return makeStringFromSignedInteger(static_cast<long long>(x), base);
+}
+
+SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::stringFromUnsignedShort(unsigned short x, int base){
+    if(base < 2 || base > 36){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::stringFromUnsignedShort crashed because base is not within 2 to 36 inclusive");}
+    return makeStringFromInteger(static_cast<unsigned long long>(x), base);
+}
+
+SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::stringFromInt(int x, int base){
+    if(base < 2 || base > 36){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::stringFromInt crashed because base is not within 2 to 36 inclusive");}
+    return makeStringFromSignedInteger(static_cast<long long>(x), base);
+}
+
+SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::stringFromUnsignedInt(unsigned int x, int base){
+    if(base < 2 || base > 36){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::stringFromUnsignedInt crashed because base is not within 2 to 36 inclusive");}
+    return makeStringFromInteger(static_cast<unsigned long long>(x), base);
+}
+
+SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::stringFromLongLong(long long x, int base){
+    if(base < 2 || base > 36){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::stringFromLongLong crashed because base is not within 2 to 36 inclusive");}
+    return makeStringFromSignedInteger(x, base);
+}
+
+SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::stringFromUnsignedLongLong(unsigned long long x, int base){
+    if(base < 2 || base > 36){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::stringFromUnsignedLongLong crashed because base is not within 2 to 36 inclusive");}
+    return makeStringFromInteger(x, base);
+}
+
+SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::stringFromFloat(float x, int base, SGEXTN::ApplicationBase::FloatPrecisionFormat format, int precision){
+    if(base < 2 || base > 36){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::stringFromFloat crashed because base is not within 2 to 36 inclusive");}
+    if(format != SGEXTN::ApplicationBase::FloatPrecisionFormat::DecimalPlace && format <= 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::stringFromFloat crashed because precision is nonpositive");}
+    if(static_cast<float>(precision) * SGEXTN::Math::FloatMath<float>::logBase2(base) > 24.0f){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::stringFromFloat crashed because precision exceeds maximum numerical precision that a float can represent");}
+    return makeStringFromFloatingPoint(static_cast<double>(x), base, format, precision);
+}
+
+SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::stringFromDouble(double x, int base, SGEXTN::ApplicationBase::FloatPrecisionFormat format, int precision){
+    if(base < 2 || base > 36){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::stringFromDouble crashed because base is not within 2 to 36 inclusive");}
+    if(format != SGEXTN::ApplicationBase::FloatPrecisionFormat::DecimalPlace && format <= 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::stringFromDouble crashed because precision is nonpositive");}
+    if(static_cast<float>(precision) * SGEXTN::Math::FloatMath<float>::logBase2(base) > 53.0f){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::stringFromDouble crashed because precision exceeds maximum numerical precision that a double precision float can represent");}
+    return makeStringFromFloatingPoint(x, base, format, precision);
 }
