@@ -109,9 +109,7 @@ public:
     [[nodiscard]] String cleanWhitespace() const;
     [[nodiscard]] String removeAllWhitespace() const;
     [[nodiscard]] SGEXTN::Containers::Array<String> split(const String& separator) const;
-
     [[nodiscard]] bool isDigit() const;
-    [[nodiscard]] bool isDigit(int base) const;
     [[nodiscard]] bool isEnglishLowercase() const;
     [[nodiscard]] bool isEnglishUppercase() const;
     [[nodiscard]] bool isEnglishLetter() const;
@@ -121,8 +119,6 @@ public:
     [[nodiscard]] bool isUppercase() const;
     [[nodiscard]] bool isLowercase() const;
     [[nodiscard]] bool isTitlecase() const;
-
-    // first make setCharacterAt use fast path if initial and final character have same length
     [[nodiscard]] String getUppercase() const;
     [[nodiscard]] String getLowercase() const;
     [[nodiscard]] String getTitlecase() const;

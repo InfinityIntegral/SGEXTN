@@ -433,12 +433,19 @@ void SGEXTN::ApplicationBase::String::setCharacterAt(int i, const SGEXTN::Applic
     if(i < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::setCharacterAt crashed because index is negative");}
     if(i >= characterLength()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::setCharacterAt crashed because index points beyond the end of the string");}
     private_computeOffsets();
-    SGEXTN::ApplicationBase::TextBuffer newBuffer;
-    newBuffer.pushBack(private_data, 0, private_characterOffsets.at(i));
-    newBuffer.pushBack(c.private_data, 0, c.byteLength());
-    newBuffer.pushBack(private_data, private_characterOffsets.at(i + 1), byteLength() - private_characterOffsets.at(i + 1));
+    if(private_characterOffsets.at(i + 1) - private_characterOffsets.at(i) == c.byteLength()){
+        for(int j=private_characterOffsets.at(i); j<private_characterOffsets.at(i + 1); j++){
+            byteAt(private_characterOffsets.at(i) + j) = c.byteAt(j);
+        }
+    }
+    else{
+        SGEXTN::ApplicationBase::TextBuffer newBuffer;
+        newBuffer.pushBack(private_data, 0, private_characterOffsets.at(i));
+        newBuffer.pushBack(c.private_data, 0, c.byteLength());
+        newBuffer.pushBack(private_data, private_characterOffsets.at(i + 1), byteLength() - private_characterOffsets.at(i + 1));
+        private_data = newBuffer;
+    }
     private_invalidateOffsets();
-    private_data = newBuffer;
 }
 
 SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::fillBytes(unsigned char c) const {
@@ -1008,6 +1015,103 @@ SGEXTN::Containers::Array<SGEXTN::ApplicationBase::String> SGEXTN::ApplicationBa
     SGEXTN::Containers::Array<SGEXTN::ApplicationBase::String> output(splitStrings.length());
     for(int i=0; i<splitStrings.length(); i++){
         output.at(i) = splitStrings.at(i);
+    }
+    return output;
+}
+
+bool SGEXTN::ApplicationBase::String::isDigit() const {
+    for(int i=0; i<characterLength(); i++){
+        if(getCharacterAt(i).isDigit() == false){return false;}
+    }
+    return true;
+}
+
+bool SGEXTN::ApplicationBase::String::isEnglishLowercase() const {
+    for(int i=0; i<characterLength(); i++){
+        if(getCharacterAt(i).isEnglishLowercase() == false){return false;}
+    }
+    return true;
+}
+
+bool SGEXTN::ApplicationBase::String::isEnglishUppercase() const {
+    for(int i=0; i<characterLength(); i++){
+        if(getCharacterAt(i).isEnglishUppercase() == false){return false;}
+    }
+    return true;
+}
+
+bool SGEXTN::ApplicationBase::String::isEnglishLetter() const {
+    for(int i=0; i<characterLength(); i++){
+        if(getCharacterAt(i).isEnglishLetter() == false){return false;}
+    }
+    return true;
+}
+
+bool SGEXTN::ApplicationBase::String::isEnglishAlphanumeric() const {
+    for(int i=0; i<characterLength(); i++){
+        if(getCharacterAt(i).isEnglishAlphanumeric() == false){return false;}
+    }
+    return true;
+}
+
+bool SGEXTN::ApplicationBase::String::isASCII() const {
+    for(int i=0; i<characterLength(); i++){
+        if(getCharacterAt(i).isASCII() == false){return false;}
+    }
+    return true;
+}
+
+bool SGEXTN::ApplicationBase::String::isWhitespace() const {
+    for(int i=0; i<characterLength(); i++){
+        if(getCharacterAt(i).isWhitespace() == false){return false;}
+    }
+    return true;
+}
+
+bool SGEXTN::ApplicationBase::String::isUppercase() const {
+    for(int i=0; i<characterLength(); i++){
+        if(getCharacterAt(i).isUppercase() == false){return false;}
+    }
+    return true;
+}
+
+bool SGEXTN::ApplicationBase::String::isLowercase() const {
+    for(int i=0; i<characterLength(); i++){
+        if(getCharacterAt(i).isLowercase() == false){return false;}
+    }
+    return true;
+}
+
+bool SGEXTN::ApplicationBase::String::isTitlecase() const {
+    for(int i=0; i<characterLength(); i++){
+        if(getCharacterAt(i).isTitlecase() == false){return false;}
+    }
+    return true;
+}
+
+SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::getUppercase() const {
+    if(isUppercase()){return (*this);}
+    SGEXTN::ApplicationBase::String output;
+    for(int i=0; i<characterLength(); i++){
+        output += getCharacterAt(i).getUppercase();
+    }
+    return output;
+}
+
+SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::getLowercase() const {
+    if(isLowercase()){return (*this);}
+    SGEXTN::ApplicationBase::String output;
+    for(int i=0; i<characterLength(); i++){
+        output += getCharacterAt(i).getLowercase();
+    }
+    return output;
+}
+
+SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::getTitlecase() const {
+    if(isTitlecase()){return (*this);}
+    SGEXTN::ApplicationBase::String output;
+    for(int i=0; i<characterLength(); i++){
+        output += getCharacterAt(i).getTitlecase();
     }
     return output;
 }
