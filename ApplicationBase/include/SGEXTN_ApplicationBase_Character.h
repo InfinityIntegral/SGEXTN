@@ -28,6 +28,7 @@ public:
     [[nodiscard]] const unsigned char& byteAt(int i) const;
     [[nodiscard]] char baseToChar() const;
     [[nodiscard]] bool isDigit() const;
+    [[nodiscard]] bool isDigit(int base) const;
     [[nodiscard]] bool isEnglishLowercase() const;
     [[nodiscard]] bool isEnglishUppercase() const;
     [[nodiscard]] bool isEnglishLetter() const;

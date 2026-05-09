@@ -28,6 +28,13 @@ void appendUnicode(int unicode, SGEXTN::ApplicationBase::Character& c){
         c.private_data.pushBack(static_cast<char>(0x80 + (unicode & 0x3f)));
     }
 }
+
+int getCharacterDigitValue(const SGEXTN::ApplicationBase::Character& c){
+    if(c.isDigit() == true){return (static_cast<int>(c.byteAt(0)) - static_cast<int>('0'));}
+    if(c.isEnglishLowercase() == true){return (10 + static_cast<int>(c.byteAt(0)) - static_cast<int>('a'));}
+    if(c.isEnglishUppercase() == true){return (10 + static_cast<int>(c.byteAt(0)) - static_cast<int>('A'));}
+    return -1;
+}
 }
 
 SGEXTN::ApplicationBase::Character::Character(){
@@ -102,6 +109,14 @@ char SGEXTN::ApplicationBase::Character::baseToChar() const {
 bool SGEXTN::ApplicationBase::Character::isDigit() const {
     if(byteLength() != 1){return false;}
     if((*this) >= '0' && (*this) <= '9'){return true;}
+    return false;
+}
+
+bool SGEXTN::ApplicationBase::Character::isDigit(int base) const {
+    if(base < 2 || base > 36){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character::isDigit crashed because base is not within 2 to 36 inclusive");}
+    if(byteLength() != 1){return false;}
+    int d = getCharacterDigitValue(*this);
+    if(d >= 0 && d < base){return true;}
     return false;
 }
 

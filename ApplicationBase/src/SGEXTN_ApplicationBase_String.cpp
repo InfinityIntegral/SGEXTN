@@ -360,9 +360,7 @@ const unsigned char& SGEXTN::ApplicationBase::String::byteAt(int i) const {
 
 void SGEXTN::ApplicationBase::String::private_computeOffsets() const {
     if(private_characterOffsets.length() > 0){return;}
-    SGEXTN::ApplicationBase::Character unicodeExtractor;
-    unicodeExtractor.private_data = private_data;
-    SGEXTN::Containers::Array<int> unicodeList = unicodeExtractor.getUnicode();
+    SGEXTN::Containers::Array<int> unicodeList = getUnicode();
     SGEXTN::Containers::Array<SGEXTN::ApplicationBase::GraphemeSegmentationType> segmentationTypes(unicodeList.length());
     SGEXTN::Containers::Array<SGEXTN::ApplicationBase::GraphemeRuleRelatedType> ruleRelatedTypes(unicodeList.length());
     for(int i=0; i<unicodeList.length(); i++){
@@ -563,7 +561,7 @@ SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::substringCharac
     if(length + start > characterLength()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::substringCharacters crashed because the substring is too long to fit inside the string");}
     private_computeOffsets();
     SGEXTN::ApplicationBase::String output;
-    output.private_data.pushBack(private_data, private_characterOffsets.at(start), private_characterOffsets.at(start + length + 1) - private_characterOffsets.at(start));
+    output.private_data.pushBack(private_data, private_characterOffsets.at(start), private_characterOffsets.at(start + length) - private_characterOffsets.at(start));
     return output;
 }
 
@@ -1026,6 +1024,14 @@ bool SGEXTN::ApplicationBase::String::isDigit() const {
     return true;
 }
 
+bool SGEXTN::ApplicationBase::String::isDigit(int base) const {
+    if(base < 2 || base > 36){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::isDigit crashed because base is not within 2 to 36 inclusive");}
+    for(int i=0; i<characterLength(); i++){
+        if(getCharacterAt(i).isDigit(base) == false){return false;}
+    }
+    return true;
+}
+
 bool SGEXTN::ApplicationBase::String::isEnglishLowercase() const {
     for(int i=0; i<characterLength(); i++){
         if(getCharacterAt(i).isEnglishLowercase() == false){return false;}
@@ -1114,4 +1120,10 @@ SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::getTitlecase() 
         output += getCharacterAt(i).getTitlecase();
     }
     return output;
+}
+
+SGEXTN::Containers::Array<int> SGEXTN::ApplicationBase::String::getUnicode() const {
+    SGEXTN::ApplicationBase::Character unicodeExtractor;
+    unicodeExtractor.private_data = private_data;
+    return unicodeExtractor.getUnicode();
 }

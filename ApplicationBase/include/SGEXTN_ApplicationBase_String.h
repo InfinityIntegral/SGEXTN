@@ -110,6 +110,7 @@ public:
     [[nodiscard]] String removeAllWhitespace() const;
     [[nodiscard]] SGEXTN::Containers::Array<String> split(const String& separator) const;
     [[nodiscard]] bool isDigit() const;
+    [[nodiscard]] bool isDigit(int base) const;
     [[nodiscard]] bool isEnglishLowercase() const;
     [[nodiscard]] bool isEnglishUppercase() const;
     [[nodiscard]] bool isEnglishLetter() const;
@@ -122,6 +123,7 @@ public:
     [[nodiscard]] String getUppercase() const;
     [[nodiscard]] String getLowercase() const;
     [[nodiscard]] String getTitlecase() const;
+    [[nodiscard]] SGEXTN::Containers::Array<int> getUnicode() const;
 
     [[nodiscard]] String getNormalised(SGEXTN::ApplicationBase::NormalisationFormat format) const;
     [[nodiscard]] SGEXTN::ApplicationBase::String getSimplestEquivalent(bool ignoreCase) const;
