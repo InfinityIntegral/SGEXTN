@@ -19,7 +19,7 @@ void init(){
     //SGXCentral::folderName = "SGEXTN";
 }
 }
-#include <../../ApplicationBase/misc/unicodedecomp.h>
+
 int main(int /*argc*/, char** /*argv*/){
     //return SGEXTN(argc, argv, &init);
     SGEXTN::Containers::UnitTests::testAll();
@@ -27,9 +27,4 @@ int main(int /*argc*/, char** /*argv*/){
     SGEXTN::ApplicationBase::UnitTests::testAll();
     SGEXTN::Structs::UnitTests::testAll();
     SG("all tests pass");
-    parseFile();
-    extractDecomp();
-    //printTable(0x0, 0x0, true);
-    printDecomp(0x0, true);
-    //checkDecomp(0x0, true);
 }
