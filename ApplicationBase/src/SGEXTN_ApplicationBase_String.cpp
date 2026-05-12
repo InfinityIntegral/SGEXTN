@@ -6,6 +6,7 @@
 #include <SGEXTN_Math_IntegerLimits.h>
 #include <SGEXTN_Math_FloatMath.h>
 #include <SGEXTN_Math_FloatLimits.h>
+#include <SGEXTN_Containers_Sort.h>
 
 namespace {
 int getValueAsDigit(const SGEXTN::ApplicationBase::Character& c, int base){
@@ -247,6 +248,83 @@ SGEXTN::ApplicationBase::String makeStringFromFloatingPoint(double x, int base, 
             return (sign + mantissa.substringCharactersLeft(exponent + 1) + "." + mantissa.substringCharactersRight(mantissa.characterLength() - exponent - 1));
         }
     }
+}
+
+SGEXTN::ApplicationBase::String decompositionEquivalent(const SGEXTN::ApplicationBase::String& s, bool* done){
+    bool isDone = true;
+    SGEXTN::ApplicationBase::String output;
+    SGEXTN::Containers::Array<int> codePoint = s.getUnicode();
+    for(int i=0; i<codePoint.length(); i++){
+        SGEXTN::ApplicationBase::String thisChar = SGEXTN::ApplicationBase::UnicodeQuery::getEquivDecomposition(codePoint.at(i));
+        if(thisChar == ""){output += SGEXTN::ApplicationBase::Character(codePoint.at(i));}
+        else{
+            isDone = false;
+            output += thisChar;
+        }
+    }
+    (*done) = isDone;
+    return output;
+}
+
+SGEXTN::ApplicationBase::String decompositionCompatibility(const SGEXTN::ApplicationBase::String& s, bool* done){
+    bool isDone = true;
+    SGEXTN::ApplicationBase::String output;
+    SGEXTN::Containers::Array<int> codePoint = s.getUnicode();
+    for(int i=0; i<codePoint.length(); i++){
+        SGEXTN::ApplicationBase::String thisChar = SGEXTN::ApplicationBase::UnicodeQuery::getCompatDecomposition(codePoint.at(i));
+        if(thisChar == ""){output += SGEXTN::ApplicationBase::Character(codePoint.at(i));}
+        else{
+            isDone = false;
+            output += thisChar;
+        }
+    }
+    (*done) = isDone;
+    return output;
+}
+
+SGEXTN::ApplicationBase::String recursiveDecomposeEquivalent(int i){
+    bool done = false;
+    SGEXTN::ApplicationBase::String output = SGEXTN::ApplicationBase::Character(i);
+    while(done == false){
+        output = decompositionEquivalent(output, &done);
+    }
+    return output;
+}
+
+SGEXTN::ApplicationBase::String recursiveDecomposeCompatibility(int i){
+    bool done = false;
+    SGEXTN::ApplicationBase::String output = SGEXTN::ApplicationBase::Character(i);
+    while(done == false){
+        output = decompositionCompatibility(output, &done);
+    }
+    return output;
+}
+
+struct SortByCombiningMarkOrder {
+public:
+    bool operator()(int a, int b);
+};
+
+bool SortByCombiningMarkOrder::operator()(int a, int b){
+    return (SGEXTN::ApplicationBase::UnicodeQuery::getCombiningMarkOrder(a) < SGEXTN::ApplicationBase::UnicodeQuery::getCombiningMarkOrder(b));
+}
+
+SGEXTN::ApplicationBase::String sortCombiningMarks(const SGEXTN::ApplicationBase::String& s){
+    int startSort = 0;
+    int endSort = 0;
+    SGEXTN::Containers::Array<int> codePoints = s.getUnicode();
+    for(int i=0; i<codePoints.length(); i++){
+        if(SGEXTN::ApplicationBase::UnicodeQuery::getCombiningMarkOrder(codePoints.at(i)) == 0){
+            if(startSort < i){SGEXTN::Containers::Sort<int, SortByCombiningMarkOrder>::sort(codePoints.pointerToData(startSort), i - startSort);}
+            startSort = i + 1;
+        }
+    }
+    if(startSort != codePoints.length()){SGEXTN::Containers::Sort<int, SortByCombiningMarkOrder>::sort(codePoints.pointerToData(startSort), codePoints.length() - startSort);}
+    SGEXTN::ApplicationBase::String output;
+    for(int i=0; i<codePoints.length(); i++){
+        output += SGEXTN::ApplicationBase::Character(codePoints.at(i));
+    }
+    return output;
 }
 }
 
@@ -1126,4 +1204,23 @@ SGEXTN::Containers::Array<int> SGEXTN::ApplicationBase::String::getUnicode() con
     SGEXTN::ApplicationBase::Character unicodeExtractor;
     unicodeExtractor.private_data = private_data;
     return unicodeExtractor.getUnicode();
+}
+
+SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::getNormalised(SGEXTN::ApplicationBase::NormalisationFormat format) const {
+    SGEXTN::ApplicationBase::String output;
+    SGEXTN::Containers::Array<int> codePoints = getUnicode();
+    bool done = false;
+    if(format == SGEXTN::ApplicationBase::NormalisationFormat::Join || format == SGEXTN::ApplicationBase::NormalisationFormat::Separate){
+        for(int i=0; i<codePoints.length(); i++){
+            output += recursiveDecomposeEquivalent(codePoints.at(i));
+        }
+    }
+    else{
+        for(int i=0; i<codePoints.length(); i++){
+            output += recursiveDecomposeCompatibility(codePoints.at(i));
+        }
+    }
+    output = sortCombiningMarks(output);
+    if(format == SGEXTN::ApplicationBase::NormalisationFormat::Join || format == SGEXTN::ApplicationBase::NormalisationFormat::LossyJoin){/*compose, will do later*/}
+    return output;
 }
