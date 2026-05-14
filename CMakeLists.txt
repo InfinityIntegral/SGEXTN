@@ -1,7 +1,7 @@
 include("${CMAKE_CURRENT_SOURCE_DIR}/cmake/buildlah.cmake")
 cmake_minimum_required(VERSION 3.21 FATAL_ERROR)
 BuildLah_use_default_settings()
-project(SGEXTN VERSION 6.4.0 LANGUAGES CXX)
+project(SGEXTN VERSION 7.0.0 LANGUAGES CXX)
 BuildLah_find_dependencies()
 BuildLah_add_component(Containers DLL "Containers")
 BuildLah_add_component(Math DLL "Math" Containers)
@@ -9,4 +9,4 @@ BuildLah_add_component(ApplicationBase DLL "ApplicationBase" Containers Math Qt6
 BuildLah_add_component(Structs DLL "Structs" Containers Math ApplicationBase)
 BuildLah_add_component(InternalTest GUI "InternalTest" Containers Math ApplicationBase Structs Qt6::Core)
 BuildLah_finalise_project()
-# cmake --install build/Desktop_Qt_6_10_1-Release --config Release --prefix ../SGEXTN_install
+# cmake --install build/Desktop_Qt_6_11_1-Release --config Release --prefix ../SGEXTN_install
