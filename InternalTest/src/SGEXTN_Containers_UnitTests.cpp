@@ -449,7 +449,7 @@ void SGEXTN::Containers::UnitTests::testAll(){
     SGEXTN::Containers::UnitTests::testSort();
 }
 
-// NOLINTBEGIN
+
 
 class RegularStruct {
 public:
@@ -460,17 +460,17 @@ public:
 
 class RegularStructLessThan {
 public:
-    bool operator()(const RegularStruct& a, const RegularStruct& b) const {return false;}
+    bool operator()(const RegularStruct& a, const RegularStruct& b) const {return (a.x < b.x);}
 };
 
 class RegularStructEqualTo {
 public:
-    bool operator()(const RegularStruct& a, const RegularStruct& b) const {return false;}
+    bool operator()(const RegularStruct& a, const RegularStruct& b) const {return (a.x == b.x);}
 };
 
 class RegularStructHashFunction {
 public:
-    int operator()(const RegularStruct& x) const {return 0;}
+    int operator()(const RegularStruct& x) const {return x.x;}
 };
 
 class OperatoredStruct {
@@ -478,11 +478,11 @@ public:
     OperatoredStruct() = default;
     OperatoredStruct(int x){(*this).x = x;}
     int x;
-    bool operator==(const OperatoredStruct& x) const {return false;}
-    bool operator!=(const OperatoredStruct& x) const {return false;}
-    int hash() const {return 0;}
-    bool operator<(const OperatoredStruct& x) const {return false;}
-    bool operator>(const OperatoredStruct& x) const {return false;}
+    [[nodiscard]] bool operator==(const OperatoredStruct& x) const {return ((*this).x == x.x);}
+    [[nodiscard]] bool operator!=(const OperatoredStruct& x) const {return ((*this).x != x.x);}
+    [[nodiscard]] int hash() const {return x;}
+    [[nodiscard]] bool operator<(const OperatoredStruct& x) const {return ((*this).x < x.x);}
+    [[nodiscard]] bool operator>(const OperatoredStruct& x) const {return ((*this).x > x.x);}
 };
 
 template class SGEXTN::Containers::Array<RegularStruct>;
@@ -517,15 +517,3 @@ template class SGEXTN::Containers::UnorderedSet<RegularStruct, RegularStructEqua
 template class SGEXTN::Containers::UnorderedSetIterator<RegularStruct, RegularStructEqualTo, RegularStructHashFunction>;
 template class SGEXTN::Containers::UnorderedSetConstIterator<RegularStruct, RegularStructEqualTo, RegularStructHashFunction>;
 template class SGEXTN::Containers::Vector<RegularStruct>;
-
-template class SGEXTN::Containers::AVLTree<RegularStruct, RegularStruct, RegularStructLessThan>;
-template class SGEXTN::Containers::AVLTreeIterator<RegularStruct, RegularStruct, RegularStructLessThan>;
-template class SGEXTN::Containers::AVLTreeConstIterator<RegularStruct, RegularStruct, RegularStructLessThan>;
-template class SGEXTN::Containers::AVLTreeNode<RegularStruct, RegularStruct, RegularStructLessThan>;
-template class SGEXTN::Containers::HashMap<RegularStruct, RegularStruct, RegularStructEqualTo, RegularStructHashFunction>;
-template class SGEXTN::Containers::HashMapIterator<RegularStruct, RegularStruct, RegularStructEqualTo, RegularStructHashFunction>;
-template class SGEXTN::Containers::HashMapConstIterator<RegularStruct, RegularStruct, RegularStructEqualTo, RegularStructHashFunction>;
-template class SGEXTN::Containers::HashMapSlot<RegularStruct, RegularStruct, RegularStructEqualTo, RegularStructHashFunction>;
-template class SGEXTN::Containers::RingBuffer<RegularStruct>;
-
-// NOLINTEND

@@ -6,7 +6,6 @@
 #include <SGEXTN_ApplicationBase_String.h>
 #include <SGEXTN_ApplicationBase_UnicodeQuery.h>
 #include <SGEXTN_Containers_Vector.h>
-#include <SGEXTN_ApplicationBase_String.h>
 #include <SGEXTN_Math_FloatLimits.h>
 
 namespace {
@@ -48,7 +47,7 @@ SGEXTN::ApplicationBase::Character::Character(char c){
 }
 
 SGEXTN::ApplicationBase::Character::Character(const char* s){
-    SGEXTN::ApplicationBase::String validityTest(s);
+    const SGEXTN::ApplicationBase::String validityTest(s);
     if(validityTest.characterLength() != 1){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character constructor crashed as passed string literal does not represent a single character");}
 }
 
@@ -115,7 +114,7 @@ bool SGEXTN::ApplicationBase::Character::isDigit() const {
 bool SGEXTN::ApplicationBase::Character::isDigit(int base) const {
     if(base < 2 || base > 36){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character::isDigit crashed because base is not within 2 to 36 inclusive");}
     if(byteLength() != 1){return false;}
-    int d = getCharacterDigitValue(*this);
+    const int d = getCharacterDigitValue(*this);
     if(d >= 0 && d < base){return true;}
     return false;
 }
@@ -155,7 +154,7 @@ int SGEXTN::ApplicationBase::Character::getBaseUnicode() const {
     SGEXTN::Containers::Array<int> codePoints = getUnicode();
     if(codePoints.length() == 1){return codePoints.at(0);}
     for(int i=0; i<codePoints.length(); i++){
-        SGEXTN::ApplicationBase::GraphemeSegmentationType graphemeCategory = SGEXTN::ApplicationBase::UnicodeQuery::getGraphemeSegmentationType(codePoints.at(i));
+        const SGEXTN::ApplicationBase::GraphemeSegmentationType graphemeCategory = SGEXTN::ApplicationBase::UnicodeQuery::getGraphemeSegmentationType(codePoints.at(i));
         if(graphemeCategory == SGEXTN::ApplicationBase::GraphemeSegmentationType::Other || graphemeCategory == SGEXTN::ApplicationBase::GraphemeSegmentationType::RegionalIndicator || graphemeCategory == SGEXTN::ApplicationBase::GraphemeSegmentationType::HangulLeading || graphemeCategory == SGEXTN::ApplicationBase::GraphemeSegmentationType::HangulVowel || graphemeCategory == SGEXTN::ApplicationBase::GraphemeSegmentationType::HangulTrailing || graphemeCategory == SGEXTN::ApplicationBase::GraphemeSegmentationType::HangulLeadingAndVowel || graphemeCategory == SGEXTN::ApplicationBase::GraphemeSegmentationType::HangulLeadingAndVowelAndTrailing){return codePoints.at(i);}
     }
     return codePoints.at(0);

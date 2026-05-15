@@ -7,6 +7,7 @@
 #include <SGEXTN_Math_FloatMath.h>
 #include <SGEXTN_Math_FloatLimits.h>
 #include <SGEXTN_Containers_Sort.h>
+#include <private_api/SGEXTN_Containers_Crash.h>
 
 namespace {
 int getValueAsDigit(const SGEXTN::ApplicationBase::Character& c, int base){
@@ -16,7 +17,7 @@ int getValueAsDigit(const SGEXTN::ApplicationBase::Character& c, int base){
         if(c.isEnglishUppercase() == true){return (10 + static_cast<int>(c.byteAt(0)) - static_cast<int>('A'));}
         return -1;
     }
-    else{return c.getDecimalDigitValue();}
+    return c.getDecimalDigitValue();
 }
 
 bool parseStringToInteger(const SGEXTN::ApplicationBase::String& s, int base, unsigned long long& output){
@@ -24,7 +25,7 @@ bool parseStringToInteger(const SGEXTN::ApplicationBase::String& s, int base, un
     unsigned long long ans = 0;
     for(int i=0; i<s.characterLength(); i++){
         if(i == 0 && s.getCharacterAt(i) == '+'){continue;}
-        int digit = getValueAsDigit(s.getCharacterAt(i), base);
+        const int digit = getValueAsDigit(s.getCharacterAt(i), base);
         if(digit == -1 || digit >= base){return false;}
         if(SGEXTN::Math::IntegerLimits<unsigned long long>::maximum() / base < ans){return false;}
         ans *= base;
@@ -57,7 +58,7 @@ bool parseStringToSignedInteger(const SGEXTN::ApplicationBase::String& s, int ba
 
 bool parseMantissa(const SGEXTN::ApplicationBase::String& s, int base, unsigned long long& mantissa, int& exponent){
     if(s == ""){return false;}
-    int digitLimit = static_cast<int>(SGEXTN::Math::FloatMath<double>::logBase2(static_cast<double>(SGEXTN::Math::IntegerLimits<unsigned long long>::maximum())) / SGEXTN::Math::FloatMath<double>::logBase2(static_cast<double>(base)));
+    const int digitLimit = static_cast<int>(SGEXTN::Math::FloatMath<double>::logBase2(static_cast<double>(SGEXTN::Math::IntegerLimits<unsigned long long>::maximum())) / SGEXTN::Math::FloatMath<double>::logBase2(static_cast<double>(base)));
     int decimalPointIndex = -1;
     int lastIndex = -1;
     int digitCount = 0;
@@ -70,13 +71,13 @@ bool parseMantissa(const SGEXTN::ApplicationBase::String& s, int base, unsigned 
         }
         if(digitCount >= digitLimit){
             for(int j=i; j<s.characterLength(); j++){
-                int verifyDigit = getValueAsDigit(s.getCharacterAt(j), base);
+                const int verifyDigit = getValueAsDigit(s.getCharacterAt(j), base);
                 if(verifyDigit == -1 || verifyDigit >= base){return false;}
             }
             if(decimalPointIndex != -1){lastIndex = i;}
             break;
         }
-        int digit = getValueAsDigit(s.getCharacterAt(i), base);
+        const int digit = getValueAsDigit(s.getCharacterAt(i), base);
         if(digit == -1 || digit >= base){return false;}
         ans = base * ans + digit;
         if(ans != 0 || decimalPointIndex != -1){digitCount++;}
@@ -102,14 +103,14 @@ bool parseScientificNotationExponent(const SGEXTN::ApplicationBase::String& s, i
         }
         if(i >= 5){
             for(int j=i; j<s.characterLength(); j++){
-                int verifyDigit = getValueAsDigit(s.getCharacterAt(j), base);
+                const int verifyDigit = getValueAsDigit(s.getCharacterAt(j), base);
                 if(verifyDigit == -1 || verifyDigit >= base){return false;}
             }
             if(isNegative == false){exponent = 100000;}
             else{exponent = -100000;}
             return true;
         }
-        int digit = getValueAsDigit(s.getCharacterAt(i), base);
+        const int digit = getValueAsDigit(s.getCharacterAt(i), base);
         if(digit == -1 || digit >= base){return false;}
         ans = base * ans + digit;
     }
@@ -152,7 +153,7 @@ bool parseStringToFloatingPoint(const SGEXTN::ApplicationBase::String& s, int ba
 
 SGEXTN::ApplicationBase::Character getDigitStringRepresentation(int x){
     if(x >= 0 && x <= 9){return SGEXTN::ApplicationBase::Character(static_cast<int>('0') + x);}
-    if(x >= 10 && x < 36){return SGEXTN::ApplicationBase::Character(static_cast<int>('a' + x - 10));}
+    if(x >= 10 && x < 36){return SGEXTN::ApplicationBase::Character('a' + x - 10);}
     return SGEXTN::ApplicationBase::Character();
 }
 
@@ -160,12 +161,12 @@ SGEXTN::ApplicationBase::String makeStringFromInteger(unsigned long long x, int 
     if(x == 0){return "0";}
     SGEXTN::ApplicationBase::String reverseNum = "";
     while(x > 0){
-        int thisDigit = x % static_cast<unsigned long long>(base);
+        const int thisDigit = static_cast<int>(x % static_cast<unsigned long long>(base));
         reverseNum += getDigitStringRepresentation(thisDigit);
         x /= static_cast<unsigned long long>(base);
     }
     for(int i=0; i<reverseNum.byteLength()/2; i++){
-        unsigned char temp = reverseNum.byteAt(i);
+        const unsigned char temp = reverseNum.byteAt(i);
         reverseNum.byteAt(i) = reverseNum.byteAt(reverseNum.byteLength() - 1 - i);
         reverseNum.byteAt(reverseNum.byteLength() - 1 - i) = temp;
     }
@@ -209,7 +210,7 @@ SGEXTN::ApplicationBase::String makeStringFromFloatingPoint(double x, int base, 
     }
     SGEXTN::ApplicationBase::String mantissa;
     int exponent = 0;
-    double logarithm = SGEXTN::Math::FloatMath<double>::floor(SGEXTN::Math::FloatMath<double>::logBase2(x) / SGEXTN::Math::FloatMath<double>::logBase2(base));
+    const int logarithm = SGEXTN::Math::FloatMath<double>::floorToInt(SGEXTN::Math::FloatMath<double>::logBase2(x) / SGEXTN::Math::FloatMath<double>::logBase2(base));
     if(format == SGEXTN::ApplicationBase::FloatPrecisionFormat::DecimalPlace){
         precision += (logarithm + 1);
         if(precision <= 0){
@@ -217,7 +218,7 @@ SGEXTN::ApplicationBase::String makeStringFromFloatingPoint(double x, int base, 
             precision = 1;
         }
     }
-    double roundUpError = 0.5 * SGEXTN::Math::FloatMath<double>::powerOf(base, logarithm + 1 - precision);
+    const double roundUpError = 0.5 * SGEXTN::Math::FloatMath<double>::powerOf(base, logarithm + 1 - precision);
     if(x + roundUpError >= SGEXTN::Math::FloatMath<double>::powerOf(base, logarithm + 1)){
         exponent = logarithm + 1;
         mantissa = "1";
@@ -240,10 +241,10 @@ SGEXTN::ApplicationBase::String makeStringFromFloatingPoint(double x, int base, 
         exponentString += makeStringFromInteger(exponent, base).fillLeftToCharacterLength(2, '0');
         return (sign + mantissa + "e" + exponentString);
     }
-    else{
+    {
         mantissa = mantissa.fillRightToCharacterLength(precision, '0').substringCharactersLeft(precision);
         if(exponent < 0){return (sign + "0." + SGEXTN::ApplicationBase::String::repeat("0", (-1) * exponent - 1) + mantissa);}
-        else{
+        {
             if(mantissa.characterLength() <= exponent + 1){return (sign + mantissa + SGEXTN::ApplicationBase::String::repeat("0", exponent + 1 - mantissa.characterLength()));}
             return (sign + mantissa.substringCharactersLeft(exponent + 1) + "." + mantissa.substringCharactersRight(mantissa.characterLength() - exponent - 1));
         }
@@ -255,7 +256,7 @@ SGEXTN::ApplicationBase::String decompositionEquivalent(const SGEXTN::Applicatio
     SGEXTN::ApplicationBase::String output;
     SGEXTN::Containers::Array<int> codePoint = s.getUnicode();
     for(int i=0; i<codePoint.length(); i++){
-        SGEXTN::ApplicationBase::String thisChar = SGEXTN::ApplicationBase::UnicodeQuery::getEquivDecomposition(codePoint.at(i));
+        const SGEXTN::ApplicationBase::String thisChar = SGEXTN::ApplicationBase::UnicodeQuery::getEquivDecomposition(codePoint.at(i));
         if(thisChar == ""){output += SGEXTN::ApplicationBase::Character(codePoint.at(i));}
         else{
             isDone = false;
@@ -271,7 +272,7 @@ SGEXTN::ApplicationBase::String decompositionCompatibility(const SGEXTN::Applica
     SGEXTN::ApplicationBase::String output;
     SGEXTN::Containers::Array<int> codePoint = s.getUnicode();
     for(int i=0; i<codePoint.length(); i++){
-        SGEXTN::ApplicationBase::String thisChar = SGEXTN::ApplicationBase::UnicodeQuery::getCompatDecomposition(codePoint.at(i));
+        const SGEXTN::ApplicationBase::String thisChar = SGEXTN::ApplicationBase::UnicodeQuery::getCompatDecomposition(codePoint.at(i));
         if(thisChar == ""){output += SGEXTN::ApplicationBase::Character(codePoint.at(i));}
         else{
             isDone = false;
@@ -311,7 +312,7 @@ bool SortByCombiningMarkOrder::operator()(int a, int b){
 
 SGEXTN::ApplicationBase::String sortCombiningMarks(const SGEXTN::ApplicationBase::String& s){
     int startSort = 0;
-    int endSort = 0;
+    const int endSort = 0;
     SGEXTN::Containers::Array<int> codePoints = s.getUnicode();
     for(int i=0; i<codePoints.length(); i++){
         if(SGEXTN::ApplicationBase::UnicodeQuery::getCombiningMarkOrder(codePoints.at(i)) == 0){
@@ -333,7 +334,7 @@ SGEXTN::ApplicationBase::String recursiveRecomposeCombiningMarks(const SGEXTN::A
         int secondIndex = -1;
         int joinedIndex = -1;
         for(int i=1; i<unicode.length(); i++){
-            int secondCombiningMarkOrder = SGEXTN::ApplicationBase::UnicodeQuery::getCombiningMarkOrder(unicode.at(i));
+            const int secondCombiningMarkOrder = SGEXTN::ApplicationBase::UnicodeQuery::getCombiningMarkOrder(unicode.at(i));
             bool isBlocked = false;
             for(int j=1; j<i; j++){
                 if(SGEXTN::ApplicationBase::UnicodeQuery::getCombiningMarkOrder(unicode.at(j)) >= secondCombiningMarkOrder){
@@ -365,7 +366,7 @@ SGEXTN::ApplicationBase::String recursiveRecomposeCombiningMarks(const SGEXTN::A
     return output;
 }
 
-SGEXTN::ApplicationBase::String unicodeRecompose(const SGEXTN::ApplicationBase::String s){
+SGEXTN::ApplicationBase::String unicodeRecompose(const SGEXTN::ApplicationBase::String& s){
     SGEXTN::Containers::Array<int> unicode = s.getUnicode();
     SGEXTN::ApplicationBase::String output;
     int combiningMarkBufferStart = 0;
@@ -385,11 +386,11 @@ SGEXTN::ApplicationBase::String unicodeRecompose(const SGEXTN::ApplicationBase::
         }
         if(unicode.at(i) >= 0x1100 && unicode.at(i) < 0x1113 && i + 1 < unicode.length() && unicode.at(i + 1) >= 0x1161 && unicode.at(i + 1) < 0x1176){
             combiningMarkBufferStart = i + 1;
-            int leadingHangulIndex = unicode.at(i) - 0x1100;
-            int vowelHangulIndex = unicode.at(i + 1) - 0x1161;
-            int leadingAndVowelHangulCodePoint = 0xac00 + (leadingHangulIndex * 21 + vowelHangulIndex) * 28;
+            const int leadingHangulIndex = unicode.at(i) - 0x1100;
+            const int vowelHangulIndex = unicode.at(i + 1) - 0x1161;
+            const int leadingAndVowelHangulCodePoint = 0xac00 + (leadingHangulIndex * 21 + vowelHangulIndex) * 28;
             if(i + 2 < unicode.length() && unicode.at(i + 2) >= 0x11a8 && unicode.at(i + 2) < 0x11c3){
-                int trailingHangulIndex = unicode.at(i + 2) - 0x11a7;
+                const int trailingHangulIndex = unicode.at(i + 2) - 0x11a7;
                 output += SGEXTN::ApplicationBase::Character(leadingAndVowelHangulCodePoint + trailingHangulIndex);
                 i += 2;
             }
@@ -400,7 +401,7 @@ SGEXTN::ApplicationBase::String unicodeRecompose(const SGEXTN::ApplicationBase::
         }
         if(unicode.at(i) >= 0xac00 && unicode.at(i) < 0xd7a4 && (unicode.at(i) - 0xac00) % 28 == 0 && i + 1 < unicode.length() && unicode.at(i + 1) >= 0x11a8 && unicode.at(i + 1) < 0x11c3){
             combiningMarkBufferStart = i + 1;
-            int trailingHangulIndex = unicode.at(i + 1) - 0x11a7;
+            const int trailingHangulIndex = unicode.at(i + 1) - 0x11a7;
             output += SGEXTN::ApplicationBase::Character(unicode.at(i) + trailingHangulIndex);
             i++;
         }
@@ -417,10 +418,6 @@ SGEXTN::ApplicationBase::String unicodeRecompose(const SGEXTN::ApplicationBase::
     }
     return output;
 }
-}
-
-SGEXTN::ApplicationBase::String::String(){
-
 }
 
 SGEXTN::ApplicationBase::String::String(const SGEXTN::ApplicationBase::String& x){
@@ -443,10 +440,6 @@ SGEXTN::ApplicationBase::String& SGEXTN::ApplicationBase::String::operator=(SGEX
     private_data = static_cast<SGEXTN::ApplicationBase::TextBuffer&&>(x.private_data);
     private_characterOffsets = static_cast<SGEXTN::Containers::Vector<int>&&>(x.private_characterOffsets);
     return (*this);
-}
-
-SGEXTN::ApplicationBase::String::~String(){
-
 }
 
 SGEXTN::ApplicationBase::String::String(char c){
@@ -751,7 +744,7 @@ SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::replaceBytes(co
     SGEXTN::ApplicationBase::String output;
     int lastCheck = 0;
     while(lastCheck != -1){
-        int nextIndex = findFirstBytesFromLeftBounded(lastCheck, oldText);
+        const int nextIndex = findFirstBytesFromLeftBounded(lastCheck, oldText);
         if(nextIndex == -1){
             output.private_data.pushBack(private_data, lastCheck, byteLength() - lastCheck);
             lastCheck = -1;
@@ -772,7 +765,7 @@ SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::replaceCharacte
     SGEXTN::ApplicationBase::String output;
     int lastCheck = 0;
     while(lastCheck != -1){
-        int nextIndex = findFirstCharactersFromLeftBounded(lastCheck, oldText);
+        const int nextIndex = findFirstCharactersFromLeftBounded(lastCheck, oldText);
         if(nextIndex == -1){
             output.private_data.pushBack(private_data, private_characterOffsets.at(lastCheck), byteLength() - private_characterOffsets.at(lastCheck));
             lastCheck = -1;
@@ -874,7 +867,7 @@ int SGEXTN::ApplicationBase::String::countBytes(const SGEXTN::ApplicationBase::S
     int lastCheck = 0;
     int count = 0;
     while(true){
-        int nextIndex = findFirstBytesFromLeftBounded(lastCheck, s);
+        const int nextIndex = findFirstBytesFromLeftBounded(lastCheck, s);
         if(nextIndex == -1){break;}
         count++;
         if(nextIndex == byteLength() - 1){break;}
@@ -888,7 +881,7 @@ int SGEXTN::ApplicationBase::String::countCharacters(const SGEXTN::ApplicationBa
     int lastCheck = 0;
     int count = 0;
     while(true){
-        int nextIndex = findFirstCharactersFromLeftBounded(lastCheck, s);
+        const int nextIndex = findFirstCharactersFromLeftBounded(lastCheck, s);
         if(nextIndex == -1){break;}
         count++;
         if(nextIndex == characterLength() - 1){break;}
@@ -902,7 +895,7 @@ int SGEXTN::ApplicationBase::String::countBytesAllowOverlap(const SGEXTN::Applic
     int lastCheck = 0;
     int count = 0;
     while(true){
-        int nextIndex = findFirstBytesFromLeftBounded(lastCheck, s);
+        const int nextIndex = findFirstBytesFromLeftBounded(lastCheck, s);
         if(nextIndex == -1){break;}
         count++;
         if(nextIndex == byteLength() - 1){break;}
@@ -916,7 +909,7 @@ int SGEXTN::ApplicationBase::String::countCharactersAllowOverlap(const SGEXTN::A
     int lastCheck = 0;
     int count = 0;
     while(true){
-        int nextIndex = findFirstCharactersFromLeftBounded(lastCheck, s);
+        const int nextIndex = findFirstCharactersFromLeftBounded(lastCheck, s);
         if(nextIndex == -1){break;}
         count++;
         if(nextIndex == characterLength() - 1){break;}
@@ -934,7 +927,7 @@ SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::repeat(const SG
     return output;
 }
 
-SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::fillLeftToByteLength(int length, unsigned char fillChar) const {
+SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::fillLeftToByteLength(int length, char fillChar) const {
     if(length < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::fillLeftToByteLength crashed because target length is negative");}
     if(byteLength() >= length){return (*this);}
     return (SGEXTN::ApplicationBase::String::repeat(fillChar, length - byteLength()) + (*this));
@@ -946,7 +939,7 @@ SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::fillLeftToChara
     return (SGEXTN::ApplicationBase::String::repeat(fillChar, length - characterLength()) + (*this));
 }
 
-SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::fillRightToByteLength(int length, unsigned char fillChar) const {
+SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::fillRightToByteLength(int length, char fillChar) const {
     if(length < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::fillRightToByteLength crashed because target length is negative");}
     if(byteLength() >= length){return (*this);}
     return ((*this) + SGEXTN::ApplicationBase::String::repeat(fillChar, length - byteLength()));
@@ -965,7 +958,7 @@ int SGEXTN::ApplicationBase::String::byteIndexToCharacterIndex(int i) const {
     int low = 0;
     int high = characterLength();
     while(high - low > 1){
-        int mid = (low + high) / 2;
+        const int mid = (low + high) / 2;
         if(private_characterOffsets.at(mid) > i){high = mid;}
         else{low = mid;}
     }
@@ -1022,7 +1015,7 @@ unsigned int SGEXTN::ApplicationBase::String::parseToUnsignedInt(bool* isValid, 
 long long SGEXTN::ApplicationBase::String::parseToLongLong(bool* isValid, int base) const {
     if(base < 2 || base > 36){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::parseToLongLong crashed because base is not within 2 to 36 inclusive");}
     long long value = 0;
-    bool valid = parseStringToSignedInteger((*this), base, value);
+    const bool valid = parseStringToSignedInteger((*this), base, value);
     if(isValid != nullptr){(*isValid) = valid;}
     if(valid == false){return 0;}
     return value;
@@ -1031,7 +1024,7 @@ long long SGEXTN::ApplicationBase::String::parseToLongLong(bool* isValid, int ba
 unsigned long long SGEXTN::ApplicationBase::String::parseToUnsignedLongLong(bool* isValid, int base) const {
     if(base < 2 || base > 36){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::parseToUnsignedLongLong crashed because base is not within 2 to 36 inclusive");}
     unsigned long long value = 0;
-    bool valid = parseStringToInteger((*this), base, value);
+    const bool valid = parseStringToInteger((*this), base, value);
     if(isValid != nullptr){(*isValid) = valid;}
     if(valid == false){return 0;}
     return value;
@@ -1040,7 +1033,7 @@ unsigned long long SGEXTN::ApplicationBase::String::parseToUnsignedLongLong(bool
 float SGEXTN::ApplicationBase::String::parseToFloat(bool* isValid, int base) const {
     if(base < 2 || base > 36){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::parseToFloat crashed because base is not within 2 to 36 inclusive");}
     double value = 0.0f;
-    bool valid = parseStringToFloatingPoint((*this), base, value);
+    const bool valid = parseStringToFloatingPoint((*this), base, value);
     if(isValid != nullptr){(*isValid) = valid;}
     if(valid == false){return 0.0f;}
     return static_cast<float>(value);
@@ -1049,7 +1042,7 @@ float SGEXTN::ApplicationBase::String::parseToFloat(bool* isValid, int base) con
 double SGEXTN::ApplicationBase::String::parseToDouble(bool* isValid, int base) const {
     if(base < 2 || base > 36){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::parseToDouble crashed because base is not within 2 to 36 inclusive");}
     double value = 0.0f;
-    bool valid = parseStringToFloatingPoint((*this), base, value);
+    const bool valid = parseStringToFloatingPoint((*this), base, value);
     if(isValid != nullptr){(*isValid) = valid;}
     if(valid == false){return 0.0f;}
     return value;
@@ -1088,23 +1081,23 @@ SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::stringFromUnsig
 SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::stringFromFloat(float x, int base, SGEXTN::ApplicationBase::FloatPrecisionFormat format, int precision){
     if(base < 2 || base > 36){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::stringFromFloat crashed because base is not within 2 to 36 inclusive");}
     if(format != SGEXTN::ApplicationBase::FloatPrecisionFormat::DecimalPlace && precision <= 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::stringFromFloat crashed because precision is nonpositive");}
-    if(static_cast<float>(precision) * SGEXTN::Math::FloatMath<float>::logBase2(base) > 24.0f){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::stringFromFloat crashed because precision exceeds maximum numerical precision that a float can represent");}
+    if(static_cast<float>(precision) * SGEXTN::Math::FloatMath<float>::logBase2(static_cast<float>(base)) > 24.0f){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::stringFromFloat crashed because precision exceeds maximum numerical precision that a float can represent");}
     return makeStringFromFloatingPoint(static_cast<double>(x), base, format, precision);
 }
 
 SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::stringFromDouble(double x, int base, SGEXTN::ApplicationBase::FloatPrecisionFormat format, int precision){
     if(base < 2 || base > 36){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::stringFromDouble crashed because base is not within 2 to 36 inclusive");}
     if(format != SGEXTN::ApplicationBase::FloatPrecisionFormat::DecimalPlace && precision <= 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::stringFromDouble crashed because precision is nonpositive");}
-    if(static_cast<float>(precision) * SGEXTN::Math::FloatMath<float>::logBase2(base) > 53.0f){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::stringFromDouble crashed because precision exceeds maximum numerical precision that a double precision float can represent");}
+    if(static_cast<float>(precision) * SGEXTN::Math::FloatMath<float>::logBase2(static_cast<float>(base)) > 53.0f){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::stringFromDouble crashed because precision exceeds maximum numerical precision that a double precision float can represent");}
     return makeStringFromFloatingPoint(x, base, format, precision);
 }
 
 SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::prettierScientificNotation() const {
     if(containsCharacters("e") == false){return (*this);}
-    int exponentIndex = findFirstCharactersFromLeft("e");
-    SGEXTN::ApplicationBase::String mantissa = substringCharactersLeft(exponentIndex);
-    int exponent = substringCharactersRight(characterLength() - 1 - exponentIndex).parseToInt(nullptr, 10);
-    SGEXTN::ApplicationBase::String exponentString = SGEXTN::ApplicationBase::String::stringFromInt(exponent, 10);
+    const int exponentIndex = findFirstCharactersFromLeft("e");
+    const SGEXTN::ApplicationBase::String mantissa = substringCharactersLeft(exponentIndex);
+    const int exponent = substringCharactersRight(characterLength() - 1 - exponentIndex).parseToInt(nullptr, 10);
+    const SGEXTN::ApplicationBase::String exponentString = SGEXTN::ApplicationBase::String::stringFromInt(exponent, 10);
     SGEXTN::ApplicationBase::String formattedExponent;
     for(int i=0; i<exponentString.characterLength(); i++){
         if(exponentString.getCharacterAt(i) == '2' || exponentString.getCharacterAt(i) == '3'){formattedExponent += SGEXTN::ApplicationBase::Character(0x00b0 + exponentString.getCharacterAt(i).getDecimalDigitValue());}
@@ -1117,10 +1110,10 @@ SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::prettierScienti
 
 SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::convertNumericSystem(const SGEXTN::ApplicationBase::Character& zeroRepresentation) const {
     if(zeroRepresentation.getDecimalDigitValue() != 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::convertNumericSystem crashed because the zero character does not represent a value of 0 in any decimal place value system");}
-    int newZero = zeroRepresentation.getBaseUnicode();
+    const int newZero = zeroRepresentation.getBaseUnicode();
     SGEXTN::ApplicationBase::String output;
     for(int i=0; i<characterLength(); i++){
-        int unicode = getCharacterAt(i).getBaseUnicode();
+        const int unicode = getCharacterAt(i).getBaseUnicode();
         if(unicode >= 0x0030 && unicode <= 0x0039){output += SGEXTN::ApplicationBase::Character(unicode - 0x0030 + newZero);}
         else{output += SGEXTN::ApplicationBase::Character(unicode);}
     }
@@ -1321,7 +1314,7 @@ SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::getSimplestEqui
     else{codePoints = cleanWhitespace().getLowercase().getNormalised(SGEXTN::ApplicationBase::NormalisationFormat::LossySeparate).getUnicode();}
     SGEXTN::ApplicationBase::String output;
     for(int i=0; i<codePoints.length(); i++){
-        SGEXTN::ApplicationBase::SimplifiedCharacterType simplifiedType = SGEXTN::ApplicationBase::UnicodeQuery::getSimplifiedType(codePoints.at(i));
+        const SGEXTN::ApplicationBase::SimplifiedCharacterType simplifiedType = SGEXTN::ApplicationBase::UnicodeQuery::getSimplifiedType(codePoints.at(i));
         if(SGEXTN::ApplicationBase::UnicodeQuery::getFullType(codePoints.at(i)) != SGEXTN::ApplicationBase::FullCharacterType::PrivateUseCharacter){
             if(simplifiedType == SGEXTN::ApplicationBase::SimplifiedCharacterType::Mark || simplifiedType == SGEXTN::ApplicationBase::SimplifiedCharacterType::Other){continue;}
         }

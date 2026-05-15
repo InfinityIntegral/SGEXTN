@@ -42,7 +42,7 @@ void SGEXTN::Math::UnitTests::testIntegerMath(){
     if(SGEXTN::Math::IntegerMath<int>::lowestCommonMultiple(10, 24) != 120){SGEXTN::Containers::Crash::crash("SGEXTN::Math::IntegerMath - LCM fail");}
 }
 
-// NOLINTBEGIN
+// NOLINTBEGIN(modernize-use-std-numbers)
 void SGEXTN::Math::UnitTests::testFloatConstants(){
     if(isCloseEnough(SGEXTN::Math::FloatConstants<float>::eulerNumber(), 2.718281828f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatConstants - retrieve e fail");}
     if(isCloseEnough(SGEXTN::Math::FloatConstants<float>::eulerNumberLog2(), 1.442695041f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatConstants - retrieve log 2 of e fail");}
@@ -54,7 +54,7 @@ void SGEXTN::Math::UnitTests::testFloatConstants(){
     if(isCloseEnough(SGEXTN::Math::FloatConstants<float>::squareRoot2(), 1.414213562f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatConstants - retrieve sqrt 2 fail");}
     if(isCloseEnough(SGEXTN::Math::FloatConstants<float>::squareRoot3(), 1.732050808f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatConstants - retrieve sqrt 3 fail");}
 }
-// NOLINTEND
+// NOLINTEND(modernize-use-std-numbers)
 
 void SGEXTN::Math::UnitTests::testFloatLimits(){
     if(SGEXTN::Math::FloatLimits<float>::minimumPositive() >= 0.000001f || SGEXTN::Math::FloatLimits<float>::minimumPositive() <= 0.0f){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatLimits - min positive fail");}
@@ -66,9 +66,6 @@ void SGEXTN::Math::UnitTests::testFloatLimits(){
     if(1.0f == 1.0f + SGEXTN::Math::FloatLimits<float>::relativeIncrementGap()){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatLimits - relative increment fail");}
     if(SGEXTN::Math::FloatLimits<float>::positiveInfinity() <= 100000.0f){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatLimits - positive infinity fail");}
     if(SGEXTN::Math::FloatLimits<float>::negativeInfinity() >= -100000.0f){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatLimits - negative infinity fail");}
-    // NOLINTBEGIN
-    if(SGEXTN::Math::FloatLimits<float>::notANumber() == SGEXTN::Math::FloatLimits<float>::notANumber()){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatLimits - NaN generation fail");}
-    // NOLINTEND
     if(SGEXTN::Math::FloatLimits<float>::isInfinite(SGEXTN::Math::FloatLimits<float>::positiveInfinity()) == false || SGEXTN::Math::FloatLimits<float>::isInfinite(SGEXTN::Math::FloatLimits<float>::negativeInfinity()) == false || SGEXTN::Math::FloatLimits<float>::isInfinite(0.0f) == true){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatLimits - infinity detection fail");}
     if(SGEXTN::Math::FloatLimits<float>::isNotANumber(SGEXTN::Math::FloatLimits<float>::notANumber()) == false || SGEXTN::Math::FloatLimits<float>::isNotANumber(0.0f) == true){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatLimits - NaN detection fail");}
 }

@@ -4,6 +4,7 @@
 #include <SGEXTN_ApplicationBase_Character.h>
 
 namespace {
+// NOLINTBEGIN(modernize-avoid-c-arrays, cppcoreguidelines-avoid-c-arrays, cppcoreguidelines-pro-bounds-constant-array-index)
 int getLowercaseOffset(int i){
     if(i >= 0x41 && i < 0x5b){return 32;}
     if(i < 0x80){return 0;}
@@ -5506,9 +5507,9 @@ SGEXTN::ApplicationBase::String getEquivDecomp(int i){
     }
     if(i >= 0xac00 && i <= 0xd7a3){
         SGEXTN::ApplicationBase::String thisEquivDecomp;
-        int index = i - 0xac00;
-        int leading = 0x1100 + (index / 588);
-        int vowel = 0x1161 + ((index % 588) / 28);
+        const int index = i - 0xac00;
+        const int leading = 0x1100 + (index / 588);
+        const int vowel = 0x1161 + ((index % 588) / 28);
         int trailing = index % 28;
         if(trailing == 0){trailing = -1;}
         else{trailing += 0x11a7;}
@@ -7974,6 +7975,7 @@ int getUnicodeRecompositionMapping(int first, int second){
     }
     return -1;
 }
+// NOLINTEND(modernize-avoid-c-arrays, cppcoreguidelines-avoid-c-arrays, cppcoreguidelines-pro-bounds-constant-array-index)
 }
 
 int SGEXTN::ApplicationBase::UnicodeQuery::getUppercase(int c){
@@ -8017,7 +8019,7 @@ SGEXTN::ApplicationBase::GraphemeSegmentationType SGEXTN::ApplicationBase::Unico
         return SGEXTN::ApplicationBase::GraphemeSegmentationType::HangulLeadingAndVowelAndTrailing;
     }
     if(c >= 0x1f3fb && c <= 0x1f3ff){return SGEXTN::ApplicationBase::GraphemeSegmentationType::Extend;}
-    SGEXTN::ApplicationBase::FullCharacterType generalCategory = getUnicodeGeneralCategory(c);
+    const SGEXTN::ApplicationBase::FullCharacterType generalCategory = getUnicodeGeneralCategory(c);
     if(generalCategory == SGEXTN::ApplicationBase::FullCharacterType::EnclosingMark || generalCategory == SGEXTN::ApplicationBase::FullCharacterType::NonspacingCombiningMark){return SGEXTN::ApplicationBase::GraphemeSegmentationType::Extend;}
     if(getUnicodeOtherGraphemeExtendProperty(c) == true){return SGEXTN::ApplicationBase::GraphemeSegmentationType::Extend;}
     if(getUnicodePrependConcatenationMark(c) == true){return SGEXTN::ApplicationBase::GraphemeSegmentationType::Prepend;}

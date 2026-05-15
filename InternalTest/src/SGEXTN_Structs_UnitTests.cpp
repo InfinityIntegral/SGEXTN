@@ -65,11 +65,12 @@ void SGEXTN::Structs::UnitTests::testRgbaColour(){
     if(col.rgbaHtmlString() != "rgba(255, 0, 200, 255)"){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::RgbaColour - rgba html string fail");}
     if(col.rgbFloatHtmlString() != "rgb(1.000, 0.000, 0.784)"){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::RgbaColour - rgb html float string fail");}
     if(col.rgbaFloatHtmlString() != "rgba(1.000, 0.000, 0.784, 1.000)"){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::RgbaColour - rgba html float string fail");}
+    col.setBlue(128);
     float r = 0.0f;
     float g = 0.0f;
     float b = 0.0f;
     col.gammaCorrectBegin(r, g, b);
-    if(isCloseEnough(r, 1.0f) == false || isCloseEnough(g, 0.0f) == false || isCloseEnough(b, 0.57758f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::RgbaColour - gamma correct begin fail");} // NOLINT(modernize-use-std-numbers)
+    if(isCloseEnough(r, 1.0f) == false || isCloseEnough(g, 0.0f) == false || isCloseEnough(b, 0.21586f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::RgbaColour - gamma correct begin fail");}
     col.gammaCorrectEnd(0.001f, 0.4f, 0.6f);
     if(col.getRed() != 3 || col.getGreen() != 170 || col.getBlue() != 203){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::RgbaColour - gamma correct end fail");}
     col = SGEXTN::Structs::RgbaColour(100, 150, 200);
