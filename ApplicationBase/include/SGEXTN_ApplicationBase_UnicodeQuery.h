@@ -26,6 +26,7 @@ public:
     [[nodiscard]] static SGEXTN::ApplicationBase::String getEquivDecomposition(int c);
     [[nodiscard]] static SGEXTN::ApplicationBase::String getCompatDecomposition(int c);
     [[nodiscard]] static int getCombiningMarkOrder(int c);
+    [[nodiscard]] static int getBinaryRecomposition(int first, int second);
 };
 }
 }

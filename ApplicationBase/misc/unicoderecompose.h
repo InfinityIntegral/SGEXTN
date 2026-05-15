@@ -101,16 +101,6 @@ int getUnicodeRecompositionMapping(int first, int second){
         if(first == 0x22b5){return 0x22ed;}
         return -1;
     }
-    {
-        int leadingHangulIndex = first - 0x1100;
-        int vowelHangulIndex = second - 0x1161;
-        if(leadingHangulIndex >= 0 && leadingHangulIndex < 19 && vowelHangulIndex >= 0 && vowelHangulIndex < 21){return (0xac00 + (leadingHangulIndex * 21 + vowelHangulIndex) * 28);}
-    }
-    {
-        int leadingAndVowelHangulIndex = first - 0xac00;
-        int trailingHangulIndex = second - 0x11a7;
-        if(leadingAndVowelHangulIndex >= 0 && leadingAndVowelHangulIndex < 11172 && leadingAndVowelHangulIndex % 28 == 0 && trailingHangulIndex > 0 && trailingHangulIndex < 28){return (first + trailingHangulIndex);}
-    }
     if(first >= 0x0000 && first <= 0x00ff){
         if(first >= 0x3c && first < 0x80){
             if(first >= 0x003c && first <= 0x003e && second == 0x0338){

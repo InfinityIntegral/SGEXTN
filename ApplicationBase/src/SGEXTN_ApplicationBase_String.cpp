@@ -326,6 +326,97 @@ SGEXTN::ApplicationBase::String sortCombiningMarks(const SGEXTN::ApplicationBase
     }
     return output;
 }
+
+SGEXTN::ApplicationBase::String recursiveRecomposeCombiningMarks(const SGEXTN::ApplicationBase::String& combiningMarksGroup){
+    SGEXTN::Containers::Array<int> unicode = combiningMarksGroup.getUnicode();
+    while(true){
+        int secondIndex = -1;
+        int joinedIndex = -1;
+        for(int i=1; i<unicode.length(); i++){
+            int secondCombiningMarkOrder = SGEXTN::ApplicationBase::UnicodeQuery::getCombiningMarkOrder(unicode.at(i));
+            bool isBlocked = false;
+            for(int j=1; j<i; j++){
+                if(SGEXTN::ApplicationBase::UnicodeQuery::getCombiningMarkOrder(unicode.at(j)) >= secondCombiningMarkOrder){
+                    isBlocked = true;
+                    break;
+                }
+            }
+            if(isBlocked == true){continue;}
+            joinedIndex = SGEXTN::ApplicationBase::UnicodeQuery::getBinaryRecomposition(unicode.at(0), unicode.at(i));
+            if(joinedIndex != -1){
+                secondIndex = i;
+                break;
+            }
+        }
+        if(secondIndex == -1){break;}
+        SGEXTN::ApplicationBase::String newCombiningMarksGroup = SGEXTN::ApplicationBase::Character(joinedIndex);
+        for(int i=1; i<secondIndex; i++){
+            newCombiningMarksGroup += SGEXTN::ApplicationBase::Character(unicode.at(i));
+        }
+        for(int i=secondIndex+1; i<unicode.length(); i++){
+            newCombiningMarksGroup += SGEXTN::ApplicationBase::Character(unicode.at(i));
+        }
+        unicode = newCombiningMarksGroup.getUnicode();
+    }
+    SGEXTN::ApplicationBase::String output;
+    for(int i=0; i<unicode.length(); i++){
+        output += SGEXTN::ApplicationBase::Character(unicode.at(i));
+    }
+    return output;
+}
+
+SGEXTN::ApplicationBase::String unicodeRecompose(const SGEXTN::ApplicationBase::String s){
+    SGEXTN::Containers::Array<int> unicode = s.getUnicode();
+    SGEXTN::ApplicationBase::String output;
+    int combiningMarkBufferStart = 0;
+    for(int i=0; i<unicode.length(); i++){
+        if(SGEXTN::ApplicationBase::UnicodeQuery::getCombiningMarkOrder(unicode.at(i)) == 0){
+            if(combiningMarkBufferStart < i){
+                if(combiningMarkBufferStart == i - 1){output += SGEXTN::ApplicationBase::Character(unicode.at(i - 1));}
+                else{
+                    SGEXTN::ApplicationBase::String combiningMarksBuffer = "";
+                    for(int j=combiningMarkBufferStart; j<i; j++){
+                        combiningMarksBuffer += SGEXTN::ApplicationBase::Character(unicode.at(j));
+                    }
+                    output += recursiveRecomposeCombiningMarks(combiningMarksBuffer);
+                }
+            }
+            combiningMarkBufferStart = i;
+        }
+        if(unicode.at(i) >= 0x1100 && unicode.at(i) < 0x1113 && i + 1 < unicode.length() && unicode.at(i + 1) >= 0x1161 && unicode.at(i + 1) < 0x1176){
+            combiningMarkBufferStart = i + 1;
+            int leadingHangulIndex = unicode.at(i) - 0x1100;
+            int vowelHangulIndex = unicode.at(i + 1) - 0x1161;
+            int leadingAndVowelHangulCodePoint = 0xac00 + (leadingHangulIndex * 21 + vowelHangulIndex) * 28;
+            if(i + 2 < unicode.length() && unicode.at(i + 2) >= 0x11a8 && unicode.at(i + 2) < 0x11c3){
+                int trailingHangulIndex = unicode.at(i + 2) - 0x11a7;
+                output += SGEXTN::ApplicationBase::Character(leadingAndVowelHangulCodePoint + trailingHangulIndex);
+                i += 2;
+            }
+            else{
+                output += SGEXTN::ApplicationBase::Character(leadingAndVowelHangulCodePoint);
+                i++;
+            }
+        }
+        if(unicode.at(i) >= 0xac00 && unicode.at(i) < 0xd7a4 && (unicode.at(i) - 0xac00) % 28 == 0 && i + 1 < unicode.length() && unicode.at(i + 1) >= 0x11a8 && unicode.at(i + 1) < 0x11c3){
+            combiningMarkBufferStart = i + 1;
+            int trailingHangulIndex = unicode.at(i + 1) - 0x11a7;
+            output += SGEXTN::ApplicationBase::Character(unicode.at(i) + trailingHangulIndex);
+            i++;
+        }
+    }
+    if(combiningMarkBufferStart < unicode.length()){
+        if(combiningMarkBufferStart == unicode.length() - 1){output += SGEXTN::ApplicationBase::Character(unicode.at(unicode.length() - 1));}
+        else{
+            SGEXTN::ApplicationBase::String combiningMarksBuffer = "";
+            for(int j=combiningMarkBufferStart; j<unicode.length(); j++){
+                combiningMarksBuffer += SGEXTN::ApplicationBase::Character(unicode.at(j));
+            }
+            output += recursiveRecomposeCombiningMarks(combiningMarksBuffer);
+        }
+    }
+    return output;
+}
 }
 
 SGEXTN::ApplicationBase::String::String(){
@@ -1209,7 +1300,6 @@ SGEXTN::Containers::Array<int> SGEXTN::ApplicationBase::String::getUnicode() con
 SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::getNormalised(SGEXTN::ApplicationBase::NormalisationFormat format) const {
     SGEXTN::ApplicationBase::String output;
     SGEXTN::Containers::Array<int> codePoints = getUnicode();
-    bool done = false;
     if(format == SGEXTN::ApplicationBase::NormalisationFormat::Join || format == SGEXTN::ApplicationBase::NormalisationFormat::Separate){
         for(int i=0; i<codePoints.length(); i++){
             output += recursiveDecomposeEquivalent(codePoints.at(i));
@@ -1221,6 +1311,6 @@ SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::getNormalised(S
         }
     }
     output = sortCombiningMarks(output);
-    if(format == SGEXTN::ApplicationBase::NormalisationFormat::Join || format == SGEXTN::ApplicationBase::NormalisationFormat::LossyJoin){/*compose, will do later*/}
+    if(format == SGEXTN::ApplicationBase::NormalisationFormat::Join || format == SGEXTN::ApplicationBase::NormalisationFormat::LossyJoin){output = unicodeRecompose(output);}
     return output;
 }
