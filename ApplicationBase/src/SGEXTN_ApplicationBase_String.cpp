@@ -1314,3 +1314,18 @@ SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::getNormalised(S
     if(format == SGEXTN::ApplicationBase::NormalisationFormat::Join || format == SGEXTN::ApplicationBase::NormalisationFormat::LossyJoin){output = unicodeRecompose(output);}
     return output;
 }
+
+SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::getSimplestEquivalent(bool ignoreCase) const {
+    SGEXTN::Containers::Array<int> codePoints;
+    if(ignoreCase == false){codePoints = cleanWhitespace().getNormalised(SGEXTN::ApplicationBase::NormalisationFormat::LossySeparate).getUnicode();}
+    else{codePoints = cleanWhitespace().getLowercase().getNormalised(SGEXTN::ApplicationBase::NormalisationFormat::LossySeparate).getUnicode();}
+    SGEXTN::ApplicationBase::String output;
+    for(int i=0; i<codePoints.length(); i++){
+        SGEXTN::ApplicationBase::SimplifiedCharacterType simplifiedType = SGEXTN::ApplicationBase::UnicodeQuery::getSimplifiedType(codePoints.at(i));
+        if(SGEXTN::ApplicationBase::UnicodeQuery::getFullType(codePoints.at(i)) != SGEXTN::ApplicationBase::FullCharacterType::PrivateUseCharacter){
+            if(simplifiedType == SGEXTN::ApplicationBase::SimplifiedCharacterType::Mark || simplifiedType == SGEXTN::ApplicationBase::SimplifiedCharacterType::Other){continue;}
+        }
+        output += SGEXTN::ApplicationBase::Character(codePoints.at(i));
+    }
+    return output;
+}

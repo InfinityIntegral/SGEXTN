@@ -125,8 +125,7 @@ public:
     [[nodiscard]] String getTitlecase() const;
     [[nodiscard]] SGEXTN::Containers::Array<int> getUnicode() const;
     [[nodiscard]] String getNormalised(SGEXTN::ApplicationBase::NormalisationFormat format) const;
-
-    [[nodiscard]] SGEXTN::ApplicationBase::String getSimplestEquivalent(bool ignoreCase) const; // clean whitespace, NFKD normalise, filter by char type
+    [[nodiscard]] SGEXTN::ApplicationBase::String getSimplestEquivalent(bool ignoreCase) const;
 };
 }
 }
