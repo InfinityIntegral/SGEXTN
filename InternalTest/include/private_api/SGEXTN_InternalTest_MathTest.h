@@ -1,8 +1,8 @@
 #pragma once
 
 namespace SGEXTN {
-namespace Math {
-class BUILDLAH_DLL_SGEXTN_Math UnitTests {
+namespace InternalTest {
+class BUILDLAH_DLL_SGEXTN_InternalTest MathTest {
 public:
     static bool checkDataSizes();
     static void testIntegerLimits();

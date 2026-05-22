@@ -1,8 +1,8 @@
 #pragma once
 
 namespace SGEXTN {
-namespace Structs {
-class BUILDLAH_DLL_SGEXTN_Structs UnitTests {
+namespace InternalTest {
+class BUILDLAH_DLL_SGEXTN_InternalTest StructsTest {
 public:
     static void testAll();
     static void testRgbaColour();

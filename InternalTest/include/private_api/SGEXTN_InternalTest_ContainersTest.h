@@ -1,8 +1,8 @@
 #pragma once
 
 namespace SGEXTN {
-namespace Containers {
-class BUILDLAH_DLL_SGEXTN_Containers UnitTests {
+namespace InternalTest {
+class BUILDLAH_DLL_SGEXTN_InternalTest ContainersTest {
 public:
     static void testEqualTo();
     static void testArray();

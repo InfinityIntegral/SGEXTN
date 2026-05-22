@@ -1,4 +1,4 @@
-#include <private_api/SGEXTN_Structs_UnitTests.h>
+#include <private_api/SGEXTN_InternalTest_StructsTest.h>
 #include <private_api/SGEXTN_Containers_Crash.h>
 #include <SGEXTN_Structs_RgbaColour.h>
 #include <SGEXTN_Structs_HslaColour.h>
@@ -22,16 +22,16 @@ bool isCloseEnoughWCAG3(float a, float b){
 }
 }
 
-void SGEXTN::Structs::UnitTests::testAll(){
-    SGEXTN::Structs::UnitTests::testRgbaColour();
-    SGEXTN::Structs::UnitTests::testHslaColour();
-    SGEXTN::Structs::UnitTests::testContrastUtilities();
-    SGEXTN::Structs::UnitTests::testIdentifier();
-    SGEXTN::Structs::UnitTests::testIdentifierRegistry();
-    SGEXTN::Structs::UnitTests::testDateTime();
+void SGEXTN::InternalTest::StructsTest::testAll(){
+    SGEXTN::InternalTest::StructsTest::testRgbaColour();
+    SGEXTN::InternalTest::StructsTest::testHslaColour();
+    SGEXTN::InternalTest::StructsTest::testContrastUtilities();
+    SGEXTN::InternalTest::StructsTest::testIdentifier();
+    SGEXTN::InternalTest::StructsTest::testIdentifierRegistry();
+    SGEXTN::InternalTest::StructsTest::testDateTime();
 }
 
-void SGEXTN::Structs::UnitTests::testRgbaColour(){
+void SGEXTN::InternalTest::StructsTest::testRgbaColour(){
     SGEXTN::Structs::RgbaColour col(255, 0, 200, 255);
     if(col.getRed() != 255 || col.getGreen() != 0 || col.getBlue() != 200 || col.getTransparency() != 255){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::RgbaColour - rgba int constructor fail");}
     col = SGEXTN::Structs::RgbaColour(255, 0, 200);
@@ -109,7 +109,7 @@ void SGEXTN::Structs::UnitTests::testRgbaColour(){
     if(SGEXTN::Structs::RgbaColour(255, 0, 200).complement(true) != SGEXTN::Structs::RgbaColour(0, 255, 174)){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::RgbaColour - complement fail");}
 }
 
-void SGEXTN::Structs::UnitTests::testHslaColour(){
+void SGEXTN::InternalTest::StructsTest::testHslaColour(){
     SGEXTN::Structs::HslaColour col = SGEXTN::Structs::HslaColour(313.0f, 100.0f, 50.0f);
     if(col.getHue() != 313.0f || col.getSaturation() != 100.0f || col.getLightness() != 50.0f || col.getTransparency() != 100.0f){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::HslaColour - getters or constructor from HSLA values fail");}
     col = SGEXTN::Structs::HslaColour(SGEXTN::Structs::RgbaColour(255, 0, 200));
@@ -150,7 +150,7 @@ void SGEXTN::Structs::UnitTests::testHslaColour(){
     if(SGEXTN::Structs::HslaColour(313.0f, 100.0f, 100.0f).toRGBA() != SGEXTN::Structs::RgbaColour(255, 255, 255)){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::HslaColour - hsl to rgb test case 10 fail");}
 }
 
-void SGEXTN::Structs::UnitTests::testContrastUtilities(){
+void SGEXTN::InternalTest::StructsTest::testContrastUtilities(){
     if(isCloseEnoughWCAG3(SGEXTN::Structs::ContrastUtilities::getContrast(SGEXTN::Structs::RgbaColour(255, 255, 255), SGEXTN::Structs::RgbaColour(0, 0, 0)), 106.0f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::ContrastUtilities - WCAG3 test 1 fail");}
     if(isCloseEnoughWCAG3(SGEXTN::Structs::ContrastUtilities::getContrast(SGEXTN::Structs::RgbaColour(0, 0, 0), SGEXTN::Structs::RgbaColour(0, 0, 0)), 0.0f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::ContrastUtilities - WCAG3 test 2 fail");}
     if(isCloseEnoughWCAG3(SGEXTN::Structs::ContrastUtilities::getContrast(SGEXTN::Structs::RgbaColour(255, 255, 255), SGEXTN::Structs::RgbaColour(118, 118, 118)), 71.6f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::ContrastUtilities - WCAG3 test 3 fail");}
@@ -178,7 +178,7 @@ void SGEXTN::Structs::UnitTests::testContrastUtilities(){
     if(SGEXTN::Structs::ContrastUtilities::getBackgroundDarkMode(SGEXTN::Structs::RgbaColour(102, 0, 80), 60.0f, &isPossible) != SGEXTN::Structs::RgbaColour(0, 0, 0) || isPossible == true){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::ContrastUtilities - get background dark impossible fail");}
 }
 
-void SGEXTN::Structs::UnitTests::testIdentifier(){
+void SGEXTN::InternalTest::StructsTest::testIdentifier(){
     if(SGEXTN::Structs::Identifier::nullIdentifier().private_data != 0u){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::Identifier - null identifier generation fail");}
     SGEXTN::Structs::Identifier a;
     a.private_data = 1u;
@@ -191,7 +191,7 @@ void SGEXTN::Structs::UnitTests::testIdentifier(){
     if(b.debugLog() != "00000000"){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::Identifier - debug log fail");}
 }
 
-void SGEXTN::Structs::UnitTests::testIdentifierRegistry(){
+void SGEXTN::InternalTest::StructsTest::testIdentifierRegistry(){
     SGEXTN::Structs::IdentifierRegistry registry;
     bool isValid = false;
     SGEXTN::Structs::Identifier id = registry.parseAndRegisterIdentifier(1u, &isValid);
@@ -213,7 +213,7 @@ void SGEXTN::Structs::UnitTests::testIdentifierRegistry(){
     if(registry.generateAndRegisterIdentifier() == SGEXTN::Structs::Identifier::nullIdentifier()){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::IdentifierRegistry identifier generation fail");}
 }
 
-void SGEXTN::Structs::UnitTests::testDateTime(){
+void SGEXTN::InternalTest::StructsTest::testDateTime(){
     if(SGEXTN::Structs::DateTime() != SGEXTN::Structs::DateTime(0, 8, 9, 10, 30, 0)){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime default constructor fail");}
     SGEXTN::Structs::DateTime zero;
     const SGEXTN::Structs::DateTime a;

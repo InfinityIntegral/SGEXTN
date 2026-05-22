@@ -1,9 +1,8 @@
 //#include <SGEXTN_EntryPoint.h>
 //#include <SGXCentral.h>
-#include <private_api/SGEXTN_Containers_UnitTests.h>
-#include <private_api/SGEXTN_Math_UnitTests.h>
-#include <private_api/SGEXTN_ApplicationBase_UnitTests.h>
-#include <private_api/SGEXTN_Structs_UnitTests.h>
+#include <private_api/SGEXTN_InternalTest_ContainersTest.h>
+#include <private_api/SGEXTN_InternalTest_MathTest.h>
+#include <private_api/SGEXTN_InternalTest_StructsTest.h>
 #include <SGEXTN_ApplicationBase_Debug.h>
 
 namespace {
@@ -22,9 +21,8 @@ void init(){
 
 int main(int /*argc*/, char** /*argv*/){
     //return SGEXTN(argc, argv, &init);
-    SGEXTN::Containers::UnitTests::testAll();
-    SGEXTN::Math::UnitTests::testAll();
-    SGEXTN::ApplicationBase::UnitTests::testAll();
-    SGEXTN::Structs::UnitTests::testAll();
+    SGEXTN::InternalTest::ContainersTest::testAll();
+    SGEXTN::InternalTest::MathTest::testAll();
+    SGEXTN::InternalTest::StructsTest::testAll();
     SG("all tests pass");
 }

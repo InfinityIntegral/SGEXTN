@@ -1,4 +1,4 @@
-#include <private_api/SGEXTN_Containers_UnitTests.h>
+#include <private_api/SGEXTN_InternalTest_ContainersTest.h>
 #include <SGEXTN_Containers_EqualTo.h>
 #include <private_api/SGEXTN_Containers_Crash.h>
 #include <SGEXTN_Containers_Array.h>
@@ -21,14 +21,14 @@
 #include <SGEXTN_Containers_Hash.h>
 #include <SGEXTN_Containers_Sort.h>
 
-void SGEXTN::Containers::UnitTests::testEqualTo(){
+void SGEXTN::InternalTest::ContainersTest::testEqualTo(){
     const SGEXTN::Containers::EqualTo<int> comparator;
     if(comparator(0, 0) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::EqualTo - 0 not equal to 0");}
     if(comparator(-1, 0) == true){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::EqualTo - -1 equal to 0");}
     if(comparator(1, 0) == true){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::EqualTo - 1 equal to 0");}
 }
 
-void SGEXTN::Containers::UnitTests::testArray(){
+void SGEXTN::InternalTest::ContainersTest::testArray(){
     SGEXTN::Containers::Array<int> arr(1, 2, 3, 4, 5);
     if(arr.at(0) != 1 || arr.at(1) != 2 || arr.at(2) != 3 || arr.at(3) != 4 || arr.at(4) != 5 || arr.length() != 5){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Array - init list fail");}
     arr = SGEXTN::Containers::Array<int>(2, 26);
@@ -43,7 +43,7 @@ void SGEXTN::Containers::UnitTests::testArray(){
     if(arr0.at(0) != -1 || arr0.at(1) != -1){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Array - fill with default value fail");}
 }
 
-void SGEXTN::Containers::UnitTests::testSpan(){
+void SGEXTN::InternalTest::ContainersTest::testSpan(){
     SGEXTN::Containers::Array<int> arr(1, 2, 3, 4, 5);
     SGEXTN::Containers::Span<int> span(arr.pointerToData(0), 5);
     if(span.at(0) != 1 || span.at(1) != 2 || span.at(2) != 3 || span.at(3) != 4 || span.at(4) != 5){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Span - bind to data fail");}
@@ -61,7 +61,7 @@ void SGEXTN::Containers::UnitTests::testSpan(){
     if(subspanLeft.pointerToData(1) != subspanCenter.pointerToData(0)){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Span - inconsistent pointer to data");}
 }
 
-void SGEXTN::Containers::UnitTests::testLessThan(){
+void SGEXTN::InternalTest::ContainersTest::testLessThan(){
     const SGEXTN::Containers::LessThan<int> comparator;
     if(comparator(-1, 0) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::LessThan - -1 not less than 0");}
     if(comparator(0, 0) == true){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::LessThan - 0 less than 0");}
@@ -73,7 +73,7 @@ void SGEXTN::Containers::UnitTests::testLessThan(){
     if(pointerComparator(&i, &i) == true){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::LessThan - same pointer point to different result");}
 }
 
-void SGEXTN::Containers::UnitTests::testMoreThan(){
+void SGEXTN::InternalTest::ContainersTest::testMoreThan(){
     const SGEXTN::Containers::MoreThan<int> comparator;
     if(comparator(-1, 0) == true){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MoreThan - -1 more than 0");}
     if(comparator(0, 0) == true){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MoreThan - 0 more than 0");}
@@ -85,7 +85,7 @@ void SGEXTN::Containers::UnitTests::testMoreThan(){
     if(pointerComparator(&i, &i) == true){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MoreThan - same pointer point to different result");}
 }
 
-void SGEXTN::Containers::UnitTests::testPair(){
+void SGEXTN::InternalTest::ContainersTest::testPair(){
     const SGEXTN::Containers::Pair<int, int> pair(0, 0);
     if(pair.first != 0 || pair.second != 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Pair - constructor init fail");}
     if(SGEXTN::Containers::Pair<int, int>(0, 0) == SGEXTN::Containers::Pair<int, int>(0, 1)){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Pair - (0, 0) equals (0, 1)");}
@@ -102,7 +102,7 @@ void SGEXTN::Containers::UnitTests::testPair(){
     if(SGEXTN::Containers::Pair<int, int>(0, 0) > SGEXTN::Containers::Pair<int, int>(0, 0)){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Pair - (0, 0) more than (0, 0)");}
 }
 
-void SGEXTN::Containers::UnitTests::testTuple3(){
+void SGEXTN::InternalTest::ContainersTest::testTuple3(){
     const SGEXTN::Containers::Tuple3<int, int, int> tuple(0, 0, 0);
     if(tuple.first != 0 || tuple.second != 0 || tuple.third != 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Tuple3 - constructor init fail");}
     if(SGEXTN::Containers::Tuple3<int, int, int>(0, 0, 0) == SGEXTN::Containers::Tuple3<int, int, int>(0, 0, 1)){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Tuple3 - (0, 0, 0) equals (0, 0, 1)");}
@@ -121,7 +121,7 @@ void SGEXTN::Containers::UnitTests::testTuple3(){
     if(SGEXTN::Containers::Tuple3<int, int, int>(0, 1, 1) > SGEXTN::Containers::Tuple3<int, int, int>(1, 0, 0)){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Tuple3 - (0, 1, 1) more than (1, 0, 0)");}
 }
 
-void SGEXTN::Containers::UnitTests::testVector(){
+void SGEXTN::InternalTest::ContainersTest::testVector(){
     SGEXTN::Containers::Vector<int> v;
     v.pushBack(0);
     if(v.length() != 1){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Vector - length check fail");}
@@ -139,7 +139,7 @@ void SGEXTN::Containers::UnitTests::testVector(){
     if(v.length() != 100){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Vector - blank construct fail");}
 }
 
-void SGEXTN::Containers::UnitTests::testQueue(){
+void SGEXTN::InternalTest::ContainersTest::testQueue(){
     SGEXTN::Containers::Queue<int> queue;
     queue.push(1);
     queue.push(2);
@@ -152,7 +152,7 @@ void SGEXTN::Containers::UnitTests::testQueue(){
     if(queue.length() != 2 || queue.back() != 3){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Queue - push fail");}
 }
 
-void SGEXTN::Containers::UnitTests::testStack(){
+void SGEXTN::InternalTest::ContainersTest::testStack(){
     SGEXTN::Containers::Stack<int> stack;
     stack.push(1);
     stack.push(2);
@@ -164,7 +164,7 @@ void SGEXTN::Containers::UnitTests::testStack(){
     if(stack.length() != 2 || stack.top() != 3){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Stack - push element fail");}
 }
 
-void SGEXTN::Containers::UnitTests::testDeque(){
+void SGEXTN::InternalTest::ContainersTest::testDeque(){
     SGEXTN::Containers::Deque<int> dq;
     dq.pushBack(1);
     dq.pushBack(2);
@@ -185,7 +185,7 @@ void SGEXTN::Containers::UnitTests::testDeque(){
     if(dq.length() != 3 || dq.front() != 26 || dq.back() != 26){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Deque - pop front fail");}
 }
 
-void SGEXTN::Containers::UnitTests::testPriorityQueue(){
+void SGEXTN::InternalTest::ContainersTest::testPriorityQueue(){
     SGEXTN::Containers::PriorityQueue<int, SGEXTN::Containers::LessThan<int>> pq;
     pq.push(1);
     pq.push(2);
@@ -212,7 +212,7 @@ void SGEXTN::Containers::UnitTests::testPriorityQueue(){
     if(pq.length() != 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::PriorityQueue - pop fail 6");}
 }
 
-void SGEXTN::Containers::UnitTests::testSet(){
+void SGEXTN::InternalTest::ContainersTest::testSet(){
     SGEXTN::Containers::Set<int, SGEXTN::Containers::LessThan<int>> s;
     s.insert(1);
     s.insert(2);
@@ -247,7 +247,7 @@ void SGEXTN::Containers::UnitTests::testSet(){
     if(s.length() != 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Set - in order traversal erase fail");}
 }
 
-void SGEXTN::Containers::UnitTests::testMultiSet(){
+void SGEXTN::InternalTest::ContainersTest::testMultiSet(){
     SGEXTN::Containers::MultiSet<int, SGEXTN::Containers::LessThan<int>> s;
     s.insert(1);
     s.insert(2);
@@ -283,7 +283,7 @@ void SGEXTN::Containers::UnitTests::testMultiSet(){
     if(s.length() != 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiSet - in order traversal erase fail");}
 }
 
-void SGEXTN::Containers::UnitTests::testMap(){
+void SGEXTN::InternalTest::ContainersTest::testMap(){
     SGEXTN::Containers::Map<int, int, SGEXTN::Containers::LessThan<int>> s;
     s.insert(1, 1);
     s.insert(2, 2);
@@ -321,7 +321,7 @@ void SGEXTN::Containers::UnitTests::testMap(){
     if(s.length() != 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Map - in order traversal erase fail");}
 }
 
-void SGEXTN::Containers::UnitTests::testMultiMap(){
+void SGEXTN::InternalTest::ContainersTest::testMultiMap(){
     SGEXTN::Containers::MultiMap<int, int, SGEXTN::Containers::LessThan<int>> s;
     s.insert(1, 1);
     s.insert(2, 2);
@@ -360,7 +360,7 @@ void SGEXTN::Containers::UnitTests::testMultiMap(){
     if(s.length() != 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiMap - in order traversal erase fail");}
 }
 
-void SGEXTN::Containers::UnitTests::testUnorderedSet(){
+void SGEXTN::InternalTest::ContainersTest::testUnorderedSet(){
     SGEXTN::Containers::UnorderedSet<int, SGEXTN::Containers::EqualTo<int>, SGEXTN::Containers::Hash<int>> s;
     s.insert(1);
     s.insert(2);
@@ -387,7 +387,7 @@ void SGEXTN::Containers::UnitTests::testUnorderedSet(){
     if(s.length() != 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::UnorderedSet - in order traversal erase fail");}
 }
 
-void SGEXTN::Containers::UnitTests::testUnorderedMap(){
+void SGEXTN::InternalTest::ContainersTest::testUnorderedMap(){
     SGEXTN::Containers::UnorderedMap<int, int, SGEXTN::Containers::EqualTo<int>, SGEXTN::Containers::Hash<int>> s;
     s.insert(1, 1);
     s.insert(2, 2);
@@ -416,7 +416,7 @@ void SGEXTN::Containers::UnitTests::testUnorderedMap(){
     if(s.length() != 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::UnorderedMap - in order traversal erase fail");}
 }
 
-void SGEXTN::Containers::UnitTests::testSort(){
+void SGEXTN::InternalTest::ContainersTest::testSort(){
     SGEXTN::Containers::Array<int> arr(1000);
     for(int i=0; i<1000; i++){
         arr.at(i) = 1000 - i;
@@ -427,26 +427,26 @@ void SGEXTN::Containers::UnitTests::testSort(){
     }
 }
 
-void SGEXTN::Containers::UnitTests::testAll(){
-    SGEXTN::Containers::UnitTests::testEqualTo();
-    SGEXTN::Containers::UnitTests::testArray();
-    SGEXTN::Containers::UnitTests::testSpan();
-    SGEXTN::Containers::UnitTests::testLessThan();
-    SGEXTN::Containers::UnitTests::testMoreThan();
-    SGEXTN::Containers::UnitTests::testPair();
-    SGEXTN::Containers::UnitTests::testTuple3();
-    SGEXTN::Containers::UnitTests::testVector();
-    SGEXTN::Containers::UnitTests::testQueue();
-    SGEXTN::Containers::UnitTests::testStack();
-    SGEXTN::Containers::UnitTests::testDeque();
-    SGEXTN::Containers::UnitTests::testPriorityQueue();
-    SGEXTN::Containers::UnitTests::testSet();
-    SGEXTN::Containers::UnitTests::testMultiSet();
-    SGEXTN::Containers::UnitTests::testMap();
-    SGEXTN::Containers::UnitTests::testMultiMap();
-    SGEXTN::Containers::UnitTests::testUnorderedSet();
-    SGEXTN::Containers::UnitTests::testUnorderedMap();
-    SGEXTN::Containers::UnitTests::testSort();
+void SGEXTN::InternalTest::ContainersTest::testAll(){
+    SGEXTN::InternalTest::ContainersTest::testEqualTo();
+    SGEXTN::InternalTest::ContainersTest::testArray();
+    SGEXTN::InternalTest::ContainersTest::testSpan();
+    SGEXTN::InternalTest::ContainersTest::testLessThan();
+    SGEXTN::InternalTest::ContainersTest::testMoreThan();
+    SGEXTN::InternalTest::ContainersTest::testPair();
+    SGEXTN::InternalTest::ContainersTest::testTuple3();
+    SGEXTN::InternalTest::ContainersTest::testVector();
+    SGEXTN::InternalTest::ContainersTest::testQueue();
+    SGEXTN::InternalTest::ContainersTest::testStack();
+    SGEXTN::InternalTest::ContainersTest::testDeque();
+    SGEXTN::InternalTest::ContainersTest::testPriorityQueue();
+    SGEXTN::InternalTest::ContainersTest::testSet();
+    SGEXTN::InternalTest::ContainersTest::testMultiSet();
+    SGEXTN::InternalTest::ContainersTest::testMap();
+    SGEXTN::InternalTest::ContainersTest::testMultiMap();
+    SGEXTN::InternalTest::ContainersTest::testUnorderedSet();
+    SGEXTN::InternalTest::ContainersTest::testUnorderedMap();
+    SGEXTN::InternalTest::ContainersTest::testSort();
 }
 
 

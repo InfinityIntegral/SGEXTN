@@ -1,4 +1,4 @@
-#include <private_api/SGEXTN_Math_UnitTests.h>
+#include <private_api/SGEXTN_InternalTest_MathTest.h>
 #include <private_api/SGEXTN_Containers_Crash.h>
 #include <SGEXTN_Math_IntegerLimits.h>
 #include <SGEXTN_Math_IntegerMath.h>
@@ -13,7 +13,7 @@ bool isCloseEnough(float a, float b){
 }
 }
 
-bool SGEXTN::Math::UnitTests::checkDataSizes(){
+bool SGEXTN::InternalTest::MathTest::checkDataSizes(){
     if(sizeof(char) != 1){SGEXTN::Containers::Crash::warn("unexpected char size");}
     if(sizeof(short) != 2){SGEXTN::Containers::Crash::warn("unpected short size");}
     if(sizeof(int) != 4){SGEXTN::Containers::Crash::warn("unexpected int size");}
@@ -25,14 +25,14 @@ bool SGEXTN::Math::UnitTests::checkDataSizes(){
     return false;
 }
 
-void SGEXTN::Math::UnitTests::testIntegerLimits(){
+void SGEXTN::InternalTest::MathTest::testIntegerLimits(){
     if(static_cast<long long>(SGEXTN::Math::IntegerLimits<int>::minimum()) != -2147483648){SGEXTN::Containers::Crash::crash("SGEXTN::Math::IntegerLimits - signed minimum fail");}
     if(static_cast<long long>(SGEXTN::Math::IntegerLimits<int>::maximum()) != 2147483647){SGEXTN::Containers::Crash::crash("SGEXTN::Math::IntegerLimits - signed maximum fail");}
     if(static_cast<long long>(SGEXTN::Math::IntegerLimits<unsigned int>::minimum()) != 0){SGEXTN::Containers::Crash::crash("SGEXTN::Math::IntegerLimits - signed minimum fail");}
     if(static_cast<long long>(SGEXTN::Math::IntegerLimits<unsigned int>::maximum()) != 4294967295){SGEXTN::Containers::Crash::crash("SGEXTN::Math::IntegerLimits - signed maximum fail");}
 }
 
-void SGEXTN::Math::UnitTests::testIntegerMath(){
+void SGEXTN::InternalTest::MathTest::testIntegerMath(){
     if(SGEXTN::Math::IntegerMath<int>::absoluteValue(5) != 5){SGEXTN::Containers::Crash::crash("SGEXTN::Math::IntegerMath - abs of positive fail");}
     if(SGEXTN::Math::IntegerMath<int>::absoluteValue(0) != 0){SGEXTN::Containers::Crash::crash("SGEXTN::Math::IntegerMath - abs of zero fail");}
     if(SGEXTN::Math::IntegerMath<int>::absoluteValue(-5) != 5){SGEXTN::Containers::Crash::crash("SGEXTN::Math::IntegerMath - abs of negative fail");}
@@ -43,7 +43,7 @@ void SGEXTN::Math::UnitTests::testIntegerMath(){
 }
 
 // NOLINTBEGIN(modernize-use-std-numbers)
-void SGEXTN::Math::UnitTests::testFloatConstants(){
+void SGEXTN::InternalTest::MathTest::testFloatConstants(){
     if(isCloseEnough(SGEXTN::Math::FloatConstants<float>::eulerNumber(), 2.718281828f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatConstants - retrieve e fail");}
     if(isCloseEnough(SGEXTN::Math::FloatConstants<float>::eulerNumberLog2(), 1.442695041f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatConstants - retrieve log 2 of e fail");}
     if(isCloseEnough(SGEXTN::Math::FloatConstants<float>::eulerNumberLog10(), 0.4342944819f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatConstants - retrieve log 10 of e fail");}
@@ -56,7 +56,7 @@ void SGEXTN::Math::UnitTests::testFloatConstants(){
 }
 // NOLINTEND(modernize-use-std-numbers)
 
-void SGEXTN::Math::UnitTests::testFloatLimits(){
+void SGEXTN::InternalTest::MathTest::testFloatLimits(){
     if(SGEXTN::Math::FloatLimits<float>::minimumPositive() >= 0.000001f || SGEXTN::Math::FloatLimits<float>::minimumPositive() <= 0.0f){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatLimits - min positive fail");}
     if(SGEXTN::Math::FloatLimits<float>::maximumNegative() <= -0.000001f || SGEXTN::Math::FloatLimits<float>::maximumNegative() >= 0.0f){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatLimits - max negative fail");}
     if(SGEXTN::Math::FloatLimits<float>::maximumFinite() <= 100000.0f){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatLimits - max finite fail");}
@@ -70,7 +70,7 @@ void SGEXTN::Math::UnitTests::testFloatLimits(){
     if(SGEXTN::Math::FloatLimits<float>::isNotANumber(SGEXTN::Math::FloatLimits<float>::notANumber()) == false || SGEXTN::Math::FloatLimits<float>::isNotANumber(0.0f) == true){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatLimits - NaN detection fail");}
 }
 
-void SGEXTN::Math::UnitTests::testFloatMath(){
+void SGEXTN::InternalTest::MathTest::testFloatMath(){
     if(isCloseEnough(SGEXTN::Math::FloatMath<float>::absoluteValue(-1.0f), 1.0f) == false || isCloseEnough(SGEXTN::Math::FloatMath<float>::absoluteValue(1.0f), 1.0f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatMath - absolute value fail");}
     if(isCloseEnough(SGEXTN::Math::FloatMath<float>::modulo(5.0f, 2.0f), 1.0f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatMath - modulo fail");}
     if(SGEXTN::Math::FloatMath<float>::maximum(0.0f, 1.0f) != 1.0f || SGEXTN::Math::FloatMath<float>::maximum(1.0f, 0.0f) != 1.0f){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatMath - maximum fail");}
@@ -101,13 +101,13 @@ void SGEXTN::Math::UnitTests::testFloatMath(){
     if(SGEXTN::Math::FloatMath<float>::roundToInt(0.4f) != 0){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatMath - round to int function fail");}
 }
 
-void SGEXTN::Math::UnitTests::testAll(){
-    const bool x = SGEXTN::Math::UnitTests::checkDataSizes();
+void SGEXTN::InternalTest::MathTest::testAll(){
+    const bool x = SGEXTN::InternalTest::MathTest::checkDataSizes();
     if(x == true){
-        SGEXTN::Math::UnitTests::testIntegerLimits();
-        SGEXTN::Math::UnitTests::testIntegerMath();
+        SGEXTN::InternalTest::MathTest::testIntegerLimits();
+        SGEXTN::InternalTest::MathTest::testIntegerMath();
     }
-    SGEXTN::Math::UnitTests::testFloatConstants();
-    SGEXTN::Math::UnitTests::testFloatLimits();
-    SGEXTN::Math::UnitTests::testFloatMath();
+    SGEXTN::InternalTest::MathTest::testFloatConstants();
+    SGEXTN::InternalTest::MathTest::testFloatLimits();
+    SGEXTN::InternalTest::MathTest::testFloatMath();
 }
