@@ -8,6 +8,8 @@
 #include <SGEXTN_Math_FloatLimits.h>
 #include <SGEXTN_Containers_Sort.h>
 #include <private_api/SGEXTN_Containers_Crash.h>
+#include <SGEXTN_ApplicationBase_OldString.h>
+#include <QString>
 
 namespace {
 int getValueAsDigit(const SGEXTN::ApplicationBase::Character& c, int base){
@@ -482,8 +484,8 @@ int SGEXTN::ApplicationBase::String::hash() const {
     return private_data.hash();
 }
 
-SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::debugLog() const {
-    return (*this);
+SGEXTN::ApplicationBase::OldString SGEXTN::ApplicationBase::String::debugLog() const {
+    return SGEXTN::ApplicationBase::OldString(QString::fromUtf8(reinterpret_cast<const char*>(&private_data.byteAt(0)), byteLength()));
 }
 
 SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::operator+(const SGEXTN::ApplicationBase::String& x) const {
@@ -626,7 +628,6 @@ SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::fillCharacters(
 
 int SGEXTN::ApplicationBase::String::findFirstBytesFromLeftBounded(int start, const SGEXTN::ApplicationBase::String& s) const {
     if(start < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::findFirstBytesFromLeftBounded crashed because the starting point is negative");}
-    if(start >= byteLength()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::findFirstBytesFromLeftBounded crashed because the starting point is beyond the end of the string");}
     if(s == ""){return start;}
     for(int i=start; i <= byteLength() - s.byteLength(); i++){
         for(int j=0; j<s.byteLength(); j++){
@@ -638,7 +639,6 @@ int SGEXTN::ApplicationBase::String::findFirstBytesFromLeftBounded(int start, co
 }
 
 int SGEXTN::ApplicationBase::String::findFirstBytesFromRightBounded(int start, const SGEXTN::ApplicationBase::String& s) const {
-    if(start < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::findFirstBytesFromRightBounded crashed because the starting point is negative");}
     if(start >= byteLength()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::findFirstBytesFromRightBounded crashed because the starting point is beyond the end of the string");}
     if(s == ""){return start;}
     if(start > byteLength() - s.byteLength()){start = byteLength() - s.byteLength();}
@@ -661,7 +661,6 @@ int SGEXTN::ApplicationBase::String::findFirstBytesFromRight(const SGEXTN::Appli
 
 int SGEXTN::ApplicationBase::String::findFirstCharactersFromLeftBounded(int start, const SGEXTN::ApplicationBase::String& s) const {
     if(start < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::findFirstCharactersFromLeftBounded crashed because the starting point is negative");}
-    if(start >= characterLength()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::findFirstCharactersFromLeftBounded crashed because the starting point is beyond the end of the string");}
     if(s == ""){return start;}
     for(int i=start; i <= characterLength() - s.characterLength(); i++){
         for(int j=0; j<s.characterLength(); j++){
@@ -673,7 +672,6 @@ int SGEXTN::ApplicationBase::String::findFirstCharactersFromLeftBounded(int star
 }
 
 int SGEXTN::ApplicationBase::String::findFirstCharactersFromRightBounded(int start, const SGEXTN::ApplicationBase::String& s) const {
-    if(start < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::findFirstCharactersFromRightBounded crashed because the starting point is negative");}
     if(start >= characterLength()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::findFirstCharactersFromRightBounded crashed because the starting point is beyond the end of the string");}
     if(s == ""){return start;}
     if(start > characterLength() - s.characterLength()){start = characterLength() - s.characterLength();}
@@ -696,9 +694,8 @@ int SGEXTN::ApplicationBase::String::findFirstCharactersFromRight(const SGEXTN::
 
 SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::substringBytes(int start, int length) const {
     if(start < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::substringBytes crashed because the starting point is negative");}
-    if(start >= byteLength()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::substringBytes crashed because the starting point is beyond the end of the string");}
     if(length < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::substringBytes crashed because the length is negative");}
-    if(length + start > byteLength()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::substringBytes crashed because the substring is too long to fit inside the string");}
+    if(length + start > byteLength()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::substringBytes crashed because the end point is beyond the end of the string");}
     SGEXTN::ApplicationBase::String output;
     output.private_data.pushBack(private_data, start, length);
     return output;
@@ -706,21 +703,20 @@ SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::substringBytes(
 
 SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::substringBytesLeft(int length) const {
     if(length < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::substringBytesLeft crashed because the length is negative");}
-    if(length > byteLength()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::substringBytesLeft crashed because the substring is too long to fit inside the string");}
+    if(length > byteLength()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::substringBytesLeft crashed because the end point is beyond the end of the string");}
     return substringBytes(0, length);
 }
 
 SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::substringBytesRight(int length) const {
     if(length < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::substringBytesRight crashed because the length is negative");}
-    if(length > byteLength()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::substringBytesRight crashed because the substring is too long to fit inside the string");}
+    if(length > byteLength()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::substringBytesRight crashed because the start point is beyond the start of the string");}
     return substringBytes(byteLength() - length, length);
 }
 
 SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::substringCharacters(int start, int length) const {
     if(start < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::substringCharacters crashed because the starting point is negative");}
-    if(start >= characterLength()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::substringCharacters crashed because the starting point is beyond the end of the string");}
     if(length < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::substringCharacters crashed because the length is negative");}
-    if(length + start > characterLength()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::substringCharacters crashed because the substring is too long to fit inside the string");}
+    if(length + start > characterLength()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::substringCharacters crashed because the end point is beyond the end of the string");}
     private_computeOffsets();
     SGEXTN::ApplicationBase::String output;
     output.private_data.pushBack(private_data, private_characterOffsets.at(start), private_characterOffsets.at(start + length) - private_characterOffsets.at(start));
@@ -729,13 +725,13 @@ SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::substringCharac
 
 SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::substringCharactersLeft(int length) const {
     if(length < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::substringCharactersLeft crashed because the length is negative");}
-    if(length > characterLength()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::substringCharactersLeft crashed because the substring is too long to fit inside the string");}
+    if(length > characterLength()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::substringCharactersLeft crashed because the end point is beyond the end of the string");}
     return substringCharacters(0, length);
 }
 
 SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::substringCharactersRight(int length) const {
     if(length < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::substringCharactersRight crashed because the length is negative");}
-    if(length > characterLength()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::substringCharactersRight crashed because the substring is too long to fit inside the string");}
+    if(length > characterLength()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::substringCharactersRight crashed because the start point is beyond the start of the string");}
     return substringCharacters(characterLength() - length, length);
 }
 
@@ -812,8 +808,7 @@ SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::insertAtCharact
 }
 
 SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::removeAtByteIndex(int pos, int length) const {
-    if(pos < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::removeAtByteIndex crashed because position of removal is negative");}
-    if(pos >= byteLength()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::removeAtByteIndex crashed because position of removal points beyond the end of the string");}
+    if(pos < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::removeAtByteIndex crashed because the start of the range to remove is negative");}
     if(length < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::removeAtByteIndex crashed because the length to remove is negative");}
     if(pos + length > byteLength()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::removeAtByteIndex crashed because the end of the range to remove points beyond the end of the string");}
     SGEXTN::ApplicationBase::String output;
@@ -823,8 +818,7 @@ SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::removeAtByteInd
 }
 
 SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::removeAtCharacterIndex(int pos, int length) const {
-    if(pos < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::removeAtCharacterIndex crashed because position of removal is negative");}
-    if(pos >= characterLength()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::removeAtCharacterIndex crashed because position of removal points beyond the end of the string");}
+    if(pos < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::removeAtCharacterIndex crashed because the start of the range to remove is negative");}
     if(length < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::removeAtCharacterIndex crashed because the length to remove is negative");}
     if(pos + length > characterLength()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::removeAtCharacterIndex crashed because the end of the range to remove points beyond the end of the string");}
     private_computeOffsets();
@@ -1166,12 +1160,13 @@ SGEXTN::Containers::Array<SGEXTN::ApplicationBase::String> SGEXTN::ApplicationBa
     if(separator == ""){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::split crashed because separator is empty");}
     int currentIndex = 0;
     SGEXTN::Containers::Vector<SGEXTN::ApplicationBase::String> splitStrings;
-    while(currentIndex < characterLength()){
+    while(true){
         int index = findFirstCharactersFromLeftBounded(currentIndex, separator);
-        if(index == -1){index = characterLength();}
+        if(index == -1){break;}
         splitStrings.pushBack(substringCharacters(currentIndex, index - currentIndex));
         currentIndex = index + separator.characterLength();
     }
+    splitStrings.pushBack(substringCharacters(currentIndex, characterLength() - currentIndex));
     SGEXTN::Containers::Array<SGEXTN::ApplicationBase::String> output(splitStrings.length());
     for(int i=0; i<splitStrings.length(); i++){
         output.at(i) = splitStrings.at(i);

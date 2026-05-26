@@ -9,6 +9,7 @@ template <typename T> class Array;
 
 namespace ApplicationBase {
 class Character;
+class OldString;
 
 enum class BUILDLAH_DLL_SGEXTN_ApplicationBase FloatPrecisionFormat : unsigned char {SignificantFigure, DecimalPlace, ScientificNotation};
 
@@ -36,7 +37,7 @@ public:
     [[nodiscard]] bool operator<=(const String& x) const;
     [[nodiscard]] bool operator>=(const String& x) const;
     [[nodiscard]] int hash() const;
-    [[nodiscard]] String debugLog() const;
+    [[nodiscard]] SGEXTN::ApplicationBase::OldString debugLog() const;
     [[nodiscard]] String operator+(const String& x) const;
     String& operator+=(const String& x);
     [[nodiscard]] int byteLength() const;

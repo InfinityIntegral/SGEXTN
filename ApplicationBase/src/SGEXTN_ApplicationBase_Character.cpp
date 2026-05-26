@@ -49,6 +49,7 @@ SGEXTN::ApplicationBase::Character::Character(char c){
 SGEXTN::ApplicationBase::Character::Character(const char* s){
     const SGEXTN::ApplicationBase::String validityTest(s);
     if(validityTest.characterLength() != 1){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character constructor crashed as passed string literal does not represent a single character");}
+    private_data.pushBack(s);
 }
 
 SGEXTN::ApplicationBase::Character::Character(int unicode){
