@@ -2399,7 +2399,7 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
         if(i >= 0xabf0 && i < 0xabfa){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
         return SGEXTN::ApplicationBase::FullCharacterType::UnassignedCharacter;
     }
-    if(i >= 0xac00 && i <= 0xd7af){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
+    if(i >= 0xac00 && i <= 0xd7a3){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
     if(i >= 0xd7b0 && i <= 0xd7ff){
         if(i >= 0xd7b0 && i < 0xd7c7){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         if(i >= 0xd7cb && i < 0xd7fc){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
@@ -3828,9 +3828,9 @@ SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
     }
     if(i >= 0x20000 && i <= 0x3ffff){
         if(i >= 0x20000 && i < 0x2a6e0){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
-        if(i >= 0x2a700 && i < 0x2b73a){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
-        if(i >= 0x2b73f && i < 0x2b81e){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
-        if(i >= 0x2b820 && i < 0x2ebe1){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
+        if(i >= 0x2a700 && i < 0x2b81e){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
+        if(i >= 0x2b820 && i < 0x2ceae){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
+        if(i >= 0x2ceb0 && i < 0x2ebe1){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         if(i >= 0x2ebf0 && i < 0x2ee5e){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         if(i >= 0x2f800 && i < 0x2fa1e){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
         if(i >= 0x30000 && i < 0x3134b){return SGEXTN::ApplicationBase::FullCharacterType::OtherLetter;}
@@ -7227,7 +7227,6 @@ int getUnicodeRecompositionMapping(int first, int second){
             if(first == 0x0292 && second == 0x030c){return 0x01ef;}
         }
         if(first >= 0x0300 && first <= 0x03ff){
-            if(first == 0x0308 && second == 0x0301){return 0x0344;}
             if(first == 0x0391){
                 if(second == 0x0300){return 0x1fba;}
                 if(second == 0x0301){return 0x0386;}
@@ -7435,54 +7434,6 @@ int getUnicodeRecompositionMapping(int first, int second){
             if(first == 0x04e8 && second == 0x0308){return 0x04ea;}
             if(first == 0x04e9 && second == 0x0308){return 0x04eb;}
         }
-        if(first >= 0x0500 && first <= 0x05ff){
-            if(first == 0x05d0){
-                if(second == 0x05b7){return 0xfb2e;}
-                if(second == 0x05b8){return 0xfb2f;}
-                if(second == 0x05bc){return 0xfb30;}
-            }
-            if(first == 0x05d1){
-                if(second == 0x05bc){return 0xfb31;}
-                if(second == 0x05bf){return 0xfb4c;}
-            }
-            if(first == 0x05d2 && second == 0x05bc){return 0xfb32;}
-            if(first == 0x05d3 && second == 0x05bc){return 0xfb33;}
-            if(first == 0x05d4 && second == 0x05bc){return 0xfb34;}
-            if(first == 0x05d5){
-                if(second == 0x05b9){return 0xfb4b;}
-                if(second == 0x05bc){return 0xfb35;}
-            }
-            if(first == 0x05d6 && second == 0x05bc){return 0xfb36;}
-            if(first == 0x05d8 && second == 0x05bc){return 0xfb38;}
-            if(first == 0x05d9){
-                if(second == 0x05b4){return 0xfb1d;}
-                if(second == 0x05bc){return 0xfb39;}
-            }
-            if(first == 0x05da && second == 0x05bc){return 0xfb3a;}
-            if(first == 0x05db){
-                if(second == 0x05bc){return 0xfb3b;}
-                if(second == 0x05bf){return 0xfb4d;}
-            }
-            if(first == 0x05dc && second == 0x05bc){return 0xfb3c;}
-            if(first == 0x05de && second == 0x05bc){return 0xfb3e;}
-            if(first == 0x05e0 && second == 0x05bc){return 0xfb40;}
-            if(first == 0x05e1 && second == 0x05bc){return 0xfb41;}
-            if(first == 0x05e3 && second == 0x05bc){return 0xfb43;}
-            if(first == 0x05e4){
-                if(second == 0x05bc){return 0xfb44;}
-                if(second == 0x05bf){return 0xfb4e;}
-            }
-            if(first == 0x05e6 && second == 0x05bc){return 0xfb46;}
-            if(first == 0x05e7 && second == 0x05bc){return 0xfb47;}
-            if(first == 0x05e8 && second == 0x05bc){return 0xfb48;}
-            if(first == 0x05e9){
-                if(second == 0x05bc){return 0xfb49;}
-                if(second == 0x05c1){return 0xfb2a;}
-                if(second == 0x05c2){return 0xfb2b;}
-            }
-            if(first == 0x05ea && second == 0x05bc){return 0xfb4a;}
-            if(first == 0x05f2 && second == 0x05b7){return 0xfb1f;}
-        }
         if(first >= 0x0600 && first <= 0x06ff){
             if(first == 0x0627){
                 if(second == 0x0653){return 0x0622;}
@@ -7496,36 +7447,15 @@ int getUnicodeRecompositionMapping(int first, int second){
             if(first == 0x06d5 && second == 0x0654){return 0x06c0;}
         }
         if(first >= 0x0900 && first <= 0x09ff){
-            if(first == 0x0915 && second == 0x093c){return 0x0958;}
-            if(first == 0x0916 && second == 0x093c){return 0x0959;}
-            if(first == 0x0917 && second == 0x093c){return 0x095a;}
-            if(first == 0x091c && second == 0x093c){return 0x095b;}
-            if(first == 0x0921 && second == 0x093c){return 0x095c;}
-            if(first == 0x0922 && second == 0x093c){return 0x095d;}
             if(first == 0x0928 && second == 0x093c){return 0x0929;}
-            if(first == 0x092b && second == 0x093c){return 0x095e;}
-            if(first == 0x092f && second == 0x093c){return 0x095f;}
             if(first == 0x0930 && second == 0x093c){return 0x0931;}
             if(first == 0x0933 && second == 0x093c){return 0x0934;}
-            if(first == 0x09a1 && second == 0x09bc){return 0x09dc;}
-            if(first == 0x09a2 && second == 0x09bc){return 0x09dd;}
-            if(first == 0x09af && second == 0x09bc){return 0x09df;}
             if(first == 0x09c7){
                 if(second == 0x09be){return 0x09cb;}
                 if(second == 0x09d7){return 0x09cc;}
             }
         }
-        if(first >= 0x0a00 && first <= 0x0aff){
-            if(first == 0x0a16 && second == 0x0a3c){return 0x0a59;}
-            if(first == 0x0a17 && second == 0x0a3c){return 0x0a5a;}
-            if(first == 0x0a1c && second == 0x0a3c){return 0x0a5b;}
-            if(first == 0x0a2b && second == 0x0a3c){return 0x0a5e;}
-            if(first == 0x0a32 && second == 0x0a3c){return 0x0a33;}
-            if(first == 0x0a38 && second == 0x0a3c){return 0x0a36;}
-        }
         if(first >= 0x0b00 && first <= 0x0b7f){
-            if(first == 0x0b21 && second == 0x0b3c){return 0x0b5c;}
-            if(first == 0x0b22 && second == 0x0b3c){return 0x0b5d;}
             if(first == 0x0b47){
                 if(second == 0x0b3e){return 0x0b4b;}
                 if(second == 0x0b56){return 0x0b48;}
@@ -7554,27 +7484,6 @@ int getUnicodeRecompositionMapping(int first, int second){
                 if(second == 0x0ddf){return 0x0dde;}
             }
             if(first == 0x0ddc && second == 0x0dca){return 0x0ddd;}
-        }
-        if(first >= 0x0f00 && first <= 0x0fff){
-            if(first == 0x0f40 && second == 0x0fb5){return 0x0f69;}
-            if(first == 0x0f42 && second == 0x0fb7){return 0x0f43;}
-            if(first == 0x0f4c && second == 0x0fb7){return 0x0f4d;}
-            if(first == 0x0f51 && second == 0x0fb7){return 0x0f52;}
-            if(first == 0x0f56 && second == 0x0fb7){return 0x0f57;}
-            if(first == 0x0f5b && second == 0x0fb7){return 0x0f5c;}
-            if(first == 0x0f71){
-                if(second == 0x0f72){return 0x0f73;}
-                if(second == 0x0f74){return 0x0f75;}
-                if(second == 0x0f80){return 0x0f81;}
-            }
-            if(first == 0x0f90 && second == 0x0fb5){return 0x0fb9;}
-            if(first == 0x0f92 && second == 0x0fb7){return 0x0f93;}
-            if(first == 0x0f9c && second == 0x0fb7){return 0x0f9d;}
-            if(first == 0x0fa1 && second == 0x0fb7){return 0x0fa2;}
-            if(first == 0x0fa6 && second == 0x0fb7){return 0x0fa7;}
-            if(first == 0x0fab && second == 0x0fb7){return 0x0fac;}
-            if(first == 0x0fb2 && second == 0x0f80){return 0x0f76;}
-            if(first == 0x0fb3 && second == 0x0f80){return 0x0f78;}
         }
     }
     if(first >= 0x1000 && first <= 0x1fff){
@@ -7815,7 +7724,6 @@ int getUnicodeRecompositionMapping(int first, int second){
             if(first == 0x21d2 && second == 0x0338){return 0x21cf;}
             if(first == 0x21d4 && second == 0x0338){return 0x21ce;}
         }
-        if(first == 0x2add && second == 0x0338){return 0x2adc;}
         if(first >= 0x3000 && first <= 0x30ff){
             if(first == 0x3046 && second == 0x3099){return 0x3094;}
             if(first == 0x304b && second == 0x3099){return 0x304c;}
@@ -7896,10 +7804,6 @@ int getUnicodeRecompositionMapping(int first, int second){
             if(first == 0x30f2 && second == 0x3099){return 0x30fa;}
             if(first == 0x30fd && second == 0x3099){return 0x30fe;}
         }
-        if(first == 0xfb49){
-            if(second == 0x05c1){return 0xfb2c;}
-            if(second == 0x05c2){return 0xfb2d;}
-        }
     }
     if(first >= 0x10000 && first <= 0x1ffff){
         if(first >= 0x10000 && first <= 0x10fff){
@@ -7951,27 +7855,6 @@ int getUnicodeRecompositionMapping(int first, int second){
             if(first == 0x16d67 && second == 0x16d67){return 0x16d68;}
             if(first == 0x16d69 && second == 0x16d67){return 0x16d6a;}
         }
-        if(first >= 0x1d100 && first <= 0x1d1ff){
-            if(first == 0x1d157 && second == 0x1d165){return 0x1d15e;}
-            if(first == 0x1d158 && second == 0x1d165){return 0x1d15f;}
-            if(first == 0x1d15f){
-                if(second == 0x1d16e){return 0x1d160;}
-                if(second == 0x1d16f){return 0x1d161;}
-                if(second == 0x1d170){return 0x1d162;}
-                if(second == 0x1d171){return 0x1d163;}
-                if(second == 0x1d172){return 0x1d164;}
-            }
-            if(first == 0x1d1b9 && second == 0x1d165){return 0x1d1bb;}
-            if(first == 0x1d1ba && second == 0x1d165){return 0x1d1bc;}
-            if(first == 0x1d1bb){
-                if(second == 0x1d16e){return 0x1d1bd;}
-                if(second == 0x1d16f){return 0x1d1bf;}
-            }
-            if(first == 0x1d1bc){
-                if(second == 0x1d16e){return 0x1d1be;}
-                if(second == 0x1d16f){return 0x1d1c0;}
-            }
-        }
     }
     return -1;
 }
@@ -8012,7 +7895,7 @@ SGEXTN::ApplicationBase::GraphemeSegmentationType SGEXTN::ApplicationBase::Unico
     if(c == 0x200d){return SGEXTN::ApplicationBase::GraphemeSegmentationType::ZeroWidthJoiner;}
     if(c >= 0x1f1e6 && c <= 0x1f1ff){return SGEXTN::ApplicationBase::GraphemeSegmentationType::RegionalIndicator;}
     if((c >= 0x1100 && c <= 0x115f) || (c >= 0xa960 && c <= 0xa97c)){return SGEXTN::ApplicationBase::GraphemeSegmentationType::HangulLeading;}
-    if((c >= 0x1160 && c <= 0x11a7) || (c >= 0xd7b0 && c <= 0xd7c6)){return SGEXTN::ApplicationBase::GraphemeSegmentationType::HangulVowel;}
+    if((c >= 0x1160 && c <= 0x11a7) || (c >= 0xd7b0 && c <= 0xd7c6) || c == 0x16d63 || (c >= 0x16d67 && c <= 0x16d6a)){return SGEXTN::ApplicationBase::GraphemeSegmentationType::HangulVowel;}
     if((c >= 0x11a8 && c <= 0x11ff) || (c >= 0xd7cb && c <= 0xd7fb)){return SGEXTN::ApplicationBase::GraphemeSegmentationType::HangulTrailing;}
     if(c >= 0xac00 && c <= 0xd7a3){
         if((c - 0xac00) % 0x1c == 0){return SGEXTN::ApplicationBase::GraphemeSegmentationType::HangulLeadingAndVowel;}

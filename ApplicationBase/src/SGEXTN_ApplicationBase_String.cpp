@@ -525,24 +525,31 @@ const unsigned char& SGEXTN::ApplicationBase::String::byteAt(int i) const {
 void SGEXTN::ApplicationBase::String::private_computeOffsets() const {
     if(private_characterOffsets.length() > 0){return;}
     SGEXTN::Containers::Array<int> unicodeList = getUnicode();
+    SGEXTN::Containers::Array<int> codePointOffset(unicodeList.length());
+    int currentCodePointOffset = 0;
+    for(int i=0; i<unicodeList.length(); i++){
+        codePointOffset.at(i) = currentCodePointOffset;
+        if(unicodeList.at(i) <= 0x7f){currentCodePointOffset++;}
+        else if(unicodeList.at(i) <= 0x7ff){currentCodePointOffset += 2;}
+        else if(unicodeList.at(i) <= 0xffff){currentCodePointOffset += 3;}
+        else{currentCodePointOffset += 4;}
+    }
     SGEXTN::Containers::Array<SGEXTN::ApplicationBase::GraphemeSegmentationType> segmentationTypes(unicodeList.length());
     SGEXTN::Containers::Array<SGEXTN::ApplicationBase::GraphemeRuleRelatedType> ruleRelatedTypes(unicodeList.length());
     for(int i=0; i<unicodeList.length(); i++){
         segmentationTypes.at(i) = SGEXTN::ApplicationBase::UnicodeQuery::getGraphemeSegmentationType(unicodeList.at(i));
         ruleRelatedTypes.at(i) = SGEXTN::ApplicationBase::UnicodeQuery::getGraphemeRuleRelatedType(unicodeList.at(i));
     }
-    for(int i=0; i<=unicodeList.length(); i++){
-        if(i == 0 || i == unicodeList.length()){
-            private_characterOffsets.pushBack(i);
-            continue;
-        }
+    private_characterOffsets.pushBack(0);
+    if(unicodeList.length() == 0){return;}
+    for(int i=1; i<unicodeList.length(); i++){
         if(segmentationTypes.at(i - 1) == SGEXTN::ApplicationBase::GraphemeSegmentationType::Return && segmentationTypes.at(i) == SGEXTN::ApplicationBase::GraphemeSegmentationType::NewLine){continue;}
         if(segmentationTypes.at(i - 1) == SGEXTN::ApplicationBase::GraphemeSegmentationType::Return || segmentationTypes.at(i - 1) == SGEXTN::ApplicationBase::GraphemeSegmentationType::NewLine || segmentationTypes.at(i - 1) == SGEXTN::ApplicationBase::GraphemeSegmentationType::ControlCharacter){
-            private_characterOffsets.pushBack(i);
+            private_characterOffsets.pushBack(codePointOffset.at(i));
             continue;
         }
         if(segmentationTypes.at(i) == SGEXTN::ApplicationBase::GraphemeSegmentationType::Return || segmentationTypes.at(i) == SGEXTN::ApplicationBase::GraphemeSegmentationType::NewLine || segmentationTypes.at(i) == SGEXTN::ApplicationBase::GraphemeSegmentationType::ControlCharacter){
-            private_characterOffsets.pushBack(i);
+            private_characterOffsets.pushBack(codePointOffset.at(i));
             continue;
         }
         if(segmentationTypes.at(i - 1) == SGEXTN::ApplicationBase::GraphemeSegmentationType::HangulLeading && (segmentationTypes.at(i) == SGEXTN::ApplicationBase::GraphemeSegmentationType::HangulLeading || segmentationTypes.at(i) == SGEXTN::ApplicationBase::GraphemeSegmentationType::HangulVowel || segmentationTypes.at(i) == SGEXTN::ApplicationBase::GraphemeSegmentationType::HangulLeadingAndVowel || segmentationTypes.at(i) == SGEXTN::ApplicationBase::GraphemeSegmentationType::HangulLeadingAndVowelAndTrailing)){continue;}
@@ -571,10 +578,11 @@ void SGEXTN::ApplicationBase::String::private_computeOffsets() const {
         }
         if(segmentationTypes.at(i) == SGEXTN::ApplicationBase::GraphemeSegmentationType::RegionalIndicator && segmentationTypes.at(i - 1) == SGEXTN::ApplicationBase::GraphemeSegmentationType::RegionalIndicator){
             if(i - 2 < 0 || segmentationTypes.at(i - 2) != SGEXTN::ApplicationBase::GraphemeSegmentationType::RegionalIndicator){continue;}
-            if(private_characterOffsets.at(private_characterOffsets.length() - 1) == i - 2){continue;}
+            if(private_characterOffsets.at(private_characterOffsets.length() - 1) == codePointOffset.at(i - 2)){continue;}
         }
-        private_characterOffsets.pushBack(i);
+        private_characterOffsets.pushBack(codePointOffset.at(i));
     }
+    private_characterOffsets.pushBack(byteLength());
 }
 
 void SGEXTN::ApplicationBase::String::private_invalidateOffsets() const {
@@ -628,7 +636,7 @@ SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::fillCharacters(
 
 int SGEXTN::ApplicationBase::String::findFirstBytesFromLeftBounded(int start, const SGEXTN::ApplicationBase::String& s) const {
     if(start < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::findFirstBytesFromLeftBounded crashed because the starting point is negative");}
-    if(s == ""){return start;}
+    if(s == ""){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::findFirstBytesFromLeftBounded crashed because the string to find is empty");}
     for(int i=start; i <= byteLength() - s.byteLength(); i++){
         for(int j=0; j<s.byteLength(); j++){
             if(byteAt(i + j) != s.byteAt(j)){break;}
@@ -640,7 +648,7 @@ int SGEXTN::ApplicationBase::String::findFirstBytesFromLeftBounded(int start, co
 
 int SGEXTN::ApplicationBase::String::findFirstBytesFromRightBounded(int start, const SGEXTN::ApplicationBase::String& s) const {
     if(start >= byteLength()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::findFirstBytesFromRightBounded crashed because the starting point is beyond the end of the string");}
-    if(s == ""){return start;}
+    if(s == ""){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::findFirstBytesFromRightBounded crashed because the string to find is empty");}
     if(start > byteLength() - s.byteLength()){start = byteLength() - s.byteLength();}
     for(int i=start; i>=0; i--){
         for(int j=0; j<s.byteLength(); j++){
@@ -652,16 +660,18 @@ int SGEXTN::ApplicationBase::String::findFirstBytesFromRightBounded(int start, c
 }
 
 int SGEXTN::ApplicationBase::String::findFirstBytesFromLeft(const SGEXTN::ApplicationBase::String& s) const {
+    if(s == ""){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::findFirstBytesFromLeft crashed because the string to find is empty");}
     return findFirstBytesFromLeftBounded(0, s);
 }
 
 int SGEXTN::ApplicationBase::String::findFirstBytesFromRight(const SGEXTN::ApplicationBase::String& s) const {
+    if(s == ""){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::findFirstBytesFromRight crashed because the string to find is empty");}
     return findFirstBytesFromRightBounded(byteLength() - 1, s);
 }
 
 int SGEXTN::ApplicationBase::String::findFirstCharactersFromLeftBounded(int start, const SGEXTN::ApplicationBase::String& s) const {
     if(start < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::findFirstCharactersFromLeftBounded crashed because the starting point is negative");}
-    if(s == ""){return start;}
+    if(s == ""){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::findFirstCharacterFromLeftBounded crashed because the string to find is empty");}
     for(int i=start; i <= characterLength() - s.characterLength(); i++){
         for(int j=0; j<s.characterLength(); j++){
             if(getCharacterAt(i + j) != s.getCharacterAt(j)){break;}
@@ -673,7 +683,7 @@ int SGEXTN::ApplicationBase::String::findFirstCharactersFromLeftBounded(int star
 
 int SGEXTN::ApplicationBase::String::findFirstCharactersFromRightBounded(int start, const SGEXTN::ApplicationBase::String& s) const {
     if(start >= characterLength()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::findFirstCharactersFromRightBounded crashed because the starting point is beyond the end of the string");}
-    if(s == ""){return start;}
+    if(s == ""){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::findFirstCharacterFromRightBounded crashed because the string to find is empty");}
     if(start > characterLength() - s.characterLength()){start = characterLength() - s.characterLength();}
     for(int i=start; i>=0; i--){
         for(int j=0; j<s.characterLength(); j++){
@@ -685,10 +695,12 @@ int SGEXTN::ApplicationBase::String::findFirstCharactersFromRightBounded(int sta
 }
 
 int SGEXTN::ApplicationBase::String::findFirstCharactersFromLeft(const SGEXTN::ApplicationBase::String& s) const {
+    if(s == ""){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::findFirstCharacterFromLeft crashed because the string to find is empty");}
     return findFirstCharactersFromLeftBounded(0, s);
 }
 
 int SGEXTN::ApplicationBase::String::findFirstCharactersFromRight(const SGEXTN::ApplicationBase::String& s) const {
+    if(s == ""){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::findFirstCharacterFromRight crashed because the string to find is empty");}
     return findFirstCharactersFromRightBounded(characterLength() - 1, s);
 }
 
