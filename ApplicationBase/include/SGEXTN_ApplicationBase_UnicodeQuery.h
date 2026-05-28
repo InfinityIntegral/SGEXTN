@@ -17,6 +17,7 @@ public:
     [[nodiscard]] static int getUppercase(int c);
     [[nodiscard]] static int getLowercase(int c);
     [[nodiscard]] static int getTitlecase(int c);
+    [[nodiscard]] static bool isWhitespace(int c);
     [[nodiscard]] static SGEXTN::ApplicationBase::FullCharacterType getFullType(int c);
     [[nodiscard]] static SGEXTN::ApplicationBase::SimplifiedCharacterType getSimplifiedType(int c);
     [[nodiscard]] static int getDecimalDigitValue(int c);

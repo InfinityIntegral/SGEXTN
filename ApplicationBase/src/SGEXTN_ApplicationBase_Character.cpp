@@ -147,7 +147,12 @@ bool SGEXTN::ApplicationBase::Character::isASCII() const {
 }
 
 bool SGEXTN::ApplicationBase::Character::isWhitespace() const {
-    return (SGEXTN::ApplicationBase::UnicodeQuery::getSimplifiedType(getBaseUnicode()) == SGEXTN::ApplicationBase::SimplifiedCharacterType::Whitespace);
+    if(byteLength() == 1){return SGEXTN::ApplicationBase::UnicodeQuery::isWhitespace(static_cast<int>(byteAt(0)));}
+    else{
+        SGEXTN::Containers::Array<int> codePoints = getUnicode();
+        if(codePoints.length() != 1){return false;}
+        return SGEXTN::ApplicationBase::UnicodeQuery::isWhitespace(codePoints.at(0));
+    }
 }
 
 int SGEXTN::ApplicationBase::Character::getBaseUnicode() const {

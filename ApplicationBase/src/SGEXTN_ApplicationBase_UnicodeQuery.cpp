@@ -646,6 +646,30 @@ int getTitlecaseOffset(int i){
     return 0;
 }
 
+bool getWhitespaceProperty(int i){
+    if(i < 0x80){
+        if(i >= 0x9 && i <= 0xd){return true;}
+        if(i == 0x20){return true;}
+        return false;
+    }
+    if(i >= 0x4e00 && i <= 0x9fff){return false;}
+    if(i >= 0xb80 && i <= 0xbff){return false;}
+    if(i >= 0x2190 && i <= 0x23ff){return false;}
+    if(i <= 0xff){
+        if(i == 0x85){return true;}
+        if(i == 0xa0){return true;}
+    }
+    if(i == 0x1680){return true;}
+    if(i >= 0x2000 && i <= 0x205f){
+        if(i >= 0x2000 && i <= 0x200a){return true;}
+        if(i >= 0x2028 && i <= 0x2029){return true;}
+        if(i == 0x202f){return true;}
+        if(i == 0x205f){return true;}
+    }
+    if(i == 0x3000){return true;}
+    return false;
+}
+
 SGEXTN::ApplicationBase::FullCharacterType getUnicodeGeneralCategory(int i){
     if(i < 0x20){return SGEXTN::ApplicationBase::FullCharacterType::ControlCharacter;}
     if(i >= 0x30 && i < 0x3a){return SGEXTN::ApplicationBase::FullCharacterType::DecimalDigit;}
@@ -7871,6 +7895,10 @@ int SGEXTN::ApplicationBase::UnicodeQuery::getLowercase(int c){
 
 int SGEXTN::ApplicationBase::UnicodeQuery::getTitlecase(int c){
     return (c + getTitlecaseOffset(c));
+}
+
+bool SGEXTN::ApplicationBase::UnicodeQuery::isWhitespace(int c){
+    return getWhitespaceProperty(c);
 }
 
 SGEXTN::ApplicationBase::FullCharacterType SGEXTN::ApplicationBase::UnicodeQuery::getFullType(int c){

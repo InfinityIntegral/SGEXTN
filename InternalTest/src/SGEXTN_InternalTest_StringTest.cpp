@@ -12,6 +12,8 @@
 #include <SGEXTN_Containers_Hash.h>
 
 namespace {
+bool testAllOfUnicode = false;
+
 SGEXTN::ApplicationBase::String readFile(const SGEXTN::ApplicationBase::String& filePath){
     if(filePath == ""){return "";}
     QByteArray data;
@@ -222,6 +224,16 @@ void fillRecomposeExclusionDatabase(){
         }
     }
 }
+
+SGEXTN::Containers::Array<SGEXTN::Containers::UnorderedSet<SGEXTN::ApplicationBase::String, SGEXTN::Containers::EqualTo<SGEXTN::ApplicationBase::String>, SGEXTN::Containers::Hash<SGEXTN::ApplicationBase::String>>> propertyListDatabase(0x110000);
+
+void appendToPropertyListDatabase(int j, const SGEXTN::ApplicationBase::String& propertyValue){
+    propertyListDatabase.at(j).insert(propertyValue);
+}
+
+void fillPropertyListDatabase(){
+    parseAuxillaryFile("proplist", &appendToPropertyListDatabase);
+}
 }
 
 void SGEXTN::InternalTest::StringTest::testAll(){
@@ -231,11 +243,13 @@ void SGEXTN::InternalTest::StringTest::testAll(){
 }
 
 void SGEXTN::InternalTest::StringTest::testUnicodeQuery(){
+    if(testAllOfUnicode == false){return;}
     fillUnicodeDatabase();
     fillGraphemeBreakDatabase();
     fillDerivedCoreDatabase();
     fillEmojiTypeDatabase();
     fillRecomposeExclusionDatabase();
+    fillPropertyListDatabase();
     for(int i=0; i<0x110000; i++){
         int uppercase = i;
         if(unicodeDatabase.at(i).at(12) != ""){uppercase = unicodeDatabase.at(i).at(12).parseToInt(nullptr, 16);}
@@ -246,6 +260,9 @@ void SGEXTN::InternalTest::StringTest::testUnicodeQuery(){
         int titlecase = i;
         if(unicodeDatabase.at(i).at(14) != ""){titlecase = unicodeDatabase.at(i).at(14).parseToInt(nullptr, 16);}
         if(titlecase != SGEXTN::ApplicationBase::UnicodeQuery::getTitlecase(i)){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::UnicodeQuery check titlecase fail");}
+        bool isWhitespace = false;
+        if(propertyListDatabase.at(i).contains("White_Space") == true){isWhitespace = true;}
+        if(isWhitespace != SGEXTN::ApplicationBase::UnicodeQuery::isWhitespace(i)){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::UnicodeQuery check whitespace fail");}
         SGEXTN::ApplicationBase::FullCharacterType fullType = SGEXTN::ApplicationBase::FullCharacterType::UnassignedCharacter;
         if(unicodeDatabase.at(i).at(2) != ""){fullType = parseFullType(unicodeDatabase.at(i).at(2));}
         if(fullType != SGEXTN::ApplicationBase::UnicodeQuery::getFullType(i)){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::UnicodeQuery get full type fail");}
@@ -289,7 +306,141 @@ void SGEXTN::InternalTest::StringTest::testUnicodeQuery(){
 }
 
 void SGEXTN::InternalTest::StringTest::testCharacter(){
-
+    if(SGEXTN::ApplicationBase::Character() != SGEXTN::ApplicationBase::Character(0x2665)){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character default value fail");}
+    if(SGEXTN::ApplicationBase::Character('A') != SGEXTN::ApplicationBase::Character(65)){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character constructor from char fail");}
+    if(SGEXTN::ApplicationBase::Character(reinterpret_cast<const char*>(u8"\u2665")) != SGEXTN::ApplicationBase::Character()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character constructor from C string fail");}
+    SGEXTN::ApplicationBase::Character a('a');
+    SGEXTN::ApplicationBase::Character b('b');
+    if(a == b){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character equality check fail");}
+    if(a != SGEXTN::ApplicationBase::Character(0x61)){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character inequality check fail");}
+    if(b < a){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character less than operator fail");}
+    if(a > b){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character more than operator fail");}
+    if(b <= a){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character less than or equal to operator fail");}
+    if(a >= b){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character more than or equal to operator fail");}
+    SGEXTN::ApplicationBase::Character c;
+    if(c.byteLength() != 3){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character check byte length fail");}
+    if(c.byteAt(2) != 0xa5){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character get byte at fail");}
+    c.byteAt(2) = 0xa6;
+    if(c != SGEXTN::ApplicationBase::Character(0x2666)){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character set byte at fail");}
+    if(a.baseToChar() != 'a'){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character convert to C++ char fail");}
+    if(SGEXTN::ApplicationBase::Character('0').isDigit() == false){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is digit base 10 fail for digit 0");}
+    if(SGEXTN::ApplicationBase::Character('5').isDigit() == false){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is digit base 10 fail for digit 5");}
+    if(SGEXTN::ApplicationBase::Character('a').isDigit() == true){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is digit base 10 fail for small letter a");}
+    if(SGEXTN::ApplicationBase::Character('A').isDigit() == true){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is digit base 10 fail for capital letter A");}
+    if(SGEXTN::ApplicationBase::Character('x').isDigit() == true){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is digit base 10 fail for small letter x");}
+    if(SGEXTN::ApplicationBase::Character('X').isDigit() == true){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is digit base 10 fail for capital letter X");}
+    if(SGEXTN::ApplicationBase::Character('/').isDigit() == true){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is digit base 10 fail for punctuation mark");}
+    if(SGEXTN::ApplicationBase::Character('0').isDigit(2) == false){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is digit base 2 fail for digit 0");}
+    if(SGEXTN::ApplicationBase::Character('5').isDigit(2) == true){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is digit base 2 fail for digit 5");}
+    if(SGEXTN::ApplicationBase::Character('a').isDigit(2) == true){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is digit base 2 fail for small letter a");}
+    if(SGEXTN::ApplicationBase::Character('A').isDigit(2) == true){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is digit base 2 fail for capital letter A");}
+    if(SGEXTN::ApplicationBase::Character('x').isDigit(2) == true){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is digit base 2 fail for small letter x");}
+    if(SGEXTN::ApplicationBase::Character('X').isDigit(2) == true){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is digit base 2 fail for capital letter X");}
+    if(SGEXTN::ApplicationBase::Character('/').isDigit(2) == true){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is digit base 2 fail for punctuation mark");}
+    if(SGEXTN::ApplicationBase::Character('0').isDigit(16) == false){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is digit base 16 fail for digit 0");}
+    if(SGEXTN::ApplicationBase::Character('5').isDigit(16) == false){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is digit base 16 fail for digit 5");}
+    if(SGEXTN::ApplicationBase::Character('a').isDigit(16) == false){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is digit base 16 fail for small letter a");}
+    if(SGEXTN::ApplicationBase::Character('A').isDigit(16) == false){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is digit base 16 fail for capital letter A");}
+    if(SGEXTN::ApplicationBase::Character('x').isDigit(16) == true){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is digit base 16 fail for small letter x");}
+    if(SGEXTN::ApplicationBase::Character('X').isDigit(16) == true){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is digit base 16 fail for capital letter X");}
+    if(SGEXTN::ApplicationBase::Character('/').isDigit(16) == true){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is digit base 16 fail for punctuation mark");}
+    if(SGEXTN::ApplicationBase::Character('0').isDigit(36) == false){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is digit base 36 fail for digit 0");}
+    if(SGEXTN::ApplicationBase::Character('5').isDigit(36) == false){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is digit base 36 fail for digit 5");}
+    if(SGEXTN::ApplicationBase::Character('a').isDigit(36) == false){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is digit base 36 fail for small letter a");}
+    if(SGEXTN::ApplicationBase::Character('A').isDigit(36) == false){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is digit base 36 fail for capital letter A");}
+    if(SGEXTN::ApplicationBase::Character('x').isDigit(36) == false){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is digit base 36 fail for small letter x");}
+    if(SGEXTN::ApplicationBase::Character('X').isDigit(36) == false){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is digit base 36 fail for capital letter X");}
+    if(SGEXTN::ApplicationBase::Character('/').isDigit(36) == true){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is digit base 36 fail for punctuation mark");}
+    if(SGEXTN::ApplicationBase::Character('0').isEnglishLowercase() == true){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is English lowercase fail for digit 0");}
+    if(SGEXTN::ApplicationBase::Character('5').isEnglishLowercase() == true){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is English lowercase fail for digit 5");}
+    if(SGEXTN::ApplicationBase::Character('a').isEnglishLowercase() == false){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is English lowercase fail for small letter a");}
+    if(SGEXTN::ApplicationBase::Character('A').isEnglishLowercase() == true){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is English lowercase fail for capital letter A");}
+    if(SGEXTN::ApplicationBase::Character('x').isEnglishLowercase() == false){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is English lowercase fail for small letter x");}
+    if(SGEXTN::ApplicationBase::Character('X').isEnglishLowercase() == true){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is English lowercase fail for capital letter X");}
+    if(SGEXTN::ApplicationBase::Character('/').isEnglishLowercase() == true){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is English lowercase fail for punctuation mark");}
+    if(SGEXTN::ApplicationBase::Character('0').isEnglishUppercase() == true){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is English uppercase fail for digit 0");}
+    if(SGEXTN::ApplicationBase::Character('5').isEnglishUppercase() == true){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is English uppercase fail for digit 5");}
+    if(SGEXTN::ApplicationBase::Character('a').isEnglishUppercase() == true){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is English uppercase fail for small letter a");}
+    if(SGEXTN::ApplicationBase::Character('A').isEnglishUppercase() == false){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is English uppercase fail for capital letter A");}
+    if(SGEXTN::ApplicationBase::Character('x').isEnglishUppercase() == true){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is English uppercase fail for small letter x");}
+    if(SGEXTN::ApplicationBase::Character('X').isEnglishUppercase() == false){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is English uppercase fail for capital letter X");}
+    if(SGEXTN::ApplicationBase::Character('/').isEnglishUppercase() == true){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is English uppercase fail for punctuation mark");}
+    if(SGEXTN::ApplicationBase::Character('0').isEnglishLetter() == true){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is English letter fail for digit 0");}
+    if(SGEXTN::ApplicationBase::Character('5').isEnglishLetter() == true){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is English letter fail for digit 5");}
+    if(SGEXTN::ApplicationBase::Character('a').isEnglishLetter() == false){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is English letter fail for small letter a");}
+    if(SGEXTN::ApplicationBase::Character('A').isEnglishLetter() == false){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is English letter fail for capital letter A");}
+    if(SGEXTN::ApplicationBase::Character('x').isEnglishLetter() == false){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is English letter fail for small letter x");}
+    if(SGEXTN::ApplicationBase::Character('X').isEnglishLetter() == false){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is English letter fail for capital letter X");}
+    if(SGEXTN::ApplicationBase::Character('/').isEnglishLetter() == true){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is English letter fail for punctuation mark");}
+    if(SGEXTN::ApplicationBase::Character('0').isEnglishAlphanumeric() == false){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is English alphanumeric fail for digit 0");}
+    if(SGEXTN::ApplicationBase::Character('5').isEnglishAlphanumeric() == false){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is English alphanumeric fail for digit 5");}
+    if(SGEXTN::ApplicationBase::Character('a').isEnglishAlphanumeric() == false){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is English alphanumeric fail for small letter a");}
+    if(SGEXTN::ApplicationBase::Character('A').isEnglishAlphanumeric() == false){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is English alphanumeric fail for capital letter A");}
+    if(SGEXTN::ApplicationBase::Character('x').isEnglishAlphanumeric() == false){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is English alphanumeric fail for small letter x");}
+    if(SGEXTN::ApplicationBase::Character('X').isEnglishAlphanumeric() == false){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is English alphanumeric fail for capital letter X");}
+    if(SGEXTN::ApplicationBase::Character('/').isEnglishAlphanumeric() == true){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is English alphanumeric fail for punctuation mark");}
+    if(SGEXTN::ApplicationBase::Character('0').isASCII() == false){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is ASCII fail for digit 0");}
+    if(SGEXTN::ApplicationBase::Character('5').isASCII() == false){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is ASCII fail for digit 5");}
+    if(SGEXTN::ApplicationBase::Character('a').isASCII() == false){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is ASCII fail for small letter a");}
+    if(SGEXTN::ApplicationBase::Character('A').isASCII() == false){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is ASCII fail for capital letter A");}
+    if(SGEXTN::ApplicationBase::Character('x').isASCII() == false){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is ASCII fail for small letter x");}
+    if(SGEXTN::ApplicationBase::Character('X').isASCII() == false){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is ASCII fail for capital letter X");}
+    if(SGEXTN::ApplicationBase::Character('/').isASCII() == false){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is ASCII fail for punctuation mark");}
+    if(SGEXTN::ApplicationBase::Character().isASCII() == true){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is ASCII fail for heart");}
+    if(SGEXTN::ApplicationBase::Character().isWhitespace() == true){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is whitespace fail for heart");}
+    if(SGEXTN::ApplicationBase::Character("A").isWhitespace() == true){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is whitespace fail for English letter");}
+    if(SGEXTN::ApplicationBase::Character(" ").isWhitespace() == false){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is whitespace fail for space");}
+    if(SGEXTN::ApplicationBase::Character("\t").isWhitespace() == false){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is whitespace fail for tab");}
+    if(SGEXTN::ApplicationBase::Character("\n").isWhitespace() == false){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is whitespace fail for newline");}
+    if(SGEXTN::ApplicationBase::Character(0x2003).isWhitespace() == false){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is whitespace fail for unicode space");}
+    SGEXTN::ApplicationBase::Character cWithTail(reinterpret_cast<const char*>(u8"\u0063\u0327"));
+    if(cWithTail.getBaseUnicode() != 0x63){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character get base unicode fail");}
+    SGEXTN::Containers::Array<int> codePoints = cWithTail.getUnicode();
+    if(codePoints.length() != 2 || codePoints.at(0) != 0x63 || codePoints.at(1) != 0x327){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character get unicode fail");}
+    if(SGEXTN::ApplicationBase::Character('a').isUppercase() == true){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is uppercase English lowercase fail");}
+    if(SGEXTN::ApplicationBase::Character('A').isUppercase() == false){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is uppercase English uppercase fail");}
+    if(SGEXTN::ApplicationBase::Character(0x03b1).isUppercase() == true){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is uppercase Greek lowercase fail");}
+    if(SGEXTN::ApplicationBase::Character(0x0391).isUppercase() == false){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is uppercase Greek uppercase fail");}
+    if(SGEXTN::ApplicationBase::Character(0x4e00).isUppercase() == true){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is uppercase Chinese letter fail");}
+    if(SGEXTN::ApplicationBase::Character(0x01c5).isUppercase() == true){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is uppercase Dz fail");}
+    if(SGEXTN::ApplicationBase::Character('a').isLowercase() == false){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is lowercase English lowercase fail");}
+    if(SGEXTN::ApplicationBase::Character('A').isLowercase() == true){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is lowercase English uppercase fail");}
+    if(SGEXTN::ApplicationBase::Character(0x03b1).isLowercase() == false){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is lowercase Greek lowercase fail");}
+    if(SGEXTN::ApplicationBase::Character(0x0391).isLowercase() == true){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is lowercase Greek uppercase fail");}
+    if(SGEXTN::ApplicationBase::Character(0x4e00).isLowercase() == true){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is lowercase Chinese letter fail");}
+    if(SGEXTN::ApplicationBase::Character(0x01c5).isLowercase() == true){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is lowercase Dz fail");}
+    if(SGEXTN::ApplicationBase::Character('a').isTitlecase() == true){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is titlecase English lowercase fail");}
+    if(SGEXTN::ApplicationBase::Character('A').isTitlecase() == true){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is titlecase English uppercase fail");}
+    if(SGEXTN::ApplicationBase::Character(0x03b1).isTitlecase() == true){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is titlecase Greek lowercase fail");}
+    if(SGEXTN::ApplicationBase::Character(0x0391).isTitlecase() == true){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is titlecase Greek uppercase fail");}
+    if(SGEXTN::ApplicationBase::Character(0x4e00).isTitlecase() == true){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is titlecase Chinese letter fail");}
+    if(SGEXTN::ApplicationBase::Character(0x01c5).isTitlecase() == false){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is titlecase Dz fail");}
+    if(SGEXTN::ApplicationBase::Character('a').getUppercase() != SGEXTN::ApplicationBase::Character('A')){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character get uppercase English lowercase fail");}
+    if(SGEXTN::ApplicationBase::Character('A').getUppercase() != SGEXTN::ApplicationBase::Character('A')){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character get uppercase English uppercase fail");}
+    if(SGEXTN::ApplicationBase::Character(0x03b1).getUppercase() != SGEXTN::ApplicationBase::Character(0x0391)){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character get uppercase Greek lowercase fail");}
+    if(SGEXTN::ApplicationBase::Character(0x0391).getUppercase() != SGEXTN::ApplicationBase::Character(0x0391)){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character get uppercase Greek uppercase fail");}
+    if(SGEXTN::ApplicationBase::Character(0x4e00).getUppercase() != SGEXTN::ApplicationBase::Character(0x4e00)){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character get uppercase Chinese letter fail");}
+    if(SGEXTN::ApplicationBase::Character(0x01c5).getUppercase() != SGEXTN::ApplicationBase::Character(0x01c4)){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character get uppercase Dz fail");}
+    if(SGEXTN::ApplicationBase::Character('a').getLowercase() != SGEXTN::ApplicationBase::Character('a')){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character get lowercase English lowercase fail");}
+    if(SGEXTN::ApplicationBase::Character('A').getLowercase() != SGEXTN::ApplicationBase::Character('a')){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character get lowercase English uppercase fail");}
+    if(SGEXTN::ApplicationBase::Character(0x03b1).getLowercase() != SGEXTN::ApplicationBase::Character(0x03b1)){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character get lowercase Greek lowercase fail");}
+    if(SGEXTN::ApplicationBase::Character(0x0391).getLowercase() != SGEXTN::ApplicationBase::Character(0x03b1)){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character get lowercase Greek uppercase fail");}
+    if(SGEXTN::ApplicationBase::Character(0x4e00).getLowercase() != SGEXTN::ApplicationBase::Character(0x4e00)){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character get lowercase Chinese letter fail");}
+    if(SGEXTN::ApplicationBase::Character(0x01c5).getLowercase() != SGEXTN::ApplicationBase::Character(0x01c6)){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character get lowercase Dz fail");}
+    if(SGEXTN::ApplicationBase::Character('a').getTitlecase() != SGEXTN::ApplicationBase::Character('A')){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character get titlecase English lowercase fail");}
+    if(SGEXTN::ApplicationBase::Character('A').getTitlecase() != SGEXTN::ApplicationBase::Character('A')){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character get titlecase English uppercase fail");}
+    if(SGEXTN::ApplicationBase::Character(0x03b1).getTitlecase() != SGEXTN::ApplicationBase::Character(0x0391)){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character get titlecase Greek lowercase fail");}
+    if(SGEXTN::ApplicationBase::Character(0x0391).getTitlecase() != SGEXTN::ApplicationBase::Character(0x0391)){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character get titlecase Greek uppercase fail");}
+    if(SGEXTN::ApplicationBase::Character(0x4e00).getTitlecase() != SGEXTN::ApplicationBase::Character(0x4e00)){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character get titlecase Chinese letter fail");}
+    if(SGEXTN::ApplicationBase::Character(0x01c5).getTitlecase() != SGEXTN::ApplicationBase::Character(0x01c5)){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character get titlecase Dz fail");}
+    if(SGEXTN::ApplicationBase::Character('0').getDecimalDigitValue() != 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character get decimal digit value digit zero fail");}
+    if(SGEXTN::ApplicationBase::Character(0x0be6).getDecimalDigitValue() != 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character get decimal digit value Tamil digit zero fail");}
+    if(SGEXTN::ApplicationBase::Character(' ').getDecimalDigitValue() != -1){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character get decimal digit value space fail");}
+    if(SGEXTN::ApplicationBase::Character(0xbd).getDecimalDigitValue() != -1){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character get decimal digit value half fraction fail");}
+    if(SGEXTN::ApplicationBase::Character('0').getNumericalValue() != 0.0f){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character get numerical value digit zero fail");}
+    if(SGEXTN::ApplicationBase::Character(0x0be6).getNumericalValue() != 0.0f){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character get numerical value Tamil digit zero fail");}
+    if(SGEXTN::ApplicationBase::Character(' ').getNumericalValue() != SGEXTN::Math::FloatLimits<float>::negativeInfinity()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character get numerical value space fail");}
+    if(SGEXTN::ApplicationBase::Character(0xbd).getNumericalValue() != 0.5f){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character get numerical value half fraction fail");}
 }
 
 void SGEXTN::InternalTest::StringTest::testString(){
