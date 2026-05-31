@@ -7955,6 +7955,7 @@ SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::UnicodeQuery::getEquivD
 }
 
 SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::UnicodeQuery::getCompatDecomposition(int c){
+    if(getEquivDecomp(c) != ""){return getEquivDecomp(c);}
     return getCompatDecomp(c);
 }
 

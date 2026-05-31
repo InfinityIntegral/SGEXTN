@@ -8,6 +8,7 @@ public:
     static void testUnicodeQuery();
     static void testCharacter();
     static void testString();
+    static void runExternalTests();
 };
 }
 }

@@ -143,7 +143,7 @@ bool parseStringToFloatingPoint(const SGEXTN::ApplicationBase::String& s, int ba
     if(end != -1){
         bool exponentIsValid = false;
         int exponent = 0;
-        exponentIsValid = parseScientificNotationExponent(s.substringCharactersRight(s.characterLength() - end - 1), base, exponent);
+        exponentIsValid = parseScientificNotationExponent(s.substringCharactersRight(s.characterLength() - end - 1), 10, exponent);
         if(exponentIsValid == false){return false;}
         additionalExponent += exponent;
     }
@@ -603,16 +603,18 @@ void SGEXTN::ApplicationBase::String::setCharacterAt(int i, const SGEXTN::Applic
     if(i < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::setCharacterAt crashed because index is negative");}
     if(i >= characterLength()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::setCharacterAt crashed because index points beyond the end of the string");}
     private_computeOffsets();
-    if(private_characterOffsets.at(i + 1) - private_characterOffsets.at(i) == c.byteLength()){
-        for(int j=private_characterOffsets.at(i); j<private_characterOffsets.at(i + 1); j++){
-            byteAt(private_characterOffsets.at(i) + j) = c.byteAt(j);
+    int rangeBegin = private_characterOffsets.at(i);
+    int rangeEnd = private_characterOffsets.at(i + 1);
+    if(rangeEnd - rangeBegin == c.byteLength()){
+        for(int j=rangeBegin; j<rangeEnd; j++){
+            byteAt(j) = c.byteAt(j - rangeBegin);
         }
     }
     else{
         SGEXTN::ApplicationBase::TextBuffer newBuffer;
-        newBuffer.pushBack(private_data, 0, private_characterOffsets.at(i));
+        newBuffer.pushBack(private_data, 0, rangeBegin);
         newBuffer.pushBack(c.private_data, 0, c.byteLength());
-        newBuffer.pushBack(private_data, private_characterOffsets.at(i + 1), byteLength() - private_characterOffsets.at(i + 1));
+        newBuffer.pushBack(private_data, rangeEnd, byteLength() - rangeEnd);
         private_data = newBuffer;
     }
     private_invalidateOffsets();
@@ -1244,28 +1246,18 @@ bool SGEXTN::ApplicationBase::String::isWhitespace() const {
 }
 
 bool SGEXTN::ApplicationBase::String::isUppercase() const {
-    for(int i=0; i<characterLength(); i++){
-        if(getCharacterAt(i).isUppercase() == false){return false;}
-    }
-    return true;
+    return ((*this) == getUppercase());
 }
 
 bool SGEXTN::ApplicationBase::String::isLowercase() const {
-    for(int i=0; i<characterLength(); i++){
-        if(getCharacterAt(i).isLowercase() == false){return false;}
-    }
-    return true;
+    return ((*this) == getLowercase());
 }
 
 bool SGEXTN::ApplicationBase::String::isTitlecase() const {
-    for(int i=0; i<characterLength(); i++){
-        if(getCharacterAt(i).isTitlecase() == false){return false;}
-    }
-    return true;
+    return ((*this) == getTitlecase());
 }
 
 SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::getUppercase() const {
-    if(isUppercase()){return (*this);}
     SGEXTN::ApplicationBase::String output;
     for(int i=0; i<characterLength(); i++){
         output += getCharacterAt(i).getUppercase();
@@ -1274,7 +1266,6 @@ SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::getUppercase() 
 }
 
 SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::getLowercase() const {
-    if(isLowercase()){return (*this);}
     SGEXTN::ApplicationBase::String output;
     for(int i=0; i<characterLength(); i++){
         output += getCharacterAt(i).getLowercase();
@@ -1283,7 +1274,6 @@ SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::getLowercase() 
 }
 
 SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::getTitlecase() const {
-    if(isTitlecase()){return (*this);}
     SGEXTN::ApplicationBase::String output;
     for(int i=0; i<characterLength(); i++){
         output += getCharacterAt(i).getTitlecase();
@@ -1316,9 +1306,9 @@ SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::getNormalised(S
 }
 
 SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::getSimplestEquivalent(bool ignoreCase) const {
-    SGEXTN::Containers::Array<int> codePoints;
-    if(ignoreCase == false){codePoints = cleanWhitespace().getNormalised(SGEXTN::ApplicationBase::NormalisationFormat::LossySeparate).getUnicode();}
-    else{codePoints = cleanWhitespace().getLowercase().getNormalised(SGEXTN::ApplicationBase::NormalisationFormat::LossySeparate).getUnicode();}
+    SGEXTN::ApplicationBase::String normalisedString = cleanWhitespace().getNormalised(SGEXTN::ApplicationBase::NormalisationFormat::LossySeparate);
+    if(ignoreCase == true){normalisedString = normalisedString.getLowercase();}
+    SGEXTN::Containers::Array<int> codePoints = normalisedString.getUnicode();
     SGEXTN::ApplicationBase::String output;
     for(int i=0; i<codePoints.length(); i++){
         const SGEXTN::ApplicationBase::SimplifiedCharacterType simplifiedType = SGEXTN::ApplicationBase::UnicodeQuery::getSimplifiedType(codePoints.at(i));
