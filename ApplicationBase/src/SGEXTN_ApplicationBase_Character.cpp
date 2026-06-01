@@ -43,6 +43,8 @@ SGEXTN::ApplicationBase::Character::Character(){
 }
 
 SGEXTN::ApplicationBase::Character::Character(char c){
+    unsigned char uc = static_cast<unsigned char>(c);
+    if(uc > 0x7f){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String constructor crashed because the given char does not represent a valid ASCII character");}
     private_data.pushBack(c);
 }
 
@@ -173,29 +175,44 @@ SGEXTN::Containers::Array<int> SGEXTN::ApplicationBase::Character::getUnicode() 
             i++;
         }
         else if((byteAt(i) & 0xE0) == 0xC0){
+            if(i + 1 >= byteLength()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character::getUnicode crashed due to incomplete 2 byte character");}
             int unicode = 0;
             unicode += (static_cast<int>(byteAt(i) & 0x1f) << 6);
+            if((byteAt(i + 1) & 0xC0) != 0x80){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character::getUnicode crashed due to invalid continuation byte in 2 byte character");}
             unicode += static_cast<int>(byteAt(i + 1) & 0x3f);
+            if(unicode < 0x80){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character::getUnicode crashed due to 2 byte overlong character");}
             output.pushBack(unicode);
             i += 2;
         }
         else if((byteAt(i) & 0xF0) == 0xE0){
+            if(i + 2 >= byteLength()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character::getUnicode crashed due to incomplete 3 byte character");}
             int unicode = 0;
             unicode += (static_cast<int>(byteAt(i) & 0x0f) << 12);
+            if((byteAt(i + 1) & 0xC0) != 0x80){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character::getUnicode crashed due to invalid first continuation byte in 3 byte character");}
             unicode += (static_cast<int>(byteAt(i + 1) & 0x3f) << 6);
+            if((byteAt(i + 2) & 0xC0) != 0x80){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character::getUnicode crashed due to invalid second continuation byte in 3 byte character");}
             unicode += static_cast<int>(byteAt(i + 2) & 0x3f);
+            if(unicode < 0x800){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character::getUnicode crashed due to 3 byte overlong character");}
+            if(unicode >= 0xd800 && unicode <= 0xdfff){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character::getUnicode crashed due to invalid 3 byte character");}
             output.pushBack(unicode);
             i += 3;
         }
-        else{
+        else if((byteAt(i) & 0xF8) == 0xF0){
+            if(i + 3 >= byteLength()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character::getUnicode crashed due to incomplete 4 byte character");}
             int unicode = 0;
             unicode += (static_cast<int>(byteAt(i) & 0x07) << 18);
+            if((byteAt(i + 1) & 0xC0) != 0x80){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character::getUnicode crashed due to invalid first continuation byte in 4 byte character");}
             unicode += (static_cast<int>(byteAt(i + 1) & 0x3f) << 12);
+            if((byteAt(i + 2) & 0xC0) != 0x80){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character::getUnicode crashed due to invalid second continuation byte in 4 byte character");}
             unicode += (static_cast<int>(byteAt(i + 2) & 0x3f) << 6);
+            if((byteAt(i + 3) & 0xC0) != 0x80){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character::getUnicode crashed due to invalid third continuation byte in 4 byte character");}
             unicode += static_cast<int>(byteAt(i + 3) & 0x3f);
+            if(unicode < 0x10000){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character::getUnicode crashed due to 4 byte overlong character");}
+            if(unicode > 0x10ffff){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character::getUnicode crashed due to 4 byte invalid character");}
             output.pushBack(unicode);
             i += 4;
         }
+        else{SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character::getUnicode crashed due to invalid character");}
     }
     SGEXTN::Containers::Array<int> outputArray(output.length());
     for(int j=0; j<output.length(); j++){
