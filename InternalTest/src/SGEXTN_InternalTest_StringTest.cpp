@@ -10,9 +10,14 @@
 #include <SGEXTN_Containers_UnorderedSet.h>
 #include <SGEXTN_Containers_EqualTo.h>
 #include <SGEXTN_Containers_Hash.h>
+#include <SGEXTN_Containers_Pair.h>
+#include <SGEXTN_Math_FloatMath.h>
+#include <QString>
 
 namespace {
 bool testAllOfUnicode = false;
+bool testUnicodeExternal = false;
+bool testNumericParsingExternal = false;
 
 SGEXTN::ApplicationBase::String readFile(const SGEXTN::ApplicationBase::String& filePath){
     if(filePath == ""){return "";}
@@ -52,6 +57,18 @@ void fillUnicodeDatabase(){
             for(int j=0; j<15; j++){
                 unicodeDatabase.at(codePoint).at(j) = fields.at(j);
             }
+        }
+    }
+    for(int first=0x1100; first<0x1113; first++){
+        for(int second=0x1161; second<0x1176; second++){
+            int combined = 0xac00 + 28 * (21 * (first - 0x1100) + (second - 0x1161));
+            unicodeDatabase.at(combined).at(5) = SGEXTN::ApplicationBase::String::stringFromInt(first, 16) + " " + SGEXTN::ApplicationBase::String::stringFromInt(second, 16);
+        }
+    }
+    for(int first=0xac00; first<0xd7a4; first+=28){
+        for(int second=0x11a8; second<0x11c3; second++){
+            int combined = first + (second - 0x11a7);
+            unicodeDatabase.at(combined).at(5) = SGEXTN::ApplicationBase::String::stringFromInt(first, 16) + " " + SGEXTN::ApplicationBase::String::stringFromInt(second, 16);
         }
     }
 }
@@ -234,12 +251,153 @@ void appendToPropertyListDatabase(int j, const SGEXTN::ApplicationBase::String& 
 void fillPropertyListDatabase(){
     parseAuxillaryFile("proplist", &appendToPropertyListDatabase);
 }
+
+SGEXTN::Containers::Vector<SGEXTN::Containers::Array<SGEXTN::ApplicationBase::String>> normalisationTestDatabase;
+
+void fillNormalisationTestDatabase(){
+    SGEXTN::ApplicationBase::String dataString = readFile(":/SGEXTN_InternalTest/normalisationtest.txt");
+    SGEXTN::Containers::Array<SGEXTN::ApplicationBase::String> dataTable = dataString.split('\n');
+    for(int i=0; i<dataTable.length(); i++){
+        if(dataTable.at(i).findFirstCharactersFromLeft('#') == -1){continue;}
+        SGEXTN::ApplicationBase::String thisTest = dataTable.at(i).substringCharactersLeft(dataTable.at(i).findFirstCharactersFromLeft('#'));
+        SGEXTN::Containers::Array<SGEXTN::ApplicationBase::String> testData = thisTest.split(';');
+        if(testData.length() < 5){continue;}
+        SGEXTN::ApplicationBase::String c1 = parseCodePointList(testData.at(0));
+        SGEXTN::ApplicationBase::String c2 = parseCodePointList(testData.at(1));
+        SGEXTN::ApplicationBase::String c3 = parseCodePointList(testData.at(2));
+        SGEXTN::ApplicationBase::String c4 = parseCodePointList(testData.at(3));
+        SGEXTN::ApplicationBase::String c5 = parseCodePointList(testData.at(4));
+        normalisationTestDatabase.pushBack(SGEXTN::Containers::Array<SGEXTN::ApplicationBase::String>(c1, c2, c3, c4, c5));
+    }
+}
+
+SGEXTN::Containers::Vector<SGEXTN::Containers::Pair<SGEXTN::ApplicationBase::String, SGEXTN::ApplicationBase::String>> graphemeBoundaryTestDatabase;
+
+void fillGraphemeBoundaryTestDatabase(){
+    SGEXTN::ApplicationBase::String dataString = readFile(":/SGEXTN_InternalTest/graphemebreaktest.txt");
+    SGEXTN::Containers::Array<SGEXTN::ApplicationBase::String> dataTable = dataString.split('\n');
+    for(int i=0; i<dataTable.length(); i++){
+        if(dataTable.at(i).findFirstCharactersFromLeft('#') == -1){continue;}
+        SGEXTN::ApplicationBase::String thisTest = dataTable.at(i).substringCharactersLeft(dataTable.at(i).findFirstCharactersFromLeft('#')).removeLeadingTrailingWhitespace();
+        if(thisTest == ""){continue;}
+        SGEXTN::Containers::Array<SGEXTN::ApplicationBase::String> characters = thisTest.split(' ');
+        SGEXTN::ApplicationBase::String originalString;
+        for(int j=0; j<characters.length(); j++){
+            bool isValid = false;
+            int codePoint = characters.at(j).parseToInt(&isValid, 16);
+            if(isValid == true){originalString += SGEXTN::ApplicationBase::Character(codePoint);}
+        }
+        graphemeBoundaryTestDatabase.pushBack(SGEXTN::Containers::Pair<SGEXTN::ApplicationBase::String, SGEXTN::ApplicationBase::String>(originalString, thisTest));
+    }
+}
+
+bool isCloseEnough(float a, float b){
+    if(a < -0.0001 && 1.0001 * a <= b && 0.9999 * a >= b){return true;}
+    if(a > 0.0001 && 1.0001 * a >= b && 0.9999 * a <= b){return true;}
+    if(b >= a - 0.0001 && b <= a + 0.0001){return true;}
+    return false;
+}
+
+SGEXTN::Containers::Vector<SGEXTN::ApplicationBase::String> numericParsingTestsDatabase;
+int numericParsingTestsDatabaseUniqueFloatLength = 0;
+
+void fillNumericParsingTestsDatabase(){
+    SGEXTN::ApplicationBase::String dataString = readFile(":/SGEXTN_InternalTest/nigeltaotencentrapidjson.txt");
+    SGEXTN::Containers::Array<SGEXTN::ApplicationBase::String> dataTable = dataString.split('\n');
+    for(int i=0; i<dataTable.length(); i++){
+        SGEXTN::Containers::Array<SGEXTN::ApplicationBase::String> thisTest = dataTable.at(i).split(' ');
+        if(thisTest.length() != 4){continue;}
+        numericParsingTestsDatabase.pushBack(thisTest.at(3));
+    }
+    int databaseLength = numericParsingTestsDatabase.length();
+    for(int i=0; i<databaseLength; i++){
+        numericParsingTestsDatabase.pushBack(SGEXTN::ApplicationBase::String('-') + numericParsingTestsDatabase.at(i));
+    }
+    numericParsingTestsDatabaseUniqueFloatLength = numericParsingTestsDatabase.length();
+    for(int i=0; i<databaseLength; i++){
+        numericParsingTestsDatabase.pushBack(SGEXTN::ApplicationBase::String('+') + numericParsingTestsDatabase.at(i));
+        numericParsingTestsDatabase.pushBack(SGEXTN::ApplicationBase::String("00000") + numericParsingTestsDatabase.at(i));
+        numericParsingTestsDatabase.pushBack(SGEXTN::ApplicationBase::String("+00000") + numericParsingTestsDatabase.at(i));
+        numericParsingTestsDatabase.pushBack(SGEXTN::ApplicationBase::String("-00000") + numericParsingTestsDatabase.at(i));
+        numericParsingTestsDatabase.pushBack(numericParsingTestsDatabase.at(i) + ".00000");
+        numericParsingTestsDatabase.pushBack(SGEXTN::ApplicationBase::String('-') + numericParsingTestsDatabase.at(i) + ".00000");
+        numericParsingTestsDatabase.pushBack(SGEXTN::ApplicationBase::String('+') + numericParsingTestsDatabase.at(i) + ".00000");
+        numericParsingTestsDatabase.pushBack(SGEXTN::ApplicationBase::String("00000") + numericParsingTestsDatabase.at(i) + ".00000");
+        numericParsingTestsDatabase.pushBack(SGEXTN::ApplicationBase::String("+00000") + numericParsingTestsDatabase.at(i) + ".00000");
+        numericParsingTestsDatabase.pushBack(SGEXTN::ApplicationBase::String("-00000") + numericParsingTestsDatabase.at(i) + ".00000");
+    }
+}
+
+QString stringSGToQ(const SGEXTN::ApplicationBase::String& s){
+    return QString::fromUtf8(reinterpret_cast<const char*>(&s.private_data.byteAt(0)), s.byteLength());
+}
+
+SGEXTN::ApplicationBase::String stringQToSG(const QString& s){
+    return SGEXTN::ApplicationBase::String(s.toUtf8().constData());
+}
+
+bool isNumericalDigit(const SGEXTN::ApplicationBase::Character& c){
+    return (c != '+' && c != '-' && c != '.');
+}
+
+void countSignificantFigures(int& minimum, int& maximum, const SGEXTN::ApplicationBase::String& s, int base){
+    int firstSignificant = -1;
+    int maximumLastSignificant = -1;
+    int minimumLastSignificant = -1;
+    for(int i=0; i<s.characterLength(); i++){
+        if(isNumericalDigit(s.getCharacterAt(i)) == true && s.getCharacterAt(i) != '0'){
+            firstSignificant = i;
+            break;
+        }
+    }
+    if(s.containsCharacters('.') == true){
+        minimumLastSignificant = s.characterLength() - 1;
+        maximumLastSignificant = s.characterLength() - 1;
+    }
+    else{
+        maximumLastSignificant = s.characterLength() - 1;
+        for(int i=s.characterLength()-1; i>=0; i--){
+            if(isNumericalDigit(s.getCharacterAt(i)) == true && s.getCharacterAt(i) != '0'){
+                minimumLastSignificant = i;
+                break;
+            }
+        }
+    }
+    minimum = 0;
+    maximum = 0;
+    if(firstSignificant == -1){firstSignificant = 0;}
+    for(int i=firstSignificant; i<=minimumLastSignificant; i++){
+        if(isNumericalDigit(s.getCharacterAt(i)) == true){minimum++;}
+    }
+    for(int i=firstSignificant; i<=maximumLastSignificant; i++){
+        if(isNumericalDigit(s.getCharacterAt(i)) == true){maximum++;}
+    }
+}
+
+void countDecimalPlaces(int& minimum, int& maximum, const SGEXTN::ApplicationBase::String& s, int base){
+    if(s.containsCharacters('.') == true){
+        minimum = s.characterLength() - 1 - s.findFirstCharactersFromRight('.');
+        maximum = minimum;
+    }
+    else{
+        maximum = 0;
+        int zeroCount = 0;
+        for(int i=s.characterLength()-1; i>=0; i--){
+            if(s.getCharacterAt(i) == '0'){zeroCount++;}
+            else{break;}
+        }
+        minimum = (-1) * zeroCount;
+    }
+    if(minimum == (-1) * s.characterLength()){minimum = -1000;}
+}
 }
 
 void SGEXTN::InternalTest::StringTest::testAll(){
     SGEXTN::InternalTest::StringTest::testUnicodeQuery();
     SGEXTN::InternalTest::StringTest::testCharacter();
     SGEXTN::InternalTest::StringTest::testString();
+    SGEXTN::InternalTest::StringTest::runExternalUnicodeTests();
+    SGEXTN::InternalTest::StringTest::runExternalNumericParsingTests();
 }
 
 void SGEXTN::InternalTest::StringTest::testUnicodeQuery(){
@@ -287,23 +445,21 @@ void SGEXTN::InternalTest::StringTest::testUnicodeQuery(){
         int combiningMarkOrder = 0;
         if(unicodeDatabase.at(i).at(3) != ""){combiningMarkOrder = unicodeDatabase.at(i).at(3).parseToInt(nullptr, 10);}
         if(combiningMarkOrder != SGEXTN::ApplicationBase::UnicodeQuery::getCombiningMarkOrder(i)){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::UnicodeQuery get combining mark order fail");}
-        if(i < 0xac00 || i > 0xd7a3){
-            SGEXTN::ApplicationBase::String equivDecompose = "";
-            if(unicodeDatabase.at(i).at(5) != "" && unicodeDatabase.at(i).at(5).containsCharacters('>') == false){equivDecompose = parseCodePointList(unicodeDatabase.at(i).at(5));}
-            if(equivDecompose != SGEXTN::ApplicationBase::UnicodeQuery::getEquivDecomposition(i)){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::UnicodeQuery get equivalent decomposition fail");}
-            SGEXTN::ApplicationBase::String compatDecompose = "";
-            if(unicodeDatabase.at(i).at(5) != ""){
-                if(unicodeDatabase.at(i).at(5).containsCharacters('>') == true){compatDecompose = parseCodePointList(unicodeDatabase.at(i).at(5).substringCharactersRight(unicodeDatabase.at(i).at(5).characterLength() - 1 - unicodeDatabase.at(i).at(5).findFirstCharactersFromLeft('>')).removeLeadingTrailingWhitespace());}
-                else{compatDecompose = parseCodePointList(unicodeDatabase.at(i).at(5));}
-            }
-            if(compatDecompose != SGEXTN::ApplicationBase::UnicodeQuery::getCompatDecomposition(i)){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::UnicodeQuery get compatibility decomposition fail");}
-            SGEXTN::Containers::Array<int> equivDecompCodePoints = equivDecompose.getUnicode();
-            if(equivDecompCodePoints.length() == 2){
-                int recomposedCodePoint = i;
-                if(combiningMarkOrder != 0 || SGEXTN::ApplicationBase::UnicodeQuery::getCombiningMarkOrder(equivDecompCodePoints.at(0)) != 0){recomposedCodePoint = -1;}
-                if(recomposeExclusionDatabase.at(i) == true){recomposedCodePoint = -1;}
-                if(recomposedCodePoint != SGEXTN::ApplicationBase::UnicodeQuery::getBinaryRecomposition(equivDecompCodePoints.at(0), equivDecompCodePoints.at(1))){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::UnicodeQuery get unicode binary recomposition fail");}
-            }
+        SGEXTN::ApplicationBase::String equivDecompose = "";
+        if(unicodeDatabase.at(i).at(5) != "" && unicodeDatabase.at(i).at(5).containsCharacters('>') == false){equivDecompose = parseCodePointList(unicodeDatabase.at(i).at(5));}
+        if(equivDecompose != SGEXTN::ApplicationBase::UnicodeQuery::getEquivDecomposition(i)){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::UnicodeQuery get equivalent decomposition fail");}
+        SGEXTN::ApplicationBase::String compatDecompose = "";
+        if(unicodeDatabase.at(i).at(5) != ""){
+            if(unicodeDatabase.at(i).at(5).containsCharacters('>') == true){compatDecompose = parseCodePointList(unicodeDatabase.at(i).at(5).substringCharactersRight(unicodeDatabase.at(i).at(5).characterLength() - 1 - unicodeDatabase.at(i).at(5).findFirstCharactersFromLeft('>')).removeLeadingTrailingWhitespace());}
+            else{compatDecompose = parseCodePointList(unicodeDatabase.at(i).at(5));}
+        }
+        if(compatDecompose != SGEXTN::ApplicationBase::UnicodeQuery::getCompatDecomposition(i)){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::UnicodeQuery get compatibility decomposition fail");}
+        SGEXTN::Containers::Array<int> equivDecompCodePoints = equivDecompose.getUnicode();
+        if(equivDecompCodePoints.length() == 2){
+            int recomposedCodePoint = i;
+            if(combiningMarkOrder != 0 || SGEXTN::ApplicationBase::UnicodeQuery::getCombiningMarkOrder(equivDecompCodePoints.at(0)) != 0){recomposedCodePoint = -1;}
+            if(recomposeExclusionDatabase.at(i) == true){recomposedCodePoint = -1;}
+            if(recomposedCodePoint != SGEXTN::ApplicationBase::UnicodeQuery::getBinaryRecomposition(equivDecompCodePoints.at(0), equivDecompCodePoints.at(1))){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::UnicodeQuery get unicode binary recomposition fail");}
         }
     }
 }
@@ -613,8 +769,8 @@ void SGEXTN::InternalTest::StringTest::testString(){
     if(invalidNumber.parseToUnsignedLongLong(nullptr, 10) != 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String parse invalid number to unsigned long long no success flag fail");}
     positiveBase10Number = "10.5";
     negativeBase10Number = "-010.500";
-    SGEXTN::ApplicationBase::String positiveScientificNotation = "5e-1";
-    SGEXTN::ApplicationBase::String negativeScientificNotation = "-5.0e-01";
+    SGEXTN::ApplicationBase::String positiveScientificNotation = "5^-1";
+    SGEXTN::ApplicationBase::String negativeScientificNotation = "-5.0^-01";
     positiveBase16Number = "a.8";
     negativeBase16Number = "-0a.80";
     positiveNonLatinNumber = U8("\u0be6\u002e\u0beb");
@@ -684,10 +840,10 @@ void SGEXTN::InternalTest::StringTest::testString(){
     if(SGEXTN::ApplicationBase::String::stringFromFloat(-31.0f / 3.0f, 10, SGEXTN::ApplicationBase::FloatPrecisionFormat::SignificantFigure, 3) != "-10.3"){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String print float significant figures mode negative base 10 fail");}
     if(SGEXTN::ApplicationBase::String::stringFromFloat(31.0f / 3.0f, 16, SGEXTN::ApplicationBase::FloatPrecisionFormat::SignificantFigure, 3) != "a.55"){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String print float significant figures mode positive base 16 fail");}
     if(SGEXTN::ApplicationBase::String::stringFromFloat(-31.0f / 3.0f, 16, SGEXTN::ApplicationBase::FloatPrecisionFormat::SignificantFigure, 3) != "-a.55"){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String print float significant figures mode negative base 16 fail");}
-    if(SGEXTN::ApplicationBase::String::stringFromFloat(31.0f / 3.0f, 10, SGEXTN::ApplicationBase::FloatPrecisionFormat::ScientificNotation, 3) != "1.03e+01"){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String print float scientific notation mode positive base 10 fail");}
-    if(SGEXTN::ApplicationBase::String::stringFromFloat(-1.0f / 3.0f, 10, SGEXTN::ApplicationBase::FloatPrecisionFormat::ScientificNotation, 3) != "-3.33e-01"){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String print float scientific notation mode negative base 10 fail");}
-    if(SGEXTN::ApplicationBase::String::stringFromFloat(31.0f / 3.0f, 16, SGEXTN::ApplicationBase::FloatPrecisionFormat::ScientificNotation, 3) != "a.55e+00"){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String print float scientific notation mode positive base 16 fail");}
-    if(SGEXTN::ApplicationBase::String::stringFromFloat(-1.0f / 3.0f, 16, SGEXTN::ApplicationBase::FloatPrecisionFormat::ScientificNotation, 3) != "-5.55e-01"){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String print float scientific notation mode negative base 16 fail");}
+    if(SGEXTN::ApplicationBase::String::stringFromFloat(31.0f / 3.0f, 10, SGEXTN::ApplicationBase::FloatPrecisionFormat::ScientificNotation, 3) != "1.03^1"){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String print float scientific notation mode positive base 10 fail");}
+    if(SGEXTN::ApplicationBase::String::stringFromFloat(-1.0f / 3.0f, 10, SGEXTN::ApplicationBase::FloatPrecisionFormat::ScientificNotation, 3) != "-3.33^-1"){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String print float scientific notation mode negative base 10 fail");}
+    if(SGEXTN::ApplicationBase::String::stringFromFloat(31.0f / 3.0f, 16, SGEXTN::ApplicationBase::FloatPrecisionFormat::ScientificNotation, 3) != "a.55^0"){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String print float scientific notation mode positive base 16 fail");}
+    if(SGEXTN::ApplicationBase::String::stringFromFloat(-1.0f / 3.0f, 16, SGEXTN::ApplicationBase::FloatPrecisionFormat::ScientificNotation, 3) != "-5.55^-1"){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String print float scientific notation mode negative base 16 fail");}
     if(SGEXTN::ApplicationBase::String::stringFromDouble(31.0f / 3.0f, 10, SGEXTN::ApplicationBase::FloatPrecisionFormat::DecimalPlace, 3) != "10.333"){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String print double decimal place mode positive base 10 fail");}
     if(SGEXTN::ApplicationBase::String::stringFromDouble(-31.0f / 3.0f, 10, SGEXTN::ApplicationBase::FloatPrecisionFormat::DecimalPlace, 3) != "-10.333"){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String print double decimal place mode negative base 10 fail");}
     if(SGEXTN::ApplicationBase::String::stringFromDouble(31.0f / 3.0f, 16, SGEXTN::ApplicationBase::FloatPrecisionFormat::DecimalPlace, 3) != "a.555"){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String print double decimal place mode positive base 16 fail");}
@@ -696,11 +852,11 @@ void SGEXTN::InternalTest::StringTest::testString(){
     if(SGEXTN::ApplicationBase::String::stringFromDouble(-31.0f / 3.0f, 10, SGEXTN::ApplicationBase::FloatPrecisionFormat::SignificantFigure, 3) != "-10.3"){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String print double significant figures mode negative base 10 fail");}
     if(SGEXTN::ApplicationBase::String::stringFromDouble(31.0f / 3.0f, 16, SGEXTN::ApplicationBase::FloatPrecisionFormat::SignificantFigure, 3) != "a.55"){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String print double significant figures mode positive base 16 fail");}
     if(SGEXTN::ApplicationBase::String::stringFromDouble(-31.0f / 3.0f, 16, SGEXTN::ApplicationBase::FloatPrecisionFormat::SignificantFigure, 3) != "-a.55"){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String print double significant figures mode negative base 16 fail");}
-    if(SGEXTN::ApplicationBase::String::stringFromDouble(31.0f / 3.0f, 10, SGEXTN::ApplicationBase::FloatPrecisionFormat::ScientificNotation, 3) != "1.03e+01"){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String print double scientific notation mode positive base 10 fail");}
-    if(SGEXTN::ApplicationBase::String::stringFromDouble(-1.0f / 3.0f, 10, SGEXTN::ApplicationBase::FloatPrecisionFormat::ScientificNotation, 3) != "-3.33e-01"){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String print double scientific notation mode negative base 10 fail");}
-    if(SGEXTN::ApplicationBase::String::stringFromDouble(31.0f / 3.0f, 16, SGEXTN::ApplicationBase::FloatPrecisionFormat::ScientificNotation, 3) != "a.55e+00"){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String print double scientific notation mode positive base 16 fail");}
-    if(SGEXTN::ApplicationBase::String::stringFromDouble(-1.0f / 3.0f, 16, SGEXTN::ApplicationBase::FloatPrecisionFormat::ScientificNotation, 3) != "-5.55e-01"){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String print double scientific notation mode negative base 16 fail");}
-    if(SGEXTN::ApplicationBase::String("-1.23e+09").prettierScientificNotation() != U8("-1.23\u00d710\u2079")){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String make scientific notation prettier fail");}
+    if(SGEXTN::ApplicationBase::String::stringFromDouble(31.0f / 3.0f, 10, SGEXTN::ApplicationBase::FloatPrecisionFormat::ScientificNotation, 3) != "1.03^1"){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String print double scientific notation mode positive base 10 fail");}
+    if(SGEXTN::ApplicationBase::String::stringFromDouble(-1.0f / 3.0f, 10, SGEXTN::ApplicationBase::FloatPrecisionFormat::ScientificNotation, 3) != "-3.33^-1"){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String print double scientific notation mode negative base 10 fail");}
+    if(SGEXTN::ApplicationBase::String::stringFromDouble(31.0f / 3.0f, 16, SGEXTN::ApplicationBase::FloatPrecisionFormat::ScientificNotation, 3) != "a.55^0"){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String print double scientific notation mode positive base 16 fail");}
+    if(SGEXTN::ApplicationBase::String::stringFromDouble(-1.0f / 3.0f, 16, SGEXTN::ApplicationBase::FloatPrecisionFormat::ScientificNotation, 3) != "-5.55^-1"){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String print double scientific notation mode negative base 16 fail");}
+    if(SGEXTN::ApplicationBase::String("-1.23^+09").prettierScientificNotationBase10() != U8("-1.23\u00d710\u2079")){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String make scientific notation prettier fail");}
     if(SGEXTN::ApplicationBase::String("12345").convertNumericSystem(0xbe6) != U8("\u0be7\u0be8\u0be9\u0bea\u0beb")){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String convert to non Latin numbers fail");}
     if(SGEXTN::ApplicationBase::String("<b> & </b>#").prepareInnerHtmlText() != "&lt;b&gt; &amp; &lt;/b&gt;#"){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String HTML escaping fail");}
     if(SGEXTN::ApplicationBase::String("  te xt \t\n  \n \t ").removeLeadingTrailingWhitespace() != "te xt"){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String whitespace trimming fail");}
@@ -746,8 +902,129 @@ void SGEXTN::InternalTest::StringTest::testString(){
 }
 #undef U8
 
-void SGEXTN::InternalTest::StringTest::runExternalTests(){
-    // grapheme boundary unit tests
-    // normalisation unit tests
-    // external floating point and integer parsing tests
+void SGEXTN::InternalTest::StringTest::runExternalUnicodeTests(){
+    if(testUnicodeExternal == false){return;}
+    fillNormalisationTestDatabase();
+    fillGraphemeBoundaryTestDatabase();
+    for(int i=0; i<normalisationTestDatabase.length(); i++){
+        if(normalisationTestDatabase.at(i).at(0).getNormalised(SGEXTN::ApplicationBase::NormalisationFormat::Join) != normalisationTestDatabase.at(i).at(1)){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String normalisation NFC test invariant 0 fail");}
+        if(normalisationTestDatabase.at(i).at(1).getNormalised(SGEXTN::ApplicationBase::NormalisationFormat::Join) != normalisationTestDatabase.at(i).at(1)){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String normalisation NFC test invariant 1 fail");}
+        if(normalisationTestDatabase.at(i).at(2).getNormalised(SGEXTN::ApplicationBase::NormalisationFormat::Join) != normalisationTestDatabase.at(i).at(1)){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String normalisation NFC test invariant 2 fail");}
+        if(normalisationTestDatabase.at(i).at(3).getNormalised(SGEXTN::ApplicationBase::NormalisationFormat::Join) != normalisationTestDatabase.at(i).at(3)){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String normalisation NFC test invariant 3 fail");}
+        if(normalisationTestDatabase.at(i).at(4).getNormalised(SGEXTN::ApplicationBase::NormalisationFormat::Join) != normalisationTestDatabase.at(i).at(3)){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String normalisation NFC test invariant 4 fail");}
+        if(normalisationTestDatabase.at(i).at(0).getNormalised(SGEXTN::ApplicationBase::NormalisationFormat::Separate) != normalisationTestDatabase.at(i).at(2)){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String normalisation NFD test invariant 0 fail");}
+        if(normalisationTestDatabase.at(i).at(1).getNormalised(SGEXTN::ApplicationBase::NormalisationFormat::Separate) != normalisationTestDatabase.at(i).at(2)){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String normalisation NFD test invariant 1 fail");}
+        if(normalisationTestDatabase.at(i).at(2).getNormalised(SGEXTN::ApplicationBase::NormalisationFormat::Separate) != normalisationTestDatabase.at(i).at(2)){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String normalisation NFD test invariant 2 fail");}
+        if(normalisationTestDatabase.at(i).at(3).getNormalised(SGEXTN::ApplicationBase::NormalisationFormat::Separate) != normalisationTestDatabase.at(i).at(4)){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String normalisation NFD test invariant 3 fail");}
+        if(normalisationTestDatabase.at(i).at(4).getNormalised(SGEXTN::ApplicationBase::NormalisationFormat::Separate) != normalisationTestDatabase.at(i).at(4)){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String normalisation NFD test invariant 4 fail");}
+        if(normalisationTestDatabase.at(i).at(0).getNormalised(SGEXTN::ApplicationBase::NormalisationFormat::LossyJoin) != normalisationTestDatabase.at(i).at(3)){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String normalisation NFKC test invariant 0 fail");}
+        if(normalisationTestDatabase.at(i).at(1).getNormalised(SGEXTN::ApplicationBase::NormalisationFormat::LossyJoin) != normalisationTestDatabase.at(i).at(3)){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String normalisation NFKC test invariant 1 fail");}
+        if(normalisationTestDatabase.at(i).at(2).getNormalised(SGEXTN::ApplicationBase::NormalisationFormat::LossyJoin) != normalisationTestDatabase.at(i).at(3)){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String normalisation NFKC test invariant 2 fail");}
+        if(normalisationTestDatabase.at(i).at(3).getNormalised(SGEXTN::ApplicationBase::NormalisationFormat::LossyJoin) != normalisationTestDatabase.at(i).at(3)){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String normalisation NFKC test invariant 3 fail");}
+        if(normalisationTestDatabase.at(i).at(4).getNormalised(SGEXTN::ApplicationBase::NormalisationFormat::LossyJoin) != normalisationTestDatabase.at(i).at(3)){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String normalisation NFKC test invariant 4 fail");}
+        if(normalisationTestDatabase.at(i).at(0).getNormalised(SGEXTN::ApplicationBase::NormalisationFormat::LossySeparate) != normalisationTestDatabase.at(i).at(4)){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String normalisation NFKD test invariant 0 fail");}
+        if(normalisationTestDatabase.at(i).at(1).getNormalised(SGEXTN::ApplicationBase::NormalisationFormat::LossySeparate) != normalisationTestDatabase.at(i).at(4)){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String normalisation NFKD test invariant 1 fail");}
+        if(normalisationTestDatabase.at(i).at(2).getNormalised(SGEXTN::ApplicationBase::NormalisationFormat::LossySeparate) != normalisationTestDatabase.at(i).at(4)){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String normalisation NFKD test invariant 2 fail");}
+        if(normalisationTestDatabase.at(i).at(3).getNormalised(SGEXTN::ApplicationBase::NormalisationFormat::LossySeparate) != normalisationTestDatabase.at(i).at(4)){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String normalisation NFKD test invariant 3 fail");}
+        if(normalisationTestDatabase.at(i).at(4).getNormalised(SGEXTN::ApplicationBase::NormalisationFormat::LossySeparate) != normalisationTestDatabase.at(i).at(4)){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String normalisation NFKD test invariant 4 fail");}
+    }
+    for(int i=0; i<graphemeBoundaryTestDatabase.length(); i++){
+        SGEXTN::ApplicationBase::String originalString = graphemeBoundaryTestDatabase.at(i).first;
+        SGEXTN::ApplicationBase::String expectedTestString;
+        for(int j=0; j<originalString.characterLength(); j++){
+            SGEXTN::Containers::Array<int> codePoints = originalString.getCharacterAt(j).getUnicode();
+            expectedTestString += SGEXTN::ApplicationBase::Character(0xf7);
+            expectedTestString += " ";
+            for(int k=0; k<codePoints.length(); k++){
+                if(k != 0){
+                    expectedTestString += SGEXTN::ApplicationBase::Character(0xd7);
+                    expectedTestString += " ";
+                }
+                expectedTestString += SGEXTN::ApplicationBase::String::stringFromInt(codePoints.at(k), 16).getUppercase().fillLeftToCharacterLength(4, '0');
+                expectedTestString += " ";
+            }
+        }
+        expectedTestString += SGEXTN::ApplicationBase::Character(0xf7);
+        if(expectedTestString != graphemeBoundaryTestDatabase.at(i).second){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String find character boundary fail");}
+    }
+}
+
+void SGEXTN::InternalTest::StringTest::runExternalNumericParsingTests(){
+    if(testNumericParsingExternal == false){return;}
+    fillNumericParsingTestsDatabase();
+    for(int i=0; i<numericParsingTestsDatabase.length(); i++){
+        bool isValid = false;
+        int expectedInt = stringSGToQ(numericParsingTestsDatabase.at(i)).toInt(&isValid, 10);
+        if(isValid == true){
+            bool parseSuccess = false;
+            if(expectedInt != numericParsingTestsDatabase.at(i).parseToInt(&parseSuccess, 10) || parseSuccess == false){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String parse base 10 integer fail");}
+            if(expectedInt != numericParsingTestsDatabase.at(i).parseToInt(nullptr, 10)){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String parse base 10 integer no success flag fail");}
+            if(i < numericParsingTestsDatabaseUniqueFloatLength){
+                for(int base=2; base<=36; base++){
+                    SGEXTN::ApplicationBase::String expectedNumString = stringQToSG(QString::number(expectedInt, base));
+                    if(expectedNumString.getLowercase() != SGEXTN::ApplicationBase::String::stringFromInt(expectedInt, base)){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String print integer fail");}
+                    parseSuccess = false;
+                    if(expectedInt != expectedNumString.getUppercase().parseToInt(&parseSuccess, base) || parseSuccess == false){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String parse uppercase integer fail");}
+                    parseSuccess = false;
+                    if(expectedInt != expectedNumString.getLowercase().parseToInt(&parseSuccess, base) || parseSuccess == false){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String parse lowercase integer fail");}
+                }
+            }
+        }
+        else{
+            bool parseSuccess = true;
+            if(numericParsingTestsDatabase.at(i).parseToInt(&parseSuccess, 10) != 0 || parseSuccess == true){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String parse invalid integer fail");}
+        }
+        isValid = false;
+        float expectedFloat = stringSGToQ(numericParsingTestsDatabase.at(i)).toFloat(&isValid);
+        if(isValid == true){
+            bool parseSuccess = false;
+            if(isCloseEnough(expectedFloat, numericParsingTestsDatabase.at(i).parseToFloat(&parseSuccess, 10)) == false || parseSuccess == false){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String parse base 10 floating point number fail");}
+            if(isCloseEnough(expectedFloat, numericParsingTestsDatabase.at(i).parseToFloat(nullptr, 10)) == false){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String parse base 10 floating point number no success flag fail");}
+            if(i < numericParsingTestsDatabaseUniqueFloatLength){
+                for(int base=2; base<=36; base++){
+                    SGEXTN::ApplicationBase::String numString = SGEXTN::ApplicationBase::String::stringFromFloat(expectedFloat, base, SGEXTN::ApplicationBase::FloatPrecisionFormat::SignificantFigure, 4);
+                    int maximumPrecision = 0;
+                    int minimumPrecision = 0;
+                    countSignificantFigures(minimumPrecision, maximumPrecision, numString, base);
+                    if(4 < minimumPrecision || 4 > maximumPrecision){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String print floating point number by significant figures fail");}
+                    float roundError = SGEXTN::Math::FloatMath<float>::absoluteValue(expectedFloat) * SGEXTN::Math::FloatMath<float>::powerOf(static_cast<float>(base), -3.0f);
+                    parseSuccess = false;
+                    float roundedFloat = numString.parseToFloat(&parseSuccess, base);
+                    if(parseSuccess == false || roundedFloat < expectedFloat - roundError || roundedFloat > expectedFloat + roundError){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String print floating point number by significant figures fail");}
+                    if(SGEXTN::Math::FloatMath<float>::absoluteValue(expectedFloat) < 100.0f){
+                        numString = SGEXTN::ApplicationBase::String::stringFromFloat(expectedFloat, base, SGEXTN::ApplicationBase::FloatPrecisionFormat::DecimalPlace, 2);
+                        countDecimalPlaces(minimumPrecision, maximumPrecision, numString, base);
+                        if(2 < minimumPrecision || 2 > maximumPrecision){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String print floating point number by positive decimal places fail");}
+                        roundError = 0.5f * SGEXTN::Math::FloatMath<float>::powerOf(static_cast<float>(base), -2.0f) + 0.5f * SGEXTN::Math::FloatMath<float>::powerOf(static_cast<float>(base), -3.0f);
+                        parseSuccess = false;
+                        roundedFloat = numString.parseToFloat(&parseSuccess, base);
+                        if(parseSuccess == false || roundedFloat < expectedFloat - roundError || roundedFloat > expectedFloat + roundError){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String print floating point number by positive decimal places fail");}
+                    }
+                    if(SGEXTN::Math::FloatMath<float>::absoluteValue(expectedFloat) < 1000000.0f){
+                        numString = SGEXTN::ApplicationBase::String::stringFromFloat(expectedFloat, base, SGEXTN::ApplicationBase::FloatPrecisionFormat::DecimalPlace, -2);
+                        countDecimalPlaces(minimumPrecision, maximumPrecision, numString, base);
+                        if(-2 < minimumPrecision || -2 > maximumPrecision){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String print floating point number by negative decimal places fail");}
+                        roundError = 0.5f * SGEXTN::Math::FloatMath<float>::powerOf(static_cast<float>(base), 2.0f) + 0.5f * SGEXTN::Math::FloatMath<float>::powerOf(static_cast<float>(base), 1.0f);
+                        parseSuccess = false;
+                        roundedFloat = numString.parseToFloat(&parseSuccess, base);
+                        if(parseSuccess == false || roundedFloat < expectedFloat - roundError || roundedFloat > expectedFloat + roundError){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String print floating point number by negative decimal places fail");}
+                    }
+                    numString = SGEXTN::ApplicationBase::String::stringFromFloat(expectedFloat, base, SGEXTN::ApplicationBase::FloatPrecisionFormat::ScientificNotation, 4);
+                    maximumPrecision = 0;
+                    minimumPrecision = 0;
+                    countSignificantFigures(minimumPrecision, maximumPrecision, numString.substringCharactersLeft(numString.findFirstCharactersFromLeft('^')), base);
+                    if(4 < minimumPrecision || 4 > maximumPrecision){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String print floating point number by scientific notation fail");}
+                    roundError = SGEXTN::Math::FloatMath<float>::absoluteValue(expectedFloat) * SGEXTN::Math::FloatMath<float>::powerOf(static_cast<float>(base), -3.0f);
+                    parseSuccess = false;
+                    roundedFloat = numString.parseToFloat(&parseSuccess, base);
+                    if(parseSuccess == false || roundedFloat < expectedFloat - roundError || roundedFloat > expectedFloat + roundError){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String print floating point number by scientific notation fail");}
+                }
+            }
+        }
+        else{
+            bool parseSuccess = true;
+            float floatValue = numericParsingTestsDatabase.at(i).parseToFloat(&parseSuccess, 10);
+            if(parseSuccess == true && floatValue != 0.0f && SGEXTN::Math::FloatLimits<float>::isInfinite(floatValue) == false){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String parse invalid floating point number fail");}
+        }
+    }
 }

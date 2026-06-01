@@ -12,7 +12,7 @@
 #include <QString>
 
 namespace {
-int getValueAsDigit(const SGEXTN::ApplicationBase::Character& c, int base){
+int getValueOfDigit(const SGEXTN::ApplicationBase::Character& c, int base){
     if(base != 10){
         if(c.isDigit() == true){return (static_cast<int>(c.byteAt(0)) - static_cast<int>('0'));}
         if(c.isEnglishLowercase() == true){return (10 + static_cast<int>(c.byteAt(0)) - static_cast<int>('a'));}
@@ -27,7 +27,7 @@ bool parseStringToInteger(const SGEXTN::ApplicationBase::String& s, int base, un
     unsigned long long ans = 0;
     for(int i=0; i<s.characterLength(); i++){
         if(i == 0 && s.getCharacterAt(i) == '+'){continue;}
-        const int digit = getValueAsDigit(s.getCharacterAt(i), base);
+        const int digit = getValueOfDigit(s.getCharacterAt(i), base);
         if(digit == -1 || digit >= base){return false;}
         if(SGEXTN::Math::IntegerLimits<unsigned long long>::maximum() / base < ans){return false;}
         ans *= base;
@@ -60,34 +60,33 @@ bool parseStringToSignedInteger(const SGEXTN::ApplicationBase::String& s, int ba
 
 bool parseMantissa(const SGEXTN::ApplicationBase::String& s, int base, unsigned long long& mantissa, int& exponent){
     if(s == ""){return false;}
-    const int digitLimit = static_cast<int>(SGEXTN::Math::FloatMath<double>::logBase2(static_cast<double>(SGEXTN::Math::IntegerLimits<unsigned long long>::maximum())) / SGEXTN::Math::FloatMath<double>::logBase2(static_cast<double>(base)));
-    int decimalPointIndex = -1;
-    int lastIndex = -1;
-    int digitCount = 0;
-    unsigned long long ans = 0;
+    mantissa = 0;
+    const int digitLimit = static_cast<int>(SGEXTN::Math::FloatMath<double>::naturalLog(static_cast<double>(SGEXTN::Math::IntegerLimits<unsigned long long>::maximum())) / SGEXTN::Math::FloatMath<double>::naturalLog(static_cast<double>(base)));
+    int decimalDotIndex = -1;
+    int digitsParsed = 0;
+    int nonzeroDigitsParsed = 0;
+    int additionalDigits = 0;
     for(int i=0; i<s.characterLength(); i++){
         if(s.getCharacterAt(i) == '.'){
-            if(decimalPointIndex != -1){return false;}
-            if(i != s.characterLength() - 1){decimalPointIndex = i;}
+            if(decimalDotIndex != -1){return false;}
+            decimalDotIndex = digitsParsed + additionalDigits;
             continue;
         }
-        if(digitCount >= digitLimit){
-            for(int j=i; j<s.characterLength(); j++){
-                const int verifyDigit = getValueAsDigit(s.getCharacterAt(j), base);
-                if(verifyDigit == -1 || verifyDigit >= base){return false;}
-            }
-            if(decimalPointIndex != -1){lastIndex = i;}
-            break;
+        int verifyDigit = getValueOfDigit(s.getCharacterAt(i), base);
+        if(mantissa == 0 && verifyDigit == 0){
+            if(decimalDotIndex != -1){digitsParsed++;}
+            continue;
         }
-        const int digit = getValueAsDigit(s.getCharacterAt(i), base);
-        if(digit == -1 || digit >= base){return false;}
-        ans = base * ans + digit;
-        if(ans != 0 || decimalPointIndex != -1){digitCount++;}
+        if(verifyDigit == -1 || verifyDigit >= base){return false;}
+        if(nonzeroDigitsParsed < digitLimit){
+            mantissa = base * mantissa + verifyDigit;
+            nonzeroDigitsParsed++;
+            digitsParsed++;
+        }
+        else if(decimalDotIndex == -1){additionalDigits++;}
     }
-    if(decimalPointIndex == -1){exponent = 0;}
-    else if(lastIndex != -1){exponent = decimalPointIndex - lastIndex;}
-    else{exponent = decimalPointIndex - s.characterLength() + 1;}
-    mantissa = ans;
+    if(decimalDotIndex == -1){decimalDotIndex = digitsParsed + additionalDigits;}
+    exponent = decimalDotIndex - digitsParsed;
     return true;
 }
 
@@ -95,6 +94,7 @@ bool parseScientificNotationExponent(const SGEXTN::ApplicationBase::String& s, i
     if(s == "" || s == "+" || s == "-"){return false;}
     bool isNegative = false;
     int ans = 0;
+    int digitLimit = SGEXTN::Math::FloatMath<float>::naturalLog(100000.0f) / SGEXTN::Math::FloatMath<float>::naturalLog(static_cast<float>(base));
     for(int i=0; i<s.characterLength(); i++){
         if(i == 0){
             if(s.getCharacterAt(i) == '+'){continue;}
@@ -103,16 +103,16 @@ bool parseScientificNotationExponent(const SGEXTN::ApplicationBase::String& s, i
                 continue;
             }
         }
-        if(i >= 5){
+        if(i >= digitLimit){
             for(int j=i; j<s.characterLength(); j++){
-                const int verifyDigit = getValueAsDigit(s.getCharacterAt(j), base);
+                const int verifyDigit = getValueOfDigit(s.getCharacterAt(j), base);
                 if(verifyDigit == -1 || verifyDigit >= base){return false;}
             }
             if(isNegative == false){exponent = 100000;}
             else{exponent = -100000;}
             return true;
         }
-        const int digit = getValueAsDigit(s.getCharacterAt(i), base);
+        const int digit = getValueOfDigit(s.getCharacterAt(i), base);
         if(digit == -1 || digit >= base){return false;}
         ans = base * ans + digit;
     }
@@ -131,9 +131,11 @@ bool parseStringToFloatingPoint(const SGEXTN::ApplicationBase::String& s, int ba
         isNegative = true;
         start = 1;
     }
-    if(s.containsCharacters('e') == true){end = s.findFirstCharactersFromRight('e');}
-    else if(s.containsCharacters('E') == true){end = s.findFirstCharactersFromRight('E');}
-    else if(base == 10 && s.containsCharacters("⏨") == true){end = s.findFirstCharactersFromRight("⏨");}
+    if(s.containsCharacters('^') == true){end = s.findFirstCharactersFromRight('^');}
+    if(base == 10){
+        if(s.containsCharacters('e') == true){end = s.findFirstCharactersFromRight('e');}
+        if(s.containsCharacters('E') == true){end = s.findFirstCharactersFromRight('E');}
+    }
     unsigned long long mantissa = 0;
     int additionalExponent = 0;
     bool mantissaIsValid = false;
@@ -143,9 +145,13 @@ bool parseStringToFloatingPoint(const SGEXTN::ApplicationBase::String& s, int ba
     if(end != -1){
         bool exponentIsValid = false;
         int exponent = 0;
-        exponentIsValid = parseScientificNotationExponent(s.substringCharactersRight(s.characterLength() - end - 1), 10, exponent);
+        exponentIsValid = parseScientificNotationExponent(s.substringCharactersRight(s.characterLength() - end - 1), base, exponent);
         if(exponentIsValid == false){return false;}
         additionalExponent += exponent;
+    }
+    if(mantissa == 0){
+        output = 0.0;
+        return true;
     }
     double finalAns = static_cast<double>(mantissa) * SGEXTN::Math::FloatMath<double>::powerOf(static_cast<double>(base), static_cast<double>(additionalExponent));
     if(isNegative == true){finalAns = (-1) * finalAns;}
@@ -193,8 +199,8 @@ SGEXTN::ApplicationBase::String makeStringFromFloatingPoint(double x, int base, 
     if(x == SGEXTN::Math::FloatLimits<double>::negativeInfinity()){return "-infinity";}
     if(x == 0.0){
         if(format == SGEXTN::ApplicationBase::FloatPrecisionFormat::ScientificNotation){
-            if(precision == 1){return "0e+00";}
-            return (SGEXTN::ApplicationBase::String("0.") + SGEXTN::ApplicationBase::String::repeat("0", precision - 1) + "e+00");
+            if(precision == 1){return "0^0";}
+            return (SGEXTN::ApplicationBase::String("0.") + SGEXTN::ApplicationBase::String::repeat("0", precision - 1) + "^0");
         }
         if(format == SGEXTN::ApplicationBase::FloatPrecisionFormat::DecimalPlace){
             if(precision <= 0){return "0";}
@@ -212,16 +218,20 @@ SGEXTN::ApplicationBase::String makeStringFromFloatingPoint(double x, int base, 
     }
     SGEXTN::ApplicationBase::String mantissa;
     int exponent = 0;
-    const int logarithm = SGEXTN::Math::FloatMath<double>::floorToInt(SGEXTN::Math::FloatMath<double>::logBase2(x) / SGEXTN::Math::FloatMath<double>::logBase2(base));
+    const int logarithm = SGEXTN::Math::FloatMath<double>::floorToInt(SGEXTN::Math::FloatMath<double>::naturalLog(x) / SGEXTN::Math::FloatMath<double>::naturalLog(base));
     if(format == SGEXTN::ApplicationBase::FloatPrecisionFormat::DecimalPlace){
         precision += (logarithm + 1);
         if(precision <= 0){
-            if(x < 0.5 * SGEXTN::Math::FloatMath<double>::powerOf(base, precision - logarithm - 1)){return "0";}
-            precision = 1;
+            if(x <= 0.5 * SGEXTN::Math::FloatMath<double>::powerOf(base, logarithm + 1 - precision)){
+                precision -= (logarithm + 1);
+                if(precision <= 0){return "0";}
+                return (SGEXTN::ApplicationBase::String("0.") + SGEXTN::ApplicationBase::String::repeat("0", precision));
+            }
         }
     }
     const double roundUpError = 0.5 * SGEXTN::Math::FloatMath<double>::powerOf(base, logarithm + 1 - precision);
     if(x + roundUpError >= SGEXTN::Math::FloatMath<double>::powerOf(base, logarithm + 1)){
+        if(format == SGEXTN::ApplicationBase::FloatPrecisionFormat::DecimalPlace){precision++;}
         exponent = logarithm + 1;
         mantissa = "1";
     }
@@ -232,25 +242,38 @@ SGEXTN::ApplicationBase::String makeStringFromFloatingPoint(double x, int base, 
     }
     SGEXTN::ApplicationBase::String sign;
     if(isNegative == true){sign = "-";}
+    mantissa = mantissa.fillRightToCharacterLength(precision, '0');
+    if(mantissa.characterLength() > precision){
+        int nextChar = getValueOfDigit(mantissa.getCharacterAt(precision), base);
+        mantissa = mantissa.substringCharactersLeft(precision);
+        if(2 * nextChar >= base){
+            int lastChar = getValueOfDigit(mantissa.getCharacterAt(mantissa.characterLength() - 1), base);
+            if(lastChar == base - 1){
+                unsigned long long mantissaValue = 0;
+                parseStringToInteger(mantissa, base, mantissaValue);
+                mantissa = makeStringFromInteger(mantissaValue + 1, base);
+                if(mantissa.characterLength() > precision){
+                    if(format == SGEXTN::ApplicationBase::FloatPrecisionFormat::DecimalPlace){precision++;}
+                    mantissa = mantissa.substringCharactersLeft(precision);
+                    exponent++;
+                }
+            }
+            else{mantissa.setCharacterAt(mantissa.characterLength() - 1, getDigitStringRepresentation(lastChar + 1));}
+        }
+    }
     if(format == SGEXTN::ApplicationBase::FloatPrecisionFormat::ScientificNotation){
-        mantissa = mantissa.fillRightToCharacterLength(precision, '0').substringCharactersLeft(precision);
         mantissa = SGEXTN::ApplicationBase::String((mantissa.getCharacterAt(0))) + "." + mantissa.substringCharactersRight(mantissa.characterLength() - 1);
-        SGEXTN::ApplicationBase::String exponentString = "+";
+        SGEXTN::ApplicationBase::String exponentString;
         if(exponent < 0){
             exponentString = "-";
             exponent *= -1;
         }
-        exponentString += makeStringFromInteger(exponent, base).fillLeftToCharacterLength(2, '0');
-        return (sign + mantissa + "e" + exponentString);
+        exponentString += makeStringFromInteger(exponent, base);
+        return (sign + mantissa + "^" + exponentString);
     }
-    {
-        mantissa = mantissa.fillRightToCharacterLength(precision, '0').substringCharactersLeft(precision);
-        if(exponent < 0){return (sign + "0." + SGEXTN::ApplicationBase::String::repeat("0", (-1) * exponent - 1) + mantissa);}
-        {
-            if(mantissa.characterLength() <= exponent + 1){return (sign + mantissa + SGEXTN::ApplicationBase::String::repeat("0", exponent + 1 - mantissa.characterLength()));}
-            return (sign + mantissa.substringCharactersLeft(exponent + 1) + "." + mantissa.substringCharactersRight(mantissa.characterLength() - exponent - 1));
-        }
-    }
+    if(exponent < 0){return (sign + "0." + SGEXTN::ApplicationBase::String::repeat("0", (-1) * exponent - 1) + mantissa);}
+    if(mantissa.characterLength() <= exponent + 1){return (sign + mantissa + SGEXTN::ApplicationBase::String::repeat("0", exponent + 1 - mantissa.characterLength()));}
+    return (sign + mantissa.substringCharactersLeft(exponent + 1) + "." + mantissa.substringCharactersRight(mantissa.characterLength() - exponent - 1));
 }
 
 SGEXTN::ApplicationBase::String decompositionEquivalent(const SGEXTN::ApplicationBase::String& s, bool* done){
@@ -330,93 +353,39 @@ SGEXTN::ApplicationBase::String sortCombiningMarks(const SGEXTN::ApplicationBase
     return output;
 }
 
-SGEXTN::ApplicationBase::String recursiveRecomposeCombiningMarks(const SGEXTN::ApplicationBase::String& combiningMarksGroup){
-    SGEXTN::Containers::Array<int> unicode = combiningMarksGroup.getUnicode();
-    while(true){
-        int secondIndex = -1;
-        int joinedIndex = -1;
-        for(int i=1; i<unicode.length(); i++){
-            const int secondCombiningMarkOrder = SGEXTN::ApplicationBase::UnicodeQuery::getCombiningMarkOrder(unicode.at(i));
-            bool isBlocked = false;
-            for(int j=1; j<i; j++){
-                if(SGEXTN::ApplicationBase::UnicodeQuery::getCombiningMarkOrder(unicode.at(j)) >= secondCombiningMarkOrder){
-                    isBlocked = true;
-                    break;
-                }
-            }
-            if(isBlocked == true){continue;}
-            joinedIndex = SGEXTN::ApplicationBase::UnicodeQuery::getBinaryRecomposition(unicode.at(0), unicode.at(i));
-            if(joinedIndex != -1){
-                secondIndex = i;
-                break;
-            }
-        }
-        if(secondIndex == -1){break;}
-        SGEXTN::ApplicationBase::String newCombiningMarksGroup = SGEXTN::ApplicationBase::Character(joinedIndex);
-        for(int i=1; i<secondIndex; i++){
-            newCombiningMarksGroup += SGEXTN::ApplicationBase::Character(unicode.at(i));
-        }
-        for(int i=secondIndex+1; i<unicode.length(); i++){
-            newCombiningMarksGroup += SGEXTN::ApplicationBase::Character(unicode.at(i));
-        }
-        unicode = newCombiningMarksGroup.getUnicode();
-    }
-    SGEXTN::ApplicationBase::String output;
-    for(int i=0; i<unicode.length(); i++){
-        output += SGEXTN::ApplicationBase::Character(unicode.at(i));
-    }
-    return output;
-}
-
 SGEXTN::ApplicationBase::String unicodeRecompose(const SGEXTN::ApplicationBase::String& s){
     SGEXTN::Containers::Array<int> unicode = s.getUnicode();
     SGEXTN::ApplicationBase::String output;
-    int combiningMarkBufferStart = 0;
-    for(int i=0; i<unicode.length(); i++){
-        if(SGEXTN::ApplicationBase::UnicodeQuery::getCombiningMarkOrder(unicode.at(i)) == 0){
-            if(combiningMarkBufferStart < i){
-                if(combiningMarkBufferStart == i - 1){output += SGEXTN::ApplicationBase::Character(unicode.at(i - 1));}
-                else{
-                    SGEXTN::ApplicationBase::String combiningMarksBuffer = "";
-                    for(int j=combiningMarkBufferStart; j<i; j++){
-                        combiningMarksBuffer += SGEXTN::ApplicationBase::Character(unicode.at(j));
-                    }
-                    output += recursiveRecomposeCombiningMarks(combiningMarksBuffer);
+    int currentStarterIndex = 0;
+    while(currentStarterIndex < unicode.length()){
+        for(int secondIndex=currentStarterIndex+1; secondIndex<=unicode.length(); secondIndex++){
+            if(secondIndex == unicode.length()){
+                currentStarterIndex = unicode.length();
+                break;
+            }
+            if(unicode.at(secondIndex) == -1){continue;}
+            int secondCombiningMarkOrder = SGEXTN::ApplicationBase::UnicodeQuery::getCombiningMarkOrder(unicode.at(secondIndex));
+            bool canMerge = true;
+            for(int i=currentStarterIndex+1; i<secondIndex; i++){
+                if(secondCombiningMarkOrder == 0 && unicode.at(i) != -1){canMerge = false;}
+                if(secondCombiningMarkOrder != 0 && unicode.at(i) != -1 && SGEXTN::ApplicationBase::UnicodeQuery::getCombiningMarkOrder(unicode.at(i)) >= secondCombiningMarkOrder){canMerge = false;}
+            }
+            if(canMerge == true){
+                int mergedCharacter = SGEXTN::ApplicationBase::UnicodeQuery::getBinaryRecomposition(unicode.at(currentStarterIndex), unicode.at(secondIndex));
+                if(mergedCharacter != -1){
+                    unicode.at(currentStarterIndex) = mergedCharacter;
+                    unicode.at(secondIndex) = -1;
+                    continue;
                 }
             }
-            combiningMarkBufferStart = i;
-        }
-        if(unicode.at(i) >= 0x1100 && unicode.at(i) < 0x1113 && i + 1 < unicode.length() && unicode.at(i + 1) >= 0x1161 && unicode.at(i + 1) < 0x1176){
-            combiningMarkBufferStart = i + 1;
-            const int leadingHangulIndex = unicode.at(i) - 0x1100;
-            const int vowelHangulIndex = unicode.at(i + 1) - 0x1161;
-            const int leadingAndVowelHangulCodePoint = 0xac00 + (leadingHangulIndex * 21 + vowelHangulIndex) * 28;
-            if(i + 2 < unicode.length() && unicode.at(i + 2) >= 0x11a8 && unicode.at(i + 2) < 0x11c3){
-                const int trailingHangulIndex = unicode.at(i + 2) - 0x11a7;
-                output += SGEXTN::ApplicationBase::Character(leadingAndVowelHangulCodePoint + trailingHangulIndex);
-                i += 2;
+            if(secondCombiningMarkOrder == 0){
+                currentStarterIndex = secondIndex;
+                break;
             }
-            else{
-                output += SGEXTN::ApplicationBase::Character(leadingAndVowelHangulCodePoint);
-                i++;
-            }
-        }
-        if(unicode.at(i) >= 0xac00 && unicode.at(i) < 0xd7a4 && (unicode.at(i) - 0xac00) % 28 == 0 && i + 1 < unicode.length() && unicode.at(i + 1) >= 0x11a8 && unicode.at(i + 1) < 0x11c3){
-            combiningMarkBufferStart = i + 1;
-            const int trailingHangulIndex = unicode.at(i + 1) - 0x11a7;
-            output += SGEXTN::ApplicationBase::Character(unicode.at(i) + trailingHangulIndex);
-            i++;
         }
     }
-    if(combiningMarkBufferStart < unicode.length()){
-        if(combiningMarkBufferStart == unicode.length() - 1){output += SGEXTN::ApplicationBase::Character(unicode.at(unicode.length() - 1));}
-        else{
-            SGEXTN::ApplicationBase::String combiningMarksBuffer = "";
-            for(int j=combiningMarkBufferStart; j<unicode.length(); j++){
-                combiningMarksBuffer += SGEXTN::ApplicationBase::Character(unicode.at(j));
-            }
-            output += recursiveRecomposeCombiningMarks(combiningMarksBuffer);
-        }
+    for(int i=0; i<unicode.length(); i++){
+        if(unicode.at(i) != -1){output += SGEXTN::ApplicationBase::Character(unicode.at(i));}
     }
     return output;
 }
@@ -542,6 +511,7 @@ void SGEXTN::ApplicationBase::String::private_computeOffsets() const {
     }
     private_characterOffsets.pushBack(0);
     if(unicodeList.length() == 0){return;}
+    int lastRegionIndicator = 0;
     for(int i=1; i<unicodeList.length(); i++){
         if(segmentationTypes.at(i - 1) == SGEXTN::ApplicationBase::GraphemeSegmentationType::Return && segmentationTypes.at(i) == SGEXTN::ApplicationBase::GraphemeSegmentationType::NewLine){continue;}
         if(segmentationTypes.at(i - 1) == SGEXTN::ApplicationBase::GraphemeSegmentationType::Return || segmentationTypes.at(i - 1) == SGEXTN::ApplicationBase::GraphemeSegmentationType::NewLine || segmentationTypes.at(i - 1) == SGEXTN::ApplicationBase::GraphemeSegmentationType::ControlCharacter){
@@ -576,9 +546,9 @@ void SGEXTN::ApplicationBase::String::private_computeOffsets() const {
             }
             if(foundStartEmoji == true){continue;}
         }
+        if(segmentationTypes.at(i) == SGEXTN::ApplicationBase::GraphemeSegmentationType::RegionalIndicator && segmentationTypes.at(i - 1) != SGEXTN::ApplicationBase::GraphemeSegmentationType::RegionalIndicator){lastRegionIndicator = i;}
         if(segmentationTypes.at(i) == SGEXTN::ApplicationBase::GraphemeSegmentationType::RegionalIndicator && segmentationTypes.at(i - 1) == SGEXTN::ApplicationBase::GraphemeSegmentationType::RegionalIndicator){
-            if(i - 2 < 0 || segmentationTypes.at(i - 2) != SGEXTN::ApplicationBase::GraphemeSegmentationType::RegionalIndicator){continue;}
-            if(private_characterOffsets.at(private_characterOffsets.length() - 1) == codePointOffset.at(i - 2)){continue;}
+            if((i - lastRegionIndicator + 1) % 2 == 0){continue;}
         }
         private_characterOffsets.pushBack(codePointOffset.at(i));
     }
@@ -1089,20 +1059,20 @@ SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::stringFromUnsig
 SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::stringFromFloat(float x, int base, SGEXTN::ApplicationBase::FloatPrecisionFormat format, int precision){
     if(base < 2 || base > 36){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::stringFromFloat crashed because base is not within 2 to 36 inclusive");}
     if(format != SGEXTN::ApplicationBase::FloatPrecisionFormat::DecimalPlace && precision <= 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::stringFromFloat crashed because precision is nonpositive");}
-    if(static_cast<float>(precision) * SGEXTN::Math::FloatMath<float>::logBase2(static_cast<float>(base)) > 24.0f){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::stringFromFloat crashed because precision exceeds maximum numerical precision that a float can represent");}
+    if(format != SGEXTN::ApplicationBase::FloatPrecisionFormat::DecimalPlace && static_cast<float>(precision) * SGEXTN::Math::FloatMath<float>::naturalLog(static_cast<float>(base)) > 24.0f){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::stringFromFloat crashed because precision exceeds maximum numerical precision that a float can represent");}
     return makeStringFromFloatingPoint(static_cast<double>(x), base, format, precision);
 }
 
 SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::stringFromDouble(double x, int base, SGEXTN::ApplicationBase::FloatPrecisionFormat format, int precision){
     if(base < 2 || base > 36){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::stringFromDouble crashed because base is not within 2 to 36 inclusive");}
     if(format != SGEXTN::ApplicationBase::FloatPrecisionFormat::DecimalPlace && precision <= 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::stringFromDouble crashed because precision is nonpositive");}
-    if(static_cast<float>(precision) * SGEXTN::Math::FloatMath<float>::logBase2(static_cast<float>(base)) > 53.0f){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::stringFromDouble crashed because precision exceeds maximum numerical precision that a double precision float can represent");}
+    if(format != SGEXTN::ApplicationBase::FloatPrecisionFormat::DecimalPlace && static_cast<float>(precision) * SGEXTN::Math::FloatMath<float>::naturalLog(static_cast<float>(base)) > 53.0f){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::stringFromDouble crashed because precision exceeds maximum numerical precision that a double precision float can represent");}
     return makeStringFromFloatingPoint(x, base, format, precision);
 }
 
-SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::prettierScientificNotation() const {
-    if(containsCharacters("e") == false){return (*this);}
-    const int exponentIndex = findFirstCharactersFromLeft("e");
+SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::prettierScientificNotationBase10() const {
+    if(containsCharacters("^") == false){return (*this);}
+    const int exponentIndex = findFirstCharactersFromLeft("^");
     const SGEXTN::ApplicationBase::String mantissa = substringCharactersLeft(exponentIndex);
     const int exponent = substringCharactersRight(characterLength() - 1 - exponentIndex).parseToInt(nullptr, 10);
     const SGEXTN::ApplicationBase::String exponentString = SGEXTN::ApplicationBase::String::stringFromInt(exponent, 10);

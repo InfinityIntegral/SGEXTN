@@ -5532,14 +5532,14 @@ SGEXTN::ApplicationBase::String getEquivDecomp(int i){
     if(i >= 0xac00 && i <= 0xd7a3){
         SGEXTN::ApplicationBase::String thisEquivDecomp;
         const int index = i - 0xac00;
-        const int leading = 0x1100 + (index / 588);
-        const int vowel = 0x1161 + ((index % 588) / 28);
-        int trailing = index % 28;
-        if(trailing == 0){trailing = -1;}
-        else{trailing += 0x11a7;}
-        thisEquivDecomp += SGEXTN::ApplicationBase::Character(leading);
-        thisEquivDecomp += SGEXTN::ApplicationBase::Character(vowel);
-        if(trailing != -1){thisEquivDecomp += SGEXTN::ApplicationBase::Character(trailing);}
+        if(index % 28 == 0){
+            thisEquivDecomp += SGEXTN::ApplicationBase::Character(0x1100 + (index / 588));
+            thisEquivDecomp += SGEXTN::ApplicationBase::Character(0x1161 + ((index % 588) / 28));
+        }
+        else{
+            thisEquivDecomp += SGEXTN::ApplicationBase::Character(0xac00 + 28 * (index / 28));
+            thisEquivDecomp += SGEXTN::ApplicationBase::Character(0x11a7 + (index % 28));
+        }
         return thisEquivDecomp;
     }
     if(i >= 0x00c0 && i <= 0x0fff){
@@ -6579,6 +6579,8 @@ int getUnicodeRecompositionMapping(int first, int second){
         if(first == 0x22b5){return 0x22ed;}
         return -1;
     }
+    if(first >= 0x1100 && first < 0x1113 && second >= 0x1161 && second < 0x1176){return (0xac00 + 28 * (21 * (first - 0x1100) + (second - 0x1161)));}
+    if(first >= 0xac00 && first < 0xd7a4 && (first - 0xac00) % 28 == 0 && second >= 0x11a8 && second < 0x11c3){return (first + (second - 0x11a7));}
     if(first >= 0x0000 && first <= 0x00ff){
         if(first >= 0x3c && first < 0x80){
             if(first >= 0x003c && first <= 0x003e && second == 0x0338){
