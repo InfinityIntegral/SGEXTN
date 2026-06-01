@@ -11,7 +11,7 @@ namespace ApplicationBase {
 class Character;
 class OldString;
 
-enum class BUILDLAH_DLL_SGEXTN_ApplicationBase FloatPrecisionFormat : unsigned char {SignificantFigure, DecimalPlace, ScientificNotation};
+enum class BUILDLAH_DLL_SGEXTN_ApplicationBase FloatPrecisionFormat : unsigned char {SignificantFigure, FractionalDigit, ScientificNotation};
 
 enum class BUILDLAH_DLL_SGEXTN_ApplicationBase NormalisationFormat : unsigned char {Join, Separate, LossyJoin, LossySeparate};
 

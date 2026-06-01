@@ -72,7 +72,7 @@ bool parseMantissa(const SGEXTN::ApplicationBase::String& s, int base, unsigned 
             decimalDotIndex = digitsParsed + additionalDigits;
             continue;
         }
-        int verifyDigit = getValueOfDigit(s.getCharacterAt(i), base);
+        const int verifyDigit = getValueOfDigit(s.getCharacterAt(i), base);
         if(mantissa == 0 && verifyDigit == 0){
             if(decimalDotIndex != -1){digitsParsed++;}
             continue;
@@ -94,7 +94,7 @@ bool parseScientificNotationExponent(const SGEXTN::ApplicationBase::String& s, i
     if(s == "" || s == "+" || s == "-"){return false;}
     bool isNegative = false;
     int ans = 0;
-    int digitLimit = SGEXTN::Math::FloatMath<float>::naturalLog(100000.0f) / SGEXTN::Math::FloatMath<float>::naturalLog(static_cast<float>(base));
+    const int digitLimit = static_cast<int>(SGEXTN::Math::FloatMath<float>::naturalLog(100000.0f) / SGEXTN::Math::FloatMath<float>::naturalLog(static_cast<float>(base)));
     for(int i=0; i<s.characterLength(); i++){
         if(i == 0){
             if(s.getCharacterAt(i) == '+'){continue;}
@@ -202,7 +202,7 @@ SGEXTN::ApplicationBase::String makeStringFromFloatingPoint(double x, int base, 
             if(precision == 1){return "0^0";}
             return (SGEXTN::ApplicationBase::String("0.") + SGEXTN::ApplicationBase::String::repeat("0", precision - 1) + "^0");
         }
-        if(format == SGEXTN::ApplicationBase::FloatPrecisionFormat::DecimalPlace){
+        if(format == SGEXTN::ApplicationBase::FloatPrecisionFormat::FractionalDigit){
             if(precision <= 0){return "0";}
             return (SGEXTN::ApplicationBase::String("0.") + SGEXTN::ApplicationBase::String::repeat("0", precision));
         }
@@ -219,7 +219,7 @@ SGEXTN::ApplicationBase::String makeStringFromFloatingPoint(double x, int base, 
     SGEXTN::ApplicationBase::String mantissa;
     int exponent = 0;
     const int logarithm = SGEXTN::Math::FloatMath<double>::floorToInt(SGEXTN::Math::FloatMath<double>::naturalLog(x) / SGEXTN::Math::FloatMath<double>::naturalLog(base));
-    if(format == SGEXTN::ApplicationBase::FloatPrecisionFormat::DecimalPlace){
+    if(format == SGEXTN::ApplicationBase::FloatPrecisionFormat::FractionalDigit){
         precision += (logarithm + 1);
         if(precision <= 0){
             if(x <= 0.5 * SGEXTN::Math::FloatMath<double>::powerOf(base, logarithm + 1 - precision)){
@@ -231,7 +231,7 @@ SGEXTN::ApplicationBase::String makeStringFromFloatingPoint(double x, int base, 
     }
     const double roundUpError = 0.5 * SGEXTN::Math::FloatMath<double>::powerOf(base, logarithm + 1 - precision);
     if(x + roundUpError >= SGEXTN::Math::FloatMath<double>::powerOf(base, logarithm + 1)){
-        if(format == SGEXTN::ApplicationBase::FloatPrecisionFormat::DecimalPlace){precision++;}
+        if(format == SGEXTN::ApplicationBase::FloatPrecisionFormat::FractionalDigit){precision++;}
         exponent = logarithm + 1;
         mantissa = "1";
     }
@@ -244,16 +244,16 @@ SGEXTN::ApplicationBase::String makeStringFromFloatingPoint(double x, int base, 
     if(isNegative == true){sign = "-";}
     mantissa = mantissa.fillRightToCharacterLength(precision, '0');
     if(mantissa.characterLength() > precision){
-        int nextChar = getValueOfDigit(mantissa.getCharacterAt(precision), base);
+        const int nextChar = getValueOfDigit(mantissa.getCharacterAt(precision), base);
         mantissa = mantissa.substringCharactersLeft(precision);
         if(2 * nextChar >= base){
-            int lastChar = getValueOfDigit(mantissa.getCharacterAt(mantissa.characterLength() - 1), base);
+            const int lastChar = getValueOfDigit(mantissa.getCharacterAt(mantissa.characterLength() - 1), base);
             if(lastChar == base - 1){
                 unsigned long long mantissaValue = 0;
                 parseStringToInteger(mantissa, base, mantissaValue);
                 mantissa = makeStringFromInteger(mantissaValue + 1, base);
                 if(mantissa.characterLength() > precision){
-                    if(format == SGEXTN::ApplicationBase::FloatPrecisionFormat::DecimalPlace){precision++;}
+                    if(format == SGEXTN::ApplicationBase::FloatPrecisionFormat::FractionalDigit){precision++;}
                     mantissa = mantissa.substringCharactersLeft(precision);
                     exponent++;
                 }
@@ -364,14 +364,14 @@ SGEXTN::ApplicationBase::String unicodeRecompose(const SGEXTN::ApplicationBase::
                 break;
             }
             if(unicode.at(secondIndex) == -1){continue;}
-            int secondCombiningMarkOrder = SGEXTN::ApplicationBase::UnicodeQuery::getCombiningMarkOrder(unicode.at(secondIndex));
+            const int secondCombiningMarkOrder = SGEXTN::ApplicationBase::UnicodeQuery::getCombiningMarkOrder(unicode.at(secondIndex));
             bool canMerge = true;
             for(int i=currentStarterIndex+1; i<secondIndex; i++){
                 if(secondCombiningMarkOrder == 0 && unicode.at(i) != -1){canMerge = false;}
                 if(secondCombiningMarkOrder != 0 && unicode.at(i) != -1 && SGEXTN::ApplicationBase::UnicodeQuery::getCombiningMarkOrder(unicode.at(i)) >= secondCombiningMarkOrder){canMerge = false;}
             }
             if(canMerge == true){
-                int mergedCharacter = SGEXTN::ApplicationBase::UnicodeQuery::getBinaryRecomposition(unicode.at(currentStarterIndex), unicode.at(secondIndex));
+                const int mergedCharacter = SGEXTN::ApplicationBase::UnicodeQuery::getBinaryRecomposition(unicode.at(currentStarterIndex), unicode.at(secondIndex));
                 if(mergedCharacter != -1){
                     unicode.at(currentStarterIndex) = mergedCharacter;
                     unicode.at(secondIndex) = -1;
@@ -573,8 +573,8 @@ void SGEXTN::ApplicationBase::String::setCharacterAt(int i, const SGEXTN::Applic
     if(i < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::setCharacterAt crashed because index is negative");}
     if(i >= characterLength()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::setCharacterAt crashed because index points beyond the end of the string");}
     private_computeOffsets();
-    int rangeBegin = private_characterOffsets.at(i);
-    int rangeEnd = private_characterOffsets.at(i + 1);
+    const int rangeBegin = private_characterOffsets.at(i);
+    const int rangeEnd = private_characterOffsets.at(i + 1);
     if(rangeEnd - rangeBegin == c.byteLength()){
         for(int j=rangeBegin; j<rangeEnd; j++){
             byteAt(j) = c.byteAt(j - rangeBegin);
@@ -1058,15 +1058,15 @@ SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::stringFromUnsig
 
 SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::stringFromFloat(float x, int base, SGEXTN::ApplicationBase::FloatPrecisionFormat format, int precision){
     if(base < 2 || base > 36){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::stringFromFloat crashed because base is not within 2 to 36 inclusive");}
-    if(format != SGEXTN::ApplicationBase::FloatPrecisionFormat::DecimalPlace && precision <= 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::stringFromFloat crashed because precision is nonpositive");}
-    if(format != SGEXTN::ApplicationBase::FloatPrecisionFormat::DecimalPlace && static_cast<float>(precision) * SGEXTN::Math::FloatMath<float>::naturalLog(static_cast<float>(base)) > 24.0f){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::stringFromFloat crashed because precision exceeds maximum numerical precision that a float can represent");}
+    if(format != SGEXTN::ApplicationBase::FloatPrecisionFormat::FractionalDigit && precision <= 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::stringFromFloat crashed because precision is nonpositive");}
+    if(format != SGEXTN::ApplicationBase::FloatPrecisionFormat::FractionalDigit && static_cast<float>(precision) * SGEXTN::Math::FloatMath<float>::naturalLog(static_cast<float>(base)) > 24.0f){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::stringFromFloat crashed because precision exceeds maximum numerical precision that a float can represent");}
     return makeStringFromFloatingPoint(static_cast<double>(x), base, format, precision);
 }
 
 SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::stringFromDouble(double x, int base, SGEXTN::ApplicationBase::FloatPrecisionFormat format, int precision){
     if(base < 2 || base > 36){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::stringFromDouble crashed because base is not within 2 to 36 inclusive");}
-    if(format != SGEXTN::ApplicationBase::FloatPrecisionFormat::DecimalPlace && precision <= 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::stringFromDouble crashed because precision is nonpositive");}
-    if(format != SGEXTN::ApplicationBase::FloatPrecisionFormat::DecimalPlace && static_cast<float>(precision) * SGEXTN::Math::FloatMath<float>::naturalLog(static_cast<float>(base)) > 53.0f){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::stringFromDouble crashed because precision exceeds maximum numerical precision that a double precision float can represent");}
+    if(format != SGEXTN::ApplicationBase::FloatPrecisionFormat::FractionalDigit && precision <= 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::stringFromDouble crashed because precision is nonpositive");}
+    if(format != SGEXTN::ApplicationBase::FloatPrecisionFormat::FractionalDigit && static_cast<float>(precision) * SGEXTN::Math::FloatMath<float>::naturalLog(static_cast<float>(base)) > 53.0f){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::stringFromDouble crashed because precision exceeds maximum numerical precision that a double precision float can represent");}
     return makeStringFromFloatingPoint(x, base, format, precision);
 }
 
@@ -1145,7 +1145,7 @@ SGEXTN::Containers::Array<SGEXTN::ApplicationBase::String> SGEXTN::ApplicationBa
     int currentIndex = 0;
     SGEXTN::Containers::Vector<SGEXTN::ApplicationBase::String> splitStrings;
     while(true){
-        int index = findFirstCharactersFromLeftBounded(currentIndex, separator);
+        const int index = findFirstCharactersFromLeftBounded(currentIndex, separator);
         if(index == -1){break;}
         splitStrings.pushBack(substringCharacters(currentIndex, index - currentIndex));
         currentIndex = index + separator.characterLength();
