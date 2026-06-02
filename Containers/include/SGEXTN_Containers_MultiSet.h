@@ -13,6 +13,7 @@ public:
     [[nodiscard]] int length() const;
     void insert(const T& x);
     bool erase(const T& x);
+    void clear();
     [[nodiscard]] bool contains(const T& x) const;
     [[nodiscard]] int count(const T& x) const;
     [[nodiscard]] MultiSetIterator<T, Comparator> begin();

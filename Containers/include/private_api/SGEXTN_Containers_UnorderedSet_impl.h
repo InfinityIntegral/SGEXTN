@@ -21,6 +21,10 @@ template <typename T, typename EqualityCheck, typename HashFunction> bool SGEXTN
     return private_hashMap.erase(x);
 }
 
+template <typename T, typename EqualityCheck, typename HashFunction> void SGEXTN::Containers::UnorderedSet<T, EqualityCheck, HashFunction>::clear(){
+    private_hashMap.clear();
+}
+
 template <typename T, typename EqualityCheck, typename HashFunction> bool SGEXTN::Containers::UnorderedSet<T, EqualityCheck, HashFunction>::contains(const T& x) const {
     return private_hashMap.contains(x);
 }

@@ -38,6 +38,10 @@ template <typename T> void SGEXTN::Containers::Queue<T>::pop(){
     private_ringBuffer.popFront();
 }
 
+template <typename T> void SGEXTN::Containers::Queue<T>::clear(){
+    private_ringBuffer.clear();
+}
+
 template <typename T> void SGEXTN::Containers::Queue<T>::reserve(int newMemoryLength){
     private_ringBuffer.reserve(newMemoryLength);
 }

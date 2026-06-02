@@ -3,13 +3,15 @@
 
 template <typename T> SGEXTN::Containers::Array<T>::Array(int count){
     if(count < 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Array constructor crashed because count cannot be negative");}
-    private_data = new T[count]();
+    if(count == 0){private_data = nullptr;}
+    else{private_data = new T[count]();}
     private_length = count;
 }
 
 template <typename T> SGEXTN::Containers::Array<T>::Array(int count, const T& defaultValue){
     if(count < 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Array constructor crashed because count cannot be negative");}
-    private_data = new T[count];
+    if(count == 0){private_data = nullptr;}
+    else{private_data = new T[count];}
     private_length = count;
     for(int i=0; i<private_length; i++){
         (*(private_data + i)) = defaultValue;
@@ -17,12 +19,14 @@ template <typename T> SGEXTN::Containers::Array<T>::Array(int count, const T& de
 }
 
 template <typename T> template <typename... Ts> SGEXTN::Containers::Array<T>::Array(Ts... data){
-    private_data = new T[sizeof...(Ts)]{data...};
+    if((sizeof...(Ts)) == 0){private_data = nullptr;}
+    else{private_data = new T[sizeof...(Ts)]{data...};}
     private_length = sizeof...(Ts);
 }
 
 template <typename T> SGEXTN::Containers::Array<T>::Array(const Array& x){
-    private_data = new T[x.private_length];
+    if(x.private_length == 0){private_data = nullptr;}
+    else{private_data = new T[x.private_length];}
     private_length = x.private_length;
     for(int i=0; i<private_length; i++){
         (*(private_data + i)) = (*(x.private_data + i));
@@ -32,7 +36,8 @@ template <typename T> SGEXTN::Containers::Array<T>::Array(const Array& x){
 template <typename T> SGEXTN::Containers::Array<T>& SGEXTN::Containers::Array<T>::operator=(const Array& x){
     if(this == &x){return (*this);}
     delete[] private_data;
-    private_data = new T[x.private_length];
+    if(x.private_length == 0){private_data = nullptr;}
+    else{private_data = new T[x.private_length];}
     private_length = x.private_length;
     for(int i=0; i<private_length; i++){
         (*(private_data + i)) = (*(x.private_data + i));

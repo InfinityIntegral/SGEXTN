@@ -77,6 +77,10 @@ template <typename T> void SGEXTN::Containers::Deque<T>::reserve(int newMemoryLe
     private_ringBuffer.reserve(newMemoryLength);
 }
 
+template <typename T> void SGEXTN::Containers::Deque<T>::clear(){
+    private_ringBuffer.clear();
+}
+
 template <typename T> T* SGEXTN::Containers::Deque<T>::pointerToData(int n){
     return private_ringBuffer.pointerToData(n);
 }

@@ -13,6 +13,7 @@ public:
     [[nodiscard]] int length() const;
     bool insert(const T& x);
     bool erase(const T& x);
+    void clear();
     [[nodiscard]] bool contains(const T& x) const;
     [[nodiscard]] SetIterator<T, Comparator> begin();
     [[nodiscard]] SetConstIterator<T, Comparator> constBegin() const;

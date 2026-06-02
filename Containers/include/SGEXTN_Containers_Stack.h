@@ -11,6 +11,7 @@ public:
     [[nodiscard]] int length() const;
     void push(const T& x);
     void pop();
+    void clear();
     void reserve(int newMemoryLength);
     SGEXTN::Containers::RingBuffer<T> private_ringBuffer;
 };

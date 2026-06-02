@@ -126,3 +126,7 @@ template <typename T, typename Comparator> void SGEXTN::Containers::PriorityQueu
         else{break;}
     }
 }
+
+template <typename T, typename Comparator> void SGEXTN::Containers::PriorityQueue<T, Comparator>::clear(){
+    private_length = 0;
+}

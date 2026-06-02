@@ -21,6 +21,7 @@ public:
     void pushFront(const T& x);
     void popFront();
     void reserve(int newMemoryLength);
+    void clear();
     [[nodiscard]] T* pointerToData(int n);
     [[nodiscard]] const T* pointerToData(int n) const;
     SGEXTN::Containers::RingBuffer<T> private_ringBuffer;

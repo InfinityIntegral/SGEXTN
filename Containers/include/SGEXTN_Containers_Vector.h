@@ -1,5 +1,6 @@
 #pragma once
 #include <private_api/SGEXTN_Containers_RingBuffer.h>
+#include <SGEXTN_Containers_Array.h>
 
 namespace SGEXTN {
 namespace Containers {
@@ -15,8 +16,11 @@ public:
     void reserve(int newMemoryLength);
     void pushBack(const T& x);
     void popBack();
+    void clear();
     [[nodiscard]] T* pointerToData(int n);
     [[nodiscard]] const T* pointerToData(int n) const;
+    static Vector<T> convertToVectorAndDestroyArray(SGEXTN::Containers::Array<T>& arr);
+    static SGEXTN::Containers::Array<T> convertToArrayAndDestroyVector(Vector<T>& vec);
     SGEXTN::Containers::RingBuffer<T> private_ringBuffer;
 };
 }

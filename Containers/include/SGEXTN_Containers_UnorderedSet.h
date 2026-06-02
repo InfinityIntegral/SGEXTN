@@ -14,6 +14,7 @@ public:
     void reserve(int newMemoryLength);
     bool insert(const T& x);
     bool erase(const T& x);
+    void clear();
     [[nodiscard]] bool contains(const T& x) const;
     [[nodiscard]] UnorderedSetIterator<T, EqualityCheck, HashFunction> begin();
     [[nodiscard]] UnorderedSetConstIterator<T, EqualityCheck, HashFunction> constBegin() const;

@@ -129,6 +129,11 @@ void SGEXTN::InternalTest::ContainersTest::testVector(){
     v.pushBack(2);
     v.pushBack(3);
     if(v.length() != 3){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Vector - length update fail");}
+    v.clear();
+    if(v.length() != 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Vector - clear vector fail");}
+    v.pushBack(0);
+    v.pushBack(2);
+    v.pushBack(3);
     v.popBack();
     if(v.length() != 2 || v.at(1) != 2){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Vector - pop back fail");}
     v.fill(26);
@@ -137,6 +142,11 @@ void SGEXTN::InternalTest::ContainersTest::testVector(){
     if(v.at(0) != 0 || v.at(1) != 0 || v.at(2) != 0 || v.at(3) != 0 || v.at(4) != 0 || v.length() != 5){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Vector - construct fail");}
     v = SGEXTN::Containers::Vector<int>(100);
     if(v.length() != 100){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Vector - blank construct fail");}
+    SGEXTN::Containers::Array<int> arr = SGEXTN::Containers::Array<int>(1, 2, 3, 4, 5);
+    v = SGEXTN::Containers::Vector<int>::convertToVectorAndDestroyArray(arr);
+    if(arr.length() != 0 || v.length() != 5 || v.at(0) != 1 || v.at(1) != 2 || v.at(2) != 3 || v.at(3) != 4 || v.at(4) != 5){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Vector - convert array to vector fail");}
+    arr = SGEXTN::Containers::Vector<int>::convertToArrayAndDestroyVector(v);
+    if(v.length() != 0 || arr.length() != 5 || arr.at(0) != 1 || arr.at(1) != 2 || arr.at(2) != 3 || arr.at(3) != 4 || arr.at(4) != 5){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Vector - convert vector to array fail");}
 }
 
 void SGEXTN::InternalTest::ContainersTest::testQueue(){
@@ -144,6 +154,10 @@ void SGEXTN::InternalTest::ContainersTest::testQueue(){
     queue.push(1);
     queue.push(2);
     if(queue.length() != 2){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Queue - length check fail");}
+    queue.clear();
+    if(queue.length() != 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Queue - clear queue fail");}
+    queue.push(1);
+    queue.push(2);
     if(queue.front() != 1){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Queue - front element check fail");}
     if(queue.back() != 2){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Queue - back element check fail");}
     queue.pop();
@@ -157,6 +171,10 @@ void SGEXTN::InternalTest::ContainersTest::testStack(){
     stack.push(1);
     stack.push(2);
     if(stack.length() != 2){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Stack - length check fail");}
+    stack.clear();
+    if(stack.length() != 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Stack - clear stack fail");}
+    stack.push(1);
+    stack.push(2);
     if(stack.top() != 2){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Stack - top element check fail");}
     stack.pop();
     if(stack.length() != 1 || stack.top() != 1){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Stack - pop fail");}
@@ -181,6 +199,12 @@ void SGEXTN::InternalTest::ContainersTest::testDeque(){
     if(dq.length() != 3 || dq.back() != 26 || dq.front() != 26){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Deque - pop back fail");}
     dq.pushFront(1);
     if(dq.length() != 4 || dq.front() != 1 || dq.back() != 26){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Deque - push front fail");}
+    dq.clear();
+    if(dq.length() != 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Deque - clear deque fail");}
+    dq.pushBack(26);
+    dq.pushBack(26);
+    dq.pushBack(26);
+    dq.pushFront(1);
     dq.popFront();
     if(dq.length() != 3 || dq.front() != 26 || dq.back() != 26){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Deque - pop front fail");}
 }
@@ -204,6 +228,11 @@ void SGEXTN::InternalTest::ContainersTest::testPriorityQueue(){
     if(pq.length() != 4 || pq.top() != 3){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::PriorityQueue - pop fail 2");}
     pq.pop();
     if(pq.length() != 3 || pq.top() != 2){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::PriorityQueue - pop fail 3");}
+    pq.clear();
+    if(pq.length() != 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::PriorityQueue - clear priority queue fail");}
+    pq.push(1);
+    pq.push(-1);
+    pq.push(2);
     pq.pop();
     if(pq.length() != 2 || pq.top() != 1){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::PriorityQueue - pop fail 4");}
     pq.pop();
@@ -221,6 +250,14 @@ void SGEXTN::InternalTest::ContainersTest::testSet(){
     s.insert(5);
     bool x = s.insert(6);
     if(s.length() != 6 || s.contains(6) == false || x == false){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Set - insert fail");}
+    s.clear();
+    if(s.length() != 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Set - clear fail");}
+    s.insert(1);
+    s.insert(2);
+    s.insert(3);
+    s.insert(4);
+    s.insert(5);
+    s.insert(6);
     x = s.insert(5);
     if(x == true){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Set - duplicate insert fail");}
     if(s.length() != 6){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Set - length check fail");}
@@ -256,6 +293,14 @@ void SGEXTN::InternalTest::ContainersTest::testMultiSet(){
     s.insert(5);
     s.insert(6);
     if(s.length() != 6 || s.contains(6) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiSet - insert fail");}
+    s.clear();
+    if(s.length() != 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiSet - clear fail");}
+    s.insert(1);
+    s.insert(2);
+    s.insert(3);
+    s.insert(4);
+    s.insert(5);
+    s.insert(6);
     s.insert(5);
     if(s.length() != 7 || s.contains(5) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiSet - duplicate insert fail");}
     if(s.length() != 7){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiSet - length check fail");}
@@ -292,6 +337,14 @@ void SGEXTN::InternalTest::ContainersTest::testMap(){
     s.insert(5, 5);
     bool x = s.insert(6, 6);
     if(s.length() != 6 || s.contains(6) == false || x == false){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Map - insert fail");}
+    s.clear();
+    if(s.length() != 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Map - clear fail");}
+    s.insert(1, 1);
+    s.insert(2, 2);
+    s.insert(3, 3);
+    s.insert(4, 4);
+    s.insert(5, 5);
+    s.insert(6, 6);
     x = s.insert(5, 0);
     if(x == true){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Map - duplicate insert fail");}
     if(s.length() != 6){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Map - length check fail");}
@@ -330,6 +383,14 @@ void SGEXTN::InternalTest::ContainersTest::testMultiMap(){
     s.insert(5, 5);
     s.insert(6, 6);
     if(s.length() != 6 || s.contains(6) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiMap - insert fail");}
+    s.clear();
+    if(s.length() != 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiMap - clear fail");}
+    s.insert(1, 1);
+    s.insert(2, 2);
+    s.insert(3, 3);
+    s.insert(4, 4);
+    s.insert(5, 5);
+    s.insert(6, 6);
     s.insert(5, 0);
     if(s.length() != 7 || s.contains(5) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiMap - duplicate insert fail");}
     if(s.length() != 7){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiMap - length check fail");}
@@ -369,6 +430,14 @@ void SGEXTN::InternalTest::ContainersTest::testUnorderedSet(){
     s.insert(5);
     bool x = s.insert(6);
     if(s.length() != 6 || s.contains(6) == false || x == false){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::UnorderedSet - insert fail");}
+    s.clear();
+    if(s.length() != 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::UnorderedSet - clear fail");}
+    s.insert(1);
+    s.insert(2);
+    s.insert(3);
+    s.insert(4);
+    s.insert(5);
+    s.insert(6);
     x = s.insert(5);
     if(x == true){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::UnorderedSet - duplicate insert fail");}
     if(s.length() != 6){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::UnorderedSet - length check fail");}
@@ -396,6 +465,14 @@ void SGEXTN::InternalTest::ContainersTest::testUnorderedMap(){
     s.insert(5, 5);
     bool x = s.insert(6, 6);
     if(s.length() != 6 || s.contains(6) == false || x == false){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::UnorderedMap - insert fail");}
+    s.clear();
+    if(s.length() != 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::UnorderedMap - clear fail");}
+    s.insert(1, 1);
+    s.insert(2, 2);
+    s.insert(3, 3);
+    s.insert(4, 4);
+    s.insert(5, 5);
+    s.insert(6, 6);
     x = s.insert(5, 0);
     if(x == true){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::UnorderedMap - duplicate insert fail");}
     if(s.length() != 6){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::UnorderedMap - length check fail");}

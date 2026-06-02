@@ -48,10 +48,36 @@ template <typename T> void SGEXTN::Containers::Vector<T>::popBack(){
     private_ringBuffer.private_length--;
 }
 
+template <typename T> void SGEXTN::Containers::Vector<T>::clear(){
+    private_ringBuffer.clear();
+}
+
 template <typename T> T* SGEXTN::Containers::Vector<T>::pointerToData(int n){
     return private_ringBuffer.pointerToData(n);
 }
 
 template <typename T> const T* SGEXTN::Containers::Vector<T>::pointerToData(int n) const {
     return private_ringBuffer.pointerToData(n);
+}
+
+template <typename T> SGEXTN::Containers::Vector<T> SGEXTN::Containers::Vector<T>::convertToVectorAndDestroyArray(SGEXTN::Containers::Array<T>& arr){
+    SGEXTN::Containers::Vector<T> vec;
+    vec.private_ringBuffer.private_data = arr.private_data;
+    vec.private_ringBuffer.private_start = 0;
+    vec.private_ringBuffer.private_length = arr.private_length;
+    vec.private_ringBuffer.private_memoryLength = arr.private_length;
+    arr.private_data = nullptr;
+    arr.private_length = 0;
+    return vec;
+}
+
+template <typename T> SGEXTN::Containers::Array<T> SGEXTN::Containers::Vector<T>::convertToArrayAndDestroyVector(SGEXTN::Containers::Vector<T>& vec){
+    SGEXTN::Containers::Array<T> arr(0);
+    arr.private_data = vec.private_ringBuffer.private_data;
+    arr.private_length = vec.private_ringBuffer.private_length;
+    vec.private_ringBuffer.private_data = nullptr;
+    vec.private_ringBuffer.private_start = 0;
+    vec.private_ringBuffer.private_length = 0;
+    vec.private_ringBuffer.private_memoryLength = 0;
+    return arr;
 }

@@ -17,6 +17,10 @@ template <typename Key, typename Value, typename Comparator> bool SGEXTN::Contai
     return private_avlTree.erase(x);
 }
 
+template <typename Key, typename Value, typename Comparator> void SGEXTN::Containers::Map<Key, Value, Comparator>::clear(){
+    private_avlTree.clear();
+}
+
 template <typename Key, typename Value, typename Comparator> bool SGEXTN::Containers::Map<Key, Value, Comparator>::contains(const Key& x) const {
     return private_avlTree.contains(x);
 }

@@ -398,7 +398,7 @@ SGEXTN::ApplicationBase::String::String(const SGEXTN::ApplicationBase::String& x
 SGEXTN::ApplicationBase::String& SGEXTN::ApplicationBase::String::operator=(const SGEXTN::ApplicationBase::String& x){
     if(this == &x){return (*this);}
     private_data = x.private_data;
-    if(private_characterOffsets.length() > 0){private_characterOffsets = SGEXTN::Containers::Vector<int>();}
+    if(private_characterOffsets.length() > 0){private_characterOffsets.clear();}
     return (*this);
 }
 
@@ -558,7 +558,7 @@ void SGEXTN::ApplicationBase::String::private_computeOffsets() const {
 }
 
 void SGEXTN::ApplicationBase::String::private_invalidateOffsets() const {
-    if(private_characterOffsets.length() > 0){private_characterOffsets = SGEXTN::Containers::Vector<int>();}
+    if(private_characterOffsets.length() > 0){private_characterOffsets.clear();}
 }
 
 SGEXTN::ApplicationBase::Character SGEXTN::ApplicationBase::String::getCharacterAt(int i) const {
@@ -1153,11 +1153,7 @@ SGEXTN::Containers::Array<SGEXTN::ApplicationBase::String> SGEXTN::ApplicationBa
         currentIndex = index + separator.characterLength();
     }
     splitStrings.pushBack(substringCharacters(currentIndex, characterLength() - currentIndex));
-    SGEXTN::Containers::Array<SGEXTN::ApplicationBase::String> output(splitStrings.length());
-    for(int i=0; i<splitStrings.length(); i++){
-        output.at(i) = splitStrings.at(i);
-    }
-    return output;
+    return SGEXTN::Containers::Vector<SGEXTN::ApplicationBase::String>::convertToArrayAndDestroyVector(splitStrings);
 }
 
 bool SGEXTN::ApplicationBase::String::isDigit() const {

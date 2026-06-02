@@ -15,6 +15,7 @@ public:
     void push(const T& x);
     void pop();
     void reserve(int newMemoryLength);
+    void clear();
     T* private_data;
     int private_length;
     int private_memoryLength;

@@ -41,6 +41,7 @@ public:
     void reserve(int newMemoryLength);
     bool insert(const Key& key, const Value& value, bool allowDuplicate);
     bool erase(const Key& x);
+    void clear();
     [[nodiscard]] bool contains(const Key& x) const;
     [[nodiscard]] int count(const Key& x) const;
     [[nodiscard]] Value& at(const Key& x);

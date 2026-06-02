@@ -193,7 +193,6 @@ SGEXTN::Containers::Array<int> SGEXTN::ApplicationBase::Character::getUnicode() 
             if((byteAt(i + 2) & 0xC0) != 0x80){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character::getUnicode crashed due to invalid second continuation byte in 3 byte character");}
             unicode += static_cast<int>(byteAt(i + 2) & 0x3f);
             if(unicode < 0x800){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character::getUnicode crashed due to 3 byte overlong character");}
-            if(unicode >= 0xd800 && unicode <= 0xdfff){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character::getUnicode crashed due to invalid 3 byte character");}
             output.pushBack(unicode);
             i += 3;
         }
@@ -214,11 +213,7 @@ SGEXTN::Containers::Array<int> SGEXTN::ApplicationBase::Character::getUnicode() 
         }
         else{SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character::getUnicode crashed due to invalid character");}
     }
-    SGEXTN::Containers::Array<int> outputArray(output.length());
-    for(int j=0; j<output.length(); j++){
-        outputArray.at(j) = output.at(j);
-    }
-    return outputArray;
+    return SGEXTN::Containers::Vector<int>::convertToArrayAndDestroyVector(output);
 }
 
 bool SGEXTN::ApplicationBase::Character::isUppercase() const {

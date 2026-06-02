@@ -211,6 +211,11 @@ template <typename Key, typename Value, typename Comparator> bool SGEXTN::Contai
     return erase(i);
 }
 
+template <typename Key, typename Value, typename Comparator> void SGEXTN::Containers::AVLTree<Key, Value, Comparator>::clear(){
+    if(root != nullptr){(*root).recursiveDelete();}
+    root = nullptr;
+}
+
 template <typename Key, typename Value, typename Comparator> bool SGEXTN::Containers::AVLTree<Key, Value, Comparator>::contains(const Key& x) const {
     return (constFind(x) != constEnd());
 }

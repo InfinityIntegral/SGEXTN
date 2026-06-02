@@ -17,6 +17,10 @@ template <typename T, typename Comparator> bool SGEXTN::Containers::MultiSet<T, 
     return private_avlTree.erase(x);
 }
 
+template <typename T, typename Comparator> void SGEXTN::Containers::MultiSet<T, Comparator>::clear(){
+    private_avlTree.clear();
+}
+
 template <typename T, typename Comparator> bool SGEXTN::Containers::MultiSet<T, Comparator>::contains(const T& x) const {
     return private_avlTree.contains(x);
 }

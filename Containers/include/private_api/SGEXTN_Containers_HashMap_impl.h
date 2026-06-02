@@ -169,6 +169,14 @@ template <typename Key, typename Value, typename EqualityCheck, typename HashFun
     return erase(i);
 }
 
+template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> void SGEXTN::Containers::HashMap<Key, Value, EqualityCheck, HashFunction>::clear(){
+    activeLength = 0;
+    memoryUsedLength = 0;
+    for(int i=0; i<memoryTotalLength; i++){
+        (*(data + i)).status = SGEXTN::Containers::HashMapSlotStatus::Unused;
+    }
+}
+
 template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> bool SGEXTN::Containers::HashMap<Key, Value, EqualityCheck, HashFunction>::contains(const Key& x) const {
     return (constFind(x) != constEnd());
 }
