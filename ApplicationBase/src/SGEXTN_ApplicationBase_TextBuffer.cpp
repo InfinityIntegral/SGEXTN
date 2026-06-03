@@ -3,6 +3,7 @@
 #include <cstring>
 #include <SGEXTN_Containers_HashAlgorithm.h>
 #include <SGEXTN_Containers_Span.h>
+#include <SGEXTN_Containers_PlacementNew.h>
 
 namespace {
 void memoryCopy(const unsigned char* source, unsigned char* target, int length){
@@ -27,8 +28,6 @@ int memoryCompare(const unsigned char* a, int aLength, const unsigned char* b, i
 }
 }
 
-void* operator new(decltype(sizeof(0)) /*unused*/, void* p) noexcept {return p;}
-
 unsigned char& SGEXTN::ApplicationBase::TextBuffer::private_lengthByte(){
     return (*(private_stackAllocData + 23));
 }
@@ -48,7 +47,7 @@ SGEXTN::ApplicationBase::TextBuffer::TextBuffer(const SGEXTN::ApplicationBase::T
         private_lengthByte() = x.private_lengthByte();
         memoryCopy(x.private_stackAllocData, private_stackAllocData, private_lengthByte());
     }
-    else{new(&private_heapAllocData) SGEXTN::Containers::Vector<unsigned char>(x.private_heapAllocData);}
+    else{new(SGEXTN::Containers::PlacementNew::placeholder, &private_heapAllocData) SGEXTN::Containers::Vector<unsigned char>(x.private_heapAllocData);}
 }
 
 SGEXTN::ApplicationBase::TextBuffer& SGEXTN::ApplicationBase::TextBuffer::operator=(const SGEXTN::ApplicationBase::TextBuffer& x){
@@ -59,7 +58,7 @@ SGEXTN::ApplicationBase::TextBuffer& SGEXTN::ApplicationBase::TextBuffer::operat
         private_lengthByte() = x.length();
         memoryCopy(x.private_stackAllocData, private_stackAllocData, private_lengthByte());
     }
-    else{new(&private_heapAllocData) SGEXTN::Containers::Vector<unsigned char>(x.private_heapAllocData);}
+    else{new(SGEXTN::Containers::PlacementNew::placeholder, &private_heapAllocData) SGEXTN::Containers::Vector<unsigned char>(x.private_heapAllocData);}
     return (*this);
 }
 
@@ -69,7 +68,7 @@ SGEXTN::ApplicationBase::TextBuffer::TextBuffer(SGEXTN::ApplicationBase::TextBuf
         private_lengthByte() = x.private_lengthByte();
         memoryCopy(x.private_stackAllocData, private_stackAllocData, private_lengthByte());
     }
-    else{new(&private_heapAllocData) SGEXTN::Containers::Vector<unsigned char>((SGEXTN::Containers::Vector<unsigned char>&&)(x.private_heapAllocData));}
+    else{new(SGEXTN::Containers::PlacementNew::placeholder, &private_heapAllocData) SGEXTN::Containers::Vector<unsigned char>((SGEXTN::Containers::Vector<unsigned char>&&)(x.private_heapAllocData));}
 }
 
 SGEXTN::ApplicationBase::TextBuffer& SGEXTN::ApplicationBase::TextBuffer::operator=(SGEXTN::ApplicationBase::TextBuffer&& x) noexcept {
@@ -79,7 +78,7 @@ SGEXTN::ApplicationBase::TextBuffer& SGEXTN::ApplicationBase::TextBuffer::operat
         private_lengthByte() = x.private_lengthByte();
         memoryCopy(x.private_stackAllocData, private_stackAllocData, private_lengthByte());
     }
-    else{new(&private_heapAllocData) SGEXTN::Containers::Vector<unsigned char>((SGEXTN::Containers::Vector<unsigned char>&&)(x.private_heapAllocData));}
+    else{new(SGEXTN::Containers::PlacementNew::placeholder, &private_heapAllocData) SGEXTN::Containers::Vector<unsigned char>((SGEXTN::Containers::Vector<unsigned char>&&)(x.private_heapAllocData));}
     return (*this);
 }
 
@@ -108,7 +107,7 @@ void SGEXTN::ApplicationBase::TextBuffer::private_moveToHeap(){
     heapContainer.private_ringBuffer.private_length = private_lengthByte();
     memoryCopy(private_stackAllocData, heapContainer.pointerToData(0), private_lengthByte());
     private_isHeapAlloc = true;
-    new(&private_heapAllocData) SGEXTN::Containers::Vector<unsigned char>((SGEXTN::Containers::Vector<unsigned char>&&)(heapContainer));
+    new(SGEXTN::Containers::PlacementNew::placeholder, &private_heapAllocData) SGEXTN::Containers::Vector<unsigned char>((SGEXTN::Containers::Vector<unsigned char>&&)(heapContainer));
 }
 
 void SGEXTN::ApplicationBase::TextBuffer::pushBack(char c){
