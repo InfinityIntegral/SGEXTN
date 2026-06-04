@@ -28,10 +28,10 @@ public:
     static int lastDestruct;
     int value;
     ConstructibleInteger(int x);
-    ConstructibleInteger(const ConstructibleInteger&) = default;
-    ConstructibleInteger& operator=(const ConstructibleInteger&) = default;
-    ConstructibleInteger(ConstructibleInteger&&) noexcept = default;
-    ConstructibleInteger& operator=(ConstructibleInteger&&) noexcept = default;
+    ConstructibleInteger(const ConstructibleInteger& x);
+    ConstructibleInteger& operator=(const ConstructibleInteger& x);
+    ConstructibleInteger(ConstructibleInteger&& x) noexcept;
+    ConstructibleInteger& operator=(ConstructibleInteger&& x) noexcept;
     ~ConstructibleInteger();
     [[nodiscard]] operator int() const;
     [[nodiscard]] bool operator==(const ConstructibleInteger& x) const;
@@ -48,8 +48,30 @@ ConstructibleInteger::ConstructibleInteger(int x) : value(x){
     ConstructibleInteger::lastConstruct = x;
 }
 
+ConstructibleInteger::ConstructibleInteger(const ConstructibleInteger& x) : value(x.value) {
+    ConstructibleInteger::lastConstruct = value;
+}
+
+ConstructibleInteger& ConstructibleInteger::operator=(const ConstructibleInteger& x){
+    if(value != -1000){ConstructibleInteger::lastDestruct = value;}
+    value = x.value;
+    ConstructibleInteger::lastConstruct = value;
+    return (*this);
+}
+
+ConstructibleInteger::ConstructibleInteger(ConstructibleInteger&& x) noexcept : value(x.value) {
+    x.value = -1000;
+}
+
+ConstructibleInteger& ConstructibleInteger::operator=(ConstructibleInteger&& x) noexcept {
+    if(value != -1000){ConstructibleInteger::lastDestruct = value;}
+    value = x.value;
+    x.value = -1000;
+    return (*this);
+}
+
 ConstructibleInteger::~ConstructibleInteger(){
-    ConstructibleInteger::lastDestruct = value;
+    if(value != -1000){ConstructibleInteger::lastDestruct = value;}
 }
 
 ConstructibleInteger::operator int() const {
@@ -622,7 +644,7 @@ void SGEXTN::InternalTest::ContainersTest::testSetConstructible(){
 }
 
 void SGEXTN::InternalTest::ContainersTest::testMapConstructible(){
-    SGEXTN::Containers::Map<ConstructibleInteger, ConstructibleInteger, SGEXTN::Containers::LessThan<ConstructibleInteger>> s;
+    SGEXTN::Containers::Map<ConstructibleInteger, int, SGEXTN::Containers::LessThan<ConstructibleInteger>> s;
     ConstructibleInteger::lastConstruct = 0;
     s.insert(1, 1);
     if(ConstructibleInteger::lastConstruct != 1){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Map - insert 1 construct fail");}
@@ -648,7 +670,7 @@ void SGEXTN::InternalTest::ContainersTest::testMapConstructible(){
     ConstructibleInteger::lastDestruct = 0;
     x = s.erase(2);
     if(ConstructibleInteger::lastDestruct != 2 || s.length() != 5 || s.contains(2) == true || x == false){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Map - erase destruct fail");}
-    SGEXTN::Containers::MapIterator<ConstructibleInteger, ConstructibleInteger, SGEXTN::Containers::LessThan<ConstructibleInteger>> itr = s.find(1);
+    SGEXTN::Containers::MapIterator<ConstructibleInteger, int, SGEXTN::Containers::LessThan<ConstructibleInteger>> itr = s.find(1);
     ConstructibleInteger::lastDestruct = 0;
     x = s.erase(itr);
     if(ConstructibleInteger::lastDestruct != 1 || s.length() != 4 || s.contains(1) == true || x == false){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Map - erase iterator destruct fail");}
@@ -708,7 +730,7 @@ void SGEXTN::InternalTest::ContainersTest::testMultiSetConstructible(){
 }
 
 void SGEXTN::InternalTest::ContainersTest::testMultiMapConstructible(){
-    SGEXTN::Containers::MultiMap<ConstructibleInteger, ConstructibleInteger, SGEXTN::Containers::LessThan<ConstructibleInteger>> s;
+    SGEXTN::Containers::MultiMap<ConstructibleInteger, int, SGEXTN::Containers::LessThan<ConstructibleInteger>> s;
     ConstructibleInteger::lastConstruct = 0;
     s.insert(1, 1);
     if(ConstructibleInteger::lastConstruct != 1){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiMap - insert 1 construct fail");}
@@ -736,7 +758,7 @@ void SGEXTN::InternalTest::ContainersTest::testMultiMapConstructible(){
     ConstructibleInteger::lastDestruct = 0;
     bool x = s.erase(2);
     if(ConstructibleInteger::lastDestruct != 2 || s.length() != 6 || s.contains(2) == true || x == false){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiMap - erase destruct fail");}
-    SGEXTN::Containers::MultiMapIterator<ConstructibleInteger, ConstructibleInteger, SGEXTN::Containers::LessThan<ConstructibleInteger>> itr = s.find(1);
+    SGEXTN::Containers::MultiMapIterator<ConstructibleInteger, int, SGEXTN::Containers::LessThan<ConstructibleInteger>> itr = s.find(1);
     ConstructibleInteger::lastDestruct = 0;
     x = s.erase(itr);
     if(ConstructibleInteger::lastDestruct != 1 || s.length() != 5 || s.contains(1) == true || x == false){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiMap - erase iterator destruct fail");}

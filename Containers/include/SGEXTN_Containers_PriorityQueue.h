@@ -1,24 +1,18 @@
 #pragma once
+#include <private_api/SGEXTN_Containers_RingBuffer.h>
 
 namespace SGEXTN {
 namespace Containers {
 template <typename T, typename Comparator> class PriorityQueue {
 public:
     PriorityQueue();
-    PriorityQueue(const PriorityQueue& x);
-    PriorityQueue& operator=(const PriorityQueue& x);
-    PriorityQueue(PriorityQueue&& x) noexcept;
-    PriorityQueue& operator=(PriorityQueue&& x) noexcept;
-    ~PriorityQueue();
     [[nodiscard]] const T& top() const;
     [[nodiscard]] int length() const;
     void push(const T& x);
     void pop();
     void reserve(int newMemoryLength);
     void clear();
-    T* private_data;
-    int private_length;
-    int private_memoryLength;
+    SGEXTN::Containers::RingBuffer<T> private_ringBuffer;
     Comparator private_comparatorInstance;
     void private_swap(int a, int b);
     bool private_compare(int a, int b);
