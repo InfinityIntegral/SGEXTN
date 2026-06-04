@@ -36,13 +36,11 @@ const unsigned char& SGEXTN::ApplicationBase::TextBuffer::private_lengthByte() c
     return (*(private_stackAllocData + 23));
 }
 
-SGEXTN::ApplicationBase::TextBuffer::TextBuffer(){
-    private_isHeapAlloc = false;
+SGEXTN::ApplicationBase::TextBuffer::TextBuffer() : private_isHeapAlloc(false) {
     private_lengthByte() = 0;
 }
 
-SGEXTN::ApplicationBase::TextBuffer::TextBuffer(const SGEXTN::ApplicationBase::TextBuffer& x){
-    private_isHeapAlloc = x.private_isHeapAlloc;
+SGEXTN::ApplicationBase::TextBuffer::TextBuffer(const SGEXTN::ApplicationBase::TextBuffer& x) : private_isHeapAlloc(x.private_isHeapAlloc) {
     if(private_isHeapAlloc == false){
         private_lengthByte() = x.private_lengthByte();
         memoryCopy(x.private_stackAllocData, private_stackAllocData, private_lengthByte());
@@ -62,8 +60,7 @@ SGEXTN::ApplicationBase::TextBuffer& SGEXTN::ApplicationBase::TextBuffer::operat
     return (*this);
 }
 
-SGEXTN::ApplicationBase::TextBuffer::TextBuffer(SGEXTN::ApplicationBase::TextBuffer&& x) noexcept {
-    private_isHeapAlloc = x.private_isHeapAlloc;
+SGEXTN::ApplicationBase::TextBuffer::TextBuffer(SGEXTN::ApplicationBase::TextBuffer&& x) noexcept : private_isHeapAlloc(x.private_isHeapAlloc) {
     if(private_isHeapAlloc == false){
         private_lengthByte() = x.private_lengthByte();
         memoryCopy(x.private_stackAllocData, private_stackAllocData, private_lengthByte());

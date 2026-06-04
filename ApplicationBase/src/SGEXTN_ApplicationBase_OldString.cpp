@@ -20,13 +20,9 @@ char floatDisplayFormatToQStringFormatSpecifier(SGEXTN::ApplicationBase::FloatDi
 }
 }
 
-SGEXTN::ApplicationBase::OldString::OldString(){
-    private_data = new QString("");
-}
+SGEXTN::ApplicationBase::OldString::OldString() : private_data(new QString("")) {}
 
-SGEXTN::ApplicationBase::OldString::OldString(const SGEXTN::ApplicationBase::OldString& s){
-    private_data = new QString(*s.private_data);
-}
+SGEXTN::ApplicationBase::OldString::OldString(const SGEXTN::ApplicationBase::OldString& s) : private_data(new QString(*s.private_data)) {}
 
 SGEXTN::ApplicationBase::OldString& SGEXTN::ApplicationBase::OldString::operator=(const SGEXTN::ApplicationBase::OldString& s){
     if(this == &s){return (*this);}
@@ -34,8 +30,7 @@ SGEXTN::ApplicationBase::OldString& SGEXTN::ApplicationBase::OldString::operator
     return (*this);
 }
 
-SGEXTN::ApplicationBase::OldString::OldString(OldString&& s) noexcept {
-    private_data = s.private_data;
+SGEXTN::ApplicationBase::OldString::OldString(OldString&& s) noexcept : private_data(s.private_data) {
     s.private_data = nullptr;
 }
 
@@ -50,17 +45,11 @@ SGEXTN::ApplicationBase::OldString::~OldString(){
     delete private_data;
 }
 
-SGEXTN::ApplicationBase::OldString::OldString(SGEXTN::ApplicationBase::OldChar c){
-    private_data = new QString(QChar(c.private_data));
-}
+SGEXTN::ApplicationBase::OldString::OldString(SGEXTN::ApplicationBase::OldChar c) : private_data(new QString(QChar(c.private_data))) {}
 
-SGEXTN::ApplicationBase::OldString::OldString(const char* cString){
-    private_data = new QString(cString);
-}
+SGEXTN::ApplicationBase::OldString::OldString(const char* cString) : private_data(new QString(cString)) {}
 
-SGEXTN::ApplicationBase::OldString::OldString(const QString& s){
-    private_data = new QString(s);
-}
+SGEXTN::ApplicationBase::OldString::OldString(const QString& s) : private_data(new QString(s)) {}
 
 bool SGEXTN::ApplicationBase::OldString::operator==(const SGEXTN::ApplicationBase::OldString& x) const {
     return ((*private_data) == (*x.private_data));

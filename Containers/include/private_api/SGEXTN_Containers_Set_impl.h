@@ -1,9 +1,7 @@
 #pragma once
 #include <private_api/SGEXTN_Containers_Crash.h>
 
-template <typename T, typename Comparator> SGEXTN::Containers::Set<T, Comparator>::Set(){
-    private_avlTree = SGEXTN::Containers::AVLTree<T, bool, Comparator>();
-}
+template <typename T, typename Comparator> SGEXTN::Containers::Set<T, Comparator>::Set() : private_avlTree() {}
 
 template <typename T, typename Comparator> int SGEXTN::Containers::Set<T, Comparator>::length() const {
     return private_avlTree.length();
@@ -95,9 +93,7 @@ template <typename T, typename Comparator> SGEXTN::Containers::SetConstIterator<
     return SGEXTN::Containers::SetConstIterator(private_avlTree.constIteratorAt(n));
 }
 
-template <typename T, typename Comparator> SGEXTN::Containers::SetIterator<T, Comparator>::SetIterator(AVLTreeIterator<T, bool, Comparator> i){
-    private_avlTreeIterator = i;
-}
+template <typename T, typename Comparator> SGEXTN::Containers::SetIterator<T, Comparator>::SetIterator(AVLTreeIterator<T, bool, Comparator> i) : private_avlTreeIterator(i) {}
 
 template <typename T, typename Comparator> SGEXTN::Containers::SetIterator<T, Comparator>& SGEXTN::Containers::SetIterator<T, Comparator>::operator++(){
     private_avlTreeIterator++;
@@ -134,9 +130,7 @@ template <typename T, typename Comparator> const T& SGEXTN::Containers::SetItera
     return private_avlTreeIterator.key();
 }
 
-template <typename T, typename Comparator> SGEXTN::Containers::SetConstIterator<T, Comparator>::SetConstIterator(AVLTreeConstIterator<T, bool, Comparator> i){
-    private_avlTreeIterator = i;
-}
+template <typename T, typename Comparator> SGEXTN::Containers::SetConstIterator<T, Comparator>::SetConstIterator(AVLTreeConstIterator<T, bool, Comparator> i) : private_avlTreeIterator(i) {}
 
 template <typename T, typename Comparator> SGEXTN::Containers::SetConstIterator<T, Comparator>& SGEXTN::Containers::SetConstIterator<T, Comparator>::operator++(){
     private_avlTreeIterator++;

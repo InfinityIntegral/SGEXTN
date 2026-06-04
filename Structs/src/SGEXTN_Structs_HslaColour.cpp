@@ -16,14 +16,16 @@ float minimumOf3(float a, float b, float c){
     return SGEXTN::Math::FloatMath<float>::minimum(a, SGEXTN::Math::FloatMath<float>::minimum(b, c));
 }
 
-void limitTo100(float& x){
-    if(x < 0.0f){x = 0.0f;}
-    else if(x > 100.0f){x = 100.0f;}
+float limitTo100(float x){
+    if(x < 0.0f){return 0.0f;}
+    if(x > 100.0f){return 100.0f;}
+    return x;
 }
 
-void limitTo360(float& x){
+float limitTo360(float x){
     x = SGEXTN::Math::FloatMath<float>::modulo(x, 360.0f);
     if(x < 0.0f){x += 360.0f;}
+    return x;
 }
 
 float hueIntermediatesToRGB(float p, float q, float t){
@@ -36,22 +38,14 @@ float hueIntermediatesToRGB(float p, float q, float t){
 }
 }
 
-SGEXTN::Structs::HslaColour::HslaColour(){
-    private_hue = 313.0f;
-    private_saturation = 100.0f;
-    private_lightness = 50.0f;
-    private_transparency = 255.0f;
-}
+SGEXTN::Structs::HslaColour::HslaColour() : private_hue(313.0f), private_saturation(100.0f), private_lightness(50.0f), private_transparency(100.0f) {}
 
-SGEXTN::Structs::HslaColour::HslaColour(SGEXTN::Structs::RgbaColour x){
-    private_transparency = x.getTransparencyFloat() * 100.0f;
+SGEXTN::Structs::HslaColour::HslaColour(SGEXTN::Structs::RgbaColour x) : private_hue(313.0f), private_saturation(0.0f), private_lightness(50.0f), private_transparency(x.getTransparencyFloat() * 100.0f){
     const float r = x.getRedFloat();
     const float g = x.getGreenFloat();
     const float b = x.getBlueFloat();
     const float h = maximumOf3(r, g, b);
     const float l = minimumOf3(r, g, b);
-    private_hue = 313.0f;
-    private_saturation = 0.0f;
     private_lightness = 0.5f * (l + h);
     if(l != h){
         const float d = h - l;
@@ -68,31 +62,14 @@ SGEXTN::Structs::HslaColour::HslaColour(SGEXTN::Structs::RgbaColour x){
     private_hue *= 360.0f;
     private_saturation *= 100.0f;
     private_lightness *= 100.0f;
-    limitTo360(private_hue);
-    limitTo100(private_saturation);
-    limitTo100(private_lightness);
+    private_hue = limitTo360(private_hue);
+    private_saturation = limitTo100(private_saturation);
+    private_lightness = limitTo100(private_lightness);
 }
 
-SGEXTN::Structs::HslaColour::HslaColour(float h, float s, float l){
-    limitTo360(h);
-    limitTo100(s);
-    limitTo100(l);
-    private_hue = h;
-    private_saturation = s;
-    private_lightness = l;
-    private_transparency = 100.0f;
-}
+SGEXTN::Structs::HslaColour::HslaColour(float h, float s, float l) : private_hue(limitTo360(h)), private_saturation(limitTo100(s)), private_lightness(limitTo100(l)), private_transparency(100.0f) {}
 
-SGEXTN::Structs::HslaColour::HslaColour(float h, float s, float l, float a){
-    limitTo360(h);
-    limitTo100(s);
-    limitTo100(l);
-    limitTo100(a);
-    private_hue = h;
-    private_saturation = s;
-    private_lightness = l;
-    private_transparency = a;
-}
+SGEXTN::Structs::HslaColour::HslaColour(float h, float s, float l, float a) : private_hue(limitTo360(h)), private_saturation(limitTo100(s)), private_lightness(limitTo100(l)), private_transparency(limitTo100(a)) {}
 
 bool SGEXTN::Structs::HslaColour::operator==(SGEXTN::Structs::HslaColour x) const {
     return ((private_hue == x.private_hue) && (private_saturation == x.private_saturation) && (private_lightness == x.private_lightness) && (private_transparency == x.private_transparency));
@@ -146,23 +123,19 @@ float SGEXTN::Structs::HslaColour::getTransparency() const {
 }
 
 void SGEXTN::Structs::HslaColour::setHue(float h){
-    limitTo360(h);
-    private_hue = h;
+    private_hue = limitTo360(h);
 }
 
 void SGEXTN::Structs::HslaColour::setSaturation(float s){
-    limitTo100(s);
-    private_saturation = s;
+    private_saturation = limitTo100(s);
 }
 
 void SGEXTN::Structs::HslaColour::setLightness(float l){
-    limitTo100(l);
-    private_lightness = l;
+    private_lightness = limitTo100(l);
 }
 
 void SGEXTN::Structs::HslaColour::setTransparency(float a){
-    limitTo100(a);
-    private_transparency = a;
+    private_transparency = limitTo100(a);
 }
 
 SGEXTN::Structs::HslaColour SGEXTN::Structs::HslaColour::invertHue() const {

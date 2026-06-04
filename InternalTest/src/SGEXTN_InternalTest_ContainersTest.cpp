@@ -21,6 +21,62 @@
 #include <SGEXTN_Containers_Hash.h>
 #include <SGEXTN_Containers_Sort.h>
 
+namespace {
+class ConstructibleInteger {
+public:
+    static int lastConstruct;
+    static int lastDestruct;
+    int value;
+    ConstructibleInteger(int x);
+    ConstructibleInteger(const ConstructibleInteger&) = default;
+    ConstructibleInteger& operator=(const ConstructibleInteger&) = default;
+    ConstructibleInteger(ConstructibleInteger&&) noexcept = default;
+    ConstructibleInteger& operator=(ConstructibleInteger&&) noexcept = default;
+    ~ConstructibleInteger();
+    [[nodiscard]] operator int() const;
+    [[nodiscard]] bool operator==(const ConstructibleInteger& x) const;
+    [[nodiscard]] bool operator!=(const ConstructibleInteger& x) const;
+    [[nodiscard]] bool operator<(const ConstructibleInteger& x) const;
+    [[nodiscard]] bool operator>(const ConstructibleInteger& x) const;
+    [[nodiscard]] int hash() const;
+};
+
+int ConstructibleInteger::lastConstruct = 0;
+int ConstructibleInteger::lastDestruct = 0;
+
+ConstructibleInteger::ConstructibleInteger(int x) : value(x){
+    ConstructibleInteger::lastConstruct = x;
+}
+
+ConstructibleInteger::~ConstructibleInteger(){
+    ConstructibleInteger::lastDestruct = value;
+}
+
+ConstructibleInteger::operator int() const {
+    return value;
+}
+
+bool ConstructibleInteger::operator==(const ConstructibleInteger& x) const {
+    return (value == x.value);
+}
+
+bool ConstructibleInteger::operator!=(const ConstructibleInteger& x) const {
+    return (value != x.value);
+}
+
+bool ConstructibleInteger::operator<(const ConstructibleInteger& x) const {
+    return (value < x.value);
+}
+
+bool ConstructibleInteger::operator>(const ConstructibleInteger& x) const {
+    return (value > x.value);
+}
+
+int ConstructibleInteger::hash() const {
+    return SGEXTN::Containers::Hash<int>()(value);
+}
+}
+
 void SGEXTN::InternalTest::ContainersTest::testEqualTo(){
     const SGEXTN::Containers::EqualTo<int> comparator;
     if(comparator(0, 0) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::EqualTo - 0 not equal to 0");}
@@ -504,6 +560,206 @@ void SGEXTN::InternalTest::ContainersTest::testSort(){
     }
 }
 
+void SGEXTN::InternalTest::ContainersTest::testVectorConstructible(){
+
+}
+
+void SGEXTN::InternalTest::ContainersTest::testQueueConstructible(){
+
+}
+
+void SGEXTN::InternalTest::ContainersTest::testStackConstructible(){
+
+}
+
+void SGEXTN::InternalTest::ContainersTest::testDequeConstructible(){
+
+}
+
+void SGEXTN::InternalTest::ContainersTest::testPriorityQueueConstructible(){
+
+}
+
+void SGEXTN::InternalTest::ContainersTest::testSetConstructible(){
+    SGEXTN::Containers::Set<ConstructibleInteger, SGEXTN::Containers::LessThan<ConstructibleInteger>> s;
+    ConstructibleInteger::lastConstruct = 0;
+    s.insert(1);
+    if(ConstructibleInteger::lastConstruct != 1){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Set - insert 1 construct fail");}
+    s.insert(2);
+    if(ConstructibleInteger::lastConstruct != 2){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Set - insert 2 construct fail");}
+    s.insert(3);
+    if(ConstructibleInteger::lastConstruct != 3){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Set - insert 3 construct fail");}
+    s.insert(4);
+    if(ConstructibleInteger::lastConstruct != 4){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Set - insert 4 construct fail");}
+    s.insert(5);
+    if(ConstructibleInteger::lastConstruct != 5){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Set - insert 5 construct fail");}
+    bool x = s.insert(6);
+    if(s.length() != 6 || s.contains(6) == false || x == false){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Set - insert 6 construct fail");}
+    ConstructibleInteger::lastDestruct = 0;
+    s.clear();
+    if(ConstructibleInteger::lastDestruct == 0 || s.length() != 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Set - clear destruct fail");}
+    s.insert(1);
+    s.insert(2);
+    s.insert(3);
+    s.insert(4);
+    s.insert(5);
+    s.insert(6);
+    ConstructibleInteger::lastDestruct = 0;
+    x = s.erase(2);
+    if(ConstructibleInteger::lastDestruct != 2 || s.length() != 5 || s.contains(2) == true || x == false){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Set - erase destruct fail");}
+    SGEXTN::Containers::SetIterator<ConstructibleInteger, SGEXTN::Containers::LessThan<ConstructibleInteger>> itr = s.find(1);
+    ConstructibleInteger::lastDestruct = 0;
+    x = s.erase(itr);
+    if(ConstructibleInteger::lastDestruct != 1 || s.length() != 4 || s.contains(1) == true || x == false){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Set - erase iterator destruct fail");}
+    s.erase(3);
+    if(ConstructibleInteger::lastDestruct != 3){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Set - erase 3 destruct fail");}
+    s.erase(4);
+    if(ConstructibleInteger::lastDestruct != 4){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Set - erase 4 destruct fail");}
+    s.erase(5);
+    if(ConstructibleInteger::lastDestruct != 5){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Set - erase 5 destruct fail");}
+    s.erase(6);
+    if(ConstructibleInteger::lastDestruct != 6){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Set - erase 6 destruct fail");}
+}
+
+void SGEXTN::InternalTest::ContainersTest::testMapConstructible(){
+    SGEXTN::Containers::Map<ConstructibleInteger, ConstructibleInteger, SGEXTN::Containers::LessThan<ConstructibleInteger>> s;
+    ConstructibleInteger::lastConstruct = 0;
+    s.insert(1, 1);
+    if(ConstructibleInteger::lastConstruct != 1){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Map - insert 1 construct fail");}
+    s.insert(2, 2);
+    if(ConstructibleInteger::lastConstruct != 2){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Map - insert 2 construct fail");}
+    s.insert(3, 3);
+    if(ConstructibleInteger::lastConstruct != 3){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Map - insert 3 construct fail");}
+    s.insert(4, 4);
+    if(ConstructibleInteger::lastConstruct != 4){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Map - insert 4 construct fail");}
+    s.insert(5, 5);
+    if(ConstructibleInteger::lastConstruct != 5){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Map - insert 5 construct fail");}
+    bool x = s.insert(6, 6);
+    if(ConstructibleInteger::lastConstruct != 6 || s.length() != 6 || s.contains(6) == false || x == false){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Map - insert 6 construct fail");}
+    ConstructibleInteger::lastDestruct = 0;
+    s.clear();
+    if(ConstructibleInteger::lastDestruct == 0 || s.length() != 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Map - clear destruct fail");}
+    s.insert(1, 1);
+    s.insert(2, 2);
+    s.insert(3, 3);
+    s.insert(4, 4);
+    s.insert(5, 5);
+    s.insert(6, 6);
+    ConstructibleInteger::lastDestruct = 0;
+    x = s.erase(2);
+    if(ConstructibleInteger::lastDestruct != 2 || s.length() != 5 || s.contains(2) == true || x == false){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Map - erase destruct fail");}
+    SGEXTN::Containers::MapIterator<ConstructibleInteger, ConstructibleInteger, SGEXTN::Containers::LessThan<ConstructibleInteger>> itr = s.find(1);
+    ConstructibleInteger::lastDestruct = 0;
+    x = s.erase(itr);
+    if(ConstructibleInteger::lastDestruct != 1 || s.length() != 4 || s.contains(1) == true || x == false){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Map - erase iterator destruct fail");}
+    s.erase(3);
+    if(ConstructibleInteger::lastDestruct != 3){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Map - erase 3 destruct fail");}
+    s.erase(4);
+    if(ConstructibleInteger::lastDestruct != 4){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Map - erase 4 destruct fail");}
+    s.erase(5);
+    if(ConstructibleInteger::lastDestruct != 5){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Map - erase 5 destruct fail");}
+    s.erase(6);
+    if(ConstructibleInteger::lastDestruct != 6){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Map - erase 6 destruct fail");}
+}
+
+void SGEXTN::InternalTest::ContainersTest::testMultiSetConstructible(){
+    SGEXTN::Containers::MultiSet<ConstructibleInteger, SGEXTN::Containers::LessThan<ConstructibleInteger>> s;
+    ConstructibleInteger::lastConstruct = 0;
+    s.insert(1);
+    if(ConstructibleInteger::lastConstruct != 1){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiSet - insert 1 construct fail");}
+    s.insert(2);
+    if(ConstructibleInteger::lastConstruct != 2){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiSet - insert 2 construct fail");}
+    s.insert(3);
+    if(ConstructibleInteger::lastConstruct != 3){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiSet - insert 3 construct fail");}
+    s.insert(4);
+    if(ConstructibleInteger::lastConstruct != 4){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiSet - insert 4 construct fail");}
+    s.insert(5);
+    if(ConstructibleInteger::lastConstruct != 5){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiSet - insert 5 construct fail");}
+    s.insert(6);
+    if(ConstructibleInteger::lastConstruct != 6 || s.length() != 6 || s.contains(6) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiSet - insert 6 construct fail");}
+    ConstructibleInteger::lastDestruct = 0;
+    s.clear();
+    if(ConstructibleInteger::lastDestruct == 0 || s.length() != 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiSet - clear destruct fail");}
+    s.insert(1);
+    s.insert(2);
+    s.insert(3);
+    s.insert(4);
+    s.insert(5);
+    s.insert(6);
+    s.insert(5);
+    if(ConstructibleInteger::lastConstruct != 5 || s.length() != 7 || s.contains(5) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiSet - duplicate insert construct fail");}
+    ConstructibleInteger::lastDestruct = 0;
+    bool x = s.erase(2);
+    if(ConstructibleInteger::lastDestruct != 2 || s.length() != 6 || s.contains(2) == true || x == false){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiSet - erase destruct fail");}
+    SGEXTN::Containers::MultiSetIterator<ConstructibleInteger, SGEXTN::Containers::LessThan<ConstructibleInteger>> itr = s.find(1);
+    ConstructibleInteger::lastDestruct = 0;
+    x = s.erase(itr);
+    if(ConstructibleInteger::lastDestruct != 1 || s.length() != 5 || s.contains(1) == true || x == false){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiSet - erase iterator destruct fail");}
+    s.erase(3);
+    if(ConstructibleInteger::lastDestruct != 3){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiSet - erase 3 destruct fail");}
+    s.erase(4);
+    if(ConstructibleInteger::lastDestruct != 4){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiSet - erase 4 destruct fail");}
+    s.erase(5);
+    if(ConstructibleInteger::lastDestruct != 5){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiSet - erase 5 destruct fail");}
+    s.erase(6);
+    if(ConstructibleInteger::lastDestruct != 6){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiSet - erase 6 destruct fail");}
+    s.erase(5);
+    if(ConstructibleInteger::lastDestruct != 5){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiSet - erase 5 destruct fail");}
+}
+
+void SGEXTN::InternalTest::ContainersTest::testMultiMapConstructible(){
+    SGEXTN::Containers::MultiMap<ConstructibleInteger, ConstructibleInteger, SGEXTN::Containers::LessThan<ConstructibleInteger>> s;
+    ConstructibleInteger::lastConstruct = 0;
+    s.insert(1, 1);
+    if(ConstructibleInteger::lastConstruct != 1){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiMap - insert 1 construct fail");}
+    s.insert(2, 2);
+    if(ConstructibleInteger::lastConstruct != 2){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiMap - insert 2 construct fail");}
+    s.insert(3, 3);
+    if(ConstructibleInteger::lastConstruct != 3){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiMap - insert 3 construct fail");}
+    s.insert(4, 4);
+    if(ConstructibleInteger::lastConstruct != 4){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiMap - insert 4 construct fail");}
+    s.insert(5, 5);
+    if(ConstructibleInteger::lastConstruct != 5){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiMap - insert 5 construct fail");}
+    s.insert(6, 6);
+    if(ConstructibleInteger::lastConstruct != 6 || s.length() != 6 || s.contains(6) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiMap - insert 6 construct fail");}
+    ConstructibleInteger::lastDestruct = 0;
+    s.clear();
+    if(ConstructibleInteger::lastDestruct == 0 || s.length() != 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiMap - clear destruct fail");}
+    s.insert(1, 1);
+    s.insert(2, 2);
+    s.insert(3, 3);
+    s.insert(4, 4);
+    s.insert(5, 5);
+    s.insert(6, 6);
+    s.insert(5, 0);
+    if(ConstructibleInteger::lastConstruct != 5 || s.length() != 7 || s.contains(5) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiMap - duplicate insert construct fail");}
+    ConstructibleInteger::lastDestruct = 0;
+    bool x = s.erase(2);
+    if(ConstructibleInteger::lastDestruct != 2 || s.length() != 6 || s.contains(2) == true || x == false){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiMap - erase destruct fail");}
+    SGEXTN::Containers::MultiMapIterator<ConstructibleInteger, ConstructibleInteger, SGEXTN::Containers::LessThan<ConstructibleInteger>> itr = s.find(1);
+    ConstructibleInteger::lastDestruct = 0;
+    x = s.erase(itr);
+    if(ConstructibleInteger::lastDestruct != 1 || s.length() != 5 || s.contains(1) == true || x == false){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiMap - erase iterator destruct fail");}
+    s.erase(3);
+    if(ConstructibleInteger::lastDestruct != 3){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiMap - erase 3 destruct fail");}
+    s.erase(4);
+    if(ConstructibleInteger::lastDestruct != 4){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiMap - erase 4 destruct fail");}
+    s.erase(5);
+    if(ConstructibleInteger::lastDestruct != 5){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiMap - erase 5 destruct fail");}
+    s.erase(6);
+    if(ConstructibleInteger::lastDestruct != 6){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiMap - erase 6 destruct fail");}
+    s.erase(5);
+    if(ConstructibleInteger::lastDestruct != 5){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiMap - erase 5 destruct fail");}
+}
+
+void SGEXTN::InternalTest::ContainersTest::testUnorderedSetConstructible(){
+
+}
+
+void SGEXTN::InternalTest::ContainersTest::testUnorderedMapConstructible(){
+
+}
+
 void SGEXTN::InternalTest::ContainersTest::testAll(){
     SGEXTN::InternalTest::ContainersTest::testEqualTo();
     SGEXTN::InternalTest::ContainersTest::testArray();
@@ -523,10 +779,19 @@ void SGEXTN::InternalTest::ContainersTest::testAll(){
     SGEXTN::InternalTest::ContainersTest::testMultiMap();
     SGEXTN::InternalTest::ContainersTest::testUnorderedSet();
     SGEXTN::InternalTest::ContainersTest::testUnorderedMap();
+    SGEXTN::InternalTest::ContainersTest::testVectorConstructible();
+    SGEXTN::InternalTest::ContainersTest::testQueueConstructible();
+    SGEXTN::InternalTest::ContainersTest::testStackConstructible();
+    SGEXTN::InternalTest::ContainersTest::testDequeConstructible();
+    SGEXTN::InternalTest::ContainersTest::testPriorityQueueConstructible();
+    SGEXTN::InternalTest::ContainersTest::testSetConstructible();
+    SGEXTN::InternalTest::ContainersTest::testMultiSetConstructible();
+    SGEXTN::InternalTest::ContainersTest::testMapConstructible();
+    SGEXTN::InternalTest::ContainersTest::testMultiMapConstructible();
+    SGEXTN::InternalTest::ContainersTest::testUnorderedSetConstructible();
+    SGEXTN::InternalTest::ContainersTest::testUnorderedMapConstructible();
     SGEXTN::InternalTest::ContainersTest::testSort();
 }
-
-
 
 class RegularStruct {
 public:

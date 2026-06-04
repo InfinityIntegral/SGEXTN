@@ -1,15 +1,10 @@
 #pragma once
 #include <private_api/SGEXTN_Containers_Crash.h>
 
-template <typename T, typename Comparator> SGEXTN::Containers::Sort<T, Comparator>::Sort(T* start, int length){
+template <typename T, typename Comparator> SGEXTN::Containers::Sort<T, Comparator>::Sort(T* start, int length) : private_firstBuffer(start), private_secondBuffer(nullptr), private_length(length), private_mainIsSecond(false), private_comparatorInstance(), private_minimumBlockSize(32) {
     if(start == nullptr){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Sort constructor crashed as starting position is nullptr");}
     if(length < 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Sort constructor crashed as length is negative");}
-    private_firstBuffer = start;
     private_secondBuffer = new T[length];
-    private_length = length;
-    private_mainIsSecond = false;
-    private_comparatorInstance = Comparator();
-    private_minimumBlockSize = 32;
 }
 
 template <typename T, typename Comparator> SGEXTN::Containers::Sort<T, Comparator>::~Sort(){

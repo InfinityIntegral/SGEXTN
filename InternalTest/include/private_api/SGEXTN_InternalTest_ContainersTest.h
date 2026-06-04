@@ -22,6 +22,17 @@ public:
     static void testMultiMap();
     static void testUnorderedSet();
     static void testUnorderedMap();
+    static void testVectorConstructible();
+    static void testQueueConstructible();
+    static void testStackConstructible();
+    static void testDequeConstructible();
+    static void testPriorityQueueConstructible();
+    static void testSetConstructible();
+    static void testMultiSetConstructible();
+    static void testMapConstructible();
+    static void testMultiMapConstructible();
+    static void testUnorderedSetConstructible();
+    static void testUnorderedMapConstructible();
     static void testSort();
     static void testAll();
 };

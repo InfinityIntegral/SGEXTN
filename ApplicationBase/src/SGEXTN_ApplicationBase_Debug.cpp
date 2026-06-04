@@ -9,8 +9,7 @@
 
 SGEXTN::ApplicationBase::OldString SGEXTN::ApplicationBase::Debug::logFile = "";
 
-SGEXTN::ApplicationBase::Debug::Debug(const SGEXTN::ApplicationBase::OldString& fileName, int lineNumber){
-    debugInfo = "";
+SGEXTN::ApplicationBase::Debug::Debug(const SGEXTN::ApplicationBase::OldString& fileName, int lineNumber) : debugInfo(""), metaInfo("") {
     SGEXTN::ApplicationBase::OldString actualFileName = fileName.replace("\\", "/");
     actualFileName = actualFileName.substringRight(actualFileName.length() - actualFileName.findFirstFromRight("/") - 1);
     metaInfo = actualFileName + ", line " + SGEXTN::ApplicationBase::OldString::stringFromInt(lineNumber, 10);

@@ -2,9 +2,7 @@
 #include <private_api/SGEXTN_Containers_Crash.h>
 #include <private_api/SGEXTN_Containers_MultiMap_impl.h>
 
-template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MultiMap<Key, Value, Comparator>::MultiMap(){
-    private_avlTree = SGEXTN::Containers::AVLTree<Key, Value, Comparator>();
-}
+template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MultiMap<Key, Value, Comparator>::MultiMap() : private_avlTree() {}
 
 template <typename Key, typename Value, typename Comparator> int SGEXTN::Containers::MultiMap<Key, Value, Comparator>::length() const {
     return private_avlTree.length();
@@ -122,9 +120,7 @@ template <typename Key, typename Value, typename Comparator> SGEXTN::Containers:
     return SGEXTN::Containers::MultiMapConstIterator(private_avlTree.constIteratorAt(n));
 }
 
-template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MultiMapIterator<Key, Value, Comparator>::MultiMapIterator(SGEXTN::Containers::AVLTreeIterator<Key, Value, Comparator> i){
-    private_avlTreeIterator = i;
-}
+template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MultiMapIterator<Key, Value, Comparator>::MultiMapIterator(SGEXTN::Containers::AVLTreeIterator<Key, Value, Comparator> i) : private_avlTreeIterator(i) {}
 
 template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MultiMapIterator<Key, Value, Comparator>& SGEXTN::Containers::MultiMapIterator<Key, Value, Comparator>::operator++(){
     private_avlTreeIterator++;
@@ -166,9 +162,7 @@ template <typename Key, typename Value, typename Comparator> Value& SGEXTN::Cont
     return private_avlTreeIterator.value();
 }
 
-template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MultiMapConstIterator<Key, Value, Comparator>::MultiMapConstIterator(SGEXTN::Containers::AVLTreeConstIterator<Key, Value, Comparator> i){
-    private_avlTreeIterator = i;
-}
+template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MultiMapConstIterator<Key, Value, Comparator>::MultiMapConstIterator(SGEXTN::Containers::AVLTreeConstIterator<Key, Value, Comparator> i) : private_avlTreeIterator(i) {}
 
 template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MultiMapConstIterator<Key, Value, Comparator>& SGEXTN::Containers::MultiMapConstIterator<Key, Value, Comparator>::operator++(){
     private_avlTreeIterator++;

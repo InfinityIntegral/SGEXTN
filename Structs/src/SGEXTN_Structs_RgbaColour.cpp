@@ -5,14 +5,16 @@
 #include <private_api/SGEXTN_Containers_Crash.h>
 
 namespace {
-void boundInt(int& x){
-    if(x < 0){x = 0;}
-    else if(x > 255){x = 255;}
+int boundInt(int x){
+    if(x < 0){return 0;}
+    if(x > 255){return 255;}
+    return x;
 }
 
-void boundFloat(float& x){
-    if(x < 0.0f){x = 0.0f;}
-    else if(x > 1.0f){x = 1.0f;}
+float boundFloat(float x){
+    if(x < 0.0f){return 0.0f;}
+    if(x > 1.0f){return 1.0f;}
+    return x;
 }
 
 unsigned int toUnsignedInt(float x){
@@ -42,43 +44,17 @@ float linearToSrgb(float x){
 }
 }
 
-SGEXTN::Structs::RgbaColour::RgbaColour(){
-    private_data = 0xff00c8ff;
-}
+SGEXTN::Structs::RgbaColour::RgbaColour() : private_data(0xff00c8ff) {}
 
-SGEXTN::Structs::RgbaColour::RgbaColour(unsigned int data){
-    private_data = data;
-}
+SGEXTN::Structs::RgbaColour::RgbaColour(unsigned int data) : private_data(data) {}
 
-SGEXTN::Structs::RgbaColour::RgbaColour(int r, int g, int b, int a){
-    boundInt(r);
-    boundInt(g);
-    boundInt(b);
-    boundInt(a);
-    private_data = packChannels(toUnsignedInt(r), toUnsignedInt(g), toUnsignedInt(b), toUnsignedInt(a));
-}
+SGEXTN::Structs::RgbaColour::RgbaColour(int r, int g, int b, int a) : private_data(packChannels(toUnsignedInt(boundInt(r)), toUnsignedInt(boundInt(g)), toUnsignedInt(boundInt(b)), toUnsignedInt(boundInt(a)))) {}
 
-SGEXTN::Structs::RgbaColour::RgbaColour(int r, int g, int b){
-    boundInt(r);
-    boundInt(g);
-    boundInt(b);
-    private_data = packChannels(toUnsignedInt(r), toUnsignedInt(g), toUnsignedInt(b), 255u);
-}
+SGEXTN::Structs::RgbaColour::RgbaColour(int r, int g, int b) : private_data(packChannels(toUnsignedInt(boundInt(r)), toUnsignedInt(boundInt(g)), toUnsignedInt(boundInt(b)), 255u)) {}
 
-SGEXTN::Structs::RgbaColour::RgbaColour(float r, float g, float b, float a){
-    boundFloat(r);
-    boundFloat(g);
-    boundFloat(b);
-    boundFloat(a);
-    private_data = packChannels(toUnsignedInt(r), toUnsignedInt(g), toUnsignedInt(b), toUnsignedInt(a));
-}
+SGEXTN::Structs::RgbaColour::RgbaColour(float r, float g, float b, float a) : private_data(packChannels(toUnsignedInt(boundFloat(r)), toUnsignedInt(boundFloat(g)), toUnsignedInt(boundFloat(b)), toUnsignedInt(boundFloat(a)))) {}
 
-SGEXTN::Structs::RgbaColour::RgbaColour(float r, float g, float b){
-    boundFloat(r);
-    boundFloat(g);
-    boundFloat(b);
-    private_data = packChannels(toUnsignedInt(r), toUnsignedInt(g), toUnsignedInt(b), 255u);
-}
+SGEXTN::Structs::RgbaColour::RgbaColour(float r, float g, float b) : private_data(packChannels(toUnsignedInt(boundFloat(r)), toUnsignedInt(boundFloat(g)), toUnsignedInt(boundFloat(b)), 255u)) {}
 
 int SGEXTN::Structs::RgbaColour::getRed() const {
     return static_cast<int>(private_data >> 24u);
@@ -113,43 +89,35 @@ float SGEXTN::Structs::RgbaColour::getTransparencyFloat() const {
 }
 
 void SGEXTN::Structs::RgbaColour::setRed(int r){
-    boundInt(r);
-    private_data = setChannelByOffset(private_data, 24u, toUnsignedInt(r));
+    private_data = setChannelByOffset(private_data, 24u, toUnsignedInt(boundInt(r)));
 }
 
 void SGEXTN::Structs::RgbaColour::setGreen(int g){
-    boundInt(g);
-    private_data = setChannelByOffset(private_data, 16u, toUnsignedInt(g));
+    private_data = setChannelByOffset(private_data, 16u, toUnsignedInt(boundInt(g)));
 }
 
 void SGEXTN::Structs::RgbaColour::setBlue(int b){
-    boundInt(b);
-    private_data = setChannelByOffset(private_data, 8u, toUnsignedInt(b));
+    private_data = setChannelByOffset(private_data, 8u, toUnsignedInt(boundInt(b)));
 }
 
 void SGEXTN::Structs::RgbaColour::setTransparency(int a){
-    boundInt(a);
-    private_data = setChannelByOffset(private_data, 0u, toUnsignedInt(a));
+    private_data = setChannelByOffset(private_data, 0u, toUnsignedInt(boundInt(a)));
 }
 
 void SGEXTN::Structs::RgbaColour::setRedFloat(float r){
-    boundFloat(r);
-    private_data = setChannelByOffset(private_data, 24u, toUnsignedInt(r));
+    private_data = setChannelByOffset(private_data, 24u, toUnsignedInt(boundFloat(r)));
 }
 
 void SGEXTN::Structs::RgbaColour::setGreenFloat(float g){
-    boundFloat(g);
-    private_data = setChannelByOffset(private_data, 16u, toUnsignedInt(g));
+    private_data = setChannelByOffset(private_data, 16u, toUnsignedInt(boundFloat(g)));
 }
 
 void SGEXTN::Structs::RgbaColour::setBlueFloat(float b){
-    boundFloat(b);
-    private_data = setChannelByOffset(private_data, 8u, toUnsignedInt(b));
+    private_data = setChannelByOffset(private_data, 8u, toUnsignedInt(boundFloat(b)));
 }
 
 void SGEXTN::Structs::RgbaColour::setTransparencyFloat(float a){
-    boundFloat(a);
-    private_data = setChannelByOffset(private_data, 0u, toUnsignedInt(a));
+    private_data = setChannelByOffset(private_data, 0u, toUnsignedInt(boundFloat(a)));
 }
 
 SGEXTN::ApplicationBase::OldString SGEXTN::Structs::RgbaColour::rgbHtmlString() const {
@@ -215,8 +183,7 @@ void SGEXTN::Structs::RgbaColour::gammaCorrectEnd(float r, float g, float b){
 SGEXTN::Structs::RgbaColour SGEXTN::Structs::RgbaColour::linearTransformRed(float m, float c, bool gammaCorrect) const {
     float r = getRedFloat();
     if(gammaCorrect == true){r = srgbToLinear(r);}
-    r = m * r + c;
-    boundFloat(r);
+    r = boundFloat(m * r + c);
     if(gammaCorrect == true){r = linearToSrgb(r);}
     SGEXTN::Structs::RgbaColour output = (*this);
     output.setRedFloat(r);
@@ -226,8 +193,7 @@ SGEXTN::Structs::RgbaColour SGEXTN::Structs::RgbaColour::linearTransformRed(floa
 SGEXTN::Structs::RgbaColour SGEXTN::Structs::RgbaColour::linearTransformGreen(float m, float c, bool gammaCorrect) const {
     float g = getGreenFloat();
     if(gammaCorrect == true){g = srgbToLinear(g);}
-    g = m * g + c;
-    boundFloat(g);
+    g = boundFloat(m * g + c);
     if(gammaCorrect == true){g = linearToSrgb(g);}
     SGEXTN::Structs::RgbaColour output = (*this);
     output.setGreenFloat(g);
@@ -237,8 +203,7 @@ SGEXTN::Structs::RgbaColour SGEXTN::Structs::RgbaColour::linearTransformGreen(fl
 SGEXTN::Structs::RgbaColour SGEXTN::Structs::RgbaColour::linearTransformBlue(float m, float c, bool gammaCorrect) const {
     float b = getBlueFloat();
     if(gammaCorrect == true){b = srgbToLinear(b);}
-    b = m * b + c;
-    boundFloat(b);
+    b = boundFloat(m * b + c);
     if(gammaCorrect == true){b = linearToSrgb(b);}
     SGEXTN::Structs::RgbaColour output = (*this);
     output.setBlueFloat(b);
@@ -247,8 +212,7 @@ SGEXTN::Structs::RgbaColour SGEXTN::Structs::RgbaColour::linearTransformBlue(flo
 
 SGEXTN::Structs::RgbaColour SGEXTN::Structs::RgbaColour::linearTransformTransparency(float m, float c) const {
     float a = getTransparencyFloat();
-    a = m * a + c;
-    boundFloat(a);
+    a = boundFloat(m * a + c);
     SGEXTN::Structs::RgbaColour output = (*this);
     output.setTransparencyFloat(a);
     return output;
@@ -278,12 +242,9 @@ SGEXTN::Structs::RgbaColour SGEXTN::Structs::RgbaColour::applyTintSeparateTransp
     }
     const float a = a2 + a1 * (1.0f - a2);
     if(a == 0.0f){return SGEXTN::Structs::RgbaColour(0, 0, 0, 0);}
-    float r = (r2 * a2 + r1 * a1 * (1.0f - a2)) / a;
-    float g = (g2 * a2 + g1 * a1 * (1.0f - a2)) / a;
-    float b = (b2 * a2 + b1 * a1 * (1.0f - a2)) / a;
-    boundFloat(r);
-    boundFloat(g);
-    boundFloat(b);
+    float r = boundFloat((r2 * a2 + r1 * a1 * (1.0f - a2)) / a);
+    float g = boundFloat((g2 * a2 + g1 * a1 * (1.0f - a2)) / a);
+    float b = boundFloat((b2 * a2 + b1 * a1 * (1.0f - a2)) / a);
     if(gammaCorrect == true){
         r = linearToSrgb(r);
         g = linearToSrgb(g);
@@ -307,12 +268,9 @@ SGEXTN::Structs::RgbaColour SGEXTN::Structs::RgbaColour::interpolate(RgbaColour 
         g2 = srgbToLinear(g2);
         b2 = srgbToLinear(b2);
     }
-    float r = r2 * (1.0f - thisStrength) + r1 * thisStrength;
-    float g = g2 * (1.0f - thisStrength) + g1 * thisStrength;
-    float b = b2 * (1.0f - thisStrength) + b1 * thisStrength;
-    boundFloat(r);
-    boundFloat(g);
-    boundFloat(b);
+    float r = boundFloat(r2 * (1.0f - thisStrength) + r1 * thisStrength);
+    float g = boundFloat(g2 * (1.0f - thisStrength) + g1 * thisStrength);
+    float b = boundFloat(b2 * (1.0f - thisStrength) + b1 * thisStrength);
     if(gammaCorrect == true){
         r = linearToSrgb(r);
         g = linearToSrgb(g);

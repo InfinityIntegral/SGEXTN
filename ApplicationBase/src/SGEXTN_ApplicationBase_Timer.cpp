@@ -4,13 +4,9 @@
 #include <private_api/SGEXTN_ApplicationBase_QObjTimerInterface.h>
 #include <private_api/SGEXTN_Containers_Crash.h>
 
-SGEXTN::ApplicationBase::Timer::Timer(float t, void (*attachedFunction)()){
+SGEXTN::ApplicationBase::Timer::Timer(float t, void (*attachedFunction)()) : private_once(false), private_deleted(false), private_interval(t), attachedFunction(attachedFunction), private_timer(nullptr), private_q(nullptr) {
     if(t < 0.0f){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Timer constructor crashed as time interval is negative");}
     if(attachedFunction == nullptr){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Timer constructor crashed as function attached is nullptr");}
-    private_once = false;
-    private_deleted = false;
-    private_interval = t;
-    (*this).attachedFunction = attachedFunction;
     private_timer = new QTimer();
     (*private_timer).setInterval(SGEXTN::Math::FloatMath<float>::roundToInt(t * 1000.0f));
     private_q = new SGEXTN::ApplicationBase::QObjTimerInterface(this);

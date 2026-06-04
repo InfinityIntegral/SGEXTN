@@ -1,11 +1,9 @@
 #pragma once
 #include <private_api/SGEXTN_Containers_Crash.h>
 
-template <typename T> SGEXTN::Containers::Span<T>::Span(T* data, int length){
+template <typename T> SGEXTN::Containers::Span<T>::Span(T* data, int length) : private_data(data), private_length(length) {
     if(length < 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Span constructor crashed because the length is negative");}
     if(data == nullptr){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Span constructor crashed because the data pointer is nullptr");}
-    (*this).private_data = data;
-    (*this).private_length = length;
 }
 
 template <typename T> int SGEXTN::Containers::Span<T>::length() const {

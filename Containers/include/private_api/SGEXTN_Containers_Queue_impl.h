@@ -1,9 +1,7 @@
 #pragma once
 #include <private_api/SGEXTN_Containers_Crash.h>
 
-template <typename T> SGEXTN::Containers::Queue<T>::Queue(){
-    private_ringBuffer = SGEXTN::Containers::RingBuffer<T>();
-}
+template <typename T> SGEXTN::Containers::Queue<T>::Queue() : private_ringBuffer() {}
 
 template <typename T> T& SGEXTN::Containers::Queue<T>::front(){
     if(private_ringBuffer.length() == 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Queue::front crashed because the queue is empty");}

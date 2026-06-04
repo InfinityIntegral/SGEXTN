@@ -1,36 +1,16 @@
 #pragma once
 
-template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTree<Key, Value, Comparator>::AVLTree(){
-    root = nullptr;
-    comparatorInstance = Comparator();
-}
+template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTree<Key, Value, Comparator>::AVLTree() : root(nullptr), comparatorInstance() {}
 
-template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTreeNode<Key, Value, Comparator>::AVLTreeNode(const Key& k, const Value& v, AVLTreeNode* parentNode){
-    key = k;
-    value = v;
-    parent = parentNode;
-    leftChild = nullptr;
-    rightChild = nullptr;
-    height = 0;
-    subtreeSize = 1;
-}
+template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTreeNode<Key, Value, Comparator>::AVLTreeNode(const Key& k, const Value& v, AVLTreeNode* parentNode) : key(k), value(v), parent(parentNode), leftChild(nullptr), rightChild(nullptr), height(0), subtreeSize(1) {}
 
-template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTreeNode<Key, Value, Comparator>::AVLTreeNode(AVLTreeNode* oldNode, AVLTreeNode* newParent){
-    key = (*oldNode).key;
-    value = (*oldNode).value;
-    height = (*oldNode).height;
-    subtreeSize = (*oldNode).subtreeSize;
-    parent = newParent;
+template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTreeNode<Key, Value, Comparator>::AVLTreeNode(AVLTreeNode* oldNode, AVLTreeNode* newParent) : key((*oldNode).key), value((*oldNode).value), height((*oldNode).height), subtreeSize((*oldNode).subtreeSize), parent(newParent), leftChild(nullptr), rightChild(nullptr) {
     if((*oldNode).leftChild != nullptr){leftChild = new AVLTreeNode((*oldNode).leftChild, this);}
-    else{leftChild = nullptr;}
     if((*oldNode).rightChild != nullptr){rightChild = new AVLTreeNode((*oldNode).rightChild, this);}
-    else{rightChild = nullptr;}
 }
 
-template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTree<Key, Value, Comparator>::AVLTree(const AVLTree& x){
+template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTree<Key, Value, Comparator>::AVLTree(const AVLTree& x) : root(nullptr), comparatorInstance(x.comparatorInstance) {
     if(x.root != nullptr){root = new AVLTreeNode<Key, Value, Comparator>(x.root, nullptr);}
-    else{root = nullptr;}
-    comparatorInstance = x.comparatorInstance;
 }
 
 template <typename Key, typename Value, typename Comparator> void SGEXTN::Containers::AVLTreeNode<Key, Value, Comparator>::recursiveDelete(){
@@ -48,10 +28,8 @@ template <typename Key, typename Value, typename Comparator> SGEXTN::Containers:
     return (*this);
 }
 
-template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTree<Key, Value, Comparator>::AVLTree(AVLTree&& x) noexcept {
-    root = x.root;
+template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTree<Key, Value, Comparator>::AVLTree(AVLTree&& x) noexcept : root(x.root), comparatorInstance(x.comparatorInstance) {
     x.root = nullptr;
-    comparatorInstance = x.comparatorInstance;
 }
 
 template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTree<Key, Value, Comparator>& SGEXTN::Containers::AVLTree<Key, Value, Comparator>::operator=(AVLTree&& x) noexcept {
@@ -241,15 +219,9 @@ template <typename Key, typename Value, typename Comparator> int SGEXTN::Contain
     return count;
 }
 
-template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTreeIterator<Key, Value, Comparator>::AVLTreeIterator(AVLTreeNode<Key, Value, Comparator>* node, AVLTree<Key, Value, Comparator>* tree){
-    associatedNode = node;
-    associatedTree = tree;
-}
+template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTreeIterator<Key, Value, Comparator>::AVLTreeIterator(AVLTreeNode<Key, Value, Comparator>* node, AVLTree<Key, Value, Comparator>* tree) : associatedNode(node), associatedTree(tree) {}
 
-template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTreeConstIterator<Key, Value, Comparator>::AVLTreeConstIterator(AVLTreeNode<Key, Value, Comparator>* node, const AVLTree<Key, Value, Comparator>* tree){
-    associatedNode = node;
-    associatedTree = tree;
-}
+template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTreeConstIterator<Key, Value, Comparator>::AVLTreeConstIterator(AVLTreeNode<Key, Value, Comparator>* node, const AVLTree<Key, Value, Comparator>* tree) : associatedNode(node), associatedTree(tree) {}
 
 template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTreeNode<Key, Value, Comparator>* SGEXTN::Containers::AVLTree<Key, Value, Comparator>::getLeftMostSubchild(AVLTreeNode<Key, Value, Comparator>* x) const {
     if(x == nullptr){return nullptr;}

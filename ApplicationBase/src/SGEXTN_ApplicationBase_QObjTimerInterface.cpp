@@ -3,8 +3,7 @@
 #include <SGEXTN_ApplicationBase_Timer.h>
 #include <QObject>
 
-SGEXTN::ApplicationBase::QObjTimerInterface::QObjTimerInterface(SGEXTN::ApplicationBase::Timer* x){
-    (*this).x = x;
+SGEXTN::ApplicationBase::QObjTimerInterface::QObjTimerInterface(SGEXTN::ApplicationBase::Timer* x) : x(x){
     QObject::connect((*x).private_timer, &QTimer::timeout, this, &SGEXTN::ApplicationBase::QObjTimerInterface::runFunction);
 }
 

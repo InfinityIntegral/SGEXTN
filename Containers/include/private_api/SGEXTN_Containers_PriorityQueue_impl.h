@@ -1,18 +1,10 @@
 #pragma once
 #include <private_api/SGEXTN_Containers_Crash.h>
 
-template <typename T, typename Comparator> SGEXTN::Containers::PriorityQueue<T, Comparator>::PriorityQueue(){
-    private_data = nullptr;
-    private_length = 0;
-    private_memoryLength = 0;
-    private_comparatorInstance = Comparator();
-}
+template <typename T, typename Comparator> SGEXTN::Containers::PriorityQueue<T, Comparator>::PriorityQueue() : private_data(nullptr), private_length(0), private_memoryLength(0), private_comparatorInstance() {}
 
-template <typename T, typename Comparator> SGEXTN::Containers::PriorityQueue<T, Comparator>::PriorityQueue(const PriorityQueue& x){
-    private_data = new T[x.private_length];
-    private_length = x.private_length;
-    private_memoryLength = x.private_length;
-    private_comparatorInstance = x.private_comparatorInstance;
+template <typename T, typename Comparator> SGEXTN::Containers::PriorityQueue<T, Comparator>::PriorityQueue(const PriorityQueue& x) : private_data(nullptr), private_length(x.private_length), private_memoryLength(x.private_length), private_comparatorInstance(x.private_comparatorInstance) {
+    if(x.private_length > 0){private_data = new T[x.private_length];}
     for(int i=0; i<private_length; i++){
         (*(private_data + i)) = (*(x.private_data + i));
     }
@@ -31,11 +23,7 @@ template <typename T, typename Comparator> SGEXTN::Containers::PriorityQueue<T, 
     return (*this);
 }
 
-template <typename T, typename Comparator> SGEXTN::Containers::PriorityQueue<T, Comparator>::PriorityQueue(PriorityQueue&& x) noexcept {
-    private_data = x.private_data;
-    private_length = x.private_length;
-    private_memoryLength = x.private_memoryLength;
-    private_comparatorInstance = x.private_comparatorInstance;
+template <typename T, typename Comparator> SGEXTN::Containers::PriorityQueue<T, Comparator>::PriorityQueue(PriorityQueue&& x) noexcept : private_data(x.private_data), private_length(x.private_length), private_memoryLength(x.private_memoryLength), private_comparatorInstance(x.private_comparatorInstance) {
     x.private_data = nullptr;
     x.private_length = 0;
     x.private_memoryLength = 0;

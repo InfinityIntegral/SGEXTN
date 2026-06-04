@@ -1,16 +1,14 @@
 #pragma once
 #include <private_api/SGEXTN_Containers_Crash.h>
 
-template <typename T> SGEXTN::Containers::Vector<T>::Vector(){
-    private_ringBuffer = SGEXTN::Containers::RingBuffer<T>();
-}
+template <typename T> SGEXTN::Containers::Vector<T>::Vector() : private_ringBuffer() {}
 
-template <typename T> SGEXTN::Containers::Vector<T>::Vector(int count){
+template <typename T> SGEXTN::Containers::Vector<T>::Vector(int count) : private_ringBuffer() {
     if(count < 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Vector constructor crashed because count is negative");}
     private_ringBuffer = SGEXTN::Containers::RingBuffer<T>(count);
 }
 
-template <typename T> SGEXTN::Containers::Vector<T>::Vector(int count, const T& defaultValue){
+template <typename T> SGEXTN::Containers::Vector<T>::Vector(int count, const T& defaultValue) : private_ringBuffer() {
     if(count < 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Vector constructor crashed because count is negative");}
     private_ringBuffer = SGEXTN::Containers::RingBuffer<T>(count, defaultValue);
 }

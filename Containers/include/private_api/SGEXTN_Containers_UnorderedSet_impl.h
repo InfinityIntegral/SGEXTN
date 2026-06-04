@@ -1,9 +1,7 @@
 #pragma once
 #include <private_api/SGEXTN_Containers_Crash.h>
 
-template <typename T, typename EqualityCheck, typename HashFunction> SGEXTN::Containers::UnorderedSet<T, EqualityCheck, HashFunction>::UnorderedSet(){
-    private_hashMap = SGEXTN::Containers::HashMap<T, bool, EqualityCheck, HashFunction>();
-}
+template <typename T, typename EqualityCheck, typename HashFunction> SGEXTN::Containers::UnorderedSet<T, EqualityCheck, HashFunction>::UnorderedSet() : private_hashMap() {}
 
 template <typename T, typename EqualityCheck, typename HashFunction> int SGEXTN::Containers::UnorderedSet<T, EqualityCheck, HashFunction>::length() const {
     return private_hashMap.length();
@@ -57,13 +55,9 @@ template <typename T, typename EqualityCheck, typename HashFunction> SGEXTN::Con
     return SGEXTN::Containers::UnorderedSetConstIterator(private_hashMap.constFind(x));
 }
 
-template <typename T, typename EqualityCheck, typename HashFunction> SGEXTN::Containers::UnorderedSetIterator<T, EqualityCheck, HashFunction>::UnorderedSetIterator(SGEXTN::Containers::HashMapIterator<T, bool, EqualityCheck, HashFunction> i){
-    private_hashMapIterator = i;
-}
+template <typename T, typename EqualityCheck, typename HashFunction> SGEXTN::Containers::UnorderedSetIterator<T, EqualityCheck, HashFunction>::UnorderedSetIterator(SGEXTN::Containers::HashMapIterator<T, bool, EqualityCheck, HashFunction> i) : private_hashMapIterator(i) {}
 
-template <typename T, typename EqualityCheck, typename HashFunction> SGEXTN::Containers::UnorderedSetConstIterator<T, EqualityCheck, HashFunction>::UnorderedSetConstIterator(SGEXTN::Containers::HashMapConstIterator<T, bool, EqualityCheck, HashFunction> i){
-    private_hashMapIterator = i;
-}
+template <typename T, typename EqualityCheck, typename HashFunction> SGEXTN::Containers::UnorderedSetConstIterator<T, EqualityCheck, HashFunction>::UnorderedSetConstIterator(SGEXTN::Containers::HashMapConstIterator<T, bool, EqualityCheck, HashFunction> i) : private_hashMapIterator(i) {}
 
 template <typename T, typename EqualityCheck, typename HashFunction> SGEXTN::Containers::UnorderedSetIterator<T, EqualityCheck, HashFunction>& SGEXTN::Containers::UnorderedSetIterator<T, EqualityCheck, HashFunction>::operator++(){
     private_hashMapIterator++;

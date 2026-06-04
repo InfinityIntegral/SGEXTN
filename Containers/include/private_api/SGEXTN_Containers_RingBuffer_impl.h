@@ -1,34 +1,20 @@
 #pragma once
 
-template <typename T> SGEXTN::Containers::RingBuffer<T>::RingBuffer(){
-    private_data = nullptr;
-    private_start = 0;
-    private_length = 0;
-    private_memoryLength = 0;
+template <typename T> SGEXTN::Containers::RingBuffer<T>::RingBuffer() : private_data(nullptr), private_start(0), private_length(0), private_memoryLength(0) {}
+
+template <typename T> SGEXTN::Containers::RingBuffer<T>::RingBuffer(int count) : private_data(nullptr), private_start(0), private_length(count), private_memoryLength(count) {
+    if(count > 0){private_data = new T[count];}
 }
 
-template <typename T> SGEXTN::Containers::RingBuffer<T>::RingBuffer(int count){
-    private_data = new T[count];
-    private_start = 0;
-    private_length = count;
-    private_memoryLength = count;
-}
-
-template <typename T> SGEXTN::Containers::RingBuffer<T>::RingBuffer(int count, const T& defaultValue){
-    private_data = new T[count];
-    private_start = 0;
-    private_length = count;
-    private_memoryLength = count;
+template <typename T> SGEXTN::Containers::RingBuffer<T>::RingBuffer(int count, const T& defaultValue) : private_data(nullptr), private_start(0), private_length(count), private_memoryLength(count) {
+    if(count > 0){private_data = new T[count];}
     for(int i=0; i<count; i++){
         (*(private_data + i)) = defaultValue;
     }
 }
 
-template <typename T> SGEXTN::Containers::RingBuffer<T>::RingBuffer(const RingBuffer& x){
-    private_data = new T[x.length()];
-    private_start = 0;
-    private_length = x.length();
-    private_memoryLength = x.length();
+template <typename T> SGEXTN::Containers::RingBuffer<T>::RingBuffer(const RingBuffer& x) : private_data(nullptr), private_start(0), private_length(x.length()), private_memoryLength(x.length()) {
+    if(x.length() > 0){private_data = new T[x.length()];}
     for(int i=0; i<x.length(); i++){
         (*(private_data + i)) = x.at(i);
     }
@@ -47,11 +33,7 @@ template <typename T> SGEXTN::Containers::RingBuffer<T>& SGEXTN::Containers::Rin
     return (*this);
 }
 
-template <typename T> SGEXTN::Containers::RingBuffer<T>::RingBuffer(RingBuffer&& x) noexcept {
-    private_data = x.private_data;
-    private_start = x.private_start;
-    private_length = x.private_length;
-    private_memoryLength = x.private_memoryLength;
+template <typename T> SGEXTN::Containers::RingBuffer<T>::RingBuffer(RingBuffer&& x) noexcept : private_data(x.private_data), private_start(x.private_start), private_length(x.private_length), private_memoryLength(x.private_memoryLength) {
     x.private_data = nullptr;
     x.private_start = 0;
     x.private_length = 0;

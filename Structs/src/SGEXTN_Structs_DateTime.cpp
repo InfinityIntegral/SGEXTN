@@ -140,17 +140,11 @@ void offsetToParts(long long offset, int* yearOutput, int* monthOutput, int* day
 }
 }
 
-SGEXTN::Structs::DateTime::DateTime(){
-    private_data = 0ll;
-}
+SGEXTN::Structs::DateTime::DateTime() : private_data(0) {}
 
-SGEXTN::Structs::DateTime::DateTime(long long t){
-    private_data = t;
-}
+SGEXTN::Structs::DateTime::DateTime(long long t) : private_data(t) {}
 
-SGEXTN::Structs::DateTime::DateTime(int year, int month, int day, int hour, int minute, int second){
-    private_data = partsToOffset(year, month, day, hour, minute, second);
-}
+SGEXTN::Structs::DateTime::DateTime(int year, int month, int day, int hour, int minute, int second) : private_data(partsToOffset(year, month, day, hour, minute, second)) {}
 
 bool SGEXTN::Structs::DateTime::operator==(SGEXTN::Structs::DateTime x) const {
     return (private_data == x.private_data);

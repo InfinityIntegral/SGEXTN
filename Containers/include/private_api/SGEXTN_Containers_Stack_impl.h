@@ -1,9 +1,7 @@
 #pragma once
 #include <private_api/SGEXTN_Containers_Crash.h>
 
-template <typename T> SGEXTN::Containers::Stack<T>::Stack(){
-    private_ringBuffer = SGEXTN::Containers::RingBuffer<T>();
-}
+template <typename T> SGEXTN::Containers::Stack<T>::Stack() : private_ringBuffer() {}
 
 template <typename T> T& SGEXTN::Containers::Stack<T>::top(){
     if(private_ringBuffer.length() == 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Stack::top crashed as the stack is empty");}

@@ -1,33 +1,25 @@
 #pragma once
 #include <private_api/SGEXTN_Containers_Crash.h>
 
-template <typename T> SGEXTN::Containers::Array<T>::Array(int count){
+template <typename T> SGEXTN::Containers::Array<T>::Array(int count) : private_data(nullptr), private_length(count) {
     if(count < 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Array constructor crashed because count cannot be negative");}
-    if(count == 0){private_data = nullptr;}
-    else{private_data = new T[count]();}
-    private_length = count;
+    if(count > 0){private_data = new T[count]();}
 }
 
-template <typename T> SGEXTN::Containers::Array<T>::Array(int count, const T& defaultValue){
+template <typename T> SGEXTN::Containers::Array<T>::Array(int count, const T& defaultValue) : private_data(nullptr), private_length(count) {
     if(count < 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Array constructor crashed because count cannot be negative");}
-    if(count == 0){private_data = nullptr;}
-    else{private_data = new T[count];}
-    private_length = count;
+    if(count > 0){private_data = new T[count];}
     for(int i=0; i<private_length; i++){
         (*(private_data + i)) = defaultValue;
     }
 }
 
-template <typename T> template <typename... Ts> SGEXTN::Containers::Array<T>::Array(Ts... data){
-    if((sizeof...(Ts)) == 0){private_data = nullptr;}
-    else{private_data = new T[sizeof...(Ts)]{data...};}
-    private_length = sizeof...(Ts);
+template <typename T> template <typename... Ts> SGEXTN::Containers::Array<T>::Array(Ts... data) : private_data(nullptr), private_length(sizeof...(Ts)){
+    if((sizeof...(Ts)) > 0){private_data = new T[private_length]{data...};}
 }
 
-template <typename T> SGEXTN::Containers::Array<T>::Array(const Array& x){
-    if(x.private_length == 0){private_data = nullptr;}
-    else{private_data = new T[x.private_length];}
-    private_length = x.private_length;
+template <typename T> SGEXTN::Containers::Array<T>::Array(const Array& x) : private_data(nullptr), private_length(x.private_length) {
+    if(x.private_length > 0){private_data = new T[x.private_length];}
     for(int i=0; i<private_length; i++){
         (*(private_data + i)) = (*(x.private_data + i));
     }
@@ -45,9 +37,7 @@ template <typename T> SGEXTN::Containers::Array<T>& SGEXTN::Containers::Array<T>
     return (*this);
 }
 
-template <typename T> SGEXTN::Containers::Array<T>::Array(Array&& x) noexcept {
-    private_data = x.private_data;
-    private_length = x.private_length;
+template <typename T> SGEXTN::Containers::Array<T>::Array(Array&& x) noexcept : private_data(x.private_data), private_length(x.private_length) {
     x.private_data = nullptr;
     x.private_length = 0;
 }

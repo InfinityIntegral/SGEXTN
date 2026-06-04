@@ -1,9 +1,7 @@
 #pragma once
 #include <private_api/SGEXTN_Containers_Crash.h>
 
-template <typename T, typename Comparator> SGEXTN::Containers::MultiSet<T, Comparator>::MultiSet(){
-    private_avlTree = SGEXTN::Containers::AVLTree<T, bool, Comparator>();
-}
+template <typename T, typename Comparator> SGEXTN::Containers::MultiSet<T, Comparator>::MultiSet() : private_avlTree() {}
 
 template <typename T, typename Comparator> int SGEXTN::Containers::MultiSet<T, Comparator>::length() const {
     return private_avlTree.length();
@@ -99,9 +97,7 @@ template <typename T, typename Comparator> SGEXTN::Containers::MultiSetConstIter
     return SGEXTN::Containers::MultiSetConstIterator(private_avlTree.constIteratorAt(n));
 }
 
-template <typename T, typename Comparator> SGEXTN::Containers::MultiSetIterator<T, Comparator>::MultiSetIterator(AVLTreeIterator<T, bool, Comparator> i){
-    private_avlTreeIterator = i;
-}
+template <typename T, typename Comparator> SGEXTN::Containers::MultiSetIterator<T, Comparator>::MultiSetIterator(AVLTreeIterator<T, bool, Comparator> i) : private_avlTreeIterator(i) {}
 
 template <typename T, typename Comparator> SGEXTN::Containers::MultiSetIterator<T, Comparator>& SGEXTN::Containers::MultiSetIterator<T, Comparator>::operator++(){
     private_avlTreeIterator++;
@@ -138,9 +134,7 @@ template <typename T, typename Comparator> const T& SGEXTN::Containers::MultiSet
     return private_avlTreeIterator.key();
 }
 
-template <typename T, typename Comparator> SGEXTN::Containers::MultiSetConstIterator<T, Comparator>::MultiSetConstIterator(AVLTreeConstIterator<T, bool, Comparator> i){
-    private_avlTreeIterator = i;
-}
+template <typename T, typename Comparator> SGEXTN::Containers::MultiSetConstIterator<T, Comparator>::MultiSetConstIterator(AVLTreeConstIterator<T, bool, Comparator> i) : private_avlTreeIterator(i) {}
 
 template <typename T, typename Comparator> SGEXTN::Containers::MultiSetConstIterator<T, Comparator>& SGEXTN::Containers::MultiSetConstIterator<T, Comparator>::operator++(){
     private_avlTreeIterator++;

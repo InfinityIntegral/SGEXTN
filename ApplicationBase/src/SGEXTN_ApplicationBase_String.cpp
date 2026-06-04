@@ -391,9 +391,7 @@ SGEXTN::ApplicationBase::String unicodeRecompose(const SGEXTN::ApplicationBase::
 }
 }
 
-SGEXTN::ApplicationBase::String::String(const SGEXTN::ApplicationBase::String& x){
-    private_data = x.private_data;
-}
+SGEXTN::ApplicationBase::String::String(const SGEXTN::ApplicationBase::String& x) : private_data(x.private_data) {}
 
 SGEXTN::ApplicationBase::String& SGEXTN::ApplicationBase::String::operator=(const SGEXTN::ApplicationBase::String& x){
     if(this == &x){return (*this);}
@@ -402,10 +400,7 @@ SGEXTN::ApplicationBase::String& SGEXTN::ApplicationBase::String::operator=(cons
     return (*this);
 }
 
-SGEXTN::ApplicationBase::String::String(SGEXTN::ApplicationBase::String&& x) noexcept {
-    private_data = static_cast<SGEXTN::ApplicationBase::TextBuffer&&>(x.private_data);
-    private_characterOffsets = static_cast<SGEXTN::Containers::Vector<int>&&>(x.private_characterOffsets);
-}
+SGEXTN::ApplicationBase::String::String(SGEXTN::ApplicationBase::String&& x) noexcept : private_data(static_cast<SGEXTN::ApplicationBase::TextBuffer&&>(x.private_data)), private_characterOffsets(static_cast<SGEXTN::Containers::Vector<int>&&>(x.private_characterOffsets)) {}
 
 SGEXTN::ApplicationBase::String& SGEXTN::ApplicationBase::String::operator=(SGEXTN::ApplicationBase::String&& x) noexcept {
     private_data = static_cast<SGEXTN::ApplicationBase::TextBuffer&&>(x.private_data);
@@ -414,7 +409,7 @@ SGEXTN::ApplicationBase::String& SGEXTN::ApplicationBase::String::operator=(SGEX
 }
 
 SGEXTN::ApplicationBase::String::String(char c){
-    unsigned char uc = static_cast<unsigned char>(c);
+    const unsigned char uc = static_cast<unsigned char>(c);
     if(uc > 0x7f){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String constructor crashed because the given char does not represent a valid ASCII character");}
     private_data.pushBack(c);
 }

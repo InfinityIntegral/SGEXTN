@@ -1,9 +1,7 @@
 #pragma once
 #include <private_api/SGEXTN_Containers_Crash.h>
 
-template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::Map<Key, Value, Comparator>::Map(){
-    private_avlTree = SGEXTN::Containers::AVLTree<Key, Value, Comparator>();
-}
+template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::Map<Key, Value, Comparator>::Map() : private_avlTree() {}
 
 template <typename Key, typename Value, typename Comparator> int SGEXTN::Containers::Map<Key, Value, Comparator>::length() const {
     return private_avlTree.length();
@@ -117,9 +115,7 @@ template <typename Key, typename Value, typename Comparator> SGEXTN::Containers:
     return SGEXTN::Containers::MapConstIterator(private_avlTree.constIteratorAt(n));
 }
 
-template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MapIterator<Key, Value, Comparator>::MapIterator(SGEXTN::Containers::AVLTreeIterator<Key, Value, Comparator> i){
-    private_avlTreeIterator = i;
-}
+template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MapIterator<Key, Value, Comparator>::MapIterator(SGEXTN::Containers::AVLTreeIterator<Key, Value, Comparator> i) : private_avlTreeIterator(i) {}
 
 template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MapIterator<Key, Value, Comparator>& SGEXTN::Containers::MapIterator<Key, Value, Comparator>::operator++(){
     private_avlTreeIterator++;
@@ -161,9 +157,7 @@ template <typename Key, typename Value, typename Comparator> Value& SGEXTN::Cont
     return private_avlTreeIterator.value();
 }
 
-template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MapConstIterator<Key, Value, Comparator>::MapConstIterator(SGEXTN::Containers::AVLTreeConstIterator<Key, Value, Comparator> i){
-    private_avlTreeIterator = i;
-}
+template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MapConstIterator<Key, Value, Comparator>::MapConstIterator(SGEXTN::Containers::AVLTreeConstIterator<Key, Value, Comparator> i) : private_avlTreeIterator(i) {}
 
 template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MapConstIterator<Key, Value, Comparator>& SGEXTN::Containers::MapConstIterator<Key, Value, Comparator>::operator++(){
     private_avlTreeIterator++;

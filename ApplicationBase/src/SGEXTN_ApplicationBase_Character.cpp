@@ -43,7 +43,7 @@ SGEXTN::ApplicationBase::Character::Character(){
 }
 
 SGEXTN::ApplicationBase::Character::Character(char c){
-    unsigned char uc = static_cast<unsigned char>(c);
+    const unsigned char uc = static_cast<unsigned char>(c);
     if(uc > 0x7f){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String constructor crashed because the given char does not represent a valid ASCII character");}
     private_data.pushBack(c);
 }
