@@ -10,5 +10,3 @@ public:
 };
 }
 }
-
-#include <private_api/SGEXTN_Containers_HashAlgorithm_impl.h>

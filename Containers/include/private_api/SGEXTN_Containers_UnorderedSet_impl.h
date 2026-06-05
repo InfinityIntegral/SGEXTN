@@ -12,7 +12,7 @@ template <typename T, typename EqualityCheck, typename HashFunction> void SGEXTN
 }
 
 template <typename T, typename EqualityCheck, typename HashFunction> bool SGEXTN::Containers::UnorderedSet<T, EqualityCheck, HashFunction>::insert(const T& x){
-    return private_hashMap.insert(x, false, false);
+    return private_hashMap.insert(x, false);
 }
 
 template <typename T, typename EqualityCheck, typename HashFunction> bool SGEXTN::Containers::UnorderedSet<T, EqualityCheck, HashFunction>::erase(const T& x){

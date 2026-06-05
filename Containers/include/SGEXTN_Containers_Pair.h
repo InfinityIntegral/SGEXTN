@@ -7,7 +7,7 @@ public:
     T1 first;
     T2 second;
     Pair();
-    Pair(T1 first, T2 second);
+    Pair(const T1& first, const T2& second);
     [[nodiscard]] bool operator==(const Pair& x) const;
     [[nodiscard]] bool operator!=(const Pair& x) const;
     [[nodiscard]] bool operator<(const Pair& x) const;

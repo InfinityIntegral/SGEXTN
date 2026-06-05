@@ -9,4 +9,4 @@ public:
 }
 }
 
-#include <private_api/SGEXTN_Containers_PlacementNew_impl.h>
+void* operator new(decltype(sizeof(0)) /*unused*/, SGEXTN::Containers::PlacementNew /*unused*/, void* p) noexcept;

@@ -6,7 +6,7 @@
 
 template <typename T1, typename T2, typename T3> SGEXTN::Containers::Tuple3<T1, T2, T3>::Tuple3() : first(), second(), third() {}
 
-template <typename T1, typename T2, typename T3> SGEXTN::Containers::Tuple3<T1, T2, T3>::Tuple3(T1 first, T2 second, T3 third) : first(first), second(second), third(third) {}
+template <typename T1, typename T2, typename T3> SGEXTN::Containers::Tuple3<T1, T2, T3>::Tuple3(const T1& first, const T2& second, const T3& third) : first(first), second(second), third(third) {}
 
 template <typename T1, typename T2, typename T3> bool SGEXTN::Containers::Tuple3<T1, T2, T3>::operator==(const Tuple3& x) const {
     return (first == x.first && second == x.second && third == x.third);

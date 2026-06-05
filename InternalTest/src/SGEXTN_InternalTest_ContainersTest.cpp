@@ -775,11 +775,83 @@ void SGEXTN::InternalTest::ContainersTest::testMultiMapConstructible(){
 }
 
 void SGEXTN::InternalTest::ContainersTest::testUnorderedSetConstructible(){
-
+    SGEXTN::Containers::UnorderedSet<ConstructibleInteger, SGEXTN::Containers::EqualTo<ConstructibleInteger>, SGEXTN::Containers::Hash<ConstructibleInteger>> s;
+    ConstructibleInteger::lastConstruct = 0;
+    s.insert(1);
+    if(ConstructibleInteger::lastConstruct != 1){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::UnorderedSet - insert 1 construct fail");}
+    s.insert(2);
+    if(ConstructibleInteger::lastConstruct != 2){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::UnorderedSet - insert 2 construct fail");}
+    s.insert(3);
+    if(ConstructibleInteger::lastConstruct != 3){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::UnorderedSet - insert 3 construct fail");}
+    s.insert(4);
+    if(ConstructibleInteger::lastConstruct != 4){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::UnorderedSet - insert 4 construct fail");}
+    s.insert(5);
+    if(ConstructibleInteger::lastConstruct != 5){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::UnorderedSet - insert 5 construct fail");}
+    bool x = s.insert(6);
+    if(ConstructibleInteger::lastConstruct != 6 || s.length() != 6 || s.contains(6) == false || x == false){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::UnorderedSet - insert 6 construct fail");}
+    ConstructibleInteger::lastDestruct = 0;
+    s.clear();
+    if(ConstructibleInteger::lastDestruct == 0 || s.length() != 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::UnorderedSet - clear destruct fail");}
+    s.insert(1);
+    s.insert(2);
+    s.insert(3);
+    s.insert(4);
+    s.insert(5);
+    s.insert(6);
+    ConstructibleInteger::lastDestruct = 0;
+    x = s.erase(2);
+    if(ConstructibleInteger::lastDestruct != 2 || s.length() != 5 || s.contains(2) == true || x == false){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::UnorderedSet - erase destruct fail");}
+    SGEXTN::Containers::UnorderedSetIterator<ConstructibleInteger, SGEXTN::Containers::EqualTo<ConstructibleInteger>, SGEXTN::Containers::Hash<ConstructibleInteger>> itr = s.find(1);
+    x = s.erase(itr);
+    if(ConstructibleInteger::lastDestruct != 1 || s.length() != 4 || s.contains(1) == true || x == false){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::UnorderedSet - erase iterator destruct fail");}
+    s.erase(3);
+    if(ConstructibleInteger::lastDestruct != 3){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::UnorderedSet - erase 3 destruct fail");}
+    s.erase(4);
+    if(ConstructibleInteger::lastDestruct != 4){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::UnorderedSet - erase 4 destruct fail");}
+    s.erase(5);
+    if(ConstructibleInteger::lastDestruct != 5){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::UnorderedSet - erase 5 destruct fail");}
+    s.erase(6);
+    if(ConstructibleInteger::lastDestruct != 6){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::UnorderedSet - erase 6 destruct fail");}
 }
 
 void SGEXTN::InternalTest::ContainersTest::testUnorderedMapConstructible(){
-
+    SGEXTN::Containers::UnorderedMap<ConstructibleInteger, ConstructibleInteger, SGEXTN::Containers::EqualTo<ConstructibleInteger>, SGEXTN::Containers::Hash<ConstructibleInteger>> s;
+    ConstructibleInteger::lastConstruct = 0;
+    s.insert(1, 1);
+    if(ConstructibleInteger::lastConstruct != 1){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::UnorderedMap - insert 1 construct fail");}
+    s.insert(2, 2);
+    if(ConstructibleInteger::lastConstruct != 2){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::UnorderedMap - insert 2 construct fail");}
+    s.insert(3, 3);
+    if(ConstructibleInteger::lastConstruct != 3){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::UnorderedMap - insert 3 construct fail");}
+    s.insert(4, 4);
+    if(ConstructibleInteger::lastConstruct != 4){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::UnorderedMap - insert 4 construct fail");}
+    s.insert(5, 5);
+    if(ConstructibleInteger::lastConstruct != 5){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::UnorderedMap - insert 5 construct fail");}
+    bool x = s.insert(6, 6);
+    if(ConstructibleInteger::lastConstruct != 6 || s.length() != 6 || s.contains(6) == false || x == false){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::UnorderedMap - insert 6 construct fail");}
+    ConstructibleInteger::lastDestruct = 0;
+    s.clear();
+    if(ConstructibleInteger::lastDestruct == 0 || s.length() != 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::UnorderedMap - clear destruct fail");}
+    s.insert(1, 1);
+    s.insert(2, 2);
+    s.insert(3, 3);
+    s.insert(4, 4);
+    s.insert(5, 5);
+    s.insert(6, 6);
+    ConstructibleInteger::lastDestruct = 0;
+    x = s.erase(2);
+    if(ConstructibleInteger::lastDestruct != 2 || s.length() != 5 || s.contains(2) == true || x == false){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::UnorderedMap - erase destruct fail");}
+    SGEXTN::Containers::UnorderedMapIterator<ConstructibleInteger, ConstructibleInteger, SGEXTN::Containers::EqualTo<ConstructibleInteger>, SGEXTN::Containers::Hash<ConstructibleInteger>> itr = s.find(1);
+    x = s.erase(itr);
+    if(ConstructibleInteger::lastDestruct != 1 || s.length() != 4 || s.contains(1) == true || x == false){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::UnorderedMap - erase iterator destruct fail");}
+    s.erase(3);
+    if(ConstructibleInteger::lastDestruct != 3){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::UnorderedMap - erase 3 destruct fail");}
+    s.erase(4);
+    if(ConstructibleInteger::lastDestruct != 4){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::UnorderedMap - erase 4 destruct fail");}
+    s.erase(5);
+    if(ConstructibleInteger::lastDestruct != 5){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::UnorderedMap - erase 5 destruct fail");}
+    s.erase(6);
+    if(ConstructibleInteger::lastDestruct != 6){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::UnorderedMap - erase 6 destruct fail");}
 }
 
 void SGEXTN::InternalTest::ContainersTest::testAll(){

@@ -7,9 +7,20 @@ enum class HashMapSlotStatus : unsigned char {Active, Unused, Deleted};
 template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> class HashMapSlot {
 public:
     HashMapSlot();
+    HashMapSlot(const HashMapSlot&) = delete;
+    HashMapSlot& operator=(const HashMapSlot&) = delete;
+    HashMapSlot(HashMapSlot&&) = delete;
+    HashMapSlot& operator=(HashMapSlot&&) = delete;
+    ~HashMapSlot();
     HashMapSlotStatus status;
-    Key key;
-    Value value;
+    union {
+        unsigned char keyConstructorRemover;
+        Key keyObject;
+    };
+    union {
+        unsigned char valueConstructorRemover;
+        Value valueObject;
+    };
 };
 
 template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> class HashMapIterator;
@@ -26,7 +37,7 @@ public:
     EqualityCheck equalityCheckInstance;
     HashFunction hashFunctionInstance;
     [[nodiscard]] int getHashIndex(const Key& x) const;
-    bool rehash(const Key& key, const Value& value, bool allowDuplicate);
+    bool hashInto(const Key& key, const Value& value);
     void rehashAll(int newMemoryLength);
     HashMapSlot<Key, Value, EqualityCheck, HashFunction>* getSlotFromKey(const Key& x) const;
     HashMapSlot<Key, Value, EqualityCheck, HashFunction>* getPreviousSlot(HashMapSlot<Key, Value, EqualityCheck, HashFunction>* x) const;
@@ -39,7 +50,7 @@ public:
     ~HashMap();
     [[nodiscard]] int length() const;
     void reserve(int newMemoryLength);
-    bool insert(const Key& key, const Value& value, bool allowDuplicate);
+    bool insert(const Key& key, const Value& value);
     bool erase(const Key& x);
     void clear();
     [[nodiscard]] bool contains(const Key& x) const;
