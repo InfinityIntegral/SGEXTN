@@ -10,6 +10,7 @@
 #include <private_api/SGEXTN_Containers_Crash.h>
 #include <SGEXTN_ApplicationBase_OldString.h>
 #include <QString>
+#include <SGEXTN_Containers_ArrayVectorMove.h>
 
 namespace {
 int getValueOfDigit(const SGEXTN::ApplicationBase::Character& c, int base){
@@ -341,11 +342,11 @@ SGEXTN::ApplicationBase::String sortCombiningMarks(const SGEXTN::ApplicationBase
     SGEXTN::Containers::Array<int> codePoints = s.getUnicode();
     for(int i=0; i<codePoints.length(); i++){
         if(SGEXTN::ApplicationBase::UnicodeQuery::getCombiningMarkOrder(codePoints.at(i)) == 0){
-            if(startSort < i){SGEXTN::Containers::Sort<int, SortByCombiningMarkOrder>::sort(codePoints.pointerToData(startSort), i - startSort);}
+            if(startSort < i){SGEXTN::Containers::Sort<int, SortByCombiningMarkOrder>::sortArray(codePoints, startSort, i - startSort);}
             startSort = i + 1;
         }
     }
-    if(startSort != codePoints.length()){SGEXTN::Containers::Sort<int, SortByCombiningMarkOrder>::sort(codePoints.pointerToData(startSort), codePoints.length() - startSort);}
+    if(startSort != codePoints.length()){SGEXTN::Containers::Sort<int, SortByCombiningMarkOrder>::sortArray(codePoints, startSort, codePoints.length() - startSort);}
     SGEXTN::ApplicationBase::String output;
     for(int i=0; i<codePoints.length(); i++){
         output += SGEXTN::ApplicationBase::Character(codePoints.at(i));
@@ -1148,7 +1149,7 @@ SGEXTN::Containers::Array<SGEXTN::ApplicationBase::String> SGEXTN::ApplicationBa
         currentIndex = index + separator.characterLength();
     }
     splitStrings.pushBack(substringCharacters(currentIndex, characterLength() - currentIndex));
-    return SGEXTN::Containers::Vector<SGEXTN::ApplicationBase::String>::convertToArrayAndDestroyVector(splitStrings);
+    return SGEXTN::Containers::ArrayVectorMove<SGEXTN::ApplicationBase::String>::convertToArrayAndDestroyVector(splitStrings);
 }
 
 bool SGEXTN::ApplicationBase::String::isDigit() const {

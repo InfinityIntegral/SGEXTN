@@ -20,6 +20,7 @@
 #include <SGEXTN_Containers_UnorderedMap.h>
 #include <SGEXTN_Containers_Hash.h>
 #include <SGEXTN_Containers_Sort.h>
+#include <SGEXTN_Containers_ArrayVectorMove.h>
 
 namespace {
 class ConstructibleInteger {
@@ -123,7 +124,7 @@ void SGEXTN::InternalTest::ContainersTest::testArray(){
 
 void SGEXTN::InternalTest::ContainersTest::testSpan(){
     SGEXTN::Containers::Array<int> arr(1, 2, 3, 4, 5);
-    SGEXTN::Containers::Span<int> span(arr.pointerToData(0), 5);
+    SGEXTN::Containers::Span<int> span(arr.private_data, 5);
     if(span.at(0) != 1 || span.at(1) != 2 || span.at(2) != 3 || span.at(3) != 4 || span.at(4) != 5){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Span - bind to data fail");}
     if(span.length() != 5){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Span - retrieving length fail");}
     arr.at(3) = 26;
@@ -136,7 +137,6 @@ void SGEXTN::InternalTest::ContainersTest::testSpan(){
     if(subspanLeft.at(0) != 1 || subspanLeft.at(1) != 2 || subspanLeft.length() != 2){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Span - subspan left fail");}
     SGEXTN::Containers::Span<int> subspanRight = span.subspanRight(2);
     if(subspanRight.at(0) != 26 || subspanRight.at(1) != 5 || subspanRight.length() != 2){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Span - subspan right fail");}
-    if(subspanLeft.pointerToData(1) != subspanCenter.pointerToData(0)){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Span - inconsistent pointer to data");}
 }
 
 void SGEXTN::InternalTest::ContainersTest::testLessThan(){
@@ -220,11 +220,6 @@ void SGEXTN::InternalTest::ContainersTest::testVector(){
     if(v.at(0) != 0 || v.at(1) != 0 || v.at(2) != 0 || v.at(3) != 0 || v.at(4) != 0 || v.length() != 5){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Vector - construct fail");}
     v = SGEXTN::Containers::Vector<int>(100);
     if(v.length() != 100){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Vector - blank construct fail");}
-    SGEXTN::Containers::Array<int> arr = SGEXTN::Containers::Array<int>(1, 2, 3, 4, 5);
-    v = SGEXTN::Containers::Vector<int>::convertToVectorAndDestroyArray(arr);
-    if(arr.length() != 0 || v.length() != 5 || v.at(0) != 1 || v.at(1) != 2 || v.at(2) != 3 || v.at(3) != 4 || v.at(4) != 5){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Vector - convert array to vector fail");}
-    arr = SGEXTN::Containers::Vector<int>::convertToArrayAndDestroyVector(v);
-    if(v.length() != 0 || arr.length() != 5 || arr.at(0) != 1 || arr.at(1) != 2 || arr.at(2) != 3 || arr.at(3) != 4 || arr.at(4) != 5){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Vector - convert vector to array fail");}
 }
 
 void SGEXTN::InternalTest::ContainersTest::testQueue(){
@@ -576,9 +571,22 @@ void SGEXTN::InternalTest::ContainersTest::testSort(){
     for(int i=0; i<1000; i++){
         arr.at(i) = 1000 - i;
     }
-    SGEXTN::Containers::Sort<int, SGEXTN::Containers::LessThan<int>>::sort(arr.pointerToData(0), arr.length());
+    SGEXTN::Containers::Sort<int, SGEXTN::Containers::LessThan<int>>::sortArray(arr, 0, arr.length());
     for(int i=0; i<1000; i++){
-        if(arr.at(i) != i + 1){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Sort - sort failed");}
+        if(arr.at(i) != i + 1){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Sort - sort array failed");}
+    }
+    SGEXTN::Containers::Span<int> span(arr.private_data, 1000);
+    SGEXTN::Containers::Sort<int, SGEXTN::Containers::MoreThan<int>>::sortSpan(span, 0, span.length());
+    for(int i=0; i<1000; i++){
+        if(arr.at(i) != 1000 - i){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Sort - sort array failed");}
+    }
+    SGEXTN::Containers::Vector<int> vector(1000);
+    for(int i=0; i<1000; i++){
+        vector.at(i) = 1000 - i;
+    }
+    SGEXTN::Containers::Sort<int, SGEXTN::Containers::LessThan<int>>::sortVector(vector, 0, vector.length());
+    for(int i=0; i<1000; i++){
+        if(vector.at(i) != i + 1){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Sort - sort vector failed");}
     }
 }
 
@@ -983,6 +991,18 @@ void SGEXTN::InternalTest::ContainersTest::testUnorderedMapConstructible(){
     if(ConstructibleInteger::lastDestruct != 6){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::UnorderedMap - erase 6 destruct fail");}
 }
 
+void SGEXTN::InternalTest::ContainersTest::testSortConstructible(){
+
+}
+
+void SGEXTN::InternalTest::ContainersTest::testArrayVectorMove(){
+    SGEXTN::Containers::Array<int> arr = SGEXTN::Containers::Array<int>(1, 2, 3, 4, 5);
+    SGEXTN::Containers::Vector<int> v = SGEXTN::Containers::ArrayVectorMove<int>::convertToVectorAndDestroyArray(arr);
+    if(arr.length() != 0 || v.length() != 5 || v.at(0) != 1 || v.at(1) != 2 || v.at(2) != 3 || v.at(3) != 4 || v.at(4) != 5){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Vector - convert array to vector fail");}
+    arr = SGEXTN::Containers::ArrayVectorMove<int>::convertToArrayAndDestroyVector(v);
+    if(v.length() != 0 || arr.length() != 5 || arr.at(0) != 1 || arr.at(1) != 2 || arr.at(2) != 3 || arr.at(3) != 4 || arr.at(4) != 5){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Vector - convert vector to array fail");}
+}
+
 void SGEXTN::InternalTest::ContainersTest::testAll(){
     SGEXTN::InternalTest::ContainersTest::testEqualTo();
     SGEXTN::InternalTest::ContainersTest::testArray();
@@ -1014,13 +1034,14 @@ void SGEXTN::InternalTest::ContainersTest::testAll(){
     SGEXTN::InternalTest::ContainersTest::testUnorderedSetConstructible();
     SGEXTN::InternalTest::ContainersTest::testUnorderedMapConstructible();
     SGEXTN::InternalTest::ContainersTest::testSort();
+    SGEXTN::InternalTest::ContainersTest::testSortConstructible();
+    SGEXTN::InternalTest::ContainersTest::testArrayVectorMove();
 }
 
 class RegularStruct {
 public:
-    RegularStruct() = default;
-    RegularStruct(int x){(*this).x = x;}
     int x;
+    RegularStruct(int x) : x(x) {}
 };
 
 class RegularStructLessThan {
@@ -1038,6 +1059,35 @@ public:
     int operator()(const RegularStruct& x) const {return x.x;}
 };
 
+class DefaultConstructableStruct {
+public:
+    int x;
+    DefaultConstructableStruct() : x(0) {}
+    DefaultConstructableStruct(int x) : x(x) {}
+};
+
+class DefaultConstructableStructLessThan {
+public:
+    bool operator()(const DefaultConstructableStruct& a, const DefaultConstructableStruct& b) const {return (a.x < b.x);}
+};
+
+class EquatableHashableStruct {
+public:
+    int x;
+    EquatableHashableStruct(int x) : x(x) {}
+    [[nodiscard]] bool operator==(const EquatableHashableStruct& x) const {return ((*this).x == x.x);}
+    [[nodiscard]] bool operator!=(const EquatableHashableStruct& x) const {return ((*this).x != x.x);}
+    [[nodiscard]] int hash() const {return x;}
+};
+
+class ComparableStruct {
+public:
+    int x;
+    ComparableStruct(int x) : x(x) {}
+    [[nodiscard]] bool operator<(const ComparableStruct& x) const {return ((*this).x < x.x);}
+    [[nodiscard]] bool operator>(const ComparableStruct& x) const {return ((*this).x > x.x);}
+};
+
 class OperatoredStruct {
 public:
     OperatoredStruct() = default;
@@ -1050,15 +1100,16 @@ public:
     [[nodiscard]] bool operator>(const OperatoredStruct& x) const {return ((*this).x > x.x);}
 };
 
-template class SGEXTN::Containers::Array<RegularStruct>;
+template class SGEXTN::Containers::Array<DefaultConstructableStruct>;
+template class SGEXTN::Containers::ArrayVectorMove<DefaultConstructableStruct>;
 template class SGEXTN::Containers::Deque<RegularStruct>;
-template class SGEXTN::Containers::EqualTo<OperatoredStruct>;
-template class SGEXTN::Containers::Hash<OperatoredStruct>;
-template class SGEXTN::Containers::LessThan<OperatoredStruct>;
+template class SGEXTN::Containers::EqualTo<EquatableHashableStruct>;
+template class SGEXTN::Containers::Hash<EquatableHashableStruct>;
+template class SGEXTN::Containers::LessThan<ComparableStruct>;
 template class SGEXTN::Containers::Map<RegularStruct, RegularStruct, RegularStructLessThan>;
 template class SGEXTN::Containers::MapIterator<RegularStruct, RegularStruct, RegularStructLessThan>;
 template class SGEXTN::Containers::MapConstIterator<RegularStruct, RegularStruct, RegularStructLessThan>;
-template class SGEXTN::Containers::MoreThan<OperatoredStruct>;
+template class SGEXTN::Containers::MoreThan<ComparableStruct>;
 template class SGEXTN::Containers::MultiMap<RegularStruct, RegularStruct, RegularStructLessThan>;
 template class SGEXTN::Containers::MultiMapIterator<RegularStruct, RegularStruct, RegularStructLessThan>;
 template class SGEXTN::Containers::MultiMapConstIterator<RegularStruct, RegularStruct, RegularStructLessThan>;
@@ -1071,7 +1122,7 @@ template class SGEXTN::Containers::Queue<RegularStruct>;
 template class SGEXTN::Containers::Set<RegularStruct, RegularStructLessThan>;
 template class SGEXTN::Containers::SetIterator<RegularStruct, RegularStructLessThan>;
 template class SGEXTN::Containers::SetConstIterator<RegularStruct, RegularStructLessThan>;
-template class SGEXTN::Containers::Sort<RegularStruct, RegularStructLessThan>;
+template class SGEXTN::Containers::Sort<DefaultConstructableStruct, DefaultConstructableStructLessThan>;
 template class SGEXTN::Containers::Span<RegularStruct>;
 template class SGEXTN::Containers::Stack<RegularStruct>;
 template class SGEXTN::Containers::Tuple3<OperatoredStruct, OperatoredStruct, OperatoredStruct>;
@@ -1081,4 +1132,4 @@ template class SGEXTN::Containers::UnorderedMapConstIterator<RegularStruct, Regu
 template class SGEXTN::Containers::UnorderedSet<RegularStruct, RegularStructEqualTo, RegularStructHashFunction>;
 template class SGEXTN::Containers::UnorderedSetIterator<RegularStruct, RegularStructEqualTo, RegularStructHashFunction>;
 template class SGEXTN::Containers::UnorderedSetConstIterator<RegularStruct, RegularStructEqualTo, RegularStructHashFunction>;
-template class SGEXTN::Containers::Vector<RegularStruct>;
+template class SGEXTN::Containers::Vector<DefaultConstructableStruct>;

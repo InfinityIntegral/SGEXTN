@@ -76,11 +76,3 @@ template <typename T> const T& SGEXTN::Containers::Array<T>::at(int i) const {
     if(i >= private_length){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Array::at crashed because index points beyond the end of the array");}
     return (*(private_data + i));
 }
-
-template <typename T> T* SGEXTN::Containers::Array<T>::pointerToData(int n){
-    return (private_data + n);
-}
-
-template <typename T> const T* SGEXTN::Containers::Array<T>::pointerToData(int n) const {
-    return (private_data + n);
-}

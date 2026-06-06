@@ -99,7 +99,7 @@ int SGEXTN::Structs::HslaColour::hash() const {
     hashArray.at(1) = SGEXTN::Containers::Hash<float>()(private_saturation);
     hashArray.at(2) = SGEXTN::Containers::Hash<float>()(private_lightness);
     hashArray.at(3) = SGEXTN::Containers::Hash<float>()(private_transparency);
-    return SGEXTN::Containers::HashAlgorithm::wyHash32(SGEXTN::Containers::Span<const unsigned char>(reinterpret_cast<const unsigned char*>(hashArray.pointerToData(0)), 4 * sizeof(int)));
+    return SGEXTN::Containers::HashAlgorithm::wyHash32(SGEXTN::Containers::Span<const unsigned char>(reinterpret_cast<const unsigned char*>(hashArray.private_data), 4 * sizeof(int)));
 }
 
 SGEXTN::ApplicationBase::OldString SGEXTN::Structs::HslaColour::debugLog() const {

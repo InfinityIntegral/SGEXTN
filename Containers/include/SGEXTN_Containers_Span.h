@@ -11,8 +11,6 @@ public:
     [[nodiscard]] Span subspan(int start, int length) const;
     [[nodiscard]] Span subspanLeft(int length) const;
     [[nodiscard]] Span subspanRight(int length) const;
-    [[nodiscard]] T* pointerToData(int n);
-    [[nodiscard]] const T* pointerToData(int n) const;
     T* private_data;
     int private_length;
 };

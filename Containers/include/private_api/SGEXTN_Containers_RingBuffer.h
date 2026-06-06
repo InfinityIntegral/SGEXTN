@@ -35,8 +35,6 @@ public:
     void popFront();
     void reserve(int newMemoryLength);
     void clear();
-    [[nodiscard]] T* pointerToData(int n);
-    [[nodiscard]] const T* pointerToData(int n) const;
     RingBufferSlot<T>* private_data;
     int private_start;
     int private_length;

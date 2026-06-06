@@ -40,11 +40,3 @@ template <typename T> SGEXTN::Containers::Span<T> SGEXTN::Containers::Span<T>::s
     if(length > private_length){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Span::subspanRight crashed because the length of the subspan exceeds the length of the original span");}
     return SGEXTN::Containers::Span(private_data + private_length - length, length);
 }
-
-template <typename T> T* SGEXTN::Containers::Span<T>::pointerToData(int n){
-    return (private_data + n);
-}
-
-template <typename T> const T* SGEXTN::Containers::Span<T>::pointerToData(int n) const {
-    return (private_data + n);
-}

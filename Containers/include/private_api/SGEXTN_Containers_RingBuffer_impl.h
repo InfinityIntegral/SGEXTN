@@ -154,11 +154,3 @@ template <typename T> void SGEXTN::Containers::RingBuffer<T>::clear(){
     private_start = 0;
     private_length = 0;
 }
-
-template <typename T> T* SGEXTN::Containers::RingBuffer<T>::pointerToData(int n){
-    return &(*(private_data + private_getMemoryIndex(n))).object;
-}
-
-template <typename T> const T* SGEXTN::Containers::RingBuffer<T>::pointerToData(int n) const {
-    return &(*(private_data + private_getMemoryIndex(n))).object;
-}

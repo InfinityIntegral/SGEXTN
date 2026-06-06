@@ -33,5 +33,5 @@ template <typename T1, typename T2, typename T3> int SGEXTN::Containers::Tuple3<
     hashArray.at(0) = SGEXTN::Containers::Hash<T1>()(first);
     hashArray.at(1) = SGEXTN::Containers::Hash<T2>()(second);
     hashArray.at(2) = SGEXTN::Containers::Hash<T3>()(third);
-    return SGEXTN::Containers::HashAlgorithm::wyHash32(SGEXTN::Containers::Span<const unsigned char>(reinterpret_cast<const unsigned char*>(hashArray.pointerToData(0)), 3 * sizeof(int)));
+    return SGEXTN::Containers::HashAlgorithm::wyHash32(SGEXTN::Containers::Span<const unsigned char>(reinterpret_cast<const unsigned char*>(hashArray.private_data), 3 * sizeof(int)));
 }

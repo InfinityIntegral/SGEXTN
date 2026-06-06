@@ -1,25 +1,32 @@
 #pragma once
 #include <private_api/SGEXTN_Containers_Crash.h>
+#include <SGEXTN_Containers_PlacementNew.h>
+#include <SGEXTN_Containers_Sort.h>
+#include <SGEXTN_Containers_ArrayVectorMove.h>
 
 template <typename T, typename Comparator> SGEXTN::Containers::Sort<T, Comparator>::Sort(T* start, int length) : private_firstBuffer(start), private_secondBuffer(nullptr), private_length(length), private_mainIsSecond(false), private_comparatorInstance(), private_minimumBlockSize(32) {
-    if(start == nullptr){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Sort constructor crashed as starting position is nullptr");}
-    if(length < 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Sort constructor crashed as length is negative");}
-    private_secondBuffer = new T[length];
+    private_secondBuffer = static_cast<T*>(::operator new(length * sizeof(T)));
+    for(int i=0; i<length; i++){
+        new(SGEXTN::Containers::PlacementNew::placeholder, private_secondBuffer + i) T(*(private_firstBuffer + i));
+    }
 }
 
 template <typename T, typename Comparator> SGEXTN::Containers::Sort<T, Comparator>::~Sort(){
-    delete[] private_secondBuffer;
+    for(int i=0; i<private_length; i++){
+        (*(private_secondBuffer + i)).~T();
+    }
+    ::operator delete(private_secondBuffer);
 }
 
 template <typename T, typename Comparator> void SGEXTN::Containers::Sort<T, Comparator>::private_insertSort(int left, int right){
     for(int i=left+1; i<right; i++){
-        T thisKey = (*(private_firstBuffer + i));
+        T thisKey = static_cast<T&&>(*(private_firstBuffer + i));
         int j = i - 1;
         while(j >= left && private_comparatorInstance(thisKey, (*(private_firstBuffer + j))) == true){
-            (*(private_firstBuffer + j + 1)) = (*(private_firstBuffer + j));
+            (*(private_firstBuffer + j + 1)) = static_cast<T&&>(*(private_firstBuffer + j));
             j--;
         }
-        (*(private_firstBuffer + j + 1)) = thisKey;
+        (*(private_firstBuffer + j + 1)) = static_cast<T&&>(thisKey);
     }
 }
 
@@ -28,11 +35,11 @@ template <typename T, typename Comparator> void SGEXTN::Containers::Sort<T, Comp
     int i2 = 0;
     for(int i=0; i<firstBlockSize+secondBlockSize; i++){
         if(i2 == secondBlockSize || (i1 != firstBlockSize && private_comparatorInstance((*(initialLocation + firstBlockSize + i2)), (*(initialLocation + i1))) == false)){
-            (*(finalLocation + i)) = (*(initialLocation + i1));
+            (*(finalLocation + i)) = static_cast<T&&>(*(initialLocation + i1));
             i1++;
         }
         else{
-            (*(finalLocation + i)) = (*(initialLocation + firstBlockSize + i2));
+            (*(finalLocation + i)) = static_cast<T&&>(*(initialLocation + firstBlockSize + i2));
             i2++;
         }
     }
@@ -67,11 +74,31 @@ template <typename T, typename Comparator> void SGEXTN::Containers::Sort<T, Comp
     }
     if(private_mainIsSecond == true){
         for(int i=0; i<private_length; i++){
-            (*(private_firstBuffer + i)) = (*(private_secondBuffer + i));
+            (*(private_firstBuffer + i)) = static_cast<T&&>(*(private_secondBuffer + i));
         }
     }
 }
 
-template <typename T, typename Comparator> void SGEXTN::Containers::Sort<T, Comparator>::sort(T* start, int length){
+template <typename T, typename Comparator> void SGEXTN::Containers::Sort<T, Comparator>::private_sort(T* start, int length){
     SGEXTN::Containers::Sort<T, Comparator>(start, length).doSort();
+}
+
+template <typename T, typename Comparator> void SGEXTN::Containers::Sort<T, Comparator>::sortArray(SGEXTN::Containers::Array<T>& array, int start, int length){
+    if(start < 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Sort::sortArray crashed because start of range is negative");}
+    if(start + length > array.length()){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Sort::sortArray crashed because end of range points beyond the length of array");}
+    SGEXTN::Containers::Sort<T, Comparator>::private_sort(array.private_data + start, length);
+}
+
+template <typename T, typename Comparator> void SGEXTN::Containers::Sort<T, Comparator>::sortVector(SGEXTN::Containers::Vector<T>& vector, int start, int length){
+    if(start < 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Sort::sortVector crashed because start of range is negative");}
+    if(start + length > vector.length()){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Sort::sortVector crashed because end of range points beyond the length of vector");}
+    SGEXTN::Containers::Array<T> array = SGEXTN::Containers::ArrayVectorMove<T>::convertToArrayAndDestroyVector(vector);
+    SGEXTN::Containers::Sort<T, Comparator>::private_sort(array.private_data + start, length);
+    vector = SGEXTN::Containers::ArrayVectorMove<T>::convertToVectorAndDestroyArray(array);
+}
+
+template <typename T, typename Comparator> void SGEXTN::Containers::Sort<T, Comparator>::sortSpan(SGEXTN::Containers::Span<T>& span, int start, int length){
+    if(start < 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Sort::sortSpan crashed because start of range is negative");}
+    if(start + length > span.length()){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Sort::sortSpan crashed because end of range points beyond the length of span");}
+    SGEXTN::Containers::Sort<T, Comparator>::private_sort(span.private_data + start, length);
 }

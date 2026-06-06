@@ -7,6 +7,7 @@
 #include <SGEXTN_ApplicationBase_UnicodeQuery.h>
 #include <SGEXTN_Containers_Vector.h>
 #include <SGEXTN_Math_FloatLimits.h>
+#include <SGEXTN_Containers_ArrayVectorMove.h>
 
 namespace {
 void appendUnicode(int unicode, SGEXTN::ApplicationBase::Character& c){
@@ -213,7 +214,7 @@ SGEXTN::Containers::Array<int> SGEXTN::ApplicationBase::Character::getUnicode() 
         }
         else{SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character::getUnicode crashed due to invalid character");}
     }
-    return SGEXTN::Containers::Vector<int>::convertToArrayAndDestroyVector(output);
+    return SGEXTN::Containers::ArrayVectorMove<int>::convertToArrayAndDestroyVector(output);
 }
 
 bool SGEXTN::ApplicationBase::Character::isUppercase() const {

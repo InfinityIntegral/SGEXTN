@@ -16,8 +16,6 @@ public:
     [[nodiscard]] int length() const;
     [[nodiscard]] T& at(int i);
     [[nodiscard]] const T& at(int i) const;
-    [[nodiscard]] T* pointerToData(int n);
-    [[nodiscard]] const T* pointerToData(int n) const;
     T* private_data;
     int private_length;
 };

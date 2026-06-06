@@ -1,4 +1,7 @@
 #pragma once
+#include <SGEXTN_Containers_Array.h>
+#include <SGEXTN_Containers_Vector.h>
+#include <SGEXTN_Containers_Span.h>
 
 namespace SGEXTN {
 namespace Containers {
@@ -20,7 +23,10 @@ public:
     void private_mergeTwoBlocks(T* initialLocation, T* finalLocation, int firstBlockSize, int secondBlockSize);
     void private_mergeAllBlocks(T* initialLocation, T* finalLocation, int blockSize);
     void doSort();
-    static void sort(T* start, int length);
+    static void private_sort(T* start, int length);
+    static void sortArray(SGEXTN::Containers::Array<T>& array, int start, int length);
+    static void sortVector(SGEXTN::Containers::Vector<T>& vector, int start, int length);
+    static void sortSpan(SGEXTN::Containers::Span<T>& span, int start, int length);
 };
 }
 }
