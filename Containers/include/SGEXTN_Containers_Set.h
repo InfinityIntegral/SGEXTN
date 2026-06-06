@@ -42,9 +42,9 @@ public:
     SetIterator operator++(int);
     SetIterator& operator--();
     SetIterator operator--(int);
-    bool operator==(const SetIterator& x);
-    bool operator!=(const SetIterator& x);
-    const T& operator*();
+    [[nodiscard]] bool operator==(const SetIterator& x) const;
+    [[nodiscard]] bool operator!=(const SetIterator& x) const;
+    [[nodiscard]] const T& operator*() const;
 };
 
 template <typename T, typename Comparator> class SetConstIterator {
@@ -55,9 +55,9 @@ public:
     SetConstIterator operator++(int);
     SetConstIterator& operator--();
     SetConstIterator operator--(int);
-    bool operator==(const SetConstIterator& x);
-    bool operator!=(const SetConstIterator& x);
-    const T& operator*();
+    [[nodiscard]] bool operator==(const SetConstIterator& x) const;
+    [[nodiscard]] bool operator!=(const SetConstIterator& x) const;
+    [[nodiscard]] const T& operator*() const;
 };
 }
 }

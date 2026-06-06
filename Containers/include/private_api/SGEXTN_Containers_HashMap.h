@@ -75,11 +75,10 @@ public:
     HashMapIterator operator++(int);
     HashMapIterator& operator--();
     HashMapIterator operator--(int);
-    bool operator==(const HashMapIterator& x);
-    bool operator!=(const HashMapIterator& x);
-    const Key& key();
-    Value& value();
-    HashMapIterator() = default;
+    [[nodiscard]] bool operator==(const HashMapIterator& x) const;
+    [[nodiscard]] bool operator!=(const HashMapIterator& x) const;
+    [[nodiscard]] const Key& key() const;
+    [[nodiscard]] Value& value() const;
 };
 
 template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> class HashMapConstIterator {
@@ -91,11 +90,10 @@ public:
     HashMapConstIterator operator++(int);
     HashMapConstIterator& operator--();
     HashMapConstIterator operator--(int);
-    bool operator==(const HashMapConstIterator& x);
-    bool operator!=(const HashMapConstIterator& x);
-    const Key& key();
-    const Value& value();
-    HashMapConstIterator() = default;
+    [[nodiscard]] bool operator==(const HashMapConstIterator& x) const;
+    [[nodiscard]] bool operator!=(const HashMapConstIterator& x) const;
+    [[nodiscard]] const Key& key() const;
+    [[nodiscard]] const Value& value() const;
 };
 }
 }

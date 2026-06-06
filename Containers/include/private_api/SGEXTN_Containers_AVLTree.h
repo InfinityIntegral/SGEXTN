@@ -83,34 +83,32 @@ public:
 
 template <typename Key, typename Value, typename Comparator> class AVLTreeIterator {
 public:
+    AVLTreeNode<Key, Value, Comparator>* associatedNode;
+    AVLTree<Key, Value, Comparator>* associatedTree;
+    AVLTreeIterator(AVLTreeNode<Key, Value, Comparator>* node, AVLTree<Key, Value, Comparator>* tree);
     AVLTreeIterator& operator++();
     AVLTreeIterator operator++(int);
     AVLTreeIterator& operator--();
     AVLTreeIterator operator--(int);
-    bool operator==(const AVLTreeIterator& x);
-    bool operator!=(const AVLTreeIterator& x);
-    const Key& key();
-    Value& value();
-    AVLTreeIterator() = default;
-    AVLTreeIterator(AVLTreeNode<Key, Value, Comparator>* node, AVLTree<Key, Value, Comparator>* tree);
-    AVLTreeNode<Key, Value, Comparator>* associatedNode;
-    AVLTree<Key, Value, Comparator>* associatedTree;
+    [[nodiscard]] bool operator==(const AVLTreeIterator& x) const;
+    [[nodiscard]] bool operator!=(const AVLTreeIterator& x) const;
+    [[nodiscard]] const Key& key() const;
+    [[nodiscard]] Value& value() const;
 };
 
 template <typename Key, typename Value, typename Comparator> class AVLTreeConstIterator {
 public:
+    AVLTreeNode<Key, Value, Comparator>* associatedNode;
+    const AVLTree<Key, Value, Comparator>* associatedTree;
+    AVLTreeConstIterator(AVLTreeNode<Key, Value, Comparator>* node, const AVLTree<Key, Value, Comparator>* tree);
     AVLTreeConstIterator& operator++();
     AVLTreeConstIterator operator++(int);
     AVLTreeConstIterator& operator--();
     AVLTreeConstIterator operator--(int);
-    bool operator==(const AVLTreeConstIterator& x);
-    bool operator!=(const AVLTreeConstIterator& x);
-    const Key& key();
-    const Value& value();
-    AVLTreeConstIterator() = default;
-    AVLTreeConstIterator(AVLTreeNode<Key, Value, Comparator>* node, const AVLTree<Key, Value, Comparator>* tree);
-    AVLTreeNode<Key, Value, Comparator>* associatedNode;
-    const AVLTree<Key, Value, Comparator>* associatedTree;
+    [[nodiscard]] bool operator==(const AVLTreeConstIterator& x) const;
+    [[nodiscard]] bool operator!=(const AVLTreeConstIterator& x) const;
+    [[nodiscard]] const Key& key() const;
+    [[nodiscard]] const Value& value() const;
 };
 }
 }

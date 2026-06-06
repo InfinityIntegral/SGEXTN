@@ -35,10 +35,10 @@ public:
     UnorderedMapIterator operator++(int);
     UnorderedMapIterator& operator--();
     UnorderedMapIterator operator--(int);
-    bool operator==(const UnorderedMapIterator& x);
-    bool operator!=(const UnorderedMapIterator& x);
-    const Key& key();
-    Value& value();
+    [[nodiscard]] bool operator==(const UnorderedMapIterator& x) const;
+    [[nodiscard]] bool operator!=(const UnorderedMapIterator& x) const;
+    [[nodiscard]] const Key& key() const;
+    [[nodiscard]] Value& value() const;
 };
 
 template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> class UnorderedMapConstIterator {
@@ -49,10 +49,10 @@ public:
     UnorderedMapConstIterator operator++(int);
     UnorderedMapConstIterator& operator--();
     UnorderedMapConstIterator operator--(int);
-    bool operator==(const UnorderedMapConstIterator& x);
-    bool operator!=(const UnorderedMapConstIterator& x);
-    const Key& key();
-    const Value& value();
+    [[nodiscard]] bool operator==(const UnorderedMapConstIterator& x) const;
+    [[nodiscard]] bool operator!=(const UnorderedMapConstIterator& x) const;
+    [[nodiscard]] const Key& key() const;
+    [[nodiscard]] const Value& value() const;
 };
 }
 }

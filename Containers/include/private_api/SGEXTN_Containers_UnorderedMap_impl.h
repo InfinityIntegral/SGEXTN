@@ -89,20 +89,20 @@ template <typename Key, typename Value, typename EqualityCheck, typename HashFun
     return prev;
 }
 
-template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> bool SGEXTN::Containers::UnorderedMapIterator<Key, Value, EqualityCheck, HashFunction>::operator==(const SGEXTN::Containers::UnorderedMapIterator<Key, Value, EqualityCheck, HashFunction>& x){
+template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> bool SGEXTN::Containers::UnorderedMapIterator<Key, Value, EqualityCheck, HashFunction>::operator==(const SGEXTN::Containers::UnorderedMapIterator<Key, Value, EqualityCheck, HashFunction>& x) const {
     return (private_hashMapIterator == x.private_hashMapIterator);
 }
 
-template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> bool SGEXTN::Containers::UnorderedMapIterator<Key, Value, EqualityCheck, HashFunction>::operator!=(const SGEXTN::Containers::UnorderedMapIterator<Key, Value, EqualityCheck, HashFunction>& x){
+template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> bool SGEXTN::Containers::UnorderedMapIterator<Key, Value, EqualityCheck, HashFunction>::operator!=(const SGEXTN::Containers::UnorderedMapIterator<Key, Value, EqualityCheck, HashFunction>& x) const {
     return (private_hashMapIterator != x.private_hashMapIterator);
 }
 
-template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> const Key& SGEXTN::Containers::UnorderedMapIterator<Key, Value, EqualityCheck, HashFunction>::key(){
+template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> const Key& SGEXTN::Containers::UnorderedMapIterator<Key, Value, EqualityCheck, HashFunction>::key() const {
     if(private_hashMapIterator.associatedSlot == nullptr){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::UnorderedMapIterator::key crashed because the iterator is the end iterator");}
     return private_hashMapIterator.key();
 }
 
-template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> Value& SGEXTN::Containers::UnorderedMapIterator<Key, Value, EqualityCheck, HashFunction>::value(){
+template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> Value& SGEXTN::Containers::UnorderedMapIterator<Key, Value, EqualityCheck, HashFunction>::value() const {
     if(private_hashMapIterator.associatedSlot == nullptr){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::UnorderedMapIterator::value crashed because the iterator is the end iterator");}
     return private_hashMapIterator.value();
 }
@@ -131,20 +131,20 @@ template <typename Key, typename Value, typename EqualityCheck, typename HashFun
     return prev;
 }
 
-template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> bool SGEXTN::Containers::UnorderedMapConstIterator<Key, Value, EqualityCheck, HashFunction>::operator==(const SGEXTN::Containers::UnorderedMapConstIterator<Key, Value, EqualityCheck, HashFunction>& x){
+template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> bool SGEXTN::Containers::UnorderedMapConstIterator<Key, Value, EqualityCheck, HashFunction>::operator==(const SGEXTN::Containers::UnorderedMapConstIterator<Key, Value, EqualityCheck, HashFunction>& x) const {
     return (private_hashMapIterator == x.private_hashMapIterator);
 }
 
-template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> bool SGEXTN::Containers::UnorderedMapConstIterator<Key, Value, EqualityCheck, HashFunction>::operator!=(const SGEXTN::Containers::UnorderedMapConstIterator<Key, Value, EqualityCheck, HashFunction>& x){
+template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> bool SGEXTN::Containers::UnorderedMapConstIterator<Key, Value, EqualityCheck, HashFunction>::operator!=(const SGEXTN::Containers::UnorderedMapConstIterator<Key, Value, EqualityCheck, HashFunction>& x) const {
     return (private_hashMapIterator != x.private_hashMapIterator);
 }
 
-template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> const Key& SGEXTN::Containers::UnorderedMapConstIterator<Key, Value, EqualityCheck, HashFunction>::key(){
+template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> const Key& SGEXTN::Containers::UnorderedMapConstIterator<Key, Value, EqualityCheck, HashFunction>::key() const {
     if(private_hashMapIterator.associatedSlot == nullptr){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::UnorderedMapConstIterator::key crashed because the iterator is the end iterator");}
     return private_hashMapIterator.key();
 }
 
-template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> const Value& SGEXTN::Containers::UnorderedMapConstIterator<Key, Value, EqualityCheck, HashFunction>::value(){
+template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> const Value& SGEXTN::Containers::UnorderedMapConstIterator<Key, Value, EqualityCheck, HashFunction>::value() const {
     if(private_hashMapIterator.associatedSlot == nullptr){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::UnorderedMapConstIterator::value crashed because the iterator is the end iterator");}
     return private_hashMapIterator.value();
 }

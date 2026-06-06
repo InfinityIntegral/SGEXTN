@@ -46,10 +46,10 @@ public:
     MapIterator operator++(int);
     MapIterator& operator--();
     MapIterator operator--(int);
-    bool operator==(const MapIterator& x);
-    bool operator!=(const MapIterator& x);
-    const Key& key();
-    Value& value();
+    [[nodiscard]] bool operator==(const MapIterator& x) const;
+    [[nodiscard]] bool operator!=(const MapIterator& x) const;
+    [[nodiscard]] const Key& key() const;
+    [[nodiscard]] Value& value() const;
 };
 
 template <typename Key, typename Value, typename Comparator> class MapConstIterator {
@@ -60,10 +60,10 @@ public:
     MapConstIterator operator++(int);
     MapConstIterator& operator--();
     MapConstIterator operator--(int);
-    bool operator==(const MapConstIterator& x);
-    bool operator!=(const MapConstIterator& x);
-    const Key& key();
-    const Value& value();
+    [[nodiscard]] bool operator==(const MapConstIterator& x) const;
+    [[nodiscard]] bool operator!=(const MapConstIterator& x) const;
+    [[nodiscard]] const Key& key() const;
+    [[nodiscard]] const Value& value() const;
 };
 }
 }

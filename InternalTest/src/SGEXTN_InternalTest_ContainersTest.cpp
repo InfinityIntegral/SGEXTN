@@ -1090,7 +1090,7 @@ public:
 
 class OperatoredStruct {
 public:
-    OperatoredStruct() = default;
+    OperatoredStruct() : x(0) {}
     OperatoredStruct(int x){(*this).x = x;}
     int x;
     [[nodiscard]] bool operator==(const OperatoredStruct& x) const {return ((*this).x == x.x);}

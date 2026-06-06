@@ -33,9 +33,9 @@ public:
     UnorderedSetIterator operator++(int);
     UnorderedSetIterator& operator--();
     UnorderedSetIterator operator--(int);
-    bool operator==(const UnorderedSetIterator& x);
-    bool operator!=(const UnorderedSetIterator& x);
-    const T& operator*();
+    [[nodiscard]] bool operator==(const UnorderedSetIterator& x) const;
+    [[nodiscard]] bool operator!=(const UnorderedSetIterator& x) const;
+    [[nodiscard]] const T& operator*() const;
 };
 
 template <typename T, typename EqualityCheck, typename HashFunction> class UnorderedSetConstIterator {
@@ -46,9 +46,9 @@ public:
     UnorderedSetConstIterator operator++(int);
     UnorderedSetConstIterator& operator--();
     UnorderedSetConstIterator operator--(int);
-    bool operator==(const UnorderedSetConstIterator& x);
-    bool operator!=(const UnorderedSetConstIterator& x);
-    const T& operator*();
+    [[nodiscard]] bool operator==(const UnorderedSetConstIterator& x) const;
+    [[nodiscard]] bool operator!=(const UnorderedSetConstIterator& x) const;
+    [[nodiscard]] const T& operator*() const;
 };
 }
 }

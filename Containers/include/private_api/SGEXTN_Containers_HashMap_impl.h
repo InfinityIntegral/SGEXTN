@@ -294,19 +294,19 @@ template <typename Key, typename Value, typename EqualityCheck, typename HashFun
     return prev;
 }
 
-template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> bool SGEXTN::Containers::HashMapIterator<Key, Value, EqualityCheck, HashFunction>::operator==(const SGEXTN::Containers::HashMapIterator<Key, Value, EqualityCheck, HashFunction>& x){
+template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> bool SGEXTN::Containers::HashMapIterator<Key, Value, EqualityCheck, HashFunction>::operator==(const SGEXTN::Containers::HashMapIterator<Key, Value, EqualityCheck, HashFunction>& x) const {
     return (associatedSlot == x.associatedSlot && associatedMap == x.associatedMap);
 }
 
-template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> bool SGEXTN::Containers::HashMapIterator<Key, Value, EqualityCheck, HashFunction>::operator!=(const SGEXTN::Containers::HashMapIterator<Key, Value, EqualityCheck, HashFunction>& x){
+template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> bool SGEXTN::Containers::HashMapIterator<Key, Value, EqualityCheck, HashFunction>::operator!=(const SGEXTN::Containers::HashMapIterator<Key, Value, EqualityCheck, HashFunction>& x) const {
     return (associatedSlot != x.associatedSlot || associatedMap != x.associatedMap);
 }
 
-template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> const Key& SGEXTN::Containers::HashMapIterator<Key, Value, EqualityCheck, HashFunction>::key(){
+template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> const Key& SGEXTN::Containers::HashMapIterator<Key, Value, EqualityCheck, HashFunction>::key() const {
     return (*associatedSlot).keyObject;
 }
 
-template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> Value& SGEXTN::Containers::HashMapIterator<Key, Value, EqualityCheck, HashFunction>::value(){
+template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> Value& SGEXTN::Containers::HashMapIterator<Key, Value, EqualityCheck, HashFunction>::value() const {
     return (*associatedSlot).valueObject;
 }
 
@@ -332,18 +332,18 @@ template <typename Key, typename Value, typename EqualityCheck, typename HashFun
     return prev;
 }
 
-template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> bool SGEXTN::Containers::HashMapConstIterator<Key, Value, EqualityCheck, HashFunction>::operator==(const SGEXTN::Containers::HashMapConstIterator<Key, Value, EqualityCheck, HashFunction>& x){
+template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> bool SGEXTN::Containers::HashMapConstIterator<Key, Value, EqualityCheck, HashFunction>::operator==(const SGEXTN::Containers::HashMapConstIterator<Key, Value, EqualityCheck, HashFunction>& x) const {
     return (associatedSlot == x.associatedSlot && associatedMap == x.associatedMap);
 }
 
-template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> bool SGEXTN::Containers::HashMapConstIterator<Key, Value, EqualityCheck, HashFunction>::operator!=(const SGEXTN::Containers::HashMapConstIterator<Key, Value, EqualityCheck, HashFunction>& x){
+template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> bool SGEXTN::Containers::HashMapConstIterator<Key, Value, EqualityCheck, HashFunction>::operator!=(const SGEXTN::Containers::HashMapConstIterator<Key, Value, EqualityCheck, HashFunction>& x) const {
     return (associatedSlot != x.associatedSlot || associatedMap != x.associatedMap);
 }
 
-template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> const Key& SGEXTN::Containers::HashMapConstIterator<Key, Value, EqualityCheck, HashFunction>::key(){
+template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> const Key& SGEXTN::Containers::HashMapConstIterator<Key, Value, EqualityCheck, HashFunction>::key() const {
     return (*associatedSlot).keyObject;
 }
 
-template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> const Value& SGEXTN::Containers::HashMapConstIterator<Key, Value, EqualityCheck, HashFunction>::value(){
+template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> const Value& SGEXTN::Containers::HashMapConstIterator<Key, Value, EqualityCheck, HashFunction>::value() const {
     return (*associatedSlot).valueObject;
 }

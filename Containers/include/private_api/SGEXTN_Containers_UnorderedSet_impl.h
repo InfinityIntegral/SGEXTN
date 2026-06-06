@@ -81,15 +81,15 @@ template <typename T, typename EqualityCheck, typename HashFunction> SGEXTN::Con
     return prev;
 }
 
-template <typename T, typename EqualityCheck, typename HashFunction> bool SGEXTN::Containers::UnorderedSetIterator<T, EqualityCheck, HashFunction>::operator==(const SGEXTN::Containers::UnorderedSetIterator<T, EqualityCheck, HashFunction>& x){
+template <typename T, typename EqualityCheck, typename HashFunction> bool SGEXTN::Containers::UnorderedSetIterator<T, EqualityCheck, HashFunction>::operator==(const SGEXTN::Containers::UnorderedSetIterator<T, EqualityCheck, HashFunction>& x) const {
     return (private_hashMapIterator == x.private_hashMapIterator);
 }
 
-template <typename T, typename EqualityCheck, typename HashFunction> bool SGEXTN::Containers::UnorderedSetIterator<T, EqualityCheck, HashFunction>::operator!=(const SGEXTN::Containers::UnorderedSetIterator<T, EqualityCheck, HashFunction>& x){
+template <typename T, typename EqualityCheck, typename HashFunction> bool SGEXTN::Containers::UnorderedSetIterator<T, EqualityCheck, HashFunction>::operator!=(const SGEXTN::Containers::UnorderedSetIterator<T, EqualityCheck, HashFunction>& x) const {
     return (private_hashMapIterator != x.private_hashMapIterator);
 }
 
-template <typename T, typename EqualityCheck, typename HashFunction> const T& SGEXTN::Containers::UnorderedSetIterator<T, EqualityCheck, HashFunction>::operator*(){
+template <typename T, typename EqualityCheck, typename HashFunction> const T& SGEXTN::Containers::UnorderedSetIterator<T, EqualityCheck, HashFunction>::operator*() const {
     if(private_hashMapIterator.associatedSlot == nullptr){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::UnorderedSetIterator::operator* crashed because the iterator is the end iterator");}
     return private_hashMapIterator.key();
 }
@@ -116,15 +116,15 @@ template <typename T, typename EqualityCheck, typename HashFunction> SGEXTN::Con
     return prev;
 }
 
-template <typename T, typename EqualityCheck, typename HashFunction> bool SGEXTN::Containers::UnorderedSetConstIterator<T, EqualityCheck, HashFunction>::operator==(const SGEXTN::Containers::UnorderedSetConstIterator<T, EqualityCheck, HashFunction>& x){
+template <typename T, typename EqualityCheck, typename HashFunction> bool SGEXTN::Containers::UnorderedSetConstIterator<T, EqualityCheck, HashFunction>::operator==(const SGEXTN::Containers::UnorderedSetConstIterator<T, EqualityCheck, HashFunction>& x) const {
     return (private_hashMapIterator == x.private_hashMapIterator);
 }
 
-template <typename T, typename EqualityCheck, typename HashFunction> bool SGEXTN::Containers::UnorderedSetConstIterator<T, EqualityCheck, HashFunction>::operator!=(const SGEXTN::Containers::UnorderedSetConstIterator<T, EqualityCheck, HashFunction>& x){
+template <typename T, typename EqualityCheck, typename HashFunction> bool SGEXTN::Containers::UnorderedSetConstIterator<T, EqualityCheck, HashFunction>::operator!=(const SGEXTN::Containers::UnorderedSetConstIterator<T, EqualityCheck, HashFunction>& x) const {
     return (private_hashMapIterator != x.private_hashMapIterator);
 }
 
-template <typename T, typename EqualityCheck, typename HashFunction> const T& SGEXTN::Containers::UnorderedSetConstIterator<T, EqualityCheck, HashFunction>::operator*(){
+template <typename T, typename EqualityCheck, typename HashFunction> const T& SGEXTN::Containers::UnorderedSetConstIterator<T, EqualityCheck, HashFunction>::operator*() const {
     if(private_hashMapIterator.associatedSlot == nullptr){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::UnorderedSetConstIterator::operator* crashed because the iterator is the end iterator");}
     return private_hashMapIterator.key();
 }

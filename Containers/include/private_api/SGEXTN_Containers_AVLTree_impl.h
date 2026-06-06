@@ -315,35 +315,35 @@ template <typename Key, typename Value, typename Comparator> SGEXTN::Containers:
     return prev;
 }
 
-template <typename Key, typename Value, typename Comparator> const Key& SGEXTN::Containers::AVLTreeIterator<Key, Value, Comparator>::key(){
+template <typename Key, typename Value, typename Comparator> const Key& SGEXTN::Containers::AVLTreeIterator<Key, Value, Comparator>::key() const {
     return (*associatedNode).key;
 }
 
-template <typename Key, typename Value, typename Comparator> const Key& SGEXTN::Containers::AVLTreeConstIterator<Key, Value, Comparator>::key(){
+template <typename Key, typename Value, typename Comparator> const Key& SGEXTN::Containers::AVLTreeConstIterator<Key, Value, Comparator>::key() const {
     return (*associatedNode).key;
 }
 
-template <typename Key, typename Value, typename Comparator> Value& SGEXTN::Containers::AVLTreeIterator<Key, Value, Comparator>::value(){
+template <typename Key, typename Value, typename Comparator> Value& SGEXTN::Containers::AVLTreeIterator<Key, Value, Comparator>::value() const {
     return (*associatedNode).value;
 }
 
-template <typename Key, typename Value, typename Comparator> const Value& SGEXTN::Containers::AVLTreeConstIterator<Key, Value, Comparator>::value(){
+template <typename Key, typename Value, typename Comparator> const Value& SGEXTN::Containers::AVLTreeConstIterator<Key, Value, Comparator>::value() const {
     return (*associatedNode).value;
 }
 
-template <typename Key, typename Value, typename Comparator> bool SGEXTN::Containers::AVLTreeIterator<Key, Value, Comparator>::operator==(const AVLTreeIterator& x){
+template <typename Key, typename Value, typename Comparator> bool SGEXTN::Containers::AVLTreeIterator<Key, Value, Comparator>::operator==(const AVLTreeIterator& x) const {
     return (associatedNode == x.associatedNode && associatedTree == x.associatedTree);
 }
 
-template <typename Key, typename Value, typename Comparator> bool SGEXTN::Containers::AVLTreeConstIterator<Key, Value, Comparator>::operator==(const AVLTreeConstIterator& x){
+template <typename Key, typename Value, typename Comparator> bool SGEXTN::Containers::AVLTreeConstIterator<Key, Value, Comparator>::operator==(const AVLTreeConstIterator& x) const {
     return (associatedNode == x.associatedNode && associatedTree == x.associatedTree);
 }
 
-template <typename Key, typename Value, typename Comparator> bool SGEXTN::Containers::AVLTreeIterator<Key, Value, Comparator>::operator!=(const AVLTreeIterator& x){
+template <typename Key, typename Value, typename Comparator> bool SGEXTN::Containers::AVLTreeIterator<Key, Value, Comparator>::operator!=(const AVLTreeIterator& x) const {
     return (associatedNode != x.associatedNode || associatedTree != x.associatedTree);
 }
 
-template <typename Key, typename Value, typename Comparator> bool SGEXTN::Containers::AVLTreeConstIterator<Key, Value, Comparator>::operator!=(const AVLTreeConstIterator& x){
+template <typename Key, typename Value, typename Comparator> bool SGEXTN::Containers::AVLTreeConstIterator<Key, Value, Comparator>::operator!=(const AVLTreeConstIterator& x) const {
     return (associatedNode != x.associatedNode || associatedTree != x.associatedTree);
 }
 

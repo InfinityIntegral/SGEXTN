@@ -144,20 +144,20 @@ template <typename Key, typename Value, typename Comparator> SGEXTN::Containers:
     return prev;
 }
 
-template <typename Key, typename Value, typename Comparator> bool SGEXTN::Containers::MultiMapIterator<Key, Value, Comparator>::operator==(const SGEXTN::Containers::MultiMapIterator<Key, Value, Comparator>& x){
+template <typename Key, typename Value, typename Comparator> bool SGEXTN::Containers::MultiMapIterator<Key, Value, Comparator>::operator==(const SGEXTN::Containers::MultiMapIterator<Key, Value, Comparator>& x) const {
     return (private_avlTreeIterator == x.private_avlTreeIterator);
 }
 
-template <typename Key, typename Value, typename Comparator> bool SGEXTN::Containers::MultiMapIterator<Key, Value, Comparator>::operator!=(const SGEXTN::Containers::MultiMapIterator<Key, Value, Comparator>& x){
+template <typename Key, typename Value, typename Comparator> bool SGEXTN::Containers::MultiMapIterator<Key, Value, Comparator>::operator!=(const SGEXTN::Containers::MultiMapIterator<Key, Value, Comparator>& x) const {
     return (private_avlTreeIterator != x.private_avlTreeIterator);
 }
 
-template <typename Key, typename Value, typename Comparator> const Key& SGEXTN::Containers::MultiMapIterator<Key, Value, Comparator>::key(){
+template <typename Key, typename Value, typename Comparator> const Key& SGEXTN::Containers::MultiMapIterator<Key, Value, Comparator>::key() const {
     if(private_avlTreeIterator.associatedNode == nullptr){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiMapIterator::key crashed because the iterator is the end iterator");}
     return private_avlTreeIterator.key();
 }
 
-template <typename Key, typename Value, typename Comparator> Value& SGEXTN::Containers::MultiMapIterator<Key, Value, Comparator>::value(){
+template <typename Key, typename Value, typename Comparator> Value& SGEXTN::Containers::MultiMapIterator<Key, Value, Comparator>::value() const {
     if(private_avlTreeIterator.associatedNode == nullptr){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiMapIterator::value crashed because the iterator is the end iterator");}
     return private_avlTreeIterator.value();
 }
@@ -186,20 +186,20 @@ template <typename Key, typename Value, typename Comparator> SGEXTN::Containers:
     return prev;
 }
 
-template <typename Key, typename Value, typename Comparator> bool SGEXTN::Containers::MultiMapConstIterator<Key, Value, Comparator>::operator==(const SGEXTN::Containers::MultiMapConstIterator<Key, Value, Comparator>& x){
+template <typename Key, typename Value, typename Comparator> bool SGEXTN::Containers::MultiMapConstIterator<Key, Value, Comparator>::operator==(const SGEXTN::Containers::MultiMapConstIterator<Key, Value, Comparator>& x) const {
     return (private_avlTreeIterator == x.private_avlTreeIterator);
 }
 
-template <typename Key, typename Value, typename Comparator> bool SGEXTN::Containers::MultiMapConstIterator<Key, Value, Comparator>::operator!=(const SGEXTN::Containers::MultiMapConstIterator<Key, Value, Comparator>& x){
+template <typename Key, typename Value, typename Comparator> bool SGEXTN::Containers::MultiMapConstIterator<Key, Value, Comparator>::operator!=(const SGEXTN::Containers::MultiMapConstIterator<Key, Value, Comparator>& x) const {
     return (private_avlTreeIterator != x.private_avlTreeIterator);
 }
 
-template <typename Key, typename Value, typename Comparator> const Key& SGEXTN::Containers::MultiMapConstIterator<Key, Value, Comparator>::key(){
+template <typename Key, typename Value, typename Comparator> const Key& SGEXTN::Containers::MultiMapConstIterator<Key, Value, Comparator>::key() const {
     if(private_avlTreeIterator.associatedNode == nullptr){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiMapConstIterator::key crashed because the iterator is the end iterator");}
     return private_avlTreeIterator.key();
 }
 
-template <typename Key, typename Value, typename Comparator> const Value& SGEXTN::Containers::MultiMapConstIterator<Key, Value, Comparator>::value(){
+template <typename Key, typename Value, typename Comparator> const Value& SGEXTN::Containers::MultiMapConstIterator<Key, Value, Comparator>::value() const {
     if(private_avlTreeIterator.associatedNode == nullptr){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiMapConstIterator::value crashed because the iterator is the end iterator");}
     return private_avlTreeIterator.value();
 }

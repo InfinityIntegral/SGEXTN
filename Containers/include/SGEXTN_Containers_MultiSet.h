@@ -43,9 +43,9 @@ public:
     MultiSetIterator operator++(int);
     MultiSetIterator& operator--();
     MultiSetIterator operator--(int);
-    bool operator==(const MultiSetIterator& x);
-    bool operator!=(const MultiSetIterator& x);
-    const T& operator*();
+    [[nodiscard]] bool operator==(const MultiSetIterator& x) const;
+    [[nodiscard]] bool operator!=(const MultiSetIterator& x) const;
+    [[nodiscard]] const T& operator*() const;
 };
 
 template <typename T, typename Comparator> class MultiSetConstIterator {
@@ -56,9 +56,9 @@ public:
     MultiSetConstIterator operator++(int);
     MultiSetConstIterator& operator--();
     MultiSetConstIterator operator--(int);
-    bool operator==(const MultiSetConstIterator& x);
-    bool operator!=(const MultiSetConstIterator& x);
-    const T& operator*();
+    [[nodiscard]] bool operator==(const MultiSetConstIterator& x) const;
+    [[nodiscard]] bool operator!=(const MultiSetConstIterator& x) const;
+    [[nodiscard]] const T& operator*() const;
 };
 }
 }

@@ -47,10 +47,10 @@ public:
     MultiMapIterator operator++(int);
     MultiMapIterator& operator--();
     MultiMapIterator operator--(int);
-    bool operator==(const MultiMapIterator& x);
-    bool operator!=(const MultiMapIterator& x);
-    const Key& key();
-    Value& value();
+    [[nodiscard]] bool operator==(const MultiMapIterator& x) const;
+    [[nodiscard]] bool operator!=(const MultiMapIterator& x) const;
+    [[nodiscard]] const Key& key() const;
+    [[nodiscard]] Value& value() const;
 };
 
 template <typename Key, typename Value, typename Comparator> class MultiMapConstIterator {
@@ -61,10 +61,10 @@ public:
     MultiMapConstIterator operator++(int);
     MultiMapConstIterator& operator--();
     MultiMapConstIterator operator--(int);
-    bool operator==(const MultiMapConstIterator& x);
-    bool operator!=(const MultiMapConstIterator& x);
-    const Key& key();
-    const Value& value();
+    [[nodiscard]] bool operator==(const MultiMapConstIterator& x) const;
+    [[nodiscard]] bool operator!=(const MultiMapConstIterator& x) const;
+    [[nodiscard]] const Key& key() const;
+    [[nodiscard]] const Value& value() const;
 };
 }
 }
