@@ -2,10 +2,19 @@
 
 namespace SGEXTN {
 namespace Containers {
+template <typename T> class RingBufferSlot {
+public:
+    union {
+        unsigned char constructorRemover;
+        T object;
+    };
+    RingBufferSlot();
+    ~RingBufferSlot();
+};
+
 template <typename T> class RingBuffer {
 public:
     RingBuffer();
-    RingBuffer(int count);
     RingBuffer(int count, const T& defaultValue);
     RingBuffer(const RingBuffer& x);
     RingBuffer& operator=(const RingBuffer& x);
@@ -28,7 +37,7 @@ public:
     void clear();
     [[nodiscard]] T* pointerToData(int n);
     [[nodiscard]] const T* pointerToData(int n) const;
-    T* private_data;
+    RingBufferSlot<T>* private_data;
     int private_start;
     int private_length;
     int private_memoryLength;

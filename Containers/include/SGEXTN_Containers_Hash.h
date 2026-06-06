@@ -2,7 +2,7 @@
 
 namespace SGEXTN {
 namespace Containers {
-template <typename T> class Hash {
+template <typename T> class BUILDLAH_DLL_SGEXTN_Containers Hash {
 public:
     [[nodiscard]] int operator()(const T& x) const;
 };

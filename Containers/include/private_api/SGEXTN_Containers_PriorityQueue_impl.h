@@ -17,9 +17,9 @@ template <typename T, typename Comparator> void SGEXTN::Containers::PriorityQueu
 }
 
 template <typename T, typename Comparator> void SGEXTN::Containers::PriorityQueue<T, Comparator>::private_swap(int a, int b){
-    T temp = private_ringBuffer.at(a);
-    private_ringBuffer.at(a) = private_ringBuffer.at(b);
-    private_ringBuffer.at(b) = temp;
+    T temp(static_cast<T&&>(private_ringBuffer.at(a)));
+    private_ringBuffer.at(a) = static_cast<T&&>(private_ringBuffer.at(b));
+    private_ringBuffer.at(b) = static_cast<T&&>(temp);
 }
 
 template <typename T, typename Comparator> bool SGEXTN::Containers::PriorityQueue<T, Comparator>::private_compare(int a, int b){
@@ -39,7 +39,7 @@ template <typename T, typename Comparator> void SGEXTN::Containers::PriorityQueu
 
 template <typename T, typename Comparator> void SGEXTN::Containers::PriorityQueue<T, Comparator>::pop(){
     if(private_ringBuffer.length() == 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::PriorityQueue::pop crashed as the priority queue is empty");}
-    private_ringBuffer.at(0) = private_ringBuffer.at(private_ringBuffer.length() - 1);
+    private_swap(0, private_ringBuffer.length() - 1);
     private_ringBuffer.popBack();
     int i = 0;
     while(true){

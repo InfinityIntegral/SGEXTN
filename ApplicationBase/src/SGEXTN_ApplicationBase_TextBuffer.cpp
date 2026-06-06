@@ -1,13 +1,16 @@
 #include <private_api/SGEXTN_ApplicationBase_TextBuffer.h>
-#include <SGEXTN_Containers_Vector.h>
 #include <cstring>
+#include <SGEXTN_Containers_PlacementNew.h>
 #include <SGEXTN_Containers_HashAlgorithm.h>
 #include <SGEXTN_Containers_Span.h>
-#include <SGEXTN_Containers_PlacementNew.h>
 
 namespace {
-void memoryCopy(const unsigned char* source, unsigned char* target, int length){
-    std::memcpy(target, source, length);
+void memoryCopy(const unsigned char* source, unsigned char* destination, int length){
+    std::memcpy(destination, source, length);
+}
+
+void memoryFill(unsigned char* start, int length, unsigned char byte){
+    std::memset(start, byte, length);
 }
 
 int cStringLength(const char* s){
@@ -29,15 +32,15 @@ int memoryCompare(const unsigned char* a, int aLength, const unsigned char* b, i
 }
 
 unsigned char& SGEXTN::ApplicationBase::TextBuffer::private_lengthByte(){
-    return (*(private_stackAllocData + 23));
+    return (*(private_stackAllocData + 15));
 }
 
 const unsigned char& SGEXTN::ApplicationBase::TextBuffer::private_lengthByte() const {
-    return (*(private_stackAllocData + 23));
+    return (*(private_stackAllocData + 15));
 }
 
-SGEXTN::ApplicationBase::TextBuffer::TextBuffer() : private_isHeapAlloc(false) {
-    private_lengthByte() = 0;
+SGEXTN::ApplicationBase::TextBuffer::TextBuffer() : private_isHeapAlloc(false), private_stackAllocData() {
+    memoryFill(private_stackAllocData, 12, static_cast<unsigned char>(0));
 }
 
 SGEXTN::ApplicationBase::TextBuffer::TextBuffer(const SGEXTN::ApplicationBase::TextBuffer& x) : private_isHeapAlloc(x.private_isHeapAlloc) {
@@ -45,18 +48,18 @@ SGEXTN::ApplicationBase::TextBuffer::TextBuffer(const SGEXTN::ApplicationBase::T
         private_lengthByte() = x.private_lengthByte();
         memoryCopy(x.private_stackAllocData, private_stackAllocData, private_lengthByte());
     }
-    else{new(SGEXTN::Containers::PlacementNew::placeholder, &private_heapAllocData) SGEXTN::Containers::Vector<unsigned char>(x.private_heapAllocData);}
+    else{new(SGEXTN::Containers::PlacementNew::placeholder, &private_heapAllocData) SGEXTN::ApplicationBase::ByteVector(x.private_heapAllocData);}
 }
 
 SGEXTN::ApplicationBase::TextBuffer& SGEXTN::ApplicationBase::TextBuffer::operator=(const SGEXTN::ApplicationBase::TextBuffer& x){
     if(this == &x){return (*this);}
-    if(private_isHeapAlloc == true){private_heapAllocData.~Vector<unsigned char>();}
+    if(private_isHeapAlloc == true){private_heapAllocData.~ByteVector();}
     private_isHeapAlloc = x.private_isHeapAlloc;
     if(private_isHeapAlloc == false){
         private_lengthByte() = x.length();
         memoryCopy(x.private_stackAllocData, private_stackAllocData, private_lengthByte());
     }
-    else{new(SGEXTN::Containers::PlacementNew::placeholder, &private_heapAllocData) SGEXTN::Containers::Vector<unsigned char>(x.private_heapAllocData);}
+    else{new(SGEXTN::Containers::PlacementNew::placeholder, &private_heapAllocData) SGEXTN::ApplicationBase::ByteVector(x.private_heapAllocData);}
     return (*this);
 }
 
@@ -65,32 +68,32 @@ SGEXTN::ApplicationBase::TextBuffer::TextBuffer(SGEXTN::ApplicationBase::TextBuf
         private_lengthByte() = x.private_lengthByte();
         memoryCopy(x.private_stackAllocData, private_stackAllocData, private_lengthByte());
     }
-    else{new(SGEXTN::Containers::PlacementNew::placeholder, &private_heapAllocData) SGEXTN::Containers::Vector<unsigned char>((SGEXTN::Containers::Vector<unsigned char>&&)(x.private_heapAllocData));}
+    else{new(SGEXTN::Containers::PlacementNew::placeholder, &private_heapAllocData) SGEXTN::ApplicationBase::ByteVector(static_cast<SGEXTN::ApplicationBase::ByteVector&&>(x.private_heapAllocData));}
 }
 
 SGEXTN::ApplicationBase::TextBuffer& SGEXTN::ApplicationBase::TextBuffer::operator=(SGEXTN::ApplicationBase::TextBuffer&& x) noexcept {
-    if(private_isHeapAlloc == true){private_heapAllocData.~Vector<unsigned char>();}
+    if(private_isHeapAlloc == true){private_heapAllocData.~ByteVector();}
     private_isHeapAlloc = x.private_isHeapAlloc;
     if(private_isHeapAlloc == false){
         private_lengthByte() = x.private_lengthByte();
         memoryCopy(x.private_stackAllocData, private_stackAllocData, private_lengthByte());
     }
-    else{new(SGEXTN::Containers::PlacementNew::placeholder, &private_heapAllocData) SGEXTN::Containers::Vector<unsigned char>((SGEXTN::Containers::Vector<unsigned char>&&)(x.private_heapAllocData));}
+    else{new(SGEXTN::Containers::PlacementNew::placeholder, &private_heapAllocData) SGEXTN::ApplicationBase::ByteVector(static_cast<SGEXTN::ApplicationBase::ByteVector&&>(x.private_heapAllocData));}
     return (*this);
 }
 
 SGEXTN::ApplicationBase::TextBuffer::~TextBuffer(){
-    if(private_isHeapAlloc == true){private_heapAllocData.~Vector<unsigned char>();}
+    if(private_isHeapAlloc == true){private_heapAllocData.~ByteVector();}
 }
 
 unsigned char& SGEXTN::ApplicationBase::TextBuffer::byteAt(int i){
     if(private_isHeapAlloc == false){return (*(private_stackAllocData + i));}
-    return (*private_heapAllocData.pointerToData(i));
+    return private_heapAllocData.at(i);
 }
 
 const unsigned char& SGEXTN::ApplicationBase::TextBuffer::byteAt(int i) const {
     if(private_isHeapAlloc == false){return (*(private_stackAllocData + i));}
-    return (*private_heapAllocData.pointerToData(i));
+    return private_heapAllocData.at(i);
 }
 
 int SGEXTN::ApplicationBase::TextBuffer::length() const {
@@ -99,17 +102,15 @@ int SGEXTN::ApplicationBase::TextBuffer::length() const {
 }
 
 void SGEXTN::ApplicationBase::TextBuffer::private_moveToHeap(){
-    SGEXTN::Containers::Vector<unsigned char> heapContainer;
-    heapContainer.reserve(private_lengthByte());
-    heapContainer.private_ringBuffer.private_length = private_lengthByte();
-    memoryCopy(private_stackAllocData, heapContainer.pointerToData(0), private_lengthByte());
+    SGEXTN::ApplicationBase::ByteVector heapContainer;
+    heapContainer.pushBack(private_stackAllocData, private_lengthByte());
     private_isHeapAlloc = true;
-    new(SGEXTN::Containers::PlacementNew::placeholder, &private_heapAllocData) SGEXTN::Containers::Vector<unsigned char>((SGEXTN::Containers::Vector<unsigned char>&&)(heapContainer));
+    new(SGEXTN::Containers::PlacementNew::placeholder, &private_heapAllocData) SGEXTN::ApplicationBase::ByteVector(static_cast<SGEXTN::ApplicationBase::ByteVector&&>(heapContainer));
 }
 
 void SGEXTN::ApplicationBase::TextBuffer::pushBack(char c){
     const int newLength = length() + 1;
-    if(newLength < 24){
+    if(newLength < 16){
         (*(private_stackAllocData + newLength - 1)) = static_cast<unsigned char>(c);
         private_lengthByte() = newLength;
     }
@@ -123,36 +124,29 @@ void SGEXTN::ApplicationBase::TextBuffer::pushBack(const char* s){
     const int sLength = cStringLength(s);
     const int oldLength = length();
     const int newLength = oldLength + sLength;
-    if(newLength < 24){
+    const unsigned char* unsignedString = reinterpret_cast<const unsigned char*>(s);
+    if(newLength < 16){
         private_lengthByte() = newLength;
-        for(int i=0; i<sLength; i++){
-            (*(private_stackAllocData + oldLength + i)) = static_cast<unsigned char>(*(s + i));
-        }
+        memoryCopy(unsignedString, private_stackAllocData + oldLength, sLength);
     }
     else{
         if(private_isHeapAlloc == false){private_moveToHeap();}
-        if(private_heapAllocData.private_ringBuffer.private_memoryLength < newLength){private_heapAllocData.reserve(3 * newLength / 2);}
-        private_heapAllocData.private_ringBuffer.private_length = newLength;
-        for(int i=0; i<sLength; i++){
-            (*private_heapAllocData.pointerToData(oldLength + i)) = static_cast<unsigned char>(*(s + i));
-        }
+        private_heapAllocData.pushBack(unsignedString, sLength);
     }
 }
 
 void SGEXTN::ApplicationBase::TextBuffer::pushBack(const TextBuffer& data, int start, int length){
     const int oldLength = (*this).length();
     const int newLength = oldLength + length;
-    if(newLength < 24){
+    if(newLength < 16){
         private_lengthByte() = newLength;
         if(data.private_isHeapAlloc == false){memoryCopy(data.private_stackAllocData + start, private_stackAllocData + oldLength, length);}
-        else{memoryCopy(data.private_heapAllocData.pointerToData(start), private_stackAllocData + oldLength, length);}
+        else{memoryCopy(&data.private_heapAllocData.at(start), private_stackAllocData + oldLength, length);}
     }
     else{
         if(private_isHeapAlloc == false){private_moveToHeap();}
-        if(private_heapAllocData.private_ringBuffer.private_memoryLength < newLength){private_heapAllocData.reserve(3 * newLength / 2);}
-        private_heapAllocData.private_ringBuffer.private_length = newLength;
-        if(data.private_isHeapAlloc == false){memoryCopy(data.private_stackAllocData + start, private_heapAllocData.pointerToData(oldLength), length);}
-        else{memoryCopy(data.private_heapAllocData.pointerToData(start), private_heapAllocData.pointerToData(oldLength), length);}
+        if(data.private_isHeapAlloc == false){private_heapAllocData.pushBack(data.private_stackAllocData + start, length);}
+        else{private_heapAllocData.pushBack(&data.private_heapAllocData.at(start), length);}
     }
 }
 

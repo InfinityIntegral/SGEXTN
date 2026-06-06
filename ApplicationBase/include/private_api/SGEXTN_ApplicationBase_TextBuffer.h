@@ -1,5 +1,5 @@
 #pragma once
-#include <SGEXTN_Containers_Vector.h>
+#include <private_api/SGEXTN_ApplicationBase_ByteVector.h>
 
 namespace SGEXTN {
 namespace ApplicationBase {
@@ -13,8 +13,8 @@ public:
     ~TextBuffer();
     bool private_isHeapAlloc;
     union {
-        unsigned char private_stackAllocData[24] = {};
-        SGEXTN::Containers::Vector<unsigned char> private_heapAllocData;
+        unsigned char private_stackAllocData[16];
+        SGEXTN::ApplicationBase::ByteVector private_heapAllocData;
     };
     [[nodiscard]] unsigned char& private_lengthByte();
     [[nodiscard]] const unsigned char& private_lengthByte() const;

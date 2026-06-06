@@ -3,16 +3,6 @@
 
 template <typename T> SGEXTN::Containers::Deque<T>::Deque() : private_ringBuffer() {}
 
-template <typename T> SGEXTN::Containers::Deque<T>::Deque(int count) : private_ringBuffer() {
-    if(count < 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Deque constructor crashed because count is negative");}
-    private_ringBuffer = SGEXTN::Containers::RingBuffer<T>(count);
-}
-
-template <typename T> SGEXTN::Containers::Deque<T>::Deque(int count, const T& defaultValue) : private_ringBuffer() {
-    if(count < 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Deque constructor crashed because count is negative");}
-    private_ringBuffer = SGEXTN::Containers::RingBuffer<T>(count, defaultValue);
-}
-
 template <typename T> void SGEXTN::Containers::Deque<T>::fill(const T& defaultValue){
     private_ringBuffer.fill(defaultValue);
 }
@@ -77,12 +67,4 @@ template <typename T> void SGEXTN::Containers::Deque<T>::reserve(int newMemoryLe
 
 template <typename T> void SGEXTN::Containers::Deque<T>::clear(){
     private_ringBuffer.clear();
-}
-
-template <typename T> T* SGEXTN::Containers::Deque<T>::pointerToData(int n){
-    return private_ringBuffer.pointerToData(n);
-}
-
-template <typename T> const T* SGEXTN::Containers::Deque<T>::pointerToData(int n) const {
-    return private_ringBuffer.pointerToData(n);
 }

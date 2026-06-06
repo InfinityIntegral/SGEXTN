@@ -583,23 +583,152 @@ void SGEXTN::InternalTest::ContainersTest::testSort(){
 }
 
 void SGEXTN::InternalTest::ContainersTest::testVectorConstructible(){
-
+    SGEXTN::Containers::Vector<ConstructibleInteger> v;
+    ConstructibleInteger::lastConstruct = 0;
+    v.pushBack(1);
+    if(ConstructibleInteger::lastConstruct != 1){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Vector - push back 1 construct fail");}
+    v.pushBack(2);
+    if(ConstructibleInteger::lastConstruct != 2){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Vector - push back 2 construct fail");}
+    v.pushBack(3);
+    if(ConstructibleInteger::lastConstruct != 3){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Vector - push back 3 construct fail");}
+    ConstructibleInteger::lastDestruct = 0;
+    v.clear();
+    if(ConstructibleInteger::lastDestruct == 0 || v.length() != 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Vector - clear vector destruct fail");}
+    v.pushBack(1);
+    v.pushBack(2);
+    v.pushBack(3);
+    ConstructibleInteger::lastDestruct = 0;
+    v.popBack();
+    if(ConstructibleInteger::lastDestruct != 3 || v.length() != 2){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Vector - pop back destruct 3 fail");}
+    v.popBack();
+    if(ConstructibleInteger::lastDestruct != 2){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Vector - pop back destruct 2 fail");}
+    v.popBack();
+    if(ConstructibleInteger::lastDestruct != 1){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Vector - pop back destruct 1 fail");}
 }
 
 void SGEXTN::InternalTest::ContainersTest::testQueueConstructible(){
-
+    SGEXTN::Containers::Queue<ConstructibleInteger> v;
+    ConstructibleInteger::lastConstruct = 0;
+    v.push(1);
+    if(ConstructibleInteger::lastConstruct != 1){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Queue - push 1 construct fail");}
+    v.push(2);
+    if(ConstructibleInteger::lastConstruct != 2){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Queue - push 2 construct fail");}
+    v.push(3);
+    if(ConstructibleInteger::lastConstruct != 3){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Queue - push 3 construct fail");}
+    ConstructibleInteger::lastDestruct = 0;
+    v.clear();
+    if(ConstructibleInteger::lastDestruct == 0 || v.length() != 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Queue - clear queue destruct fail");}
+    v.push(1);
+    v.push(2);
+    v.push(3);
+    ConstructibleInteger::lastDestruct = 0;
+    v.pop();
+    if(ConstructibleInteger::lastDestruct != 1 || v.length() != 2){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Queue - pop destruct 1 fail");}
+    v.pop();
+    if(ConstructibleInteger::lastDestruct != 2){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Queue - pop destruct 2 fail");}
+    v.pop();
+    if(ConstructibleInteger::lastDestruct != 3){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Queue - pop destruct 3 fail");}
 }
 
 void SGEXTN::InternalTest::ContainersTest::testStackConstructible(){
-
+    SGEXTN::Containers::Stack<ConstructibleInteger> v;
+    ConstructibleInteger::lastConstruct = 0;
+    v.push(1);
+    if(ConstructibleInteger::lastConstruct != 1){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Stack - push 1 construct fail");}
+    v.push(2);
+    if(ConstructibleInteger::lastConstruct != 2){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Stack - push 2 construct fail");}
+    v.push(3);
+    if(ConstructibleInteger::lastConstruct != 3){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Stack - push 3 construct fail");}
+    ConstructibleInteger::lastDestruct = 0;
+    v.clear();
+    if(ConstructibleInteger::lastDestruct == 0 || v.length() != 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Stack - clear stack destruct fail");}
+    v.push(1);
+    v.push(2);
+    v.push(3);
+    ConstructibleInteger::lastDestruct = 0;
+    v.pop();
+    if(ConstructibleInteger::lastDestruct != 3 || v.length() != 2){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Stack - pop destruct 3 fail");}
+    v.pop();
+    if(ConstructibleInteger::lastDestruct != 2){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Stack - pop destruct 2 fail");}
+    v.pop();
+    if(ConstructibleInteger::lastDestruct != 1){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Stack - pop destruct 1 fail");}
 }
 
 void SGEXTN::InternalTest::ContainersTest::testDequeConstructible(){
-
+    SGEXTN::Containers::Deque<ConstructibleInteger> v;
+    ConstructibleInteger::lastConstruct = 0;
+    v.pushBack(1);
+    if(ConstructibleInteger::lastConstruct != 1){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Deque - push back 1 construct fail");}
+    v.pushBack(2);
+    if(ConstructibleInteger::lastConstruct != 2){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Deque - push back 2 construct fail");}
+    v.pushBack(3);
+    if(ConstructibleInteger::lastConstruct != 3){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Deque - push back 3 construct fail");}
+    ConstructibleInteger::lastDestruct = 0;
+    v.clear();
+    if(ConstructibleInteger::lastDestruct == 0 || v.length() != 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Deque - clear deque destruct fail");}
+    v.pushBack(1);
+    v.pushBack(2);
+    v.pushBack(3);
+    ConstructibleInteger::lastConstruct = 0;
+    v.pushFront(1);
+    if(ConstructibleInteger::lastConstruct != 1){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Deque - push front 1 construct fail");}
+    v.pushFront(2);
+    if(ConstructibleInteger::lastConstruct != 2){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Deque - push front 2 construct fail");}
+    v.pushFront(3);
+    if(ConstructibleInteger::lastConstruct != 3){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Deque - push front 3 construct fail");}
+    ConstructibleInteger::lastDestruct = 0;
+    v.popFront();
+    if(ConstructibleInteger::lastDestruct != 3 || v.length() != 5){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Deque - pop front destruct 3 fail");}
+    v.popFront();
+    if(ConstructibleInteger::lastDestruct != 2){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Deque - pop front destruct 2 fail");}
+    v.popFront();
+    if(ConstructibleInteger::lastDestruct != 1){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Deque - pop front destruct 1 fail");}
+    ConstructibleInteger::lastDestruct = 0;
+    v.popBack();
+    if(ConstructibleInteger::lastDestruct != 3 || v.length() != 2){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Deque - pop back destruct 3 fail");}
+    v.popBack();
+    if(ConstructibleInteger::lastDestruct != 2){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Deque - pop back destruct 2 fail");}
+    v.popBack();
+    if(ConstructibleInteger::lastDestruct != 1){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Deque - pop back destruct 1 fail");}
 }
 
 void SGEXTN::InternalTest::ContainersTest::testPriorityQueueConstructible(){
-
+    SGEXTN::Containers::PriorityQueue<ConstructibleInteger, SGEXTN::Containers::LessThan<ConstructibleInteger>> pq;
+    ConstructibleInteger::lastConstruct = 0;
+    pq.push(1);
+    if(ConstructibleInteger::lastConstruct != 1){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::PriorityQueue - push construct 1 fail");}
+    pq.push(2);
+    if(ConstructibleInteger::lastConstruct != 2){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::PriorityQueue - push construct 2 fail");}
+    pq.push(3);
+    if(ConstructibleInteger::lastConstruct != 3){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::PriorityQueue - push construct 3 fail");}
+    pq.push(5);
+    if(ConstructibleInteger::lastConstruct != 5 || pq.length() != 4){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::PriorityQueue - push bigger element construct fail");}
+    pq.push(4);
+    if(ConstructibleInteger::lastConstruct != 4 || pq.length() != 5){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::PriorityQueue - push in range element construct fail");}
+    ConstructibleInteger::lastDestruct = 0;
+    pq.pop();
+    if(ConstructibleInteger::lastDestruct != 5 || pq.length() != 4){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::PriorityQueue - pop destruct 5 fail");}
+    ConstructibleInteger::lastConstruct = 0;
+    pq.push(-1);
+    if(ConstructibleInteger::lastConstruct != -1 || pq.length() != 5){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::PriorityQueue - push smaller element construct fail");}
+    ConstructibleInteger::lastDestruct = 0;
+    pq.pop();
+    if(ConstructibleInteger::lastDestruct != 4 || pq.length() != 4){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::PriorityQueue - pop destruct 4 fail");}
+    pq.pop();
+    if(ConstructibleInteger::lastDestruct != 3 || pq.length() != 3){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::PriorityQueue - pop destruct 3 fail");}
+    ConstructibleInteger::lastDestruct = 0;
+    pq.clear();
+    if(ConstructibleInteger::lastDestruct == 0 || pq.length() != 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::PriorityQueue - clear priority queue destruct fail");}
+    pq.push(1);
+    pq.push(-1);
+    pq.push(2);
+    ConstructibleInteger::lastDestruct = 0;
+    pq.pop();
+    if(ConstructibleInteger::lastDestruct != 2 || pq.length() != 2){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::PriorityQueue - pop destruct 2 fail");}
+    pq.pop();
+    if(ConstructibleInteger::lastDestruct != 1 || pq.length() != 1){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::PriorityQueue - pop destruct 1 fail");}
+    pq.pop();
+    if(ConstructibleInteger::lastDestruct != -1 || pq.length() != 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::PriorityQueue - pop destruct -1 fail");}
 }
 
 void SGEXTN::InternalTest::ContainersTest::testSetConstructible(){

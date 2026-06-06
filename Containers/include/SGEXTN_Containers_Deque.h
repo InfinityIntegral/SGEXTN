@@ -6,8 +6,6 @@ namespace Containers {
 template <typename T> class Deque {
 public:
     Deque();
-    Deque(int count);
-    Deque(int count, const T& defaultValue);
     void fill(const T& defaultValue);
     [[nodiscard]] T& at(int i);
     [[nodiscard]] const T& at(int i) const;
@@ -22,8 +20,6 @@ public:
     void popFront();
     void reserve(int newMemoryLength);
     void clear();
-    [[nodiscard]] T* pointerToData(int n);
-    [[nodiscard]] const T* pointerToData(int n) const;
     SGEXTN::Containers::RingBuffer<T> private_ringBuffer;
 };
 }
