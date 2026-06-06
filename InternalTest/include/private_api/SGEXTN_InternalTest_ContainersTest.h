@@ -10,7 +10,6 @@ public:
     static void testLessThan();
     static void testMoreThan();
     static void testPair();
-    static void testTuple3();
     static void testVector();
     static void testQueue();
     static void testStack();

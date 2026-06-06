@@ -6,7 +6,6 @@
 #include <SGEXTN_Containers_LessThan.h>
 #include <SGEXTN_Containers_MoreThan.h>
 #include <SGEXTN_Containers_Pair.h>
-#include <SGEXTN_Containers_Tuple3.h>
 #include <SGEXTN_Containers_Vector.h>
 #include <SGEXTN_Containers_Queue.h>
 #include <SGEXTN_Containers_Stack.h>
@@ -178,25 +177,6 @@ void SGEXTN::InternalTest::ContainersTest::testPair(){
     if(SGEXTN::Containers::Pair<int, int>(0, 0) > SGEXTN::Containers::Pair<int, int>(0, 1)){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Pair - (0, 0) more than (0, 1)");}
     if(SGEXTN::Containers::Pair<int, int>(0, 1) > SGEXTN::Containers::Pair<int, int>(1, 0)){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Pair - (0, 1) more than (1, 0)");}
     if(SGEXTN::Containers::Pair<int, int>(0, 0) > SGEXTN::Containers::Pair<int, int>(0, 0)){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Pair - (0, 0) more than (0, 0)");}
-}
-
-void SGEXTN::InternalTest::ContainersTest::testTuple3(){
-    const SGEXTN::Containers::Tuple3<int, int, int> tuple(0, 0, 0);
-    if(tuple.first != 0 || tuple.second != 0 || tuple.third != 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Tuple3 - constructor init fail");}
-    if(SGEXTN::Containers::Tuple3<int, int, int>(0, 0, 0) == SGEXTN::Containers::Tuple3<int, int, int>(0, 0, 1)){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Tuple3 - (0, 0, 0) equals (0, 0, 1)");}
-    if((SGEXTN::Containers::Tuple3<int, int, int>(0, 0, 0) == SGEXTN::Containers::Tuple3<int, int, int>(0, 0, 0)) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Tuple3 - (0, 0, 0) not equal to (0, 0, 0)");}
-    if(SGEXTN::Containers::Tuple3<int, int, int>(0, 0, 0) != SGEXTN::Containers::Tuple3<int, int, int>(0, 0, 0)){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Tuple3 - (0, 0, 0) not equal to (0, 0, 0)");}
-    if((SGEXTN::Containers::Tuple3<int, int, int>(0, 0, 0) != SGEXTN::Containers::Tuple3<int, int, int>(0, 0, 1)) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Tuple3 - (0, 0, 0) equals to (0, 0, 1)");}
-    if(SGEXTN::Containers::Tuple3<int, int, int>(1, 0, 0) < SGEXTN::Containers::Tuple3<int, int, int>(0, 0, 0)){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Tuple3 - (1, 0, 0) less than (0, 0, 0)");}
-    if(SGEXTN::Containers::Tuple3<int, int, int>(0, 1, 0) < SGEXTN::Containers::Tuple3<int, int, int>(0, 0, 0)){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Tuple3 - (0, 1, 0) less than (0, 0, 0)");}
-    if(SGEXTN::Containers::Tuple3<int, int, int>(0, 0, 1) < SGEXTN::Containers::Tuple3<int, int, int>(0, 0, 0)){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Tuple3 - (0, 0, 1) less than (0, 0, 0)");}
-    if(SGEXTN::Containers::Tuple3<int, int, int>(0, 0, 0) < SGEXTN::Containers::Tuple3<int, int, int>(0, 0, 0)){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Tuple3 - (0, 0, 0) less than (0, 0, 0)");}
-    if(SGEXTN::Containers::Tuple3<int, int, int>(1, 0, 0) < SGEXTN::Containers::Tuple3<int, int, int>(0, 1, 1)){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Tuple3 - (1, 0, 0) less than (0, 1, 1)");}
-    if(SGEXTN::Containers::Tuple3<int, int, int>(0, 0, 0) > SGEXTN::Containers::Tuple3<int, int, int>(1, 0, 0)){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Tuple3 - (0, 0, 0) more than (1, 0, 0)");}
-    if(SGEXTN::Containers::Tuple3<int, int, int>(0, 0, 0) > SGEXTN::Containers::Tuple3<int, int, int>(0, 1, 0)){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Tuple3 - (0, 0, 0) more than (0, 1, 0)");}
-    if(SGEXTN::Containers::Tuple3<int, int, int>(0, 0, 0) > SGEXTN::Containers::Tuple3<int, int, int>(0, 0, 1)){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Tuple3 - (0, 0, 0) more than (0, 0, 1)");}
-    if(SGEXTN::Containers::Tuple3<int, int, int>(0, 0, 0) > SGEXTN::Containers::Tuple3<int, int, int>(0, 0, 0)){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Tuple3 - (0, 0, 0) more than (0, 0, 0)");}
-    if(SGEXTN::Containers::Tuple3<int, int, int>(0, 1, 1) > SGEXTN::Containers::Tuple3<int, int, int>(1, 0, 0)){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Tuple3 - (0, 1, 1) more than (1, 0, 0)");}
 }
 
 void SGEXTN::InternalTest::ContainersTest::testVector(){
@@ -1010,7 +990,6 @@ void SGEXTN::InternalTest::ContainersTest::testAll(){
     SGEXTN::InternalTest::ContainersTest::testLessThan();
     SGEXTN::InternalTest::ContainersTest::testMoreThan();
     SGEXTN::InternalTest::ContainersTest::testPair();
-    SGEXTN::InternalTest::ContainersTest::testTuple3();
     SGEXTN::InternalTest::ContainersTest::testVector();
     SGEXTN::InternalTest::ContainersTest::testQueue();
     SGEXTN::InternalTest::ContainersTest::testStack();
@@ -1125,7 +1104,6 @@ template class SGEXTN::Containers::SetConstIterator<RegularStruct, RegularStruct
 template class SGEXTN::Containers::Sort<DefaultConstructableStruct, DefaultConstructableStructLessThan>;
 template class SGEXTN::Containers::Span<RegularStruct>;
 template class SGEXTN::Containers::Stack<RegularStruct>;
-template class SGEXTN::Containers::Tuple3<OperatoredStruct, OperatoredStruct, OperatoredStruct>;
 template class SGEXTN::Containers::UnorderedMap<RegularStruct, RegularStruct, RegularStructEqualTo, RegularStructHashFunction>;
 template class SGEXTN::Containers::UnorderedMapIterator<RegularStruct, RegularStruct, RegularStructEqualTo, RegularStructHashFunction>;
 template class SGEXTN::Containers::UnorderedMapConstIterator<RegularStruct, RegularStruct, RegularStructEqualTo, RegularStructHashFunction>;
