@@ -17,6 +17,21 @@ public:
     [[nodiscard]] int operator()(T* x) const;
 };
 
+template <typename ReturnType, typename... ArgTypes> class Hash<ReturnType(*)(ArgTypes...)> {
+public:
+    [[nodiscard]] int operator()(ReturnType(*x)(ArgTypes...)) const;
+};
+
+template <typename ReturnType, typename ClassName, typename... ArgTypes> class Hash<ReturnType(ClassName::*)(ArgTypes...)> {
+public:
+    [[nodiscard]] int operator()(ReturnType(ClassName::*x)(ArgTypes...)) const;
+};
+
+template <typename ReturnType, typename ClassName, typename... ArgTypes> class Hash<ReturnType(ClassName::*)(ArgTypes...)const> {
+public:
+    [[nodiscard]] int operator()(ReturnType(ClassName::*x)(ArgTypes...)const) const;
+};
+
 template <> class BUILDLAH_DLL_SGEXTN_Containers Hash<bool> {
 public:
     [[nodiscard]] int operator()(bool x) const;

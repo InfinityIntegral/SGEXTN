@@ -15,3 +15,15 @@ template <typename... Ts> int SGEXTN::Containers::Hash<Ts...>::operator()(Ts... 
 template <typename T> int SGEXTN::Containers::Hash<T*>::operator()(T* x) const {
     return SGEXTN::Containers::HashAlgorithm::wyHash32(SGEXTN::Containers::Span<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(T*)));
 }
+
+template <typename ReturnType, typename... ArgTypes> int SGEXTN::Containers::Hash<ReturnType(*)(ArgTypes...)>::operator()(ReturnType(*x)(ArgTypes...)) const {
+    return SGEXTN::Containers::HashAlgorithm::wyHash32(SGEXTN::Containers::Span<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(ReturnType(*)(ArgTypes...))));
+}
+
+template <typename ReturnType, typename ClassName, typename... ArgTypes> int SGEXTN::Containers::Hash<ReturnType(ClassName::*)(ArgTypes...)>::operator()(ReturnType(ClassName::*x)(ArgTypes...)) const {
+    return SGEXTN::Containers::HashAlgorithm::wyHash32(SGEXTN::Containers::Span<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(ReturnType(ClassName::*)(ArgTypes...))));
+}
+
+template <typename ReturnType, typename ClassName, typename... ArgTypes> int SGEXTN::Containers::Hash<ReturnType(ClassName::*)(ArgTypes...)const>::operator()(ReturnType(ClassName::*x)(ArgTypes...)const) const {
+    return SGEXTN::Containers::HashAlgorithm::wyHash32(SGEXTN::Containers::Span<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(ReturnType(ClassName::*)(ArgTypes...)const)));
+}

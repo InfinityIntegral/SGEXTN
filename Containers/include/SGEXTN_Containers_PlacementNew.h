@@ -9,4 +9,4 @@ public:
 }
 }
 
-BUILDLAH_DLL_SGEXTN_Containers void* operator new(decltype(sizeof(0)) /*unused*/, SGEXTN::Containers::PlacementNew /*unused*/, void* p) noexcept;
+BUILDLAH_DLL_SGEXTN_Containers void* operator new(decltype(sizeof(int)) /*unused*/, SGEXTN::Containers::PlacementNew /*unused*/, void* p) noexcept;
