@@ -1,5 +1,5 @@
 #include <SGEXTN_Containers_Span.h>
-#include <SGEXTN_Containers_HashAlgorithm.h>
+#include <private_api/SGEXTN_Containers_HashAlgorithm.h>
 
 int SGEXTN::Containers::HashAlgorithm::wyHash32(const SGEXTN::Containers::Span<const unsigned char> &span){
     const unsigned int num0 = 0xA0761D65;

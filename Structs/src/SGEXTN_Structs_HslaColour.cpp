@@ -1,11 +1,8 @@
 #include <SGEXTN_Structs_HslaColour.h>
 #include <SGEXTN_Structs_RgbaColour.h>
 #include <SGEXTN_Math_FloatMath.h>
-#include <SGEXTN_Containers_Array.h>
-#include <SGEXTN_Containers_Hash.h>
-#include <SGEXTN_Containers_HashAlgorithm.h>
 #include <SGEXTN_ApplicationBase_OldString.h>
-#include <SGEXTN_Containers_Span.h>
+#include <SGEXTN_Containers_Hash.h>
 
 namespace {
 float maximumOf3(float a, float b, float c){
@@ -94,12 +91,7 @@ bool SGEXTN::Structs::HslaColour::operator>(SGEXTN::Structs::HslaColour x) const
 }
 
 int SGEXTN::Structs::HslaColour::hash() const {
-    SGEXTN::Containers::Array<int> hashArray(4);
-    hashArray.at(0) = SGEXTN::Containers::Hash<float>()(private_hue);
-    hashArray.at(1) = SGEXTN::Containers::Hash<float>()(private_saturation);
-    hashArray.at(2) = SGEXTN::Containers::Hash<float>()(private_lightness);
-    hashArray.at(3) = SGEXTN::Containers::Hash<float>()(private_transparency);
-    return SGEXTN::Containers::HashAlgorithm::wyHash32(SGEXTN::Containers::Span<const unsigned char>(reinterpret_cast<const unsigned char*>(hashArray.private_data), 4 * sizeof(int)));
+    return SGEXTN::Containers::Hash<float, float, float, float>()(private_hue, private_saturation, private_lightness, private_transparency);
 }
 
 SGEXTN::ApplicationBase::OldString SGEXTN::Structs::HslaColour::debugLog() const {

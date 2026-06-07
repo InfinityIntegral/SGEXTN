@@ -1,7 +1,7 @@
 #include <private_api/SGEXTN_ApplicationBase_TextBuffer.h>
 #include <cstring>
 #include <SGEXTN_Containers_PlacementNew.h>
-#include <SGEXTN_Containers_HashAlgorithm.h>
+#include <private_api/SGEXTN_Containers_HashAlgorithm.h>
 #include <SGEXTN_Containers_Span.h>
 
 namespace {

@@ -3,7 +3,7 @@
 #include <SGEXTN_Containers_Array.h>
 #include <QString>
 #include <QChar>
-#include <SGEXTN_Containers_HashAlgorithm.h>
+#include <private_api/SGEXTN_Containers_HashAlgorithm.h>
 #include <SGEXTN_Containers_Span.h>
 #include <QList>
 #include <QByteArray>
