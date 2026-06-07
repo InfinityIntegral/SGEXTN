@@ -3,27 +3,28 @@
 #include <SGEXTN_ApplicationBase_String.h>
 #include <iostream>
 #include <locale>
-#include <cstddef>
+#include <cwchar>
 
 namespace {
-const char* printUtf8String(unsigned char* data, int byteLength, bool& mustDeleteOutputUsingArrayDelete){
+const char* printUtf8String(const unsigned char* data, int byteLength, bool& mustDeleteOutputUsingArrayDelete){
     mustDeleteOutputUsingArrayDelete = false;
     if(byteLength == 0){return "";}
-    std::locale cmdConsoleLocale("");
+    const std::locale cmdConsoleLocale("");
     char16_t* utf16Buffer = new char16_t[byteLength];
     const std::codecvt<char16_t, char8_t, std::mbstate_t>& utf8ToUtf16Facet = std::use_facet<std::codecvt<char16_t, char8_t, std::mbstate_t>>(cmdConsoleLocale);
     const char8_t* utf8Data = reinterpret_cast<const char8_t*>(data);
     std::mbstate_t utf8ToUtf16State = {};
     const char8_t* nextUtf8ToConvertToUtf16 = utf8Data;
+    // NOLINTNEXTLINE(misc-const-correctness)
     char16_t* nextUtf16SlotToContainConvertedUtf8 = utf16Buffer;
     std::codecvt_base::result conversionResult = utf8ToUtf16Facet.in(utf8ToUtf16State, utf8Data, utf8Data + byteLength, nextUtf8ToConvertToUtf16, utf16Buffer, utf16Buffer + byteLength, nextUtf16SlotToContainConvertedUtf8);
     if(conversionResult != std::codecvt_base::ok){
         delete[] utf16Buffer;
         return "invalid string";
     }
-    int utf16Length = static_cast<int>(nextUtf16SlotToContainConvertedUtf8 - utf16Buffer);
+    const int utf16Length = static_cast<int>(nextUtf16SlotToContainConvertedUtf8 - utf16Buffer);
     const std::codecvt<char16_t, char, std::mbstate_t>& utf16ToSystemEncodingFacet = std::use_facet<std::codecvt<char16_t, char, std::mbstate_t>>(cmdConsoleLocale);
-    int maximumSystemEncodingLength = (utf16Length * utf16ToSystemEncodingFacet.max_length()) + 1;
+    const int maximumSystemEncodingLength = (utf16Length * utf16ToSystemEncodingFacet.max_length()) + 1;
     mustDeleteOutputUsingArrayDelete = true;
     char* systemEncodingBuffer = new char[maximumSystemEncodingLength];
     std::mbstate_t utf16ToSystemEncodingState = {};

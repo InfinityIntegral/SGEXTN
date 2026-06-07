@@ -10,7 +10,7 @@ std::random_device randomDevice;
 std::minstd_rand randomEngine;
 
 void reSeedRandomEngine(){
-    unsigned int currentTime = static_cast<unsigned int>(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count());
+    const unsigned int currentTime = static_cast<unsigned int>(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count());
     randomEngine.seed(randomDevice() ^ currentTime);
 }
 

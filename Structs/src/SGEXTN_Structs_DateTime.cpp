@@ -459,20 +459,20 @@ SGEXTN::ApplicationBase::String SGEXTN::Structs::DateTime::getDisplayString(cons
 SGEXTN::ApplicationBase::String SGEXTN::Structs::DateTime::getDisplayString(const SGEXTN::ApplicationBase::String& customFormat) const {
     SGEXTN::ApplicationBase::String format = customFormat;
     SGEXTN::ApplicationBase::String output = "";
-    while(format.byteLength() > 0){
-        int tokenEnd = format.findFirstBytesFromLeftBounded(1, '%');
-        if(tokenEnd == -1){tokenEnd = format.byteLength();}
-        SGEXTN::ApplicationBase::String thisToken = format.substringBytesLeft(tokenEnd);
-        format = format.substringBytesRight(format.byteLength() - tokenEnd);
-        if(thisToken.byteLength() == 0 || thisToken.byteAt(0) != '%'){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime::getDisplayString crashed because a token does not start with %");}
-        if(thisToken.byteLength() > 1 && thisToken.byteAt(1) == '\\'){
-            output += thisToken.substringBytesRight(thisToken.byteLength() - 2);
+    while(format.characterLength() > 0){
+        int tokenEnd = format.findFirstCharactersFromLeftBounded(1, '%');
+        if(tokenEnd == -1){tokenEnd = format.characterLength();}
+        SGEXTN::ApplicationBase::String thisToken = format.substringCharactersLeft(tokenEnd);
+        format = format.substringCharactersRight(format.characterLength() - tokenEnd);
+        if(thisToken.characterLength() == 0 || thisToken.getCharacterAt(0) != '%'){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime::getDisplayString crashed because a token does not start with %");}
+        if(thisToken.characterLength() > 1 && thisToken.getCharacterAt(1) == '\\'){
+            output += thisToken.substringCharactersRight(thisToken.characterLength() - 2);
             continue;
         }
-        if(thisToken.byteLength() < 2 || SGEXTN::ApplicationBase::Character(thisToken.byteAt(1)).isDigit() == false){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime::getDisplayString crashed because the precision specifier, which is the character after the %, in a token is not a number");}
-        const int precision = SGEXTN::ApplicationBase::String(thisToken.byteAt(1)).parseToInt(nullptr, 10);
+        if(thisToken.characterLength() < 2 || SGEXTN::ApplicationBase::Character(thisToken.getCharacterAt(1)).isDigit() == false){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime::getDisplayString crashed because the precision specifier, which is the character after the %, in a token is not a number");}
+        const int precision = SGEXTN::ApplicationBase::String(thisToken.getCharacterAt(1)).parseToInt(nullptr, 10);
         int component = 0;
-        thisToken = thisToken.substringBytesRight(thisToken.byteLength() - 2);
+        thisToken = thisToken.substringCharactersRight(thisToken.characterLength() - 2);
         if(thisToken == "year"){component = getPart(SGEXTN::Structs::TimeUnit::Year);}
         else if(thisToken == "globalyear"){component = getPart(SGEXTN::Structs::TimeUnit::Year) + 1965;}
         else if(thisToken == "month"){component = getPart(SGEXTN::Structs::TimeUnit::Month);}
@@ -482,8 +482,8 @@ SGEXTN::ApplicationBase::String SGEXTN::Structs::DateTime::getDisplayString(cons
         else if(thisToken == "second"){component = getPart(SGEXTN::Structs::TimeUnit::Second);}
         else{SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime::getDisplayString crashed because the component name is invalid, custom strings must not contain % and must be prefixed with a \\ sign");}
         SGEXTN::ApplicationBase::String componentString = SGEXTN::ApplicationBase::String::stringFromInt(component, 10);
-        if(componentString.byteLength() > precision && (thisToken == "year" || thisToken == "globalyear")){componentString = componentString.substringBytesRight(precision);}
-        output += componentString.fillLeftToByteLength(precision, '0');
+        if(componentString.characterLength() > precision && thisToken.containsCharacters("year")){componentString = componentString.substringCharactersRight(precision);}
+        output += componentString.fillLeftToCharacterLength(precision, '0');
     }
     return output;
 }
