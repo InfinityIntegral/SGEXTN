@@ -6,11 +6,9 @@ class BUILDLAH_DLL_SGEXTN_ApplicationBase OldChar {
 public:
     unsigned short private_data;
     OldChar();
-    OldChar(char c);
+    OldChar(unsigned char c);
     OldChar(unsigned short data);
     OldChar(int unicode);
-    [[nodiscard]] char toChar() const;
-    [[nodiscard]] signed char toSignedChar() const;
     [[nodiscard]] unsigned char toUnsignedChar() const;
     [[nodiscard]] bool operator==(OldChar x) const;
     [[nodiscard]] bool operator!=(OldChar x) const;

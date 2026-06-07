@@ -108,15 +108,15 @@ void SGEXTN::ApplicationBase::TextBuffer::private_moveToHeap(){
     new(SGEXTN::Containers::PlacementNew::placeholder, &private_heapAllocData) SGEXTN::ApplicationBase::ByteVector(static_cast<SGEXTN::ApplicationBase::ByteVector&&>(heapContainer));
 }
 
-void SGEXTN::ApplicationBase::TextBuffer::pushBack(char c){
+void SGEXTN::ApplicationBase::TextBuffer::pushBack(unsigned char c){
     const int newLength = length() + 1;
     if(newLength < 16){
-        (*(private_stackAllocData + newLength - 1)) = static_cast<unsigned char>(c);
+        (*(private_stackAllocData + newLength - 1)) = c;
         private_lengthByte() = newLength;
     }
     else{
         if(private_isHeapAlloc == false){private_moveToHeap();}
-        private_heapAllocData.pushBack(static_cast<unsigned char>(c));
+        private_heapAllocData.pushBack(c);
     }
 }
 

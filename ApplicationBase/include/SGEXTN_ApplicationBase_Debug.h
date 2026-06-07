@@ -16,8 +16,6 @@ public:
     SGEXTN::ApplicationBase::OldString metaInfo;
     template <typename T> Debug& operator()(const T& x);
     Debug& operator()(bool x);
-    Debug& operator()(char x);
-    Debug& operator()(signed char x);
     Debug& operator()(unsigned char x);
     Debug& operator()(short x);
     Debug& operator()(unsigned short x);

@@ -22,7 +22,7 @@ public:
     [[nodiscard]] unsigned char& byteAt(int i);
     [[nodiscard]] const unsigned char& byteAt(int i) const;
     [[nodiscard]] int length() const;
-    void pushBack(char c);
+    void pushBack(unsigned char c);
     void pushBack(const char* s);
     void pushBack(const TextBuffer& data, int start, int length);
     [[nodiscard]] bool operator==(const TextBuffer& x) const;

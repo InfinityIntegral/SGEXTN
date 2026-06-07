@@ -7,8 +7,8 @@ SGEXTN::ApplicationBase::OldChar::OldChar(){
     (*this).private_data = static_cast<unsigned short>(0);
 }
 
-SGEXTN::ApplicationBase::OldChar::OldChar(char c){
-    (*this).private_data = static_cast<unsigned short>(static_cast<unsigned char>(c));
+SGEXTN::ApplicationBase::OldChar::OldChar(unsigned char c){
+    (*this).private_data = static_cast<unsigned short>(c);
 }
 
 SGEXTN::ApplicationBase::OldChar::OldChar(unsigned short data){
@@ -18,14 +18,6 @@ SGEXTN::ApplicationBase::OldChar::OldChar(unsigned short data){
 SGEXTN::ApplicationBase::OldChar::OldChar(int unicode){
     if(unicode < 0 || unicode > 65535){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::OldChar constructor crashed because unicode value used is not between 0 and 65535 inclusive");}
     (*this).private_data = static_cast<unsigned short>(unicode);
-}
-
-char SGEXTN::ApplicationBase::OldChar::toChar() const {
-    return static_cast<char>(private_data);
-}
-
-signed char SGEXTN::ApplicationBase::OldChar::toSignedChar() const {
-    return static_cast<signed char>(private_data);
 }
 
 unsigned char SGEXTN::ApplicationBase::OldChar::toUnsignedChar() const {

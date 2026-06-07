@@ -13,7 +13,7 @@
 #include <SGEXTN_Math_FloatMath.h>
 
 namespace {
-char floatDisplayFormatToQStringFormatSpecifier(SGEXTN::ApplicationBase::FloatDisplayFormat x){
+unsigned char floatDisplayFormatToQStringFormatSpecifier(SGEXTN::ApplicationBase::FloatDisplayFormat x){
     if(x == SGEXTN::ApplicationBase::FloatDisplayFormat::Default){return 'g';}
     if(x == SGEXTN::ApplicationBase::FloatDisplayFormat::DecimalPlace){return 'f';}
     return 'e';

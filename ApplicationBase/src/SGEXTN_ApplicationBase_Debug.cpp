@@ -36,18 +36,8 @@ SGEXTN::ApplicationBase::Debug& SGEXTN::ApplicationBase::Debug::operator()(bool 
     return (*this);
 }
 
-SGEXTN::ApplicationBase::Debug& SGEXTN::ApplicationBase::Debug::operator()(char x){
-    debugInfo += SGEXTN::ApplicationBase::OldString(" - ") + SGEXTN::ApplicationBase::OldString::stringFromInt(static_cast<int>(x), 10) + " or " + SGEXTN::ApplicationBase::OldChar(x);
-    return (*this);
-}
-
-SGEXTN::ApplicationBase::Debug& SGEXTN::ApplicationBase::Debug::operator()(signed char x){
-    debugInfo += SGEXTN::ApplicationBase::OldString(" - ") + SGEXTN::ApplicationBase::OldString::stringFromInt(static_cast<int>(x), 10) + " or " + SGEXTN::ApplicationBase::OldChar(static_cast<char>(x));
-    return (*this);
-}
-
 SGEXTN::ApplicationBase::Debug& SGEXTN::ApplicationBase::Debug::operator()(unsigned char x){
-    debugInfo += SGEXTN::ApplicationBase::OldString(" - ") + SGEXTN::ApplicationBase::OldString::stringFromInt(static_cast<int>(x), 10) + " or " + SGEXTN::ApplicationBase::OldChar(static_cast<char>(x));
+    debugInfo += SGEXTN::ApplicationBase::OldString(" - ") + SGEXTN::ApplicationBase::OldString::stringFromInt(static_cast<int>(x), 10) + " or " + SGEXTN::ApplicationBase::OldChar(static_cast<unsigned char>(x));
     return (*this);
 }
 

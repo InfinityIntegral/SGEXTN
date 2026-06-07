@@ -409,9 +409,8 @@ SGEXTN::ApplicationBase::String& SGEXTN::ApplicationBase::String::operator=(SGEX
     return (*this);
 }
 
-SGEXTN::ApplicationBase::String::String(char c){
-    const unsigned char uc = static_cast<unsigned char>(c);
-    if(uc > 0x7f){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String constructor crashed because the given char does not represent a valid ASCII character");}
+SGEXTN::ApplicationBase::String::String(unsigned char c){
+    if(c > 0x7f){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String constructor crashed because the given unsigned char does not represent a valid ASCII character");}
     private_data.pushBack(c);
 }
 
@@ -903,7 +902,7 @@ SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::repeat(const SG
     return output;
 }
 
-SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::fillLeftToByteLength(int length, char fillChar) const {
+SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::fillLeftToByteLength(int length, unsigned char fillChar) const {
     if(length < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::fillLeftToByteLength crashed because target length is negative");}
     if(byteLength() >= length){return (*this);}
     return (SGEXTN::ApplicationBase::String::repeat(fillChar, length - byteLength()) + (*this));
@@ -915,7 +914,7 @@ SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::fillLeftToChara
     return (SGEXTN::ApplicationBase::String::repeat(fillChar, length - characterLength()) + (*this));
 }
 
-SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::fillRightToByteLength(int length, char fillChar) const {
+SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::fillRightToByteLength(int length, unsigned char fillChar) const {
     if(length < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String::fillRightToByteLength crashed because target length is negative");}
     if(byteLength() >= length){return (*this);}
     return ((*this) + SGEXTN::ApplicationBase::String::repeat(fillChar, length - byteLength()));

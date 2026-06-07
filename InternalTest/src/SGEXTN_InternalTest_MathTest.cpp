@@ -14,13 +14,13 @@ bool isCloseEnough(float a, float b){
 }
 
 bool SGEXTN::InternalTest::MathTest::checkDataSizes(){
-    if(sizeof(char) != 1){SGEXTN::Containers::Crash::warn("unexpected char size");}
+    if(sizeof(unsigned char) != 1){SGEXTN::Containers::Crash::warn("unexpected unsigned char size");}
     if(sizeof(short) != 2){SGEXTN::Containers::Crash::warn("unpected short size");}
     if(sizeof(int) != 4){SGEXTN::Containers::Crash::warn("unexpected int size");}
     if(sizeof(long long) != 8){SGEXTN::Containers::Crash::warn("unexpected long long size");}
     if(sizeof(float) != 4){SGEXTN::Containers::Crash::warn("unexpected float size");}
     if(sizeof(double) != 8){SGEXTN::Containers::Crash::warn("unexpected double size");}
-    if(sizeof(char) == 1 && sizeof(short) == 2 && sizeof(int) == 4 && sizeof(long long) == 8 && sizeof(float) == 4 && sizeof(double) == 8){return true;}
+    if(sizeof(unsigned char) == 1 && sizeof(short) == 2 && sizeof(int) == 4 && sizeof(long long) == 8 && sizeof(float) == 4 && sizeof(double) == 8){return true;}
     SGEXTN::Containers::Crash::warn("avoid using types with unexpected sizes listed above on this platform");
     return false;
 }

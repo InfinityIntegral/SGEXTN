@@ -13,7 +13,7 @@ class BUILDLAH_DLL_SGEXTN_ApplicationBase Character {
 public:
     SGEXTN::ApplicationBase::TextBuffer private_data;
     Character();
-    Character(char c);
+    Character(unsigned char c);
     Character(const char* s);
     Character(int unicode);
     [[nodiscard]] bool operator==(const Character& x) const;
@@ -26,7 +26,7 @@ public:
     [[nodiscard]] int byteLength() const;
     [[nodiscard]] unsigned char& byteAt(int i);
     [[nodiscard]] const unsigned char& byteAt(int i) const;
-    [[nodiscard]] char baseToChar() const;
+    [[nodiscard]] unsigned char baseToAsciiChar() const;
     [[nodiscard]] bool isDigit() const;
     [[nodiscard]] bool isDigit(int base) const;
     [[nodiscard]] bool isEnglishLowercase() const;

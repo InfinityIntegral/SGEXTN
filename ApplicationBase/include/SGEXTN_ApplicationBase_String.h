@@ -27,7 +27,7 @@ public:
     String(String&& x) noexcept;
     String& operator=(String&& x) noexcept;
     ~String() = default;
-    String(char c);
+    String(unsigned char c);
     String(const char* s);
     String(const SGEXTN::ApplicationBase::Character& c);
     [[nodiscard]] bool operator==(const String& x) const;
@@ -81,9 +81,9 @@ public:
     [[nodiscard]] int countBytesAllowOverlap(const String& s) const;
     [[nodiscard]] int countCharactersAllowOverlap(const String& s) const;
     [[nodiscard]] static String repeat(const String& s, int count);
-    [[nodiscard]] String fillLeftToByteLength(int length, char fillChar) const;
+    [[nodiscard]] String fillLeftToByteLength(int length, unsigned char fillChar) const;
     [[nodiscard]] String fillLeftToCharacterLength(int length, const SGEXTN::ApplicationBase::Character& fillChar) const;
-    [[nodiscard]] String fillRightToByteLength(int length, char fillChar) const;
+    [[nodiscard]] String fillRightToByteLength(int length, unsigned char fillChar) const;
     [[nodiscard]] String fillRightToCharacterLength(int length, const SGEXTN::ApplicationBase::Character& fillChar) const;
     [[nodiscard]] int byteIndexToCharacterIndex(int i) const;
     [[nodiscard]] int characterIndexToByteIndex(int i) const;

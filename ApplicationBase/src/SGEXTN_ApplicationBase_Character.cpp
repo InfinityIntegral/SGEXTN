@@ -11,21 +11,21 @@
 
 namespace {
 void appendUnicode(int unicode, SGEXTN::ApplicationBase::Character& c){
-    if(unicode < 0x80){c.private_data.pushBack(static_cast<char>(unicode));}
+    if(unicode < 0x80){c.private_data.pushBack(static_cast<unsigned char>(unicode));}
     else if(unicode < 0x800){
-        c.private_data.pushBack(static_cast<char>(0xc0 + (unicode >> 6)));
-        c.private_data.pushBack(static_cast<char>(0x80 + (unicode & 0x3f)));
+        c.private_data.pushBack(static_cast<unsigned char>(0xc0 + (unicode >> 6)));
+        c.private_data.pushBack(static_cast<unsigned char>(0x80 + (unicode & 0x3f)));
     }
     else if(unicode < 0x10000){
-        c.private_data.pushBack(static_cast<char>(0xe0 + (unicode >> 12)));
-        c.private_data.pushBack(static_cast<char>(0x80 + ((unicode >> 6) & 0x3f)));
-        c.private_data.pushBack(static_cast<char>(0x80 + (unicode & 0x3f)));
+        c.private_data.pushBack(static_cast<unsigned char>(0xe0 + (unicode >> 12)));
+        c.private_data.pushBack(static_cast<unsigned char>(0x80 + ((unicode >> 6) & 0x3f)));
+        c.private_data.pushBack(static_cast<unsigned char>(0x80 + (unicode & 0x3f)));
     }
     else if(unicode < 0x110000){
-        c.private_data.pushBack(static_cast<char>(0xf0 + (unicode >> 18)));
-        c.private_data.pushBack(static_cast<char>(0x80 + ((unicode >> 12) & 0x3f)));
-        c.private_data.pushBack(static_cast<char>(0x80 + ((unicode >> 6) & 0x3f)));
-        c.private_data.pushBack(static_cast<char>(0x80 + (unicode & 0x3f)));
+        c.private_data.pushBack(static_cast<unsigned char>(0xf0 + (unicode >> 18)));
+        c.private_data.pushBack(static_cast<unsigned char>(0x80 + ((unicode >> 12) & 0x3f)));
+        c.private_data.pushBack(static_cast<unsigned char>(0x80 + ((unicode >> 6) & 0x3f)));
+        c.private_data.pushBack(static_cast<unsigned char>(0x80 + (unicode & 0x3f)));
     }
 }
 
@@ -38,14 +38,13 @@ int getCharacterDigitValue(const SGEXTN::ApplicationBase::Character& c){
 }
 
 SGEXTN::ApplicationBase::Character::Character(){
-    private_data.pushBack(static_cast<char>(0xE2));
-    private_data.pushBack(static_cast<char>(0x99));
-    private_data.pushBack(static_cast<char>(0xA5));
+    private_data.pushBack(static_cast<unsigned char>(0xE2));
+    private_data.pushBack(static_cast<unsigned char>(0x99));
+    private_data.pushBack(static_cast<unsigned char>(0xA5));
 }
 
-SGEXTN::ApplicationBase::Character::Character(char c){
-    const unsigned char uc = static_cast<unsigned char>(c);
-    if(uc > 0x7f){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String constructor crashed because the given char does not represent a valid ASCII character");}
+SGEXTN::ApplicationBase::Character::Character(unsigned char c){
+    if(c > 0x7f){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String constructor crashed because the given unsigned char does not represent a valid ASCII character");}
     private_data.pushBack(c);
 }
 
@@ -105,8 +104,9 @@ const unsigned char& SGEXTN::ApplicationBase::Character::byteAt(int i) const {
     return private_data.byteAt(i);
 }
 
-char SGEXTN::ApplicationBase::Character::baseToChar() const {
-    return static_cast<char>(private_data.byteAt(0));
+unsigned char SGEXTN::ApplicationBase::Character::baseToAsciiChar() const {
+    if(private_data.byteAt(0) > 0x7f){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character::baseToAsciiChar crashed because the first unsigned char in the grapheme cluster does not represent a valid ASCII character");}
+    return private_data.byteAt(0);
 }
 
 bool SGEXTN::ApplicationBase::Character::isDigit() const {
