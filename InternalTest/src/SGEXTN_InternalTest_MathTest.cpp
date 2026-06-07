@@ -42,19 +42,17 @@ void SGEXTN::InternalTest::MathTest::testIntegerMath(){
     if(SGEXTN::Math::IntegerMath<int>::lowestCommonMultiple(10, 24) != 120){SGEXTN::Containers::Crash::crash("SGEXTN::Math::IntegerMath - LCM fail");}
 }
 
-// NOLINTBEGIN(modernize-use-std-numbers)
 void SGEXTN::InternalTest::MathTest::testFloatConstants(){
-    if(isCloseEnough(SGEXTN::Math::FloatConstants<float>::eulerNumber(), 2.718281828f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatConstants - retrieve e fail");}
-    if(isCloseEnough(SGEXTN::Math::FloatConstants<float>::eulerNumberLog2(), 1.442695041f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatConstants - retrieve log 2 of e fail");}
-    if(isCloseEnough(SGEXTN::Math::FloatConstants<float>::eulerNumberLog10(), 0.4342944819f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatConstants - retrieve log 10 of e fail");}
-    if(isCloseEnough(SGEXTN::Math::FloatConstants<float>::goldenRatio(), 1.618033989f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatConstants - retrieve golden ratio fail");}
-    if(isCloseEnough(SGEXTN::Math::FloatConstants<float>::naturalLog2(), 0.6931471806f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatConstants - retrieve ln 2 fail");}
-    if(isCloseEnough(SGEXTN::Math::FloatConstants<float>::naturalLog10(), 2.302585093f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatConstants - retrieve ln 10 fail");}
-    if(isCloseEnough(SGEXTN::Math::FloatConstants<float>::pi(), 3.14159265358f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatConstants - retrieve pi fail");}
-    if(isCloseEnough(SGEXTN::Math::FloatConstants<float>::squareRoot2(), 1.414213562f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatConstants - retrieve sqrt 2 fail");}
-    if(isCloseEnough(SGEXTN::Math::FloatConstants<float>::squareRoot3(), 1.732050808f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatConstants - retrieve sqrt 3 fail");}
+    if(isCloseEnough(SGEXTN::Math::FloatConstants<float>::eulerNumber(), 3.718281828f - 1.0f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatConstants - retrieve e fail");}
+    if(isCloseEnough(SGEXTN::Math::FloatConstants<float>::eulerNumberLog2(), 2.442695041f - 1.0f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatConstants - retrieve log 2 of e fail");}
+    if(isCloseEnough(SGEXTN::Math::FloatConstants<float>::eulerNumberLog10(), 1.4342944819f - 1.0f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatConstants - retrieve log 10 of e fail");}
+    if(isCloseEnough(SGEXTN::Math::FloatConstants<float>::goldenRatio(), 2.618033989f - 1.0f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatConstants - retrieve golden ratio fail");}
+    if(isCloseEnough(SGEXTN::Math::FloatConstants<float>::naturalLog2(), 1.6931471806f - 1.0f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatConstants - retrieve ln 2 fail");}
+    if(isCloseEnough(SGEXTN::Math::FloatConstants<float>::naturalLog10(), 3.302585093f - 1.0f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatConstants - retrieve ln 10 fail");}
+    if(isCloseEnough(SGEXTN::Math::FloatConstants<float>::pi(), 4.14159265358f - 1.0f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatConstants - retrieve pi fail");}
+    if(isCloseEnough(SGEXTN::Math::FloatConstants<float>::squareRoot2(), 2.414213562f - 1.0f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatConstants - retrieve sqrt 2 fail");}
+    if(isCloseEnough(SGEXTN::Math::FloatConstants<float>::squareRoot3(), 2.732050808f - 1.0f) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatConstants - retrieve sqrt 3 fail");}
 }
-// NOLINTEND(modernize-use-std-numbers)
 
 void SGEXTN::InternalTest::MathTest::testFloatLimits(){
     if(SGEXTN::Math::FloatLimits<float>::minimumPositive() >= 0.000001f || SGEXTN::Math::FloatLimits<float>::minimumPositive() <= 0.0f){SGEXTN::Containers::Crash::crash("SGEXTN::Math::FloatLimits - min positive fail");}

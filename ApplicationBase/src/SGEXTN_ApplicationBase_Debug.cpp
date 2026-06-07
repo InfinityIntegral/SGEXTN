@@ -37,7 +37,7 @@ SGEXTN::ApplicationBase::Debug& SGEXTN::ApplicationBase::Debug::operator()(bool 
 }
 
 SGEXTN::ApplicationBase::Debug& SGEXTN::ApplicationBase::Debug::operator()(unsigned char x){
-    debugInfo += SGEXTN::ApplicationBase::OldString(" - ") + SGEXTN::ApplicationBase::OldString::stringFromInt(static_cast<int>(x), 10) + " or " + SGEXTN::ApplicationBase::OldChar(static_cast<unsigned char>(x));
+    debugInfo += SGEXTN::ApplicationBase::OldString(" - ") + SGEXTN::ApplicationBase::OldString::stringFromInt(static_cast<int>(x), 10) + " or " + SGEXTN::ApplicationBase::OldChar(x);
     return (*this);
 }
 

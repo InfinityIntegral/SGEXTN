@@ -29,7 +29,7 @@ public:
     [[nodiscard]] int hash() const;
     OldString& operator+=(const OldString& x);
     [[nodiscard]] SGEXTN::ApplicationBase::OldChar getCharAt(int i) const;
-    void setCharAt(int i, SGEXTN::ApplicationBase::OldChar c);
+    void setCharAt(int i, SGEXTN::ApplicationBase::OldChar c) const;
     [[nodiscard]] int length() const;
     [[nodiscard]] OldString replace(const OldString& oldText, const OldString& newText) const;
     [[nodiscard]] OldString insert(int pos, const OldString& s) const;

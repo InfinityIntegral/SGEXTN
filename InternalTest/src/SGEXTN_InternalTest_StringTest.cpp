@@ -467,9 +467,9 @@ void SGEXTN::InternalTest::StringTest::testUnicodeQuery(){
 }
 
 void SGEXTN::InternalTest::StringTest::testCharacter(){
-    if(SGEXTN::ApplicationBase::Character() != SGEXTN::ApplicationBase::Character(0x2665)){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character default value fail");}
+    if(SGEXTN::ApplicationBase::Character() != SGEXTN::ApplicationBase::Character(0x1f496)){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character default value fail");}
     if(SGEXTN::ApplicationBase::Character('A') != SGEXTN::ApplicationBase::Character(65)){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character constructor from unsigned char fail");}
-    if(SGEXTN::ApplicationBase::Character(reinterpret_cast<const char*>(u8"\u2665")) != SGEXTN::ApplicationBase::Character()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character constructor from C string fail");}
+    if(SGEXTN::ApplicationBase::Character(reinterpret_cast<const char*>(u8"\U0001f496")) != SGEXTN::ApplicationBase::Character()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character constructor from C string fail");}
     const SGEXTN::ApplicationBase::Character a('a');
     const SGEXTN::ApplicationBase::Character b('b');
     if(a == b){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character equality check fail");}
@@ -479,10 +479,10 @@ void SGEXTN::InternalTest::StringTest::testCharacter(){
     if(b <= a){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character less than or equal to operator fail");}
     if(a >= b){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character more than or equal to operator fail");}
     SGEXTN::ApplicationBase::Character c;
-    if(c.byteLength() != 3){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character check byte length fail");}
-    if(c.byteAt(2) != 0xa5){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character get byte at fail");}
-    c.byteAt(2) = 0xa6;
-    if(c != SGEXTN::ApplicationBase::Character(0x2666)){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character set byte at fail");}
+    if(c.byteLength() != 4){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character check byte length fail");}
+    if(c.byteAt(3) != 0x96){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character get byte at fail");}
+    c.byteAt(3) = 0x97;
+    if(c != SGEXTN::ApplicationBase::Character(0x1f497)){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character set byte at fail");}
     if(a.baseToAsciiChar() != 'a'){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character convert to C++ unsigned char fail");}
     if(SGEXTN::ApplicationBase::Character('0').isDigit() == false){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is digit base 10 fail for digit 0");}
     if(SGEXTN::ApplicationBase::Character('5').isDigit() == false){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::Character is digit base 10 fail for digit 5");}

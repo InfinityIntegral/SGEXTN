@@ -38,9 +38,7 @@ int getCharacterDigitValue(const SGEXTN::ApplicationBase::Character& c){
 }
 
 SGEXTN::ApplicationBase::Character::Character(){
-    private_data.pushBack(static_cast<unsigned char>(0xE2));
-    private_data.pushBack(static_cast<unsigned char>(0x99));
-    private_data.pushBack(static_cast<unsigned char>(0xA5));
+    appendUnicode(0x1f496, (*this));
 }
 
 SGEXTN::ApplicationBase::Character::Character(unsigned char c){

@@ -43,6 +43,7 @@ public:
 
 /*
 before everything else - copy argc argv, call init
+9 - check math
 8 - set locale
 7 - init log file | by SGEXTN::NambagaFS
 6 - allow user inject metadata and indicate if it is a console app | by user

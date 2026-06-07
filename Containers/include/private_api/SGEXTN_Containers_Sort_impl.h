@@ -1,7 +1,6 @@
 #pragma once
 #include <private_api/SGEXTN_Containers_Crash.h>
 #include <SGEXTN_Containers_PlacementNew.h>
-#include <SGEXTN_Containers_Sort.h>
 #include <SGEXTN_Containers_ArrayVectorMove.h>
 
 template <typename T, typename Comparator> SGEXTN::Containers::Sort<T, Comparator>::Sort(T* start, int length) : private_firstBuffer(start), private_secondBuffer(nullptr), private_length(length), private_mainIsSecond(false), private_comparatorInstance(), private_minimumBlockSize(32) {

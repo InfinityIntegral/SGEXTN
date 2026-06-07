@@ -97,7 +97,7 @@ SGEXTN::ApplicationBase::OldChar SGEXTN::ApplicationBase::OldString::getCharAt(i
     return SGEXTN::ApplicationBase::OldChar((*private_data).at(i).unicode());
 }
 
-void SGEXTN::ApplicationBase::OldString::setCharAt(int i, SGEXTN::ApplicationBase::OldChar c){ // NOLINT(readability-make-member-function-const)
+void SGEXTN::ApplicationBase::OldString::setCharAt(int i, SGEXTN::ApplicationBase::OldChar c) const {
     if(i < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::OldString::setCharAt crashed as the index is negative");}
     if(i >= length()){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::OldString::setCharAt crashed as the index points beyond the end of the string");}
     (*private_data)[i] = QChar(c.private_data);
@@ -277,7 +277,7 @@ SGEXTN::ApplicationBase::OldString SGEXTN::ApplicationBase::OldString::stringFro
     else if(precision < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::OldString::stringFromFloat crashed as the number of significant figures is nonpositive");}
     if(format == SGEXTN::ApplicationBase::FloatDisplayFormat::ScientificNotation){precision--;}
     SGEXTN::ApplicationBase::OldString output = "";
-    (*output.private_data) = QString::number(x, floatDisplayFormatToQStringFormatSpecifier(format), precision);
+    (*output.private_data) = QString::number(x, static_cast<char>(floatDisplayFormatToQStringFormatSpecifier(format)), precision);
     return output;
 }
 
@@ -289,7 +289,7 @@ SGEXTN::ApplicationBase::OldString SGEXTN::ApplicationBase::OldString::stringFro
     }
     else if(precision < 0){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::OldString::stringFromDouble crashed as the number of significant figures is nonpositive");}
     SGEXTN::ApplicationBase::OldString output = "";
-    (*output.private_data) = QString::number(x, floatDisplayFormatToQStringFormatSpecifier(format), precision);
+    (*output.private_data) = QString::number(x, static_cast<char>(floatDisplayFormatToQStringFormatSpecifier(format)), precision);
     return output;
 }
 

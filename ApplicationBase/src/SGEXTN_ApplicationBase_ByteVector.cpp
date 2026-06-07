@@ -50,6 +50,7 @@ SGEXTN::ApplicationBase::ByteVector::~ByteVector(){
     delete[] private_data;
 }
 
+// NOLINTNEXTLINE(readability-make-member-function-const)
 unsigned char& SGEXTN::ApplicationBase::ByteVector::at(int i){
     return (*(private_data + i));
 }
@@ -64,7 +65,7 @@ int SGEXTN::ApplicationBase::ByteVector::length() const {
 
 void SGEXTN::ApplicationBase::ByteVector::reserve(int newMemoryLength){
     if(newMemoryLength <= private_memoryLength){return;}
-    unsigned char* oldPointer = private_data;
+    const unsigned char* oldPointer = private_data;
     private_memoryLength = newMemoryLength;
     private_data = new unsigned char[newMemoryLength];
     if(oldPointer != nullptr){memoryCopy(oldPointer, private_data, private_length);}

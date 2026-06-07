@@ -3,6 +3,7 @@
 #include <SGEXTN_Containers_PlacementNew.h>
 #include <private_api/SGEXTN_Containers_HashAlgorithm.h>
 #include <SGEXTN_Containers_Span.h>
+#include <private_api/SGEXTN_ApplicationBase_ByteVector.h>
 
 namespace {
 void memoryCopy(const unsigned char* source, unsigned char* destination, int length){
@@ -43,7 +44,7 @@ SGEXTN::ApplicationBase::TextBuffer::TextBuffer() : private_isHeapAlloc(false), 
     memoryFill(private_stackAllocData, 12, static_cast<unsigned char>(0));
 }
 
-SGEXTN::ApplicationBase::TextBuffer::TextBuffer(const SGEXTN::ApplicationBase::TextBuffer& x) : private_isHeapAlloc(x.private_isHeapAlloc) {
+SGEXTN::ApplicationBase::TextBuffer::TextBuffer(const SGEXTN::ApplicationBase::TextBuffer& x) : private_isHeapAlloc(x.private_isHeapAlloc), private_stackAllocData() {
     if(private_isHeapAlloc == false){
         private_lengthByte() = x.private_lengthByte();
         memoryCopy(x.private_stackAllocData, private_stackAllocData, private_lengthByte());
@@ -63,7 +64,7 @@ SGEXTN::ApplicationBase::TextBuffer& SGEXTN::ApplicationBase::TextBuffer::operat
     return (*this);
 }
 
-SGEXTN::ApplicationBase::TextBuffer::TextBuffer(SGEXTN::ApplicationBase::TextBuffer&& x) noexcept : private_isHeapAlloc(x.private_isHeapAlloc) {
+SGEXTN::ApplicationBase::TextBuffer::TextBuffer(SGEXTN::ApplicationBase::TextBuffer&& x) noexcept : private_isHeapAlloc(x.private_isHeapAlloc), private_stackAllocData() {
     if(private_isHeapAlloc == false){
         private_lengthByte() = x.private_lengthByte();
         memoryCopy(x.private_stackAllocData, private_stackAllocData, private_lengthByte());
