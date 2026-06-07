@@ -1,7 +1,7 @@
 #pragma once
 
 namespace SGEXTN {
-namespace ApplicationBase {
+namespace CoreText {
 class String;
 }
 
@@ -23,7 +23,7 @@ public:
     [[nodiscard]] bool operator<(HslaColour x) const;
     [[nodiscard]] bool operator>(HslaColour x) const;
     [[nodiscard]] int hash() const;
-    [[nodiscard]] SGEXTN::ApplicationBase::String debugLog() const;
+    [[nodiscard]] SGEXTN::CoreText::String debugLog() const;
     float getHue() const;
     float getSaturation() const;
     float getLightness() const;

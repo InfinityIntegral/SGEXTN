@@ -1,7 +1,7 @@
 #pragma once
 
 namespace SGEXTN {
-namespace ApplicationBase {
+namespace CoreText {
 class String;
 }
 
@@ -25,7 +25,7 @@ public:
     [[nodiscard]] bool operator<=(DateTime x) const;
     [[nodiscard]] bool operator>=(DateTime x) const;
     [[nodiscard]] int hash() const;
-    [[nodiscard]] SGEXTN::ApplicationBase::String debugLog() const;
+    [[nodiscard]] SGEXTN::CoreText::String debugLog() const;
     [[nodiscard]] double getTimeAfter(DateTime x, SGEXTN::Utilities::TimeUnit unit) const;
     [[nodiscard]] static DateTime beginningOfTime();
     [[nodiscard]] static DateTime now();
@@ -43,8 +43,8 @@ public:
     [[nodiscard]] static int convertToGlobalYear(int standardYear);
     [[nodiscard]] bool isNationalDayPeriod() const;
     [[nodiscard]] bool isSignificantDate(SGEXTN::Utilities::SignificantDates date) const;
-    [[nodiscard]] SGEXTN::ApplicationBase::String getDisplayString(SGEXTN::Utilities::TimeFormat format, bool global, bool correctToSecond) const;
-    [[nodiscard]] SGEXTN::ApplicationBase::String getDisplayString(const SGEXTN::ApplicationBase::String& customFormat) const;
+    [[nodiscard]] SGEXTN::CoreText::String getDisplayString(SGEXTN::Utilities::TimeFormat format, bool global, bool correctToSecond) const;
+    [[nodiscard]] SGEXTN::CoreText::String getDisplayString(const SGEXTN::CoreText::String& customFormat) const;
 };
 }
 }

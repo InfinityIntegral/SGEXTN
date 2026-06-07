@@ -1,9 +1,9 @@
-#include <private_api/SGEXTN_ApplicationBase_TextBuffer.h>
+#include <private_api/SGEXTN_CoreText_TextBuffer.h>
 #include <cstring>
 #include <SGEXTN_Containers_PlacementNew.h>
 #include <private_api/SGEXTN_Containers_HashAlgorithm.h>
 #include <SGEXTN_Containers_Span.h>
-#include <private_api/SGEXTN_ApplicationBase_ByteVector.h>
+#include <private_api/SGEXTN_CoreText_ByteVector.h>
 
 namespace {
 void memoryCopy(const unsigned char* source, unsigned char* destination, int length){
@@ -32,27 +32,27 @@ int memoryCompare(const unsigned char* a, int aLength, const unsigned char* b, i
 }
 }
 
-unsigned char& SGEXTN::ApplicationBase::TextBuffer::private_lengthByte(){
+unsigned char& SGEXTN::CoreText::TextBuffer::private_lengthByte(){
     return (*(private_stackAllocData + 15));
 }
 
-const unsigned char& SGEXTN::ApplicationBase::TextBuffer::private_lengthByte() const {
+const unsigned char& SGEXTN::CoreText::TextBuffer::private_lengthByte() const {
     return (*(private_stackAllocData + 15));
 }
 
-SGEXTN::ApplicationBase::TextBuffer::TextBuffer() : private_isHeapAlloc(false), private_stackAllocData() {
+SGEXTN::CoreText::TextBuffer::TextBuffer() : private_isHeapAlloc(false), private_stackAllocData() {
     memoryFill(private_stackAllocData, 12, static_cast<unsigned char>(0));
 }
 
-SGEXTN::ApplicationBase::TextBuffer::TextBuffer(const SGEXTN::ApplicationBase::TextBuffer& x) : private_isHeapAlloc(x.private_isHeapAlloc), private_stackAllocData() {
+SGEXTN::CoreText::TextBuffer::TextBuffer(const SGEXTN::CoreText::TextBuffer& x) : private_isHeapAlloc(x.private_isHeapAlloc), private_stackAllocData() {
     if(private_isHeapAlloc == false){
         private_lengthByte() = x.private_lengthByte();
         memoryCopy(x.private_stackAllocData, private_stackAllocData, private_lengthByte());
     }
-    else{new(SGEXTN::Containers::PlacementNew::placeholder, &private_heapAllocData) SGEXTN::ApplicationBase::ByteVector(x.private_heapAllocData);}
+    else{new(SGEXTN::Containers::PlacementNew::placeholder, &private_heapAllocData) SGEXTN::CoreText::ByteVector(x.private_heapAllocData);}
 }
 
-SGEXTN::ApplicationBase::TextBuffer& SGEXTN::ApplicationBase::TextBuffer::operator=(const SGEXTN::ApplicationBase::TextBuffer& x){
+SGEXTN::CoreText::TextBuffer& SGEXTN::CoreText::TextBuffer::operator=(const SGEXTN::CoreText::TextBuffer& x){
     if(this == &x){return (*this);}
     if(private_isHeapAlloc == true){private_heapAllocData.~ByteVector();}
     private_isHeapAlloc = x.private_isHeapAlloc;
@@ -60,56 +60,56 @@ SGEXTN::ApplicationBase::TextBuffer& SGEXTN::ApplicationBase::TextBuffer::operat
         private_lengthByte() = x.length();
         memoryCopy(x.private_stackAllocData, private_stackAllocData, private_lengthByte());
     }
-    else{new(SGEXTN::Containers::PlacementNew::placeholder, &private_heapAllocData) SGEXTN::ApplicationBase::ByteVector(x.private_heapAllocData);}
+    else{new(SGEXTN::Containers::PlacementNew::placeholder, &private_heapAllocData) SGEXTN::CoreText::ByteVector(x.private_heapAllocData);}
     return (*this);
 }
 
-SGEXTN::ApplicationBase::TextBuffer::TextBuffer(SGEXTN::ApplicationBase::TextBuffer&& x) noexcept : private_isHeapAlloc(x.private_isHeapAlloc), private_stackAllocData() {
+SGEXTN::CoreText::TextBuffer::TextBuffer(SGEXTN::CoreText::TextBuffer&& x) noexcept : private_isHeapAlloc(x.private_isHeapAlloc), private_stackAllocData() {
     if(private_isHeapAlloc == false){
         private_lengthByte() = x.private_lengthByte();
         memoryCopy(x.private_stackAllocData, private_stackAllocData, private_lengthByte());
     }
-    else{new(SGEXTN::Containers::PlacementNew::placeholder, &private_heapAllocData) SGEXTN::ApplicationBase::ByteVector(static_cast<SGEXTN::ApplicationBase::ByteVector&&>(x.private_heapAllocData));}
+    else{new(SGEXTN::Containers::PlacementNew::placeholder, &private_heapAllocData) SGEXTN::CoreText::ByteVector(static_cast<SGEXTN::CoreText::ByteVector&&>(x.private_heapAllocData));}
 }
 
-SGEXTN::ApplicationBase::TextBuffer& SGEXTN::ApplicationBase::TextBuffer::operator=(SGEXTN::ApplicationBase::TextBuffer&& x) noexcept {
+SGEXTN::CoreText::TextBuffer& SGEXTN::CoreText::TextBuffer::operator=(SGEXTN::CoreText::TextBuffer&& x) noexcept {
     if(private_isHeapAlloc == true){private_heapAllocData.~ByteVector();}
     private_isHeapAlloc = x.private_isHeapAlloc;
     if(private_isHeapAlloc == false){
         private_lengthByte() = x.private_lengthByte();
         memoryCopy(x.private_stackAllocData, private_stackAllocData, private_lengthByte());
     }
-    else{new(SGEXTN::Containers::PlacementNew::placeholder, &private_heapAllocData) SGEXTN::ApplicationBase::ByteVector(static_cast<SGEXTN::ApplicationBase::ByteVector&&>(x.private_heapAllocData));}
+    else{new(SGEXTN::Containers::PlacementNew::placeholder, &private_heapAllocData) SGEXTN::CoreText::ByteVector(static_cast<SGEXTN::CoreText::ByteVector&&>(x.private_heapAllocData));}
     return (*this);
 }
 
-SGEXTN::ApplicationBase::TextBuffer::~TextBuffer(){
+SGEXTN::CoreText::TextBuffer::~TextBuffer(){
     if(private_isHeapAlloc == true){private_heapAllocData.~ByteVector();}
 }
 
-unsigned char& SGEXTN::ApplicationBase::TextBuffer::byteAt(int i){
+unsigned char& SGEXTN::CoreText::TextBuffer::byteAt(int i){
     if(private_isHeapAlloc == false){return (*(private_stackAllocData + i));}
     return private_heapAllocData.at(i);
 }
 
-const unsigned char& SGEXTN::ApplicationBase::TextBuffer::byteAt(int i) const {
+const unsigned char& SGEXTN::CoreText::TextBuffer::byteAt(int i) const {
     if(private_isHeapAlloc == false){return (*(private_stackAllocData + i));}
     return private_heapAllocData.at(i);
 }
 
-int SGEXTN::ApplicationBase::TextBuffer::length() const {
+int SGEXTN::CoreText::TextBuffer::length() const {
     if(private_isHeapAlloc == false){return private_lengthByte();}
     return private_heapAllocData.length();
 }
 
-void SGEXTN::ApplicationBase::TextBuffer::private_moveToHeap(){
-    SGEXTN::ApplicationBase::ByteVector heapContainer;
+void SGEXTN::CoreText::TextBuffer::private_moveToHeap(){
+    SGEXTN::CoreText::ByteVector heapContainer;
     heapContainer.pushBack(private_stackAllocData, private_lengthByte());
     private_isHeapAlloc = true;
-    new(SGEXTN::Containers::PlacementNew::placeholder, &private_heapAllocData) SGEXTN::ApplicationBase::ByteVector(static_cast<SGEXTN::ApplicationBase::ByteVector&&>(heapContainer));
+    new(SGEXTN::Containers::PlacementNew::placeholder, &private_heapAllocData) SGEXTN::CoreText::ByteVector(static_cast<SGEXTN::CoreText::ByteVector&&>(heapContainer));
 }
 
-void SGEXTN::ApplicationBase::TextBuffer::pushBack(unsigned char c){
+void SGEXTN::CoreText::TextBuffer::pushBack(unsigned char c){
     const int newLength = length() + 1;
     if(newLength < 16){
         (*(private_stackAllocData + newLength - 1)) = c;
@@ -121,7 +121,7 @@ void SGEXTN::ApplicationBase::TextBuffer::pushBack(unsigned char c){
     }
 }
 
-void SGEXTN::ApplicationBase::TextBuffer::pushBack(const char* s){
+void SGEXTN::CoreText::TextBuffer::pushBack(const char* s){
     const int sLength = cStringLength(s);
     const int oldLength = length();
     const int newLength = oldLength + sLength;
@@ -136,7 +136,7 @@ void SGEXTN::ApplicationBase::TextBuffer::pushBack(const char* s){
     }
 }
 
-void SGEXTN::ApplicationBase::TextBuffer::pushBack(const TextBuffer& data, int start, int length){
+void SGEXTN::CoreText::TextBuffer::pushBack(const TextBuffer& data, int start, int length){
     const int oldLength = (*this).length();
     const int newLength = oldLength + length;
     if(newLength < 16){
@@ -151,44 +151,44 @@ void SGEXTN::ApplicationBase::TextBuffer::pushBack(const TextBuffer& data, int s
     }
 }
 
-bool SGEXTN::ApplicationBase::TextBuffer::operator==(const SGEXTN::ApplicationBase::TextBuffer& x) const {
+bool SGEXTN::CoreText::TextBuffer::operator==(const SGEXTN::CoreText::TextBuffer& x) const {
     return (memoryCompare(&byteAt(0), length(), &x.byteAt(0), x.length()) == 0);
 }
 
-bool SGEXTN::ApplicationBase::TextBuffer::operator!=(const SGEXTN::ApplicationBase::TextBuffer& x) const {
+bool SGEXTN::CoreText::TextBuffer::operator!=(const SGEXTN::CoreText::TextBuffer& x) const {
     return (memoryCompare(&byteAt(0), length(), &x.byteAt(0), x.length()) != 0);
 }
 
-bool SGEXTN::ApplicationBase::TextBuffer::operator<(const SGEXTN::ApplicationBase::TextBuffer& x) const {
+bool SGEXTN::CoreText::TextBuffer::operator<(const SGEXTN::CoreText::TextBuffer& x) const {
     return (memoryCompare(&byteAt(0), length(), &x.byteAt(0), x.length()) < 0);
 }
 
-bool SGEXTN::ApplicationBase::TextBuffer::operator>(const SGEXTN::ApplicationBase::TextBuffer& x) const {
+bool SGEXTN::CoreText::TextBuffer::operator>(const SGEXTN::CoreText::TextBuffer& x) const {
     return (memoryCompare(&byteAt(0), length(), &x.byteAt(0), x.length()) > 0);
 }
 
-bool SGEXTN::ApplicationBase::TextBuffer::operator<=(const SGEXTN::ApplicationBase::TextBuffer& x) const {
+bool SGEXTN::CoreText::TextBuffer::operator<=(const SGEXTN::CoreText::TextBuffer& x) const {
     return (memoryCompare(&byteAt(0), length(), &x.byteAt(0), x.length()) <= 0);
 }
 
-bool SGEXTN::ApplicationBase::TextBuffer::operator>=(const SGEXTN::ApplicationBase::TextBuffer& x) const {
+bool SGEXTN::CoreText::TextBuffer::operator>=(const SGEXTN::CoreText::TextBuffer& x) const {
     return (memoryCompare(&byteAt(0), length(), &x.byteAt(0), x.length()) >= 0);
 }
 
-int SGEXTN::ApplicationBase::TextBuffer::hash() const {
+int SGEXTN::CoreText::TextBuffer::hash() const {
     return SGEXTN::Containers::HashAlgorithm::wyHash32(SGEXTN::Containers::Span<const unsigned char>(&byteAt(0), length()));
 }
 
-SGEXTN::ApplicationBase::TextBuffer SGEXTN::ApplicationBase::TextBuffer::substring(int start, int length) const {
-    SGEXTN::ApplicationBase::TextBuffer output;
+SGEXTN::CoreText::TextBuffer SGEXTN::CoreText::TextBuffer::substring(int start, int length) const {
+    SGEXTN::CoreText::TextBuffer output;
     output.pushBack((*this), start, length);
     return output;
 }
 
-SGEXTN::ApplicationBase::TextBuffer SGEXTN::ApplicationBase::TextBuffer::substringLeft(int length) const {
+SGEXTN::CoreText::TextBuffer SGEXTN::CoreText::TextBuffer::substringLeft(int length) const {
     return substring(0, length);
 }
 
-SGEXTN::ApplicationBase::TextBuffer SGEXTN::ApplicationBase::TextBuffer::substringRight(int length) const {
+SGEXTN::CoreText::TextBuffer SGEXTN::CoreText::TextBuffer::substringRight(int length) const {
     return substring((*this).length() - length, length);
 }

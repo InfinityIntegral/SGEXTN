@@ -1,5 +1,5 @@
 #pragma once
-#include <private_api/SGEXTN_ApplicationBase_TextBuffer.h>
+#include <private_api/SGEXTN_CoreText_TextBuffer.h>
 #include <SGEXTN_Containers_Vector.h>
 
 namespace SGEXTN {
@@ -7,17 +7,17 @@ namespace Containers {
 template <typename T> class Array;
 }
 
-namespace ApplicationBase {
+namespace CoreText {
 class Character;
 class OldString;
 
-enum class BUILDLAH_DLL_SGEXTN_ApplicationBase FloatPrecisionFormat : unsigned char {SignificantFigure, FractionalDigit, ScientificNotation};
+enum class BUILDLAH_DLL_SGEXTN_CoreText FloatPrecisionFormat : unsigned char {SignificantFigure, FractionalDigit, ScientificNotation};
 
-enum class BUILDLAH_DLL_SGEXTN_ApplicationBase NormalisationFormat : unsigned char {Join, Separate, LossyJoin, LossySeparate};
+enum class BUILDLAH_DLL_SGEXTN_CoreText NormalisationFormat : unsigned char {Join, Separate, LossyJoin, LossySeparate};
 
-class BUILDLAH_DLL_SGEXTN_ApplicationBase String {
+class BUILDLAH_DLL_SGEXTN_CoreText String {
 public:
-    SGEXTN::ApplicationBase::TextBuffer private_data;
+    SGEXTN::CoreText::TextBuffer private_data;
     mutable SGEXTN::Containers::Vector<int> private_characterOffsets;
     void private_computeOffsets() const;
     void private_invalidateOffsets() const;
@@ -29,7 +29,7 @@ public:
     ~String() = default;
     String(unsigned char c);
     String(const char* s);
-    String(const SGEXTN::ApplicationBase::Character& c);
+    String(const SGEXTN::CoreText::Character& c);
     [[nodiscard]] bool operator==(const String& x) const;
     [[nodiscard]] bool operator!=(const String& x) const;
     [[nodiscard]] bool operator<(const String& x) const;
@@ -43,10 +43,10 @@ public:
     [[nodiscard]] int characterLength() const;
     [[nodiscard]] unsigned char& byteAt(int i);
     [[nodiscard]] const unsigned char& byteAt(int i) const;
-    [[nodiscard]] SGEXTN::ApplicationBase::Character getCharacterAt(int i) const;
-    void setCharacterAt(int i, const SGEXTN::ApplicationBase::Character& c);
+    [[nodiscard]] SGEXTN::CoreText::Character getCharacterAt(int i) const;
+    void setCharacterAt(int i, const SGEXTN::CoreText::Character& c);
     [[nodiscard]] String fillBytes(unsigned char c) const;
-    [[nodiscard]] String fillCharacters(const SGEXTN::ApplicationBase::Character& c) const;
+    [[nodiscard]] String fillCharacters(const SGEXTN::CoreText::Character& c) const;
     [[nodiscard]] int findFirstBytesFromLeft(const String& s) const;
     [[nodiscard]] int findFirstBytesFromRight(const String& s) const;
     [[nodiscard]] int findFirstCharactersFromLeft(const String& s) const;
@@ -81,9 +81,9 @@ public:
     [[nodiscard]] int countCharactersAllowOverlap(const String& s) const;
     [[nodiscard]] static String repeat(const String& s, int count);
     [[nodiscard]] String fillLeftToByteLength(int length, unsigned char fillChar) const;
-    [[nodiscard]] String fillLeftToCharacterLength(int length, const SGEXTN::ApplicationBase::Character& fillChar) const;
+    [[nodiscard]] String fillLeftToCharacterLength(int length, const SGEXTN::CoreText::Character& fillChar) const;
     [[nodiscard]] String fillRightToByteLength(int length, unsigned char fillChar) const;
-    [[nodiscard]] String fillRightToCharacterLength(int length, const SGEXTN::ApplicationBase::Character& fillChar) const;
+    [[nodiscard]] String fillRightToCharacterLength(int length, const SGEXTN::CoreText::Character& fillChar) const;
     [[nodiscard]] int byteIndexToCharacterIndex(int i) const;
     [[nodiscard]] int characterIndexToByteIndex(int i) const;
     [[nodiscard]] short parseToShort(bool* isValid, int base) const;
@@ -100,10 +100,10 @@ public:
     [[nodiscard]] static String stringFromUnsignedInt(unsigned int x, int base);
     [[nodiscard]] static String stringFromLongLong(long long x, int base);
     [[nodiscard]] static String stringFromUnsignedLongLong(unsigned long long x, int base);
-    [[nodiscard]] static String stringFromFloat(float x, int base, SGEXTN::ApplicationBase::FloatPrecisionFormat format, int precision);
-    [[nodiscard]] static String stringFromDouble(double x, int base, SGEXTN::ApplicationBase::FloatPrecisionFormat format, int precision);
+    [[nodiscard]] static String stringFromFloat(float x, int base, SGEXTN::CoreText::FloatPrecisionFormat format, int precision);
+    [[nodiscard]] static String stringFromDouble(double x, int base, SGEXTN::CoreText::FloatPrecisionFormat format, int precision);
     [[nodiscard]] String prettierScientificNotationBase10() const;
-    [[nodiscard]] String convertNumericSystem(const SGEXTN::ApplicationBase::Character& zeroRepresentation) const;
+    [[nodiscard]] String convertNumericSystem(const SGEXTN::CoreText::Character& zeroRepresentation) const;
     [[nodiscard]] String prepareInnerHtmlText() const;
     [[nodiscard]] String removeLeadingTrailingWhitespace() const;
     [[nodiscard]] String cleanWhitespace() const;
@@ -124,8 +124,8 @@ public:
     [[nodiscard]] String getLowercase() const;
     [[nodiscard]] String getTitlecase() const;
     [[nodiscard]] SGEXTN::Containers::Array<int> getUnicode() const;
-    [[nodiscard]] String getNormalised(SGEXTN::ApplicationBase::NormalisationFormat format) const;
-    [[nodiscard]] SGEXTN::ApplicationBase::String getSimplestEquivalent(bool ignoreCase) const;
+    [[nodiscard]] String getNormalised(SGEXTN::CoreText::NormalisationFormat format) const;
+    [[nodiscard]] SGEXTN::CoreText::String getSimplestEquivalent(bool ignoreCase) const;
 };
 }
 }

@@ -6,7 +6,7 @@
 #include <SGEXTN_Utilities_Identifier.h>
 #include <SGEXTN_Utilities_IdentifierRegistry.h>
 #include <SGEXTN_Utilities_DateTime.h>
-#include <SGEXTN_ApplicationBase_String.h>
+#include <SGEXTN_CoreText_String.h>
 #include <chrono>
 #include <format>
 #include <cstdlib>

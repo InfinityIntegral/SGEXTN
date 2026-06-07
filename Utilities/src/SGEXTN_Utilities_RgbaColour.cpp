@@ -1,5 +1,5 @@
 #include <SGEXTN_Utilities_RgbaColour.h>
-#include <SGEXTN_ApplicationBase_String.h>
+#include <SGEXTN_CoreText_String.h>
 #include <SGEXTN_Containers_Hash.h>
 #include <SGEXTN_Math_FloatMath.h>
 #include <private_api/SGEXTN_Containers_Crash.h>
@@ -120,28 +120,28 @@ void SGEXTN::Utilities::RgbaColour::setTransparencyFloat(float a){
     private_data = setChannelByOffset(private_data, 0u, toUnsignedInt(boundFloat(a)));
 }
 
-SGEXTN::ApplicationBase::String SGEXTN::Utilities::RgbaColour::rgbHtmlString() const {
-    return (SGEXTN::ApplicationBase::String("rgb(") + SGEXTN::ApplicationBase::String::stringFromInt(getRed(), 10) + ", " + SGEXTN::ApplicationBase::String::stringFromInt(getGreen(), 10) + ", " + SGEXTN::ApplicationBase::String::stringFromInt(getBlue(), 10) + ")");
+SGEXTN::CoreText::String SGEXTN::Utilities::RgbaColour::rgbHtmlString() const {
+    return (SGEXTN::CoreText::String("rgb(") + SGEXTN::CoreText::String::stringFromInt(getRed(), 10) + ", " + SGEXTN::CoreText::String::stringFromInt(getGreen(), 10) + ", " + SGEXTN::CoreText::String::stringFromInt(getBlue(), 10) + ")");
 }
 
-SGEXTN::ApplicationBase::String SGEXTN::Utilities::RgbaColour::rgbaHtmlString() const {
-    return (SGEXTN::ApplicationBase::String("rgba(") + SGEXTN::ApplicationBase::String::stringFromInt(getRed(), 10) + ", " + SGEXTN::ApplicationBase::String::stringFromInt(getGreen(), 10) + ", " + SGEXTN::ApplicationBase::String::stringFromInt(getBlue(), 10) + ", " + SGEXTN::ApplicationBase::String::stringFromInt(getTransparency(), 10 ) + ")");
+SGEXTN::CoreText::String SGEXTN::Utilities::RgbaColour::rgbaHtmlString() const {
+    return (SGEXTN::CoreText::String("rgba(") + SGEXTN::CoreText::String::stringFromInt(getRed(), 10) + ", " + SGEXTN::CoreText::String::stringFromInt(getGreen(), 10) + ", " + SGEXTN::CoreText::String::stringFromInt(getBlue(), 10) + ", " + SGEXTN::CoreText::String::stringFromInt(getTransparency(), 10 ) + ")");
 }
 
-SGEXTN::ApplicationBase::String SGEXTN::Utilities::RgbaColour::rgbHexString() const {
-    return (SGEXTN::ApplicationBase::String::stringFromInt(getRed(), 16).fillLeftToByteLength(2, '0') + SGEXTN::ApplicationBase::String::stringFromInt(getGreen(), 16).fillLeftToByteLength(2, '0') + SGEXTN::ApplicationBase::String::stringFromInt(getBlue(), 16).fillLeftToByteLength(2, '0'));
+SGEXTN::CoreText::String SGEXTN::Utilities::RgbaColour::rgbHexString() const {
+    return (SGEXTN::CoreText::String::stringFromInt(getRed(), 16).fillLeftToByteLength(2, '0') + SGEXTN::CoreText::String::stringFromInt(getGreen(), 16).fillLeftToByteLength(2, '0') + SGEXTN::CoreText::String::stringFromInt(getBlue(), 16).fillLeftToByteLength(2, '0'));
 }
 
-SGEXTN::ApplicationBase::String SGEXTN::Utilities::RgbaColour::rgbaHexString() const {
-    return (SGEXTN::ApplicationBase::String::stringFromInt(getRed(), 16).fillLeftToByteLength(2, '0') + SGEXTN::ApplicationBase::String::stringFromInt(getGreen(), 16).fillLeftToByteLength(2, '0') + SGEXTN::ApplicationBase::String::stringFromInt(getBlue(), 16).fillLeftToByteLength(2, '0') + SGEXTN::ApplicationBase::String::stringFromInt(getTransparency(), 16).fillLeftToByteLength(2, '0'));
+SGEXTN::CoreText::String SGEXTN::Utilities::RgbaColour::rgbaHexString() const {
+    return (SGEXTN::CoreText::String::stringFromInt(getRed(), 16).fillLeftToByteLength(2, '0') + SGEXTN::CoreText::String::stringFromInt(getGreen(), 16).fillLeftToByteLength(2, '0') + SGEXTN::CoreText::String::stringFromInt(getBlue(), 16).fillLeftToByteLength(2, '0') + SGEXTN::CoreText::String::stringFromInt(getTransparency(), 16).fillLeftToByteLength(2, '0'));
 }
 
-SGEXTN::ApplicationBase::String SGEXTN::Utilities::RgbaColour::rgbFloatHtmlString() const {
-    return (SGEXTN::ApplicationBase::String("rgb(") + SGEXTN::ApplicationBase::String::stringFromFloat(getRedFloat(), 10, SGEXTN::ApplicationBase::FloatPrecisionFormat::FractionalDigit, 3) + ", " + SGEXTN::ApplicationBase::String::stringFromFloat(getGreenFloat(), 10, SGEXTN::ApplicationBase::FloatPrecisionFormat::FractionalDigit, 3) + ", " + SGEXTN::ApplicationBase::String::stringFromFloat(getBlueFloat(), 10, SGEXTN::ApplicationBase::FloatPrecisionFormat::FractionalDigit, 3) + ")");
+SGEXTN::CoreText::String SGEXTN::Utilities::RgbaColour::rgbFloatHtmlString() const {
+    return (SGEXTN::CoreText::String("rgb(") + SGEXTN::CoreText::String::stringFromFloat(getRedFloat(), 10, SGEXTN::CoreText::FloatPrecisionFormat::FractionalDigit, 3) + ", " + SGEXTN::CoreText::String::stringFromFloat(getGreenFloat(), 10, SGEXTN::CoreText::FloatPrecisionFormat::FractionalDigit, 3) + ", " + SGEXTN::CoreText::String::stringFromFloat(getBlueFloat(), 10, SGEXTN::CoreText::FloatPrecisionFormat::FractionalDigit, 3) + ")");
 }
 
-SGEXTN::ApplicationBase::String SGEXTN::Utilities::RgbaColour::rgbaFloatHtmlString() const {
-    return (SGEXTN::ApplicationBase::String("rgba(") + SGEXTN::ApplicationBase::String::stringFromFloat(getRedFloat(), 10, SGEXTN::ApplicationBase::FloatPrecisionFormat::FractionalDigit, 3) + ", " + SGEXTN::ApplicationBase::String::stringFromFloat(getGreenFloat(), 10, SGEXTN::ApplicationBase::FloatPrecisionFormat::FractionalDigit, 3) + ", " + SGEXTN::ApplicationBase::String::stringFromFloat(getBlueFloat(), 10, SGEXTN::ApplicationBase::FloatPrecisionFormat::FractionalDigit, 3) + ", " + SGEXTN::ApplicationBase::String::stringFromFloat(getTransparencyFloat(), 10, SGEXTN::ApplicationBase::FloatPrecisionFormat::FractionalDigit, 3) +  ")");
+SGEXTN::CoreText::String SGEXTN::Utilities::RgbaColour::rgbaFloatHtmlString() const {
+    return (SGEXTN::CoreText::String("rgba(") + SGEXTN::CoreText::String::stringFromFloat(getRedFloat(), 10, SGEXTN::CoreText::FloatPrecisionFormat::FractionalDigit, 3) + ", " + SGEXTN::CoreText::String::stringFromFloat(getGreenFloat(), 10, SGEXTN::CoreText::FloatPrecisionFormat::FractionalDigit, 3) + ", " + SGEXTN::CoreText::String::stringFromFloat(getBlueFloat(), 10, SGEXTN::CoreText::FloatPrecisionFormat::FractionalDigit, 3) + ", " + SGEXTN::CoreText::String::stringFromFloat(getTransparencyFloat(), 10, SGEXTN::CoreText::FloatPrecisionFormat::FractionalDigit, 3) +  ")");
 }
 
 bool SGEXTN::Utilities::RgbaColour::operator==(SGEXTN::Utilities::RgbaColour x) const {
@@ -164,7 +164,7 @@ int SGEXTN::Utilities::RgbaColour::hash() const {
     return SGEXTN::Containers::Hash<unsigned int>()(private_data);
 }
 
-SGEXTN::ApplicationBase::String SGEXTN::Utilities::RgbaColour::debugLog() const {
+SGEXTN::CoreText::String SGEXTN::Utilities::RgbaColour::debugLog() const {
     return rgbaHtmlString();
 }
 

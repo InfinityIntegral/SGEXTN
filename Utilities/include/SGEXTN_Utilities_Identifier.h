@@ -1,7 +1,7 @@
 #pragma once
 
 namespace SGEXTN {
-namespace ApplicationBase {
+namespace CoreText {
 class String;
 }
 
@@ -17,8 +17,8 @@ public:
     [[nodiscard]] bool operator<(Identifier x) const;
     [[nodiscard]] bool operator>(Identifier x) const;
     [[nodiscard]] int hash() const;
-    [[nodiscard]] SGEXTN::ApplicationBase::String getStringForPrinting() const;
-    [[nodiscard]] SGEXTN::ApplicationBase::String debugLog() const;
+    [[nodiscard]] SGEXTN::CoreText::String getStringForPrinting() const;
+    [[nodiscard]] SGEXTN::CoreText::String debugLog() const;
 };
 }
 }

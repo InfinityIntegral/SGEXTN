@@ -1,9 +1,9 @@
 #pragma once
-#include <private_api/SGEXTN_ApplicationBase_ByteVector.h>
+#include <private_api/SGEXTN_CoreText_ByteVector.h>
 
 namespace SGEXTN {
-namespace ApplicationBase {
-class BUILDLAH_DLL_SGEXTN_ApplicationBase TextBuffer {
+namespace CoreText {
+class BUILDLAH_DLL_SGEXTN_CoreText TextBuffer {
 public:
     TextBuffer();
     TextBuffer(const TextBuffer& x);
@@ -14,7 +14,7 @@ public:
     bool private_isHeapAlloc;
     union {
         unsigned char private_stackAllocData[16];
-        SGEXTN::ApplicationBase::ByteVector private_heapAllocData;
+        SGEXTN::CoreText::ByteVector private_heapAllocData;
     };
     [[nodiscard]] unsigned char& private_lengthByte();
     [[nodiscard]] const unsigned char& private_lengthByte() const;

@@ -1,8 +1,8 @@
 #pragma once
 
 namespace SGEXTN {
-namespace ApplicationBase {
-class BUILDLAH_DLL_SGEXTN_ApplicationBase ByteVector {
+namespace CoreText {
+class BUILDLAH_DLL_SGEXTN_CoreText ByteVector {
 public:
     unsigned char* private_data;
     int private_length;

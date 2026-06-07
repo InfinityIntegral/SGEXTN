@@ -1,17 +1,17 @@
 #pragma once
-#include <private_api/SGEXTN_ApplicationBase_TextBuffer.h>
+#include <private_api/SGEXTN_CoreText_TextBuffer.h>
 
 namespace SGEXTN {
 namespace Containers {
 template <typename T> class Array;
 }
 
-namespace ApplicationBase {
+namespace CoreText {
 class String;
 
-class BUILDLAH_DLL_SGEXTN_ApplicationBase Character {
+class BUILDLAH_DLL_SGEXTN_CoreText Character {
 public:
-    SGEXTN::ApplicationBase::TextBuffer private_data;
+    SGEXTN::CoreText::TextBuffer private_data;
     Character();
     Character(unsigned char c);
     Character(const char* s);

@@ -1,7 +1,7 @@
 #pragma once
 
 namespace SGEXTN {
-namespace ApplicationBase {
+namespace CoreText {
 class String;
 }
 
@@ -31,18 +31,18 @@ public:
     void setGreenFloat(float g);
     void setBlueFloat(float b);
     void setTransparencyFloat(float a);
-    [[nodiscard]] SGEXTN::ApplicationBase::String rgbHtmlString() const;
-    [[nodiscard]] SGEXTN::ApplicationBase::String rgbaHtmlString() const;
-    [[nodiscard]] SGEXTN::ApplicationBase::String rgbHexString() const;
-    [[nodiscard]] SGEXTN::ApplicationBase::String rgbaHexString() const;
-    [[nodiscard]] SGEXTN::ApplicationBase::String rgbFloatHtmlString() const;
-    [[nodiscard]] SGEXTN::ApplicationBase::String rgbaFloatHtmlString() const;
+    [[nodiscard]] SGEXTN::CoreText::String rgbHtmlString() const;
+    [[nodiscard]] SGEXTN::CoreText::String rgbaHtmlString() const;
+    [[nodiscard]] SGEXTN::CoreText::String rgbHexString() const;
+    [[nodiscard]] SGEXTN::CoreText::String rgbaHexString() const;
+    [[nodiscard]] SGEXTN::CoreText::String rgbFloatHtmlString() const;
+    [[nodiscard]] SGEXTN::CoreText::String rgbaFloatHtmlString() const;
     [[nodiscard]] bool operator==(RgbaColour x) const;
     [[nodiscard]] bool operator!=(RgbaColour x) const;
     [[nodiscard]] bool operator<(RgbaColour x) const;
     [[nodiscard]] bool operator>(RgbaColour x) const;
     [[nodiscard]] int hash() const;
-    [[nodiscard]] SGEXTN::ApplicationBase::String debugLog() const;
+    [[nodiscard]] SGEXTN::CoreText::String debugLog() const;
     void gammaCorrectBegin(float& r, float& g, float& b) const;
     void gammaCorrectEnd(float r, float g, float b);
     [[nodiscard]] RgbaColour linearTransformRed(float m, float c, bool gammaCorrect) const;

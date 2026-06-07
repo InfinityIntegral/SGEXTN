@@ -1,6 +1,6 @@
 #include <SGEXTN_Utilities_Identifier.h>
 #include <SGEXTN_Containers_Hash.h>
-#include <SGEXTN_ApplicationBase_String.h>
+#include <SGEXTN_CoreText_String.h>
 
 SGEXTN::Utilities::Identifier::Identifier() : private_data(0) {}
 
@@ -30,10 +30,10 @@ int SGEXTN::Utilities::Identifier::hash() const {
     return SGEXTN::Containers::Hash<unsigned int>()(private_data);
 }
 
-SGEXTN::ApplicationBase::String SGEXTN::Utilities::Identifier::getStringForPrinting() const {
-    return SGEXTN::ApplicationBase::String::stringFromUnsignedInt(private_data, 16).fillLeftToByteLength(8, '0');
+SGEXTN::CoreText::String SGEXTN::Utilities::Identifier::getStringForPrinting() const {
+    return SGEXTN::CoreText::String::stringFromUnsignedInt(private_data, 16).fillLeftToByteLength(8, '0');
 }
 
-SGEXTN::ApplicationBase::String SGEXTN::Utilities::Identifier::debugLog() const {
+SGEXTN::CoreText::String SGEXTN::Utilities::Identifier::debugLog() const {
     return getStringForPrinting();
 }
