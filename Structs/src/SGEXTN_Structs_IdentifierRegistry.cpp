@@ -1,17 +1,38 @@
 #include <SGEXTN_Structs_IdentifierRegistry.h>
-#include <SGEXTN_ApplicationBase_Random.h>
 #include <SGEXTN_Containers_UnorderedSet.h>
 #include <SGEXTN_Structs_Identifier.h>
+#include <chrono>
+#include <random>
+
+namespace {
+bool randomEngineIsSeeded = false;
+std::random_device randomDevice;
+std::minstd_rand randomEngine;
+
+void reSeedRandomEngine(){
+    unsigned int currentTime = static_cast<unsigned int>(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count());
+    randomEngine.seed(randomDevice() ^ currentTime);
+}
+
+unsigned int getRandomNumber(){
+    if(randomEngineIsSeeded == false){
+        reSeedRandomEngine();
+        randomEngineIsSeeded = true;
+    }
+    return randomEngine();
+}
+}
 
 SGEXTN::Structs::Identifier SGEXTN::Structs::IdentifierRegistry::generateAndRegisterIdentifier(){
     while(true){
-        const unsigned int n = SGEXTN::ApplicationBase::Random::unsignedInt32();
-        if(n != 0u && private_contents.contains(n) == false){
+        const unsigned int n = getRandomNumber();
+        if(private_contents.contains(n) == false){
             SGEXTN::Structs::Identifier id;
             id.private_data = n;
             private_contents.insert(n);
             return id;
         }
+        reSeedRandomEngine();
     }
 }
 
