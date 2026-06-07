@@ -1,6 +1,4 @@
 #include <private_api/SGEXTN_InternalTest_StringTest.h>
-#include <QFile>
-#include <QByteArray>
 #include <SGEXTN_ApplicationBase_String.h>
 #include <SGEXTN_Containers_Array.h>
 #include <SGEXTN_ApplicationBase_UnicodeQuery.h>
@@ -12,30 +10,73 @@
 #include <SGEXTN_Containers_Hash.h>
 #include <SGEXTN_Containers_Pair.h>
 #include <SGEXTN_Math_FloatMath.h>
-#include <QString>
-#include <QIODevice>
 #include <SGEXTN_Containers_Vector.h>
+#include <fstream>
+#include <ios>
+#include <charconv>
+#include <cstring>
+#include <system_error>
 
 namespace {
 bool testAllOfUnicode = false;
 bool testUnicodeExternal = false;
 bool testNumericParsingExternal = false;
 
+int parseCStringToInt(const char* s, bool* isValid, int base){
+    const int length = static_cast<int>(std::strlen(s));
+    const char* endPointer = s + length;
+    if(length > 0 && s[0] == '+' && (length == 1 || s[1] != '-')){s++;}
+    int output = 0;
+    const std::from_chars_result parseResult = std::from_chars(s, endPointer, output, base);
+    (*isValid) = true;
+    if(parseResult.ec != std::errc() || parseResult.ptr != endPointer){(*isValid) = false;}
+    if((*isValid) == false){return 0;}
+    return output;
+}
+
+const char* printIntToCString(int x, int base){
+    char* output = new char[50];
+    const std::to_chars_result printResult = std::to_chars(output, output + 49, x, base);
+    if(printResult.ec == std::errc()){(*printResult.ptr) = '\0';}
+    else{(*output) = '\0';}
+    return output;
+}
+
+float parseCStringToFloat(const char* s, bool* isValid){
+    const int length = static_cast<int>(std::strlen(s));
+    const char* endPointer = s + length;
+    if(length > 0 && s[0] == '+' && (length == 1 || s[1] != '-')){s++;}
+    float output = 0.0f;
+    const std::from_chars_result parseResult = std::from_chars(s, endPointer, output);
+    (*isValid) = true;
+    if(parseResult.ec != std::errc() || parseResult.ptr != endPointer){(*isValid) = false;}
+    if((*isValid) == false){return 0.0f;}
+    return output;
+}
+
 SGEXTN::ApplicationBase::String readFile(const SGEXTN::ApplicationBase::String& filePath){
-    if(filePath == ""){return "";}
-    QByteArray data;
-    QFile file(QString::fromUtf8(reinterpret_cast<const char*>(&filePath.private_data.byteAt(0)), filePath.byteLength()));
-    if(file.open(QIODevice::ReadOnly | QIODevice::Text)){
-        data = file.readAll();
-        file.close();
+    SGEXTN::ApplicationBase::String pathToFile = "../../InternalTest/assets/";
+    pathToFile += filePath;
+    pathToFile += '\0';
+    const char* rawPath = reinterpret_cast<const char*>(&pathToFile.private_data.byteAt(0));
+    std::ifstream file(rawPath, std::ios::binary | std::ios::ate);
+    if(file.is_open() == false){return "";}
+    const std::streamsize streamSize = file.tellg();
+    file.seekg(0, std::ios::beg);
+    char* cString = new char[streamSize + 1];
+    SGEXTN::ApplicationBase::String outputString;
+    if(file.read(cString, streamSize)){
+        cString[streamSize] = '\0';
+        outputString = cString;
     }
-    return SGEXTN::ApplicationBase::String(data.constData());
+    delete[] cString;
+    return outputString;
 }
 
 SGEXTN::Containers::Array<SGEXTN::Containers::Array<SGEXTN::ApplicationBase::String>> unicodeDatabase(0x110000, SGEXTN::Containers::Array<SGEXTN::ApplicationBase::String>(15));
 
 void fillUnicodeDatabase(){
-    const SGEXTN::ApplicationBase::String dataString = readFile(":/SGEXTN_InternalTest/unicodedata.txt");
+    const SGEXTN::ApplicationBase::String dataString = readFile("unicodedata.txt");
     SGEXTN::Containers::Array<SGEXTN::ApplicationBase::String> dataTable = dataString.split('\n');
     SGEXTN::Containers::Array<int> codePoint(dataTable.length());
     for(int i=0; i<dataTable.length(); i++){
@@ -147,7 +188,7 @@ float parseRationalNumber(const SGEXTN::ApplicationBase::String& s){
 SGEXTN::Containers::Array<SGEXTN::ApplicationBase::String> graphemeBreakDatabase(0x110000);
 
 void parseAuxillaryFile(const SGEXTN::ApplicationBase::String& fileName, void (*toDoFunction)(int, const SGEXTN::ApplicationBase::String&)){
-    const SGEXTN::ApplicationBase::String dataString = readFile(SGEXTN::ApplicationBase::String(":/SGEXTN_InternalTest/") + fileName + ".txt");
+    const SGEXTN::ApplicationBase::String dataString = readFile(SGEXTN::ApplicationBase::String(fileName + ".txt"));
     SGEXTN::Containers::Array<SGEXTN::ApplicationBase::String> dataTable = dataString.split('\n');
     for(int i=0; i<dataTable.length(); i++){
         SGEXTN::ApplicationBase::String thisData = dataTable.at(i);
@@ -228,7 +269,7 @@ SGEXTN::ApplicationBase::String parseCodePointList(const SGEXTN::ApplicationBase
 SGEXTN::Containers::Array<bool> recomposeExclusionDatabase(0x110000, false);
 
 void fillRecomposeExclusionDatabase(){
-    const SGEXTN::ApplicationBase::String dataString = readFile(":/SGEXTN_InternalTest/compositionexclusions.txt");
+    const SGEXTN::ApplicationBase::String dataString = readFile("compositionexclusions.txt");
     SGEXTN::Containers::Array<SGEXTN::ApplicationBase::String> dataTable = dataString.split('\n');
     for(int i=0; i<dataTable.length(); i++){
         if(dataTable.at(i).containsCharacters('#') == false){continue;}
@@ -257,7 +298,7 @@ void fillPropertyListDatabase(){
 SGEXTN::Containers::Vector<SGEXTN::Containers::Array<SGEXTN::ApplicationBase::String>> normalisationTestDatabase;
 
 void fillNormalisationTestDatabase(){
-    const SGEXTN::ApplicationBase::String dataString = readFile(":/SGEXTN_InternalTest/normalisationtest.txt");
+    const SGEXTN::ApplicationBase::String dataString = readFile("normalisationtest.txt");
     SGEXTN::Containers::Array<SGEXTN::ApplicationBase::String> dataTable = dataString.split('\n');
     for(int i=0; i<dataTable.length(); i++){
         if(dataTable.at(i).findFirstCharactersFromLeft('#') == -1){continue;}
@@ -276,7 +317,7 @@ void fillNormalisationTestDatabase(){
 SGEXTN::Containers::Vector<SGEXTN::Containers::Pair<SGEXTN::ApplicationBase::String, SGEXTN::ApplicationBase::String>> graphemeBoundaryTestDatabase;
 
 void fillGraphemeBoundaryTestDatabase(){
-    const SGEXTN::ApplicationBase::String dataString = readFile(":/SGEXTN_InternalTest/graphemebreaktest.txt");
+    const SGEXTN::ApplicationBase::String dataString = readFile("graphemebreaktest.txt");
     SGEXTN::Containers::Array<SGEXTN::ApplicationBase::String> dataTable = dataString.split('\n');
     for(int i=0; i<dataTable.length(); i++){
         if(dataTable.at(i).findFirstCharactersFromLeft('#') == -1){continue;}
@@ -304,7 +345,7 @@ SGEXTN::Containers::Vector<SGEXTN::ApplicationBase::String> numericParsingTestsD
 int numericParsingTestsDatabaseUniqueFloatLength = 0;
 
 void fillNumericParsingTestsDatabase(){
-    const SGEXTN::ApplicationBase::String dataString = readFile(":/SGEXTN_InternalTest/nigeltaotencentrapidjson.txt");
+    const SGEXTN::ApplicationBase::String dataString = readFile("nigeltaotencentrapidjson.txt");
     SGEXTN::Containers::Array<SGEXTN::ApplicationBase::String> dataTable = dataString.split('\n');
     for(int i=0; i<dataTable.length(); i++){
         SGEXTN::Containers::Array<SGEXTN::ApplicationBase::String> thisTest = dataTable.at(i).split(' ');
@@ -328,14 +369,6 @@ void fillNumericParsingTestsDatabase(){
         numericParsingTestsDatabase.pushBack(SGEXTN::ApplicationBase::String("+00000") + numericParsingTestsDatabase.at(i) + ".00000");
         numericParsingTestsDatabase.pushBack(SGEXTN::ApplicationBase::String("-00000") + numericParsingTestsDatabase.at(i) + ".00000");
     }
-}
-
-QString stringSGToQ(const SGEXTN::ApplicationBase::String& s){
-    return QString::fromUtf8(reinterpret_cast<const char*>(&s.private_data.byteAt(0)), s.byteLength());
-}
-
-SGEXTN::ApplicationBase::String stringQToSG(const QString& s){
-    return SGEXTN::ApplicationBase::String(s.toUtf8().constData());
 }
 
 bool isNumericalDigit(const SGEXTN::ApplicationBase::Character& c){
@@ -956,14 +989,17 @@ void SGEXTN::InternalTest::StringTest::runExternalNumericParsingTests(){
     fillNumericParsingTestsDatabase();
     for(int i=0; i<numericParsingTestsDatabase.length(); i++){
         bool isValid = false;
-        const int expectedInt = stringSGToQ(numericParsingTestsDatabase.at(i)).toInt(&isValid, 10);
+        SGEXTN::ApplicationBase::String nullTerminatedString = numericParsingTestsDatabase.at(i) + '\0';
+        const int expectedInt = parseCStringToInt(reinterpret_cast<const char*>(&nullTerminatedString.byteAt(0)), &isValid, 10);
         if(isValid == true){
             bool parseSuccess = false;
             if(expectedInt != numericParsingTestsDatabase.at(i).parseToInt(&parseSuccess, 10) || parseSuccess == false){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String parse base 10 integer fail");}
             if(expectedInt != numericParsingTestsDatabase.at(i).parseToInt(nullptr, 10)){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String parse base 10 integer no success flag fail");}
             if(i < numericParsingTestsDatabaseUniqueFloatLength){
                 for(int base=2; base<=36; base++){
-                    const SGEXTN::ApplicationBase::String expectedNumString = stringQToSG(QString::number(expectedInt, base));
+                    const char* intAsCString = printIntToCString(expectedInt, base);
+                    const SGEXTN::ApplicationBase::String expectedNumString = intAsCString;
+                    delete[] intAsCString;
                     if(expectedNumString.getLowercase() != SGEXTN::ApplicationBase::String::stringFromInt(expectedInt, base)){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String print integer fail");}
                     parseSuccess = false;
                     if(expectedInt != expectedNumString.getUppercase().parseToInt(&parseSuccess, base) || parseSuccess == false){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String parse uppercase integer fail");}
@@ -977,7 +1013,7 @@ void SGEXTN::InternalTest::StringTest::runExternalNumericParsingTests(){
             if(numericParsingTestsDatabase.at(i).parseToInt(&parseSuccess, 10) != 0 || parseSuccess == true){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String parse invalid integer fail");}
         }
         isValid = false;
-        const float expectedFloat = stringSGToQ(numericParsingTestsDatabase.at(i)).toFloat(&isValid);
+        const float expectedFloat = parseCStringToFloat(reinterpret_cast<const char*>(&nullTerminatedString.byteAt(0)), &isValid);
         if(isValid == true){
             bool parseSuccess = false;
             if(isCloseEnough(expectedFloat, numericParsingTestsDatabase.at(i).parseToFloat(&parseSuccess, 10)) == false || parseSuccess == false){SGEXTN::Containers::Crash::crash("SGEXTN::ApplicationBase::String parse base 10 floating point number fail");}

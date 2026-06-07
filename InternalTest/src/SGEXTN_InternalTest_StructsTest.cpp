@@ -7,10 +7,9 @@
 #include <SGEXTN_Structs_IdentifierRegistry.h>
 #include <SGEXTN_Structs_DateTime.h>
 #include <SGEXTN_ApplicationBase_String.h>
-#include <QDateTime>
-#include <QDate>
-#include <QTime>
-#include <QTimeZone>
+#include <chrono>
+#include <format>
+#include <cstdlib>
 
 namespace {
 bool isCloseEnough(float a, float b){
@@ -239,10 +238,11 @@ void SGEXTN::InternalTest::StructsTest::testDateTime(){
                 const int hour = (year % 24 + 24) % 24;
                 const int minute = ((year + month + day) % 60 + 60) % 60;
                 const int second = ((year + month + day) % 60 + 60) % 60;
-                const QDateTime qDateTime = QDateTime(QDate(year + 1965, month, day), QTime(hour, minute, second), QTimeZone::UTC);
-                const long long expected = QDateTime(QDate(1965, 8, 9), QTime(10, 30, 0), QTimeZone::UTC).secsTo(qDateTime);
+                const std::chrono::sys_days thisDay{std::chrono::year{year + 1965} / std::chrono::month{static_cast<unsigned int>(month)} / std::chrono::day{static_cast<unsigned int>(day)}};
+                const std::chrono::sys_time<std::chrono::seconds> externalBeginningOfTime{std::chrono::sys_days{std::chrono::year{1965} / std::chrono::August / 9} + std::chrono::hours{10} + std::chrono::minutes{30}};
+                const std::chrono::sys_time<std::chrono::seconds> externalDateTime{thisDay + std::chrono::hours{hour} + std::chrono::minutes{minute} + std::chrono::seconds{second}};
                 SGEXTN::Structs::DateTime thisDateTime(year, month, day, hour, minute, second);
-                if(expected != thisDateTime.private_data){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime components constructor fail");}
+                if(std::chrono::duration_cast<std::chrono::seconds>(externalDateTime - externalBeginningOfTime).count() != thisDateTime.private_data){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime components constructor fail");}
                 if(thisDateTime.getPart(SGEXTN::Structs::TimeUnit::Year) != year){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime get year fail");}
                 if(thisDateTime.getPart(SGEXTN::Structs::TimeUnit::Month) != month){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime get month fail");}
                 if(thisDateTime.getPart(SGEXTN::Structs::TimeUnit::Day) != day){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime get day fail");}
@@ -268,13 +268,17 @@ void SGEXTN::InternalTest::StructsTest::testDateTime(){
                 thisDateTime.setPart(SGEXTN::Structs::TimeUnit::Second, 0);
                 if(thisDateTime != SGEXTN::Structs::DateTime(year, month, day, hour, minute, 0)){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime set second fail");}
                 thisDateTime = originalDateTime;
-                if(thisDateTime.getDayOfWeek() != qDateTime.date().dayOfWeek()){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime get day of week fail");}
-                if(thisDateTime.getDayOfYear() != qDateTime.date().dayOfYear()){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime get day of year fail");}
-                if(thisDateTime.countDaysInMonth() != qDateTime.date().daysInMonth()){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime count days in month fail");}
-                if(thisDateTime.countDaysInYear() != qDateTime.date().daysInYear()){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime count days in year fail");}
-                if(thisDateTime.getStartOfDay().private_data != QDateTime(QDate(1965, 8, 9), QTime(10, 30, 0), QTimeZone::UTC).secsTo(qDateTime.date().startOfDay(QTimeZone::UTC))){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime start of day fail");}
-                if(thisDateTime.getEndOfDay().private_data != QDateTime(QDate(1965, 8, 9), QTime(10, 30, 0), QTimeZone::UTC).secsTo(qDateTime.date().startOfDay(QTimeZone::UTC)) + 86400ll){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime end of day fail");}
-                if(thisDateTime.getWeekOfYear() != qDateTime.date().weekNumber()){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime week count fail");}
+                if(thisDateTime.getDayOfWeek() != (std::chrono::weekday{thisDay}).iso_encoding()){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime get day of week fail");}
+                if(thisDateTime.getDayOfYear() != static_cast<int>((thisDay - std::chrono::sys_days{std::chrono::year{year + 1965} / std::chrono::January / 1}).count() + 1)){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime get day of year fail");}
+                if(thisDateTime.countDaysInMonth() != static_cast<int>(static_cast<unsigned int>((std::chrono::year{year + 1965} / std::chrono::month{static_cast<unsigned int>(month)} / std::chrono::last).day()))){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime count days in month fail");}
+                if(thisDateTime.countDaysInYear() != 365 + static_cast<int>((std::chrono::year{year + 1965}).is_leap())){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime count days in year fail");}
+                if(thisDateTime.getStartOfDay().private_data != (std::chrono::duration_cast<std::chrono::seconds>(thisDay.time_since_epoch()).count() - externalBeginningOfTime.time_since_epoch().count())){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime start of day fail");}
+                if(thisDateTime.getEndOfDay().private_data != std::chrono::duration_cast<std::chrono::seconds>(thisDay.time_since_epoch()).count() - externalBeginningOfTime.time_since_epoch().count() + 86400ll){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime end of day fail");}
+                char* weekNumberString = new char[3];
+                std::format_to_n(weekNumberString, 2, "{:%V}", externalDateTime);
+                (*(weekNumberString + 2)) = '\0';
+                if(thisDateTime.getWeekOfYear() != std::atoi(weekNumberString)){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime week count fail");}
+                delete[] weekNumberString;
                 const int diffYear = thisDateTime.getTimeAfterDisplayPart(SGEXTN::Structs::DateTime::beginningOfTime(), SGEXTN::Structs::TimeUnit::Year);
                 const int diffMonth = thisDateTime.getTimeAfterDisplayPart(SGEXTN::Structs::DateTime::beginningOfTime(), SGEXTN::Structs::TimeUnit::Month);
                 if(diffMonth < 0 || diffMonth > 11){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime time after display part month fail");}
