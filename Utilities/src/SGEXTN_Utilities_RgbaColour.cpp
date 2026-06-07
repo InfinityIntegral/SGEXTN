@@ -1,4 +1,4 @@
-#include <SGEXTN_Structs_RgbaColour.h>
+#include <SGEXTN_Utilities_RgbaColour.h>
 #include <SGEXTN_ApplicationBase_String.h>
 #include <SGEXTN_Containers_Hash.h>
 #include <SGEXTN_Math_FloatMath.h>
@@ -44,186 +44,186 @@ float linearToSrgb(float x){
 }
 }
 
-SGEXTN::Structs::RgbaColour::RgbaColour() : private_data(0xff00c8ff) {}
+SGEXTN::Utilities::RgbaColour::RgbaColour() : private_data(0xff00c8ff) {}
 
-SGEXTN::Structs::RgbaColour::RgbaColour(unsigned int data) : private_data(data) {}
+SGEXTN::Utilities::RgbaColour::RgbaColour(unsigned int data) : private_data(data) {}
 
-SGEXTN::Structs::RgbaColour::RgbaColour(int r, int g, int b, int a) : private_data(packChannels(toUnsignedInt(boundInt(r)), toUnsignedInt(boundInt(g)), toUnsignedInt(boundInt(b)), toUnsignedInt(boundInt(a)))) {}
+SGEXTN::Utilities::RgbaColour::RgbaColour(int r, int g, int b, int a) : private_data(packChannels(toUnsignedInt(boundInt(r)), toUnsignedInt(boundInt(g)), toUnsignedInt(boundInt(b)), toUnsignedInt(boundInt(a)))) {}
 
-SGEXTN::Structs::RgbaColour::RgbaColour(int r, int g, int b) : private_data(packChannels(toUnsignedInt(boundInt(r)), toUnsignedInt(boundInt(g)), toUnsignedInt(boundInt(b)), 255u)) {}
+SGEXTN::Utilities::RgbaColour::RgbaColour(int r, int g, int b) : private_data(packChannels(toUnsignedInt(boundInt(r)), toUnsignedInt(boundInt(g)), toUnsignedInt(boundInt(b)), 255u)) {}
 
-SGEXTN::Structs::RgbaColour::RgbaColour(float r, float g, float b, float a) : private_data(packChannels(toUnsignedInt(boundFloat(r)), toUnsignedInt(boundFloat(g)), toUnsignedInt(boundFloat(b)), toUnsignedInt(boundFloat(a)))) {}
+SGEXTN::Utilities::RgbaColour::RgbaColour(float r, float g, float b, float a) : private_data(packChannels(toUnsignedInt(boundFloat(r)), toUnsignedInt(boundFloat(g)), toUnsignedInt(boundFloat(b)), toUnsignedInt(boundFloat(a)))) {}
 
-SGEXTN::Structs::RgbaColour::RgbaColour(float r, float g, float b) : private_data(packChannels(toUnsignedInt(boundFloat(r)), toUnsignedInt(boundFloat(g)), toUnsignedInt(boundFloat(b)), 255u)) {}
+SGEXTN::Utilities::RgbaColour::RgbaColour(float r, float g, float b) : private_data(packChannels(toUnsignedInt(boundFloat(r)), toUnsignedInt(boundFloat(g)), toUnsignedInt(boundFloat(b)), 255u)) {}
 
-int SGEXTN::Structs::RgbaColour::getRed() const {
+int SGEXTN::Utilities::RgbaColour::getRed() const {
     return static_cast<int>(private_data >> 24u);
 }
 
-int SGEXTN::Structs::RgbaColour::getGreen() const {
+int SGEXTN::Utilities::RgbaColour::getGreen() const {
     return static_cast<int>(0xFFu & (private_data >> 16u));
 }
 
-int SGEXTN::Structs::RgbaColour::getBlue() const {
+int SGEXTN::Utilities::RgbaColour::getBlue() const {
     return static_cast<int>(0xFFu & (private_data >> 8u));
 }
 
-int SGEXTN::Structs::RgbaColour::getTransparency() const {
+int SGEXTN::Utilities::RgbaColour::getTransparency() const {
     return static_cast<int>(0xFFu & private_data);
 }
 
-float SGEXTN::Structs::RgbaColour::getRedFloat() const {
+float SGEXTN::Utilities::RgbaColour::getRedFloat() const {
     return (static_cast<float>(getRed()) / 255.0f);
 }
 
-float SGEXTN::Structs::RgbaColour::getGreenFloat() const {
+float SGEXTN::Utilities::RgbaColour::getGreenFloat() const {
     return (static_cast<float>(getGreen()) / 255.0f);
 }
 
-float SGEXTN::Structs::RgbaColour::getBlueFloat() const {
+float SGEXTN::Utilities::RgbaColour::getBlueFloat() const {
     return (static_cast<float>(getBlue()) / 255.0f);
 }
 
-float SGEXTN::Structs::RgbaColour::getTransparencyFloat() const {
+float SGEXTN::Utilities::RgbaColour::getTransparencyFloat() const {
     return (static_cast<float>(getTransparency()) / 255.0f);
 }
 
-void SGEXTN::Structs::RgbaColour::setRed(int r){
+void SGEXTN::Utilities::RgbaColour::setRed(int r){
     private_data = setChannelByOffset(private_data, 24u, toUnsignedInt(boundInt(r)));
 }
 
-void SGEXTN::Structs::RgbaColour::setGreen(int g){
+void SGEXTN::Utilities::RgbaColour::setGreen(int g){
     private_data = setChannelByOffset(private_data, 16u, toUnsignedInt(boundInt(g)));
 }
 
-void SGEXTN::Structs::RgbaColour::setBlue(int b){
+void SGEXTN::Utilities::RgbaColour::setBlue(int b){
     private_data = setChannelByOffset(private_data, 8u, toUnsignedInt(boundInt(b)));
 }
 
-void SGEXTN::Structs::RgbaColour::setTransparency(int a){
+void SGEXTN::Utilities::RgbaColour::setTransparency(int a){
     private_data = setChannelByOffset(private_data, 0u, toUnsignedInt(boundInt(a)));
 }
 
-void SGEXTN::Structs::RgbaColour::setRedFloat(float r){
+void SGEXTN::Utilities::RgbaColour::setRedFloat(float r){
     private_data = setChannelByOffset(private_data, 24u, toUnsignedInt(boundFloat(r)));
 }
 
-void SGEXTN::Structs::RgbaColour::setGreenFloat(float g){
+void SGEXTN::Utilities::RgbaColour::setGreenFloat(float g){
     private_data = setChannelByOffset(private_data, 16u, toUnsignedInt(boundFloat(g)));
 }
 
-void SGEXTN::Structs::RgbaColour::setBlueFloat(float b){
+void SGEXTN::Utilities::RgbaColour::setBlueFloat(float b){
     private_data = setChannelByOffset(private_data, 8u, toUnsignedInt(boundFloat(b)));
 }
 
-void SGEXTN::Structs::RgbaColour::setTransparencyFloat(float a){
+void SGEXTN::Utilities::RgbaColour::setTransparencyFloat(float a){
     private_data = setChannelByOffset(private_data, 0u, toUnsignedInt(boundFloat(a)));
 }
 
-SGEXTN::ApplicationBase::String SGEXTN::Structs::RgbaColour::rgbHtmlString() const {
+SGEXTN::ApplicationBase::String SGEXTN::Utilities::RgbaColour::rgbHtmlString() const {
     return (SGEXTN::ApplicationBase::String("rgb(") + SGEXTN::ApplicationBase::String::stringFromInt(getRed(), 10) + ", " + SGEXTN::ApplicationBase::String::stringFromInt(getGreen(), 10) + ", " + SGEXTN::ApplicationBase::String::stringFromInt(getBlue(), 10) + ")");
 }
 
-SGEXTN::ApplicationBase::String SGEXTN::Structs::RgbaColour::rgbaHtmlString() const {
+SGEXTN::ApplicationBase::String SGEXTN::Utilities::RgbaColour::rgbaHtmlString() const {
     return (SGEXTN::ApplicationBase::String("rgba(") + SGEXTN::ApplicationBase::String::stringFromInt(getRed(), 10) + ", " + SGEXTN::ApplicationBase::String::stringFromInt(getGreen(), 10) + ", " + SGEXTN::ApplicationBase::String::stringFromInt(getBlue(), 10) + ", " + SGEXTN::ApplicationBase::String::stringFromInt(getTransparency(), 10 ) + ")");
 }
 
-SGEXTN::ApplicationBase::String SGEXTN::Structs::RgbaColour::rgbHexString() const {
+SGEXTN::ApplicationBase::String SGEXTN::Utilities::RgbaColour::rgbHexString() const {
     return (SGEXTN::ApplicationBase::String::stringFromInt(getRed(), 16).fillLeftToByteLength(2, '0') + SGEXTN::ApplicationBase::String::stringFromInt(getGreen(), 16).fillLeftToByteLength(2, '0') + SGEXTN::ApplicationBase::String::stringFromInt(getBlue(), 16).fillLeftToByteLength(2, '0'));
 }
 
-SGEXTN::ApplicationBase::String SGEXTN::Structs::RgbaColour::rgbaHexString() const {
+SGEXTN::ApplicationBase::String SGEXTN::Utilities::RgbaColour::rgbaHexString() const {
     return (SGEXTN::ApplicationBase::String::stringFromInt(getRed(), 16).fillLeftToByteLength(2, '0') + SGEXTN::ApplicationBase::String::stringFromInt(getGreen(), 16).fillLeftToByteLength(2, '0') + SGEXTN::ApplicationBase::String::stringFromInt(getBlue(), 16).fillLeftToByteLength(2, '0') + SGEXTN::ApplicationBase::String::stringFromInt(getTransparency(), 16).fillLeftToByteLength(2, '0'));
 }
 
-SGEXTN::ApplicationBase::String SGEXTN::Structs::RgbaColour::rgbFloatHtmlString() const {
+SGEXTN::ApplicationBase::String SGEXTN::Utilities::RgbaColour::rgbFloatHtmlString() const {
     return (SGEXTN::ApplicationBase::String("rgb(") + SGEXTN::ApplicationBase::String::stringFromFloat(getRedFloat(), 10, SGEXTN::ApplicationBase::FloatPrecisionFormat::FractionalDigit, 3) + ", " + SGEXTN::ApplicationBase::String::stringFromFloat(getGreenFloat(), 10, SGEXTN::ApplicationBase::FloatPrecisionFormat::FractionalDigit, 3) + ", " + SGEXTN::ApplicationBase::String::stringFromFloat(getBlueFloat(), 10, SGEXTN::ApplicationBase::FloatPrecisionFormat::FractionalDigit, 3) + ")");
 }
 
-SGEXTN::ApplicationBase::String SGEXTN::Structs::RgbaColour::rgbaFloatHtmlString() const {
+SGEXTN::ApplicationBase::String SGEXTN::Utilities::RgbaColour::rgbaFloatHtmlString() const {
     return (SGEXTN::ApplicationBase::String("rgba(") + SGEXTN::ApplicationBase::String::stringFromFloat(getRedFloat(), 10, SGEXTN::ApplicationBase::FloatPrecisionFormat::FractionalDigit, 3) + ", " + SGEXTN::ApplicationBase::String::stringFromFloat(getGreenFloat(), 10, SGEXTN::ApplicationBase::FloatPrecisionFormat::FractionalDigit, 3) + ", " + SGEXTN::ApplicationBase::String::stringFromFloat(getBlueFloat(), 10, SGEXTN::ApplicationBase::FloatPrecisionFormat::FractionalDigit, 3) + ", " + SGEXTN::ApplicationBase::String::stringFromFloat(getTransparencyFloat(), 10, SGEXTN::ApplicationBase::FloatPrecisionFormat::FractionalDigit, 3) +  ")");
 }
 
-bool SGEXTN::Structs::RgbaColour::operator==(SGEXTN::Structs::RgbaColour x) const {
+bool SGEXTN::Utilities::RgbaColour::operator==(SGEXTN::Utilities::RgbaColour x) const {
     return (private_data == x.private_data);
 }
 
-bool SGEXTN::Structs::RgbaColour::operator!=(SGEXTN::Structs::RgbaColour x) const {
+bool SGEXTN::Utilities::RgbaColour::operator!=(SGEXTN::Utilities::RgbaColour x) const {
     return (private_data != x.private_data);
 }
 
-bool SGEXTN::Structs::RgbaColour::operator<(SGEXTN::Structs::RgbaColour x) const {
+bool SGEXTN::Utilities::RgbaColour::operator<(SGEXTN::Utilities::RgbaColour x) const {
     return (private_data < x.private_data);
 }
 
-bool SGEXTN::Structs::RgbaColour::operator>(SGEXTN::Structs::RgbaColour x) const {
+bool SGEXTN::Utilities::RgbaColour::operator>(SGEXTN::Utilities::RgbaColour x) const {
     return (private_data > x.private_data);
 }
 
-int SGEXTN::Structs::RgbaColour::hash() const {
+int SGEXTN::Utilities::RgbaColour::hash() const {
     return SGEXTN::Containers::Hash<unsigned int>()(private_data);
 }
 
-SGEXTN::ApplicationBase::String SGEXTN::Structs::RgbaColour::debugLog() const {
+SGEXTN::ApplicationBase::String SGEXTN::Utilities::RgbaColour::debugLog() const {
     return rgbaHtmlString();
 }
 
-void SGEXTN::Structs::RgbaColour::gammaCorrectBegin(float& r, float& g, float& b) const {
+void SGEXTN::Utilities::RgbaColour::gammaCorrectBegin(float& r, float& g, float& b) const {
     r = srgbToLinear(getRedFloat());
     g = srgbToLinear(getGreenFloat());
     b = srgbToLinear(getBlueFloat());
 }
 
-void SGEXTN::Structs::RgbaColour::gammaCorrectEnd(float r, float g, float b){
+void SGEXTN::Utilities::RgbaColour::gammaCorrectEnd(float r, float g, float b){
     setRedFloat(linearToSrgb(r));
     setGreenFloat(linearToSrgb(g));
     setBlueFloat(linearToSrgb(b));
 }
 
-SGEXTN::Structs::RgbaColour SGEXTN::Structs::RgbaColour::linearTransformRed(float m, float c, bool gammaCorrect) const {
+SGEXTN::Utilities::RgbaColour SGEXTN::Utilities::RgbaColour::linearTransformRed(float m, float c, bool gammaCorrect) const {
     float r = getRedFloat();
     if(gammaCorrect == true){r = srgbToLinear(r);}
     r = boundFloat(m * r + c);
     if(gammaCorrect == true){r = linearToSrgb(r);}
-    SGEXTN::Structs::RgbaColour output = (*this);
+    SGEXTN::Utilities::RgbaColour output = (*this);
     output.setRedFloat(r);
     return output;
 }
 
-SGEXTN::Structs::RgbaColour SGEXTN::Structs::RgbaColour::linearTransformGreen(float m, float c, bool gammaCorrect) const {
+SGEXTN::Utilities::RgbaColour SGEXTN::Utilities::RgbaColour::linearTransformGreen(float m, float c, bool gammaCorrect) const {
     float g = getGreenFloat();
     if(gammaCorrect == true){g = srgbToLinear(g);}
     g = boundFloat(m * g + c);
     if(gammaCorrect == true){g = linearToSrgb(g);}
-    SGEXTN::Structs::RgbaColour output = (*this);
+    SGEXTN::Utilities::RgbaColour output = (*this);
     output.setGreenFloat(g);
     return output;
 }
 
-SGEXTN::Structs::RgbaColour SGEXTN::Structs::RgbaColour::linearTransformBlue(float m, float c, bool gammaCorrect) const {
+SGEXTN::Utilities::RgbaColour SGEXTN::Utilities::RgbaColour::linearTransformBlue(float m, float c, bool gammaCorrect) const {
     float b = getBlueFloat();
     if(gammaCorrect == true){b = srgbToLinear(b);}
     b = boundFloat(m * b + c);
     if(gammaCorrect == true){b = linearToSrgb(b);}
-    SGEXTN::Structs::RgbaColour output = (*this);
+    SGEXTN::Utilities::RgbaColour output = (*this);
     output.setBlueFloat(b);
     return output;
 }
 
-SGEXTN::Structs::RgbaColour SGEXTN::Structs::RgbaColour::linearTransformTransparency(float m, float c) const {
+SGEXTN::Utilities::RgbaColour SGEXTN::Utilities::RgbaColour::linearTransformTransparency(float m, float c) const {
     float a = getTransparencyFloat();
     a = boundFloat(m * a + c);
-    SGEXTN::Structs::RgbaColour output = (*this);
+    SGEXTN::Utilities::RgbaColour output = (*this);
     output.setTransparencyFloat(a);
     return output;
 }
 
-SGEXTN::Structs::RgbaColour SGEXTN::Structs::RgbaColour::applyTint(RgbaColour x, bool gammaCorrect) const {
+SGEXTN::Utilities::RgbaColour SGEXTN::Utilities::RgbaColour::applyTint(RgbaColour x, bool gammaCorrect) const {
     return applyTintSeparateTransparency(x, x.getTransparencyFloat(), gammaCorrect);
 }
 
-SGEXTN::Structs::RgbaColour SGEXTN::Structs::RgbaColour::applyTintSeparateTransparency(RgbaColour x, float transparency, bool gammaCorrect) const {
-    if(transparency < 0.0f || transparency > 1.0f){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::RgbaColour::applyTintSeparateTransparency crashed because the transparency is below 0 or above 1, if you want to intentionally produce a negative mixing effect, use SGEXTN::Structs::RgbaColour::interpolate instead and set thisStrength to below 0 or above 1");}
+SGEXTN::Utilities::RgbaColour SGEXTN::Utilities::RgbaColour::applyTintSeparateTransparency(RgbaColour x, float transparency, bool gammaCorrect) const {
+    if(transparency < 0.0f || transparency > 1.0f){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::RgbaColour::applyTintSeparateTransparency crashed because the transparency is below 0 or above 1, if you want to intentionally produce a negative mixing effect, use SGEXTN::Utilities::RgbaColour::interpolate instead and set thisStrength to below 0 or above 1");}
     float r1 = getRedFloat();
     float g1 = getGreenFloat();
     float b1 = getBlueFloat();
@@ -241,7 +241,7 @@ SGEXTN::Structs::RgbaColour SGEXTN::Structs::RgbaColour::applyTintSeparateTransp
         b2 = srgbToLinear(b2);
     }
     const float a = a2 + a1 * (1.0f - a2);
-    if(a == 0.0f){return SGEXTN::Structs::RgbaColour(0, 0, 0, 0);}
+    if(a == 0.0f){return SGEXTN::Utilities::RgbaColour(0, 0, 0, 0);}
     float r = boundFloat((r2 * a2 + r1 * a1 * (1.0f - a2)) / a);
     float g = boundFloat((g2 * a2 + g1 * a1 * (1.0f - a2)) / a);
     float b = boundFloat((b2 * a2 + b1 * a1 * (1.0f - a2)) / a);
@@ -250,10 +250,10 @@ SGEXTN::Structs::RgbaColour SGEXTN::Structs::RgbaColour::applyTintSeparateTransp
         g = linearToSrgb(g);
         b = linearToSrgb(b);
     }
-    return SGEXTN::Structs::RgbaColour(r, g, b, a);
+    return SGEXTN::Utilities::RgbaColour(r, g, b, a);
 }
 
-SGEXTN::Structs::RgbaColour SGEXTN::Structs::RgbaColour::interpolate(RgbaColour other, float thisStrength, bool gammaCorrect) const {
+SGEXTN::Utilities::RgbaColour SGEXTN::Utilities::RgbaColour::interpolate(RgbaColour other, float thisStrength, bool gammaCorrect) const {
     float r1 = getRedFloat();
     float g1 = getGreenFloat();
     float b1 = getBlueFloat();
@@ -277,10 +277,10 @@ SGEXTN::Structs::RgbaColour SGEXTN::Structs::RgbaColour::interpolate(RgbaColour 
         b = linearToSrgb(b);
     }
     const float a = other.getTransparencyFloat() * (1.0f - thisStrength) + getTransparencyFloat() * thisStrength;
-    return SGEXTN::Structs::RgbaColour(r, g, b, a);
+    return SGEXTN::Utilities::RgbaColour(r, g, b, a);
 }
 
-SGEXTN::Structs::RgbaColour SGEXTN::Structs::RgbaColour::complement(bool gammaCorrect) const {
+SGEXTN::Utilities::RgbaColour SGEXTN::Utilities::RgbaColour::complement(bool gammaCorrect) const {
     float r = getRedFloat();
     float g = getGreenFloat();
     float b = getBlueFloat();
@@ -297,5 +297,5 @@ SGEXTN::Structs::RgbaColour SGEXTN::Structs::RgbaColour::complement(bool gammaCo
         g = linearToSrgb(g);
         b = linearToSrgb(b);
     }
-    return SGEXTN::Structs::RgbaColour(r, g, b, getTransparencyFloat());
+    return SGEXTN::Utilities::RgbaColour(r, g, b, getTransparencyFloat());
 }

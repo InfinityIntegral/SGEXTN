@@ -1,11 +1,11 @@
-#include <SGEXTN_Structs_ContrastUtilities.h>
-#include <SGEXTN_Structs_RgbaColour.h>
+#include <SGEXTN_Utilities_ContrastUtilities.h>
+#include <SGEXTN_Utilities_RgbaColour.h>
 #include <SGEXTN_Math_FloatMath.h>
-#include <SGEXTN_Structs_HslaColour.h>
+#include <SGEXTN_Utilities_HslaColour.h>
 #include <SGEXTN_Math_FloatConstants.h>
 #include <private_api/SGEXTN_Containers_Crash.h>
 
-float SGEXTN::Structs::ContrastUtilities::getContrast(SGEXTN::Structs::RgbaColour bg, SGEXTN::Structs::RgbaColour fg){
+float SGEXTN::Utilities::ContrastUtilities::getContrast(SGEXTN::Utilities::RgbaColour bg, SGEXTN::Utilities::RgbaColour fg){
     fg = bg.applyTint(fg, true);
     float bgLuminance = 0.2126729f * SGEXTN::Math::FloatMath<float>::powerOf(bg.getRedFloat(), 2.4f) + 0.7151522f * SGEXTN::Math::FloatMath<float>::powerOf(bg.getGreenFloat(), 2.4f) + 0.0721750f * SGEXTN::Math::FloatMath<float>::powerOf(bg.getBlueFloat(), 2.4f);
     float fgLuminance = 0.2126729f * SGEXTN::Math::FloatMath<float>::powerOf(fg.getRedFloat(), 2.4f) + 0.7151522f * SGEXTN::Math::FloatMath<float>::powerOf(fg.getGreenFloat(), 2.4f) + 0.0721750f * SGEXTN::Math::FloatMath<float>::powerOf(fg.getBlueFloat(), 2.4f);
@@ -25,12 +25,12 @@ float SGEXTN::Structs::ContrastUtilities::getContrast(SGEXTN::Structs::RgbaColou
     return (100.0f * finalContrast);
 }
 
-float SGEXTN::Structs::ContrastUtilities::getAbsoluteContrast(SGEXTN::Structs::RgbaColour bg, SGEXTN::Structs::RgbaColour fg){
-    return SGEXTN::Math::FloatMath<float>::absoluteValue(SGEXTN::Structs::ContrastUtilities::getContrast(bg, fg));
+float SGEXTN::Utilities::ContrastUtilities::getAbsoluteContrast(SGEXTN::Utilities::RgbaColour bg, SGEXTN::Utilities::RgbaColour fg){
+    return SGEXTN::Math::FloatMath<float>::absoluteValue(SGEXTN::Utilities::ContrastUtilities::getContrast(bg, fg));
 }
 
-float SGEXTN::Structs::ContrastUtilities::safeContrast(float sizeUnit, bool bold, bool bodyText){
-    if(sizeUnit < 0.0f){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::ContrastUtilities::safeContrast crashed because size unit of text cannot be negative");}
+float SGEXTN::Utilities::ContrastUtilities::safeContrast(float sizeUnit, bool bold, bool bodyText){
+    if(sizeUnit < 0.0f){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::ContrastUtilities::safeContrast crashed because size unit of text cannot be negative");}
     const float fontSize = sizeUnit * 28.0f;
     float requiredContrast = 195.0f;
     if(bold == false){
@@ -74,85 +74,85 @@ float SGEXTN::Structs::ContrastUtilities::safeContrast(float sizeUnit, bool bold
     return requiredContrast;
 }
 
-SGEXTN::Structs::RgbaColour SGEXTN::Structs::ContrastUtilities::getForegroundLightMode(RgbaColour bg, float targetContrast, bool* isPossible){
-    if(targetContrast < 0.0f){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::ContrastUtilities::getForegroundLightMode crashed because target contrast cannot be negative, always pass absolute value of intended contrast");}
-    const SGEXTN::Structs::HslaColour referenceColour = SGEXTN::Structs::HslaColour(bg);
+SGEXTN::Utilities::RgbaColour SGEXTN::Utilities::ContrastUtilities::getForegroundLightMode(RgbaColour bg, float targetContrast, bool* isPossible){
+    if(targetContrast < 0.0f){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::ContrastUtilities::getForegroundLightMode crashed because target contrast cannot be negative, always pass absolute value of intended contrast");}
+    const SGEXTN::Utilities::HslaColour referenceColour = SGEXTN::Utilities::HslaColour(bg);
     float low = 0.0f;
     float high = referenceColour.getLightness();
-    SGEXTN::Structs::HslaColour newColour = referenceColour;
+    SGEXTN::Utilities::HslaColour newColour = referenceColour;
     while(high - low > 0.001){
         const float m = 0.5f * (low + high);
         newColour.setLightness(m);
-        if(SGEXTN::Structs::ContrastUtilities::getAbsoluteContrast(bg, newColour.toRGBA()) >= targetContrast){low = m;}
+        if(SGEXTN::Utilities::ContrastUtilities::getAbsoluteContrast(bg, newColour.toRGBA()) >= targetContrast){low = m;}
         else{high = m;}
     }
     newColour.setLightness(low);
-    SGEXTN::Structs::RgbaColour outputColour = newColour.toRGBA();
+    SGEXTN::Utilities::RgbaColour outputColour = newColour.toRGBA();
     if(isPossible != nullptr){
-        if(SGEXTN::Structs::ContrastUtilities::getAbsoluteContrast(bg, outputColour) >= targetContrast){(*isPossible) = true;}
+        if(SGEXTN::Utilities::ContrastUtilities::getAbsoluteContrast(bg, outputColour) >= targetContrast){(*isPossible) = true;}
         else{(*isPossible) = false;}
     }
     return outputColour;
 }
 
-SGEXTN::Structs::RgbaColour SGEXTN::Structs::ContrastUtilities::getForegroundDarkMode(RgbaColour bg, float targetContrast, bool* isPossible){
-    if(targetContrast < 0.0f){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::ContrastUtilities::getForegroundDarkMode crashed because target contrast cannot be negative, always pass absolute value of intended contrast");}
-    const SGEXTN::Structs::HslaColour referenceColour = SGEXTN::Structs::HslaColour(bg);
+SGEXTN::Utilities::RgbaColour SGEXTN::Utilities::ContrastUtilities::getForegroundDarkMode(RgbaColour bg, float targetContrast, bool* isPossible){
+    if(targetContrast < 0.0f){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::ContrastUtilities::getForegroundDarkMode crashed because target contrast cannot be negative, always pass absolute value of intended contrast");}
+    const SGEXTN::Utilities::HslaColour referenceColour = SGEXTN::Utilities::HslaColour(bg);
     float low = referenceColour.getLightness();
     float high = 100.0f;
-    SGEXTN::Structs::HslaColour newColour = referenceColour;
+    SGEXTN::Utilities::HslaColour newColour = referenceColour;
     while(high - low > 0.001){
         const float m = 0.5f * (low + high);
         newColour.setLightness(m);
-        if(SGEXTN::Structs::ContrastUtilities::getAbsoluteContrast(bg, newColour.toRGBA()) >= targetContrast){high = m;}
+        if(SGEXTN::Utilities::ContrastUtilities::getAbsoluteContrast(bg, newColour.toRGBA()) >= targetContrast){high = m;}
         else{low = m;}
     }
     newColour.setLightness(high);
-    SGEXTN::Structs::RgbaColour outputColour = newColour.toRGBA();
+    SGEXTN::Utilities::RgbaColour outputColour = newColour.toRGBA();
     if(isPossible != nullptr){
-        if(SGEXTN::Structs::ContrastUtilities::getAbsoluteContrast(bg, outputColour) >= targetContrast){(*isPossible) = true;}
+        if(SGEXTN::Utilities::ContrastUtilities::getAbsoluteContrast(bg, outputColour) >= targetContrast){(*isPossible) = true;}
         else{(*isPossible) = false;}
     }
     return outputColour;
 }
 
-SGEXTN::Structs::RgbaColour SGEXTN::Structs::ContrastUtilities::getBackgroundLightMode(RgbaColour fg, float targetContrast, bool* isPossible){
-    if(targetContrast < 0.0f){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::ContrastUtilities::getBackgroundLightMode crashed because target contrast cannot be negative, always pass absolute value of intended contrast");}
-    const SGEXTN::Structs::HslaColour referenceColour = SGEXTN::Structs::HslaColour(fg);
+SGEXTN::Utilities::RgbaColour SGEXTN::Utilities::ContrastUtilities::getBackgroundLightMode(RgbaColour fg, float targetContrast, bool* isPossible){
+    if(targetContrast < 0.0f){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::ContrastUtilities::getBackgroundLightMode crashed because target contrast cannot be negative, always pass absolute value of intended contrast");}
+    const SGEXTN::Utilities::HslaColour referenceColour = SGEXTN::Utilities::HslaColour(fg);
     float low = referenceColour.getLightness();
     float high = 100.0f;
-    SGEXTN::Structs::HslaColour newColour = referenceColour;
+    SGEXTN::Utilities::HslaColour newColour = referenceColour;
     while(high - low > 0.001){
         const float m = 0.5f * (low + high);
         newColour.setLightness(m);
-        if(SGEXTN::Structs::ContrastUtilities::getAbsoluteContrast(newColour.toRGBA(), fg) >= targetContrast){high = m;}
+        if(SGEXTN::Utilities::ContrastUtilities::getAbsoluteContrast(newColour.toRGBA(), fg) >= targetContrast){high = m;}
         else{low = m;}
     }
     newColour.setLightness(high);
-    SGEXTN::Structs::RgbaColour outputColour = newColour.toRGBA();
+    SGEXTN::Utilities::RgbaColour outputColour = newColour.toRGBA();
     if(isPossible != nullptr){
-        if(SGEXTN::Structs::ContrastUtilities::getAbsoluteContrast(outputColour, fg) >= targetContrast){(*isPossible) = true;}
+        if(SGEXTN::Utilities::ContrastUtilities::getAbsoluteContrast(outputColour, fg) >= targetContrast){(*isPossible) = true;}
         else{(*isPossible) = false;}
     }
     return outputColour;
 }
 
-SGEXTN::Structs::RgbaColour SGEXTN::Structs::ContrastUtilities::getBackgroundDarkMode(RgbaColour fg, float targetContrast, bool* isPossible){
-    if(targetContrast < 0.0f){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::ContrastUtilities::getBackgroundDarkMode crashed because target contrast cannot be negative, always pass absolute value of intended contrast");}
-    const SGEXTN::Structs::HslaColour referenceColour = SGEXTN::Structs::HslaColour(fg);
+SGEXTN::Utilities::RgbaColour SGEXTN::Utilities::ContrastUtilities::getBackgroundDarkMode(RgbaColour fg, float targetContrast, bool* isPossible){
+    if(targetContrast < 0.0f){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::ContrastUtilities::getBackgroundDarkMode crashed because target contrast cannot be negative, always pass absolute value of intended contrast");}
+    const SGEXTN::Utilities::HslaColour referenceColour = SGEXTN::Utilities::HslaColour(fg);
     float low = 0.0f;
     float high = referenceColour.getLightness();
-    SGEXTN::Structs::HslaColour newColour = referenceColour;
+    SGEXTN::Utilities::HslaColour newColour = referenceColour;
     while(high - low > 0.001){
         const float m = 0.5f * (low + high);
         newColour.setLightness(m);
-        if(SGEXTN::Structs::ContrastUtilities::getAbsoluteContrast(newColour.toRGBA(), fg) >= targetContrast){low = m;}
+        if(SGEXTN::Utilities::ContrastUtilities::getAbsoluteContrast(newColour.toRGBA(), fg) >= targetContrast){low = m;}
         else{high = m;}
     }
     newColour.setLightness(low);
-    SGEXTN::Structs::RgbaColour outputColour = newColour.toRGBA();
+    SGEXTN::Utilities::RgbaColour outputColour = newColour.toRGBA();
     if(isPossible != nullptr){
-        if(SGEXTN::Structs::ContrastUtilities::getAbsoluteContrast(outputColour, fg) >= targetContrast){(*isPossible) = true;}
+        if(SGEXTN::Utilities::ContrastUtilities::getAbsoluteContrast(outputColour, fg) >= targetContrast){(*isPossible) = true;}
         else{(*isPossible) = false;}
     }
     return outputColour;

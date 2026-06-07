@@ -5,14 +5,14 @@ namespace ApplicationBase {
 class String;
 }
 
-namespace Structs {
-enum class BUILDLAH_DLL_SGEXTN_Structs TimeUnit : unsigned char {Year, Month, Day, Hour, Minute, Second};
+namespace Utilities {
+enum class BUILDLAH_DLL_SGEXTN_Utilities TimeUnit : unsigned char {Year, Month, Day, Hour, Minute, Second};
 
-enum class BUILDLAH_DLL_SGEXTN_Structs TimeFormat : unsigned char {Display, FileName, ShortestReadable};
+enum class BUILDLAH_DLL_SGEXTN_Utilities TimeFormat : unsigned char {Display, FileName, ShortestReadable};
 
-enum class BUILDLAH_DLL_SGEXTN_Structs SignificantDates : unsigned char {NationalDay, DayBeforeNationalDay, DayAfterNationalDay, TotalDefenceDay, RacialHarmonyDay};
+enum class BUILDLAH_DLL_SGEXTN_Utilities SignificantDates : unsigned char {NationalDay, DayBeforeNationalDay, DayAfterNationalDay, TotalDefenceDay, RacialHarmonyDay};
 
-class BUILDLAH_DLL_SGEXTN_Structs DateTime {
+class BUILDLAH_DLL_SGEXTN_Utilities DateTime {
 public:
     long long private_data;
     DateTime();
@@ -26,24 +26,24 @@ public:
     [[nodiscard]] bool operator>=(DateTime x) const;
     [[nodiscard]] int hash() const;
     [[nodiscard]] SGEXTN::ApplicationBase::String debugLog() const;
-    [[nodiscard]] double getTimeAfter(DateTime x, SGEXTN::Structs::TimeUnit unit) const;
+    [[nodiscard]] double getTimeAfter(DateTime x, SGEXTN::Utilities::TimeUnit unit) const;
     [[nodiscard]] static DateTime beginningOfTime();
     [[nodiscard]] static DateTime now();
-    [[nodiscard]] int getPart(SGEXTN::Structs::TimeUnit unit) const;
-    void setPart(SGEXTN::Structs::TimeUnit unit, int x);
+    [[nodiscard]] int getPart(SGEXTN::Utilities::TimeUnit unit) const;
+    void setPart(SGEXTN::Utilities::TimeUnit unit, int x);
     [[nodiscard]] int getDayOfWeek() const;
     [[nodiscard]] int getDayOfYear() const;
     [[nodiscard]] int countDaysInMonth() const;
     [[nodiscard]] int countDaysInYear() const;
-    [[nodiscard]] SGEXTN::Structs::DateTime getStartOfDay() const;
-    [[nodiscard]] SGEXTN::Structs::DateTime getEndOfDay() const;
+    [[nodiscard]] SGEXTN::Utilities::DateTime getStartOfDay() const;
+    [[nodiscard]] SGEXTN::Utilities::DateTime getEndOfDay() const;
     [[nodiscard]] int getWeekOfYear() const;
-    [[nodiscard]] int getTimeAfterDisplayPart(DateTime x, SGEXTN::Structs::TimeUnit unit) const;
-    void advanceTime(long long x, SGEXTN::Structs::TimeUnit unit);
+    [[nodiscard]] int getTimeAfterDisplayPart(DateTime x, SGEXTN::Utilities::TimeUnit unit) const;
+    void advanceTime(long long x, SGEXTN::Utilities::TimeUnit unit);
     [[nodiscard]] static int convertToGlobalYear(int standardYear);
     [[nodiscard]] bool isNationalDayPeriod() const;
-    [[nodiscard]] bool isSignificantDate(SGEXTN::Structs::SignificantDates date) const;
-    [[nodiscard]] SGEXTN::ApplicationBase::String getDisplayString(SGEXTN::Structs::TimeFormat format, bool global, bool correctToSecond) const;
+    [[nodiscard]] bool isSignificantDate(SGEXTN::Utilities::SignificantDates date) const;
+    [[nodiscard]] SGEXTN::ApplicationBase::String getDisplayString(SGEXTN::Utilities::TimeFormat format, bool global, bool correctToSecond) const;
     [[nodiscard]] SGEXTN::ApplicationBase::String getDisplayString(const SGEXTN::ApplicationBase::String& customFormat) const;
 };
 }

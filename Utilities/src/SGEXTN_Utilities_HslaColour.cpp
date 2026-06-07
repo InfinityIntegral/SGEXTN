@@ -1,5 +1,5 @@
-#include <SGEXTN_Structs_HslaColour.h>
-#include <SGEXTN_Structs_RgbaColour.h>
+#include <SGEXTN_Utilities_HslaColour.h>
+#include <SGEXTN_Utilities_RgbaColour.h>
 #include <SGEXTN_Math_FloatMath.h>
 #include <SGEXTN_ApplicationBase_String.h>
 #include <SGEXTN_Containers_Hash.h>
@@ -35,9 +35,9 @@ float hueIntermediatesToRGB(float p, float q, float t){
 }
 }
 
-SGEXTN::Structs::HslaColour::HslaColour() : private_hue(313.0f), private_saturation(100.0f), private_lightness(50.0f), private_transparency(100.0f) {}
+SGEXTN::Utilities::HslaColour::HslaColour() : private_hue(313.0f), private_saturation(100.0f), private_lightness(50.0f), private_transparency(100.0f) {}
 
-SGEXTN::Structs::HslaColour::HslaColour(SGEXTN::Structs::RgbaColour x) : private_hue(313.0f), private_saturation(0.0f), private_lightness(50.0f), private_transparency(x.getTransparencyFloat() * 100.0f){
+SGEXTN::Utilities::HslaColour::HslaColour(SGEXTN::Utilities::RgbaColour x) : private_hue(313.0f), private_saturation(0.0f), private_lightness(50.0f), private_transparency(x.getTransparencyFloat() * 100.0f){
     const float r = x.getRedFloat();
     const float g = x.getGreenFloat();
     const float b = x.getBlueFloat();
@@ -64,115 +64,115 @@ SGEXTN::Structs::HslaColour::HslaColour(SGEXTN::Structs::RgbaColour x) : private
     private_lightness = limitTo100(private_lightness);
 }
 
-SGEXTN::Structs::HslaColour::HslaColour(float h, float s, float l) : private_hue(limitTo360(h)), private_saturation(limitTo100(s)), private_lightness(limitTo100(l)), private_transparency(100.0f) {}
+SGEXTN::Utilities::HslaColour::HslaColour(float h, float s, float l) : private_hue(limitTo360(h)), private_saturation(limitTo100(s)), private_lightness(limitTo100(l)), private_transparency(100.0f) {}
 
-SGEXTN::Structs::HslaColour::HslaColour(float h, float s, float l, float a) : private_hue(limitTo360(h)), private_saturation(limitTo100(s)), private_lightness(limitTo100(l)), private_transparency(limitTo100(a)) {}
+SGEXTN::Utilities::HslaColour::HslaColour(float h, float s, float l, float a) : private_hue(limitTo360(h)), private_saturation(limitTo100(s)), private_lightness(limitTo100(l)), private_transparency(limitTo100(a)) {}
 
-bool SGEXTN::Structs::HslaColour::operator==(SGEXTN::Structs::HslaColour x) const {
+bool SGEXTN::Utilities::HslaColour::operator==(SGEXTN::Utilities::HslaColour x) const {
     return ((private_hue == x.private_hue) && (private_saturation == x.private_saturation) && (private_lightness == x.private_lightness) && (private_transparency == x.private_transparency));
 }
 
-bool SGEXTN::Structs::HslaColour::operator!=(SGEXTN::Structs::HslaColour x) const {
+bool SGEXTN::Utilities::HslaColour::operator!=(SGEXTN::Utilities::HslaColour x) const {
     return ((private_hue != x.private_hue) || (private_saturation != x.private_saturation) || (private_lightness != x.private_lightness) || (private_transparency != x.private_transparency));
 }
 
-bool SGEXTN::Structs::HslaColour::operator<(SGEXTN::Structs::HslaColour x) const {
+bool SGEXTN::Utilities::HslaColour::operator<(SGEXTN::Utilities::HslaColour x) const {
     if(private_hue != x.private_hue){return (private_hue < x.private_hue);}
     if(private_saturation != x.private_saturation){return (private_saturation < x.private_saturation);}
     if(private_lightness != x.private_lightness){return (private_lightness < x.private_lightness);}
     return (private_transparency < x.private_transparency);
 }
 
-bool SGEXTN::Structs::HslaColour::operator>(SGEXTN::Structs::HslaColour x) const {
+bool SGEXTN::Utilities::HslaColour::operator>(SGEXTN::Utilities::HslaColour x) const {
     if(private_hue != x.private_hue){return (private_hue > x.private_hue);}
     if(private_saturation != x.private_saturation){return (private_saturation > x.private_saturation);}
     if(private_lightness != x.private_lightness){return (private_lightness > x.private_lightness);}
     return (private_transparency > x.private_transparency);
 }
 
-int SGEXTN::Structs::HslaColour::hash() const {
+int SGEXTN::Utilities::HslaColour::hash() const {
     return SGEXTN::Containers::Hash<float, float, float, float>()(private_hue, private_saturation, private_lightness, private_transparency);
 }
 
-SGEXTN::ApplicationBase::String SGEXTN::Structs::HslaColour::debugLog() const {
+SGEXTN::ApplicationBase::String SGEXTN::Utilities::HslaColour::debugLog() const {
     return SGEXTN::ApplicationBase::String("hsla(") + SGEXTN::ApplicationBase::String::stringFromFloat(private_hue, 10, SGEXTN::ApplicationBase::FloatPrecisionFormat::FractionalDigit, 0) + ", " + SGEXTN::ApplicationBase::String::stringFromFloat(private_saturation, 10, SGEXTN::ApplicationBase::FloatPrecisionFormat::FractionalDigit, 0) + ", " + SGEXTN::ApplicationBase::String::stringFromFloat(private_lightness, 10, SGEXTN::ApplicationBase::FloatPrecisionFormat::FractionalDigit, 0) + ", " + SGEXTN::ApplicationBase::String::stringFromFloat(private_transparency, 10, SGEXTN::ApplicationBase::FloatPrecisionFormat::FractionalDigit, 0) + ")";
 }
 
-float SGEXTN::Structs::HslaColour::getHue() const {
+float SGEXTN::Utilities::HslaColour::getHue() const {
     return private_hue;
 }
 
-float SGEXTN::Structs::HslaColour::getSaturation() const {
+float SGEXTN::Utilities::HslaColour::getSaturation() const {
     return private_saturation;
 }
 
-float SGEXTN::Structs::HslaColour::getLightness() const {
+float SGEXTN::Utilities::HslaColour::getLightness() const {
     return private_lightness;
 }
 
-float SGEXTN::Structs::HslaColour::getTransparency() const {
+float SGEXTN::Utilities::HslaColour::getTransparency() const {
     return private_transparency;
 }
 
-void SGEXTN::Structs::HslaColour::setHue(float h){
+void SGEXTN::Utilities::HslaColour::setHue(float h){
     private_hue = limitTo360(h);
 }
 
-void SGEXTN::Structs::HslaColour::setSaturation(float s){
+void SGEXTN::Utilities::HslaColour::setSaturation(float s){
     private_saturation = limitTo100(s);
 }
 
-void SGEXTN::Structs::HslaColour::setLightness(float l){
+void SGEXTN::Utilities::HslaColour::setLightness(float l){
     private_lightness = limitTo100(l);
 }
 
-void SGEXTN::Structs::HslaColour::setTransparency(float a){
+void SGEXTN::Utilities::HslaColour::setTransparency(float a){
     private_transparency = limitTo100(a);
 }
 
-SGEXTN::Structs::HslaColour SGEXTN::Structs::HslaColour::invertHue() const {
-    SGEXTN::Structs::HslaColour copy = (*this);
+SGEXTN::Utilities::HslaColour SGEXTN::Utilities::HslaColour::invertHue() const {
+    SGEXTN::Utilities::HslaColour copy = (*this);
     copy.setHue(private_hue + 180.0f);
     return copy;
 }
 
-SGEXTN::Structs::HslaColour SGEXTN::Structs::HslaColour::invertSaturation() const {
-    SGEXTN::Structs::HslaColour copy = (*this);
+SGEXTN::Utilities::HslaColour SGEXTN::Utilities::HslaColour::invertSaturation() const {
+    SGEXTN::Utilities::HslaColour copy = (*this);
     copy.setSaturation(100.0f - private_saturation);
     return copy;
 }
 
-SGEXTN::Structs::HslaColour SGEXTN::Structs::HslaColour::invertLightness() const {
-    SGEXTN::Structs::HslaColour copy = (*this);
+SGEXTN::Utilities::HslaColour SGEXTN::Utilities::HslaColour::invertLightness() const {
+    SGEXTN::Utilities::HslaColour copy = (*this);
     copy.setLightness(100.0f - private_lightness);
     return copy;
 }
 
-SGEXTN::Structs::HslaColour SGEXTN::Structs::HslaColour::linearTransformSaturation(float m, float c) const {
-    SGEXTN::Structs::HslaColour copy = (*this);
+SGEXTN::Utilities::HslaColour SGEXTN::Utilities::HslaColour::linearTransformSaturation(float m, float c) const {
+    SGEXTN::Utilities::HslaColour copy = (*this);
     copy.setSaturation(m * private_saturation + c);
     return copy;
 }
 
-SGEXTN::Structs::HslaColour SGEXTN::Structs::HslaColour::linearTransformLightness(float m, float c) const {
-    SGEXTN::Structs::HslaColour copy = (*this);
+SGEXTN::Utilities::HslaColour SGEXTN::Utilities::HslaColour::linearTransformLightness(float m, float c) const {
+    SGEXTN::Utilities::HslaColour copy = (*this);
     copy.setLightness(m * private_lightness + c);
     return copy;
 }
 
-SGEXTN::Structs::HslaColour SGEXTN::Structs::HslaColour::linearTransformTransparency(float m, float c) const {
-    SGEXTN::Structs::HslaColour copy = (*this);
+SGEXTN::Utilities::HslaColour SGEXTN::Utilities::HslaColour::linearTransformTransparency(float m, float c) const {
+    SGEXTN::Utilities::HslaColour copy = (*this);
     copy.setTransparency(m * private_transparency + c);
     return copy;
 }
 
-SGEXTN::Structs::HslaColour SGEXTN::Structs::HslaColour::offsetHue(float c) const {
-    SGEXTN::Structs::HslaColour copy = (*this);
+SGEXTN::Utilities::HslaColour SGEXTN::Utilities::HslaColour::offsetHue(float c) const {
+    SGEXTN::Utilities::HslaColour copy = (*this);
     copy.setHue(private_hue + c);
     return copy;
 }
 
-SGEXTN::Structs::RgbaColour SGEXTN::Structs::HslaColour::toRGBA() const {
+SGEXTN::Utilities::RgbaColour SGEXTN::Utilities::HslaColour::toRGBA() const {
     float r = 0.0f;
     float g = 0.0f;
     float b = 0.0f;
@@ -193,5 +193,5 @@ SGEXTN::Structs::RgbaColour SGEXTN::Structs::HslaColour::toRGBA() const {
         g = hueIntermediatesToRGB(p, q, xh);
         b = hueIntermediatesToRGB(p, q, xh - 1.0f / 3.0f);
     }
-    return SGEXTN::Structs::RgbaColour(r, g, b, private_transparency / 100.0f);
+    return SGEXTN::Utilities::RgbaColour(r, g, b, private_transparency / 100.0f);
 }

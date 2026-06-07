@@ -1,6 +1,6 @@
-#include <SGEXTN_Structs_IdentifierRegistry.h>
+#include <SGEXTN_Utilities_IdentifierRegistry.h>
 #include <SGEXTN_Containers_UnorderedSet.h>
-#include <SGEXTN_Structs_Identifier.h>
+#include <SGEXTN_Utilities_Identifier.h>
 #include <chrono>
 #include <random>
 
@@ -23,11 +23,11 @@ unsigned int getRandomNumber(){
 }
 }
 
-SGEXTN::Structs::Identifier SGEXTN::Structs::IdentifierRegistry::generateAndRegisterIdentifier(){
+SGEXTN::Utilities::Identifier SGEXTN::Utilities::IdentifierRegistry::generateAndRegisterIdentifier(){
     while(true){
         const unsigned int n = getRandomNumber();
         if(private_contents.contains(n) == false){
-            SGEXTN::Structs::Identifier id;
+            SGEXTN::Utilities::Identifier id;
             id.private_data = n;
             private_contents.insert(n);
             return id;
@@ -36,8 +36,8 @@ SGEXTN::Structs::Identifier SGEXTN::Structs::IdentifierRegistry::generateAndRegi
     }
 }
 
-SGEXTN::Structs::Identifier SGEXTN::Structs::IdentifierRegistry::parseAndRegisterIdentifier(unsigned int data, bool* isValid){
-    SGEXTN::Structs::Identifier id;
+SGEXTN::Utilities::Identifier SGEXTN::Utilities::IdentifierRegistry::parseAndRegisterIdentifier(unsigned int data, bool* isValid){
+    SGEXTN::Utilities::Identifier id;
     id.private_data = data;
     if(isValid != nullptr){
         if(data == 0u || private_contents.contains(data) == true){(*isValid) = false;}
@@ -47,12 +47,12 @@ SGEXTN::Structs::Identifier SGEXTN::Structs::IdentifierRegistry::parseAndRegiste
     return id;
 }
 
-bool SGEXTN::Structs::IdentifierRegistry::unregister(SGEXTN::Structs::Identifier id){
+bool SGEXTN::Utilities::IdentifierRegistry::unregister(SGEXTN::Utilities::Identifier id){
     if(id.private_data == 0u){return false;}
     return private_contents.erase(id.private_data);
 }
 
-bool SGEXTN::Structs::IdentifierRegistry::contains(SGEXTN::Structs::Identifier id) const {
+bool SGEXTN::Utilities::IdentifierRegistry::contains(SGEXTN::Utilities::Identifier id) const {
     if(id.private_data == 0u){return false;}
     return private_contents.contains(id.private_data);
 }

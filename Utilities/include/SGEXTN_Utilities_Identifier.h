@@ -5,9 +5,9 @@ namespace ApplicationBase {
 class String;
 }
 
-namespace Structs {
+namespace Utilities {
 class IdentifierRegistry;
-class BUILDLAH_DLL_SGEXTN_Structs Identifier {
+class BUILDLAH_DLL_SGEXTN_Utilities Identifier {
 public:
     unsigned int private_data;
     Identifier();

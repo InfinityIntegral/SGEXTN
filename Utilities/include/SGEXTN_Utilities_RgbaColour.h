@@ -5,8 +5,8 @@ namespace ApplicationBase {
 class String;
 }
 
-namespace Structs {
-class BUILDLAH_DLL_SGEXTN_Structs RgbaColour {
+namespace Utilities {
+class BUILDLAH_DLL_SGEXTN_Utilities RgbaColour {
 public:
     unsigned int private_data;
     RgbaColour();

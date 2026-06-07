@@ -5,17 +5,17 @@ namespace ApplicationBase {
 class String;
 }
 
-namespace Structs {
+namespace Utilities {
 class RgbaColour;
 
-class BUILDLAH_DLL_SGEXTN_Structs HslaColour {
+class BUILDLAH_DLL_SGEXTN_Utilities HslaColour {
 public:
     float private_hue;
     float private_saturation;
     float private_lightness;
     float private_transparency;
     HslaColour();
-    HslaColour(SGEXTN::Structs::RgbaColour x);
+    HslaColour(SGEXTN::Utilities::RgbaColour x);
     HslaColour(float h, float s, float l);
     HslaColour(float h, float s, float l, float a);
     [[nodiscard]] bool operator==(HslaColour x) const;
@@ -39,7 +39,7 @@ public:
     [[nodiscard]] HslaColour linearTransformLightness(float m, float c) const;
     [[nodiscard]] HslaColour linearTransformTransparency(float m, float c) const;
     [[nodiscard]] HslaColour offsetHue(float c) const;
-    [[nodiscard]] SGEXTN::Structs::RgbaColour toRGBA() const;
+    [[nodiscard]] SGEXTN::Utilities::RgbaColour toRGBA() const;
 };
 }
 }

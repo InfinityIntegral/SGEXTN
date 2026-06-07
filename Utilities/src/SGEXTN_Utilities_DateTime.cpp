@@ -1,4 +1,4 @@
-#include <SGEXTN_Structs_DateTime.h>
+#include <SGEXTN_Utilities_DateTime.h>
 #include <SGEXTN_Containers_Hash.h>
 #include <SGEXTN_ApplicationBase_String.h>
 #include <SGEXTN_ApplicationBase_Character.h>
@@ -141,75 +141,75 @@ void offsetToParts(long long offset, int* yearOutput, int* monthOutput, int* day
 }
 }
 
-SGEXTN::Structs::DateTime::DateTime() : private_data(0) {}
+SGEXTN::Utilities::DateTime::DateTime() : private_data(0) {}
 
-SGEXTN::Structs::DateTime::DateTime(long long t) : private_data(t) {}
+SGEXTN::Utilities::DateTime::DateTime(long long t) : private_data(t) {}
 
-SGEXTN::Structs::DateTime::DateTime(int year, int month, int day, int hour, int minute, int second) : private_data(partsToOffset(year, month, day, hour, minute, second)) {}
+SGEXTN::Utilities::DateTime::DateTime(int year, int month, int day, int hour, int minute, int second) : private_data(partsToOffset(year, month, day, hour, minute, second)) {}
 
-bool SGEXTN::Structs::DateTime::operator==(SGEXTN::Structs::DateTime x) const {
+bool SGEXTN::Utilities::DateTime::operator==(SGEXTN::Utilities::DateTime x) const {
     return (private_data == x.private_data);
 }
 
-bool SGEXTN::Structs::DateTime::operator!=(SGEXTN::Structs::DateTime x) const {
+bool SGEXTN::Utilities::DateTime::operator!=(SGEXTN::Utilities::DateTime x) const {
     return (private_data != x.private_data);
 }
 
-bool SGEXTN::Structs::DateTime::operator<(SGEXTN::Structs::DateTime x) const {
+bool SGEXTN::Utilities::DateTime::operator<(SGEXTN::Utilities::DateTime x) const {
     return (private_data < x.private_data);
 }
 
-bool SGEXTN::Structs::DateTime::operator>(SGEXTN::Structs::DateTime x) const {
+bool SGEXTN::Utilities::DateTime::operator>(SGEXTN::Utilities::DateTime x) const {
     return (private_data > x.private_data);
 }
 
-bool SGEXTN::Structs::DateTime::operator<=(SGEXTN::Structs::DateTime x) const {
+bool SGEXTN::Utilities::DateTime::operator<=(SGEXTN::Utilities::DateTime x) const {
     return (private_data <= x.private_data);
 }
 
-bool SGEXTN::Structs::DateTime::operator>=(SGEXTN::Structs::DateTime x) const {
+bool SGEXTN::Utilities::DateTime::operator>=(SGEXTN::Utilities::DateTime x) const {
     return (private_data >= x.private_data);
 }
 
-int SGEXTN::Structs::DateTime::hash() const {
+int SGEXTN::Utilities::DateTime::hash() const {
     return SGEXTN::Containers::Hash<long long>()(private_data);
 }
 
-SGEXTN::ApplicationBase::String SGEXTN::Structs::DateTime::debugLog() const {
-    return getDisplayString(SGEXTN::Structs::TimeFormat::Display, false, true);
+SGEXTN::ApplicationBase::String SGEXTN::Utilities::DateTime::debugLog() const {
+    return getDisplayString(SGEXTN::Utilities::TimeFormat::Display, false, true);
 }
 
-double SGEXTN::Structs::DateTime::getTimeAfter(SGEXTN::Structs::DateTime x, SGEXTN::Structs::TimeUnit unit) const {
+double SGEXTN::Utilities::DateTime::getTimeAfter(SGEXTN::Utilities::DateTime x, SGEXTN::Utilities::TimeUnit unit) const {
     double offset = static_cast<double>(private_data - x.private_data);
-    if(unit == SGEXTN::Structs::TimeUnit::Second){return offset;}
-    if(unit == SGEXTN::Structs::TimeUnit::Minute){return (offset / 60.0);}
-    if(unit == SGEXTN::Structs::TimeUnit::Hour){return (offset / 3600.0);}
-    if(unit == SGEXTN::Structs::TimeUnit::Day){return (offset / 86400.0);}
+    if(unit == SGEXTN::Utilities::TimeUnit::Second){return offset;}
+    if(unit == SGEXTN::Utilities::TimeUnit::Minute){return (offset / 60.0);}
+    if(unit == SGEXTN::Utilities::TimeUnit::Hour){return (offset / 3600.0);}
+    if(unit == SGEXTN::Utilities::TimeUnit::Day){return (offset / 86400.0);}
     offset /= 86400.0;
-    if(unit == SGEXTN::Structs::TimeUnit::Month){return (offset / 30.436875);}
+    if(unit == SGEXTN::Utilities::TimeUnit::Month){return (offset / 30.436875);}
     return (offset / 365.2425);
 }
 
-SGEXTN::Structs::DateTime SGEXTN::Structs::DateTime::beginningOfTime(){
-    return SGEXTN::Structs::DateTime(0ll);
+SGEXTN::Utilities::DateTime SGEXTN::Utilities::DateTime::beginningOfTime(){
+    return SGEXTN::Utilities::DateTime(0ll);
 }
 
-SGEXTN::Structs::DateTime SGEXTN::Structs::DateTime::now(){
-    return SGEXTN::Structs::DateTime(std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count() + 138749400ll);
+SGEXTN::Utilities::DateTime SGEXTN::Utilities::DateTime::now(){
+    return SGEXTN::Utilities::DateTime(std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count() + 138749400ll);
 }
 
-int SGEXTN::Structs::DateTime::getPart(SGEXTN::Structs::TimeUnit unit) const {
+int SGEXTN::Utilities::DateTime::getPart(SGEXTN::Utilities::TimeUnit unit) const {
     int output = 0;
-    if(unit == SGEXTN::Structs::TimeUnit::Second){offsetToParts(private_data, nullptr, nullptr, nullptr, nullptr, nullptr, &output);}
-    else if(unit == SGEXTN::Structs::TimeUnit::Minute){offsetToParts(private_data, nullptr, nullptr, nullptr, nullptr, &output, nullptr);}
-    else if(unit == SGEXTN::Structs::TimeUnit::Hour){offsetToParts(private_data, nullptr, nullptr, nullptr, &output, nullptr, nullptr);}
-    else if(unit == SGEXTN::Structs::TimeUnit::Day){offsetToParts(private_data, nullptr, nullptr, &output, nullptr, nullptr, nullptr);}
-    else if(unit == SGEXTN::Structs::TimeUnit::Month){offsetToParts(private_data, nullptr, &output, nullptr, nullptr, nullptr, nullptr);}
-    else if(unit == SGEXTN::Structs::TimeUnit::Year){offsetToParts(private_data, &output, nullptr, nullptr, nullptr, nullptr, nullptr);}
+    if(unit == SGEXTN::Utilities::TimeUnit::Second){offsetToParts(private_data, nullptr, nullptr, nullptr, nullptr, nullptr, &output);}
+    else if(unit == SGEXTN::Utilities::TimeUnit::Minute){offsetToParts(private_data, nullptr, nullptr, nullptr, nullptr, &output, nullptr);}
+    else if(unit == SGEXTN::Utilities::TimeUnit::Hour){offsetToParts(private_data, nullptr, nullptr, nullptr, &output, nullptr, nullptr);}
+    else if(unit == SGEXTN::Utilities::TimeUnit::Day){offsetToParts(private_data, nullptr, nullptr, &output, nullptr, nullptr, nullptr);}
+    else if(unit == SGEXTN::Utilities::TimeUnit::Month){offsetToParts(private_data, nullptr, &output, nullptr, nullptr, nullptr, nullptr);}
+    else if(unit == SGEXTN::Utilities::TimeUnit::Year){offsetToParts(private_data, &output, nullptr, nullptr, nullptr, nullptr, nullptr);}
     return output;
 }
 
-void SGEXTN::Structs::DateTime::setPart(SGEXTN::Structs::TimeUnit unit, int x){
+void SGEXTN::Utilities::DateTime::setPart(SGEXTN::Utilities::TimeUnit unit, int x){
     int year = 0;
     int month = 0;
     int day = 0;
@@ -217,30 +217,30 @@ void SGEXTN::Structs::DateTime::setPart(SGEXTN::Structs::TimeUnit unit, int x){
     int minute = 0;
     int second = 0;
     offsetToParts(private_data, &year, &month, &day, &hour, &minute, &second);
-    if(unit == SGEXTN::Structs::TimeUnit::Year){year = x;}
-    else if(unit == SGEXTN::Structs::TimeUnit::Month){
+    if(unit == SGEXTN::Utilities::TimeUnit::Year){year = x;}
+    else if(unit == SGEXTN::Utilities::TimeUnit::Month){
         if(x < 1){x = 1;}
         else if(x > 12){x = 12;}
         month = x;
     }
-    else if(unit == SGEXTN::Structs::TimeUnit::Day){
+    else if(unit == SGEXTN::Utilities::TimeUnit::Day){
         const bool isLeapYear = checkLeapYear(year);
         const int maxDays = monthLength(month, isLeapYear);
         if(x < 1){x = 1;}
         else if(x > maxDays){x = maxDays;}
         day = x;
     }
-    else if(unit == SGEXTN::Structs::TimeUnit::Hour){
+    else if(unit == SGEXTN::Utilities::TimeUnit::Hour){
         if(x < 0){x = 0;}
         else if(x > 23){x = 23;}
         hour = x;
     }
-    else if(unit == SGEXTN::Structs::TimeUnit::Minute){
+    else if(unit == SGEXTN::Utilities::TimeUnit::Minute){
         if(x < 0){x = 0;}
         else if(x > 59){x = 59;}
         minute = x;
     }
-    else if(unit == SGEXTN::Structs::TimeUnit::Second){
+    else if(unit == SGEXTN::Utilities::TimeUnit::Second){
         if(x < 0){x = 0;}
         else if(x > 59){x = 59;}
         second = x;
@@ -248,13 +248,13 @@ void SGEXTN::Structs::DateTime::setPart(SGEXTN::Structs::TimeUnit unit, int x){
     private_data = partsToOffset(year, month, day, hour, minute, second);
 }
 
-int SGEXTN::Structs::DateTime::getDayOfWeek() const {
+int SGEXTN::Utilities::DateTime::getDayOfWeek() const {
     long long offsetFromMidnight = private_data + 37800ll;
     offsetFromMidnight = properDivision(offsetFromMidnight, 86400ll);
     return (1 + static_cast<int>(properRemainder(offsetFromMidnight, 7ll)));
 }
 
-int SGEXTN::Structs::DateTime::getDayOfYear() const {
+int SGEXTN::Utilities::DateTime::getDayOfYear() const {
     int year = 0;
     int month = 0;
     int day = 0;
@@ -262,47 +262,47 @@ int SGEXTN::Structs::DateTime::getDayOfYear() const {
     return (day + monthOffset(month, checkLeapYear(year)));
 }
 
-int SGEXTN::Structs::DateTime::countDaysInMonth() const {
+int SGEXTN::Utilities::DateTime::countDaysInMonth() const {
     int month = 0;
     int year = 0;
     offsetToParts(private_data, &year, &month, nullptr, nullptr, nullptr, nullptr);
     return monthLength(month, checkLeapYear(year));
 }
 
-int SGEXTN::Structs::DateTime::countDaysInYear() const {
+int SGEXTN::Utilities::DateTime::countDaysInYear() const {
     int year = 0;
     offsetToParts(private_data, &year, nullptr, nullptr, nullptr, nullptr, nullptr);
     if(checkLeapYear(year) == true){return 366;}
     return 365;
 }
 
-SGEXTN::Structs::DateTime SGEXTN::Structs::DateTime::getStartOfDay() const {
+SGEXTN::Utilities::DateTime SGEXTN::Utilities::DateTime::getStartOfDay() const {
     int year = 0;
     int month = 0;
     int day = 0;
     offsetToParts(private_data, &year, &month, &day, nullptr, nullptr, nullptr);
-    return SGEXTN::Structs::DateTime(year, month, day, 0, 0, 0);
+    return SGEXTN::Utilities::DateTime(year, month, day, 0, 0, 0);
 }
 
-SGEXTN::Structs::DateTime SGEXTN::Structs::DateTime::getEndOfDay() const {
+SGEXTN::Utilities::DateTime SGEXTN::Utilities::DateTime::getEndOfDay() const {
     int year = 0;
     int month = 0;
     int day = 0;
     offsetToParts(private_data + 86400ll, &year, &month, &day, nullptr, nullptr, nullptr);
-    return SGEXTN::Structs::DateTime(year, month, day, 0, 0, 0);
+    return SGEXTN::Utilities::DateTime(year, month, day, 0, 0, 0);
 }
 
-int SGEXTN::Structs::DateTime::getWeekOfYear() const {
+int SGEXTN::Utilities::DateTime::getWeekOfYear() const {
     int dayOfYearThisThursday = getDayOfYear() - getDayOfWeek() + 3;
     if(dayOfYearThisThursday >= countDaysInYear()){return 1;}
     if(dayOfYearThisThursday >= 0){return (dayOfYearThisThursday / 7 + 1);}
-    const bool previousIsLeapYear = checkLeapYear(getPart(SGEXTN::Structs::TimeUnit::Year) - 1);
+    const bool previousIsLeapYear = checkLeapYear(getPart(SGEXTN::Utilities::TimeUnit::Year) - 1);
     if(previousIsLeapYear == false){dayOfYearThisThursday += 365;}
     else{dayOfYearThisThursday += 366;}
     return (dayOfYearThisThursday / 7 + 1);
 }
 
-int SGEXTN::Structs::DateTime::getTimeAfterDisplayPart(SGEXTN::Structs::DateTime x, SGEXTN::Structs::TimeUnit unit) const {
+int SGEXTN::Utilities::DateTime::getTimeAfterDisplayPart(SGEXTN::Utilities::DateTime x, SGEXTN::Utilities::TimeUnit unit) const {
     int year1 = 0;
     int month1 = 0;
     int day1 = 0;
@@ -320,20 +320,20 @@ int SGEXTN::Structs::DateTime::getTimeAfterDisplayPart(SGEXTN::Structs::DateTime
     int carryBelow = 0;
     int answer = 0;
     offsetToParts(x.private_data, &year2, &month2, &day2, &hour2, &minute2, &second2);
-    if(unit == SGEXTN::Structs::TimeUnit::Year){
+    if(unit == SGEXTN::Utilities::TimeUnit::Year){
         answer = year1 - year2;
         const int carry1 = 2678400 * month1 + 86400 * day1 + 3600 * hour1 + 60 * minute1 + second1;
         const int carry2 = 2678400 * month2 + 86400 * day2 + 3600 * hour2 + 60 * minute2 + second2;
         if(carry2 > carry1){carryBelow = -1;}
     }
-    else if(unit == SGEXTN::Structs::TimeUnit::Month){
+    else if(unit == SGEXTN::Utilities::TimeUnit::Month){
         answer = month1 - month2;
         const int carry1 = 86400 * day1 + 3600 * hour1 + 60 * minute1 + second1;
         const int carry2 = 86400 * day2 + 3600 * hour2 + 60 * minute2 + second2;
         if(carry2 > carry1){carryBelow = -1;}
         if(answer + carryBelow < 0){carryAbove = 12;}
     }
-    else if(unit == SGEXTN::Structs::TimeUnit::Day){
+    else if(unit == SGEXTN::Utilities::TimeUnit::Day){
         answer = day1 - day2;
         const int carry1 = 3600 * hour1 + 60 * minute1 + second1;
         const int carry2 = 3600 * hour2 + 60 * minute2 + second2;
@@ -346,39 +346,39 @@ int SGEXTN::Structs::DateTime::getTimeAfterDisplayPart(SGEXTN::Structs::DateTime
         }
         if(answer + carryBelow < 0){carryAbove = monthLength(carryMonth, checkLeapYear(carryYear));}
     }
-    else if(unit == SGEXTN::Structs::TimeUnit::Hour){
+    else if(unit == SGEXTN::Utilities::TimeUnit::Hour){
         answer = hour1 - hour2;
         const int carry1 = 60 * minute1 + second1;
         const int carry2 = 60 * minute2 + second2;
         if(carry2 > carry1){carryBelow = -1;}
         if(answer + carryBelow < 0){carryAbove = 24;}
     }
-    else if(unit == SGEXTN::Structs::TimeUnit::Minute){
+    else if(unit == SGEXTN::Utilities::TimeUnit::Minute){
         answer = minute1 - minute2;
         if(second2 > second1){carryBelow = -1;}
         if(answer + carryBelow < 0){carryAbove = 60;}
     }
-    else if(unit == SGEXTN::Structs::TimeUnit::Second){
+    else if(unit == SGEXTN::Utilities::TimeUnit::Second){
         answer = second1 - second2;
         if(answer < 0){carryAbove = 60;}
     }
     return (carryAbove + answer + carryBelow);
 }
 
-void SGEXTN::Structs::DateTime::advanceTime(long long x, SGEXTN::Structs::TimeUnit unit){
-    if(unit == SGEXTN::Structs::TimeUnit::Second){
+void SGEXTN::Utilities::DateTime::advanceTime(long long x, SGEXTN::Utilities::TimeUnit unit){
+    if(unit == SGEXTN::Utilities::TimeUnit::Second){
         private_data += x;
         return;
     }
-    if(unit == SGEXTN::Structs::TimeUnit::Minute){
+    if(unit == SGEXTN::Utilities::TimeUnit::Minute){
         private_data += (60ll * x);
         return;
     }
-    if(unit == SGEXTN::Structs::TimeUnit::Hour){
+    if(unit == SGEXTN::Utilities::TimeUnit::Hour){
         private_data += (3600ll * x);
         return;
     }
-    if(unit == SGEXTN::Structs::TimeUnit::Day){
+    if(unit == SGEXTN::Utilities::TimeUnit::Day){
         private_data += (86400ll * x);
         return;
     }
@@ -389,10 +389,10 @@ void SGEXTN::Structs::DateTime::advanceTime(long long x, SGEXTN::Structs::TimeUn
     int minute = 0;
     int second = 0;
     offsetToParts(private_data, &year, &month, &day, &hour, &minute, &second);
-    if(unit == SGEXTN::Structs::TimeUnit::Year){
+    if(unit == SGEXTN::Utilities::TimeUnit::Year){
         year += static_cast<int>(x);
     }
-    else if(unit == SGEXTN::Structs::TimeUnit::Month){
+    else if(unit == SGEXTN::Utilities::TimeUnit::Month){
         month += static_cast<int>(x);
         month--;
         year += properDivision(month, 12);
@@ -401,54 +401,54 @@ void SGEXTN::Structs::DateTime::advanceTime(long long x, SGEXTN::Structs::TimeUn
     private_data = partsToOffset(year, month, day, hour, minute, second);
 }
 
-int SGEXTN::Structs::DateTime::convertToGlobalYear(int standardYear){
+int SGEXTN::Utilities::DateTime::convertToGlobalYear(int standardYear){
     return (standardYear + 1965);
 }
 
-bool SGEXTN::Structs::DateTime::isNationalDayPeriod() const {
-    const int month = getPart(SGEXTN::Structs::TimeUnit::Month);
+bool SGEXTN::Utilities::DateTime::isNationalDayPeriod() const {
+    const int month = getPart(SGEXTN::Utilities::TimeUnit::Month);
     if(month >= 7 && month <= 9){return true;}
     return false;
 }
 
-bool SGEXTN::Structs::DateTime::isSignificantDate(SGEXTN::Structs::SignificantDates date) const {
+bool SGEXTN::Utilities::DateTime::isSignificantDate(SGEXTN::Utilities::SignificantDates date) const {
     int month = 0;
     int day = 0;
     offsetToParts(private_data, nullptr, &month, &day, nullptr, nullptr, nullptr);
-    if(date == SGEXTN::Structs::SignificantDates::NationalDay && month == 8 && day == 9){return true;}
-    if(date == SGEXTN::Structs::SignificantDates::DayBeforeNationalDay && month == 8 && day == 8){return true;}
-    if(date == SGEXTN::Structs::SignificantDates::DayAfterNationalDay && month == 8 && day == 10){return true;}
-    if(date == SGEXTN::Structs::SignificantDates::TotalDefenceDay && month == 2 && day == 15){return true;}
-    if(date == SGEXTN::Structs::SignificantDates::RacialHarmonyDay && month == 7 && day == 21){return true;}
+    if(date == SGEXTN::Utilities::SignificantDates::NationalDay && month == 8 && day == 9){return true;}
+    if(date == SGEXTN::Utilities::SignificantDates::DayBeforeNationalDay && month == 8 && day == 8){return true;}
+    if(date == SGEXTN::Utilities::SignificantDates::DayAfterNationalDay && month == 8 && day == 10){return true;}
+    if(date == SGEXTN::Utilities::SignificantDates::TotalDefenceDay && month == 2 && day == 15){return true;}
+    if(date == SGEXTN::Utilities::SignificantDates::RacialHarmonyDay && month == 7 && day == 21){return true;}
     return false;
 }
 
-SGEXTN::ApplicationBase::String SGEXTN::Structs::DateTime::getDisplayString(const SGEXTN::Structs::TimeFormat format, bool global, bool correctToSecond) const {
+SGEXTN::ApplicationBase::String SGEXTN::Utilities::DateTime::getDisplayString(const SGEXTN::Utilities::TimeFormat format, bool global, bool correctToSecond) const {
     SGEXTN::ApplicationBase::String formatString = "";
     if(global == false){
-        if(format == SGEXTN::Structs::TimeFormat::Display){
+        if(format == SGEXTN::Utilities::TimeFormat::Display){
             if(correctToSecond == true){formatString = "%\\SG%2year%\\-%2month%\\-%2day%\\ %2hour%\\:%2minute%\\:%2second";}
             else{formatString = "%\\SG%2year%\\-%2month%\\-%2day";}
         }
-        else if(format == SGEXTN::Structs::TimeFormat::FileName){
+        else if(format == SGEXTN::Utilities::TimeFormat::FileName){
             if(correctToSecond == true){formatString = "%2year%2month%2day%2hour%2minute%2second";}
             else{formatString = "%2year%2month%2day";}
         }
-        else if(format == SGEXTN::Structs::TimeFormat::ShortestReadable){
+        else if(format == SGEXTN::Utilities::TimeFormat::ShortestReadable){
             if(correctToSecond == true){formatString = "%\\SG%2year%\\ %2month%2day%\\ %2hour%2minute%2second";}
             else{formatString = "%\\SG%2year%\\ %2month%2day";}
         }
     }
     else{
-        if(format == SGEXTN::Structs::TimeFormat::Display){
+        if(format == SGEXTN::Utilities::TimeFormat::Display){
             if(correctToSecond == true){formatString = "%4globalyear%\\-%2month%\\-%2day%\\ %2hour%\\:%2minute%\\:%2second";}
             else{formatString = "%4globalyear%\\-%2month%\\-%2day";}
         }
-        else if(format == SGEXTN::Structs::TimeFormat::FileName){
+        else if(format == SGEXTN::Utilities::TimeFormat::FileName){
             if(correctToSecond == true){formatString = "%4globalyear%2month%2day%2hour%2minute%2second";}
             else{formatString = "%4globalyear%2month%2day";}
         }
-        else if(format == SGEXTN::Structs::TimeFormat::ShortestReadable){
+        else if(format == SGEXTN::Utilities::TimeFormat::ShortestReadable){
             if(correctToSecond == true){formatString = "%4globalyear%2month%2day%\\ %2hour%2minute%2second";}
             else{formatString = "%4globalyear%2month%2day";}
         }
@@ -456,7 +456,7 @@ SGEXTN::ApplicationBase::String SGEXTN::Structs::DateTime::getDisplayString(cons
     return getDisplayString(formatString);
 }
 
-SGEXTN::ApplicationBase::String SGEXTN::Structs::DateTime::getDisplayString(const SGEXTN::ApplicationBase::String& customFormat) const {
+SGEXTN::ApplicationBase::String SGEXTN::Utilities::DateTime::getDisplayString(const SGEXTN::ApplicationBase::String& customFormat) const {
     SGEXTN::ApplicationBase::String format = customFormat;
     SGEXTN::ApplicationBase::String output = "";
     while(format.characterLength() > 0){
@@ -464,23 +464,23 @@ SGEXTN::ApplicationBase::String SGEXTN::Structs::DateTime::getDisplayString(cons
         if(tokenEnd == -1){tokenEnd = format.characterLength();}
         SGEXTN::ApplicationBase::String thisToken = format.substringCharactersLeft(tokenEnd);
         format = format.substringCharactersRight(format.characterLength() - tokenEnd);
-        if(thisToken.characterLength() == 0 || thisToken.getCharacterAt(0) != '%'){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime::getDisplayString crashed because a token does not start with %");}
+        if(thisToken.characterLength() == 0 || thisToken.getCharacterAt(0) != '%'){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime::getDisplayString crashed because a token does not start with %");}
         if(thisToken.characterLength() > 1 && thisToken.getCharacterAt(1) == '\\'){
             output += thisToken.substringCharactersRight(thisToken.characterLength() - 2);
             continue;
         }
-        if(thisToken.characterLength() < 2 || SGEXTN::ApplicationBase::Character(thisToken.getCharacterAt(1)).isDigit() == false){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime::getDisplayString crashed because the precision specifier, which is the character after the %, in a token is not a number");}
+        if(thisToken.characterLength() < 2 || SGEXTN::ApplicationBase::Character(thisToken.getCharacterAt(1)).isDigit() == false){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime::getDisplayString crashed because the precision specifier, which is the character after the %, in a token is not a number");}
         const int precision = SGEXTN::ApplicationBase::String(thisToken.getCharacterAt(1)).parseToInt(nullptr, 10);
         int component = 0;
         thisToken = thisToken.substringCharactersRight(thisToken.characterLength() - 2);
-        if(thisToken == "year"){component = getPart(SGEXTN::Structs::TimeUnit::Year);}
-        else if(thisToken == "globalyear"){component = getPart(SGEXTN::Structs::TimeUnit::Year) + 1965;}
-        else if(thisToken == "month"){component = getPart(SGEXTN::Structs::TimeUnit::Month);}
-        else if(thisToken == "day"){component = getPart(SGEXTN::Structs::TimeUnit::Day);}
-        else if(thisToken == "hour"){component = getPart(SGEXTN::Structs::TimeUnit::Hour);}
-        else if(thisToken == "minute"){component = getPart(SGEXTN::Structs::TimeUnit::Minute);}
-        else if(thisToken == "second"){component = getPart(SGEXTN::Structs::TimeUnit::Second);}
-        else{SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime::getDisplayString crashed because the component name is invalid, custom strings must not contain % and must be prefixed with a \\ sign");}
+        if(thisToken == "year"){component = getPart(SGEXTN::Utilities::TimeUnit::Year);}
+        else if(thisToken == "globalyear"){component = getPart(SGEXTN::Utilities::TimeUnit::Year) + 1965;}
+        else if(thisToken == "month"){component = getPart(SGEXTN::Utilities::TimeUnit::Month);}
+        else if(thisToken == "day"){component = getPart(SGEXTN::Utilities::TimeUnit::Day);}
+        else if(thisToken == "hour"){component = getPart(SGEXTN::Utilities::TimeUnit::Hour);}
+        else if(thisToken == "minute"){component = getPart(SGEXTN::Utilities::TimeUnit::Minute);}
+        else if(thisToken == "second"){component = getPart(SGEXTN::Utilities::TimeUnit::Second);}
+        else{SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime::getDisplayString crashed because the component name is invalid, custom strings must not contain % and must be prefixed with a \\ sign");}
         SGEXTN::ApplicationBase::String componentString = SGEXTN::ApplicationBase::String::stringFromInt(component, 10);
         if(componentString.characterLength() > precision && thisToken.containsCharacters("year")){componentString = componentString.substringCharactersRight(precision);}
         output += componentString.fillLeftToCharacterLength(precision, '0');

@@ -18,9 +18,11 @@
 #include <system_error>
 
 namespace {
-bool testAllOfUnicode = false;
-bool testUnicodeExternal = false;
-bool testNumericParsingExternal = false;
+bool testExternalUnitTests = true;
+
+bool testAllOfUnicode = true;
+bool testUnicodeExternal = true;
+bool testNumericParsingExternal = true;
 
 int parseCStringToInt(const char* s, bool* isValid, int base){
     const int length = static_cast<int>(std::strlen(s));
@@ -428,11 +430,13 @@ void countDecimalPlaces(int& minimum, int& maximum, const SGEXTN::ApplicationBas
 }
 
 void SGEXTN::InternalTest::StringTest::testAll(){
-    SGEXTN::InternalTest::StringTest::testUnicodeQuery();
     SGEXTN::InternalTest::StringTest::testCharacter();
     SGEXTN::InternalTest::StringTest::testString();
-    SGEXTN::InternalTest::StringTest::runExternalUnicodeTests();
-    SGEXTN::InternalTest::StringTest::runExternalNumericParsingTests();
+    if(testExternalUnitTests == true){
+        SGEXTN::InternalTest::StringTest::testUnicodeQuery();
+        SGEXTN::InternalTest::StringTest::runExternalUnicodeTests();
+        SGEXTN::InternalTest::StringTest::runExternalNumericParsingTests();
+    }
 }
 
 void SGEXTN::InternalTest::StringTest::testUnicodeQuery(){
