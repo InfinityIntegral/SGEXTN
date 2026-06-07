@@ -1,6 +1,5 @@
 #pragma once
 #include <private_api/SGEXTN_Containers_Crash.h>
-#include <private_api/SGEXTN_Containers_MultiMap_impl.h>
 
 template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MultiMap<Key, Value, Comparator>::MultiMap() : private_avlTree() {}
 

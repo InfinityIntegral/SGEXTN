@@ -2,7 +2,7 @@
 
 namespace SGEXTN {
 namespace ApplicationBase {
-class OldString;
+class String;
 }
 
 namespace Structs {
@@ -23,7 +23,7 @@ public:
     [[nodiscard]] bool operator<(HslaColour x) const;
     [[nodiscard]] bool operator>(HslaColour x) const;
     [[nodiscard]] int hash() const;
-    [[nodiscard]] SGEXTN::ApplicationBase::OldString debugLog() const;
+    [[nodiscard]] SGEXTN::ApplicationBase::String debugLog() const;
     float getHue() const;
     float getSaturation() const;
     float getLightness() const;

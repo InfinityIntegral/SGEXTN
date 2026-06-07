@@ -37,7 +37,6 @@ public:
     [[nodiscard]] bool operator<=(const String& x) const;
     [[nodiscard]] bool operator>=(const String& x) const;
     [[nodiscard]] int hash() const;
-    [[nodiscard]] SGEXTN::ApplicationBase::OldString debugLog() const;
     [[nodiscard]] String operator+(const String& x) const;
     String& operator+=(const String& x);
     [[nodiscard]] int byteLength() const;

@@ -1,4 +1,7 @@
 #pragma once
+#include <SGEXTN_Containers_Array.h>
+#include <SGEXTN_Containers_Vector.h>
+#include <SGEXTN_Containers_Span.h>
 #include <private_api/SGEXTN_Containers_Crash.h>
 #include <SGEXTN_Containers_PlacementNew.h>
 #include <SGEXTN_Containers_ArrayVectorMove.h>

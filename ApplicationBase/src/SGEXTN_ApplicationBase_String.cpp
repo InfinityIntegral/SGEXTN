@@ -8,8 +8,6 @@
 #include <SGEXTN_Math_FloatLimits.h>
 #include <SGEXTN_Containers_Sort.h>
 #include <private_api/SGEXTN_Containers_Crash.h>
-#include <SGEXTN_ApplicationBase_OldString.h>
-#include <QString>
 #include <SGEXTN_Containers_ArrayVectorMove.h>
 
 namespace {
@@ -448,10 +446,6 @@ bool SGEXTN::ApplicationBase::String::operator>=(const SGEXTN::ApplicationBase::
 
 int SGEXTN::ApplicationBase::String::hash() const {
     return private_data.hash();
-}
-
-SGEXTN::ApplicationBase::OldString SGEXTN::ApplicationBase::String::debugLog() const {
-    return SGEXTN::ApplicationBase::OldString(QString::fromUtf8(reinterpret_cast<const char*>(&private_data.byteAt(0)), byteLength()));
 }
 
 SGEXTN::ApplicationBase::String SGEXTN::ApplicationBase::String::operator+(const SGEXTN::ApplicationBase::String& x) const {

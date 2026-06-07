@@ -5,12 +5,12 @@
 #include <SGEXTN_Structs_ContrastUtilities.h>
 #include <SGEXTN_Structs_Identifier.h>
 #include <SGEXTN_Structs_IdentifierRegistry.h>
+#include <SGEXTN_Structs_DateTime.h>
+#include <SGEXTN_ApplicationBase_String.h>
 #include <QDateTime>
 #include <QDate>
 #include <QTime>
 #include <QTimeZone>
-#include <SGEXTN_Structs_DateTime.h>
-#include <SGEXTN_ApplicationBase_OldString.h>
 
 namespace {
 bool isCloseEnough(float a, float b){
@@ -58,6 +58,7 @@ void SGEXTN::InternalTest::StructsTest::testRgbaColour(){
     if(col.getTransparencyFloat() != 0.8f){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::RgbaColour - set transparency float fail");}
     if(SGEXTN::Structs::RgbaColour(255, 0, 200, 255) == SGEXTN::Structs::RgbaColour(255, 0, 200, 254)){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::RgbaColour - equality check fail");}
     if(SGEXTN::Structs::RgbaColour(255, 0, 200, 255) != SGEXTN::Structs::RgbaColour(255, 0, 200)){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::RgbaColour - inequality check fail");}
+    if(SGEXTN::Structs::RgbaColour(255, 0, 200, 255).debugLog() != "rgba(255, 0, 200, 255)"){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::RgbaColour - debug log fail");}
     col = SGEXTN::Structs::RgbaColour(255, 0, 200);
     if(col.rgbHexString() != "ff00c8"){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::RgbaColour - rgb hex string fail");}
     if(col.rgbaHexString() != "ff00c8ff"){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::RgbaColour - rgba hex string fail");}

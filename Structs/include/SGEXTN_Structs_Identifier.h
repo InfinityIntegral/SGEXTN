@@ -2,7 +2,7 @@
 
 namespace SGEXTN {
 namespace ApplicationBase {
-class OldString;
+class String;
 }
 
 namespace Structs {
@@ -17,8 +17,8 @@ public:
     [[nodiscard]] bool operator<(Identifier x) const;
     [[nodiscard]] bool operator>(Identifier x) const;
     [[nodiscard]] int hash() const;
-    [[nodiscard]] SGEXTN::ApplicationBase::OldString getStringForPrinting() const;
-    [[nodiscard]] SGEXTN::ApplicationBase::OldString debugLog() const;
+    [[nodiscard]] SGEXTN::ApplicationBase::String getStringForPrinting() const;
+    [[nodiscard]] SGEXTN::ApplicationBase::String debugLog() const;
 };
 }
 }

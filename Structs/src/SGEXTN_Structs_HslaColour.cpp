@@ -1,7 +1,7 @@
 #include <SGEXTN_Structs_HslaColour.h>
 #include <SGEXTN_Structs_RgbaColour.h>
 #include <SGEXTN_Math_FloatMath.h>
-#include <SGEXTN_ApplicationBase_OldString.h>
+#include <SGEXTN_ApplicationBase_String.h>
 #include <SGEXTN_Containers_Hash.h>
 
 namespace {
@@ -94,8 +94,8 @@ int SGEXTN::Structs::HslaColour::hash() const {
     return SGEXTN::Containers::Hash<float, float, float, float>()(private_hue, private_saturation, private_lightness, private_transparency);
 }
 
-SGEXTN::ApplicationBase::OldString SGEXTN::Structs::HslaColour::debugLog() const {
-    return SGEXTN::ApplicationBase::OldString("hsla(") + SGEXTN::ApplicationBase::OldString::stringFromFloat(private_hue, SGEXTN::ApplicationBase::FloatDisplayFormat::DecimalPlace, 0) + ", " + SGEXTN::ApplicationBase::OldString::stringFromFloat(private_saturation, SGEXTN::ApplicationBase::FloatDisplayFormat::DecimalPlace, 0) + ", " + SGEXTN::ApplicationBase::OldString::stringFromFloat(private_lightness, SGEXTN::ApplicationBase::FloatDisplayFormat::DecimalPlace, 0) + ", " + SGEXTN::ApplicationBase::OldString::stringFromFloat(private_transparency, SGEXTN::ApplicationBase::FloatDisplayFormat::DecimalPlace, 0) + ")";
+SGEXTN::ApplicationBase::String SGEXTN::Structs::HslaColour::debugLog() const {
+    return SGEXTN::ApplicationBase::String("hsla(") + SGEXTN::ApplicationBase::String::stringFromFloat(private_hue, 10, SGEXTN::ApplicationBase::FloatPrecisionFormat::FractionalDigit, 0) + ", " + SGEXTN::ApplicationBase::String::stringFromFloat(private_saturation, 10, SGEXTN::ApplicationBase::FloatPrecisionFormat::FractionalDigit, 0) + ", " + SGEXTN::ApplicationBase::String::stringFromFloat(private_lightness, 10, SGEXTN::ApplicationBase::FloatPrecisionFormat::FractionalDigit, 0) + ", " + SGEXTN::ApplicationBase::String::stringFromFloat(private_transparency, 10, SGEXTN::ApplicationBase::FloatPrecisionFormat::FractionalDigit, 0) + ")";
 }
 
 float SGEXTN::Structs::HslaColour::getHue() const {

@@ -1,5 +1,5 @@
 #include <SGEXTN_Structs_RgbaColour.h>
-#include <SGEXTN_ApplicationBase_OldString.h>
+#include <SGEXTN_ApplicationBase_String.h>
 #include <SGEXTN_Containers_Hash.h>
 #include <SGEXTN_Math_FloatMath.h>
 #include <private_api/SGEXTN_Containers_Crash.h>
@@ -120,28 +120,28 @@ void SGEXTN::Structs::RgbaColour::setTransparencyFloat(float a){
     private_data = setChannelByOffset(private_data, 0u, toUnsignedInt(boundFloat(a)));
 }
 
-SGEXTN::ApplicationBase::OldString SGEXTN::Structs::RgbaColour::rgbHtmlString() const {
-    return (SGEXTN::ApplicationBase::OldString("rgb(") + SGEXTN::ApplicationBase::OldString::stringFromInt(getRed(), 10) + ", " + SGEXTN::ApplicationBase::OldString::stringFromInt(getGreen(), 10) + ", " + SGEXTN::ApplicationBase::OldString::stringFromInt(getBlue(), 10) + ")");
+SGEXTN::ApplicationBase::String SGEXTN::Structs::RgbaColour::rgbHtmlString() const {
+    return (SGEXTN::ApplicationBase::String("rgb(") + SGEXTN::ApplicationBase::String::stringFromInt(getRed(), 10) + ", " + SGEXTN::ApplicationBase::String::stringFromInt(getGreen(), 10) + ", " + SGEXTN::ApplicationBase::String::stringFromInt(getBlue(), 10) + ")");
 }
 
-SGEXTN::ApplicationBase::OldString SGEXTN::Structs::RgbaColour::rgbaHtmlString() const {
-    return (SGEXTN::ApplicationBase::OldString("rgba(") + SGEXTN::ApplicationBase::OldString::stringFromInt(getRed(), 10) + ", " + SGEXTN::ApplicationBase::OldString::stringFromInt(getGreen(), 10) + ", " + SGEXTN::ApplicationBase::OldString::stringFromInt(getBlue(), 10) + ", " + SGEXTN::ApplicationBase::OldString::stringFromInt(getTransparency(), 10 ) + ")");
+SGEXTN::ApplicationBase::String SGEXTN::Structs::RgbaColour::rgbaHtmlString() const {
+    return (SGEXTN::ApplicationBase::String("rgba(") + SGEXTN::ApplicationBase::String::stringFromInt(getRed(), 10) + ", " + SGEXTN::ApplicationBase::String::stringFromInt(getGreen(), 10) + ", " + SGEXTN::ApplicationBase::String::stringFromInt(getBlue(), 10) + ", " + SGEXTN::ApplicationBase::String::stringFromInt(getTransparency(), 10 ) + ")");
 }
 
-SGEXTN::ApplicationBase::OldString SGEXTN::Structs::RgbaColour::rgbHexString() const {
-    return (SGEXTN::ApplicationBase::OldString::stringFromInt(getRed(), 16).fillLeftToLength(2, '0') + SGEXTN::ApplicationBase::OldString::stringFromInt(getGreen(), 16).fillLeftToLength(2, '0') + SGEXTN::ApplicationBase::OldString::stringFromInt(getBlue(), 16).fillLeftToLength(2, '0'));
+SGEXTN::ApplicationBase::String SGEXTN::Structs::RgbaColour::rgbHexString() const {
+    return (SGEXTN::ApplicationBase::String::stringFromInt(getRed(), 16).fillLeftToByteLength(2, '0') + SGEXTN::ApplicationBase::String::stringFromInt(getGreen(), 16).fillLeftToByteLength(2, '0') + SGEXTN::ApplicationBase::String::stringFromInt(getBlue(), 16).fillLeftToByteLength(2, '0'));
 }
 
-SGEXTN::ApplicationBase::OldString SGEXTN::Structs::RgbaColour::rgbaHexString() const {
-    return (SGEXTN::ApplicationBase::OldString::stringFromInt(getRed(), 16).fillLeftToLength(2, '0') + SGEXTN::ApplicationBase::OldString::stringFromInt(getGreen(), 16).fillLeftToLength(2, '0') + SGEXTN::ApplicationBase::OldString::stringFromInt(getBlue(), 16).fillLeftToLength(2, '0') + SGEXTN::ApplicationBase::OldString::stringFromInt(getTransparency(), 16).fillLeftToLength(2, '0'));
+SGEXTN::ApplicationBase::String SGEXTN::Structs::RgbaColour::rgbaHexString() const {
+    return (SGEXTN::ApplicationBase::String::stringFromInt(getRed(), 16).fillLeftToByteLength(2, '0') + SGEXTN::ApplicationBase::String::stringFromInt(getGreen(), 16).fillLeftToByteLength(2, '0') + SGEXTN::ApplicationBase::String::stringFromInt(getBlue(), 16).fillLeftToByteLength(2, '0') + SGEXTN::ApplicationBase::String::stringFromInt(getTransparency(), 16).fillLeftToByteLength(2, '0'));
 }
 
-SGEXTN::ApplicationBase::OldString SGEXTN::Structs::RgbaColour::rgbFloatHtmlString() const {
-    return (SGEXTN::ApplicationBase::OldString("rgb(") + SGEXTN::ApplicationBase::OldString::stringFromFloat(getRedFloat(), SGEXTN::ApplicationBase::FloatDisplayFormat::DecimalPlace, 3) + ", " + SGEXTN::ApplicationBase::OldString::stringFromFloat(getGreenFloat(), SGEXTN::ApplicationBase::FloatDisplayFormat::DecimalPlace, 3) + ", " + SGEXTN::ApplicationBase::OldString::stringFromFloat(getBlueFloat(), SGEXTN::ApplicationBase::FloatDisplayFormat::DecimalPlace, 3) + ")");
+SGEXTN::ApplicationBase::String SGEXTN::Structs::RgbaColour::rgbFloatHtmlString() const {
+    return (SGEXTN::ApplicationBase::String("rgb(") + SGEXTN::ApplicationBase::String::stringFromFloat(getRedFloat(), 10, SGEXTN::ApplicationBase::FloatPrecisionFormat::FractionalDigit, 3) + ", " + SGEXTN::ApplicationBase::String::stringFromFloat(getGreenFloat(), 10, SGEXTN::ApplicationBase::FloatPrecisionFormat::FractionalDigit, 3) + ", " + SGEXTN::ApplicationBase::String::stringFromFloat(getBlueFloat(), 10, SGEXTN::ApplicationBase::FloatPrecisionFormat::FractionalDigit, 3) + ")");
 }
 
-SGEXTN::ApplicationBase::OldString SGEXTN::Structs::RgbaColour::rgbaFloatHtmlString() const {
-    return (SGEXTN::ApplicationBase::OldString("rgba(") + SGEXTN::ApplicationBase::OldString::stringFromFloat(getRedFloat(), SGEXTN::ApplicationBase::FloatDisplayFormat::DecimalPlace, 3) + ", " + SGEXTN::ApplicationBase::OldString::stringFromFloat(getGreenFloat(), SGEXTN::ApplicationBase::FloatDisplayFormat::DecimalPlace, 3) + ", " + SGEXTN::ApplicationBase::OldString::stringFromFloat(getBlueFloat(), SGEXTN::ApplicationBase::FloatDisplayFormat::DecimalPlace, 3) + ", " + SGEXTN::ApplicationBase::OldString::stringFromFloat(getTransparencyFloat(), SGEXTN::ApplicationBase::FloatDisplayFormat::DecimalPlace, 3) +  ")");
+SGEXTN::ApplicationBase::String SGEXTN::Structs::RgbaColour::rgbaFloatHtmlString() const {
+    return (SGEXTN::ApplicationBase::String("rgba(") + SGEXTN::ApplicationBase::String::stringFromFloat(getRedFloat(), 10, SGEXTN::ApplicationBase::FloatPrecisionFormat::FractionalDigit, 3) + ", " + SGEXTN::ApplicationBase::String::stringFromFloat(getGreenFloat(), 10, SGEXTN::ApplicationBase::FloatPrecisionFormat::FractionalDigit, 3) + ", " + SGEXTN::ApplicationBase::String::stringFromFloat(getBlueFloat(), 10, SGEXTN::ApplicationBase::FloatPrecisionFormat::FractionalDigit, 3) + ", " + SGEXTN::ApplicationBase::String::stringFromFloat(getTransparencyFloat(), 10, SGEXTN::ApplicationBase::FloatPrecisionFormat::FractionalDigit, 3) +  ")");
 }
 
 bool SGEXTN::Structs::RgbaColour::operator==(SGEXTN::Structs::RgbaColour x) const {
@@ -164,7 +164,7 @@ int SGEXTN::Structs::RgbaColour::hash() const {
     return SGEXTN::Containers::Hash<unsigned int>()(private_data);
 }
 
-SGEXTN::ApplicationBase::OldString SGEXTN::Structs::RgbaColour::debugLog() const {
+SGEXTN::ApplicationBase::String SGEXTN::Structs::RgbaColour::debugLog() const {
     return rgbaHtmlString();
 }
 

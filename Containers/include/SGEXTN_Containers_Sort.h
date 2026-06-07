@@ -1,10 +1,11 @@
 #pragma once
-#include <SGEXTN_Containers_Array.h>
-#include <SGEXTN_Containers_Vector.h>
-#include <SGEXTN_Containers_Span.h>
 
 namespace SGEXTN {
 namespace Containers {
+template <typename T> class Array;
+template <typename T> class Vector;
+template <typename T> class Span;
+
 template <typename T, typename Comparator> class Sort {
 public:
     Sort(T* start, int length);

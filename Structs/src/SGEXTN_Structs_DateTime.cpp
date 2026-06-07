@@ -1,6 +1,7 @@
 #include <SGEXTN_Structs_DateTime.h>
 #include <SGEXTN_Containers_Hash.h>
-#include <SGEXTN_ApplicationBase_OldString.h>
+#include <SGEXTN_ApplicationBase_String.h>
+#include <SGEXTN_ApplicationBase_Character.h>
 #include <chrono>
 #include <private_api/SGEXTN_Containers_Crash.h>
 
@@ -174,7 +175,7 @@ int SGEXTN::Structs::DateTime::hash() const {
     return SGEXTN::Containers::Hash<long long>()(private_data);
 }
 
-SGEXTN::ApplicationBase::OldString SGEXTN::Structs::DateTime::debugLog() const {
+SGEXTN::ApplicationBase::String SGEXTN::Structs::DateTime::debugLog() const {
     return getDisplayString(SGEXTN::Structs::TimeFormat::Display, false, true);
 }
 
@@ -422,8 +423,8 @@ bool SGEXTN::Structs::DateTime::isSignificantDate(SGEXTN::Structs::SignificantDa
     return false;
 }
 
-SGEXTN::ApplicationBase::OldString SGEXTN::Structs::DateTime::getDisplayString(const SGEXTN::Structs::TimeFormat format, bool global, bool correctToSecond) const {
-    SGEXTN::ApplicationBase::OldString formatString = "";
+SGEXTN::ApplicationBase::String SGEXTN::Structs::DateTime::getDisplayString(const SGEXTN::Structs::TimeFormat format, bool global, bool correctToSecond) const {
+    SGEXTN::ApplicationBase::String formatString = "";
     if(global == false){
         if(format == SGEXTN::Structs::TimeFormat::Display){
             if(correctToSecond == true){formatString = "%\\SG%2year%\\-%2month%\\-%2day%\\ %2hour%\\:%2minute%\\:%2second";}
@@ -455,23 +456,23 @@ SGEXTN::ApplicationBase::OldString SGEXTN::Structs::DateTime::getDisplayString(c
     return getDisplayString(formatString);
 }
 
-SGEXTN::ApplicationBase::OldString SGEXTN::Structs::DateTime::getDisplayString(const SGEXTN::ApplicationBase::OldString& customFormat) const {
-    SGEXTN::ApplicationBase::OldString format = customFormat;
-    SGEXTN::ApplicationBase::OldString output = "";
-    while(format.length() > 0){
-        int tokenEnd = format.findFirstFromLeftCustomStart("%", 1);
-        if(tokenEnd == -1){tokenEnd = format.length();}
-        SGEXTN::ApplicationBase::OldString thisToken = format.substringLeft(tokenEnd);
-        format = format.substringRight(format.length() - tokenEnd);
-        if(thisToken.length() == 0 || thisToken.getCharAt(0) != '%'){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime::getDisplayString crashed because a token does not start with %");}
-        if(thisToken.length() > 1 && thisToken.getCharAt(1) == '\\'){
-            output += thisToken.substringRight(thisToken.length() - 2);
+SGEXTN::ApplicationBase::String SGEXTN::Structs::DateTime::getDisplayString(const SGEXTN::ApplicationBase::String& customFormat) const {
+    SGEXTN::ApplicationBase::String format = customFormat;
+    SGEXTN::ApplicationBase::String output = "";
+    while(format.byteLength() > 0){
+        int tokenEnd = format.findFirstBytesFromLeftBounded(1, '%');
+        if(tokenEnd == -1){tokenEnd = format.byteLength();}
+        SGEXTN::ApplicationBase::String thisToken = format.substringBytesLeft(tokenEnd);
+        format = format.substringBytesRight(format.byteLength() - tokenEnd);
+        if(thisToken.byteLength() == 0 || thisToken.byteAt(0) != '%'){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime::getDisplayString crashed because a token does not start with %");}
+        if(thisToken.byteLength() > 1 && thisToken.byteAt(1) == '\\'){
+            output += thisToken.substringBytesRight(thisToken.byteLength() - 2);
             continue;
         }
-        if(thisToken.length() == 1 || thisToken.getCharAt(1).isDigit() == false){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime::getDisplayString crashed because the precision specifier, which is the character after the %, in a token is not a number");}
-        const int precision = SGEXTN::ApplicationBase::OldString(thisToken.getCharAt(1)).parseToInt(nullptr, 10);
+        if(thisToken.byteLength() < 2 || SGEXTN::ApplicationBase::Character(thisToken.byteAt(1)).isDigit() == false){SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime::getDisplayString crashed because the precision specifier, which is the character after the %, in a token is not a number");}
+        const int precision = SGEXTN::ApplicationBase::String(thisToken.byteAt(1)).parseToInt(nullptr, 10);
         int component = 0;
-        thisToken = thisToken.substringRight(thisToken.length() - 2);
+        thisToken = thisToken.substringBytesRight(thisToken.byteLength() - 2);
         if(thisToken == "year"){component = getPart(SGEXTN::Structs::TimeUnit::Year);}
         else if(thisToken == "globalyear"){component = getPart(SGEXTN::Structs::TimeUnit::Year) + 1965;}
         else if(thisToken == "month"){component = getPart(SGEXTN::Structs::TimeUnit::Month);}
@@ -480,9 +481,9 @@ SGEXTN::ApplicationBase::OldString SGEXTN::Structs::DateTime::getDisplayString(c
         else if(thisToken == "minute"){component = getPart(SGEXTN::Structs::TimeUnit::Minute);}
         else if(thisToken == "second"){component = getPart(SGEXTN::Structs::TimeUnit::Second);}
         else{SGEXTN::Containers::Crash::crash("SGEXTN::Structs::DateTime::getDisplayString crashed because the component name is invalid, custom strings must not contain % and must be prefixed with a \\ sign");}
-        SGEXTN::ApplicationBase::OldString componentString = SGEXTN::ApplicationBase::OldString::stringFromInt(component, 10);
-        if(componentString.length() > precision){componentString = componentString.substringRight(precision);}
-        output += componentString.fillLeftToLength(precision, '0');
+        SGEXTN::ApplicationBase::String componentString = SGEXTN::ApplicationBase::String::stringFromInt(component, 10);
+        if(componentString.byteLength() > precision && (thisToken == "year" || thisToken == "globalyear")){componentString = componentString.substringBytesRight(precision);}
+        output += componentString.fillLeftToByteLength(precision, '0');
     }
     return output;
 }

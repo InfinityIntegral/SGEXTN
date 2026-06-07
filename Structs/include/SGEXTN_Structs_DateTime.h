@@ -2,7 +2,7 @@
 
 namespace SGEXTN {
 namespace ApplicationBase {
-class OldString;
+class String;
 }
 
 namespace Structs {
@@ -25,7 +25,7 @@ public:
     [[nodiscard]] bool operator<=(DateTime x) const;
     [[nodiscard]] bool operator>=(DateTime x) const;
     [[nodiscard]] int hash() const;
-    [[nodiscard]] SGEXTN::ApplicationBase::OldString debugLog() const;
+    [[nodiscard]] SGEXTN::ApplicationBase::String debugLog() const;
     [[nodiscard]] double getTimeAfter(DateTime x, SGEXTN::Structs::TimeUnit unit) const;
     [[nodiscard]] static DateTime beginningOfTime();
     [[nodiscard]] static DateTime now();
@@ -43,8 +43,8 @@ public:
     [[nodiscard]] static int convertToGlobalYear(int standardYear);
     [[nodiscard]] bool isNationalDayPeriod() const;
     [[nodiscard]] bool isSignificantDate(SGEXTN::Structs::SignificantDates date) const;
-    [[nodiscard]] SGEXTN::ApplicationBase::OldString getDisplayString(SGEXTN::Structs::TimeFormat format, bool global, bool correctToSecond) const;
-    [[nodiscard]] SGEXTN::ApplicationBase::OldString getDisplayString(const SGEXTN::ApplicationBase::OldString& customFormat) const;
+    [[nodiscard]] SGEXTN::ApplicationBase::String getDisplayString(SGEXTN::Structs::TimeFormat format, bool global, bool correctToSecond) const;
+    [[nodiscard]] SGEXTN::ApplicationBase::String getDisplayString(const SGEXTN::ApplicationBase::String& customFormat) const;
 };
 }
 }
