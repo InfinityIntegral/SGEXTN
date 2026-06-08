@@ -1,10 +1,6 @@
 #pragma once
-#include <SGEXTN_Containers_Array.h>
-#include <SGEXTN_Containers_Vector.h>
-#include <SGEXTN_Containers_Span.h>
 #include <private_api/SGEXTN_Containers_Crash.h>
 #include <SGEXTN_Containers_PlacementNew.h>
-#include <SGEXTN_Containers_ArrayVectorMove.h>
 
 template <typename T, typename Comparator> SGEXTN::Containers::Sort<T, Comparator>::Sort(T* start, int length) : private_firstBuffer(start), private_secondBuffer(nullptr), private_length(length), private_mainIsSecond(false), private_comparatorInstance(), private_minimumBlockSize(32) {
     private_secondBuffer = static_cast<T*>(::operator new(length * sizeof(T)));
@@ -83,24 +79,4 @@ template <typename T, typename Comparator> void SGEXTN::Containers::Sort<T, Comp
 
 template <typename T, typename Comparator> void SGEXTN::Containers::Sort<T, Comparator>::private_sort(T* start, int length){
     SGEXTN::Containers::Sort<T, Comparator>(start, length).doSort();
-}
-
-template <typename T, typename Comparator> void SGEXTN::Containers::Sort<T, Comparator>::sortArray(SGEXTN::Containers::Array<T>& array, int start, int length){
-    if(start < 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Sort::sortArray crashed because start of range is negative");}
-    if(start + length > array.length()){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Sort::sortArray crashed because end of range points beyond the length of array");}
-    SGEXTN::Containers::Sort<T, Comparator>::private_sort(array.private_data + start, length);
-}
-
-template <typename T, typename Comparator> void SGEXTN::Containers::Sort<T, Comparator>::sortVector(SGEXTN::Containers::Vector<T>& vector, int start, int length){
-    if(start < 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Sort::sortVector crashed because start of range is negative");}
-    if(start + length > vector.length()){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Sort::sortVector crashed because end of range points beyond the length of vector");}
-    SGEXTN::Containers::Array<T> array = SGEXTN::Containers::ArrayVectorMove<T>::convertToArrayAndDestroyVector(vector);
-    SGEXTN::Containers::Sort<T, Comparator>::private_sort(array.private_data + start, length);
-    vector = SGEXTN::Containers::ArrayVectorMove<T>::convertToVectorAndDestroyArray(array);
-}
-
-template <typename T, typename Comparator> void SGEXTN::Containers::Sort<T, Comparator>::sortSpan(SGEXTN::Containers::Span<T>& span, int start, int length){
-    if(start < 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Sort::sortSpan crashed because start of range is negative");}
-    if(start + length > span.length()){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Sort::sortSpan crashed because end of range points beyond the length of span");}
-    SGEXTN::Containers::Sort<T, Comparator>::private_sort(span.private_data + start, length);
 }

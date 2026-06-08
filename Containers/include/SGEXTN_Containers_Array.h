@@ -18,6 +18,7 @@ public:
     [[nodiscard]] const T& at(int i) const;
     T* private_data;
     int private_length;
+    template <typename Comparator> void sort(int start, int length);
 };
 }
 }

@@ -18,7 +18,6 @@
 #include <SGEXTN_Containers_UnorderedSet.h>
 #include <SGEXTN_Containers_UnorderedMap.h>
 #include <SGEXTN_Containers_Hash.h>
-#include <SGEXTN_Containers_Sort.h>
 #include <SGEXTN_Containers_ArrayVectorMove.h>
 
 namespace {
@@ -119,6 +118,14 @@ void SGEXTN::InternalTest::ContainersTest::testArray(){
     if(arr0.length() != 2){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Array - get length info fail");}
     arr0.fill(-1);
     if(arr0.at(0) != -1 || arr0.at(1) != -1){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Array - fill with default value fail");}
+    arr = SGEXTN::Containers::Array<int>(1000);
+    for(int i=0; i<1000; i++){
+        arr.at(i) = 1000 - i;
+    }
+    arr.sort<SGEXTN::Containers::LessThan<int>>(0, arr.length());
+    for(int i=0; i<1000; i++){
+        if(arr.at(i) != i + 1){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Array - sort array failed");}
+    }
 }
 
 void SGEXTN::InternalTest::ContainersTest::testSpan(){
@@ -136,6 +143,15 @@ void SGEXTN::InternalTest::ContainersTest::testSpan(){
     if(subspanLeft.at(0) != 1 || subspanLeft.at(1) != 2 || subspanLeft.length() != 2){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Span - subspan left fail");}
     SGEXTN::Containers::Span<int> subspanRight = span.subspanRight(2);
     if(subspanRight.at(0) != 26 || subspanRight.at(1) != 5 || subspanRight.length() != 2){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Span - subspan right fail");}
+    arr = SGEXTN::Containers::Array<int>(1000);
+    for(int i=0; i<1000; i++){
+        arr.at(i) = i + 1;
+    }
+    span = SGEXTN::Containers::Span<int>(arr.private_data, 1000);
+    span.sort<SGEXTN::Containers::MoreThan<int>>(0, span.length());
+    for(int i=0; i<1000; i++){
+        if(arr.at(i) != 1000 - i){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Span - sort array failed");}
+    }
 }
 
 void SGEXTN::InternalTest::ContainersTest::testLessThan(){
@@ -198,8 +214,6 @@ void SGEXTN::InternalTest::ContainersTest::testVector(){
     if(v.at(0) != 26 || v.at(1) != 26 || v.length() != 2){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Vector - fill fail");}
     v = SGEXTN::Containers::Vector(5, 0);
     if(v.at(0) != 0 || v.at(1) != 0 || v.at(2) != 0 || v.at(3) != 0 || v.at(4) != 0 || v.length() != 5){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Vector - construct fail");}
-    v = SGEXTN::Containers::Vector<int>(100);
-    if(v.length() != 100){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Vector - blank construct fail");}
 }
 
 void SGEXTN::InternalTest::ContainersTest::testQueue(){
@@ -544,30 +558,6 @@ void SGEXTN::InternalTest::ContainersTest::testUnorderedMap(){
         s.erase(i);
     }
     if(s.length() != 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::UnorderedMap - in order traversal erase fail");}
-}
-
-void SGEXTN::InternalTest::ContainersTest::testSort(){
-    SGEXTN::Containers::Array<int> arr(1000);
-    for(int i=0; i<1000; i++){
-        arr.at(i) = 1000 - i;
-    }
-    SGEXTN::Containers::Sort<int, SGEXTN::Containers::LessThan<int>>::sortArray(arr, 0, arr.length());
-    for(int i=0; i<1000; i++){
-        if(arr.at(i) != i + 1){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Sort - sort array failed");}
-    }
-    SGEXTN::Containers::Span<int> span(arr.private_data, 1000);
-    SGEXTN::Containers::Sort<int, SGEXTN::Containers::MoreThan<int>>::sortSpan(span, 0, span.length());
-    for(int i=0; i<1000; i++){
-        if(arr.at(i) != 1000 - i){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Sort - sort array failed");}
-    }
-    SGEXTN::Containers::Vector<int> vector(1000);
-    for(int i=0; i<1000; i++){
-        vector.at(i) = 1000 - i;
-    }
-    SGEXTN::Containers::Sort<int, SGEXTN::Containers::LessThan<int>>::sortVector(vector, 0, vector.length());
-    for(int i=0; i<1000; i++){
-        if(vector.at(i) != i + 1){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Sort - sort vector failed");}
-    }
 }
 
 void SGEXTN::InternalTest::ContainersTest::testVectorConstructible(){
@@ -971,10 +961,6 @@ void SGEXTN::InternalTest::ContainersTest::testUnorderedMapConstructible(){
     if(ConstructibleInteger::lastDestruct != 6){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::UnorderedMap - erase 6 destruct fail");}
 }
 
-void SGEXTN::InternalTest::ContainersTest::testSortConstructible(){
-
-}
-
 void SGEXTN::InternalTest::ContainersTest::testArrayVectorMove(){
     SGEXTN::Containers::Array<int> arr = SGEXTN::Containers::Array<int>(1, 2, 3, 4, 5);
     SGEXTN::Containers::Vector<int> v = SGEXTN::Containers::ArrayVectorMove<int>::convertToVectorAndDestroyArray(arr);
@@ -1012,8 +998,6 @@ void SGEXTN::InternalTest::ContainersTest::testAll(){
     SGEXTN::InternalTest::ContainersTest::testMultiMapConstructible();
     SGEXTN::InternalTest::ContainersTest::testUnorderedSetConstructible();
     SGEXTN::InternalTest::ContainersTest::testUnorderedMapConstructible();
-    SGEXTN::InternalTest::ContainersTest::testSort();
-    SGEXTN::InternalTest::ContainersTest::testSortConstructible();
     SGEXTN::InternalTest::ContainersTest::testArrayVectorMove();
 }
 
@@ -1045,17 +1029,18 @@ public:
     DefaultConstructableStruct(int x) : x(x) {}
 };
 
-class DefaultConstructableStructLessThan {
-public:
-    bool operator()(const DefaultConstructableStruct& a, const DefaultConstructableStruct& b) const {return (a.x < b.x);}
-};
-
-class EquatableHashableStruct {
+class EquatableStruct {
 public:
     int x;
-    EquatableHashableStruct(int x) : x(x) {}
-    [[nodiscard]] bool operator==(const EquatableHashableStruct& x) const {return ((*this).x == x.x);}
-    [[nodiscard]] bool operator!=(const EquatableHashableStruct& x) const {return ((*this).x != x.x);}
+    EquatableStruct(int x) : x(x) {}
+    [[nodiscard]] bool operator==(const EquatableStruct& x) const {return ((*this).x == x.x);}
+    [[nodiscard]] bool operator!=(const EquatableStruct& x) const {return ((*this).x != x.x);}
+};
+
+class HashableStruct {
+public:
+    int x;
+    HashableStruct(int x) : x(x) {}
     [[nodiscard]] int hash() const {return x;}
 };
 
@@ -1069,7 +1054,6 @@ public:
 
 class OperatoredStruct {
 public:
-    OperatoredStruct() : x(0) {}
     OperatoredStruct(int x){(*this).x = x;}
     int x;
     [[nodiscard]] bool operator==(const OperatoredStruct& x) const {return ((*this).x == x.x);}
@@ -1082,8 +1066,8 @@ public:
 template class SGEXTN::Containers::Array<DefaultConstructableStruct>;
 template class SGEXTN::Containers::ArrayVectorMove<DefaultConstructableStruct>;
 template class SGEXTN::Containers::Deque<RegularStruct>;
-template class SGEXTN::Containers::EqualTo<EquatableHashableStruct>;
-template class SGEXTN::Containers::Hash<EquatableHashableStruct>;
+template class SGEXTN::Containers::EqualTo<EquatableStruct>;
+template class SGEXTN::Containers::Hash<HashableStruct>;
 template class SGEXTN::Containers::LessThan<ComparableStruct>;
 template class SGEXTN::Containers::Map<RegularStruct, RegularStruct, RegularStructLessThan>;
 template class SGEXTN::Containers::MapIterator<RegularStruct, RegularStruct, RegularStructLessThan>;
@@ -1101,7 +1085,6 @@ template class SGEXTN::Containers::Queue<RegularStruct>;
 template class SGEXTN::Containers::Set<RegularStruct, RegularStructLessThan>;
 template class SGEXTN::Containers::SetIterator<RegularStruct, RegularStructLessThan>;
 template class SGEXTN::Containers::SetConstIterator<RegularStruct, RegularStructLessThan>;
-template class SGEXTN::Containers::Sort<DefaultConstructableStruct, DefaultConstructableStructLessThan>;
 template class SGEXTN::Containers::Span<RegularStruct>;
 template class SGEXTN::Containers::Stack<RegularStruct>;
 template class SGEXTN::Containers::UnorderedMap<RegularStruct, RegularStruct, RegularStructEqualTo, RegularStructHashFunction>;
@@ -1110,11 +1093,9 @@ template class SGEXTN::Containers::UnorderedMapConstIterator<RegularStruct, Regu
 template class SGEXTN::Containers::UnorderedSet<RegularStruct, RegularStructEqualTo, RegularStructHashFunction>;
 template class SGEXTN::Containers::UnorderedSetIterator<RegularStruct, RegularStructEqualTo, RegularStructHashFunction>;
 template class SGEXTN::Containers::UnorderedSetConstIterator<RegularStruct, RegularStructEqualTo, RegularStructHashFunction>;
-template class SGEXTN::Containers::Vector<DefaultConstructableStruct>;
+template class SGEXTN::Containers::Vector<RegularStruct>;
 
-class FunctionOwner {
-
-};
+class FunctionOwner {};
 
 template class SGEXTN::Containers::Hash<int>;
 template class SGEXTN::Containers::Hash<int*>;

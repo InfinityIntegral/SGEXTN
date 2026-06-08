@@ -11,6 +11,7 @@ public:
     [[nodiscard]] Span subspan(int start, int length) const;
     [[nodiscard]] Span subspanLeft(int length) const;
     [[nodiscard]] Span subspanRight(int length) const;
+    template <typename Comparator> void sort(int start, int length);
     T* private_data;
     int private_length;
 };

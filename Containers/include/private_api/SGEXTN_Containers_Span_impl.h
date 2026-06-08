@@ -1,5 +1,6 @@
 #pragma once
 #include <private_api/SGEXTN_Containers_Crash.h>
+#include <private_api/SGEXTN_Containers_Sort.h>
 
 template <typename T> SGEXTN::Containers::Span<T>::Span(T* data, int length) : private_data(data), private_length(length) {
     if(length < 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Span constructor crashed because the length is negative");}
@@ -39,4 +40,10 @@ template <typename T> SGEXTN::Containers::Span<T> SGEXTN::Containers::Span<T>::s
     if(length < 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Span::subspanRight crashed because the length of the subspan is negative");}
     if(length > private_length){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Span::subspanRight crashed because the length of the subspan exceeds the length of the original span");}
     return SGEXTN::Containers::Span(private_data + private_length - length, length);
+}
+
+template <typename T> template <typename Comparator> void SGEXTN::Containers::Span<T>::sort(int start, int length){
+    if(start < 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Span::sort crashed because start of range is negative");}
+    if(start + length > (*this).length()){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Span::sort crashed because end of range points beyond the end of the span");}
+    SGEXTN::Containers::Sort<T, Comparator>::private_sort(private_data + start, length);
 }

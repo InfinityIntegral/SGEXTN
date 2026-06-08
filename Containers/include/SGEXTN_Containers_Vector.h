@@ -6,7 +6,6 @@ namespace Containers {
 template <typename T> class Vector {
 public:
     Vector();
-    Vector(int count);
     Vector(int count, const T& defaultValue);
     [[nodiscard]] T& at(int i);
     [[nodiscard]] const T& at(int i) const;

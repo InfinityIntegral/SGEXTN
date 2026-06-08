@@ -32,8 +32,6 @@ public:
     static void testMultiMapConstructible();
     static void testUnorderedSetConstructible();
     static void testUnorderedMapConstructible();
-    static void testSort();
-    static void testSortConstructible();
     static void testArrayVectorMove();
     static void testAll();
 };

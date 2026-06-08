@@ -1,5 +1,6 @@
 #pragma once
 #include <private_api/SGEXTN_Containers_Crash.h>
+#include <private_api/SGEXTN_Containers_Sort.h>
 
 template <typename T> SGEXTN::Containers::Array<T>::Array(int count) : private_data(nullptr), private_length(count) {
     if(count < 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Array constructor crashed because count cannot be negative");}
@@ -75,4 +76,10 @@ template <typename T> const T& SGEXTN::Containers::Array<T>::at(int i) const {
     if(i < 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Array::at crashed because index is negative");}
     if(i >= private_length){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Array::at crashed because index points beyond the end of the array");}
     return (*(private_data + i));
+}
+
+template <typename T> template <typename Comparator> void SGEXTN::Containers::Array<T>::sort(int start, int length){
+    if(start < 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Array::sort crashed because start of range is negative");}
+    if(start + length > (*this).length()){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Array::sort crashed because end of range points beyond the end of the array");}
+    SGEXTN::Containers::Sort<T, Comparator>::private_sort(private_data + start, length);
 }

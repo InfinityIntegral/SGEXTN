@@ -6,7 +6,6 @@
 #include <SGEXTN_Math_IntegerLimits.h>
 #include <SGEXTN_Math_FloatMath.h>
 #include <SGEXTN_Math_FloatLimits.h>
-#include <SGEXTN_Containers_Sort.h>
 #include <private_api/SGEXTN_Containers_Crash.h>
 #include <SGEXTN_Containers_ArrayVectorMove.h>
 
@@ -340,11 +339,11 @@ SGEXTN::CoreText::String sortCombiningMarks(const SGEXTN::CoreText::String& s){
     SGEXTN::Containers::Array<int> codePoints = s.getUnicode();
     for(int i=0; i<codePoints.length(); i++){
         if(SGEXTN::CoreText::UnicodeQuery::getCombiningMarkOrder(codePoints.at(i)) == 0){
-            if(startSort < i){SGEXTN::Containers::Sort<int, SortByCombiningMarkOrder>::sortArray(codePoints, startSort, i - startSort);}
+            if(startSort < i){codePoints.sort<SortByCombiningMarkOrder>(startSort, i - startSort);}
             startSort = i + 1;
         }
     }
-    if(startSort != codePoints.length()){SGEXTN::Containers::Sort<int, SortByCombiningMarkOrder>::sortArray(codePoints, startSort, codePoints.length() - startSort);}
+    if(startSort != codePoints.length()){codePoints.sort<SortByCombiningMarkOrder>(startSort, codePoints.length() - startSort);}
     SGEXTN::CoreText::String output;
     for(int i=0; i<codePoints.length(); i++){
         output += SGEXTN::CoreText::Character(codePoints.at(i));

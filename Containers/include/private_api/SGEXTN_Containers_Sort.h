@@ -2,10 +2,6 @@
 
 namespace SGEXTN {
 namespace Containers {
-template <typename T> class Array;
-template <typename T> class Vector;
-template <typename T> class Span;
-
 template <typename T, typename Comparator> class Sort {
 public:
     Sort(T* start, int length);
@@ -25,9 +21,6 @@ public:
     void private_mergeAllBlocks(T* initialLocation, T* finalLocation, int blockSize);
     void doSort();
     static void private_sort(T* start, int length);
-    static void sortArray(SGEXTN::Containers::Array<T>& array, int start, int length);
-    static void sortVector(SGEXTN::Containers::Vector<T>& vector, int start, int length);
-    static void sortSpan(SGEXTN::Containers::Span<T>& span, int start, int length);
 };
 }
 }
