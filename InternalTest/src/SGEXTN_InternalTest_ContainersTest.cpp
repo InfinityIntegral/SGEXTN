@@ -5,7 +5,6 @@
 #include <SGEXTN_Containers_Span.h>
 #include <SGEXTN_Containers_LessThan.h>
 #include <SGEXTN_Containers_MoreThan.h>
-#include <SGEXTN_Containers_Pair.h>
 #include <SGEXTN_Containers_Vector.h>
 #include <SGEXTN_Containers_Queue.h>
 #include <SGEXTN_Containers_Stack.h>
@@ -176,23 +175,6 @@ void SGEXTN::InternalTest::ContainersTest::testMoreThan(){
     const int j = 0;
     if(pointerComparator(&i, &j) == false && pointerComparator(&j, &i) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MoreThan - different pointer point to same result");}
     if(pointerComparator(&i, &i) == true){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MoreThan - same pointer point to different result");}
-}
-
-void SGEXTN::InternalTest::ContainersTest::testPair(){
-    const SGEXTN::Containers::Pair<int, int> pair(0, 0);
-    if(pair.first != 0 || pair.second != 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Pair - constructor init fail");}
-    if(SGEXTN::Containers::Pair<int, int>(0, 0) == SGEXTN::Containers::Pair<int, int>(0, 1)){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Pair - (0, 0) equals (0, 1)");}
-    if((SGEXTN::Containers::Pair<int, int>(0, 0) == SGEXTN::Containers::Pair<int, int>(0, 0)) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Pair - (0, 0) not equal to (0, 0)");}
-    if((SGEXTN::Containers::Pair<int, int>(0, 0) != SGEXTN::Containers::Pair<int, int>(0, 1)) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Pair - (0, 0) equals (0, 1)");}
-    if(SGEXTN::Containers::Pair<int, int>(0, 0) != SGEXTN::Containers::Pair<int, int>(0, 0)){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Pair - (0, 0) not equal to (0, 0)");}
-    if(SGEXTN::Containers::Pair<int, int>(1, 0) < SGEXTN::Containers::Pair<int, int>(0, 0)){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Pair - (1, 0) less than (0, 0)");}
-    if(SGEXTN::Containers::Pair<int, int>(0, 1) < SGEXTN::Containers::Pair<int, int>(0, 0)){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Pair - (0, 1) less than (0, 0)");}
-    if(SGEXTN::Containers::Pair<int, int>(1, 0) < SGEXTN::Containers::Pair<int, int>(0, 1)){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Pair - (1, 0) less than (0, 1)");}
-    if(SGEXTN::Containers::Pair<int, int>(0, 0) < SGEXTN::Containers::Pair<int, int>(0, 0)){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Pair - (0, 0) less than (0, 0)");}
-    if(SGEXTN::Containers::Pair<int, int>(0, 0) > SGEXTN::Containers::Pair<int, int>(1, 0)){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Pair - (0, 0) more than (1, 0)");}
-    if(SGEXTN::Containers::Pair<int, int>(0, 0) > SGEXTN::Containers::Pair<int, int>(0, 1)){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Pair - (0, 0) more than (0, 1)");}
-    if(SGEXTN::Containers::Pair<int, int>(0, 1) > SGEXTN::Containers::Pair<int, int>(1, 0)){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Pair - (0, 1) more than (1, 0)");}
-    if(SGEXTN::Containers::Pair<int, int>(0, 0) > SGEXTN::Containers::Pair<int, int>(0, 0)){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Pair - (0, 0) more than (0, 0)");}
 }
 
 void SGEXTN::InternalTest::ContainersTest::testVector(){
@@ -975,7 +957,6 @@ void SGEXTN::InternalTest::ContainersTest::testAll(){
     SGEXTN::InternalTest::ContainersTest::testSpan();
     SGEXTN::InternalTest::ContainersTest::testLessThan();
     SGEXTN::InternalTest::ContainersTest::testMoreThan();
-    SGEXTN::InternalTest::ContainersTest::testPair();
     SGEXTN::InternalTest::ContainersTest::testVector();
     SGEXTN::InternalTest::ContainersTest::testQueue();
     SGEXTN::InternalTest::ContainersTest::testStack();
@@ -1052,17 +1033,6 @@ public:
     [[nodiscard]] bool operator>(const ComparableStruct& x) const {return ((*this).x > x.x);}
 };
 
-class OperatoredStruct {
-public:
-    OperatoredStruct(int x){(*this).x = x;}
-    int x;
-    [[nodiscard]] bool operator==(const OperatoredStruct& x) const {return ((*this).x == x.x);}
-    [[nodiscard]] bool operator!=(const OperatoredStruct& x) const {return ((*this).x != x.x);}
-    [[nodiscard]] int hash() const {return x;}
-    [[nodiscard]] bool operator<(const OperatoredStruct& x) const {return ((*this).x < x.x);}
-    [[nodiscard]] bool operator>(const OperatoredStruct& x) const {return ((*this).x > x.x);}
-};
-
 template class SGEXTN::Containers::Array<DefaultConstructableStruct>;
 template class SGEXTN::Containers::ArrayVectorMove<DefaultConstructableStruct>;
 template class SGEXTN::Containers::Deque<RegularStruct>;
@@ -1079,7 +1049,6 @@ template class SGEXTN::Containers::MultiMapConstIterator<RegularStruct, RegularS
 template class SGEXTN::Containers::MultiSet<RegularStruct, RegularStructLessThan>;
 template class SGEXTN::Containers::MultiSetIterator<RegularStruct, RegularStructLessThan>;
 template class SGEXTN::Containers::MultiSetConstIterator<RegularStruct, RegularStructLessThan>;
-template class SGEXTN::Containers::Pair<OperatoredStruct, OperatoredStruct>;
 template class SGEXTN::Containers::PriorityQueue<RegularStruct, RegularStructLessThan>;
 template class SGEXTN::Containers::Queue<RegularStruct>;
 template class SGEXTN::Containers::Set<RegularStruct, RegularStructLessThan>;

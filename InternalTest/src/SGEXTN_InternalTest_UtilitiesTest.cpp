@@ -7,9 +7,6 @@
 #include <SGEXTN_Utilities_IdentifierRegistry.h>
 #include <SGEXTN_Utilities_DateTime.h>
 #include <SGEXTN_CoreText_String.h>
-#include <chrono>
-#include <format>
-#include <cstdlib>
 
 namespace {
 bool isCloseEnough(float a, float b){
@@ -226,81 +223,6 @@ void SGEXTN::InternalTest::UtilitiesTest::testDateTime(){
     if(a >= b){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime more than equal to operator fail");}
     if(a.debugLog() != "SG00-08-09 10:30:00"){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime debug log print fail");}
     if(a != SGEXTN::Utilities::DateTime::beginningOfTime()){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime beginning of time fail");}
-    for(int year=-100; year<100; year++){
-        for(int month=1; month<=12; month++){
-            for(int day=1; day<=31; day++){
-                bool isLeapYear = false;
-                if((year - 35) % 4 == 0 && (year - 35) % 100 != 0){isLeapYear = true;}
-                if((year - 35) % 400 == 0){isLeapYear = true;}
-                if(day > 28 && month == 2 && isLeapYear == false){continue;}
-                if(day > 29 && month == 2 && isLeapYear == true){continue;}
-                if(day == 31 && (month == 4 || month == 6 || month == 9 || month == 11)){continue;}
-                const int hour = (year % 24 + 24) % 24;
-                const int minute = ((year + month + day) % 60 + 60) % 60;
-                const int second = ((year + month + day) % 60 + 60) % 60;
-                const std::chrono::sys_days thisDay{std::chrono::year{year + 1965} / std::chrono::month{static_cast<unsigned int>(month)} / std::chrono::day{static_cast<unsigned int>(day)}};
-                const std::chrono::sys_time<std::chrono::seconds> externalBeginningOfTime{std::chrono::sys_days{std::chrono::year{1965} / std::chrono::August / 9} + std::chrono::hours{10} + std::chrono::minutes{30}};
-                const std::chrono::sys_time<std::chrono::seconds> externalDateTime{thisDay + std::chrono::hours{hour} + std::chrono::minutes{minute} + std::chrono::seconds{second}};
-                SGEXTN::Utilities::DateTime thisDateTime(year, month, day, hour, minute, second);
-                if(std::chrono::duration_cast<std::chrono::seconds>(externalDateTime - externalBeginningOfTime).count() != thisDateTime.private_data){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime components constructor fail");}
-                if(thisDateTime.getPart(SGEXTN::Utilities::TimeUnit::Year) != year){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime get year fail");}
-                if(thisDateTime.getPart(SGEXTN::Utilities::TimeUnit::Month) != month){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime get month fail");}
-                if(thisDateTime.getPart(SGEXTN::Utilities::TimeUnit::Day) != day){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime get day fail");}
-                if(thisDateTime.getPart(SGEXTN::Utilities::TimeUnit::Hour) != hour){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime get hour fail");}
-                if(thisDateTime.getPart(SGEXTN::Utilities::TimeUnit::Minute) != minute){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime get minute fail");}
-                if(thisDateTime.getPart(SGEXTN::Utilities::TimeUnit::Second) != second){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime get second fail");}
-                const SGEXTN::Utilities::DateTime originalDateTime = thisDateTime;
-                thisDateTime.setPart(SGEXTN::Utilities::TimeUnit::Year, 0);
-                if(thisDateTime != SGEXTN::Utilities::DateTime(0, month, day, hour, minute, second)){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime set year fail");}
-                thisDateTime = originalDateTime;
-                thisDateTime.setPart(SGEXTN::Utilities::TimeUnit::Month, 8);
-                if(thisDateTime != SGEXTN::Utilities::DateTime(year, 8, day, hour, minute, second)){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime set month fail");}
-                thisDateTime = originalDateTime;
-                thisDateTime.setPart(SGEXTN::Utilities::TimeUnit::Day, 9);
-                if(thisDateTime != SGEXTN::Utilities::DateTime(year, month, 9, hour, minute, second)){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime set day fail");}
-                thisDateTime = originalDateTime;
-                thisDateTime.setPart(SGEXTN::Utilities::TimeUnit::Hour, 10);
-                if(thisDateTime != SGEXTN::Utilities::DateTime(year, month, day, 10, minute, second)){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime set hour fail");}
-                thisDateTime = originalDateTime;
-                thisDateTime.setPart(SGEXTN::Utilities::TimeUnit::Minute, 30);
-                if(thisDateTime != SGEXTN::Utilities::DateTime(year, month, day, hour, 30, second)){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime set minute fail");}
-                thisDateTime = originalDateTime;
-                thisDateTime.setPart(SGEXTN::Utilities::TimeUnit::Second, 0);
-                if(thisDateTime != SGEXTN::Utilities::DateTime(year, month, day, hour, minute, 0)){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime set second fail");}
-                thisDateTime = originalDateTime;
-                if(thisDateTime.getDayOfWeek() != (std::chrono::weekday{thisDay}).iso_encoding()){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime get day of week fail");}
-                if(thisDateTime.getDayOfYear() != static_cast<int>((thisDay - std::chrono::sys_days{std::chrono::year{year + 1965} / std::chrono::January / 1}).count() + 1)){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime get day of year fail");}
-                if(thisDateTime.countDaysInMonth() != static_cast<int>(static_cast<unsigned int>((std::chrono::year{year + 1965} / std::chrono::month{static_cast<unsigned int>(month)} / std::chrono::last).day()))){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime count days in month fail");}
-                if(thisDateTime.countDaysInYear() != 365 + static_cast<int>((std::chrono::year{year + 1965}).is_leap())){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime count days in year fail");}
-                if(thisDateTime.getStartOfDay().private_data != (std::chrono::duration_cast<std::chrono::seconds>(thisDay.time_since_epoch()).count() - externalBeginningOfTime.time_since_epoch().count())){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime start of day fail");}
-                if(thisDateTime.getEndOfDay().private_data != std::chrono::duration_cast<std::chrono::seconds>(thisDay.time_since_epoch()).count() - externalBeginningOfTime.time_since_epoch().count() + 86400ll){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime end of day fail");}
-                char* weekNumberString = new char[3];
-                std::format_to_n(weekNumberString, 2, "{:%V}", externalDateTime);
-                (*(weekNumberString + 2)) = '\0';
-                if(thisDateTime.getWeekOfYear() != std::atoi(weekNumberString)){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime week count fail");}
-                delete[] weekNumberString;
-                const int diffYear = thisDateTime.getTimeAfterDisplayPart(SGEXTN::Utilities::DateTime::beginningOfTime(), SGEXTN::Utilities::TimeUnit::Year);
-                const int diffMonth = thisDateTime.getTimeAfterDisplayPart(SGEXTN::Utilities::DateTime::beginningOfTime(), SGEXTN::Utilities::TimeUnit::Month);
-                if(diffMonth < 0 || diffMonth > 11){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime time after display part month fail");}
-                const int diffDay = thisDateTime.getTimeAfterDisplayPart(SGEXTN::Utilities::DateTime::beginningOfTime(), SGEXTN::Utilities::TimeUnit::Day);
-                if(diffDay < 0 || diffDay > 30){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime time after display part day fail");}
-                const int diffHour = thisDateTime.getTimeAfterDisplayPart(SGEXTN::Utilities::DateTime::beginningOfTime(), SGEXTN::Utilities::TimeUnit::Hour);
-                if(diffHour < 0 || diffHour > 23){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime time after display part hour fail");}
-                const int diffMinute = thisDateTime.getTimeAfterDisplayPart(SGEXTN::Utilities::DateTime::beginningOfTime(), SGEXTN::Utilities::TimeUnit::Minute);
-                if(diffMinute < 0 || diffMinute > 59){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime time after display part minute fail");}
-                const int diffSecond = thisDateTime.getTimeAfterDisplayPart(SGEXTN::Utilities::DateTime::beginningOfTime(), SGEXTN::Utilities::TimeUnit::Second);
-                if(diffSecond < 0 || diffSecond > 59){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime time after display part second fail");}
-                zero = SGEXTN::Utilities::DateTime::beginningOfTime();
-                zero.advanceTime(diffYear, SGEXTN::Utilities::TimeUnit::Year);
-                zero.advanceTime(diffMonth, SGEXTN::Utilities::TimeUnit::Month);
-                zero.advanceTime(diffDay, SGEXTN::Utilities::TimeUnit::Day);
-                zero.advanceTime(diffHour, SGEXTN::Utilities::TimeUnit::Hour);
-                zero.advanceTime(diffMinute, SGEXTN::Utilities::TimeUnit::Minute);
-                zero.advanceTime(diffSecond, SGEXTN::Utilities::TimeUnit::Second);
-                if(zero != thisDateTime){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime advance time fail");}
-            }
-        }
-    }
     if(SGEXTN::Utilities::DateTime::convertToGlobalYear(0) != 1965){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime standard to global year fail");}
     if(SGEXTN::Utilities::DateTime(60, 6, 15, 0, 0, 0).isNationalDayPeriod() == true || SGEXTN::Utilities::DateTime(60, 7, 15, 0, 0, 0).isNationalDayPeriod() == false || SGEXTN::Utilities::DateTime(60, 8, 15, 0, 0, 0).isNationalDayPeriod() == false || SGEXTN::Utilities::DateTime(60, 9, 15, 0, 0, 0).isNationalDayPeriod() == false || SGEXTN::Utilities::DateTime(60, 10, 15, 0, 0, 0).isNationalDayPeriod() == true){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime National Day period check fail");}
     if(SGEXTN::Utilities::DateTime(60, 1, 1, 0, 0, 0).isSignificantDate(SGEXTN::Utilities::SignificantDates::NationalDay) == true || SGEXTN::Utilities::DateTime(60, 8, 9, 0, 0, 0).isSignificantDate(SGEXTN::Utilities::SignificantDates::NationalDay) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime significant day check National Day fail");}
