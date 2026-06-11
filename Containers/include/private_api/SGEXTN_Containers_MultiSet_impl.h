@@ -1,5 +1,5 @@
 #pragma once
-#include <private_api/SGEXTN_Containers_Crash.h>
+#include <SGEXTN_Containers_ForceCrash.h>
 
 template <typename T, typename Comparator> SGEXTN::Containers::MultiSet<T, Comparator>::MultiSet() : private_avlTree() {}
 
@@ -84,8 +84,8 @@ template <typename T, typename Comparator> int SGEXTN::Containers::MultiSet<T, C
 }
 
 template <typename T, typename Comparator> const T& SGEXTN::Containers::MultiSet<T, Comparator>::elementAt(int n) const {
-    if(n < 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiSet::elementAt crashed because the index is negative");}
-    if(n >= length()){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiSet::elementAt crashed because the index points beyond the end of the set");}
+    if(n < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::MultiSet::elementAt crashed because the index is negative");}
+    if(n >= length()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::MultiSet::elementAt crashed because the index points beyond the end of the set");}
     return private_avlTree.keyAt(n);
 }
 
@@ -130,7 +130,7 @@ template <typename T, typename Comparator> bool SGEXTN::Containers::MultiSetIter
 }
 
 template <typename T, typename Comparator> const T& SGEXTN::Containers::MultiSetIterator<T, Comparator>::operator*() const {
-    if(private_avlTreeIterator.associatedNode == nullptr){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiSetIterator::operator* crashed as the iterator is the end iterator");}
+    if(private_avlTreeIterator.associatedNode == nullptr){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::MultiSetIterator::operator* crashed as the iterator is the end iterator");}
     return private_avlTreeIterator.key();
 }
 
@@ -167,6 +167,6 @@ template <typename T, typename Comparator> bool SGEXTN::Containers::MultiSetCons
 }
 
 template <typename T, typename Comparator> const T& SGEXTN::Containers::MultiSetConstIterator<T, Comparator>::operator*() const {
-    if(private_avlTreeIterator.associatedNode == nullptr){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiSetConstIterator::operator* crashed as the iterator is the end iterator");}
+    if(private_avlTreeIterator.associatedNode == nullptr){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::MultiSetConstIterator::operator* crashed as the iterator is the end iterator");}
     return private_avlTreeIterator.key();
 }

@@ -1,15 +1,15 @@
 #pragma once
-#include <private_api/SGEXTN_Containers_Crash.h>
+#include <SGEXTN_Containers_ForceCrash.h>
 
 template <typename T> SGEXTN::Containers::Stack<T>::Stack() : private_ringBuffer() {}
 
 template <typename T> T& SGEXTN::Containers::Stack<T>::top(){
-    if(private_ringBuffer.length() == 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Stack::top crashed as the stack is empty");}
+    if(private_ringBuffer.length() == 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Stack::top crashed as the stack is empty");}
     return private_ringBuffer.back();
 }
 
 template <typename T> const T& SGEXTN::Containers::Stack<T>::top() const {
-    if(private_ringBuffer.length() == 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Stack::top crashed as the stack is empty");}
+    if(private_ringBuffer.length() == 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Stack::top crashed as the stack is empty");}
     return private_ringBuffer.back();
 }
 
@@ -22,7 +22,7 @@ template <typename T> void SGEXTN::Containers::Stack<T>::push(const T& x){
 }
 
 template <typename T> void SGEXTN::Containers::Stack<T>::pop(){
-    if(private_ringBuffer.length() == 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Stack::pop crashed as the stack is empty");}
+    if(private_ringBuffer.length() == 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Stack::pop crashed as the stack is empty");}
     private_ringBuffer.popBack();
 }
 

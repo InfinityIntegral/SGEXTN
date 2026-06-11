@@ -1,5 +1,5 @@
 #pragma once
-#include <private_api/SGEXTN_Containers_Crash.h>
+#include <SGEXTN_Containers_ForceCrash.h>
 
 template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MultiMap<Key, Value, Comparator>::MultiMap() : private_avlTree() {}
 
@@ -28,12 +28,12 @@ template <typename Key, typename Value, typename Comparator> int SGEXTN::Contain
 }
 
 template <typename Key, typename Value, typename Comparator> Value& SGEXTN::Containers::MultiMap<Key, Value, Comparator>::at(const Key& x){
-    if(contains(x) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiMap::at crashed because the key is not in the map");}
+    if(contains(x) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::MultiMap::at crashed because the key is not in the map");}
     return private_avlTree.at(x);
 }
 
 template <typename Key, typename Value, typename Comparator> const Value& SGEXTN::Containers::MultiMap<Key, Value, Comparator>::at(const Key& x) const {
-    if(contains(x) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiMap::at crashed because the key is not in the map");}
+    if(contains(x) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::MultiMap::at crashed because the key is not in the map");}
     return private_avlTree.at(x);
 }
 
@@ -94,20 +94,20 @@ template <typename Key, typename Value, typename Comparator> int SGEXTN::Contain
 }
 
 template <typename Key, typename Value, typename Comparator> const Key& SGEXTN::Containers::MultiMap<Key, Value, Comparator>::keyAt(int n) const {
-    if(n < 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiMap::keyAt crashed because index is negative");}
-    if(n >= length()){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiMap::keyAt crashed because index points beyond the end of the data structure");}
+    if(n < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::MultiMap::keyAt crashed because index is negative");}
+    if(n >= length()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::MultiMap::keyAt crashed because index points beyond the end of the data structure");}
     return private_avlTree.keyAt(n);
 }
 
 template <typename Key, typename Value, typename Comparator> Value& SGEXTN::Containers::MultiMap<Key, Value, Comparator>::valueAt(int n){
-    if(n < 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiMap::valueAt crashed because index is negative");}
-    if(n >= length()){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiMap::valueAt crashed because index points beyond the end of the data structure");}
+    if(n < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::MultiMap::valueAt crashed because index is negative");}
+    if(n >= length()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::MultiMap::valueAt crashed because index points beyond the end of the data structure");}
     return private_avlTree.valueAt(n);
 }
 
 template <typename Key, typename Value, typename Comparator> const Value& SGEXTN::Containers::MultiMap<Key, Value, Comparator>::valueAt(int n) const {
-    if(n < 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiMap::valueAt crashed because index is negative");}
-    if(n >= length()){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiMap::valueAt crashed because index points beyond the end of the data structure");}
+    if(n < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::MultiMap::valueAt crashed because index is negative");}
+    if(n >= length()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::MultiMap::valueAt crashed because index points beyond the end of the data structure");}
     return private_avlTree.valueAt(n);
 }
 
@@ -152,12 +152,12 @@ template <typename Key, typename Value, typename Comparator> bool SGEXTN::Contai
 }
 
 template <typename Key, typename Value, typename Comparator> const Key& SGEXTN::Containers::MultiMapIterator<Key, Value, Comparator>::key() const {
-    if(private_avlTreeIterator.associatedNode == nullptr){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiMapIterator::key crashed because the iterator is the end iterator");}
+    if(private_avlTreeIterator.associatedNode == nullptr){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::MultiMapIterator::key crashed because the iterator is the end iterator");}
     return private_avlTreeIterator.key();
 }
 
 template <typename Key, typename Value, typename Comparator> Value& SGEXTN::Containers::MultiMapIterator<Key, Value, Comparator>::value() const {
-    if(private_avlTreeIterator.associatedNode == nullptr){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiMapIterator::value crashed because the iterator is the end iterator");}
+    if(private_avlTreeIterator.associatedNode == nullptr){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::MultiMapIterator::value crashed because the iterator is the end iterator");}
     return private_avlTreeIterator.value();
 }
 
@@ -194,11 +194,11 @@ template <typename Key, typename Value, typename Comparator> bool SGEXTN::Contai
 }
 
 template <typename Key, typename Value, typename Comparator> const Key& SGEXTN::Containers::MultiMapConstIterator<Key, Value, Comparator>::key() const {
-    if(private_avlTreeIterator.associatedNode == nullptr){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiMapConstIterator::key crashed because the iterator is the end iterator");}
+    if(private_avlTreeIterator.associatedNode == nullptr){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::MultiMapConstIterator::key crashed because the iterator is the end iterator");}
     return private_avlTreeIterator.key();
 }
 
 template <typename Key, typename Value, typename Comparator> const Value& SGEXTN::Containers::MultiMapConstIterator<Key, Value, Comparator>::value() const {
-    if(private_avlTreeIterator.associatedNode == nullptr){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MultiMapConstIterator::value crashed because the iterator is the end iterator");}
+    if(private_avlTreeIterator.associatedNode == nullptr){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::MultiMapConstIterator::value crashed because the iterator is the end iterator");}
     return private_avlTreeIterator.value();
 }

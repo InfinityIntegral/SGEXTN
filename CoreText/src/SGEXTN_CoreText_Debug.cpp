@@ -4,20 +4,10 @@
 #include <iostream>
 #include <locale>
 #include <cwchar>
-#include <private_api/SGEXTN_Containers_Crash.h>
+#include <SGEXTN_Containers_ForceCrash.h>
 
 namespace {
-class ForceCrashErrorMessageSetter {
-public:
-    ForceCrashErrorMessageSetter();
-    static ForceCrashErrorMessageSetter instance;
-};
-
-ForceCrashErrorMessageSetter ForceCrashErrorMessageSetter::instance;
-
-ForceCrashErrorMessageSetter::ForceCrashErrorMessageSetter(){
-    SGEXTN::Containers::Crash::logCrashMessage = &SGEXTN::CoreText::Debug::logCrashMessage;
-}
+SGEXTN::Containers::ForceCrashLogFunctionRegistrar forceCrashLogFunctionRegistrarInstance(&SGEXTN::CoreText::Debug::logCrashMessage);
 
 const char* printUtf8String(const unsigned char* data, int byteLength, bool& mustDeleteOutputUsingArrayDelete){
     mustDeleteOutputUsingArrayDelete = false;
@@ -67,7 +57,7 @@ SGEXTN::CoreText::Debug::~Debug(){
     else{logData = SGEXTN::CoreText::String("SG") + debugInfo;}
     bool mustDelete = false;
     const char* cString = printUtf8String(&logData.byteAt(0), logData.byteLength(), mustDelete);
-    std::cerr << cString << "\n";
+    logCrashMessage(cString);
     if(mustDelete == true){delete[] cString;}
 }
 

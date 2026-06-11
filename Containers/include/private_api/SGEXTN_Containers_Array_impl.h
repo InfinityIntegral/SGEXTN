@@ -1,14 +1,14 @@
 #pragma once
-#include <private_api/SGEXTN_Containers_Crash.h>
+#include <SGEXTN_Containers_ForceCrash.h>
 #include <private_api/SGEXTN_Containers_Sort.h>
 
 template <typename T> SGEXTN::Containers::Array<T>::Array(int count) : private_data(nullptr), private_length(count) {
-    if(count < 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Array constructor crashed because count cannot be negative");}
+    if(count < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Array constructor crashed because count cannot be negative");}
     if(count > 0){private_data = new T[count]();}
 }
 
 template <typename T> SGEXTN::Containers::Array<T>::Array(int count, const T& defaultValue) : private_data(nullptr), private_length(count) {
-    if(count < 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Array constructor crashed because count cannot be negative");}
+    if(count < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Array constructor crashed because count cannot be negative");}
     if(count > 0){private_data = new T[count];}
     for(int i=0; i<private_length; i++){
         (*(private_data + i)) = defaultValue;
@@ -67,19 +67,19 @@ template <typename T> int SGEXTN::Containers::Array<T>::length() const {
 }
 
 template <typename T> T& SGEXTN::Containers::Array<T>::at(int i){
-    if(i < 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Array::at crashed because index is negative");}
-    if(i >= private_length){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Array::at crashed because index points beyond the end of the array");}
+    if(i < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Array::at crashed because index is negative");}
+    if(i >= private_length){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Array::at crashed because index points beyond the end of the array");}
     return (*(private_data + i));
 }
 
 template <typename T> const T& SGEXTN::Containers::Array<T>::at(int i) const {
-    if(i < 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Array::at crashed because index is negative");}
-    if(i >= private_length){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Array::at crashed because index points beyond the end of the array");}
+    if(i < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Array::at crashed because index is negative");}
+    if(i >= private_length){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Array::at crashed because index points beyond the end of the array");}
     return (*(private_data + i));
 }
 
 template <typename T> template <typename Comparator> void SGEXTN::Containers::Array<T>::sort(int start, int length){
-    if(start < 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Array::sort crashed because start of range is negative");}
-    if(start + length > (*this).length()){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Array::sort crashed because end of range points beyond the end of the array");}
+    if(start < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Array::sort crashed because start of range is negative");}
+    if(start + length > (*this).length()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Array::sort crashed because end of range points beyond the end of the array");}
     SGEXTN::Containers::Sort<T, Comparator>::private_sort(private_data + start, length);
 }

@@ -1,10 +1,10 @@
 #pragma once
-#include <private_api/SGEXTN_Containers_Crash.h>
+#include <SGEXTN_Containers_ForceCrash.h>
 
 template <typename T, typename Comparator> SGEXTN::Containers::PriorityQueue<T, Comparator>::PriorityQueue() : private_ringBuffer(), private_comparatorInstance() {}
 
 template <typename T, typename Comparator> const T& SGEXTN::Containers::PriorityQueue<T, Comparator>::top() const {
-    if(private_ringBuffer.length() == 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::PriorityQueue::top crashed as the priority queue is empty");}
+    if(private_ringBuffer.length() == 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::PriorityQueue::top crashed as the priority queue is empty");}
     return private_ringBuffer.at(0);
 }
 
@@ -38,7 +38,7 @@ template <typename T, typename Comparator> void SGEXTN::Containers::PriorityQueu
 }
 
 template <typename T, typename Comparator> void SGEXTN::Containers::PriorityQueue<T, Comparator>::pop(){
-    if(private_ringBuffer.length() == 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::PriorityQueue::pop crashed as the priority queue is empty");}
+    if(private_ringBuffer.length() == 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::PriorityQueue::pop crashed as the priority queue is empty");}
     private_swap(0, private_ringBuffer.length() - 1);
     private_ringBuffer.popBack();
     int i = 0;

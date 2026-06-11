@@ -1,5 +1,5 @@
 #pragma once
-#include <private_api/SGEXTN_Containers_Crash.h>
+#include <SGEXTN_Containers_ForceCrash.h>
 
 template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> SGEXTN::Containers::UnorderedMap<Key, Value, EqualityCheck, HashFunction>::UnorderedMap() : private_hashMap() {}
 
@@ -28,12 +28,12 @@ template <typename Key, typename Value, typename EqualityCheck, typename HashFun
 }
 
 template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> Value& SGEXTN::Containers::UnorderedMap<Key, Value, EqualityCheck, HashFunction>::at(const Key& x){
-    if(contains(x) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::UnorderedMap::at crashed because the provided key is not in the map");}
+    if(contains(x) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::UnorderedMap::at crashed because the provided key is not in the map");}
     return private_hashMap.at(x);
 }
 
 template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> const Value& SGEXTN::Containers::UnorderedMap<Key, Value, EqualityCheck, HashFunction>::at(const Key& x) const {
-    if(contains(x) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::UnorderedMap::at crashed because the provided key is not in the map");}
+    if(contains(x) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::UnorderedMap::at crashed because the provided key is not in the map");}
     return private_hashMap.at(x);
 }
 
@@ -98,12 +98,12 @@ template <typename Key, typename Value, typename EqualityCheck, typename HashFun
 }
 
 template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> const Key& SGEXTN::Containers::UnorderedMapIterator<Key, Value, EqualityCheck, HashFunction>::key() const {
-    if(private_hashMapIterator.associatedSlot == nullptr){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::UnorderedMapIterator::key crashed because the iterator is the end iterator");}
+    if(private_hashMapIterator.associatedSlot == nullptr){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::UnorderedMapIterator::key crashed because the iterator is the end iterator");}
     return private_hashMapIterator.key();
 }
 
 template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> Value& SGEXTN::Containers::UnorderedMapIterator<Key, Value, EqualityCheck, HashFunction>::value() const {
-    if(private_hashMapIterator.associatedSlot == nullptr){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::UnorderedMapIterator::value crashed because the iterator is the end iterator");}
+    if(private_hashMapIterator.associatedSlot == nullptr){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::UnorderedMapIterator::value crashed because the iterator is the end iterator");}
     return private_hashMapIterator.value();
 }
 
@@ -140,11 +140,11 @@ template <typename Key, typename Value, typename EqualityCheck, typename HashFun
 }
 
 template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> const Key& SGEXTN::Containers::UnorderedMapConstIterator<Key, Value, EqualityCheck, HashFunction>::key() const {
-    if(private_hashMapIterator.associatedSlot == nullptr){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::UnorderedMapConstIterator::key crashed because the iterator is the end iterator");}
+    if(private_hashMapIterator.associatedSlot == nullptr){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::UnorderedMapConstIterator::key crashed because the iterator is the end iterator");}
     return private_hashMapIterator.key();
 }
 
 template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> const Value& SGEXTN::Containers::UnorderedMapConstIterator<Key, Value, EqualityCheck, HashFunction>::value() const {
-    if(private_hashMapIterator.associatedSlot == nullptr){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::UnorderedMapConstIterator::value crashed because the iterator is the end iterator");}
+    if(private_hashMapIterator.associatedSlot == nullptr){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::UnorderedMapConstIterator::value crashed because the iterator is the end iterator");}
     return private_hashMapIterator.value();
 }

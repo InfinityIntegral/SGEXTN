@@ -6,7 +6,7 @@
 #include <SGEXTN_Math_IntegerLimits.h>
 #include <SGEXTN_Math_FloatMath.h>
 #include <SGEXTN_Math_FloatLimits.h>
-#include <private_api/SGEXTN_Containers_Crash.h>
+#include <SGEXTN_Containers_ForceCrash.h>
 #include <SGEXTN_Containers_ArrayVectorMove.h>
 
 namespace {
@@ -407,7 +407,7 @@ SGEXTN::CoreText::String& SGEXTN::CoreText::String::operator=(SGEXTN::CoreText::
 }
 
 SGEXTN::CoreText::String::String(unsigned char c){
-    if(c > 0x7f){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String constructor crashed because the given unsigned char does not represent a valid ASCII character");}
+    if(c > 0x7f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String constructor crashed because the given unsigned char does not represent a valid ASCII character");}
     private_data.pushBack(c);
 }
 
@@ -469,15 +469,15 @@ int SGEXTN::CoreText::String::characterLength() const {
 }
 
 unsigned char& SGEXTN::CoreText::String::byteAt(int i){
-    if(i < 0){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::byteAt crashed because the index is negative");}
-    if(i >= byteLength()){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::byteAt crashed because the index points beyond the end of the string");}
+    if(i < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::byteAt crashed because the index is negative");}
+    if(i >= byteLength()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::byteAt crashed because the index points beyond the end of the string");}
     private_invalidateOffsets();
     return private_data.byteAt(i);
 }
 
 const unsigned char& SGEXTN::CoreText::String::byteAt(int i) const {
-    if(i < 0){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::byteAt crashed because the index is negative");}
-    if(i >= byteLength()){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::byteAt crashed because the index points beyond the end of the string");}
+    if(i < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::byteAt crashed because the index is negative");}
+    if(i >= byteLength()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::byteAt crashed because the index points beyond the end of the string");}
     return private_data.byteAt(i);
 }
 
@@ -550,8 +550,8 @@ void SGEXTN::CoreText::String::private_invalidateOffsets() const {
 }
 
 SGEXTN::CoreText::Character SGEXTN::CoreText::String::getCharacterAt(int i) const {
-    if(i < 0){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::getCharacterAt crashed because index is negative");}
-    if(i >= characterLength()){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::getCharacterAt crashed because index points beyond the end of the string");}
+    if(i < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::getCharacterAt crashed because index is negative");}
+    if(i >= characterLength()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::getCharacterAt crashed because index points beyond the end of the string");}
     private_computeOffsets();
     SGEXTN::CoreText::Character c;
     c.private_data = SGEXTN::CoreText::TextBuffer();
@@ -560,8 +560,8 @@ SGEXTN::CoreText::Character SGEXTN::CoreText::String::getCharacterAt(int i) cons
 }
 
 void SGEXTN::CoreText::String::setCharacterAt(int i, const SGEXTN::CoreText::Character& c){
-    if(i < 0){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::setCharacterAt crashed because index is negative");}
-    if(i >= characterLength()){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::setCharacterAt crashed because index points beyond the end of the string");}
+    if(i < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::setCharacterAt crashed because index is negative");}
+    if(i >= characterLength()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::setCharacterAt crashed because index points beyond the end of the string");}
     private_computeOffsets();
     const int rangeBegin = private_characterOffsets.at(i);
     const int rangeEnd = private_characterOffsets.at(i + 1);
@@ -597,8 +597,8 @@ SGEXTN::CoreText::String SGEXTN::CoreText::String::fillCharacters(const SGEXTN::
 }
 
 int SGEXTN::CoreText::String::findFirstBytesFromLeftBounded(int start, const SGEXTN::CoreText::String& s) const {
-    if(start < 0){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::findFirstBytesFromLeftBounded crashed because the starting point is negative");}
-    if(s == ""){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::findFirstBytesFromLeftBounded crashed because the string to find is empty");}
+    if(start < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::findFirstBytesFromLeftBounded crashed because the starting point is negative");}
+    if(s == ""){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::findFirstBytesFromLeftBounded crashed because the string to find is empty");}
     for(int i=start; i <= byteLength() - s.byteLength(); i++){
         for(int j=0; j<s.byteLength(); j++){
             if(byteAt(i + j) != s.byteAt(j)){break;}
@@ -609,8 +609,8 @@ int SGEXTN::CoreText::String::findFirstBytesFromLeftBounded(int start, const SGE
 }
 
 int SGEXTN::CoreText::String::findFirstBytesFromRightBounded(int start, const SGEXTN::CoreText::String& s) const {
-    if(start >= byteLength()){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::findFirstBytesFromRightBounded crashed because the starting point is beyond the end of the string");}
-    if(s == ""){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::findFirstBytesFromRightBounded crashed because the string to find is empty");}
+    if(start >= byteLength()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::findFirstBytesFromRightBounded crashed because the starting point is beyond the end of the string");}
+    if(s == ""){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::findFirstBytesFromRightBounded crashed because the string to find is empty");}
     if(start > byteLength() - s.byteLength()){start = byteLength() - s.byteLength();}
     for(int i=start; i>=0; i--){
         for(int j=0; j<s.byteLength(); j++){
@@ -622,18 +622,18 @@ int SGEXTN::CoreText::String::findFirstBytesFromRightBounded(int start, const SG
 }
 
 int SGEXTN::CoreText::String::findFirstBytesFromLeft(const SGEXTN::CoreText::String& s) const {
-    if(s == ""){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::findFirstBytesFromLeft crashed because the string to find is empty");}
+    if(s == ""){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::findFirstBytesFromLeft crashed because the string to find is empty");}
     return findFirstBytesFromLeftBounded(0, s);
 }
 
 int SGEXTN::CoreText::String::findFirstBytesFromRight(const SGEXTN::CoreText::String& s) const {
-    if(s == ""){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::findFirstBytesFromRight crashed because the string to find is empty");}
+    if(s == ""){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::findFirstBytesFromRight crashed because the string to find is empty");}
     return findFirstBytesFromRightBounded(byteLength() - 1, s);
 }
 
 int SGEXTN::CoreText::String::findFirstCharactersFromLeftBounded(int start, const SGEXTN::CoreText::String& s) const {
-    if(start < 0){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::findFirstCharactersFromLeftBounded crashed because the starting point is negative");}
-    if(s == ""){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::findFirstCharacterFromLeftBounded crashed because the string to find is empty");}
+    if(start < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::findFirstCharactersFromLeftBounded crashed because the starting point is negative");}
+    if(s == ""){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::findFirstCharacterFromLeftBounded crashed because the string to find is empty");}
     for(int i=start; i <= characterLength() - s.characterLength(); i++){
         for(int j=0; j<s.characterLength(); j++){
             if(getCharacterAt(i + j) != s.getCharacterAt(j)){break;}
@@ -644,8 +644,8 @@ int SGEXTN::CoreText::String::findFirstCharactersFromLeftBounded(int start, cons
 }
 
 int SGEXTN::CoreText::String::findFirstCharactersFromRightBounded(int start, const SGEXTN::CoreText::String& s) const {
-    if(start >= characterLength()){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::findFirstCharactersFromRightBounded crashed because the starting point is beyond the end of the string");}
-    if(s == ""){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::findFirstCharacterFromRightBounded crashed because the string to find is empty");}
+    if(start >= characterLength()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::findFirstCharactersFromRightBounded crashed because the starting point is beyond the end of the string");}
+    if(s == ""){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::findFirstCharacterFromRightBounded crashed because the string to find is empty");}
     if(start > characterLength() - s.characterLength()){start = characterLength() - s.characterLength();}
     for(int i=start; i>=0; i--){
         for(int j=0; j<s.characterLength(); j++){
@@ -657,40 +657,40 @@ int SGEXTN::CoreText::String::findFirstCharactersFromRightBounded(int start, con
 }
 
 int SGEXTN::CoreText::String::findFirstCharactersFromLeft(const SGEXTN::CoreText::String& s) const {
-    if(s == ""){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::findFirstCharacterFromLeft crashed because the string to find is empty");}
+    if(s == ""){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::findFirstCharacterFromLeft crashed because the string to find is empty");}
     return findFirstCharactersFromLeftBounded(0, s);
 }
 
 int SGEXTN::CoreText::String::findFirstCharactersFromRight(const SGEXTN::CoreText::String& s) const {
-    if(s == ""){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::findFirstCharacterFromRight crashed because the string to find is empty");}
+    if(s == ""){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::findFirstCharacterFromRight crashed because the string to find is empty");}
     return findFirstCharactersFromRightBounded(characterLength() - 1, s);
 }
 
 SGEXTN::CoreText::String SGEXTN::CoreText::String::substringBytes(int start, int length) const {
-    if(start < 0){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::substringBytes crashed because the starting point is negative");}
-    if(length < 0){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::substringBytes crashed because the length is negative");}
-    if(length + start > byteLength()){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::substringBytes crashed because the end point is beyond the end of the string");}
+    if(start < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::substringBytes crashed because the starting point is negative");}
+    if(length < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::substringBytes crashed because the length is negative");}
+    if(length + start > byteLength()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::substringBytes crashed because the end point is beyond the end of the string");}
     SGEXTN::CoreText::String output;
     output.private_data.pushBack(private_data, start, length);
     return output;
 }
 
 SGEXTN::CoreText::String SGEXTN::CoreText::String::substringBytesLeft(int length) const {
-    if(length < 0){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::substringBytesLeft crashed because the length is negative");}
-    if(length > byteLength()){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::substringBytesLeft crashed because the end point is beyond the end of the string");}
+    if(length < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::substringBytesLeft crashed because the length is negative");}
+    if(length > byteLength()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::substringBytesLeft crashed because the end point is beyond the end of the string");}
     return substringBytes(0, length);
 }
 
 SGEXTN::CoreText::String SGEXTN::CoreText::String::substringBytesRight(int length) const {
-    if(length < 0){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::substringBytesRight crashed because the length is negative");}
-    if(length > byteLength()){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::substringBytesRight crashed because the start point is beyond the start of the string");}
+    if(length < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::substringBytesRight crashed because the length is negative");}
+    if(length > byteLength()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::substringBytesRight crashed because the start point is beyond the start of the string");}
     return substringBytes(byteLength() - length, length);
 }
 
 SGEXTN::CoreText::String SGEXTN::CoreText::String::substringCharacters(int start, int length) const {
-    if(start < 0){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::substringCharacters crashed because the starting point is negative");}
-    if(length < 0){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::substringCharacters crashed because the length is negative");}
-    if(length + start > characterLength()){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::substringCharacters crashed because the end point is beyond the end of the string");}
+    if(start < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::substringCharacters crashed because the starting point is negative");}
+    if(length < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::substringCharacters crashed because the length is negative");}
+    if(length + start > characterLength()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::substringCharacters crashed because the end point is beyond the end of the string");}
     private_computeOffsets();
     SGEXTN::CoreText::String output;
     output.private_data.pushBack(private_data, private_characterOffsets.at(start), private_characterOffsets.at(start + length) - private_characterOffsets.at(start));
@@ -698,19 +698,19 @@ SGEXTN::CoreText::String SGEXTN::CoreText::String::substringCharacters(int start
 }
 
 SGEXTN::CoreText::String SGEXTN::CoreText::String::substringCharactersLeft(int length) const {
-    if(length < 0){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::substringCharactersLeft crashed because the length is negative");}
-    if(length > characterLength()){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::substringCharactersLeft crashed because the end point is beyond the end of the string");}
+    if(length < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::substringCharactersLeft crashed because the length is negative");}
+    if(length > characterLength()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::substringCharactersLeft crashed because the end point is beyond the end of the string");}
     return substringCharacters(0, length);
 }
 
 SGEXTN::CoreText::String SGEXTN::CoreText::String::substringCharactersRight(int length) const {
-    if(length < 0){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::substringCharactersRight crashed because the length is negative");}
-    if(length > characterLength()){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::substringCharactersRight crashed because the start point is beyond the start of the string");}
+    if(length < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::substringCharactersRight crashed because the length is negative");}
+    if(length > characterLength()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::substringCharactersRight crashed because the start point is beyond the start of the string");}
     return substringCharacters(characterLength() - length, length);
 }
 
 SGEXTN::CoreText::String SGEXTN::CoreText::String::replaceBytes(const SGEXTN::CoreText::String& oldText, const SGEXTN::CoreText::String& newText) const {
-    if(oldText == ""){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::replaceBytes crashed because string to replace is empty");}
+    if(oldText == ""){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::replaceBytes crashed because string to replace is empty");}
     SGEXTN::CoreText::String output;
     int lastCheck = 0;
     while(lastCheck != -1){
@@ -730,7 +730,7 @@ SGEXTN::CoreText::String SGEXTN::CoreText::String::replaceBytes(const SGEXTN::Co
 }
 
 SGEXTN::CoreText::String SGEXTN::CoreText::String::replaceCharacters(const SGEXTN::CoreText::String& oldText, const SGEXTN::CoreText::String& newText) const {
-    if(oldText == ""){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::replaceCharacters crashed because string to replace is empty");}
+    if(oldText == ""){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::replaceCharacters crashed because string to replace is empty");}
     private_computeOffsets();
     SGEXTN::CoreText::String output;
     int lastCheck = 0;
@@ -751,18 +751,18 @@ SGEXTN::CoreText::String SGEXTN::CoreText::String::replaceCharacters(const SGEXT
 }
 
 SGEXTN::CoreText::String SGEXTN::CoreText::String::removeBytes(const SGEXTN::CoreText::String& s) const {
-    if(s == ""){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::removeBytes crashed because string to replace is empty");}
+    if(s == ""){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::removeBytes crashed because string to replace is empty");}
     return replaceBytes(s, "");
 }
 
 SGEXTN::CoreText::String SGEXTN::CoreText::String::removeCharacters(const SGEXTN::CoreText::String& s) const {
-    if(s == ""){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::removeCharacters crashed because string to replace is empty");}
+    if(s == ""){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::removeCharacters crashed because string to replace is empty");}
     return replaceCharacters(s, "");
 }
 
 SGEXTN::CoreText::String SGEXTN::CoreText::String::insertAtByteIndex(int pos, const SGEXTN::CoreText::String& s) const {
-    if(pos < 0){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::insertAtByteIndex crashed because position of insertion is negative");}
-    if(pos > byteLength()){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::insertAtByteIndex crashed because position of insertion points to more than 1 space beyond the end of the string");}
+    if(pos < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::insertAtByteIndex crashed because position of insertion is negative");}
+    if(pos > byteLength()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::insertAtByteIndex crashed because position of insertion points to more than 1 space beyond the end of the string");}
     SGEXTN::CoreText::String output;
     if(pos > 0){output.private_data.pushBack(private_data, 0, pos);}
     output.private_data.pushBack(s.private_data, 0, s.byteLength());
@@ -771,8 +771,8 @@ SGEXTN::CoreText::String SGEXTN::CoreText::String::insertAtByteIndex(int pos, co
 }
 
 SGEXTN::CoreText::String SGEXTN::CoreText::String::insertAtCharacterIndex(int pos, const SGEXTN::CoreText::String& s) const {
-    if(pos < 0){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::insertAtCharacterIndex crashed because position of insertion is negative");}
-    if(pos > characterLength()){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::insertAtCharacterIndex crashed because position of insertion points to more than 1 space beyond the end of the string");}
+    if(pos < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::insertAtCharacterIndex crashed because position of insertion is negative");}
+    if(pos > characterLength()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::insertAtCharacterIndex crashed because position of insertion points to more than 1 space beyond the end of the string");}
     private_computeOffsets();
     SGEXTN::CoreText::String output;
     if(pos > 0){output.private_data.pushBack(private_data, 0, private_characterOffsets.at(pos));}
@@ -782,9 +782,9 @@ SGEXTN::CoreText::String SGEXTN::CoreText::String::insertAtCharacterIndex(int po
 }
 
 SGEXTN::CoreText::String SGEXTN::CoreText::String::removeAtByteIndex(int pos, int length) const {
-    if(pos < 0){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::removeAtByteIndex crashed because the start of the range to remove is negative");}
-    if(length < 0){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::removeAtByteIndex crashed because the length to remove is negative");}
-    if(pos + length > byteLength()){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::removeAtByteIndex crashed because the end of the range to remove points beyond the end of the string");}
+    if(pos < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::removeAtByteIndex crashed because the start of the range to remove is negative");}
+    if(length < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::removeAtByteIndex crashed because the length to remove is negative");}
+    if(pos + length > byteLength()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::removeAtByteIndex crashed because the end of the range to remove points beyond the end of the string");}
     SGEXTN::CoreText::String output;
     if(pos > 0){output.private_data.pushBack(private_data, 0, pos);}
     if(pos + length < byteLength()){output.private_data.pushBack(private_data, pos + length, byteLength() - pos - length);}
@@ -792,9 +792,9 @@ SGEXTN::CoreText::String SGEXTN::CoreText::String::removeAtByteIndex(int pos, in
 }
 
 SGEXTN::CoreText::String SGEXTN::CoreText::String::removeAtCharacterIndex(int pos, int length) const {
-    if(pos < 0){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::removeAtCharacterIndex crashed because the start of the range to remove is negative");}
-    if(length < 0){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::removeAtCharacterIndex crashed because the length to remove is negative");}
-    if(pos + length > characterLength()){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::removeAtCharacterIndex crashed because the end of the range to remove points beyond the end of the string");}
+    if(pos < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::removeAtCharacterIndex crashed because the start of the range to remove is negative");}
+    if(length < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::removeAtCharacterIndex crashed because the length to remove is negative");}
+    if(pos + length > characterLength()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::removeAtCharacterIndex crashed because the end of the range to remove points beyond the end of the string");}
     private_computeOffsets();
     SGEXTN::CoreText::String output;
     if(pos > 0){output.private_data.pushBack(private_data, 0, private_characterOffsets.at(pos));}
@@ -831,7 +831,7 @@ bool SGEXTN::CoreText::String::endsWithCharacters(const SGEXTN::CoreText::String
 }
 
 int SGEXTN::CoreText::String::countBytes(const SGEXTN::CoreText::String& s) const {
-    if(s == ""){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::countBytes crashed because string to count is empty");}
+    if(s == ""){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::countBytes crashed because string to count is empty");}
     int lastCheck = 0;
     int count = 0;
     while(true){
@@ -845,7 +845,7 @@ int SGEXTN::CoreText::String::countBytes(const SGEXTN::CoreText::String& s) cons
 }
 
 int SGEXTN::CoreText::String::countCharacters(const SGEXTN::CoreText::String& s) const {
-    if(s == ""){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::countCharacters crashed because string to count is empty");}
+    if(s == ""){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::countCharacters crashed because string to count is empty");}
     int lastCheck = 0;
     int count = 0;
     while(true){
@@ -859,7 +859,7 @@ int SGEXTN::CoreText::String::countCharacters(const SGEXTN::CoreText::String& s)
 }
 
 int SGEXTN::CoreText::String::countBytesAllowOverlap(const SGEXTN::CoreText::String& s) const {
-    if(s == ""){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::countBytesAllowOverlap crashed because string to count is empty");}
+    if(s == ""){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::countBytesAllowOverlap crashed because string to count is empty");}
     int lastCheck = 0;
     int count = 0;
     while(true){
@@ -873,7 +873,7 @@ int SGEXTN::CoreText::String::countBytesAllowOverlap(const SGEXTN::CoreText::Str
 }
 
 int SGEXTN::CoreText::String::countCharactersAllowOverlap(const SGEXTN::CoreText::String& s) const {
-    if(s == ""){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::countCharactersAllowOverlap crashed because string to count is empty");}
+    if(s == ""){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::countCharactersAllowOverlap crashed because string to count is empty");}
     int lastCheck = 0;
     int count = 0;
     while(true){
@@ -887,7 +887,7 @@ int SGEXTN::CoreText::String::countCharactersAllowOverlap(const SGEXTN::CoreText
 }
 
 SGEXTN::CoreText::String SGEXTN::CoreText::String::repeat(const SGEXTN::CoreText::String& s, int count){
-    if(count < 0){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::repeat crashed because count is negative");}
+    if(count < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::repeat crashed because count is negative");}
     SGEXTN::CoreText::String output;
     for(int i=0; i<count; i++){
         output.private_data.pushBack(s.private_data, 0, s.byteLength());
@@ -896,32 +896,32 @@ SGEXTN::CoreText::String SGEXTN::CoreText::String::repeat(const SGEXTN::CoreText
 }
 
 SGEXTN::CoreText::String SGEXTN::CoreText::String::fillLeftToByteLength(int length, unsigned char fillChar) const {
-    if(length < 0){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::fillLeftToByteLength crashed because target length is negative");}
+    if(length < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::fillLeftToByteLength crashed because target length is negative");}
     if(byteLength() >= length){return (*this);}
     return (SGEXTN::CoreText::String::repeat(fillChar, length - byteLength()) + (*this));
 }
 
 SGEXTN::CoreText::String SGEXTN::CoreText::String::fillLeftToCharacterLength(int length, const SGEXTN::CoreText::Character& fillChar) const {
-    if(length < 0){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::fillLeftToCharacterLength crashed because target length is negative");}
+    if(length < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::fillLeftToCharacterLength crashed because target length is negative");}
     if(characterLength() >= length){return (*this);}
     return (SGEXTN::CoreText::String::repeat(fillChar, length - characterLength()) + (*this));
 }
 
 SGEXTN::CoreText::String SGEXTN::CoreText::String::fillRightToByteLength(int length, unsigned char fillChar) const {
-    if(length < 0){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::fillRightToByteLength crashed because target length is negative");}
+    if(length < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::fillRightToByteLength crashed because target length is negative");}
     if(byteLength() >= length){return (*this);}
     return ((*this) + SGEXTN::CoreText::String::repeat(fillChar, length - byteLength()));
 }
 
 SGEXTN::CoreText::String SGEXTN::CoreText::String::fillRightToCharacterLength(int length, const SGEXTN::CoreText::Character& fillChar) const {
-    if(length < 0){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::fillRightToCharacterLength crashed because target length is negative");}
+    if(length < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::fillRightToCharacterLength crashed because target length is negative");}
     if(characterLength() >= length){return (*this);}
     return ((*this) + SGEXTN::CoreText::String::repeat(fillChar, length - characterLength()));
 }
 
 int SGEXTN::CoreText::String::byteIndexToCharacterIndex(int i) const {
-    if(i < 0){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::byteIndexToCharacterIndex crashed because the index is negative");}
-    if(i >= byteLength()){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::byteIndexToCharacterIndex crashed because the index points beyond the end of the string");}
+    if(i < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::byteIndexToCharacterIndex crashed because the index is negative");}
+    if(i >= byteLength()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::byteIndexToCharacterIndex crashed because the index points beyond the end of the string");}
     private_computeOffsets();
     int low = 0;
     int high = characterLength();
@@ -934,14 +934,14 @@ int SGEXTN::CoreText::String::byteIndexToCharacterIndex(int i) const {
 }
 
 int SGEXTN::CoreText::String::characterIndexToByteIndex(int i) const {
-    if(i < 0){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::characterIndexToByteIndex crashed because the index is negative");}
-    if(i >= characterLength()){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::characterIndexToByteIndex crashed because the index points beyond the end of the string");}
+    if(i < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::characterIndexToByteIndex crashed because the index is negative");}
+    if(i >= characterLength()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::characterIndexToByteIndex crashed because the index points beyond the end of the string");}
     private_computeOffsets();
     return private_characterOffsets.at(i);
 }
 
 short SGEXTN::CoreText::String::parseToShort(bool* isValid, int base) const {
-    if(base < 2 || base > 36){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::parseToShort crashed because base is not within 2 to 36 inclusive");}
+    if(base < 2 || base > 36){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::parseToShort crashed because base is not within 2 to 36 inclusive");}
     long long value = 0;
     bool valid = parseStringToSignedInteger((*this), base, value);
     if(value < static_cast<long long>(SGEXTN::Math::IntegerLimits<short>::minimum()) || value > static_cast<long long>(SGEXTN::Math::IntegerLimits<short>::maximum())){valid = false;}
@@ -951,7 +951,7 @@ short SGEXTN::CoreText::String::parseToShort(bool* isValid, int base) const {
 }
 
 unsigned short SGEXTN::CoreText::String::parseToUnsignedShort(bool* isValid, int base) const {
-    if(base < 2 || base > 36){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::parseToUnsignedShort crashed because base is not within 2 to 36 inclusive");}
+    if(base < 2 || base > 36){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::parseToUnsignedShort crashed because base is not within 2 to 36 inclusive");}
     unsigned long long value = 0;
     bool valid = parseStringToInteger((*this), base, value);
     if(value > static_cast<unsigned long long>(SGEXTN::Math::IntegerLimits<unsigned short>::maximum())){valid = false;}
@@ -961,7 +961,7 @@ unsigned short SGEXTN::CoreText::String::parseToUnsignedShort(bool* isValid, int
 }
 
 int SGEXTN::CoreText::String::parseToInt(bool* isValid, int base) const {
-    if(base < 2 || base > 36){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::parseToInt crashed because base is not within 2 to 36 inclusive");}
+    if(base < 2 || base > 36){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::parseToInt crashed because base is not within 2 to 36 inclusive");}
     long long value = 0;
     bool valid = parseStringToSignedInteger((*this), base, value);
     if(value < static_cast<long long>(SGEXTN::Math::IntegerLimits<int>::minimum()) || value > static_cast<long long>(SGEXTN::Math::IntegerLimits<int>::maximum())){valid = false;}
@@ -971,7 +971,7 @@ int SGEXTN::CoreText::String::parseToInt(bool* isValid, int base) const {
 }
 
 unsigned int SGEXTN::CoreText::String::parseToUnsignedInt(bool* isValid, int base) const {
-    if(base < 2 || base > 36){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::parseToUnsignedInt crashed because base is not within 2 to 36 inclusive");}
+    if(base < 2 || base > 36){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::parseToUnsignedInt crashed because base is not within 2 to 36 inclusive");}
     unsigned long long value = 0;
     bool valid = parseStringToInteger((*this), base, value);
     if(value > static_cast<unsigned long long>(SGEXTN::Math::IntegerLimits<unsigned int>::maximum())){valid = false;}
@@ -981,7 +981,7 @@ unsigned int SGEXTN::CoreText::String::parseToUnsignedInt(bool* isValid, int bas
 }
 
 long long SGEXTN::CoreText::String::parseToLongLong(bool* isValid, int base) const {
-    if(base < 2 || base > 36){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::parseToLongLong crashed because base is not within 2 to 36 inclusive");}
+    if(base < 2 || base > 36){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::parseToLongLong crashed because base is not within 2 to 36 inclusive");}
     long long value = 0;
     const bool valid = parseStringToSignedInteger((*this), base, value);
     if(isValid != nullptr){(*isValid) = valid;}
@@ -990,7 +990,7 @@ long long SGEXTN::CoreText::String::parseToLongLong(bool* isValid, int base) con
 }
 
 unsigned long long SGEXTN::CoreText::String::parseToUnsignedLongLong(bool* isValid, int base) const {
-    if(base < 2 || base > 36){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::parseToUnsignedLongLong crashed because base is not within 2 to 36 inclusive");}
+    if(base < 2 || base > 36){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::parseToUnsignedLongLong crashed because base is not within 2 to 36 inclusive");}
     unsigned long long value = 0;
     const bool valid = parseStringToInteger((*this), base, value);
     if(isValid != nullptr){(*isValid) = valid;}
@@ -999,7 +999,7 @@ unsigned long long SGEXTN::CoreText::String::parseToUnsignedLongLong(bool* isVal
 }
 
 float SGEXTN::CoreText::String::parseToFloat(bool* isValid, int base) const {
-    if(base < 2 || base > 36){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::parseToFloat crashed because base is not within 2 to 36 inclusive");}
+    if(base < 2 || base > 36){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::parseToFloat crashed because base is not within 2 to 36 inclusive");}
     double value = 0.0f;
     const bool valid = parseStringToFloatingPoint((*this), base, value);
     if(isValid != nullptr){(*isValid) = valid;}
@@ -1008,7 +1008,7 @@ float SGEXTN::CoreText::String::parseToFloat(bool* isValid, int base) const {
 }
 
 double SGEXTN::CoreText::String::parseToDouble(bool* isValid, int base) const {
-    if(base < 2 || base > 36){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::parseToDouble crashed because base is not within 2 to 36 inclusive");}
+    if(base < 2 || base > 36){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::parseToDouble crashed because base is not within 2 to 36 inclusive");}
     double value = 0.0f;
     const bool valid = parseStringToFloatingPoint((*this), base, value);
     if(isValid != nullptr){(*isValid) = valid;}
@@ -1017,46 +1017,46 @@ double SGEXTN::CoreText::String::parseToDouble(bool* isValid, int base) const {
 }
 
 SGEXTN::CoreText::String SGEXTN::CoreText::String::stringFromShort(short x, int base){
-    if(base < 2 || base > 36){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::stringFromShort crashed because base is not within 2 to 36 inclusive");}
+    if(base < 2 || base > 36){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::stringFromShort crashed because base is not within 2 to 36 inclusive");}
     return makeStringFromSignedInteger(static_cast<long long>(x), base);
 }
 
 SGEXTN::CoreText::String SGEXTN::CoreText::String::stringFromUnsignedShort(unsigned short x, int base){
-    if(base < 2 || base > 36){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::stringFromUnsignedShort crashed because base is not within 2 to 36 inclusive");}
+    if(base < 2 || base > 36){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::stringFromUnsignedShort crashed because base is not within 2 to 36 inclusive");}
     return makeStringFromInteger(static_cast<unsigned long long>(x), base);
 }
 
 SGEXTN::CoreText::String SGEXTN::CoreText::String::stringFromInt(int x, int base){
-    if(base < 2 || base > 36){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::stringFromInt crashed because base is not within 2 to 36 inclusive");}
+    if(base < 2 || base > 36){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::stringFromInt crashed because base is not within 2 to 36 inclusive");}
     return makeStringFromSignedInteger(static_cast<long long>(x), base);
 }
 
 SGEXTN::CoreText::String SGEXTN::CoreText::String::stringFromUnsignedInt(unsigned int x, int base){
-    if(base < 2 || base > 36){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::stringFromUnsignedInt crashed because base is not within 2 to 36 inclusive");}
+    if(base < 2 || base > 36){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::stringFromUnsignedInt crashed because base is not within 2 to 36 inclusive");}
     return makeStringFromInteger(static_cast<unsigned long long>(x), base);
 }
 
 SGEXTN::CoreText::String SGEXTN::CoreText::String::stringFromLongLong(long long x, int base){
-    if(base < 2 || base > 36){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::stringFromLongLong crashed because base is not within 2 to 36 inclusive");}
+    if(base < 2 || base > 36){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::stringFromLongLong crashed because base is not within 2 to 36 inclusive");}
     return makeStringFromSignedInteger(x, base);
 }
 
 SGEXTN::CoreText::String SGEXTN::CoreText::String::stringFromUnsignedLongLong(unsigned long long x, int base){
-    if(base < 2 || base > 36){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::stringFromUnsignedLongLong crashed because base is not within 2 to 36 inclusive");}
+    if(base < 2 || base > 36){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::stringFromUnsignedLongLong crashed because base is not within 2 to 36 inclusive");}
     return makeStringFromInteger(x, base);
 }
 
 SGEXTN::CoreText::String SGEXTN::CoreText::String::stringFromFloat(float x, int base, SGEXTN::CoreText::FloatPrecisionFormat format, int precision){
-    if(base < 2 || base > 36){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::stringFromFloat crashed because base is not within 2 to 36 inclusive");}
-    if(format != SGEXTN::CoreText::FloatPrecisionFormat::FractionalDigit && precision <= 0){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::stringFromFloat crashed because precision is nonpositive");}
-    if(format != SGEXTN::CoreText::FloatPrecisionFormat::FractionalDigit && static_cast<float>(precision) * SGEXTN::Math::FloatMath<float>::naturalLog(static_cast<float>(base)) > 24.0f){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::stringFromFloat crashed because precision exceeds maximum numerical precision that a float can represent");}
+    if(base < 2 || base > 36){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::stringFromFloat crashed because base is not within 2 to 36 inclusive");}
+    if(format != SGEXTN::CoreText::FloatPrecisionFormat::FractionalDigit && precision <= 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::stringFromFloat crashed because precision is nonpositive");}
+    if(format != SGEXTN::CoreText::FloatPrecisionFormat::FractionalDigit && static_cast<float>(precision) * SGEXTN::Math::FloatMath<float>::naturalLog(static_cast<float>(base)) > 24.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::stringFromFloat crashed because precision exceeds maximum numerical precision that a float can represent");}
     return makeStringFromFloatingPoint(static_cast<double>(x), base, format, precision);
 }
 
 SGEXTN::CoreText::String SGEXTN::CoreText::String::stringFromDouble(double x, int base, SGEXTN::CoreText::FloatPrecisionFormat format, int precision){
-    if(base < 2 || base > 36){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::stringFromDouble crashed because base is not within 2 to 36 inclusive");}
-    if(format != SGEXTN::CoreText::FloatPrecisionFormat::FractionalDigit && precision <= 0){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::stringFromDouble crashed because precision is nonpositive");}
-    if(format != SGEXTN::CoreText::FloatPrecisionFormat::FractionalDigit && static_cast<float>(precision) * SGEXTN::Math::FloatMath<float>::naturalLog(static_cast<float>(base)) > 53.0f){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::stringFromDouble crashed because precision exceeds maximum numerical precision that a double precision float can represent");}
+    if(base < 2 || base > 36){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::stringFromDouble crashed because base is not within 2 to 36 inclusive");}
+    if(format != SGEXTN::CoreText::FloatPrecisionFormat::FractionalDigit && precision <= 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::stringFromDouble crashed because precision is nonpositive");}
+    if(format != SGEXTN::CoreText::FloatPrecisionFormat::FractionalDigit && static_cast<float>(precision) * SGEXTN::Math::FloatMath<float>::naturalLog(static_cast<float>(base)) > 53.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::stringFromDouble crashed because precision exceeds maximum numerical precision that a double precision float can represent");}
     return makeStringFromFloatingPoint(x, base, format, precision);
 }
 
@@ -1077,7 +1077,7 @@ SGEXTN::CoreText::String SGEXTN::CoreText::String::prettierScientificNotationBas
 }
 
 SGEXTN::CoreText::String SGEXTN::CoreText::String::convertNumericSystem(const SGEXTN::CoreText::Character& zeroRepresentation) const {
-    if(zeroRepresentation.getDecimalDigitValue() != 0){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::convertNumericSystem crashed because the zero character does not represent a value of 0 in any decimal place value system");}
+    if(zeroRepresentation.getDecimalDigitValue() != 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::convertNumericSystem crashed because the zero character does not represent a value of 0 in any decimal place value system");}
     const int newZero = zeroRepresentation.getBaseUnicode();
     SGEXTN::CoreText::String output;
     for(int i=0; i<characterLength(); i++){
@@ -1131,7 +1131,7 @@ SGEXTN::CoreText::String SGEXTN::CoreText::String::removeAllWhitespace() const {
 }
 
 SGEXTN::Containers::Array<SGEXTN::CoreText::String> SGEXTN::CoreText::String::split(const SGEXTN::CoreText::String& separator) const {
-    if(separator == ""){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::split crashed because separator is empty");}
+    if(separator == ""){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::split crashed because separator is empty");}
     int currentIndex = 0;
     SGEXTN::Containers::Vector<SGEXTN::CoreText::String> splitStrings;
     while(true){
@@ -1152,7 +1152,7 @@ bool SGEXTN::CoreText::String::isDigit() const {
 }
 
 bool SGEXTN::CoreText::String::isDigit(int base) const {
-    if(base < 2 || base > 36){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String::isDigit crashed because base is not within 2 to 36 inclusive");}
+    if(base < 2 || base > 36){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::isDigit crashed because base is not within 2 to 36 inclusive");}
     for(int i=0; i<characterLength(); i++){
         if(getCharacterAt(i).isDigit(base) == false){return false;}
     }

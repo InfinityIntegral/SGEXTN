@@ -1,25 +1,25 @@
 #pragma once
-#include <private_api/SGEXTN_Containers_Crash.h>
+#include <SGEXTN_Containers_ForceCrash.h>
 
 template <typename T> SGEXTN::Containers::Queue<T>::Queue() : private_ringBuffer() {}
 
 template <typename T> T& SGEXTN::Containers::Queue<T>::front(){
-    if(private_ringBuffer.length() == 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Queue::front crashed because the queue is empty");}
+    if(private_ringBuffer.length() == 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Queue::front crashed because the queue is empty");}
     return private_ringBuffer.front();
 }
 
 template <typename T> const T& SGEXTN::Containers::Queue<T>::front() const {
-    if(private_ringBuffer.length() == 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Queue::front crashed because the queue is empty");}
+    if(private_ringBuffer.length() == 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Queue::front crashed because the queue is empty");}
     return private_ringBuffer.front();
 }
 
 template <typename T> T& SGEXTN::Containers::Queue<T>::back(){
-    if(private_ringBuffer.length() == 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Queue::back crashed because the queue is empty");}
+    if(private_ringBuffer.length() == 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Queue::back crashed because the queue is empty");}
     return private_ringBuffer.back();
 }
 
 template <typename T> const T& SGEXTN::Containers::Queue<T>::back() const {
-    if(private_ringBuffer.length() == 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Queue::back crashed because the queue is empty");}
+    if(private_ringBuffer.length() == 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Queue::back crashed because the queue is empty");}
     return private_ringBuffer.back();
 }
 
@@ -32,7 +32,7 @@ template <typename T> void SGEXTN::Containers::Queue<T>::push(const T& x){
 }
 
 template <typename T> void SGEXTN::Containers::Queue<T>::pop(){
-    if(private_ringBuffer.length() == 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Queue::pop crashed because the queue is empty");}
+    if(private_ringBuffer.length() == 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Queue::pop crashed because the queue is empty");}
     private_ringBuffer.popFront();
 }
 

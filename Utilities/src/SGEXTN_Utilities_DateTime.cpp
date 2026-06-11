@@ -3,7 +3,7 @@
 #include <SGEXTN_CoreText_String.h>
 #include <SGEXTN_CoreText_Character.h>
 #include <chrono>
-#include <private_api/SGEXTN_Containers_Crash.h>
+#include <SGEXTN_Containers_ForceCrash.h>
 
 namespace {
 int monthOffset(int month, bool isLeapYear){
@@ -464,12 +464,12 @@ SGEXTN::CoreText::String SGEXTN::Utilities::DateTime::getDisplayString(const SGE
         if(tokenEnd == -1){tokenEnd = format.characterLength();}
         SGEXTN::CoreText::String thisToken = format.substringCharactersLeft(tokenEnd);
         format = format.substringCharactersRight(format.characterLength() - tokenEnd);
-        if(thisToken.characterLength() == 0 || thisToken.getCharacterAt(0) != '%'){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime::getDisplayString crashed because a token does not start with %");}
+        if(thisToken.characterLength() == 0 || thisToken.getCharacterAt(0) != '%'){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::DateTime::getDisplayString crashed because a token does not start with %");}
         if(thisToken.characterLength() > 1 && thisToken.getCharacterAt(1) == '\\'){
             output += thisToken.substringCharactersRight(thisToken.characterLength() - 2);
             continue;
         }
-        if(thisToken.characterLength() < 2 || SGEXTN::CoreText::Character(thisToken.getCharacterAt(1)).isDigit() == false){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime::getDisplayString crashed because the precision specifier, which is the character after the %, in a token is not a number");}
+        if(thisToken.characterLength() < 2 || SGEXTN::CoreText::Character(thisToken.getCharacterAt(1)).isDigit() == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::DateTime::getDisplayString crashed because the precision specifier, which is the character after the %, in a token is not a number");}
         const int precision = SGEXTN::CoreText::String(thisToken.getCharacterAt(1)).parseToInt(nullptr, 10);
         int component = 0;
         thisToken = thisToken.substringCharactersRight(thisToken.characterLength() - 2);
@@ -480,7 +480,7 @@ SGEXTN::CoreText::String SGEXTN::Utilities::DateTime::getDisplayString(const SGE
         else if(thisToken == "hour"){component = getPart(SGEXTN::Utilities::TimeUnit::Hour);}
         else if(thisToken == "minute"){component = getPart(SGEXTN::Utilities::TimeUnit::Minute);}
         else if(thisToken == "second"){component = getPart(SGEXTN::Utilities::TimeUnit::Second);}
-        else{SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime::getDisplayString crashed because the component name is invalid, custom strings must not contain % and must be prefixed with a \\ sign");}
+        else{SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::DateTime::getDisplayString crashed because the component name is invalid, custom strings must not contain % and must be prefixed with a \\ sign");}
         SGEXTN::CoreText::String componentString = SGEXTN::CoreText::String::stringFromInt(component, 10);
         if(componentString.characterLength() > precision && thisToken.containsCharacters("year")){componentString = componentString.substringCharactersRight(precision);}
         output += componentString.fillLeftToCharacterLength(precision, '0');

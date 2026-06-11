@@ -1,5 +1,5 @@
 #pragma once
-#include <private_api/SGEXTN_Containers_Crash.h>
+#include <SGEXTN_Containers_ForceCrash.h>
 
 template <typename T, typename EqualityCheck, typename HashFunction> SGEXTN::Containers::UnorderedSet<T, EqualityCheck, HashFunction>::UnorderedSet() : private_hashMap() {}
 
@@ -90,7 +90,7 @@ template <typename T, typename EqualityCheck, typename HashFunction> bool SGEXTN
 }
 
 template <typename T, typename EqualityCheck, typename HashFunction> const T& SGEXTN::Containers::UnorderedSetIterator<T, EqualityCheck, HashFunction>::operator*() const {
-    if(private_hashMapIterator.associatedSlot == nullptr){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::UnorderedSetIterator::operator* crashed because the iterator is the end iterator");}
+    if(private_hashMapIterator.associatedSlot == nullptr){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::UnorderedSetIterator::operator* crashed because the iterator is the end iterator");}
     return private_hashMapIterator.key();
 }
 
@@ -125,6 +125,6 @@ template <typename T, typename EqualityCheck, typename HashFunction> bool SGEXTN
 }
 
 template <typename T, typename EqualityCheck, typename HashFunction> const T& SGEXTN::Containers::UnorderedSetConstIterator<T, EqualityCheck, HashFunction>::operator*() const {
-    if(private_hashMapIterator.associatedSlot == nullptr){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::UnorderedSetConstIterator::operator* crashed because the iterator is the end iterator");}
+    if(private_hashMapIterator.associatedSlot == nullptr){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::UnorderedSetConstIterator::operator* crashed because the iterator is the end iterator");}
     return private_hashMapIterator.key();
 }

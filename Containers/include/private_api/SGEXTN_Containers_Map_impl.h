@@ -1,5 +1,5 @@
 #pragma once
-#include <private_api/SGEXTN_Containers_Crash.h>
+#include <SGEXTN_Containers_ForceCrash.h>
 
 template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::Map<Key, Value, Comparator>::Map() : private_avlTree() {}
 
@@ -24,12 +24,12 @@ template <typename Key, typename Value, typename Comparator> bool SGEXTN::Contai
 }
 
 template <typename Key, typename Value, typename Comparator> Value& SGEXTN::Containers::Map<Key, Value, Comparator>::at(const Key& x){
-    if(contains(x) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Map::at crashed because the key is not in the map");}
+    if(contains(x) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Map::at crashed because the key is not in the map");}
     return private_avlTree.at(x);
 }
 
 template <typename Key, typename Value, typename Comparator> const Value& SGEXTN::Containers::Map<Key, Value, Comparator>::at(const Key& x) const {
-    if(contains(x) == false){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Map::at crashed because the key is not in the map");}
+    if(contains(x) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Map::at crashed because the key is not in the map");}
     return private_avlTree.at(x);
 }
 
@@ -90,20 +90,20 @@ template <typename Key, typename Value, typename Comparator> int SGEXTN::Contain
 }
 
 template <typename Key, typename Value, typename Comparator> const Key& SGEXTN::Containers::Map<Key, Value, Comparator>::keyAt(int n) const {
-    if(n < 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Map::keyAt crashed because index is negative");}
-    if(n >= length()){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Map::keyAt crashed because index points beyond the end of the data structure");}
+    if(n < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Map::keyAt crashed because index is negative");}
+    if(n >= length()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Map::keyAt crashed because index points beyond the end of the data structure");}
     return private_avlTree.keyAt(n);
 }
 
 template <typename Key, typename Value, typename Comparator> Value& SGEXTN::Containers::Map<Key, Value, Comparator>::valueAt(int n){
-    if(n < 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Map::valueAt crashed because index is negative");}
-    if(n >= length()){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Map::valueAt crashed because index points beyond the end of the data structure");}
+    if(n < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Map::valueAt crashed because index is negative");}
+    if(n >= length()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Map::valueAt crashed because index points beyond the end of the data structure");}
     return private_avlTree.valueAt(n);
 }
 
 template <typename Key, typename Value, typename Comparator> const Value& SGEXTN::Containers::Map<Key, Value, Comparator>::valueAt(int n) const {
-    if(n < 0){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Map::valueAt crashed because index is negative");}
-    if(n >= length()){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::Map::valueAt crashed because index points beyond the end of the data structure");}
+    if(n < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Map::valueAt crashed because index is negative");}
+    if(n >= length()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Map::valueAt crashed because index points beyond the end of the data structure");}
     return private_avlTree.valueAt(n);
 }
 
@@ -148,12 +148,12 @@ template <typename Key, typename Value, typename Comparator> bool SGEXTN::Contai
 }
 
 template <typename Key, typename Value, typename Comparator> const Key& SGEXTN::Containers::MapIterator<Key, Value, Comparator>::key() const {
-    if(private_avlTreeIterator.associatedNode == nullptr){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MapIterator::key crashed because the iterator is the end iterator");}
+    if(private_avlTreeIterator.associatedNode == nullptr){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::MapIterator::key crashed because the iterator is the end iterator");}
     return private_avlTreeIterator.key();
 }
 
 template <typename Key, typename Value, typename Comparator> Value& SGEXTN::Containers::MapIterator<Key, Value, Comparator>::value() const {
-    if(private_avlTreeIterator.associatedNode == nullptr){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MapIterator::value crashed because the iterator is the end iterator");}
+    if(private_avlTreeIterator.associatedNode == nullptr){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::MapIterator::value crashed because the iterator is the end iterator");}
     return private_avlTreeIterator.value();
 }
 
@@ -190,11 +190,11 @@ template <typename Key, typename Value, typename Comparator> bool SGEXTN::Contai
 }
 
 template <typename Key, typename Value, typename Comparator> const Key& SGEXTN::Containers::MapConstIterator<Key, Value, Comparator>::key() const {
-    if(private_avlTreeIterator.associatedNode == nullptr){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MapConstIterator::key crashed because the iterator is the end iterator");}
+    if(private_avlTreeIterator.associatedNode == nullptr){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::MapConstIterator::key crashed because the iterator is the end iterator");}
     return private_avlTreeIterator.key();
 }
 
 template <typename Key, typename Value, typename Comparator> const Value& SGEXTN::Containers::MapConstIterator<Key, Value, Comparator>::value() const {
-    if(private_avlTreeIterator.associatedNode == nullptr){SGEXTN::Containers::Crash::crash("SGEXTN::Containers::MapConstIterator::value crashed because the iterator is the end iterator");}
+    if(private_avlTreeIterator.associatedNode == nullptr){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::MapConstIterator::value crashed because the iterator is the end iterator");}
     return private_avlTreeIterator.value();
 }

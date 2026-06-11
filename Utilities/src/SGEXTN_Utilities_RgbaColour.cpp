@@ -2,7 +2,7 @@
 #include <SGEXTN_CoreText_String.h>
 #include <SGEXTN_Containers_Hash.h>
 #include <SGEXTN_Math_FloatMath.h>
-#include <private_api/SGEXTN_Containers_Crash.h>
+#include <SGEXTN_Containers_ForceCrash.h>
 
 namespace {
 int boundInt(int x){
@@ -223,7 +223,7 @@ SGEXTN::Utilities::RgbaColour SGEXTN::Utilities::RgbaColour::applyTint(RgbaColou
 }
 
 SGEXTN::Utilities::RgbaColour SGEXTN::Utilities::RgbaColour::applyTintSeparateTransparency(RgbaColour x, float transparency, bool gammaCorrect) const {
-    if(transparency < 0.0f || transparency > 1.0f){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::RgbaColour::applyTintSeparateTransparency crashed because the transparency is below 0 or above 1, if you want to intentionally produce a negative mixing effect, use SGEXTN::Utilities::RgbaColour::interpolate instead and set thisStrength to below 0 or above 1");}
+    if(transparency < 0.0f || transparency > 1.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour::applyTintSeparateTransparency crashed because the transparency is below 0 or above 1, if you want to intentionally produce a negative mixing effect, use SGEXTN::Utilities::RgbaColour::interpolate instead and set thisStrength to below 0 or above 1");}
     float r1 = getRedFloat();
     float g1 = getGreenFloat();
     float b1 = getBlueFloat();

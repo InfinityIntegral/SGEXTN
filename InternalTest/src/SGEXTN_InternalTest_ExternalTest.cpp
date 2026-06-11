@@ -10,7 +10,7 @@
 #include <SGEXTN_Math_FloatLimits.h>
 #include <SGEXTN_Math_FloatMath.h>
 #include <SGEXTN_Containers_Vector.h>
-#include <private_api/SGEXTN_Containers_Crash.h>
+#include <SGEXTN_Containers_ForceCrash.h>
 #include <chrono>
 #include <format>
 #include <cstdlib>
@@ -451,54 +451,54 @@ void SGEXTN::InternalTest::ExternalTest::testDateTimeExternal(){
                 const std::chrono::sys_time<std::chrono::seconds> externalBeginningOfTime{std::chrono::sys_days{std::chrono::year{1965} / std::chrono::August / 9} + std::chrono::hours{10} + std::chrono::minutes{30}};
                 const std::chrono::sys_time<std::chrono::seconds> externalDateTime{thisDay + std::chrono::hours{hour} + std::chrono::minutes{minute} + std::chrono::seconds{second}};
                 SGEXTN::Utilities::DateTime thisDateTime(year, month, day, hour, minute, second);
-                if(std::chrono::duration_cast<std::chrono::seconds>(externalDateTime - externalBeginningOfTime).count() != thisDateTime.private_data){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime components constructor fail");}
-                if(thisDateTime.getPart(SGEXTN::Utilities::TimeUnit::Year) != year){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime get year fail");}
-                if(thisDateTime.getPart(SGEXTN::Utilities::TimeUnit::Month) != month){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime get month fail");}
-                if(thisDateTime.getPart(SGEXTN::Utilities::TimeUnit::Day) != day){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime get day fail");}
-                if(thisDateTime.getPart(SGEXTN::Utilities::TimeUnit::Hour) != hour){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime get hour fail");}
-                if(thisDateTime.getPart(SGEXTN::Utilities::TimeUnit::Minute) != minute){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime get minute fail");}
-                if(thisDateTime.getPart(SGEXTN::Utilities::TimeUnit::Second) != second){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime get second fail");}
+                if(std::chrono::duration_cast<std::chrono::seconds>(externalDateTime - externalBeginningOfTime).count() != thisDateTime.private_data){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::DateTime components constructor fail");}
+                if(thisDateTime.getPart(SGEXTN::Utilities::TimeUnit::Year) != year){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::DateTime get year fail");}
+                if(thisDateTime.getPart(SGEXTN::Utilities::TimeUnit::Month) != month){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::DateTime get month fail");}
+                if(thisDateTime.getPart(SGEXTN::Utilities::TimeUnit::Day) != day){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::DateTime get day fail");}
+                if(thisDateTime.getPart(SGEXTN::Utilities::TimeUnit::Hour) != hour){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::DateTime get hour fail");}
+                if(thisDateTime.getPart(SGEXTN::Utilities::TimeUnit::Minute) != minute){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::DateTime get minute fail");}
+                if(thisDateTime.getPart(SGEXTN::Utilities::TimeUnit::Second) != second){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::DateTime get second fail");}
                 const SGEXTN::Utilities::DateTime originalDateTime = thisDateTime;
                 thisDateTime.setPart(SGEXTN::Utilities::TimeUnit::Year, 0);
-                if(thisDateTime != SGEXTN::Utilities::DateTime(0, month, day, hour, minute, second)){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime set year fail");}
+                if(thisDateTime != SGEXTN::Utilities::DateTime(0, month, day, hour, minute, second)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::DateTime set year fail");}
                 thisDateTime = originalDateTime;
                 thisDateTime.setPart(SGEXTN::Utilities::TimeUnit::Month, 8);
-                if(thisDateTime != SGEXTN::Utilities::DateTime(year, 8, day, hour, minute, second)){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime set month fail");}
+                if(thisDateTime != SGEXTN::Utilities::DateTime(year, 8, day, hour, minute, second)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::DateTime set month fail");}
                 thisDateTime = originalDateTime;
                 thisDateTime.setPart(SGEXTN::Utilities::TimeUnit::Day, 9);
-                if(thisDateTime != SGEXTN::Utilities::DateTime(year, month, 9, hour, minute, second)){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime set day fail");}
+                if(thisDateTime != SGEXTN::Utilities::DateTime(year, month, 9, hour, minute, second)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::DateTime set day fail");}
                 thisDateTime = originalDateTime;
                 thisDateTime.setPart(SGEXTN::Utilities::TimeUnit::Hour, 10);
-                if(thisDateTime != SGEXTN::Utilities::DateTime(year, month, day, 10, minute, second)){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime set hour fail");}
+                if(thisDateTime != SGEXTN::Utilities::DateTime(year, month, day, 10, minute, second)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::DateTime set hour fail");}
                 thisDateTime = originalDateTime;
                 thisDateTime.setPart(SGEXTN::Utilities::TimeUnit::Minute, 30);
-                if(thisDateTime != SGEXTN::Utilities::DateTime(year, month, day, hour, 30, second)){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime set minute fail");}
+                if(thisDateTime != SGEXTN::Utilities::DateTime(year, month, day, hour, 30, second)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::DateTime set minute fail");}
                 thisDateTime = originalDateTime;
                 thisDateTime.setPart(SGEXTN::Utilities::TimeUnit::Second, 0);
-                if(thisDateTime != SGEXTN::Utilities::DateTime(year, month, day, hour, minute, 0)){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime set second fail");}
+                if(thisDateTime != SGEXTN::Utilities::DateTime(year, month, day, hour, minute, 0)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::DateTime set second fail");}
                 thisDateTime = originalDateTime;
-                if(thisDateTime.getDayOfWeek() != (std::chrono::weekday{thisDay}).iso_encoding()){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime get day of week fail");}
-                if(thisDateTime.getDayOfYear() != static_cast<int>((thisDay - std::chrono::sys_days{std::chrono::year{year + 1965} / std::chrono::January / 1}).count() + 1)){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime get day of year fail");}
-                if(thisDateTime.countDaysInMonth() != static_cast<int>(static_cast<unsigned int>((std::chrono::year{year + 1965} / std::chrono::month{static_cast<unsigned int>(month)} / std::chrono::last).day()))){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime count days in month fail");}
-                if(thisDateTime.countDaysInYear() != 365 + static_cast<int>((std::chrono::year{year + 1965}).is_leap())){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime count days in year fail");}
-                if(thisDateTime.getStartOfDay().private_data != (std::chrono::duration_cast<std::chrono::seconds>(thisDay.time_since_epoch()).count() - externalBeginningOfTime.time_since_epoch().count())){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime start of day fail");}
-                if(thisDateTime.getEndOfDay().private_data != std::chrono::duration_cast<std::chrono::seconds>(thisDay.time_since_epoch()).count() - externalBeginningOfTime.time_since_epoch().count() + 86400ll){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime end of day fail");}
+                if(thisDateTime.getDayOfWeek() != (std::chrono::weekday{thisDay}).iso_encoding()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::DateTime get day of week fail");}
+                if(thisDateTime.getDayOfYear() != static_cast<int>((thisDay - std::chrono::sys_days{std::chrono::year{year + 1965} / std::chrono::January / 1}).count() + 1)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::DateTime get day of year fail");}
+                if(thisDateTime.countDaysInMonth() != static_cast<int>(static_cast<unsigned int>((std::chrono::year{year + 1965} / std::chrono::month{static_cast<unsigned int>(month)} / std::chrono::last).day()))){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::DateTime count days in month fail");}
+                if(thisDateTime.countDaysInYear() != 365 + static_cast<int>((std::chrono::year{year + 1965}).is_leap())){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::DateTime count days in year fail");}
+                if(thisDateTime.getStartOfDay().private_data != (std::chrono::duration_cast<std::chrono::seconds>(thisDay.time_since_epoch()).count() - externalBeginningOfTime.time_since_epoch().count())){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::DateTime start of day fail");}
+                if(thisDateTime.getEndOfDay().private_data != std::chrono::duration_cast<std::chrono::seconds>(thisDay.time_since_epoch()).count() - externalBeginningOfTime.time_since_epoch().count() + 86400ll){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::DateTime end of day fail");}
                 char* weekNumberString = new char[3];
                 std::format_to_n(weekNumberString, 2, "{:%V}", externalDateTime);
                 (*(weekNumberString + 2)) = '\0';
-                if(thisDateTime.getWeekOfYear() != std::atoi(weekNumberString)){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime week count fail");}
+                if(thisDateTime.getWeekOfYear() != std::atoi(weekNumberString)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::DateTime week count fail");}
                 delete[] weekNumberString;
                 const int diffYear = thisDateTime.getTimeAfterDisplayPart(SGEXTN::Utilities::DateTime::beginningOfTime(), SGEXTN::Utilities::TimeUnit::Year);
                 const int diffMonth = thisDateTime.getTimeAfterDisplayPart(SGEXTN::Utilities::DateTime::beginningOfTime(), SGEXTN::Utilities::TimeUnit::Month);
-                if(diffMonth < 0 || diffMonth > 11){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime time after display part month fail");}
+                if(diffMonth < 0 || diffMonth > 11){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::DateTime time after display part month fail");}
                 const int diffDay = thisDateTime.getTimeAfterDisplayPart(SGEXTN::Utilities::DateTime::beginningOfTime(), SGEXTN::Utilities::TimeUnit::Day);
-                if(diffDay < 0 || diffDay > 30){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime time after display part day fail");}
+                if(diffDay < 0 || diffDay > 30){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::DateTime time after display part day fail");}
                 const int diffHour = thisDateTime.getTimeAfterDisplayPart(SGEXTN::Utilities::DateTime::beginningOfTime(), SGEXTN::Utilities::TimeUnit::Hour);
-                if(diffHour < 0 || diffHour > 23){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime time after display part hour fail");}
+                if(diffHour < 0 || diffHour > 23){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::DateTime time after display part hour fail");}
                 const int diffMinute = thisDateTime.getTimeAfterDisplayPart(SGEXTN::Utilities::DateTime::beginningOfTime(), SGEXTN::Utilities::TimeUnit::Minute);
-                if(diffMinute < 0 || diffMinute > 59){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime time after display part minute fail");}
+                if(diffMinute < 0 || diffMinute > 59){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::DateTime time after display part minute fail");}
                 const int diffSecond = thisDateTime.getTimeAfterDisplayPart(SGEXTN::Utilities::DateTime::beginningOfTime(), SGEXTN::Utilities::TimeUnit::Second);
-                if(diffSecond < 0 || diffSecond > 59){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime time after display part second fail");}
+                if(diffSecond < 0 || diffSecond > 59){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::DateTime time after display part second fail");}
                 SGEXTN::Utilities::DateTime zero = SGEXTN::Utilities::DateTime::beginningOfTime();
                 zero.advanceTime(diffYear, SGEXTN::Utilities::TimeUnit::Year);
                 zero.advanceTime(diffMonth, SGEXTN::Utilities::TimeUnit::Month);
@@ -506,7 +506,7 @@ void SGEXTN::InternalTest::ExternalTest::testDateTimeExternal(){
                 zero.advanceTime(diffHour, SGEXTN::Utilities::TimeUnit::Hour);
                 zero.advanceTime(diffMinute, SGEXTN::Utilities::TimeUnit::Minute);
                 zero.advanceTime(diffSecond, SGEXTN::Utilities::TimeUnit::Second);
-                if(zero != thisDateTime){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::DateTime advance time fail");}
+                if(zero != thisDateTime){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::DateTime advance time fail");}
             }
         }
     }
@@ -522,55 +522,55 @@ void SGEXTN::InternalTest::ExternalTest::testUnicodeQueryExternal(){
     for(int i=0; i<0x110000; i++){
         int uppercase = i;
         if(unicodeDatabase.at(i).at(12) != ""){uppercase = unicodeDatabase.at(i).at(12).parseToInt(nullptr, 16);}
-        if(uppercase != SGEXTN::CoreText::UnicodeQuery::getUppercase(i)){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::UnicodeQuery check uppercase fail");}
+        if(uppercase != SGEXTN::CoreText::UnicodeQuery::getUppercase(i)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::UnicodeQuery check uppercase fail");}
         int lowercase = i;
         if(unicodeDatabase.at(i).at(13) != ""){lowercase = unicodeDatabase.at(i).at(13).parseToInt(nullptr, 16);}
-        if(lowercase != SGEXTN::CoreText::UnicodeQuery::getLowercase(i)){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::UnicodeQuery check lowercase fail");}
+        if(lowercase != SGEXTN::CoreText::UnicodeQuery::getLowercase(i)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::UnicodeQuery check lowercase fail");}
         int titlecase = i;
         if(unicodeDatabase.at(i).at(14) != ""){titlecase = unicodeDatabase.at(i).at(14).parseToInt(nullptr, 16);}
-        if(titlecase != SGEXTN::CoreText::UnicodeQuery::getTitlecase(i)){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::UnicodeQuery check titlecase fail");}
+        if(titlecase != SGEXTN::CoreText::UnicodeQuery::getTitlecase(i)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::UnicodeQuery check titlecase fail");}
         bool isWhitespace = false;
         if(propertyListDatabase.at(i).contains("White_Space") == true){isWhitespace = true;}
-        if(isWhitespace != SGEXTN::CoreText::UnicodeQuery::isWhitespace(i)){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::UnicodeQuery check whitespace fail");}
+        if(isWhitespace != SGEXTN::CoreText::UnicodeQuery::isWhitespace(i)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::UnicodeQuery check whitespace fail");}
         SGEXTN::CoreText::FullCharacterType fullType = SGEXTN::CoreText::FullCharacterType::UnassignedCharacter;
         if(unicodeDatabase.at(i).at(2) != ""){fullType = parseFullType(unicodeDatabase.at(i).at(2));}
-        if(fullType != SGEXTN::CoreText::UnicodeQuery::getFullType(i)){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::UnicodeQuery get full type fail");}
+        if(fullType != SGEXTN::CoreText::UnicodeQuery::getFullType(i)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::UnicodeQuery get full type fail");}
         SGEXTN::CoreText::SimplifiedCharacterType simplifiedType = SGEXTN::CoreText::SimplifiedCharacterType::Other;
         if(unicodeDatabase.at(i).at(2) != ""){simplifiedType = parseSimplifiedType(unicodeDatabase.at(i).at(2));}
-        if(simplifiedType != SGEXTN::CoreText::UnicodeQuery::getSimplifiedType(i)){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::UnicodeQuery get simplified type fail");}
+        if(simplifiedType != SGEXTN::CoreText::UnicodeQuery::getSimplifiedType(i)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::UnicodeQuery get simplified type fail");}
         int decimalDigit = -1;
         if(unicodeDatabase.at(i).at(6) != ""){decimalDigit = unicodeDatabase.at(i).at(6).parseToInt(nullptr, 16);}
-        if(decimalDigit != SGEXTN::CoreText::UnicodeQuery::getDecimalDigitValue(i)){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::UnicodeQuery get decimal digit value fail");}
+        if(decimalDigit != SGEXTN::CoreText::UnicodeQuery::getDecimalDigitValue(i)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::UnicodeQuery get decimal digit value fail");}
         float numericalValue = SGEXTN::Math::FloatLimits<float>::negativeInfinity();
         if(unicodeDatabase.at(i).at(8) != ""){numericalValue = parseRationalNumber(unicodeDatabase.at(i).at(8));}
-        if(numericalValue != SGEXTN::CoreText::UnicodeQuery::getNumericalValue(i)){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::UnicodeQuery get numerical value fail");}
+        if(numericalValue != SGEXTN::CoreText::UnicodeQuery::getNumericalValue(i)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::UnicodeQuery get numerical value fail");}
         SGEXTN::CoreText::GraphemeSegmentationType graphemeSegmentationType = SGEXTN::CoreText::GraphemeSegmentationType::Other;
         if(graphemeBreakDatabase.at(i) != ""){graphemeSegmentationType = parseGraphemeSegmentationType(graphemeBreakDatabase.at(i));}
-        if(graphemeSegmentationType != SGEXTN::CoreText::UnicodeQuery::getGraphemeSegmentationType(i)){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::UnicodeQuery get grapheme segmentation type fail");}
+        if(graphemeSegmentationType != SGEXTN::CoreText::UnicodeQuery::getGraphemeSegmentationType(i)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::UnicodeQuery get grapheme segmentation type fail");}
         SGEXTN::CoreText::GraphemeRuleRelatedType graphemeRuleRelatedType = SGEXTN::CoreText::GraphemeRuleRelatedType::None;
         if(derivedCoreDatabase.at(i).contains("InCB; Consonant") == true){graphemeRuleRelatedType = SGEXTN::CoreText::GraphemeRuleRelatedType::Rule9cConsonant;}
         else if(derivedCoreDatabase.at(i).contains("InCB; Extend") == true){graphemeRuleRelatedType = SGEXTN::CoreText::GraphemeRuleRelatedType::Rule9cExtend;}
         else if(derivedCoreDatabase.at(i).contains("InCB; Linker") == true){graphemeRuleRelatedType = SGEXTN::CoreText::GraphemeRuleRelatedType::Rule9cLinker;}
         else if(emojiTypeDatabase.at(i) == "Extended_Pictographic"){graphemeRuleRelatedType = SGEXTN::CoreText::GraphemeRuleRelatedType::Rule11Emoji;}
-        if(graphemeRuleRelatedType != SGEXTN::CoreText::UnicodeQuery::getGraphemeRuleRelatedType(i)){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::UnicodeQuery get grapheme rule related type fail");}
+        if(graphemeRuleRelatedType != SGEXTN::CoreText::UnicodeQuery::getGraphemeRuleRelatedType(i)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::UnicodeQuery get grapheme rule related type fail");}
         int combiningMarkOrder = 0;
         if(unicodeDatabase.at(i).at(3) != ""){combiningMarkOrder = unicodeDatabase.at(i).at(3).parseToInt(nullptr, 10);}
-        if(combiningMarkOrder != SGEXTN::CoreText::UnicodeQuery::getCombiningMarkOrder(i)){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::UnicodeQuery get combining mark order fail");}
+        if(combiningMarkOrder != SGEXTN::CoreText::UnicodeQuery::getCombiningMarkOrder(i)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::UnicodeQuery get combining mark order fail");}
         SGEXTN::CoreText::String equivDecompose = "";
         if(unicodeDatabase.at(i).at(5) != "" && unicodeDatabase.at(i).at(5).containsCharacters('>') == false){equivDecompose = parseCodePointList(unicodeDatabase.at(i).at(5));}
-        if(equivDecompose != SGEXTN::CoreText::UnicodeQuery::getEquivDecomposition(i)){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::UnicodeQuery get equivalent decomposition fail");}
+        if(equivDecompose != SGEXTN::CoreText::UnicodeQuery::getEquivDecomposition(i)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::UnicodeQuery get equivalent decomposition fail");}
         SGEXTN::CoreText::String compatDecompose = "";
         if(unicodeDatabase.at(i).at(5) != ""){
             if(unicodeDatabase.at(i).at(5).containsCharacters('>') == true){compatDecompose = parseCodePointList(unicodeDatabase.at(i).at(5).substringCharactersRight(unicodeDatabase.at(i).at(5).characterLength() - 1 - unicodeDatabase.at(i).at(5).findFirstCharactersFromLeft('>')).removeLeadingTrailingWhitespace());}
             else{compatDecompose = parseCodePointList(unicodeDatabase.at(i).at(5));}
         }
-        if(compatDecompose != SGEXTN::CoreText::UnicodeQuery::getCompatDecomposition(i)){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::UnicodeQuery get compatibility decomposition fail");}
+        if(compatDecompose != SGEXTN::CoreText::UnicodeQuery::getCompatDecomposition(i)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::UnicodeQuery get compatibility decomposition fail");}
         SGEXTN::Containers::Array<int> equivDecompCodePoints = equivDecompose.getUnicode();
         if(equivDecompCodePoints.length() == 2){
             int recomposedCodePoint = i;
             if(combiningMarkOrder != 0 || SGEXTN::CoreText::UnicodeQuery::getCombiningMarkOrder(equivDecompCodePoints.at(0)) != 0){recomposedCodePoint = -1;}
             if(recomposeExclusionDatabase.at(i) == true){recomposedCodePoint = -1;}
-            if(recomposedCodePoint != SGEXTN::CoreText::UnicodeQuery::getBinaryRecomposition(equivDecompCodePoints.at(0), equivDecompCodePoints.at(1))){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::UnicodeQuery get unicode binary recomposition fail");}
+            if(recomposedCodePoint != SGEXTN::CoreText::UnicodeQuery::getBinaryRecomposition(equivDecompCodePoints.at(0), equivDecompCodePoints.at(1))){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::UnicodeQuery get unicode binary recomposition fail");}
         }
     }
 }
@@ -579,26 +579,26 @@ void SGEXTN::InternalTest::ExternalTest::testUnicodeExternal(){
     fillNormalisationTestDatabase();
     fillGraphemeBoundaryTestDatabase();
     for(int i=0; i<normalisationTestDatabase.length(); i++){
-        if(normalisationTestDatabase.at(i).at(0).getNormalised(SGEXTN::CoreText::NormalisationFormat::Join) != normalisationTestDatabase.at(i).at(1)){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String normalisation NFC test invariant 0 fail");}
-        if(normalisationTestDatabase.at(i).at(1).getNormalised(SGEXTN::CoreText::NormalisationFormat::Join) != normalisationTestDatabase.at(i).at(1)){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String normalisation NFC test invariant 1 fail");}
-        if(normalisationTestDatabase.at(i).at(2).getNormalised(SGEXTN::CoreText::NormalisationFormat::Join) != normalisationTestDatabase.at(i).at(1)){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String normalisation NFC test invariant 2 fail");}
-        if(normalisationTestDatabase.at(i).at(3).getNormalised(SGEXTN::CoreText::NormalisationFormat::Join) != normalisationTestDatabase.at(i).at(3)){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String normalisation NFC test invariant 3 fail");}
-        if(normalisationTestDatabase.at(i).at(4).getNormalised(SGEXTN::CoreText::NormalisationFormat::Join) != normalisationTestDatabase.at(i).at(3)){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String normalisation NFC test invariant 4 fail");}
-        if(normalisationTestDatabase.at(i).at(0).getNormalised(SGEXTN::CoreText::NormalisationFormat::Separate) != normalisationTestDatabase.at(i).at(2)){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String normalisation NFD test invariant 0 fail");}
-        if(normalisationTestDatabase.at(i).at(1).getNormalised(SGEXTN::CoreText::NormalisationFormat::Separate) != normalisationTestDatabase.at(i).at(2)){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String normalisation NFD test invariant 1 fail");}
-        if(normalisationTestDatabase.at(i).at(2).getNormalised(SGEXTN::CoreText::NormalisationFormat::Separate) != normalisationTestDatabase.at(i).at(2)){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String normalisation NFD test invariant 2 fail");}
-        if(normalisationTestDatabase.at(i).at(3).getNormalised(SGEXTN::CoreText::NormalisationFormat::Separate) != normalisationTestDatabase.at(i).at(4)){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String normalisation NFD test invariant 3 fail");}
-        if(normalisationTestDatabase.at(i).at(4).getNormalised(SGEXTN::CoreText::NormalisationFormat::Separate) != normalisationTestDatabase.at(i).at(4)){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String normalisation NFD test invariant 4 fail");}
-        if(normalisationTestDatabase.at(i).at(0).getNormalised(SGEXTN::CoreText::NormalisationFormat::LossyJoin) != normalisationTestDatabase.at(i).at(3)){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String normalisation NFKC test invariant 0 fail");}
-        if(normalisationTestDatabase.at(i).at(1).getNormalised(SGEXTN::CoreText::NormalisationFormat::LossyJoin) != normalisationTestDatabase.at(i).at(3)){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String normalisation NFKC test invariant 1 fail");}
-        if(normalisationTestDatabase.at(i).at(2).getNormalised(SGEXTN::CoreText::NormalisationFormat::LossyJoin) != normalisationTestDatabase.at(i).at(3)){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String normalisation NFKC test invariant 2 fail");}
-        if(normalisationTestDatabase.at(i).at(3).getNormalised(SGEXTN::CoreText::NormalisationFormat::LossyJoin) != normalisationTestDatabase.at(i).at(3)){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String normalisation NFKC test invariant 3 fail");}
-        if(normalisationTestDatabase.at(i).at(4).getNormalised(SGEXTN::CoreText::NormalisationFormat::LossyJoin) != normalisationTestDatabase.at(i).at(3)){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String normalisation NFKC test invariant 4 fail");}
-        if(normalisationTestDatabase.at(i).at(0).getNormalised(SGEXTN::CoreText::NormalisationFormat::LossySeparate) != normalisationTestDatabase.at(i).at(4)){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String normalisation NFKD test invariant 0 fail");}
-        if(normalisationTestDatabase.at(i).at(1).getNormalised(SGEXTN::CoreText::NormalisationFormat::LossySeparate) != normalisationTestDatabase.at(i).at(4)){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String normalisation NFKD test invariant 1 fail");}
-        if(normalisationTestDatabase.at(i).at(2).getNormalised(SGEXTN::CoreText::NormalisationFormat::LossySeparate) != normalisationTestDatabase.at(i).at(4)){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String normalisation NFKD test invariant 2 fail");}
-        if(normalisationTestDatabase.at(i).at(3).getNormalised(SGEXTN::CoreText::NormalisationFormat::LossySeparate) != normalisationTestDatabase.at(i).at(4)){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String normalisation NFKD test invariant 3 fail");}
-        if(normalisationTestDatabase.at(i).at(4).getNormalised(SGEXTN::CoreText::NormalisationFormat::LossySeparate) != normalisationTestDatabase.at(i).at(4)){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String normalisation NFKD test invariant 4 fail");}
+        if(normalisationTestDatabase.at(i).at(0).getNormalised(SGEXTN::CoreText::NormalisationFormat::Join) != normalisationTestDatabase.at(i).at(1)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String normalisation NFC test invariant 0 fail");}
+        if(normalisationTestDatabase.at(i).at(1).getNormalised(SGEXTN::CoreText::NormalisationFormat::Join) != normalisationTestDatabase.at(i).at(1)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String normalisation NFC test invariant 1 fail");}
+        if(normalisationTestDatabase.at(i).at(2).getNormalised(SGEXTN::CoreText::NormalisationFormat::Join) != normalisationTestDatabase.at(i).at(1)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String normalisation NFC test invariant 2 fail");}
+        if(normalisationTestDatabase.at(i).at(3).getNormalised(SGEXTN::CoreText::NormalisationFormat::Join) != normalisationTestDatabase.at(i).at(3)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String normalisation NFC test invariant 3 fail");}
+        if(normalisationTestDatabase.at(i).at(4).getNormalised(SGEXTN::CoreText::NormalisationFormat::Join) != normalisationTestDatabase.at(i).at(3)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String normalisation NFC test invariant 4 fail");}
+        if(normalisationTestDatabase.at(i).at(0).getNormalised(SGEXTN::CoreText::NormalisationFormat::Separate) != normalisationTestDatabase.at(i).at(2)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String normalisation NFD test invariant 0 fail");}
+        if(normalisationTestDatabase.at(i).at(1).getNormalised(SGEXTN::CoreText::NormalisationFormat::Separate) != normalisationTestDatabase.at(i).at(2)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String normalisation NFD test invariant 1 fail");}
+        if(normalisationTestDatabase.at(i).at(2).getNormalised(SGEXTN::CoreText::NormalisationFormat::Separate) != normalisationTestDatabase.at(i).at(2)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String normalisation NFD test invariant 2 fail");}
+        if(normalisationTestDatabase.at(i).at(3).getNormalised(SGEXTN::CoreText::NormalisationFormat::Separate) != normalisationTestDatabase.at(i).at(4)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String normalisation NFD test invariant 3 fail");}
+        if(normalisationTestDatabase.at(i).at(4).getNormalised(SGEXTN::CoreText::NormalisationFormat::Separate) != normalisationTestDatabase.at(i).at(4)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String normalisation NFD test invariant 4 fail");}
+        if(normalisationTestDatabase.at(i).at(0).getNormalised(SGEXTN::CoreText::NormalisationFormat::LossyJoin) != normalisationTestDatabase.at(i).at(3)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String normalisation NFKC test invariant 0 fail");}
+        if(normalisationTestDatabase.at(i).at(1).getNormalised(SGEXTN::CoreText::NormalisationFormat::LossyJoin) != normalisationTestDatabase.at(i).at(3)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String normalisation NFKC test invariant 1 fail");}
+        if(normalisationTestDatabase.at(i).at(2).getNormalised(SGEXTN::CoreText::NormalisationFormat::LossyJoin) != normalisationTestDatabase.at(i).at(3)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String normalisation NFKC test invariant 2 fail");}
+        if(normalisationTestDatabase.at(i).at(3).getNormalised(SGEXTN::CoreText::NormalisationFormat::LossyJoin) != normalisationTestDatabase.at(i).at(3)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String normalisation NFKC test invariant 3 fail");}
+        if(normalisationTestDatabase.at(i).at(4).getNormalised(SGEXTN::CoreText::NormalisationFormat::LossyJoin) != normalisationTestDatabase.at(i).at(3)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String normalisation NFKC test invariant 4 fail");}
+        if(normalisationTestDatabase.at(i).at(0).getNormalised(SGEXTN::CoreText::NormalisationFormat::LossySeparate) != normalisationTestDatabase.at(i).at(4)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String normalisation NFKD test invariant 0 fail");}
+        if(normalisationTestDatabase.at(i).at(1).getNormalised(SGEXTN::CoreText::NormalisationFormat::LossySeparate) != normalisationTestDatabase.at(i).at(4)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String normalisation NFKD test invariant 1 fail");}
+        if(normalisationTestDatabase.at(i).at(2).getNormalised(SGEXTN::CoreText::NormalisationFormat::LossySeparate) != normalisationTestDatabase.at(i).at(4)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String normalisation NFKD test invariant 2 fail");}
+        if(normalisationTestDatabase.at(i).at(3).getNormalised(SGEXTN::CoreText::NormalisationFormat::LossySeparate) != normalisationTestDatabase.at(i).at(4)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String normalisation NFKD test invariant 3 fail");}
+        if(normalisationTestDatabase.at(i).at(4).getNormalised(SGEXTN::CoreText::NormalisationFormat::LossySeparate) != normalisationTestDatabase.at(i).at(4)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String normalisation NFKD test invariant 4 fail");}
     }
     for(int i=0; i<graphemeBoundaryTestStrings.length(); i++){
         const SGEXTN::CoreText::String& originalString = graphemeBoundaryTestStrings.at(i);
@@ -617,7 +617,7 @@ void SGEXTN::InternalTest::ExternalTest::testUnicodeExternal(){
             }
         }
         expectedTestString += SGEXTN::CoreText::Character(0xf7);
-        if(expectedTestString != graphemeBoundaryTestExpectedResults.at(i)){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String find character boundary fail");}
+        if(expectedTestString != graphemeBoundaryTestExpectedResults.at(i)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String find character boundary fail");}
     }
 }
 
@@ -629,76 +629,76 @@ void SGEXTN::InternalTest::ExternalTest::testNumericalParsing(){
         const int expectedInt = parseCStringToInt(reinterpret_cast<const char*>(&nullTerminatedString.byteAt(0)), &isValid, 10);
         if(isValid == true){
             bool parseSuccess = false;
-            if(expectedInt != numericParsingTestsDatabase.at(i).parseToInt(&parseSuccess, 10) || parseSuccess == false){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String parse base 10 integer fail");}
-            if(expectedInt != numericParsingTestsDatabase.at(i).parseToInt(nullptr, 10)){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String parse base 10 integer no success flag fail");}
+            if(expectedInt != numericParsingTestsDatabase.at(i).parseToInt(&parseSuccess, 10) || parseSuccess == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String parse base 10 integer fail");}
+            if(expectedInt != numericParsingTestsDatabase.at(i).parseToInt(nullptr, 10)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String parse base 10 integer no success flag fail");}
             if(i < numericParsingTestsDatabaseUniqueFloatLength){
                 for(int base=2; base<=36; base++){
                     const char* intAsCString = printIntToCString(expectedInt, base);
                     const SGEXTN::CoreText::String expectedNumString = intAsCString;
                     delete[] intAsCString;
-                    if(expectedNumString.getLowercase() != SGEXTN::CoreText::String::stringFromInt(expectedInt, base)){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String print integer fail");}
+                    if(expectedNumString.getLowercase() != SGEXTN::CoreText::String::stringFromInt(expectedInt, base)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String print integer fail");}
                     parseSuccess = false;
-                    if(expectedInt != expectedNumString.getUppercase().parseToInt(&parseSuccess, base) || parseSuccess == false){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String parse uppercase integer fail");}
+                    if(expectedInt != expectedNumString.getUppercase().parseToInt(&parseSuccess, base) || parseSuccess == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String parse uppercase integer fail");}
                     parseSuccess = false;
-                    if(expectedInt != expectedNumString.getLowercase().parseToInt(&parseSuccess, base) || parseSuccess == false){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String parse lowercase integer fail");}
+                    if(expectedInt != expectedNumString.getLowercase().parseToInt(&parseSuccess, base) || parseSuccess == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String parse lowercase integer fail");}
                 }
             }
         }
         else{
             bool parseSuccess = true;
-            if(numericParsingTestsDatabase.at(i).parseToInt(&parseSuccess, 10) != 0 || parseSuccess == true){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String parse invalid integer fail");}
+            if(numericParsingTestsDatabase.at(i).parseToInt(&parseSuccess, 10) != 0 || parseSuccess == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String parse invalid integer fail");}
         }
         isValid = false;
         const float expectedFloat = parseCStringToFloat(reinterpret_cast<const char*>(&nullTerminatedString.byteAt(0)), &isValid);
         if(isValid == true){
             bool parseSuccess = false;
-            if(isCloseEnough(expectedFloat, numericParsingTestsDatabase.at(i).parseToFloat(&parseSuccess, 10)) == false || parseSuccess == false){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String parse base 10 floating point number fail");}
-            if(isCloseEnough(expectedFloat, numericParsingTestsDatabase.at(i).parseToFloat(nullptr, 10)) == false){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String parse base 10 floating point number no success flag fail");}
+            if(isCloseEnough(expectedFloat, numericParsingTestsDatabase.at(i).parseToFloat(&parseSuccess, 10)) == false || parseSuccess == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String parse base 10 floating point number fail");}
+            if(isCloseEnough(expectedFloat, numericParsingTestsDatabase.at(i).parseToFloat(nullptr, 10)) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String parse base 10 floating point number no success flag fail");}
             if(i < numericParsingTestsDatabaseUniqueFloatLength){
                 for(int base=2; base<=36; base++){
                     SGEXTN::CoreText::String numString = SGEXTN::CoreText::String::stringFromFloat(expectedFloat, base, SGEXTN::CoreText::FloatPrecisionFormat::SignificantFigure, 4);
                     int maximumPrecision = 0;
                     int minimumPrecision = 0;
                     countSignificantFigures(minimumPrecision, maximumPrecision, numString);
-                    if(4 < minimumPrecision || 4 > maximumPrecision){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String print floating point number by significant figures fail");}
+                    if(4 < minimumPrecision || 4 > maximumPrecision){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String print floating point number by significant figures fail");}
                     float roundError = SGEXTN::Math::FloatMath<float>::absoluteValue(expectedFloat) * SGEXTN::Math::FloatMath<float>::powerOf(static_cast<float>(base), -3.0f);
                     parseSuccess = false;
                     float roundedFloat = numString.parseToFloat(&parseSuccess, base);
-                    if(parseSuccess == false || roundedFloat < expectedFloat - roundError || roundedFloat > expectedFloat + roundError){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String print floating point number by significant figures fail");}
+                    if(parseSuccess == false || roundedFloat < expectedFloat - roundError || roundedFloat > expectedFloat + roundError){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String print floating point number by significant figures fail");}
                     if(SGEXTN::Math::FloatMath<float>::absoluteValue(expectedFloat) < 100.0f){
                         numString = SGEXTN::CoreText::String::stringFromFloat(expectedFloat, base, SGEXTN::CoreText::FloatPrecisionFormat::FractionalDigit, 2);
                         countDecimalPlaces(minimumPrecision, maximumPrecision, numString);
-                        if(2 < minimumPrecision || 2 > maximumPrecision){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String print floating point number by positive decimal places fail");}
+                        if(2 < minimumPrecision || 2 > maximumPrecision){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String print floating point number by positive decimal places fail");}
                         roundError = 0.5f * SGEXTN::Math::FloatMath<float>::powerOf(static_cast<float>(base), -2.0f) + 0.5f * SGEXTN::Math::FloatMath<float>::powerOf(static_cast<float>(base), -3.0f);
                         parseSuccess = false;
                         roundedFloat = numString.parseToFloat(&parseSuccess, base);
-                        if(parseSuccess == false || roundedFloat < expectedFloat - roundError || roundedFloat > expectedFloat + roundError){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String print floating point number by positive decimal places fail");}
+                        if(parseSuccess == false || roundedFloat < expectedFloat - roundError || roundedFloat > expectedFloat + roundError){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String print floating point number by positive decimal places fail");}
                     }
                     if(SGEXTN::Math::FloatMath<float>::absoluteValue(expectedFloat) < 1000000.0f){
                         numString = SGEXTN::CoreText::String::stringFromFloat(expectedFloat, base, SGEXTN::CoreText::FloatPrecisionFormat::FractionalDigit, -2);
                         countDecimalPlaces(minimumPrecision, maximumPrecision, numString);
-                        if(-2 < minimumPrecision || -2 > maximumPrecision){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String print floating point number by negative decimal places fail");}
+                        if(-2 < minimumPrecision || -2 > maximumPrecision){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String print floating point number by negative decimal places fail");}
                         roundError = 0.5f * SGEXTN::Math::FloatMath<float>::powerOf(static_cast<float>(base), 2.0f) + 0.5f * SGEXTN::Math::FloatMath<float>::powerOf(static_cast<float>(base), 1.0f);
                         parseSuccess = false;
                         roundedFloat = numString.parseToFloat(&parseSuccess, base);
-                        if(parseSuccess == false || roundedFloat < expectedFloat - roundError || roundedFloat > expectedFloat + roundError){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String print floating point number by negative decimal places fail");}
+                        if(parseSuccess == false || roundedFloat < expectedFloat - roundError || roundedFloat > expectedFloat + roundError){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String print floating point number by negative decimal places fail");}
                     }
                     numString = SGEXTN::CoreText::String::stringFromFloat(expectedFloat, base, SGEXTN::CoreText::FloatPrecisionFormat::ScientificNotation, 4);
                     maximumPrecision = 0;
                     minimumPrecision = 0;
                     countSignificantFigures(minimumPrecision, maximumPrecision, numString.substringCharactersLeft(numString.findFirstCharactersFromLeft('^')));
-                    if(4 < minimumPrecision || 4 > maximumPrecision){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String print floating point number by scientific notation fail");}
+                    if(4 < minimumPrecision || 4 > maximumPrecision){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String print floating point number by scientific notation fail");}
                     roundError = SGEXTN::Math::FloatMath<float>::absoluteValue(expectedFloat) * SGEXTN::Math::FloatMath<float>::powerOf(static_cast<float>(base), -3.0f);
                     parseSuccess = false;
                     roundedFloat = numString.parseToFloat(&parseSuccess, base);
-                    if(parseSuccess == false || roundedFloat < expectedFloat - roundError || roundedFloat > expectedFloat + roundError){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String print floating point number by scientific notation fail");}
+                    if(parseSuccess == false || roundedFloat < expectedFloat - roundError || roundedFloat > expectedFloat + roundError){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String print floating point number by scientific notation fail");}
                 }
             }
         }
         else{
             bool parseSuccess = true;
             const float floatValue = numericParsingTestsDatabase.at(i).parseToFloat(&parseSuccess, 10);
-            if(parseSuccess == true && floatValue != 0.0f && SGEXTN::Math::FloatLimits<float>::isInfinite(floatValue) == false){SGEXTN::Containers::Crash::crash("SGEXTN::CoreText::String parse invalid floating point number fail");}
+            if(parseSuccess == true && floatValue != 0.0f && SGEXTN::Math::FloatLimits<float>::isInfinite(floatValue) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String parse invalid floating point number fail");}
         }
     }
 }

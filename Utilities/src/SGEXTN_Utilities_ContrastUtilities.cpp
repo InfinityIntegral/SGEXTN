@@ -3,7 +3,7 @@
 #include <SGEXTN_Math_FloatMath.h>
 #include <SGEXTN_Utilities_HslaColour.h>
 #include <SGEXTN_Math_FloatConstants.h>
-#include <private_api/SGEXTN_Containers_Crash.h>
+#include <SGEXTN_Containers_ForceCrash.h>
 
 float SGEXTN::Utilities::ContrastUtilities::getContrast(SGEXTN::Utilities::RgbaColour bg, SGEXTN::Utilities::RgbaColour fg){
     fg = bg.applyTint(fg, true);
@@ -30,7 +30,7 @@ float SGEXTN::Utilities::ContrastUtilities::getAbsoluteContrast(SGEXTN::Utilitie
 }
 
 float SGEXTN::Utilities::ContrastUtilities::safeContrast(float sizeUnit, bool bold, bool bodyText){
-    if(sizeUnit < 0.0f){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::ContrastUtilities::safeContrast crashed because size unit of text cannot be negative");}
+    if(sizeUnit < 0.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::ContrastUtilities::safeContrast crashed because size unit of text cannot be negative");}
     const float fontSize = sizeUnit * 28.0f;
     float requiredContrast = 195.0f;
     if(bold == false){
@@ -75,7 +75,7 @@ float SGEXTN::Utilities::ContrastUtilities::safeContrast(float sizeUnit, bool bo
 }
 
 SGEXTN::Utilities::RgbaColour SGEXTN::Utilities::ContrastUtilities::getForegroundLightMode(RgbaColour bg, float targetContrast, bool* isPossible){
-    if(targetContrast < 0.0f){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::ContrastUtilities::getForegroundLightMode crashed because target contrast cannot be negative, always pass absolute value of intended contrast");}
+    if(targetContrast < 0.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::ContrastUtilities::getForegroundLightMode crashed because target contrast cannot be negative, always pass absolute value of intended contrast");}
     const SGEXTN::Utilities::HslaColour referenceColour = SGEXTN::Utilities::HslaColour(bg);
     float low = 0.0f;
     float high = referenceColour.getLightness();
@@ -96,7 +96,7 @@ SGEXTN::Utilities::RgbaColour SGEXTN::Utilities::ContrastUtilities::getForegroun
 }
 
 SGEXTN::Utilities::RgbaColour SGEXTN::Utilities::ContrastUtilities::getForegroundDarkMode(RgbaColour bg, float targetContrast, bool* isPossible){
-    if(targetContrast < 0.0f){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::ContrastUtilities::getForegroundDarkMode crashed because target contrast cannot be negative, always pass absolute value of intended contrast");}
+    if(targetContrast < 0.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::ContrastUtilities::getForegroundDarkMode crashed because target contrast cannot be negative, always pass absolute value of intended contrast");}
     const SGEXTN::Utilities::HslaColour referenceColour = SGEXTN::Utilities::HslaColour(bg);
     float low = referenceColour.getLightness();
     float high = 100.0f;
@@ -117,7 +117,7 @@ SGEXTN::Utilities::RgbaColour SGEXTN::Utilities::ContrastUtilities::getForegroun
 }
 
 SGEXTN::Utilities::RgbaColour SGEXTN::Utilities::ContrastUtilities::getBackgroundLightMode(RgbaColour fg, float targetContrast, bool* isPossible){
-    if(targetContrast < 0.0f){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::ContrastUtilities::getBackgroundLightMode crashed because target contrast cannot be negative, always pass absolute value of intended contrast");}
+    if(targetContrast < 0.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::ContrastUtilities::getBackgroundLightMode crashed because target contrast cannot be negative, always pass absolute value of intended contrast");}
     const SGEXTN::Utilities::HslaColour referenceColour = SGEXTN::Utilities::HslaColour(fg);
     float low = referenceColour.getLightness();
     float high = 100.0f;
@@ -138,7 +138,7 @@ SGEXTN::Utilities::RgbaColour SGEXTN::Utilities::ContrastUtilities::getBackgroun
 }
 
 SGEXTN::Utilities::RgbaColour SGEXTN::Utilities::ContrastUtilities::getBackgroundDarkMode(RgbaColour fg, float targetContrast, bool* isPossible){
-    if(targetContrast < 0.0f){SGEXTN::Containers::Crash::crash("SGEXTN::Utilities::ContrastUtilities::getBackgroundDarkMode crashed because target contrast cannot be negative, always pass absolute value of intended contrast");}
+    if(targetContrast < 0.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::ContrastUtilities::getBackgroundDarkMode crashed because target contrast cannot be negative, always pass absolute value of intended contrast");}
     const SGEXTN::Utilities::HslaColour referenceColour = SGEXTN::Utilities::HslaColour(fg);
     float low = 0.0f;
     float high = referenceColour.getLightness();
