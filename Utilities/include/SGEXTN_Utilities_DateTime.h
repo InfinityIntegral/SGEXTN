@@ -25,7 +25,7 @@ public:
     [[nodiscard]] bool operator<=(DateTime x) const;
     [[nodiscard]] bool operator>=(DateTime x) const;
     [[nodiscard]] int hash() const;
-    [[nodiscard]] SGEXTN::CoreText::String debugLog() const;
+    [[nodiscard]] SGEXTN::CoreText::String debugPrint() const;
     [[nodiscard]] double getTimeAfter(DateTime x, SGEXTN::Utilities::TimeUnit unit) const;
     [[nodiscard]] static DateTime beginningOfTime();
     [[nodiscard]] static DateTime now();

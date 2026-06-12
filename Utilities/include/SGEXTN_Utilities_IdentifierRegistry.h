@@ -15,6 +15,7 @@ public:
     [[nodiscard]] SGEXTN::Utilities::Identifier parseAndRegisterIdentifier(unsigned int data, bool* isValid);
     bool unregister(SGEXTN::Utilities::Identifier id);
     [[nodiscard]] bool contains(SGEXTN::Utilities::Identifier id) const;
+    [[nodiscard]] int length() const;
 };
 }
 }

@@ -164,7 +164,7 @@ int SGEXTN::Utilities::RgbaColour::hash() const {
     return SGEXTN::Containers::Hash<unsigned int>()(private_data);
 }
 
-SGEXTN::CoreText::String SGEXTN::Utilities::RgbaColour::debugLog() const {
+SGEXTN::CoreText::String SGEXTN::Utilities::RgbaColour::debugPrint() const {
     return rgbaHtmlString();
 }
 

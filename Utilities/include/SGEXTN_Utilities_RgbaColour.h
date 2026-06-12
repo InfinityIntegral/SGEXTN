@@ -42,7 +42,7 @@ public:
     [[nodiscard]] bool operator<(RgbaColour x) const;
     [[nodiscard]] bool operator>(RgbaColour x) const;
     [[nodiscard]] int hash() const;
-    [[nodiscard]] SGEXTN::CoreText::String debugLog() const;
+    [[nodiscard]] SGEXTN::CoreText::String debugPrint() const;
     void gammaCorrectBegin(float& r, float& g, float& b) const;
     void gammaCorrectEnd(float r, float g, float b);
     [[nodiscard]] RgbaColour linearTransformRed(float m, float c, bool gammaCorrect) const;

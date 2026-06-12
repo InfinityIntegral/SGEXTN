@@ -94,7 +94,7 @@ int SGEXTN::Utilities::HslaColour::hash() const {
     return SGEXTN::Containers::Hash<float, float, float, float>()(private_hue, private_saturation, private_lightness, private_transparency);
 }
 
-SGEXTN::CoreText::String SGEXTN::Utilities::HslaColour::debugLog() const {
+SGEXTN::CoreText::String SGEXTN::Utilities::HslaColour::debugPrint() const {
     return SGEXTN::CoreText::String("hsla(") + SGEXTN::CoreText::String::stringFromFloat(private_hue, 10, SGEXTN::CoreText::FloatPrecisionFormat::FractionalDigit, 0) + ", " + SGEXTN::CoreText::String::stringFromFloat(private_saturation, 10, SGEXTN::CoreText::FloatPrecisionFormat::FractionalDigit, 0) + ", " + SGEXTN::CoreText::String::stringFromFloat(private_lightness, 10, SGEXTN::CoreText::FloatPrecisionFormat::FractionalDigit, 0) + ", " + SGEXTN::CoreText::String::stringFromFloat(private_transparency, 10, SGEXTN::CoreText::FloatPrecisionFormat::FractionalDigit, 0) + ")";
 }
 

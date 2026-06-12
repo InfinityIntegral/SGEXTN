@@ -175,7 +175,7 @@ int SGEXTN::Utilities::DateTime::hash() const {
     return SGEXTN::Containers::Hash<long long>()(private_data);
 }
 
-SGEXTN::CoreText::String SGEXTN::Utilities::DateTime::debugLog() const {
+SGEXTN::CoreText::String SGEXTN::Utilities::DateTime::debugPrint() const {
     return getDisplayString(SGEXTN::Utilities::TimeFormat::Display, false, true);
 }
 

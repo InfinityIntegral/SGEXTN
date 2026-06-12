@@ -14,22 +14,22 @@ public:
 
 template <typename T> class Hash<T*> {
 public:
-    [[nodiscard]] int operator()(T* x) const;
+    [[nodiscard]] int operator()(const T* x) const;
 };
 
-template <typename ReturnType, typename... ArgTypes> class Hash<ReturnType(*)(ArgTypes...)> {
+template <typename ReturnType, typename... ArgTypes> class Hash<ReturnType (*)(ArgTypes...)> {
 public:
-    [[nodiscard]] int operator()(ReturnType(*x)(ArgTypes...)) const;
+    [[nodiscard]] int operator()(ReturnType (*x)(ArgTypes...)) const;
 };
 
-template <typename ReturnType, typename ClassName, typename... ArgTypes> class Hash<ReturnType(ClassName::*)(ArgTypes...)> {
+template <typename ReturnType, typename ClassName, typename... ArgTypes> class Hash<ReturnType (ClassName::*)(ArgTypes...)> {
 public:
-    [[nodiscard]] int operator()(ReturnType(ClassName::*x)(ArgTypes...)) const;
+    [[nodiscard]] int operator()(ReturnType (ClassName::*x)(ArgTypes...)) const;
 };
 
-template <typename ReturnType, typename ClassName, typename... ArgTypes> class Hash<ReturnType(ClassName::*)(ArgTypes...)const> {
+template <typename ReturnType, typename ClassName, typename... ArgTypes> class Hash<ReturnType (ClassName::*)(ArgTypes...) const> {
 public:
-    [[nodiscard]] int operator()(ReturnType(ClassName::*x)(ArgTypes...)const) const;
+    [[nodiscard]] int operator()(ReturnType (ClassName::*x)(ArgTypes...) const) const;
 };
 
 template <> class BUILDLAH_DLL_SGEXTN_Containers Hash<bool> {

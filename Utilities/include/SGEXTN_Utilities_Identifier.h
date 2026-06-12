@@ -18,7 +18,7 @@ public:
     [[nodiscard]] bool operator>(Identifier x) const;
     [[nodiscard]] int hash() const;
     [[nodiscard]] SGEXTN::CoreText::String getStringForPrinting() const;
-    [[nodiscard]] SGEXTN::CoreText::String debugLog() const;
+    [[nodiscard]] SGEXTN::CoreText::String debugPrint() const;
 };
 }
 }

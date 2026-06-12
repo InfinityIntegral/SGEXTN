@@ -3,6 +3,7 @@
 #include <private_api/SGEXTN_InternalTest_UtilitiesTest.h>
 #include <private_api/SGEXTN_InternalTest_CoreTextTest.h>
 #include <private_api/SGEXTN_InternalTest_ExternalTest.h>
+#include <private_api/SGEXTN_InternalTest_DebugTest.h>
 #include <SGEXTN_CoreText_Debug.h>
 
 int main(int /*argc*/, char** /*argv*/){
@@ -11,5 +12,6 @@ int main(int /*argc*/, char** /*argv*/){
     SGEXTN::InternalTest::UtilitiesTest::testAll();
     SGEXTN::InternalTest::CoreTextTest::testAll();
     SGEXTN::InternalTest::ExternalTest::testAll();
+    SGEXTN::InternalTest::DebugTest::runTest();
     SG("all tests pass");
 }

@@ -7,6 +7,7 @@
 #include <SGEXTN_Utilities_IdentifierRegistry.h>
 #include <SGEXTN_Utilities_DateTime.h>
 #include <SGEXTN_CoreText_String.h>
+#include <SGEXTN_Containers_Array.h>
 
 namespace {
 bool isCloseEnough(float a, float b){
@@ -54,7 +55,7 @@ void SGEXTN::InternalTest::UtilitiesTest::testRgbaColour(){
     if(col.getTransparencyFloat() != 0.8f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - set transparency float fail");}
     if(SGEXTN::Utilities::RgbaColour(255, 0, 200, 255) == SGEXTN::Utilities::RgbaColour(255, 0, 200, 254)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - equality check fail");}
     if(SGEXTN::Utilities::RgbaColour(255, 0, 200, 255) != SGEXTN::Utilities::RgbaColour(255, 0, 200)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - inequality check fail");}
-    if(SGEXTN::Utilities::RgbaColour(255, 0, 200, 255).debugLog() != "rgba(255, 0, 200, 255)"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - debug log fail");}
+    if(SGEXTN::Utilities::RgbaColour(255, 0, 200, 255).debugPrint() != "rgba(255, 0, 200, 255)"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - debug log fail");}
     col = SGEXTN::Utilities::RgbaColour(255, 0, 200);
     if(col.rgbHexString() != "ff00c8"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - rgb hex string fail");}
     if(col.rgbaHexString() != "ff00c8ff"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - rgba hex string fail");}
@@ -113,7 +114,7 @@ void SGEXTN::InternalTest::UtilitiesTest::testHslaColour(){
     if(isCloseEnoughWCAG3(col.getHue(), 313.0f) == false || isCloseEnoughWCAG3(col.getSaturation(), 100.0f) == false || isCloseEnoughWCAG3(col.getLightness(), 50.0f) == false || isCloseEnough(col.getTransparency(), 100.0f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::HslaColour - RGBA constructor fail");}
     if(SGEXTN::Utilities::HslaColour(SGEXTN::Utilities::RgbaColour(255, 0, 200, 0)) == SGEXTN::Utilities::HslaColour(SGEXTN::Utilities::RgbaColour(255, 0, 200))){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::HslaColour - equality check fail");}
     if(SGEXTN::Utilities::HslaColour(313.0f, 0.0f, 100.0f, 100.0f) != SGEXTN::Utilities::HslaColour(313.0f, 0.0f, 100.0f)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::HslaColour - inequality check fail");}
-    if(SGEXTN::Utilities::HslaColour(313.0f, 0.0f, 100.0f).debugLog() != "hsla(313, 0, 100, 100)"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::HslaColour - debug log fail");}
+    if(SGEXTN::Utilities::HslaColour(313.0f, 0.0f, 100.0f).debugPrint() != "hsla(313, 0, 100, 100)"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::HslaColour - debug log fail");}
     col.setHue(40.0f);
     col.setSaturation(10.0f);
     col.setLightness(20.0f);
@@ -185,7 +186,7 @@ void SGEXTN::InternalTest::UtilitiesTest::testIdentifier(){
     if(SGEXTN::Utilities::Identifier::nullIdentifier() != b){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::Identifier - inequality check fail");}
     a.private_data = 726726u;
     if(a.getStringForPrinting() != "000b16c6"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::Identifier - print string fail");}
-    if(b.debugLog() != "00000000"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::Identifier - debug log fail");}
+    if(b.debugPrint() != "00000000"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::Identifier - debug log fail");}
 }
 
 void SGEXTN::InternalTest::UtilitiesTest::testIdentifierRegistry(){
@@ -207,7 +208,11 @@ void SGEXTN::InternalTest::UtilitiesTest::testIdentifierRegistry(){
     id.private_data = 1u;
     if(registry.unregister(id) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::IdentifierRegistry unregister existing identifier fail");}
     if(registry.contains(id) == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::IdentifierRegistry contains unregistered identifier fail");}
-    if(registry.generateAndRegisterIdentifier() == SGEXTN::Utilities::Identifier::nullIdentifier()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::IdentifierRegistry identifier generation fail");}
+    SGEXTN::Containers::Array<SGEXTN::Utilities::Identifier> ids(1000);
+    for(int i=0; i<1000; i++){
+        ids.at(i) = registry.generateAndRegisterIdentifier();
+    }
+    if(registry.length() != 1000){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::Identifier check length fail");}
 }
 
 void SGEXTN::InternalTest::UtilitiesTest::testDateTime(){
@@ -221,7 +226,7 @@ void SGEXTN::InternalTest::UtilitiesTest::testDateTime(){
     if(a > b){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::DateTime more than operator fail");}
     if(b <= a){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::DateTime less than equal to operator fail");}
     if(a >= b){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::DateTime more than equal to operator fail");}
-    if(a.debugLog() != "SG00-08-09 10:30:00"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::DateTime debug log print fail");}
+    if(a.debugPrint() != "SG00-08-09 10:30:00"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::DateTime debug log print fail");}
     if(a != SGEXTN::Utilities::DateTime::beginningOfTime()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::DateTime beginning of time fail");}
     if(SGEXTN::Utilities::DateTime::convertToGlobalYear(0) != 1965){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::DateTime standard to global year fail");}
     if(SGEXTN::Utilities::DateTime(60, 6, 15, 0, 0, 0).isNationalDayPeriod() == true || SGEXTN::Utilities::DateTime(60, 7, 15, 0, 0, 0).isNationalDayPeriod() == false || SGEXTN::Utilities::DateTime(60, 8, 15, 0, 0, 0).isNationalDayPeriod() == false || SGEXTN::Utilities::DateTime(60, 9, 15, 0, 0, 0).isNationalDayPeriod() == false || SGEXTN::Utilities::DateTime(60, 10, 15, 0, 0, 0).isNationalDayPeriod() == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::DateTime National Day period check fail");}

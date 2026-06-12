@@ -23,7 +23,7 @@ public:
     [[nodiscard]] bool operator<(HslaColour x) const;
     [[nodiscard]] bool operator>(HslaColour x) const;
     [[nodiscard]] int hash() const;
-    [[nodiscard]] SGEXTN::CoreText::String debugLog() const;
+    [[nodiscard]] SGEXTN::CoreText::String debugPrint() const;
     float getHue() const;
     float getSaturation() const;
     float getLightness() const;

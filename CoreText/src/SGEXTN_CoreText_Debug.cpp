@@ -4,10 +4,11 @@
 #include <iostream>
 #include <locale>
 #include <cwchar>
-#include <SGEXTN_Containers_ForceCrash.h>
+#include <SGEXTN_Containers_Array.h>
+#include <SGEXTN_Containers_Vector.h>
 
 namespace {
-SGEXTN::Containers::ForceCrashLogFunctionRegistrar forceCrashLogFunctionRegistrarInstance(&SGEXTN::CoreText::Debug::logCrashMessage);
+SGEXTN::CoreText::DebugLogFunctionRegistrarInstance useLogToCerr(&SGEXTN::CoreText::Debug::logToCerr);
 
 const char* printUtf8String(const unsigned char* data, int byteLength, bool& mustDeleteOutputUsingArrayDelete){
     mustDeleteOutputUsingArrayDelete = false;
@@ -45,88 +46,159 @@ const char* printUtf8String(const unsigned char* data, int byteLength, bool& mus
 }
 }
 
-SGEXTN::CoreText::Debug::Debug(const SGEXTN::CoreText::String& fileName, int lineNumber) : debugInfo(""), metaInfo("") {
-    SGEXTN::CoreText::String actualFileName = fileName.replaceCharacters("\\", "/");
-    actualFileName = actualFileName.substringCharactersRight(actualFileName.characterLength() - actualFileName.findFirstCharactersFromRight("/") - 1);
-    metaInfo = actualFileName + ", line " + SGEXTN::CoreText::String::stringFromInt(lineNumber, 10);
+constinit SGEXTN::Containers::Vector<void (*)(const char*)>* SGEXTN::CoreText::Debug::logFunctionList = nullptr;
+
+SGEXTN::CoreText::Debug::Debug(const SGEXTN::CoreText::String& fileName, int lineNumber) : debugInfo(""), fileName(""), lineNumber(""), metadataMode(SGEXTN::CoreText::DebugPrintMetadataMode::None), integerMode(10), floatingPointMode(10, SGEXTN::CoreText::FloatPrecisionFormat::SignificantFigure, 5), cCharMode(SGEXTN::CoreText::DebugPrintCCharMode::Byte), stringMode(SGEXTN::CoreText::DebugPrintStringMode::String), pointerMode(SGEXTN::CoreText::DebugPrintPointerMode::NullCheck) {
+    const SGEXTN::CoreText::String actualFilePath = fileName.replaceCharacters("\\", "/");
+    (*this).fileName = actualFilePath.substringCharactersRight(actualFilePath.characterLength() - actualFilePath.findFirstCharactersFromRight("/") - 1);
+    (*this).lineNumber = SGEXTN::CoreText::String("line ") + SGEXTN::CoreText::String::stringFromInt(lineNumber, 10);
 }
 
 SGEXTN::CoreText::Debug::~Debug(){
-    SGEXTN::CoreText::String logData = "";
-    if(debugInfo == ""){logData = SGEXTN::CoreText::String("SG - ") + metaInfo;}
-    else{logData = SGEXTN::CoreText::String("SG") + debugInfo;}
+    if(debugInfo == ""){metadataMode = SGEXTN::CoreText::DebugPrintMetadataMode::All;}
+    SGEXTN::CoreText::String logMessage = "SG";
+    if(metadataMode == SGEXTN::CoreText::DebugPrintMetadataMode::Line){
+        logMessage += " at ";
+        logMessage += lineNumber;
+    }
+    else if(metadataMode == SGEXTN::CoreText::DebugPrintMetadataMode::All){
+        logMessage += " in ";
+        logMessage += fileName;
+        logMessage += " at ";
+        logMessage += lineNumber;
+    }
+    if(debugInfo != ""){
+        logMessage += ": ";
+        logMessage += debugInfo;
+    }
     bool mustDelete = false;
-    const char* cString = printUtf8String(&logData.byteAt(0), logData.byteLength(), mustDelete);
-    logCrashMessage(cString);
+    const char* cString = printUtf8String(&logMessage.byteAt(0), logMessage.byteLength(), mustDelete);
+    for(int i=0; i<(*SGEXTN::CoreText::Debug::logFunctionList).length(); i++){
+        ((*SGEXTN::CoreText::Debug::logFunctionList).at(i))(cString);
+    }
     if(mustDelete == true){delete[] cString;}
 }
 
-SGEXTN::CoreText::Debug& SGEXTN::CoreText::Debug::operator()(bool x){
-    if(x == true){debugInfo += " - true";}
-    else{debugInfo += " - false";}
-    return (*this);
+// NOLINTBEGIN(readability-convert-member-functions-to-static)
+SGEXTN::CoreText::String SGEXTN::CoreText::Debug::debugPrint(bool x) const {
+    if(x == true){return "true";}
+    return "false";
 }
 
-SGEXTN::CoreText::Debug& SGEXTN::CoreText::Debug::operator()(unsigned char x){
-    debugInfo += SGEXTN::CoreText::String(" - ") + SGEXTN::CoreText::String::stringFromInt(static_cast<int>(x), 10) + " or " + x;
-    return (*this);
-}
-
-SGEXTN::CoreText::Debug& SGEXTN::CoreText::Debug::operator()(short x){
-    debugInfo += SGEXTN::CoreText::String(" - ") + SGEXTN::CoreText::String::stringFromShort(x, 10);
-    return (*this);
-}
-
-SGEXTN::CoreText::Debug& SGEXTN::CoreText::Debug::operator()(unsigned short x){
-    debugInfo += SGEXTN::CoreText::String(" - ") + SGEXTN::CoreText::String::stringFromUnsignedShort(x, 10);
-    return (*this);
-}
-
-SGEXTN::CoreText::Debug& SGEXTN::CoreText::Debug::operator()(int x){
-    debugInfo += SGEXTN::CoreText::String(" - ") + SGEXTN::CoreText::String::stringFromInt(x, 10);
-    return (*this);
-}
-
-SGEXTN::CoreText::Debug& SGEXTN::CoreText::Debug::operator()(unsigned int x){
-    debugInfo += SGEXTN::CoreText::String(" - ") + SGEXTN::CoreText::String::stringFromUnsignedInt(x, 10);
-    return (*this);
-}
-
-SGEXTN::CoreText::Debug& SGEXTN::CoreText::Debug::operator()(long long x){
-    debugInfo += SGEXTN::CoreText::String(" - ") + SGEXTN::CoreText::String::stringFromLongLong(x, 10);
-    return (*this);
-}
-
-SGEXTN::CoreText::Debug& SGEXTN::CoreText::Debug::operator()(unsigned long long x){
-    debugInfo += SGEXTN::CoreText::String(" - ") + SGEXTN::CoreText::String::stringFromUnsignedLongLong(x, 10);
-    return (*this);
-}
-
-SGEXTN::CoreText::Debug& SGEXTN::CoreText::Debug::operator()(float x){
-    debugInfo += SGEXTN::CoreText::String(" - ") + SGEXTN::CoreText::String::stringFromFloat(x, 10, SGEXTN::CoreText::FloatPrecisionFormat::SignificantFigure, 5);
-    return (*this);
-}
-
-SGEXTN::CoreText::Debug& SGEXTN::CoreText::Debug::operator()(double x){
-    debugInfo += SGEXTN::CoreText::String(" - ") + SGEXTN::CoreText::String::stringFromDouble(x, 10, SGEXTN::CoreText::FloatPrecisionFormat::SignificantFigure, 5);
-    return (*this);
-}
-
-SGEXTN::CoreText::Debug& SGEXTN::CoreText::Debug::operator()(const SGEXTN::CoreText::Character& x){
-    debugInfo += SGEXTN::CoreText::String(" - ") + x;
-    return (*this);
-}
-
-SGEXTN::CoreText::Debug& SGEXTN::CoreText::Debug::operator()(const SGEXTN::CoreText::String& x){
-    debugInfo += SGEXTN::CoreText::String(" - ") + x;
-    return (*this);
-}
-
-SGEXTN::CoreText::Debug& SGEXTN::CoreText::Debug::operator()(const char* x){
-    debugInfo += SGEXTN::CoreText::String(" - ") + x;
-    return (*this);
-}
-
-void SGEXTN::CoreText::Debug::logCrashMessage(const char* msg){
+void SGEXTN::CoreText::Debug::logToCerr(const char* msg){
     std::cerr << msg << "\n";
+}
+
+SGEXTN::CoreText::String SGEXTN::CoreText::Debug::debugPrint(unsigned char x) const {
+    if(cCharMode == SGEXTN::CoreText::DebugPrintCCharMode::Character){return x;}
+    return SGEXTN::CoreText::String::stringFromInt(static_cast<int>(x), 16).fillLeftToCharacterLength(2, '0');
+}
+
+SGEXTN::CoreText::String SGEXTN::CoreText::Debug::debugPrint(short x) const {
+    return SGEXTN::CoreText::String::stringFromShort(x, integerMode.base);
+}
+
+SGEXTN::CoreText::String SGEXTN::CoreText::Debug::debugPrint(unsigned short x) const {
+    return SGEXTN::CoreText::String::stringFromUnsignedShort(x, integerMode.base);
+}
+
+SGEXTN::CoreText::String SGEXTN::CoreText::Debug::debugPrint(int x) const {
+    return SGEXTN::CoreText::String::stringFromInt(x, integerMode.base);
+}
+
+SGEXTN::CoreText::String SGEXTN::CoreText::Debug::debugPrint(unsigned int x) const {
+    return SGEXTN::CoreText::String::stringFromUnsignedInt(x, integerMode.base);
+}
+
+SGEXTN::CoreText::String SGEXTN::CoreText::Debug::debugPrint(long long x) const {
+    return SGEXTN::CoreText::String::stringFromLongLong(x, integerMode.base);
+}
+
+SGEXTN::CoreText::String SGEXTN::CoreText::Debug::debugPrint(unsigned long long x) const {
+    return SGEXTN::CoreText::String::stringFromUnsignedLongLong(x, integerMode.base);
+}
+
+SGEXTN::CoreText::String SGEXTN::CoreText::Debug::debugPrint(float x) const {
+    return SGEXTN::CoreText::String::stringFromFloat(x, floatingPointMode.base, floatingPointMode.format, floatingPointMode.precision);
+}
+
+SGEXTN::CoreText::String SGEXTN::CoreText::Debug::debugPrint(double x) const {
+    return SGEXTN::CoreText::String::stringFromDouble(x, floatingPointMode.base, floatingPointMode.format, floatingPointMode.precision);
+}
+
+SGEXTN::CoreText::String SGEXTN::CoreText::Debug::debugPrint(const SGEXTN::CoreText::Character& x) const {
+    return debugPrint(SGEXTN::CoreText::String(x));
+}
+
+SGEXTN::CoreText::String SGEXTN::CoreText::Debug::debugPrint(const SGEXTN::CoreText::String& x) const {
+    if(stringMode == SGEXTN::CoreText::DebugPrintStringMode::String){return x;}
+    if(stringMode == SGEXTN::CoreText::DebugPrintStringMode::Byte){
+        SGEXTN::CoreText::String output = "";
+        if(x != ""){output += SGEXTN::CoreText::String::stringFromInt(static_cast<int>(x.byteAt(0)), 16).fillLeftToCharacterLength(2, '0');}
+        for(int i=1; i<x.byteLength(); i++){
+            output += " ";
+            output += SGEXTN::CoreText::String::stringFromInt(static_cast<int>(x.byteAt(i)), 16).fillLeftToCharacterLength(2, '0');
+        }
+        return output;
+    }
+    if(stringMode == SGEXTN::CoreText::DebugPrintStringMode::CodePoint){
+        SGEXTN::Containers::Array<int> unicode = x.getUnicode();
+        SGEXTN::CoreText::String output = "";
+        if(unicode.length() > 0){output += SGEXTN::CoreText::String::stringFromInt(unicode.at(0), 16).fillLeftToCharacterLength(4, '0');}
+        for(int i=1; i<unicode.length(); i++){
+            output += " ";
+            output += SGEXTN::CoreText::String::stringFromInt(unicode.at(i), 16).fillLeftToCharacterLength(4, '0');
+        }
+        return output;
+    }
+    return "";
+}
+
+SGEXTN::CoreText::String SGEXTN::CoreText::Debug::debugPrint(const char x) const {
+    if(cCharMode == SGEXTN::CoreText::DebugPrintCCharMode::Character){return x;}
+    return SGEXTN::CoreText::String::stringFromInt(static_cast<int>(x), 16).fillLeftToCharacterLength(2, '0');
+}
+
+SGEXTN::CoreText::String SGEXTN::CoreText::Debug::debugPrint(const char* x) const {
+    return x;
+}
+// NOLINTEND(readability-convert-member-functions-to-static)
+
+SGEXTN::CoreText::DebugPrintIntegerMode::DebugPrintIntegerMode(int base) : base(base) {}
+
+SGEXTN::CoreText::DebugPrintFloatingPointMode::DebugPrintFloatingPointMode(int base, SGEXTN::CoreText::FloatPrecisionFormat format, int precision) : base(base), format(format), precision(precision) {}
+
+SGEXTN::CoreText::Debug& SGEXTN::CoreText::Debug::operator()(SGEXTN::CoreText::DebugPrintMetadataMode mode){
+    metadataMode = mode;
+    return (*this);
+}
+
+SGEXTN::CoreText::Debug& SGEXTN::CoreText::Debug::operator()(SGEXTN::CoreText::DebugPrintIntegerMode mode){
+    integerMode = mode;
+    return (*this);
+}
+
+SGEXTN::CoreText::Debug& SGEXTN::CoreText::Debug::operator()(SGEXTN::CoreText::DebugPrintFloatingPointMode mode){
+    floatingPointMode = mode;
+    return (*this);
+}
+
+SGEXTN::CoreText::Debug& SGEXTN::CoreText::Debug::operator()(SGEXTN::CoreText::DebugPrintCCharMode mode){
+    cCharMode = mode;
+    return (*this);
+}
+
+SGEXTN::CoreText::Debug& SGEXTN::CoreText::Debug::operator()(SGEXTN::CoreText::DebugPrintStringMode mode){
+    stringMode = mode;
+    return (*this);
+}
+
+SGEXTN::CoreText::Debug& SGEXTN::CoreText::Debug::operator()(SGEXTN::CoreText::DebugPrintPointerMode mode){
+    pointerMode = mode;
+    return (*this);
+}
+
+SGEXTN::CoreText::DebugLogFunctionRegistrarInstance::DebugLogFunctionRegistrarInstance(void (*func)(const char*)){
+    if(SGEXTN::CoreText::Debug::logFunctionList == nullptr){SGEXTN::CoreText::Debug::logFunctionList = new SGEXTN::Containers::Vector<void (*)(const char*)>();}
+    (*SGEXTN::CoreText::Debug::logFunctionList).pushBack(func);
 }

@@ -6,13 +6,7 @@ class BUILDLAH_DLL_SGEXTN_Containers ForceCrash {
 public:
     [[noreturn]] static void immediateCrash(const char* msg);
     static void basicWarn(const char* msg);
-    static void (*logFunction)(const char*);
     static void logMessage(const char* prefix, const char* msg);
-};
-
-class BUILDLAH_DLL_SGEXTN_Containers ForceCrashLogFunctionRegistrar {
-public:
-    ForceCrashLogFunctionRegistrar(void (*newLogFunction)(const char*));
 };
 }
 }

@@ -56,3 +56,7 @@ bool SGEXTN::Utilities::IdentifierRegistry::contains(SGEXTN::Utilities::Identifi
     if(id.private_data == 0u){return false;}
     return private_contents.contains(id.private_data);
 }
+
+int SGEXTN::Utilities::IdentifierRegistry::length() const {
+    return private_contents.length();
+}

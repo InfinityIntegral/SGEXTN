@@ -34,6 +34,6 @@ SGEXTN::CoreText::String SGEXTN::Utilities::Identifier::getStringForPrinting() c
     return SGEXTN::CoreText::String::stringFromUnsignedInt(private_data, 16).fillLeftToByteLength(8, '0');
 }
 
-SGEXTN::CoreText::String SGEXTN::Utilities::Identifier::debugLog() const {
+SGEXTN::CoreText::String SGEXTN::Utilities::Identifier::debugPrint() const {
     return getStringForPrinting();
 }
