@@ -21,15 +21,17 @@ indent_mode=2
 name=SGEXTN
 base_path=/home/infinityintegral/SGEXTN
 description=SGEXTN - Singaporean-made Extension to the C++ Core Language, currently work in progress, is written to provide an alternative to the Standard Template Library that is easy to use, more consistent between different platforms, faster to lint and compile, and provides a cross platform framework for developing applications using the capabilities of Simple DirectMedia Layer 3 and AccessKit
-file_patterns=*.h;*.cpp;*.vert;*.frag;
+file_patterns=*.h;*.cpp;*.hlsl;
 
 [long line marker]
 long_line_behaviour=1
 long_line_column=72
 
 [files]
-current_page=0
-FILE_NAME_0=3443;CMake;0;EUTF-8;0;1;1;%2Fhome%2Finfinityintegral%2FSGEXTN%2Fcmake%2FBuildLah.cmake;0;4
+current_page=1
+FILE_NAME_0=6309;CMake;0;EUTF-8;0;1;1;%2Fhome%2Finfinityintegral%2FSGEXTN%2Fcmake%2FBuildLah.cmake;0;4
+FILE_NAME_1=732;CMake;0;EUTF-8;0;1;1;%2Fhome%2Finfinityintegral%2FSGEXTN%2FCMakeLists.txt;0;4
+FILE_NAME_2=1146;CMake;0;EUTF-8;0;1;1;%2Fhome%2Finfinityintegral%2FSGEXTN%2Fcmake%2FBuildLah_CheckLicense.cmake;0;4
 
 [VTE]
 last_dir=/home/infinityintegral/SGEXTN
