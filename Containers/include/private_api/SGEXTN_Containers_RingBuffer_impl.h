@@ -1,7 +1,7 @@
 #pragma once
 #include <SGEXTN_Containers_PlacementNew.h>
 
-template <typename T> SGEXTN::Containers::RingBufferSlot<T>::RingBufferSlot(){}
+template <typename T> SGEXTN::Containers::RingBufferSlot<T>::RingBufferSlot() : constructorRemover('\0') {}
 
 template <typename T> SGEXTN::Containers::RingBufferSlot<T>::~RingBufferSlot(){}
 
@@ -75,7 +75,7 @@ template <typename T> void SGEXTN::Containers::RingBuffer<T>::fill(const T& defa
 
 template <typename T> int SGEXTN::Containers::RingBuffer<T>::private_getMemoryIndex(int i) const {
     if(private_start == 0){return i;}
-    int idx = i + private_start;
+    const int idx = i + private_start;
     if(idx < private_memoryLength){return idx;}
     return (idx - private_memoryLength);
 }

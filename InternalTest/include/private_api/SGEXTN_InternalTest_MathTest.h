@@ -2,7 +2,7 @@
 
 namespace SGEXTN {
 namespace InternalTest {
-class BUILDLAH_DLL_SGEXTN_InternalTest MathTest {
+class BuildLah_SGEXTN_InternalTest MathTest {
 public:
     static bool checkDataSizes();
     static void testIntegerLimits();

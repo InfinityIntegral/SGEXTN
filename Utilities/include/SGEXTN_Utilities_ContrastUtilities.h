@@ -4,7 +4,7 @@ namespace SGEXTN {
 namespace Utilities {
 class RgbaColour;
 
-class BUILDLAH_DLL_SGEXTN_Utilities ContrastUtilities {
+class BuildLah_SGEXTN_Utilities ContrastUtilities {
 public:
     [[nodiscard]] static float getContrast(SGEXTN::Utilities::RgbaColour bg, SGEXTN::Utilities::RgbaColour fg);
     [[nodiscard]] static float getAbsoluteContrast(SGEXTN::Utilities::RgbaColour bg, SGEXTN::Utilities::RgbaColour fg);

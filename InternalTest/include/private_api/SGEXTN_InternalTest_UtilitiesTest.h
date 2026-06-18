@@ -2,7 +2,7 @@
 
 namespace SGEXTN {
 namespace InternalTest {
-class BUILDLAH_DLL_SGEXTN_InternalTest UtilitiesTest {
+class BuildLah_SGEXTN_InternalTest UtilitiesTest {
 public:
     static void testAll();
     static void testRgbaColour();

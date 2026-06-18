@@ -2,7 +2,7 @@
 
 namespace SGEXTN {
 namespace Math {
-template <typename T> class BUILDLAH_DLL_SGEXTN_Math IntegerMath {
+template <typename T> class BuildLah_SGEXTN_Math IntegerMath {
 public:
     [[nodiscard]] static T absoluteValue(T x);
     [[nodiscard]] static T minimum(T a, T b);

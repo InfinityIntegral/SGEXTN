@@ -154,7 +154,7 @@ SGEXTN::CoreText::String SGEXTN::CoreText::Debug::debugPrint(const SGEXTN::CoreT
     return "";
 }
 
-SGEXTN::CoreText::String SGEXTN::CoreText::Debug::debugPrint(const char x) const {
+SGEXTN::CoreText::String SGEXTN::CoreText::Debug::debugPrint(char x) const {
     if(cCharMode == SGEXTN::CoreText::DebugPrintCCharMode::Character){return x;}
     return SGEXTN::CoreText::String::stringFromInt(static_cast<int>(x), 16).fillLeftToCharacterLength(2, '0');
 }

@@ -11,11 +11,11 @@ namespace CoreText {
 class Character;
 class OldString;
 
-enum class BUILDLAH_DLL_SGEXTN_CoreText FloatPrecisionFormat : unsigned char {SignificantFigure, FractionalDigit, ScientificNotation};
+enum class BuildLah_SGEXTN_CoreText FloatPrecisionFormat : unsigned char {SignificantFigure, FractionalDigit, ScientificNotation};
 
-enum class BUILDLAH_DLL_SGEXTN_CoreText NormalisationFormat : unsigned char {Join, Separate, LossyJoin, LossySeparate};
+enum class BuildLah_SGEXTN_CoreText NormalisationFormat : unsigned char {Join, Separate, LossyJoin, LossySeparate};
 
-class BUILDLAH_DLL_SGEXTN_CoreText String {
+class BuildLah_SGEXTN_CoreText String {
 public:
     SGEXTN::CoreText::TextBuffer private_data;
     mutable SGEXTN::Containers::Vector<int> private_characterOffsets;

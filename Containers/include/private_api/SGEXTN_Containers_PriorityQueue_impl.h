@@ -30,7 +30,7 @@ template <typename T, typename Comparator> void SGEXTN::Containers::PriorityQueu
     private_ringBuffer.pushBack(x);
     int i = private_ringBuffer.length() - 1;
     while(i > 0){
-        int parentIndex = (i - 1) / 2;
+        const int parentIndex = (i - 1) / 2;
         if(private_compare(parentIndex, i) == true){private_swap(parentIndex, i);}
         else{break;}
         i = parentIndex;
@@ -43,8 +43,8 @@ template <typename T, typename Comparator> void SGEXTN::Containers::PriorityQueu
     private_ringBuffer.popBack();
     int i = 0;
     while(true){
-        int leftChild = 2 * i + 1;
-        int rightChild = 2 * i + 2;
+        const int leftChild = 2 * i + 1;
+        const int rightChild = 2 * i + 2;
         if(rightChild < private_ringBuffer.length()){
             if(private_compare(i, leftChild) == false && private_compare(i, rightChild) == false){break;}
             if(private_compare(leftChild, rightChild) == true){

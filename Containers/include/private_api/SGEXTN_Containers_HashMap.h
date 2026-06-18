@@ -39,9 +39,9 @@ public:
     [[nodiscard]] int getHashIndex(const Key& x) const;
     bool hashInto(const Key& key, const Value& value);
     void rehashAll(int newMemoryLength);
-    HashMapSlot<Key, Value, EqualityCheck, HashFunction>* getSlotFromKey(const Key& x) const;
-    HashMapSlot<Key, Value, EqualityCheck, HashFunction>* getPreviousSlot(HashMapSlot<Key, Value, EqualityCheck, HashFunction>* x) const;
-    HashMapSlot<Key, Value, EqualityCheck, HashFunction>* getNextSlot(HashMapSlot<Key, Value, EqualityCheck, HashFunction>* x) const;
+    [[nodiscard]] HashMapSlot<Key, Value, EqualityCheck, HashFunction>* getSlotFromKey(const Key& x) const;
+    [[nodiscard]] HashMapSlot<Key, Value, EqualityCheck, HashFunction>* getPreviousSlot(HashMapSlot<Key, Value, EqualityCheck, HashFunction>* x) const;
+    [[nodiscard]] HashMapSlot<Key, Value, EqualityCheck, HashFunction>* getNextSlot(HashMapSlot<Key, Value, EqualityCheck, HashFunction>* x) const;
     HashMap();
     HashMap(const HashMap& x);
     HashMap& operator=(const HashMap& x);

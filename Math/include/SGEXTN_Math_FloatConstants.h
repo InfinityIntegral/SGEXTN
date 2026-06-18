@@ -2,7 +2,7 @@
 
 namespace SGEXTN {
 namespace Math {
-template <typename T> class BUILDLAH_DLL_SGEXTN_Math FloatConstants {
+template <typename T> class BuildLah_SGEXTN_Math FloatConstants {
 public:
     [[nodiscard]] static T eulerNumber();
     [[nodiscard]] static T eulerNumberLog2();

@@ -2,7 +2,7 @@
 
 namespace SGEXTN {
 namespace InternalTest {
-class BUILDLAH_DLL_SGEXTN_InternalTest ContainersTest {
+class BuildLah_SGEXTN_InternalTest ContainersTest {
 public:
     static void testEqualTo();
     static void testArray();

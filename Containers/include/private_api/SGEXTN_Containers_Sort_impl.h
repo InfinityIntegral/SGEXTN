@@ -3,7 +3,9 @@
 #include <SGEXTN_Containers_PlacementNew.h>
 
 template <typename T, typename Comparator> SGEXTN::Containers::Sort<T, Comparator>::Sort(T* start, int length) : private_firstBuffer(start), private_secondBuffer(nullptr), private_length(length), private_mainIsSecond(false), private_comparatorInstance(), private_minimumBlockSize(32) {
-    private_secondBuffer = static_cast<T*>(::operator new(length * sizeof(T)));
+    if(length > 0){
+        private_secondBuffer = static_cast<T*>(::operator new(length * sizeof(T)));
+    }
     for(int i=0; i<length; i++){
         new(SGEXTN::Containers::PlacementNew::placeholder, private_secondBuffer + i) T(*(private_firstBuffer + i));
     }
@@ -47,8 +49,8 @@ template <typename T, typename Comparator> void SGEXTN::Containers::Sort<T, Comp
     for(int i=0; i<private_length/blockSize; i++){
         private_mergeTwoBlocks(initialLocation + i * blockSize, finalLocation + i * blockSize, blockSize / 2, blockSize / 2);
     }
-    int remainderStart = blockSize * (private_length / blockSize);
-    int remainderLength = private_length - remainderStart;
+    const int remainderStart = blockSize * (private_length / blockSize);
+    const int remainderLength = private_length - remainderStart;
     if(remainderLength > blockSize / 2){private_mergeTwoBlocks(initialLocation + remainderStart, finalLocation + remainderStart, blockSize / 2, remainderLength - blockSize / 2);}
     else{private_mergeTwoBlocks(initialLocation + remainderStart, finalLocation + remainderStart, remainderLength, 0);}
 }

@@ -1,12 +1,34 @@
-include("${CMAKE_CURRENT_SOURCE_DIR}/cmake/buildlah.cmake")
-cmake_minimum_required(VERSION 3.21 FATAL_ERROR)
-BuildLah_use_default_settings()
-project(SGEXTN VERSION 7.0.0 LANGUAGES CXX)
-BuildLah_find_dependencies()
-BuildLah_add_component(Containers DLL "Containers")
-BuildLah_add_component(Math DLL "Math")
-BuildLah_add_component(CoreText DLL "CoreText" Containers Math)
-BuildLah_add_component(Utilities DLL "Utilities" Containers Math CoreText)
-BuildLah_add_component(InternalTest GUI "InternalTest" Containers Math CoreText Utilities)
-BuildLah_finalise_project()
-# cmake --install build/Desktop_Qt_6_11_1-Release --config Release --prefix ../SGEXTN_install
+cmake_minimum_required(VERSION 3.16 FATAL_ERROR)
+set(CMAKE_FIND_NO_INSTALL_PREFIX true)
+project(SGEXTN LANGUAGES CXX VERSION 7.0.0 DESCRIPTION "SGEXTN - Singaporean-made Extension to the C++ Core Language, currently work in progress, is written to provide an alternative to the Standard Template Library that is easy to use, more consistent between different platforms, faster to lint and compile, and provides a cross platform framework for developing applications using the capabilities of Simple DirectMedia Layer 3 and AccessKit" HOMEPAGE_URL "https://infinityintegral.github.io/SGEXTN/readme/readme")
+set(BuildLah_internal_v_installFolder "${CMAKE_SOURCE_DIR}/cmake")
+include("${CMAKE_CURRENT_SOURCE_DIR}/cmake/BuildLah.cmake")
+BuildLah_addComponent(
+    NAME Containers
+    TYPE LIBRARY
+    ROOT_FOLDER "Containers"
+)
+BuildLah_addComponent(
+    NAME Math
+    TYPE LIBRARY
+    ROOT_FOLDER "Math"
+)
+BuildLah_addComponent(
+    NAME CoreText
+    TYPE LIBRARY
+    ROOT_FOLDER "CoreText"
+    DEPENDENCIES INTERNAL Math FORWARD Containers
+)
+BuildLah_addComponent(
+    NAME Utilities
+    TYPE LIBRARY
+    ROOT_FOLDER "Utilities"
+    DEPENDENCIES INTERNAL Math FORWARD Containers CoreText
+)
+BuildLah_addComponent(
+    NAME InternalTest
+    TYPE GUI_APP
+    ROOT_FOLDER "InternalTest"
+    DEPENDENCIES INTERNAL Containers Math CoreText Utilities
+)
+BuildLah_finaliseProject()

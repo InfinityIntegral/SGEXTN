@@ -18,17 +18,17 @@ template <typename T> SGEXTN::CoreText::String SGEXTN::CoreText::Debug::debugPri
 
 template <typename ReturnType, typename... ArgTypes> SGEXTN::CoreText::String SGEXTN::CoreText::Debug::debugPrint(ReturnType (*x)(ArgTypes...)) const {
     if(x == nullptr){return "nullptr";}
-    else{return "not nullptr";}
+    return "not nullptr";
 }
 
 template <typename ReturnType, typename ClassName, typename... ArgTypes> SGEXTN::CoreText::String SGEXTN::CoreText::Debug::debugPrint(ReturnType (ClassName::*x)(ArgTypes...)) const {
     if(x == nullptr){return "nullptr";}
-    else{return "not nullptr";}
+    return "not nullptr";
 }
 
 template <typename ReturnType, typename ClassName, typename... ArgTypes> SGEXTN::CoreText::String SGEXTN::CoreText::Debug::debugPrint(ReturnType (ClassName::*x)(ArgTypes...) const) const {
     if(x == nullptr){return "nullptr";}
-    else{return "not nullptr";}
+    return "not nullptr";
 }
 
 template <typename T> SGEXTN::CoreText::Debug& SGEXTN::CoreText::Debug::operator()(const T& x){

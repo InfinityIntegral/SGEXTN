@@ -4,15 +4,15 @@ namespace SGEXTN {
 namespace CoreText {
 class String;
 
-enum class BUILDLAH_DLL_SGEXTN_CoreText SimplifiedCharacterType : unsigned char {Letter, Punctuation, Symbol, Mark, Number, Whitespace, Other};
+enum class BuildLah_SGEXTN_CoreText SimplifiedCharacterType : unsigned char {Letter, Punctuation, Symbol, Mark, Number, Whitespace, Other};
 
-enum class BUILDLAH_DLL_SGEXTN_CoreText FullCharacterType : unsigned char {NonspacingCombiningMark, SpacingCombiningMark, EnclosingMark, DecimalDigit, LetterNumber, OtherNumber, SpaceBreak, LineBreak, ParagraphBreak, ControlCharacter, FormatCharacter, SurrogateCharacter, PrivateUseCharacter, UnassignedCharacter, UppercaseLetter, LowercaseLetter, TitlecaseLetter, ModifierLetter, OtherLetter, ConnectorPunctuation, DashPunctuation, OpeningPunctuation, ClosingPunctuation, OpeningQuote, ClosingQuote, OtherPunctuation, MathSymbol, CurrencySymbol, ModifierSymbol, OtherSymbol};
+enum class BuildLah_SGEXTN_CoreText FullCharacterType : unsigned char {NonspacingCombiningMark, SpacingCombiningMark, EnclosingMark, DecimalDigit, LetterNumber, OtherNumber, SpaceBreak, LineBreak, ParagraphBreak, ControlCharacter, FormatCharacter, SurrogateCharacter, PrivateUseCharacter, UnassignedCharacter, UppercaseLetter, LowercaseLetter, TitlecaseLetter, ModifierLetter, OtherLetter, ConnectorPunctuation, DashPunctuation, OpeningPunctuation, ClosingPunctuation, OpeningQuote, ClosingQuote, OtherPunctuation, MathSymbol, CurrencySymbol, ModifierSymbol, OtherSymbol};
 
-enum class BUILDLAH_DLL_SGEXTN_CoreText GraphemeSegmentationType : unsigned char {Return, NewLine, ControlCharacter, Extend, ZeroWidthJoiner, RegionalIndicator, Prepend, SpacingCombiningMark, HangulLeading, HangulVowel, HangulTrailing, HangulLeadingAndVowel, HangulLeadingAndVowelAndTrailing, Other};
+enum class BuildLah_SGEXTN_CoreText GraphemeSegmentationType : unsigned char {Return, NewLine, ControlCharacter, Extend, ZeroWidthJoiner, RegionalIndicator, Prepend, SpacingCombiningMark, HangulLeading, HangulVowel, HangulTrailing, HangulLeadingAndVowel, HangulLeadingAndVowelAndTrailing, Other};
 
-enum class BUILDLAH_DLL_SGEXTN_CoreText GraphemeRuleRelatedType : unsigned char {None, Rule11Emoji, Rule9cConsonant, Rule9cExtend, Rule9cLinker};
+enum class BuildLah_SGEXTN_CoreText GraphemeRuleRelatedType : unsigned char {None, Rule11Emoji, Rule9cConsonant, Rule9cExtend, Rule9cLinker};
 
-class BUILDLAH_DLL_SGEXTN_CoreText UnicodeQuery {
+class BuildLah_SGEXTN_CoreText UnicodeQuery {
 public:
     [[nodiscard]] static int getUppercase(int c);
     [[nodiscard]] static int getLowercase(int c);

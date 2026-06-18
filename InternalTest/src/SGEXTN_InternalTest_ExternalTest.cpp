@@ -54,7 +54,7 @@ float parseCStringToFloat(const char* s, bool* isValid){
 }
 
 SGEXTN::CoreText::String readFile(const SGEXTN::CoreText::String& filePath){
-    SGEXTN::CoreText::String pathToFile = "../../InternalTest/assets/";
+    SGEXTN::CoreText::String pathToFile = "InternalTest/assets/";
     pathToFile += filePath;
     pathToFile += '\0';
     const char* rawPath = reinterpret_cast<const char*>(&pathToFile.private_data.byteAt(0));

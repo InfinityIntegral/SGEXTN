@@ -8,7 +8,7 @@ class String;
 namespace Utilities {
 class RgbaColour;
 
-class BUILDLAH_DLL_SGEXTN_Utilities HslaColour {
+class BuildLah_SGEXTN_Utilities HslaColour {
 public:
     float private_hue;
     float private_saturation;
@@ -24,10 +24,10 @@ public:
     [[nodiscard]] bool operator>(HslaColour x) const;
     [[nodiscard]] int hash() const;
     [[nodiscard]] SGEXTN::CoreText::String debugPrint() const;
-    float getHue() const;
-    float getSaturation() const;
-    float getLightness() const;
-    float getTransparency() const;
+    [[nodiscard]] float getHue() const;
+    [[nodiscard]] float getSaturation() const;
+    [[nodiscard]] float getLightness() const;
+    [[nodiscard]] float getTransparency() const;
     void setHue(float h);
     void setSaturation(float s);
     void setLightness(float l);

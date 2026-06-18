@@ -13,6 +13,7 @@ template <typename Key, typename Value, typename Comparator> SGEXTN::Containers:
     if(x.root != nullptr){root = new AVLTreeNode<Key, Value, Comparator>(x.root, nullptr);}
 }
 
+// NOLINTNEXTLINE(misc-no-recursion)
 template <typename Key, typename Value, typename Comparator> void SGEXTN::Containers::AVLTreeNode<Key, Value, Comparator>::recursiveDelete(){
     if(leftChild != nullptr){(*leftChild).recursiveDelete();}
     if(rightChild != nullptr){(*rightChild).recursiveDelete();}
@@ -199,7 +200,7 @@ template <typename Key, typename Value, typename Comparator> bool SGEXTN::Contai
 }
 
 template <typename Key, typename Value, typename Comparator> int SGEXTN::Containers::AVLTree<Key, Value, Comparator>::count(const Key& x) const {
-    AVLTreeConstIterator i = constFind(x);
+    const AVLTreeConstIterator i = constFind(x);
     if(i == constEnd()){return 0;}
     int count = 1;
     AVLTreeConstIterator currentNode = i;
@@ -521,7 +522,7 @@ template <typename Key, typename Value, typename Comparator> SGEXTN::Containers:
     if(root == nullptr || x < 0 || x >= length()){return nullptr;}
     AVLTreeNode<Key, Value, Comparator>* currentNode = root;
     while(true){
-        int leftSize = getEffectiveSubtreeSize((*currentNode).leftChild);
+        const int leftSize = getEffectiveSubtreeSize((*currentNode).leftChild);
         if(x == leftSize){return currentNode;}
         if(x < leftSize){currentNode = (*currentNode).leftChild;}
         else{

@@ -9,6 +9,10 @@ public:
         T object;
     };
     RingBufferSlot();
+    RingBufferSlot(const RingBufferSlot&) = delete;
+    RingBufferSlot& operator=(const RingBufferSlot&) = delete;
+    RingBufferSlot(RingBufferSlot&&) = delete;
+    RingBufferSlot& operator=(RingBufferSlot&&) = delete;
     ~RingBufferSlot();
 };
 

@@ -2,7 +2,7 @@
 
 namespace SGEXTN {
 namespace InternalTest {
-class BUILDLAH_DLL_SGEXTN_InternalTest ExternalTest {
+class BuildLah_SGEXTN_InternalTest ExternalTest {
 public:
     static void testAll();
     static bool ifTestAll;

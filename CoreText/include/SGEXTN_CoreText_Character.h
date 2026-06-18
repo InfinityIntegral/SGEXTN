@@ -9,7 +9,7 @@ template <typename T> class Array;
 namespace CoreText {
 class String;
 
-class BUILDLAH_DLL_SGEXTN_CoreText Character {
+class BuildLah_SGEXTN_CoreText Character {
 public:
     SGEXTN::CoreText::TextBuffer private_data;
     Character();

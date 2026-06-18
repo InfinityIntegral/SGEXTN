@@ -2,7 +2,7 @@
 
 namespace SGEXTN {
 namespace InternalTest {
-class BUILDLAH_DLL_SGEXTN_InternalTest CoreTextTest {
+class BuildLah_SGEXTN_InternalTest CoreTextTest {
 public:
     static void testAll();
     static void testCharacter();

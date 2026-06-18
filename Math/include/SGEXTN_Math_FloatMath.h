@@ -2,7 +2,7 @@
 
 namespace SGEXTN {
 namespace Math {
-template <typename T> class BUILDLAH_DLL_SGEXTN_Math FloatMath {
+template <typename T> class BuildLah_SGEXTN_Math FloatMath {
 public:
     [[nodiscard]] static T absoluteValue(T x);
     [[nodiscard]] static T modulo(T a, T b);

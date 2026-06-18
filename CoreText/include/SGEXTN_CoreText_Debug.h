@@ -9,24 +9,24 @@ template <typename T> class Vector;
 namespace CoreText {
 class Character;
 
-enum class BUILDLAH_DLL_SGEXTN_CoreText DebugPrintMetadataMode : unsigned char {None, Line, All};
-class BUILDLAH_DLL_SGEXTN_CoreText DebugPrintIntegerMode {
+enum class BuildLah_SGEXTN_CoreText DebugPrintMetadataMode : unsigned char {None, Line, All};
+class BuildLah_SGEXTN_CoreText DebugPrintIntegerMode {
 public:
     DebugPrintIntegerMode(int base);
     int base;
 };
-class BUILDLAH_DLL_SGEXTN_CoreText DebugPrintFloatingPointMode {
+class BuildLah_SGEXTN_CoreText DebugPrintFloatingPointMode {
 public:
     DebugPrintFloatingPointMode(int base, SGEXTN::CoreText::FloatPrecisionFormat format, int precision);
     int base;
     SGEXTN::CoreText::FloatPrecisionFormat format;
     int precision;
 };
-enum class BUILDLAH_DLL_SGEXTN_CoreText DebugPrintCCharMode : unsigned char {Byte, Character};
-enum class BUILDLAH_DLL_SGEXTN_CoreText DebugPrintStringMode : unsigned char {Byte, CodePoint, String};
-enum class BUILDLAH_DLL_SGEXTN_CoreText DebugPrintPointerMode : unsigned char {NullCheck, TryDeref};
+enum class BuildLah_SGEXTN_CoreText DebugPrintCCharMode : unsigned char {Byte, Character};
+enum class BuildLah_SGEXTN_CoreText DebugPrintStringMode : unsigned char {Byte, CodePoint, String};
+enum class BuildLah_SGEXTN_CoreText DebugPrintPointerMode : unsigned char {NullCheck, TryDeref};
 
-class BUILDLAH_DLL_SGEXTN_CoreText Debug {
+class BuildLah_SGEXTN_CoreText Debug {
 public:
     Debug(const SGEXTN::CoreText::String& fileName, int lineNumber);
     Debug(const Debug&) = delete;
@@ -63,7 +63,7 @@ public:
     SGEXTN::CoreText::String debugPrint(double x) const;
     SGEXTN::CoreText::String debugPrint(const SGEXTN::CoreText::Character& x) const;
     SGEXTN::CoreText::String debugPrint(const SGEXTN::CoreText::String& x) const;
-    SGEXTN::CoreText::String debugPrint(const char x) const;
+    SGEXTN::CoreText::String debugPrint(char x) const;
     SGEXTN::CoreText::String debugPrint(const char* x) const;
     template <typename T> Debug& operator()(const T& x);
     Debug& operator()(SGEXTN::CoreText::DebugPrintMetadataMode mode);
@@ -74,7 +74,7 @@ public:
     Debug& operator()(SGEXTN::CoreText::DebugPrintPointerMode mode);
 };
 
-class BUILDLAH_DLL_SGEXTN_CoreText DebugLogFunctionRegistrarInstance {
+class BuildLah_SGEXTN_CoreText DebugLogFunctionRegistrarInstance {
 public:
     DebugLogFunctionRegistrarInstance(void (*func)(const char*));
 };

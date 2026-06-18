@@ -6,7 +6,7 @@ class String;
 }
 
 namespace Utilities {
-class BUILDLAH_DLL_SGEXTN_Utilities RgbaColour {
+class BuildLah_SGEXTN_Utilities RgbaColour {
 public:
     unsigned int private_data;
     RgbaColour();

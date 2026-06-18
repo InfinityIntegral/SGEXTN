@@ -7,7 +7,7 @@ namespace SGEXTN {
 namespace Utilities {
 class Identifier;
 
-class BUILDLAH_DLL_SGEXTN_Utilities IdentifierRegistry{
+class BuildLah_SGEXTN_Utilities IdentifierRegistry{
 public:
     IdentifierRegistry() = default;
     SGEXTN::Containers::UnorderedSet<unsigned int, SGEXTN::Containers::EqualTo<unsigned int>, SGEXTN::Containers::Hash<unsigned int>> private_contents;

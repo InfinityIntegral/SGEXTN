@@ -1,0 +1,4 @@
+@PACKAGE_INIT@
+set(BuildLah_internal_v_installFolder "\${CMAKE_CURRENT_LIST_DIR}")
+include("\${BuildLah_internal_v_installFolder}/BuildLah.cmake")
+include("\${BuildLah_internal_v_installFolder}/SGEXTNTargets.cmake")

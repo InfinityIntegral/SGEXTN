@@ -2,7 +2,7 @@
 
 namespace SGEXTN {
 namespace CoreText {
-class BUILDLAH_DLL_SGEXTN_CoreText ByteVector {
+class BuildLah_SGEXTN_CoreText ByteVector {
 public:
     unsigned char* private_data;
     int private_length;

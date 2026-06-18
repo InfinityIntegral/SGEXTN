@@ -14,7 +14,7 @@ int acceptableCapacity(int i){
 }
 }
 
-template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> SGEXTN::Containers::HashMapSlot<Key, Value, EqualityCheck, HashFunction>::HashMapSlot() : status(HashMapSlotStatus::Unused) {}
+template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> SGEXTN::Containers::HashMapSlot<Key, Value, EqualityCheck, HashFunction>::HashMapSlot() : status(HashMapSlotStatus::Unused), keyConstructorRemover('\0'), valueConstructorRemover('\0') {}
 
 template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> SGEXTN::Containers::HashMapSlot<Key, Value, EqualityCheck, HashFunction>::~HashMapSlot(){}
 
@@ -100,8 +100,7 @@ template <typename Key, typename Value, typename EqualityCheck, typename HashFun
 }
 
 template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> int SGEXTN::Containers::HashMap<Key, Value, EqualityCheck, HashFunction>::getHashIndex(const Key& x) const {
-    int hash = hashFunctionInstance(x) & (memoryTotalLength - 1);
-    return hash;
+    return (hashFunctionInstance(x) & (memoryTotalLength - 1));
 }
 
 template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> bool SGEXTN::Containers::HashMap<Key, Value, EqualityCheck, HashFunction>::hashInto(const Key& key, const Value& value){
@@ -124,7 +123,7 @@ template <typename Key, typename Value, typename EqualityCheck, typename HashFun
 template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> void SGEXTN::Containers::HashMap<Key, Value, EqualityCheck, HashFunction>::rehashAll(int newMemoryLength){
     newMemoryLength = acceptableCapacity(newMemoryLength);
     SGEXTN::Containers::HashMapSlot<Key, Value, EqualityCheck, HashFunction>* oldPointer = data;
-    int oldMemoryLength = memoryTotalLength;
+    const int oldMemoryLength = memoryTotalLength;
     memoryTotalLength = newMemoryLength;
     data = new SGEXTN::Containers::HashMapSlot<Key, Value, EqualityCheck, HashFunction>[newMemoryLength];
     memoryUsedLength = 0;
@@ -150,7 +149,7 @@ template <typename Key, typename Value, typename EqualityCheck, typename HashFun
 template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> bool SGEXTN::Containers::HashMap<Key, Value, EqualityCheck, HashFunction>::insert(const Key& key, const Value& value){
     if(memoryTotalLength == 0 || static_cast<float>(memoryUsedLength) / static_cast<float>(memoryTotalLength) >= loadFactor){rehashAll(3 * memoryTotalLength + 3);}
     if(memoryUsedLength > 0 && static_cast<float>(memoryUsedLength - activeLength) / static_cast<float>(memoryUsedLength) >= efficiencyFactor){rehashAll(memoryTotalLength);}
-    bool result = hashInto(key, value);
+    const bool result = hashInto(key, value);
     if(result == true){activeLength++;}
     return result;
 }

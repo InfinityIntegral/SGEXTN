@@ -6,13 +6,13 @@ class String;
 }
 
 namespace Utilities {
-enum class BUILDLAH_DLL_SGEXTN_Utilities TimeUnit : unsigned char {Year, Month, Day, Hour, Minute, Second};
+enum class BuildLah_SGEXTN_Utilities TimeUnit : unsigned char {Year, Month, Day, Hour, Minute, Second};
 
-enum class BUILDLAH_DLL_SGEXTN_Utilities TimeFormat : unsigned char {Display, FileName, ShortestReadable};
+enum class BuildLah_SGEXTN_Utilities TimeFormat : unsigned char {Display, FileName, ShortestReadable};
 
-enum class BUILDLAH_DLL_SGEXTN_Utilities SignificantDates : unsigned char {NationalDay, DayBeforeNationalDay, DayAfterNationalDay, TotalDefenceDay, RacialHarmonyDay};
+enum class BuildLah_SGEXTN_Utilities SignificantDates : unsigned char {NationalDay, DayBeforeNationalDay, DayAfterNationalDay, TotalDefenceDay, RacialHarmonyDay};
 
-class BUILDLAH_DLL_SGEXTN_Utilities DateTime {
+class BuildLah_SGEXTN_Utilities DateTime {
 public:
     long long private_data;
     DateTime();

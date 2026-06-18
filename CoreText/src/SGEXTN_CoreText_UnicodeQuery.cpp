@@ -4,7 +4,7 @@
 #include <SGEXTN_CoreText_Character.h>
 
 namespace {
-// NOLINTBEGIN(modernize-avoid-c-arrays, cppcoreguidelines-avoid-c-arrays, cppcoreguidelines-pro-bounds-constant-array-index)
+// NOLINTBEGIN(cppcoreguidelines-pro-bounds-constant-array-index)
 int getLowercaseOffset(int i){
     if(i >= 0x41 && i < 0x5b){return 32;}
     if(i < 0x80){return 0;}
@@ -7884,7 +7884,7 @@ int getUnicodeRecompositionMapping(int first, int second){
     }
     return -1;
 }
-// NOLINTEND(modernize-avoid-c-arrays, cppcoreguidelines-avoid-c-arrays, cppcoreguidelines-pro-bounds-constant-array-index)
+// NOLINTEND(cppcoreguidelines-pro-bounds-constant-array-index)
 }
 
 int SGEXTN::CoreText::UnicodeQuery::getUppercase(int c){

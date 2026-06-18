@@ -2,7 +2,7 @@
 
 namespace SGEXTN {
 namespace Containers {
-class BUILDLAH_DLL_SGEXTN_Containers ForceCrash {
+class BuildLah_SGEXTN_Containers ForceCrash {
 public:
     [[noreturn]] static void immediateCrash(const char* msg);
     static void basicWarn(const char* msg);

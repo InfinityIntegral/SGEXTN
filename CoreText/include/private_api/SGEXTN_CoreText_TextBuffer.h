@@ -3,7 +3,7 @@
 
 namespace SGEXTN {
 namespace CoreText {
-class BUILDLAH_DLL_SGEXTN_CoreText TextBuffer {
+class BuildLah_SGEXTN_CoreText TextBuffer {
 public:
     TextBuffer();
     TextBuffer(const TextBuffer& x);

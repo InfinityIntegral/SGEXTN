@@ -1,2 +1,36 @@
 CompileFlags:
+  Add:
+    - "-nostdinc"
+    - "-nostdinc++"
+    - "-nobuiltininc"
+    - "-ffreestanding"
+    - "-fno-builtin"
+    - "-ferror-limit=0"
+    - "-include"
+    - ".autocomplete.h"
+  Remove:
+    - "-isystem*"
+    - "-I/usr/include*"
+    - "-I/Applications/Xcode.app/*"
+    - "--driver-mode=*"
   CompilationDatabase: "build/"
+Index:
+  Background: Skip
+  StandardLibrary: false
+Style:
+  FullyQualifiedNamespaces:
+    - std
+    - SGEXTN
+  AngledHeaders: "*"
+Diagnostics:
+  ClangTidy:
+    Remove: "*"
+  UnusedIncludes: None
+  MissingIncludes: None
+Completion:
+  AllScopes: No
+  ArgumentLists: Delimiters
+  HeaderInsertion: Never
+  MacroFilter: ExactPrefix
+InlayHints:
+  Enabled: false

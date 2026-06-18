@@ -2,7 +2,7 @@
 
 namespace SGEXTN {
 namespace Math {
-template <typename T> class BUILDLAH_DLL_SGEXTN_Math FloatLimits {
+template <typename T> class BuildLah_SGEXTN_Math FloatLimits {
 public:
     [[nodiscard]] static T minimumPositive();
     [[nodiscard]] static T maximumNegative();
