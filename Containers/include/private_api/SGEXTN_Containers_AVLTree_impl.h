@@ -13,16 +13,27 @@ template <typename Key, typename Value, typename Comparator> SGEXTN::Containers:
     if(x.root != nullptr){root = new AVLTreeNode<Key, Value, Comparator>(x.root, nullptr);}
 }
 
-// NOLINTNEXTLINE(misc-no-recursion)
-template <typename Key, typename Value, typename Comparator> void SGEXTN::Containers::AVLTreeNode<Key, Value, Comparator>::recursiveDelete(){
-    if(leftChild != nullptr){(*leftChild).recursiveDelete();}
-    if(rightChild != nullptr){(*rightChild).recursiveDelete();}
-    delete this;
+template <typename Key, typename Value, typename Comparator> void SGEXTN::Containers::AVLTree<Key, Value, Comparator>::recursiveDeleteAtRoot(){
+    AVLTreeNode<Key, Value, Comparator>* current = root;
+    root = nullptr;
+    while(current != nullptr){
+        if((*current).leftChild != nullptr){
+            AVLTreeNode<Key, Value, Comparator>* left = (*current).leftChild;
+            (*current).leftChild = (*left).rightChild;
+            (*left).rightChild = current;
+            current = left;
+        }
+        else{
+            AVLTreeNode<Key, Value, Comparator>* next = (*current).rightChild;
+            delete current;
+            current = next;
+        }
+    }
 }
 
 template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTree<Key, Value, Comparator>& SGEXTN::Containers::AVLTree<Key, Value, Comparator>::operator=(const AVLTree& x){
     if(this == &x){return (*this);}
-    if(root != nullptr){(*root).recursiveDelete();}
+    if(root != nullptr){recursiveDeleteAtRoot();}
     if(x.root != nullptr){root = new AVLTreeNode<Key, Value, Comparator>(x.root, nullptr);}
     else{root = nullptr;}
     comparatorInstance = x.comparatorInstance;
@@ -34,7 +45,7 @@ template <typename Key, typename Value, typename Comparator> SGEXTN::Containers:
 }
 
 template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTree<Key, Value, Comparator>& SGEXTN::Containers::AVLTree<Key, Value, Comparator>::operator=(AVLTree&& x) noexcept {
-    if(root != nullptr){(*root).recursiveDelete();}
+    if(root != nullptr){recursiveDeleteAtRoot();}
     root = x.root;
     x.root = nullptr;
     comparatorInstance = x.comparatorInstance;
@@ -42,7 +53,7 @@ template <typename Key, typename Value, typename Comparator> SGEXTN::Containers:
 }
 
 template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTree<Key, Value, Comparator>::~AVLTree(){
-    if(root != nullptr){(*root).recursiveDelete();}
+    if(root != nullptr){recursiveDeleteAtRoot();}
 }
 
 template <typename Key, typename Value, typename Comparator> int SGEXTN::Containers::AVLTree<Key, Value, Comparator>::length() const {
@@ -191,7 +202,7 @@ template <typename Key, typename Value, typename Comparator> bool SGEXTN::Contai
 }
 
 template <typename Key, typename Value, typename Comparator> void SGEXTN::Containers::AVLTree<Key, Value, Comparator>::clear(){
-    if(root != nullptr){(*root).recursiveDelete();}
+    if(root != nullptr){recursiveDeleteAtRoot();}
     root = nullptr;
 }
 

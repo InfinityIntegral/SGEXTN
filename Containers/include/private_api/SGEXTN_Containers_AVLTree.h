@@ -15,7 +15,6 @@ public:
     Value value;
     AVLTreeNode(const Key& k, const Value& v, AVLTreeNode* parentNode);
     AVLTreeNode(AVLTreeNode* oldNode, AVLTreeNode* newParent);
-    void recursiveDelete();
 };
 
 template <typename Key, typename Value, typename Comparator> class AVLTreeIterator;
@@ -28,6 +27,7 @@ public:
     [[nodiscard]] int getEffectiveHeight(AVLTreeNode<Key, Value, Comparator>* x) const;
     [[nodiscard]] int getEffectiveSubtreeSize(AVLTreeNode<Key, Value, Comparator>* x) const;
     void updateHeightRecurseToRoot(AVLTreeNode<Key, Value, Comparator>* x);
+    void recursiveDeleteAtRoot();
     AVLTreeNode<Key, Value, Comparator>* rebalanceAtNode(AVLTreeNode<Key, Value, Comparator>* x);
     AVLTreeNode<Key, Value, Comparator>* leftRotate(AVLTreeNode<Key, Value, Comparator>* x);
     AVLTreeNode<Key, Value, Comparator>* rightRotate(AVLTreeNode<Key, Value, Comparator>* x);

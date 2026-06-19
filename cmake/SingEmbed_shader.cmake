@@ -7,7 +7,7 @@ endif()
 
 file(WRITE "${output}" "")
 file(APPEND "${output}" "// command: ${command}\n")
-file(APPEND "${output}" "// embed: 💖${embed}\n")
+file(APPEND "${output}" "// embed: ${embed}\n")
 file(READ "${input}" tempVar1 LIMIT 100 HEX)
 file(APPEND "${output}" "\n/*\n")
 file(APPEND "${output}" "${tempVar1}")

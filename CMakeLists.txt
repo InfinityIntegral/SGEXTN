@@ -23,7 +23,7 @@ BuildLah_addComponent(
     NAME SingEmbed
     TYPE LIBRARY
     ROOT_FOLDER "SingEmbed"
-    DEPENDENCIES INTERNAL Containers CoreText
+    DEPENDENCIES INTERNAL Containers FORWARD CoreText
 )
 BuildLah_addComponent(
     NAME Utilities

@@ -28,8 +28,10 @@ long_line_behaviour=1
 long_line_column=72
 
 [files]
-current_page=0
-FILE_NAME_0=0;CMake;0;EUTF-8;0;1;1;%2Fhome%2Finfinityintegral%2FSGEXTN%2FCMakeLists.txt;0;4
+current_page=1
+FILE_NAME_0=672;CMake;0;EUTF-8;0;1;1;%2Fhome%2Finfinityintegral%2FSGEXTN%2FCMakeLists.txt;0;4
+FILE_NAME_1=2326;C++;0;EUTF-8;0;1;1;%2Fhome%2Finfinityintegral%2FSGEXTN%2FInternalTest%2Fsrc%2FSGEXTN_InternalTest_ExternalTest.cpp;0;4
+FILE_NAME_2=1043;CMake;0;EUTF-8;0;1;1;%2Fhome%2Finfinityintegral%2FSGEXTN%2Fcmake%2FSingEmbed_asset.cmake;0;4
 
 [VTE]
 last_dir=/home/infinityintegral/SGEXTN
@@ -68,11 +70,14 @@ NF_02_LB=build + install
 NF_02_CM=cmake --build build && cmake --install build --prefix build/BuildLah_install
 NF_02_WD=%p
 NF_03_LB=analysis
-NF_03_CM=run-clang-tidy -p build/
+NF_03_CM=patch_clangtidy.sh
 NF_03_WD=%p
 NF_04_LB=clean + configure release
 NF_04_CM=rm -rf build && cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
 NF_04_WD=%p
+NF_05_LB=analysis verbose
+NF_05_CM=patch_clangtidy.sh -verbose
+NF_05_WD=%p
 EX_00_LB=run app
 EX_00_CM=./build/BuildLah_install/bin/InternalTest
 EX_00_WD=%p

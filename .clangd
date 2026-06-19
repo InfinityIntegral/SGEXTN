@@ -6,8 +6,6 @@ CompileFlags:
     - "-ffreestanding"
     - "-fno-builtin"
     - "-ferror-limit=0"
-    - "-include"
-    - ".autocomplete.h"
   Remove:
     - "-isystem*"
     - "-I/usr/include*"

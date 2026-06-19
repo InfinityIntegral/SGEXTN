@@ -11,11 +11,11 @@
 #include <SGEXTN_Math_FloatMath.h>
 #include <SGEXTN_Containers_Vector.h>
 #include <SGEXTN_Containers_ForceCrash.h>
+#include <private_api/SGEXTN_SingEmbed_SingEmbedFileRegistrarInstance.h>
+#include <SGEXTN_Containers_UnorderedMap.h>
 #include <chrono>
 #include <format>
 #include <cstdlib>
-#include <fstream>
-#include <ios>
 #include <charconv>
 #include <cstring>
 #include <system_error>
@@ -54,21 +54,13 @@ float parseCStringToFloat(const char* s, bool* isValid){
 }
 
 SGEXTN::CoreText::String readFile(const SGEXTN::CoreText::String& filePath){
-    SGEXTN::CoreText::String pathToFile = "InternalTest/assets/";
-    pathToFile += filePath;
-    pathToFile += '\0';
-    const char* rawPath = reinterpret_cast<const char*>(&pathToFile.private_data.byteAt(0));
-    std::ifstream file(rawPath, std::ios::binary | std::ios::ate);
-    if(file.is_open() == false){return "";}
-    const std::streamsize streamSize = file.tellg();
-    file.seekg(0, std::ios::beg);
-    char* cString = new char[streamSize + 1];
-    SGEXTN::CoreText::String outputString;
-    if(file.read(cString, streamSize)){
-        cString[streamSize] = '\0';
-        outputString = cString;
+    const SGEXTN::CoreText::String pathToFile = SGEXTN::CoreText::String(SGEXTN::CoreText::Character()) + "/SGEXTN/InternalTest/" + filePath;
+    const int fileLength = (*SGEXTN::SingEmbed::SingEmbedFileRegistrarInstance::registry).at(pathToFile).length;
+    const unsigned char* fileData = reinterpret_cast<const unsigned char*>((*SGEXTN::SingEmbed::SingEmbedFileRegistrarInstance::registry).at(pathToFile).data);
+    SGEXTN::CoreText::String outputString = SGEXTN::CoreText::String::repeat(" ", fileLength);
+    for(int i=0; i<fileLength; i++){
+        outputString.byteAt(i) = (*(fileData + i));
     }
-    delete[] cString;
     return outputString;
 }
 

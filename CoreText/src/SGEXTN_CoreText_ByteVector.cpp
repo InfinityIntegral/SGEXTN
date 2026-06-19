@@ -50,8 +50,9 @@ SGEXTN::CoreText::ByteVector::~ByteVector(){
     delete[] private_data;
 }
 
-// NOLINTNEXTLINE(readability-make-member-function-const)
 unsigned char& SGEXTN::CoreText::ByteVector::at(int i){
+    unsigned char* data0 = private_data;
+    private_data = data0;
     return (*(private_data + i));
 }
 
