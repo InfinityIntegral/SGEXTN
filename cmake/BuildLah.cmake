@@ -694,10 +694,11 @@ function(BuildLah_addComponent)
             string(REPLACE "${componentRoot}/" "" tempVar5 "${tempVar4}")
             string(REPLACE "${componentRoot}/${tempVar2}/" "" tempVar6 "${tempVar4}")
             set(tempVar7 "${CMAKE_BINARY_DIR}/SingEmbed/${ARG_NAME}/${tempVar6}.sgs.SingEmbed.cpp")
+            set(tempVarA "${CMAKE_BINARY_DIR}/shader_bytecode/${ARG_NAME}/${tempVar6}")
             set(tempVar6 "/${CMAKE_PROJECT_NAME}/${ARG_NAME}/${tempVar6}.sgs")
             add_custom_command(
                 OUTPUT "${tempVar7}"
-                COMMAND "${CMAKE_COMMAND}" "-Dcommand=${BuildLah_ucv_shadercrossLocation}" "-Dinput=${tempVar4}" "-Doutput=${tempVar7}" "-Dembed=${tempVar6}" "-P" "${BuildLah_internal_v_installFolder}/SingEmbed_shader.cmake"
+                COMMAND "${CMAKE_COMMAND}" "-Dcommand=${BuildLah_ucv_shadercrossLocation}" "-Dinput=${tempVar4}" "-Doutput=${tempVar7}" "-Dembed=${tempVar6}" "-DshaderIm=${tempVarA}" "-P" "${BuildLah_internal_v_installFolder}/SingEmbed_shader.cmake"
                 DEPENDS "${tempVar4}"
                 COMMENT "SingEmbed processing shader ${tempVar5} for ${ARG_NAME}"
                 VERBATIM
@@ -714,6 +715,7 @@ function(BuildLah_addComponent)
     unset(tempVar5)
     unset(tempVar6)
     unset(tempVar7)
+    unset(tempVarA)
     BuildLah_internal_nf_printToGenericLog("")
 
     if(tempVar8)
