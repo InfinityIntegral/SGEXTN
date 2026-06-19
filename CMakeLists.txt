@@ -20,6 +20,12 @@ BuildLah_addComponent(
     DEPENDENCIES INTERNAL Math FORWARD Containers
 )
 BuildLah_addComponent(
+    NAME SingEmbed
+    TYPE LIBRARY
+    ROOT_FOLDER "SingEmbed"
+    DEPENDENCIES INTERNAL Containers CoreText
+)
+BuildLah_addComponent(
     NAME Utilities
     TYPE LIBRARY
     ROOT_FOLDER "Utilities"
@@ -29,6 +35,6 @@ BuildLah_addComponent(
     NAME InternalTest
     TYPE GUI_APP
     ROOT_FOLDER "InternalTest"
-    DEPENDENCIES INTERNAL Containers Math CoreText Utilities
+    DEPENDENCIES INTERNAL Containers Math CoreText SingEmbed Utilities
 )
 BuildLah_finaliseProject()
