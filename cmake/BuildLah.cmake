@@ -855,6 +855,11 @@ function(BuildLah_finaliseProject)
         DESTINATION "lib/cmake/${CMAKE_PROJECT_NAME}"
         NAMESPACE "${CMAKE_PROJECT_NAME}::"
     )
+    if(IS_DIRECTORY "${CMAKE_SOURCE_DIR}/LICENSES")
+        install(DIRECTORY "${CMAKE_SOURCE_DIR}/LICENSES/" DESTINATION "share/licenses")
+    else()
+        BuildLah_internal_nf_printWarning("your project is missing a LICENSES folder, you should put your software LICENSE, NOTICE (if applicable), and that of dependencies in here")
+    endif()
     include(CMakePackageConfigHelpers)
     configure_package_config_file("cmake/template.cmake.in" "${CMAKE_BINARY_DIR}/${CMAKE_PROJECT_NAME}Config.cmake" INSTALL_DESTINATION "lib/cmake/${CMAKE_PROJECT_NAME}")
     install(FILES "${CMAKE_BINARY_DIR}/${CMAKE_PROJECT_NAME}Config.cmake" DESTINATION "lib/cmake/${CMAKE_PROJECT_NAME}")
