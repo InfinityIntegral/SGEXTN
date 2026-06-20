@@ -1,3 +1,20 @@
+/*
+   Copyright 2026 05524F.sg
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+*/
+// BuildLah license check: SGEXTN 7.0.0
+
 #include <private_api/SGEXTN_InternalTest_DebugTest.h>
 #include <SGEXTN_CoreText_String.h>
 #include <SGEXTN_Utilities_RgbaColour.h>
@@ -20,7 +37,7 @@ void SGEXTN::InternalTest::DebugTest::runTest(){
         (*SGEXTN::CoreText::Debug::logFunctionList).at(0) = &logIntoString;
     }
     SG;
-    if(lastSentString != "SG in SGEXTN_InternalTest_DebugTest.cpp at line 22"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreTest::Debug log file and line fail");}
+    if(lastSentString != "SG in SGEXTN_InternalTest_DebugTest.cpp at line 39"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreTest::Debug log file and line fail");}
     SG(true);
     if(lastSentString != "SG: true"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreTest::Debug log bool true fail");}
     SG(false);
@@ -46,9 +63,9 @@ void SGEXTN::InternalTest::DebugTest::runTest(){
     SG(0.25);
     if(lastSentString != "SG: 0.25000"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreTest::Debug log double fail");}
     SG(SGEXTN::CoreText::DebugPrintMetadataMode::Line)(26);
-    if(lastSentString != "SG at line 48: 26"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreTest::Debug log int with line metadata fail");}
+    if(lastSentString != "SG at line 65: 26"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreTest::Debug log int with line metadata fail");}
     SG(SGEXTN::CoreText::DebugPrintMetadataMode::All)(26);
-    if(lastSentString != "SG in SGEXTN_InternalTest_DebugTest.cpp at line 50: 26"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreTest::Debug log int with line and file metadata fail");}
+    if(lastSentString != "SG in SGEXTN_InternalTest_DebugTest.cpp at line 67: 26"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreTest::Debug log int with line and file metadata fail");}
     SG(SGEXTN::CoreText::DebugPrintIntegerMode(16))(26);
     if(lastSentString != "SG: 1a"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreTest::Debug log int custom formatting fail");}
     SG(SGEXTN::CoreText::DebugPrintFloatingPointMode(2, SGEXTN::CoreText::FloatPrecisionFormat::ScientificNotation, 5))(0.25f);
@@ -87,14 +104,14 @@ void SGEXTN::InternalTest::DebugTest::runTest(){
     if(lastSentString != "SG: &(26)"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreTest::Debug log pointer try deref fail");}
     delete intPointer;
     SG_L(26);
-    if(lastSentString != "SG at line 89: 26"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreTest::Debug log with line number fail");}
+    if(lastSentString != "SG at line 106: 26"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreTest::Debug log with line number fail");}
     SG_A(26);
-    if(lastSentString != "SG in SGEXTN_InternalTest_DebugTest.cpp at line 91: 26"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreTest::Debug log with file name and line number fail");}
+    if(lastSentString != "SG in SGEXTN_InternalTest_DebugTest.cpp at line 108: 26"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreTest::Debug log with file name and line number fail");}
     SGEXTN_DEBUG_PRINT(26);
     if(lastSentString != "SG: 26"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreTest::Debug long macro fail");}
     SGEXTN_DEBUG_PRINT_LINE_LOG(26);
-    if(lastSentString != "SG at line 95: 26"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreTest::Debug log with line number long macro fail");}
+    if(lastSentString != "SG at line 112: 26"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreTest::Debug log with line number long macro fail");}
     SGEXTN_DEBUG_PRINT_FULL_LOG(26);
-    if(lastSentString != "SG in SGEXTN_InternalTest_DebugTest.cpp at line 97: 26"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreTest::Debug log with file name and line number long macro fail");}
+    if(lastSentString != "SG in SGEXTN_InternalTest_DebugTest.cpp at line 114: 26"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreTest::Debug log with file name and line number long macro fail");}
     if((*SGEXTN::CoreText::Debug::logFunctionList).length() > 0){(*SGEXTN::CoreText::Debug::logFunctionList).at(0) = originalFunction;}
 }

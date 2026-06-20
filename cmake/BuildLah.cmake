@@ -637,7 +637,7 @@ function(BuildLah_addComponent)
             COMMENT "performing license check for ${ARG_NAME}"
             VERBATIM
         )
-        add_dependencies("${ARG_NAME}" "BuildLah_internal_t_${ARG_NAME}_licenseCheck")
+        add_dependencies("BuildLah_internal_t_${ARG_NAME}_licenseCheck" "${ARG_NAME}")
         unset(tempVar1)
         unset(tempVar2)
     endif()
