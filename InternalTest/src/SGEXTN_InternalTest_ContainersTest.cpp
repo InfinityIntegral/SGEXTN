@@ -119,6 +119,11 @@ void SGEXTN::InternalTest::ContainersTest::testEqualTo(){
     if(comparator(0, 0) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::EqualTo - 0 not equal to 0");}
     if(comparator(-1, 0) == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::EqualTo - -1 equal to 0");}
     if(comparator(1, 0) == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::EqualTo - 1 equal to 0");}
+    const int i = 0;
+    const int j = 0;
+    const SGEXTN::Containers::EqualTo<const int*> pointerComparator;
+    if(pointerComparator(&i, &j) == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::LessThan - different pointer point to same result");}
+    if(pointerComparator(&i, &i) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::LessThan - same pointer point to different result");}
 }
 
 void SGEXTN::InternalTest::ContainersTest::testArray(){
@@ -1103,6 +1108,26 @@ template class SGEXTN::Containers::Hash<void (FunctionOwner::*)(int, int, int) c
 template class SGEXTN::Containers::Hash<int (FunctionOwner::*)() const>;
 template class SGEXTN::Containers::Hash<int (FunctionOwner::*)(int) const>;
 template class SGEXTN::Containers::Hash<int (FunctionOwner::*)(int, int, int) const>;
+template class SGEXTN::Containers::EqualTo<int>;
+template class SGEXTN::Containers::EqualTo<int*>;
+template class SGEXTN::Containers::EqualTo<void (*)()>;
+template class SGEXTN::Containers::EqualTo<void (*)(int)>;
+template class SGEXTN::Containers::EqualTo<void (*)(int, int, int)>;
+template class SGEXTN::Containers::EqualTo<int (*)()>;
+template class SGEXTN::Containers::EqualTo<int (*)(int)>;
+template class SGEXTN::Containers::EqualTo<int (*)(int, int, int)>;
+template class SGEXTN::Containers::EqualTo<void (FunctionOwner::*)()>;
+template class SGEXTN::Containers::EqualTo<void (FunctionOwner::*)(int)>;
+template class SGEXTN::Containers::EqualTo<void (FunctionOwner::*)(int, int, int)>;
+template class SGEXTN::Containers::EqualTo<int (FunctionOwner::*)()>;
+template class SGEXTN::Containers::EqualTo<int (FunctionOwner::*)(int)>;
+template class SGEXTN::Containers::EqualTo<int (FunctionOwner::*)(int, int, int)>;
+template class SGEXTN::Containers::EqualTo<void (FunctionOwner::*)() const>;
+template class SGEXTN::Containers::EqualTo<void (FunctionOwner::*)(int) const>;
+template class SGEXTN::Containers::EqualTo<void (FunctionOwner::*)(int, int, int) const>;
+template class SGEXTN::Containers::EqualTo<int (FunctionOwner::*)() const>;
+template class SGEXTN::Containers::EqualTo<int (FunctionOwner::*)(int) const>;
+template class SGEXTN::Containers::EqualTo<int (FunctionOwner::*)(int, int, int) const>;
 template class SGEXTN::Containers::LessThan<int>;
 template class SGEXTN::Containers::LessThan<int*>;
 template class SGEXTN::Containers::LessThan<void (*)()>;
