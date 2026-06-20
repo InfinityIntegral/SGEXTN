@@ -67,7 +67,7 @@ void SGEXTN::InternalTest::DebugTest::runTest(){
     SG(1)(2)(3)(SGEXTN::CoreText::DebugPrintIntegerMode(2))(4)(5);
     if(lastSentString != "SG: 1 - 2 - 3 - 100 - 101"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreTest::Debug log multiple objects fail");}
     SG(SGEXTN::Utilities::RgbaColour());
-    if(lastSentString != "SG: rgba(255, 0, 200, 255)"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreTest::Debug log custom struct fail");}
+    if(lastSentString != "SG: rgba(255, 0, 200, 255)"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreTest::Debug log custom class fail");}
     // NOLINTBEGIN(misc-const-correctness)
     int* (*testFunction1)(const int&) = nullptr;
     const void (SGEXTN::InternalTest::DebugTest::*testFunction2)(int, int, float) = nullptr;

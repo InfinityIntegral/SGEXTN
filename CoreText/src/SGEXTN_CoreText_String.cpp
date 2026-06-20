@@ -324,7 +324,7 @@ SGEXTN::CoreText::String recursiveDecomposeCompatibility(int i){
     return output;
 }
 
-struct SortByCombiningMarkOrder {
+class SortByCombiningMarkOrder {
 public:
     bool operator()(int a, int b);
 };
