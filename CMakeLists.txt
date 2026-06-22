@@ -32,9 +32,15 @@ BuildLah_addComponent(
     DEPENDENCIES INTERNAL Math FORWARD Containers CoreText
 )
 BuildLah_addComponent(
+    NAME SeerattraNum
+    TYPE LIBRARY
+    ROOT_FOLDER "SeerattraNum"
+    DEPENDENCIES FORWARD Containers
+)
+BuildLah_addComponent(
     NAME InternalTest
     TYPE GUI_APP
     ROOT_FOLDER "InternalTest"
-    DEPENDENCIES INTERNAL Containers Math CoreText SingEmbed Utilities
+    DEPENDENCIES INTERNAL Containers Math CoreText SingEmbed Utilities SeerattraNum
 )
 BuildLah_finaliseProject()

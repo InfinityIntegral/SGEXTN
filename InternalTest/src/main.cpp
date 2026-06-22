@@ -21,6 +21,7 @@
 #include <private_api/SGEXTN_InternalTest_CoreTextTest.h>
 #include <private_api/SGEXTN_InternalTest_ExternalTest.h>
 #include <private_api/SGEXTN_InternalTest_DebugTest.h>
+#include <private_api/SGEXTN_InternalTest_SeerattraNumTest.h>
 #include <SGEXTN_CoreText_Debug.h>
 
 int main(int /*argc*/, char** /*argv*/){
@@ -30,5 +31,6 @@ int main(int /*argc*/, char** /*argv*/){
     SGEXTN::InternalTest::CoreTextTest::testAll();
     SGEXTN::InternalTest::ExternalTest::testAll();
     SGEXTN::InternalTest::DebugTest::runTest();
+    SGEXTN::InternalTest::SeerattraNumTest::testAll();
     SG("all tests pass");
 }
