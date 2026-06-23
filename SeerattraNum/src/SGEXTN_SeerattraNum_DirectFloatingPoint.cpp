@@ -23,29 +23,29 @@
 #include <SGEXTN_SeerattraNum_SimpleRandom.h>
 #include <random>
 
-template <typename FloatingPoint> SGEXTN::SeerattraNum::DirectFloatingPoint<FloatingPoint>::DirectFloatingPoint(bool useGlobal) : stlRandomEngine(nullptr), stlDistribution(SGEXTN::SeerattraNum::UnsafeCasts<std::uniform_real_distribution<FloatingPoint>>::eraseType(new std::uniform_real_distribution<FloatingPoint>(0.0, 1.0))){
+template <typename FloatingPoint> SGEXTN::SeerattraNum::DirectFloatingPoint<FloatingPoint>::DirectFloatingPoint(bool useGlobal) : private_stlRandomEngine(nullptr), private_stlDistribution(SGEXTN::SeerattraNum::UnsafeCasts<std::uniform_real_distribution<FloatingPoint>>::eraseType(new std::uniform_real_distribution<FloatingPoint>(0.0, 1.0))){
     if(useGlobal == false){
         SGEXTN::Containers::Array<unsigned int> seedArray = SGEXTN::SeerattraNum::TrueRandom::randomUnsignedInt32Array(8);
         std::seed_seq seedSequence(&seedArray.at(0), &seedArray.at(0) + 8);
-        stlRandomEngine = SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::eraseType(new std::mt19937_64(seedSequence));
+        private_stlRandomEngine = SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::eraseType(new std::mt19937_64(seedSequence));
     }
 }
 
 template <typename FloatingPoint> SGEXTN::SeerattraNum::DirectFloatingPoint<FloatingPoint>::~DirectFloatingPoint(){
-    delete SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(stlRandomEngine);
-    delete SGEXTN::SeerattraNum::UnsafeCasts<std::uniform_real_distribution<FloatingPoint>>::uneraseType(stlDistribution);
+    delete SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(private_stlRandomEngine);
+    delete SGEXTN::SeerattraNum::UnsafeCasts<std::uniform_real_distribution<FloatingPoint>>::uneraseType(private_stlDistribution);
 }
 
 template <typename FloatingPoint> void SGEXTN::SeerattraNum::DirectFloatingPoint<FloatingPoint>::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
-    if(stlRandomEngine == nullptr){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::DirectFloatingPoint::seed crashed because cannot seed global rng");}
+    if(private_stlRandomEngine == nullptr){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::DirectFloatingPoint::seed crashed because cannot seed global rng");}
     std::seed_seq seedSequence(&seedArray.at(0), &seedArray.at(0) + seedArray.length());
-    (*SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(stlRandomEngine)).seed(seedSequence);
+    (*SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(private_stlRandomEngine)).seed(seedSequence);
 }
 
 template <typename FloatingPoint> FloatingPoint SGEXTN::SeerattraNum::DirectFloatingPoint<FloatingPoint>::randomFloatingPoint(){
-    void* randomEngine = stlRandomEngine;
+    void* randomEngine = private_stlRandomEngine;
     if(randomEngine == nullptr){randomEngine = SGEXTN::SeerattraNum::SimpleRandom::private_getRandomEngine();}
-    return ((*SGEXTN::SeerattraNum::UnsafeCasts<std::uniform_real_distribution<FloatingPoint>>::uneraseType(stlDistribution))(*SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(randomEngine)));
+    return ((*SGEXTN::SeerattraNum::UnsafeCasts<std::uniform_real_distribution<FloatingPoint>>::uneraseType(private_stlDistribution))(*SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(randomEngine)));
 }
 
 template <typename FloatingPoint> SGEXTN::Containers::Array<FloatingPoint> SGEXTN::SeerattraNum::DirectFloatingPoint<FloatingPoint>::randomFloatingPointArray(int count){
