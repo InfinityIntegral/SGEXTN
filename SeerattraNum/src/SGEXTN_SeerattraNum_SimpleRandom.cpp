@@ -118,3 +118,8 @@ SGEXTN::Containers::Array<double> SGEXTN::SeerattraNum::SimpleRandom::randomFloa
     }
     return output;
 }
+
+void* SGEXTN::SeerattraNum::SimpleRandom::private_getRandomEngine(){
+    if(SGEXTN::SeerattraNum::SimpleRandom::stlMersenneTwister19937 == nullptr){initialiseRng();}
+    return SGEXTN::SeerattraNum::SimpleRandom::stlMersenneTwister19937;
+}
