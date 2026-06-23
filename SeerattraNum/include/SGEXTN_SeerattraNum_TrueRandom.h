@@ -22,9 +22,9 @@ namespace SGEXTN {
 namespace SeerattraNum {
 class BuildLah_SGEXTN_SeerattraNum TrueRandom{
 public:
-    static void* stlRandomDevice;
-    static void* stlDistributionFloat;
-    static void* stlDistributionDouble;
+    static void* private_stlRandomDevice;
+    static void* private_stlDistributionFloat;
+    static void* private_stlDistributionDouble;
     [[nodiscard]] static int randomInt32();
     [[nodiscard]] static long long randomInt64();
     [[nodiscard]] static unsigned int randomUnsignedInt32();

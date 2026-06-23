@@ -22,7 +22,7 @@ namespace SGEXTN {
 namespace SeerattraNum {
 template <typename Integer> class BuildLah_SGEXTN_SeerattraNum DirectInteger {
 public:
-    void* stlRandomEngine;
+    void* private_stlRandomEngine;
     DirectInteger(bool useGlobal);
     DirectInteger(const DirectInteger&) = delete;
     DirectInteger& operator=(const DirectInteger&) = delete;
@@ -30,8 +30,8 @@ public:
     DirectInteger& operator=(DirectInteger&&) = delete;
     ~DirectInteger();
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
-    Integer randomInteger();
-    SGEXTN::Containers::Array<Integer> randomIntegerArray(int count);
+    [[nodiscard]] Integer randomInteger();
+    [[nodiscard]] SGEXTN::Containers::Array<Integer> randomIntegerArray(int count);
 };
 }
 }
