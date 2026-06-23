@@ -23,27 +23,27 @@
 #include <SGEXTN_SeerattraNum_SimpleRandom.h>
 #include <random>
 
-template <typename Integer> SGEXTN::SeerattraNum::DirectInteger<Integer>::DirectInteger(bool useGlobal) : stlRandomEngine(nullptr){
+template <typename Integer> SGEXTN::SeerattraNum::DirectInteger<Integer>::DirectInteger(bool useGlobal) : private_stlRandomEngine(nullptr){
     if(useGlobal == false){
         SGEXTN::Containers::Array<unsigned int> seedArray = SGEXTN::SeerattraNum::TrueRandom::randomUnsignedInt32Array(8);
         std::seed_seq seedSequence(&seedArray.at(0), &seedArray.at(0) + 8);
-        stlRandomEngine = SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::eraseType(new std::mt19937_64(seedSequence));
+        private_stlRandomEngine = SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::eraseType(new std::mt19937_64(seedSequence));
     }
 }
 
 template <typename Integer> SGEXTN::SeerattraNum::DirectInteger<Integer>::~DirectInteger(){
-    delete SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(stlRandomEngine);
+    delete SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(private_stlRandomEngine);
 }
 
 template <typename Integer> void SGEXTN::SeerattraNum::DirectInteger<Integer>::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
-    if(stlRandomEngine == nullptr){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::DirectInteger::seed crashed because cannot seed global rng");}
+    if(private_stlRandomEngine == nullptr){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::DirectInteger::seed crashed because cannot seed global rng");}
     std::seed_seq seedSequence(&seedArray.at(0), &seedArray.at(0) + seedArray.length());
-    (*SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(stlRandomEngine)).seed(seedSequence);
+    (*SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(private_stlRandomEngine)).seed(seedSequence);
 }
 
 template <typename Integer> Integer SGEXTN::SeerattraNum::DirectInteger<Integer>::randomInteger(){
-    if(stlRandomEngine == nullptr){return static_cast<Integer>(SGEXTN::SeerattraNum::SimpleRandom::randomUnsignedInt64());}
-    return static_cast<Integer>((*SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(stlRandomEngine))());
+    if(private_stlRandomEngine == nullptr){return static_cast<Integer>(SGEXTN::SeerattraNum::SimpleRandom::randomUnsignedInt64());}
+    return static_cast<Integer>((*SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(private_stlRandomEngine))());
 }
 
 template <typename Integer> SGEXTN::Containers::Array<Integer> SGEXTN::SeerattraNum::DirectInteger<Integer>::randomIntegerArray(int count){
