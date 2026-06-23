@@ -21,8 +21,8 @@ namespace SGEXTN {
 namespace SeerattraNum {
 template <typename T> class BuildLah_SGEXTN_SeerattraNum UnsafeCasts {
 public:
-    static void* eraseType(T* ptr);
-    static T* uneraseType(void* ptr);
+    [[nodiscard]] static void* eraseType(T* ptr);
+    [[nodiscard]] static T* uneraseType(void* ptr);
 };
 }
 }

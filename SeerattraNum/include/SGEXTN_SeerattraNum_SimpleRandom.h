@@ -22,7 +22,7 @@ namespace SGEXTN {
 namespace SeerattraNum {
 class BuildLah_SGEXTN_SeerattraNum SimpleRandom{
 public:
-    static void* stlMersenneTwister19937;
+    static void* private_stlMersenneTwister19937;
     [[nodiscard]] static int randomInt32();
     [[nodiscard]] static long long randomInt64();
     [[nodiscard]] static unsigned int randomUnsignedInt32();

@@ -22,8 +22,8 @@ namespace SGEXTN {
 namespace SeerattraNum {
 template <typename FloatingPoint> class BuildLah_SGEXTN_SeerattraNum DirectFloatingPoint {
 public:
-    void* stlRandomEngine;
-    void* stlDistribution;
+    void* private_stlRandomEngine;
+    void* private_stlDistribution;
     DirectFloatingPoint(bool useGlobal);
     DirectFloatingPoint(const DirectFloatingPoint&) = delete;
     DirectFloatingPoint& operator=(const DirectFloatingPoint&) = delete;
@@ -31,8 +31,8 @@ public:
     DirectFloatingPoint& operator=(DirectFloatingPoint&&) = delete;
     ~DirectFloatingPoint();
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
-    FloatingPoint randomFloatingPoint();
-    SGEXTN::Containers::Array<FloatingPoint> randomFloatingPointArray(int count);
+    [[nodiscard]] FloatingPoint randomFloatingPoint();
+    [[nodiscard]] SGEXTN::Containers::Array<FloatingPoint> randomFloatingPointArray(int count);
 };
 }
 }
