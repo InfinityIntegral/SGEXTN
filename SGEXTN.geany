@@ -28,11 +28,13 @@ long_line_behaviour=1
 long_line_column=72
 
 [files]
-current_page=3
-FILE_NAME_0=842;C++;0;EUTF-8;0;1;1;%2Fhome%2Finfinityintegral%2FSGEXTN%2FInternalTest%2Finclude%2Fprivate_api%2FSGEXTN_InternalTest_SeerattraNumTest.h;0;4
-FILE_NAME_1=0;C++;0;EUTF-8;0;1;1;%2Fhome%2Finfinityintegral%2FSGEXTN%2FInternalTest%2Fsrc%2FSGEXTN_InternalTest_SeerattraNum.cpp;0;4
-FILE_NAME_2=806;C++;0;EUTF-8;0;1;1;%2Fhome%2Finfinityintegral%2FSGEXTN%2FSeerattraNum%2Fsrc%2FSGEXTN_SeerattraNum_TrueRandom.cpp;0;4
-FILE_NAME_3=852;C++;0;EUTF-8;0;1;1;%2Fhome%2Finfinityintegral%2FSGEXTN%2FSeerattraNum%2Fsrc%2FSGEXTN_SeerattraNum_SimpleRandom.cpp;0;4
+current_page=4
+FILE_NAME_0=81;C++;0;EUTF-8;0;1;1;%2Fhome%2Finfinityintegral%2FSGEXTN%2FSeerattraNum%2Finclude%2FSGEXTN_SeerattraNum_DirectInteger.h;0;4
+FILE_NAME_1=1398;C++;0;EUTF-8;0;1;1;%2Fhome%2Finfinityintegral%2FSGEXTN%2FSeerattraNum%2Finclude%2FSGEXTN_SeerattraNum_DirectFloatingPoint.h;0;4
+FILE_NAME_2=2617;C++;0;EUTF-8;0;1;1;%2Fhome%2Finfinityintegral%2FSGEXTN%2FSeerattraNum%2Fsrc%2FSGEXTN_SeerattraNum_DirectInteger.cpp;0;4
+FILE_NAME_3=3604;C++;0;EUTF-8;0;1;1;%2Fhome%2Finfinityintegral%2FSGEXTN%2FSeerattraNum%2Fsrc%2FSGEXTN_SeerattraNum_DirectFloatingPoint.cpp;0;4
+FILE_NAME_4=8003;C++;0;EUTF-8;0;1;1;%2Fhome%2Finfinityintegral%2FSGEXTN%2FInternalTest%2Fsrc%2FSGEXTN_InternalTest_SeerattraNum.cpp;0;4
+FILE_NAME_5=921;C++;0;EUTF-8;0;1;1;%2Fhome%2Finfinityintegral%2FSGEXTN%2FInternalTest%2Finclude%2Fprivate_api%2FSGEXTN_InternalTest_SeerattraNumTest.h;0;4
 
 [VTE]
 last_dir=/home/infinityintegral/SGEXTN

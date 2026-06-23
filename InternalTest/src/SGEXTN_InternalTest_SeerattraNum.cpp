@@ -23,6 +23,15 @@
 #include <SGEXTN_Containers_Hash.h>
 #include <SGEXTN_Containers_ForceCrash.h>
 #include <SGEXTN_SeerattraNum_SimpleRandom.h>
+#include <SGEXTN_SeerattraNum_DirectInteger.h>
+#include <SGEXTN_SeerattraNum_DirectFloatingPoint.h>
+
+namespace {
+bool isCloseEnough(float a, float b){
+    if(a > b - 0.001f && a < b + 0.001f){return true;}
+    return false;
+}
+}
 
 void SGEXTN::InternalTest::SeerattraNumTest::testTrueRandom(){
     SGEXTN::Containers::UnorderedSet<int, SGEXTN::Containers::EqualTo<int>, SGEXTN::Containers::Hash<int>> randomInts32;
@@ -90,7 +99,33 @@ void SGEXTN::InternalTest::SeerattraNumTest::testSimpleRandom(){
     if(SGEXTN::SeerattraNum::SimpleRandom::randomFloat64Array(100).length() != 100){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Seerattra::SimpleRandom generate array of 64 bit floating point number fail");}
 }
 
+void SGEXTN::InternalTest::SeerattraNumTest::testDirectInteger(){
+    SGEXTN::SeerattraNum::DirectInteger<int> generator(false);
+    generator.seed(SGEXTN::Containers::Array<unsigned int>(1u, 2u, 3u, 4u, 5u));
+    if(generator.randomInteger() != 689864061){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::DirectInteger generate integer first seed fail");}
+    SGEXTN::Containers::Array<int> randomArray = generator.randomIntegerArray(2);
+    if(randomArray.at(0) != -2116458956 || randomArray.at(1) != -249517681){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::DirectInteger generate integer array first seed fail");}
+    generator.seed(SGEXTN::Containers::Array<unsigned int>(6u, 7u, 8u, 9u, 10u));
+    if(generator.randomInteger() != 986110788){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::DirectInteger generate integer second seed fail");}
+    randomArray = generator.randomIntegerArray(2);
+    if(randomArray.at(0) != 1930272640 || randomArray.at(1) != -10058938){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::DirectInteger generate integer array second seed fail");}
+}
+
+void SGEXTN::InternalTest::SeerattraNumTest::testDirectFloatingPoint(){
+    SGEXTN::SeerattraNum::DirectFloatingPoint<float> generator(false);
+    generator.seed(SGEXTN::Containers::Array<unsigned int>(1u, 2u, 3u, 4u, 5u));
+    if(isCloseEnough(generator.randomFloatingPoint(), 0.3335325718f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::DirectFloatingPoint generate floating point first seed fail");}
+    SGEXTN::Containers::Array<float> randomArray = generator.randomFloatingPointArray(2);
+    if(isCloseEnough(randomArray.at(0), 0.1071110144f) == false || isCloseEnough(randomArray.at(1), 0.5377733111f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::DirectFloatingPoint generate floating point array first seed fail");}
+    generator.seed(SGEXTN::Containers::Array<unsigned int>(6u, 7u, 8u, 9u, 10u));
+    if(isCloseEnough(generator.randomFloatingPoint(), 0.5235455632f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::DirectFloatingPoint generate floating point second seed fail");}
+    randomArray = generator.randomFloatingPointArray(2);
+    if(isCloseEnough(randomArray.at(0), 0.7091222405f) == false || isCloseEnough(randomArray.at(1), 0.9260670543f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::DirectFloatingPoint generate floating point array second seed fail");}
+}
+
 void SGEXTN::InternalTest::SeerattraNumTest::testAll(){
     SGEXTN::InternalTest::SeerattraNumTest::testTrueRandom();
     SGEXTN::InternalTest::SeerattraNumTest::testSimpleRandom();
+    SGEXTN::InternalTest::SeerattraNumTest::testDirectInteger();
+    SGEXTN::InternalTest::SeerattraNumTest::testDirectFloatingPoint();
 }

@@ -42,7 +42,7 @@ long long SGEXTN::SeerattraNum::TrueRandom::randomInt64(){
     if(SGEXTN::SeerattraNum::TrueRandom::stlRandomDevice == nullptr){SGEXTN::SeerattraNum::TrueRandom::stlRandomDevice = SGEXTN::SeerattraNum::UnsafeCasts<std::random_device>::eraseType(new std::random_device());}
     const unsigned int randomValue1 = (*SGEXTN::SeerattraNum::UnsafeCasts<std::random_device>::uneraseType(SGEXTN::SeerattraNum::TrueRandom::stlRandomDevice))();
     const unsigned int randomValue2 = (*SGEXTN::SeerattraNum::UnsafeCasts<std::random_device>::uneraseType(SGEXTN::SeerattraNum::TrueRandom::stlRandomDevice))();
-    const unsigned long long randomValue = (static_cast<unsigned long long>(randomValue1) << 32) & static_cast<unsigned long long>(randomValue2);
+    const unsigned long long randomValue = (static_cast<unsigned long long>(randomValue1) << 32) + static_cast<unsigned long long>(randomValue2);
     return (static_cast<long long>(randomValue) ^ getCurrentTime());
 }
 

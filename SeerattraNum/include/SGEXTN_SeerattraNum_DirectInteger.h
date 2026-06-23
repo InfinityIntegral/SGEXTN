@@ -16,16 +16,22 @@
 // BuildLah license check: SGEXTN 7.0.0
 
 #pragma once
+#include <SGEXTN_Containers_Array.h>
 
 namespace SGEXTN {
-namespace InternalTest {
-class BuildLah_SGEXTN_InternalTest SeerattraNumTest {
+namespace SeerattraNum {
+template <typename Integer> class BuildLah_SGEXTN_SeerattraNum DirectInteger {
 public:
-    static void testAll();
-    static void testTrueRandom();
-    static void testSimpleRandom();
-    static void testDirectInteger();
-    static void testDirectFloatingPoint();
+    void* stlRandomEngine;
+    DirectInteger(bool useGlobal);
+    DirectInteger(const DirectInteger&) = delete;
+    DirectInteger& operator=(const DirectInteger&) = delete;
+    DirectInteger(DirectInteger&&) = delete;
+    DirectInteger& operator=(DirectInteger&&) = delete;
+    ~DirectInteger();
+    void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
+    Integer randomInteger();
+    SGEXTN::Containers::Array<Integer> randomIntegerArray(int count);
 };
 }
 }
