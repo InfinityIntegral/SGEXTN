@@ -25,6 +25,8 @@
 #include <SGEXTN_SeerattraNum_SimpleRandom.h>
 #include <SGEXTN_SeerattraNum_DirectInteger.h>
 #include <SGEXTN_SeerattraNum_DirectFloatingPoint.h>
+#include <SGEXTN_SeerattraNum_UniformDistributionInteger.h>
+#include <SGEXTN_SeerattraNum_UniformDistributionFloatingPoint.h>
 
 namespace {
 bool isCloseEnough(float a, float b){
@@ -114,13 +116,45 @@ void SGEXTN::InternalTest::SeerattraNumTest::testDirectInteger(){
 void SGEXTN::InternalTest::SeerattraNumTest::testDirectFloatingPoint(){
     SGEXTN::SeerattraNum::DirectFloatingPoint<float> generator(false);
     generator.seed(SGEXTN::Containers::Array<unsigned int>(1u, 2u, 3u, 4u, 5u));
-    if(isCloseEnough(generator.randomFloatingPoint(), 0.3335325718f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::DirectFloatingPoint generate floating point first seed fail");}
+    if(isCloseEnough(generator.randomFloatingPoint(), 0.33353f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::DirectFloatingPoint generate floating point first seed fail");}
     SGEXTN::Containers::Array<float> randomArray = generator.randomFloatingPointArray(2);
-    if(isCloseEnough(randomArray.at(0), 0.1071110144f) == false || isCloseEnough(randomArray.at(1), 0.5377733111f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::DirectFloatingPoint generate floating point array first seed fail");}
+    if(isCloseEnough(randomArray.at(0), 0.10711f) == false || isCloseEnough(randomArray.at(1), 0.53777f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::DirectFloatingPoint generate floating point array first seed fail");}
     generator.seed(SGEXTN::Containers::Array<unsigned int>(6u, 7u, 8u, 9u, 10u));
-    if(isCloseEnough(generator.randomFloatingPoint(), 0.5235455632f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::DirectFloatingPoint generate floating point second seed fail");}
+    if(isCloseEnough(generator.randomFloatingPoint(), 0.52355f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::DirectFloatingPoint generate floating point second seed fail");}
     randomArray = generator.randomFloatingPointArray(2);
-    if(isCloseEnough(randomArray.at(0), 0.7091222405f) == false || isCloseEnough(randomArray.at(1), 0.9260670543f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::DirectFloatingPoint generate floating point array second seed fail");}
+    if(isCloseEnough(randomArray.at(0), 0.70912f) == false || isCloseEnough(randomArray.at(1), 0.92607f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::DirectFloatingPoint generate floating point array second seed fail");}
+}
+
+void SGEXTN::InternalTest::SeerattraNumTest::testUniformDistributionInteger(){
+    SGEXTN::SeerattraNum::UniformDistributionInteger<int> generator(false, 1, 6);
+    generator.seed(SGEXTN::Containers::Array<unsigned int>(1u, 2u, 3u, 4u, 5u));
+    if(generator.randomValue() != 3){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionInteger generate number first seed fail");}
+    SGEXTN::Containers::Array<int> randomArray = generator.randomValueArray(2);
+    if(randomArray.at(0) != 1 || randomArray.at(1) != 4){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionInteger generate array first seed fail");}
+    if(generator.getInclusiveMin() != 1){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionInteger get minimum boundary fail");}
+    if(generator.getInclusiveMax() != 6){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionInteger get maximum boundary fail");}
+    generator.setInclusiveMin(-5);
+    generator.setInclusiveMax(-1);
+    generator.seed(SGEXTN::Containers::Array<unsigned int>(6u, 7u, 8u, 9u, 10u));
+    if(generator.randomValue() != -3){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionInteger generate number second seed fail");}
+    randomArray = generator.randomValueArray(2);
+    if(randomArray.at(0) != -2 || randomArray.at(1) != -1){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionInteger generate array second seed fail");}
+}
+
+void SGEXTN::InternalTest::SeerattraNumTest::testUniformDistributionFloatingPoint(){
+    SGEXTN::SeerattraNum::UniformDistributionFloatingPoint<float> generator(false, 1.0f, 2.0f);
+    generator.seed(SGEXTN::Containers::Array<unsigned int>(1u, 2u, 3u, 4u, 5u));
+    if(isCloseEnough(generator.randomValue(), 1.3335f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionFloatingPoint generate number first seed fail");}
+    SGEXTN::Containers::Array<float> randomArray = generator.randomValueArray(2);
+    if(isCloseEnough(randomArray.at(0), 1.1071f) == false || isCloseEnough(randomArray.at(1), 1.5378f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionFloatingPoint generate array first seed fail");}
+    if(generator.getMinimum() != 1.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionFloatingPoint get minimum boundary fail");}
+    if(generator.getMaximum() != 2.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionFloatingPoint get maximum boundary fail");}
+    generator.setMinimum(-2.0f);
+    generator.setMaximum(-1.0f);
+    generator.seed(SGEXTN::Containers::Array<unsigned int>(6u, 7u, 8u, 9u, 10u));
+    if(isCloseEnough(generator.randomValue(), -1.4765f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionFloatingPoint generate number second seed fail");}
+    randomArray = generator.randomValueArray(2);
+    if(isCloseEnough(randomArray.at(0), -1.2909f) == false || isCloseEnough(randomArray.at(1), -1.0739f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionFloatingPoint generate array second seed fail");}
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testAll(){
@@ -128,4 +162,6 @@ void SGEXTN::InternalTest::SeerattraNumTest::testAll(){
     SGEXTN::InternalTest::SeerattraNumTest::testSimpleRandom();
     SGEXTN::InternalTest::SeerattraNumTest::testDirectInteger();
     SGEXTN::InternalTest::SeerattraNumTest::testDirectFloatingPoint();
+    SGEXTN::InternalTest::SeerattraNumTest::testUniformDistributionInteger();
+    SGEXTN::InternalTest::SeerattraNumTest::testUniformDistributionFloatingPoint();
 }

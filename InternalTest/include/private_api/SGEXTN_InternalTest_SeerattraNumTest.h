@@ -26,6 +26,8 @@ public:
     static void testSimpleRandom();
     static void testDirectInteger();
     static void testDirectFloatingPoint();
+    static void testUniformDistributionInteger();
+    static void testUniformDistributionFloatingPoint();
 };
 }
 }
