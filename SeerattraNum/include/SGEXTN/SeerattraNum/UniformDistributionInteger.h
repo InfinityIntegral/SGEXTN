@@ -37,8 +37,7 @@ public:
     [[nodiscard]] SGEXTN::Containers::Array<Integer> randomValueArray(int count);
     [[nodiscard]] Integer getInclusiveMin() const;
     [[nodiscard]] Integer getInclusiveMax() const;
-    void setInclusiveMin(Integer inclusiveMin);
-    void setInclusiveMax(Integer inclusiveMax);
+    void setRange(Integer inclusiveMin, Integer inclusiveMax);
 };
 }
 }

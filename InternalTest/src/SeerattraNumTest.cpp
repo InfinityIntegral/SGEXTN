@@ -155,8 +155,7 @@ void SGEXTN::InternalTest::SeerattraNumTest::testUniformDistributionInteger(){
     stlRandomDistribution.param(std::uniform_int_distribution<int>::param_type(-5, -1));
     stlRandomDistribution.reset();
     seedRandomEngine(secondSeed);
-    generator.setInclusiveMin(-5);
-    generator.setInclusiveMax(-1);
+    generator.setRange(-5, -1);
     generator.seed(secondSeed);
     if(generator.randomValue() != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionInteger generate number second seed fail");}
     randomArray = generator.randomValueArray(2);
@@ -176,8 +175,7 @@ void SGEXTN::InternalTest::SeerattraNumTest::testUniformDistributionFloatingPoin
     stlRandomDistribution.param(std::uniform_real_distribution<float>::param_type(-2.0f, -1.0f));
     stlRandomDistribution.reset();
     seedRandomEngine(secondSeed);
-    generator.setMinimum(-2.0f);
-    generator.setMaximum(-1.0f);
+    generator.setRange(-2.0f, -1.0f);
     generator.seed(secondSeed);
     if(generator.randomValue() != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionFloatingPoint generate number second seed fail");}
     randomArray = generator.randomValueArray(2);

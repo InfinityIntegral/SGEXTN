@@ -37,8 +37,7 @@ public:
     [[nodiscard]] SGEXTN::Containers::Array<FloatingPoint> randomValueArray(int count);
     [[nodiscard]] FloatingPoint getMinimum() const;
     [[nodiscard]] FloatingPoint getMaximum() const;
-    void setMinimum(FloatingPoint minimum);
-    void setMaximum(FloatingPoint maximum);
+    void setRange(FloatingPoint minimum, FloatingPoint maximum);
 };
 }
 }
