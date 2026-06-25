@@ -17,19 +17,12 @@
 
 #include <SGEXTN/SeerattraNum/BinomialDistribution.h>
 #include <SGEXTN/SeerattraNum/private_api/UnsafeCasts.h>
-#include <SGEXTN/SeerattraNum/TrueRandom.h>
 #include <SGEXTN/Containers/Array.h>
 #include <SGEXTN/Containers/ForceCrash.h>
 #include <SGEXTN/SeerattraNum/SimpleRandom.h>
 #include <random>
 
-template <typename ProbabilityType, typename Integer> SGEXTN::SeerattraNum::BinomialDistribution<ProbabilityType, Integer>::BinomialDistribution(bool useGlobal, ProbabilityType chanceOfTrue, Integer attemptCount) : private_chanceOfTrue(chanceOfTrue), private_attemptCount(attemptCount), private_stlRandomEngine(nullptr), private_stlDistribution(SGEXTN::SeerattraNum::UnsafeCasts<std::binomial_distribution<Integer>>::eraseType(new std::binomial_distribution<Integer>(attemptCount, chanceOfTrue))){
-    if(useGlobal == false){
-        SGEXTN::Containers::Array<unsigned int> seedArray = SGEXTN::SeerattraNum::TrueRandom::randomUnsignedInt32Array(8);
-        std::seed_seq seedSequence(&seedArray.at(0), &seedArray.at(0) + 8);
-        private_stlRandomEngine = SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::eraseType(new std::mt19937_64(seedSequence));
-    }
-}
+template <typename ProbabilityType, typename Integer> SGEXTN::SeerattraNum::BinomialDistribution<ProbabilityType, Integer>::BinomialDistribution(bool useGlobal, ProbabilityType chanceOfTrue, Integer attemptCount) : private_chanceOfTrue(chanceOfTrue), private_attemptCount(attemptCount), private_stlRandomEngine(SGEXTN::SeerattraNum::SimpleRandom::private_createRandomEngine(useGlobal)), private_stlDistribution(SGEXTN::SeerattraNum::UnsafeCasts<std::binomial_distribution<Integer>>::eraseType(new std::binomial_distribution<Integer>(attemptCount, chanceOfTrue))){}
 
 template <typename ProbabilityType, typename Integer> SGEXTN::SeerattraNum::BinomialDistribution<ProbabilityType, Integer>::~BinomialDistribution(){
     delete SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(private_stlRandomEngine);
@@ -38,8 +31,7 @@ template <typename ProbabilityType, typename Integer> SGEXTN::SeerattraNum::Bino
 
 template <typename ProbabilityType, typename Integer> void SGEXTN::SeerattraNum::BinomialDistribution<ProbabilityType, Integer>::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
     if(private_stlRandomEngine == nullptr){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BinomialDistribution::seed crashed because cannot seed global rng");}
-    std::seed_seq seedSequence(&seedArray.at(0), &seedArray.at(0) + seedArray.length());
-    (*SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(private_stlRandomEngine)).seed(seedSequence);
+    SGEXTN::SeerattraNum::SimpleRandom::private_seedRandomEngine(private_stlRandomEngine, seedArray);
 }
 
 template <typename ProbabilityType, typename Integer> Integer SGEXTN::SeerattraNum::BinomialDistribution<ProbabilityType, Integer>::randomValue(){
