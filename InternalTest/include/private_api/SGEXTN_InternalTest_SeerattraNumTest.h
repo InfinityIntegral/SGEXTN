@@ -28,6 +28,10 @@ public:
     static void testDirectFloatingPoint();
     static void testUniformDistributionInteger();
     static void testUniformDistributionFloatingPoint();
+    static void testBernoulliDistribution();
+    static void testBinomialDistribution();
+    static void testNegativeBinomialDistribution();
+    static void testGeometricDistribution();
 };
 }
 }

@@ -1,18 +1,18 @@
 /*
- *   Copyright 2026 05524F.sg
- *
- *   Licensed under the Apache License, Version 2.0 (the "License");
- *   you may not use this file except in compliance with the License.
- *   You may obtain a copy of the License at
- *
- *       http://www.apache.org/licenses/LICENSE-2.0
- *
- *   Unless required by applicable law or agreed to in writing, software
- *   distributed under the License is distributed on an "AS IS" BASIS,
- *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *   See the License for the specific language governing permissions and
- *   limitations under the License.
- */
+   Copyright 2026 05524F.sg
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+*/
 // BuildLah license check: SGEXTN 7.0.0
 
 #include <SGEXTN_SeerattraNum_UniformDistributionFloatingPoint.h>
@@ -45,7 +45,7 @@ template <typename FloatingPoint> void SGEXTN::SeerattraNum::UniformDistribution
 template <typename FloatingPoint> FloatingPoint SGEXTN::SeerattraNum::UniformDistributionFloatingPoint<FloatingPoint>::randomValue(){
     void* randomEngine = private_stlRandomEngine;
     if(randomEngine == nullptr){randomEngine = SGEXTN::SeerattraNum::SimpleRandom::private_getRandomEngine();}
-    return ((*SGEXTN::SeerattraNum::UnsafeCasts<std::uniform_real_distribution<FloatingPoint>>::uneraseType(private_stlDistribution))(*SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(private_stlRandomEngine)));
+    return ((*SGEXTN::SeerattraNum::UnsafeCasts<std::uniform_real_distribution<FloatingPoint>>::uneraseType(private_stlDistribution))(*SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(randomEngine)));
 }
 
 template <typename FloatingPoint> SGEXTN::Containers::Array<FloatingPoint> SGEXTN::SeerattraNum::UniformDistributionFloatingPoint<FloatingPoint>::randomValueArray(int count){
@@ -69,12 +69,14 @@ template <typename FloatingPoint> void SGEXTN::SeerattraNum::UniformDistribution
     if(minimum > private_maximum){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionInteger::setMinimum crashed because minimum is higher than maximum");}
     private_minimum = minimum;
     (*SGEXTN::SeerattraNum::UnsafeCasts<std::uniform_real_distribution<FloatingPoint>>::uneraseType(private_stlDistribution)).param(typename std::uniform_real_distribution<FloatingPoint>::param_type(private_minimum, private_maximum));
+    (*SGEXTN::SeerattraNum::UnsafeCasts<std::uniform_real_distribution<FloatingPoint>>::uneraseType(private_stlDistribution)).reset();
 }
 
 template <typename FloatingPoint> void SGEXTN::SeerattraNum::UniformDistributionFloatingPoint<FloatingPoint>::setMaximum(FloatingPoint maximum){
     if(maximum < private_minimum){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionInteger::setMaximum crashed because maximum is lower than minimum");}
     private_maximum = maximum;
     (*SGEXTN::SeerattraNum::UnsafeCasts<std::uniform_real_distribution<FloatingPoint>>::uneraseType(private_stlDistribution)).param(typename std::uniform_real_distribution<FloatingPoint>::param_type(private_minimum, private_maximum));
+    (*SGEXTN::SeerattraNum::UnsafeCasts<std::uniform_real_distribution<FloatingPoint>>::uneraseType(private_stlDistribution)).reset();
 }
 
 template class SGEXTN::SeerattraNum::UniformDistributionFloatingPoint<float>;
