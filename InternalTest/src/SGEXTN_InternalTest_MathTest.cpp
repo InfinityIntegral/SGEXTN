@@ -15,13 +15,13 @@
 */
 // BuildLah license check: SGEXTN 7.0.0
 
-#include <private_api/SGEXTN_InternalTest_MathTest.h>
-#include <SGEXTN_Containers_ForceCrash.h>
-#include <SGEXTN_Math_IntegerLimits.h>
-#include <SGEXTN_Math_IntegerMath.h>
-#include <SGEXTN_Math_FloatConstants.h>
-#include <SGEXTN_Math_FloatLimits.h>
-#include <SGEXTN_Math_FloatMath.h>
+#include <SGEXTN/InternalTest/private_api/MathTest.h>
+#include <SGEXTN/Containers/ForceCrash.h>
+#include <SGEXTN/Math/IntegerLimits.h>
+#include <SGEXTN/Math/IntegerMath.h>
+#include <SGEXTN/Math/FloatConstants.h>
+#include <SGEXTN/Math/FloatLimits.h>
+#include <SGEXTN/Math/FloatMath.h>
 
 namespace {
 bool isCloseEnough(float a, float b){

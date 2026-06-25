@@ -15,12 +15,12 @@
 */
 // BuildLah license check: SGEXTN 7.0.0
 
-#include <SGEXTN_Utilities_DateTime.h>
-#include <SGEXTN_Containers_Hash.h>
-#include <SGEXTN_CoreText_String.h>
-#include <SGEXTN_CoreText_Character.h>
+#include <SGEXTN/Utilities/DateTime.h>
+#include <SGEXTN/Containers/Hash.h>
+#include <SGEXTN/CoreText/String.h>
+#include <SGEXTN/CoreText/Character.h>
+#include <SGEXTN/Containers/ForceCrash.h>
 #include <chrono>
-#include <SGEXTN_Containers_ForceCrash.h>
 
 namespace {
 int monthOffset(int month, bool isLeapYear){

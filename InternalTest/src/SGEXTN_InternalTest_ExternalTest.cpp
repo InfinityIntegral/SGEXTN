@@ -15,21 +15,21 @@
 */
 // BuildLah license check: SGEXTN 7.0.0
 
-#include <private_api/SGEXTN_InternalTest_ExternalTest.h>
-#include <SGEXTN_Utilities_DateTime.h>
-#include <SGEXTN_CoreText_String.h>
-#include <SGEXTN_CoreText_UnicodeQuery.h>
-#include <SGEXTN_Containers_Array.h>
-#include <SGEXTN_CoreText_Character.h>
-#include <SGEXTN_Containers_UnorderedSet.h>
-#include <SGEXTN_Containers_EqualTo.h>
-#include <SGEXTN_Containers_Hash.h>
-#include <SGEXTN_Math_FloatLimits.h>
-#include <SGEXTN_Math_FloatMath.h>
-#include <SGEXTN_Containers_Vector.h>
-#include <SGEXTN_Containers_ForceCrash.h>
-#include <private_api/SGEXTN_SingEmbed_SingEmbedFileRegistrarInstance.h>
-#include <SGEXTN_Containers_UnorderedMap.h>
+#include <SGEXTN/InternalTest/private_api/ExternalTest.h>
+#include <SGEXTN/Utilities/DateTime.h>
+#include <SGEXTN/CoreText/String.h>
+#include <SGEXTN/CoreText/UnicodeQuery.h>
+#include <SGEXTN/Containers/Array.h>
+#include <SGEXTN/CoreText/Character.h>
+#include <SGEXTN/Containers/UnorderedSet.h>
+#include <SGEXTN/Containers/EqualTo.h>
+#include <SGEXTN/Containers/Hash.h>
+#include <SGEXTN/Math/FloatLimits.h>
+#include <SGEXTN/Math/FloatMath.h>
+#include <SGEXTN/Containers/Vector.h>
+#include <SGEXTN/Containers/ForceCrash.h>
+#include <SGEXTN/SingEmbed/private_api/SingEmbedFileRegistrarInstance.h>
+#include <SGEXTN/Containers/UnorderedMap.h>
 #include <chrono>
 #include <format>
 #include <cstdlib>

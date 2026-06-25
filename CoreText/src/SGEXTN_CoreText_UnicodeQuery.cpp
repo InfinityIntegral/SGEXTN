@@ -15,10 +15,10 @@
 */
 // BuildLah license check: SGEXTN 7.0.0
 
-#include <SGEXTN_CoreText_UnicodeQuery.h>
-#include <SGEXTN_Math_FloatLimits.h>
-#include <SGEXTN_CoreText_String.h>
-#include <SGEXTN_CoreText_Character.h>
+#include <SGEXTN/CoreText/UnicodeQuery.h>
+#include <SGEXTN/Math/FloatLimits.h>
+#include <SGEXTN/CoreText/String.h>
+#include <SGEXTN/CoreText/Character.h>
 
 namespace {
 // NOLINTBEGIN(cppcoreguidelines-pro-bounds-constant-array-index)

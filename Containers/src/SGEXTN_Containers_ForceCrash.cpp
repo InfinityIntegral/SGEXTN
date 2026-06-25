@@ -15,7 +15,7 @@
 */
 // BuildLah license check: SGEXTN 7.0.0
 
-#include <SGEXTN_Containers_ForceCrash.h>
+#include <SGEXTN/Containers/ForceCrash.h>
 #include <cstring>
 #include <cstdlib>
 #include <iostream>

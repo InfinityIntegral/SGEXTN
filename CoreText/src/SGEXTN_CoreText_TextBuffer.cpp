@@ -15,12 +15,12 @@
 */
 // BuildLah license check: SGEXTN 7.0.0
 
-#include <private_api/SGEXTN_CoreText_TextBuffer.h>
+#include <SGEXTN/CoreText/private_api/TextBuffer.h>
+#include <SGEXTN/Containers/PlacementNew.h>
+#include <SGEXTN/Containers/private_api/HashAlgorithm.h>
+#include <SGEXTN/Containers/Span.h>
+#include <SGEXTN/CoreText/private_api/ByteVector.h>
 #include <cstring>
-#include <SGEXTN_Containers_PlacementNew.h>
-#include <private_api/SGEXTN_Containers_HashAlgorithm.h>
-#include <SGEXTN_Containers_Span.h>
-#include <private_api/SGEXTN_CoreText_ByteVector.h>
 
 namespace {
 void memoryCopy(const unsigned char* source, unsigned char* destination, int length){

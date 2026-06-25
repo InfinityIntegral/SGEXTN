@@ -15,7 +15,7 @@
 */
 // BuildLah license check: SGEXTN 7.0.0
 
-#include <private_api/SGEXTN_CoreText_ByteVector.h>
+#include <SGEXTN/CoreText/private_api/ByteVector.h>
 #include <cstring>
 
 namespace {

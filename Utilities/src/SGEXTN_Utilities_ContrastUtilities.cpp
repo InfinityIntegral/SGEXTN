@@ -15,12 +15,12 @@
 */
 // BuildLah license check: SGEXTN 7.0.0
 
-#include <SGEXTN_Utilities_ContrastUtilities.h>
-#include <SGEXTN_Utilities_RgbaColour.h>
-#include <SGEXTN_Math_FloatMath.h>
-#include <SGEXTN_Utilities_HslaColour.h>
-#include <SGEXTN_Math_FloatConstants.h>
-#include <SGEXTN_Containers_ForceCrash.h>
+#include <SGEXTN/Utilities/ContrastUtilities.h>
+#include <SGEXTN/Utilities/RgbaColour.h>
+#include <SGEXTN/Math/FloatMath.h>
+#include <SGEXTN/Utilities/HslaColour.h>
+#include <SGEXTN/Math/FloatConstants.h>
+#include <SGEXTN/Containers/ForceCrash.h>
 
 float SGEXTN::Utilities::ContrastUtilities::getContrast(SGEXTN::Utilities::RgbaColour bg, SGEXTN::Utilities::RgbaColour fg){
     fg = bg.applyTint(fg, true);

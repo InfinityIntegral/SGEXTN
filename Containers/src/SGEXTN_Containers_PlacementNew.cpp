@@ -15,7 +15,7 @@
 */
 // BuildLah license check: SGEXTN 7.0.0
 
-#include <SGEXTN_Containers_PlacementNew.h>
+#include <SGEXTN/Containers/PlacementNew.h>
 
 SGEXTN::Containers::PlacementNew SGEXTN::Containers::PlacementNew::placeholder;
 

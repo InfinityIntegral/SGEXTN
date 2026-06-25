@@ -15,14 +15,14 @@
 */
 // BuildLah license check: SGEXTN 7.0.0
 
-#include <private_api/SGEXTN_SingEmbed_SingEmbedFileRegistrarInstance.h>
-#include <SGEXTN_CoreText_String.h>
-#include <private_api/SGEXTN_SingEmbed_EmbeddedFile.h>
-#include <SGEXTN_Containers_EqualTo.h>
-#include <SGEXTN_Containers_Hash.h>
-#include <SGEXTN_Containers_UnorderedMap.h>
-#include <SGEXTN_Containers_ForceCrash.h>
-#include <SGEXTN_CoreText_Character.h>
+#include <SGEXTN/SingEmbed/private_api/SingEmbedFileRegistrarInstance.h>
+#include <SGEXTN/CoreText/String.h>
+#include <SGEXTN/SingEmbed/private_api/EmbeddedFile.h>
+#include <SGEXTN/Containers/EqualTo.h>
+#include <SGEXTN/Containers/Hash.h>
+#include <SGEXTN/Containers/UnorderedMap.h>
+#include <SGEXTN/Containers/ForceCrash.h>
+#include <SGEXTN/CoreText/Character.h>
 
 namespace {
 SGEXTN::SingEmbed::SingEmbedFileRegistrarInstance testInstance("/SGEXTN/SingEmbed/testFile.sg", 0, "");

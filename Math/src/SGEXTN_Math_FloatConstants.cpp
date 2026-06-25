@@ -15,7 +15,7 @@
 */
 // BuildLah license check: SGEXTN 7.0.0
 
-#include <SGEXTN_Math_FloatConstants.h>
+#include <SGEXTN/Math/FloatConstants.h>
 #include <numbers>
 
 template <typename T> T SGEXTN::Math::FloatConstants<T>::eulerNumber(){

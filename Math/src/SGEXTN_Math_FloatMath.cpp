@@ -15,7 +15,7 @@
 */
 // BuildLah license check: SGEXTN 7.0.0
 
-#include <SGEXTN_Math_FloatMath.h>
+#include <SGEXTN/Math/FloatMath.h>
 #include <cmath>
 
 template <typename T> T SGEXTN::Math::FloatMath<T>::absoluteValue(T x){
