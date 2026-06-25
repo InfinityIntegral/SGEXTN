@@ -45,7 +45,7 @@ template <typename Integer> void SGEXTN::SeerattraNum::UniformDistributionIntege
 template <typename Integer> Integer SGEXTN::SeerattraNum::UniformDistributionInteger<Integer>::randomValue(){
     void* randomEngine = private_stlRandomEngine;
     if(randomEngine == nullptr){randomEngine = SGEXTN::SeerattraNum::SimpleRandom::private_getRandomEngine();}
-    return ((*SGEXTN::SeerattraNum::UnsafeCasts<std::uniform_int_distribution<Integer>>::uneraseType(private_stlDistribution))(*SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(private_stlRandomEngine)));
+    return ((*SGEXTN::SeerattraNum::UnsafeCasts<std::uniform_int_distribution<Integer>>::uneraseType(private_stlDistribution))(*SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(randomEngine)));
 }
 
 template <typename Integer> SGEXTN::Containers::Array<Integer> SGEXTN::SeerattraNum::UniformDistributionInteger<Integer>::randomValueArray(int count){
@@ -69,12 +69,14 @@ template <typename Integer> void SGEXTN::SeerattraNum::UniformDistributionIntege
     if(inclusiveMin > private_inclusiveMax){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionInteger::setInclusiveMin crashed because minimum is higher than maximum");}
     private_inclusiveMin = inclusiveMin;
     (*SGEXTN::SeerattraNum::UnsafeCasts<std::uniform_int_distribution<Integer>>::uneraseType(private_stlDistribution)).param(typename std::uniform_int_distribution<Integer>::param_type(private_inclusiveMin, private_inclusiveMax));
+    (*SGEXTN::SeerattraNum::UnsafeCasts<std::uniform_int_distribution<Integer>>::uneraseType(private_stlDistribution)).reset();
 }
 
 template <typename Integer> void SGEXTN::SeerattraNum::UniformDistributionInteger<Integer>::setInclusiveMax(Integer inclusiveMax){
     if(inclusiveMax < private_inclusiveMin){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionInteger::setInclusiveMax crashed because maximum is lower than minimum");}
     private_inclusiveMax = inclusiveMax;
     (*SGEXTN::SeerattraNum::UnsafeCasts<std::uniform_int_distribution<Integer>>::uneraseType(private_stlDistribution)).param(typename std::uniform_int_distribution<Integer>::param_type(private_inclusiveMin, private_inclusiveMax));
+    (*SGEXTN::SeerattraNum::UnsafeCasts<std::uniform_int_distribution<Integer>>::uneraseType(private_stlDistribution)).reset();
 }
 
 template class SGEXTN::SeerattraNum::UniformDistributionInteger<int>;

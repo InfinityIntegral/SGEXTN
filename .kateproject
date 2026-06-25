@@ -1,0 +1,32 @@
+{
+  "name": "SGEXTN",
+  "files": [
+    {
+      "directory": ".",
+      "filters": ["*"],
+      "recursive": 1,
+      "hidden": 1
+    }
+  ],
+  "exclude_patterns" : [],
+  "build": {
+    "directory": ".",
+    "targets": [
+      {
+        "name": "clean + configure",
+        "build_cmd" : "echo 'configuring...'",
+        "run_cmd": "rm -rf build && mkdir build && cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Debug"
+      },
+      {
+        "name": "build + install",
+        "build_cmd": "cmake --build build && cmake --install build --prefix build/BuildLah_install",
+        "run_cmd": "./build/BuildLah_install/bin/InternalTest"
+      },
+      {
+        "name": "analyse",
+        "build_cmd" : "echo 'analysing...'",
+        "run_cmd": "patch_clangtidy.sh -verbose"
+      }
+    ]
+  }
+}
