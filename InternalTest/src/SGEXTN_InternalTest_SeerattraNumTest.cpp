@@ -15,22 +15,22 @@
 */
 // BuildLah license check: SGEXTN 7.0.0
 
-#include <private_api/SGEXTN_InternalTest_SeerattraNumTest.h>
-#include <SGEXTN_SeerattraNum_TrueRandom.h>
-#include <SGEXTN_Containers_Array.h>
-#include <SGEXTN_Containers_UnorderedSet.h>
-#include <SGEXTN_Containers_EqualTo.h>
-#include <SGEXTN_Containers_Hash.h>
-#include <SGEXTN_Containers_ForceCrash.h>
-#include <SGEXTN_SeerattraNum_SimpleRandom.h>
-#include <SGEXTN_SeerattraNum_DirectInteger.h>
-#include <SGEXTN_SeerattraNum_DirectFloatingPoint.h>
-#include <SGEXTN_SeerattraNum_UniformDistributionInteger.h>
-#include <SGEXTN_SeerattraNum_UniformDistributionFloatingPoint.h>
-#include <SGEXTN_SeerattraNum_BernoulliDistribution.h>
-#include <SGEXTN_SeerattraNum_BinomialDistribution.h>
-#include <SGEXTN_SeerattraNum_NegativeBinomialDistribution.h>
-#include <SGEXTN_SeerattraNum_GeometricDistribution.h>
+#include <SGEXTN/InternalTest/private_api/SeerattraNumTest.h>
+#include <SGEXTN/SeerattraNum/TrueRandom.h>
+#include <SGEXTN/Containers/Array.h>
+#include <SGEXTN/Containers/UnorderedSet.h>
+#include <SGEXTN/Containers/EqualTo.h>
+#include <SGEXTN/Containers/Hash.h>
+#include <SGEXTN/Containers/ForceCrash.h>
+#include <SGEXTN/SeerattraNum/SimpleRandom.h>
+#include <SGEXTN/SeerattraNum/DirectInteger.h>
+#include <SGEXTN/SeerattraNum/DirectFloatingPoint.h>
+#include <SGEXTN/SeerattraNum/UniformDistributionInteger.h>
+#include <SGEXTN/SeerattraNum/UniformDistributionFloatingPoint.h>
+#include <SGEXTN/SeerattraNum/BernoulliDistribution.h>
+#include <SGEXTN/SeerattraNum/BinomialDistribution.h>
+#include <SGEXTN/SeerattraNum/NegativeBinomialDistribution.h>
+#include <SGEXTN/SeerattraNum/GeometricDistribution.h>
 #include <random>
 
 namespace {

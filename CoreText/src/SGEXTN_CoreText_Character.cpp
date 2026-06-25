@@ -15,16 +15,16 @@
 */
 // BuildLah license check: SGEXTN 7.0.0
 
-#include <SGEXTN_CoreText_Character.h>
-#include <private_api/SGEXTN_CoreText_TextBuffer.h>
-#include <SGEXTN_Containers_ForceCrash.h>
-#include <SGEXTN_Containers_Hash.h>
-#include <SGEXTN_Containers_Array.h>
-#include <SGEXTN_CoreText_String.h>
-#include <SGEXTN_CoreText_UnicodeQuery.h>
-#include <SGEXTN_Containers_Vector.h>
-#include <SGEXTN_Math_FloatLimits.h>
-#include <SGEXTN_Containers_ArrayVectorMove.h>
+#include <SGEXTN/CoreText/Character.h>
+#include <SGEXTN/CoreText/private_api/TextBuffer.h>
+#include <SGEXTN/Containers/ForceCrash.h>
+#include <SGEXTN/Containers/Hash.h>
+#include <SGEXTN/Containers/Array.h>
+#include <SGEXTN/CoreText/String.h>
+#include <SGEXTN/CoreText/UnicodeQuery.h>
+#include <SGEXTN/Containers/Vector.h>
+#include <SGEXTN/Math/FloatLimits.h>
+#include <SGEXTN/Containers/ArrayVectorMove.h>
 
 namespace {
 void appendUnicode(int unicode, SGEXTN::CoreText::Character& c){

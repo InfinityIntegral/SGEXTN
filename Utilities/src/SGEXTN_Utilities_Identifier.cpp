@@ -15,9 +15,9 @@
 */
 // BuildLah license check: SGEXTN 7.0.0
 
-#include <SGEXTN_Utilities_Identifier.h>
-#include <SGEXTN_Containers_Hash.h>
-#include <SGEXTN_CoreText_String.h>
+#include <SGEXTN/Utilities/Identifier.h>
+#include <SGEXTN/Containers/Hash.h>
+#include <SGEXTN/CoreText/String.h>
 
 SGEXTN::Utilities::Identifier::Identifier() : private_data(0) {}
 

@@ -15,9 +15,9 @@
 */
 // BuildLah license check: SGEXTN 7.0.0
 
-#include <SGEXTN_Containers_Span.h>
-#include <private_api/SGEXTN_Containers_HashAlgorithm.h>
-#include <SGEXTN_Containers_Hash.h>
+#include <SGEXTN/Containers/Span.h>
+#include <SGEXTN/Containers/private_api/HashAlgorithm.h>
+#include <SGEXTN/Containers/Hash.h>
 
 int SGEXTN::Containers::Hash<bool>::operator()(bool x) const {
     return SGEXTN::Containers::HashAlgorithm::wyHash32(SGEXTN::Containers::Span<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(bool)));

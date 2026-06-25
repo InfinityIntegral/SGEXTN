@@ -15,7 +15,7 @@
 */
 // BuildLah license check: SGEXTN 7.0.0
 
-#include <SGEXTN_Math_IntegerLimits.h>
+#include <SGEXTN/Math/IntegerLimits.h>
 #include <limits>
 
 template <typename T> T SGEXTN::Math::IntegerLimits<T>::maximum(){

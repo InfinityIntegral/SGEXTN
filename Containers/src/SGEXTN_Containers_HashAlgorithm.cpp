@@ -15,8 +15,8 @@
 */
 // BuildLah license check: SGEXTN 7.0.0
 
-#include <SGEXTN_Containers_Span.h>
-#include <private_api/SGEXTN_Containers_HashAlgorithm.h>
+#include <SGEXTN/Containers/Span.h>
+#include <SGEXTN/Containers/private_api/HashAlgorithm.h>
 
 int SGEXTN::Containers::HashAlgorithm::wyHash32(const SGEXTN::Containers::Span<const unsigned char> &span){
     const unsigned int num0 = 0xA0761D65;

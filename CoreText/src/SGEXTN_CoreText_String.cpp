@@ -15,16 +15,16 @@
 */
 // BuildLah license check: SGEXTN 7.0.0
 
-#include <SGEXTN_CoreText_String.h>
-#include <SGEXTN_Containers_Vector.h>
-#include <SGEXTN_CoreText_Character.h>
-#include <SGEXTN_Containers_Array.h>
-#include <SGEXTN_CoreText_UnicodeQuery.h>
-#include <SGEXTN_Math_IntegerLimits.h>
-#include <SGEXTN_Math_FloatMath.h>
-#include <SGEXTN_Math_FloatLimits.h>
-#include <SGEXTN_Containers_ForceCrash.h>
-#include <SGEXTN_Containers_ArrayVectorMove.h>
+#include <SGEXTN/CoreText/String.h>
+#include <SGEXTN/Containers/Vector.h>
+#include <SGEXTN/CoreText/Character.h>
+#include <SGEXTN/Containers/Array.h>
+#include <SGEXTN/CoreText/UnicodeQuery.h>
+#include <SGEXTN/Math/IntegerLimits.h>
+#include <SGEXTN/Math/FloatMath.h>
+#include <SGEXTN/Math/FloatLimits.h>
+#include <SGEXTN/Containers/ForceCrash.h>
+#include <SGEXTN/Containers/ArrayVectorMove.h>
 
 namespace {
 int getValueOfDigit(const SGEXTN::CoreText::Character& c, int base){

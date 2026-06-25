@@ -15,12 +15,12 @@
 */
 // BuildLah license check: SGEXTN 7.0.0
 
-#include <private_api/SGEXTN_InternalTest_DebugTest.h>
-#include <SGEXTN_CoreText_String.h>
-#include <SGEXTN_Utilities_RgbaColour.h>
-#include <SGEXTN_CoreText_Debug.h>
-#include <SGEXTN_Containers_ForceCrash.h>
-#include <SGEXTN_CoreText_Character.h>
+#include <SGEXTN/InternalTest/private_api/DebugTest.h>
+#include <SGEXTN/CoreText/String.h>
+#include <SGEXTN/Utilities/RgbaColour.h>
+#include <SGEXTN/CoreText/Debug.h>
+#include <SGEXTN/Containers/ForceCrash.h>
+#include <SGEXTN/CoreText/Character.h>
 
 namespace {
 SGEXTN::CoreText::String lastSentString;

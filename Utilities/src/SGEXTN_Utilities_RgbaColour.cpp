@@ -15,11 +15,11 @@
 */
 // BuildLah license check: SGEXTN 7.0.0
 
-#include <SGEXTN_Utilities_RgbaColour.h>
-#include <SGEXTN_CoreText_String.h>
-#include <SGEXTN_Containers_Hash.h>
-#include <SGEXTN_Math_FloatMath.h>
-#include <SGEXTN_Containers_ForceCrash.h>
+#include <SGEXTN/Utilities/RgbaColour.h>
+#include <SGEXTN/CoreText/String.h>
+#include <SGEXTN/Containers/Hash.h>
+#include <SGEXTN/Math/FloatMath.h>
+#include <SGEXTN/Containers/ForceCrash.h>
 
 namespace {
 int boundInt(int x){

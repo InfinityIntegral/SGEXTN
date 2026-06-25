@@ -15,6 +15,6 @@
 */
 // BuildLah license check: SGEXTN 7.0.0
 
-#include <private_api/SGEXTN_SingEmbed_EmbeddedFile.h>
+#include <SGEXTN/SingEmbed/private_api/EmbeddedFile.h>
 
 SGEXTN::SingEmbed::EmbeddedFile::EmbeddedFile(const char* data, int length) : data(data), length(length) {}

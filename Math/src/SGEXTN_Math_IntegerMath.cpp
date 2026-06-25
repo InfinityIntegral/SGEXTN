@@ -15,7 +15,7 @@
 */
 // BuildLah license check: SGEXTN 7.0.0
 
-#include <SGEXTN_Math_IntegerMath.h>
+#include <SGEXTN/Math/IntegerMath.h>
 #include <numeric>
 
 template <typename T> T SGEXTN::Math::IntegerMath<T>::absoluteValue(T x){

@@ -15,16 +15,16 @@
 */
 // BuildLah license check: SGEXTN 7.0.0
 
-#include <private_api/SGEXTN_InternalTest_UtilitiesTest.h>
-#include <SGEXTN_Containers_ForceCrash.h>
-#include <SGEXTN_Utilities_RgbaColour.h>
-#include <SGEXTN_Utilities_HslaColour.h>
-#include <SGEXTN_Utilities_ContrastUtilities.h>
-#include <SGEXTN_Utilities_Identifier.h>
-#include <SGEXTN_Utilities_IdentifierRegistry.h>
-#include <SGEXTN_Utilities_DateTime.h>
-#include <SGEXTN_CoreText_String.h>
-#include <SGEXTN_Containers_Array.h>
+#include <SGEXTN/InternalTest/private_api/UtilitiesTest.h>
+#include <SGEXTN/Containers/ForceCrash.h>
+#include <SGEXTN/Utilities/RgbaColour.h>
+#include <SGEXTN/Utilities/HslaColour.h>
+#include <SGEXTN/Utilities/ContrastUtilities.h>
+#include <SGEXTN/Utilities/Identifier.h>
+#include <SGEXTN/Utilities/IdentifierRegistry.h>
+#include <SGEXTN/Utilities/DateTime.h>
+#include <SGEXTN/CoreText/String.h>
+#include <SGEXTN/Containers/Array.h>
 
 namespace {
 bool isCloseEnough(float a, float b){

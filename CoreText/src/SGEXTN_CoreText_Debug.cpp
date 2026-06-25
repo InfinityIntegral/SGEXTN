@@ -15,14 +15,14 @@
 */
 // BuildLah license check: SGEXTN 7.0.0
 
-#include <SGEXTN_CoreText_Debug.h>
-#include <SGEXTN_CoreText_Character.h>
-#include <SGEXTN_CoreText_String.h>
+#include <SGEXTN/CoreText/Debug.h>
+#include <SGEXTN/CoreText/Character.h>
+#include <SGEXTN/CoreText/String.h>
+#include <SGEXTN/Containers/Array.h>
+#include <SGEXTN/Containers/Vector.h>
 #include <iostream>
 #include <locale>
 #include <cwchar>
-#include <SGEXTN_Containers_Array.h>
-#include <SGEXTN_Containers_Vector.h>
 
 namespace {
 SGEXTN::CoreText::DebugLogFunctionRegistrarInstance useLogToCerr(&SGEXTN::CoreText::Debug::logToCerr);

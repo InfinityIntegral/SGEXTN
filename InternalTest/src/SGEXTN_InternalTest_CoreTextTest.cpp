@@ -15,12 +15,12 @@
 */
 // BuildLah license check: SGEXTN 7.0.0
 
-#include <private_api/SGEXTN_InternalTest_CoreTextTest.h>
-#include <SGEXTN_CoreText_String.h>
-#include <SGEXTN_Containers_Array.h>
-#include <SGEXTN_Containers_ForceCrash.h>
-#include <SGEXTN_CoreText_Character.h>
-#include <SGEXTN_Math_FloatLimits.h>
+#include <SGEXTN/InternalTest/private_api/CoreTextTest.h>
+#include <SGEXTN/CoreText/String.h>
+#include <SGEXTN/Containers/Array.h>
+#include <SGEXTN/Containers/ForceCrash.h>
+#include <SGEXTN/CoreText/Character.h>
+#include <SGEXTN/Math/FloatLimits.h>
 
 void SGEXTN::InternalTest::CoreTextTest::testAll(){
     SGEXTN::InternalTest::CoreTextTest::testCharacter();

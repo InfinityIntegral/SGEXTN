@@ -15,9 +15,9 @@
 */
 // BuildLah license check: SGEXTN 7.0.0
 
-#include <SGEXTN_Utilities_IdentifierRegistry.h>
-#include <SGEXTN_Containers_UnorderedSet.h>
-#include <SGEXTN_Utilities_Identifier.h>
+#include <SGEXTN/Utilities/IdentifierRegistry.h>
+#include <SGEXTN/Containers/UnorderedSet.h>
+#include <SGEXTN/Utilities/Identifier.h>
 #include <chrono>
 #include <random>
 

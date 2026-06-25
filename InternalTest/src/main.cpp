@@ -15,14 +15,14 @@
 */
 // BuildLah license check: SGEXTN 7.0.0
 
-#include <private_api/SGEXTN_InternalTest_ContainersTest.h>
-#include <private_api/SGEXTN_InternalTest_MathTest.h>
-#include <private_api/SGEXTN_InternalTest_UtilitiesTest.h>
-#include <private_api/SGEXTN_InternalTest_CoreTextTest.h>
-#include <private_api/SGEXTN_InternalTest_ExternalTest.h>
-#include <private_api/SGEXTN_InternalTest_DebugTest.h>
-#include <private_api/SGEXTN_InternalTest_SeerattraNumTest.h>
-#include <SGEXTN_CoreText_Debug.h>
+#include <SGEXTN/InternalTest/private_api/ContainersTest.h>
+#include <SGEXTN/InternalTest/private_api/MathTest.h>
+#include <SGEXTN/InternalTest/private_api/UtilitiesTest.h>
+#include <SGEXTN/InternalTest/private_api/CoreTextTest.h>
+#include <SGEXTN/InternalTest/private_api/ExternalTest.h>
+#include <SGEXTN/InternalTest/private_api/DebugTest.h>
+#include <SGEXTN/InternalTest/private_api/SeerattraNumTest.h>
+#include <SGEXTN/CoreText/Debug.h>
 
 int main(int /*argc*/, char** /*argv*/){
     SGEXTN::InternalTest::ContainersTest::testAll();

@@ -15,26 +15,26 @@
 */
 // BuildLah license check: SGEXTN 7.0.0
 
-#include <private_api/SGEXTN_InternalTest_ContainersTest.h>
-#include <SGEXTN_Containers_EqualTo.h>
-#include <SGEXTN_Containers_ForceCrash.h>
-#include <SGEXTN_Containers_Array.h>
-#include <SGEXTN_Containers_Span.h>
-#include <SGEXTN_Containers_LessThan.h>
-#include <SGEXTN_Containers_MoreThan.h>
-#include <SGEXTN_Containers_Vector.h>
-#include <SGEXTN_Containers_Queue.h>
-#include <SGEXTN_Containers_Stack.h>
-#include <SGEXTN_Containers_Deque.h>
-#include <SGEXTN_Containers_PriorityQueue.h>
-#include <SGEXTN_Containers_Set.h>
-#include <SGEXTN_Containers_MultiSet.h>
-#include <SGEXTN_Containers_Map.h>
-#include <SGEXTN_Containers_MultiMap.h>
-#include <SGEXTN_Containers_UnorderedSet.h>
-#include <SGEXTN_Containers_UnorderedMap.h>
-#include <SGEXTN_Containers_Hash.h>
-#include <SGEXTN_Containers_ArrayVectorMove.h>
+#include <SGEXTN/InternalTest/private_api/ContainersTest.h>
+#include <SGEXTN/Containers/EqualTo.h>
+#include <SGEXTN/Containers/ForceCrash.h>
+#include <SGEXTN/Containers/Array.h>
+#include <SGEXTN/Containers/Span.h>
+#include <SGEXTN/Containers/LessThan.h>
+#include <SGEXTN/Containers/MoreThan.h>
+#include <SGEXTN/Containers/Vector.h>
+#include <SGEXTN/Containers/Queue.h>
+#include <SGEXTN/Containers/Stack.h>
+#include <SGEXTN/Containers/Deque.h>
+#include <SGEXTN/Containers/PriorityQueue.h>
+#include <SGEXTN/Containers/Set.h>
+#include <SGEXTN/Containers/MultiSet.h>
+#include <SGEXTN/Containers/Map.h>
+#include <SGEXTN/Containers/MultiMap.h>
+#include <SGEXTN/Containers/UnorderedSet.h>
+#include <SGEXTN/Containers/UnorderedMap.h>
+#include <SGEXTN/Containers/Hash.h>
+#include <SGEXTN/Containers/ArrayVectorMove.h>
 
 namespace {
 class ConstructibleInteger {

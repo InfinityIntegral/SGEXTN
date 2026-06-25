@@ -15,12 +15,12 @@
 */
 // BuildLah license check: SGEXTN 7.0.0
 
-#include <SGEXTN_SeerattraNum_DirectInteger.h>
-#include <private_api/SGEXTN_SeerattraNum_UnsafeCasts.h>
-#include <SGEXTN_SeerattraNum_TrueRandom.h>
-#include <SGEXTN_Containers_Array.h>
-#include <SGEXTN_Containers_ForceCrash.h>
-#include <SGEXTN_SeerattraNum_SimpleRandom.h>
+#include <SGEXTN/SeerattraNum/DirectInteger.h>
+#include <SGEXTN/SeerattraNum/private_api/UnsafeCasts.h>
+#include <SGEXTN/SeerattraNum/TrueRandom.h>
+#include <SGEXTN/Containers/Array.h>
+#include <SGEXTN/Containers/ForceCrash.h>
+#include <SGEXTN/SeerattraNum/SimpleRandom.h>
 #include <random>
 
 template <typename Integer> SGEXTN::SeerattraNum::DirectInteger<Integer>::DirectInteger(bool useGlobal) : private_stlRandomEngine(nullptr){

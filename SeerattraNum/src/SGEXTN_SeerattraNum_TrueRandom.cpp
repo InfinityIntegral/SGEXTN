@@ -15,10 +15,10 @@
 */
 // BuildLah license check: SGEXTN 7.0.0
 
-#include <SGEXTN_SeerattraNum_TrueRandom.h>
-#include <private_api/SGEXTN_SeerattraNum_UnsafeCasts.h>
-#include <SGEXTN_Containers_ForceCrash.h>
-#include <SGEXTN_Containers_Array.h>
+#include <SGEXTN/SeerattraNum/TrueRandom.h>
+#include <SGEXTN/SeerattraNum/private_api/UnsafeCasts.h>
+#include <SGEXTN/Containers/ForceCrash.h>
+#include <SGEXTN/Containers/Array.h>
 #include <chrono>
 #include <random>
 
