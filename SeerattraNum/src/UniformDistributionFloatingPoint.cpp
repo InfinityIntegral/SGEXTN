@@ -57,15 +57,9 @@ template <typename FloatingPoint> FloatingPoint SGEXTN::SeerattraNum::UniformDis
     return private_maximum;
 }
 
-template <typename FloatingPoint> void SGEXTN::SeerattraNum::UniformDistributionFloatingPoint<FloatingPoint>::setMinimum(FloatingPoint minimum){
-    if(minimum > private_maximum){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionInteger::setMinimum crashed because minimum is higher than maximum");}
+template <typename FloatingPoint> void SGEXTN::SeerattraNum::UniformDistributionFloatingPoint<FloatingPoint>::setRange(FloatingPoint minimum, FloatingPoint maximum){
+    if(minimum > maximum){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionInteger::setRange crashed because minimum is higher than maximum");}
     private_minimum = minimum;
-    (*SGEXTN::SeerattraNum::UnsafeCasts<std::uniform_real_distribution<FloatingPoint>>::uneraseType(private_stlDistribution)).param(typename std::uniform_real_distribution<FloatingPoint>::param_type(private_minimum, private_maximum));
-    (*SGEXTN::SeerattraNum::UnsafeCasts<std::uniform_real_distribution<FloatingPoint>>::uneraseType(private_stlDistribution)).reset();
-}
-
-template <typename FloatingPoint> void SGEXTN::SeerattraNum::UniformDistributionFloatingPoint<FloatingPoint>::setMaximum(FloatingPoint maximum){
-    if(maximum < private_minimum){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionInteger::setMaximum crashed because maximum is lower than minimum");}
     private_maximum = maximum;
     (*SGEXTN::SeerattraNum::UnsafeCasts<std::uniform_real_distribution<FloatingPoint>>::uneraseType(private_stlDistribution)).param(typename std::uniform_real_distribution<FloatingPoint>::param_type(private_minimum, private_maximum));
     (*SGEXTN::SeerattraNum::UnsafeCasts<std::uniform_real_distribution<FloatingPoint>>::uneraseType(private_stlDistribution)).reset();

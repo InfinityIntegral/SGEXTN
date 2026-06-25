@@ -57,15 +57,9 @@ template <typename Integer> Integer SGEXTN::SeerattraNum::UniformDistributionInt
     return private_inclusiveMax;
 }
 
-template <typename Integer> void SGEXTN::SeerattraNum::UniformDistributionInteger<Integer>::setInclusiveMin(Integer inclusiveMin){
-    if(inclusiveMin > private_inclusiveMax){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionInteger::setInclusiveMin crashed because minimum is higher than maximum");}
+template <typename Integer> void SGEXTN::SeerattraNum::UniformDistributionInteger<Integer>::setRange(Integer inclusiveMin, Integer inclusiveMax){
+    if(inclusiveMin > inclusiveMax){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionInteger::setRange crashed because minimum is higher than maximum");}
     private_inclusiveMin = inclusiveMin;
-    (*SGEXTN::SeerattraNum::UnsafeCasts<std::uniform_int_distribution<Integer>>::uneraseType(private_stlDistribution)).param(typename std::uniform_int_distribution<Integer>::param_type(private_inclusiveMin, private_inclusiveMax));
-    (*SGEXTN::SeerattraNum::UnsafeCasts<std::uniform_int_distribution<Integer>>::uneraseType(private_stlDistribution)).reset();
-}
-
-template <typename Integer> void SGEXTN::SeerattraNum::UniformDistributionInteger<Integer>::setInclusiveMax(Integer inclusiveMax){
-    if(inclusiveMax < private_inclusiveMin){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionInteger::setInclusiveMax crashed because maximum is lower than minimum");}
     private_inclusiveMax = inclusiveMax;
     (*SGEXTN::SeerattraNum::UnsafeCasts<std::uniform_int_distribution<Integer>>::uneraseType(private_stlDistribution)).param(typename std::uniform_int_distribution<Integer>::param_type(private_inclusiveMin, private_inclusiveMax));
     (*SGEXTN::SeerattraNum::UnsafeCasts<std::uniform_int_distribution<Integer>>::uneraseType(private_stlDistribution)).reset();
