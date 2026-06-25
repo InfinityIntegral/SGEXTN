@@ -17,19 +17,12 @@
 
 #include <SGEXTN/SeerattraNum/DirectInteger.h>
 #include <SGEXTN/SeerattraNum/private_api/UnsafeCasts.h>
-#include <SGEXTN/SeerattraNum/TrueRandom.h>
 #include <SGEXTN/Containers/Array.h>
 #include <SGEXTN/Containers/ForceCrash.h>
 #include <SGEXTN/SeerattraNum/SimpleRandom.h>
 #include <random>
 
-template <typename Integer> SGEXTN::SeerattraNum::DirectInteger<Integer>::DirectInteger(bool useGlobal) : private_stlRandomEngine(nullptr){
-    if(useGlobal == false){
-        SGEXTN::Containers::Array<unsigned int> seedArray = SGEXTN::SeerattraNum::TrueRandom::randomUnsignedInt32Array(8);
-        std::seed_seq seedSequence(&seedArray.at(0), &seedArray.at(0) + 8);
-        private_stlRandomEngine = SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::eraseType(new std::mt19937_64(seedSequence));
-    }
-}
+template <typename Integer> SGEXTN::SeerattraNum::DirectInteger<Integer>::DirectInteger(bool useGlobal) : private_stlRandomEngine(SGEXTN::SeerattraNum::SimpleRandom::private_createRandomEngine(useGlobal)){}
 
 template <typename Integer> SGEXTN::SeerattraNum::DirectInteger<Integer>::~DirectInteger(){
     delete SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(private_stlRandomEngine);
@@ -37,8 +30,7 @@ template <typename Integer> SGEXTN::SeerattraNum::DirectInteger<Integer>::~Direc
 
 template <typename Integer> void SGEXTN::SeerattraNum::DirectInteger<Integer>::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
     if(private_stlRandomEngine == nullptr){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::DirectInteger::seed crashed because cannot seed global rng");}
-    std::seed_seq seedSequence(&seedArray.at(0), &seedArray.at(0) + seedArray.length());
-    (*SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(private_stlRandomEngine)).seed(seedSequence);
+    SGEXTN::SeerattraNum::SimpleRandom::private_seedRandomEngine(private_stlRandomEngine, seedArray);
 }
 
 template <typename Integer> Integer SGEXTN::SeerattraNum::DirectInteger<Integer>::randomInteger(){

@@ -123,3 +123,15 @@ void* SGEXTN::SeerattraNum::SimpleRandom::private_getRandomEngine(){
     if(SGEXTN::SeerattraNum::SimpleRandom::private_stlMersenneTwister19937 == nullptr){initialiseRng();}
     return SGEXTN::SeerattraNum::SimpleRandom::private_stlMersenneTwister19937;
 }
+
+void* SGEXTN::SeerattraNum::SimpleRandom::private_createRandomEngine(bool useGlobal){
+    if(useGlobal == true){return nullptr;}
+    SGEXTN::Containers::Array<unsigned int> seedArray = SGEXTN::SeerattraNum::TrueRandom::randomUnsignedInt32Array(8);
+    std::seed_seq seedSequence(&seedArray.at(0), &seedArray.at(0) + 8);
+    return SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::eraseType(new std::mt19937_64(seedSequence));
+}
+
+void SGEXTN::SeerattraNum::SimpleRandom::private_seedRandomEngine(void* randomEngine, const SGEXTN::Containers::Array<unsigned int>& seedArray){
+    std::seed_seq seedSequence(&seedArray.at(0), &seedArray.at(0) + seedArray.length());
+    (*SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(randomEngine)).seed(seedSequence);
+}

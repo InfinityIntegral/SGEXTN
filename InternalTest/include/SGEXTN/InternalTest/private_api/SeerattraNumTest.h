@@ -32,6 +32,11 @@ public:
     static void testBinomialDistribution();
     static void testNegativeBinomialDistribution();
     static void testGeometricDistribution();
+    static void testPoissonDistribution();
+    static void testExponentialDistribution();
+    static void testGammaDistribution();
+    static void testWeibullDistribution();
+    static void testGumbelDistribution();
 };
 }
 }

@@ -14,8 +14,8 @@
     "targets": [
       {
         "name": "clean + configure",
-        "build_cmd" : "echo 'configuring...'",
-        "run_cmd": "rm -rf build && mkdir build && cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Debug"
+        "build_cmd" : "rm -rf build && mkdir build && cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Debug",
+        "run_cmd": "echo 'configure done'"
       },
       {
         "name": "build + install",
@@ -24,8 +24,8 @@
       },
       {
         "name": "analyse",
-        "build_cmd" : "echo 'analysing...'",
-        "run_cmd": "patch_clangtidy.sh -verbose"
+        "build_cmd" : "patch_clangtidy.sh -verbose",
+        "run_cmd": "echo 'analyse done'"
       }
     ]
   }
