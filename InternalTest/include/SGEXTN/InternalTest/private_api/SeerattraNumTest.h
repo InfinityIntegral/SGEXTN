@@ -40,6 +40,9 @@ public:
     static void testNormalDistribution();
     static void testLogNormalDistribution();
     static void testCauchyDistribution();
+    static void testChiSquaredDistribution();
+    static void testFisherFDistribution();
+    static void testStudentTDistribution();
 };
 }
 }
