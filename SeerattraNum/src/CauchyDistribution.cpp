@@ -64,7 +64,7 @@ template <typename FloatingPoint> void SGEXTN::SeerattraNum::CauchyDistribution<
 }
 
 template <typename FloatingPoint> void SGEXTN::SeerattraNum::CauchyDistribution<FloatingPoint>::setHalfWidth(FloatingPoint halfWidth){
-    if(halfWidth < 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::CauchyDistribution::setHalfWidth crashed because requested half width is negative");}
+    if(halfWidth <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::CauchyDistribution::setHalfWidth crashed because requested half width is nonpositive");}
     private_halfWidth = halfWidth;
     (*SGEXTN::SeerattraNum::UnsafeCasts<std::cauchy_distribution<FloatingPoint>>::uneraseType(private_stlDistribution)).param(typename std::cauchy_distribution<FloatingPoint>::param_type(private_median, private_halfWidth));
     (*SGEXTN::SeerattraNum::UnsafeCasts<std::cauchy_distribution<FloatingPoint>>::uneraseType(private_stlDistribution)).reset();

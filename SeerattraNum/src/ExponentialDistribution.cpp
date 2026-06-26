@@ -53,8 +53,8 @@ template <typename FloatingPoint> FloatingPoint SGEXTN::SeerattraNum::Exponentia
     return private_meanEventsPerTime;
 }
 
-template <typename FloatingPoint>  void SGEXTN::SeerattraNum::ExponentialDistribution<FloatingPoint>::setMeanEventsPerTime(FloatingPoint meanEventsPerTime){
-    if(meanEventsPerTime < 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::ExponentialDistribution::setMeanEventsPerTime crashed because requested number of events occurring in each unit time is negative");}
+template <typename FloatingPoint> void SGEXTN::SeerattraNum::ExponentialDistribution<FloatingPoint>::setMeanEventsPerTime(FloatingPoint meanEventsPerTime){
+    if(meanEventsPerTime <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::ExponentialDistribution::setMeanEventsPerTime crashed because requested number of events occurring in each unit time is nonpositive");}
     private_meanEventsPerTime = meanEventsPerTime;
     (*SGEXTN::SeerattraNum::UnsafeCasts<std::exponential_distribution<FloatingPoint>>::uneraseType(private_stlDistribution)).param(typename std::exponential_distribution<FloatingPoint>::param_type(private_meanEventsPerTime));
     (*SGEXTN::SeerattraNum::UnsafeCasts<std::exponential_distribution<FloatingPoint>>::uneraseType(private_stlDistribution)).reset();

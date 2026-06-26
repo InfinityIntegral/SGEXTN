@@ -64,7 +64,7 @@ template <typename FloatingPoint> void SGEXTN::SeerattraNum::GumbelDistribution<
 }
 
 template <typename FloatingPoint> void SGEXTN::SeerattraNum::GumbelDistribution<FloatingPoint>::setSpread(FloatingPoint spread){
-    if(spread < 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GumbelDistribution::setSpread crashed because requested spread is negative");}
+    if(spread <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GumbelDistribution::setSpread crashed because requested spread is nonpositive");}
     private_spread = spread;
     (*SGEXTN::SeerattraNum::UnsafeCasts<std::extreme_value_distribution<FloatingPoint>>::uneraseType(private_stlDistribution)).param(typename std::extreme_value_distribution<FloatingPoint>::param_type(private_mode, private_spread));
     (*SGEXTN::SeerattraNum::UnsafeCasts<std::extreme_value_distribution<FloatingPoint>>::uneraseType(private_stlDistribution)).reset();
