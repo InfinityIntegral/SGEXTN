@@ -37,6 +37,9 @@ public:
     static void testGammaDistribution();
     static void testWeibullDistribution();
     static void testGumbelDistribution();
+    static void testNormalDistribution();
+    static void testLogNormalDistribution();
+    static void testCauchyDistribution();
 };
 }
 }
