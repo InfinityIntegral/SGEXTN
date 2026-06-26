@@ -64,7 +64,7 @@ template <typename FloatingPoint> void SGEXTN::SeerattraNum::LogNormalDistributi
 }
 
 template <typename FloatingPoint> void SGEXTN::SeerattraNum::LogNormalDistribution<FloatingPoint>::setStandardDeviationOfLn(FloatingPoint standardDeviationOfLn){
-    if(standardDeviationOfLn < 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::LogNormalDistribution::setStandardDeviationOfLn crashed because requested standard deviation is negative");}
+    if(standardDeviationOfLn <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::LogNormalDistribution::setStandardDeviationOfLn crashed because requested standard deviation is nonpositive");}
     private_standardDeviationOfLn = standardDeviationOfLn;
     (*SGEXTN::SeerattraNum::UnsafeCasts<std::lognormal_distribution<FloatingPoint>>::uneraseType(private_stlDistribution)).param(typename std::lognormal_distribution<FloatingPoint>::param_type(private_meanOfLn, private_standardDeviationOfLn));
     (*SGEXTN::SeerattraNum::UnsafeCasts<std::normal_distribution<FloatingPoint>>::uneraseType(private_stlDistribution)).reset();
