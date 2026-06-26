@@ -22,7 +22,12 @@
 #include <SGEXTN/SeerattraNum/SimpleRandom.h>
 #include <random>
 
-template <typename FloatingPoint> SGEXTN::SeerattraNum::ExponentialDistribution<FloatingPoint>::ExponentialDistribution(bool useGlobal, FloatingPoint meanEventsPerTime) : private_meanEventsPerTime(meanEventsPerTime), private_stlRandomEngine(SGEXTN::SeerattraNum::SimpleRandom::private_createRandomEngine(useGlobal)), private_stlDistribution(SGEXTN::SeerattraNum::UnsafeCasts<std::exponential_distribution<FloatingPoint>>::eraseType(new std::exponential_distribution<FloatingPoint>(meanEventsPerTime))){}
+template <typename FloatingPoint> SGEXTN::SeerattraNum::ExponentialDistribution<FloatingPoint>::ExponentialDistribution(bool useGlobal, FloatingPoint meanEventsPerTime){
+    if(meanEventsPerTime <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::ExponentialDistribution constructor crashed because requested number of events occurring in each unit time is nonpositive");}
+    private_meanEventsPerTime = meanEventsPerTime;
+    private_stlRandomEngine = SGEXTN::SeerattraNum::SimpleRandom::private_createRandomEngine(useGlobal);
+    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::exponential_distribution<FloatingPoint>>::eraseType(new std::exponential_distribution<FloatingPoint>(meanEventsPerTime));
+}
 
 template <typename FloatingPoint> SGEXTN::SeerattraNum::ExponentialDistribution<FloatingPoint>::~ExponentialDistribution(){
     delete SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(private_stlRandomEngine);

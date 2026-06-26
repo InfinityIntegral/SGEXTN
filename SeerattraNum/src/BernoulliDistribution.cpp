@@ -22,7 +22,13 @@
 #include <SGEXTN/SeerattraNum/SimpleRandom.h>
 #include <random>
 
-template <typename ProbabilityType> SGEXTN::SeerattraNum::BernoulliDistribution<ProbabilityType>::BernoulliDistribution(bool useGlobal, ProbabilityType chanceOfTrue) : private_chanceOfTrue(chanceOfTrue), private_stlRandomEngine(SGEXTN::SeerattraNum::SimpleRandom::private_createRandomEngine(useGlobal)), private_stlDistribution(SGEXTN::SeerattraNum::UnsafeCasts<std::bernoulli_distribution>::eraseType(new std::bernoulli_distribution(chanceOfTrue))){}
+template <typename ProbabilityType> SGEXTN::SeerattraNum::BernoulliDistribution<ProbabilityType>::BernoulliDistribution(bool useGlobal, ProbabilityType chanceOfTrue){
+    if(chanceOfTrue < 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BernoulliDistribution constructor crashed because the requested probability is negative");}
+    if(chanceOfTrue > 1.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BernoulliDistribution constructor crashed because the requested probability is higher than 1");}
+    private_chanceOfTrue = chanceOfTrue;
+    private_stlRandomEngine = SGEXTN::SeerattraNum::SimpleRandom::private_createRandomEngine(useGlobal);
+    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::bernoulli_distribution>::eraseType(new std::bernoulli_distribution(chanceOfTrue));
+}
 
 template <typename ProbabilityType> SGEXTN::SeerattraNum::BernoulliDistribution<ProbabilityType>::~BernoulliDistribution(){
     delete SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(private_stlRandomEngine);

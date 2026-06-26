@@ -22,7 +22,13 @@
 #include <SGEXTN/SeerattraNum/SimpleRandom.h>
 #include <random>
 
-template <typename FloatingPoint> SGEXTN::SeerattraNum::GumbelDistribution<FloatingPoint>::GumbelDistribution(bool useGlobal, FloatingPoint mode, FloatingPoint spread) : private_mode(mode), private_spread(spread), private_stlRandomEngine(SGEXTN::SeerattraNum::SimpleRandom::private_createRandomEngine(useGlobal)), private_stlDistribution(SGEXTN::SeerattraNum::UnsafeCasts<std::extreme_value_distribution<FloatingPoint>>::eraseType(new std::extreme_value_distribution<FloatingPoint>(mode, spread))){}
+template <typename FloatingPoint> SGEXTN::SeerattraNum::GumbelDistribution<FloatingPoint>::GumbelDistribution(bool useGlobal, FloatingPoint mode, FloatingPoint spread){
+    if(spread <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GumbelDistribution constructor crashed because requested spread is nonpositive");}
+    private_mode = mode;
+    private_spread = spread;
+    private_stlRandomEngine = SGEXTN::SeerattraNum::SimpleRandom::private_createRandomEngine(useGlobal);
+    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::extreme_value_distribution<FloatingPoint>>::eraseType(new std::extreme_value_distribution<FloatingPoint>(mode, spread));
+}
 
 template <typename FloatingPoint> SGEXTN::SeerattraNum::GumbelDistribution<FloatingPoint>::~GumbelDistribution(){
     delete SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(private_stlRandomEngine);

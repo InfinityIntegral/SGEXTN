@@ -22,7 +22,13 @@
 #include <SGEXTN/SeerattraNum/SimpleRandom.h>
 #include <random>
 
-template <typename FloatingPoint> SGEXTN::SeerattraNum::LogNormalDistribution<FloatingPoint>::LogNormalDistribution(bool useGlobal, FloatingPoint meanOfLn, FloatingPoint standardDeviationOfLn) : private_meanOfLn(meanOfLn), private_standardDeviationOfLn(standardDeviationOfLn), private_stlRandomEngine(SGEXTN::SeerattraNum::SimpleRandom::private_createRandomEngine(useGlobal)), private_stlDistribution(SGEXTN::SeerattraNum::UnsafeCasts<std::lognormal_distribution<FloatingPoint>>::eraseType(new std::lognormal_distribution<FloatingPoint>(meanOfLn, standardDeviationOfLn))){}
+template <typename FloatingPoint> SGEXTN::SeerattraNum::LogNormalDistribution<FloatingPoint>::LogNormalDistribution(bool useGlobal, FloatingPoint meanOfLn, FloatingPoint standardDeviationOfLn){
+    if(standardDeviationOfLn <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::LogNormalDistribution constructor crashed because requested standard deviation is nonpositive");}
+    private_meanOfLn = meanOfLn;
+    private_standardDeviationOfLn = standardDeviationOfLn;
+    private_stlRandomEngine = SGEXTN::SeerattraNum::SimpleRandom::private_createRandomEngine(useGlobal);
+    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::lognormal_distribution<FloatingPoint>>::eraseType(new std::lognormal_distribution<FloatingPoint>(meanOfLn, standardDeviationOfLn));
+}
 
 template <typename FloatingPoint> SGEXTN::SeerattraNum::LogNormalDistribution<FloatingPoint>::~LogNormalDistribution(){
     delete SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(private_stlRandomEngine);

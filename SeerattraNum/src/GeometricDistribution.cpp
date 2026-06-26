@@ -22,7 +22,13 @@
 #include <SGEXTN/SeerattraNum/SimpleRandom.h>
 #include <random>
 
-template <typename ProbabilityType, typename Integer> SGEXTN::SeerattraNum::GeometricDistribution<ProbabilityType, Integer>::GeometricDistribution(bool useGlobal, ProbabilityType chanceOfTrue) : private_chanceOfTrue(chanceOfTrue), private_stlRandomEngine(SGEXTN::SeerattraNum::SimpleRandom::private_createRandomEngine(useGlobal)), private_stlDistribution(SGEXTN::SeerattraNum::UnsafeCasts<std::geometric_distribution<Integer>>::eraseType(new std::geometric_distribution<Integer>(chanceOfTrue))){}
+template <typename ProbabilityType, typename Integer> SGEXTN::SeerattraNum::GeometricDistribution<ProbabilityType, Integer>::GeometricDistribution(bool useGlobal, ProbabilityType chanceOfTrue){
+    if(chanceOfTrue < 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GeometricDistribution constructor crashed because the requested probability is negative");}
+    if(chanceOfTrue > 1.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GeometricDistribution constructor crashed because the requested probability is higher than 1");}
+    private_chanceOfTrue = chanceOfTrue;
+    private_stlRandomEngine = SGEXTN::SeerattraNum::SimpleRandom::private_createRandomEngine(useGlobal);
+    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::geometric_distribution<Integer>>::eraseType(new std::geometric_distribution<Integer>(chanceOfTrue));
+}
 
 template <typename ProbabilityType, typename Integer> SGEXTN::SeerattraNum::GeometricDistribution<ProbabilityType, Integer>::~GeometricDistribution(){
     delete SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(private_stlRandomEngine);

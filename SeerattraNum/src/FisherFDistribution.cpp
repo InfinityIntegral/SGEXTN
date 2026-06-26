@@ -22,7 +22,14 @@
 #include <SGEXTN/SeerattraNum/SimpleRandom.h>
 #include <random>
 
-template <typename FloatingPoint> SGEXTN::SeerattraNum::FisherFDistribution<FloatingPoint>::FisherFDistribution(bool useGlobal, FloatingPoint numeratorDegreesOfFreedom, FloatingPoint denominatorDegreesOfFreedom) : private_numeratorDegreesOfFreedom(numeratorDegreesOfFreedom), private_denominatorDegreesOfFreedom(denominatorDegreesOfFreedom), private_stlRandomEngine(SGEXTN::SeerattraNum::SimpleRandom::private_createRandomEngine(useGlobal)), private_stlDistribution(SGEXTN::SeerattraNum::UnsafeCasts<std::fisher_f_distribution<FloatingPoint>>::eraseType(new std::fisher_f_distribution<FloatingPoint>(numeratorDegreesOfFreedom, denominatorDegreesOfFreedom))){}
+template <typename FloatingPoint> SGEXTN::SeerattraNum::FisherFDistribution<FloatingPoint>::FisherFDistribution(bool useGlobal, FloatingPoint numeratorDegreesOfFreedom, FloatingPoint denominatorDegreesOfFreedom){
+    if(numeratorDegreesOfFreedom <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::FisherFDistribution constructor crashed because requested number of degrees of freedom in the numerator is nonpositive");}
+    if(denominatorDegreesOfFreedom <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::FisherFDistribution constructor crashed because requested number of degrees of freedom in the denominator is nonpositive");}
+    private_numeratorDegreesOfFreedom = numeratorDegreesOfFreedom;
+    private_denominatorDegreesOfFreedom = denominatorDegreesOfFreedom;
+    private_stlRandomEngine = SGEXTN::SeerattraNum::SimpleRandom::private_createRandomEngine(useGlobal);
+    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::fisher_f_distribution<FloatingPoint>>::eraseType(new std::fisher_f_distribution<FloatingPoint>(numeratorDegreesOfFreedom, denominatorDegreesOfFreedom));
+}
 
 template <typename FloatingPoint> SGEXTN::SeerattraNum::FisherFDistribution<FloatingPoint>::~FisherFDistribution(){
     delete SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(private_stlRandomEngine);

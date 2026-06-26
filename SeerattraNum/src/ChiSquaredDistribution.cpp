@@ -22,7 +22,12 @@
 #include <SGEXTN/SeerattraNum/SimpleRandom.h>
 #include <random>
 
-template <typename FloatingPoint> SGEXTN::SeerattraNum::ChiSquaredDistribution<FloatingPoint>::ChiSquaredDistribution(bool useGlobal, FloatingPoint degreesOfFreedom) : private_degreesOfFreedom(degreesOfFreedom), private_stlRandomEngine(SGEXTN::SeerattraNum::SimpleRandom::private_createRandomEngine(useGlobal)), private_stlDistribution(SGEXTN::SeerattraNum::UnsafeCasts<std::chi_squared_distribution<FloatingPoint>>::eraseType(new std::chi_squared_distribution<FloatingPoint>(degreesOfFreedom))){}
+template <typename FloatingPoint> SGEXTN::SeerattraNum::ChiSquaredDistribution<FloatingPoint>::ChiSquaredDistribution(bool useGlobal, FloatingPoint degreesOfFreedom){
+    if(degreesOfFreedom <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::ChiSquaredDistribution constructor crashed because requested number of degrees of freedom is nonpositive");}
+    private_degreesOfFreedom = degreesOfFreedom;
+    private_stlRandomEngine = SGEXTN::SeerattraNum::SimpleRandom::private_createRandomEngine(useGlobal);
+    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::chi_squared_distribution<FloatingPoint>>::eraseType(new std::chi_squared_distribution<FloatingPoint>(degreesOfFreedom));
+}
 
 template <typename FloatingPoint> SGEXTN::SeerattraNum::ChiSquaredDistribution<FloatingPoint>::~ChiSquaredDistribution(){
     delete SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(private_stlRandomEngine);

@@ -22,7 +22,14 @@
 #include <SGEXTN/SeerattraNum/SimpleRandom.h>
 #include <random>
 
-template <typename FloatingPoint> SGEXTN::SeerattraNum::GammaDistribution<FloatingPoint>::GammaDistribution(bool useGlobal, FloatingPoint variableCount, FloatingPoint variableMean) : private_variableCount(variableCount), private_variableMean(variableMean), private_stlRandomEngine(SGEXTN::SeerattraNum::SimpleRandom::private_createRandomEngine(useGlobal)), private_stlDistribution(SGEXTN::SeerattraNum::UnsafeCasts<std::gamma_distribution<FloatingPoint>>::eraseType(new std::gamma_distribution<FloatingPoint>(variableCount, variableMean))){}
+template <typename FloatingPoint> SGEXTN::SeerattraNum::GammaDistribution<FloatingPoint>::GammaDistribution(bool useGlobal, FloatingPoint variableCount, FloatingPoint variableMean){
+    if(variableCount <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GammaDistribution constructor crashed because requested number of exponentially distributed variables to sum is nonpositive");}
+    if(variableMean <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GammaDistribution constructor crashed because requested mean of each exponentially distributed variable is nonpositive");}
+    private_variableCount = variableCount;
+    private_variableMean = variableMean;
+    private_stlRandomEngine = SGEXTN::SeerattraNum::SimpleRandom::private_createRandomEngine(useGlobal);
+    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::gamma_distribution<FloatingPoint>>::eraseType(new std::gamma_distribution<FloatingPoint>(variableCount, variableMean));
+}
 
 template <typename FloatingPoint> SGEXTN::SeerattraNum::GammaDistribution<FloatingPoint>::~GammaDistribution(){
     delete SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(private_stlRandomEngine);
