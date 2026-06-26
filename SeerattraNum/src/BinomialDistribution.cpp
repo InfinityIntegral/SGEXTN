@@ -22,7 +22,15 @@
 #include <SGEXTN/SeerattraNum/SimpleRandom.h>
 #include <random>
 
-template <typename ProbabilityType, typename Integer> SGEXTN::SeerattraNum::BinomialDistribution<ProbabilityType, Integer>::BinomialDistribution(bool useGlobal, ProbabilityType chanceOfTrue, Integer attemptCount) : private_chanceOfTrue(chanceOfTrue), private_attemptCount(attemptCount), private_stlRandomEngine(SGEXTN::SeerattraNum::SimpleRandom::private_createRandomEngine(useGlobal)), private_stlDistribution(SGEXTN::SeerattraNum::UnsafeCasts<std::binomial_distribution<Integer>>::eraseType(new std::binomial_distribution<Integer>(attemptCount, chanceOfTrue))){}
+template <typename ProbabilityType, typename Integer> SGEXTN::SeerattraNum::BinomialDistribution<ProbabilityType, Integer>::BinomialDistribution(bool useGlobal, ProbabilityType chanceOfTrue, Integer attemptCount){
+    if(chanceOfTrue < 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BinomialDistribution constructor crashed because the requested probability is negative");}
+    if(chanceOfTrue > 1.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BinomialDistribution constructor crashed because the requested probability is higher than 1");}
+    if(attemptCount < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BinomialDistribution constructor crashed because the requested number of attempts is negative");}
+    private_chanceOfTrue = chanceOfTrue;
+    private_attemptCount = attemptCount;
+    private_stlRandomEngine = SGEXTN::SeerattraNum::SimpleRandom::private_createRandomEngine(useGlobal);
+    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::binomial_distribution<Integer>>::eraseType(new std::binomial_distribution<Integer>(attemptCount, chanceOfTrue));
+}
 
 template <typename ProbabilityType, typename Integer> SGEXTN::SeerattraNum::BinomialDistribution<ProbabilityType, Integer>::~BinomialDistribution(){
     delete SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(private_stlRandomEngine);

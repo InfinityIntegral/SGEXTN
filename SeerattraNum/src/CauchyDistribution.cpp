@@ -22,7 +22,13 @@
 #include <SGEXTN/SeerattraNum/SimpleRandom.h>
 #include <random>
 
-template <typename FloatingPoint> SGEXTN::SeerattraNum::CauchyDistribution<FloatingPoint>::CauchyDistribution(bool useGlobal, FloatingPoint median, FloatingPoint halfWidth) : private_median(median), private_halfWidth(halfWidth), private_stlRandomEngine(SGEXTN::SeerattraNum::SimpleRandom::private_createRandomEngine(useGlobal)), private_stlDistribution(SGEXTN::SeerattraNum::UnsafeCasts<std::cauchy_distribution<FloatingPoint>>::eraseType(new std::cauchy_distribution<FloatingPoint>(median, halfWidth))){}
+template <typename FloatingPoint> SGEXTN::SeerattraNum::CauchyDistribution<FloatingPoint>::CauchyDistribution(bool useGlobal, FloatingPoint median, FloatingPoint halfWidth){
+    if(halfWidth <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::CauchyDistribution constructor crashed because requested half width is nonpositive");}
+    private_median = median;
+    private_halfWidth = halfWidth;
+    private_stlRandomEngine = SGEXTN::SeerattraNum::SimpleRandom::private_createRandomEngine(useGlobal);
+    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::cauchy_distribution<FloatingPoint>>::eraseType(new std::cauchy_distribution<FloatingPoint>(median, halfWidth));
+}
 
 template <typename FloatingPoint> SGEXTN::SeerattraNum::CauchyDistribution<FloatingPoint>::~CauchyDistribution(){
     delete SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(private_stlRandomEngine);

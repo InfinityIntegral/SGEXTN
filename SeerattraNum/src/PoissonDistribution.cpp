@@ -22,7 +22,12 @@
 #include <SGEXTN/SeerattraNum/SimpleRandom.h>
 #include <random>
 
-template <typename MeanType, typename Integer> SGEXTN::SeerattraNum::PoissonDistribution<MeanType, Integer>::PoissonDistribution(bool useGlobal, MeanType mean) : private_mean(mean), private_stlRandomEngine(SGEXTN::SeerattraNum::SimpleRandom::private_createRandomEngine(useGlobal)), private_stlDistribution(SGEXTN::SeerattraNum::UnsafeCasts<std::poisson_distribution<Integer>>::eraseType(new std::poisson_distribution<Integer>(mean))){}
+template <typename MeanType, typename Integer> SGEXTN::SeerattraNum::PoissonDistribution<MeanType, Integer>::PoissonDistribution(bool useGlobal, MeanType mean){
+    if(mean <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::PoissonDistribution constructor crashed because requested mean is nonpositive");}
+    private_mean = mean;
+    private_stlRandomEngine = SGEXTN::SeerattraNum::SimpleRandom::private_createRandomEngine(useGlobal);
+    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::poisson_distribution<Integer>>::eraseType(new std::poisson_distribution<Integer>(mean));
+}
 
 template <typename MeanType, typename Integer> SGEXTN::SeerattraNum::PoissonDistribution<MeanType, Integer>::~PoissonDistribution(){
     delete SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(private_stlRandomEngine);

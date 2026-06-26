@@ -22,7 +22,13 @@
 #include <SGEXTN/SeerattraNum/SimpleRandom.h>
 #include <random>
 
-template <typename Integer> SGEXTN::SeerattraNum::UniformDistributionInteger<Integer>::UniformDistributionInteger(bool useGlobal, Integer inclusiveMin, Integer inclusiveMax) : private_inclusiveMin(inclusiveMin), private_inclusiveMax(inclusiveMax), private_stlRandomEngine(SGEXTN::SeerattraNum::SimpleRandom::private_createRandomEngine(useGlobal)), private_stlDistribution(SGEXTN::SeerattraNum::UnsafeCasts<std::uniform_int_distribution<Integer>>::eraseType(new std::uniform_int_distribution<Integer>(inclusiveMin, inclusiveMax))){}
+template <typename Integer> SGEXTN::SeerattraNum::UniformDistributionInteger<Integer>::UniformDistributionInteger(bool useGlobal, Integer inclusiveMin, Integer inclusiveMax){
+    if(inclusiveMin > inclusiveMax){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionInteger constructor crashed because minimum is higher than maximum");}
+    private_inclusiveMin = inclusiveMin;
+    private_inclusiveMax = inclusiveMax;
+    private_stlRandomEngine = SGEXTN::SeerattraNum::SimpleRandom::private_createRandomEngine(useGlobal);
+    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::uniform_int_distribution<Integer>>::eraseType(new std::uniform_int_distribution<Integer>(inclusiveMin, inclusiveMax));
+}
 
 template <typename Integer> SGEXTN::SeerattraNum::UniformDistributionInteger<Integer>::~UniformDistributionInteger(){
     delete SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(private_stlRandomEngine);

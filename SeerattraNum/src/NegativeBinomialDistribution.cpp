@@ -22,7 +22,15 @@
 #include <SGEXTN/SeerattraNum/SimpleRandom.h>
 #include <random>
 
-template <typename ProbabilityType, typename Integer> SGEXTN::SeerattraNum::NegativeBinomialDistribution<ProbabilityType, Integer>::NegativeBinomialDistribution(bool useGlobal, ProbabilityType chanceOfTrue, Integer successCount) : private_chanceOfTrue(chanceOfTrue), private_successCount(successCount), private_stlRandomEngine(SGEXTN::SeerattraNum::SimpleRandom::private_createRandomEngine(useGlobal)), private_stlDistribution(SGEXTN::SeerattraNum::UnsafeCasts<std::negative_binomial_distribution<Integer>>::eraseType(new std::negative_binomial_distribution<Integer>(successCount, chanceOfTrue))){}
+template <typename ProbabilityType, typename Integer> SGEXTN::SeerattraNum::NegativeBinomialDistribution<ProbabilityType, Integer>::NegativeBinomialDistribution(bool useGlobal, ProbabilityType chanceOfTrue, Integer successCount){
+    if(chanceOfTrue < 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NegativeBinomialDistribution constructor crashed because the requested probability is negative");}
+    if(chanceOfTrue > 1.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NegativeBinomialDistribution constructor crashed because the requested probability is higher than 1");}
+    if(successCount < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NegativeBinomialDistribution constructor crashed because the requested number of successful attempts is negative");}
+    private_chanceOfTrue = chanceOfTrue;
+    private_successCount = successCount;
+    private_stlRandomEngine = SGEXTN::SeerattraNum::SimpleRandom::private_createRandomEngine(useGlobal);
+    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::negative_binomial_distribution<Integer>>::eraseType(new std::negative_binomial_distribution<Integer>(successCount, chanceOfTrue));
+}
 
 template <typename ProbabilityType, typename Integer> SGEXTN::SeerattraNum::NegativeBinomialDistribution<ProbabilityType, Integer>::~NegativeBinomialDistribution(){
     delete SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(private_stlRandomEngine);

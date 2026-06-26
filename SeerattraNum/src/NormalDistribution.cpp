@@ -22,7 +22,13 @@
 #include <SGEXTN/SeerattraNum/SimpleRandom.h>
 #include <random>
 
-template <typename FloatingPoint> SGEXTN::SeerattraNum::NormalDistribution<FloatingPoint>::NormalDistribution(bool useGlobal, FloatingPoint mean, FloatingPoint standardDeviation) : private_mean(mean), private_standardDeviation(standardDeviation), private_stlRandomEngine(SGEXTN::SeerattraNum::SimpleRandom::private_createRandomEngine(useGlobal)), private_stlDistribution(SGEXTN::SeerattraNum::UnsafeCasts<std::normal_distribution<FloatingPoint>>::eraseType(new std::normal_distribution<FloatingPoint>(mean, standardDeviation))){}
+template <typename FloatingPoint> SGEXTN::SeerattraNum::NormalDistribution<FloatingPoint>::NormalDistribution(bool useGlobal, FloatingPoint mean, FloatingPoint standardDeviation){
+    if(standardDeviation <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NormalDistribution constructor crashed because requested standard deviation is nonpositive");}
+    private_mean = mean;
+    private_standardDeviation = standardDeviation;
+    private_stlRandomEngine = SGEXTN::SeerattraNum::SimpleRandom::private_createRandomEngine(useGlobal);
+    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::normal_distribution<FloatingPoint>>::eraseType(new std::normal_distribution<FloatingPoint>(mean, standardDeviation));
+}
 
 template <typename FloatingPoint> SGEXTN::SeerattraNum::NormalDistribution<FloatingPoint>::~NormalDistribution(){
     delete SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(private_stlRandomEngine);
