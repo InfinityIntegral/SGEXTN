@@ -43,6 +43,9 @@ public:
     static void testChiSquaredDistribution();
     static void testFisherFDistribution();
     static void testStudentTDistribution();
+    static void testWeightedIndexSelectionDistribution();
+    static void testWeightedPiecewiseConstantDistribution();
+    static void testWeightedPiecewiseLinearDistribution();
 };
 }
 }
