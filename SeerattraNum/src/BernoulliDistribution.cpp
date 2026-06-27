@@ -63,8 +63,8 @@ template <typename ProbabilityType> void SGEXTN::SeerattraNum::BernoulliDistribu
     if(chanceOfTrue < 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BernoulliDistribution::setChanceOfTrue crashed because the requested probability is negative");}
     if(chanceOfTrue > 1.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BernoulliDistribution::setChanceOfTrue crashed because the requested probability is higher than 1");}
     private_chanceOfTrue = chanceOfTrue;
-    (*SGEXTN::SeerattraNum::UnsafeCasts<std::bernoulli_distribution>::uneraseType(private_stlDistribution)).param(typename std::bernoulli_distribution::param_type(private_chanceOfTrue));
-    (*SGEXTN::SeerattraNum::UnsafeCasts<std::bernoulli_distribution>::uneraseType(private_stlDistribution)).reset();
+    delete SGEXTN::SeerattraNum::UnsafeCasts<std::bernoulli_distribution>::uneraseType(private_stlDistribution);
+    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::bernoulli_distribution>::eraseType(new std::bernoulli_distribution(chanceOfTrue));
 }
 
 template class SGEXTN::SeerattraNum::BernoulliDistribution<float>;

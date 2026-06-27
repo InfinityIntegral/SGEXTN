@@ -67,8 +67,8 @@ template <typename Integer> void SGEXTN::SeerattraNum::UniformDistributionIntege
     if(inclusiveMin > inclusiveMax){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionInteger::setRange crashed because minimum is higher than maximum");}
     private_inclusiveMin = inclusiveMin;
     private_inclusiveMax = inclusiveMax;
-    (*SGEXTN::SeerattraNum::UnsafeCasts<std::uniform_int_distribution<Integer>>::uneraseType(private_stlDistribution)).param(typename std::uniform_int_distribution<Integer>::param_type(private_inclusiveMin, private_inclusiveMax));
-    (*SGEXTN::SeerattraNum::UnsafeCasts<std::uniform_int_distribution<Integer>>::uneraseType(private_stlDistribution)).reset();
+    delete SGEXTN::SeerattraNum::UnsafeCasts<std::uniform_int_distribution<Integer>>::uneraseType(private_stlDistribution);
+    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::uniform_int_distribution<Integer>>::eraseType(new std::uniform_int_distribution<Integer>(inclusiveMin, inclusiveMax));
 }
 
 template class SGEXTN::SeerattraNum::UniformDistributionInteger<int>;

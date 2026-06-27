@@ -65,15 +65,15 @@ template <typename FloatingPoint> FloatingPoint SGEXTN::SeerattraNum::LogNormalD
 
 template <typename FloatingPoint> void SGEXTN::SeerattraNum::LogNormalDistribution<FloatingPoint>::setMeanOfLn(FloatingPoint meanOfLn){
     private_meanOfLn = meanOfLn;
-    (*SGEXTN::SeerattraNum::UnsafeCasts<std::lognormal_distribution<FloatingPoint>>::uneraseType(private_stlDistribution)).param(typename std::lognormal_distribution<FloatingPoint>::param_type(private_meanOfLn, private_standardDeviationOfLn));
-    (*SGEXTN::SeerattraNum::UnsafeCasts<std::normal_distribution<FloatingPoint>>::uneraseType(private_stlDistribution)).reset();
+    delete SGEXTN::SeerattraNum::UnsafeCasts<std::lognormal_distribution<FloatingPoint>>::uneraseType(private_stlDistribution);
+    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::lognormal_distribution<FloatingPoint>>::eraseType(new std::lognormal_distribution<FloatingPoint>(meanOfLn, private_standardDeviationOfLn));
 }
 
 template <typename FloatingPoint> void SGEXTN::SeerattraNum::LogNormalDistribution<FloatingPoint>::setStandardDeviationOfLn(FloatingPoint standardDeviationOfLn){
     if(standardDeviationOfLn <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::LogNormalDistribution::setStandardDeviationOfLn crashed because requested standard deviation is nonpositive");}
     private_standardDeviationOfLn = standardDeviationOfLn;
-    (*SGEXTN::SeerattraNum::UnsafeCasts<std::lognormal_distribution<FloatingPoint>>::uneraseType(private_stlDistribution)).param(typename std::lognormal_distribution<FloatingPoint>::param_type(private_meanOfLn, private_standardDeviationOfLn));
-    (*SGEXTN::SeerattraNum::UnsafeCasts<std::normal_distribution<FloatingPoint>>::uneraseType(private_stlDistribution)).reset();
+    delete SGEXTN::SeerattraNum::UnsafeCasts<std::lognormal_distribution<FloatingPoint>>::uneraseType(private_stlDistribution);
+    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::lognormal_distribution<FloatingPoint>>::eraseType(new std::lognormal_distribution<FloatingPoint>(private_meanOfLn, standardDeviationOfLn));
 }
 
 template class SGEXTN::SeerattraNum::LogNormalDistribution<float>;

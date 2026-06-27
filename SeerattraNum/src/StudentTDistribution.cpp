@@ -61,8 +61,8 @@ template <typename FloatingPoint> FloatingPoint SGEXTN::SeerattraNum::StudentTDi
 template <typename FloatingPoint> void SGEXTN::SeerattraNum::StudentTDistribution<FloatingPoint>::setDegreesOfFreedom(FloatingPoint degreesOfFreedom){
     if(degreesOfFreedom <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::StudentTDistribution::setDegreesOfFreedom crashed because requested number of degrees of freedom is nonpositive");}
     private_degreesOfFreedom = degreesOfFreedom;
-    (*SGEXTN::SeerattraNum::UnsafeCasts<std::student_t_distribution<FloatingPoint>>::uneraseType(private_stlDistribution)).param(typename std::student_t_distribution<FloatingPoint>::param_type(private_degreesOfFreedom));
-    (*SGEXTN::SeerattraNum::UnsafeCasts<std::student_t_distribution<FloatingPoint>>::uneraseType(private_stlDistribution)).reset();
+    delete SGEXTN::SeerattraNum::UnsafeCasts<std::student_t_distribution<FloatingPoint>>::uneraseType(private_stlDistribution);
+    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::student_t_distribution<FloatingPoint>>::eraseType(new std::student_t_distribution<FloatingPoint>(degreesOfFreedom));
 }
 
 template class SGEXTN::SeerattraNum::StudentTDistribution<float>;

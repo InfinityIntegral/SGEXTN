@@ -67,15 +67,15 @@ template <typename FloatingPoint> FloatingPoint SGEXTN::SeerattraNum::FisherFDis
 template <typename FloatingPoint> void SGEXTN::SeerattraNum::FisherFDistribution<FloatingPoint>::setNumeratorDegreesOfFreedom(FloatingPoint numeratorDegreesOfFreedom){
     if(numeratorDegreesOfFreedom <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::FisherFDistribution::setNumeratorDegreesOfFreedom crashed because requested number of degrees of freedom in the numerator is nonpositive");}
     private_numeratorDegreesOfFreedom = numeratorDegreesOfFreedom;
-    (*SGEXTN::SeerattraNum::UnsafeCasts<std::fisher_f_distribution<FloatingPoint>>::uneraseType(private_stlDistribution)).param(typename std::fisher_f_distribution<FloatingPoint>::param_type(private_numeratorDegreesOfFreedom, private_denominatorDegreesOfFreedom));
-    (*SGEXTN::SeerattraNum::UnsafeCasts<std::fisher_f_distribution<FloatingPoint>>::uneraseType(private_stlDistribution)).reset();
+    delete SGEXTN::SeerattraNum::UnsafeCasts<std::fisher_f_distribution<FloatingPoint>>::uneraseType(private_stlDistribution);
+    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::fisher_f_distribution<FloatingPoint>>::eraseType(new std::fisher_f_distribution<FloatingPoint>(numeratorDegreesOfFreedom, private_denominatorDegreesOfFreedom));
 }
 
 template <typename FloatingPoint> void SGEXTN::SeerattraNum::FisherFDistribution<FloatingPoint>::setDenominatorDegreesOfFreedom(FloatingPoint denominatorDegreesOfFreedom){
     if(denominatorDegreesOfFreedom <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::FisherFDistribution::setDenominatorDegreesOfFreedom crashed because requested number of degrees of freedom in the denominator is nonpositive");}
     private_denominatorDegreesOfFreedom = denominatorDegreesOfFreedom;
-    (*SGEXTN::SeerattraNum::UnsafeCasts<std::fisher_f_distribution<FloatingPoint>>::uneraseType(private_stlDistribution)).param(typename std::fisher_f_distribution<FloatingPoint>::param_type(private_numeratorDegreesOfFreedom, private_denominatorDegreesOfFreedom));
-    (*SGEXTN::SeerattraNum::UnsafeCasts<std::fisher_f_distribution<FloatingPoint>>::uneraseType(private_stlDistribution)).reset();
+    delete SGEXTN::SeerattraNum::UnsafeCasts<std::fisher_f_distribution<FloatingPoint>>::uneraseType(private_stlDistribution);
+    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::fisher_f_distribution<FloatingPoint>>::eraseType(new std::fisher_f_distribution<FloatingPoint>(private_numeratorDegreesOfFreedom, denominatorDegreesOfFreedom));
 }
 
 template class SGEXTN::SeerattraNum::FisherFDistribution<float>;

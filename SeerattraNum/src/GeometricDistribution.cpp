@@ -63,8 +63,8 @@ template <typename ProbabilityType, typename Integer> void SGEXTN::SeerattraNum:
     if(chanceOfTrue < 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GeometricDistribution::setChanceOfTrue crashed because the requested probability is negative");}
     if(chanceOfTrue > 1.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GeometricDistribution::setChanceOfTrue crashed because the requested probability is higher than 1");}
     private_chanceOfTrue = chanceOfTrue;
-    (*SGEXTN::SeerattraNum::UnsafeCasts<std::geometric_distribution<Integer>>::uneraseType(private_stlDistribution)).param(typename std::geometric_distribution<Integer>::param_type(private_chanceOfTrue));
-    (*SGEXTN::SeerattraNum::UnsafeCasts<std::geometric_distribution<Integer>>::uneraseType(private_stlDistribution)).reset();
+    delete SGEXTN::SeerattraNum::UnsafeCasts<std::geometric_distribution<Integer>>::uneraseType(private_stlDistribution);
+    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::geometric_distribution<Integer>>::eraseType(new std::geometric_distribution<Integer>(chanceOfTrue));
 }
 
 template class SGEXTN::SeerattraNum::GeometricDistribution<float, int>;

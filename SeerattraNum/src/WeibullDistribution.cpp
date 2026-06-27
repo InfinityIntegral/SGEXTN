@@ -67,15 +67,15 @@ template <typename FloatingPoint> FloatingPoint SGEXTN::SeerattraNum::WeibullDis
 template <typename FloatingPoint> void SGEXTN::SeerattraNum::WeibullDistribution<FloatingPoint>::setFailureBehaviour(FloatingPoint failureBehaviour){
     if(failureBehaviour <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeibullDistribution::setFailureBehaviour crashed because requested failure behaviour indicator is nonpositive");}
     private_failureBehaviour = failureBehaviour;
-    (*SGEXTN::SeerattraNum::UnsafeCasts<std::weibull_distribution<FloatingPoint>>::uneraseType(private_stlDistribution)).param(typename std::weibull_distribution<FloatingPoint>::param_type(private_failureBehaviour, private_characteristicLifespan));
-    (*SGEXTN::SeerattraNum::UnsafeCasts<std::weibull_distribution<FloatingPoint>>::uneraseType(private_stlDistribution)).reset();
+    delete SGEXTN::SeerattraNum::UnsafeCasts<std::weibull_distribution<FloatingPoint>>::uneraseType(private_stlDistribution);
+    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::weibull_distribution<FloatingPoint>>::eraseType(new std::weibull_distribution<FloatingPoint>(failureBehaviour, private_characteristicLifespan));
 }
 
 template <typename FloatingPoint> void SGEXTN::SeerattraNum::WeibullDistribution<FloatingPoint>::setCharacteristicLifespan(FloatingPoint characteristicLifespan){
     if(characteristicLifespan <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeibullDistribution::setCharacteristicLifespan crashed because requested characteristic lifespan is nonpositive");}
     private_characteristicLifespan = characteristicLifespan;
-    (*SGEXTN::SeerattraNum::UnsafeCasts<std::weibull_distribution<FloatingPoint>>::uneraseType(private_stlDistribution)).param(typename std::weibull_distribution<FloatingPoint>::param_type(private_failureBehaviour, private_characteristicLifespan));
-    (*SGEXTN::SeerattraNum::UnsafeCasts<std::weibull_distribution<FloatingPoint>>::uneraseType(private_stlDistribution)).reset();
+    delete SGEXTN::SeerattraNum::UnsafeCasts<std::weibull_distribution<FloatingPoint>>::uneraseType(private_stlDistribution);
+    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::weibull_distribution<FloatingPoint>>::eraseType(new std::weibull_distribution<FloatingPoint>(private_failureBehaviour, characteristicLifespan));
 }
 
 template class SGEXTN::SeerattraNum::WeibullDistribution<float>;
