@@ -67,15 +67,15 @@ template <typename FloatingPoint> FloatingPoint SGEXTN::SeerattraNum::GammaDistr
 template <typename FloatingPoint> void SGEXTN::SeerattraNum::GammaDistribution<FloatingPoint>::setVariableCount(FloatingPoint variableCount){
     if(variableCount <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GammaDistribution::setVariableCount crashed because requested number of exponentially distributed variables to sum is nonpositive");}
     private_variableCount = variableCount;
-    (*SGEXTN::SeerattraNum::UnsafeCasts<std::gamma_distribution<FloatingPoint>>::uneraseType(private_stlDistribution)).param(typename std::gamma_distribution<FloatingPoint>::param_type(private_variableCount, private_variableMean));
-    (*SGEXTN::SeerattraNum::UnsafeCasts<std::gamma_distribution<FloatingPoint>>::uneraseType(private_stlDistribution)).reset();
+    delete SGEXTN::SeerattraNum::UnsafeCasts<std::gamma_distribution<FloatingPoint>>::uneraseType(private_stlDistribution);
+    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::gamma_distribution<FloatingPoint>>::eraseType(new std::gamma_distribution<FloatingPoint>(variableCount, private_variableMean));
 }
 
 template <typename FloatingPoint> void SGEXTN::SeerattraNum::GammaDistribution<FloatingPoint>::setVariableMean(FloatingPoint variableMean){
     if(variableMean <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GammaDistribution::setVariableMean crashed because requested mean of each exponentially distributed variable is nonpositive");}
     private_variableMean = variableMean;
-    (*SGEXTN::SeerattraNum::UnsafeCasts<std::gamma_distribution<FloatingPoint>>::uneraseType(private_stlDistribution)).param(typename std::gamma_distribution<FloatingPoint>::param_type(private_variableCount, private_variableMean));
-    (*SGEXTN::SeerattraNum::UnsafeCasts<std::gamma_distribution<FloatingPoint>>::uneraseType(private_stlDistribution)).reset();
+    delete SGEXTN::SeerattraNum::UnsafeCasts<std::gamma_distribution<FloatingPoint>>::uneraseType(private_stlDistribution);
+    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::gamma_distribution<FloatingPoint>>::eraseType(new std::gamma_distribution<FloatingPoint>(private_variableCount, variableMean));
 }
 
 template class SGEXTN::SeerattraNum::GammaDistribution<float>;

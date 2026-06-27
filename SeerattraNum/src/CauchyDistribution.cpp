@@ -65,15 +65,15 @@ template <typename FloatingPoint> FloatingPoint SGEXTN::SeerattraNum::CauchyDist
 
 template <typename FloatingPoint> void SGEXTN::SeerattraNum::CauchyDistribution<FloatingPoint>::setMedian(FloatingPoint median){
     private_median = median;
-    (*SGEXTN::SeerattraNum::UnsafeCasts<std::cauchy_distribution<FloatingPoint>>::uneraseType(private_stlDistribution)).param(typename std::cauchy_distribution<FloatingPoint>::param_type(private_median, private_halfWidth));
-    (*SGEXTN::SeerattraNum::UnsafeCasts<std::cauchy_distribution<FloatingPoint>>::uneraseType(private_stlDistribution)).reset();
+    delete SGEXTN::SeerattraNum::UnsafeCasts<std::cauchy_distribution<FloatingPoint>>::uneraseType(private_stlDistribution);
+    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::cauchy_distribution<FloatingPoint>>::eraseType(new std::cauchy_distribution<FloatingPoint>(median, private_halfWidth));
 }
 
 template <typename FloatingPoint> void SGEXTN::SeerattraNum::CauchyDistribution<FloatingPoint>::setHalfWidth(FloatingPoint halfWidth){
     if(halfWidth <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::CauchyDistribution::setHalfWidth crashed because requested half width is nonpositive");}
     private_halfWidth = halfWidth;
-    (*SGEXTN::SeerattraNum::UnsafeCasts<std::cauchy_distribution<FloatingPoint>>::uneraseType(private_stlDistribution)).param(typename std::cauchy_distribution<FloatingPoint>::param_type(private_median, private_halfWidth));
-    (*SGEXTN::SeerattraNum::UnsafeCasts<std::cauchy_distribution<FloatingPoint>>::uneraseType(private_stlDistribution)).reset();
+    delete SGEXTN::SeerattraNum::UnsafeCasts<std::cauchy_distribution<FloatingPoint>>::uneraseType(private_stlDistribution);
+    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::cauchy_distribution<FloatingPoint>>::eraseType(new std::cauchy_distribution<FloatingPoint>(private_median, halfWidth));
 }
 
 template class SGEXTN::SeerattraNum::CauchyDistribution<float>;

@@ -87,8 +87,8 @@ template <typename WeightType, typename FloatingPoint> void SGEXTN::SeerattraNum
     }
     private_weights = weights;
     private_boundaries = boundaries;
-    (*SGEXTN::SeerattraNum::UnsafeCasts<std::piecewise_linear_distribution<FloatingPoint>>::uneraseType(private_stlDistribution)).param(typename std::piecewise_linear_distribution<FloatingPoint>::param_type(&boundaries.at(0), &boundaries.at(0) + boundaries.length(), &weights.at(0)));
-    (*SGEXTN::SeerattraNum::UnsafeCasts<std::piecewise_linear_distribution<FloatingPoint>>::uneraseType(private_stlDistribution)).reset();
+    delete SGEXTN::SeerattraNum::UnsafeCasts<std::piecewise_linear_distribution<FloatingPoint>>::uneraseType(private_stlDistribution);
+    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::piecewise_linear_distribution<FloatingPoint>>::eraseType(new std::piecewise_linear_distribution<FloatingPoint>(&boundaries.at(0), &boundaries.at(0) + boundaries.length(), &weights.at(0)));
 }
 
 template class SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution<float, float>;

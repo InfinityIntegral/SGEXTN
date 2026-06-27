@@ -73,8 +73,8 @@ template <typename WeightType> void SGEXTN::SeerattraNum::WeightedIndexSelection
     }
     if(isAllZero == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightIndexSelectionDistribution::setWeights crashed because all of the weights are zero");}
     private_weights = weights;
-    (*SGEXTN::SeerattraNum::UnsafeCasts<std::discrete_distribution<int>>::uneraseType(private_stlDistribution)).param(typename std::discrete_distribution<int>::param_type(&weights.at(0), &weights.at(0) + weights.length()));
-    (*SGEXTN::SeerattraNum::UnsafeCasts<std::discrete_distribution<int>>::uneraseType(private_stlDistribution)).reset();
+    delete SGEXTN::SeerattraNum::UnsafeCasts<std::discrete_distribution<int>>::uneraseType(private_stlDistribution);
+    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::discrete_distribution<int>>::eraseType(new std::discrete_distribution<int>(&weights.at(0), &weights.at(0) + weights.length()));
 }
 
 template class SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution<float>;

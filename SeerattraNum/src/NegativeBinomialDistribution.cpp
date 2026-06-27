@@ -69,15 +69,15 @@ template <typename ProbabilityType, typename Integer> void SGEXTN::SeerattraNum:
     if(chanceOfTrue < 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NegativeBinomialDistribution::setChanceOfTrue crashed because the requested probability is negative");}
     if(chanceOfTrue > 1.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NegativeBinomialDistribution::setChanceOfTrue crashed because the requested probability is higher than 1");}
     private_chanceOfTrue = chanceOfTrue;
-    (*SGEXTN::SeerattraNum::UnsafeCasts<std::negative_binomial_distribution<Integer>>::uneraseType(private_stlDistribution)).param(typename std::negative_binomial_distribution<Integer>::param_type(private_successCount, private_chanceOfTrue));
-    (*SGEXTN::SeerattraNum::UnsafeCasts<std::negative_binomial_distribution<Integer>>::uneraseType(private_stlDistribution)).reset();
+    delete SGEXTN::SeerattraNum::UnsafeCasts<std::negative_binomial_distribution<Integer>>::uneraseType(private_stlDistribution);
+    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::negative_binomial_distribution<Integer>>::eraseType(new std::negative_binomial_distribution<Integer>(private_successCount, chanceOfTrue));
 }
 
 template <typename ProbabilityType, typename Integer> void SGEXTN::SeerattraNum::NegativeBinomialDistribution<ProbabilityType, Integer>::setSuccessCount(Integer successCount){
     if(successCount < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NegativeBinomialDistribution::setSuccessCount crashed because the requested number of successful attempts is negative");}
     private_successCount = successCount;
-    (*SGEXTN::SeerattraNum::UnsafeCasts<std::negative_binomial_distribution<Integer>>::uneraseType(private_stlDistribution)).param(typename std::negative_binomial_distribution<Integer>::param_type(private_successCount, private_chanceOfTrue));
-    (*SGEXTN::SeerattraNum::UnsafeCasts<std::negative_binomial_distribution<Integer>>::uneraseType(private_stlDistribution)).reset();
+    delete SGEXTN::SeerattraNum::UnsafeCasts<std::negative_binomial_distribution<Integer>>::uneraseType(private_stlDistribution);
+    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::negative_binomial_distribution<Integer>>::eraseType(new std::negative_binomial_distribution<Integer>(successCount, private_chanceOfTrue));
 }
 
 template class SGEXTN::SeerattraNum::NegativeBinomialDistribution<float, int>;

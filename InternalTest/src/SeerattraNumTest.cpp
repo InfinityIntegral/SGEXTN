@@ -161,8 +161,7 @@ void SGEXTN::InternalTest::SeerattraNumTest::testUniformDistributionInteger(){
     if(randomArray.at(0) != stlRandomDistribution(stlRandomEngine) || randomArray.at(1) != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionInteger generate array first seed fail");}
     if(generator.getInclusiveMin() != 1){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionInteger get minimum boundary fail");}
     if(generator.getInclusiveMax() != 6){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionInteger get maximum boundary fail");}
-    stlRandomDistribution.param(std::uniform_int_distribution<int>::param_type(-5, -1));
-    stlRandomDistribution.reset();
+    stlRandomDistribution = std::uniform_int_distribution<int>(-5, -1);
     seedRandomEngine(secondSeed);
     generator.setRange(-5, -1);
     generator.seed(secondSeed);
@@ -181,8 +180,7 @@ void SGEXTN::InternalTest::SeerattraNumTest::testUniformDistributionFloatingPoin
     if(randomArray.at(0) != stlRandomDistribution(stlRandomEngine) || randomArray.at(1) != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionFloatingPoint generate array first seed fail");}
     if(generator.getMinimum() != 1.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionFloatingPoint get minimum boundary fail");}
     if(generator.getMaximum() != 2.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionFloatingPoint get maximum boundary fail");}
-    stlRandomDistribution.param(std::uniform_real_distribution<float>::param_type(-2.0f, -1.0f));
-    stlRandomDistribution.reset();
+    stlRandomDistribution = std::uniform_real_distribution<float>(-2.0f, -1.0f);
     seedRandomEngine(secondSeed);
     generator.setRange(-2.0f, -1.0f);
     generator.seed(secondSeed);
@@ -200,8 +198,7 @@ void SGEXTN::InternalTest::SeerattraNumTest::testBernoulliDistribution(){
     SGEXTN::Containers::Array<bool> randomArray = generator.randomValueArray(2);
     if(randomArray.at(0) != stlRandomDistribution(stlRandomEngine) || randomArray.at(1) != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BernoulliDistribution generate array first seed fail");}
     if(generator.getChanceOfTrue() != 0.25f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BernoulliDistribution get probability fail");}
-    stlRandomDistribution.param(std::bernoulli_distribution::param_type(0.75f));
-    stlRandomDistribution.reset();
+    stlRandomDistribution = std::bernoulli_distribution(0.75f);
     seedRandomEngine(secondSeed);
     generator.setChanceOfTrue(0.75f);
     generator.seed(secondSeed);
@@ -220,8 +217,7 @@ void SGEXTN::InternalTest::SeerattraNumTest::testBinomialDistribution(){
     if(randomArray.at(0) != stlRandomDistribution(stlRandomEngine) || randomArray.at(1) != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BinomialDistribution generate array first seed fail");}
     if(generator.getChanceOfTrue() != 0.25f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BinomialDistribution get probability fail");}
     if(generator.getAttemptCount() != 100){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BinomialDistribution get number of attempts fail");}
-    stlRandomDistribution.param(std::binomial_distribution<int>::param_type(1000, 0.75f));
-    stlRandomDistribution.reset();
+    stlRandomDistribution = std::binomial_distribution<int>(1000, 0.75f);
     seedRandomEngine(secondSeed);
     generator.setChanceOfTrue(0.75f);
     generator.setAttemptCount(1000);
@@ -241,8 +237,7 @@ void SGEXTN::InternalTest::SeerattraNumTest::testNegativeBinomialDistribution(){
     if(randomArray.at(0) != stlRandomDistribution(stlRandomEngine) || randomArray.at(1) != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NegativeBinomialDistribution generate array first seed fail");}
     if(generator.getChanceOfTrue() != 0.25f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NegativeBinomialDistribution get probability fail");}
     if(generator.getSuccessCount() != 100){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NegativeBinomialDistribution get number of successful attempts fail");}
-    stlRandomDistribution.param(std::negative_binomial_distribution<int>::param_type(1000, 0.75f));
-    stlRandomDistribution.reset();
+    stlRandomDistribution = std::negative_binomial_distribution<int>(1000, 0.75f);
     seedRandomEngine(secondSeed);
     generator.setChanceOfTrue(0.75f);
     generator.setSuccessCount(1000);
@@ -261,8 +256,7 @@ void SGEXTN::InternalTest::SeerattraNumTest::testGeometricDistribution(){
     SGEXTN::Containers::Array<int> randomArray = generator.randomValueArray(2);
     if(randomArray.at(0) != stlRandomDistribution(stlRandomEngine) || randomArray.at(1) != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GeometricDistribution generate array first seed fail");}
     if(generator.getChanceOfTrue() != 0.25f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GeometricDistribution get probability fail");}
-    stlRandomDistribution.param(std::geometric_distribution<int>::param_type(0.75f));
-    stlRandomDistribution.reset();
+    stlRandomDistribution = std::geometric_distribution<int>(0.75f);
     seedRandomEngine(secondSeed);
     generator.setChanceOfTrue(0.75f);
     generator.seed(secondSeed);
@@ -280,8 +274,7 @@ void SGEXTN::InternalTest::SeerattraNumTest::testPoissonDistribution(){
     SGEXTN::Containers::Array<int> randomArray = generator.randomValueArray(2);
     if(randomArray.at(0) != stlRandomDistribution(stlRandomEngine) || randomArray.at(1) != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::PoissonDistribution generate array first seed fail");}
     if(generator.getMean() != 100.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::PoissonDistribution get mean fail");}
-    stlRandomDistribution.param(std::poisson_distribution<int>::param_type(10.0f));
-    stlRandomDistribution.reset();
+    stlRandomDistribution = std::poisson_distribution<int>(10.0f);
     seedRandomEngine(secondSeed);
     generator.setMean(10.0f);
     generator.seed(secondSeed);
@@ -299,8 +292,7 @@ void SGEXTN::InternalTest::SeerattraNumTest::testExponentialDistribution(){
     SGEXTN::Containers::Array<float> randomArray = generator.randomValueArray(2);
     if(randomArray.at(0) != stlRandomDistribution(stlRandomEngine) || randomArray.at(1) != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::ExponentialDistribution generate array first seed fail");}
     if(generator.getMeanEventsPerTime() != 1.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::ExponentialDistribution get mean number of events occurring per unit time fail");}
-    stlRandomDistribution.param(std::exponential_distribution<float>::param_type(10.0f));
-    stlRandomDistribution.reset();
+    stlRandomDistribution = std::exponential_distribution<float>(10.0f);
     seedRandomEngine(secondSeed);
     generator.setMeanEventsPerTime(10.0f);
     generator.seed(secondSeed);
@@ -319,8 +311,7 @@ void SGEXTN::InternalTest::SeerattraNumTest::testGammaDistribution(){
     if(randomArray.at(0) != stlRandomDistribution(stlRandomEngine) || randomArray.at(1) != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GammaDistribution generate array first seed fail");}
     if(generator.getVariableCount() != 2.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GammaDistribution get number of exponentially distributed variables being summed fail");}
     if(generator.getVariableMean() != 5.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GammaDistribution get mean of each exponentially distributed variable fail");}
-    stlRandomDistribution.param(std::gamma_distribution<float>::param_type(10.0f, 20.0f));
-    stlRandomDistribution.reset();
+    stlRandomDistribution = std::gamma_distribution<float>(10.0f, 20.0f);
     seedRandomEngine(secondSeed);
     generator.setVariableCount(10.0f);
     generator.setVariableMean(20.0f);
@@ -340,8 +331,7 @@ void SGEXTN::InternalTest::SeerattraNumTest::testWeibullDistribution(){
     if(randomArray.at(0) != stlRandomDistribution(stlRandomEngine) || randomArray.at(1) != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeibullDistribution generate array first seed fail");}
     if(generator.getFailureBehaviour() != 0.5f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeibullDistribution get failure behaviour fail");}
     if(generator.getCharacteristicLifespan() != 10.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeibullDistribution get characteristic lifespan fail");}
-    stlRandomDistribution.param(std::weibull_distribution<float>::param_type(2.0f, 100.0f));
-    stlRandomDistribution.reset();
+    stlRandomDistribution = std::weibull_distribution<float>(2.0f, 100.0f);
     seedRandomEngine(secondSeed);
     generator.setFailureBehaviour(2.0f);
     generator.setCharacteristicLifespan(100.0f);
@@ -361,8 +351,7 @@ void SGEXTN::InternalTest::SeerattraNumTest::testGumbelDistribution(){
     if(randomArray.at(0) != stlRandomDistribution(stlRandomEngine) || randomArray.at(1) != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GumbelDistribution generate array first seed fail");}
     if(generator.getMode() != -1.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GumbelDistribution get mode fail");}
     if(generator.getSpread() != 1.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GumbelDistribution get spread fail");}
-    stlRandomDistribution.param(std::extreme_value_distribution<float>::param_type(100.0f, 5.0f));
-    stlRandomDistribution.reset();
+    stlRandomDistribution = std::extreme_value_distribution<float>(100.0f, 5.0f);
     seedRandomEngine(secondSeed);
     generator.setMode(100.0f);
     generator.setSpread(5.0f);
@@ -382,8 +371,7 @@ void SGEXTN::InternalTest::SeerattraNumTest::testNormalDistribution(){
     if(randomArray.at(0) != stlRandomDistribution(stlRandomEngine) || randomArray.at(1) != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NormalDistribution generate array first seed fail");}
     if(generator.getMean() != -1.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NormalDistribution get mean fail");}
     if(generator.getStandardDeviation() != 1.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NormalDistribution get standard deviation fail");}
-    stlRandomDistribution.param(std::normal_distribution<float>::param_type(100.0f, 5.0f));
-    stlRandomDistribution.reset();
+    stlRandomDistribution = std::normal_distribution<float>(100.0f, 5.0f);
     seedRandomEngine(secondSeed);
     generator.setMean(100.0f);
     generator.setStandardDeviation(5.0f);
@@ -403,11 +391,10 @@ void SGEXTN::InternalTest::SeerattraNumTest::testLogNormalDistribution(){
     if(randomArray.at(0) != stlRandomDistribution(stlRandomEngine) || randomArray.at(1) != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::LogNormalDistribution generate array first seed fail");}
     if(generator.getMeanOfLn() != -1.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::LogNormalDistribution get mean of ln of data fail");}
     if(generator.getStandardDeviationOfLn() != 1.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::LogNormalDistribution get standard deviation of ln of data fail");}
-    stlRandomDistribution.param(std::lognormal_distribution<float>::param_type(100.0f, 5.0f));
-    stlRandomDistribution.reset();
+    stlRandomDistribution = std::lognormal_distribution<float>(1.0f, 0.125f);
     seedRandomEngine(secondSeed);
-    generator.setMeanOfLn(100.0f);
-    generator.setStandardDeviationOfLn(5.0f);
+    generator.setMeanOfLn(1.0f);
+    generator.setStandardDeviationOfLn(0.125f);
     generator.seed(secondSeed);
     if(generator.randomValue() != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::LogNormalDistribution generate value second seed fail");}
     randomArray = generator.randomValueArray(2);
@@ -424,8 +411,7 @@ void SGEXTN::InternalTest::SeerattraNumTest::testCauchyDistribution(){
     if(randomArray.at(0) != stlRandomDistribution(stlRandomEngine) || randomArray.at(1) != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::CauchyDistribution generate array first seed fail");}
     if(generator.getMedian() != -1.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::CauchyDistribution get median fail");}
     if(generator.getHalfWidth() != 1.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::CauchyDistribution get half width fail");}
-    stlRandomDistribution.param(std::cauchy_distribution<float>::param_type(100.0f, 5.0f));
-    stlRandomDistribution.reset();
+    stlRandomDistribution = std::cauchy_distribution<float>(100.0f, 5.0f);
     seedRandomEngine(secondSeed);
     generator.setMedian(100.0f);
     generator.setHalfWidth(5.0f);
@@ -444,8 +430,7 @@ void SGEXTN::InternalTest::SeerattraNumTest::testChiSquaredDistribution(){
     SGEXTN::Containers::Array<float> randomArray = generator.randomValueArray(2);
     if(randomArray.at(0) != stlRandomDistribution(stlRandomEngine) || randomArray.at(1) != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::ChiSquaredDistribution generate array first seed fail");}
     if(generator.getDegreesOfFreedom() != 5.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::ChiSquaredDistribution get number of degrees of freedom fail");}
-    stlRandomDistribution.param(std::chi_squared_distribution<float>::param_type(100.0f));
-    stlRandomDistribution.reset();
+    stlRandomDistribution = std::chi_squared_distribution<float>(100.0f);
     seedRandomEngine(secondSeed);
     generator.setDegreesOfFreedom(100.0f);
     generator.seed(secondSeed);
@@ -464,8 +449,7 @@ void SGEXTN::InternalTest::SeerattraNumTest::testFisherFDistribution(){
     if(randomArray.at(0) != stlRandomDistribution(stlRandomEngine) || randomArray.at(1) != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::FisherFDistribution generate array first seed fail");}
     if(generator.getNumeratorDegreesOfFreedom() != 5.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::FisherFDistribution get number of degrees of freedom in numerator fail");}
     if(generator.getDenominatorDegreesOfFreedom() != 10.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::FisherFDistribution get number of degrees of freedom in denominator fail");}
-    stlRandomDistribution.param(std::fisher_f_distribution<float>::param_type(14.0f, 7.0f));
-    stlRandomDistribution.reset();
+    stlRandomDistribution = std::fisher_f_distribution<float>(14.0f, 7.0f);
     seedRandomEngine(secondSeed);
     generator.setNumeratorDegreesOfFreedom(14.0f);
     generator.setDenominatorDegreesOfFreedom(7.0f);
@@ -484,8 +468,7 @@ void SGEXTN::InternalTest::SeerattraNumTest::testStudentTDistribution(){
     SGEXTN::Containers::Array<float> randomArray = generator.randomValueArray(2);
     if(randomArray.at(0) != stlRandomDistribution(stlRandomEngine) || randomArray.at(1) != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::StudentTDistribution generate array first seed fail");}
     if(generator.getDegreesOfFreedom() != 5.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::StudentTDistribution get number of degrees of freedom fail");}
-    stlRandomDistribution.param(std::student_t_distribution<float>::param_type(100.0f));
-    stlRandomDistribution.reset();
+    stlRandomDistribution = std::student_t_distribution<float>(100.0f);
     seedRandomEngine(secondSeed);
     generator.setDegreesOfFreedom(100.0f);
     generator.seed(secondSeed);
@@ -511,8 +494,7 @@ void SGEXTN::InternalTest::SeerattraNumTest::testWeightedIndexSelectionDistribut
         if(firstWeights.at(i) != firstWeightsReturned.at(i)){isSame = false;}
     }
     if(isSame == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution get weights fail");}
-    stlRandomDistribution.param(std::discrete_distribution<int>::param_type(&secondWeights.at(0), &secondWeights.at(0) + secondWeights.length()));
-    stlRandomDistribution.reset();
+    stlRandomDistribution = std::discrete_distribution<int>(&secondWeights.at(0), &secondWeights.at(0) + secondWeights.length());
     seedRandomEngine(secondSeed);
     generator.setWeights(secondWeights);
     generator.seed(secondSeed);
@@ -547,8 +529,7 @@ void SGEXTN::InternalTest::SeerattraNumTest::testWeightedPiecewiseConstantDistri
         if(firstBoundaries.at(i) != firstBoundariesReturned.at(i)){isSame = false;}
     }
     if(isSame == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedPiecewiseConstantDistribution get boundaries fail");}
-    stlRandomDistribution.param(std::piecewise_constant_distribution<float>::param_type(&secondBoundaries.at(0), &secondBoundaries.at(0) + secondBoundaries.length(), &secondWeights.at(0)));
-    stlRandomDistribution.reset();
+    stlRandomDistribution = std::piecewise_constant_distribution<float>(&secondBoundaries.at(0), &secondBoundaries.at(0) + secondBoundaries.length(), &secondWeights.at(0));
     seedRandomEngine(secondSeed);
     generator.setWeightsAndBoundaries(secondWeights, secondBoundaries);
     generator.seed(secondSeed);
@@ -583,8 +564,7 @@ void SGEXTN::InternalTest::SeerattraNumTest::testWeightedPiecewiseLinearDistribu
         if(firstBoundaries.at(i) != firstBoundariesReturned.at(i)){isSame = false;}
     }
     if(isSame == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution get boundaries fail");}
-    stlRandomDistribution.param(std::piecewise_linear_distribution<float>::param_type(&secondBoundaries.at(0), &secondBoundaries.at(0) + secondBoundaries.length(), &secondWeights.at(0)));
-    stlRandomDistribution.reset();
+    stlRandomDistribution = std::piecewise_linear_distribution<float>(&secondBoundaries.at(0), &secondBoundaries.at(0) + secondBoundaries.length(), &secondWeights.at(0));
     seedRandomEngine(secondSeed);
     generator.setWeightsAndBoundaries(secondWeights, secondBoundaries);
     generator.seed(secondSeed);

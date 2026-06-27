@@ -65,15 +65,15 @@ template <typename FloatingPoint> FloatingPoint SGEXTN::SeerattraNum::NormalDist
 
 template <typename FloatingPoint> void SGEXTN::SeerattraNum::NormalDistribution<FloatingPoint>::setMean(FloatingPoint mean){
     private_mean = mean;
-    (*SGEXTN::SeerattraNum::UnsafeCasts<std::normal_distribution<FloatingPoint>>::uneraseType(private_stlDistribution)).param(typename std::normal_distribution<FloatingPoint>::param_type(private_mean, private_standardDeviation));
-    (*SGEXTN::SeerattraNum::UnsafeCasts<std::normal_distribution<FloatingPoint>>::uneraseType(private_stlDistribution)).reset();
+    delete SGEXTN::SeerattraNum::UnsafeCasts<std::normal_distribution<FloatingPoint>>::uneraseType(private_stlDistribution);
+    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::normal_distribution<FloatingPoint>>::eraseType(new std::normal_distribution<FloatingPoint>(mean, private_standardDeviation));
 }
 
 template <typename FloatingPoint> void SGEXTN::SeerattraNum::NormalDistribution<FloatingPoint>::setStandardDeviation(FloatingPoint standardDeviation){
     if(standardDeviation <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NormalDistribution::setStandardDeviation crashed because requested standard deviation is nonpositive");}
     private_standardDeviation = standardDeviation;
-    (*SGEXTN::SeerattraNum::UnsafeCasts<std::normal_distribution<FloatingPoint>>::uneraseType(private_stlDistribution)).param(typename std::normal_distribution<FloatingPoint>::param_type(private_mean, private_standardDeviation));
-    (*SGEXTN::SeerattraNum::UnsafeCasts<std::normal_distribution<FloatingPoint>>::uneraseType(private_stlDistribution)).reset();
+    delete SGEXTN::SeerattraNum::UnsafeCasts<std::normal_distribution<FloatingPoint>>::uneraseType(private_stlDistribution);
+    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::normal_distribution<FloatingPoint>>::eraseType(new std::normal_distribution<FloatingPoint>(private_mean, standardDeviation));
 }
 
 template class SGEXTN::SeerattraNum::NormalDistribution<float>;

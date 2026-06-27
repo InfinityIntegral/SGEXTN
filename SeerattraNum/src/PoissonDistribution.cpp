@@ -61,8 +61,8 @@ template <typename MeanType, typename Integer> MeanType SGEXTN::SeerattraNum::Po
 template <typename MeanType, typename Integer> void SGEXTN::SeerattraNum::PoissonDistribution<MeanType, Integer>::setMean(MeanType mean){
     if(mean <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::PoissonDistribution::setMean crashed because requested mean is nonpositive");}
     private_mean = mean;
-    (*SGEXTN::SeerattraNum::UnsafeCasts<std::poisson_distribution<Integer>>::uneraseType(private_stlDistribution)).param(typename std::poisson_distribution<Integer>::param_type(private_mean));
-    (*SGEXTN::SeerattraNum::UnsafeCasts<std::poisson_distribution<Integer>>::uneraseType(private_stlDistribution)).reset();
+    delete SGEXTN::SeerattraNum::UnsafeCasts<std::poisson_distribution<Integer>>::uneraseType(private_stlDistribution);
+    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::poisson_distribution<Integer>>::eraseType(new std::poisson_distribution<Integer>(mean));
 }
 
 template class SGEXTN::SeerattraNum::PoissonDistribution<float, int>;

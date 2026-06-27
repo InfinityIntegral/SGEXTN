@@ -61,8 +61,8 @@ template <typename FloatingPoint> FloatingPoint SGEXTN::SeerattraNum::ChiSquared
 template <typename FloatingPoint> void SGEXTN::SeerattraNum::ChiSquaredDistribution<FloatingPoint>::setDegreesOfFreedom(FloatingPoint degreesOfFreedom){
     if(degreesOfFreedom <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::ChiSquaredDistribution::setDegreesOfFreedom crashed because requested number of degrees of freedom is nonpositive");}
     private_degreesOfFreedom = degreesOfFreedom;
-    (*SGEXTN::SeerattraNum::UnsafeCasts<std::chi_squared_distribution<FloatingPoint>>::uneraseType(private_stlDistribution)).param(typename std::chi_squared_distribution<FloatingPoint>::param_type(private_degreesOfFreedom));
-    (*SGEXTN::SeerattraNum::UnsafeCasts<std::chi_squared_distribution<FloatingPoint>>::uneraseType(private_stlDistribution)).reset();
+    delete SGEXTN::SeerattraNum::UnsafeCasts<std::chi_squared_distribution<FloatingPoint>>::uneraseType(private_stlDistribution);
+    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::chi_squared_distribution<FloatingPoint>>::eraseType(new std::chi_squared_distribution<FloatingPoint>(degreesOfFreedom));
 }
 
 template class SGEXTN::SeerattraNum::ChiSquaredDistribution<float>;
