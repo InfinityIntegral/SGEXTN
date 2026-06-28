@@ -24,7 +24,7 @@
       },
       {
         "name": "analyse",
-        "build_cmd" : "patch_clangtidy.sh -verbose",
+        "build_cmd" : "cmake --build build && patch_clangtidy.sh -verbose",
         "run_cmd": "echo 'analyse done'"
       }
     ]

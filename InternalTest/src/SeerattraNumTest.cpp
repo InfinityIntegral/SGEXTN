@@ -45,6 +45,7 @@
 #include <SGEXTN/SeerattraNum/WeightedIndexSelectionDistribution.h>
 #include <SGEXTN/SeerattraNum/WeightedPiecewiseConstantDistribution.h>
 #include <SGEXTN/SeerattraNum/WeightedPiecewiseLinearDistribution.h>
+#include <SGEXTN/SeerattraNum/RandomPermutation.h>
 #include <random>
 
 namespace {
@@ -573,6 +574,16 @@ void SGEXTN::InternalTest::SeerattraNumTest::testWeightedPiecewiseLinearDistribu
     if(randomArray.at(0) != stlRandomDistribution(stlRandomEngine) || randomArray.at(1) != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution generate array second seed fail");}
 }
 
+void SGEXTN::InternalTest::SeerattraNumTest::testRandomPermutation(){
+    SGEXTN::SeerattraNum::RandomPermutation generator(false);
+    generator.seed(firstSeed);
+    SGEXTN::Containers::Array<int> firstPermutation = generator.randomPermutation(5);
+    if(firstPermutation.length() != 5 || firstPermutation.at(0) != 2 || firstPermutation.at(1) != 3 || firstPermutation.at(2) != 4 || firstPermutation.at(3) != 0 || firstPermutation.at(4) != 1){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::RandomPermutation generate permutation first seed fail");}
+    generator.seed(secondSeed);
+    SGEXTN::Containers::Array<int> secondPermutation = generator.randomPermutation(4);
+    if(secondPermutation.length() != 4 || secondPermutation.at(0) != 0 || secondPermutation.at(1) != 1 || secondPermutation.at(2) != 3 || secondPermutation.at(3) != 2){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::RandomPermutation generate permutation second seed fail");}
+}
+
 void SGEXTN::InternalTest::SeerattraNumTest::testAll(){
     SGEXTN::InternalTest::SeerattraNumTest::testTrueRandom();
     SGEXTN::InternalTest::SeerattraNumTest::testSimpleRandom();
@@ -598,4 +609,5 @@ void SGEXTN::InternalTest::SeerattraNumTest::testAll(){
     SGEXTN::InternalTest::SeerattraNumTest::testWeightedIndexSelectionDistribution();
     SGEXTN::InternalTest::SeerattraNumTest::testWeightedPiecewiseConstantDistribution();
     SGEXTN::InternalTest::SeerattraNumTest::testWeightedPiecewiseLinearDistribution();
+    SGEXTN::InternalTest::SeerattraNumTest::testRandomPermutation();
 }

@@ -46,6 +46,7 @@ public:
     static void testWeightedIndexSelectionDistribution();
     static void testWeightedPiecewiseConstantDistribution();
     static void testWeightedPiecewiseLinearDistribution();
+    static void testRandomPermutation();
 };
 }
 }
