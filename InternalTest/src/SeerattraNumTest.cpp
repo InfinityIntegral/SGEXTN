@@ -46,6 +46,7 @@
 #include <SGEXTN/SeerattraNum/WeightedPiecewiseConstantDistribution.h>
 #include <SGEXTN/SeerattraNum/WeightedPiecewiseLinearDistribution.h>
 #include <SGEXTN/SeerattraNum/RandomPermutation.h>
+#include <SGEXTN/SeerattraNum/UnitSphereSample.h>
 #include <random>
 
 namespace {
@@ -584,6 +585,18 @@ void SGEXTN::InternalTest::SeerattraNumTest::testRandomPermutation(){
     if(secondPermutation.length() != 4 || secondPermutation.at(0) != 0 || secondPermutation.at(1) != 1 || secondPermutation.at(2) != 3 || secondPermutation.at(3) != 2){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::RandomPermutation generate permutation second seed fail");}
 }
 
+void SGEXTN::InternalTest::SeerattraNumTest::testUnitSphereSample(){
+    SGEXTN::SeerattraNum::UnitSphereSample generator(false);
+    generator.seed(firstSeed);
+    SGEXTN::Containers::Array<float> firstPoint = generator.randomPoint(2);
+    float sumOfSquares = firstPoint.at(0) * firstPoint.at(0) + firstPoint.at(1) * firstPoint.at(1);
+    if(firstPoint.length() != 2 || sumOfSquares < 0.999f || sumOfSquares > 1.001f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UnitSphereSample generate first point fail");}
+    generator.seed(secondSeed);
+    SGEXTN::Containers::Array<float> secondPoint = generator.randomPoint(3);
+    sumOfSquares = secondPoint.at(0) * secondPoint.at(0) + secondPoint.at(1) * secondPoint.at(1) + secondPoint.at(2) * secondPoint.at(2);
+    if(secondPoint.length() != 3 || sumOfSquares < 0.999f || sumOfSquares > 1.001f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UnitSphereSample generate second point fail");}
+}
+
 void SGEXTN::InternalTest::SeerattraNumTest::testAll(){
     SGEXTN::InternalTest::SeerattraNumTest::testTrueRandom();
     SGEXTN::InternalTest::SeerattraNumTest::testSimpleRandom();
@@ -610,4 +623,5 @@ void SGEXTN::InternalTest::SeerattraNumTest::testAll(){
     SGEXTN::InternalTest::SeerattraNumTest::testWeightedPiecewiseConstantDistribution();
     SGEXTN::InternalTest::SeerattraNumTest::testWeightedPiecewiseLinearDistribution();
     SGEXTN::InternalTest::SeerattraNumTest::testRandomPermutation();
+    SGEXTN::InternalTest::SeerattraNumTest::testUnitSphereSample();
 }

@@ -17,16 +17,16 @@
 
 #pragma once
 #include <SGEXTN/Containers/Array.h>
-#include <SGEXTN/SeerattraNum/UniformDistributionInteger.h>
+#include <SGEXTN/SeerattraNum/NormalDistribution.h>
 
 namespace SGEXTN {
 namespace SeerattraNum {
-class BuildLah_SGEXTN_SeerattraNum RandomPermutation {
+class BuildLah_SGEXTN_SeerattraNum UnitSphereSample {
 public:
-    SGEXTN::SeerattraNum::UniformDistributionInteger<int> private_rng;
-    RandomPermutation(bool useGlobal);
+    SGEXTN::SeerattraNum::NormalDistribution<float> private_rng;
+    UnitSphereSample(bool useGlobal);
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
-    [[nodiscard]] SGEXTN::Containers::Array<int> randomPermutation(int n);
+    [[nodiscard]] SGEXTN::Containers::Array<float> randomPoint(int dimensions);
 };
 }
 }
