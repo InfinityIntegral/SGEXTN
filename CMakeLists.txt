@@ -35,7 +35,7 @@ BuildLah_addComponent(
     NAME SeerattraNum
     TYPE LIBRARY
     ROOT_FOLDER "SeerattraNum"
-    DEPENDENCIES FORWARD Containers
+    DEPENDENCIES INTERNAL Math FORWARD Containers
 )
 BuildLah_addComponent(
     NAME InternalTest
