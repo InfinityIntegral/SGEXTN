@@ -24,6 +24,11 @@ SGEXTN uses the following dependencies:
     * License: Unicode License v3
     * Source: https://www.unicode.org/Public/UCD/latest
     * Use: test cases for SGEXTN::CoreText::String and SGEXTN::CoreText::UnicodeQuery
+* Sobol Sequence direction numbers
+    * Author: Frances Y. Kuo and Stephen Joe
+    * License: custom BSD-style license
+    * Source: https://web.maths.unsw.edu.au/~fkuo/sobol/
+    * Use: direction number initialisation for SGEXTN::SeerattraNum::SobolSequence
 * Simple DirectMedia Layer 3 (SDL3)
     * Author: libsdl-org
     * License: zlib License

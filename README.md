@@ -8,6 +8,8 @@ Current version of SGEXTN: v7.0.0
 
 Published on: (none, work in progress)
 
+I acknowledge that all technical and transferrable skills I used to work on this project are directly or indirectly taught to me by the Singapore Ministry of Education. I would like to thank my homeland for everything. Majulah Singapura. 🇸🇬
+
 ## List of modules
 
 (This section will be written once v7.0.0 is complete)
@@ -23,6 +25,8 @@ Copyright SG61 (2026) 05524F.sg
 This product includes software developed at [05524F.sg](https://infinityintegral.github.io).
 
 Remember to include my NOTICE and LICENSE file in your application; you can put it under LICENSES/05524F.sg/SGEXTN
+
+The Apache 2.0 license forbids modifying the license itself, so the following is a suggestion not a legal requirement: You are encouraged to use the software to contribute to the National Interests of Singapore and the Singaporean and global public good. May the good we achieve, as one nation, be shared with the world.
 
 SGEXTN uses the following dependencies:
 
@@ -41,6 +45,11 @@ SGEXTN uses the following dependencies:
     * License: Unicode License v3
     * Source: https://www.unicode.org/Public/UCD/latest
     * Use: test cases for SGEXTN::CoreText::String and SGEXTN::CoreText::UnicodeQuery
+* Sobol Sequence direction numbers
+    * Author: Frances Y. Kuo and Stephen Joe
+    * License: custom BSD-style license
+    * Source: https://web.maths.unsw.edu.au/~fkuo/sobol/
+    * Use: direction number initialisation for SGEXTN::SeerattraNum::SobolSequence
 * Simple DirectMedia Layer 3 (SDL3)
     * Author: libsdl-org
     * License: zlib License
