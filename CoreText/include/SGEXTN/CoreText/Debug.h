@@ -17,9 +17,11 @@
 
 #pragma once
 #include <SGEXTN/CoreText/String.h>
+#include <SGEXTN/Containers/Array.h>
 
 namespace SGEXTN {
 namespace Containers {
+template <typename T> class Array;
 template <typename T> class Vector;
 }
 
@@ -68,6 +70,7 @@ public:
     template <typename ReturnType, typename... ArgTypes> SGEXTN::CoreText::String debugPrint(ReturnType (*x)(ArgTypes...)) const;
     template <typename ReturnType, typename ClassName, typename... ArgTypes> SGEXTN::CoreText::String debugPrint(ReturnType (ClassName::*x)(ArgTypes...)) const;
     template <typename ReturnType, typename ClassName, typename... ArgTypes> SGEXTN::CoreText::String debugPrint(ReturnType (ClassName::*x)(ArgTypes...) const) const;
+    template <typename T> SGEXTN::CoreText::String debugPrint(const SGEXTN::Containers::Array<T>& x) const;
     SGEXTN::CoreText::String debugPrint(bool x) const;
     SGEXTN::CoreText::String debugPrint(unsigned char x) const;
     SGEXTN::CoreText::String debugPrint(short x) const;

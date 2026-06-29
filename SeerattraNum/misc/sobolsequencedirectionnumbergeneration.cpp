@@ -6,10 +6,10 @@
 #include <iterator>
 #include <format>
 
-#define MAXIMUM_DIMENSION_COUNT 21200
+constexpr int MAXIMUM_DIMENSION_COUNT = 21200;
 
 std::string toHexString(unsigned int n){
-    std::string numericalString = std::format("{:08x}", n);
+    const std::string numericalString = std::format("{:08x}", n);
     std::string output = "\\x" + numericalString.substr(0, 2) + "\\x" + numericalString.substr(2, 2) + "\\x" + numericalString.substr(4, 2) + "\\x" + numericalString.substr(6, 2);
     return output;
 }
@@ -18,11 +18,11 @@ int main(){
     std::ifstream templateFile("sobolsequencelookuptemplate.txt");
     std::ifstream dataFile("sobolsequencedirectionnumbers.txt");
     std::ofstream outputFile("../src/SobolSequenceLookup.cpp");
-    std::string templateString((std::istreambuf_iterator<char>(templateFile)), std::istreambuf_iterator<char>());
+    const std::string templateString((std::istreambuf_iterator<char>(templateFile)), std::istreambuf_iterator<char>());
     outputFile << templateString;
-    std::array<int, MAXIMUM_DIMENSION_COUNT> degrees;
-    std::array<int, MAXIMUM_DIMENSION_COUNT> coefficients;
-    std::array<std::array<unsigned int, 32>, MAXIMUM_DIMENSION_COUNT> directionNumbers;
+    std::array<int, MAXIMUM_DIMENSION_COUNT> degrees = {};
+    std::array<int, MAXIMUM_DIMENSION_COUNT> coefficients = {};
+    std::array<std::array<unsigned int, 32>, MAXIMUM_DIMENSION_COUNT> directionNumbers = {};
     std::string discard;
     for(int i=0; i<4; i++){
         dataFile >> discard;

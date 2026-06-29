@@ -48,6 +48,17 @@ template <typename ReturnType, typename ClassName, typename... ArgTypes> SGEXTN:
     return "not nullptr";
 }
 
+template <typename T> SGEXTN::CoreText::String SGEXTN::CoreText::Debug::debugPrint(const SGEXTN::Containers::Array<T>& x) const {
+    SGEXTN::CoreText::String output = "[";
+    for(int i=0; i<x.length()-1; i++){
+        output += debugPrint(x.at(i));
+        output += ", ";
+    }
+    if(x.length() != 0){output += debugPrint(x.at(x.length() - 1));}
+    output += "]";
+    return output;
+}
+
 template <typename T> SGEXTN::CoreText::Debug& SGEXTN::CoreText::Debug::operator()(const T& x){
     if(debugInfo != ""){debugInfo += " - ";}
     debugInfo += debugPrint(x);
