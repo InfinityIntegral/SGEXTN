@@ -48,6 +48,7 @@ public:
     static void testWeightedPiecewiseLinearDistribution();
     static void testRandomPermutation();
     static void testUnitSphereSample();
+    static void testSobolSequence();
 };
 }
 }
