@@ -49,6 +49,7 @@ public:
     static void testRandomPermutation();
     static void testUnitSphereSample();
     static void testSobolSequence();
+    static void testHaltonSequence();
 };
 }
 }

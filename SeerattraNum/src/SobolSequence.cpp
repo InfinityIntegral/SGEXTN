@@ -47,16 +47,18 @@ int getTrailingZeroCount(unsigned int n){
 }
 }
 
-SGEXTN::SeerattraNum::SobolSequence::SobolSequence(int dimension) : private_lastPosition(-1), private_lastPositionResult(0), private_dimensions(dimension), private_hashedSeed(dimension), private_directionNumberCache(dimension, SGEXTN::Containers::Array<unsigned int>(32)){
-    if(dimension < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::SobolSequence constructor crashed because the number of dimensions is negative");}
+SGEXTN::SeerattraNum::SobolSequence::SobolSequence(int dimension) : private_lastPosition(-1), private_lastPositionResult(0), private_dimensions(dimension), private_hashedSeed(0), private_directionNumberCache(0){
+    if(dimension <= 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::SobolSequence constructor crashed because the number of dimensions is nonpositive");}
     if(dimension > 21200){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::SobolSequence constructor crashed because the number of dimensions exceeds 21200 which is where the lookup tables for direction numbers end");}
+    private_hashedSeed = SGEXTN::Containers::Array<unsigned int>(dimension);
+    private_directionNumberCache = SGEXTN::Containers::Array<SGEXTN::Containers::Array<unsigned int>>(dimension, SGEXTN::Containers::Array<unsigned int>(32));
     for(int i=0; i<dimension; i++){
         for(int j=0; j<32; j++){
             unsigned int directionNumber = 0;
-            unsigned char firstByte = static_cast<unsigned char>(*(SGEXTN::SeerattraNum::SobolSequenceLookup::data + 128 * i + 4 * j));
-            unsigned char secondByte = static_cast<unsigned char>(*(SGEXTN::SeerattraNum::SobolSequenceLookup::data + 128 * i + 4 * j + 1));
-            unsigned char thirdByte = static_cast<unsigned char>(*(SGEXTN::SeerattraNum::SobolSequenceLookup::data + 128 * i + 4 * j + 2));
-            unsigned char fourthByte = static_cast<unsigned char>(*(SGEXTN::SeerattraNum::SobolSequenceLookup::data + 128 * i + 4 * j + 3));
+            const unsigned char firstByte = static_cast<unsigned char>(*(SGEXTN::SeerattraNum::SobolSequenceLookup::data + static_cast<decltype(static_cast<int*>(nullptr) - static_cast<int*>(nullptr))>(128 * i + 4 * j)));
+            const unsigned char secondByte = static_cast<unsigned char>(*(SGEXTN::SeerattraNum::SobolSequenceLookup::data + static_cast<decltype(static_cast<int*>(nullptr) - static_cast<int*>(nullptr))>(128 * i + 4 * j + 1)));
+            const unsigned char thirdByte = static_cast<unsigned char>(*(SGEXTN::SeerattraNum::SobolSequenceLookup::data + static_cast<decltype(static_cast<int*>(nullptr) - static_cast<int*>(nullptr))>(128 * i + 4 * j + 2)));
+            const unsigned char fourthByte = static_cast<unsigned char>(*(SGEXTN::SeerattraNum::SobolSequenceLookup::data + static_cast<decltype(static_cast<int*>(nullptr) - static_cast<int*>(nullptr))>(128 * i + 4 * j + 3)));
             directionNumber = directionNumber | (static_cast<unsigned int>(firstByte) << 24);
             directionNumber = directionNumber | (static_cast<unsigned int>(secondByte) << 16);
             directionNumber = directionNumber | (static_cast<unsigned int>(thirdByte) << 8);
@@ -64,7 +66,7 @@ SGEXTN::SeerattraNum::SobolSequence::SobolSequence(int dimension) : private_last
             private_directionNumberCache.at(i).at(j) = directionNumber;
         }
     }
-    unsigned int seed = SGEXTN::SeerattraNum::TrueRandom::randomUnsignedInt32();
+    const unsigned int seed = SGEXTN::SeerattraNum::TrueRandom::randomUnsignedInt32();
     for(int i=0; i<dimension; i++){
         private_hashedSeed.at(i) = SGEXTN::Containers::Hash<int, unsigned int>()(i, seed);
     }
@@ -80,7 +82,7 @@ void SGEXTN::SeerattraNum::SobolSequence::seed(int seed){
 
 SGEXTN::Containers::Array<float> SGEXTN::SeerattraNum::SobolSequence::nextTerm(){
     if(private_lastPosition == -1){return requestTerm(1);}
-    int changedBit = getTrailingZeroCount(static_cast<unsigned int>(private_lastPosition));
+    const int changedBit = getTrailingZeroCount(static_cast<unsigned int>(private_lastPosition));
     private_lastPosition++;
     for(int i=0; i<private_dimensions; i++){
         private_lastPositionResult.at(i) = private_lastPositionResult.at(i) ^ private_directionNumberCache.at(i).at(changedBit);
@@ -90,10 +92,9 @@ SGEXTN::Containers::Array<float> SGEXTN::SeerattraNum::SobolSequence::nextTerm()
         integerResult.at(i) = integerResult.at(i) ^ private_hashedSeed.at(i);
     }
     SGEXTN::Containers::Array<float> floatingPointResult(private_dimensions);
-    double maximumValue = static_cast<double>(SGEXTN::Math::IntegerLimits<unsigned int>::maximum()) + 1.0;
+    const double maximumValue = static_cast<double>(SGEXTN::Math::IntegerLimits<unsigned int>::maximum()) + 1.0;
     for(int i=0; i<private_dimensions; i++){
-        double thisValue = static_cast<double>(integerResult.at(i));
-        floatingPointResult.at(i) = static_cast<float>(thisValue / maximumValue);
+        floatingPointResult.at(i) = static_cast<float>(static_cast<double>(integerResult.at(i)) / maximumValue);
     }
     return floatingPointResult;
 }
@@ -116,10 +117,9 @@ SGEXTN::Containers::Array<float> SGEXTN::SeerattraNum::SobolSequence::requestTer
         integerResult.at(i) = integerResult.at(i) ^ private_hashedSeed.at(i);
     }
     SGEXTN::Containers::Array<float> floatingPointResult(private_dimensions);
-    double maximumValue = static_cast<double>(SGEXTN::Math::IntegerLimits<unsigned int>::maximum()) + 1.0;
+    const double maximumValue = static_cast<double>(SGEXTN::Math::IntegerLimits<unsigned int>::maximum()) + 1.0;
     for(int i=0; i<private_dimensions; i++){
-        double thisValue = static_cast<double>(integerResult.at(i));
-        floatingPointResult.at(i) = static_cast<float>(thisValue / maximumValue);
+        floatingPointResult.at(i) = static_cast<float>(static_cast<double>(integerResult.at(i)) / maximumValue);
     }
     return floatingPointResult;
 }

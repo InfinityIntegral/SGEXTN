@@ -48,6 +48,7 @@
 #include <SGEXTN/SeerattraNum/RandomPermutation.h>
 #include <SGEXTN/SeerattraNum/UnitSphereSample.h>
 #include <SGEXTN/SeerattraNum/SobolSequence.h>
+#include <SGEXTN/SeerattraNum/HaltonSequence.h>
 #include <random>
 
 namespace {
@@ -611,7 +612,21 @@ void SGEXTN::InternalTest::SeerattraNumTest::testSobolSequence(){
     firstPoint = generator.nextTerm();
     if(firstPoint.length() != 3 || isCloseEnough(firstPoint.at(0), 0.28590f) == false || isCloseEnough(firstPoint.at(1), 0.81898f) == false || isCloseEnough(firstPoint.at(2), 0.092364f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::SobolSequence generate first point second seed fail");}
     secondPoint = generator.nextTerm();
-    if(secondPoint.length() != 3 || isCloseEnough(secondPoint.at(0), 0.78590f) == false || isCloseEnough(secondPoint.at(1), 0.31898f) == false || isCloseEnough(secondPoint.at(2), 0.59236) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::SobolSequence generate second point second seed fail");}
+    if(secondPoint.length() != 3 || isCloseEnough(secondPoint.at(0), 0.78590f) == false || isCloseEnough(secondPoint.at(1), 1.31898f - 1.0f) == false || isCloseEnough(secondPoint.at(2), 0.59236) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::SobolSequence generate second point second seed fail");}
+}
+#include <SGEXTN/CoreText/Debug.h>
+void SGEXTN::InternalTest::SeerattraNumTest::testHaltonSequence(){
+    SGEXTN::SeerattraNum::HaltonSequence generator(3);
+    generator.seed(726);
+    SGEXTN::Containers::Array<float> firstPoint = generator.nextTerm();
+    if(firstPoint.length() != 3 || isCloseEnough(firstPoint.at(0), 0.5f) == false || isCloseEnough(firstPoint.at(1), 2.0f / 3.0f) == false || isCloseEnough(firstPoint.at(2), 0.8f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::HaltonSequence generate first point first seed fail");}
+    SGEXTN::Containers::Array<float> secondPoint = generator.nextTerm();
+    if(secondPoint.length() != 3 || isCloseEnough(secondPoint.at(0), 0.25f) == false || isCloseEnough(secondPoint.at(1), 1.0f / 3.0f) == false || isCloseEnough(secondPoint.at(2), 0.2f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::HaltonSequence generate second point first seed fail");}
+    generator.seed(1965);
+    firstPoint = generator.nextTerm();
+    if(firstPoint.length() != 3 || isCloseEnough(firstPoint.at(0), 0.5f) == false || isCloseEnough(firstPoint.at(1), 2.0f / 3.0f) == false || isCloseEnough(firstPoint.at(2), 0.4f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::HaltonSequence generate first point second seed fail");}
+    secondPoint = generator.nextTerm();
+    if(secondPoint.length() != 3 || isCloseEnough(secondPoint.at(0), 0.25f) == false || isCloseEnough(secondPoint.at(1), 1.0f / 3.0f) == false || isCloseEnough(secondPoint.at(2), 0.8f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::HaltonSequence generate second point second seed fail");}
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testAll(){
@@ -642,4 +657,5 @@ void SGEXTN::InternalTest::SeerattraNumTest::testAll(){
     SGEXTN::InternalTest::SeerattraNumTest::testRandomPermutation();
     SGEXTN::InternalTest::SeerattraNumTest::testUnitSphereSample();
     SGEXTN::InternalTest::SeerattraNumTest::testSobolSequence();
+    SGEXTN::InternalTest::SeerattraNumTest::testHaltonSequence();
 }
