@@ -52,6 +52,7 @@
 #include <SGEXTN/SeerattraNum/VoronoiNoise.h>
 #include <SGEXTN/SeerattraNum/ValueNoise.h>
 #include <SGEXTN/SeerattraNum/SmoothingFunction.h>
+#include <SGEXTN/SeerattraNum/PerlinNoise.h>
 #include <random>
 
 namespace {
@@ -671,6 +672,18 @@ void SGEXTN::InternalTest::SeerattraNumTest::testValueNoise(){
     if(isCloseEnough(noiseMap.getHeight(secondPoint), -0.39768f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::ValueNoise get second point second seed fail");}
 }
 
+void SGEXTN::InternalTest::SeerattraNumTest::testPerlinNoise(){
+    SGEXTN::SeerattraNum::PerlinNoise noiseMap(3, SGEXTN::SeerattraNum::SmoothingFunction::polynomial2);
+    const SGEXTN::Containers::Array<float> firstPoint(0.25f, 0.25f, 0.25f);
+    const SGEXTN::Containers::Array<float> secondPoint(-0.25f, -0.25f, -0.25f);
+    noiseMap.seed(726);
+    if(isCloseEnough(noiseMap.getHeight(firstPoint), 0.27678f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::PerlinNoise get first point first seed fail");}
+    if(isCloseEnough(noiseMap.getHeight(secondPoint), -0.29634f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::PerlinNoise get second point first seed fail");}
+    noiseMap.seed(1965);
+    if(isCloseEnough(noiseMap.getHeight(firstPoint), -0.10025f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::PerlinNoise get first point second seed fail");}
+    if(isCloseEnough(noiseMap.getHeight(secondPoint), -0.0084291f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::PerlinNoise get second point second seed fail");}
+}
+
 void SGEXTN::InternalTest::SeerattraNumTest::testAll(){
     SGEXTN::InternalTest::SeerattraNumTest::testTrueRandom();
     SGEXTN::InternalTest::SeerattraNumTest::testSimpleRandom();
@@ -702,4 +715,5 @@ void SGEXTN::InternalTest::SeerattraNumTest::testAll(){
     SGEXTN::InternalTest::SeerattraNumTest::testHaltonSequence();
     SGEXTN::InternalTest::SeerattraNumTest::testVoronoiNoise();
     SGEXTN::InternalTest::SeerattraNumTest::testValueNoise();
+    SGEXTN::InternalTest::SeerattraNumTest::testPerlinNoise();
 }

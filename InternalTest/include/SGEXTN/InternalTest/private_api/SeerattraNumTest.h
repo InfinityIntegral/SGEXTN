@@ -52,6 +52,7 @@ public:
     static void testHaltonSequence();
     static void testVoronoiNoise();
     static void testValueNoise();
+    static void testPerlinNoise();
 };
 }
 }

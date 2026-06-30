@@ -41,7 +41,8 @@ SGEXTN::Containers::Array<float> getFeaturePoint(int seed, const SGEXTN::Contain
     const double maximum = static_cast<double>(SGEXTN::Math::IntegerLimits<unsigned int>::maximum()) + 1.0;
     for(int i=0; i<normalVarCount; i++){
         spanArray.at(dimensions + 1) = i;
-        const unsigned int rngUnsigned = static_cast<unsigned int>(SGEXTN::Containers::HashAlgorithm::wyHash32(span));
+        unsigned int rngUnsigned = static_cast<unsigned int>(SGEXTN::Containers::HashAlgorithm::wyHash32(span));
+        if(rngUnsigned == 0){rngUnsigned = 1;}
         normalDistributedVars.at(i) = static_cast<float>(static_cast<double>(rngUnsigned) / maximum);
     }
     for(int i=0; i<normalVarCount/2; i++){
