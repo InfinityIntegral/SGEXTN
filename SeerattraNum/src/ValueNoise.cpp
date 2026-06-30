@@ -56,7 +56,7 @@ float SGEXTN::SeerattraNum::ValueNoise::getHeight(const SGEXTN::Containers::Arra
             else{spanArray.at(j) = flooredCorner.at(j) + 1;}
         }
         const unsigned int rngUnsigned = static_cast<unsigned int>(SGEXTN::Containers::HashAlgorithm::wyHash32(span));
-        cornerHeights.at(i) = static_cast<float>(rngUnsigned / scaleFactor - 1.0);
+        cornerHeights.at(i) = static_cast<float>(static_cast<double>(rngUnsigned) / scaleFactor - 1.0);
     }
     for(int i=private_dimension-1; i>=0; i--){
         float dist = point.at(i) - static_cast<float>(flooredCorner.at(i));
