@@ -50,6 +50,7 @@ public:
     static void testUnitSphereSample();
     static void testSobolSequence();
     static void testHaltonSequence();
+    static void testVoronoiNoise();
 };
 }
 }

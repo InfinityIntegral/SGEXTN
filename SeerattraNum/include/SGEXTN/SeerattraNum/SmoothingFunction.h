@@ -19,16 +19,20 @@
 
 namespace SGEXTN {
 namespace SeerattraNum {
-class BuildLah_SGEXTN_SeerattraNum FastRandomEngine {
+class BuildLah_SGEXTN_SeerattraNum SmoothingFunction {
 public:
-    FastRandomEngine(int initialSeed);
-    using result_type = unsigned int;
-    static constexpr unsigned int min() noexcept {return 0u;}
-    static constexpr unsigned int max() noexcept {return 0xffffffffu;}
-    unsigned int operator()();
-    int internalSeed;
-    int internalIndex;
-    void seed(int seed);
+    float (*private_function)(float);
+    static float private_polynomial2(float x);
+    static float private_polynomial3(float x);
+    static float private_trigonometric2(float x);
+    static float private_rational2(float x);
+    static float private_rational3(float x);
+    SmoothingFunction(float (*function)(float));
+    static SmoothingFunction polynomial2;
+    static SmoothingFunction polynomial3;
+    static SmoothingFunction trigonometric2;
+    static SmoothingFunction rational2;
+    static SmoothingFunction rational3;
 };
 }
 }
