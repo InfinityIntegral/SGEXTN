@@ -50,6 +50,8 @@
 #include <SGEXTN/SeerattraNum/SobolSequence.h>
 #include <SGEXTN/SeerattraNum/HaltonSequence.h>
 #include <SGEXTN/SeerattraNum/VoronoiNoise.h>
+#include <SGEXTN/SeerattraNum/ValueNoise.h>
+#include <SGEXTN/SeerattraNum/SmoothingFunction.h>
 #include <random>
 
 namespace {
@@ -657,6 +659,18 @@ void SGEXTN::InternalTest::SeerattraNumTest::testVoronoiNoise(){
     if(outputPoint.length() != 3 || isCloseEnough(outputPoint.at(0), -0.27972f) == false || isCloseEnough(outputPoint.at(1), 0.16646f) == false || isCloseEnough(outputPoint.at(2), 0.97845f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::VoronoiNoise second seed get second closest point to second test point fail");}
 }
 
+void SGEXTN::InternalTest::SeerattraNumTest::testValueNoise(){
+    SGEXTN::SeerattraNum::ValueNoise noiseMap(3, SGEXTN::SeerattraNum::SmoothingFunction::polynomial2);
+    const SGEXTN::Containers::Array<float> firstPoint(0.25f, 0.25f, 0.25f);
+    const SGEXTN::Containers::Array<float> secondPoint(-0.25f, -0.25f, -0.25f);
+    noiseMap.seed(726);
+    if(isCloseEnough(noiseMap.getHeight(firstPoint), -0.42717f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::ValueNoise get first point first seed fail");}
+    if(isCloseEnough(noiseMap.getHeight(secondPoint), -0.60357f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::ValueNoise get second point first seed fail");}
+    noiseMap.seed(1965);
+    if(isCloseEnough(noiseMap.getHeight(firstPoint), -0.52749f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::ValueNoise get first point second seed fail");}
+    if(isCloseEnough(noiseMap.getHeight(secondPoint), -0.39768f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::ValueNoise get second point second seed fail");}
+}
+
 void SGEXTN::InternalTest::SeerattraNumTest::testAll(){
     SGEXTN::InternalTest::SeerattraNumTest::testTrueRandom();
     SGEXTN::InternalTest::SeerattraNumTest::testSimpleRandom();
@@ -687,4 +701,5 @@ void SGEXTN::InternalTest::SeerattraNumTest::testAll(){
     SGEXTN::InternalTest::SeerattraNumTest::testSobolSequence();
     SGEXTN::InternalTest::SeerattraNumTest::testHaltonSequence();
     SGEXTN::InternalTest::SeerattraNumTest::testVoronoiNoise();
+    SGEXTN::InternalTest::SeerattraNumTest::testValueNoise();
 }

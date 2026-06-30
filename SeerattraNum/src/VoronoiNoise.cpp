@@ -38,10 +38,10 @@ SGEXTN::Containers::Array<float> getFeaturePoint(int seed, const SGEXTN::Contain
     int normalVarCount = dimensions;
     if(dimensions % 2 == 1){normalVarCount++;}
     SGEXTN::Containers::Array<float> normalDistributedVars(normalVarCount);
+    const double maximum = static_cast<double>(SGEXTN::Math::IntegerLimits<unsigned int>::maximum()) + 1.0;
     for(int i=0; i<normalVarCount; i++){
         spanArray.at(dimensions + 1) = i;
         const unsigned int rngUnsigned = static_cast<unsigned int>(SGEXTN::Containers::HashAlgorithm::wyHash32(span));
-        const double maximum = static_cast<double>(SGEXTN::Math::IntegerLimits<unsigned int>::maximum()) + 1.0;
         normalDistributedVars.at(i) = static_cast<float>(static_cast<double>(rngUnsigned) / maximum);
     }
     for(int i=0; i<normalVarCount/2; i++){
@@ -59,7 +59,6 @@ SGEXTN::Containers::Array<float> getFeaturePoint(int seed, const SGEXTN::Contain
     {
         spanArray.at(dimensions + 1) = dimensions + 2;
         const unsigned int rngSigned = static_cast<unsigned int>(SGEXTN::Containers::HashAlgorithm::wyHash32(span));
-        const double maximum = static_cast<double>(SGEXTN::Math::IntegerLimits<unsigned int>::maximum()) + 1.0;
         magnitude = 0.5f * static_cast<float>(static_cast<double>(rngSigned) / maximum);
     }
     SGEXTN::Containers::Array<float> outputPoint(dimensions);
@@ -88,6 +87,7 @@ void SGEXTN::SeerattraNum::VoronoiNoise::seed(int seed){
 SGEXTN::Containers::Array<float> SGEXTN::SeerattraNum::VoronoiNoise::getPosition(int nthNearest, const SGEXTN::Containers::Array<float>& point) const {
     if(nthNearest < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::VoronoiNoise::getPosition crashed because point index is negative");}
     if(nthNearest > 2 * private_dimension){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::VoronoiNoise::getPosition crashed because only querying the nearest 2n + 1 points, where n is the number of dimensions, is supported");}
+    if(point.length() != private_dimension){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::VoronoiNoise::getPosition crashed because the number of dimensions in the point does not match that of the noise generator");}
     SGEXTN::Containers::Array<float> distancesSquared(nthNearest + 1, SGEXTN::Math::FloatLimits<float>::positiveInfinity());
     SGEXTN::Containers::Array<SGEXTN::Containers::Array<float>> points(nthNearest + 1, SGEXTN::Containers::Array<float>(0));
     SGEXTN::Containers::Array<int> nearestCenter(private_dimension);
@@ -128,6 +128,7 @@ SGEXTN::Containers::Array<float> SGEXTN::SeerattraNum::VoronoiNoise::getPosition
 SGEXTN::Containers::Array<float> SGEXTN::SeerattraNum::VoronoiNoise::getVectorFrom(int nthNearest, const SGEXTN::Containers::Array<float>& point) const {
     if(nthNearest < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::VoronoiNoise::getVectorFrom crashed because point index is negative");}
     if(nthNearest > 2 * private_dimension){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::VoronoiNoise::getVectorFrom crashed because only querying the nearest 2n + 1 points, where n is the number of dimensions, is supported");}
+    if(point.length() != private_dimension){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::VoronoiNoise::getVectorFrom crashed because the number of dimensions in the point does not match that of the noise generator");}
     SGEXTN::Containers::Array<float> referencePoint = getPosition(nthNearest, point);
     SGEXTN::Containers::Array<float> output(private_dimension);
     for(int i=0; i<private_dimension; i++){
@@ -139,6 +140,7 @@ SGEXTN::Containers::Array<float> SGEXTN::SeerattraNum::VoronoiNoise::getVectorFr
 float SGEXTN::SeerattraNum::VoronoiNoise::getDistanceTo(int nthNearest, const SGEXTN::Containers::Array<float>& point) const {
     if(nthNearest < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::VoronoiNoise::getDistanceTo crashed because point index is negative");}
     if(nthNearest > 2 * private_dimension){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::VoronoiNoise::getDistanceTo crashed because only querying the nearest 2n + 1 points, where n is the number of dimensions, is supported");}
+    if(point.length() != private_dimension){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::VoronoiNoise::getDistanceTo crashed because the number of dimensions in the point does not match that of the noise generator");}
     float distanceSquared = 0.0f;
     SGEXTN::Containers::Array<float> difference = getVectorFrom(nthNearest, point);
     for(int i=0; i<private_dimension; i++){
