@@ -39,7 +39,7 @@ SGEXTN::SeerattraNum::HaltonSequence::HaltonSequence(int dimensions) : private_d
         }
         nextPossiblePrime++;
     }
-    SGEXTN::SeerattraNum::RandomPermutation permutationGenerator(false);
+    SGEXTN::SeerattraNum::RandomPermutation permutationGenerator(true);
     for(int i=0; i<dimensions; i++){
         private_permutations.at(i) = permutationGenerator.randomPermutation(private_primeNumbers.at(i));
     }
@@ -53,10 +53,8 @@ SGEXTN::SeerattraNum::HaltonSequence::HaltonSequence(int dimensions) : private_d
     }
 }
 
-void SGEXTN::SeerattraNum::HaltonSequence::seed(int seed){
+void SGEXTN::SeerattraNum::HaltonSequence::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
     SGEXTN::SeerattraNum::RandomPermutation permutationGenerator(false);
-    SGEXTN::Containers::Array<unsigned int> seedArray(1);
-    seedArray.at(0) = static_cast<unsigned int>(seed);
     permutationGenerator.seed(seedArray);
     for(int i=0; i<private_dimensions; i++){
         private_permutations.at(i) = permutationGenerator.randomPermutation(private_primeNumbers.at(i));

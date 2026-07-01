@@ -20,6 +20,8 @@
 #include <SGEXTN/Containers/ForceCrash.h>
 #include <SGEXTN/Containers/Hash.h>
 #include <SGEXTN/Math/IntegerLimits.h>
+#include <SGEXTN/SeerattraNum/TrueRandom.h>
+#include <SGEXTN/SeerattraNum/SimpleRandom.h>
 
 namespace {
 unsigned long long rotation(unsigned long long x, int k){
@@ -28,7 +30,7 @@ unsigned long long rotation(unsigned long long x, int k){
 }
 
 SGEXTN::SeerattraNum::DirectRandom::DirectRandom() : private_cache(0u), private_cacheActive(false), private_firstNum(0u), private_secondNum(0u), private_thirdNum(0u), private_fourthNum(0u){
-    seed(SGEXTN::Containers::Array<unsigned int>(0x19650809u, 1965u, 65u, 26u, 726u, 5900691u, 61u, 744u));
+    seed(SGEXTN::SeerattraNum::TrueRandom::randomUnsignedInt32Array(8));
 }
 
 void SGEXTN::SeerattraNum::DirectRandom::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
@@ -148,4 +150,12 @@ SGEXTN::Containers::Array<double> SGEXTN::SeerattraNum::DirectRandom::randomFloa
         output.at(i) = SGEXTN::SeerattraNum::DirectRandom::randomFloat64();
     }
     return output;
+}
+
+SGEXTN::SeerattraNum::DirectRandom* SGEXTN::SeerattraNum::DirectRandom::private_createRng(bool useGlobal){
+    if(useGlobal == true){
+        if(SGEXTN::SeerattraNum::SimpleRandom::private_globalInstance == nullptr){SGEXTN::SeerattraNum::SimpleRandom::private_globalInstance = new SGEXTN::SeerattraNum::DirectRandom();}
+        return SGEXTN::SeerattraNum::SimpleRandom::private_globalInstance;
+    }
+    return new SGEXTN::SeerattraNum::DirectRandom();
 }

@@ -134,7 +134,7 @@ void SGEXTN::InternalTest::SeerattraNumTest::testSimpleRandom(){
     if(SGEXTN::SeerattraNum::SimpleRandom::randomFloat32Array(100).length() != 100){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Seerattra::SimpleRandom generate array of 32 bit floating point number fail");}
     if(SGEXTN::SeerattraNum::SimpleRandom::randomFloat64Array(100).length() != 100){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Seerattra::SimpleRandom generate array of 64 bit floating point number fail");}
 }
-#include <SGEXTN/CoreText/Debug.h>
+
 void SGEXTN::InternalTest::SeerattraNumTest::testDirectRandom(){
     SGEXTN::SeerattraNum::DirectRandom generator;
     generator.seed(firstSeed);
@@ -148,24 +148,20 @@ void SGEXTN::InternalTest::SeerattraNumTest::testDirectRandom(){
     if(isCloseEnough(generator.randomFloat32(), 0.49299f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::DirectRandom generate first floating point second seed fail");}
     if(isCloseEnough(generator.randomFloat32(), 0.90498f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::DirectRandom generate second floating point second seed fail");}
 }
-
+#include <SGEXTN/CoreText/Debug.h>
 void SGEXTN::InternalTest::SeerattraNumTest::testUniformDistributionInteger(){
-    std::uniform_int_distribution<int> stlRandomDistribution(1, 6);
-    seedRandomEngine(firstSeed);
-    SGEXTN::SeerattraNum::UniformDistributionInteger<int> generator(false, 1, 6);
+    SGEXTN::SeerattraNum::UniformDistributionInteger generator(false, 1, 6);
     generator.seed(firstSeed);
-    if(generator.randomValue() != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionInteger generate number first seed fail");}
+    if(generator.randomValue() != 3){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionInteger generate number first seed fail");}
     SGEXTN::Containers::Array<int> randomArray = generator.randomValueArray(2);
-    if(randomArray.at(0) != stlRandomDistribution(stlRandomEngine) || randomArray.at(1) != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionInteger generate array first seed fail");}
+    if(randomArray.at(0) != 3 || randomArray.at(1) != 4){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionInteger generate array first seed fail");}
     if(generator.getInclusiveMin() != 1){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionInteger get minimum boundary fail");}
     if(generator.getInclusiveMax() != 6){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionInteger get maximum boundary fail");}
-    stlRandomDistribution = std::uniform_int_distribution<int>(-5, -1);
-    seedRandomEngine(secondSeed);
     generator.setRange(-5, -1);
     generator.seed(secondSeed);
-    if(generator.randomValue() != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionInteger generate number second seed fail");}
+    if(generator.randomValue() != -1){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionInteger generate number second seed fail");}
     randomArray = generator.randomValueArray(2);
-    if(randomArray.at(0) != stlRandomDistribution(stlRandomEngine) || randomArray.at(1) != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionInteger generate array second seed fail");}
+    if(randomArray.at(0) != -3 || randomArray.at(1) != -1){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionInteger generate array second seed fail");}
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testUniformDistributionFloatingPoint(){
@@ -575,10 +571,10 @@ void SGEXTN::InternalTest::SeerattraNumTest::testRandomPermutation(){
     SGEXTN::SeerattraNum::RandomPermutation generator(false);
     generator.seed(firstSeed);
     SGEXTN::Containers::Array<int> firstPermutation = generator.randomPermutation(5);
-    if(firstPermutation.length() != 5 || firstPermutation.at(0) != 2 || firstPermutation.at(1) != 3 || firstPermutation.at(2) != 4 || firstPermutation.at(3) != 0 || firstPermutation.at(4) != 1){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::RandomPermutation generate permutation first seed fail");}
+    if(firstPermutation.length() != 5 || firstPermutation.at(0) != 1 || firstPermutation.at(1) != 4 || firstPermutation.at(2) != 3 || firstPermutation.at(3) != 0 || firstPermutation.at(4) != 2){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::RandomPermutation generate permutation first seed fail");}
     generator.seed(secondSeed);
     SGEXTN::Containers::Array<int> secondPermutation = generator.randomPermutation(4);
-    if(secondPermutation.length() != 4 || secondPermutation.at(0) != 0 || secondPermutation.at(1) != 1 || secondPermutation.at(2) != 3 || secondPermutation.at(3) != 2){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::RandomPermutation generate permutation second seed fail");}
+    if(secondPermutation.length() != 4 || secondPermutation.at(0) != 0 || secondPermutation.at(1) != 1 || secondPermutation.at(2) != 2 || secondPermutation.at(3) != 3){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::RandomPermutation generate permutation second seed fail");}
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testUnitSphereSample(){
@@ -607,16 +603,16 @@ void SGEXTN::InternalTest::SeerattraNumTest::testSobolSequence(){
 
 void SGEXTN::InternalTest::SeerattraNumTest::testHaltonSequence(){
     SGEXTN::SeerattraNum::HaltonSequence generator(3);
-    generator.seed(726);
+    generator.seed(firstSeed);
     SGEXTN::Containers::Array<float> firstPoint = generator.nextTerm();
-    if(firstPoint.length() != 3 || isCloseEnough(firstPoint.at(0), 0.5f) == false || isCloseEnough(firstPoint.at(1), 2.0f / 3.0f) == false || isCloseEnough(firstPoint.at(2), 0.8f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::HaltonSequence generate first point first seed fail");}
+    if(firstPoint.length() != 3 || isCloseEnough(firstPoint.at(0), 0.5f) == false || isCloseEnough(firstPoint.at(1), 1.0f / 3.0f) == false || isCloseEnough(firstPoint.at(2), 0.8f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::HaltonSequence generate first point first seed fail");}
     SGEXTN::Containers::Array<float> secondPoint = generator.nextTerm();
-    if(secondPoint.length() != 3 || isCloseEnough(secondPoint.at(0), 0.25f) == false || isCloseEnough(secondPoint.at(1), 1.0f / 3.0f) == false || isCloseEnough(secondPoint.at(2), 0.2f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::HaltonSequence generate second point first seed fail");}
-    generator.seed(1965);
+    if(secondPoint.length() != 3 || isCloseEnough(secondPoint.at(0), 0.25f) == false || isCloseEnough(secondPoint.at(1), 2.0f / 3.0f) == false || isCloseEnough(secondPoint.at(2), 0.2f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::HaltonSequence generate second point first seed fail");}
+    generator.seed(secondSeed);
     firstPoint = generator.nextTerm();
-    if(firstPoint.length() != 3 || isCloseEnough(firstPoint.at(0), 0.5f) == false || isCloseEnough(firstPoint.at(1), 2.0f / 3.0f) == false || isCloseEnough(firstPoint.at(2), 0.4f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::HaltonSequence generate first point second seed fail");}
+    if(firstPoint.length() != 3 || isCloseEnough(firstPoint.at(0), 0.5f) == false || isCloseEnough(firstPoint.at(1), 1.0f / 3.0f) == false || isCloseEnough(firstPoint.at(2), 0.2f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::HaltonSequence generate first point second seed fail");}
     secondPoint = generator.nextTerm();
-    if(secondPoint.length() != 3 || isCloseEnough(secondPoint.at(0), 0.25f) == false || isCloseEnough(secondPoint.at(1), 1.0f / 3.0f) == false || isCloseEnough(secondPoint.at(2), 0.8f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::HaltonSequence generate second point second seed fail");}
+    if(secondPoint.length() != 3 || isCloseEnough(secondPoint.at(0), 0.25f) == false || isCloseEnough(secondPoint.at(1), 2.0f / 3.0f) == false || isCloseEnough(secondPoint.at(2), 0.4f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::HaltonSequence generate second point second seed fail");}
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testVoronoiNoise(){

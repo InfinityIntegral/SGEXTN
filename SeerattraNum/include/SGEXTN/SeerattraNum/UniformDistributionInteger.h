@@ -20,24 +20,26 @@
 
 namespace SGEXTN {
 namespace SeerattraNum {
-template <typename Integer> class BuildLah_SGEXTN_SeerattraNum UniformDistributionInteger {
+class DirectRandom;
+
+class BuildLah_SGEXTN_SeerattraNum UniformDistributionInteger {
 public:
-    void* private_stlRandomEngine;
-    void* private_stlDistribution;
-    Integer private_inclusiveMin;
-    Integer private_inclusiveMax;
-    UniformDistributionInteger(bool useGlobal, Integer inclusiveMin, Integer inclusiveMax);
+    SGEXTN::SeerattraNum::DirectRandom* private_rng;
+    bool private_ownsRng;
+    int private_inclusiveMin;
+    int private_inclusiveMax;
+    UniformDistributionInteger(bool useGlobal, int inclusiveMin, int inclusiveMax);
     UniformDistributionInteger(const UniformDistributionInteger&) = delete;
     UniformDistributionInteger& operator=(const UniformDistributionInteger&) = delete;
     UniformDistributionInteger(UniformDistributionInteger&&) = delete;
     UniformDistributionInteger& operator=(UniformDistributionInteger&&) = delete;
     ~UniformDistributionInteger();
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
-    [[nodiscard]] Integer randomValue();
-    [[nodiscard]] SGEXTN::Containers::Array<Integer> randomValueArray(int count);
-    [[nodiscard]] Integer getInclusiveMin() const;
-    [[nodiscard]] Integer getInclusiveMax() const;
-    void setRange(Integer inclusiveMin, Integer inclusiveMax);
+    [[nodiscard]] int randomValue();
+    [[nodiscard]] SGEXTN::Containers::Array<int> randomValueArray(int count);
+    [[nodiscard]] int getInclusiveMin() const;
+    [[nodiscard]] int getInclusiveMax() const;
+    void setRange(int inclusiveMin, int inclusiveMax);
 };
 }
 }

@@ -42,6 +42,7 @@ public:
     [[nodiscard]] SGEXTN::Containers::Array<unsigned long long> randomUnsignedInt64Array(int count);
     [[nodiscard]] SGEXTN::Containers::Array<float> randomFloat32Array(int count);
     [[nodiscard]] SGEXTN::Containers::Array<double> randomFloat64Array(int count);
+    [[nodiscard]] static DirectRandom* private_createRng(bool useGlobal);
 };
 }
 }
