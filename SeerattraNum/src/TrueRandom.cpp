@@ -16,54 +16,52 @@
 // BuildLah license check: SGEXTN 7.0.0
 
 #include <SGEXTN/SeerattraNum/TrueRandom.h>
-#include <SGEXTN/SeerattraNum/private_api/UnsafeCasts.h>
 #include <SGEXTN/Containers/ForceCrash.h>
 #include <SGEXTN/Containers/Array.h>
+#include <SGEXTN/Math/IntegerLimits.h>
 #include <chrono>
 #include <random>
 
 namespace {
+std::random_device randomDevice;
+
 long long getCurrentTime(){
     return std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
 }
 }
 
-void* SGEXTN::SeerattraNum::TrueRandom::private_stlRandomDevice = nullptr;
-void* SGEXTN::SeerattraNum::TrueRandom::private_stlDistributionFloat = nullptr;
-void* SGEXTN::SeerattraNum::TrueRandom::private_stlDistributionDouble = nullptr;
-
 int SGEXTN::SeerattraNum::TrueRandom::randomInt32(){
-    if(SGEXTN::SeerattraNum::TrueRandom::private_stlRandomDevice == nullptr){SGEXTN::SeerattraNum::TrueRandom::private_stlRandomDevice = SGEXTN::SeerattraNum::UnsafeCasts<std::random_device>::eraseType(new std::random_device());}
-    const unsigned int randomValue = (*SGEXTN::SeerattraNum::UnsafeCasts<std::random_device>::uneraseType(SGEXTN::SeerattraNum::TrueRandom::private_stlRandomDevice))();
-    return (static_cast<int>(randomValue) ^ static_cast<int>(getCurrentTime()));
+    const unsigned int randomValue = randomDevice();
+    return static_cast<int>(randomValue ^ static_cast<unsigned int>(getCurrentTime()));
 }
 
 long long SGEXTN::SeerattraNum::TrueRandom::randomInt64(){
-    if(SGEXTN::SeerattraNum::TrueRandom::private_stlRandomDevice == nullptr){SGEXTN::SeerattraNum::TrueRandom::private_stlRandomDevice = SGEXTN::SeerattraNum::UnsafeCasts<std::random_device>::eraseType(new std::random_device());}
-    const unsigned int randomValue1 = (*SGEXTN::SeerattraNum::UnsafeCasts<std::random_device>::uneraseType(SGEXTN::SeerattraNum::TrueRandom::private_stlRandomDevice))();
-    const unsigned int randomValue2 = (*SGEXTN::SeerattraNum::UnsafeCasts<std::random_device>::uneraseType(SGEXTN::SeerattraNum::TrueRandom::private_stlRandomDevice))();
+    const unsigned int randomValue1 = randomDevice();
+    const unsigned int randomValue2 = randomDevice();
     const unsigned long long randomValue = (static_cast<unsigned long long>(randomValue1) << 32) + static_cast<unsigned long long>(randomValue2);
-    return (static_cast<long long>(randomValue) ^ getCurrentTime());
+    return static_cast<long long>(randomValue ^ static_cast<unsigned long long>(getCurrentTime()));
 }
 
 unsigned int SGEXTN::SeerattraNum::TrueRandom::randomUnsignedInt32(){
-    return static_cast<unsigned int>(SGEXTN::SeerattraNum::TrueRandom::randomInt32());
+    const unsigned int randomValue = randomDevice();
+    return (randomValue ^ static_cast<unsigned int>(getCurrentTime()));
 }
 
 unsigned long long SGEXTN::SeerattraNum::TrueRandom::randomUnsignedInt64(){
-    return static_cast<unsigned long long>(SGEXTN::SeerattraNum::TrueRandom::randomInt64());
+    const unsigned int randomValue1 = randomDevice();
+    const unsigned int randomValue2 = randomDevice();
+    const unsigned long long randomValue = (static_cast<unsigned long long>(randomValue1) << 32) + static_cast<unsigned long long>(randomValue2);
+    return (randomValue ^ static_cast<unsigned long long>(getCurrentTime()));
 }
 
 float SGEXTN::SeerattraNum::TrueRandom::randomFloat32(){
-    if(SGEXTN::SeerattraNum::TrueRandom::private_stlRandomDevice == nullptr){SGEXTN::SeerattraNum::TrueRandom::private_stlRandomDevice = SGEXTN::SeerattraNum::UnsafeCasts<std::random_device>::eraseType(new std::random_device());}
-    if(SGEXTN::SeerattraNum::TrueRandom::private_stlDistributionFloat == nullptr){SGEXTN::SeerattraNum::TrueRandom::private_stlDistributionFloat = SGEXTN::SeerattraNum::UnsafeCasts<std::uniform_real_distribution<float>>::eraseType(new std::uniform_real_distribution<float>(0.0f, 1.0f));}
-    return (*SGEXTN::SeerattraNum::UnsafeCasts<std::uniform_real_distribution<float>>::uneraseType(SGEXTN::SeerattraNum::TrueRandom::private_stlDistributionFloat))(*SGEXTN::SeerattraNum::UnsafeCasts<std::random_device>::uneraseType(SGEXTN::SeerattraNum::TrueRandom::private_stlRandomDevice));
+    const double maximum = static_cast<double>(SGEXTN::Math::IntegerLimits<unsigned int>::maximum()) + 1.0;
+    return static_cast<float>(static_cast<double>(SGEXTN::SeerattraNum::TrueRandom::randomUnsignedInt32()) /maximum);
 }
 
 double SGEXTN::SeerattraNum::TrueRandom::randomFloat64(){
-    if(SGEXTN::SeerattraNum::TrueRandom::private_stlRandomDevice == nullptr){SGEXTN::SeerattraNum::TrueRandom::private_stlRandomDevice = SGEXTN::SeerattraNum::UnsafeCasts<std::random_device>::eraseType(new std::random_device());}
-    if(SGEXTN::SeerattraNum::TrueRandom::private_stlDistributionDouble == nullptr){SGEXTN::SeerattraNum::TrueRandom::private_stlDistributionDouble = SGEXTN::SeerattraNum::UnsafeCasts<std::uniform_real_distribution<double>>::eraseType(new std::uniform_real_distribution<double>(0.0, 1.0));}
-    return (*SGEXTN::SeerattraNum::UnsafeCasts<std::uniform_real_distribution<double>>::uneraseType(SGEXTN::SeerattraNum::TrueRandom::private_stlDistributionDouble))(*SGEXTN::SeerattraNum::UnsafeCasts<std::random_device>::uneraseType(SGEXTN::SeerattraNum::TrueRandom::private_stlRandomDevice));
+    const double maximum = static_cast<double>(SGEXTN::Math::IntegerLimits<unsigned int>::maximum()) + 1.0;
+    return (static_cast<double>(SGEXTN::SeerattraNum::TrueRandom::randomUnsignedInt32()) /maximum);
 }
 
 SGEXTN::Containers::Array<int> SGEXTN::SeerattraNum::TrueRandom::randomInt32Array(int count){

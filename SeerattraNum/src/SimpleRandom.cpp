@@ -55,14 +55,12 @@ unsigned long long SGEXTN::SeerattraNum::SimpleRandom::randomUnsignedInt64(){
 
 float SGEXTN::SeerattraNum::SimpleRandom::randomFloat32(){
     if(SGEXTN::SeerattraNum::SimpleRandom::private_stlMersenneTwister19937 == nullptr){initialiseRng();}
-    if(SGEXTN::SeerattraNum::TrueRandom::private_stlDistributionFloat == nullptr){SGEXTN::SeerattraNum::TrueRandom::private_stlDistributionFloat = SGEXTN::SeerattraNum::UnsafeCasts<std::uniform_real_distribution<float>>::eraseType(new std::uniform_real_distribution<float>(0.0f, 1.0f));}
-    return (*SGEXTN::SeerattraNum::UnsafeCasts<std::uniform_real_distribution<float>>::uneraseType(SGEXTN::SeerattraNum::TrueRandom::private_stlDistributionFloat))(*SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(SGEXTN::SeerattraNum::SimpleRandom::private_stlMersenneTwister19937));
+    return (std::uniform_real_distribution<float>(0.0f, 1.0f))(*SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(SGEXTN::SeerattraNum::SimpleRandom::private_stlMersenneTwister19937));
 }
 
 double SGEXTN::SeerattraNum::SimpleRandom::randomFloat64(){
     if(SGEXTN::SeerattraNum::SimpleRandom::private_stlMersenneTwister19937 == nullptr){initialiseRng();}
-    if(SGEXTN::SeerattraNum::TrueRandom::private_stlDistributionDouble == nullptr){SGEXTN::SeerattraNum::TrueRandom::private_stlDistributionDouble = SGEXTN::SeerattraNum::UnsafeCasts<std::uniform_real_distribution<double>>::eraseType(new std::uniform_real_distribution<double>(0.0, 1.0));}
-    return (*SGEXTN::SeerattraNum::UnsafeCasts<std::uniform_real_distribution<double>>::uneraseType(SGEXTN::SeerattraNum::TrueRandom::private_stlDistributionDouble))(*SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(SGEXTN::SeerattraNum::SimpleRandom::private_stlMersenneTwister19937));
+    return (std::uniform_real_distribution<double>(0.0, 1.0))(*SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(SGEXTN::SeerattraNum::SimpleRandom::private_stlMersenneTwister19937));
 }
 
 SGEXTN::Containers::Array<int> SGEXTN::SeerattraNum::SimpleRandom::randomInt32Array(int count){
