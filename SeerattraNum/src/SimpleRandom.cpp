@@ -20,47 +20,49 @@
 #include <SGEXTN/SeerattraNum/private_api/UnsafeCasts.h>
 #include <SGEXTN/Containers/Array.h>
 #include <SGEXTN/Containers/ForceCrash.h>
+#include <SGEXTN/SeerattraNum/DirectRandom.h>
 #include <random>
 
 namespace {
 void initialiseRng(){
-    SGEXTN::Containers::Array<unsigned int> seedArray = SGEXTN::SeerattraNum::TrueRandom::randomUnsignedInt32Array(8);
-    std::seed_seq seedSequence(&seedArray.at(0), &seedArray.at(0) + 8);
-    SGEXTN::SeerattraNum::SimpleRandom::private_stlMersenneTwister19937 = SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::eraseType(new std::mt19937_64(seedSequence));
-}
-
-unsigned long long getRandomNumber(){
-    if(SGEXTN::SeerattraNum::SimpleRandom::private_stlMersenneTwister19937 == nullptr){initialiseRng();}
-    return (*SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(SGEXTN::SeerattraNum::SimpleRandom::private_stlMersenneTwister19937))();
+    if(SGEXTN::SeerattraNum::SimpleRandom::private_globalInstance == nullptr){
+        SGEXTN::SeerattraNum::SimpleRandom::private_globalInstance = new SGEXTN::SeerattraNum::DirectRandom();
+        const SGEXTN::Containers::Array<unsigned int> seedArray = SGEXTN::SeerattraNum::TrueRandom::randomUnsignedInt32Array(8);
+        (*SGEXTN::SeerattraNum::SimpleRandom::private_globalInstance).seed(seedArray);
+    }
 }
 }
 
-void* SGEXTN::SeerattraNum::SimpleRandom::private_stlMersenneTwister19937 = nullptr;
+SGEXTN::SeerattraNum::DirectRandom* SGEXTN::SeerattraNum::SimpleRandom::private_globalInstance = nullptr;
 
 int SGEXTN::SeerattraNum::SimpleRandom::randomInt32(){
-    return static_cast<int>(getRandomNumber());
+    initialiseRng();
+    return (*SGEXTN::SeerattraNum::SimpleRandom::private_globalInstance).randomInt32();
 }
 
 long long SGEXTN::SeerattraNum::SimpleRandom::randomInt64(){
-    return static_cast<long long>(getRandomNumber());
+    initialiseRng();
+    return (*SGEXTN::SeerattraNum::SimpleRandom::private_globalInstance).randomInt64();
 }
 
 unsigned int SGEXTN::SeerattraNum::SimpleRandom::randomUnsignedInt32(){
-    return static_cast<unsigned int>(getRandomNumber());
+    initialiseRng();
+    return (*SGEXTN::SeerattraNum::SimpleRandom::private_globalInstance).randomUnsignedInt32();
 }
 
 unsigned long long SGEXTN::SeerattraNum::SimpleRandom::randomUnsignedInt64(){
-    return getRandomNumber();
+    initialiseRng();
+    return (*SGEXTN::SeerattraNum::SimpleRandom::private_globalInstance).randomUnsignedInt64();
 }
 
 float SGEXTN::SeerattraNum::SimpleRandom::randomFloat32(){
-    if(SGEXTN::SeerattraNum::SimpleRandom::private_stlMersenneTwister19937 == nullptr){initialiseRng();}
-    return (std::uniform_real_distribution<float>(0.0f, 1.0f))(*SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(SGEXTN::SeerattraNum::SimpleRandom::private_stlMersenneTwister19937));
+    initialiseRng();
+    return (*SGEXTN::SeerattraNum::SimpleRandom::private_globalInstance).randomFloat32();
 }
 
 double SGEXTN::SeerattraNum::SimpleRandom::randomFloat64(){
-    if(SGEXTN::SeerattraNum::SimpleRandom::private_stlMersenneTwister19937 == nullptr){initialiseRng();}
-    return (std::uniform_real_distribution<double>(0.0, 1.0))(*SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(SGEXTN::SeerattraNum::SimpleRandom::private_stlMersenneTwister19937));
+    initialiseRng();
+    return (*SGEXTN::SeerattraNum::SimpleRandom::private_globalInstance).randomFloat64();
 }
 
 SGEXTN::Containers::Array<int> SGEXTN::SeerattraNum::SimpleRandom::randomInt32Array(int count){
@@ -118,8 +120,7 @@ SGEXTN::Containers::Array<double> SGEXTN::SeerattraNum::SimpleRandom::randomFloa
 }
 
 void* SGEXTN::SeerattraNum::SimpleRandom::private_getRandomEngine(){
-    if(SGEXTN::SeerattraNum::SimpleRandom::private_stlMersenneTwister19937 == nullptr){initialiseRng();}
-    return SGEXTN::SeerattraNum::SimpleRandom::private_stlMersenneTwister19937;
+    return nullptr;
 }
 
 void* SGEXTN::SeerattraNum::SimpleRandom::private_createRandomEngine(bool useGlobal){

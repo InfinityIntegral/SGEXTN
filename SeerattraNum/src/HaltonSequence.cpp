@@ -39,7 +39,7 @@ SGEXTN::SeerattraNum::HaltonSequence::HaltonSequence(int dimensions) : private_d
         }
         nextPossiblePrime++;
     }
-    SGEXTN::SeerattraNum::RandomPermutation permutationGenerator(true);
+    SGEXTN::SeerattraNum::RandomPermutation permutationGenerator(false);
     for(int i=0; i<dimensions; i++){
         private_permutations.at(i) = permutationGenerator.randomPermutation(private_primeNumbers.at(i));
     }
