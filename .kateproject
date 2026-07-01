@@ -14,18 +14,19 @@
     "targets": [
       {
         "name": "clean + configure",
-        "build_cmd" : "rm -rf build && mkdir build && cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Debug",
-        "run_cmd": "echo 'configure done'"
+        "build_cmd" : "rm -rf build && mkdir build && cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Debug"
       },
       {
         "name": "build + install",
-        "build_cmd": "cmake --build build && cmake --install build --prefix build/BuildLah_install",
-        "run_cmd": "./build/BuildLah_install/bin/InternalTest"
+        "build_cmd": "cmake --build build && cmake --install build --prefix build/BuildLah_install && ./build/BuildLah_install/bin/InternalTest"
       },
       {
         "name": "analyse",
-        "build_cmd" : "cmake --build build && patch_clangtidy.sh -verbose",
-        "run_cmd": "echo 'analyse done'"
+        "build_cmd" : "cmake --build build && patch_clangtidy.sh -verbose"
+      },
+      {
+        "name": "debug",
+        "build_cmd" : "patch_gdb.sh InternalTest"
       }
     ]
   }

@@ -23,8 +23,7 @@
 #include <SGEXTN/Containers/Hash.h>
 #include <SGEXTN/Containers/ForceCrash.h>
 #include <SGEXTN/SeerattraNum/SimpleRandom.h>
-#include <SGEXTN/SeerattraNum/DirectInteger.h>
-#include <SGEXTN/SeerattraNum/DirectFloatingPoint.h>
+#include <SGEXTN/SeerattraNum/DirectRandom.h>
 #include <SGEXTN/SeerattraNum/UniformDistributionInteger.h>
 #include <SGEXTN/SeerattraNum/UniformDistributionFloatingPoint.h>
 #include <SGEXTN/SeerattraNum/BernoulliDistribution.h>
@@ -135,32 +134,19 @@ void SGEXTN::InternalTest::SeerattraNumTest::testSimpleRandom(){
     if(SGEXTN::SeerattraNum::SimpleRandom::randomFloat32Array(100).length() != 100){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Seerattra::SimpleRandom generate array of 32 bit floating point number fail");}
     if(SGEXTN::SeerattraNum::SimpleRandom::randomFloat64Array(100).length() != 100){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Seerattra::SimpleRandom generate array of 64 bit floating point number fail");}
 }
-
-void SGEXTN::InternalTest::SeerattraNumTest::testDirectInteger(){
-    SGEXTN::SeerattraNum::DirectInteger<int> generator(false);
+#include <SGEXTN/CoreText/Debug.h>
+void SGEXTN::InternalTest::SeerattraNumTest::testDirectRandom(){
+    SGEXTN::SeerattraNum::DirectRandom generator;
     generator.seed(firstSeed);
-    if(generator.randomInteger() != 689864061){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::DirectInteger generate integer first seed fail");}
-    SGEXTN::Containers::Array<int> randomArray = generator.randomIntegerArray(2);
-    if(randomArray.at(0) != -2116458956 || randomArray.at(1) != -249517681){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::DirectInteger generate integer array first seed fail");}
+    if(generator.randomInt32() != 45808322){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::DirectRandom generate first integer first seed fail");}
+    if(generator.randomInt32() != -662986976){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::DirectRandom generate second integer first seed fail");}
+    if(isCloseEnough(generator.randomFloat32(), 0.10182f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::DirectRandom generate first floating point first seed fail");}
+    if(isCloseEnough(generator.randomFloat32(), 0.35892f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::DirectRandom generate second floating point first seed fail");}
     generator.seed(secondSeed);
-    if(generator.randomInteger() != 986110788){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::DirectInteger generate integer second seed fail");}
-    randomArray = generator.randomIntegerArray(2);
-    if(randomArray.at(0) != 1930272640 || randomArray.at(1) != -10058938){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::DirectInteger generate integer array second seed fail");}
-}
-
-void SGEXTN::InternalTest::SeerattraNumTest::testDirectFloatingPoint(){
-    std::uniform_real_distribution<float> stlRandomDistribution(0.0f, 1.0f);
-    seedRandomEngine(firstSeed);
-    SGEXTN::SeerattraNum::DirectFloatingPoint<float> generator(false);
-    generator.seed(firstSeed);
-    if(generator.randomFloatingPoint() != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::DirectFloatingPoint generate floating point first seed fail");}
-    SGEXTN::Containers::Array<float> randomArray = generator.randomFloatingPointArray(2);
-    if(randomArray.at(0) != stlRandomDistribution(stlRandomEngine) || randomArray.at(1) != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::DirectFloatingPoint generate floating point array first seed fail");}
-    seedRandomEngine(secondSeed);
-    generator.seed(secondSeed);
-    if(generator.randomFloatingPoint() != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::DirectFloatingPoint generate floating point second seed fail");}
-    randomArray = generator.randomFloatingPointArray(2);
-    if(randomArray.at(0) != stlRandomDistribution(stlRandomEngine) || randomArray.at(1) != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::DirectFloatingPoint generate floating point array second seed fail");}
+    if(generator.randomInt32() != 360871459){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::DirectRandom generate first integer second seed fail");}
+    if(generator.randomInt32() != -589113209){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::DirectRandom generate second integer second seed fail");}
+    if(isCloseEnough(generator.randomFloat32(), 0.49299f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::DirectRandom generate first floating point second seed fail");}
+    if(isCloseEnough(generator.randomFloat32(), 0.90498f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::DirectRandom generate second floating point second seed fail");}
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testUniformDistributionInteger(){
@@ -632,7 +618,7 @@ void SGEXTN::InternalTest::SeerattraNumTest::testHaltonSequence(){
     secondPoint = generator.nextTerm();
     if(secondPoint.length() != 3 || isCloseEnough(secondPoint.at(0), 0.25f) == false || isCloseEnough(secondPoint.at(1), 1.0f / 3.0f) == false || isCloseEnough(secondPoint.at(2), 0.8f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::HaltonSequence generate second point second seed fail");}
 }
-#include <SGEXTN/CoreText/Debug.h>
+
 void SGEXTN::InternalTest::SeerattraNumTest::testVoronoiNoise(){
     SGEXTN::SeerattraNum::VoronoiNoise noiseMap(3);
     noiseMap.seed(726);
@@ -687,8 +673,7 @@ void SGEXTN::InternalTest::SeerattraNumTest::testPerlinNoise(){
 void SGEXTN::InternalTest::SeerattraNumTest::testAll(){
     SGEXTN::InternalTest::SeerattraNumTest::testTrueRandom();
     SGEXTN::InternalTest::SeerattraNumTest::testSimpleRandom();
-    SGEXTN::InternalTest::SeerattraNumTest::testDirectInteger();
-    SGEXTN::InternalTest::SeerattraNumTest::testDirectFloatingPoint();
+    SGEXTN::InternalTest::SeerattraNumTest::testDirectRandom();
     SGEXTN::InternalTest::SeerattraNumTest::testUniformDistributionInteger();
     SGEXTN::InternalTest::SeerattraNumTest::testUniformDistributionFloatingPoint();
     SGEXTN::InternalTest::SeerattraNumTest::testBernoulliDistribution();

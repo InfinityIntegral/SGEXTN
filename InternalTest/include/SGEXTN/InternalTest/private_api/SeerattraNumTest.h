@@ -24,8 +24,7 @@ public:
     static void testAll();
     static void testTrueRandom();
     static void testSimpleRandom();
-    static void testDirectInteger();
-    static void testDirectFloatingPoint();
+    static void testDirectRandom();
     static void testUniformDistributionInteger();
     static void testUniformDistributionFloatingPoint();
     static void testBernoulliDistribution();
