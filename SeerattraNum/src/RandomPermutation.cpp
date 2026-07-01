@@ -19,12 +19,15 @@
 #include <SGEXTN/Containers/Array.h>
 #include <SGEXTN/SeerattraNum/UniformDistributionInteger.h>
 #include <SGEXTN/Containers/ForceCrash.h>
+#include <SGEXTN/SeerattraNum/DirectRandom.h>
 
-SGEXTN::SeerattraNum::RandomPermutation::RandomPermutation(bool useGlobal) : private_rng(useGlobal, 0, 0){}
+SGEXTN::SeerattraNum::RandomPermutation::RandomPermutation(bool useGlobal) : private_ownsRng(useGlobal == false), private_rng(SGEXTN::SeerattraNum::DirectRandom::private_createRng(useGlobal)), private_uniformDistribution(new SGEXTN::SeerattraNum::UniformDistributionInteger(true, 0, 0)){
+    (*private_uniformDistribution).private_rng = private_rng;
+}
 
 void SGEXTN::SeerattraNum::RandomPermutation::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
-    if(private_rng.private_stlRandomEngine == nullptr){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::RandomPermutation::seed crashed because cannot seed global rng");}
-    private_rng.seed(seedArray);
+    if(private_ownsRng == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::RandomPermutation::seed crashed because cannot seed global rng");}
+    (*private_rng).seed(seedArray);
 }
 
 SGEXTN::Containers::Array<int> SGEXTN::SeerattraNum::RandomPermutation::randomPermutation(int n){
@@ -34,8 +37,8 @@ SGEXTN::Containers::Array<int> SGEXTN::SeerattraNum::RandomPermutation::randomPe
         outputArray.at(i) = i;
     }
     for(int i=n-1; i>0; i--){
-        private_rng.setRange(0, i);
-        const int index = private_rng.randomValue();
+        (*private_uniformDistribution).setRange(0, i);
+        const int index = (*private_uniformDistribution).randomValue();
         const int tempVar = outputArray.at(index);
         outputArray.at(index) = outputArray.at(i);
         outputArray.at(i) = tempVar;
