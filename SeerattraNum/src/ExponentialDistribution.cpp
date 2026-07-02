@@ -16,54 +16,48 @@
 // BuildLah license check: SGEXTN 7.0.0
 
 #include <SGEXTN/SeerattraNum/ExponentialDistribution.h>
-#include <SGEXTN/SeerattraNum/private_api/UnsafeCasts.h>
 #include <SGEXTN/Containers/Array.h>
 #include <SGEXTN/Containers/ForceCrash.h>
-#include <SGEXTN/SeerattraNum/SimpleRandom.h>
-#include <random>
+#include <SGEXTN/SeerattraNum/DirectRandom.h>
+#include <SGEXTN/Math/FloatMath.h>
 
-template <typename FloatingPoint> SGEXTN::SeerattraNum::ExponentialDistribution<FloatingPoint>::ExponentialDistribution(bool useGlobal, FloatingPoint meanEventsPerTime){
+SGEXTN::SeerattraNum::ExponentialDistribution::ExponentialDistribution(bool useGlobal, float meanEventsPerTime) : private_meanEventsPerTime(meanEventsPerTime), private_rng(nullptr), private_ownsRng(useGlobal == false){
     if(meanEventsPerTime <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::ExponentialDistribution constructor crashed because requested number of events occurring in each unit time is nonpositive");}
-    private_meanEventsPerTime = meanEventsPerTime;
-    private_stlRandomEngine = SGEXTN::SeerattraNum::SimpleRandom::private_createRandomEngine(useGlobal);
-    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::exponential_distribution<FloatingPoint>>::eraseType(new std::exponential_distribution<FloatingPoint>(meanEventsPerTime));
+    private_rng = SGEXTN::SeerattraNum::DirectRandom::private_createRng(useGlobal);
 }
 
-template <typename FloatingPoint> SGEXTN::SeerattraNum::ExponentialDistribution<FloatingPoint>::~ExponentialDistribution(){
-    delete SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(private_stlRandomEngine);
-    delete SGEXTN::SeerattraNum::UnsafeCasts<std::exponential_distribution<FloatingPoint>>::uneraseType(private_stlDistribution);
+SGEXTN::SeerattraNum::ExponentialDistribution::~ExponentialDistribution(){
+    if(private_ownsRng == true){delete private_rng;}
 }
 
-template <typename FloatingPoint> void SGEXTN::SeerattraNum::ExponentialDistribution<FloatingPoint>::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
-    if(private_stlRandomEngine == nullptr){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::ExponentialDistribution::seed crashed because cannot seed global rng");}
-    SGEXTN::SeerattraNum::SimpleRandom::private_seedRandomEngine(private_stlRandomEngine, seedArray);
+void SGEXTN::SeerattraNum::ExponentialDistribution::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
+    if(private_ownsRng == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::ExponentialDistribution::seed crashed because cannot seed global rng");}
+    SGEXTN::SeerattraNum::DirectRandom* temp = private_rng;
+    private_rng = temp;
+    (*private_rng).seed(seedArray);
 }
 
-template <typename FloatingPoint> FloatingPoint SGEXTN::SeerattraNum::ExponentialDistribution<FloatingPoint>::randomValue(){
-    void* randomEngine = private_stlRandomEngine;
-    if(randomEngine == nullptr){randomEngine = SGEXTN::SeerattraNum::SimpleRandom::private_getRandomEngine();}
-    return ((*SGEXTN::SeerattraNum::UnsafeCasts<std::exponential_distribution<FloatingPoint>>::uneraseType(private_stlDistribution))(*SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(randomEngine)));
+float SGEXTN::SeerattraNum::ExponentialDistribution::randomValue(){
+    SGEXTN::SeerattraNum::DirectRandom* temp = private_rng;
+    private_rng = temp;
+    float rng = (*private_rng).randomFloat32();
+    return (-1.0f * SGEXTN::Math::FloatMath<float>::naturalLog(1.0f - rng) / private_meanEventsPerTime);
 }
 
-template <typename FloatingPoint> SGEXTN::Containers::Array<FloatingPoint> SGEXTN::SeerattraNum::ExponentialDistribution<FloatingPoint>::randomValueArray(int count){
+SGEXTN::Containers::Array<float> SGEXTN::SeerattraNum::ExponentialDistribution::randomValueArray(int count){
     if(count < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::ExponentialDistribution::randomValueArray crashed because a negative number of outputs is requested");}
-    SGEXTN::Containers::Array<FloatingPoint> outputArray(count);
+    SGEXTN::Containers::Array<float> outputArray(count);
     for(int i=0; i<count; i++){
         outputArray.at(i) = randomValue();
     }
     return outputArray;
 }
 
-template <typename FloatingPoint> FloatingPoint SGEXTN::SeerattraNum::ExponentialDistribution<FloatingPoint>::getMeanEventsPerTime() const {
+float SGEXTN::SeerattraNum::ExponentialDistribution::getMeanEventsPerTime() const {
     return private_meanEventsPerTime;
 }
 
-template <typename FloatingPoint> void SGEXTN::SeerattraNum::ExponentialDistribution<FloatingPoint>::setMeanEventsPerTime(FloatingPoint meanEventsPerTime){
+void SGEXTN::SeerattraNum::ExponentialDistribution::setMeanEventsPerTime(float meanEventsPerTime){
     if(meanEventsPerTime <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::ExponentialDistribution::setMeanEventsPerTime crashed because requested number of events occurring in each unit time is nonpositive");}
     private_meanEventsPerTime = meanEventsPerTime;
-    delete SGEXTN::SeerattraNum::UnsafeCasts<std::exponential_distribution<FloatingPoint>>::uneraseType(private_stlDistribution);
-    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::exponential_distribution<FloatingPoint>>::eraseType(new std::exponential_distribution<FloatingPoint>(meanEventsPerTime));
 }
-
-template class SGEXTN::SeerattraNum::ExponentialDistribution<float>;
-template class SGEXTN::SeerattraNum::ExponentialDistribution<double>;
