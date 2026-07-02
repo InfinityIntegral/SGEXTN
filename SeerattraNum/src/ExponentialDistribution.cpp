@@ -40,7 +40,7 @@ void SGEXTN::SeerattraNum::ExponentialDistribution::seed(const SGEXTN::Container
 float SGEXTN::SeerattraNum::ExponentialDistribution::randomValue(){
     SGEXTN::SeerattraNum::DirectRandom* temp = private_rng;
     private_rng = temp;
-    float rng = (*private_rng).randomFloat32();
+    const float rng = (*private_rng).randomFloat32();
     return (-1.0f * SGEXTN::Math::FloatMath<float>::naturalLog(1.0f - rng) / private_meanEventsPerTime);
 }
 

@@ -20,22 +20,24 @@
 
 namespace SGEXTN {
 namespace SeerattraNum {
-template <typename ProbabilityType, typename Integer> class BuildLah_SGEXTN_SeerattraNum GeometricDistribution {
+class DirectRandom;
+
+class BuildLah_SGEXTN_SeerattraNum GeometricDistribution {
 public:
-    void* private_stlRandomEngine;
-    void* private_stlDistribution;
-    ProbabilityType private_chanceOfTrue;
-    GeometricDistribution(bool useGlobal, ProbabilityType chanceOfTrue);
+    SGEXTN::SeerattraNum::DirectRandom* private_rng;
+    bool private_ownsRng;
+    float private_chanceOfTrue;
+    GeometricDistribution(bool useGlobal, float chanceOfTrue);
     GeometricDistribution(const GeometricDistribution&) = delete;
     GeometricDistribution& operator=(const GeometricDistribution&) = delete;
     GeometricDistribution(GeometricDistribution&&) = delete;
     GeometricDistribution& operator=(GeometricDistribution&&) = delete;
     ~GeometricDistribution();
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
-    [[nodiscard]] Integer randomValue();
-    [[nodiscard]] SGEXTN::Containers::Array<Integer> randomValueArray(int count);
-    [[nodiscard]] ProbabilityType getChanceOfTrue() const;
-    void setChanceOfTrue(ProbabilityType chanceOfTrue);
+    [[nodiscard]] int randomValue();
+    [[nodiscard]] SGEXTN::Containers::Array<int> randomValueArray(int count);
+    [[nodiscard]] float getChanceOfTrue() const;
+    void setChanceOfTrue(float chanceOfTrue);
 };
 }
 }
