@@ -20,22 +20,24 @@
 
 namespace SGEXTN {
 namespace SeerattraNum {
-template <typename FloatingPoint> class BuildLah_SGEXTN_SeerattraNum ExponentialDistribution {
+class DirectRandom;
+
+class BuildLah_SGEXTN_SeerattraNum ExponentialDistribution {
 public:
-    void* private_stlRandomEngine;
-    void* private_stlDistribution;
-    FloatingPoint private_meanEventsPerTime;
-    ExponentialDistribution(bool useGlobal, FloatingPoint meanEventsPerTime);
+    SGEXTN::SeerattraNum::DirectRandom* private_rng;
+    bool private_ownsRng;
+    float private_meanEventsPerTime;
+    ExponentialDistribution(bool useGlobal, float meanEventsPerTime);
     ExponentialDistribution(const ExponentialDistribution&) = delete;
     ExponentialDistribution& operator=(const ExponentialDistribution&) = delete;
     ExponentialDistribution(ExponentialDistribution&&) = delete;
     ExponentialDistribution& operator=(ExponentialDistribution&&) = delete;
     ~ExponentialDistribution();
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
-    [[nodiscard]] FloatingPoint randomValue();
-    [[nodiscard]] SGEXTN::Containers::Array<FloatingPoint> randomValueArray(int count);
-    [[nodiscard]] FloatingPoint getMeanEventsPerTime() const;
-    void setMeanEventsPerTime(FloatingPoint meanEventsPerTime);
+    [[nodiscard]] float randomValue();
+    [[nodiscard]] SGEXTN::Containers::Array<float> randomValueArray(int count);
+    [[nodiscard]] float getMeanEventsPerTime() const;
+    void setMeanEventsPerTime(float meanEventsPerTime);
 };
 }
 }
