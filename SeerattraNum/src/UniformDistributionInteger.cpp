@@ -32,13 +32,17 @@ SGEXTN::SeerattraNum::UniformDistributionInteger::~UniformDistributionInteger(){
 
 void SGEXTN::SeerattraNum::UniformDistributionInteger::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
     if(private_ownsRng == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionInteger::seed crashed because cannot seed global rng");}
+    SGEXTN::SeerattraNum::DirectRandom* temp = private_rng;
+    private_rng = temp;
     (*private_rng).seed(seedArray);
 }
 
 int SGEXTN::SeerattraNum::UniformDistributionInteger::randomValue(){
+    SGEXTN::SeerattraNum::DirectRandom* temp = private_rng;
+    private_rng = temp;
     while(true){
-        unsigned int rngValue = (*private_rng).randomUnsignedInt32();
-        unsigned int elementCount = static_cast<unsigned int>(private_inclusiveMax - private_inclusiveMin + 1);
+        const unsigned int rngValue = (*private_rng).randomUnsignedInt32();
+        const unsigned int elementCount = static_cast<unsigned int>(private_inclusiveMax - private_inclusiveMin + 1);
         if(rngValue >= elementCount * (SGEXTN::Math::IntegerLimits<unsigned int>::maximum() / elementCount)){continue;}
         return (static_cast<int>(rngValue % elementCount) + private_inclusiveMin);
     }

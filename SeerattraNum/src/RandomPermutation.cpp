@@ -27,11 +27,15 @@ SGEXTN::SeerattraNum::RandomPermutation::RandomPermutation(bool useGlobal) : pri
 
 void SGEXTN::SeerattraNum::RandomPermutation::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
     if(private_ownsRng == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::RandomPermutation::seed crashed because cannot seed global rng");}
+    SGEXTN::SeerattraNum::DirectRandom* temp = private_rng;
+    private_rng = temp;
     (*private_rng).seed(seedArray);
 }
 
 SGEXTN::Containers::Array<int> SGEXTN::SeerattraNum::RandomPermutation::randomPermutation(int n){
     if(n < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::RandomPermutation::randomPermutation crashed because the number of numbers in the requested permutation is negative");}
+    SGEXTN::SeerattraNum::DirectRandom* temp = private_rng;
+    private_rng = temp;
     SGEXTN::Containers::Array<int> outputArray(n);
     for(int i=0; i<n; i++){
         outputArray.at(i) = i;
