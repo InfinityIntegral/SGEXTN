@@ -23,7 +23,6 @@
 #include <SGEXTN/Math/FloatMath.h>
 #include <SGEXTN/Containers/Span.h>
 #include <SGEXTN/Containers/private_api/HashAlgorithm.h>
-#include <SGEXTN/Math/IntegerLimits.h>
 #include <SGEXTN/Math/FloatConstants.h>
 #include <SGEXTN/Math/FloatLimits.h>
 
@@ -51,7 +50,7 @@ float SGEXTN::SeerattraNum::PerlinNoise::getHeight(const SGEXTN::Containers::Arr
     SGEXTN::Containers::Array<int> spanArray(private_dimension + 2);
     spanArray.at(private_dimension) = private_seed;
     const SGEXTN::Containers::Span<const unsigned char> span(reinterpret_cast<const unsigned char*>(&spanArray.at(0)), (private_dimension + 2) *static_cast<int>(sizeof(int)));
-    const double maximum = static_cast<double>(SGEXTN::Math::IntegerLimits<unsigned int>::maximum()) + 1.0;
+    const float scaleFactor = 1.0f / static_cast<float>(static_cast<unsigned int>(1) << 24);
     int normalVarCount = private_dimension;
     if(private_dimension % 2 == 1){normalVarCount++;}
     SGEXTN::Containers::Array<float> normalDistributedVars(normalVarCount);
@@ -64,7 +63,7 @@ float SGEXTN::SeerattraNum::PerlinNoise::getHeight(const SGEXTN::Containers::Arr
             spanArray.at(private_dimension + 1) = j;
             unsigned int rngUnsigned = static_cast<unsigned int>(SGEXTN::Containers::HashAlgorithm::wyHash32(span));
             if(rngUnsigned == 0){rngUnsigned = 1;}
-            normalDistributedVars.at(j) =  static_cast<float>(static_cast<double>(rngUnsigned) / maximum);
+            normalDistributedVars.at(j) = static_cast<float>(rngUnsigned >> 8) * scaleFactor;
         }
         for(int j=0; j<normalVarCount/2; j++){
             const float squareRootFirst = SGEXTN::Math::FloatMath<float>::squareRoot(-2.0f * SGEXTN::Math::FloatMath<float>::naturalLog(normalDistributedVars.at(2 * j)));

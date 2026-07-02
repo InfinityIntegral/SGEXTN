@@ -21,7 +21,6 @@
 #include <SGEXTN/Math/FloatMath.h>
 #include <SGEXTN/Containers/Span.h>
 #include <SGEXTN/Containers/private_api/HashAlgorithm.h>
-#include <SGEXTN/Math/IntegerLimits.h>
 #include <SGEXTN/SeerattraNum/SmoothingFunction.h>
 #include <SGEXTN/Containers/Array.h>
 
@@ -49,14 +48,14 @@ float SGEXTN::SeerattraNum::ValueNoise::getHeight(const SGEXTN::Containers::Arra
     SGEXTN::Containers::Array<int> spanArray(private_dimension + 1);
     spanArray.at(private_dimension) = private_seed;
     const SGEXTN::Containers::Span<const unsigned char> span(reinterpret_cast<const unsigned char*>(&spanArray.at(0)), (private_dimension + 1) *static_cast<int>(sizeof(int)));
-    const double scaleFactor = (1.0 + static_cast<double>(SGEXTN::Math::IntegerLimits<unsigned int>::maximum())) / 2.0;
+    const float scaleFactor = 1.0f / static_cast<float>(static_cast<unsigned int>(1) << 24) * 2.0f;
     for(int i=0; i<powerOf2(private_dimension); i++){
         for(int j=0; j<private_dimension; j++){
             if((i & powerOf2(j)) == 0){spanArray.at(j) = flooredCorner.at(j);}
             else{spanArray.at(j) = flooredCorner.at(j) + 1;}
         }
         const unsigned int rngUnsigned = static_cast<unsigned int>(SGEXTN::Containers::HashAlgorithm::wyHash32(span));
-        cornerHeights.at(i) = static_cast<float>(static_cast<double>(rngUnsigned) / scaleFactor - 1.0);
+        cornerHeights.at(i) = static_cast<float>(rngUnsigned >> 8) * scaleFactor - 1.0f;
     }
     for(int i=private_dimension-1; i>=0; i--){
         float dist = point.at(i) - static_cast<float>(flooredCorner.at(i));

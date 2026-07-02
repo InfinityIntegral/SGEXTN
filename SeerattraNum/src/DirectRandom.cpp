@@ -19,7 +19,6 @@
 #include <SGEXTN/Containers/Array.h>
 #include <SGEXTN/Containers/ForceCrash.h>
 #include <SGEXTN/Containers/Hash.h>
-#include <SGEXTN/Math/IntegerLimits.h>
 #include <SGEXTN/SeerattraNum/TrueRandom.h>
 #include <SGEXTN/SeerattraNum/SimpleRandom.h>
 
@@ -89,13 +88,13 @@ unsigned long long SGEXTN::SeerattraNum::DirectRandom::randomUnsignedInt64(){
 }
 
 float SGEXTN::SeerattraNum::DirectRandom::randomFloat32(){
-    const double maximum = static_cast<double>(SGEXTN::Math::IntegerLimits<unsigned int>::maximum()) + 1.0;
-    return static_cast<float>(static_cast<double>(randomUnsignedInt32()) / maximum);
+    const float scaleFactor = 1.0f / static_cast<float>(static_cast<unsigned int>(1) << 24);
+    return (static_cast<float>(randomUnsignedInt32() >> 8) * scaleFactor);
 }
 
 double SGEXTN::SeerattraNum::DirectRandom::randomFloat64(){
-    const double maximum = static_cast<double>(SGEXTN::Math::IntegerLimits<unsigned int>::maximum()) + 1.0;
-    return (static_cast<double>(randomUnsignedInt32()) / maximum);
+    const double scaleFactor = 1.0 / static_cast<double>(static_cast<unsigned long long>(1) << 53);
+    return (static_cast<double>(randomUnsignedInt64() >> 11) * scaleFactor);
 }
 
 SGEXTN::Containers::Array<int> SGEXTN::SeerattraNum::DirectRandom::randomInt32Array(int count){

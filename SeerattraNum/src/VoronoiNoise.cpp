@@ -22,7 +22,6 @@
 #include <SGEXTN/Math/FloatLimits.h>
 #include <SGEXTN/Containers/Span.h>
 #include <SGEXTN/Containers/private_api/HashAlgorithm.h>
-#include <SGEXTN/Math/IntegerLimits.h>
 #include <SGEXTN/Math/FloatConstants.h>
 #include <SGEXTN/Containers/Array.h>
 
@@ -38,12 +37,12 @@ SGEXTN::Containers::Array<float> getFeaturePoint(int seed, const SGEXTN::Contain
     int normalVarCount = dimensions;
     if(dimensions % 2 == 1){normalVarCount++;}
     SGEXTN::Containers::Array<float> normalDistributedVars(normalVarCount);
-    const double maximum = static_cast<double>(SGEXTN::Math::IntegerLimits<unsigned int>::maximum()) + 1.0;
+    const float scaleFactor = 1.0f / static_cast<float>(static_cast<unsigned int>(1) << 24);
     for(int i=0; i<normalVarCount; i++){
         spanArray.at(dimensions + 1) = i;
         unsigned int rngUnsigned = static_cast<unsigned int>(SGEXTN::Containers::HashAlgorithm::wyHash32(span));
         if(rngUnsigned == 0){rngUnsigned = 1;}
-        normalDistributedVars.at(i) = static_cast<float>(static_cast<double>(rngUnsigned) / maximum);
+        normalDistributedVars.at(i) = static_cast<float>(rngUnsigned >> 8) * scaleFactor;
     }
     for(int i=0; i<normalVarCount/2; i++){
         const float squareRootFirst = SGEXTN::Math::FloatMath<float>::squareRoot(-2.0f * SGEXTN::Math::FloatMath<float>::naturalLog(normalDistributedVars.at(2 * i)));
@@ -59,8 +58,8 @@ SGEXTN::Containers::Array<float> getFeaturePoint(int seed, const SGEXTN::Contain
     float magnitude = 0.0f;
     {
         spanArray.at(dimensions + 1) = dimensions + 2;
-        const unsigned int rngSigned = static_cast<unsigned int>(SGEXTN::Containers::HashAlgorithm::wyHash32(span));
-        magnitude = 0.5f * static_cast<float>(static_cast<double>(rngSigned) / maximum);
+        const unsigned int rngUnsigned = static_cast<unsigned int>(SGEXTN::Containers::HashAlgorithm::wyHash32(span));
+        magnitude = 0.5f * static_cast<float>(rngUnsigned >> 8) * scaleFactor;
     }
     SGEXTN::Containers::Array<float> outputPoint(dimensions);
     if(generatedMagnitude >= SGEXTN::Math::FloatLimits<float>::minimumPositive()){
