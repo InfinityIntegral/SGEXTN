@@ -20,12 +20,14 @@
 
 namespace SGEXTN {
 namespace SeerattraNum {
-template <typename ProbabilityType> class BuildLah_SGEXTN_SeerattraNum BernoulliDistribution {
+class DirectRandom;
+
+class BuildLah_SGEXTN_SeerattraNum BernoulliDistribution {
 public:
-    void* private_stlRandomEngine;
-    void* private_stlDistribution;
-    ProbabilityType private_chanceOfTrue;
-    BernoulliDistribution(bool useGlobal, ProbabilityType chanceOfTrue);
+    SGEXTN::SeerattraNum::DirectRandom* private_rng;
+    bool private_ownsRng;
+    float private_chanceOfTrue;
+    BernoulliDistribution(bool useGlobal, float chanceOfTrue);
     BernoulliDistribution(const BernoulliDistribution&) = delete;
     BernoulliDistribution& operator=(const BernoulliDistribution&) = delete;
     BernoulliDistribution(BernoulliDistribution&&) = delete;
@@ -34,8 +36,8 @@ public:
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
     [[nodiscard]] bool randomValue();
     [[nodiscard]] SGEXTN::Containers::Array<bool> randomValueArray(int count);
-    [[nodiscard]] ProbabilityType getChanceOfTrue() const;
-    void setChanceOfTrue(ProbabilityType chanceOfTrue);
+    [[nodiscard]] float getChanceOfTrue() const;
+    void setChanceOfTrue(float chanceOfTrue);
 };
 }
 }

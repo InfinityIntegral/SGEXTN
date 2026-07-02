@@ -16,37 +16,34 @@
 // BuildLah license check: SGEXTN 7.0.0
 
 #include <SGEXTN/SeerattraNum/BernoulliDistribution.h>
-#include <SGEXTN/SeerattraNum/private_api/UnsafeCasts.h>
 #include <SGEXTN/Containers/Array.h>
 #include <SGEXTN/Containers/ForceCrash.h>
-#include <SGEXTN/SeerattraNum/SimpleRandom.h>
-#include <random>
+#include <SGEXTN/SeerattraNum/DirectRandom.h>
 
-template <typename ProbabilityType> SGEXTN::SeerattraNum::BernoulliDistribution<ProbabilityType>::BernoulliDistribution(bool useGlobal, ProbabilityType chanceOfTrue){
+SGEXTN::SeerattraNum::BernoulliDistribution::BernoulliDistribution(bool useGlobal, float chanceOfTrue) : private_chanceOfTrue(chanceOfTrue), private_rng(nullptr), private_ownsRng(useGlobal == false){
     if(chanceOfTrue < 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BernoulliDistribution constructor crashed because the requested probability is negative");}
     if(chanceOfTrue > 1.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BernoulliDistribution constructor crashed because the requested probability is higher than 1");}
-    private_chanceOfTrue = chanceOfTrue;
-    private_stlRandomEngine = SGEXTN::SeerattraNum::SimpleRandom::private_createRandomEngine(useGlobal);
-    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::bernoulli_distribution>::eraseType(new std::bernoulli_distribution(chanceOfTrue));
+    private_rng = SGEXTN::SeerattraNum::DirectRandom::private_createRng(useGlobal);
 }
 
-template <typename ProbabilityType> SGEXTN::SeerattraNum::BernoulliDistribution<ProbabilityType>::~BernoulliDistribution(){
-    delete SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(private_stlRandomEngine);
-    delete SGEXTN::SeerattraNum::UnsafeCasts<std::bernoulli_distribution>::uneraseType(private_stlDistribution);
+SGEXTN::SeerattraNum::BernoulliDistribution::~BernoulliDistribution(){
+    if(private_ownsRng == true){delete private_rng;}
 }
 
-template <typename ProbabilityType> void SGEXTN::SeerattraNum::BernoulliDistribution<ProbabilityType>::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
-    if(private_stlRandomEngine == nullptr){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BernoulliDistribution::seed crashed because cannot seed global rng");}
-    SGEXTN::SeerattraNum::SimpleRandom::private_seedRandomEngine(private_stlRandomEngine, seedArray);
+void SGEXTN::SeerattraNum::BernoulliDistribution::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
+    if(private_ownsRng == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BernoulliDistribution::seed crashed because cannot seed global rng");}
+    SGEXTN::SeerattraNum::DirectRandom* temp = private_rng;
+    private_rng = temp;
+    (*private_rng).seed(seedArray);
 }
 
-template <typename ProbabilityType> bool SGEXTN::SeerattraNum::BernoulliDistribution<ProbabilityType>::randomValue(){
-    void* randomEngine = private_stlRandomEngine;
-    if(randomEngine == nullptr){randomEngine = SGEXTN::SeerattraNum::SimpleRandom::private_getRandomEngine();}
-    return ((*SGEXTN::SeerattraNum::UnsafeCasts<std::bernoulli_distribution>::uneraseType(private_stlDistribution))(*SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(randomEngine)));
+bool SGEXTN::SeerattraNum::BernoulliDistribution::randomValue(){
+    SGEXTN::SeerattraNum::DirectRandom* temp = private_rng;
+    private_rng = temp;
+    return ((*private_rng).randomFloat32() < private_chanceOfTrue);
 }
 
-template <typename ProbabilityType> SGEXTN::Containers::Array<bool> SGEXTN::SeerattraNum::BernoulliDistribution<ProbabilityType>::randomValueArray(int count){
+SGEXTN::Containers::Array<bool> SGEXTN::SeerattraNum::BernoulliDistribution::randomValueArray(int count){
     if(count < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BernoulliDistribution::randomValueArray crashed because a negative number of outputs is requested");}
     SGEXTN::Containers::Array<bool> outputArray(count);
     for(int i=0; i<count; i++){
@@ -55,17 +52,12 @@ template <typename ProbabilityType> SGEXTN::Containers::Array<bool> SGEXTN::Seer
     return outputArray;
 }
 
-template <typename ProbabilityType> ProbabilityType SGEXTN::SeerattraNum::BernoulliDistribution<ProbabilityType>::getChanceOfTrue() const {
+float SGEXTN::SeerattraNum::BernoulliDistribution::getChanceOfTrue() const {
     return private_chanceOfTrue;
 }
 
-template <typename ProbabilityType> void SGEXTN::SeerattraNum::BernoulliDistribution<ProbabilityType>::setChanceOfTrue(ProbabilityType chanceOfTrue){
+void SGEXTN::SeerattraNum::BernoulliDistribution::setChanceOfTrue(float chanceOfTrue){
     if(chanceOfTrue < 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BernoulliDistribution::setChanceOfTrue crashed because the requested probability is negative");}
     if(chanceOfTrue > 1.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BernoulliDistribution::setChanceOfTrue crashed because the requested probability is higher than 1");}
     private_chanceOfTrue = chanceOfTrue;
-    delete SGEXTN::SeerattraNum::UnsafeCasts<std::bernoulli_distribution>::uneraseType(private_stlDistribution);
-    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::bernoulli_distribution>::eraseType(new std::bernoulli_distribution(chanceOfTrue));
 }
-
-template class SGEXTN::SeerattraNum::BernoulliDistribution<float>;
-template class SGEXTN::SeerattraNum::BernoulliDistribution<double>;
