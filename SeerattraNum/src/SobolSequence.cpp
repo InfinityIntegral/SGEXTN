@@ -20,7 +20,6 @@
 #include <SGEXTN/Containers/Array.h>
 #include <SGEXTN/Containers/Hash.h>
 #include <SGEXTN/SeerattraNum/TrueRandom.h>
-#include <SGEXTN/Math/IntegerLimits.h>
 #include <SGEXTN/Containers/ForceCrash.h>
 
 namespace {
@@ -92,9 +91,9 @@ SGEXTN::Containers::Array<float> SGEXTN::SeerattraNum::SobolSequence::nextTerm()
         integerResult.at(i) = integerResult.at(i) ^ private_hashedSeed.at(i);
     }
     SGEXTN::Containers::Array<float> floatingPointResult(private_dimensions);
-    const double maximumValue = static_cast<double>(SGEXTN::Math::IntegerLimits<unsigned int>::maximum()) + 1.0;
+    const float scaleFactor = 1.0f / static_cast<float>(static_cast<unsigned int>(1) << 24);
     for(int i=0; i<private_dimensions; i++){
-        floatingPointResult.at(i) = static_cast<float>(static_cast<double>(integerResult.at(i)) / maximumValue);
+        floatingPointResult.at(i) = static_cast<float>(integerResult.at(i) >> 8) * scaleFactor;
     }
     return floatingPointResult;
 }
@@ -117,9 +116,9 @@ SGEXTN::Containers::Array<float> SGEXTN::SeerattraNum::SobolSequence::requestTer
         integerResult.at(i) = integerResult.at(i) ^ private_hashedSeed.at(i);
     }
     SGEXTN::Containers::Array<float> floatingPointResult(private_dimensions);
-    const double maximumValue = static_cast<double>(SGEXTN::Math::IntegerLimits<unsigned int>::maximum()) + 1.0;
+    const float scaleFactor = 1.0f / static_cast<float>(static_cast<unsigned int>(1) << 24);
     for(int i=0; i<private_dimensions; i++){
-        floatingPointResult.at(i) = static_cast<float>(static_cast<double>(integerResult.at(i)) / maximumValue);
+        floatingPointResult.at(i) = static_cast<float>(integerResult.at(i) >> 8) * scaleFactor;
     }
     return floatingPointResult;
 }
