@@ -470,13 +470,11 @@ void SGEXTN::InternalTest::SeerattraNumTest::testStudentTDistribution(){
 void SGEXTN::InternalTest::SeerattraNumTest::testWeightedIndexSelectionDistribution(){
     SGEXTN::Containers::Array<float> firstWeights(1.0f, 2.0f, 3.0f, 4.0f, 5.0f);
     SGEXTN::Containers::Array<float> secondWeights(0.5f, 0.1f, 2.0f);
-    std::discrete_distribution<int> stlRandomDistribution(&firstWeights.at(0), &firstWeights.at(0) + firstWeights.length());
-    seedRandomEngine(firstSeed);
-    SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution<float> generator(false, firstWeights);
+    SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution generator(false, firstWeights);
     generator.seed(firstSeed);
-    if(generator.randomIndex() != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution generate value first seed fail");}
+    if(generator.randomIndex() != 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution generate value first seed fail");}
     SGEXTN::Containers::Array<int> randomArray = generator.randomIndexArray(2);
-    if(randomArray.at(0) != stlRandomDistribution(stlRandomEngine) || randomArray.at(1) != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution generate index first seed fail");}
+    if(randomArray.at(0) != 4 || randomArray.at(1) != 1){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution generate index first seed fail");}
     SGEXTN::Containers::Array<float> firstWeightsReturned = generator.getWeights();
     bool isSame = true;
     if(firstWeights.length() != firstWeightsReturned.length()){isSame = false;}
@@ -484,13 +482,11 @@ void SGEXTN::InternalTest::SeerattraNumTest::testWeightedIndexSelectionDistribut
         if(firstWeights.at(i) != firstWeightsReturned.at(i)){isSame = false;}
     }
     if(isSame == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution get weights fail");}
-    stlRandomDistribution = std::discrete_distribution<int>(&secondWeights.at(0), &secondWeights.at(0) + secondWeights.length());
-    seedRandomEngine(secondSeed);
     generator.setWeights(secondWeights);
     generator.seed(secondSeed);
-    if(generator.randomIndex() != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution generate index second seed fail");}
+    if(generator.randomIndex() != 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution generate index second seed fail");}
     randomArray = generator.randomIndexArray(2);
-    if(randomArray.at(0) != stlRandomDistribution(stlRandomEngine) || randomArray.at(1) != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution generate array second seed fail");}
+    if(randomArray.at(0) != 2 || randomArray.at(1) != 2){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution generate array second seed fail");}
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testWeightedPiecewiseConstantDistribution(){
