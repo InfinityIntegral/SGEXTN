@@ -180,21 +180,17 @@ void SGEXTN::InternalTest::SeerattraNumTest::testUniformDistributionFloatingPoin
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testBernoulliDistribution(){
-    std::bernoulli_distribution stlRandomDistribution(0.25f);
-    seedRandomEngine(firstSeed);
-    SGEXTN::SeerattraNum::BernoulliDistribution<float> generator(false, 0.25f);
+    SGEXTN::SeerattraNum::BernoulliDistribution generator(false, 0.25f);
     generator.seed(firstSeed);
-    if(generator.randomValue() != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BernoulliDistribution generate value first seed fail");}
+    if(generator.randomValue() != true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BernoulliDistribution generate value first seed fail");}
     SGEXTN::Containers::Array<bool> randomArray = generator.randomValueArray(2);
-    if(randomArray.at(0) != stlRandomDistribution(stlRandomEngine) || randomArray.at(1) != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BernoulliDistribution generate array first seed fail");}
+    if(randomArray.at(0) != false || randomArray.at(1) != true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BernoulliDistribution generate array first seed fail");}
     if(generator.getChanceOfTrue() != 0.25f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BernoulliDistribution get probability fail");}
-    stlRandomDistribution = std::bernoulli_distribution(0.75f);
-    seedRandomEngine(secondSeed);
     generator.setChanceOfTrue(0.75f);
     generator.seed(secondSeed);
-    if(generator.randomValue() != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BernoulliDistribution generate value second seed fail");}
+    if(generator.randomValue() != true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BernoulliDistribution generate value second seed fail");}
     randomArray = generator.randomValueArray(2);
-    if(randomArray.at(0) != stlRandomDistribution(stlRandomEngine) || randomArray.at(1) != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BernoulliDistribution generate array second seed fail");}
+    if(randomArray.at(0) != false || randomArray.at(1) != true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BernoulliDistribution generate array second seed fail");}
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testBinomialDistribution(){
