@@ -21,8 +21,8 @@
 #include <SGEXTN/Containers/ForceCrash.h>
 #include <SGEXTN/SeerattraNum/DirectRandom.h>
 
-SGEXTN::SeerattraNum::RandomPermutation::RandomPermutation(bool useGlobal) : private_ownsRng(useGlobal == false), private_rng(SGEXTN::SeerattraNum::DirectRandom::private_createRng(useGlobal)), private_uniformDistribution(new SGEXTN::SeerattraNum::UniformDistributionInteger(true, 0, 0)){
-    (*private_uniformDistribution).private_rng = private_rng;
+SGEXTN::SeerattraNum::RandomPermutation::RandomPermutation(bool useGlobal) : private_ownsRng(useGlobal == false), private_rng(SGEXTN::SeerattraNum::DirectRandom::private_createRng(useGlobal)), private_uniformDistribution(true, 0, 0){
+    private_uniformDistribution.private_rng = private_rng;
 }
 
 void SGEXTN::SeerattraNum::RandomPermutation::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
@@ -41,8 +41,8 @@ SGEXTN::Containers::Array<int> SGEXTN::SeerattraNum::RandomPermutation::randomPe
         outputArray.at(i) = i;
     }
     for(int i=n-1; i>0; i--){
-        (*private_uniformDistribution).setRange(0, i);
-        const int index = (*private_uniformDistribution).randomValue();
+        private_uniformDistribution.setRange(0, i);
+        const int index = private_uniformDistribution.randomValue();
         const int tempVar = outputArray.at(index);
         outputArray.at(index) = outputArray.at(i);
         outputArray.at(i) = tempVar;

@@ -20,24 +20,28 @@
 
 namespace SGEXTN {
 namespace SeerattraNum {
-template <typename WeightType, typename FloatingPoint> class BuildLah_SGEXTN_SeerattraNum WeightedPiecewiseLinearDistribution {
+class DirectRandom;
+
+class BuildLah_SGEXTN_SeerattraNum WeightedPiecewiseLinearDistribution {
 public:
-    void* private_stlRandomEngine;
-    void* private_stlDistribution;
-    SGEXTN::Containers::Array<WeightType> private_weights;
-    SGEXTN::Containers::Array<FloatingPoint> private_boundaries;
-    WeightedPiecewiseLinearDistribution(bool useGlobal, const SGEXTN::Containers::Array<WeightType>& weights, const SGEXTN::Containers::Array<FloatingPoint>& boundaries);
+    SGEXTN::SeerattraNum::DirectRandom* private_rng;
+    bool private_ownsRng;
+    SGEXTN::Containers::Array<float> private_weights;
+    SGEXTN::Containers::Array<float> private_boundaries;
+    SGEXTN::Containers::Array<float> private_prefixSums;
+    void private_updatePrefixSums();
+    WeightedPiecewiseLinearDistribution(bool useGlobal, const SGEXTN::Containers::Array<float>& weights, const SGEXTN::Containers::Array<float>& boundaries);
     WeightedPiecewiseLinearDistribution(const WeightedPiecewiseLinearDistribution&) = delete;
     WeightedPiecewiseLinearDistribution& operator=(const WeightedPiecewiseLinearDistribution&) = delete;
     WeightedPiecewiseLinearDistribution(WeightedPiecewiseLinearDistribution&&) = delete;
     WeightedPiecewiseLinearDistribution& operator=(WeightedPiecewiseLinearDistribution&&) = delete;
     ~WeightedPiecewiseLinearDistribution();
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
-    [[nodiscard]] FloatingPoint randomValue();
-    [[nodiscard]] SGEXTN::Containers::Array<FloatingPoint> randomValueArray(int count);
-    [[nodiscard]] SGEXTN::Containers::Array<WeightType> getWeights() const;
-    [[nodiscard]] SGEXTN::Containers::Array<FloatingPoint> getBoundaries() const;
-    void setWeightsAndBoundaries(const SGEXTN::Containers::Array<WeightType>& weights, const SGEXTN::Containers::Array<FloatingPoint>& boundaries);
+    [[nodiscard]] float randomValue();
+    [[nodiscard]] SGEXTN::Containers::Array<float> randomValueArray(int count);
+    [[nodiscard]] SGEXTN::Containers::Array<float> getWeights() const;
+    [[nodiscard]] SGEXTN::Containers::Array<float> getBoundaries() const;
+    void setWeightsAndBoundaries(const SGEXTN::Containers::Array<float>& weights, const SGEXTN::Containers::Array<float>& boundaries);
 };
 }
 }

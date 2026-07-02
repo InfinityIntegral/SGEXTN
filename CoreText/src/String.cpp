@@ -209,7 +209,7 @@ SGEXTN::CoreText::String makeStringFromSignedInteger(long long x, int base){
 }
 
 SGEXTN::CoreText::String makeStringFromFloatingPoint(double x, int base, SGEXTN::CoreText::FloatPrecisionFormat format, int precision){
-    if(x == SGEXTN::Math::FloatLimits<double>::notANumber()){return "not a number";}
+    if(SGEXTN::Math::FloatLimits<double>::isNotANumber(x) == true){return "not a number";}
     if(x == SGEXTN::Math::FloatLimits<double>::positiveInfinity()){return "+infinity";}
     if(x == SGEXTN::Math::FloatLimits<double>::negativeInfinity()){return "-infinity";}
     if(x == 0.0){

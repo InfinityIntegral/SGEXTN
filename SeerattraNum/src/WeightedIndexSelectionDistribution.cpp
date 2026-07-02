@@ -57,11 +57,11 @@ void SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution::seed(const SGEXTN
 int SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution::randomIndex(){
     SGEXTN::SeerattraNum::DirectRandom* temp = private_rng;
     private_rng = temp;
-    float rng = (*private_rng).randomFloat32();
+    const float rng = (*private_rng).randomFloat32();
     int low = 0;
     int high = private_weights.length();
     while(high - low > 1){
-        int middle = low + (high - low) / 2;
+        const int middle = low + (high - low) / 2;
         if(private_prefixSums.at(middle) >= rng){high = middle;}
         else{low = middle;}
     }
