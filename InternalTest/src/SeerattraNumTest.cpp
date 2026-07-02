@@ -165,22 +165,18 @@ void SGEXTN::InternalTest::SeerattraNumTest::testUniformDistributionInteger(){
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testUniformDistributionFloatingPoint(){
-    std::uniform_real_distribution<float> stlRandomDistribution(1.0f, 2.0f);
-    seedRandomEngine(firstSeed);
-    SGEXTN::SeerattraNum::UniformDistributionFloatingPoint<float> generator(false, 1.0f, 2.0f);
+    SGEXTN::SeerattraNum::UniformDistributionFloatingPoint generator(false, 1.0f, 2.0f);
     generator.seed(firstSeed);
-    if(generator.randomValue() != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionFloatingPoint generate number first seed fail");}
+    if(isCloseEnough(generator.randomValue(), 1.0107f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionFloatingPoint generate number first seed fail");}
     SGEXTN::Containers::Array<float> randomArray = generator.randomValueArray(2);
-    if(randomArray.at(0) != stlRandomDistribution(stlRandomEngine) || randomArray.at(1) != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionFloatingPoint generate array first seed fail");}
+    if(isCloseEnough(randomArray.at(0), 1.8456f) == false || isCloseEnough(randomArray.at(1), 1.1018f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionFloatingPoint generate array first seed fail");}
     if(generator.getMinimum() != 1.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionFloatingPoint get minimum boundary fail");}
     if(generator.getMaximum() != 2.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionFloatingPoint get maximum boundary fail");}
-    stlRandomDistribution = std::uniform_real_distribution<float>(-2.0f, -1.0f);
-    seedRandomEngine(secondSeed);
     generator.setRange(-2.0f, -1.0f);
     generator.seed(secondSeed);
-    if(generator.randomValue() != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionFloatingPoint generate number second seed fail");}
+    if(isCloseEnough(generator.randomValue(), -1.9160f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionFloatingPoint generate number second seed fail");}
     randomArray = generator.randomValueArray(2);
-    if(randomArray.at(0) != stlRandomDistribution(stlRandomEngine) || randomArray.at(1) != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionFloatingPoint generate array second seed fail");}
+    if(isCloseEnough(randomArray.at(0), -1.1372f) == false || isCloseEnough(randomArray.at(1), -1.5070f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionFloatingPoint generate array second seed fail");}
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testBernoulliDistribution(){

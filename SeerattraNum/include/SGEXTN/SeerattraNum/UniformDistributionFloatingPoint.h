@@ -20,24 +20,26 @@
 
 namespace SGEXTN {
 namespace SeerattraNum {
-template <typename FloatingPoint> class BuildLah_SGEXTN_SeerattraNum UniformDistributionFloatingPoint {
+class DirectRandom;
+
+class BuildLah_SGEXTN_SeerattraNum UniformDistributionFloatingPoint {
 public:
-    void* private_stlRandomEngine;
-    void* private_stlDistribution;
-    FloatingPoint private_minimum;
-    FloatingPoint private_maximum;
-    UniformDistributionFloatingPoint(bool useGlobal, FloatingPoint minimum, FloatingPoint maximum);
+    SGEXTN::SeerattraNum::DirectRandom* private_rng;
+    bool private_ownsRng;
+    float private_minimum;
+    float private_maximum;
+    UniformDistributionFloatingPoint(bool useGlobal, float minimum, float maximum);
     UniformDistributionFloatingPoint(const UniformDistributionFloatingPoint&) = delete;
     UniformDistributionFloatingPoint& operator=(const UniformDistributionFloatingPoint&) = delete;
     UniformDistributionFloatingPoint(UniformDistributionFloatingPoint&&) = delete;
     UniformDistributionFloatingPoint& operator=(UniformDistributionFloatingPoint&&) = delete;
     ~UniformDistributionFloatingPoint();
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
-    [[nodiscard]] FloatingPoint randomValue();
-    [[nodiscard]] SGEXTN::Containers::Array<FloatingPoint> randomValueArray(int count);
-    [[nodiscard]] FloatingPoint getMinimum() const;
-    [[nodiscard]] FloatingPoint getMaximum() const;
-    void setRange(FloatingPoint minimum, FloatingPoint maximum);
+    [[nodiscard]] float randomValue();
+    [[nodiscard]] SGEXTN::Containers::Array<float> randomValueArray(int count);
+    [[nodiscard]] float getMinimum() const;
+    [[nodiscard]] float getMaximum() const;
+    void setRange(float minimum, float maximum);
 };
 }
 }
