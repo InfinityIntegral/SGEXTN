@@ -234,21 +234,17 @@ void SGEXTN::InternalTest::SeerattraNumTest::testNegativeBinomialDistribution(){
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testGeometricDistribution(){
-    std::geometric_distribution<int> stlRandomDistribution(0.25f);
-    seedRandomEngine(firstSeed);
-    SGEXTN::SeerattraNum::GeometricDistribution<float, int> generator(false, 0.25f);
+    SGEXTN::SeerattraNum::GeometricDistribution generator(false, 0.25f);
     generator.seed(firstSeed);
-    if(generator.randomValue() != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GeometricDistribution generate value first seed fail");}
+    if(generator.randomValue() != 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GeometricDistribution generate value first seed fail");}
     SGEXTN::Containers::Array<int> randomArray = generator.randomValueArray(2);
-    if(randomArray.at(0) != stlRandomDistribution(stlRandomEngine) || randomArray.at(1) != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GeometricDistribution generate array first seed fail");}
+    if(randomArray.at(0) != 6 || randomArray.at(1) != 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GeometricDistribution generate array first seed fail");}
     if(generator.getChanceOfTrue() != 0.25f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GeometricDistribution get probability fail");}
-    stlRandomDistribution = std::geometric_distribution<int>(0.75f);
-    seedRandomEngine(secondSeed);
     generator.setChanceOfTrue(0.75f);
     generator.seed(secondSeed);
-    if(generator.randomValue() != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GeometricDistribution generate value second seed fail");}
+    if(generator.randomValue() != 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GeometricDistribution generate value second seed fail");}
     randomArray = generator.randomValueArray(2);
-    if(randomArray.at(0) != stlRandomDistribution(stlRandomEngine) || randomArray.at(1) != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GeometricDistribution generate array second seed fail");}
+    if(randomArray.at(0) != 1 || randomArray.at(1) != 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GeometricDistribution generate array second seed fail");}
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testPoissonDistribution(){

@@ -16,62 +16,51 @@
 // BuildLah license check: SGEXTN 7.0.0
 
 #include <SGEXTN/SeerattraNum/GeometricDistribution.h>
-#include <SGEXTN/SeerattraNum/private_api/UnsafeCasts.h>
 #include <SGEXTN/Containers/Array.h>
 #include <SGEXTN/Containers/ForceCrash.h>
-#include <SGEXTN/SeerattraNum/SimpleRandom.h>
-#include <random>
+#include <SGEXTN/SeerattraNum/DirectRandom.h>
+#include <SGEXTN/Math/FloatMath.h>
 
-template <typename ProbabilityType, typename Integer> SGEXTN::SeerattraNum::GeometricDistribution<ProbabilityType, Integer>::GeometricDistribution(bool useGlobal, ProbabilityType chanceOfTrue){
+SGEXTN::SeerattraNum::GeometricDistribution::GeometricDistribution(bool useGlobal, float chanceOfTrue) : private_chanceOfTrue(chanceOfTrue), private_rng(nullptr), private_ownsRng(useGlobal == false){
     if(chanceOfTrue < 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GeometricDistribution constructor crashed because the requested probability is negative");}
     if(chanceOfTrue > 1.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GeometricDistribution constructor crashed because the requested probability is higher than 1");}
-    private_chanceOfTrue = chanceOfTrue;
-    private_stlRandomEngine = SGEXTN::SeerattraNum::SimpleRandom::private_createRandomEngine(useGlobal);
-    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::geometric_distribution<Integer>>::eraseType(new std::geometric_distribution<Integer>(chanceOfTrue));
+    private_rng = SGEXTN::SeerattraNum::DirectRandom::private_createRng(useGlobal);
 }
 
-template <typename ProbabilityType, typename Integer> SGEXTN::SeerattraNum::GeometricDistribution<ProbabilityType, Integer>::~GeometricDistribution(){
-    delete SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(private_stlRandomEngine);
-    delete SGEXTN::SeerattraNum::UnsafeCasts<std::geometric_distribution<Integer>>::uneraseType(private_stlDistribution);
+SGEXTN::SeerattraNum::GeometricDistribution::~GeometricDistribution(){
+    if(private_ownsRng == true){delete private_rng;}
 }
 
-template <typename ProbabilityType, typename Integer> void SGEXTN::SeerattraNum::GeometricDistribution<ProbabilityType, Integer>::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
-    if(private_stlRandomEngine == nullptr){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GeometricDistribution::seed crashed because cannot seed global rng");}
-    SGEXTN::SeerattraNum::SimpleRandom::private_seedRandomEngine(private_stlRandomEngine, seedArray);
+void SGEXTN::SeerattraNum::GeometricDistribution::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
+    if(private_ownsRng == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GeometricDistribution::seed crashed because cannot seed global rng");}
+    SGEXTN::SeerattraNum::DirectRandom* temp = private_rng;
+    private_rng = temp;
+    (*private_rng).seed(seedArray);
 }
 
-template <typename ProbabilityType, typename Integer> Integer SGEXTN::SeerattraNum::GeometricDistribution<ProbabilityType, Integer>::randomValue(){
-    void* randomEngine = private_stlRandomEngine;
-    if(randomEngine == nullptr){randomEngine = SGEXTN::SeerattraNum::SimpleRandom::private_getRandomEngine();}
-    return ((*SGEXTN::SeerattraNum::UnsafeCasts<std::geometric_distribution<Integer>>::uneraseType(private_stlDistribution))(*SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(randomEngine)));
+int SGEXTN::SeerattraNum::GeometricDistribution::randomValue(){
+    SGEXTN::SeerattraNum::DirectRandom* temp = private_rng;
+    private_rng = temp;
+    const float rng = (*private_rng).randomFloat32();
+    if(private_chanceOfTrue == 1.0f){return 0;}
+    return SGEXTN::Math::FloatMath<float>::floorToInt(SGEXTN::Math::FloatMath<float>::naturalLog(1.0f - rng) / SGEXTN::Math::FloatMath<float>::naturalLog(1.0f - private_chanceOfTrue));
 }
 
-template <typename ProbabilityType, typename Integer> SGEXTN::Containers::Array<Integer> SGEXTN::SeerattraNum::GeometricDistribution<ProbabilityType, Integer>::randomValueArray(int count){
+SGEXTN::Containers::Array<int> SGEXTN::SeerattraNum::GeometricDistribution::randomValueArray(int count){
     if(count < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GeometricDistribution::randomValueArray crashed because a negative number of outputs is requested");}
-    SGEXTN::Containers::Array<Integer> outputArray(count);
+    SGEXTN::Containers::Array<int> outputArray(count);
     for(int i=0; i<count; i++){
         outputArray.at(i) = randomValue();
     }
     return outputArray;
 }
 
-template <typename ProbabilityType, typename Integer> ProbabilityType SGEXTN::SeerattraNum::GeometricDistribution<ProbabilityType, Integer>::getChanceOfTrue() const {
+float SGEXTN::SeerattraNum::GeometricDistribution::getChanceOfTrue() const {
     return private_chanceOfTrue;
 }
 
-template <typename ProbabilityType, typename Integer> void SGEXTN::SeerattraNum::GeometricDistribution<ProbabilityType, Integer>::setChanceOfTrue(ProbabilityType chanceOfTrue){
+void SGEXTN::SeerattraNum::GeometricDistribution::setChanceOfTrue(float chanceOfTrue){
     if(chanceOfTrue < 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GeometricDistribution::setChanceOfTrue crashed because the requested probability is negative");}
     if(chanceOfTrue > 1.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GeometricDistribution::setChanceOfTrue crashed because the requested probability is higher than 1");}
     private_chanceOfTrue = chanceOfTrue;
-    delete SGEXTN::SeerattraNum::UnsafeCasts<std::geometric_distribution<Integer>>::uneraseType(private_stlDistribution);
-    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::geometric_distribution<Integer>>::eraseType(new std::geometric_distribution<Integer>(chanceOfTrue));
 }
-
-template class SGEXTN::SeerattraNum::GeometricDistribution<float, int>;
-template class SGEXTN::SeerattraNum::GeometricDistribution<float, long long>;
-template class SGEXTN::SeerattraNum::GeometricDistribution<float, unsigned int>;
-template class SGEXTN::SeerattraNum::GeometricDistribution<float, unsigned long long>;
-template class SGEXTN::SeerattraNum::GeometricDistribution<double, int>;
-template class SGEXTN::SeerattraNum::GeometricDistribution<double, long long>;
-template class SGEXTN::SeerattraNum::GeometricDistribution<double, unsigned int>;
-template class SGEXTN::SeerattraNum::GeometricDistribution<double, unsigned long long>;
