@@ -16,13 +16,12 @@
 // BuildLah license check: SGEXTN 7.0.0
 
 #include <SGEXTN/SeerattraNum/WeightedPiecewiseLinearDistribution.h>
-#include <SGEXTN/SeerattraNum/private_api/UnsafeCasts.h>
 #include <SGEXTN/Containers/Array.h>
 #include <SGEXTN/Containers/ForceCrash.h>
-#include <SGEXTN/SeerattraNum/SimpleRandom.h>
-#include <random>
+#include <SGEXTN/SeerattraNum/DirectRandom.h>
+#include <SGEXTN/Math/FloatMath.h>
 
-template <typename WeightType, typename FloatingPoint> SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution<WeightType, FloatingPoint>::WeightedPiecewiseLinearDistribution(bool useGlobal, const SGEXTN::Containers::Array<WeightType>& weights, const SGEXTN::Containers::Array<FloatingPoint>& boundaries){
+SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution::WeightedPiecewiseLinearDistribution(bool useGlobal, const SGEXTN::Containers::Array<float>& weights, const SGEXTN::Containers::Array<float>& boundaries) : private_weights(weights), private_boundaries(boundaries), private_prefixSums(0), private_rng(nullptr), private_ownsRng(useGlobal == false){
     if(boundaries.length() < 2){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution constructor crashed because listed boundaries do not form at least 1 valid interval");}
     if(boundaries.length() != weights.length()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution constructor crashed because the length of the boudaries array is not equal to the length of the weights array");}
     bool isAllZero = true;
@@ -34,46 +33,70 @@ template <typename WeightType, typename FloatingPoint> SGEXTN::SeerattraNum::Wei
     for(int i=0; i<boundaries.length()-1; i++){
         if(boundaries.at(i) >= boundaries.at(i + 1)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution constructor crashed because the boundaries array is not strictly increasing");}
     }
-    private_weights = weights;
-    private_boundaries = boundaries;
-    private_stlRandomEngine = SGEXTN::SeerattraNum::SimpleRandom::private_createRandomEngine(useGlobal);
-    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::piecewise_linear_distribution<FloatingPoint>>::eraseType(new std::piecewise_linear_distribution<FloatingPoint>(&boundaries.at(0), &boundaries.at(0) + boundaries.length(), &weights.at(0)));
+    private_rng = SGEXTN::SeerattraNum::DirectRandom::private_createRng(useGlobal);
+    private_updatePrefixSums();
 }
 
-template <typename WeightType, typename FloatingPoint> SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution<WeightType, FloatingPoint>::~WeightedPiecewiseLinearDistribution(){
-    delete SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(private_stlRandomEngine);
-    delete SGEXTN::SeerattraNum::UnsafeCasts<std::piecewise_linear_distribution<FloatingPoint>>::uneraseType(private_stlDistribution);
+SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution::~WeightedPiecewiseLinearDistribution(){
+    if(private_ownsRng == true){delete private_rng;}
 }
 
-template <typename WeightType, typename FloatingPoint> void SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution<WeightType, FloatingPoint>::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
-    if(private_stlRandomEngine == nullptr){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution::seed crashed because cannot seed global rng");}
-    SGEXTN::SeerattraNum::SimpleRandom::private_seedRandomEngine(private_stlRandomEngine, seedArray);
+void SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution::private_updatePrefixSums(){
+    private_prefixSums = SGEXTN::Containers::Array<float>(private_weights.length());
+    private_prefixSums.at(0) = 0.0f;
+    for(int i=1; i<private_weights.length(); i++){
+        private_prefixSums.at(i) = private_prefixSums.at(i - 1) + (private_boundaries.at(i) - private_boundaries.at(i - 1)) * (private_weights.at(i - 1) + private_weights.at(i)) / 2;
+    }
+    for(int i=0; i<private_prefixSums.length(); i++){
+        private_prefixSums.at(i) /= private_prefixSums.at(private_weights.length() - 1);
+    }
 }
 
-template <typename WeightType, typename FloatingPoint> FloatingPoint SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution<WeightType, FloatingPoint>::randomValue(){
-    void* randomEngine = private_stlRandomEngine;
-    if(randomEngine == nullptr){randomEngine = SGEXTN::SeerattraNum::SimpleRandom::private_getRandomEngine();}
-    return ((*SGEXTN::SeerattraNum::UnsafeCasts<std::piecewise_linear_distribution<FloatingPoint>>::uneraseType(private_stlDistribution))(*SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(randomEngine)));
+void SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
+    if(private_ownsRng == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution::seed crashed because cannot seed global rng");}
+    SGEXTN::SeerattraNum::DirectRandom* temp = private_rng;
+    private_rng = temp;
+    (*private_rng).seed(seedArray);
 }
 
-template <typename WeightType, typename FloatingPoint> SGEXTN::Containers::Array<FloatingPoint> SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution<WeightType, FloatingPoint>::randomValueArray(int count){
-    if(count < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution::randomIndexArray crashed because a negative number of outputs is requested");}
-    SGEXTN::Containers::Array<FloatingPoint> outputArray(count);
+float SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution::randomValue(){
+    SGEXTN::SeerattraNum::DirectRandom* temp = private_rng;
+    private_rng = temp;
+    float rng = (*private_rng).randomFloat32();
+    int low = 0;
+    int high = private_weights.length() - 1;
+    while(high - low > 1){
+        const int middle = low + (high - low) / 2;
+        if(private_prefixSums.at(middle) >= rng){high = middle;}
+        else{low = middle;}
+    }
+    rng = (rng - private_prefixSums.at(low)) / (private_prefixSums.at(low + 1) - private_prefixSums.at(low));
+    const float k1 = private_weights.at(low);
+    const float k2 = private_weights.at(low + 1);
+    const float d = private_boundaries.at(low + 1) - private_boundaries.at(low);
+    if(k2 - k1 == 0.0f){return private_boundaries.at(low) + d * rng;}
+    const float sqrt = SGEXTN::Math::FloatMath<float>::squareRoot(k1 * k1 + rng * (k2 * k2 - k1 * k1));
+    return (private_boundaries.at(low) + d * (sqrt - k1) / (k2 - k1));
+}
+
+SGEXTN::Containers::Array<float> SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution::randomValueArray(int count){
+    if(count < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution::randomValueArray crashed because a negative number of outputs is requested");}
+    SGEXTN::Containers::Array<float> outputArray(count);
     for(int i=0; i<count; i++){
         outputArray.at(i) = randomValue();
     }
     return outputArray;
 }
 
-template <typename WeightType, typename FloatingPoint> SGEXTN::Containers::Array<WeightType> SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution<WeightType, FloatingPoint>::getWeights() const {
+SGEXTN::Containers::Array<float> SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution::getWeights() const {
     return private_weights;
 }
 
-template <typename WeightType, typename FloatingPoint> SGEXTN::Containers::Array<FloatingPoint> SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution<WeightType, FloatingPoint>::getBoundaries() const {
+SGEXTN::Containers::Array<float> SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution::getBoundaries() const {
     return private_boundaries;
 }
 
-template <typename WeightType, typename FloatingPoint> void SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution<WeightType, FloatingPoint>::setWeightsAndBoundaries(const SGEXTN::Containers::Array<WeightType>& weights, const SGEXTN::Containers::Array<FloatingPoint>& boundaries){
+void SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution::setWeightsAndBoundaries(const SGEXTN::Containers::Array<float>& weights, const SGEXTN::Containers::Array<float>& boundaries){
     if(boundaries.length() < 2){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution::setWeightsAndBoundaries crashed because listed boundaries do not form at least 1 valid interval");}
     if(boundaries.length() != weights.length()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution::setWeightsAndBoundaries crashed because the length of the boudaries array is not equal to the length of the weights array");}
     bool isAllZero = true;
@@ -87,11 +110,5 @@ template <typename WeightType, typename FloatingPoint> void SGEXTN::SeerattraNum
     }
     private_weights = weights;
     private_boundaries = boundaries;
-    delete SGEXTN::SeerattraNum::UnsafeCasts<std::piecewise_linear_distribution<FloatingPoint>>::uneraseType(private_stlDistribution);
-    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::piecewise_linear_distribution<FloatingPoint>>::eraseType(new std::piecewise_linear_distribution<FloatingPoint>(&boundaries.at(0), &boundaries.at(0) + boundaries.length(), &weights.at(0)));
+    private_updatePrefixSums();
 }
-
-template class SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution<float, float>;
-template class SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution<float, double>;
-template class SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution<double, float>;
-template class SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution<double, double>;

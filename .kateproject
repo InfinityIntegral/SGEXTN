@@ -26,7 +26,7 @@
       },
       {
         "name": "debug",
-        "build_cmd" : "patch_gdb.sh InternalTest"
+        "build_cmd" : "cmake --build build && cmake --install build --prefix build/BuildLah_install && patch_gdb.sh InternalTest"
       }
     ]
   }
