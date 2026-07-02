@@ -16,13 +16,11 @@
 // BuildLah license check: SGEXTN 7.0.0
 
 #include <SGEXTN/SeerattraNum/WeightedIndexSelectionDistribution.h>
-#include <SGEXTN/SeerattraNum/private_api/UnsafeCasts.h>
 #include <SGEXTN/Containers/Array.h>
 #include <SGEXTN/Containers/ForceCrash.h>
-#include <SGEXTN/SeerattraNum/SimpleRandom.h>
-#include <random>
+#include <SGEXTN/SeerattraNum/DirectRandom.h>
 
-template <typename WeightType> SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution<WeightType>::WeightedIndexSelectionDistribution(bool useGlobal, const SGEXTN::Containers::Array<WeightType>& weights){
+SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution::WeightedIndexSelectionDistribution(bool useGlobal, const SGEXTN::Containers::Array<float>& weights) : private_weights(weights), private_prefixSums(0), private_rng(nullptr), private_ownsRng(useGlobal == false){
     if(weights.length() == 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightIndexSelectionDistribution constructor crashed because the array of weights is empty");}
     bool isAllZero = true;
     for(int i=0; i<weights.length(); i++){
@@ -30,28 +28,47 @@ template <typename WeightType> SGEXTN::SeerattraNum::WeightedIndexSelectionDistr
         if(weights.at(i) > 0.0){isAllZero = false;}
     }
     if(isAllZero == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightIndexSelectionDistribution constructor crashed because all of the weights are zero");}
-    private_weights = weights;
-    private_stlRandomEngine = SGEXTN::SeerattraNum::SimpleRandom::private_createRandomEngine(useGlobal);
-    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::discrete_distribution<int>>::eraseType(new std::discrete_distribution<int>(&weights.at(0), &weights.at(0) + weights.length()));
+    private_rng = SGEXTN::SeerattraNum::DirectRandom::private_createRng(useGlobal);
+    private_updatePrefixSums();
 }
 
-template <typename WeightType> SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution<WeightType>::~WeightedIndexSelectionDistribution(){
-    delete SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(private_stlRandomEngine);
-    delete SGEXTN::SeerattraNum::UnsafeCasts<std::discrete_distribution<int>>::uneraseType(private_stlDistribution);
+SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution::~WeightedIndexSelectionDistribution(){
+    if(private_ownsRng == true){delete private_rng;}
 }
 
-template <typename WeightType> void SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution<WeightType>::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
-    if(private_stlRandomEngine == nullptr){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution::seed crashed because cannot seed global rng");}
-    SGEXTN::SeerattraNum::SimpleRandom::private_seedRandomEngine(private_stlRandomEngine, seedArray);
+void SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution::private_updatePrefixSums(){
+    private_prefixSums = SGEXTN::Containers::Array<float>(private_weights.length() + 1);
+    private_prefixSums.at(0) = 0.0f;
+    for(int i=0; i<private_weights.length(); i++){
+        private_prefixSums.at(i + 1) = private_prefixSums.at(i) + private_weights.at(i);
+    }
+    for(int i=0; i<private_prefixSums.length(); i++){
+        private_prefixSums.at(i) /= private_prefixSums.at(private_weights.length());
+    }
 }
 
-template <typename WeightType> int SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution<WeightType>::randomIndex(){
-    void* randomEngine = private_stlRandomEngine;
-    if(randomEngine == nullptr){randomEngine = SGEXTN::SeerattraNum::SimpleRandom::private_getRandomEngine();}
-    return ((*SGEXTN::SeerattraNum::UnsafeCasts<std::discrete_distribution<int>>::uneraseType(private_stlDistribution))(*SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(randomEngine)));
+void SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
+    if(private_ownsRng == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution::seed crashed because cannot seed global rng");}
+    SGEXTN::SeerattraNum::DirectRandom* temp = private_rng;
+    private_rng = temp;
+    (*private_rng).seed(seedArray);
 }
 
-template <typename WeightType> SGEXTN::Containers::Array<int> SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution<WeightType>::randomIndexArray(int count){
+int SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution::randomIndex(){
+    SGEXTN::SeerattraNum::DirectRandom* temp = private_rng;
+    private_rng = temp;
+    float rng = (*private_rng).randomFloat32();
+    int low = 0;
+    int high = private_weights.length();
+    while(high - low > 1){
+        int middle = low + (high - low) / 2;
+        if(private_prefixSums.at(middle) > rng){high = middle;}
+        else{low = middle;}
+    }
+    return low;
+}
+
+SGEXTN::Containers::Array<int> SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution::randomIndexArray(int count){
     if(count < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution::randomIndexArray crashed because a negative number of outputs is requested");}
     SGEXTN::Containers::Array<int> outputArray(count);
     for(int i=0; i<count; i++){
@@ -60,11 +77,11 @@ template <typename WeightType> SGEXTN::Containers::Array<int> SGEXTN::SeerattraN
     return outputArray;
 }
 
-template <typename WeightType> SGEXTN::Containers::Array<WeightType> SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution<WeightType>::getWeights() const {
+SGEXTN::Containers::Array<float> SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution::getWeights() const {
     return private_weights;
 }
 
-template <typename WeightType> void SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution<WeightType>::setWeights(const SGEXTN::Containers::Array<WeightType>& weights){
+void SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution::setWeights(const SGEXTN::Containers::Array<float>& weights){
     if(weights.length() == 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightIndexSelectionDistribution::setWeights crashed because the array of weights is empty");}
     bool isAllZero = true;
     for(int i=0; i<weights.length(); i++){
@@ -73,9 +90,5 @@ template <typename WeightType> void SGEXTN::SeerattraNum::WeightedIndexSelection
     }
     if(isAllZero == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightIndexSelectionDistribution::setWeights crashed because all of the weights are zero");}
     private_weights = weights;
-    delete SGEXTN::SeerattraNum::UnsafeCasts<std::discrete_distribution<int>>::uneraseType(private_stlDistribution);
-    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::discrete_distribution<int>>::eraseType(new std::discrete_distribution<int>(&weights.at(0), &weights.at(0) + weights.length()));
+    private_updatePrefixSums();
 }
-
-template class SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution<float>;
-template class SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution<double>;

@@ -20,12 +20,16 @@
 
 namespace SGEXTN {
 namespace SeerattraNum {
-template <typename WeightType> class BuildLah_SGEXTN_SeerattraNum WeightedIndexSelectionDistribution {
+class DirectRandom;
+
+class BuildLah_SGEXTN_SeerattraNum WeightedIndexSelectionDistribution {
 public:
-    void* private_stlRandomEngine;
-    void* private_stlDistribution;
-    SGEXTN::Containers::Array<WeightType> private_weights;
-    WeightedIndexSelectionDistribution(bool useGlobal, const SGEXTN::Containers::Array<WeightType>& weights);
+    SGEXTN::SeerattraNum::DirectRandom* private_rng;
+    bool private_ownsRng;
+    SGEXTN::Containers::Array<float> private_weights;
+    SGEXTN::Containers::Array<float> private_prefixSums;
+    void private_updatePrefixSums();
+    WeightedIndexSelectionDistribution(bool useGlobal, const SGEXTN::Containers::Array<float>& weights);
     WeightedIndexSelectionDistribution(const WeightedIndexSelectionDistribution&) = delete;
     WeightedIndexSelectionDistribution& operator=(const WeightedIndexSelectionDistribution&) = delete;
     WeightedIndexSelectionDistribution(WeightedIndexSelectionDistribution&&) = delete;
@@ -34,8 +38,8 @@ public:
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
     [[nodiscard]] int randomIndex();
     [[nodiscard]] SGEXTN::Containers::Array<int> randomIndexArray(int count);
-    [[nodiscard]] SGEXTN::Containers::Array<WeightType> getWeights() const;
-    void setWeights(const SGEXTN::Containers::Array<WeightType>& weights);
+    [[nodiscard]] SGEXTN::Containers::Array<float> getWeights() const;
+    void setWeights(const SGEXTN::Containers::Array<float>& weights);
 };
 }
 }
