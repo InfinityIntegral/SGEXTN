@@ -17,6 +17,7 @@
 
 #pragma once
 #include <SGEXTN/Containers/Array.h>
+#include <SGEXTN/SeerattraNum/BernoulliDistribution.h>
 
 namespace SGEXTN {
 namespace SeerattraNum {
@@ -27,6 +28,8 @@ public:
     SGEXTN::SeerattraNum::DirectRandom* private_rng;
     bool private_ownsRng;
     float private_chanceOfTrue;
+    float private_cacheReciprocalOfLnChanceOfFalse;
+    SGEXTN::SeerattraNum::BernoulliDistribution private_bernoulliDistribution;
     GeometricDistribution(bool useGlobal, float chanceOfTrue);
     GeometricDistribution(const GeometricDistribution&) = delete;
     GeometricDistribution& operator=(const GeometricDistribution&) = delete;

@@ -20,11 +20,13 @@
 #include <SGEXTN/Containers/ForceCrash.h>
 #include <SGEXTN/SeerattraNum/DirectRandom.h>
 #include <SGEXTN/Math/FloatMath.h>
+#include <SGEXTN/SeerattraNum/BernoulliDistribution.h>
 
-SGEXTN::SeerattraNum::GeometricDistribution::GeometricDistribution(bool useGlobal, float chanceOfTrue) : private_chanceOfTrue(chanceOfTrue), private_rng(nullptr), private_ownsRng(useGlobal == false){
-    if(chanceOfTrue < 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GeometricDistribution constructor crashed because the requested probability is negative");}
+SGEXTN::SeerattraNum::GeometricDistribution::GeometricDistribution(bool useGlobal, float chanceOfTrue) : private_chanceOfTrue(chanceOfTrue), private_cacheReciprocalOfLnChanceOfFalse(1.0f / SGEXTN::Math::FloatMath<float>::naturalLog(1.0f - chanceOfTrue)), private_rng(nullptr), private_ownsRng(useGlobal == false), private_bernoulliDistribution(true, chanceOfTrue){
+    if(chanceOfTrue <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GeometricDistribution constructor crashed because the requested probability is nonpositive");}
     if(chanceOfTrue > 1.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GeometricDistribution constructor crashed because the requested probability is higher than 1");}
     private_rng = SGEXTN::SeerattraNum::DirectRandom::private_createRng(useGlobal);
+    private_bernoulliDistribution.private_rng = private_rng;
 }
 
 SGEXTN::SeerattraNum::GeometricDistribution::~GeometricDistribution(){
@@ -41,9 +43,15 @@ void SGEXTN::SeerattraNum::GeometricDistribution::seed(const SGEXTN::Containers:
 int SGEXTN::SeerattraNum::GeometricDistribution::randomValue(){
     SGEXTN::SeerattraNum::DirectRandom* temp = private_rng;
     private_rng = temp;
-    const float rng = (*private_rng).randomFloat32();
-    if(private_chanceOfTrue == 1.0f){return 0;}
-    return SGEXTN::Math::FloatMath<float>::floorToInt(SGEXTN::Math::FloatMath<float>::naturalLog(1.0f - rng) / SGEXTN::Math::FloatMath<float>::naturalLog(1.0f - private_chanceOfTrue));
+    if(private_chanceOfTrue < 0.15f){
+        const float rng = (*private_rng).randomFloat32();
+        return SGEXTN::Math::FloatMath<float>::floorToInt(SGEXTN::Math::FloatMath<float>::naturalLog(1.0f - rng) * private_cacheReciprocalOfLnChanceOfFalse);
+    }
+    int failCount = 0;
+    while(private_bernoulliDistribution.randomValue() == false){
+        failCount++;
+    }
+    return failCount;
 }
 
 SGEXTN::Containers::Array<int> SGEXTN::SeerattraNum::GeometricDistribution::randomValueArray(int count){
@@ -60,7 +68,9 @@ float SGEXTN::SeerattraNum::GeometricDistribution::getChanceOfTrue() const {
 }
 
 void SGEXTN::SeerattraNum::GeometricDistribution::setChanceOfTrue(float chanceOfTrue){
-    if(chanceOfTrue < 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GeometricDistribution::setChanceOfTrue crashed because the requested probability is negative");}
+    if(chanceOfTrue <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GeometricDistribution::setChanceOfTrue crashed because the requested probability is nonpositive");}
     if(chanceOfTrue > 1.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GeometricDistribution::setChanceOfTrue crashed because the requested probability is higher than 1");}
     private_chanceOfTrue = chanceOfTrue;
+    private_cacheReciprocalOfLnChanceOfFalse = 1.0f / SGEXTN::Math::FloatMath<float>::naturalLog(1.0f - chanceOfTrue);
+    private_bernoulliDistribution.setChanceOfTrue(chanceOfTrue);
 }
