@@ -62,7 +62,7 @@ int SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution::randomIndex(){
     int high = private_weights.length();
     while(high - low > 1){
         int middle = low + (high - low) / 2;
-        if(private_prefixSums.at(middle) > rng){high = middle;}
+        if(private_prefixSums.at(middle) >= rng){high = middle;}
         else{low = middle;}
     }
     return low;

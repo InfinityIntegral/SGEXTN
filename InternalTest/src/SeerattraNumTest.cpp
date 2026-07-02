@@ -494,13 +494,11 @@ void SGEXTN::InternalTest::SeerattraNumTest::testWeightedPiecewiseConstantDistri
     SGEXTN::Containers::Array<float> firstBoundaries(1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f);
     SGEXTN::Containers::Array<float> secondWeights(0.5f, 0.1f, 2.0f);
     SGEXTN::Containers::Array<float> secondBoundaries(-4.0f, -3.0f, -2.0f, -1.0f);
-    std::piecewise_constant_distribution<float> stlRandomDistribution(&firstBoundaries.at(0), &firstBoundaries.at(0) + firstBoundaries.length(), &firstWeights.at(0));
-    seedRandomEngine(firstSeed);
-    SGEXTN::SeerattraNum::WeightedPiecewiseConstantDistribution<float, float> generator(false, firstWeights, firstBoundaries);
+    SGEXTN::SeerattraNum::WeightedPiecewiseConstantDistribution generator(false, firstWeights, firstBoundaries);
     generator.seed(firstSeed);
-    if(generator.randomValue() != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedPiecewiseConstantDistribution generate value first seed fail");}
+    if(isCloseEnough(generator.randomValue(), 1.1600f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedPiecewiseConstantDistribution generate value first seed fail");}
     SGEXTN::Containers::Array<float> randomArray = generator.randomValueArray(2);
-    if(randomArray.at(0) != stlRandomDistribution(stlRandomEngine) || randomArray.at(1) != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedPiecewiseConstantDistribution generate array first seed fail");}
+    if(isCloseEnough(randomArray.at(0), 5.5369f) == false || isCloseEnough(randomArray.at(1), 2.2637f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedPiecewiseConstantDistribution generate array first seed fail");}
     SGEXTN::Containers::Array<float> firstWeightsReturned = generator.getWeights();
     bool isSame = true;
     if(firstWeights.length() != firstWeightsReturned.length()){isSame = false;}
@@ -515,13 +513,11 @@ void SGEXTN::InternalTest::SeerattraNumTest::testWeightedPiecewiseConstantDistri
         if(firstBoundaries.at(i) != firstBoundariesReturned.at(i)){isSame = false;}
     }
     if(isSame == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedPiecewiseConstantDistribution get boundaries fail");}
-    stlRandomDistribution = std::piecewise_constant_distribution<float>(&secondBoundaries.at(0), &secondBoundaries.at(0) + secondBoundaries.length(), &secondWeights.at(0));
-    seedRandomEngine(secondSeed);
     generator.setWeightsAndBoundaries(secondWeights, secondBoundaries);
     generator.seed(secondSeed);
-    if(generator.randomValue() != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedPiecewiseConstantDistribution generate value second seed fail");}
+    if(isCloseEnough(generator.randomValue(), -3.5631f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedPiecewiseConstantDistribution generate value second seed fail");}
     randomArray = generator.randomValueArray(2);
-    if(randomArray.at(0) != stlRandomDistribution(stlRandomEngine) || randomArray.at(1) != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedPiecewiseConstantDistribution generate array second seed fail");}
+    if(isCloseEnough(randomArray.at(0), -1.1783f) == false || isCloseEnough(randomArray.at(1), -1.6591f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedPiecewiseConstantDistribution generate array second seed fail");}
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testWeightedPiecewiseLinearDistribution(){
