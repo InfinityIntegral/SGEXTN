@@ -22,7 +22,6 @@
 namespace SGEXTN {
 namespace SeerattraNum {
 class DirectRandom;
-class UniformDistributionInteger;
 
 class BuildLah_SGEXTN_SeerattraNum RandomPermutation {
 public:
@@ -30,6 +29,11 @@ public:
     bool private_ownsRng;
     SGEXTN::SeerattraNum::UniformDistributionInteger private_uniformDistribution;
     RandomPermutation(bool useGlobal);
+    RandomPermutation(const RandomPermutation&) = delete;
+    RandomPermutation& operator=(const RandomPermutation&) = delete;
+    RandomPermutation(RandomPermutation&&) = delete;
+    RandomPermutation& operator=(RandomPermutation&&) = delete;
+    ~RandomPermutation();
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
     [[nodiscard]] SGEXTN::Containers::Array<int> randomPermutation(int n);
 };

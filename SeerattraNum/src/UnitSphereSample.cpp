@@ -21,17 +21,26 @@
 #include <SGEXTN/Containers/ForceCrash.h>
 #include <SGEXTN/Math/FloatLimits.h>
 #include <SGEXTN/Math/FloatMath.h>
+#include <SGEXTN/SeerattraNum/DirectRandom.h>
 
-SGEXTN::SeerattraNum::UnitSphereSample::UnitSphereSample(bool useGlobal) : private_rng(useGlobal, 0.0f, 1.0f){}
+SGEXTN::SeerattraNum::UnitSphereSample::UnitSphereSample(bool useGlobal) : private_ownsRng(useGlobal == false), private_rng(SGEXTN::SeerattraNum::DirectRandom::private_createRng(useGlobal)), private_normalDistribution(true, 0.0f, 1.0f){
+    private_normalDistribution.private_rng = private_rng;
+}
+
+SGEXTN::SeerattraNum::UnitSphereSample::~UnitSphereSample(){
+    if(private_ownsRng == true){delete private_rng;}
+}
 
 void SGEXTN::SeerattraNum::UnitSphereSample::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
-    if(private_rng.private_stlRandomEngine == nullptr){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UnitSphereSample::seed crashed because cannot seed global rng");}
-    private_rng.seed(seedArray);
+    if(private_ownsRng == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UnitSphereSample::seed crashed because cannot seed global rng");}
+    SGEXTN::SeerattraNum::DirectRandom* temp = private_rng;
+    private_rng = temp;
+    (*private_rng).seed(seedArray);
 }
 
 SGEXTN::Containers::Array<float> SGEXTN::SeerattraNum::UnitSphereSample::randomPoint(int dimensions){
     if(dimensions <= 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UnitSphereSample::randomPoint crashed because the requested number of dimensions is nonpositive");}
-    SGEXTN::Containers::Array<float> outputArray = private_rng.randomValueArray(dimensions);
+    SGEXTN::Containers::Array<float> outputArray = private_normalDistribution.randomValueArray(dimensions);
     float sumOfSquares = 0.0f;
     for(int i=0; i<dimensions; i++){
         sumOfSquares += (outputArray.at(i) * outputArray.at(i));

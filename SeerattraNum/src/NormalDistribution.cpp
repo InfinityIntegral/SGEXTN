@@ -16,65 +16,155 @@
 // BuildLah license check: SGEXTN 7.0.0
 
 #include <SGEXTN/SeerattraNum/NormalDistribution.h>
-#include <SGEXTN/SeerattraNum/private_api/UnsafeCasts.h>
 #include <SGEXTN/Containers/Array.h>
 #include <SGEXTN/Containers/ForceCrash.h>
-#include <SGEXTN/SeerattraNum/SimpleRandom.h>
-#include <random>
+#include <SGEXTN/SeerattraNum/DirectRandom.h>
+#include <SGEXTN/Math/FloatMath.h>
+#include <SGEXTN/SeerattraNum/private_api/ZigguratTables.h>
+#include <SGEXTN/Math/FloatLimits.h>
+#include <cmath>
 
-template <typename FloatingPoint> SGEXTN::SeerattraNum::NormalDistribution<FloatingPoint>::NormalDistribution(bool useGlobal, FloatingPoint mean, FloatingPoint standardDeviation){
+namespace {
+float unpackInteger(unsigned int data){
+    const unsigned int sign = static_cast<int>((data & 0x80000000) >> 31);
+    const unsigned int exponent = (data & 0x7f800000) >> 23;
+    const unsigned int mantissa = data & 0x007fffff;
+    if(exponent == 0xff){
+        if(mantissa != 0){return SGEXTN::Math::FloatLimits<float>::notANumber();}
+        if(sign == 1){return SGEXTN::Math::FloatLimits<float>::negativeInfinity();}
+        return SGEXTN::Math::FloatLimits<float>::positiveInfinity();
+    }
+    if(exponent == 0){
+        if(mantissa == 0){
+            if(sign == 1){return -0.0f;}
+            return 0.0f;
+        }
+        if(sign == 1){return (-1.0f * std::scalbn(static_cast<float>(mantissa), -149));}
+        return std::scalbn(static_cast<float>(mantissa), -149);
+    }
+    if(sign == 1){return (-1.0f * std::scalbn(1.0f + std::scalbn(static_cast<float>(mantissa), -23), static_cast<int>(exponent) - 127));}
+    return std::scalbn(1.0f + std::scalbn(static_cast<float>(mantissa), -23), static_cast<int>(exponent) - 127);
+}
+
+float getHwidth(int i){
+    const unsigned char firstByte = static_cast<unsigned char>(*(SGEXTN::SeerattraNum::ZigguratTables::normalDistributionHalfWidths + static_cast<decltype(static_cast<int*>(nullptr) - static_cast<int*>(nullptr))>(4 * i)));
+    const unsigned char secondByte = static_cast<unsigned char>(*(SGEXTN::SeerattraNum::ZigguratTables::normalDistributionHalfWidths + static_cast<decltype(static_cast<int*>(nullptr) - static_cast<int*>(nullptr))>(4 * i + 1)));
+    const unsigned char thirdByte = static_cast<unsigned char>(*(SGEXTN::SeerattraNum::ZigguratTables::normalDistributionHalfWidths + static_cast<decltype(static_cast<int*>(nullptr) - static_cast<int*>(nullptr))>(4 * i + 2)));
+    const unsigned char fourthByte = static_cast<unsigned char>(*(SGEXTN::SeerattraNum::ZigguratTables::normalDistributionHalfWidths + static_cast<decltype(static_cast<int*>(nullptr) - static_cast<int*>(nullptr))>(4 * i + 3)));
+    const unsigned int packedInt = (static_cast<unsigned int>(firstByte) << 24) | (static_cast<unsigned int>(secondByte) << 16) | (static_cast<unsigned int>(thirdByte) << 8) | static_cast<unsigned int>(fourthByte);
+    return unpackInteger(packedInt);
+}
+
+float getFloor(int i){
+    const unsigned char firstByte = static_cast<unsigned char>(*(SGEXTN::SeerattraNum::ZigguratTables::normalDistributionFloors + static_cast<decltype(static_cast<int*>(nullptr) - static_cast<int*>(nullptr))>(4 * i)));
+    const unsigned char secondByte = static_cast<unsigned char>(*(SGEXTN::SeerattraNum::ZigguratTables::normalDistributionFloors + static_cast<decltype(static_cast<int*>(nullptr) - static_cast<int*>(nullptr))>(4 * i + 1)));
+    const unsigned char thirdByte = static_cast<unsigned char>(*(SGEXTN::SeerattraNum::ZigguratTables::normalDistributionFloors + static_cast<decltype(static_cast<int*>(nullptr) - static_cast<int*>(nullptr))>(4 * i + 2)));
+    const unsigned char fourthByte = static_cast<unsigned char>(*(SGEXTN::SeerattraNum::ZigguratTables::normalDistributionFloors + static_cast<decltype(static_cast<int*>(nullptr) - static_cast<int*>(nullptr))>(4 * i + 3)));
+    const unsigned int packedInt = (static_cast<unsigned int>(firstByte) << 24) | (static_cast<unsigned int>(secondByte) << 16) | (static_cast<unsigned int>(thirdByte) << 8) | static_cast<unsigned int>(fourthByte);
+    return unpackInteger(packedInt);
+}
+
+void parseTables(){
+    SGEXTN::SeerattraNum::NormalDistribution::hwidthTables = new SGEXTN::Containers::Array<float>(256);
+    SGEXTN::SeerattraNum::NormalDistribution::floorTables = new SGEXTN::Containers::Array<float>(256);
+    for(int i=0; i<256; i++){
+        (*SGEXTN::SeerattraNum::NormalDistribution::hwidthTables).at(i) = getHwidth(i);
+        (*SGEXTN::SeerattraNum::NormalDistribution::floorTables).at(i) = getFloor(i);
+    }
+}
+}
+
+SGEXTN::Containers::Array<float>* SGEXTN::SeerattraNum::NormalDistribution::hwidthTables = nullptr;
+SGEXTN::Containers::Array<float>* SGEXTN::SeerattraNum::NormalDistribution::floorTables = nullptr;
+SGEXTN::SeerattraNum::NormalDistribution::NormalDistribution(bool useGlobal, float mean, float standardDeviation) : private_mean(mean), private_standardDeviation(standardDeviation), private_rng(nullptr), private_ownsRng(useGlobal == false){
     if(standardDeviation <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NormalDistribution constructor crashed because requested standard deviation is nonpositive");}
-    private_mean = mean;
-    private_standardDeviation = standardDeviation;
-    private_stlRandomEngine = SGEXTN::SeerattraNum::SimpleRandom::private_createRandomEngine(useGlobal);
-    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::normal_distribution<FloatingPoint>>::eraseType(new std::normal_distribution<FloatingPoint>(mean, standardDeviation));
+    private_rng = SGEXTN::SeerattraNum::DirectRandom::private_createRng(useGlobal);
 }
 
-template <typename FloatingPoint> SGEXTN::SeerattraNum::NormalDistribution<FloatingPoint>::~NormalDistribution(){
-    delete SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(private_stlRandomEngine);
-    delete SGEXTN::SeerattraNum::UnsafeCasts<std::normal_distribution<FloatingPoint>>::uneraseType(private_stlDistribution);
+SGEXTN::SeerattraNum::NormalDistribution::~NormalDistribution(){
+    if(private_ownsRng == true){delete private_rng;}
 }
 
-template <typename FloatingPoint> void SGEXTN::SeerattraNum::NormalDistribution<FloatingPoint>::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
-    if(private_stlRandomEngine == nullptr){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NormalDistribution::seed crashed because cannot seed global rng");}
-    SGEXTN::SeerattraNum::SimpleRandom::private_seedRandomEngine(private_stlRandomEngine, seedArray);
+void SGEXTN::SeerattraNum::NormalDistribution::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
+    if(private_ownsRng == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NormalDistribution::seed crashed because cannot seed global rng");}
+    SGEXTN::SeerattraNum::DirectRandom* temp = private_rng;
+    private_rng = temp;
+    (*private_rng).seed(seedArray);
 }
 
-template <typename FloatingPoint> FloatingPoint SGEXTN::SeerattraNum::NormalDistribution<FloatingPoint>::randomValue(){
-    void* randomEngine = private_stlRandomEngine;
-    if(randomEngine == nullptr){randomEngine = SGEXTN::SeerattraNum::SimpleRandom::private_getRandomEngine();}
-    return ((*SGEXTN::SeerattraNum::UnsafeCasts<std::normal_distribution<FloatingPoint>>::uneraseType(private_stlDistribution))(*SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(randomEngine)));
+float SGEXTN::SeerattraNum::NormalDistribution::randomValue(){
+    SGEXTN::SeerattraNum::DirectRandom* temp = private_rng;
+    private_rng = temp;
+    if(SGEXTN::SeerattraNum::NormalDistribution::floorTables == nullptr){parseTables();}
+    float result = 0;
+    int sign = 1;
+    while(true){
+        const unsigned int rng = (*private_rng).randomUnsignedInt32();
+        const int layer = static_cast<int>((rng & 0xff000000) >> 24);
+        if((rng & 0x800000) != 0){sign = -1;}
+        else{sign = 1;}
+        const float scaleFactor = 1.0f / static_cast<float>(1u << 23);
+        float xCoord = static_cast<float>(rng & 0x7fffff) * scaleFactor;
+        if(layer == 0){
+            const float rectangleProportion = (*SGEXTN::SeerattraNum::NormalDistribution::floorTables).at(0);
+            if(xCoord < rectangleProportion){
+                xCoord /= rectangleProportion;
+                result = (xCoord * (*SGEXTN::SeerattraNum::NormalDistribution::hwidthTables).at(1));
+                break;
+            }
+            const float rectangleBoundary = (*SGEXTN::SeerattraNum::NormalDistribution::hwidthTables).at(1);
+            const float v1 = -1.0f * SGEXTN::Math::FloatMath<float>::naturalLog((*private_rng).randomFloat32()) / rectangleBoundary;
+            const float v2 = -1.0f * SGEXTN::Math::FloatMath<float>::naturalLog((*private_rng).randomFloat32());
+            if(v1 * v1 < v2 + v2){
+                result = rectangleBoundary + v1;
+                break;
+            }
+            continue;
+        }
+        const float thisLayerHwidth = (*SGEXTN::SeerattraNum::NormalDistribution::hwidthTables).at(layer);
+        float layerAboveHwidth = 0.0f;
+        const float thisLayerFloor = (*SGEXTN::SeerattraNum::NormalDistribution::floorTables).at(layer);
+        float layerAboveFloor = 0.3989422804f;
+        if(layer != 255){
+            layerAboveHwidth = (*SGEXTN::SeerattraNum::NormalDistribution::hwidthTables).at(layer + 1);
+            layerAboveFloor = (*SGEXTN::SeerattraNum::NormalDistribution::floorTables).at(layer + 1);
+        }
+        xCoord *= thisLayerHwidth;
+        if(xCoord < layerAboveHwidth){
+            result = xCoord;
+            break;
+        }
+        const float yCoord = thisLayerFloor + (layerAboveFloor - thisLayerFloor) * (*private_rng).randomFloat32();
+        if(SGEXTN::Math::FloatMath<float>::naturalLog(yCoord) < -0.5f * xCoord * xCoord){
+            result = xCoord;
+            break;
+        }
+    }
+    return (private_mean + result * static_cast<float>(sign) * private_standardDeviation);
 }
 
-template <typename FloatingPoint> SGEXTN::Containers::Array<FloatingPoint> SGEXTN::SeerattraNum::NormalDistribution<FloatingPoint>::randomValueArray(int count){
+SGEXTN::Containers::Array<float> SGEXTN::SeerattraNum::NormalDistribution::randomValueArray(int count){
     if(count < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NormalDistribution::randomValueArray crashed because a negative number of outputs is requested");}
-    SGEXTN::Containers::Array<FloatingPoint> outputArray(count);
+    SGEXTN::Containers::Array<float> outputArray(count);
     for(int i=0; i<count; i++){
         outputArray.at(i) = randomValue();
     }
     return outputArray;
 }
 
-template <typename FloatingPoint> FloatingPoint SGEXTN::SeerattraNum::NormalDistribution<FloatingPoint>::getMean() const {
+float SGEXTN::SeerattraNum::NormalDistribution::getMean() const {
     return private_mean;
 }
 
-template <typename FloatingPoint> FloatingPoint SGEXTN::SeerattraNum::NormalDistribution<FloatingPoint>::getStandardDeviation() const {
+float SGEXTN::SeerattraNum::NormalDistribution::getStandardDeviation() const {
     return private_standardDeviation;
 }
 
-template <typename FloatingPoint> void SGEXTN::SeerattraNum::NormalDistribution<FloatingPoint>::setMean(FloatingPoint mean){
+void SGEXTN::SeerattraNum::NormalDistribution::setMean(float mean){
     private_mean = mean;
-    delete SGEXTN::SeerattraNum::UnsafeCasts<std::normal_distribution<FloatingPoint>>::uneraseType(private_stlDistribution);
-    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::normal_distribution<FloatingPoint>>::eraseType(new std::normal_distribution<FloatingPoint>(mean, private_standardDeviation));
 }
 
-template <typename FloatingPoint> void SGEXTN::SeerattraNum::NormalDistribution<FloatingPoint>::setStandardDeviation(FloatingPoint standardDeviation){
+void SGEXTN::SeerattraNum::NormalDistribution::setStandardDeviation(float standardDeviation){
     if(standardDeviation <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NormalDistribution::setStandardDeviation crashed because requested standard deviation is nonpositive");}
     private_standardDeviation = standardDeviation;
-    delete SGEXTN::SeerattraNum::UnsafeCasts<std::normal_distribution<FloatingPoint>>::uneraseType(private_stlDistribution);
-    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::normal_distribution<FloatingPoint>>::eraseType(new std::normal_distribution<FloatingPoint>(private_mean, standardDeviation));
 }
-
-template class SGEXTN::SeerattraNum::NormalDistribution<float>;
-template class SGEXTN::SeerattraNum::NormalDistribution<double>;

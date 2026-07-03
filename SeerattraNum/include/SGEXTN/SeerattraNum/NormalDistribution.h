@@ -20,25 +20,29 @@
 
 namespace SGEXTN {
 namespace SeerattraNum {
-template <typename FloatingPoint> class BuildLah_SGEXTN_SeerattraNum NormalDistribution {
+class DirectRandom;
+
+class BuildLah_SGEXTN_SeerattraNum NormalDistribution {
 public:
-    void* private_stlRandomEngine;
-    void* private_stlDistribution;
-    FloatingPoint private_mean;
-    FloatingPoint private_standardDeviation;
-    NormalDistribution(bool useGlobal, FloatingPoint mean, FloatingPoint standardDeviation);
+    SGEXTN::SeerattraNum::DirectRandom* private_rng;
+    bool private_ownsRng;
+    float private_mean;
+    float private_standardDeviation;
+    static SGEXTN::Containers::Array<float>* hwidthTables;
+    static SGEXTN::Containers::Array<float>* floorTables;
+    NormalDistribution(bool useGlobal, float mean, float standardDeviation);
     NormalDistribution(const NormalDistribution&) = delete;
     NormalDistribution& operator=(const NormalDistribution&) = delete;
     NormalDistribution(NormalDistribution&&) = delete;
     NormalDistribution& operator=(NormalDistribution&&) = delete;
     ~NormalDistribution();
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
-    [[nodiscard]] FloatingPoint randomValue();
-    [[nodiscard]] SGEXTN::Containers::Array<FloatingPoint> randomValueArray(int count);
-    [[nodiscard]] FloatingPoint getMean() const;
-    [[nodiscard]] FloatingPoint getStandardDeviation() const;
-    void setMean(FloatingPoint mean);
-    void setStandardDeviation(FloatingPoint standardDeviation);
+    [[nodiscard]] float randomValue();
+    [[nodiscard]] SGEXTN::Containers::Array<float> randomValueArray(int count);
+    [[nodiscard]] float getMean() const;
+    [[nodiscard]] float getStandardDeviation() const;
+    void setMean(float mean);
+    void setStandardDeviation(float standardDeviation);
 };
 }
 }
