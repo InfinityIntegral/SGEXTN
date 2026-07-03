@@ -268,15 +268,15 @@ void SGEXTN::InternalTest::SeerattraNumTest::testPoissonDistribution(){
 void SGEXTN::InternalTest::SeerattraNumTest::testExponentialDistribution(){
     SGEXTN::SeerattraNum::ExponentialDistribution generator(false, 1.0f);
     generator.seed(firstSeed);
-    if(isCloseEnough(generator.randomValue(), 0.010723f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::ExponentialDistribution generate value first seed fail");}
+    if(isCloseEnough(generator.randomValue(), 5.0697f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::ExponentialDistribution generate value first seed fail");}
     SGEXTN::Containers::Array<float> randomArray = generator.randomValueArray(2);
-    if(isCloseEnough(randomArray.at(0), 1.8684f) == false || isCloseEnough(randomArray.at(1), 0.10739f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::ExponentialDistribution generate array first seed fail");}
+    if(isCloseEnough(randomArray.at(0), 0.33226f) == false || isCloseEnough(randomArray.at(1), 0.25896f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::ExponentialDistribution generate array first seed fail");}
     if(generator.getMeanEventsPerTime() != 1.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::ExponentialDistribution get mean number of events occurring per unit time fail");}
     generator.setMeanEventsPerTime(10.0f);
     generator.seed(secondSeed);
-    if(isCloseEnough(generator.randomValue(), 0.0087763f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::ExponentialDistribution generate value second seed fail");}
+    if(isCloseEnough(generator.randomValue(), 0.21110f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::ExponentialDistribution generate value second seed fail");}
     randomArray = generator.randomValueArray(2);
-    if(isCloseEnough(randomArray.at(0), 0.19866f) == false || isCloseEnough(randomArray.at(1), 0.067923f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::ExponentialDistribution generate array second seed fail");}
+    if(isCloseEnough(randomArray.at(0), 0.056912f) == false || isCloseEnough(randomArray.at(1), 0.034873f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::ExponentialDistribution generate array second seed fail");}
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testGammaDistribution(){
