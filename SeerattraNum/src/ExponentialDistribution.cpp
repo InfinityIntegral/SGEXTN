@@ -101,7 +101,7 @@ float SGEXTN::SeerattraNum::ExponentialDistribution::randomValue(){
     while(true){
         const unsigned int rng = (*private_rng).randomUnsignedInt32();
         const int layer = static_cast<int>((rng & 0xff000000) >> 24);
-        const float scaleFactor = 1.0f / static_cast<float>(static_cast<unsigned int>(1) << 24);
+        const float scaleFactor = 1.0f / static_cast<float>(1u << 24);
         float xCoord = static_cast<float>(rng & 0xffffff) * scaleFactor;
         if(layer == 0){
             const float rectangleProportion = (*SGEXTN::SeerattraNum::ExponentialDistribution::floorTables).at(0);

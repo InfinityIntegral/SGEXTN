@@ -64,7 +64,7 @@ void getNormalTables(std::string& hwidth, std::string& floor){
     const double rightBound = 3.6541528853610088;
     const double rectangleArea = 0.00492867323399;
     hwidthArray.at(0) = std::numeric_limits<double>::infinity();
-    floorArray.at(0) = 0.0;
+    floorArray.at(0) = (rectangleArea - std::sqrt(0.5 * std::numbers::pi) * std::erfc(rightBound * std::sqrt(0.5))) / rectangleArea;
     hwidthArray.at(1) = rightBound;
     floorArray.at(1) = std::pow(std::numbers::e, -0.5 * rightBound * rightBound);
     for(int i=2; i<256; i++){

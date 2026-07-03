@@ -25,6 +25,10 @@ SGEXTN::SeerattraNum::RandomPermutation::RandomPermutation(bool useGlobal) : pri
     private_uniformDistribution.private_rng = private_rng;
 }
 
+SGEXTN::SeerattraNum::RandomPermutation::~RandomPermutation(){
+    if(private_ownsRng == true){delete private_rng;}
+}
+
 void SGEXTN::SeerattraNum::RandomPermutation::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
     if(private_ownsRng == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::RandomPermutation::seed crashed because cannot seed global rng");}
     SGEXTN::SeerattraNum::DirectRandom* temp = private_rng;

@@ -340,23 +340,19 @@ void SGEXTN::InternalTest::SeerattraNumTest::testGumbelDistribution(){
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testNormalDistribution(){
-    std::normal_distribution<float> stlRandomDistribution(-1.0f, 1.0f);
-    seedRandomEngine(firstSeed);
-    SGEXTN::SeerattraNum::NormalDistribution<float> generator(false, -1.0f, 1.0f);
+    SGEXTN::SeerattraNum::NormalDistribution generator(false, -1.0f, 1.0f);
     generator.seed(firstSeed);
-    if(generator.randomValue() != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NormalDistribution generate value first seed fail");}
+    if(isCloseEnough(generator.randomValue(), -2.5894f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NormalDistribution generate value first seed fail");}
     SGEXTN::Containers::Array<float> randomArray = generator.randomValueArray(2);
-    if(randomArray.at(0) != stlRandomDistribution(stlRandomEngine) || randomArray.at(1) != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NormalDistribution generate array first seed fail");}
+    if(isCloseEnough(randomArray.at(0), -0.12984f) == false || isCloseEnough(randomArray.at(1), -0.66659f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NormalDistribution generate array first seed fail");}
     if(generator.getMean() != -1.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NormalDistribution get mean fail");}
     if(generator.getStandardDeviation() != 1.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NormalDistribution get standard deviation fail");}
-    stlRandomDistribution = std::normal_distribution<float>(100.0f, 5.0f);
-    seedRandomEngine(secondSeed);
     generator.setMean(100.0f);
     generator.setStandardDeviation(5.0f);
     generator.seed(secondSeed);
-    if(generator.randomValue() != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NormalDistribution generate value second seed fail");}
+    if(isCloseEnough(generator.randomValue(), 99.751007f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NormalDistribution generate value second seed fail");}
     randomArray = generator.randomValueArray(2);
-    if(randomArray.at(0) != stlRandomDistribution(stlRandomEngine) || randomArray.at(1) != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NormalDistribution generate array second seed fail");}
+    if(isCloseEnough(randomArray.at(0), 96.664742f) == false || isCloseEnough(randomArray.at(1), 103.18581f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NormalDistribution generate array second seed fail");}
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testLogNormalDistribution(){
@@ -553,10 +549,10 @@ void SGEXTN::InternalTest::SeerattraNumTest::testUnitSphereSample(){
     SGEXTN::SeerattraNum::UnitSphereSample generator(false);
     generator.seed(firstSeed);
     SGEXTN::Containers::Array<float> firstPoint = generator.randomPoint(2);
-    if(firstPoint.length() != 2 || isCloseEnough(firstPoint.at(0), -0.92076f) == false || isCloseEnough(firstPoint.at(1), -0.39013) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UnitSphereSample generate first point fail");}
+    if(firstPoint.length() != 2 || isCloseEnough(firstPoint.at(0), -0.87714f) == false || isCloseEnough(firstPoint.at(1), 0.48023f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UnitSphereSample generate first point fail");}
     generator.seed(secondSeed);
     SGEXTN::Containers::Array<float> secondPoint = generator.randomPoint(3);
-    if(secondPoint.length() != 3 || isCloseEnough(secondPoint.at(0), 0.94004f) == false || isCloseEnough(secondPoint.at(1), 0.10584f) == false || isCloseEnough(secondPoint.at(2), 0.32422f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UnitSphereSample generate second point fail");}
+    if(secondPoint.length() != 3 || isCloseEnough(secondPoint.at(0), -0.053906f) == false || isCloseEnough(secondPoint.at(1), -0.72207f) == false || isCloseEnough(secondPoint.at(2), 0.68972f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UnitSphereSample generate second point fail");}
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testSobolSequence(){
