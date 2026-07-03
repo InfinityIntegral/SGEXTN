@@ -15,13 +15,12 @@
 */
 // BuildLah license check: SGEXTN 7.0.0
 
-#pragma once
+#include <SGEXTN/SeerattraNum/private_api/ZigguratTables.h>
 
-namespace SGEXTN {
-namespace SeerattraNum {
-class BuildLah_SGEXTN_SeerattraNum SobolSequenceLookup {
-public:
-    static const char* data;
-};
-}
-}
+const char* SGEXTN::SeerattraNum::ZigguratTables::exponentialDistributionWidths = "@SG_EXP_WIDTH";
+
+const char* SGEXTN::SeerattraNum::ZigguratTables::exponentialDistributionFloors = "@SG_EXP_FLOOR";
+
+const char* SGEXTN::SeerattraNum::ZigguratTables::normalDistributionHalfWidths = "@SG_NORM_HWIDTH";
+
+const char* SGEXTN::SeerattraNum::ZigguratTables::normalDistributionFloors = "@SG_NORM_FLOOR";

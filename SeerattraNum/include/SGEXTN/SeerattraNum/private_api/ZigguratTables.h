@@ -19,9 +19,12 @@
 
 namespace SGEXTN {
 namespace SeerattraNum {
-class BuildLah_SGEXTN_SeerattraNum SobolSequenceLookup {
+class BuildLah_SGEXTN_SeerattraNum ZigguratTables {
 public:
-    static const char* data;
+    static const char* exponentialDistributionWidths;
+    static const char* exponentialDistributionFloors;
+    static const char* normalDistributionHalfWidths;
+    static const char* normalDistributionFloors;
 };
 }
 }
