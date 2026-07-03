@@ -589,25 +589,25 @@ void SGEXTN::InternalTest::SeerattraNumTest::testVoronoiNoise(){
     const SGEXTN::Containers::Array<float> testPoint1(0.0f, 0.0f, 0.0f);
     const SGEXTN::Containers::Array<float> testPoint2(0.35f, 0.35f, 0.35f);
     SGEXTN::Containers::Array<float> outputPoint = noiseMap.getPosition(0, testPoint1);
-    if(outputPoint.length() != 3 || isCloseEnough(outputPoint.at(0), -0.017993f) == false || isCloseEnough(outputPoint.at(1), 0.11588f) == false || isCloseEnough(outputPoint.at(2), 0.13573f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::VoronoiNoise first seed get closest point to first test point fail");}
+    if(outputPoint.length() != 3 || isCloseEnough(outputPoint.at(0), -0.034563f) == false || isCloseEnough(outputPoint.at(1), -0.10254f) == false || isCloseEnough(outputPoint.at(2), -0.14306f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::VoronoiNoise first seed get closest point to first test point fail");}
     outputPoint = noiseMap.getVectorFrom(0, testPoint1);
-    if(outputPoint.length() != 3 || isCloseEnough(outputPoint.at(0), 0.017993f) == false || isCloseEnough(outputPoint.at(1), -0.11588f) == false || isCloseEnough(outputPoint.at(2), -0.13573f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::VoronoiNoise get vector fail");}
+    if(outputPoint.length() != 3 || isCloseEnough(outputPoint.at(0), 0.034563f) == false || isCloseEnough(outputPoint.at(1), 0.10254f) == false || isCloseEnough(outputPoint.at(2), 0.14306f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::VoronoiNoise get vector fail");}
     if(isCloseEnough(noiseMap.getDistanceTo(0, testPoint1), 0.17938f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::VoronoiNoise get distance fail");}
     outputPoint = noiseMap.getPosition(1, testPoint1);
-    if(outputPoint.length() != 3 || isCloseEnough(outputPoint.at(0), -0.84598f) == false || isCloseEnough(outputPoint.at(1), -0.021936f) == false || isCloseEnough(outputPoint.at(2), 0.22727f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::VoronoiNoise first seed get second closest point to first test point fail");}
+    if(outputPoint.length() != 3 || isCloseEnough(outputPoint.at(0), 0.040457f) == false || isCloseEnough(outputPoint.at(1), -0.11818f) == false || isCloseEnough(outputPoint.at(2), -0.70033f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::VoronoiNoise first seed get second closest point to first test point fail");}
     outputPoint = noiseMap.getPosition(0, testPoint2);
-    if(outputPoint.length() != 3 || isCloseEnough(outputPoint.at(0), -0.017993f) == false || isCloseEnough(outputPoint.at(1), 0.11588f) == false || isCloseEnough(outputPoint.at(2), 0.13573f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::VoronoiNoise first seed get closest point to second test point fail");}
+    if(outputPoint.length() != 3 || isCloseEnough(outputPoint.at(0), 0.91800f) == false || isCloseEnough(outputPoint.at(1), 0.083622f) == false || isCloseEnough(outputPoint.at(2), 0.11147f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::VoronoiNoise first seed get closest point to second test point fail");}
     outputPoint = noiseMap.getPosition(1, testPoint2);
-    if(outputPoint.length() != 3 || isCloseEnough(outputPoint.at(0), 0.15600f) == false || isCloseEnough(outputPoint.at(1), -0.093905f) == false || isCloseEnough(outputPoint.at(2), 0.95159f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::VoronoiNoise first seed get second closest point to second test point fail");}
+    if(outputPoint.length() != 3 || isCloseEnough(outputPoint.at(0), -0.034563f) == false || isCloseEnough(outputPoint.at(1), -0.10254f) == false || isCloseEnough(outputPoint.at(2), -0.14306f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::VoronoiNoise first seed get second closest point to second test point fail");}
     noiseMap.seed(1965);
     outputPoint = noiseMap.getPosition(0, testPoint1);
-    if(outputPoint.length() != 3 || isCloseEnough(outputPoint.at(0), -0.11358f) == false || isCloseEnough(outputPoint.at(1), 0.30637f) == false || isCloseEnough(outputPoint.at(2), -0.13487f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::VoronoiNoise second seed get closest point to first test point fail");}
+    if(outputPoint.length() != 3 || isCloseEnough(outputPoint.at(0), 0.29695f) == false || isCloseEnough(outputPoint.at(1), -0.097455f) == false || isCloseEnough(outputPoint.at(2), 0.16516f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::VoronoiNoise second seed get closest point to first test point fail");}
     outputPoint = noiseMap.getPosition(1, testPoint1);
-    if(outputPoint.length() != 3 || isCloseEnough(outputPoint.at(0), -0.016363f) == false || isCloseEnough(outputPoint.at(1), 0.0033550f) == false || isCloseEnough(outputPoint.at(2), -0.86490f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::VoronoiNoise second seed get second closest point to first test point fail");}
+    if(outputPoint.length() != 3 || isCloseEnough(outputPoint.at(0), 0.031908f) == false || isCloseEnough(outputPoint.at(1), 0.66805f) == false || isCloseEnough(outputPoint.at(2), 0.11509f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::VoronoiNoise second seed get second closest point to first test point fail");}
     outputPoint = noiseMap.getPosition(0, testPoint2);
-    if(outputPoint.length() != 3 || isCloseEnough(outputPoint.at(0), -0.11358f) == false || isCloseEnough(outputPoint.at(1), 0.30637f) == false || isCloseEnough(outputPoint.at(2), -0.13487f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::VoronoiNoise second seed get closest point to second test point fail");}
+    if(outputPoint.length() != 3 || isCloseEnough(outputPoint.at(0), 0.29695f) == false || isCloseEnough(outputPoint.at(1), -0.097455f) == false || isCloseEnough(outputPoint.at(2), 0.16516f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::VoronoiNoise second seed get closest point to second test point fail");}
     outputPoint = noiseMap.getPosition(1, testPoint2);
-    if(outputPoint.length() != 3 || isCloseEnough(outputPoint.at(0), -0.27972f) == false || isCloseEnough(outputPoint.at(1), 0.16646f) == false || isCloseEnough(outputPoint.at(2), 0.97845f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::VoronoiNoise second seed get second closest point to second test point fail");}
+    if(outputPoint.length() != 3 || isCloseEnough(outputPoint.at(0), 0.031908f) == false || isCloseEnough(outputPoint.at(1), 0.66805f) == false || isCloseEnough(outputPoint.at(2), 0.11509f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::VoronoiNoise second seed get second closest point to second test point fail");}
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testValueNoise(){
@@ -627,11 +627,11 @@ void SGEXTN::InternalTest::SeerattraNumTest::testPerlinNoise(){
     const SGEXTN::Containers::Array<float> firstPoint(0.25f, 0.25f, 0.25f);
     const SGEXTN::Containers::Array<float> secondPoint(-0.25f, -0.25f, -0.25f);
     noiseMap.seed(726);
-    if(isCloseEnough(noiseMap.getHeight(firstPoint), 0.27678f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::PerlinNoise get first point first seed fail");}
-    if(isCloseEnough(noiseMap.getHeight(secondPoint), -0.29634f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::PerlinNoise get second point first seed fail");}
+    if(isCloseEnough(noiseMap.getHeight(firstPoint), -0.33693f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::PerlinNoise get first point first seed fail");}
+    if(isCloseEnough(noiseMap.getHeight(secondPoint), 0.45495f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::PerlinNoise get second point first seed fail");}
     noiseMap.seed(1965);
-    if(isCloseEnough(noiseMap.getHeight(firstPoint), -0.10025f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::PerlinNoise get first point second seed fail");}
-    if(isCloseEnough(noiseMap.getHeight(secondPoint), -0.0084291f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::PerlinNoise get second point second seed fail");}
+    if(isCloseEnough(noiseMap.getHeight(firstPoint), 0.31241f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::PerlinNoise get first point second seed fail");}
+    if(isCloseEnough(noiseMap.getHeight(secondPoint), -0.28643f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::PerlinNoise get second point second seed fail");}
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testAll(){

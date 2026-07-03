@@ -23,8 +23,8 @@
 #include <SGEXTN/Math/FloatMath.h>
 #include <SGEXTN/Containers/Span.h>
 #include <SGEXTN/Containers/private_api/HashAlgorithm.h>
-#include <SGEXTN/Math/FloatConstants.h>
 #include <SGEXTN/Math/FloatLimits.h>
+#include <SGEXTN/SeerattraNum/NormalDistribution.h>
 
 namespace {
 int powerOf2(int n){
@@ -51,25 +51,17 @@ float SGEXTN::SeerattraNum::PerlinNoise::getHeight(const SGEXTN::Containers::Arr
     spanArray.at(private_dimension) = private_seed;
     const SGEXTN::Containers::Span<const unsigned char> span(reinterpret_cast<const unsigned char*>(&spanArray.at(0)), (private_dimension + 2) *static_cast<int>(sizeof(int)));
     const float scaleFactor = 1.0f / static_cast<float>(static_cast<unsigned int>(1) << 24);
-    int normalVarCount = private_dimension;
-    if(private_dimension % 2 == 1){normalVarCount++;}
-    SGEXTN::Containers::Array<float> normalDistributedVars(normalVarCount);
+    SGEXTN::Containers::Array<float> normalDistributedVars(private_dimension);
     for(int i=0; i<powerOf2(private_dimension); i++){
         for(int j=0; j<private_dimension; j++){
             if((i & powerOf2(j)) == 0){spanArray.at(j) = flooredCorner.at(j);}
             else{spanArray.at(j) = flooredCorner.at(j) + 1;}
         }
-        for(int j=0; j<normalVarCount; j++){
+        for(int j=0; j<private_dimension; j++){
             spanArray.at(private_dimension + 1) = j;
-            unsigned int rngUnsigned = static_cast<unsigned int>(SGEXTN::Containers::HashAlgorithm::wyHash32(span));
-            if(rngUnsigned == 0){rngUnsigned = 1;}
+            const unsigned int rngUnsigned = static_cast<unsigned int>(SGEXTN::Containers::HashAlgorithm::wyHash32(span));
             normalDistributedVars.at(j) = static_cast<float>(rngUnsigned >> 8) * scaleFactor;
-        }
-        for(int j=0; j<normalVarCount/2; j++){
-            const float squareRootFirst = SGEXTN::Math::FloatMath<float>::squareRoot(-2.0f * SGEXTN::Math::FloatMath<float>::naturalLog(normalDistributedVars.at(2 * j)));
-            const float scaledSecond = 2 * SGEXTN::Math::FloatConstants<float>::pi() * normalDistributedVars.at(2 * j + 1);
-            normalDistributedVars.at(2 * j) = squareRootFirst * SGEXTN::Math::FloatMath<float>::cosine(scaledSecond);
-            normalDistributedVars.at(2 * j + 1) = squareRootFirst * SGEXTN::Math::FloatMath<float>::sine(scaledSecond);
+            normalDistributedVars.at(j) = SGEXTN::SeerattraNum::NormalDistribution::private_fastTransform(normalDistributedVars.at(j));
         }
         float generatedMagnitude = 0.0f;
         for(int j=0; j<private_dimension; j++){

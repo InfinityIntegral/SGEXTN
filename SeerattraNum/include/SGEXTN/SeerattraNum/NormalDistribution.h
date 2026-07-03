@@ -43,6 +43,7 @@ public:
     [[nodiscard]] float getStandardDeviation() const;
     void setMean(float mean);
     void setStandardDeviation(float standardDeviation);
+    static float private_fastTransform(float x);
 };
 }
 }
