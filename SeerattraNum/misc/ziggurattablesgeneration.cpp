@@ -1,7 +1,6 @@
 #include <string>
 #include <fstream>
 #include <array>
-#include <iostream>
 #include <cstdlib>
 #include <iterator>
 #include <format>
@@ -17,32 +16,32 @@ std::string toHexString(unsigned int n){
 
 std::string toHexString(double d){
     const float f = static_cast<float>(d);
-    unsigned int sign = std::signbit(f);
+    const unsigned int sign = static_cast<unsigned int>(std::signbit(f));
     unsigned int exponent = 0;
     unsigned int mantissa = 0;
     if(std::isnan(f)){exponent = 255; mantissa = 0x400000;}
     else if(std::isinf(f)){exponent = 255;}
     else if(f != 0.0f){
-        int prelimExponent = std::ilogb(std::abs(f));
+        const int prelimExponent = std::ilogb(std::abs(f));
         if(prelimExponent < -126){mantissa = static_cast<unsigned int>(std::round(std::scalbn(std::abs(f), 23 + 126)));}
         else{
             exponent = static_cast<unsigned int>(prelimExponent + 127);
-            float scaledDownMantissa = std::scalbn(std::abs(f), -prelimExponent) - 1.0f;
+            const float scaledDownMantissa = std::scalbn(std::abs(f), -prelimExponent) - 1.0f;
             mantissa = static_cast<unsigned int>(std::round(std::scalbn(scaledDownMantissa, 23)));
         }
         if(mantissa > 0x7fffff){mantissa = mantissa & 0x7fffff; exponent++;}
     }
-    unsigned int packedBinary = (sign << 31) | (exponent << 23) | mantissa;
+    const unsigned int packedBinary = (sign << 31) | (exponent << 23) | mantissa;
     return toHexString(packedBinary);
 }
 
 void getExponentialTables(std::string& width, std::string& floor){
-    std::array<double, 256> widthArray;
-    std::array<double, 256> floorArray;
+    std::array<double, 256> widthArray = {};
+    std::array<double, 256> floorArray = {};
     const double rightBound = 7.69711747013104972;
     const double rectangleArea = 0.003949653420019919;
     widthArray.at(0) = std::numeric_limits<double>::infinity();
-    floorArray.at(0) = 0.0;
+    floorArray.at(0) = (rectangleArea - std::exp(-1.0 *rightBound)) / rectangleArea;
     widthArray.at(1) = rightBound;
     floorArray.at(1) = std::pow(std::numbers::e, -1.0 * rightBound);
     for(int i=2; i<256; i++){
@@ -60,8 +59,8 @@ void getExponentialTables(std::string& width, std::string& floor){
 }
 
 void getNormalTables(std::string& hwidth, std::string& floor){
-    std::array<double, 256> hwidthArray;
-    std::array<double, 256> floorArray;
+    std::array<double, 256> hwidthArray = {};
+    std::array<double, 256> floorArray = {};
     const double rightBound = 3.6541528853610088;
     const double rectangleArea = 0.00492867323399;
     hwidthArray.at(0) = std::numeric_limits<double>::infinity();
@@ -83,10 +82,10 @@ void getNormalTables(std::string& hwidth, std::string& floor){
 }
 
 int main(){
-    std::string exponentialWidth = "";
-    std::string exponentialFloor = "";
-    std::string normalHwidth = "";
-    std::string normalFloor = "";
+    std::string exponentialWidth;
+    std::string exponentialFloor;
+    std::string normalHwidth;
+    std::string normalFloor;
     getExponentialTables(exponentialWidth, exponentialFloor);
     getNormalTables(normalHwidth, normalFloor);
     std::ifstream templateFile("ziggurattablestemplate.txt");

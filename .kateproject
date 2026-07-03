@@ -22,7 +22,7 @@
       },
       {
         "name": "analyse",
-        "build_cmd" : "cmake --build build && patch_clangtidy.sh -verbose"
+        "build_cmd" : "cmake --build build && cmake --install build --prefix build/BuildLah_install && ./build/BuildLah_install/bin/InternalTest && patch_clangtidy.sh -verbose"
       },
       {
         "name": "debug",

@@ -27,6 +27,9 @@ public:
     SGEXTN::SeerattraNum::DirectRandom* private_rng;
     bool private_ownsRng;
     float private_meanEventsPerTime;
+    float private_reciprocalRate;
+    static SGEXTN::Containers::Array<float>* widthTables;
+    static SGEXTN::Containers::Array<float>* floorTables;
     ExponentialDistribution(bool useGlobal, float meanEventsPerTime);
     ExponentialDistribution(const ExponentialDistribution&) = delete;
     ExponentialDistribution& operator=(const ExponentialDistribution&) = delete;
