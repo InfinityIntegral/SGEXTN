@@ -22,6 +22,7 @@
 #include <SGEXTN/Math/FloatMath.h>
 #include <SGEXTN/SeerattraNum/private_api/ZigguratTables.h>
 #include <SGEXTN/Math/FloatLimits.h>
+#include <SGEXTN/Math/FloatConstants.h>
 #include <cmath>
 
 namespace {
@@ -167,4 +168,19 @@ void SGEXTN::SeerattraNum::NormalDistribution::setMean(float mean){
 void SGEXTN::SeerattraNum::NormalDistribution::setStandardDeviation(float standardDeviation){
     if(standardDeviation <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NormalDistribution::setStandardDeviation crashed because requested standard deviation is nonpositive");}
     private_standardDeviation = standardDeviation;
+}
+
+float SGEXTN::SeerattraNum::NormalDistribution::private_fastTransform(float x){
+    x = 2.0f * x - 1.0f;
+    if(x == -1.0f || x == 1.0f){x = 0.0f;}
+    if(x == 0.0f){return 0.0f;}
+    const float sign = x / SGEXTN::Math::FloatMath<float>::absoluteValue(x);
+    const float lnOneMinusXSquared = SGEXTN::Math::FloatMath<float>::naturalLog(1.0f - x * x);
+    const float a = 0.140012288687f;
+    const float reciprocalA = 7.14223022408f;
+    const float twoOverPiA = 4.54688497945f;
+    const float sum = twoOverPiA + 0.5f * lnOneMinusXSquared;
+    const float innerSqrtInside = sum * sum - lnOneMinusXSquared * reciprocalA;
+    const float outerSqrtInside = SGEXTN::Math::FloatMath<float>::squareRoot(innerSqrtInside) - sum;
+    return (SGEXTN::Math::FloatConstants<float>::squareRoot2() * sign * SGEXTN::Math::FloatMath<float>::squareRoot(outerSqrtInside));
 }
