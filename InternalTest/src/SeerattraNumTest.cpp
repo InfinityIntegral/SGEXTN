@@ -507,9 +507,9 @@ void SGEXTN::InternalTest::SeerattraNumTest::testWeightedPiecewiseLinearDistribu
     const SGEXTN::Containers::Array<float> secondBoundaries(-3.0f, -2.0f, -1.0f);
     SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution generator(false, firstWeights, firstBoundaries);
     generator.seed(firstSeed);
-    if(isCloseEnough(generator.randomValue(), 1.1207f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution generate value first seed fail");}
+    if(isCloseEnough(generator.randomValue(), 1.9147f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution generate value first seed fail");}
     SGEXTN::Containers::Array<float> randomArray = generator.randomValueArray(2);
-    if(isCloseEnough(randomArray.at(0), 4.6147f) == false || isCloseEnough(randomArray.at(1), 1.8557f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution generate array first seed fail");}
+    if(isCloseEnough(randomArray.at(0), 1.8146f) == false || isCloseEnough(randomArray.at(1), 3.9966f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution generate array first seed fail");}
     SGEXTN::Containers::Array<float> firstWeightsReturned = generator.getWeights();
     bool isSame = true;
     if(firstWeights.length() != firstWeightsReturned.length()){isSame = false;}
@@ -526,9 +526,9 @@ void SGEXTN::InternalTest::SeerattraNumTest::testWeightedPiecewiseLinearDistribu
     if(isSame == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution get boundaries fail");}
     generator.setWeightsAndBoundaries(secondWeights, secondBoundaries);
     generator.seed(secondSeed);
-    if(isCloseEnough(generator.randomValue(), -2.7477f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution generate value second seed fail");}
+    if(isCloseEnough(generator.randomValue(), -2.3781f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution generate value second seed fail");}
     randomArray = generator.randomValueArray(2);
-    if(isCloseEnough(randomArray.at(0), -1.0971f) == false || isCloseEnough(randomArray.at(1), -1.4301f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution generate array second seed fail");}
+    if(isCloseEnough(randomArray.at(0), -1.3481f) == false || isCloseEnough(randomArray.at(1), -1.0087f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution generate array second seed fail");}
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testRandomPermutation(){

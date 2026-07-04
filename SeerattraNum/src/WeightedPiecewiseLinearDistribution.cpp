@@ -19,7 +19,6 @@
 #include <SGEXTN/Containers/Array.h>
 #include <SGEXTN/Containers/ForceCrash.h>
 #include <SGEXTN/SeerattraNum/DirectRandom.h>
-#include <SGEXTN/Math/FloatMath.h>
 
 SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution::WeightedPiecewiseLinearDistribution(bool useGlobal, const SGEXTN::Containers::Array<float>& weights, const SGEXTN::Containers::Array<float>& boundaries) : private_weights(weights), private_boundaries(boundaries), private_prefixSums(0), private_rng(nullptr), private_ownsRng(useGlobal == false){
     if(boundaries.length() < 2){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution constructor crashed because listed boundaries do not form at least 1 valid interval");}
@@ -73,10 +72,10 @@ float SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution::randomValue(){
     rng = (rng - private_prefixSums.at(low)) / (private_prefixSums.at(low + 1) - private_prefixSums.at(low));
     const float k1 = private_weights.at(low);
     const float k2 = private_weights.at(low + 1);
-    const float d = private_boundaries.at(low + 1) - private_boundaries.at(low);
-    if(k2 - k1 == 0.0f){return private_boundaries.at(low) + d * rng;}
-    const float sqrt = SGEXTN::Math::FloatMath<float>::squareRoot(k1 * k1 + rng * (k2 * k2 - k1 * k1));
-    return (private_boundaries.at(low) + d * (sqrt - k1) / (k2 - k1));
+    const float y = (*private_rng).randomFloat32() * (k1 + k2);
+    const float boundary = k1 + rng * (k2 - k1);
+    if(y <= boundary){return (private_boundaries.at(low) + rng * (private_boundaries.at(low + 1) - private_boundaries.at(low)));}
+    return (private_boundaries.at(low + 1) + rng * (private_boundaries.at(low) - private_boundaries.at(low + 1)));
 }
 
 SGEXTN::Containers::Array<float> SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution::randomValueArray(int count){
