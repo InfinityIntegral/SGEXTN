@@ -106,6 +106,7 @@ void SGEXTN::InternalTest::MathTest::testFloatMath(){
     if(isCloseEnough(SGEXTN::Math::FloatMath<float>::arctangent(1.0f), SGEXTN::Math::FloatConstants<float>::pi() / 4.0f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Math::FloatMath - arctangent fail");}
     if(isCloseEnough(SGEXTN::Math::FloatMath<float>::arctangentQuadrantAware(5.0f, 5.0f), SGEXTN::Math::FloatConstants<float>::pi() / 4.0f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Math::FloatMath - quadrant aware arctangent fail");}
     if(isCloseEnough(SGEXTN::Math::FloatMath<float>::extendedFactorial(4.0f), 24.0f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Math::FloatMath - extended factorial fail");}
+    if(isCloseEnough(SGEXTN::Math::FloatMath<float>::lnExtendedFactorial(4.0f), 3.17805f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Math::FloatMath - natural logarithm of extended factorial fail");}
     if(isCloseEnough(SGEXTN::Math::FloatMath<float>::errorFunction(0.5f), 0.52050f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Math::FloatMath - normal distribution left side fail");}
     if(isCloseEnough(SGEXTN::Math::FloatMath<float>::complementaryErrorFunction(0.5f), 0.47950f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Math::FloatMath - normal distribution right side fail");}
     if(SGEXTN::Math::FloatMath<float>::ceiling(0.5f) != 1.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Math::FloatMath - ceiling function fail");}

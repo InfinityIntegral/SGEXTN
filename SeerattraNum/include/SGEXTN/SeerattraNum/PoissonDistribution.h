@@ -20,22 +20,32 @@
 
 namespace SGEXTN {
 namespace SeerattraNum {
-template <typename MeanType, typename Integer> class BuildLah_SGEXTN_SeerattraNum PoissonDistribution {
+class DirectRandom;
+
+class BuildLah_SGEXTN_SeerattraNum PoissonDistribution {
 public:
-    void* private_stlRandomEngine;
-    void* private_stlDistribution;
-    MeanType private_mean;
-    PoissonDistribution(bool useGlobal, MeanType mean);
+    SGEXTN::SeerattraNum::DirectRandom* private_rng;
+    bool private_ownsRng;
+    float private_mean;
+    float private_smallMeanProductThreshold;
+    float private_precompConstantA;
+    float private_precompConstantB;
+    float private_squeezeBoundU;
+    float private_squeezeBoundV;
+    float private_lnMean;
+    float private_lnAcceptRate;
+    PoissonDistribution(bool useGlobal, float mean);
     PoissonDistribution(const PoissonDistribution&) = delete;
     PoissonDistribution& operator=(const PoissonDistribution&) = delete;
     PoissonDistribution(PoissonDistribution&&) = delete;
     PoissonDistribution& operator=(PoissonDistribution&&) = delete;
     ~PoissonDistribution();
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
-    [[nodiscard]] Integer randomValue();
-    [[nodiscard]] SGEXTN::Containers::Array<Integer> randomValueArray(int count);
-    [[nodiscard]] MeanType getMean() const;
-    void setMean(MeanType mean);
+    [[nodiscard]] int randomValue();
+    [[nodiscard]] SGEXTN::Containers::Array<int> randomValueArray(int count);
+    [[nodiscard]] float getMean() const;
+    void setMean(float mean);
+    void private_redoPrecompute();
 };
 }
 }
