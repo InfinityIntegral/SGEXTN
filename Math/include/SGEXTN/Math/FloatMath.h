@@ -41,6 +41,7 @@ public:
     [[nodiscard]] static T arctangent(T x);
     [[nodiscard]] static T arctangentQuadrantAware(T y, T x);
     [[nodiscard]] static T extendedFactorial(T x);
+    [[nodiscard]] static T lnExtendedFactorial(T x);
     [[nodiscard]] static T errorFunction(T x);
     [[nodiscard]] static T complementaryErrorFunction(T x);
     [[nodiscard]] static T ceiling(T x);

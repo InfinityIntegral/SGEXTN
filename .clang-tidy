@@ -77,8 +77,6 @@ Checks:
   - bugprone-unused-return-value
   - bugprone-use-after-move
   - bugprone-virtual-near-miss
-  - concurrency-mt-unsafe
-  - concurrency-thread-canceltype-asynchronous
   - cppcoreguidelines-avoid-capturing-lambda-coroutines
   - cppcoreguidelines-avoid-const-or-ref-data-members
   - cppcoreguidelines-avoid-do-while

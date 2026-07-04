@@ -248,21 +248,17 @@ void SGEXTN::InternalTest::SeerattraNumTest::testGeometricDistribution(){
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testPoissonDistribution(){
-    std::poisson_distribution<int> stlRandomDistribution(100.0f);
-    seedRandomEngine(firstSeed);
-    SGEXTN::SeerattraNum::PoissonDistribution<float, int> generator(false, 100.0f);
+    SGEXTN::SeerattraNum::PoissonDistribution generator(false, 100.0f);
     generator.seed(firstSeed);
-    if(generator.randomValue() != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::PoissonDistribution generate value first seed fail");}
+    if(generator.randomValue() != 85){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::PoissonDistribution generate value first seed fail");}
     SGEXTN::Containers::Array<int> randomArray = generator.randomValueArray(2);
-    if(randomArray.at(0) != stlRandomDistribution(stlRandomEngine) || randomArray.at(1) != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::PoissonDistribution generate array first seed fail");}
+    if(randomArray.at(0) != 104 || randomArray.at(1) != 102){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::PoissonDistribution generate array first seed fail");}
     if(generator.getMean() != 100.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::PoissonDistribution get mean fail");}
-    stlRandomDistribution = std::poisson_distribution<int>(10.0f);
-    seedRandomEngine(secondSeed);
     generator.setMean(10.0f);
     generator.seed(secondSeed);
-    if(generator.randomValue() != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::PoissonDistribution generate value second seed fail");}
+    if(generator.randomValue() != 12){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::PoissonDistribution generate value second seed fail");}
     randomArray = generator.randomValueArray(2);
-    if(randomArray.at(0) != stlRandomDistribution(stlRandomEngine) || randomArray.at(1) != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::PoissonDistribution generate array second seed fail");}
+    if(randomArray.at(0) != 8 || randomArray.at(1) != 9){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::PoissonDistribution generate array second seed fail");}
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testExponentialDistribution(){

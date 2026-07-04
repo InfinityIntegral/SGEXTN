@@ -98,6 +98,10 @@ template <typename T> T SGEXTN::Math::FloatMath<T>::extendedFactorial(T x){
     return std::tgamma(x + static_cast<T>(1.0f));
 }
 
+template <typename T> T SGEXTN::Math::FloatMath<T>::lnExtendedFactorial(T x){
+    return std::lgamma(x + static_cast<T>(1.0f));
+}
+
 template <typename T> T SGEXTN::Math::FloatMath<T>::errorFunction(T x){
     return std::erf(x);
 }
