@@ -17,28 +17,36 @@
 
 #pragma once
 #include <SGEXTN/Containers/Array.h>
+#include <SGEXTN/SeerattraNum/NormalDistribution.h>
 
 namespace SGEXTN {
 namespace SeerattraNum {
-template <typename FloatingPoint> class BuildLah_SGEXTN_SeerattraNum GammaDistribution {
+class DirectRandom;
+
+class BuildLah_SGEXTN_SeerattraNum GammaDistribution {
 public:
-    void* private_stlRandomEngine;
-    void* private_stlDistribution;
-    FloatingPoint private_variableCount;
-    FloatingPoint private_variableMean;
-    GammaDistribution(bool useGlobal, FloatingPoint variableCount, FloatingPoint variableMean);
+    SGEXTN::SeerattraNum::DirectRandom* private_rng;
+    bool private_ownsRng;
+    float private_variableCount;
+    float private_variableMean;
+    SGEXTN::SeerattraNum::NormalDistribution private_standardNormalDistribution;
+    float private_precompConstantD;
+    float private_precompConstantC;
+    float private_reciprocalVariableCount;
+    GammaDistribution(bool useGlobal, float variableCount, float variableMean);
     GammaDistribution(const GammaDistribution&) = delete;
     GammaDistribution& operator=(const GammaDistribution&) = delete;
     GammaDistribution(GammaDistribution&&) = delete;
     GammaDistribution& operator=(GammaDistribution&&) = delete;
     ~GammaDistribution();
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
-    [[nodiscard]] FloatingPoint randomValue();
-    [[nodiscard]] SGEXTN::Containers::Array<FloatingPoint> randomValueArray(int count);
-    [[nodiscard]] FloatingPoint getVariableCount() const;
-    [[nodiscard]] FloatingPoint getVariableMean() const;
-    void setVariableCount(FloatingPoint variableCount);
-    void setVariableMean(FloatingPoint variableMean);
+    [[nodiscard]] float randomValue();
+    [[nodiscard]] SGEXTN::Containers::Array<float> randomValueArray(int count);
+    [[nodiscard]] float getVariableCount() const;
+    [[nodiscard]] float getVariableMean() const;
+    void setVariableCount(float variableCount);
+    void setVariableMean(float variableMean);
+    void private_redoPrecompute();
 };
 }
 }

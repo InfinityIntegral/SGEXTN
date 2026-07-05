@@ -63,7 +63,7 @@ const char* printUtf8String(const unsigned char* data, int byteLength, bool& mus
 }
 }
 
-constinit SGEXTN::Containers::Vector<void (*)(const char*)>* SGEXTN::CoreText::Debug::logFunctionList = nullptr;
+SGEXTN::Containers::Vector<void (*)(const char*)>* SGEXTN::CoreText::Debug::logFunctionList = nullptr;
 
 SGEXTN::CoreText::Debug::Debug(const SGEXTN::CoreText::String& fileName, int lineNumber) : debugInfo(""), fileName(""), lineNumber(""), metadataMode(SGEXTN::CoreText::DebugPrintMetadataMode::None), integerMode(10), floatingPointMode(10, SGEXTN::CoreText::FloatPrecisionFormat::SignificantFigure, 5), cCharMode(SGEXTN::CoreText::DebugPrintCCharMode::Byte), stringMode(SGEXTN::CoreText::DebugPrintStringMode::String), pointerMode(SGEXTN::CoreText::DebugPrintPointerMode::NullCheck) {
     const SGEXTN::CoreText::String actualFilePath = fileName.replaceCharacters("\\", "/");
