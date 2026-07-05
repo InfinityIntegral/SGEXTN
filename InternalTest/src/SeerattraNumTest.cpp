@@ -194,23 +194,19 @@ void SGEXTN::InternalTest::SeerattraNumTest::testBernoulliDistribution(){
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testBinomialDistribution(){
-    std::binomial_distribution<int> stlRandomDistribution(100, 0.25f);
-    seedRandomEngine(firstSeed);
-    SGEXTN::SeerattraNum::BinomialDistribution<float, int> generator(false, 0.25f, 100);
+    SGEXTN::SeerattraNum::BinomialDistribution generator(false, 0.25f, 100);
     generator.seed(firstSeed);
-    if(generator.randomValue() != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BinomialDistribution generate value first seed fail");}
+    if(generator.randomValue() != 29){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BinomialDistribution generate value first seed fail");}
     SGEXTN::Containers::Array<int> randomArray = generator.randomValueArray(2);
-    if(randomArray.at(0) != stlRandomDistribution(stlRandomEngine) || randomArray.at(1) != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BinomialDistribution generate array first seed fail");}
+    if(randomArray.at(0) != 28 || randomArray.at(1) != 22){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BinomialDistribution generate array first seed fail");}
     if(generator.getChanceOfTrue() != 0.25f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BinomialDistribution get probability fail");}
     if(generator.getAttemptCount() != 100){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BinomialDistribution get number of attempts fail");}
-    stlRandomDistribution = std::binomial_distribution<int>(1000, 0.75f);
-    seedRandomEngine(secondSeed);
     generator.setChanceOfTrue(0.75f);
     generator.setAttemptCount(1000);
     generator.seed(secondSeed);
-    if(generator.randomValue() != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BinomialDistribution generate value second seed fail");}
+    if(generator.randomValue() != 744){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BinomialDistribution generate value second seed fail");}
     randomArray = generator.randomValueArray(2);
-    if(randomArray.at(0) != stlRandomDistribution(stlRandomEngine) || randomArray.at(1) != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BinomialDistribution generate array second seed fail");}
+    if(randomArray.at(0) != 731 || randomArray.at(1) != 745){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BinomialDistribution generate array second seed fail");}
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testNegativeBinomialDistribution(){

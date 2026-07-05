@@ -28,8 +28,8 @@ public:
     bool private_ownsRng;
     float private_mean;
     float private_standardDeviation;
-    static SGEXTN::Containers::Array<float>* hwidthTables;
-    static SGEXTN::Containers::Array<float>* floorTables;
+    static SGEXTN::Containers::Array<float>* private_hwidthTables;
+    static SGEXTN::Containers::Array<float>* private_floorTables;
     NormalDistribution(bool useGlobal, float mean, float standardDeviation);
     NormalDistribution(const NormalDistribution&) = delete;
     NormalDistribution& operator=(const NormalDistribution&) = delete;
