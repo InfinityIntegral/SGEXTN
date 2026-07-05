@@ -8,8 +8,7 @@ CompileFlags:
     - "-ferror-limit=0"
   Remove:
     - "-isystem*"
-    - "-I/usr/include*"
-    - "-I/Applications/Xcode.app/*"
+    - "-I/usr*"
     - "--driver-mode=*"
   CompilationDatabase: "build/"
 Index:

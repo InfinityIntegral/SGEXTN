@@ -28,7 +28,7 @@ namespace {
 SGEXTN::SingEmbed::SingEmbedFileRegistrarInstance testInstance("/SGEXTN/SingEmbed/testFile.sg", 0, "");
 }
 
-constinit SGEXTN::Containers::UnorderedMap<SGEXTN::CoreText::String, SGEXTN::SingEmbed::EmbeddedFile, SGEXTN::Containers::EqualTo<SGEXTN::CoreText::String>, SGEXTN::Containers::Hash<SGEXTN::CoreText::String>>* SGEXTN::SingEmbed::SingEmbedFileRegistrarInstance::registry = nullptr;
+SGEXTN::Containers::UnorderedMap<SGEXTN::CoreText::String, SGEXTN::SingEmbed::EmbeddedFile, SGEXTN::Containers::EqualTo<SGEXTN::CoreText::String>, SGEXTN::Containers::Hash<SGEXTN::CoreText::String>>* SGEXTN::SingEmbed::SingEmbedFileRegistrarInstance::registry = nullptr;
 
 SGEXTN::SingEmbed::SingEmbedFileRegistrarInstance::SingEmbedFileRegistrarInstance(const SGEXTN::CoreText::String& virtualPath, int fileSize, const char* data){
     if(SGEXTN::SingEmbed::SingEmbedFileRegistrarInstance::registry == nullptr){

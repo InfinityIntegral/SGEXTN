@@ -16,67 +16,94 @@
 // BuildLah license check: SGEXTN 7.0.0
 
 #include <SGEXTN/SeerattraNum/GammaDistribution.h>
-#include <SGEXTN/SeerattraNum/private_api/UnsafeCasts.h>
 #include <SGEXTN/Containers/Array.h>
 #include <SGEXTN/Containers/ForceCrash.h>
-#include <SGEXTN/SeerattraNum/SimpleRandom.h>
-#include <random>
+#include <SGEXTN/SeerattraNum/DirectRandom.h>
+#include <SGEXTN/Math/FloatMath.h>
+#include <SGEXTN/SeerattraNum/NormalDistribution.h>
 
-template <typename FloatingPoint> SGEXTN::SeerattraNum::GammaDistribution<FloatingPoint>::GammaDistribution(bool useGlobal, FloatingPoint variableCount, FloatingPoint variableMean){
+SGEXTN::SeerattraNum::GammaDistribution::GammaDistribution(bool useGlobal, float variableCount, float variableMean) : private_variableCount(variableCount), private_variableMean(variableMean), private_rng(nullptr), private_ownsRng(useGlobal == false), private_standardNormalDistribution(true, 0.0f, 1.0f), private_precompConstantC(0.0f), private_precompConstantD(0.0f), private_reciprocalVariableCount(0.0f){
     if(variableCount <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GammaDistribution constructor crashed because requested number of exponentially distributed variables to sum is nonpositive");}
     if(variableMean <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GammaDistribution constructor crashed because requested mean of each exponentially distributed variable is nonpositive");}
-    private_variableCount = variableCount;
-    private_variableMean = variableMean;
-    private_stlRandomEngine = SGEXTN::SeerattraNum::SimpleRandom::private_createRandomEngine(useGlobal);
-    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::gamma_distribution<FloatingPoint>>::eraseType(new std::gamma_distribution<FloatingPoint>(variableCount, variableMean));
+    private_rng = SGEXTN::SeerattraNum::DirectRandom::private_createRng(useGlobal);
+    private_redoPrecompute();
+    private_standardNormalDistribution.private_rng = private_rng;
+
 }
 
-template <typename FloatingPoint> SGEXTN::SeerattraNum::GammaDistribution<FloatingPoint>::~GammaDistribution(){
-    delete SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(private_stlRandomEngine);
-    delete SGEXTN::SeerattraNum::UnsafeCasts<std::gamma_distribution<FloatingPoint>>::uneraseType(private_stlDistribution);
+SGEXTN::SeerattraNum::GammaDistribution::~GammaDistribution(){
+    if(private_ownsRng == true){delete private_rng;}
 }
 
-template <typename FloatingPoint> void SGEXTN::SeerattraNum::GammaDistribution<FloatingPoint>::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
-    if(private_stlRandomEngine == nullptr){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GammaDistribution::seed crashed because cannot seed global rng");}
-    SGEXTN::SeerattraNum::SimpleRandom::private_seedRandomEngine(private_stlRandomEngine, seedArray);
+void SGEXTN::SeerattraNum::GammaDistribution::private_redoPrecompute(){
+    float correctedVariableCount = private_variableCount;
+    if(correctedVariableCount < 1.0f){correctedVariableCount = private_variableCount + 1.0f;}
+    private_reciprocalVariableCount = 1.0f / private_variableCount;
+    private_precompConstantD = correctedVariableCount - 1.0f / 3.0f;
+    private_precompConstantC = 1.0f / 3.0f / SGEXTN::Math::FloatMath<float>::squareRoot(private_precompConstantD);
 }
 
-template <typename FloatingPoint> FloatingPoint SGEXTN::SeerattraNum::GammaDistribution<FloatingPoint>::randomValue(){
-    void* randomEngine = private_stlRandomEngine;
-    if(randomEngine == nullptr){randomEngine = SGEXTN::SeerattraNum::SimpleRandom::private_getRandomEngine();}
-    return ((*SGEXTN::SeerattraNum::UnsafeCasts<std::gamma_distribution<FloatingPoint>>::uneraseType(private_stlDistribution))(*SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(randomEngine)));
+void SGEXTN::SeerattraNum::GammaDistribution::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
+    if(private_ownsRng == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GammaDistribution::seed crashed because cannot seed global rng");}
+    SGEXTN::SeerattraNum::DirectRandom* temp = private_rng;
+    private_rng = temp;
+    (*private_rng).seed(seedArray);
 }
 
-template <typename FloatingPoint> SGEXTN::Containers::Array<FloatingPoint> SGEXTN::SeerattraNum::GammaDistribution<FloatingPoint>::randomValueArray(int count){
+float SGEXTN::SeerattraNum::GammaDistribution::randomValue(){
+    float effectiveVariableCount = private_variableCount;
+    bool shouldAdjust = false;
+    if(effectiveVariableCount < 1){
+        effectiveVariableCount = private_variableCount + 1.0f;
+        shouldAdjust = true;
+    }
+    float result = 0.0f;
+    while(true){
+        const float normalVar = private_standardNormalDistribution.randomValue();
+        const float uniformVar = (*private_rng).randomFloat32();
+        float v = 1.0f + private_precompConstantC * normalVar;
+        v = v * v * v;
+        if(v <= 0.0f){continue;}
+        float normalVar4th = normalVar * normalVar;
+        normalVar4th = normalVar4th * normalVar4th;
+        if(uniformVar < 1.0f - 0.0331f * normalVar4th){
+            result = private_precompConstantD * v;
+            break;
+        }
+        if(SGEXTN::Math::FloatMath<float>::naturalLog(uniformVar) < 0.5f * normalVar * normalVar + private_precompConstantD * (1.0f - v + SGEXTN::Math::FloatMath<float>::naturalLog(v))){
+            result = private_precompConstantD * v;
+            break;
+        }
+    }
+    if(shouldAdjust == true){result *= SGEXTN::Math::FloatMath<float>::powerOf((*private_rng).randomFloat32(), private_reciprocalVariableCount);}
+    return (result * private_variableMean);
+}
+
+SGEXTN::Containers::Array<float> SGEXTN::SeerattraNum::GammaDistribution::randomValueArray(int count){
     if(count < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GammaDistribution::randomValueArray crashed because a negative number of outputs is requested");}
-    SGEXTN::Containers::Array<FloatingPoint> outputArray(count);
+    SGEXTN::Containers::Array<float> outputArray(count);
     for(int i=0; i<count; i++){
         outputArray.at(i) = randomValue();
     }
     return outputArray;
 }
 
-template <typename FloatingPoint> FloatingPoint SGEXTN::SeerattraNum::GammaDistribution<FloatingPoint>::getVariableCount() const {
+float SGEXTN::SeerattraNum::GammaDistribution::getVariableCount() const {
     return private_variableCount;
 }
 
-template <typename FloatingPoint> FloatingPoint SGEXTN::SeerattraNum::GammaDistribution<FloatingPoint>::getVariableMean() const {
+float SGEXTN::SeerattraNum::GammaDistribution::getVariableMean() const {
     return private_variableMean;
 }
 
-template <typename FloatingPoint> void SGEXTN::SeerattraNum::GammaDistribution<FloatingPoint>::setVariableCount(FloatingPoint variableCount){
+void SGEXTN::SeerattraNum::GammaDistribution::setVariableCount(float variableCount){
     if(variableCount <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GammaDistribution::setVariableCount crashed because requested number of exponentially distributed variables to sum is nonpositive");}
     private_variableCount = variableCount;
-    delete SGEXTN::SeerattraNum::UnsafeCasts<std::gamma_distribution<FloatingPoint>>::uneraseType(private_stlDistribution);
-    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::gamma_distribution<FloatingPoint>>::eraseType(new std::gamma_distribution<FloatingPoint>(variableCount, private_variableMean));
+    private_redoPrecompute();
 }
 
-template <typename FloatingPoint> void SGEXTN::SeerattraNum::GammaDistribution<FloatingPoint>::setVariableMean(FloatingPoint variableMean){
+void SGEXTN::SeerattraNum::GammaDistribution::setVariableMean(float variableMean){
     if(variableMean <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GammaDistribution::setVariableMean crashed because requested mean of each exponentially distributed variable is nonpositive");}
     private_variableMean = variableMean;
-    delete SGEXTN::SeerattraNum::UnsafeCasts<std::gamma_distribution<FloatingPoint>>::uneraseType(private_stlDistribution);
-    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::gamma_distribution<FloatingPoint>>::eraseType(new std::gamma_distribution<FloatingPoint>(private_variableCount, variableMean));
+    private_redoPrecompute();
 }
-
-template class SGEXTN::SeerattraNum::GammaDistribution<float>;
-template class SGEXTN::SeerattraNum::GammaDistribution<double>;
