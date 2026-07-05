@@ -17,28 +17,51 @@
 
 #pragma once
 #include <SGEXTN/Containers/Array.h>
+#include <SGEXTN/SeerattraNum/GeometricDistribution.h>
+#include <SGEXTN/SeerattraNum/ExponentialDistribution.h>
 
 namespace SGEXTN {
 namespace SeerattraNum {
-template <typename ProbabilityType, typename Integer> class BuildLah_SGEXTN_SeerattraNum BinomialDistribution {
+class DirectRandom;
+
+class BuildLah_SGEXTN_SeerattraNum BinomialDistribution {
 public:
-    void* private_stlRandomEngine;
-    void* private_stlDistribution;
-    ProbabilityType private_chanceOfTrue;
-    Integer private_attemptCount;
-    BinomialDistribution(bool useGlobal, ProbabilityType chanceOfTrue, Integer attemptCount);
+    SGEXTN::SeerattraNum::DirectRandom* private_rng;
+    bool private_ownsRng;
+    float private_chanceOfTrue;
+    int private_attemptCount;
+    SGEXTN::SeerattraNum::GeometricDistribution private_geometricDistribution;
+    SGEXTN::SeerattraNum::ExponentialDistribution private_standardExponentialDistribution;
+    float private_precompConstantL;
+    float private_precompConstantC;
+    float private_precompConstantM;
+    float private_exponentialFactorLeft;
+    float private_exponentialFactorRight;
+    float private_negativeReciprocalExponentialFactorLeft;
+    float private_reciprocalExponentialFactorRight;
+    float private_boundaryFarLeft;
+    float private_boundaryCenterLeft;
+    float private_boundaryCenterRight;
+    float private_boundaryFarRight;
+    float private_weightLeftTail;
+    float private_weightBothTails;
+    float private_weightAllExceptCenter;
+    float private_comparisonMultiplier;
+    float private_comparisonConstant;
+    BinomialDistribution(bool useGlobal, float chanceOfTrue, int attemptCount);
     BinomialDistribution(const BinomialDistribution&) = delete;
     BinomialDistribution& operator=(const BinomialDistribution&) = delete;
     BinomialDistribution(BinomialDistribution&&) = delete;
     BinomialDistribution& operator=(BinomialDistribution&&) = delete;
     ~BinomialDistribution();
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
-    [[nodiscard]] Integer randomValue();
-    [[nodiscard]] SGEXTN::Containers::Array<Integer> randomValueArray(int count);
-    [[nodiscard]] ProbabilityType getChanceOfTrue() const;
-    [[nodiscard]] Integer getAttemptCount() const;
-    void setChanceOfTrue(ProbabilityType chanceOfTrue);
-    void setAttemptCount(Integer attemptCount);
+    [[nodiscard]] int randomValue();
+    [[nodiscard]] SGEXTN::Containers::Array<int> randomValueArray(int count);
+    [[nodiscard]] float getChanceOfTrue() const;
+    [[nodiscard]] int getAttemptCount() const;
+    void setChanceOfTrue(float chanceOfTrue);
+    void setAttemptCount(int attemptCount);
+    void private_redoPrecompute();
 };
 }
 }

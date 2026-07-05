@@ -16,75 +16,157 @@
 // BuildLah license check: SGEXTN 7.0.0
 
 #include <SGEXTN/SeerattraNum/BinomialDistribution.h>
-#include <SGEXTN/SeerattraNum/private_api/UnsafeCasts.h>
 #include <SGEXTN/Containers/Array.h>
 #include <SGEXTN/Containers/ForceCrash.h>
-#include <SGEXTN/SeerattraNum/SimpleRandom.h>
-#include <random>
+#include <SGEXTN/SeerattraNum/DirectRandom.h>
+#include <SGEXTN/Math/FloatMath.h>
+#include <SGEXTN/SeerattraNum/GeometricDistribution.h>
+#include <SGEXTN/SeerattraNum/ExponentialDistribution.h>
 
-template <typename ProbabilityType, typename Integer> SGEXTN::SeerattraNum::BinomialDistribution<ProbabilityType, Integer>::BinomialDistribution(bool useGlobal, ProbabilityType chanceOfTrue, Integer attemptCount){
+SGEXTN::SeerattraNum::BinomialDistribution::BinomialDistribution(bool useGlobal, float chanceOfTrue, int attemptCount) :private_chanceOfTrue(chanceOfTrue), private_attemptCount(attemptCount), private_rng(nullptr), private_ownsRng(useGlobal == false), private_geometricDistribution(true, chanceOfTrue), private_standardExponentialDistribution(true, 1.0f), private_precompConstantL(0.0f), private_precompConstantC(0.0f), private_precompConstantM(0.0f), private_exponentialFactorLeft(0.0f), private_exponentialFactorRight(0.0f), private_negativeReciprocalExponentialFactorLeft(0.0f), private_reciprocalExponentialFactorRight(0.0f), private_boundaryFarLeft(0.0f), private_boundaryCenterLeft(0.0f), private_boundaryCenterRight(0.0f), private_boundaryFarRight(0.0f), private_weightLeftTail(0.0f), private_weightBothTails(0.0f), private_weightAllExceptCenter(0.0f), private_comparisonMultiplier(0.0f), private_comparisonConstant(0.0f){
     if(chanceOfTrue < 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BinomialDistribution constructor crashed because the requested probability is negative");}
     if(chanceOfTrue > 1.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BinomialDistribution constructor crashed because the requested probability is higher than 1");}
     if(attemptCount < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BinomialDistribution constructor crashed because the requested number of attempts is negative");}
-    private_chanceOfTrue = chanceOfTrue;
-    private_attemptCount = attemptCount;
-    private_stlRandomEngine = SGEXTN::SeerattraNum::SimpleRandom::private_createRandomEngine(useGlobal);
-    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::binomial_distribution<Integer>>::eraseType(new std::binomial_distribution<Integer>(attemptCount, chanceOfTrue));
+    private_rng = SGEXTN::SeerattraNum::DirectRandom::private_createRng(useGlobal);
+    private_redoPrecompute();
+    private_geometricDistribution.private_rng = private_rng;
+    private_geometricDistribution.private_bernoulliDistribution.private_rng = private_rng;
+    private_standardExponentialDistribution.private_rng = private_rng;
 }
 
-template <typename ProbabilityType, typename Integer> SGEXTN::SeerattraNum::BinomialDistribution<ProbabilityType, Integer>::~BinomialDistribution(){
-    delete SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(private_stlRandomEngine);
-    delete SGEXTN::SeerattraNum::UnsafeCasts<std::binomial_distribution<Integer>>::uneraseType(private_stlDistribution);
+SGEXTN::SeerattraNum::BinomialDistribution::~BinomialDistribution(){
+    if(private_ownsRng == true){delete private_rng;}
 }
 
-template <typename ProbabilityType, typename Integer> void SGEXTN::SeerattraNum::BinomialDistribution<ProbabilityType, Integer>::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
-    if(private_stlRandomEngine == nullptr){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BinomialDistribution::seed crashed because cannot seed global rng");}
-    SGEXTN::SeerattraNum::SimpleRandom::private_seedRandomEngine(private_stlRandomEngine, seedArray);
+void SGEXTN::SeerattraNum::BinomialDistribution::private_redoPrecompute(){
+    float probability = private_chanceOfTrue;
+    const float attempts = static_cast<float>(private_attemptCount);
+    if(probability > 0.5f){probability = 1.0f - probability;}
+    private_precompConstantL = 0.5f + SGEXTN::Math::FloatMath<float>::floor(2.195f * SGEXTN::Math::FloatMath<float>::squareRoot(attempts * probability * (1.0f - probability)) - 4.6f * (1.0f - probability));
+    private_precompConstantM = SGEXTN::Math::FloatMath<float>::floor(attempts * probability + probability);
+    private_precompConstantC = 0.134f + 20.5f / (15.3f + private_precompConstantM);
+    const float exponentialInternalLeft = (attempts * probability + probability - (private_precompConstantM - private_precompConstantL)) / (attempts * probability + probability - probability * (private_precompConstantM - private_precompConstantL));
+    private_exponentialFactorLeft = exponentialInternalLeft * (1.0f + 0.5f * exponentialInternalLeft);
+    const float exponentialInternalRight = (private_precompConstantM + private_precompConstantL + 1.0f - attempts * probability - probability) / ((private_precompConstantM + private_precompConstantL + 1.0f) * (1.0f - probability));
+    private_exponentialFactorRight = exponentialInternalRight * (1.0f + 0.5f * exponentialInternalRight);
+    private_negativeReciprocalExponentialFactorLeft = -1.0f / private_exponentialFactorLeft;
+    private_reciprocalExponentialFactorRight = 1.0f / private_exponentialFactorRight;
+    private_boundaryFarLeft = private_precompConstantM - private_precompConstantL + 0.5f;
+    private_boundaryCenterLeft = private_precompConstantM - private_precompConstantC * private_precompConstantL + 0.5f;
+    private_boundaryCenterRight = private_precompConstantM + private_precompConstantC * private_precompConstantL + 0.5f;
+    private_boundaryFarRight = private_precompConstantM + private_precompConstantL + 0.5f;
+    const float w1 = private_precompConstantC / private_exponentialFactorLeft;
+    const float w2 = 0.5f * private_precompConstantL * (1.0f - private_precompConstantC * private_precompConstantC);
+    const float w3 = 2.0f * private_precompConstantC * private_precompConstantL;
+    const float w4 = 0.5f * private_precompConstantL * (1.0f - private_precompConstantC * private_precompConstantC);
+    const float w5 = private_precompConstantC / private_exponentialFactorRight;
+    const float weightSum = w1 + w2 + w3 + w4 + w5;
+    private_weightLeftTail = w1 / weightSum;
+    private_weightBothTails = (w1 + w5) / weightSum;
+    private_weightAllExceptCenter = 1.0f - w3 / weightSum;
+    private_comparisonMultiplier = SGEXTN::Math::FloatMath<float>::naturalLog(probability) - SGEXTN::Math::FloatMath<float>::naturalLog(1.0f - probability);
+    private_comparisonConstant = SGEXTN::Math::FloatMath<float>::lnExtendedFactorial(private_precompConstantM) + SGEXTN::Math::FloatMath<float>::lnExtendedFactorial(attempts - private_precompConstantM) - private_precompConstantM * private_comparisonMultiplier;
+    private_geometricDistribution.setChanceOfTrue(probability);
 }
 
-template <typename ProbabilityType, typename Integer> Integer SGEXTN::SeerattraNum::BinomialDistribution<ProbabilityType, Integer>::randomValue(){
-    void* randomEngine = private_stlRandomEngine;
-    if(randomEngine == nullptr){randomEngine = SGEXTN::SeerattraNum::SimpleRandom::private_getRandomEngine();}
-    return ((*SGEXTN::SeerattraNum::UnsafeCasts<std::binomial_distribution<Integer>>::uneraseType(private_stlDistribution))(*SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(randomEngine)));
+void SGEXTN::SeerattraNum::BinomialDistribution::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
+    if(private_ownsRng == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BinomialDistribution::seed crashed because cannot seed global rng");}
+    SGEXTN::SeerattraNum::DirectRandom* temp = private_rng;
+    private_rng = temp;
+    (*private_rng).seed(seedArray);
 }
 
-template <typename ProbabilityType, typename Integer> SGEXTN::Containers::Array<Integer> SGEXTN::SeerattraNum::BinomialDistribution<ProbabilityType, Integer>::randomValueArray(int count){
+int SGEXTN::SeerattraNum::BinomialDistribution::randomValue(){
+    if(private_chanceOfTrue == 0.0f){return 0;}
+    if(private_chanceOfTrue == 1.0f){return private_attemptCount;}
+    if(private_attemptCount == 0){return 0;}
+    bool useNegative = false;
+    float probability = private_chanceOfTrue;
+    int result = 0;
+    if(probability > 0.5f){
+        probability = 1.0f - probability;
+        useNegative = true;
+    }
+    if(static_cast<float>(private_attemptCount) * probability < 30.0f){
+        int count = 0;
+        int sum = 0;
+        while(sum <= private_attemptCount){
+            sum += (private_geometricDistribution.randomValue() + 1);
+            count++;
+        }
+        result = count - 1;
+    }
+    else{
+        while(true){
+            float rng = (*private_rng).randomFloat32();
+            float xCoord = 0.0f;
+            float yCoord = 0.0f;
+            if(rng < private_weightLeftTail){
+                private_standardExponentialDistribution.private_samplePointStandard(xCoord, yCoord);
+                xCoord = private_negativeReciprocalExponentialFactorLeft * xCoord + private_boundaryFarLeft;
+                yCoord = private_precompConstantC * yCoord;
+            }
+            else if(rng < private_weightBothTails){
+                private_standardExponentialDistribution.private_samplePointStandard(xCoord, yCoord);
+                xCoord = private_reciprocalExponentialFactorRight * xCoord + private_boundaryFarRight;
+                yCoord = private_precompConstantC * yCoord;
+            }
+            else if(rng < private_weightAllExceptCenter){
+                rng = (rng - private_weightBothTails) / (private_weightAllExceptCenter - private_weightBothTails);
+                xCoord = private_boundaryFarLeft + rng * (private_boundaryCenterLeft - private_boundaryFarLeft);
+                yCoord = (*private_rng).randomFloat32() * (1.0f + private_precompConstantC);
+                if(yCoord > private_precompConstantC + rng * (1.0f - private_precompConstantC)){
+                    xCoord = private_boundaryCenterRight + xCoord - private_boundaryFarLeft;
+                    yCoord = 1.0f + private_precompConstantC - yCoord;
+                }
+            }
+            else{
+                rng = (rng - private_weightAllExceptCenter) / (1.0f - private_weightAllExceptCenter);
+                xCoord = private_boundaryCenterLeft + rng * (private_boundaryCenterRight - private_boundaryCenterLeft);
+                yCoord = (*private_rng).randomFloat32();
+            }
+            const float flooredX = SGEXTN::Math::FloatMath<float>::floor(xCoord);
+            if(static_cast<int>(flooredX) < 0 || static_cast<int>(flooredX) > private_attemptCount){continue;}
+            if(private_precompConstantL * yCoord <= private_precompConstantL - SGEXTN::Math::FloatMath<float>::absoluteValue(private_precompConstantM - xCoord + 0.5f)){
+                result = static_cast<int>(flooredX);
+                break;
+            }
+            if(SGEXTN::Math::FloatMath<float>::naturalLog(yCoord) + SGEXTN::Math::FloatMath<float>::lnExtendedFactorial(flooredX) + SGEXTN::Math::FloatMath<float>::lnExtendedFactorial(static_cast<float>(private_attemptCount) - flooredX) <= flooredX * private_comparisonMultiplier + private_comparisonConstant){
+                result = static_cast<int>(flooredX);
+                break;
+            }
+        }
+    }
+    if(useNegative == false){return result;}
+    return (private_attemptCount - result);
+}
+
+SGEXTN::Containers::Array<int> SGEXTN::SeerattraNum::BinomialDistribution::randomValueArray(int count){
     if(count < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BinomialDistribution::randomValueArray crashed because a negative number of outputs is requested");}
-    SGEXTN::Containers::Array<Integer> outputArray(count);
+    SGEXTN::Containers::Array<int> outputArray(count);
     for(int i=0; i<count; i++){
         outputArray.at(i) = randomValue();
     }
     return outputArray;
 }
 
-template <typename ProbabilityType, typename Integer> ProbabilityType SGEXTN::SeerattraNum::BinomialDistribution<ProbabilityType, Integer>::getChanceOfTrue() const {
+float SGEXTN::SeerattraNum::BinomialDistribution::getChanceOfTrue() const {
     return private_chanceOfTrue;
 }
 
-template <typename ProbabilityType, typename Integer> Integer SGEXTN::SeerattraNum::BinomialDistribution<ProbabilityType, Integer>::getAttemptCount() const {
+int SGEXTN::SeerattraNum::BinomialDistribution::getAttemptCount() const {
     return private_attemptCount;
 }
 
-template <typename ProbabilityType, typename Integer> void SGEXTN::SeerattraNum::BinomialDistribution<ProbabilityType, Integer>::setChanceOfTrue(ProbabilityType chanceOfTrue){
+void SGEXTN::SeerattraNum::BinomialDistribution::setChanceOfTrue(float chanceOfTrue){
     if(chanceOfTrue < 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BinomialDistribution::setChanceOfTrue crashed because the requested probability is negative");}
     if(chanceOfTrue > 1.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BinomialDistribution::setChanceOfTrue crashed because the requested probability is higher than 1");}
     private_chanceOfTrue = chanceOfTrue;
-    delete SGEXTN::SeerattraNum::UnsafeCasts<std::binomial_distribution<Integer>>::uneraseType(private_stlDistribution);
-    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::binomial_distribution<Integer>>::eraseType(new std::binomial_distribution<Integer>(private_attemptCount, chanceOfTrue));
+    private_redoPrecompute();
 }
 
-template <typename ProbabilityType, typename Integer> void SGEXTN::SeerattraNum::BinomialDistribution<ProbabilityType, Integer>::setAttemptCount(Integer attemptCount){
+void SGEXTN::SeerattraNum::BinomialDistribution::setAttemptCount(int attemptCount){
     if(attemptCount < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BinomialDistribution::setAttemptCount crashed because the requested number of attempts is negative");}
     private_attemptCount = attemptCount;
-    delete SGEXTN::SeerattraNum::UnsafeCasts<std::binomial_distribution<Integer>>::uneraseType(private_stlDistribution);
-    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::binomial_distribution<Integer>>::eraseType(new std::binomial_distribution<Integer>(attemptCount, private_chanceOfTrue));
+    private_redoPrecompute();
 }
-
-template class SGEXTN::SeerattraNum::BinomialDistribution<float, int>;
-template class SGEXTN::SeerattraNum::BinomialDistribution<float, long long>;
-template class SGEXTN::SeerattraNum::BinomialDistribution<float, unsigned int>;
-template class SGEXTN::SeerattraNum::BinomialDistribution<float, unsigned long long>;
-template class SGEXTN::SeerattraNum::BinomialDistribution<double, int>;
-template class SGEXTN::SeerattraNum::BinomialDistribution<double, long long>;
-template class SGEXTN::SeerattraNum::BinomialDistribution<double, unsigned int>;
-template class SGEXTN::SeerattraNum::BinomialDistribution<double, unsigned long long>;

@@ -65,17 +65,19 @@ float getFloor(int i){
 }
 
 void parseTables(){
-    SGEXTN::SeerattraNum::ExponentialDistribution::widthTables = new SGEXTN::Containers::Array<float>(256);
-    SGEXTN::SeerattraNum::ExponentialDistribution::floorTables = new SGEXTN::Containers::Array<float>(256);
+    SGEXTN::SeerattraNum::ExponentialDistribution::private_widthTables = new SGEXTN::Containers::Array<float>(256);
+    SGEXTN::SeerattraNum::ExponentialDistribution::private_floorTables = new SGEXTN::Containers::Array<float>(256);
     for(int i=0; i<256; i++){
-        (*SGEXTN::SeerattraNum::ExponentialDistribution::widthTables).at(i) = getWidth(i);
-        (*SGEXTN::SeerattraNum::ExponentialDistribution::floorTables).at(i) = getFloor(i);
+        (*SGEXTN::SeerattraNum::ExponentialDistribution::private_widthTables).at(i) = getWidth(i);
+        (*SGEXTN::SeerattraNum::ExponentialDistribution::private_floorTables).at(i) = getFloor(i);
     }
+    SGEXTN::SeerattraNum::ExponentialDistribution::private_expRightBoundary = SGEXTN::Math::FloatMath<float>::powerOfE((*SGEXTN::SeerattraNum::ExponentialDistribution::private_widthTables).at(1));
 }
 }
 
-SGEXTN::Containers::Array<float>* SGEXTN::SeerattraNum::ExponentialDistribution::widthTables = nullptr;
-SGEXTN::Containers::Array<float>* SGEXTN::SeerattraNum::ExponentialDistribution::floorTables = nullptr;
+SGEXTN::Containers::Array<float>* SGEXTN::SeerattraNum::ExponentialDistribution::private_widthTables = nullptr;
+SGEXTN::Containers::Array<float>* SGEXTN::SeerattraNum::ExponentialDistribution::private_floorTables = nullptr;
+float SGEXTN::SeerattraNum::ExponentialDistribution::private_expRightBoundary = 0.0f;
 
 SGEXTN::SeerattraNum::ExponentialDistribution::ExponentialDistribution(bool useGlobal, float meanEventsPerTime) : private_meanEventsPerTime(meanEventsPerTime), private_reciprocalRate(1.0f / meanEventsPerTime), private_rng(nullptr), private_ownsRng(useGlobal == false){
     if(meanEventsPerTime <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::ExponentialDistribution constructor crashed because requested number of events occurring in each unit time is nonpositive");}
@@ -96,7 +98,7 @@ void SGEXTN::SeerattraNum::ExponentialDistribution::seed(const SGEXTN::Container
 float SGEXTN::SeerattraNum::ExponentialDistribution::randomValue(){
     SGEXTN::SeerattraNum::DirectRandom* temp = private_rng;
     private_rng = temp;
-    if(SGEXTN::SeerattraNum::ExponentialDistribution::floorTables == nullptr){parseTables();}
+    if(SGEXTN::SeerattraNum::ExponentialDistribution::private_floorTables == nullptr){parseTables();}
     float result = 0;
     while(true){
         const unsigned int rng = (*private_rng).randomUnsignedInt32();
@@ -104,22 +106,22 @@ float SGEXTN::SeerattraNum::ExponentialDistribution::randomValue(){
         const float scaleFactor = 1.0f / static_cast<float>(1u << 24);
         float xCoord = static_cast<float>(rng & 0xffffff) * scaleFactor;
         if(layer == 0){
-            const float rectangleProportion = (*SGEXTN::SeerattraNum::ExponentialDistribution::floorTables).at(0);
+            const float rectangleProportion = (*SGEXTN::SeerattraNum::ExponentialDistribution::private_floorTables).at(0);
             if(xCoord < rectangleProportion){
                 xCoord /= rectangleProportion;
-                result = (xCoord * (*SGEXTN::SeerattraNum::ExponentialDistribution::widthTables).at(1));
+                result = (xCoord * (*SGEXTN::SeerattraNum::ExponentialDistribution::private_widthTables).at(1));
                 break;
             }
-            result = ((*SGEXTN::SeerattraNum::ExponentialDistribution::widthTables).at(1) - SGEXTN::Math::FloatMath<float>::naturalLog((*private_rng).randomFloat32()));
+            result = ((*SGEXTN::SeerattraNum::ExponentialDistribution::private_widthTables).at(1) - SGEXTN::Math::FloatMath<float>::naturalLog((*private_rng).randomFloat32()));
             break;
         }
-        const float thisLayerWidth = (*SGEXTN::SeerattraNum::ExponentialDistribution::widthTables).at(layer);
+        const float thisLayerWidth = (*SGEXTN::SeerattraNum::ExponentialDistribution::private_widthTables).at(layer);
         float layerAboveWidth = 0.0f;
-        const float thisLayerFloor = (*SGEXTN::SeerattraNum::ExponentialDistribution::floorTables).at(layer);
+        const float thisLayerFloor = (*SGEXTN::SeerattraNum::ExponentialDistribution::private_floorTables).at(layer);
         float layerAboveFloor = 1.0f;
         if(layer != 255){
-            layerAboveWidth = (*SGEXTN::SeerattraNum::ExponentialDistribution::widthTables).at(layer + 1);
-            layerAboveFloor = (*SGEXTN::SeerattraNum::ExponentialDistribution::floorTables).at(layer + 1);
+            layerAboveWidth = (*SGEXTN::SeerattraNum::ExponentialDistribution::private_widthTables).at(layer + 1);
+            layerAboveFloor = (*SGEXTN::SeerattraNum::ExponentialDistribution::private_floorTables).at(layer + 1);
         }
         xCoord *= thisLayerWidth;
         if(xCoord < layerAboveWidth){
@@ -152,4 +154,49 @@ void SGEXTN::SeerattraNum::ExponentialDistribution::setMeanEventsPerTime(float m
     if(meanEventsPerTime <= 0.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::ExponentialDistribution::setMeanEventsPerTime crashed because requested number of events occurring in each unit time is nonpositive");}
     private_meanEventsPerTime = meanEventsPerTime;
     private_reciprocalRate = 1.0f / meanEventsPerTime;
+}
+
+void SGEXTN::SeerattraNum::ExponentialDistribution::private_samplePointStandard(float& x, float& y){
+    SGEXTN::SeerattraNum::DirectRandom* temp = private_rng;
+    private_rng = temp;
+    if(SGEXTN::SeerattraNum::ExponentialDistribution::private_floorTables == nullptr){parseTables();}
+    while(true){
+        const unsigned int rng = (*private_rng).randomUnsignedInt32();
+        const int layer = static_cast<int>((rng & 0xff000000) >> 24);
+        const float scaleFactor = 1.0f / static_cast<float>(1u << 24);
+        float xCoord = static_cast<float>(rng & 0xffffff) * scaleFactor;
+        if(layer == 0){
+            const float rectangleProportion = (*SGEXTN::SeerattraNum::ExponentialDistribution::private_floorTables).at(0);
+            if(xCoord < rectangleProportion){
+                xCoord /= rectangleProportion;
+                x = (xCoord * (*SGEXTN::SeerattraNum::ExponentialDistribution::private_widthTables).at(1));
+                y = (*SGEXTN::SeerattraNum::ExponentialDistribution::private_floorTables).at(1) * (*private_rng).randomFloat32();
+                return;
+            }
+            const float newRng = (*private_rng).randomFloat32();
+            x = ((*SGEXTN::SeerattraNum::ExponentialDistribution::private_widthTables).at(1) - SGEXTN::Math::FloatMath<float>::naturalLog(newRng));
+            y = newRng / SGEXTN::SeerattraNum::ExponentialDistribution::private_expRightBoundary;
+            return;
+        }
+        const float thisLayerWidth = (*SGEXTN::SeerattraNum::ExponentialDistribution::private_widthTables).at(layer);
+        float layerAboveWidth = 0.0f;
+        const float thisLayerFloor = (*SGEXTN::SeerattraNum::ExponentialDistribution::private_floorTables).at(layer);
+        float layerAboveFloor = 1.0f;
+        if(layer != 255){
+            layerAboveWidth = (*SGEXTN::SeerattraNum::ExponentialDistribution::private_widthTables).at(layer + 1);
+            layerAboveFloor = (*SGEXTN::SeerattraNum::ExponentialDistribution::private_floorTables).at(layer + 1);
+        }
+        xCoord *= thisLayerWidth;
+        const float yCoord = thisLayerFloor + (layerAboveFloor - thisLayerFloor) * (*private_rng).randomFloat32();
+        if(xCoord < layerAboveWidth){
+            x = xCoord;
+            y = yCoord;
+            return;
+        }
+        if(SGEXTN::Math::FloatMath<float>::naturalLog(yCoord) < -1.0f * xCoord){
+            x = xCoord;
+            y = yCoord;
+            return;
+        }
+    }
 }

@@ -66,17 +66,18 @@ float getFloor(int i){
 }
 
 void parseTables(){
-    SGEXTN::SeerattraNum::NormalDistribution::hwidthTables = new SGEXTN::Containers::Array<float>(256);
-    SGEXTN::SeerattraNum::NormalDistribution::floorTables = new SGEXTN::Containers::Array<float>(256);
+    SGEXTN::SeerattraNum::NormalDistribution::private_hwidthTables = new SGEXTN::Containers::Array<float>(256);
+    SGEXTN::SeerattraNum::NormalDistribution::private_floorTables = new SGEXTN::Containers::Array<float>(256);
     for(int i=0; i<256; i++){
-        (*SGEXTN::SeerattraNum::NormalDistribution::hwidthTables).at(i) = getHwidth(i);
-        (*SGEXTN::SeerattraNum::NormalDistribution::floorTables).at(i) = getFloor(i);
+        (*SGEXTN::SeerattraNum::NormalDistribution::private_hwidthTables).at(i) = getHwidth(i);
+        (*SGEXTN::SeerattraNum::NormalDistribution::private_floorTables).at(i) = getFloor(i);
     }
 }
 }
 
-SGEXTN::Containers::Array<float>* SGEXTN::SeerattraNum::NormalDistribution::hwidthTables = nullptr;
-SGEXTN::Containers::Array<float>* SGEXTN::SeerattraNum::NormalDistribution::floorTables = nullptr;
+SGEXTN::Containers::Array<float>* SGEXTN::SeerattraNum::NormalDistribution::private_hwidthTables = nullptr;
+SGEXTN::Containers::Array<float>* SGEXTN::SeerattraNum::NormalDistribution::private_floorTables = nullptr;
+
 SGEXTN::SeerattraNum::NormalDistribution::NormalDistribution(bool useGlobal, float mean, float standardDeviation) : private_mean(mean), private_standardDeviation(standardDeviation), private_rng(nullptr), private_ownsRng(useGlobal == false){
     if(standardDeviation <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NormalDistribution constructor crashed because requested standard deviation is nonpositive");}
     private_rng = SGEXTN::SeerattraNum::DirectRandom::private_createRng(useGlobal);
@@ -96,7 +97,7 @@ void SGEXTN::SeerattraNum::NormalDistribution::seed(const SGEXTN::Containers::Ar
 float SGEXTN::SeerattraNum::NormalDistribution::randomValue(){
     SGEXTN::SeerattraNum::DirectRandom* temp = private_rng;
     private_rng = temp;
-    if(SGEXTN::SeerattraNum::NormalDistribution::floorTables == nullptr){parseTables();}
+    if(SGEXTN::SeerattraNum::NormalDistribution::private_floorTables == nullptr){parseTables();}
     float result = 0;
     int sign = 1;
     while(true){
@@ -107,13 +108,13 @@ float SGEXTN::SeerattraNum::NormalDistribution::randomValue(){
         const float scaleFactor = 1.0f / static_cast<float>(1u << 23);
         float xCoord = static_cast<float>(rng & 0x7fffff) * scaleFactor;
         if(layer == 0){
-            const float rectangleProportion = (*SGEXTN::SeerattraNum::NormalDistribution::floorTables).at(0);
+            const float rectangleProportion = (*SGEXTN::SeerattraNum::NormalDistribution::private_floorTables).at(0);
             if(xCoord < rectangleProportion){
                 xCoord /= rectangleProportion;
-                result = (xCoord * (*SGEXTN::SeerattraNum::NormalDistribution::hwidthTables).at(1));
+                result = (xCoord * (*SGEXTN::SeerattraNum::NormalDistribution::private_hwidthTables).at(1));
                 break;
             }
-            const float rectangleBoundary = (*SGEXTN::SeerattraNum::NormalDistribution::hwidthTables).at(1);
+            const float rectangleBoundary = (*SGEXTN::SeerattraNum::NormalDistribution::private_hwidthTables).at(1);
             const float v1 = -1.0f * SGEXTN::Math::FloatMath<float>::naturalLog((*private_rng).randomFloat32()) / rectangleBoundary;
             const float v2 = -1.0f * SGEXTN::Math::FloatMath<float>::naturalLog((*private_rng).randomFloat32());
             if(v1 * v1 < v2 + v2){
@@ -122,13 +123,13 @@ float SGEXTN::SeerattraNum::NormalDistribution::randomValue(){
             }
             continue;
         }
-        const float thisLayerHwidth = (*SGEXTN::SeerattraNum::NormalDistribution::hwidthTables).at(layer);
+        const float thisLayerHwidth = (*SGEXTN::SeerattraNum::NormalDistribution::private_hwidthTables).at(layer);
         float layerAboveHwidth = 0.0f;
-        const float thisLayerFloor = (*SGEXTN::SeerattraNum::NormalDistribution::floorTables).at(layer);
+        const float thisLayerFloor = (*SGEXTN::SeerattraNum::NormalDistribution::private_floorTables).at(layer);
         float layerAboveFloor = 0.3989422804f;
         if(layer != 255){
-            layerAboveHwidth = (*SGEXTN::SeerattraNum::NormalDistribution::hwidthTables).at(layer + 1);
-            layerAboveFloor = (*SGEXTN::SeerattraNum::NormalDistribution::floorTables).at(layer + 1);
+            layerAboveHwidth = (*SGEXTN::SeerattraNum::NormalDistribution::private_hwidthTables).at(layer + 1);
+            layerAboveFloor = (*SGEXTN::SeerattraNum::NormalDistribution::private_floorTables).at(layer + 1);
         }
         xCoord *= thisLayerHwidth;
         if(xCoord < layerAboveHwidth){

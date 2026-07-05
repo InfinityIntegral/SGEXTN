@@ -28,8 +28,9 @@ public:
     bool private_ownsRng;
     float private_meanEventsPerTime;
     float private_reciprocalRate;
-    static SGEXTN::Containers::Array<float>* widthTables;
-    static SGEXTN::Containers::Array<float>* floorTables;
+    static SGEXTN::Containers::Array<float>* private_widthTables;
+    static SGEXTN::Containers::Array<float>* private_floorTables;
+    static float private_expRightBoundary;
     ExponentialDistribution(bool useGlobal, float meanEventsPerTime);
     ExponentialDistribution(const ExponentialDistribution&) = delete;
     ExponentialDistribution& operator=(const ExponentialDistribution&) = delete;
@@ -41,6 +42,7 @@ public:
     [[nodiscard]] SGEXTN::Containers::Array<float> randomValueArray(int count);
     [[nodiscard]] float getMeanEventsPerTime() const;
     void setMeanEventsPerTime(float meanEventsPerTime);
+    void private_samplePointStandard(float& x, float& y);
 };
 }
 }
