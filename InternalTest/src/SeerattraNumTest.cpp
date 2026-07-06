@@ -284,23 +284,19 @@ void SGEXTN::InternalTest::SeerattraNumTest::testGammaDistribution(){
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testWeibullDistribution(){
-    std::weibull_distribution<float> stlRandomDistribution(0.5f, 10.0f);
-    seedRandomEngine(firstSeed);
-    SGEXTN::SeerattraNum::WeibullDistribution<float> generator(false, 0.5f, 10.0f);
+    SGEXTN::SeerattraNum::WeibullDistribution generator(false, 0.5f, 10.0f);
     generator.seed(firstSeed);
-    if(generator.randomValue() != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeibullDistribution generate value first seed fail");}
+    if(isCloseEnough(generator.randomValue(), 0.0011498f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeibullDistribution generate value first seed fail");}
     SGEXTN::Containers::Array<float> randomArray = generator.randomValueArray(2);
-    if(randomArray.at(0) != stlRandomDistribution(stlRandomEngine) || randomArray.at(1) != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeibullDistribution generate array first seed fail");}
+    if(isCloseEnough(randomArray.at(0), 34.911f) == false || isCloseEnough(randomArray.at(1), 0.11532f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeibullDistribution generate array first seed fail");}
     if(generator.getFailureBehaviour() != 0.5f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeibullDistribution get failure behaviour fail");}
     if(generator.getCharacteristicLifespan() != 10.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeibullDistribution get characteristic lifespan fail");}
-    stlRandomDistribution = std::weibull_distribution<float>(2.0f, 100.0f);
-    seedRandomEngine(secondSeed);
     generator.setFailureBehaviour(2.0f);
     generator.setCharacteristicLifespan(100.0f);
     generator.seed(secondSeed);
-    if(generator.randomValue() != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeibullDistribution generate value second seed fail");}
+    if(isCloseEnough(generator.randomValue(), 29.625f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeibullDistribution generate value second seed fail");}
     randomArray = generator.randomValueArray(2);
-    if(randomArray.at(0) != stlRandomDistribution(stlRandomEngine) || randomArray.at(1) != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeibullDistribution generate array second seed fail");}
+    if(isCloseEnough(randomArray.at(0), 140.9461f) == false || isCloseEnough(randomArray.at(1), 82.415f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeibullDistribution generate array second seed fail");}
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testGumbelDistribution(){
