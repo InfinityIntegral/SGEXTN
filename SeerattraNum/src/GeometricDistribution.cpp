@@ -22,11 +22,12 @@
 #include <SGEXTN/Math/FloatMath.h>
 #include <SGEXTN/SeerattraNum/BernoulliDistribution.h>
 
-SGEXTN::SeerattraNum::GeometricDistribution::GeometricDistribution(bool useGlobal, float chanceOfTrue) : private_chanceOfTrue(chanceOfTrue), private_cacheReciprocalOfLnChanceOfFalse(1.0f / SGEXTN::Math::FloatMath<float>::naturalLog(1.0f - chanceOfTrue)), private_rng(nullptr), private_ownsRng(useGlobal == false), private_bernoulliDistribution(true, chanceOfTrue){
+SGEXTN::SeerattraNum::GeometricDistribution::GeometricDistribution(bool useGlobal, float chanceOfTrue) : private_chanceOfTrue(chanceOfTrue), private_cacheReciprocalOfLnChanceOfFalse(1.0f / SGEXTN::Math::FloatMath<float>::naturalLog(1.0f - chanceOfTrue)), private_rng(nullptr), private_ownsRng(useGlobal == false), private_bernoulliDistribution(true, 0.5f){
     if(chanceOfTrue <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GeometricDistribution constructor crashed because the requested probability is nonpositive");}
     if(chanceOfTrue > 1.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GeometricDistribution constructor crashed because the requested probability is higher than 1");}
     private_rng = SGEXTN::SeerattraNum::DirectRandom::private_createRng(useGlobal);
     private_bernoulliDistribution.private_rng = private_rng;
+    private_bernoulliDistribution.setChanceOfTrue(chanceOfTrue);
 }
 
 SGEXTN::SeerattraNum::GeometricDistribution::~GeometricDistribution(){

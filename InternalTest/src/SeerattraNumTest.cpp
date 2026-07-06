@@ -210,23 +210,19 @@ void SGEXTN::InternalTest::SeerattraNumTest::testBinomialDistribution(){
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testNegativeBinomialDistribution(){
-    std::negative_binomial_distribution<int> stlRandomDistribution(100, 0.25f);
-    seedRandomEngine(firstSeed);
-    SGEXTN::SeerattraNum::NegativeBinomialDistribution<float, int> generator(false, 0.25f, 100);
+    SGEXTN::SeerattraNum::NegativeBinomialDistribution generator(false, 0.25f, 100);
     generator.seed(firstSeed);
-    if(generator.randomValue() != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NegativeBinomialDistribution generate value first seed fail");}
+    if(generator.randomValue() != 230){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NegativeBinomialDistribution generate value first seed fail");}
     SGEXTN::Containers::Array<int> randomArray = generator.randomValueArray(2);
-    if(randomArray.at(0) != stlRandomDistribution(stlRandomEngine) || randomArray.at(1) != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NegativeBinomialDistribution generate array first seed fail");}
+    if(randomArray.at(0) != 284 || randomArray.at(1) != 287){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NegativeBinomialDistribution generate array first seed fail");}
     if(generator.getChanceOfTrue() != 0.25f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NegativeBinomialDistribution get probability fail");}
     if(generator.getSuccessCount() != 100){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NegativeBinomialDistribution get number of successful attempts fail");}
-    stlRandomDistribution = std::negative_binomial_distribution<int>(1000, 0.75f);
-    seedRandomEngine(secondSeed);
     generator.setChanceOfTrue(0.75f);
     generator.setSuccessCount(1000);
     generator.seed(secondSeed);
-    if(generator.randomValue() != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NegativeBinomialDistribution generate value second seed fail");}
+    if(generator.randomValue() != 332){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NegativeBinomialDistribution generate value second seed fail");}
     randomArray = generator.randomValueArray(2);
-    if(randomArray.at(0) != stlRandomDistribution(stlRandomEngine) || randomArray.at(1) != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NegativeBinomialDistribution generate array second seed fail");}
+    if(randomArray.at(0) != 329 || randomArray.at(1) != 310){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NegativeBinomialDistribution generate array second seed fail");}
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testGeometricDistribution(){
