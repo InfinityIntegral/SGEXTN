@@ -28,7 +28,6 @@ SGEXTN::SeerattraNum::GammaDistribution::GammaDistribution(bool useGlobal, float
     private_rng = SGEXTN::SeerattraNum::DirectRandom::private_createRng(useGlobal);
     private_redoPrecompute();
     private_standardNormalDistribution.private_rng = private_rng;
-
 }
 
 SGEXTN::SeerattraNum::GammaDistribution::~GammaDistribution(){

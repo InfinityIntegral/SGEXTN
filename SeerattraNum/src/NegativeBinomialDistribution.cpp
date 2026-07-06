@@ -16,75 +16,66 @@
 // BuildLah license check: SGEXTN 7.0.0
 
 #include <SGEXTN/SeerattraNum/NegativeBinomialDistribution.h>
-#include <SGEXTN/SeerattraNum/private_api/UnsafeCasts.h>
 #include <SGEXTN/Containers/Array.h>
 #include <SGEXTN/Containers/ForceCrash.h>
-#include <SGEXTN/SeerattraNum/SimpleRandom.h>
-#include <random>
+#include <SGEXTN/SeerattraNum/DirectRandom.h>
+#include <SGEXTN/SeerattraNum/GammaDistribution.h>
+#include <SGEXTN/SeerattraNum/PoissonDistribution.h>
 
-template <typename ProbabilityType, typename Integer> SGEXTN::SeerattraNum::NegativeBinomialDistribution<ProbabilityType, Integer>::NegativeBinomialDistribution(bool useGlobal, ProbabilityType chanceOfTrue, Integer successCount){
+SGEXTN::SeerattraNum::NegativeBinomialDistribution::NegativeBinomialDistribution(bool useGlobal, float chanceOfTrue, int successCount) : private_chanceOfTrue(chanceOfTrue), private_successCount(successCount), private_rng(nullptr), private_ownsRng(useGlobal == false), private_gammaDistribution(true, 1.0f, 1.0f), private_poissonDistribution(true, 1.0f){
     if(chanceOfTrue < 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NegativeBinomialDistribution constructor crashed because the requested probability is negative");}
     if(chanceOfTrue > 1.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NegativeBinomialDistribution constructor crashed because the requested probability is higher than 1");}
     if(successCount < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NegativeBinomialDistribution constructor crashed because the requested number of successful attempts is negative");}
-    private_chanceOfTrue = chanceOfTrue;
-    private_successCount = successCount;
-    private_stlRandomEngine = SGEXTN::SeerattraNum::SimpleRandom::private_createRandomEngine(useGlobal);
-    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::negative_binomial_distribution<Integer>>::eraseType(new std::negative_binomial_distribution<Integer>(successCount, chanceOfTrue));
+    private_rng = SGEXTN::SeerattraNum::DirectRandom::private_createRng(useGlobal);
+    private_gammaDistribution.private_rng = private_rng;
+    private_gammaDistribution.private_standardNormalDistribution.private_rng = private_rng;
+    private_poissonDistribution.private_rng = private_rng;
+    private_gammaDistribution.setVariableCount(static_cast<float>(successCount));
+    private_gammaDistribution.setVariableMean((1.0f - chanceOfTrue) / chanceOfTrue);
 }
 
-template <typename ProbabilityType, typename Integer> SGEXTN::SeerattraNum::NegativeBinomialDistribution<ProbabilityType, Integer>::~NegativeBinomialDistribution(){
-    delete SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(private_stlRandomEngine);
-    delete SGEXTN::SeerattraNum::UnsafeCasts<std::negative_binomial_distribution<Integer>>::uneraseType(private_stlDistribution);
+SGEXTN::SeerattraNum::NegativeBinomialDistribution::~NegativeBinomialDistribution(){
+    if(private_ownsRng == true){delete private_rng;}
 }
 
-template <typename ProbabilityType, typename Integer> void SGEXTN::SeerattraNum::NegativeBinomialDistribution<ProbabilityType, Integer>::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
-    if(private_stlRandomEngine == nullptr){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NegativeBinomialDistribution::seed crashed because cannot seed global rng");}
-    SGEXTN::SeerattraNum::SimpleRandom::private_seedRandomEngine(private_stlRandomEngine, seedArray);
+void SGEXTN::SeerattraNum::NegativeBinomialDistribution::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
+    if(private_ownsRng == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NegativeBinomialDistribution::seed crashed because cannot seed global rng");}
+    SGEXTN::SeerattraNum::DirectRandom* temp = private_rng;
+    private_rng = temp;
+    (*private_rng).seed(seedArray);
 }
 
-template <typename ProbabilityType, typename Integer> Integer SGEXTN::SeerattraNum::NegativeBinomialDistribution<ProbabilityType, Integer>::randomValue(){
-    void* randomEngine = private_stlRandomEngine;
-    if(randomEngine == nullptr){randomEngine = SGEXTN::SeerattraNum::SimpleRandom::private_getRandomEngine();}
-    return ((*SGEXTN::SeerattraNum::UnsafeCasts<std::negative_binomial_distribution<Integer>>::uneraseType(private_stlDistribution))(*SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(randomEngine)));
+int SGEXTN::SeerattraNum::NegativeBinomialDistribution::randomValue(){
+    private_poissonDistribution.setMean(private_gammaDistribution.randomValue());
+    return private_poissonDistribution.randomValue();
 }
 
-template <typename ProbabilityType, typename Integer> SGEXTN::Containers::Array<Integer> SGEXTN::SeerattraNum::NegativeBinomialDistribution<ProbabilityType, Integer>::randomValueArray(int count){
+SGEXTN::Containers::Array<int> SGEXTN::SeerattraNum::NegativeBinomialDistribution::randomValueArray(int count){
     if(count < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NegativeBinomialDistribution::randomValueArray crashed because a negative number of outputs is requested");}
-    SGEXTN::Containers::Array<Integer> outputArray(count);
+    SGEXTN::Containers::Array<int> outputArray(count);
     for(int i=0; i<count; i++){
         outputArray.at(i) = randomValue();
     }
     return outputArray;
 }
 
-template <typename ProbabilityType, typename Integer> ProbabilityType SGEXTN::SeerattraNum::NegativeBinomialDistribution<ProbabilityType, Integer>::getChanceOfTrue() const {
+float SGEXTN::SeerattraNum::NegativeBinomialDistribution::getChanceOfTrue() const {
     return private_chanceOfTrue;
 }
 
-template <typename ProbabilityType, typename Integer> Integer SGEXTN::SeerattraNum::NegativeBinomialDistribution<ProbabilityType, Integer>::getSuccessCount() const {
+int SGEXTN::SeerattraNum::NegativeBinomialDistribution::getSuccessCount() const {
     return private_successCount;
 }
 
-template <typename ProbabilityType, typename Integer> void SGEXTN::SeerattraNum::NegativeBinomialDistribution<ProbabilityType, Integer>::setChanceOfTrue(ProbabilityType chanceOfTrue){
+void SGEXTN::SeerattraNum::NegativeBinomialDistribution::setChanceOfTrue(float chanceOfTrue){
     if(chanceOfTrue < 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NegativeBinomialDistribution::setChanceOfTrue crashed because the requested probability is negative");}
     if(chanceOfTrue > 1.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NegativeBinomialDistribution::setChanceOfTrue crashed because the requested probability is higher than 1");}
     private_chanceOfTrue = chanceOfTrue;
-    delete SGEXTN::SeerattraNum::UnsafeCasts<std::negative_binomial_distribution<Integer>>::uneraseType(private_stlDistribution);
-    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::negative_binomial_distribution<Integer>>::eraseType(new std::negative_binomial_distribution<Integer>(private_successCount, chanceOfTrue));
+    private_gammaDistribution.setVariableMean((1.0f - chanceOfTrue) / chanceOfTrue);
 }
 
-template <typename ProbabilityType, typename Integer> void SGEXTN::SeerattraNum::NegativeBinomialDistribution<ProbabilityType, Integer>::setSuccessCount(Integer successCount){
+void SGEXTN::SeerattraNum::NegativeBinomialDistribution::setSuccessCount(int successCount){
     if(successCount < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NegativeBinomialDistribution::setSuccessCount crashed because the requested number of successful attempts is negative");}
     private_successCount = successCount;
-    delete SGEXTN::SeerattraNum::UnsafeCasts<std::negative_binomial_distribution<Integer>>::uneraseType(private_stlDistribution);
-    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::negative_binomial_distribution<Integer>>::eraseType(new std::negative_binomial_distribution<Integer>(successCount, private_chanceOfTrue));
+    private_gammaDistribution.setVariableCount(static_cast<float>(successCount));
 }
-
-template class SGEXTN::SeerattraNum::NegativeBinomialDistribution<float, int>;
-template class SGEXTN::SeerattraNum::NegativeBinomialDistribution<float, long long>;
-template class SGEXTN::SeerattraNum::NegativeBinomialDistribution<float, unsigned int>;
-template class SGEXTN::SeerattraNum::NegativeBinomialDistribution<float, unsigned long long>;
-template class SGEXTN::SeerattraNum::NegativeBinomialDistribution<double, int>;
-template class SGEXTN::SeerattraNum::NegativeBinomialDistribution<double, long long>;
-template class SGEXTN::SeerattraNum::NegativeBinomialDistribution<double, unsigned int>;
-template class SGEXTN::SeerattraNum::NegativeBinomialDistribution<double, unsigned long long>;

@@ -17,28 +17,34 @@
 
 #pragma once
 #include <SGEXTN/Containers/Array.h>
+#include <SGEXTN/SeerattraNum/GammaDistribution.h>
+#include <SGEXTN/SeerattraNum/PoissonDistribution.h>
 
 namespace SGEXTN {
 namespace SeerattraNum {
-template <typename ProbabilityType, typename Integer> class BuildLah_SGEXTN_SeerattraNum NegativeBinomialDistribution {
+class DirectRandom;
+
+class BuildLah_SGEXTN_SeerattraNum NegativeBinomialDistribution {
 public:
-    void* private_stlRandomEngine;
-    void* private_stlDistribution;
-    ProbabilityType private_chanceOfTrue;
-    Integer private_successCount;
-    NegativeBinomialDistribution(bool useGlobal, ProbabilityType chanceOfTrue, Integer successCount);
+    SGEXTN::SeerattraNum::DirectRandom* private_rng;
+    bool private_ownsRng;
+    float private_chanceOfTrue;
+    int private_successCount;
+    SGEXTN::SeerattraNum::GammaDistribution private_gammaDistribution;
+    SGEXTN::SeerattraNum::PoissonDistribution private_poissonDistribution;
+    NegativeBinomialDistribution(bool useGlobal, float chanceOfTrue, int successCount);
     NegativeBinomialDistribution(const NegativeBinomialDistribution&) = delete;
     NegativeBinomialDistribution& operator=(const NegativeBinomialDistribution&) = delete;
     NegativeBinomialDistribution(NegativeBinomialDistribution&&) = delete;
     NegativeBinomialDistribution& operator=(NegativeBinomialDistribution&&) = delete;
     ~NegativeBinomialDistribution();
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
-    [[nodiscard]] Integer randomValue();
-    [[nodiscard]] SGEXTN::Containers::Array<Integer> randomValueArray(int count);
-    [[nodiscard]] ProbabilityType getChanceOfTrue() const;
-    [[nodiscard]] Integer getSuccessCount() const;
-    void setChanceOfTrue(ProbabilityType chanceOfTrue);
-    void setSuccessCount(Integer successCount);
+    [[nodiscard]] int randomValue();
+    [[nodiscard]] SGEXTN::Containers::Array<int> randomValueArray(int count);
+    [[nodiscard]] float getChanceOfTrue() const;
+    [[nodiscard]] int getSuccessCount() const;
+    void setChanceOfTrue(float chanceOfTrue);
+    void setSuccessCount(int successCount);
 };
 }
 }

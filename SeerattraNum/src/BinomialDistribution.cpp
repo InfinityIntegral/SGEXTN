@@ -23,7 +23,7 @@
 #include <SGEXTN/SeerattraNum/GeometricDistribution.h>
 #include <SGEXTN/SeerattraNum/ExponentialDistribution.h>
 
-SGEXTN::SeerattraNum::BinomialDistribution::BinomialDistribution(bool useGlobal, float chanceOfTrue, int attemptCount) :private_chanceOfTrue(chanceOfTrue), private_attemptCount(attemptCount), private_rng(nullptr), private_ownsRng(useGlobal == false), private_geometricDistribution(true, chanceOfTrue), private_standardExponentialDistribution(true, 1.0f), private_precompConstantL(0.0f), private_precompConstantC(0.0f), private_precompConstantM(0.0f), private_exponentialFactorLeft(0.0f), private_exponentialFactorRight(0.0f), private_negativeReciprocalExponentialFactorLeft(0.0f), private_reciprocalExponentialFactorRight(0.0f), private_boundaryFarLeft(0.0f), private_boundaryCenterLeft(0.0f), private_boundaryCenterRight(0.0f), private_boundaryFarRight(0.0f), private_weightLeftTail(0.0f), private_weightBothTails(0.0f), private_weightAllExceptCenter(0.0f), private_comparisonMultiplier(0.0f), private_comparisonConstant(0.0f){
+SGEXTN::SeerattraNum::BinomialDistribution::BinomialDistribution(bool useGlobal, float chanceOfTrue, int attemptCount) :private_chanceOfTrue(chanceOfTrue), private_attemptCount(attemptCount), private_rng(nullptr), private_ownsRng(useGlobal == false), private_geometricDistribution(true, 0.5f), private_standardExponentialDistribution(true, 1.0f), private_precompConstantL(0.0f), private_precompConstantC(0.0f), private_precompConstantM(0.0f), private_exponentialFactorLeft(0.0f), private_exponentialFactorRight(0.0f), private_negativeReciprocalExponentialFactorLeft(0.0f), private_reciprocalExponentialFactorRight(0.0f), private_boundaryFarLeft(0.0f), private_boundaryCenterLeft(0.0f), private_boundaryCenterRight(0.0f), private_boundaryFarRight(0.0f), private_weightLeftTail(0.0f), private_weightBothTails(0.0f), private_weightAllExceptCenter(0.0f), private_comparisonMultiplier(0.0f), private_comparisonConstant(0.0f){
     if(chanceOfTrue < 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BinomialDistribution constructor crashed because the requested probability is negative");}
     if(chanceOfTrue > 1.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BinomialDistribution constructor crashed because the requested probability is higher than 1");}
     if(attemptCount < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BinomialDistribution constructor crashed because the requested number of attempts is negative");}
@@ -32,6 +32,7 @@ SGEXTN::SeerattraNum::BinomialDistribution::BinomialDistribution(bool useGlobal,
     private_geometricDistribution.private_rng = private_rng;
     private_geometricDistribution.private_bernoulliDistribution.private_rng = private_rng;
     private_standardExponentialDistribution.private_rng = private_rng;
+    private_geometricDistribution.setChanceOfTrue(chanceOfTrue);
 }
 
 SGEXTN::SeerattraNum::BinomialDistribution::~BinomialDistribution(){
