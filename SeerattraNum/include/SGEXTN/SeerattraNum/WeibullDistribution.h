@@ -20,25 +20,28 @@
 
 namespace SGEXTN {
 namespace SeerattraNum {
-template <typename FloatingPoint> class BuildLah_SGEXTN_SeerattraNum WeibullDistribution {
+class DirectRandom;
+
+class BuildLah_SGEXTN_SeerattraNum WeibullDistribution {
 public:
-    void* private_stlRandomEngine;
-    void* private_stlDistribution;
-    FloatingPoint private_failureBehaviour;
-    FloatingPoint private_characteristicLifespan;
-    WeibullDistribution(bool useGlobal, FloatingPoint failureBehaviour, FloatingPoint characteristicLifespan);
+    SGEXTN::SeerattraNum::DirectRandom* private_rng;
+    bool private_ownsRng;
+    float private_failureBehaviour;
+    float private_characteristicLifespan;
+    float private_reciprocalA;
+    WeibullDistribution(bool useGlobal, float failureBehaviour, float characteristicLifespan);
     WeibullDistribution(const WeibullDistribution&) = delete;
     WeibullDistribution& operator=(const WeibullDistribution&) = delete;
     WeibullDistribution(WeibullDistribution&&) = delete;
     WeibullDistribution& operator=(WeibullDistribution&&) = delete;
     ~WeibullDistribution();
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
-    [[nodiscard]] FloatingPoint randomValue();
-    [[nodiscard]] SGEXTN::Containers::Array<FloatingPoint> randomValueArray(int count);
-    [[nodiscard]] FloatingPoint getFailureBehaviour() const;
-    [[nodiscard]] FloatingPoint getCharacteristicLifespan() const;
-    void setFailureBehaviour(FloatingPoint failureBehaviour);
-    void setCharacteristicLifespan(FloatingPoint characteristicLifespan);
+    [[nodiscard]] float randomValue();
+    [[nodiscard]] SGEXTN::Containers::Array<float> randomValueArray(int count);
+    [[nodiscard]] float getFailureBehaviour() const;
+    [[nodiscard]] float getCharacteristicLifespan() const;
+    void setFailureBehaviour(float failureBehaviour);
+    void setCharacteristicLifespan(float characteristicLifespan);
 };
 }
 }

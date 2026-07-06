@@ -16,67 +16,58 @@
 // BuildLah license check: SGEXTN 7.0.0
 
 #include <SGEXTN/SeerattraNum/WeibullDistribution.h>
-#include <SGEXTN/SeerattraNum/private_api/UnsafeCasts.h>
 #include <SGEXTN/Containers/Array.h>
 #include <SGEXTN/Containers/ForceCrash.h>
-#include <SGEXTN/SeerattraNum/SimpleRandom.h>
-#include <random>
+#include <SGEXTN/SeerattraNum/DirectRandom.h>
+#include <SGEXTN/Math/FloatMath.h>
 
-template <typename FloatingPoint> SGEXTN::SeerattraNum::WeibullDistribution<FloatingPoint>::WeibullDistribution(bool useGlobal, FloatingPoint failureBehaviour, FloatingPoint characteristicLifespan){
+SGEXTN::SeerattraNum::WeibullDistribution::WeibullDistribution(bool useGlobal, float failureBehaviour, float characteristicLifespan) : private_characteristicLifespan(characteristicLifespan), private_failureBehaviour(failureBehaviour), private_rng(nullptr), private_ownsRng(useGlobal == false), private_reciprocalA(1.0f / failureBehaviour){
     if(failureBehaviour <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeibullDistribution constructor crashed because requested failure behaviour indicator is nonpositive");}
     if(characteristicLifespan <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeibullDistribution constructor crashed because requested characteristic lifespan is nonpositive");}
-    private_failureBehaviour = failureBehaviour;
-    private_characteristicLifespan = characteristicLifespan;
-    private_stlRandomEngine = SGEXTN::SeerattraNum::SimpleRandom::private_createRandomEngine(useGlobal);
-    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::weibull_distribution<FloatingPoint>>::eraseType(new std::weibull_distribution<FloatingPoint>(failureBehaviour, characteristicLifespan));
+    private_rng = SGEXTN::SeerattraNum::DirectRandom::private_createRng(useGlobal);
 }
 
-template <typename FloatingPoint> SGEXTN::SeerattraNum::WeibullDistribution<FloatingPoint>::~WeibullDistribution(){
-    delete SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(private_stlRandomEngine);
-    delete SGEXTN::SeerattraNum::UnsafeCasts<std::weibull_distribution<FloatingPoint>>::uneraseType(private_stlDistribution);
+SGEXTN::SeerattraNum::WeibullDistribution::~WeibullDistribution(){
+    if(private_ownsRng == true){delete private_rng;}
 }
 
-template <typename FloatingPoint> void SGEXTN::SeerattraNum::WeibullDistribution<FloatingPoint>::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
-    if(private_stlRandomEngine == nullptr){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeibullDistribution::seed crashed because cannot seed global rng");}
-    SGEXTN::SeerattraNum::SimpleRandom::private_seedRandomEngine(private_stlRandomEngine, seedArray);
+void SGEXTN::SeerattraNum::WeibullDistribution::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
+    if(private_ownsRng == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeibullDistribution::seed crashed because cannot seed global rng");}
+    SGEXTN::SeerattraNum::DirectRandom* temp = private_rng;
+    private_rng = temp;
+    (*private_rng).seed(seedArray);
 }
 
-template <typename FloatingPoint> FloatingPoint SGEXTN::SeerattraNum::WeibullDistribution<FloatingPoint>::randomValue(){
-    void* randomEngine = private_stlRandomEngine;
-    if(randomEngine == nullptr){randomEngine = SGEXTN::SeerattraNum::SimpleRandom::private_getRandomEngine();}
-    return ((*SGEXTN::SeerattraNum::UnsafeCasts<std::weibull_distribution<FloatingPoint>>::uneraseType(private_stlDistribution))(*SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(randomEngine)));
+float SGEXTN::SeerattraNum::WeibullDistribution::randomValue(){
+    SGEXTN::SeerattraNum::DirectRandom* temp = private_rng;
+    private_rng = temp;
+    return (private_characteristicLifespan * SGEXTN::Math::FloatMath<float>::powerOf(-1.0f * SGEXTN::Math::FloatMath<float>::naturalLog(1.0f - (*private_rng).randomFloat32()), private_reciprocalA));
 }
 
-template <typename FloatingPoint> SGEXTN::Containers::Array<FloatingPoint> SGEXTN::SeerattraNum::WeibullDistribution<FloatingPoint>::randomValueArray(int count){
+SGEXTN::Containers::Array<float> SGEXTN::SeerattraNum::WeibullDistribution::randomValueArray(int count){
     if(count < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeibullDistribution::randomValueArray crashed because a negative number of outputs is requested");}
-    SGEXTN::Containers::Array<FloatingPoint> outputArray(count);
+    SGEXTN::Containers::Array<float> outputArray(count);
     for(int i=0; i<count; i++){
         outputArray.at(i) = randomValue();
     }
     return outputArray;
 }
 
-template <typename FloatingPoint> FloatingPoint SGEXTN::SeerattraNum::WeibullDistribution<FloatingPoint>::getFailureBehaviour() const {
+float SGEXTN::SeerattraNum::WeibullDistribution::getFailureBehaviour() const {
     return private_failureBehaviour;
 }
 
-template <typename FloatingPoint> FloatingPoint SGEXTN::SeerattraNum::WeibullDistribution<FloatingPoint>::getCharacteristicLifespan() const {
+float SGEXTN::SeerattraNum::WeibullDistribution::getCharacteristicLifespan() const {
     return private_characteristicLifespan;
 }
 
-template <typename FloatingPoint> void SGEXTN::SeerattraNum::WeibullDistribution<FloatingPoint>::setFailureBehaviour(FloatingPoint failureBehaviour){
+void SGEXTN::SeerattraNum::WeibullDistribution::setFailureBehaviour(float failureBehaviour){
     if(failureBehaviour <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeibullDistribution::setFailureBehaviour crashed because requested failure behaviour indicator is nonpositive");}
     private_failureBehaviour = failureBehaviour;
-    delete SGEXTN::SeerattraNum::UnsafeCasts<std::weibull_distribution<FloatingPoint>>::uneraseType(private_stlDistribution);
-    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::weibull_distribution<FloatingPoint>>::eraseType(new std::weibull_distribution<FloatingPoint>(failureBehaviour, private_characteristicLifespan));
+    private_reciprocalA = 1.0f / failureBehaviour;
 }
 
-template <typename FloatingPoint> void SGEXTN::SeerattraNum::WeibullDistribution<FloatingPoint>::setCharacteristicLifespan(FloatingPoint characteristicLifespan){
+void SGEXTN::SeerattraNum::WeibullDistribution::setCharacteristicLifespan(float characteristicLifespan){
     if(characteristicLifespan <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeibullDistribution::setCharacteristicLifespan crashed because requested characteristic lifespan is nonpositive");}
     private_characteristicLifespan = characteristicLifespan;
-    delete SGEXTN::SeerattraNum::UnsafeCasts<std::weibull_distribution<FloatingPoint>>::uneraseType(private_stlDistribution);
-    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::weibull_distribution<FloatingPoint>>::eraseType(new std::weibull_distribution<FloatingPoint>(private_failureBehaviour, characteristicLifespan));
 }
-
-template class SGEXTN::SeerattraNum::WeibullDistribution<float>;
-template class SGEXTN::SeerattraNum::WeibullDistribution<double>;
