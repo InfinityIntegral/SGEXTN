@@ -20,25 +20,27 @@
 
 namespace SGEXTN {
 namespace SeerattraNum {
-template <typename FloatingPoint> class BuildLah_SGEXTN_SeerattraNum GumbelDistribution {
+class DirectRandom;
+
+class BuildLah_SGEXTN_SeerattraNum GumbelDistribution {
 public:
-    void* private_stlRandomEngine;
-    void* private_stlDistribution;
-    FloatingPoint private_mode;
-    FloatingPoint private_spread;
-    GumbelDistribution(bool useGlobal, FloatingPoint mode, FloatingPoint spread);
+    SGEXTN::SeerattraNum::DirectRandom* private_rng;
+    bool private_ownsRng;
+    float private_mode;
+    float private_spread;
+    GumbelDistribution(bool useGlobal, float mode, float spread);
     GumbelDistribution(const GumbelDistribution&) = delete;
     GumbelDistribution& operator=(const GumbelDistribution&) = delete;
     GumbelDistribution(GumbelDistribution&&) = delete;
     GumbelDistribution& operator=(GumbelDistribution&&) = delete;
     ~GumbelDistribution();
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
-    [[nodiscard]] FloatingPoint randomValue();
-    [[nodiscard]] SGEXTN::Containers::Array<FloatingPoint> randomValueArray(int count);
-    [[nodiscard]] FloatingPoint getMode() const;
-    [[nodiscard]] FloatingPoint getSpread() const;
-    void setMode(FloatingPoint mode);
-    void setSpread(FloatingPoint spread);
+    [[nodiscard]] float randomValue();
+    [[nodiscard]] SGEXTN::Containers::Array<float> randomValueArray(int count);
+    [[nodiscard]] float getMode() const;
+    [[nodiscard]] float getSpread() const;
+    void setMode(float mode);
+    void setSpread(float spread);
 };
 }
 }
