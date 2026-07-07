@@ -20,25 +20,27 @@
 
 namespace SGEXTN {
 namespace SeerattraNum {
-template <typename FloatingPoint> class BuildLah_SGEXTN_SeerattraNum CauchyDistribution {
+class DirectRandom;
+
+class BuildLah_SGEXTN_SeerattraNum CauchyDistribution {
 public:
-    void* private_stlRandomEngine;
-    void* private_stlDistribution;
-    FloatingPoint private_median;
-    FloatingPoint private_halfWidth;
-    CauchyDistribution(bool useGlobal, FloatingPoint median, FloatingPoint halfWidth);
+    SGEXTN::SeerattraNum::DirectRandom* private_rng;
+    bool private_ownsRng;
+    float private_median;
+    float private_halfWidth;
+    CauchyDistribution(bool useGlobal, float median, float halfWidth);
     CauchyDistribution(const CauchyDistribution&) = delete;
     CauchyDistribution& operator=(const CauchyDistribution&) = delete;
     CauchyDistribution(CauchyDistribution&&) = delete;
     CauchyDistribution& operator=(CauchyDistribution&&) = delete;
     ~CauchyDistribution();
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
-    [[nodiscard]] FloatingPoint randomValue();
-    [[nodiscard]] SGEXTN::Containers::Array<FloatingPoint> randomValueArray(int count);
-    [[nodiscard]] FloatingPoint getMedian() const;
-    [[nodiscard]] FloatingPoint getHalfWidth() const;
-    void setMedian(FloatingPoint median);
-    void setHalfWidth(FloatingPoint halfWidth);
+    [[nodiscard]] float randomValue();
+    [[nodiscard]] SGEXTN::Containers::Array<float> randomValueArray(int count);
+    [[nodiscard]] float getMedian() const;
+    [[nodiscard]] float getHalfWidth() const;
+    void setMedian(float median);
+    void setHalfWidth(float halfWidth);
 };
 }
 }

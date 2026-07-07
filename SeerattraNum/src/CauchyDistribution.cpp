@@ -16,65 +16,59 @@
 // BuildLah license check: SGEXTN 7.0.0
 
 #include <SGEXTN/SeerattraNum/CauchyDistribution.h>
-#include <SGEXTN/SeerattraNum/private_api/UnsafeCasts.h>
 #include <SGEXTN/Containers/Array.h>
 #include <SGEXTN/Containers/ForceCrash.h>
-#include <SGEXTN/SeerattraNum/SimpleRandom.h>
-#include <random>
+#include <SGEXTN/SeerattraNum/DirectRandom.h>
+#include <SGEXTN/Math/FloatMath.h>
+#include <SGEXTN/Math/FloatConstants.h>
 
-template <typename FloatingPoint> SGEXTN::SeerattraNum::CauchyDistribution<FloatingPoint>::CauchyDistribution(bool useGlobal, FloatingPoint median, FloatingPoint halfWidth){
+SGEXTN::SeerattraNum::CauchyDistribution::CauchyDistribution(bool useGlobal, float median, float halfWidth) : private_median(median), private_halfWidth(halfWidth), private_rng(nullptr), private_ownsRng(useGlobal == false){
     if(halfWidth <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::CauchyDistribution constructor crashed because requested half width is nonpositive");}
-    private_median = median;
-    private_halfWidth = halfWidth;
-    private_stlRandomEngine = SGEXTN::SeerattraNum::SimpleRandom::private_createRandomEngine(useGlobal);
-    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::cauchy_distribution<FloatingPoint>>::eraseType(new std::cauchy_distribution<FloatingPoint>(median, halfWidth));
+    private_rng = SGEXTN::SeerattraNum::DirectRandom::private_createRng(useGlobal);
 }
 
-template <typename FloatingPoint> SGEXTN::SeerattraNum::CauchyDistribution<FloatingPoint>::~CauchyDistribution(){
-    delete SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(private_stlRandomEngine);
-    delete SGEXTN::SeerattraNum::UnsafeCasts<std::cauchy_distribution<FloatingPoint>>::uneraseType(private_stlDistribution);
+SGEXTN::SeerattraNum::CauchyDistribution::~CauchyDistribution(){
+    if(private_ownsRng == true){delete private_rng;}
 }
 
-template <typename FloatingPoint> void SGEXTN::SeerattraNum::CauchyDistribution<FloatingPoint>::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
-    if(private_stlRandomEngine == nullptr){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::CauchyDistribution::seed crashed because cannot seed global rng");}
-    SGEXTN::SeerattraNum::SimpleRandom::private_seedRandomEngine(private_stlRandomEngine, seedArray);
+void SGEXTN::SeerattraNum::CauchyDistribution::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
+    if(private_ownsRng == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::CauchyDistribution::seed crashed because cannot seed global rng");}
+    SGEXTN::SeerattraNum::DirectRandom* temp = private_rng;
+    private_rng = temp;
+    (*private_rng).seed(seedArray);
 }
 
-template <typename FloatingPoint> FloatingPoint SGEXTN::SeerattraNum::CauchyDistribution<FloatingPoint>::randomValue(){
-    void* randomEngine = private_stlRandomEngine;
-    if(randomEngine == nullptr){randomEngine = SGEXTN::SeerattraNum::SimpleRandom::private_getRandomEngine();}
-    return ((*SGEXTN::SeerattraNum::UnsafeCasts<std::cauchy_distribution<FloatingPoint>>::uneraseType(private_stlDistribution))(*SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(randomEngine)));
+float SGEXTN::SeerattraNum::CauchyDistribution::randomValue(){
+    SGEXTN::SeerattraNum::DirectRandom* temp = private_rng;
+    private_rng = temp;
+    unsigned int integerRng = (*private_rng).randomUnsignedInt32();
+    const float scaleFactor = 1.0f / (static_cast<float>(static_cast<unsigned int>(1) << 24) + 1.0f);
+    float rng = (1.0f + (static_cast<float>(integerRng >> 8))) * scaleFactor;
+    return (private_median + private_halfWidth * SGEXTN::Math::FloatMath<float>::tangent(SGEXTN::Math::FloatConstants<float>::pi() * (rng - 0.5f)));
 }
 
-template <typename FloatingPoint> SGEXTN::Containers::Array<FloatingPoint> SGEXTN::SeerattraNum::CauchyDistribution<FloatingPoint>::randomValueArray(int count){
+SGEXTN::Containers::Array<float> SGEXTN::SeerattraNum::CauchyDistribution::randomValueArray(int count){
     if(count < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::CauchyDistribution::randomValueArray crashed because a negative number of outputs is requested");}
-    SGEXTN::Containers::Array<FloatingPoint> outputArray(count);
+    SGEXTN::Containers::Array<float> outputArray(count);
     for(int i=0; i<count; i++){
         outputArray.at(i) = randomValue();
     }
     return outputArray;
 }
 
-template <typename FloatingPoint> FloatingPoint SGEXTN::SeerattraNum::CauchyDistribution<FloatingPoint>::getMedian() const {
+float SGEXTN::SeerattraNum::CauchyDistribution::getMedian() const {
     return private_median;
 }
 
-template <typename FloatingPoint> FloatingPoint SGEXTN::SeerattraNum::CauchyDistribution<FloatingPoint>::getHalfWidth() const {
+float SGEXTN::SeerattraNum::CauchyDistribution::getHalfWidth() const {
     return private_halfWidth;
 }
 
-template <typename FloatingPoint> void SGEXTN::SeerattraNum::CauchyDistribution<FloatingPoint>::setMedian(FloatingPoint median){
+void SGEXTN::SeerattraNum::CauchyDistribution::setMedian(float median){
     private_median = median;
-    delete SGEXTN::SeerattraNum::UnsafeCasts<std::cauchy_distribution<FloatingPoint>>::uneraseType(private_stlDistribution);
-    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::cauchy_distribution<FloatingPoint>>::eraseType(new std::cauchy_distribution<FloatingPoint>(median, private_halfWidth));
 }
 
-template <typename FloatingPoint> void SGEXTN::SeerattraNum::CauchyDistribution<FloatingPoint>::setHalfWidth(FloatingPoint halfWidth){
+void SGEXTN::SeerattraNum::CauchyDistribution::setHalfWidth(float halfWidth){
     if(halfWidth <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::CauchyDistribution::setHalfWidth crashed because requested half width is nonpositive");}
     private_halfWidth = halfWidth;
-    delete SGEXTN::SeerattraNum::UnsafeCasts<std::cauchy_distribution<FloatingPoint>>::uneraseType(private_stlDistribution);
-    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::cauchy_distribution<FloatingPoint>>::eraseType(new std::cauchy_distribution<FloatingPoint>(private_median, halfWidth));
 }
-
-template class SGEXTN::SeerattraNum::CauchyDistribution<float>;
-template class SGEXTN::SeerattraNum::CauchyDistribution<double>;
