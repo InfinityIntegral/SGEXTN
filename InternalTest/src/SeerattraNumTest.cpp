@@ -352,23 +352,19 @@ void SGEXTN::InternalTest::SeerattraNumTest::testLogNormalDistribution(){
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testCauchyDistribution(){
-    std::cauchy_distribution<float> stlRandomDistribution(-1.0f, 1.0f);
-    seedRandomEngine(firstSeed);
-    SGEXTN::SeerattraNum::CauchyDistribution<float> generator(false, -1.0f, 1.0f);
+    SGEXTN::SeerattraNum::CauchyDistribution generator(false, -1.0f, 1.0f);
     generator.seed(firstSeed);
-    if(generator.randomValue() != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::CauchyDistribution generate value first seed fail");}
+    if(isCloseEnough(generator.randomValue(), -30.833f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::CauchyDistribution generate value first seed fail");}
     SGEXTN::Containers::Array<float> randomArray = generator.randomValueArray(2);
-    if(randomArray.at(0) != stlRandomDistribution(stlRandomEngine) || randomArray.at(1) != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::CauchyDistribution generate array first seed fail");}
+    if(isCloseEnough(randomArray.at(0), 0.89784f) == false || isCloseEnough(randomArray.at(1), -4.0187f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::CauchyDistribution generate array first seed fail");}
     if(generator.getMedian() != -1.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::CauchyDistribution get median fail");}
     if(generator.getHalfWidth() != 1.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::CauchyDistribution get half width fail");}
-    stlRandomDistribution = std::cauchy_distribution<float>(100.0f, 5.0f);
-    seedRandomEngine(secondSeed);
-    generator.setMedian(100.0f);
+    generator.setMedian(20.0f);
     generator.setHalfWidth(5.0f);
     generator.seed(secondSeed);
-    if(generator.randomValue() != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::CauchyDistribution generate value second seed fail");}
+    if(isCloseEnough(generator.randomValue(), 1.4999f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::CauchyDistribution generate value second seed fail");}
     randomArray = generator.randomValueArray(2);
-    if(randomArray.at(0) != stlRandomDistribution(stlRandomEngine) || randomArray.at(1) != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::CauchyDistribution generate array second seed fail");}
+    if(isCloseEnough(randomArray.at(0), 30.876f) == false || isCloseEnough(randomArray.at(1), 19.890f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::CauchyDistribution generate array second seed fail");}
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testChiSquaredDistribution(){
