@@ -17,28 +17,32 @@
 
 #pragma once
 #include <SGEXTN/Containers/Array.h>
+#include <SGEXTN/SeerattraNum/NormalDistribution.h>
 
 namespace SGEXTN {
 namespace SeerattraNum {
-template <typename FloatingPoint> class BuildLah_SGEXTN_SeerattraNum LogNormalDistribution {
+class DirectRandom;
+
+class BuildLah_SGEXTN_SeerattraNum LogNormalDistribution {
 public:
-    void* private_stlRandomEngine;
-    void* private_stlDistribution;
-    FloatingPoint private_meanOfLn;
-    FloatingPoint private_standardDeviationOfLn;
-    LogNormalDistribution(bool useGlobal, FloatingPoint meanOfLn, FloatingPoint standardDeviationOfLn);
+    SGEXTN::SeerattraNum::DirectRandom* private_rng;
+    bool private_ownsRng;
+    float private_meanOfLn;
+    float private_standardDeviationOfLn;
+    SGEXTN::SeerattraNum::NormalDistribution private_normalDistribution;
+    LogNormalDistribution(bool useGlobal, float meanOfLn, float standardDeviationOfLn);
     LogNormalDistribution(const LogNormalDistribution&) = delete;
     LogNormalDistribution& operator=(const LogNormalDistribution&) = delete;
     LogNormalDistribution(LogNormalDistribution&&) = delete;
     LogNormalDistribution& operator=(LogNormalDistribution&&) = delete;
     ~LogNormalDistribution();
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
-    [[nodiscard]] FloatingPoint randomValue();
-    [[nodiscard]] SGEXTN::Containers::Array<FloatingPoint> randomValueArray(int count);
-    [[nodiscard]] FloatingPoint getMeanOfLn() const;
-    [[nodiscard]] FloatingPoint getStandardDeviationOfLn() const;
-    void setMeanOfLn(FloatingPoint meanOfLn);
-    void setStandardDeviationOfLn(FloatingPoint standardDeviationOfLn);
+    [[nodiscard]] float randomValue();
+    [[nodiscard]] SGEXTN::Containers::Array<float> randomValueArray(int count);
+    [[nodiscard]] float getMeanOfLn() const;
+    [[nodiscard]] float getStandardDeviationOfLn() const;
+    void setMeanOfLn(float meanOfLn);
+    void setStandardDeviationOfLn(float standardDeviationOfLn);
 };
 }
 }

@@ -332,23 +332,19 @@ void SGEXTN::InternalTest::SeerattraNumTest::testNormalDistribution(){
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testLogNormalDistribution(){
-    std::lognormal_distribution<float> stlRandomDistribution(-1.0f, 1.0f);
-    seedRandomEngine(firstSeed);
-    SGEXTN::SeerattraNum::LogNormalDistribution<float> generator(false, -1.0f, 1.0f);
+    SGEXTN::SeerattraNum::LogNormalDistribution generator(false, -1.0f, 1.0f);
     generator.seed(firstSeed);
-    if(generator.randomValue() != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::LogNormalDistribution generate value first seed fail");}
+    if(isCloseEnough(generator.randomValue(), 0.075069f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::LogNormalDistribution generate value first seed fail");}
     SGEXTN::Containers::Array<float> randomArray = generator.randomValueArray(2);
-    if(randomArray.at(0) != stlRandomDistribution(stlRandomEngine) || randomArray.at(1) != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::LogNormalDistribution generate array first seed fail");}
+    if(isCloseEnough(randomArray.at(0), 0.87823f) == false || isCloseEnough(randomArray.at(1), 0.51346f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::LogNormalDistribution generate array first seed fail");}
     if(generator.getMeanOfLn() != -1.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::LogNormalDistribution get mean of ln of data fail");}
     if(generator.getStandardDeviationOfLn() != 1.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::LogNormalDistribution get standard deviation of ln of data fail");}
-    stlRandomDistribution = std::lognormal_distribution<float>(1.0f, 0.125f);
-    seedRandomEngine(secondSeed);
     generator.setMeanOfLn(1.0f);
     generator.setStandardDeviationOfLn(0.125f);
     generator.seed(secondSeed);
-    if(generator.randomValue() != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::LogNormalDistribution generate value second seed fail");}
+    if(isCloseEnough(generator.randomValue(), 2.7014f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::LogNormalDistribution generate value second seed fail");}
     randomArray = generator.randomValueArray(2);
-    if(randomArray.at(0) != stlRandomDistribution(stlRandomEngine) || randomArray.at(1) != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::LogNormalDistribution generate array second seed fail");}
+    if(isCloseEnough(randomArray.at(0), 2.5008f) == false || isCloseEnough(randomArray.at(1), 2.9436f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::LogNormalDistribution generate array second seed fail");}
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testCauchyDistribution(){
