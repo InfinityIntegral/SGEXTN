@@ -52,13 +52,70 @@
 #include <SGEXTN/SeerattraNum/ValueNoise.h>
 #include <SGEXTN/SeerattraNum/SmoothingFunction.h>
 #include <SGEXTN/SeerattraNum/PerlinNoise.h>
-
+#include <SGEXTN/Containers/LessThan.h>
+#include <SGEXTN/Containers/Map.h>
+#include <random>
+#include <SGEXTN/CoreText/Debug.h>
 namespace {
 SGEXTN::Containers::Array<unsigned int> firstSeed(1u, 2u, 3u, 4u, 5u);
 SGEXTN::Containers::Array<unsigned int> secondSeed(6u, 7u, 8u, 9u, 10u);
 
+std::mt19937 standardLibraryRng;
+
+void seedStandardLibraryRng(const SGEXTN::Containers::Array<unsigned int>& seed){
+    std::seed_seq seedSequence(&seed.at(0), &seed.at(0) + seed.length());
+    standardLibraryRng.seed(seedSequence);
+}
+
 bool isCloseEnough(float a, float b){
     return (a > b - 0.001f && a < b + 0.001f);
+}
+
+bool testIfDistributionSameContinuous(SGEXTN::Containers::Array<float>& sampleData, SGEXTN::Containers::Array<float>& testData){
+    if(sampleData.length() != 100000 || testData.length() != 100000){SGEXTN_IMMEDIATE_CRASH("sample size is wrong");}
+    sampleData.sort<SGEXTN::Containers::LessThan<float>>(0, sampleData.length());
+    testData.sort<SGEXTN::Containers::LessThan<float>>(0, testData.length());
+    int maximumDifference = 0;
+    int nextInSampleData = 0;
+    int nextInTestData = 0;
+    while(nextInSampleData < 100000 && nextInTestData < 100000){
+        if(sampleData.at(nextInSampleData) < testData.at(nextInTestData)){nextInSampleData++;}
+        else{nextInTestData++;}
+        if(maximumDifference < nextInSampleData - nextInTestData){maximumDifference = nextInSampleData - nextInTestData;}
+        else if(maximumDifference < nextInTestData - nextInSampleData){maximumDifference = nextInTestData - nextInSampleData;}
+    }
+    SG(maximumDifference);
+    return (maximumDifference < 608);
+}
+
+bool testIfDistributionSameDiscrete(SGEXTN::Containers::Array<int>& sampleData, SGEXTN::Containers::Array<int>& testData){
+    if(sampleData.length() != 100000 || testData.length() != 100000){SGEXTN_IMMEDIATE_CRASH("sample size is wrong");}
+    SGEXTN::Containers::Map<int, int, SGEXTN::Containers::LessThan<int>> sampleDataDensityMap;
+    SGEXTN::Containers::Map<int, int, SGEXTN::Containers::LessThan<int>> testDataDensityMap;
+    for(int i=0; i<100000; i++){
+        if(sampleDataDensityMap.contains(sampleData.at(i)) == false){sampleDataDensityMap.insert(sampleData.at(i), 1);}
+        else{sampleDataDensityMap.at(sampleData.at(i))++;}
+    }
+    for(int i=0; i<100000; i++){
+        if(testDataDensityMap.contains(testData.at(i)) == false){testDataDensityMap.insert(testData.at(i), 1);}
+        else{testDataDensityMap.at(testData.at(i))++;}
+    }
+    int minimum = sampleDataDensityMap.keyAt(0);
+    if(testDataDensityMap.keyAt(0) < minimum){minimum = testDataDensityMap.keyAt(0);}
+    int maximum = sampleDataDensityMap.keyAt(sampleDataDensityMap.length() - 1);
+    if(testDataDensityMap.keyAt(testDataDensityMap.length() - 1) > maximum){maximum = testDataDensityMap.keyAt(testDataDensityMap.length() - 1);}
+    if(maximum - minimum > 100000){SGEXTN_IMMEDIATE_CRASH("range of data too wide");}
+    int maximumDifference = 0;
+    int nextInSampleData = 0;
+    int nextInTestData = 0;
+    for(int i=minimum; i<=maximum; i++){
+        if(sampleDataDensityMap.contains(i) == true){nextInSampleData += sampleDataDensityMap.at(i);}
+        if(testDataDensityMap.contains(i) == true){nextInTestData += testDataDensityMap.at(i);}
+        if(maximumDifference < nextInSampleData - nextInTestData){maximumDifference = nextInSampleData - nextInTestData;}
+        else if(maximumDifference < nextInTestData - nextInSampleData){maximumDifference = nextInTestData - nextInSampleData;}
+    }
+    SG(maximumDifference);
+    return (maximumDifference < 608);
 }
 }
 
@@ -143,33 +200,51 @@ void SGEXTN::InternalTest::SeerattraNumTest::testDirectRandom(){
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testUniformDistributionInteger(){
-    SGEXTN::SeerattraNum::UniformDistributionInteger generator(false, 1, 6);
-    generator.seed(firstSeed);
-    if(generator.randomValue() != 3){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionInteger generate number first seed fail");}
-    SGEXTN::Containers::Array<int> randomArray = generator.randomValueArray(2);
-    if(randomArray.at(0) != 3 || randomArray.at(1) != 4){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionInteger generate array first seed fail");}
-    if(generator.getInclusiveMin() != 1){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionInteger get minimum boundary fail");}
-    if(generator.getInclusiveMax() != 6){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionInteger get maximum boundary fail");}
-    generator.setRange(-5, -1);
-    generator.seed(secondSeed);
-    if(generator.randomValue() != -1){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionInteger generate number second seed fail");}
-    randomArray = generator.randomValueArray(2);
-    if(randomArray.at(0) != -3 || randomArray.at(1) != -1){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionInteger generate array second seed fail");}
+    SGEXTN::SeerattraNum::UniformDistributionInteger testRng(false, 1, 6);
+    testRng.seed(firstSeed);
+    std::uniform_int_distribution sampleRng(1, 6);
+    seedStandardLibraryRng(firstSeed);
+    SGEXTN::Containers::Array<int> testData = testRng.randomValueArray(100000);
+    SGEXTN::Containers::Array<int> sampleData(100000);
+    for(int i=0; i<100000; i++){
+        sampleData.at(i) = sampleRng(standardLibraryRng);
+    }
+    if(testIfDistributionSameDiscrete(sampleData, testData) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionInteger first test fail");}
+    if(testRng.getInclusiveMin() != 1){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionInteger get minimum boundary fail");}
+    if(testRng.getInclusiveMax() != 6){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionInteger get maximum boundary fail");}
+    testRng.setRange(-5, -1);
+    testRng.seed(secondSeed);
+    sampleRng = std::uniform_int_distribution(-5, -1);
+    seedStandardLibraryRng(secondSeed);
+    for(int i=0; i<100000; i++){
+        testData.at(i) = testRng.randomValue();
+        sampleData.at(i) = sampleRng(standardLibraryRng);
+    }
+    if(testIfDistributionSameDiscrete(sampleData, testData) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionInteger second test fail");}
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testUniformDistributionFloatingPoint(){
-    SGEXTN::SeerattraNum::UniformDistributionFloatingPoint generator(false, 1.0f, 2.0f);
-    generator.seed(firstSeed);
-    if(isCloseEnough(generator.randomValue(), 1.0107f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionFloatingPoint generate number first seed fail");}
-    SGEXTN::Containers::Array<float> randomArray = generator.randomValueArray(2);
-    if(isCloseEnough(randomArray.at(0), 1.8456f) == false || isCloseEnough(randomArray.at(1), 1.1018f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionFloatingPoint generate array first seed fail");}
-    if(generator.getMinimum() != 1.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionFloatingPoint get minimum boundary fail");}
-    if(generator.getMaximum() != 2.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionFloatingPoint get maximum boundary fail");}
-    generator.setRange(-2.0f, -1.0f);
-    generator.seed(secondSeed);
-    if(isCloseEnough(generator.randomValue(), -1.9160f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionFloatingPoint generate number second seed fail");}
-    randomArray = generator.randomValueArray(2);
-    if(isCloseEnough(randomArray.at(0), -1.1372f) == false || isCloseEnough(randomArray.at(1), -1.5070f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionFloatingPoint generate array second seed fail");}
+    SGEXTN::SeerattraNum::UniformDistributionFloatingPoint testRng(false, 1.0f, 2.0f);
+    testRng.seed(firstSeed);
+    std::uniform_real_distribution sampleRng(1.0f, 2.0f);
+    seedStandardLibraryRng(firstSeed);
+    SGEXTN::Containers::Array<float> testData = testRng.randomValueArray(100000);
+    SGEXTN::Containers::Array<float> sampleData(100000);
+    for(int i=0; i<100000; i++){
+        sampleData.at(i) = sampleRng(standardLibraryRng);
+    }
+    if(testIfDistributionSameContinuous(sampleData, testData) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionFloatingPoint first test fail");}
+    if(testRng.getMinimum() != 1.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionFloatingPoint get minimum boundary fail");}
+    if(testRng.getMaximum() != 2.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionFloatingPoint get maximum boundary fail");}
+    testRng.setRange(-2.0f, -1.0f);
+    testRng.seed(secondSeed);
+    sampleRng = std::uniform_real_distribution(-2.0f, -1.0f);
+    seedStandardLibraryRng(secondSeed);
+    for(int i=0; i<100000; i++){
+        testData.at(i) = testRng.randomValue();
+        sampleData.at(i) = sampleRng(standardLibraryRng);
+    }
+    if(testIfDistributionSameContinuous(sampleData, testData) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionFloatingPoint second test fail");}
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testBernoulliDistribution(){
