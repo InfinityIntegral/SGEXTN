@@ -40,9 +40,9 @@ void SGEXTN::SeerattraNum::GumbelDistribution::seed(const SGEXTN::Containers::Ar
 float SGEXTN::SeerattraNum::GumbelDistribution::randomValue(){
     SGEXTN::SeerattraNum::DirectRandom* temp = private_rng;
     private_rng = temp;
-    unsigned int integerRng = (*private_rng).randomUnsignedInt32();
+    const unsigned int integerRng = (*private_rng).randomUnsignedInt32();
     const float scaleFactor = 1.0f / (static_cast<float>(static_cast<unsigned int>(1) << 24) + 1.0f);
-    float rng = (1.0f + (static_cast<float>(integerRng >> 8))) * scaleFactor;
+    const float rng = (1.0f + (static_cast<float>(integerRng >> 8))) * scaleFactor;
     return (private_mode - private_spread * SGEXTN::Math::FloatMath<float>::naturalLog(-1.0f * SGEXTN::Math::FloatMath<float>::naturalLog(1.0f - rng)));
 }
 

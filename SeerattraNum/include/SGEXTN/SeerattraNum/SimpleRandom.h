@@ -37,9 +37,6 @@ public:
     [[nodiscard]] static SGEXTN::Containers::Array<unsigned long long> randomUnsignedInt64Array(int count);
     [[nodiscard]] static SGEXTN::Containers::Array<float> randomFloat32Array(int count);
     [[nodiscard]] static SGEXTN::Containers::Array<double> randomFloat64Array(int count);
-    [[nodiscard]] static void* private_getRandomEngine();
-    [[nodiscard]] static void* private_createRandomEngine(bool useGlobal);
-    static void private_seedRandomEngine(void* randomEngine, const SGEXTN::Containers::Array<unsigned int>& seedArray);
 };
 }
 }

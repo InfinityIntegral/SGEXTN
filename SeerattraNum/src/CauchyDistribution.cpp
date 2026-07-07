@@ -41,9 +41,9 @@ void SGEXTN::SeerattraNum::CauchyDistribution::seed(const SGEXTN::Containers::Ar
 float SGEXTN::SeerattraNum::CauchyDistribution::randomValue(){
     SGEXTN::SeerattraNum::DirectRandom* temp = private_rng;
     private_rng = temp;
-    unsigned int integerRng = (*private_rng).randomUnsignedInt32();
+    const unsigned int integerRng = (*private_rng).randomUnsignedInt32();
     const float scaleFactor = 1.0f / (static_cast<float>(static_cast<unsigned int>(1) << 24) + 1.0f);
-    float rng = (1.0f + (static_cast<float>(integerRng >> 8))) * scaleFactor;
+    const float rng = (1.0f + (static_cast<float>(integerRng >> 8))) * scaleFactor;
     return (private_median + private_halfWidth * SGEXTN::Math::FloatMath<float>::tangent(SGEXTN::Math::FloatConstants<float>::pi() * (rng - 0.5f)));
 }
 
