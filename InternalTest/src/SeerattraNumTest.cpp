@@ -364,21 +364,17 @@ void SGEXTN::InternalTest::SeerattraNumTest::testCauchyDistribution(){
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testChiSquaredDistribution(){
-    std::chi_squared_distribution<float> stlRandomDistribution(5.0f);
-    seedRandomEngine(firstSeed);
-    SGEXTN::SeerattraNum::ChiSquaredDistribution<float> generator(false, 5.0f);
+    SGEXTN::SeerattraNum::ChiSquaredDistribution generator(false, 5.0f);
     generator.seed(firstSeed);
-    if(generator.randomValue() != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::ChiSquaredDistribution generate value first seed fail");}
+    if(isCloseEnough(generator.randomValue(), 1.1364f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::ChiSquaredDistribution generate value first seed fail");}
     SGEXTN::Containers::Array<float> randomArray = generator.randomValueArray(2);
-    if(randomArray.at(0) != stlRandomDistribution(stlRandomEngine) || randomArray.at(1) != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::ChiSquaredDistribution generate array first seed fail");}
+    if(isCloseEnough(randomArray.at(0), 5.3909f) == false || isCloseEnough(randomArray.at(1), 2.6929f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::ChiSquaredDistribution generate array first seed fail");}
     if(generator.getDegreesOfFreedom() != 5.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::ChiSquaredDistribution get number of degrees of freedom fail");}
-    stlRandomDistribution = std::chi_squared_distribution<float>(100.0f);
-    seedRandomEngine(secondSeed);
     generator.setDegreesOfFreedom(100.0f);
     generator.seed(secondSeed);
-    if(generator.randomValue() != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::ChiSquaredDistribution generate value second seed fail");}
+    if(isCloseEnough(generator.randomValue(), 98.633f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::ChiSquaredDistribution generate value second seed fail");}
     randomArray = generator.randomValueArray(2);
-    if(randomArray.at(0) != stlRandomDistribution(stlRandomEngine) || randomArray.at(1) != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::ChiSquaredDistribution generate array second seed fail");}
+    if(isCloseEnough(randomArray.at(0), 108.588f) == false || isCloseEnough(randomArray.at(1), 101.597f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::ChiSquaredDistribution generate array second seed fail");}
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testFisherFDistribution(){

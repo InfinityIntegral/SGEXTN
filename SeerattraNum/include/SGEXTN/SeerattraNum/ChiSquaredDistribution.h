@@ -17,25 +17,29 @@
 
 #pragma once
 #include <SGEXTN/Containers/Array.h>
+#include <SGEXTN/SeerattraNum/GammaDistribution.h>
 
 namespace SGEXTN {
 namespace SeerattraNum {
-template <typename FloatingPoint> class BuildLah_SGEXTN_SeerattraNum ChiSquaredDistribution {
+class DirectRandom;
+
+class BuildLah_SGEXTN_SeerattraNum ChiSquaredDistribution {
 public:
-    void* private_stlRandomEngine;
-    void* private_stlDistribution;
-    FloatingPoint private_degreesOfFreedom;
-    ChiSquaredDistribution(bool useGlobal, FloatingPoint degreesOfFreedom);
+    SGEXTN::SeerattraNum::DirectRandom* private_rng;
+    bool private_ownsRng;
+    float private_degreesOfFreedom;
+    SGEXTN::SeerattraNum::GammaDistribution private_gammaDistribution;
+    ChiSquaredDistribution(bool useGlobal, float degreesOfFreedom);
     ChiSquaredDistribution(const ChiSquaredDistribution&) = delete;
     ChiSquaredDistribution& operator=(const ChiSquaredDistribution&) = delete;
     ChiSquaredDistribution(ChiSquaredDistribution&&) = delete;
     ChiSquaredDistribution& operator=(ChiSquaredDistribution&&) = delete;
     ~ChiSquaredDistribution();
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
-    [[nodiscard]] FloatingPoint randomValue();
-    [[nodiscard]] SGEXTN::Containers::Array<FloatingPoint> randomValueArray(int count);
-    [[nodiscard]] FloatingPoint getDegreesOfFreedom() const;
-    void setDegreesOfFreedom(FloatingPoint degreesOfFreedom);
+    [[nodiscard]] float randomValue();
+    [[nodiscard]] SGEXTN::Containers::Array<float> randomValueArray(int count);
+    [[nodiscard]] float getDegreesOfFreedom() const;
+    void setDegreesOfFreedom(float degreesOfFreedom);
 };
 }
 }
