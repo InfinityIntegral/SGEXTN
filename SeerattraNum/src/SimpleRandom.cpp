@@ -16,12 +16,9 @@
 // BuildLah license check: SGEXTN 7.0.0
 
 #include <SGEXTN/SeerattraNum/SimpleRandom.h>
-#include <SGEXTN/SeerattraNum/TrueRandom.h>
-#include <SGEXTN/SeerattraNum/private_api/UnsafeCasts.h>
 #include <SGEXTN/Containers/Array.h>
 #include <SGEXTN/Containers/ForceCrash.h>
 #include <SGEXTN/SeerattraNum/DirectRandom.h>
-#include <random>
 
 SGEXTN::SeerattraNum::DirectRandom* SGEXTN::SeerattraNum::SimpleRandom::private_globalInstance = nullptr;
 
@@ -107,20 +104,4 @@ SGEXTN::Containers::Array<double> SGEXTN::SeerattraNum::SimpleRandom::randomFloa
         output.at(i) = SGEXTN::SeerattraNum::SimpleRandom::randomFloat64();
     }
     return output;
-}
-
-void* SGEXTN::SeerattraNum::SimpleRandom::private_getRandomEngine(){
-    return nullptr;
-}
-
-void* SGEXTN::SeerattraNum::SimpleRandom::private_createRandomEngine(bool useGlobal){
-    if(useGlobal == true){return nullptr;}
-    SGEXTN::Containers::Array<unsigned int> seedArray = SGEXTN::SeerattraNum::TrueRandom::randomUnsignedInt32Array(8);
-    std::seed_seq seedSequence(&seedArray.at(0), &seedArray.at(0) + 8);
-    return SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::eraseType(new std::mt19937_64(seedSequence));
-}
-
-void SGEXTN::SeerattraNum::SimpleRandom::private_seedRandomEngine(void* randomEngine, const SGEXTN::Containers::Array<unsigned int>& seedArray){
-    std::seed_seq seedSequence(&seedArray.at(0), &seedArray.at(0) + seedArray.length());
-    (*SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(randomEngine)).seed(seedSequence);
 }
