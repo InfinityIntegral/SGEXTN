@@ -16,67 +16,65 @@
 // BuildLah license check: SGEXTN 7.0.0
 
 #include <SGEXTN/SeerattraNum/FisherFDistribution.h>
-#include <SGEXTN/SeerattraNum/private_api/UnsafeCasts.h>
 #include <SGEXTN/Containers/Array.h>
 #include <SGEXTN/Containers/ForceCrash.h>
-#include <SGEXTN/SeerattraNum/SimpleRandom.h>
-#include <random>
+#include <SGEXTN/SeerattraNum/DirectRandom.h>
+#include <SGEXTN/Math/FloatMath.h>
 
-template <typename FloatingPoint> SGEXTN::SeerattraNum::FisherFDistribution<FloatingPoint>::FisherFDistribution(bool useGlobal, FloatingPoint numeratorDegreesOfFreedom, FloatingPoint denominatorDegreesOfFreedom){
+SGEXTN::SeerattraNum::FisherFDistribution::FisherFDistribution(bool useGlobal, float numeratorDegreesOfFreedom, float denominatorDegreesOfFreedom) : private_numeratorDegreesOfFreedom(numeratorDegreesOfFreedom), private_denominatorDegreesOfFreedom(denominatorDegreesOfFreedom), private_rng(nullptr), private_ownsRng(useGlobal == false), private_numeratorDistribution(true, 1.0f), private_denominatorDistribution(true, 1.0f){
     if(numeratorDegreesOfFreedom <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::FisherFDistribution constructor crashed because requested number of degrees of freedom in the numerator is nonpositive");}
     if(denominatorDegreesOfFreedom <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::FisherFDistribution constructor crashed because requested number of degrees of freedom in the denominator is nonpositive");}
-    private_numeratorDegreesOfFreedom = numeratorDegreesOfFreedom;
-    private_denominatorDegreesOfFreedom = denominatorDegreesOfFreedom;
-    private_stlRandomEngine = SGEXTN::SeerattraNum::SimpleRandom::private_createRandomEngine(useGlobal);
-    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::fisher_f_distribution<FloatingPoint>>::eraseType(new std::fisher_f_distribution<FloatingPoint>(numeratorDegreesOfFreedom, denominatorDegreesOfFreedom));
+    private_rng = SGEXTN::SeerattraNum::DirectRandom::private_createRng(useGlobal);
+    private_numeratorDistribution.private_rng = private_rng;
+    private_numeratorDistribution.private_gammaDistribution.private_rng = private_rng;
+    private_numeratorDistribution.private_gammaDistribution.private_standardNormalDistribution.private_rng = private_rng;
+    private_denominatorDistribution.private_rng = private_rng;
+    private_denominatorDistribution.private_gammaDistribution.private_rng = private_rng;
+    private_denominatorDistribution.private_gammaDistribution.private_standardNormalDistribution.private_rng = private_rng;
+    private_numeratorDistribution.setDegreesOfFreedom(numeratorDegreesOfFreedom);
+    private_denominatorDistribution.setDegreesOfFreedom(denominatorDegreesOfFreedom);
 }
 
-template <typename FloatingPoint> SGEXTN::SeerattraNum::FisherFDistribution<FloatingPoint>::~FisherFDistribution(){
-    delete SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(private_stlRandomEngine);
-    delete SGEXTN::SeerattraNum::UnsafeCasts<std::fisher_f_distribution<FloatingPoint>>::uneraseType(private_stlDistribution);
+SGEXTN::SeerattraNum::FisherFDistribution::~FisherFDistribution(){
+    if(private_ownsRng == true){delete private_rng;}
 }
 
-template <typename FloatingPoint> void SGEXTN::SeerattraNum::FisherFDistribution<FloatingPoint>::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
-    if(private_stlRandomEngine == nullptr){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::FisherFDistribution::seed crashed because cannot seed global rng");}
-    SGEXTN::SeerattraNum::SimpleRandom::private_seedRandomEngine(private_stlRandomEngine, seedArray);
+void SGEXTN::SeerattraNum::FisherFDistribution::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
+    if(private_ownsRng == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::FisherFDistribution::seed crashed because cannot seed global rng");}
+    SGEXTN::SeerattraNum::DirectRandom* temp = private_rng;
+    private_rng = temp;
+    (*private_rng).seed(seedArray);
 }
 
-template <typename FloatingPoint> FloatingPoint SGEXTN::SeerattraNum::FisherFDistribution<FloatingPoint>::randomValue(){
-    void* randomEngine = private_stlRandomEngine;
-    if(randomEngine == nullptr){randomEngine = SGEXTN::SeerattraNum::SimpleRandom::private_getRandomEngine();}
-    return ((*SGEXTN::SeerattraNum::UnsafeCasts<std::fisher_f_distribution<FloatingPoint>>::uneraseType(private_stlDistribution))(*SGEXTN::SeerattraNum::UnsafeCasts<std::mt19937_64>::uneraseType(randomEngine)));
+float SGEXTN::SeerattraNum::FisherFDistribution::randomValue(){
+    return ((private_denominatorDegreesOfFreedom * private_numeratorDistribution.randomValue()) / (private_numeratorDegreesOfFreedom * private_denominatorDistribution.randomValue()));
 }
 
-template <typename FloatingPoint> SGEXTN::Containers::Array<FloatingPoint> SGEXTN::SeerattraNum::FisherFDistribution<FloatingPoint>::randomValueArray(int count){
+SGEXTN::Containers::Array<float> SGEXTN::SeerattraNum::FisherFDistribution::randomValueArray(int count){
     if(count < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::FisherFDistribution::randomValueArray crashed because a negative number of outputs is requested");}
-    SGEXTN::Containers::Array<FloatingPoint> outputArray(count);
+    SGEXTN::Containers::Array<float> outputArray(count);
     for(int i=0; i<count; i++){
         outputArray.at(i) = randomValue();
     }
     return outputArray;
 }
 
-template <typename FloatingPoint> FloatingPoint SGEXTN::SeerattraNum::FisherFDistribution<FloatingPoint>::getNumeratorDegreesOfFreedom() const {
+float SGEXTN::SeerattraNum::FisherFDistribution::getNumeratorDegreesOfFreedom() const {
     return private_numeratorDegreesOfFreedom;
 }
 
-template <typename FloatingPoint> FloatingPoint SGEXTN::SeerattraNum::FisherFDistribution<FloatingPoint>::getDenominatorDegreesOfFreedom() const {
+float SGEXTN::SeerattraNum::FisherFDistribution::getDenominatorDegreesOfFreedom() const {
     return private_denominatorDegreesOfFreedom;
 }
 
-template <typename FloatingPoint> void SGEXTN::SeerattraNum::FisherFDistribution<FloatingPoint>::setNumeratorDegreesOfFreedom(FloatingPoint numeratorDegreesOfFreedom){
+void SGEXTN::SeerattraNum::FisherFDistribution::setNumeratorDegreesOfFreedom(float numeratorDegreesOfFreedom){
     if(numeratorDegreesOfFreedom <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::FisherFDistribution::setNumeratorDegreesOfFreedom crashed because requested number of degrees of freedom in the numerator is nonpositive");}
     private_numeratorDegreesOfFreedom = numeratorDegreesOfFreedom;
-    delete SGEXTN::SeerattraNum::UnsafeCasts<std::fisher_f_distribution<FloatingPoint>>::uneraseType(private_stlDistribution);
-    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::fisher_f_distribution<FloatingPoint>>::eraseType(new std::fisher_f_distribution<FloatingPoint>(numeratorDegreesOfFreedom, private_denominatorDegreesOfFreedom));
+    private_numeratorDistribution.setDegreesOfFreedom(numeratorDegreesOfFreedom);
 }
 
-template <typename FloatingPoint> void SGEXTN::SeerattraNum::FisherFDistribution<FloatingPoint>::setDenominatorDegreesOfFreedom(FloatingPoint denominatorDegreesOfFreedom){
+void SGEXTN::SeerattraNum::FisherFDistribution::setDenominatorDegreesOfFreedom(float denominatorDegreesOfFreedom){
     if(denominatorDegreesOfFreedom <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::FisherFDistribution::setDenominatorDegreesOfFreedom crashed because requested number of degrees of freedom in the denominator is nonpositive");}
     private_denominatorDegreesOfFreedom = denominatorDegreesOfFreedom;
-    delete SGEXTN::SeerattraNum::UnsafeCasts<std::fisher_f_distribution<FloatingPoint>>::uneraseType(private_stlDistribution);
-    private_stlDistribution = SGEXTN::SeerattraNum::UnsafeCasts<std::fisher_f_distribution<FloatingPoint>>::eraseType(new std::fisher_f_distribution<FloatingPoint>(private_numeratorDegreesOfFreedom, denominatorDegreesOfFreedom));
+    private_denominatorDistribution.setDegreesOfFreedom(denominatorDegreesOfFreedom);
 }
-
-template class SGEXTN::SeerattraNum::FisherFDistribution<float>;
-template class SGEXTN::SeerattraNum::FisherFDistribution<double>;

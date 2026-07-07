@@ -17,28 +17,33 @@
 
 #pragma once
 #include <SGEXTN/Containers/Array.h>
+#include <SGEXTN/SeerattraNum/ChiSquaredDistribution.h>
 
 namespace SGEXTN {
 namespace SeerattraNum {
-template <typename FloatingPoint> class BuildLah_SGEXTN_SeerattraNum FisherFDistribution {
+class DirectRandom;
+
+class BuildLah_SGEXTN_SeerattraNum FisherFDistribution {
 public:
-    void* private_stlRandomEngine;
-    void* private_stlDistribution;
-    FloatingPoint private_numeratorDegreesOfFreedom;
-    FloatingPoint private_denominatorDegreesOfFreedom;
-    FisherFDistribution(bool useGlobal, FloatingPoint numeratorDegreesOfFreedom, FloatingPoint denominatorDegreesOfFreedom);
+    SGEXTN::SeerattraNum::DirectRandom* private_rng;
+    bool private_ownsRng;
+    float private_numeratorDegreesOfFreedom;
+    float private_denominatorDegreesOfFreedom;
+    SGEXTN::SeerattraNum::ChiSquaredDistribution private_numeratorDistribution;
+    SGEXTN::SeerattraNum::ChiSquaredDistribution private_denominatorDistribution;
+    FisherFDistribution(bool useGlobal, float numeratorDegreesOfFreedom, float denominatorDegreesOfFreedom);
     FisherFDistribution(const FisherFDistribution&) = delete;
     FisherFDistribution& operator=(const FisherFDistribution&) = delete;
     FisherFDistribution(FisherFDistribution&&) = delete;
     FisherFDistribution& operator=(FisherFDistribution&&) = delete;
     ~FisherFDistribution();
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
-    [[nodiscard]] FloatingPoint randomValue();
-    [[nodiscard]] SGEXTN::Containers::Array<FloatingPoint> randomValueArray(int count);
-    [[nodiscard]] FloatingPoint getNumeratorDegreesOfFreedom() const;
-    [[nodiscard]] FloatingPoint getDenominatorDegreesOfFreedom() const;
-    void setNumeratorDegreesOfFreedom(FloatingPoint numeratorDegreesOfFreedom);
-    void setDenominatorDegreesOfFreedom(FloatingPoint denominatorDegreesOfFreedom);
+    [[nodiscard]] float randomValue();
+    [[nodiscard]] SGEXTN::Containers::Array<float> randomValueArray(int count);
+    [[nodiscard]] float getNumeratorDegreesOfFreedom() const;
+    [[nodiscard]] float getDenominatorDegreesOfFreedom() const;
+    void setNumeratorDegreesOfFreedom(float numeratorDegreesOfFreedom);
+    void setDenominatorDegreesOfFreedom(float denominatorDegreesOfFreedom);
 };
 }
 }

@@ -378,41 +378,33 @@ void SGEXTN::InternalTest::SeerattraNumTest::testChiSquaredDistribution(){
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testFisherFDistribution(){
-    std::fisher_f_distribution<float> stlRandomDistribution(5.0f, 10.0f);
-    seedRandomEngine(firstSeed);
-    SGEXTN::SeerattraNum::FisherFDistribution<float> generator(false, 5.0f, 10.0f);
+    SGEXTN::SeerattraNum::FisherFDistribution generator(false, 5.0f, 10.0f);
     generator.seed(firstSeed);
-    if(generator.randomValue() != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::FisherFDistribution generate value first seed fail");}
+    if(isCloseEnough(generator.randomValue(), 0.20949f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::FisherFDistribution generate value first seed fail");}
     SGEXTN::Containers::Array<float> randomArray = generator.randomValueArray(2);
-    if(randomArray.at(0) != stlRandomDistribution(stlRandomEngine) || randomArray.at(1) != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::FisherFDistribution generate array first seed fail");}
+    if(isCloseEnough(randomArray.at(0), 2.7437f) == false || isCloseEnough(randomArray.at(1), 0.68150f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::FisherFDistribution generate array first seed fail");}
     if(generator.getNumeratorDegreesOfFreedom() != 5.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::FisherFDistribution get number of degrees of freedom in numerator fail");}
     if(generator.getDenominatorDegreesOfFreedom() != 10.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::FisherFDistribution get number of degrees of freedom in denominator fail");}
-    stlRandomDistribution = std::fisher_f_distribution<float>(14.0f, 7.0f);
-    seedRandomEngine(secondSeed);
     generator.setNumeratorDegreesOfFreedom(14.0f);
     generator.setDenominatorDegreesOfFreedom(7.0f);
     generator.seed(secondSeed);
-    if(generator.randomValue() != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::FisherFDistribution generate value second seed fail");}
+    if(isCloseEnough(generator.randomValue(), 0.73616f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::FisherFDistribution generate value second seed fail");}
     randomArray = generator.randomValueArray(2);
-    if(randomArray.at(0) != stlRandomDistribution(stlRandomEngine) || randomArray.at(1) != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::FisherFDistribution generate array second seed fail");}
+    if(isCloseEnough(randomArray.at(0), 0.84379f) == false || isCloseEnough(randomArray.at(1), 0.41344f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::FisherFDistribution generate array second seed fail");}
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testStudentTDistribution(){
-    std::student_t_distribution<float> stlRandomDistribution(5.0f);
-    seedRandomEngine(firstSeed);
-    SGEXTN::SeerattraNum::StudentTDistribution<float> generator(false, 5.0f);
+    SGEXTN::SeerattraNum::StudentTDistribution generator(false, 5.0f);
     generator.seed(firstSeed);
-    if(generator.randomValue() != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::StudentTDistribution generate value first seed fail");}
+    if(isCloseEnough(generator.randomValue(), -1.3035f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::StudentTDistribution generate value first seed fail");}
     SGEXTN::Containers::Array<float> randomArray = generator.randomValueArray(2);
-    if(randomArray.at(0) != stlRandomDistribution(stlRandomEngine) || randomArray.at(1) != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::StudentTDistribution generate array first seed fail");}
+    if(isCloseEnough(randomArray.at(0), -1.8767f) == false || isCloseEnough(randomArray.at(1), -1.8334f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::StudentTDistribution generate array first seed fail");}
     if(generator.getDegreesOfFreedom() != 5.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::StudentTDistribution get number of degrees of freedom fail");}
-    stlRandomDistribution = std::student_t_distribution<float>(100.0f);
-    seedRandomEngine(secondSeed);
     generator.setDegreesOfFreedom(100.0f);
     generator.seed(secondSeed);
-    if(generator.randomValue() != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::StudentTDistribution generate value second seed fail");}
+    if(isCloseEnough(generator.randomValue(), -0.052427f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::StudentTDistribution generate value second seed fail");}
     randomArray = generator.randomValueArray(2);
-    if(randomArray.at(0) != stlRandomDistribution(stlRandomEngine) || randomArray.at(1) != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::StudentTDistribution generate array second seed fail");}
+    if(isCloseEnough(randomArray.at(0), -0.25986f) == false || isCloseEnough(randomArray.at(1), 0.52099f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::StudentTDistribution generate array second seed fail");}
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testWeightedIndexSelectionDistribution(){
