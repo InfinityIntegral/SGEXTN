@@ -300,23 +300,19 @@ void SGEXTN::InternalTest::SeerattraNumTest::testWeibullDistribution(){
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testGumbelDistribution(){
-    std::extreme_value_distribution<float> stlRandomDistribution(-1.0f, 1.0f);
-    seedRandomEngine(firstSeed);
-    SGEXTN::SeerattraNum::GumbelDistribution<float> generator(false, -1.0f, 1.0f);
+    SGEXTN::SeerattraNum::GumbelDistribution generator(false, -1.0f, 1.0f);
     generator.seed(firstSeed);
-    if(generator.randomValue() != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GumbelDistribution generate value first seed fail");}
+    if(isCloseEnough(generator.randomValue(), 3.5354f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GumbelDistribution generate value first seed fail");}
     SGEXTN::Containers::Array<float> randomArray = generator.randomValueArray(2);
-    if(randomArray.at(0) != stlRandomDistribution(stlRandomEngine) || randomArray.at(1) != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GumbelDistribution generate array first seed fail");}
+    if(isCloseEnough(randomArray.at(0), -1.6251f) == false || isCloseEnough(randomArray.at(1), 1.2313f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GumbelDistribution generate array first seed fail");}
     if(generator.getMode() != -1.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GumbelDistribution get mode fail");}
     if(generator.getSpread() != 1.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GumbelDistribution get spread fail");}
-    stlRandomDistribution = std::extreme_value_distribution<float>(100.0f, 5.0f);
-    seedRandomEngine(secondSeed);
     generator.setMode(100.0f);
     generator.setSpread(5.0f);
     generator.seed(secondSeed);
-    if(generator.randomValue() != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GumbelDistribution generate value second seed fail");}
+    if(isCloseEnough(generator.randomValue(), 112.166f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GumbelDistribution generate value second seed fail");}
     randomArray = generator.randomValueArray(2);
-    if(randomArray.at(0) != stlRandomDistribution(stlRandomEngine) || randomArray.at(1) != stlRandomDistribution(stlRandomEngine)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GumbelDistribution generate array second seed fail");}
+    if(isCloseEnough(randomArray.at(0), 96.568f) == false || isCloseEnough(randomArray.at(1), 101.934f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GumbelDistribution generate array second seed fail");}
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testNormalDistribution(){
