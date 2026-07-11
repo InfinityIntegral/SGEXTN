@@ -54,8 +54,9 @@
 #include <SGEXTN/SeerattraNum/PerlinNoise.h>
 #include <SGEXTN/Containers/LessThan.h>
 #include <SGEXTN/Containers/Map.h>
+#include <SGEXTN/Math/FloatMath.h>
 #include <random>
-#include <SGEXTN/CoreText/Debug.h>
+
 namespace {
 SGEXTN::Containers::Array<unsigned int> firstSeed(1u, 2u, 3u, 4u, 5u);
 SGEXTN::Containers::Array<unsigned int> secondSeed(6u, 7u, 8u, 9u, 10u);
@@ -736,12 +737,37 @@ void SGEXTN::InternalTest::SeerattraNumTest::testRandomPermutation(){
 
 void SGEXTN::InternalTest::SeerattraNumTest::testUnitSphereSample(){
     SGEXTN::SeerattraNum::UnitSphereSample generator(false);
-    generator.seed(firstSeed);
-    SGEXTN::Containers::Array<float> firstPoint = generator.randomPoint(2);
-    if(firstPoint.length() != 2 || isCloseEnough(firstPoint.at(0), -0.87714f) == false || isCloseEnough(firstPoint.at(1), 0.48023f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UnitSphereSample generate first point fail");}
     generator.seed(secondSeed);
-    SGEXTN::Containers::Array<float> secondPoint = generator.randomPoint(3);
-    if(secondPoint.length() != 3 || isCloseEnough(secondPoint.at(0), -0.053906f) == false || isCloseEnough(secondPoint.at(1), -0.72207f) == false || isCloseEnough(secondPoint.at(2), 0.68972f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UnitSphereSample generate second point fail");}
+    SGEXTN::Containers::Array<SGEXTN::Containers::Array<float>> sample(10000, SGEXTN::Containers::Array<float>(0));
+    for(int i=0; i<10000; i++){
+        sample.at(i) = generator.randomPoint(3);
+    }
+    float rho = 0.3f;
+    float measuredVariation = 0.0f;
+    for(int i=1; i<10000; i++){
+        for(int j=0; j<i; j++){
+            float dotProduct = sample.at(i).at(0) * sample.at(j).at(0) + sample.at(i).at(1) * sample.at(j).at(1) + sample.at(i).at(2) * sample.at(j).at(2);
+            dotProduct = (1.0f - rho * rho) * SGEXTN::Math::FloatMath<float>::powerOf(1.0f + rho * rho - 2.0f * rho * dotProduct, -1.5f) - 1.0f;
+            measuredVariation += dotProduct;
+        }
+    }
+    measuredVariation *= (2.0f / 10000.0f / 9999.0f);
+    float expectedVariation = 2.0f / 10000.0f / 9999.0f * ((1.0f + rho * rho) / (1.0f - rho * rho) / (1.0f - rho * rho) - 1.0f);
+    float measurementValue = measuredVariation / SGEXTN::Math::FloatMath<float>::squareRoot(expectedVariation);
+    if(measurementValue >= 1.645f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UnitSphereSample uniformity first test fail");}
+    rho = 0.7f;
+    measuredVariation = 0.0f;
+    for(int i=1; i<10000; i++){
+        for(int j=0; j<i; j++){
+            float dotProduct = sample.at(i).at(0) * sample.at(j).at(0) + sample.at(i).at(1) * sample.at(j).at(1) + sample.at(i).at(2) * sample.at(j).at(2);
+            dotProduct = (1.0f - rho * rho) * SGEXTN::Math::FloatMath<float>::powerOf(1.0f + rho * rho - 2.0f * rho * dotProduct, -1.5f) - 1.0f;
+            measuredVariation += dotProduct;
+        }
+    }
+    measuredVariation *= (2.0f / 10000.0f / 9999.0f);
+    expectedVariation = 2.0f / 10000.0f / 9999.0f * ((1.0f + rho * rho) / (1.0f - rho * rho) / (1.0f - rho * rho) - 1.0f);
+    measurementValue = measuredVariation / SGEXTN::Math::FloatMath<float>::squareRoot(expectedVariation);
+    if(measurementValue >= 1.645f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UnitSphereSample uniformity second test fail");}
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testSobolSequence(){
