@@ -139,7 +139,7 @@ template <typename Key, typename Value, typename EqualityCheck, typename HashFun
 
 template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> void SGEXTN::Containers::HashMap<Key, Value, EqualityCheck, HashFunction>::rehashAll(int newMemoryLength){
     newMemoryLength = acceptableCapacity(newMemoryLength);
-    SGEXTN::Containers::HashMapSlot<Key, Value, EqualityCheck, HashFunction>* oldPointer = data;
+    const SGEXTN::Containers::HashMapSlot<Key, Value, EqualityCheck, HashFunction>* oldPointer = data;
     const int oldMemoryLength = memoryTotalLength;
     memoryTotalLength = newMemoryLength;
     data = new SGEXTN::Containers::HashMapSlot<Key, Value, EqualityCheck, HashFunction>[newMemoryLength];

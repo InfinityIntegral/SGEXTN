@@ -523,9 +523,9 @@ template <typename Key, typename Value, typename Comparator> SGEXTN::Containers:
     return AVLTreeConstIterator(upperBoundNode(x), this);
 }
 
-template <typename Key, typename Value, typename Comparator> int SGEXTN::Containers::AVLTree<Key, Value, Comparator>::getIndexOfNode(AVLTreeNode<Key, Value, Comparator>* x) const {
+template <typename Key, typename Value, typename Comparator> int SGEXTN::Containers::AVLTree<Key, Value, Comparator>::getIndexOfNode(const AVLTreeNode<Key, Value, Comparator>* x) const {
     if(x == nullptr){return -1;}
-    AVLTreeNode<Key, Value, Comparator>* currentNode = x;
+    const AVLTreeNode<Key, Value, Comparator>* currentNode = x;
     int index = 0;
     while(true){
         if(currentNode == nullptr){return index;}

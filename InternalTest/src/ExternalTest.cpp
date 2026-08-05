@@ -634,7 +634,7 @@ void SGEXTN::InternalTest::ExternalTest::testNumericalParsing(){
     fillNumericParsingTestsDatabase();
     for(int i=0; i<numericParsingTestsDatabase.length(); i++){
         bool isValid = false;
-        SGEXTN::CoreText::String nullTerminatedString = numericParsingTestsDatabase.at(i) + '\0';
+        SGEXTN::CoreText::String nullTerminatedString = numericParsingTestsDatabase.at(i) + SGEXTN::CoreText::Character('\0');
         const int expectedInt = parseCStringToInt(reinterpret_cast<const char*>(&nullTerminatedString.byteAt(0)), &isValid, 10);
         if(isValid == true){
             bool parseSuccess = false;
