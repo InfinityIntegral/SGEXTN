@@ -21,46 +21,9 @@
 #include <SGEXTN/Containers/Array.h>
 #include <SGEXTN/Containers/Vector.h>
 #include <iostream>
-#include <locale>
-#include <cwchar>
 
 namespace {
 SGEXTN::CoreText::DebugLogFunctionRegistrarInstance useLogToCerr(&SGEXTN::CoreText::Debug::logToCerr);
-
-const char* printUtf8String(const unsigned char* data, int byteLength, bool& mustDeleteOutputUsingArrayDelete){
-    mustDeleteOutputUsingArrayDelete = false;
-    if(byteLength == 0){return "";}
-    const std::locale cmdConsoleLocale("");
-    char16_t* utf16Buffer = new char16_t[byteLength];
-    const std::codecvt<char16_t, char8_t, std::mbstate_t>& utf8ToUtf16Facet = std::use_facet<std::codecvt<char16_t, char8_t, std::mbstate_t>>(cmdConsoleLocale);
-    const char8_t* utf8Data = reinterpret_cast<const char8_t*>(data);
-    std::mbstate_t utf8ToUtf16State = {};
-    const char8_t* nextUtf8ToConvertToUtf16 = utf8Data;
-    // NOLINTNEXTLINE(misc-const-correctness)
-    char16_t* nextUtf16SlotToContainConvertedUtf8 = utf16Buffer;
-    std::codecvt_base::result conversionResult = utf8ToUtf16Facet.in(utf8ToUtf16State, utf8Data, utf8Data + byteLength, nextUtf8ToConvertToUtf16, utf16Buffer, utf16Buffer + byteLength, nextUtf16SlotToContainConvertedUtf8);
-    if(conversionResult != std::codecvt_base::ok){
-        delete[] utf16Buffer;
-        return "invalid string";
-    }
-    const int utf16Length = static_cast<int>(nextUtf16SlotToContainConvertedUtf8 - utf16Buffer);
-    const std::codecvt<char16_t, char, std::mbstate_t>& utf16ToSystemEncodingFacet = std::use_facet<std::codecvt<char16_t, char, std::mbstate_t>>(cmdConsoleLocale);
-    const int maximumSystemEncodingLength = (utf16Length * utf16ToSystemEncodingFacet.max_length()) + 1;
-    mustDeleteOutputUsingArrayDelete = true;
-    char* systemEncodingBuffer = new char[maximumSystemEncodingLength];
-    std::mbstate_t utf16ToSystemEncodingState = {};
-    const char16_t* nextUtf16ToConvertToSystemEncoding = utf16Buffer;
-    char* nextSystemEncodingSlotToContainConvertedUtf16 = systemEncodingBuffer;
-    conversionResult = utf16ToSystemEncodingFacet.out(utf16ToSystemEncodingState, utf16Buffer, utf16Buffer + utf16Length, nextUtf16ToConvertToSystemEncoding, systemEncodingBuffer, systemEncodingBuffer + maximumSystemEncodingLength, nextSystemEncodingSlotToContainConvertedUtf16);
-    delete[] utf16Buffer;
-    if(conversionResult != std::codecvt_base::ok){
-        mustDeleteOutputUsingArrayDelete = false;
-        delete[] systemEncodingBuffer;
-        return "";
-    }
-    (*nextSystemEncodingSlotToContainConvertedUtf16) = '\0';
-    return systemEncodingBuffer;
-}
 }
 
 SGEXTN::Containers::Vector<void (*)(const char*)>* SGEXTN::CoreText::Debug::logFunctionList = nullptr;
@@ -88,12 +51,11 @@ SGEXTN::CoreText::Debug::~Debug(){
         logMessage += ": ";
         logMessage += debugInfo;
     }
-    bool mustDelete = false;
-    const char* cString = printUtf8String(&logMessage.byteAt(0), logMessage.byteLength(), mustDelete);
+    logMessage += SGEXTN::CoreText::Character('\0');
+    const char* cString = reinterpret_cast<const char*>(&logMessage.byteAt(0));
     for(int i=0; i<(*SGEXTN::CoreText::Debug::logFunctionList).length(); i++){
         ((*SGEXTN::CoreText::Debug::logFunctionList).at(i))(cString);
     }
-    if(mustDelete == true){delete[] cString;}
 }
 
 // NOLINTBEGIN(readability-convert-member-functions-to-static)

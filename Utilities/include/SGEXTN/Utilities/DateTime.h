@@ -23,11 +23,11 @@ class String;
 }
 
 namespace Utilities {
-enum class BuildLah_SGEXTN_Utilities TimeUnit : unsigned char {Year, Month, Day, Hour, Minute, Second};
+enum class TimeUnit : unsigned char {Year, Month, Day, Hour, Minute, Second};
 
-enum class BuildLah_SGEXTN_Utilities TimeFormat : unsigned char {Display, FileName, ShortestReadable};
+enum class TimeFormat : unsigned char {Display, FileName, ShortestReadable};
 
-enum class BuildLah_SGEXTN_Utilities SignificantDates : unsigned char {NationalDay, DayBeforeNationalDay, DayAfterNationalDay, TotalDefenceDay, RacialHarmonyDay};
+enum class SignificantDates : unsigned char {NationalDay, DayBeforeNationalDay, DayAfterNationalDay, TotalDefenceDay, RacialHarmonyDay};
 
 class BuildLah_SGEXTN_Utilities DateTime {
 public:

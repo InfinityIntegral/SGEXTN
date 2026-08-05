@@ -28,9 +28,9 @@ namespace CoreText {
 class Character;
 class OldString;
 
-enum class BuildLah_SGEXTN_CoreText FloatPrecisionFormat : unsigned char {SignificantFigure, FractionalDigit, ScientificNotation};
+enum class FloatPrecisionFormat : unsigned char {SignificantFigure, FractionalDigit, ScientificNotation};
 
-enum class BuildLah_SGEXTN_CoreText NormalisationFormat : unsigned char {Join, Separate, LossyJoin, LossySeparate};
+enum class NormalisationFormat : unsigned char {Join, Separate, LossyJoin, LossySeparate};
 
 class BuildLah_SGEXTN_CoreText String {
 public:

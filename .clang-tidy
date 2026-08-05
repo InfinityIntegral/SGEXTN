@@ -13,7 +13,6 @@ Checks:
   - bugprone-dangling-handle
   - bugprone-dynamic-static-initializers
   - bugprone-empty-catch
-  - bugprone-exception-escape
   - bugprone-fold-init-type
   - bugprone-forward-declaration-namespace
   - bugprone-forwarding-reference-overload

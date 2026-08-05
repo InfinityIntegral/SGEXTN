@@ -62,7 +62,7 @@ public:
     [[nodiscard]] AVLTreeNode<Key, Value, Comparator>* lowerBoundNode(const Key& x) const;
     [[nodiscard]] AVLTreeNode<Key, Value, Comparator>* upperBoundNode(const Key& x) const;
     [[nodiscard]] AVLTreeNode<Key, Value, Comparator>* getNodeByIndex(int x) const;
-    [[nodiscard]] int getIndexOfNode(AVLTreeNode<Key, Value, Comparator>* x) const;
+    [[nodiscard]] int getIndexOfNode(const AVLTreeNode<Key, Value, Comparator>* x) const;
     AVLTree();
     AVLTree(const AVLTree& x);
     AVLTree& operator=(const AVLTree& x);
