@@ -20,27 +20,22 @@
 #include <SGEXTN/Containers/ForceCrash.h>
 #include <SGEXTN/SeerattraNum/DirectRandom.h>
 
-SGEXTN::SeerattraNum::ChiSquaredDistribution::ChiSquaredDistribution(bool useGlobal, float degreesOfFreedom) : private_degreesOfFreedom(degreesOfFreedom), private_rng(nullptr), private_ownsRng(useGlobal == false), private_gammaDistribution(true, 1.0f, 2.0f){
+SGEXTN::SeerattraNum::ChiSquaredDistribution::ChiSquaredDistribution(bool useGlobal, float degreesOfFreedom) : private_degreesOfFreedom(degreesOfFreedom), private_rngLocator(useGlobal), private_gammaDistribution(true, 1.0f, 2.0f){
     if(degreesOfFreedom <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::ChiSquaredDistribution constructor crashed because requested number of degrees of freedom is nonpositive");}
-    private_rng = SGEXTN::SeerattraNum::DirectRandom::private_createRng(useGlobal);
-    private_gammaDistribution.private_rng = private_rng;
-    private_gammaDistribution.private_standardNormalDistribution.private_rng = private_rng;
     private_gammaDistribution.setVariableCount(0.5f * degreesOfFreedom);
 }
 
-SGEXTN::SeerattraNum::ChiSquaredDistribution::~ChiSquaredDistribution(){
-    if(private_ownsRng == true){delete private_rng;}
+void SGEXTN::SeerattraNum::ChiSquaredDistribution::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
+    if(private_rngLocator.private_ownsRng == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::ChiSquaredDistribution::seed crashed because cannot seed global rng");}
+    (*private_rngLocator).seed(seedArray);
 }
 
-void SGEXTN::SeerattraNum::ChiSquaredDistribution::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
-    if(private_ownsRng == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::ChiSquaredDistribution::seed crashed because cannot seed global rng");}
-    SGEXTN::SeerattraNum::DirectRandom* temp = private_rng;
-    private_rng = temp;
-    (*private_rng).seed(seedArray);
+float SGEXTN::SeerattraNum::ChiSquaredDistribution::private_randomValue(SGEXTN::SeerattraNum::DirectRandomInstanceLocator& externalLocator) const {
+    return private_gammaDistribution.private_randomValue(externalLocator);
 }
 
 float SGEXTN::SeerattraNum::ChiSquaredDistribution::randomValue(){
-    return private_gammaDistribution.randomValue();
+    return private_randomValue(private_rngLocator);
 }
 
 SGEXTN::Containers::Array<float> SGEXTN::SeerattraNum::ChiSquaredDistribution::randomValueArray(int count){

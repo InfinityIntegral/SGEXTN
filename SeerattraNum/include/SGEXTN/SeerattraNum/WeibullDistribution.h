@@ -17,24 +17,17 @@
 
 #pragma once
 #include <SGEXTN/Containers/Array.h>
+#include <SGEXTN/SeerattraNum/DirectRandomInstanceLocator.h>
 
 namespace SGEXTN {
 namespace SeerattraNum {
-class DirectRandom;
-
 class BuildLah_SGEXTN_SeerattraNum WeibullDistribution {
 public:
-    SGEXTN::SeerattraNum::DirectRandom* private_rng;
-    bool private_ownsRng;
+    SGEXTN::SeerattraNum::DirectRandomInstanceLocator private_rngLocator;
     float private_failureBehaviour;
     float private_characteristicLifespan;
     float private_reciprocalA;
     WeibullDistribution(bool useGlobal, float failureBehaviour, float characteristicLifespan);
-    WeibullDistribution(const WeibullDistribution&) = delete;
-    WeibullDistribution& operator=(const WeibullDistribution&) = delete;
-    WeibullDistribution(WeibullDistribution&&) = delete;
-    WeibullDistribution& operator=(WeibullDistribution&&) = delete;
-    ~WeibullDistribution();
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
     [[nodiscard]] float randomValue();
     [[nodiscard]] SGEXTN::Containers::Array<float> randomValueArray(int count);

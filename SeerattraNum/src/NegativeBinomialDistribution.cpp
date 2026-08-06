@@ -22,32 +22,22 @@
 #include <SGEXTN/SeerattraNum/GammaDistribution.h>
 #include <SGEXTN/SeerattraNum/PoissonDistribution.h>
 
-SGEXTN::SeerattraNum::NegativeBinomialDistribution::NegativeBinomialDistribution(bool useGlobal, float chanceOfTrue, int successCount) : private_chanceOfTrue(chanceOfTrue), private_successCount(successCount), private_rng(nullptr), private_ownsRng(useGlobal == false), private_gammaDistribution(true, 1.0f, 1.0f), private_poissonDistribution(true, 1.0f){
+SGEXTN::SeerattraNum::NegativeBinomialDistribution::NegativeBinomialDistribution(bool useGlobal, float chanceOfTrue, int successCount) : private_chanceOfTrue(chanceOfTrue), private_successCount(successCount), private_rngLocator(useGlobal), private_gammaDistribution(true, 1.0f, 1.0f), private_poissonDistribution(true, 1.0f){
     if(chanceOfTrue < 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NegativeBinomialDistribution constructor crashed because the requested probability is negative");}
     if(chanceOfTrue > 1.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NegativeBinomialDistribution constructor crashed because the requested probability is higher than 1");}
     if(successCount < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NegativeBinomialDistribution constructor crashed because the requested number of successful attempts is negative");}
-    private_rng = SGEXTN::SeerattraNum::DirectRandom::private_createRng(useGlobal);
-    private_gammaDistribution.private_rng = private_rng;
-    private_gammaDistribution.private_standardNormalDistribution.private_rng = private_rng;
-    private_poissonDistribution.private_rng = private_rng;
     private_gammaDistribution.setVariableCount(static_cast<float>(successCount));
     private_gammaDistribution.setVariableMean((1.0f - chanceOfTrue) / chanceOfTrue);
 }
 
-SGEXTN::SeerattraNum::NegativeBinomialDistribution::~NegativeBinomialDistribution(){
-    if(private_ownsRng == true){delete private_rng;}
-}
-
 void SGEXTN::SeerattraNum::NegativeBinomialDistribution::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
-    if(private_ownsRng == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NegativeBinomialDistribution::seed crashed because cannot seed global rng");}
-    SGEXTN::SeerattraNum::DirectRandom* temp = private_rng;
-    private_rng = temp;
-    (*private_rng).seed(seedArray);
+    if(private_rngLocator.private_ownsRng == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NegativeBinomialDistribution::seed crashed because cannot seed global rng");}
+    (*private_rngLocator).seed(seedArray);
 }
 
 int SGEXTN::SeerattraNum::NegativeBinomialDistribution::randomValue(){
-    private_poissonDistribution.setMean(private_gammaDistribution.randomValue());
-    return private_poissonDistribution.randomValue();
+    private_poissonDistribution.setMean(private_gammaDistribution.private_randomValue(private_rngLocator));
+    return private_poissonDistribution.private_randomValue(private_rngLocator);
 }
 
 SGEXTN::Containers::Array<int> SGEXTN::SeerattraNum::NegativeBinomialDistribution::randomValueArray(int count){

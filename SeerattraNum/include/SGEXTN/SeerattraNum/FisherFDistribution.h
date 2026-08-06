@@ -18,25 +18,18 @@
 #pragma once
 #include <SGEXTN/Containers/Array.h>
 #include <SGEXTN/SeerattraNum/ChiSquaredDistribution.h>
+#include <SGEXTN/SeerattraNum/DirectRandomInstanceLocator.h>
 
 namespace SGEXTN {
 namespace SeerattraNum {
-class DirectRandom;
-
 class BuildLah_SGEXTN_SeerattraNum FisherFDistribution {
 public:
-    SGEXTN::SeerattraNum::DirectRandom* private_rng;
-    bool private_ownsRng;
+    SGEXTN::SeerattraNum::DirectRandomInstanceLocator private_rngLocator;
     float private_numeratorDegreesOfFreedom;
     float private_denominatorDegreesOfFreedom;
     SGEXTN::SeerattraNum::ChiSquaredDistribution private_numeratorDistribution;
     SGEXTN::SeerattraNum::ChiSquaredDistribution private_denominatorDistribution;
     FisherFDistribution(bool useGlobal, float numeratorDegreesOfFreedom, float denominatorDegreesOfFreedom);
-    FisherFDistribution(const FisherFDistribution&) = delete;
-    FisherFDistribution& operator=(const FisherFDistribution&) = delete;
-    FisherFDistribution(FisherFDistribution&&) = delete;
-    FisherFDistribution& operator=(FisherFDistribution&&) = delete;
-    ~FisherFDistribution();
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
     [[nodiscard]] float randomValue();
     [[nodiscard]] SGEXTN::Containers::Array<float> randomValueArray(int count);

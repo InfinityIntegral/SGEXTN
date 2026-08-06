@@ -21,31 +21,26 @@
 #include <SGEXTN/SeerattraNum/DirectRandom.h>
 #include <SGEXTN/Math/IntegerLimits.h>
 
-SGEXTN::SeerattraNum::UniformDistributionInteger::UniformDistributionInteger(bool useGlobal, int inclusiveMin, int inclusiveMax) : private_inclusiveMax(inclusiveMax), private_inclusiveMin(inclusiveMin), private_rng(nullptr), private_ownsRng(useGlobal == false){
+SGEXTN::SeerattraNum::UniformDistributionInteger::UniformDistributionInteger(bool useGlobal, int inclusiveMin, int inclusiveMax) : private_inclusiveMax(inclusiveMax), private_inclusiveMin(inclusiveMin), private_rngLocator(useGlobal){
     if(inclusiveMin > inclusiveMax){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionInteger constructor crashed because minimum is higher than maximum");}
-    private_rng = SGEXTN::SeerattraNum::DirectRandom::private_createRng(useGlobal);
-}
-
-SGEXTN::SeerattraNum::UniformDistributionInteger::~UniformDistributionInteger(){
-    if(private_ownsRng == true){delete private_rng;}
 }
 
 void SGEXTN::SeerattraNum::UniformDistributionInteger::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
-    if(private_ownsRng == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionInteger::seed crashed because cannot seed global rng");}
-    SGEXTN::SeerattraNum::DirectRandom* temp = private_rng;
-    private_rng = temp;
-    (*private_rng).seed(seedArray);
+    if(private_rngLocator.private_ownsRng == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionInteger::seed crashed because cannot seed global rng");}
+    (*private_rngLocator).seed(seedArray);
 }
 
-int SGEXTN::SeerattraNum::UniformDistributionInteger::randomValue(){
-    SGEXTN::SeerattraNum::DirectRandom* temp = private_rng;
-    private_rng = temp;
+int SGEXTN::SeerattraNum::UniformDistributionInteger::private_randomValue(SGEXTN::SeerattraNum::DirectRandomInstanceLocator& externalLocator) const {
     while(true){
-        const unsigned int rngValue = (*private_rng).randomUnsignedInt32();
+        const unsigned int rngValue = (*externalLocator).randomUnsignedInt32();
         const unsigned int elementCount = static_cast<unsigned int>(private_inclusiveMax - private_inclusiveMin + 1);
         if(rngValue >= elementCount * (SGEXTN::Math::IntegerLimits<unsigned int>::maximum() / elementCount)){continue;}
         return (static_cast<int>(rngValue % elementCount) + private_inclusiveMin);
     }
+}
+
+int SGEXTN::SeerattraNum::UniformDistributionInteger::randomValue(){
+    return private_randomValue(private_rngLocator);
 }
 
 SGEXTN::Containers::Array<int> SGEXTN::SeerattraNum::UniformDistributionInteger::randomValueArray(int count){

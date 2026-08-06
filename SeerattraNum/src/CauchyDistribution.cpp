@@ -22,26 +22,17 @@
 #include <SGEXTN/Math/FloatMath.h>
 #include <SGEXTN/Math/FloatConstants.h>
 
-SGEXTN::SeerattraNum::CauchyDistribution::CauchyDistribution(bool useGlobal, float median, float halfWidth) : private_median(median), private_halfWidth(halfWidth), private_rng(nullptr), private_ownsRng(useGlobal == false){
+SGEXTN::SeerattraNum::CauchyDistribution::CauchyDistribution(bool useGlobal, float median, float halfWidth) : private_median(median), private_halfWidth(halfWidth), private_rngLocator(useGlobal){
     if(halfWidth <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::CauchyDistribution constructor crashed because requested half width is nonpositive");}
-    private_rng = SGEXTN::SeerattraNum::DirectRandom::private_createRng(useGlobal);
-}
-
-SGEXTN::SeerattraNum::CauchyDistribution::~CauchyDistribution(){
-    if(private_ownsRng == true){delete private_rng;}
 }
 
 void SGEXTN::SeerattraNum::CauchyDistribution::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
-    if(private_ownsRng == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::CauchyDistribution::seed crashed because cannot seed global rng");}
-    SGEXTN::SeerattraNum::DirectRandom* temp = private_rng;
-    private_rng = temp;
-    (*private_rng).seed(seedArray);
+    if(private_rngLocator.private_ownsRng == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::CauchyDistribution::seed crashed because cannot seed global rng");}
+    (*private_rngLocator).seed(seedArray);
 }
 
 float SGEXTN::SeerattraNum::CauchyDistribution::randomValue(){
-    SGEXTN::SeerattraNum::DirectRandom* temp = private_rng;
-    private_rng = temp;
-    const unsigned int integerRng = (*private_rng).randomUnsignedInt32();
+    const unsigned int integerRng = (*private_rngLocator).randomUnsignedInt32();
     const float scaleFactor = 1.0f / (static_cast<float>(static_cast<unsigned int>(1) << 24) + 1.0f);
     const float rng = (1.0f + (static_cast<float>(integerRng >> 8))) * scaleFactor;
     return (private_median + private_halfWidth * SGEXTN::Math::FloatMath<float>::tangent(SGEXTN::Math::FloatConstants<float>::pi() * (rng - 0.5f)));

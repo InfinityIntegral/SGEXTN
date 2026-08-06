@@ -17,27 +17,19 @@
 
 #pragma once
 #include <SGEXTN/Containers/Array.h>
-#include <SGEXTN/SeerattraNum/BernoulliDistribution.h>
+#include <SGEXTN/SeerattraNum/DirectRandomInstanceLocator.h>
 
 namespace SGEXTN {
 namespace SeerattraNum {
-class DirectRandom;
-
 class BuildLah_SGEXTN_SeerattraNum GeometricDistribution {
 public:
-    SGEXTN::SeerattraNum::DirectRandom* private_rng;
-    bool private_ownsRng;
+    SGEXTN::SeerattraNum::DirectRandomInstanceLocator private_rngLocator;
     float private_chanceOfTrue;
     float private_cacheReciprocalOfLnChanceOfFalse;
-    SGEXTN::SeerattraNum::BernoulliDistribution private_bernoulliDistribution;
     GeometricDistribution(bool useGlobal, float chanceOfTrue);
-    GeometricDistribution(const GeometricDistribution&) = delete;
-    GeometricDistribution& operator=(const GeometricDistribution&) = delete;
-    GeometricDistribution(GeometricDistribution&&) = delete;
-    GeometricDistribution& operator=(GeometricDistribution&&) = delete;
-    ~GeometricDistribution();
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
     [[nodiscard]] int randomValue();
+    [[nodiscard]] int private_randomValue(SGEXTN::SeerattraNum::DirectRandomInstanceLocator& externalLocator) const;
     [[nodiscard]] SGEXTN::Containers::Array<int> randomValueArray(int count);
     [[nodiscard]] float getChanceOfTrue() const;
     void setChanceOfTrue(float chanceOfTrue);

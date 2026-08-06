@@ -17,15 +17,13 @@
 
 #pragma once
 #include <SGEXTN/Containers/Array.h>
+#include <SGEXTN/SeerattraNum/DirectRandomInstanceLocator.h>
 
 namespace SGEXTN {
 namespace SeerattraNum {
-class DirectRandom;
-
 class BuildLah_SGEXTN_SeerattraNum PoissonDistribution {
 public:
-    SGEXTN::SeerattraNum::DirectRandom* private_rng;
-    bool private_ownsRng;
+    SGEXTN::SeerattraNum::DirectRandomInstanceLocator private_rngLocator;
     float private_mean;
     float private_smallMeanProductThreshold;
     float private_precompConstantA;
@@ -35,13 +33,9 @@ public:
     float private_lnMean;
     float private_lnAcceptRate;
     PoissonDistribution(bool useGlobal, float mean);
-    PoissonDistribution(const PoissonDistribution&) = delete;
-    PoissonDistribution& operator=(const PoissonDistribution&) = delete;
-    PoissonDistribution(PoissonDistribution&&) = delete;
-    PoissonDistribution& operator=(PoissonDistribution&&) = delete;
-    ~PoissonDistribution();
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
     [[nodiscard]] int randomValue();
+    [[nodiscard]] int private_randomValue(SGEXTN::SeerattraNum::DirectRandomInstanceLocator& externalLocator) const;
     [[nodiscard]] SGEXTN::Containers::Array<int> randomValueArray(int count);
     [[nodiscard]] float getMean() const;
     void setMean(float mean);

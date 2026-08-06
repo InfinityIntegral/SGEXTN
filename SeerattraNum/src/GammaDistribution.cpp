@@ -22,16 +22,10 @@
 #include <SGEXTN/Math/FloatMath.h>
 #include <SGEXTN/SeerattraNum/NormalDistribution.h>
 
-SGEXTN::SeerattraNum::GammaDistribution::GammaDistribution(bool useGlobal, float variableCount, float variableMean) : private_variableCount(variableCount), private_variableMean(variableMean), private_rng(nullptr), private_ownsRng(useGlobal == false), private_standardNormalDistribution(true, 0.0f, 1.0f), private_precompConstantC(0.0f), private_precompConstantD(0.0f), private_reciprocalVariableCount(0.0f){
+SGEXTN::SeerattraNum::GammaDistribution::GammaDistribution(bool useGlobal, float variableCount, float variableMean) : private_variableCount(variableCount), private_variableMean(variableMean), private_rngLocator(useGlobal), private_standardNormalDistribution(true, 0.0f, 1.0f), private_precompConstantC(0.0f), private_precompConstantD(0.0f), private_reciprocalVariableCount(0.0f){
     if(variableCount <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GammaDistribution constructor crashed because requested number of exponentially distributed variables to sum is nonpositive");}
     if(variableMean <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GammaDistribution constructor crashed because requested mean of each exponentially distributed variable is nonpositive");}
-    private_rng = SGEXTN::SeerattraNum::DirectRandom::private_createRng(useGlobal);
     private_redoPrecompute();
-    private_standardNormalDistribution.private_rng = private_rng;
-}
-
-SGEXTN::SeerattraNum::GammaDistribution::~GammaDistribution(){
-    if(private_ownsRng == true){delete private_rng;}
 }
 
 void SGEXTN::SeerattraNum::GammaDistribution::private_redoPrecompute(){
@@ -43,13 +37,11 @@ void SGEXTN::SeerattraNum::GammaDistribution::private_redoPrecompute(){
 }
 
 void SGEXTN::SeerattraNum::GammaDistribution::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
-    if(private_ownsRng == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GammaDistribution::seed crashed because cannot seed global rng");}
-    SGEXTN::SeerattraNum::DirectRandom* temp = private_rng;
-    private_rng = temp;
-    (*private_rng).seed(seedArray);
+    if(private_rngLocator.private_ownsRng == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GammaDistribution::seed crashed because cannot seed global rng");}
+    (*private_rngLocator).seed(seedArray);
 }
 
-float SGEXTN::SeerattraNum::GammaDistribution::randomValue(){
+float SGEXTN::SeerattraNum::GammaDistribution::private_randomValue(SGEXTN::SeerattraNum::DirectRandomInstanceLocator& externalLocator) const {
     float effectiveVariableCount = private_variableCount;
     bool shouldAdjust = false;
     if(effectiveVariableCount < 1){
@@ -58,8 +50,8 @@ float SGEXTN::SeerattraNum::GammaDistribution::randomValue(){
     }
     float result = 0.0f;
     while(true){
-        const float normalVar = private_standardNormalDistribution.randomValue();
-        const float uniformVar = (*private_rng).randomFloat32();
+        const float normalVar = private_standardNormalDistribution.private_randomValue(externalLocator);
+        const float uniformVar = (*externalLocator).randomFloat32();
         float v = 1.0f + private_precompConstantC * normalVar;
         v = v * v * v;
         if(v <= 0.0f){continue;}
@@ -74,8 +66,12 @@ float SGEXTN::SeerattraNum::GammaDistribution::randomValue(){
             break;
         }
     }
-    if(shouldAdjust == true){result *= SGEXTN::Math::FloatMath<float>::powerOf((*private_rng).randomFloat32(), private_reciprocalVariableCount);}
+    if(shouldAdjust == true){result *= SGEXTN::Math::FloatMath<float>::powerOf((*externalLocator).randomFloat32(), private_reciprocalVariableCount);}
     return (result * private_variableMean);
+}
+
+float SGEXTN::SeerattraNum::GammaDistribution::randomValue(){
+    return private_randomValue(private_rngLocator);
 }
 
 SGEXTN::Containers::Array<float> SGEXTN::SeerattraNum::GammaDistribution::randomValueArray(int count){

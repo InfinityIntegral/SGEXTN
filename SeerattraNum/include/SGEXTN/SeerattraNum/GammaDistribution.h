@@ -18,15 +18,13 @@
 #pragma once
 #include <SGEXTN/Containers/Array.h>
 #include <SGEXTN/SeerattraNum/NormalDistribution.h>
+#include <SGEXTN/SeerattraNum/DirectRandomInstanceLocator.h>
 
 namespace SGEXTN {
 namespace SeerattraNum {
-class DirectRandom;
-
 class BuildLah_SGEXTN_SeerattraNum GammaDistribution {
 public:
-    SGEXTN::SeerattraNum::DirectRandom* private_rng;
-    bool private_ownsRng;
+    SGEXTN::SeerattraNum::DirectRandomInstanceLocator private_rngLocator;
     float private_variableCount;
     float private_variableMean;
     SGEXTN::SeerattraNum::NormalDistribution private_standardNormalDistribution;
@@ -34,12 +32,8 @@ public:
     float private_precompConstantC;
     float private_reciprocalVariableCount;
     GammaDistribution(bool useGlobal, float variableCount, float variableMean);
-    GammaDistribution(const GammaDistribution&) = delete;
-    GammaDistribution& operator=(const GammaDistribution&) = delete;
-    GammaDistribution(GammaDistribution&&) = delete;
-    GammaDistribution& operator=(GammaDistribution&&) = delete;
-    ~GammaDistribution();
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
+    [[nodiscard]] float private_randomValue(SGEXTN::SeerattraNum::DirectRandomInstanceLocator& externalLocator) const;
     [[nodiscard]] float randomValue();
     [[nodiscard]] SGEXTN::Containers::Array<float> randomValueArray(int count);
     [[nodiscard]] float getVariableCount() const;

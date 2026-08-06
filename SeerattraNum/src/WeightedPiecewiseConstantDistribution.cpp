@@ -20,7 +20,7 @@
 #include <SGEXTN/Containers/ForceCrash.h>
 #include <SGEXTN/SeerattraNum/DirectRandom.h>
 
-SGEXTN::SeerattraNum::WeightedPiecewiseConstantDistribution::WeightedPiecewiseConstantDistribution(bool useGlobal, const SGEXTN::Containers::Array<float>& weights, const SGEXTN::Containers::Array<float>& boundaries) : private_weights(weights), private_boundaries(boundaries), private_prefixSums(0), private_rng(nullptr), private_ownsRng(useGlobal == false){
+SGEXTN::SeerattraNum::WeightedPiecewiseConstantDistribution::WeightedPiecewiseConstantDistribution(bool useGlobal, const SGEXTN::Containers::Array<float>& weights, const SGEXTN::Containers::Array<float>& boundaries) : private_weights(weights), private_boundaries(boundaries), private_prefixSums(0), private_rngLocator(useGlobal){
     if(weights.length() == 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedPiecewiseConstantDistribution constructor crashed because the array of weights is empty");}
     bool isAllZero = true;
     for(int i=0; i<weights.length(); i++){
@@ -32,12 +32,7 @@ SGEXTN::SeerattraNum::WeightedPiecewiseConstantDistribution::WeightedPiecewiseCo
     for(int i=0; i<boundaries.length()-1; i++){
         if(boundaries.at(i) >= boundaries.at(i + 1)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedPiecewiseConstantDistribution constructor crashed because the boundaries array is not strictly increasing");}
     }
-    private_rng = SGEXTN::SeerattraNum::DirectRandom::private_createRng(useGlobal);
     private_updatePrefixSums();
-}
-
-SGEXTN::SeerattraNum::WeightedPiecewiseConstantDistribution::~WeightedPiecewiseConstantDistribution(){
-    if(private_ownsRng == true){delete private_rng;}
 }
 
 void SGEXTN::SeerattraNum::WeightedPiecewiseConstantDistribution::private_updatePrefixSums(){
@@ -52,16 +47,12 @@ void SGEXTN::SeerattraNum::WeightedPiecewiseConstantDistribution::private_update
 }
 
 void SGEXTN::SeerattraNum::WeightedPiecewiseConstantDistribution::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
-    if(private_ownsRng == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedPiecewiseConstantDistribution::seed crashed because cannot seed global rng");}
-    SGEXTN::SeerattraNum::DirectRandom* temp = private_rng;
-    private_rng = temp;
-    (*private_rng).seed(seedArray);
+    if(private_rngLocator.private_ownsRng == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedPiecewiseConstantDistribution::seed crashed because cannot seed global rng");}
+    (*private_rngLocator).seed(seedArray);
 }
 
 float SGEXTN::SeerattraNum::WeightedPiecewiseConstantDistribution::randomValue(){
-    SGEXTN::SeerattraNum::DirectRandom* temp = private_rng;
-    private_rng = temp;
-    float rng = (*private_rng).randomFloat32();
+    float rng = (*private_rngLocator).randomFloat32();
     int low = 0;
     int high = private_weights.length();
     while(high - low > 1){

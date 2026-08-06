@@ -20,27 +20,18 @@
 #include <SGEXTN/Containers/ForceCrash.h>
 #include <SGEXTN/SeerattraNum/DirectRandom.h>
 
-SGEXTN::SeerattraNum::BernoulliDistribution::BernoulliDistribution(bool useGlobal, float chanceOfTrue) : private_chanceOfTrue(chanceOfTrue), private_rng(nullptr), private_ownsRng(useGlobal == false){
+SGEXTN::SeerattraNum::BernoulliDistribution::BernoulliDistribution(bool useGlobal, float chanceOfTrue) : private_chanceOfTrue(chanceOfTrue), private_rngLocator(useGlobal){
     if(chanceOfTrue < 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BernoulliDistribution constructor crashed because the requested probability is negative");}
     if(chanceOfTrue > 1.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BernoulliDistribution constructor crashed because the requested probability is higher than 1");}
-    private_rng = SGEXTN::SeerattraNum::DirectRandom::private_createRng(useGlobal);
-}
-
-SGEXTN::SeerattraNum::BernoulliDistribution::~BernoulliDistribution(){
-    if(private_ownsRng == true){delete private_rng;}
 }
 
 void SGEXTN::SeerattraNum::BernoulliDistribution::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
-    if(private_ownsRng == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BernoulliDistribution::seed crashed because cannot seed global rng");}
-    SGEXTN::SeerattraNum::DirectRandom* temp = private_rng;
-    private_rng = temp;
-    (*private_rng).seed(seedArray);
+    if(private_rngLocator.private_ownsRng == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BernoulliDistribution::seed crashed because cannot seed global rng");}
+    (*private_rngLocator).seed(seedArray);
 }
 
 bool SGEXTN::SeerattraNum::BernoulliDistribution::randomValue(){
-    SGEXTN::SeerattraNum::DirectRandom* temp = private_rng;
-    private_rng = temp;
-    return ((*private_rng).randomFloat32() < private_chanceOfTrue);
+    return ((*private_rngLocator).randomFloat32() < private_chanceOfTrue);
 }
 
 SGEXTN::Containers::Array<bool> SGEXTN::SeerattraNum::BernoulliDistribution::randomValueArray(int count){

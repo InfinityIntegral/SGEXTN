@@ -16,21 +16,22 @@
 // BuildLah license check: SGEXTN 7.0.0
 
 #pragma once
-#include <SGEXTN/Containers/Array.h>
-#include <SGEXTN/SeerattraNum/DirectRandomInstanceLocator.h>
 
 namespace SGEXTN {
 namespace SeerattraNum {
-class BuildLah_SGEXTN_SeerattraNum BernoulliDistribution {
+class DirectRandom;
+
+class BuildLah_SGEXTN_SeerattraNum DirectRandomInstanceLocator {
 public:
-    SGEXTN::SeerattraNum::DirectRandomInstanceLocator private_rngLocator;
-    float private_chanceOfTrue;
-    BernoulliDistribution(bool useGlobal, float chanceOfTrue);
-    void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
-    [[nodiscard]] bool randomValue();
-    [[nodiscard]] SGEXTN::Containers::Array<bool> randomValueArray(int count);
-    [[nodiscard]] float getChanceOfTrue() const;
-    void setChanceOfTrue(float chanceOfTrue);
+    bool private_ownsRng;
+    SGEXTN::SeerattraNum::DirectRandom* private_rng;
+    DirectRandomInstanceLocator(bool useGlobal);
+    DirectRandomInstanceLocator(const DirectRandomInstanceLocator& x);
+    DirectRandomInstanceLocator& operator=(const DirectRandomInstanceLocator& x);
+    DirectRandomInstanceLocator(DirectRandomInstanceLocator&& x) noexcept;
+    DirectRandomInstanceLocator& operator=(DirectRandomInstanceLocator&& x) noexcept;
+    ~DirectRandomInstanceLocator();
+    [[nodiscard]] SGEXTN::SeerattraNum::DirectRandom& operator*();
 };
 }
 }

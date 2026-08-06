@@ -21,14 +21,9 @@
 #include <SGEXTN/SeerattraNum/DirectRandom.h>
 #include <SGEXTN/Math/FloatMath.h>
 
-SGEXTN::SeerattraNum::PoissonDistribution::PoissonDistribution(bool useGlobal, float mean) : private_mean(mean), private_rng(nullptr), private_ownsRng(useGlobal == false), private_smallMeanProductThreshold(0.0f), private_precompConstantA(0.0f), private_precompConstantB(0.0f), private_squeezeBoundU(0.0f), private_squeezeBoundV(0.0f), private_lnMean(0.0f), private_lnAcceptRate(0.0f){
+SGEXTN::SeerattraNum::PoissonDistribution::PoissonDistribution(bool useGlobal, float mean) : private_mean(mean), private_rngLocator(useGlobal), private_smallMeanProductThreshold(0.0f), private_precompConstantA(0.0f), private_precompConstantB(0.0f), private_squeezeBoundU(0.0f), private_squeezeBoundV(0.0f), private_lnMean(0.0f), private_lnAcceptRate(0.0f){
     if(mean <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::PoissonDistribution constructor crashed because requested mean is nonpositive");}
-    private_rng = SGEXTN::SeerattraNum::DirectRandom::private_createRng(useGlobal);
     private_redoPrecompute();
-}
-
-SGEXTN::SeerattraNum::PoissonDistribution::~PoissonDistribution(){
-    if(private_ownsRng == true){delete private_rng;}
 }
 
 void SGEXTN::SeerattraNum::PoissonDistribution::private_redoPrecompute(){
@@ -42,28 +37,24 @@ void SGEXTN::SeerattraNum::PoissonDistribution::private_redoPrecompute(){
 }
 
 void SGEXTN::SeerattraNum::PoissonDistribution::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
-    if(private_ownsRng == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::PoissonDistribution::seed crashed because cannot seed global rng");}
-    SGEXTN::SeerattraNum::DirectRandom* temp = private_rng;
-    private_rng = temp;
-    (*private_rng).seed(seedArray);
+    if(private_rngLocator.private_ownsRng == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::PoissonDistribution::seed crashed because cannot seed global rng");}
+    (*private_rngLocator).seed(seedArray);
 }
 
-int SGEXTN::SeerattraNum::PoissonDistribution::randomValue(){
-    SGEXTN::SeerattraNum::DirectRandom* temp = private_rng;
-    private_rng = temp;
+int SGEXTN::SeerattraNum::PoissonDistribution::private_randomValue(SGEXTN::SeerattraNum::DirectRandomInstanceLocator& externalLocator) const {
     if(private_mean <= 20.0f){
         float product = 1.0f;
         int count = 0;
         while(product >= private_smallMeanProductThreshold){
-            product *= (*private_rng).randomFloat32();
+            product *= (*externalLocator).randomFloat32();
             count++;
         }
         return (count - 1);
     }
     int result = 0;
     while(true){
-        const float v1 = (*private_rng).randomFloat32() - 0.5f;
-        const float v2 = (*private_rng).randomFloat32();
+        const float v1 = (*externalLocator).randomFloat32() - 0.5f;
+        const float v2 = (*externalLocator).randomFloat32();
         const int g0OfV1 = SGEXTN::Math::FloatMath<float>::floorToInt(0.445f + private_mean + v1 * (private_precompConstantB + 2.0f * private_precompConstantA / (0.5f - SGEXTN::Math::FloatMath<float>::absoluteValue(v1))));
         if(g0OfV1 < 0){continue;}
         if(v1 >= -1.0f * private_squeezeBoundU && v1 <= private_squeezeBoundU && v2 <= private_squeezeBoundV){
@@ -79,6 +70,10 @@ int SGEXTN::SeerattraNum::PoissonDistribution::randomValue(){
         }
     }
     return result;
+}
+
+int SGEXTN::SeerattraNum::PoissonDistribution::randomValue(){
+    return private_randomValue(private_rngLocator);
 }
 
 SGEXTN::Containers::Array<int> SGEXTN::SeerattraNum::PoissonDistribution::randomValueArray(int count){

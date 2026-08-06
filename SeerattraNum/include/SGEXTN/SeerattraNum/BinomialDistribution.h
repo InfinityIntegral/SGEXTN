@@ -18,20 +18,16 @@
 #pragma once
 #include <SGEXTN/Containers/Array.h>
 #include <SGEXTN/SeerattraNum/GeometricDistribution.h>
-#include <SGEXTN/SeerattraNum/ExponentialDistribution.h>
+#include <SGEXTN/SeerattraNum/DirectRandomInstanceLocator.h>
 
 namespace SGEXTN {
 namespace SeerattraNum {
-class DirectRandom;
-
 class BuildLah_SGEXTN_SeerattraNum BinomialDistribution {
 public:
-    SGEXTN::SeerattraNum::DirectRandom* private_rng;
-    bool private_ownsRng;
+    SGEXTN::SeerattraNum::DirectRandomInstanceLocator private_rngLocator;
     float private_chanceOfTrue;
     int private_attemptCount;
     SGEXTN::SeerattraNum::GeometricDistribution private_geometricDistribution;
-    SGEXTN::SeerattraNum::ExponentialDistribution private_standardExponentialDistribution;
     float private_precompConstantL;
     float private_precompConstantC;
     float private_precompConstantM;
@@ -49,11 +45,6 @@ public:
     float private_comparisonMultiplier;
     float private_comparisonConstant;
     BinomialDistribution(bool useGlobal, float chanceOfTrue, int attemptCount);
-    BinomialDistribution(const BinomialDistribution&) = delete;
-    BinomialDistribution& operator=(const BinomialDistribution&) = delete;
-    BinomialDistribution(BinomialDistribution&&) = delete;
-    BinomialDistribution& operator=(BinomialDistribution&&) = delete;
-    ~BinomialDistribution();
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
     [[nodiscard]] int randomValue();
     [[nodiscard]] SGEXTN::Containers::Array<int> randomValueArray(int count);
