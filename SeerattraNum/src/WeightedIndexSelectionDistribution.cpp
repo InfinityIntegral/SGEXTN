@@ -20,7 +20,7 @@
 #include <SGEXTN/Containers/ForceCrash.h>
 #include <SGEXTN/SeerattraNum/DirectRandom.h>
 
-SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution::WeightedIndexSelectionDistribution(bool useGlobal, const SGEXTN::Containers::Array<float>& weights) : private_weights(weights), private_prefixSums(0), private_rng(nullptr), private_ownsRng(useGlobal == false){
+SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution::WeightedIndexSelectionDistribution(bool useGlobal, const SGEXTN::Containers::Array<float>& weights) : private_weights(weights), private_prefixSums(0), private_rngLocator(useGlobal){
     if(weights.length() == 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightIndexSelectionDistribution constructor crashed because the array of weights is empty");}
     bool isAllZero = true;
     for(int i=0; i<weights.length(); i++){
@@ -28,12 +28,7 @@ SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution::WeightedIndexSelection
         if(weights.at(i) > 0.0){isAllZero = false;}
     }
     if(isAllZero == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightIndexSelectionDistribution constructor crashed because all of the weights are zero");}
-    private_rng = SGEXTN::SeerattraNum::DirectRandom::private_createRng(useGlobal);
     private_updatePrefixSums();
-}
-
-SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution::~WeightedIndexSelectionDistribution(){
-    if(private_ownsRng == true){delete private_rng;}
 }
 
 void SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution::private_updatePrefixSums(){
@@ -48,16 +43,12 @@ void SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution::private_updatePre
 }
 
 void SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
-    if(private_ownsRng == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution::seed crashed because cannot seed global rng");}
-    SGEXTN::SeerattraNum::DirectRandom* temp = private_rng;
-    private_rng = temp;
-    (*private_rng).seed(seedArray);
+    if(private_rngLocator.private_ownsRng == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution::seed crashed because cannot seed global rng");}
+    (*private_rngLocator).seed(seedArray);
 }
 
 int SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution::randomIndex(){
-    SGEXTN::SeerattraNum::DirectRandom* temp = private_rng;
-    private_rng = temp;
-    const float rng = (*private_rng).randomFloat32();
+    const float rng = (*private_rngLocator).randomFloat32();
     int low = 0;
     int high = private_weights.length();
     while(high - low > 1){

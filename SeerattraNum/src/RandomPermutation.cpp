@@ -21,32 +21,22 @@
 #include <SGEXTN/Containers/ForceCrash.h>
 #include <SGEXTN/SeerattraNum/DirectRandom.h>
 
-SGEXTN::SeerattraNum::RandomPermutation::RandomPermutation(bool useGlobal) : private_ownsRng(useGlobal == false), private_rng(SGEXTN::SeerattraNum::DirectRandom::private_createRng(useGlobal)), private_uniformDistribution(true, 0, 0){
-    private_uniformDistribution.private_rng = private_rng;
-}
-
-SGEXTN::SeerattraNum::RandomPermutation::~RandomPermutation(){
-    if(private_ownsRng == true){delete private_rng;}
-}
+SGEXTN::SeerattraNum::RandomPermutation::RandomPermutation(bool useGlobal) : private_rngLocator(useGlobal), private_uniformDistribution(true, 0, 0){}
 
 void SGEXTN::SeerattraNum::RandomPermutation::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
-    if(private_ownsRng == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::RandomPermutation::seed crashed because cannot seed global rng");}
-    SGEXTN::SeerattraNum::DirectRandom* temp = private_rng;
-    private_rng = temp;
-    (*private_rng).seed(seedArray);
+    if(private_rngLocator.private_ownsRng == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::RandomPermutation::seed crashed because cannot seed global rng");}
+    (*private_rngLocator).seed(seedArray);
 }
 
 SGEXTN::Containers::Array<int> SGEXTN::SeerattraNum::RandomPermutation::randomPermutation(int n){
     if(n < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::RandomPermutation::randomPermutation crashed because the number of numbers in the requested permutation is negative");}
-    SGEXTN::SeerattraNum::DirectRandom* temp = private_rng;
-    private_rng = temp;
     SGEXTN::Containers::Array<int> outputArray(n);
     for(int i=0; i<n; i++){
         outputArray.at(i) = i;
     }
     for(int i=n-1; i>0; i--){
         private_uniformDistribution.setRange(0, i);
-        const int index = private_uniformDistribution.randomValue();
+        const int index = private_uniformDistribution.private_randomValue(private_rngLocator);
         const int tempVar = outputArray.at(index);
         outputArray.at(index) = outputArray.at(i);
         outputArray.at(i) = tempVar;

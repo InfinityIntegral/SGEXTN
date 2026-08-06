@@ -17,32 +17,26 @@
 
 #pragma once
 #include <SGEXTN/Containers/Array.h>
+#include <SGEXTN/SeerattraNum/DirectRandomInstanceLocator.h>
 
 namespace SGEXTN {
 namespace SeerattraNum {
-class DirectRandom;
-
 class BuildLah_SGEXTN_SeerattraNum ExponentialDistribution {
 public:
-    SGEXTN::SeerattraNum::DirectRandom* private_rng;
-    bool private_ownsRng;
+    SGEXTN::SeerattraNum::DirectRandomInstanceLocator private_rngLocator;
     float private_meanEventsPerTime;
     float private_reciprocalRate;
     static SGEXTN::Containers::Array<float>* private_widthTables;
     static SGEXTN::Containers::Array<float>* private_floorTables;
     static float private_expRightBoundary;
     ExponentialDistribution(bool useGlobal, float meanEventsPerTime);
-    ExponentialDistribution(const ExponentialDistribution&) = delete;
-    ExponentialDistribution& operator=(const ExponentialDistribution&) = delete;
-    ExponentialDistribution(ExponentialDistribution&&) = delete;
-    ExponentialDistribution& operator=(ExponentialDistribution&&) = delete;
-    ~ExponentialDistribution();
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
     [[nodiscard]] float randomValue();
+    [[nodiscard]] float private_randomValue(SGEXTN::SeerattraNum::DirectRandomInstanceLocator& externalLocator) const;
     [[nodiscard]] SGEXTN::Containers::Array<float> randomValueArray(int count);
     [[nodiscard]] float getMeanEventsPerTime() const;
     void setMeanEventsPerTime(float meanEventsPerTime);
-    void private_samplePointStandard(float& x, float& y);
+    static void private_samplePointStandard(float& x, float& y, SGEXTN::SeerattraNum::DirectRandomInstanceLocator& externalLocator);
 };
 }
 }

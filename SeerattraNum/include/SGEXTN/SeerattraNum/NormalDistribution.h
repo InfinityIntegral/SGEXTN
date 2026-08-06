@@ -17,27 +17,21 @@
 
 #pragma once
 #include <SGEXTN/Containers/Array.h>
+#include <SGEXTN/SeerattraNum/DirectRandomInstanceLocator.h>
 
 namespace SGEXTN {
 namespace SeerattraNum {
-class DirectRandom;
-
 class BuildLah_SGEXTN_SeerattraNum NormalDistribution {
 public:
-    SGEXTN::SeerattraNum::DirectRandom* private_rng;
-    bool private_ownsRng;
+    SGEXTN::SeerattraNum::DirectRandomInstanceLocator private_rngLocator;
     float private_mean;
     float private_standardDeviation;
     static SGEXTN::Containers::Array<float>* private_hwidthTables;
     static SGEXTN::Containers::Array<float>* private_floorTables;
     NormalDistribution(bool useGlobal, float mean, float standardDeviation);
-    NormalDistribution(const NormalDistribution&) = delete;
-    NormalDistribution& operator=(const NormalDistribution&) = delete;
-    NormalDistribution(NormalDistribution&&) = delete;
-    NormalDistribution& operator=(NormalDistribution&&) = delete;
-    ~NormalDistribution();
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
     [[nodiscard]] float randomValue();
+    [[nodiscard]] float private_randomValue(SGEXTN::SeerattraNum::DirectRandomInstanceLocator& externalLocator) const;
     [[nodiscard]] SGEXTN::Containers::Array<float> randomValueArray(int count);
     [[nodiscard]] float getMean() const;
     [[nodiscard]] float getStandardDeviation() const;

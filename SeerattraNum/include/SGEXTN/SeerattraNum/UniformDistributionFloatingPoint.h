@@ -17,23 +17,16 @@
 
 #pragma once
 #include <SGEXTN/Containers/Array.h>
+#include <SGEXTN/SeerattraNum/DirectRandomInstanceLocator.h>
 
 namespace SGEXTN {
 namespace SeerattraNum {
-class DirectRandom;
-
 class BuildLah_SGEXTN_SeerattraNum UniformDistributionFloatingPoint {
 public:
-    SGEXTN::SeerattraNum::DirectRandom* private_rng;
-    bool private_ownsRng;
+    SGEXTN::SeerattraNum::DirectRandomInstanceLocator private_rngLocator;
     float private_minimum;
     float private_maximum;
     UniformDistributionFloatingPoint(bool useGlobal, float minimum, float maximum);
-    UniformDistributionFloatingPoint(const UniformDistributionFloatingPoint&) = delete;
-    UniformDistributionFloatingPoint& operator=(const UniformDistributionFloatingPoint&) = delete;
-    UniformDistributionFloatingPoint(UniformDistributionFloatingPoint&&) = delete;
-    UniformDistributionFloatingPoint& operator=(UniformDistributionFloatingPoint&&) = delete;
-    ~UniformDistributionFloatingPoint();
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
     [[nodiscard]] float randomValue();
     [[nodiscard]] SGEXTN::Containers::Array<float> randomValueArray(int count);

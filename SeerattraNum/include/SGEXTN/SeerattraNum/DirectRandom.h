@@ -20,7 +20,7 @@
 
 namespace SGEXTN {
 namespace SeerattraNum {
-class BuildLah_SGEXTN_SeerattraNum DirectRandom{
+class BuildLah_SGEXTN_SeerattraNum DirectRandom {
 public:
     unsigned long long private_firstNum;
     unsigned long long private_secondNum;

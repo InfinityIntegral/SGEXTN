@@ -20,7 +20,7 @@
 #include <SGEXTN/Containers/ForceCrash.h>
 #include <SGEXTN/SeerattraNum/DirectRandom.h>
 
-SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution::WeightedPiecewiseLinearDistribution(bool useGlobal, const SGEXTN::Containers::Array<float>& weights, const SGEXTN::Containers::Array<float>& boundaries) : private_weights(weights), private_boundaries(boundaries), private_prefixSums(0), private_rng(nullptr), private_ownsRng(useGlobal == false){
+SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution::WeightedPiecewiseLinearDistribution(bool useGlobal, const SGEXTN::Containers::Array<float>& weights, const SGEXTN::Containers::Array<float>& boundaries) : private_weights(weights), private_boundaries(boundaries), private_prefixSums(0), private_rngLocator(useGlobal){
     if(boundaries.length() < 2){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution constructor crashed because listed boundaries do not form at least 1 valid interval");}
     if(boundaries.length() != weights.length()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution constructor crashed because the length of the boudaries array is not equal to the length of the weights array");}
     bool isAllZero = true;
@@ -32,12 +32,7 @@ SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution::WeightedPiecewiseLine
     for(int i=0; i<boundaries.length()-1; i++){
         if(boundaries.at(i) >= boundaries.at(i + 1)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution constructor crashed because the boundaries array is not strictly increasing");}
     }
-    private_rng = SGEXTN::SeerattraNum::DirectRandom::private_createRng(useGlobal);
     private_updatePrefixSums();
-}
-
-SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution::~WeightedPiecewiseLinearDistribution(){
-    if(private_ownsRng == true){delete private_rng;}
 }
 
 void SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution::private_updatePrefixSums(){
@@ -52,16 +47,12 @@ void SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution::private_updatePr
 }
 
 void SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
-    if(private_ownsRng == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution::seed crashed because cannot seed global rng");}
-    SGEXTN::SeerattraNum::DirectRandom* temp = private_rng;
-    private_rng = temp;
-    (*private_rng).seed(seedArray);
+    if(private_rngLocator.private_ownsRng == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution::seed crashed because cannot seed global rng");}
+    (*private_rngLocator).seed(seedArray);
 }
 
 float SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution::randomValue(){
-    SGEXTN::SeerattraNum::DirectRandom* temp = private_rng;
-    private_rng = temp;
-    float rng = (*private_rng).randomFloat32();
+    float rng = (*private_rngLocator).randomFloat32();
     int low = 0;
     int high = private_weights.length() - 1;
     while(high - low > 1){
@@ -72,7 +63,7 @@ float SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution::randomValue(){
     rng = (rng - private_prefixSums.at(low)) / (private_prefixSums.at(low + 1) - private_prefixSums.at(low));
     const float k1 = private_weights.at(low);
     const float k2 = private_weights.at(low + 1);
-    const float y = (*private_rng).randomFloat32() * (k1 + k2);
+    const float y = (*private_rngLocator).randomFloat32() * (k1 + k2);
     const float boundary = k1 + rng * (k2 - k1);
     if(y <= boundary){return (private_boundaries.at(low) + rng * (private_boundaries.at(low + 1) - private_boundaries.at(low)));}
     return (private_boundaries.at(low + 1) + rng * (private_boundaries.at(low) - private_boundaries.at(low + 1)));

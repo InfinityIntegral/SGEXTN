@@ -19,24 +19,17 @@
 #include <SGEXTN/Containers/Array.h>
 #include <SGEXTN/SeerattraNum/ChiSquaredDistribution.h>
 #include <SGEXTN/SeerattraNum/NormalDistribution.h>
+#include <SGEXTN/SeerattraNum/DirectRandomInstanceLocator.h>
 
 namespace SGEXTN {
 namespace SeerattraNum {
-class DirectRandom;
-
 class BuildLah_SGEXTN_SeerattraNum StudentTDistribution {
 public:
-    SGEXTN::SeerattraNum::DirectRandom* private_rng;
-    bool private_ownsRng;
+    SGEXTN::SeerattraNum::DirectRandomInstanceLocator private_rngLocator;
     float private_degreesOfFreedom;
     SGEXTN::SeerattraNum::ChiSquaredDistribution private_chiSquaredDistribution;
     SGEXTN::SeerattraNum::NormalDistribution private_standardNormalDistribution;
     StudentTDistribution(bool useGlobal, float degreesOfFreedom);
-    StudentTDistribution(const StudentTDistribution&) = delete;
-    StudentTDistribution& operator=(const StudentTDistribution&) = delete;
-    StudentTDistribution(StudentTDistribution&&) = delete;
-    StudentTDistribution& operator=(StudentTDistribution&&) = delete;
-    ~StudentTDistribution();
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
     [[nodiscard]] float randomValue();
     [[nodiscard]] SGEXTN::Containers::Array<float> randomValueArray(int count);

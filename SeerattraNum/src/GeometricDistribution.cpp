@@ -20,39 +20,31 @@
 #include <SGEXTN/Containers/ForceCrash.h>
 #include <SGEXTN/SeerattraNum/DirectRandom.h>
 #include <SGEXTN/Math/FloatMath.h>
-#include <SGEXTN/SeerattraNum/BernoulliDistribution.h>
 
-SGEXTN::SeerattraNum::GeometricDistribution::GeometricDistribution(bool useGlobal, float chanceOfTrue) : private_chanceOfTrue(chanceOfTrue), private_cacheReciprocalOfLnChanceOfFalse(1.0f / SGEXTN::Math::FloatMath<float>::naturalLog(1.0f - chanceOfTrue)), private_rng(nullptr), private_ownsRng(useGlobal == false), private_bernoulliDistribution(true, 0.5f){
+SGEXTN::SeerattraNum::GeometricDistribution::GeometricDistribution(bool useGlobal, float chanceOfTrue) : private_chanceOfTrue(chanceOfTrue), private_cacheReciprocalOfLnChanceOfFalse(1.0f / SGEXTN::Math::FloatMath<float>::naturalLog(1.0f - chanceOfTrue)), private_rngLocator(useGlobal){
     if(chanceOfTrue <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GeometricDistribution constructor crashed because the requested probability is nonpositive");}
     if(chanceOfTrue > 1.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GeometricDistribution constructor crashed because the requested probability is higher than 1");}
-    private_rng = SGEXTN::SeerattraNum::DirectRandom::private_createRng(useGlobal);
-    private_bernoulliDistribution.private_rng = private_rng;
-    private_bernoulliDistribution.setChanceOfTrue(chanceOfTrue);
-}
-
-SGEXTN::SeerattraNum::GeometricDistribution::~GeometricDistribution(){
-    if(private_ownsRng == true){delete private_rng;}
 }
 
 void SGEXTN::SeerattraNum::GeometricDistribution::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
-    if(private_ownsRng == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GeometricDistribution::seed crashed because cannot seed global rng");}
-    SGEXTN::SeerattraNum::DirectRandom* temp = private_rng;
-    private_rng = temp;
-    (*private_rng).seed(seedArray);
+    if(private_rngLocator.private_ownsRng == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GeometricDistribution::seed crashed because cannot seed global rng");}
+    (*private_rngLocator).seed(seedArray);
 }
 
-int SGEXTN::SeerattraNum::GeometricDistribution::randomValue(){
-    SGEXTN::SeerattraNum::DirectRandom* temp = private_rng;
-    private_rng = temp;
+int SGEXTN::SeerattraNum::GeometricDistribution::private_randomValue(SGEXTN::SeerattraNum::DirectRandomInstanceLocator& externalLocator) const {
     if(private_chanceOfTrue < 0.15f){
-        const float rng = (*private_rng).randomFloat32();
+        const float rng = (*externalLocator).randomFloat32();
         return SGEXTN::Math::FloatMath<float>::floorToInt(SGEXTN::Math::FloatMath<float>::naturalLog(1.0f - rng) * private_cacheReciprocalOfLnChanceOfFalse);
     }
     int failCount = 0;
-    while(private_bernoulliDistribution.randomValue() == false){
+    while((*externalLocator).randomFloat32() > private_chanceOfTrue){
         failCount++;
     }
     return failCount;
+}
+
+int SGEXTN::SeerattraNum::GeometricDistribution::randomValue(){
+    return private_randomValue(private_rngLocator);
 }
 
 SGEXTN::Containers::Array<int> SGEXTN::SeerattraNum::GeometricDistribution::randomValueArray(int count){
@@ -73,5 +65,4 @@ void SGEXTN::SeerattraNum::GeometricDistribution::setChanceOfTrue(float chanceOf
     if(chanceOfTrue > 1.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GeometricDistribution::setChanceOfTrue crashed because the requested probability is higher than 1");}
     private_chanceOfTrue = chanceOfTrue;
     private_cacheReciprocalOfLnChanceOfFalse = 1.0f / SGEXTN::Math::FloatMath<float>::naturalLog(1.0f - chanceOfTrue);
-    private_bernoulliDistribution.setChanceOfTrue(chanceOfTrue);
 }

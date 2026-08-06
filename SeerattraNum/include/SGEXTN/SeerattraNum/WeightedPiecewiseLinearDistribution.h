@@ -17,25 +17,18 @@
 
 #pragma once
 #include <SGEXTN/Containers/Array.h>
+#include <SGEXTN/SeerattraNum/DirectRandomInstanceLocator.h>
 
 namespace SGEXTN {
 namespace SeerattraNum {
-class DirectRandom;
-
 class BuildLah_SGEXTN_SeerattraNum WeightedPiecewiseLinearDistribution {
 public:
-    SGEXTN::SeerattraNum::DirectRandom* private_rng;
-    bool private_ownsRng;
+    SGEXTN::SeerattraNum::DirectRandomInstanceLocator private_rngLocator;
     SGEXTN::Containers::Array<float> private_weights;
     SGEXTN::Containers::Array<float> private_boundaries;
     SGEXTN::Containers::Array<float> private_prefixSums;
     void private_updatePrefixSums();
     WeightedPiecewiseLinearDistribution(bool useGlobal, const SGEXTN::Containers::Array<float>& weights, const SGEXTN::Containers::Array<float>& boundaries);
-    WeightedPiecewiseLinearDistribution(const WeightedPiecewiseLinearDistribution&) = delete;
-    WeightedPiecewiseLinearDistribution& operator=(const WeightedPiecewiseLinearDistribution&) = delete;
-    WeightedPiecewiseLinearDistribution(WeightedPiecewiseLinearDistribution&&) = delete;
-    WeightedPiecewiseLinearDistribution& operator=(WeightedPiecewiseLinearDistribution&&) = delete;
-    ~WeightedPiecewiseLinearDistribution();
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
     [[nodiscard]] float randomValue();
     [[nodiscard]] SGEXTN::Containers::Array<float> randomValueArray(int count);

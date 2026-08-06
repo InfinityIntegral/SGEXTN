@@ -21,29 +21,18 @@
 #include <SGEXTN/SeerattraNum/DirectRandom.h>
 #include <SGEXTN/Math/FloatMath.h>
 
-SGEXTN::SeerattraNum::StudentTDistribution::StudentTDistribution(bool useGlobal, float degreesOfFreedom) : private_degreesOfFreedom(degreesOfFreedom), private_rng(nullptr), private_ownsRng(useGlobal == false), private_chiSquaredDistribution(true, 1.0f), private_standardNormalDistribution(true, 0.0f, 1.0f){
+SGEXTN::SeerattraNum::StudentTDistribution::StudentTDistribution(bool useGlobal, float degreesOfFreedom) : private_degreesOfFreedom(degreesOfFreedom), private_rngLocator(useGlobal), private_chiSquaredDistribution(true, 1.0f), private_standardNormalDistribution(true, 0.0f, 1.0f){
     if(degreesOfFreedom <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::StudentTDistribution constructor crashed because requested number of degrees of freedom is nonpositive");}
-    private_rng = SGEXTN::SeerattraNum::DirectRandom::private_createRng(useGlobal);
-    private_standardNormalDistribution.private_rng = private_rng;
-    private_chiSquaredDistribution.private_rng = private_rng;
-    private_chiSquaredDistribution.private_gammaDistribution.private_rng = private_rng;
-    private_chiSquaredDistribution.private_gammaDistribution.private_standardNormalDistribution.private_rng = private_rng;
     private_chiSquaredDistribution.setDegreesOfFreedom(degreesOfFreedom);
 }
 
-SGEXTN::SeerattraNum::StudentTDistribution::~StudentTDistribution(){
-    if(private_ownsRng == true){delete private_rng;}
-}
-
 void SGEXTN::SeerattraNum::StudentTDistribution::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
-    if(private_ownsRng == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::StudentTDistribution::seed crashed because cannot seed global rng");}
-    SGEXTN::SeerattraNum::DirectRandom* temp = private_rng;
-    private_rng = temp;
-    (*private_rng).seed(seedArray);
+    if(private_rngLocator.private_ownsRng == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::StudentTDistribution::seed crashed because cannot seed global rng");}
+    (*private_rngLocator).seed(seedArray);
 }
 
 float SGEXTN::SeerattraNum::StudentTDistribution::randomValue(){
-    return (private_standardNormalDistribution.randomValue() * SGEXTN::Math::FloatMath<float>::squareRoot(private_degreesOfFreedom / private_chiSquaredDistribution.randomValue()));
+    return (private_standardNormalDistribution.private_randomValue(private_rngLocator) * SGEXTN::Math::FloatMath<float>::squareRoot(private_degreesOfFreedom / private_chiSquaredDistribution.private_randomValue(private_rngLocator)));
 }
 
 SGEXTN::Containers::Array<float> SGEXTN::SeerattraNum::StudentTDistribution::randomValueArray(int count){

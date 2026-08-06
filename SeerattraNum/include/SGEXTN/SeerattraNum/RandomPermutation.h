@@ -18,22 +18,15 @@
 #pragma once
 #include <SGEXTN/Containers/Array.h>
 #include <SGEXTN/SeerattraNum/UniformDistributionInteger.h>
+#include <SGEXTN/SeerattraNum/DirectRandomInstanceLocator.h>
 
 namespace SGEXTN {
 namespace SeerattraNum {
-class DirectRandom;
-
 class BuildLah_SGEXTN_SeerattraNum RandomPermutation {
 public:
-    SGEXTN::SeerattraNum::DirectRandom* private_rng;
-    bool private_ownsRng;
+    SGEXTN::SeerattraNum::DirectRandomInstanceLocator private_rngLocator;
     SGEXTN::SeerattraNum::UniformDistributionInteger private_uniformDistribution;
     RandomPermutation(bool useGlobal);
-    RandomPermutation(const RandomPermutation&) = delete;
-    RandomPermutation& operator=(const RandomPermutation&) = delete;
-    RandomPermutation(RandomPermutation&&) = delete;
-    RandomPermutation& operator=(RandomPermutation&&) = delete;
-    ~RandomPermutation();
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
     [[nodiscard]] SGEXTN::Containers::Array<int> randomPermutation(int n);
 };

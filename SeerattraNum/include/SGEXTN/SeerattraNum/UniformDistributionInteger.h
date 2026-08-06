@@ -17,25 +17,19 @@
 
 #pragma once
 #include <SGEXTN/Containers/Array.h>
+#include <SGEXTN/SeerattraNum/DirectRandomInstanceLocator.h>
 
 namespace SGEXTN {
 namespace SeerattraNum {
-class DirectRandom;
-
 class BuildLah_SGEXTN_SeerattraNum UniformDistributionInteger {
 public:
-    SGEXTN::SeerattraNum::DirectRandom* private_rng;
-    bool private_ownsRng;
+    SGEXTN::SeerattraNum::DirectRandomInstanceLocator private_rngLocator;
     int private_inclusiveMin;
     int private_inclusiveMax;
     UniformDistributionInteger(bool useGlobal, int inclusiveMin, int inclusiveMax);
-    UniformDistributionInteger(const UniformDistributionInteger&) = delete;
-    UniformDistributionInteger& operator=(const UniformDistributionInteger&) = delete;
-    UniformDistributionInteger(UniformDistributionInteger&&) = delete;
-    UniformDistributionInteger& operator=(UniformDistributionInteger&&) = delete;
-    ~UniformDistributionInteger();
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
     [[nodiscard]] int randomValue();
+    [[nodiscard]] int private_randomValue(SGEXTN::SeerattraNum::DirectRandomInstanceLocator& externalLocator) const;
     [[nodiscard]] SGEXTN::Containers::Array<int> randomValueArray(int count);
     [[nodiscard]] int getInclusiveMin() const;
     [[nodiscard]] int getInclusiveMax() const;

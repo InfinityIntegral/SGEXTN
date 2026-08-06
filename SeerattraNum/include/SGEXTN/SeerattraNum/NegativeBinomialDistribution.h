@@ -19,25 +19,18 @@
 #include <SGEXTN/Containers/Array.h>
 #include <SGEXTN/SeerattraNum/GammaDistribution.h>
 #include <SGEXTN/SeerattraNum/PoissonDistribution.h>
+#include <SGEXTN/SeerattraNum/DirectRandomInstanceLocator.h>
 
 namespace SGEXTN {
 namespace SeerattraNum {
-class DirectRandom;
-
 class BuildLah_SGEXTN_SeerattraNum NegativeBinomialDistribution {
 public:
-    SGEXTN::SeerattraNum::DirectRandom* private_rng;
-    bool private_ownsRng;
+    SGEXTN::SeerattraNum::DirectRandomInstanceLocator private_rngLocator;
     float private_chanceOfTrue;
     int private_successCount;
     SGEXTN::SeerattraNum::GammaDistribution private_gammaDistribution;
     SGEXTN::SeerattraNum::PoissonDistribution private_poissonDistribution;
     NegativeBinomialDistribution(bool useGlobal, float chanceOfTrue, int successCount);
-    NegativeBinomialDistribution(const NegativeBinomialDistribution&) = delete;
-    NegativeBinomialDistribution& operator=(const NegativeBinomialDistribution&) = delete;
-    NegativeBinomialDistribution(NegativeBinomialDistribution&&) = delete;
-    NegativeBinomialDistribution& operator=(NegativeBinomialDistribution&&) = delete;
-    ~NegativeBinomialDistribution();
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
     [[nodiscard]] int randomValue();
     [[nodiscard]] SGEXTN::Containers::Array<int> randomValueArray(int count);

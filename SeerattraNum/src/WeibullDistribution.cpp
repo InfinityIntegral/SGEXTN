@@ -21,27 +21,18 @@
 #include <SGEXTN/SeerattraNum/DirectRandom.h>
 #include <SGEXTN/Math/FloatMath.h>
 
-SGEXTN::SeerattraNum::WeibullDistribution::WeibullDistribution(bool useGlobal, float failureBehaviour, float characteristicLifespan) : private_characteristicLifespan(characteristicLifespan), private_failureBehaviour(failureBehaviour), private_rng(nullptr), private_ownsRng(useGlobal == false), private_reciprocalA(1.0f / failureBehaviour){
+SGEXTN::SeerattraNum::WeibullDistribution::WeibullDistribution(bool useGlobal, float failureBehaviour, float characteristicLifespan) : private_characteristicLifespan(characteristicLifespan), private_failureBehaviour(failureBehaviour), private_rngLocator(useGlobal), private_reciprocalA(1.0f / failureBehaviour){
     if(failureBehaviour <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeibullDistribution constructor crashed because requested failure behaviour indicator is nonpositive");}
     if(characteristicLifespan <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeibullDistribution constructor crashed because requested characteristic lifespan is nonpositive");}
-    private_rng = SGEXTN::SeerattraNum::DirectRandom::private_createRng(useGlobal);
-}
-
-SGEXTN::SeerattraNum::WeibullDistribution::~WeibullDistribution(){
-    if(private_ownsRng == true){delete private_rng;}
 }
 
 void SGEXTN::SeerattraNum::WeibullDistribution::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
-    if(private_ownsRng == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeibullDistribution::seed crashed because cannot seed global rng");}
-    SGEXTN::SeerattraNum::DirectRandom* temp = private_rng;
-    private_rng = temp;
-    (*private_rng).seed(seedArray);
+    if(private_rngLocator.private_ownsRng == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeibullDistribution::seed crashed because cannot seed global rng");}
+    (*private_rngLocator).seed(seedArray);
 }
 
 float SGEXTN::SeerattraNum::WeibullDistribution::randomValue(){
-    SGEXTN::SeerattraNum::DirectRandom* temp = private_rng;
-    private_rng = temp;
-    return (private_characteristicLifespan * SGEXTN::Math::FloatMath<float>::powerOf(-1.0f * SGEXTN::Math::FloatMath<float>::naturalLog(1.0f - (*private_rng).randomFloat32()), private_reciprocalA));
+    return (private_characteristicLifespan * SGEXTN::Math::FloatMath<float>::powerOf(-1.0f * SGEXTN::Math::FloatMath<float>::naturalLog(1.0f - (*private_rngLocator).randomFloat32()), private_reciprocalA));
 }
 
 SGEXTN::Containers::Array<float> SGEXTN::SeerattraNum::WeibullDistribution::randomValueArray(int count){

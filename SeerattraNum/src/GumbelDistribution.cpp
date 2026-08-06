@@ -21,26 +21,17 @@
 #include <SGEXTN/SeerattraNum/DirectRandom.h>
 #include <SGEXTN/Math/FloatMath.h>
 
-SGEXTN::SeerattraNum::GumbelDistribution::GumbelDistribution(bool useGlobal, float mode, float spread) : private_mode(mode), private_spread(spread), private_rng(nullptr), private_ownsRng(useGlobal == false){
+SGEXTN::SeerattraNum::GumbelDistribution::GumbelDistribution(bool useGlobal, float mode, float spread) : private_mode(mode), private_spread(spread), private_rngLocator(useGlobal){
     if(spread <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GumbelDistribution constructor crashed because requested spread is nonpositive");}
-    private_rng = SGEXTN::SeerattraNum::DirectRandom::private_createRng(useGlobal);
-}
-
-SGEXTN::SeerattraNum::GumbelDistribution::~GumbelDistribution(){
-    if(private_ownsRng == true){delete private_rng;}
 }
 
 void SGEXTN::SeerattraNum::GumbelDistribution::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
-    if(private_ownsRng == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GumbelDistribution::seed crashed because cannot seed global rng");}
-    SGEXTN::SeerattraNum::DirectRandom* temp = private_rng;
-    private_rng = temp;
-    (*private_rng).seed(seedArray);
+    if(private_rngLocator.private_ownsRng == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GumbelDistribution::seed crashed because cannot seed global rng");}
+    (*private_rngLocator).seed(seedArray);
 }
 
 float SGEXTN::SeerattraNum::GumbelDistribution::randomValue(){
-    SGEXTN::SeerattraNum::DirectRandom* temp = private_rng;
-    private_rng = temp;
-    const unsigned int integerRng = (*private_rng).randomUnsignedInt32();
+    const unsigned int integerRng = (*private_rngLocator).randomUnsignedInt32();
     const float scaleFactor = 1.0f / (static_cast<float>(static_cast<unsigned int>(1) << 24) + 1.0f);
     const float rng = (1.0f + (static_cast<float>(integerRng >> 8))) * scaleFactor;
     return (private_mode - private_spread * SGEXTN::Math::FloatMath<float>::naturalLog(-1.0f * SGEXTN::Math::FloatMath<float>::naturalLog(1.0f - rng)));
