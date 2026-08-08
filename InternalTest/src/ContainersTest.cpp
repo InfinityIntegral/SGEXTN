@@ -35,6 +35,7 @@
 #include <SGEXTN/Containers/UnorderedMap.h>
 #include <SGEXTN/Containers/Hash.h>
 #include <SGEXTN/Containers/ArrayVectorMove.h>
+#include <SGEXTN/Containers/Serialise.h>
 
 namespace {
 class ConstructibleInteger {
@@ -111,6 +112,14 @@ bool ConstructibleInteger::operator>(const ConstructibleInteger& x) const {
 
 int ConstructibleInteger::hash() const {
     return SGEXTN::Containers::Hash<int>()(value);
+}
+
+bool isBitwiseIdentical(const SGEXTN::Containers::Array<unsigned char>& a, const SGEXTN::Containers::Array<unsigned char>& b){
+    if(a.length() != b.length()){return false;}
+    for(int i=0; i<a.length(); i++){
+        if(a.at(i) != b.at(i)){return false;}
+    }
+    return true;
 }
 }
 
@@ -973,6 +982,109 @@ void SGEXTN::InternalTest::ContainersTest::testArrayVectorMove(){
     if(v.length() != 0 || arr.length() != 5 || arr.at(0) != 1 || arr.at(1) != 2 || arr.at(2) != 3 || arr.at(3) != 4 || arr.at(4) != 5){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Vector - convert vector to array fail");}
 }
 
+void SGEXTN::InternalTest::ContainersTest::testSerialise(){
+    bool isValid = false;
+    SGEXTN::Containers::Array<unsigned char> targetArray(1, static_cast<unsigned char>(1));
+    if(isBitwiseIdentical(targetArray, SGEXTN::Containers::Serialise<bool>::serialise(true)) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise serialise bool fail");}
+    const bool b = SGEXTN::Containers::Serialise<bool>::unserialise(targetArray, &isValid);
+    if(b != true || isValid == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise unserialise bool fail");}
+    if(SGEXTN::Containers::Serialise<bool>::lengthof(true) != 1){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise lengthof bool fail");}
+    isValid = false;
+    targetArray = SGEXTN::Containers::Array<unsigned char>(1, static_cast<unsigned char>(0x26));
+    if(isBitwiseIdentical(targetArray, SGEXTN::Containers::Serialise<unsigned char>::serialise(static_cast<unsigned char>(0x26))) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise serialise unsigned char fail");}
+    const unsigned char uc = SGEXTN::Containers::Serialise<unsigned char>::unserialise(targetArray, &isValid);
+    if(uc != static_cast<unsigned char>(0x26) || isValid == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise unserialise unsigned char fail");}
+    if(SGEXTN::Containers::Serialise<unsigned char>::lengthof(static_cast<unsigned char>(0x26)) != 1){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise lengthof unsigned char fail");}
+    isValid = false;
+    targetArray = SGEXTN::Containers::Array<unsigned char>(2);
+    targetArray.at(0) = static_cast<unsigned char>(0x34);
+    targetArray.at(1) = static_cast<unsigned char>(0x12);
+    if(isBitwiseIdentical(targetArray, SGEXTN::Containers::Serialise<short>::serialise(0x1234)) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise serialise short fail");}
+    const short s = SGEXTN::Containers::Serialise<short>::unserialise(targetArray, &isValid);
+    if(s != 0x1234 || isValid == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise unserialise short fail");}
+    if(SGEXTN::Containers::Serialise<short>::lengthof(0x1234) != 2){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise lengthof short fail");}
+    isValid = false;
+    targetArray = SGEXTN::Containers::Array<unsigned char>(2);
+    targetArray.at(0) = static_cast<unsigned char>(0x34);
+    targetArray.at(1) = static_cast<unsigned char>(0x12);
+    if(isBitwiseIdentical(targetArray, SGEXTN::Containers::Serialise<unsigned short>::serialise(0x1234)) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise serialise unsigned short fail");}
+    const unsigned short us = SGEXTN::Containers::Serialise<unsigned short>::unserialise(targetArray, &isValid);
+    if(us != 0x1234 || isValid == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise unserialise unsigned short fail");}
+    if(SGEXTN::Containers::Serialise<unsigned short>::lengthof(0x1234) != 2){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise lengthof unsigned short fail");}
+    isValid = false;
+    targetArray = SGEXTN::Containers::Array<unsigned char>(4);
+    targetArray.at(0) = static_cast<unsigned char>(0x78);
+    targetArray.at(1) = static_cast<unsigned char>(0x56);
+    targetArray.at(2) = static_cast<unsigned char>(0x34);
+    targetArray.at(3) = static_cast<unsigned char>(0x12);
+    if(isBitwiseIdentical(targetArray, SGEXTN::Containers::Serialise<int>::serialise(0x12345678)) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise serialise int fail");}
+    const int i = SGEXTN::Containers::Serialise<int>::unserialise(targetArray, &isValid);
+    if(i != 0x12345678 || isValid == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise unserialise int fail");}
+    if(SGEXTN::Containers::Serialise<int>::lengthof(0x12345678) != 4){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise lengthof int fail");}
+    isValid = false;
+    targetArray = SGEXTN::Containers::Array<unsigned char>(4);
+    targetArray.at(0) = static_cast<unsigned char>(0x78);
+    targetArray.at(1) = static_cast<unsigned char>(0x56);
+    targetArray.at(2) = static_cast<unsigned char>(0x34);
+    targetArray.at(3) = static_cast<unsigned char>(0x12);
+    if(isBitwiseIdentical(targetArray, SGEXTN::Containers::Serialise<unsigned int>::serialise(0x12345678)) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise serialise unsigned int fail");}
+    const unsigned int ui = SGEXTN::Containers::Serialise<unsigned int>::unserialise(targetArray, &isValid);
+    if(ui != 0x12345678 || isValid == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise unserialise unsigned int fail");}
+    if(SGEXTN::Containers::Serialise<unsigned int>::lengthof(0x12345678) != 4){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise lengthof unsigned int fail");}
+    isValid = false;
+    targetArray = SGEXTN::Containers::Array<unsigned char>(8);
+    targetArray.at(0) = static_cast<unsigned char>(0xf0);
+    targetArray.at(1) = static_cast<unsigned char>(0xde);
+    targetArray.at(2) = static_cast<unsigned char>(0xbc);
+    targetArray.at(3) = static_cast<unsigned char>(0x9a);
+    targetArray.at(4) = static_cast<unsigned char>(0x78);
+    targetArray.at(5) = static_cast<unsigned char>(0x56);
+    targetArray.at(6) = static_cast<unsigned char>(0x34);
+    targetArray.at(7) = static_cast<unsigned char>(0x12);
+    if(isBitwiseIdentical(targetArray, SGEXTN::Containers::Serialise<long long>::serialise(0x123456789abcdef0ll)) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise serialise long long fail");}
+    const long long ll = SGEXTN::Containers::Serialise<long long>::unserialise(targetArray, &isValid);
+    if(ll != 0x123456789abcdef0ll || isValid == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise unserialise long long fail");}
+    if(SGEXTN::Containers::Serialise<long long>::lengthof(0x123456789abcdef0ll) != 8){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise lengthof long long fail");}
+    isValid = false;
+    targetArray = SGEXTN::Containers::Array<unsigned char>(8);
+    targetArray.at(0) = static_cast<unsigned char>(0xf0);
+    targetArray.at(1) = static_cast<unsigned char>(0xde);
+    targetArray.at(2) = static_cast<unsigned char>(0xbc);
+    targetArray.at(3) = static_cast<unsigned char>(0x9a);
+    targetArray.at(4) = static_cast<unsigned char>(0x78);
+    targetArray.at(5) = static_cast<unsigned char>(0x56);
+    targetArray.at(6) = static_cast<unsigned char>(0x34);
+    targetArray.at(7) = static_cast<unsigned char>(0x12);
+    if(isBitwiseIdentical(targetArray, SGEXTN::Containers::Serialise<unsigned long long>::serialise(0x123456789abcdef0ull)) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise serialise unsigned long long fail");}
+    const unsigned long long ull = SGEXTN::Containers::Serialise<unsigned long long>::unserialise(targetArray, &isValid);
+    if(ull != 0x123456789abcdef0ull || isValid == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise unserialise unsigned long long fail");}
+    if(SGEXTN::Containers::Serialise<unsigned long long>::lengthof(0x123456789abcdef0ull) != 8){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise lengthof unsigned long long fail");}
+    isValid = false;
+    targetArray = SGEXTN::Containers::Array<unsigned char>(4);
+    targetArray.at(0) = static_cast<unsigned char>(0x00);
+    targetArray.at(1) = static_cast<unsigned char>(0x84);
+    targetArray.at(2) = static_cast<unsigned char>(0x35);
+    targetArray.at(3) = static_cast<unsigned char>(0x44);
+    if(isBitwiseIdentical(targetArray, SGEXTN::Containers::Serialise<float>::serialise(726.0625f)) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise serialise float fail");}
+    const float f = SGEXTN::Containers::Serialise<float>::unserialise(targetArray, &isValid);
+    if(f != 726.0625f || isValid == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise unserialise float fail");}
+    if(SGEXTN::Containers::Serialise<float>::lengthof(726.0625f) != 4){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise lengthof float fail");}
+    isValid = false;
+    targetArray = SGEXTN::Containers::Array<unsigned char>(8);
+    targetArray.at(0) = static_cast<unsigned char>(0x00);
+    targetArray.at(1) = static_cast<unsigned char>(0x00);
+    targetArray.at(2) = static_cast<unsigned char>(0x00);
+    targetArray.at(3) = static_cast<unsigned char>(0x00);
+    targetArray.at(4) = static_cast<unsigned char>(0x80);
+    targetArray.at(5) = static_cast<unsigned char>(0xb0);
+    targetArray.at(6) = static_cast<unsigned char>(0x86);
+    targetArray.at(7) = static_cast<unsigned char>(0x40);
+    if(isBitwiseIdentical(targetArray, SGEXTN::Containers::Serialise<double>::serialise(726.0625)) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise serialise double fail");}
+    const double d = SGEXTN::Containers::Serialise<double>::unserialise(targetArray, &isValid);
+    if(d != 726.0625 || isValid == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise unserialise double fail");}
+    if(SGEXTN::Containers::Serialise<double>::lengthof(726.0625) != 8){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise lengthof double fail");}
+}
+
 void SGEXTN::InternalTest::ContainersTest::testAll(){
     SGEXTN::InternalTest::ContainersTest::testEqualTo();
     SGEXTN::InternalTest::ContainersTest::testArray();
@@ -1002,6 +1114,7 @@ void SGEXTN::InternalTest::ContainersTest::testAll(){
     SGEXTN::InternalTest::ContainersTest::testUnorderedSetConstructible();
     SGEXTN::InternalTest::ContainersTest::testUnorderedMapConstructible();
     SGEXTN::InternalTest::ContainersTest::testArrayVectorMove();
+    SGEXTN::InternalTest::ContainersTest::testSerialise();
 }
 
 class RegularStruct {

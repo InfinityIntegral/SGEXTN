@@ -26,4 +26,4 @@ public:
 }
 }
 
-BuildLah_SGEXTN_Containers void* operator new(decltype(sizeof(int)) /*unused*/, SGEXTN::Containers::PlacementNew /*unused*/, void* p) noexcept;
+BuildLah_SGEXTN_Containers void* operator new([[maybe_unused]] decltype(sizeof(int)) placeholder, [[maybe_unused]] SGEXTN::Containers::PlacementNew indicator, void* p) noexcept;
