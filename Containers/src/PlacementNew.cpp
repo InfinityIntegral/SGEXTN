@@ -19,6 +19,6 @@
 
 SGEXTN::Containers::PlacementNew SGEXTN::Containers::PlacementNew::placeholder;
 
-void* operator new(decltype(sizeof(int)) /*unused*/, SGEXTN::Containers::PlacementNew /*unused*/, void* p) noexcept {
+void* operator new([[maybe_unused]] decltype(sizeof(int)) placeholder, [[maybe_unused]] SGEXTN::Containers::PlacementNew indicator, void* p) noexcept {
     return p;
 }
