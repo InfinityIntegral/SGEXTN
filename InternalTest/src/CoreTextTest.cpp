@@ -21,6 +21,17 @@
 #include <SGEXTN/Containers/ForceCrash.h>
 #include <SGEXTN/CoreText/Character.h>
 #include <SGEXTN/Math/FloatLimits.h>
+#include <SGEXTN/Containers/Serialise.h>
+
+namespace {
+bool isBitwiseIdentical(const SGEXTN::Containers::Array<unsigned char>& a, const SGEXTN::Containers::Array<unsigned char>& b){
+    if(a.length() != b.length()){return false;}
+    for(int i=0; i<a.length(); i++){
+        if(a.at(i) != b.at(i)){return false;}
+    }
+    return true;
+}
+}
 
 void SGEXTN::InternalTest::CoreTextTest::testAll(){
     SGEXTN::InternalTest::CoreTextTest::testCharacter();
@@ -163,6 +174,17 @@ void SGEXTN::InternalTest::CoreTextTest::testCharacter(){
     if(SGEXTN::CoreText::Character(0x0be6).getNumericalValue() != 0.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::Character get numerical value Tamil digit zero fail");}
     if(SGEXTN::CoreText::Character(' ').getNumericalValue() != SGEXTN::Math::FloatLimits<float>::negativeInfinity()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::Character get numerical value space fail");}
     if(SGEXTN::CoreText::Character(0xbd).getNumericalValue() != 0.5f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::Character get numerical value half fraction fail");}
+    bool isValid = false;
+    SGEXTN::Containers::Array<unsigned char> serialiseArray(8, static_cast<unsigned char>(0x00));
+    serialiseArray.at(0) = static_cast<unsigned char>(0x04);
+    serialiseArray.at(4) = static_cast<unsigned char>(0xf0);
+    serialiseArray.at(5) = static_cast<unsigned char>(0x9f);
+    serialiseArray.at(6) = static_cast<unsigned char>(0x92);
+    serialiseArray.at(7) = static_cast<unsigned char>(0x96);
+    if(isBitwiseIdentical(serialiseArray, SGEXTN::Containers::Serialise<SGEXTN::CoreText::Character>::serialise(SGEXTN::CoreText::Character())) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise serialise SGEXTN::CoreText::Character fail");}
+    const SGEXTN::CoreText::Character unserialisedCharacter = SGEXTN::Containers::Serialise<SGEXTN::CoreText::Character>::unserialise(serialiseArray, &isValid);
+    if(isValid == false || unserialisedCharacter != SGEXTN::CoreText::Character()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise unserialise SGEXTN::CoreText::Character fail");}
+    if(SGEXTN::Containers::Serialise<SGEXTN::CoreText::Character>::lengthof(SGEXTN::CoreText::Character()) != 8){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise lengthof SGEXTN::CoreText::Character fail");}
 }
 
 #define U8(str) reinterpret_cast<const char*>(u8##str)
@@ -462,5 +484,25 @@ void SGEXTN::InternalTest::CoreTextTest::testString(){
     const SGEXTN::CoreText::String unsimplifiedString = U8("Caf\u00e8 at Yishun \uff2d\uff32\uff34 \u2122 \n\t \U0001d4a9\U0001d4ae\u2081\u2081");
     if(unsimplifiedString.getSimplestEquivalent(false) != "Cafe at Yishun MRT TM NS11"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String case sensitive simplest string conversion fail");}
     if(unsimplifiedString.getSimplestEquivalent(true) != "cafe at yishun mrt tm ns11"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String case insensitive simplest string conversion fail");}
+    isValid = false;
+    const SGEXTN::CoreText::String sampleText = U8("I\u2665\U0001f1f8\U0001f1ec");
+    SGEXTN::Containers::Array<unsigned char> serialiseArray(16, static_cast<unsigned char>(0x00));
+    serialiseArray.at(0) = static_cast<unsigned char>(0x0c);
+    serialiseArray.at(4) = static_cast<unsigned char>(0x49);
+    serialiseArray.at(5) = static_cast<unsigned char>(0xe2);
+    serialiseArray.at(6) = static_cast<unsigned char>(0x99);
+    serialiseArray.at(7) = static_cast<unsigned char>(0xa5);
+    serialiseArray.at(8) = static_cast<unsigned char>(0xf0);
+    serialiseArray.at(9) = static_cast<unsigned char>(0x9f);
+    serialiseArray.at(10) = static_cast<unsigned char>(0x87);
+    serialiseArray.at(11) = static_cast<unsigned char>(0xb8);
+    serialiseArray.at(12) = static_cast<unsigned char>(0xf0);
+    serialiseArray.at(13) = static_cast<unsigned char>(0x9f);
+    serialiseArray.at(14) = static_cast<unsigned char>(0x87);
+    serialiseArray.at(15) = static_cast<unsigned char>(0xac);
+    if(isBitwiseIdentical(serialiseArray, SGEXTN::Containers::Serialise<SGEXTN::CoreText::String>::serialise(sampleText)) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise serialise SGEXTN::CoreText::String fail");}
+    const SGEXTN::CoreText::String unserialisedString = SGEXTN::Containers::Serialise<SGEXTN::CoreText::String>::unserialise(serialiseArray, &isValid);
+    if(isValid == false || unserialisedString != sampleText){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise unserialise SGEXTN::CoreText::String fail");}
+    if(SGEXTN::Containers::Serialise<SGEXTN::CoreText::String>::lengthof(sampleText) != 16){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise lengthof SGEXTN::CoreText::String fail");}
 }
 #undef U8

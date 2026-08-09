@@ -25,6 +25,7 @@
 #include <SGEXTN/Containers/Vector.h>
 #include <SGEXTN/Math/FloatLimits.h>
 #include <SGEXTN/Containers/ArrayVectorMove.h>
+#include <SGEXTN/Containers/Serialise.h>
 
 namespace {
 void appendUnicode(int unicode, SGEXTN::CoreText::Character& c){
@@ -101,6 +102,48 @@ bool SGEXTN::CoreText::Character::operator>=(const SGEXTN::CoreText::Character& 
 
 int SGEXTN::CoreText::Character::hash() const {
     return SGEXTN::Containers::Hash<SGEXTN::CoreText::TextBuffer>()(private_data);
+}
+
+SGEXTN::Containers::Array<unsigned char> SGEXTN::CoreText::Character::serialise(const SGEXTN::CoreText::Character& x){
+    SGEXTN::Containers::Array<unsigned char> outputArray(4 + x.byteLength());
+    int offset = 0;
+    SGEXTN::Containers::MemoryCopySerialise::copySection(outputArray, offset, SGEXTN::Containers::Serialise<int>::serialise(x.byteLength()));
+    for(int i=0; i<x.byteLength(); i++){
+        outputArray.at(4 + i) = x.byteAt(i);
+    }
+    return outputArray;
+}
+
+SGEXTN::CoreText::Character SGEXTN::CoreText::Character::unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success){
+    if(data.length() < 4){
+        success = false;
+        return SGEXTN::CoreText::Character();
+    }
+    SGEXTN::Containers::Array<unsigned char> tempArray(4);
+    int offset = 0;
+    bool isSuccessful = false;
+    SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
+    const int byteLength = SGEXTN::Containers::Serialise<int>::unserialise(tempArray, &isSuccessful);
+    if(isSuccessful == false || byteLength + 4 != data.length()){
+        success = false;
+        return SGEXTN::CoreText::Character();
+    }
+    SGEXTN::CoreText::String s = SGEXTN::CoreText::String::repeat(static_cast<unsigned char>(0), byteLength);
+    for(int i=0; i<byteLength; i++){
+        s.byteAt(i) = data.at(4 + i);
+    }
+    if(s.characterLength() != 1){
+        success = false;
+        return SGEXTN::CoreText::Character();
+    }
+    success = true;
+    SGEXTN::CoreText::Character output;
+    output.private_data = s.private_data;
+    return output;
+}
+
+int SGEXTN::CoreText::Character::lengthof(const SGEXTN::CoreText::Character& x){
+    return (4 + x.byteLength());
 }
 
 int SGEXTN::CoreText::Character::byteLength() const {

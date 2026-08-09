@@ -17,12 +17,9 @@
 
 #pragma once
 #include <SGEXTN/CoreText/private_api/TextBuffer.h>
+#include <SGEXTN/Containers/Array.h>
 
 namespace SGEXTN {
-namespace Containers {
-template <typename T> class Array;
-}
-
 namespace CoreText {
 class String;
 
@@ -40,6 +37,9 @@ public:
     [[nodiscard]] bool operator<=(const Character& x) const;
     [[nodiscard]] bool operator>=(const Character& x) const;
     [[nodiscard]] int hash() const;
+    [[nodiscard]] static SGEXTN::Containers::Array<unsigned char> serialise(const Character& x);
+    [[nodiscard]] static Character unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success);
+    [[nodiscard]] static int lengthof(const Character& x);
     [[nodiscard]] int byteLength() const;
     [[nodiscard]] unsigned char& byteAt(int i);
     [[nodiscard]] const unsigned char& byteAt(int i) const;
