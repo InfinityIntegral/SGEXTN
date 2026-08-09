@@ -25,6 +25,7 @@
 #include <SGEXTN/Math/FloatLimits.h>
 #include <SGEXTN/Containers/ForceCrash.h>
 #include <SGEXTN/Containers/ArrayVectorMove.h>
+#include <SGEXTN/Containers/Serialise.h>
 
 namespace {
 int getValueOfDigit(const SGEXTN::CoreText::Character& c, int base){
@@ -462,6 +463,42 @@ bool SGEXTN::CoreText::String::operator>=(const SGEXTN::CoreText::String& x) con
 
 int SGEXTN::CoreText::String::hash() const {
     return private_data.hash();
+}
+
+SGEXTN::Containers::Array<unsigned char> SGEXTN::CoreText::String::serialise(const SGEXTN::CoreText::String& x){
+    SGEXTN::Containers::Array<unsigned char> outputArray(4 + x.byteLength());
+    int offset = 0;
+    SGEXTN::Containers::MemoryCopySerialise::copySection(outputArray, offset, SGEXTN::Containers::Serialise<int>::serialise(x.byteLength()));
+    for(int i=0; i<x.byteLength(); i++){
+        outputArray.at(4 + i) = x.byteAt(i);
+    }
+    return outputArray;
+}
+
+SGEXTN::CoreText::String SGEXTN::CoreText::String::unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success){
+    if(data.length() < 4){
+        success = false;
+        return "";
+    }
+    SGEXTN::Containers::Array<unsigned char> tempArray(4);
+    int offset = 0;
+    bool isSuccessful = false;
+    SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
+    const int byteLength = SGEXTN::Containers::Serialise<int>::unserialise(tempArray, &isSuccessful);
+    if(isSuccessful == false || byteLength + 4 != data.length()){
+        success = false;
+        return "";
+    }
+    SGEXTN::CoreText::String output = SGEXTN::CoreText::String::repeat(static_cast<unsigned char>(0), byteLength);
+    for(int i=0; i<byteLength; i++){
+        output.byteAt(i) = data.at(4 + i);
+    }
+    success = true;
+    return output;
+}
+
+int SGEXTN::CoreText::String::lengthof(const SGEXTN::CoreText::String& x){
+    return (4 + x.byteLength());
 }
 
 SGEXTN::CoreText::String SGEXTN::CoreText::String::operator+(const SGEXTN::CoreText::String& x) const {
