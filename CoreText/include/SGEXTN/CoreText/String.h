@@ -18,9 +18,12 @@
 #pragma once
 #include <SGEXTN/CoreText/private_api/TextBuffer.h>
 #include <SGEXTN/Containers/Vector.h>
-#include <SGEXTN/Containers/Array.h>
 
 namespace SGEXTN {
+namespace Containers {
+template <typename T> class Array;
+}
+
 namespace CoreText {
 class Character;
 class OldString;

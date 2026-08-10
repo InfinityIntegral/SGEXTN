@@ -28,6 +28,7 @@
 #include <SGEXTN/Math/FloatMath.h>
 #include <SGEXTN/Containers/Vector.h>
 #include <SGEXTN/Containers/ForceCrash.h>
+#include <SGEXTN/SingEmbed/private_api/EmbeddedFile.h>
 #include <SGEXTN/SingEmbed/private_api/SingEmbedFileRegistrarInstance.h>
 #include <SGEXTN/Containers/UnorderedMap.h>
 #include <chrono>

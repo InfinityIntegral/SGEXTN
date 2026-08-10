@@ -20,6 +20,8 @@
 #include <SGEXTN/CoreText/String.h>
 #include <SGEXTN/CoreText/Character.h>
 #include <SGEXTN/Containers/ForceCrash.h>
+#include <SGEXTN/Containers/Array.h>
+#include <SGEXTN/Containers/Serialise.h>
 #include <chrono>
 
 namespace {
@@ -194,6 +196,20 @@ int SGEXTN::Utilities::DateTime::hash() const {
 
 SGEXTN::CoreText::String SGEXTN::Utilities::DateTime::debugPrint() const {
     return getDisplayString(SGEXTN::Utilities::TimeFormat::Display, false, true);
+}
+
+SGEXTN::Containers::Array<unsigned char> SGEXTN::Utilities::DateTime::serialise(SGEXTN::Utilities::DateTime x){
+    return SGEXTN::Containers::Serialise<long long>::serialise(x.private_data);
+}
+
+SGEXTN::Utilities::DateTime SGEXTN::Utilities::DateTime::unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success){
+    const long long time = SGEXTN::Containers::Serialise<long long>::unserialise(data, &success);
+    if(success == false){return SGEXTN::Utilities::DateTime::beginningOfTime();}
+    return SGEXTN::Utilities::DateTime(time);
+}
+
+int SGEXTN::Utilities::DateTime::lengthof([[maybe_unused]] SGEXTN::Utilities::DateTime x){
+    return 8;
 }
 
 double SGEXTN::Utilities::DateTime::getTimeAfter(SGEXTN::Utilities::DateTime x, SGEXTN::Utilities::TimeUnit unit) const {

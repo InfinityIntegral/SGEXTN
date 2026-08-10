@@ -18,6 +18,10 @@
 #pragma once
 
 namespace SGEXTN {
+namespace Containers {
+template <typename T> class Array;
+}
+
 namespace CoreText {
 class String;
 }
@@ -41,6 +45,9 @@ public:
     [[nodiscard]] bool operator>(HslaColour x) const;
     [[nodiscard]] int hash() const;
     [[nodiscard]] SGEXTN::CoreText::String debugPrint() const;
+    [[nodiscard]] static SGEXTN::Containers::Array<unsigned char> serialise(HslaColour x);
+    [[nodiscard]] static HslaColour unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success);
+    [[nodiscard]] static int lengthof(HslaColour x);
     [[nodiscard]] float getHue() const;
     [[nodiscard]] float getSaturation() const;
     [[nodiscard]] float getLightness() const;

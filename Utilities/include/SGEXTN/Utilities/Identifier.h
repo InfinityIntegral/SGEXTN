@@ -18,6 +18,10 @@
 #pragma once
 
 namespace SGEXTN {
+namespace Containers {
+template <typename T> class Array;
+}
+
 namespace CoreText {
 class String;
 }
@@ -36,6 +40,9 @@ public:
     [[nodiscard]] int hash() const;
     [[nodiscard]] SGEXTN::CoreText::String getStringForPrinting() const;
     [[nodiscard]] SGEXTN::CoreText::String debugPrint() const;
+    [[nodiscard]] static SGEXTN::Containers::Array<unsigned char> serialise(Identifier x);
+    [[nodiscard]] static Identifier unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success);
+    [[nodiscard]] static int lengthof(Identifier x);
 };
 }
 }

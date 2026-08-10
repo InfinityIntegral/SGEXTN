@@ -16,10 +16,11 @@
 // BuildLah license check: SGEXTN 7.0.0
 
 #pragma once
-#include <SGEXTN/Containers/Array.h>
 
 namespace SGEXTN {
 namespace Containers {
+template <typename T> class Array;
+
 class BuildLah_SGEXTN_Containers MemoryCopySerialise {
 public:
     static void copySection(SGEXTN::Containers::Array<unsigned char>& mainArray, int& offset, const SGEXTN::Containers::Array<unsigned char>& section);

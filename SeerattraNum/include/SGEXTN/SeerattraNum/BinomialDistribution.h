@@ -16,11 +16,14 @@
 // BuildLah license check: SGEXTN 7.0.0
 
 #pragma once
-#include <SGEXTN/Containers/Array.h>
 #include <SGEXTN/SeerattraNum/GeometricDistribution.h>
 #include <SGEXTN/SeerattraNum/DirectRandomInstanceLocator.h>
 
 namespace SGEXTN {
+namespace Containers {
+template <typename T> class Array;
+}
+
 namespace SeerattraNum {
 class BuildLah_SGEXTN_SeerattraNum BinomialDistribution {
 public:

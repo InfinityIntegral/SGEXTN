@@ -17,7 +17,6 @@
 
 #pragma once
 #include <SGEXTN/CoreText/String.h>
-#include <SGEXTN/Containers/Array.h>
 
 namespace SGEXTN {
 namespace Containers {

@@ -25,6 +25,7 @@
 #include <SGEXTN/Utilities/DateTime.h>
 #include <SGEXTN/CoreText/String.h>
 #include <SGEXTN/Containers/Array.h>
+#include <SGEXTN/Containers/Serialise.h>
 
 namespace {
 bool isCloseEnough(float a, float b){
@@ -33,6 +34,14 @@ bool isCloseEnough(float a, float b){
 
 bool isCloseEnoughWCAG3(float a, float b){
     return ((a > b - 0.1f) && (a < b + 0.1f));
+}
+
+bool isBitwiseIdentical(const SGEXTN::Containers::Array<unsigned char>& a, const SGEXTN::Containers::Array<unsigned char>& b){
+    if(a.length() != b.length()){return false;}
+    for(int i=0; i<a.length(); i++){
+        if(a.at(i) != b.at(i)){return false;}
+    }
+    return true;
 }
 }
 
@@ -122,6 +131,17 @@ void SGEXTN::InternalTest::UtilitiesTest::testRgbaColour(){
     if(col.interpolate(SGEXTN::Utilities::RgbaColour(255, 0, 200), 1.2f, true) != SGEXTN::Utilities::RgbaColour(0, 163, 200)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - interpolate very high strength fail");}
     if(SGEXTN::Utilities::RgbaColour(255, 0, 200).complement(false) != SGEXTN::Utilities::RgbaColour(0, 255, 55)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - complement no gamma correct fail");}
     if(SGEXTN::Utilities::RgbaColour(255, 0, 200).complement(true) != SGEXTN::Utilities::RgbaColour(0, 255, 174)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - complement fail");}
+    const SGEXTN::Utilities::RgbaColour sampleColour(64, 128, 192, 255);
+    bool isValid = false;
+    SGEXTN::Containers::Array<unsigned char> serialiseArray(4);
+    serialiseArray.at(0) = static_cast<unsigned char>(0xff);
+    serialiseArray.at(1) = static_cast<unsigned char>(0xc0);
+    serialiseArray.at(2) = static_cast<unsigned char>(0x80);
+    serialiseArray.at(3) = static_cast<unsigned char>(0x40);
+    if(isBitwiseIdentical(SGEXTN::Containers::Serialise<SGEXTN::Utilities::RgbaColour>::serialise(sampleColour), serialiseArray) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise serialise SGEXTN::Utilities::RgbaColour fail");}
+    const SGEXTN::Utilities::RgbaColour unserialisedColour = SGEXTN::Containers::Serialise<SGEXTN::Utilities::RgbaColour>::unserialise(serialiseArray, &isValid);
+    if(isValid == false || unserialisedColour != sampleColour){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise unserialise SGEXTN::Utilities::RgbaColour fail");}
+    if(SGEXTN::Containers::Serialise<SGEXTN::Utilities::RgbaColour>::lengthof(sampleColour) != 4){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise lengthof SGEXTN::Utilities::RgbaColour fail");}
 }
 
 void SGEXTN::InternalTest::UtilitiesTest::testHslaColour(){
@@ -163,6 +183,21 @@ void SGEXTN::InternalTest::UtilitiesTest::testHslaColour(){
     if(SGEXTN::Utilities::HslaColour(313.0f, 100.0f, 80.0f).toRGBA() != SGEXTN::Utilities::RgbaColour(255, 153, 233)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::HslaColour - hsl to rgb test case 8 fail");}
     if(SGEXTN::Utilities::HslaColour(313.0f, 100.0f, 90.0f).toRGBA() != SGEXTN::Utilities::RgbaColour(255, 204, 244)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::HslaColour - hsl to rgb test case 9 fail");}
     if(SGEXTN::Utilities::HslaColour(313.0f, 100.0f, 100.0f).toRGBA() != SGEXTN::Utilities::RgbaColour(255, 255, 255)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::HslaColour - hsl to rgb test case 10 fail");}
+    bool isValid = false;
+    const SGEXTN::Utilities::HslaColour sampleColour(200.0f, 25.0f, 50.0f, 75.0f);
+    SGEXTN::Containers::Array<unsigned char> serialiseArray(16, static_cast<unsigned char>(0));
+    serialiseArray.at(2) = static_cast<unsigned char>(0x48);
+    serialiseArray.at(3) = static_cast<unsigned char>(0x43);
+    serialiseArray.at(6) = static_cast<unsigned char>(0xc8);
+    serialiseArray.at(7) = static_cast<unsigned char>(0x41);
+    serialiseArray.at(10) = static_cast<unsigned char>(0x48);
+    serialiseArray.at(11) = static_cast<unsigned char>(0x42);
+    serialiseArray.at(14) = static_cast<unsigned char>(0x96);
+    serialiseArray.at(15) = static_cast<unsigned char>(0x42);
+    if(isBitwiseIdentical(serialiseArray, SGEXTN::Containers::Serialise<SGEXTN::Utilities::HslaColour>::serialise(sampleColour)) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise serialise SGEXTN::Utilities::HslaColour fail");}
+    const SGEXTN::Utilities::HslaColour unserialisedColour = SGEXTN::Containers::Serialise<SGEXTN::Utilities::HslaColour>::unserialise(serialiseArray, &isValid);
+    if(isValid == false || unserialisedColour != sampleColour){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise unserialise SGEXTN::Utilities::HslaColour fail");}
+    if(SGEXTN::Containers::Serialise<SGEXTN::Utilities::HslaColour>::lengthof(sampleColour) != 16){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise lengthof SGEXTN::Utilities::HslaColour fail");}
 }
 
 void SGEXTN::InternalTest::UtilitiesTest::testContrastUtilities(){
@@ -230,6 +265,16 @@ void SGEXTN::InternalTest::UtilitiesTest::testIdentifierRegistry(){
         ids.at(i) = registry.generateAndRegisterIdentifier();
     }
     if(registry.length() != 1000){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::Identifier check length fail");}
+    SGEXTN::Utilities::Identifier sampleId = SGEXTN::Utilities::Identifier::nullIdentifier();
+    sampleId.private_data = 726;
+    isValid = false;
+    SGEXTN::Containers::Array<unsigned char> serialiseArray(4, static_cast<unsigned char>(0));
+    serialiseArray.at(0) = static_cast<unsigned char>(0xd6);
+    serialiseArray.at(1) = static_cast<unsigned char>(0x02);
+    if(isBitwiseIdentical(serialiseArray, SGEXTN::Containers::Serialise<SGEXTN::Utilities::Identifier>::serialise(sampleId)) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise serialise SGEXTN::Utilities::Identifier fail");}
+    const SGEXTN::Utilities::Identifier unserialisedId = SGEXTN::Containers::Serialise<SGEXTN::Utilities::Identifier>::unserialise(serialiseArray, &isValid);
+    if(isValid == false || unserialisedId != sampleId){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise unserialise SGEXTN::Utilities::Identifier fail");}
+    if(SGEXTN::Containers::Serialise<SGEXTN::Utilities::Identifier>::lengthof(sampleId) != 4){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise lengthof SGEXTN::Utilities::Identifier fail");}
 }
 
 void SGEXTN::InternalTest::UtilitiesTest::testDateTime(){
@@ -266,4 +311,13 @@ void SGEXTN::InternalTest::UtilitiesTest::testDateTime(){
     if(zero.getDisplayString(SGEXTN::Utilities::TimeFormat::ShortestReadable, true, true) != "19650809 103000"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::DateTime display string shortest readable format global year correct to second fail");}
     if(zero.getDisplayString(SGEXTN::Utilities::TimeFormat::ShortestReadable, true, false) != "19650809"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::DateTime display string shortest readable format global year fail");}
     if(zero.getDisplayString("%\\SG%2year%\\ %2month%2day%\\ %2hour%2minute%2second") != "SG00 0809 103000"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::DateTime display string custom format fail");}
+    bool isValid = false;
+    const SGEXTN::Utilities::DateTime sampleTime(0, 8, 9, 11, 30, 00);
+    SGEXTN::Containers::Array<unsigned char> serialiseArray(8, static_cast<unsigned char>(0));
+    serialiseArray.at(0) = static_cast<unsigned char>(0x10);
+    serialiseArray.at(1) = static_cast<unsigned char>(0x0e);
+    if(isBitwiseIdentical(serialiseArray, SGEXTN::Containers::Serialise<SGEXTN::Utilities::DateTime>::serialise(sampleTime)) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise serialise SGEXTN::Utilities::DateTime false");}
+    const SGEXTN::Utilities::DateTime unserialisedTime = SGEXTN::Containers::Serialise<SGEXTN::Utilities::DateTime>::unserialise(serialiseArray, &isValid);
+    if(isValid == false || unserialisedTime != sampleTime){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise unserialise SGEXTN::Utilities::DateTime fail");}
+    if(SGEXTN::Containers::Serialise<SGEXTN::Utilities::DateTime>::lengthof(sampleTime) != 8){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise lengthof SGEXTN::Utilities::DateTime fail");}
 }

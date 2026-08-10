@@ -18,6 +18,8 @@
 #include <SGEXTN/Utilities/Identifier.h>
 #include <SGEXTN/Containers/Hash.h>
 #include <SGEXTN/CoreText/String.h>
+#include <SGEXTN/Containers/Array.h>
+#include <SGEXTN/Containers/Serialise.h>
 
 SGEXTN::Utilities::Identifier::Identifier() : private_data(0) {}
 
@@ -53,4 +55,20 @@ SGEXTN::CoreText::String SGEXTN::Utilities::Identifier::getStringForPrinting() c
 
 SGEXTN::CoreText::String SGEXTN::Utilities::Identifier::debugPrint() const {
     return getStringForPrinting();
+}
+
+SGEXTN::Containers::Array<unsigned char> SGEXTN::Utilities::Identifier::serialise(SGEXTN::Utilities::Identifier x){
+    return SGEXTN::Containers::Serialise<unsigned int>::serialise(x.private_data);
+}
+
+SGEXTN::Utilities::Identifier SGEXTN::Utilities::Identifier::unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success){
+    const unsigned int internalData = SGEXTN::Containers::Serialise<unsigned int>::unserialise(data, &success);
+    if(success == false){return SGEXTN::Utilities::Identifier::nullIdentifier();}
+    SGEXTN::Utilities::Identifier output = SGEXTN::Utilities::Identifier::nullIdentifier();
+    output.private_data = internalData;
+    return output;
+}
+
+int SGEXTN::Utilities::Identifier::lengthof([[maybe_unused]] SGEXTN::Utilities::Identifier x){
+    return 4;
 }
