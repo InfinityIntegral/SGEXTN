@@ -16,7 +16,6 @@
 // BuildLah license check: SGEXTN 7.0.0
 
 #pragma once
-#include <SGEXTN/SingEmbed/private_api/EmbeddedFile.h>
 
 namespace SGEXTN {
 namespace CoreText {
@@ -30,6 +29,8 @@ template <typename... Ts> class Hash;
 }
 
 namespace SingEmbed {
+class EmbeddedFile;
+
 class BuildLah_SGEXTN_SingEmbed SingEmbedFileRegistrarInstance {
 public:
     static SGEXTN::Containers::UnorderedMap<SGEXTN::CoreText::String, SGEXTN::SingEmbed::EmbeddedFile, SGEXTN::Containers::EqualTo<SGEXTN::CoreText::String>, SGEXTN::Containers::Hash<SGEXTN::CoreText::String>>* registry;

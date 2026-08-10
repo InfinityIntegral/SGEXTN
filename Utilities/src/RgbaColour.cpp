@@ -20,6 +20,7 @@
 #include <SGEXTN/Containers/Hash.h>
 #include <SGEXTN/Math/FloatMath.h>
 #include <SGEXTN/Containers/ForceCrash.h>
+#include <SGEXTN/Containers/Serialise.h>
 
 namespace {
 int boundInt(int x){
@@ -183,6 +184,20 @@ int SGEXTN::Utilities::RgbaColour::hash() const {
 
 SGEXTN::CoreText::String SGEXTN::Utilities::RgbaColour::debugPrint() const {
     return rgbaHtmlString();
+}
+
+SGEXTN::Containers::Array<unsigned char> SGEXTN::Utilities::RgbaColour::serialise(SGEXTN::Utilities::RgbaColour x){
+    return SGEXTN::Containers::Serialise<unsigned int>::serialise(x.private_data);
+}
+
+SGEXTN::Utilities::RgbaColour SGEXTN::Utilities::RgbaColour::unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success){
+    const unsigned int colourInfo = SGEXTN::Containers::Serialise<unsigned int>::unserialise(data, &success);
+    if(success == false){return SGEXTN::Utilities::RgbaColour();}
+    return SGEXTN::Utilities::RgbaColour(colourInfo);
+}
+
+int SGEXTN::Utilities::RgbaColour::lengthof([[maybe_unused]] SGEXTN::Utilities::RgbaColour x){
+    return 4;
 }
 
 void SGEXTN::Utilities::RgbaColour::gammaCorrectBegin(float& r, float& g, float& b) const {
