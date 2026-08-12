@@ -121,10 +121,9 @@ SGEXTN::CoreText::Character SGEXTN::CoreText::Character::unserialise(const SGEXT
     }
     SGEXTN::Containers::Array<unsigned char> tempArray(4);
     int offset = 0;
-    bool isSuccessful = false;
     SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
-    const int byteLength = SGEXTN::Containers::Serialise<int>::unserialise(tempArray, &isSuccessful);
-    if(isSuccessful == false || byteLength + 4 != data.length()){
+    const int byteLength = SGEXTN::Containers::Serialise<int>::unserialise(tempArray, &success);
+    if(success == false || byteLength + 4 != data.length()){
         success = false;
         return SGEXTN::CoreText::Character();
     }

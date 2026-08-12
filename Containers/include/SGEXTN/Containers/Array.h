@@ -27,7 +27,7 @@ public:
     Array& operator=(const Array& x);
     Array(Array&& x) noexcept;
     Array& operator=(Array&& x) noexcept;
-    template <typename... Ts> Array(Ts... data);
+    template <typename... Ts> Array(const Ts&... data);
     ~Array();
     void fill(const T& defaultValue);
     [[nodiscard]] int length() const;

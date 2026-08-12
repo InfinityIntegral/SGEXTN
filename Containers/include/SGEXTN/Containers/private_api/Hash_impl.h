@@ -23,7 +23,7 @@ template <typename T> int SGEXTN::Containers::Hash<T>::operator()(const T& x) co
     return x.hash();
 }
 
-template <typename... Ts> int SGEXTN::Containers::Hash<Ts...>::operator()(Ts... xs) const {
+template <typename... Ts> int SGEXTN::Containers::Hash<Ts...>::operator()(const Ts&... xs) const {
     constexpr int argCount = (sizeof...(Ts));
     int buffer[argCount] = {SGEXTN::Containers::Hash<Ts>{}(xs)...};
     return SGEXTN::Containers::HashAlgorithm::wyHash32(SGEXTN::Containers::Span<const unsigned char>(reinterpret_cast<const unsigned char*>(buffer), argCount * sizeof(int)));

@@ -29,7 +29,7 @@ public:
 
 template <typename... Ts> class Serialise {
 public:
-    [[nodiscard]] static SGEXTN::Containers::Array<unsigned char> serialiseTogether(Ts... xs);
+    [[nodiscard]] static SGEXTN::Containers::Array<unsigned char> serialiseTogether(const Ts&... xs);
 };
 
 template <typename T> class Serialise<T> {

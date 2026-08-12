@@ -128,28 +128,27 @@ SGEXTN::Utilities::HslaColour SGEXTN::Utilities::HslaColour::unserialise(const S
         return SGEXTN::Utilities::HslaColour();
     }
     int offset = 0;
-    bool isValid = false;
     SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
-    const float h = SGEXTN::Containers::Serialise<float>::unserialise(tempArray, &isValid);
-    if(isValid == false || h < 0.0f || h > 360.0f){
+    const float h = SGEXTN::Containers::Serialise<float>::unserialise(tempArray, &success);
+    if(success == false || h < 0.0f || h > 360.0f){
         success = false;
         return SGEXTN::Utilities::HslaColour();
     }
     SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
-    const float s = SGEXTN::Containers::Serialise<float>::unserialise(tempArray, &isValid);
-    if(isValid == false || s < 0.0f || s > 100.0f){
+    const float s = SGEXTN::Containers::Serialise<float>::unserialise(tempArray, &success);
+    if(success == false || s < 0.0f || s > 100.0f){
         success = false;
         return SGEXTN::Utilities::HslaColour();
     }
     SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
-    const float l = SGEXTN::Containers::Serialise<float>::unserialise(tempArray, &isValid);
-    if(isValid == false || l < 0.0f || l > 100.0f){
+    const float l = SGEXTN::Containers::Serialise<float>::unserialise(tempArray, &success);
+    if(success == false || l < 0.0f || l > 100.0f){
         success = false;
         return SGEXTN::Utilities::HslaColour();
     }
     SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
-    const float a = SGEXTN::Containers::Serialise<float>::unserialise(tempArray, &isValid);
-    if(isValid == false || a < 0.0f || a > 100.0f){
+    const float a = SGEXTN::Containers::Serialise<float>::unserialise(tempArray, &success);
+    if(success == false || a < 0.0f || a > 100.0f){
         success = false;
         return SGEXTN::Utilities::HslaColour();
     }

@@ -32,8 +32,8 @@ template <typename T> SGEXTN::Containers::Array<T>::Array(int count, const T& de
     }
 }
 
-template <typename T> template <typename... Ts> SGEXTN::Containers::Array<T>::Array(Ts... data) : private_data(nullptr), private_length(sizeof...(Ts)){
-    if((sizeof...(Ts)) > 0){private_data = new T[private_length]{(static_cast<Ts&&>(data))...};}
+template <typename T> template <typename... Ts> SGEXTN::Containers::Array<T>::Array(const Ts&... data) : private_data(nullptr), private_length(sizeof...(Ts)){
+    if((sizeof...(Ts)) > 0){private_data = new T[private_length]{data...};}
 }
 
 template <typename T> SGEXTN::Containers::Array<T>::Array(const Array& x) : private_data(nullptr), private_length(x.private_length) {

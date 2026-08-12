@@ -18,6 +18,10 @@
 #pragma once
 
 namespace SGEXTN {
+namespace Containers {
+template <typename T> class Array;
+}
+
 namespace SeerattraNum {
 class DirectRandom;
 
@@ -26,12 +30,17 @@ public:
     bool private_ownsRng;
     SGEXTN::SeerattraNum::DirectRandom* private_rng;
     DirectRandomInstanceLocator(bool useGlobal);
+    DirectRandomInstanceLocator(const SGEXTN::SeerattraNum::DirectRandom& rng);
     DirectRandomInstanceLocator(const DirectRandomInstanceLocator& x);
     DirectRandomInstanceLocator& operator=(const DirectRandomInstanceLocator& x);
     DirectRandomInstanceLocator(DirectRandomInstanceLocator&& x) noexcept;
     DirectRandomInstanceLocator& operator=(DirectRandomInstanceLocator&& x) noexcept;
     ~DirectRandomInstanceLocator();
+    [[nodiscard]] static SGEXTN::Containers::Array<unsigned char> serialise(const DirectRandomInstanceLocator& x);
+    [[nodiscard]] static SGEXTN::SeerattraNum::DirectRandomInstanceLocator unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success);
+    [[nodiscard]] static int lengthof(const DirectRandomInstanceLocator& x);
     [[nodiscard]] SGEXTN::SeerattraNum::DirectRandom& operator*();
+    [[nodiscard]] const SGEXTN::SeerattraNum::DirectRandom& operator*() const;
 };
 }
 }
