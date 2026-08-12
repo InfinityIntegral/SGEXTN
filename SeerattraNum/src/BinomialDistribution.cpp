@@ -22,13 +22,55 @@
 #include <SGEXTN/Math/FloatMath.h>
 #include <SGEXTN/SeerattraNum/GeometricDistribution.h>
 #include <SGEXTN/SeerattraNum/ExponentialDistribution.h>
+#include <SGEXTN/Containers/Serialise.h>
 
-SGEXTN::SeerattraNum::BinomialDistribution::BinomialDistribution(bool useGlobal, float chanceOfTrue, int attemptCount) :private_chanceOfTrue(chanceOfTrue), private_attemptCount(attemptCount), private_rngLocator(useGlobal), private_geometricDistribution(true, 0.5f), private_precompConstantL(0.0f), private_precompConstantC(0.0f), private_precompConstantM(0.0f), private_exponentialFactorLeft(0.0f), private_exponentialFactorRight(0.0f), private_negativeReciprocalExponentialFactorLeft(0.0f), private_reciprocalExponentialFactorRight(0.0f), private_boundaryFarLeft(0.0f), private_boundaryCenterLeft(0.0f), private_boundaryCenterRight(0.0f), private_boundaryFarRight(0.0f), private_weightLeftTail(0.0f), private_weightBothTails(0.0f), private_weightAllExceptCenter(0.0f), private_comparisonMultiplier(0.0f), private_comparisonConstant(0.0f){
+SGEXTN::SeerattraNum::BinomialDistribution::BinomialDistribution() : private_chanceOfTrue(0.5f), private_attemptCount(1), private_rngLocator(true), private_geometricDistribution(true, 0.5f), private_precompConstantL(0.0f), private_precompConstantC(0.0f), private_precompConstantM(0.0f), private_exponentialFactorLeft(0.0f), private_exponentialFactorRight(0.0f), private_negativeReciprocalExponentialFactorLeft(0.0f), private_reciprocalExponentialFactorRight(0.0f), private_boundaryFarLeft(0.0f), private_boundaryCenterLeft(0.0f), private_boundaryCenterRight(0.0f), private_boundaryFarRight(0.0f), private_weightLeftTail(0.0f), private_weightBothTails(0.0f), private_weightAllExceptCenter(0.0f), private_comparisonMultiplier(0.0f), private_comparisonConstant(0.0f){
+    private_redoPrecompute();
+    private_geometricDistribution.setChanceOfTrue(0.5f);
+}
+
+SGEXTN::SeerattraNum::BinomialDistribution::BinomialDistribution(bool useGlobal, float chanceOfTrue, int attemptCount) : private_chanceOfTrue(chanceOfTrue), private_attemptCount(attemptCount), private_rngLocator(useGlobal), private_geometricDistribution(true, 0.5f), private_precompConstantL(0.0f), private_precompConstantC(0.0f), private_precompConstantM(0.0f), private_exponentialFactorLeft(0.0f), private_exponentialFactorRight(0.0f), private_negativeReciprocalExponentialFactorLeft(0.0f), private_reciprocalExponentialFactorRight(0.0f), private_boundaryFarLeft(0.0f), private_boundaryCenterLeft(0.0f), private_boundaryCenterRight(0.0f), private_boundaryFarRight(0.0f), private_weightLeftTail(0.0f), private_weightBothTails(0.0f), private_weightAllExceptCenter(0.0f), private_comparisonMultiplier(0.0f), private_comparisonConstant(0.0f){
     if(chanceOfTrue < 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BinomialDistribution constructor crashed because the requested probability is negative");}
     if(chanceOfTrue > 1.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BinomialDistribution constructor crashed because the requested probability is higher than 1");}
     if(attemptCount < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BinomialDistribution constructor crashed because the requested number of attempts is negative");}
     private_redoPrecompute();
     private_geometricDistribution.setChanceOfTrue(chanceOfTrue);
+}
+
+SGEXTN::Containers::Array<unsigned char> SGEXTN::SeerattraNum::BinomialDistribution::serialise(const SGEXTN::SeerattraNum::BinomialDistribution& x){
+    return SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float, int>::serialiseTogether(x.private_rngLocator, x.private_chanceOfTrue, x.private_attemptCount);
+}
+
+SGEXTN::SeerattraNum::BinomialDistribution SGEXTN::SeerattraNum::BinomialDistribution::unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success){
+    if(data.length() != 45){
+        success = false;
+        return SGEXTN::SeerattraNum::BinomialDistribution();
+    }
+    SGEXTN::Containers::Array<unsigned char> tempArray(37);
+    int offset = 0;
+    SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
+    const SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::unserialise(tempArray, &success);
+    if(success == false){return SGEXTN::SeerattraNum::BinomialDistribution();}
+    tempArray = SGEXTN::Containers::Array<unsigned char>(4);
+    SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
+    const float probability = SGEXTN::Containers::Serialise<float>::unserialise(tempArray, &success);
+    if(success == false || probability < 0.0f || probability > 1.0f){
+        success = false;
+        return SGEXTN::SeerattraNum::BinomialDistribution();
+    }
+    SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
+    const int attempts = SGEXTN::Containers::Serialise<int>::unserialise(tempArray, &success);
+    if(success == false || attempts < 0){
+        success = false;
+        return SGEXTN::SeerattraNum::BinomialDistribution();
+    }
+    SGEXTN::SeerattraNum::BinomialDistribution output(true, probability, attempts);
+    output.private_rngLocator = rngLocator;
+    return output;
+}
+
+int SGEXTN::SeerattraNum::BinomialDistribution::lengthof([[maybe_unused]] const SGEXTN::SeerattraNum::BinomialDistribution& x){
+    return 45;
 }
 
 void SGEXTN::SeerattraNum::BinomialDistribution::private_redoPrecompute(){

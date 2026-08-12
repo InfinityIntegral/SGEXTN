@@ -47,7 +47,11 @@ public:
     float private_weightAllExceptCenter;
     float private_comparisonMultiplier;
     float private_comparisonConstant;
+    BinomialDistribution();
     BinomialDistribution(bool useGlobal, float chanceOfTrue, int attemptCount);
+    [[nodiscard]] static SGEXTN::Containers::Array<unsigned char> serialise(const BinomialDistribution& x);
+    [[nodiscard]] static BinomialDistribution unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success);
+    [[nodiscard]] static int lengthof(const BinomialDistribution& x);
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
     [[nodiscard]] int randomValue();
     [[nodiscard]] SGEXTN::Containers::Array<int> randomValueArray(int count);
