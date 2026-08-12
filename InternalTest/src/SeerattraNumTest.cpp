@@ -55,6 +55,7 @@
 #include <SGEXTN/Containers/LessThan.h>
 #include <SGEXTN/Containers/Map.h>
 #include <SGEXTN/Math/FloatMath.h>
+#include <SGEXTN/Containers/Serialise.h>
 #include <random>
 
 namespace {
@@ -115,6 +116,14 @@ bool testIfDistributionSameDiscrete(SGEXTN::Containers::Array<int>& sampleData, 
         else if(maximumDifference < nextInTestData - nextInSampleData){maximumDifference = nextInTestData - nextInSampleData;}
     }
     return (maximumDifference < 608);
+}
+
+bool isBitwiseIdentical(const SGEXTN::Containers::Array<unsigned char>& a, const SGEXTN::Containers::Array<unsigned char>& b){
+    if(a.length() != b.length()){return false;}
+    for(int i=0; i<a.length(); i++){
+        if(a.at(i) != b.at(i)){return false;}
+    }
+    return true;
 }
 }
 
@@ -196,6 +205,52 @@ void SGEXTN::InternalTest::SeerattraNumTest::testDirectRandom(){
     if(generator.randomInt32() != -589113209){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::DirectRandom generate second integer second seed fail");}
     if(isCloseEnough(generator.randomFloat32(), 0.49299f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::DirectRandom generate first floating point second seed fail");}
     if(isCloseEnough(generator.randomFloat32(), 0.90498f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::DirectRandom generate second floating point second seed fail");}
+    SGEXTN::SeerattraNum::DirectRandom sampleRng;
+    sampleRng.seed(SGEXTN::Containers::Array<unsigned int>(1, 726u));
+    (void)sampleRng.randomInt32();
+    SGEXTN::Containers::Array<unsigned char> serialiseArray(37);
+    serialiseArray.at(0) = static_cast<unsigned char>(0x02);
+    serialiseArray.at(1) = static_cast<unsigned char>(0x65);
+    serialiseArray.at(2) = static_cast<unsigned char>(0xe2);
+    serialiseArray.at(3) = static_cast<unsigned char>(0xf2);
+    serialiseArray.at(4) = static_cast<unsigned char>(0x2e);
+    serialiseArray.at(5) = static_cast<unsigned char>(0x64);
+    serialiseArray.at(6) = static_cast<unsigned char>(0xb6);
+    serialiseArray.at(7) = static_cast<unsigned char>(0xd4);
+    serialiseArray.at(8) = static_cast<unsigned char>(0x22);
+    serialiseArray.at(9) = static_cast<unsigned char>(0x93);
+    serialiseArray.at(10) = static_cast<unsigned char>(0x9a);
+    serialiseArray.at(11) = static_cast<unsigned char>(0x22);
+    serialiseArray.at(12) = static_cast<unsigned char>(0xcc);
+    serialiseArray.at(13) = static_cast<unsigned char>(0x46);
+    serialiseArray.at(14) = static_cast<unsigned char>(0x5c);
+    serialiseArray.at(15) = static_cast<unsigned char>(0xb5);
+    serialiseArray.at(16) = static_cast<unsigned char>(0x71);
+    serialiseArray.at(17) = static_cast<unsigned char>(0x55);
+    serialiseArray.at(18) = static_cast<unsigned char>(0xd7);
+    serialiseArray.at(19) = static_cast<unsigned char>(0xea);
+    serialiseArray.at(20) = static_cast<unsigned char>(0x0c);
+    serialiseArray.at(21) = static_cast<unsigned char>(0xd3);
+    serialiseArray.at(22) = static_cast<unsigned char>(0x21);
+    serialiseArray.at(23) = static_cast<unsigned char>(0xde);
+    serialiseArray.at(24) = static_cast<unsigned char>(0xde);
+    serialiseArray.at(25) = static_cast<unsigned char>(0x74);
+    serialiseArray.at(26) = static_cast<unsigned char>(0x69);
+    serialiseArray.at(27) = static_cast<unsigned char>(0xf6);
+    serialiseArray.at(28) = static_cast<unsigned char>(0x15);
+    serialiseArray.at(29) = static_cast<unsigned char>(0x02);
+    serialiseArray.at(30) = static_cast<unsigned char>(0xb5);
+    serialiseArray.at(31) = static_cast<unsigned char>(0x94);
+    serialiseArray.at(32) = static_cast<unsigned char>(0x01);
+    serialiseArray.at(33) = static_cast<unsigned char>(0x8e);
+    serialiseArray.at(34) = static_cast<unsigned char>(0x0b);
+    serialiseArray.at(35) = static_cast<unsigned char>(0xf8);
+    serialiseArray.at(36) = static_cast<unsigned char>(0xcd);
+    bool isValid = false;
+    if(isBitwiseIdentical(serialiseArray, SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandom>::serialise(sampleRng)) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise serialise SGEXTN::SeerattraNum::DirectRandom fail");}
+    SGEXTN::SeerattraNum::DirectRandom unserialisedRng = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandom>::unserialise(serialiseArray, &isValid);
+    if(sampleRng.randomInt64() != unserialisedRng.randomInt64() || sampleRng.randomInt32() != unserialisedRng.randomInt32()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise unserialise SGEXTN::SeerattraNum::DirectRandom fail");}
+    if(SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandom>::lengthof(sampleRng) != 37){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise lengthof SGEXTN::SeerattraNum::DirectRandom fail");}
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testUniformDistributionInteger(){

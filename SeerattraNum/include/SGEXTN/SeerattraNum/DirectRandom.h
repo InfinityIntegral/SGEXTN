@@ -32,6 +32,9 @@ public:
     unsigned int private_cache;
     bool private_cacheActive;
     DirectRandom();
+    [[nodiscard]] static SGEXTN::Containers::Array<unsigned char> serialise(const DirectRandom& x);
+    [[nodiscard]] static DirectRandom unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success);
+    [[nodiscard]] static int lengthof(const DirectRandom& x);
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
     [[nodiscard]] int randomInt32();
     [[nodiscard]] long long randomInt64();
