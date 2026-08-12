@@ -29,7 +29,11 @@ public:
     SGEXTN::SeerattraNum::DirectRandomInstanceLocator private_rngLocator;
     float private_chanceOfTrue;
     float private_cacheReciprocalOfLnChanceOfFalse;
+    GeometricDistribution();
     GeometricDistribution(bool useGlobal, float chanceOfTrue);
+    [[nodiscard]] static SGEXTN::Containers::Array<unsigned char> serialise(const GeometricDistribution& x);
+    [[nodiscard]] static GeometricDistribution unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success);
+    [[nodiscard]] static int lengthof(const GeometricDistribution& x);
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
     [[nodiscard]] int randomValue();
     [[nodiscard]] int private_randomValue(SGEXTN::SeerattraNum::DirectRandomInstanceLocator& externalLocator) const;
