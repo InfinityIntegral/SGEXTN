@@ -17,8 +17,12 @@
 
 #include <SGEXTN/SeerattraNum/DirectRandomInstanceLocator.h>
 #include <SGEXTN/SeerattraNum/DirectRandom.h>
+#include <SGEXTN/Containers/Array.h>
+#include <SGEXTN/Containers/Serialise.h>
 
 SGEXTN::SeerattraNum::DirectRandomInstanceLocator::DirectRandomInstanceLocator(bool useGlobal) : private_ownsRng(useGlobal == false), private_rng(SGEXTN::SeerattraNum::DirectRandom::private_createRng(useGlobal)){}
+
+SGEXTN::SeerattraNum::DirectRandomInstanceLocator::DirectRandomInstanceLocator(const SGEXTN::SeerattraNum::DirectRandom& rng) : private_ownsRng(true), private_rng(new SGEXTN::SeerattraNum::DirectRandom(rng)){}
 
 SGEXTN::SeerattraNum::DirectRandomInstanceLocator::DirectRandomInstanceLocator(const DirectRandomInstanceLocator& x) : private_ownsRng(x.private_ownsRng), private_rng(x.private_rng){
     if(private_ownsRng == true){private_rng = new SGEXTN::SeerattraNum::DirectRandom(*x.private_rng);}
@@ -55,4 +59,33 @@ SGEXTN::SeerattraNum::DirectRandom& SGEXTN::SeerattraNum::DirectRandomInstanceLo
     SGEXTN::SeerattraNum::DirectRandom* temp = private_rng;
     private_rng = temp;
     return (*private_rng);
+}
+
+const SGEXTN::SeerattraNum::DirectRandom& SGEXTN::SeerattraNum::DirectRandomInstanceLocator::operator*() const {
+    return (*private_rng);
+}
+
+SGEXTN::Containers::Array<unsigned char> SGEXTN::SeerattraNum::DirectRandomInstanceLocator::serialise(const SGEXTN::SeerattraNum::DirectRandomInstanceLocator& x){
+    if(x.private_ownsRng == false){
+        SGEXTN::Containers::Array<unsigned char> outputArray(37, static_cast<unsigned char>(0x00));
+        outputArray.at(32) = static_cast<unsigned char>(0xff);
+        return outputArray;
+    }
+    return SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandom>::serialise(*x.private_rng);
+}
+
+SGEXTN::SeerattraNum::DirectRandomInstanceLocator SGEXTN::SeerattraNum::DirectRandomInstanceLocator::unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success){
+    if(data.length() != 37){
+        success = false;
+        return SGEXTN::SeerattraNum::DirectRandomInstanceLocator(true);
+    }
+    success = true;
+    if(data.at(32) == static_cast<unsigned char>(0xff)){return SGEXTN::SeerattraNum::DirectRandomInstanceLocator(true);}
+    const SGEXTN::SeerattraNum::DirectRandom internalRng = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandom>::unserialise(data, &success);
+    if(success == false){return SGEXTN::SeerattraNum::DirectRandomInstanceLocator(true);}
+    return SGEXTN::SeerattraNum::DirectRandomInstanceLocator(internalRng);
+}
+
+int SGEXTN::SeerattraNum::DirectRandomInstanceLocator::lengthof([[maybe_unused]] const SGEXTN::SeerattraNum::DirectRandomInstanceLocator& x){
+    return 37;
 }

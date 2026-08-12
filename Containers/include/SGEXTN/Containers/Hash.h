@@ -21,7 +21,7 @@ namespace SGEXTN {
 namespace Containers {
 template <typename... Ts> class Hash {
 public:
-    [[nodiscard]] int operator()(Ts... xs) const;
+    [[nodiscard]] int operator()(const Ts&... xs) const;
 };
 
 template <typename T> class Hash<T> {

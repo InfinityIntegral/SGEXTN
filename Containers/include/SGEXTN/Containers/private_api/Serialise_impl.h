@@ -18,7 +18,7 @@
 #pragma once
 #include <SGEXTN/Containers/Array.h>
 
-template <typename... Ts> SGEXTN::Containers::Array<unsigned char> SGEXTN::Containers::Serialise<Ts...>::serialiseTogether(Ts... xs){
+template <typename... Ts> SGEXTN::Containers::Array<unsigned char> SGEXTN::Containers::Serialise<Ts...>::serialiseTogether(const Ts&... xs){
     SGEXTN::Containers::Array<unsigned char> outputArray((0 + ... + SGEXTN::Containers::Serialise<Ts>::lengthof(xs)));
     int offset = 0;
     (SGEXTN::Containers::MemoryCopySerialise::copySection(outputArray, offset, SGEXTN::Containers::Serialise<Ts>::serialise(xs)), ...);

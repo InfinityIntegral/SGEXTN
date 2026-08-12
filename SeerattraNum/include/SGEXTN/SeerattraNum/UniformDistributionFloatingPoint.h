@@ -29,7 +29,11 @@ public:
     SGEXTN::SeerattraNum::DirectRandomInstanceLocator private_rngLocator;
     float private_minimum;
     float private_maximum;
+    UniformDistributionFloatingPoint();
     UniformDistributionFloatingPoint(bool useGlobal, float minimum, float maximum);
+    [[nodiscard]] static SGEXTN::Containers::Array<unsigned char> serialise(const UniformDistributionFloatingPoint& x);
+    [[nodiscard]] static UniformDistributionFloatingPoint unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success);
+    [[nodiscard]] static int lengthof(const UniformDistributionFloatingPoint& x);
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
     [[nodiscard]] float randomValue();
     [[nodiscard]] SGEXTN::Containers::Array<float> randomValueArray(int count);

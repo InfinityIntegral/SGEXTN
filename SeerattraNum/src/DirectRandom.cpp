@@ -39,46 +39,27 @@ SGEXTN::Containers::Array<unsigned char> SGEXTN::SeerattraNum::DirectRandom::ser
 
 SGEXTN::SeerattraNum::DirectRandom SGEXTN::SeerattraNum::DirectRandom::unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success){
     SGEXTN::Containers::Array<unsigned char> tempArray(8);
-    bool isValid = false;
     int offset = 0;
     SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
-    unsigned long long num1 = SGEXTN::Containers::Serialise<unsigned long long>::unserialise(tempArray, &isValid);
-    if(isValid == false){
-        success = false;
-        return SGEXTN::SeerattraNum::DirectRandom();
-    }
+    const unsigned long long num1 = SGEXTN::Containers::Serialise<unsigned long long>::unserialise(tempArray, &success);
+    if(success == false){return SGEXTN::SeerattraNum::DirectRandom();}
     SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
-    unsigned long long num2 = SGEXTN::Containers::Serialise<unsigned long long>::unserialise(tempArray, &isValid);
-    if(isValid == false){
-        success = false;
-        return SGEXTN::SeerattraNum::DirectRandom();
-    }
+    const unsigned long long num2 = SGEXTN::Containers::Serialise<unsigned long long>::unserialise(tempArray, &success);
+    if(success == false){return SGEXTN::SeerattraNum::DirectRandom();}
     SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
-    unsigned long long num3 = SGEXTN::Containers::Serialise<unsigned long long>::unserialise(tempArray, &isValid);
-    if(isValid == false){
-        success = false;
-        return SGEXTN::SeerattraNum::DirectRandom();
-    }
+    const unsigned long long num3 = SGEXTN::Containers::Serialise<unsigned long long>::unserialise(tempArray, &success);
+    if(success == false){return SGEXTN::SeerattraNum::DirectRandom();}
     SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
-    unsigned long long num4 = SGEXTN::Containers::Serialise<unsigned long long>::unserialise(tempArray, &isValid);
-    if(isValid == false){
-        success = false;
-        return SGEXTN::SeerattraNum::DirectRandom();
-    }
+    const unsigned long long num4 = SGEXTN::Containers::Serialise<unsigned long long>::unserialise(tempArray, &success);
+    if(success == false){return SGEXTN::SeerattraNum::DirectRandom();}
     tempArray = SGEXTN::Containers::Array<unsigned char>(1);
     SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
-    bool cacheActive = SGEXTN::Containers::Serialise<bool>::unserialise(tempArray, &isValid);
-    if(isValid == false){
-        success = false;
-        return SGEXTN::SeerattraNum::DirectRandom();
-    }
+    const bool cacheActive = SGEXTN::Containers::Serialise<bool>::unserialise(tempArray, &success);
+    if(success == false){return SGEXTN::SeerattraNum::DirectRandom();}
     tempArray = SGEXTN::Containers::Array<unsigned char>(4);
     SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
-    unsigned int cacheNumber = SGEXTN::Containers::Serialise<unsigned int>::unserialise(tempArray, &isValid);
-    if(isValid == false){
-        success = false;
-        return SGEXTN::SeerattraNum::DirectRandom();
-    }
+    const unsigned int cacheNumber = SGEXTN::Containers::Serialise<unsigned int>::unserialise(tempArray, &success);
+    if(success == false){return SGEXTN::SeerattraNum::DirectRandom();}
     SGEXTN::SeerattraNum::DirectRandom rng;
     rng.private_firstNum = num1;
     rng.private_secondNum = num2;
@@ -89,7 +70,7 @@ SGEXTN::SeerattraNum::DirectRandom SGEXTN::SeerattraNum::DirectRandom::unseriali
     return rng;
 }
 
-int SGEXTN::SeerattraNum::DirectRandom::lengthof(const SGEXTN::SeerattraNum::DirectRandom& x){
+int SGEXTN::SeerattraNum::DirectRandom::lengthof([[maybe_unused]] const SGEXTN::SeerattraNum::DirectRandom& x){
     return 37;
 }
 
