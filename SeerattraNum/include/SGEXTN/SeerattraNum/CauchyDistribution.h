@@ -29,7 +29,11 @@ public:
     SGEXTN::SeerattraNum::DirectRandomInstanceLocator private_rngLocator;
     float private_median;
     float private_halfWidth;
+    CauchyDistribution();
     CauchyDistribution(bool useGlobal, float median, float halfWidth);
+    [[nodiscard]] static SGEXTN::Containers::Array<unsigned char> serialise(const CauchyDistribution& x);
+    [[nodiscard]] static CauchyDistribution unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success);
+    [[nodiscard]] static int lengthof(const CauchyDistribution& x);
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
     [[nodiscard]] float randomValue();
     [[nodiscard]] SGEXTN::Containers::Array<float> randomValueArray(int count);

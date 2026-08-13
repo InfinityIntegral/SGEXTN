@@ -31,7 +31,11 @@ public:
     float private_meanOfLn;
     float private_standardDeviationOfLn;
     SGEXTN::SeerattraNum::NormalDistribution private_normalDistribution;
+    LogNormalDistribution();
     LogNormalDistribution(bool useGlobal, float meanOfLn, float standardDeviationOfLn);
+    [[nodiscard]] static SGEXTN::Containers::Array<unsigned char> serialise(const LogNormalDistribution& x);
+    [[nodiscard]] static LogNormalDistribution unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success);
+    [[nodiscard]] static int lengthof(const LogNormalDistribution& x);
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
     [[nodiscard]] float randomValue();
     [[nodiscard]] SGEXTN::Containers::Array<float> randomValueArray(int count);
