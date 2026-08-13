@@ -32,7 +32,11 @@ public:
     static SGEXTN::Containers::Array<float>* private_widthTables;
     static SGEXTN::Containers::Array<float>* private_floorTables;
     static float private_expRightBoundary;
+    ExponentialDistribution();
     ExponentialDistribution(bool useGlobal, float meanEventsPerTime);
+    [[nodiscard]] static SGEXTN::Containers::Array<unsigned char> serialise(const ExponentialDistribution& x);
+    [[nodiscard]] static ExponentialDistribution unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success);
+    [[nodiscard]] static int lengthof(const ExponentialDistribution& x);
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
     [[nodiscard]] float randomValue();
     [[nodiscard]] float private_randomValue(SGEXTN::SeerattraNum::DirectRandomInstanceLocator& externalLocator) const;

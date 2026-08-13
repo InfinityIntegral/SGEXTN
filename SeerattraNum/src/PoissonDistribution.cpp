@@ -20,10 +20,45 @@
 #include <SGEXTN/Containers/ForceCrash.h>
 #include <SGEXTN/SeerattraNum/DirectRandom.h>
 #include <SGEXTN/Math/FloatMath.h>
+#include <SGEXTN/Containers/Serialise.h>
+
+SGEXTN::SeerattraNum::PoissonDistribution::PoissonDistribution() : private_mean(1.0f), private_rngLocator(true), private_smallMeanProductThreshold(0.0f), private_precompConstantA(0.0f), private_precompConstantB(0.0f), private_squeezeBoundU(0.0f), private_squeezeBoundV(0.0f), private_lnMean(0.0f), private_lnAcceptRate(0.0f){
+    private_redoPrecompute();
+}
 
 SGEXTN::SeerattraNum::PoissonDistribution::PoissonDistribution(bool useGlobal, float mean) : private_mean(mean), private_rngLocator(useGlobal), private_smallMeanProductThreshold(0.0f), private_precompConstantA(0.0f), private_precompConstantB(0.0f), private_squeezeBoundU(0.0f), private_squeezeBoundV(0.0f), private_lnMean(0.0f), private_lnAcceptRate(0.0f){
     if(mean <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::PoissonDistribution constructor crashed because requested mean is nonpositive");}
     private_redoPrecompute();
+}
+
+SGEXTN::Containers::Array<unsigned char> SGEXTN::SeerattraNum::PoissonDistribution::serialise(const SGEXTN::SeerattraNum::PoissonDistribution& x){
+    return SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float>::serialiseTogether(x.private_rngLocator, x.private_mean);
+}
+
+SGEXTN::SeerattraNum::PoissonDistribution SGEXTN::SeerattraNum::PoissonDistribution::unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success){
+    if(data.length() != 41){
+        success = false;
+        return SGEXTN::SeerattraNum::PoissonDistribution();
+    }
+    SGEXTN::Containers::Array<unsigned char> tempArray(37);
+    int offset = 0;
+    SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
+    const SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::unserialise(tempArray, &success);
+    if(success == false){return SGEXTN::SeerattraNum::PoissonDistribution();}
+    tempArray = SGEXTN::Containers::Array<unsigned char>(4);
+    SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
+    const float mean = SGEXTN::Containers::Serialise<float>::unserialise(tempArray, &success);
+    if(success == false || mean <= 0.0f){
+        success = false;
+        return SGEXTN::SeerattraNum::PoissonDistribution();
+    }
+    SGEXTN::SeerattraNum::PoissonDistribution output(true, mean);
+    output.private_rngLocator = rngLocator;
+    return output;
+}
+
+int SGEXTN::SeerattraNum::PoissonDistribution::lengthof([[maybe_unused]] const SGEXTN::SeerattraNum::PoissonDistribution& x){
+    return 41;
 }
 
 void SGEXTN::SeerattraNum::PoissonDistribution::private_redoPrecompute(){

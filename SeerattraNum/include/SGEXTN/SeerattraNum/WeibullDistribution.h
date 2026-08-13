@@ -30,7 +30,11 @@ public:
     float private_failureBehaviour;
     float private_characteristicLifespan;
     float private_reciprocalA;
+    WeibullDistribution();
     WeibullDistribution(bool useGlobal, float failureBehaviour, float characteristicLifespan);
+    [[nodiscard]] static SGEXTN::Containers::Array<unsigned char> serialise(const WeibullDistribution& x);
+    [[nodiscard]] static WeibullDistribution unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success);
+    [[nodiscard]] static int lengthof(const WeibullDistribution& x);
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
     [[nodiscard]] float randomValue();
     [[nodiscard]] SGEXTN::Containers::Array<float> randomValueArray(int count);
