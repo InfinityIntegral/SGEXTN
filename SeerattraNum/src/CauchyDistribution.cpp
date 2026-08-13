@@ -21,9 +21,45 @@
 #include <SGEXTN/SeerattraNum/DirectRandom.h>
 #include <SGEXTN/Math/FloatMath.h>
 #include <SGEXTN/Math/FloatConstants.h>
+#include <SGEXTN/Containers/Serialise.h>
+
+SGEXTN::SeerattraNum::CauchyDistribution::CauchyDistribution() : private_median(0.0f), private_halfWidth(1.0f), private_rngLocator(true){}
 
 SGEXTN::SeerattraNum::CauchyDistribution::CauchyDistribution(bool useGlobal, float median, float halfWidth) : private_median(median), private_halfWidth(halfWidth), private_rngLocator(useGlobal){
     if(halfWidth <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::CauchyDistribution constructor crashed because requested half width is nonpositive");}
+}
+
+SGEXTN::Containers::Array<unsigned char> SGEXTN::SeerattraNum::CauchyDistribution::serialise(const SGEXTN::SeerattraNum::CauchyDistribution& x){
+    return SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float, float>::serialiseTogether(x.private_rngLocator, x.private_median, x.private_halfWidth);
+}
+
+SGEXTN::SeerattraNum::CauchyDistribution SGEXTN::SeerattraNum::CauchyDistribution::unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success){
+    if(data.length() != 45){
+        success = false;
+        return SGEXTN::SeerattraNum::CauchyDistribution();
+    }
+    SGEXTN::Containers::Array<unsigned char> tempArray(37);
+    int offset = 0;
+    SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
+    const SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::unserialise(tempArray, &success);
+    if(success == false){return SGEXTN::SeerattraNum::CauchyDistribution();}
+    tempArray = SGEXTN::Containers::Array<unsigned char>(4);
+    SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
+    const float median = SGEXTN::Containers::Serialise<float>::unserialise(tempArray, &success);
+    if(success == false){return SGEXTN::SeerattraNum::CauchyDistribution();}
+    SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
+    const float halfWidth = SGEXTN::Containers::Serialise<float>::unserialise(tempArray, &success);
+    if(success == false || halfWidth <= 0.0f){
+        success = false;
+        return SGEXTN::SeerattraNum::CauchyDistribution();
+    }
+    SGEXTN::SeerattraNum::CauchyDistribution output(true, median, halfWidth);
+    output.private_rngLocator = rngLocator;
+    return output;
+}
+
+int SGEXTN::SeerattraNum::CauchyDistribution::lengthof([[maybe_unused]] const SGEXTN::SeerattraNum::CauchyDistribution& x){
+    return 45;
 }
 
 void SGEXTN::SeerattraNum::CauchyDistribution::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){

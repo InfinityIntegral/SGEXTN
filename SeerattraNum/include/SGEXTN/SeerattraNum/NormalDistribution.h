@@ -31,7 +31,11 @@ public:
     float private_standardDeviation;
     static SGEXTN::Containers::Array<float>* private_hwidthTables;
     static SGEXTN::Containers::Array<float>* private_floorTables;
+    NormalDistribution();
     NormalDistribution(bool useGlobal, float mean, float standardDeviation);
+    [[nodiscard]] static SGEXTN::Containers::Array<unsigned char> serialise(const NormalDistribution& x);
+    [[nodiscard]] static NormalDistribution unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success);
+    [[nodiscard]] static int lengthof(const NormalDistribution& x);
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
     [[nodiscard]] float randomValue();
     [[nodiscard]] float private_randomValue(SGEXTN::SeerattraNum::DirectRandomInstanceLocator& externalLocator) const;

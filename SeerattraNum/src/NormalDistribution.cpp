@@ -23,6 +23,7 @@
 #include <SGEXTN/SeerattraNum/private_api/ZigguratTables.h>
 #include <SGEXTN/Math/FloatLimits.h>
 #include <SGEXTN/Math/FloatConstants.h>
+#include <SGEXTN/Containers/Serialise.h>
 #include <cmath>
 
 namespace {
@@ -78,8 +79,43 @@ void parseTables(){
 SGEXTN::Containers::Array<float>* SGEXTN::SeerattraNum::NormalDistribution::private_hwidthTables = nullptr;
 SGEXTN::Containers::Array<float>* SGEXTN::SeerattraNum::NormalDistribution::private_floorTables = nullptr;
 
+SGEXTN::SeerattraNum::NormalDistribution::NormalDistribution() : private_mean(0.0f), private_standardDeviation(1.0f), private_rngLocator(true){}
+
 SGEXTN::SeerattraNum::NormalDistribution::NormalDistribution(bool useGlobal, float mean, float standardDeviation) : private_mean(mean), private_standardDeviation(standardDeviation), private_rngLocator(useGlobal){
     if(standardDeviation <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NormalDistribution constructor crashed because requested standard deviation is nonpositive");}
+}
+
+SGEXTN::Containers::Array<unsigned char> SGEXTN::SeerattraNum::NormalDistribution::serialise(const SGEXTN::SeerattraNum::NormalDistribution& x){
+    return SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float, float>::serialiseTogether(x.private_rngLocator, x.private_mean, x.private_standardDeviation);
+}
+
+SGEXTN::SeerattraNum::NormalDistribution SGEXTN::SeerattraNum::NormalDistribution::unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success){
+    if(data.length() != 45){
+        success = false;
+        return SGEXTN::SeerattraNum::NormalDistribution();
+    }
+    SGEXTN::Containers::Array<unsigned char> tempArray(37);
+    int offset = 0;
+    SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
+    const SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::unserialise(tempArray, &success);
+    if(success == false){return SGEXTN::SeerattraNum::NormalDistribution();}
+    tempArray = SGEXTN::Containers::Array<unsigned char>(4);
+    SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
+    const float mean = SGEXTN::Containers::Serialise<float>::unserialise(tempArray, &success);
+    if(success == false){return SGEXTN::SeerattraNum::NormalDistribution();}
+    SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
+    const float standardDeviation = SGEXTN::Containers::Serialise<float>::unserialise(tempArray, &success);
+    if(success == false || standardDeviation <= 0.0f){
+        success = false;
+        return SGEXTN::SeerattraNum::NormalDistribution();
+    }
+    SGEXTN::SeerattraNum::NormalDistribution output(true, mean, standardDeviation);
+    output.private_rngLocator = rngLocator;
+    return output;
+}
+
+int SGEXTN::SeerattraNum::NormalDistribution::lengthof([[maybe_unused]] const SGEXTN::SeerattraNum::NormalDistribution& x){
+    return 45;
 }
 
 void SGEXTN::SeerattraNum::NormalDistribution::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
