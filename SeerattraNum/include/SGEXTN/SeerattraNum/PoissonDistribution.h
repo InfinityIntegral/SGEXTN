@@ -35,7 +35,11 @@ public:
     float private_squeezeBoundV;
     float private_lnMean;
     float private_lnAcceptRate;
+    PoissonDistribution();
     PoissonDistribution(bool useGlobal, float mean);
+    [[nodiscard]] static SGEXTN::Containers::Array<unsigned char> serialise(const PoissonDistribution& x);
+    [[nodiscard]] static PoissonDistribution unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success);
+    [[nodiscard]] static int lengthof(const PoissonDistribution& x);
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
     [[nodiscard]] int randomValue();
     [[nodiscard]] int private_randomValue(SGEXTN::SeerattraNum::DirectRandomInstanceLocator& externalLocator) const;

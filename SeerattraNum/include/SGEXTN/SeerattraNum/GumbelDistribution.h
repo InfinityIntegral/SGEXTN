@@ -29,7 +29,11 @@ public:
     SGEXTN::SeerattraNum::DirectRandomInstanceLocator private_rngLocator;
     float private_mode;
     float private_spread;
+    GumbelDistribution();
     GumbelDistribution(bool useGlobal, float mode, float spread);
+    [[nodiscard]] static SGEXTN::Containers::Array<unsigned char> serialise(const GumbelDistribution& x);
+    [[nodiscard]] static GumbelDistribution unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success);
+    [[nodiscard]] static int lengthof(const GumbelDistribution& x);
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
     [[nodiscard]] float randomValue();
     [[nodiscard]] SGEXTN::Containers::Array<float> randomValueArray(int count);

@@ -494,6 +494,17 @@ void SGEXTN::InternalTest::SeerattraNumTest::testPoissonDistribution(){
         sampleData.at(i) = sampleRng(standardLibraryRng);
     }
     if(testIfDistributionSameDiscrete(sampleData, testData) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::PoissonDistribution second test fail");}
+    bool isValid = false;
+    int offset = 0;
+    SGEXTN::SeerattraNum::PoissonDistribution newSampleRng(false, 26.0f);
+    newSampleRng.seed(SGEXTN::Containers::Array<unsigned int>(1, 726u));
+    SGEXTN::Containers::Array<unsigned char> serialiseArray(41);
+    SGEXTN::Containers::MemoryCopySerialise::copySection(serialiseArray, offset, SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::serialise(newSampleRng.private_rngLocator));
+    SGEXTN::Containers::MemoryCopySerialise::copySection(serialiseArray, offset, SGEXTN::Containers::Serialise<float>::serialise(26.0f));
+    if(isBitwiseIdentical(serialiseArray, SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::PoissonDistribution>::serialise(newSampleRng)) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise serialise SGEXTN::SeerattraNum::PoissonDistribution fail");}
+    SGEXTN::SeerattraNum::PoissonDistribution unserialisedRng = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::PoissonDistribution>::unserialise(serialiseArray, &isValid);
+    if(isValid == false || newSampleRng.randomValue() != unserialisedRng.randomValue()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise unserialise SGEXTN::SeerattraNum::PoissonDistribution fail");}
+    if(SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::PoissonDistribution>::lengthof(newSampleRng) != 41){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise lengthof SGEXTN::SeerattraNum::PoissonDistribution fail");}
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testExponentialDistribution(){
@@ -517,6 +528,17 @@ void SGEXTN::InternalTest::SeerattraNumTest::testExponentialDistribution(){
         sampleData.at(i) = sampleRng(standardLibraryRng);
     }
     if(testIfDistributionSameContinuous(sampleData, testData) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::ExponentialDistribution second test fail");}
+    bool isValid = false;
+    int offset = 0;
+    SGEXTN::SeerattraNum::ExponentialDistribution newSampleRng(false, 26.0f);
+    newSampleRng.seed(SGEXTN::Containers::Array<unsigned int>(1, 726u));
+    SGEXTN::Containers::Array<unsigned char> serialiseArray(41);
+    SGEXTN::Containers::MemoryCopySerialise::copySection(serialiseArray, offset, SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::serialise(newSampleRng.private_rngLocator));
+    SGEXTN::Containers::MemoryCopySerialise::copySection(serialiseArray, offset, SGEXTN::Containers::Serialise<float>::serialise(26.0f));
+    if(isBitwiseIdentical(serialiseArray, SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::ExponentialDistribution>::serialise(newSampleRng)) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise serialise SGEXTN::SeerattraNum::ExponentialDistribution fail");}
+    SGEXTN::SeerattraNum::ExponentialDistribution unserialisedRng = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::ExponentialDistribution>::unserialise(serialiseArray, &isValid);
+    if(isValid == false || newSampleRng.randomValue() != unserialisedRng.randomValue()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise unserialise SGEXTN::SeerattraNum::ExponentialDistribution fail");}
+    if(SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::ExponentialDistribution>::lengthof(newSampleRng) != 41){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise lengthof SGEXTN::SeerattraNum::ExponentialDistribution fail");}
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testGammaDistribution(){
@@ -542,6 +564,18 @@ void SGEXTN::InternalTest::SeerattraNumTest::testGammaDistribution(){
         sampleData.at(i) = sampleRng(standardLibraryRng);
     }
     if(testIfDistributionSameContinuous(sampleData, testData) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GammaDistribution second test fail");}
+    bool isValid = false;
+    int offset = 0;
+    SGEXTN::SeerattraNum::GammaDistribution newSampleRng(false, 26.0f, 0.26f);
+    newSampleRng.seed(SGEXTN::Containers::Array<unsigned int>(1, 726u));
+    SGEXTN::Containers::Array<unsigned char> serialiseArray(45);
+    SGEXTN::Containers::MemoryCopySerialise::copySection(serialiseArray, offset, SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::serialise(newSampleRng.private_rngLocator));
+    SGEXTN::Containers::MemoryCopySerialise::copySection(serialiseArray, offset, SGEXTN::Containers::Serialise<float>::serialise(26.0f));
+    SGEXTN::Containers::MemoryCopySerialise::copySection(serialiseArray, offset, SGEXTN::Containers::Serialise<float>::serialise(0.26f));
+    if(isBitwiseIdentical(serialiseArray, SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::GammaDistribution>::serialise(newSampleRng)) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise serialise SGEXTN::SeerattraNum::GammaDistribution fail");}
+    SGEXTN::SeerattraNum::GammaDistribution unserialisedRng = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::GammaDistribution>::unserialise(serialiseArray, &isValid);
+    if(isValid == false || newSampleRng.randomValue() != unserialisedRng.randomValue()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise unserialise SGEXTN::SeerattraNum::GammaDistribution fail");}
+    if(SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::GammaDistribution>::lengthof(newSampleRng) != 45){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise lengthof SGEXTN::SeerattraNum::GammaDistribution fail");}
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testWeibullDistribution(){
@@ -567,6 +601,18 @@ void SGEXTN::InternalTest::SeerattraNumTest::testWeibullDistribution(){
         sampleData.at(i) = sampleRng(standardLibraryRng);
     }
     if(testIfDistributionSameContinuous(sampleData, testData) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeibullDistribution second test fail");}
+    bool isValid = false;
+    int offset = 0;
+    SGEXTN::SeerattraNum::WeibullDistribution newSampleRng(false, 2.6f, 26.0f);
+    newSampleRng.seed(SGEXTN::Containers::Array<unsigned int>(1, 726u));
+    SGEXTN::Containers::Array<unsigned char> serialiseArray(45);
+    SGEXTN::Containers::MemoryCopySerialise::copySection(serialiseArray, offset, SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::serialise(newSampleRng.private_rngLocator));
+    SGEXTN::Containers::MemoryCopySerialise::copySection(serialiseArray, offset, SGEXTN::Containers::Serialise<float>::serialise(2.6f));
+    SGEXTN::Containers::MemoryCopySerialise::copySection(serialiseArray, offset, SGEXTN::Containers::Serialise<float>::serialise(26.0f));
+    if(isBitwiseIdentical(serialiseArray, SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::WeibullDistribution>::serialise(newSampleRng)) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise serialise SGEXTN::SeerattraNum::WeibullDistribution fail");}
+    SGEXTN::SeerattraNum::WeibullDistribution unserialisedRng = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::WeibullDistribution>::unserialise(serialiseArray, &isValid);
+    if(isValid == false || newSampleRng.randomValue() != unserialisedRng.randomValue()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise unserialise SGEXTN::SeerattraNum::WeibullDistribution fail");}
+    if(SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::WeibullDistribution>::lengthof(newSampleRng) != 45){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise lengthof SGEXTN::SeerattraNum::WeibullDistribution fail");}
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testGumbelDistribution(){
@@ -592,6 +638,18 @@ void SGEXTN::InternalTest::SeerattraNumTest::testGumbelDistribution(){
         sampleData.at(i) = sampleRng(standardLibraryRng);
     }
     if(testIfDistributionSameContinuous(sampleData, testData) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GumbelDistribution second test fail");}
+    bool isValid = false;
+    int offset = 0;
+    SGEXTN::SeerattraNum::GumbelDistribution newSampleRng(false, 26.0f, 2.6f);
+    newSampleRng.seed(SGEXTN::Containers::Array<unsigned int>(1, 726u));
+    SGEXTN::Containers::Array<unsigned char> serialiseArray(45);
+    SGEXTN::Containers::MemoryCopySerialise::copySection(serialiseArray, offset, SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::serialise(newSampleRng.private_rngLocator));
+    SGEXTN::Containers::MemoryCopySerialise::copySection(serialiseArray, offset, SGEXTN::Containers::Serialise<float>::serialise(26.0f));
+    SGEXTN::Containers::MemoryCopySerialise::copySection(serialiseArray, offset, SGEXTN::Containers::Serialise<float>::serialise(2.6f));
+    if(isBitwiseIdentical(serialiseArray, SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::GumbelDistribution>::serialise(newSampleRng)) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise serialise SGEXTN::SeerattraNum::GumbelDistribution fail");}
+    SGEXTN::SeerattraNum::GumbelDistribution unserialisedRng = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::GumbelDistribution>::unserialise(serialiseArray, &isValid);
+    if(isValid == false || newSampleRng.randomValue() != unserialisedRng.randomValue()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise unserialise SGEXTN::SeerattraNum::GumbelDistribution fail");}
+    if(SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::GumbelDistribution>::lengthof(newSampleRng) != 45){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise lengthof SGEXTN::SeerattraNum::GumbelDistribution");}
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testNormalDistribution(){

@@ -20,10 +20,49 @@
 #include <SGEXTN/Containers/ForceCrash.h>
 #include <SGEXTN/SeerattraNum/DirectRandom.h>
 #include <SGEXTN/Math/FloatMath.h>
+#include <SGEXTN/Containers/Serialise.h>
+
+SGEXTN::SeerattraNum::WeibullDistribution::WeibullDistribution() : private_characteristicLifespan(1.0f), private_failureBehaviour(1.0f), private_rngLocator(true), private_reciprocalA(1.0f){}
 
 SGEXTN::SeerattraNum::WeibullDistribution::WeibullDistribution(bool useGlobal, float failureBehaviour, float characteristicLifespan) : private_characteristicLifespan(characteristicLifespan), private_failureBehaviour(failureBehaviour), private_rngLocator(useGlobal), private_reciprocalA(1.0f / failureBehaviour){
     if(failureBehaviour <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeibullDistribution constructor crashed because requested failure behaviour indicator is nonpositive");}
     if(characteristicLifespan <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeibullDistribution constructor crashed because requested characteristic lifespan is nonpositive");}
+}
+
+SGEXTN::Containers::Array<unsigned char> SGEXTN::SeerattraNum::WeibullDistribution::serialise(const SGEXTN::SeerattraNum::WeibullDistribution& x){
+    return SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float, float>::serialiseTogether(x.private_rngLocator, x.private_failureBehaviour, x.private_characteristicLifespan);
+}
+
+SGEXTN::SeerattraNum::WeibullDistribution SGEXTN::SeerattraNum::WeibullDistribution::unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success){
+    if(data.length() != 45){
+        success = false;
+        return SGEXTN::SeerattraNum::WeibullDistribution();
+    }
+    SGEXTN::Containers::Array<unsigned char> tempArray(37);
+    int offset = 0;
+    SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
+    const SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::unserialise(tempArray, &success);
+    if(success == false){return SGEXTN::SeerattraNum::WeibullDistribution();}
+    tempArray = SGEXTN::Containers::Array<unsigned char>(4);
+    SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
+    const float failureMode = SGEXTN::Containers::Serialise<float>::unserialise(tempArray, &success);
+    if(success == false || failureMode <= 0.0f){
+        success = false;
+        return SGEXTN::SeerattraNum::WeibullDistribution();
+    }
+    SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
+    const float characteristicLife = SGEXTN::Containers::Serialise<float>::unserialise(tempArray, &success);
+    if(success == false || characteristicLife <= 0.0f){
+        success = false;
+        return SGEXTN::SeerattraNum::WeibullDistribution();
+    }
+    SGEXTN::SeerattraNum::WeibullDistribution output(true, failureMode, characteristicLife);
+    output.private_rngLocator = rngLocator;
+    return output;
+}
+
+int SGEXTN::SeerattraNum::WeibullDistribution::lengthof([[maybe_unused]] const SGEXTN::SeerattraNum::WeibullDistribution& x){
+    return 45;
 }
 
 void SGEXTN::SeerattraNum::WeibullDistribution::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){

@@ -21,11 +21,52 @@
 #include <SGEXTN/SeerattraNum/DirectRandom.h>
 #include <SGEXTN/Math/FloatMath.h>
 #include <SGEXTN/SeerattraNum/NormalDistribution.h>
+#include <SGEXTN/Containers/Serialise.h>
+
+SGEXTN::SeerattraNum::GammaDistribution::GammaDistribution() : private_variableCount(1.0f), private_variableMean(1.0f), private_rngLocator(true), private_standardNormalDistribution(true, 0.0f, 1.0f), private_precompConstantC(0.0f), private_precompConstantD(0.0f), private_reciprocalVariableCount(0.0f){
+    private_redoPrecompute();
+}
 
 SGEXTN::SeerattraNum::GammaDistribution::GammaDistribution(bool useGlobal, float variableCount, float variableMean) : private_variableCount(variableCount), private_variableMean(variableMean), private_rngLocator(useGlobal), private_standardNormalDistribution(true, 0.0f, 1.0f), private_precompConstantC(0.0f), private_precompConstantD(0.0f), private_reciprocalVariableCount(0.0f){
     if(variableCount <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GammaDistribution constructor crashed because requested number of exponentially distributed variables to sum is nonpositive");}
     if(variableMean <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GammaDistribution constructor crashed because requested mean of each exponentially distributed variable is nonpositive");}
     private_redoPrecompute();
+}
+
+SGEXTN::Containers::Array<unsigned char> SGEXTN::SeerattraNum::GammaDistribution::serialise(const SGEXTN::SeerattraNum::GammaDistribution& x){
+    return SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float, float>::serialiseTogether(x.private_rngLocator, x.private_variableCount, x.private_variableMean);
+}
+
+SGEXTN::SeerattraNum::GammaDistribution SGEXTN::SeerattraNum::GammaDistribution::unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success){
+    if(data.length() != 45){
+        success = false;
+        return SGEXTN::SeerattraNum::GammaDistribution();
+    }
+    SGEXTN::Containers::Array<unsigned char> tempArray(37);
+    int offset = 0;
+    SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
+    const SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::unserialise(tempArray, &success);
+    if(success == false){return SGEXTN::SeerattraNum::GammaDistribution();}
+    tempArray = SGEXTN::Containers::Array<unsigned char>(4);
+    SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
+    const float variableCount = SGEXTN::Containers::Serialise<float>::unserialise(tempArray, &success);
+    if(success == false || variableCount <= 0.0f){
+        success = false;
+        return SGEXTN::SeerattraNum::GammaDistribution();
+    }
+    SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
+    const float variableMean = SGEXTN::Containers::Serialise<float>::unserialise(tempArray, &success);
+    if(success == false || variableMean < 0){
+        success = false;
+        return SGEXTN::SeerattraNum::GammaDistribution();
+    }
+    SGEXTN::SeerattraNum::GammaDistribution output(true, variableCount, variableMean);
+    output.private_rngLocator = rngLocator;
+    return output;
+}
+
+int SGEXTN::SeerattraNum::GammaDistribution::lengthof([[maybe_unused]] const SGEXTN::SeerattraNum::GammaDistribution& x){
+    return 45;
 }
 
 void SGEXTN::SeerattraNum::GammaDistribution::private_redoPrecompute(){

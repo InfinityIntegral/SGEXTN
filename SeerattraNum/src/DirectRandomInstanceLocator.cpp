@@ -67,7 +67,7 @@ const SGEXTN::SeerattraNum::DirectRandom& SGEXTN::SeerattraNum::DirectRandomInst
 
 SGEXTN::Containers::Array<unsigned char> SGEXTN::SeerattraNum::DirectRandomInstanceLocator::serialise(const SGEXTN::SeerattraNum::DirectRandomInstanceLocator& x){
     if(x.private_ownsRng == false){
-        SGEXTN::Containers::Array<unsigned char> outputArray(37, static_cast<unsigned char>(0x00));
+        SGEXTN::Containers::Array<unsigned char> outputArray(37, static_cast<unsigned char>(0));
         outputArray.at(32) = static_cast<unsigned char>(0xff);
         return outputArray;
     }
@@ -79,8 +79,16 @@ SGEXTN::SeerattraNum::DirectRandomInstanceLocator SGEXTN::SeerattraNum::DirectRa
         success = false;
         return SGEXTN::SeerattraNum::DirectRandomInstanceLocator(true);
     }
-    success = true;
-    if(data.at(32) == static_cast<unsigned char>(0xff)){return SGEXTN::SeerattraNum::DirectRandomInstanceLocator(true);}
+    if(data.at(32) == static_cast<unsigned char>(0xff)){
+        for(int i=0; i<37; i++){
+            if(i != 32 && data.at(i) != static_cast<unsigned char>(0)){
+                success = false;
+                return SGEXTN::SeerattraNum::DirectRandomInstanceLocator(true);
+            }
+        }
+        success = true;
+        return SGEXTN::SeerattraNum::DirectRandomInstanceLocator(true);
+    }
     const SGEXTN::SeerattraNum::DirectRandom internalRng = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandom>::unserialise(data, &success);
     if(success == false){return SGEXTN::SeerattraNum::DirectRandomInstanceLocator(true);}
     return SGEXTN::SeerattraNum::DirectRandomInstanceLocator(internalRng);
