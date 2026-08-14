@@ -79,7 +79,7 @@ void parseTables(){
 SGEXTN::Containers::Array<float>* SGEXTN::SeerattraNum::NormalDistribution::private_hwidthTables = nullptr;
 SGEXTN::Containers::Array<float>* SGEXTN::SeerattraNum::NormalDistribution::private_floorTables = nullptr;
 
-SGEXTN::SeerattraNum::NormalDistribution::NormalDistribution() : private_mean(0.0f), private_standardDeviation(1.0f), private_rngLocator(true){}
+SGEXTN::SeerattraNum::NormalDistribution::NormalDistribution() : SGEXTN::SeerattraNum::NormalDistribution(true, 0.0f, 1.0f){}
 
 SGEXTN::SeerattraNum::NormalDistribution::NormalDistribution(bool useGlobal, float mean, float standardDeviation) : private_mean(mean), private_standardDeviation(standardDeviation), private_rngLocator(useGlobal){
     if(standardDeviation <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NormalDistribution constructor crashed because requested standard deviation is nonpositive");}

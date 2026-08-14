@@ -21,6 +21,7 @@
 #include <SGEXTN/Containers/Hash.h>
 #include <SGEXTN/SeerattraNum/TrueRandom.h>
 #include <SGEXTN/Containers/ForceCrash.h>
+#include <SGEXTN/Containers/Serialise.h>
 
 namespace {
 int getTrailingZeroCount(unsigned int n){
@@ -46,6 +47,8 @@ int getTrailingZeroCount(unsigned int n){
 }
 }
 
+SGEXTN::SeerattraNum::SobolSequence::SobolSequence() : SGEXTN::SeerattraNum::SobolSequence(1){}
+
 SGEXTN::SeerattraNum::SobolSequence::SobolSequence(int dimension) : private_lastPosition(-1), private_lastPositionResult(0), private_dimensions(dimension), private_hashedSeed(0), private_directionNumberCache(0){
     if(dimension <= 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::SobolSequence constructor crashed because the number of dimensions is nonpositive");}
     if(dimension > 21200){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::SobolSequence constructor crashed because the number of dimensions exceeds 21200 which is where the lookup tables for direction numbers end");}
@@ -65,18 +68,21 @@ SGEXTN::SeerattraNum::SobolSequence::SobolSequence(int dimension) : private_last
             private_directionNumberCache.at(i).at(j) = directionNumber;
         }
     }
-    const unsigned int seed = SGEXTN::SeerattraNum::TrueRandom::randomUnsignedInt32();
-    for(int i=0; i<dimension; i++){
-        private_hashedSeed.at(i) = SGEXTN::Containers::Hash<int, unsigned int>()(i, seed);
-    }
+    seed(SGEXTN::Containers::Array<unsigned int>(1, SGEXTN::SeerattraNum::TrueRandom::randomUnsignedInt32()));
 }
 
-void SGEXTN::SeerattraNum::SobolSequence::seed(int seed){
-    for(int i=0; i<private_dimensions; i++){
-        private_hashedSeed.at(i) = SGEXTN::Containers::Hash<int, int>()(i, seed);
-    }
+void SGEXTN::SeerattraNum::SobolSequence::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
     private_lastPosition = -1;
     private_lastPositionResult = SGEXTN::Containers::Array<unsigned int>(0);
+    if(seedArray.length() == 0){
+        for(int i=0; i<private_dimensions; i++){
+            private_hashedSeed.at(i) = SGEXTN::Containers::Hash<int, unsigned int>()(i, 726);
+        }
+        return;
+    }
+    for(int i=0; i<private_dimensions; i++){
+        private_hashedSeed.at(i) = SGEXTN::Containers::Hash<int, unsigned int>()(i, seedArray.at(i % seedArray.length()));
+    }
 }
 
 SGEXTN::Containers::Array<float> SGEXTN::SeerattraNum::SobolSequence::nextTerm(){

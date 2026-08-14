@@ -21,7 +21,7 @@
 #include <SGEXTN/SeerattraNum/DirectRandom.h>
 #include <SGEXTN/Containers/Serialise.h>
 
-SGEXTN::SeerattraNum::ChiSquaredDistribution::ChiSquaredDistribution() : private_degreesOfFreedom(1.0f), private_rngLocator(true), private_gammaDistribution(true, 0.5f, 2.0f){}
+SGEXTN::SeerattraNum::ChiSquaredDistribution::ChiSquaredDistribution() : SGEXTN::SeerattraNum::ChiSquaredDistribution(true, 1.0f){}
 
 SGEXTN::SeerattraNum::ChiSquaredDistribution::ChiSquaredDistribution(bool useGlobal, float degreesOfFreedom) : private_degreesOfFreedom(degreesOfFreedom), private_rngLocator(useGlobal), private_gammaDistribution(true, 1.0f, 2.0f){
     if(degreesOfFreedom <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::ChiSquaredDistribution constructor crashed because requested number of degrees of freedom is nonpositive");}

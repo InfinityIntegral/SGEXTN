@@ -23,10 +23,7 @@
 #include <SGEXTN/SeerattraNum/PoissonDistribution.h>
 #include <SGEXTN/Containers/Serialise.h>
 
-SGEXTN::SeerattraNum::NegativeBinomialDistribution::NegativeBinomialDistribution() : private_chanceOfTrue(0.5f), private_successCount(26), private_rngLocator(true), private_gammaDistribution(true, 1.0f, 1.0f), private_poissonDistribution(true, 1.0f){
-    private_gammaDistribution.setVariableCount(26.0f);
-    private_gammaDistribution.setVariableMean(1.0f);
-}
+SGEXTN::SeerattraNum::NegativeBinomialDistribution::NegativeBinomialDistribution() : SGEXTN::SeerattraNum::NegativeBinomialDistribution(true, 0.5f, 1){}
 
 SGEXTN::SeerattraNum::NegativeBinomialDistribution::NegativeBinomialDistribution(bool useGlobal, float chanceOfTrue, int successCount) : private_chanceOfTrue(chanceOfTrue), private_successCount(successCount), private_rngLocator(useGlobal), private_gammaDistribution(true, 1.0f, 1.0f), private_poissonDistribution(true, 1.0f){
     if(chanceOfTrue < 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NegativeBinomialDistribution constructor crashed because the requested probability is negative");}

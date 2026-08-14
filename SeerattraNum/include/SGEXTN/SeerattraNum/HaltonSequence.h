@@ -26,6 +26,7 @@ public:
     int private_dimensions;
     SGEXTN::Containers::Array<SGEXTN::Containers::Array<int>> private_permutations;
     SGEXTN::Containers::Array<int> private_primeNumbers;
+    HaltonSequence();
     HaltonSequence(int dimensions);
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
     [[nodiscard]] SGEXTN::Containers::Array<float> nextTerm();

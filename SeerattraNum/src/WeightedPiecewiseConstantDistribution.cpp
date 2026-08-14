@@ -21,9 +21,7 @@
 #include <SGEXTN/SeerattraNum/DirectRandom.h>
 #include <SGEXTN/Containers/Serialise.h>
 
-SGEXTN::SeerattraNum::WeightedPiecewiseConstantDistribution::WeightedPiecewiseConstantDistribution() : private_weights(1, 1.0f), private_boundaries(0.0f, 1.0f), private_prefixSums(0), private_rngLocator(true){
-    private_updatePrefixSums();
-}
+SGEXTN::SeerattraNum::WeightedPiecewiseConstantDistribution::WeightedPiecewiseConstantDistribution() : SGEXTN::SeerattraNum::WeightedPiecewiseConstantDistribution(true, SGEXTN::Containers::Array<float>(1, 1.0f), SGEXTN::Containers::Array<float>(0.0f, 1.0f)){}
 
 SGEXTN::SeerattraNum::WeightedPiecewiseConstantDistribution::WeightedPiecewiseConstantDistribution(bool useGlobal, const SGEXTN::Containers::Array<float>& weights, const SGEXTN::Containers::Array<float>& boundaries) : private_weights(weights), private_boundaries(boundaries), private_prefixSums(0), private_rngLocator(useGlobal){
     if(weights.length() == 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedPiecewiseConstantDistribution constructor crashed because the array of weights is empty");}

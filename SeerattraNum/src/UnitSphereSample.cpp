@@ -24,7 +24,7 @@
 #include <SGEXTN/SeerattraNum/DirectRandom.h>
 #include <SGEXTN/Containers/Serialise.h>
 
-SGEXTN::SeerattraNum::UnitSphereSample::UnitSphereSample() : private_rngLocator(true), private_normalDistribution(true, 0.0f, 1.0f){}
+SGEXTN::SeerattraNum::UnitSphereSample::UnitSphereSample() : SGEXTN::SeerattraNum::UnitSphereSample(true){}
 
 SGEXTN::SeerattraNum::UnitSphereSample::UnitSphereSample(bool useGlobal) : private_rngLocator(useGlobal), private_normalDistribution(true, 0.0f, 1.0f){}
 

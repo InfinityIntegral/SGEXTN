@@ -21,6 +21,8 @@
 #include <SGEXTN/SeerattraNum/RandomPermutation.h>
 #include <SGEXTN/Containers/Vector.h>
 
+SGEXTN::SeerattraNum::HaltonSequence::HaltonSequence() : SGEXTN::SeerattraNum::HaltonSequence(1){}
+
 SGEXTN::SeerattraNum::HaltonSequence::HaltonSequence(int dimensions) : private_dimensions(dimensions), private_lastPosition(-1), private_permutations(0), private_primeNumbers(0){
     if(dimensions <= 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::HaltonSequence constructor crashed as the number of dimensions is nonpositive");}
     private_permutations = SGEXTN::Containers::Array<SGEXTN::Containers::Array<int>>(dimensions, SGEXTN::Containers::Array<int>(0));

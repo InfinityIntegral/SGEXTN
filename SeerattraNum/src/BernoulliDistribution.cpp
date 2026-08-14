@@ -21,7 +21,7 @@
 #include <SGEXTN/SeerattraNum/DirectRandom.h>
 #include <SGEXTN/Containers/Serialise.h>
 
-SGEXTN::SeerattraNum::BernoulliDistribution::BernoulliDistribution() : private_chanceOfTrue(0.5f), private_rngLocator(true){}
+SGEXTN::SeerattraNum::BernoulliDistribution::BernoulliDistribution() : SGEXTN::SeerattraNum::BernoulliDistribution(true, 0.5f){}
 
 SGEXTN::SeerattraNum::BernoulliDistribution::BernoulliDistribution(bool useGlobal, float chanceOfTrue) : private_chanceOfTrue(chanceOfTrue), private_rngLocator(useGlobal){
     if(chanceOfTrue < 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BernoulliDistribution constructor crashed because the requested probability is negative");}
