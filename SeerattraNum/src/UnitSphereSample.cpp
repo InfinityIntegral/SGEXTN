@@ -22,8 +22,27 @@
 #include <SGEXTN/Math/FloatLimits.h>
 #include <SGEXTN/Math/FloatMath.h>
 #include <SGEXTN/SeerattraNum/DirectRandom.h>
+#include <SGEXTN/Containers/Serialise.h>
+
+SGEXTN::SeerattraNum::UnitSphereSample::UnitSphereSample() : private_rngLocator(true), private_normalDistribution(true, 0.0f, 1.0f){}
 
 SGEXTN::SeerattraNum::UnitSphereSample::UnitSphereSample(bool useGlobal) : private_rngLocator(useGlobal), private_normalDistribution(true, 0.0f, 1.0f){}
+
+SGEXTN::Containers::Array<unsigned char> SGEXTN::SeerattraNum::UnitSphereSample::serialise(const SGEXTN::SeerattraNum::UnitSphereSample& x){
+    return SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::serialise(x.private_rngLocator);
+}
+
+SGEXTN::SeerattraNum::UnitSphereSample SGEXTN::SeerattraNum::UnitSphereSample::unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success){
+    const SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::unserialise(data, &success);
+    if(success == false){return SGEXTN::SeerattraNum::UnitSphereSample();}
+    SGEXTN::SeerattraNum::UnitSphereSample output(true);
+    output.private_rngLocator = rngLocator;
+    return output;
+}
+
+int SGEXTN::SeerattraNum::UnitSphereSample::lengthof([[maybe_unused]] const SGEXTN::SeerattraNum::UnitSphereSample& x){
+    return 37;
+}
 
 void SGEXTN::SeerattraNum::UnitSphereSample::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
     if(private_rngLocator.private_ownsRng == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UnitSphereSample::seed crashed because cannot seed global rng");}

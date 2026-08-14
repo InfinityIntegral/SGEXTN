@@ -1055,6 +1055,19 @@ void SGEXTN::InternalTest::SeerattraNumTest::testRandomPermutation(){
     generator.seed(secondSeed);
     SGEXTN::Containers::Array<int> secondPermutation = generator.randomPermutation(4);
     if(secondPermutation.length() != 4 || secondPermutation.at(0) != 0 || secondPermutation.at(1) != 1 || secondPermutation.at(2) != 2 || secondPermutation.at(3) != 3){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::RandomPermutation generate permutation second seed fail");}
+    bool isValid = false;
+    SGEXTN::SeerattraNum::RandomPermutation sampleRng(false);
+    sampleRng.seed(SGEXTN::Containers::Array<unsigned int>(1, 726u));
+    const SGEXTN::Containers::Array<unsigned char> serialiseArray = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::serialise(sampleRng.private_rngLocator);
+    if(isBitwiseIdentical(serialiseArray, SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::RandomPermutation>::serialise(sampleRng)) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise serialise SGEXTN::SeerattraNum::RandomPermutation fail");}
+    SGEXTN::SeerattraNum::RandomPermutation unserialisedRng = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::RandomPermutation>::unserialise(serialiseArray, &isValid);
+    SGEXTN::Containers::Array<int> output1 = sampleRng.randomPermutation(100);
+    SGEXTN::Containers::Array<int> output2 = unserialisedRng.randomPermutation(100);
+    for(int i=0; i<100; i++){
+        if(output1.at(i) != output2.at(i)){isValid = false;}
+    }
+    if(isValid == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise unserialise SGEXTN::SeerattraNum::RandomPermutation fail");}
+    if(SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::RandomPermutation>::lengthof(sampleRng) != 37){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise lengthof SGEXTN::SeerattraNum::RandomPermutation fail");}
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testUnitSphereSample(){
@@ -1090,6 +1103,19 @@ void SGEXTN::InternalTest::SeerattraNumTest::testUnitSphereSample(){
     expectedVariation = 2.0f / 10000.0f / 9999.0f * ((1.0f + rho * rho) / (1.0f - rho * rho) / (1.0f - rho * rho) - 1.0f);
     measurementValue = measuredVariation / SGEXTN::Math::FloatMath<float>::squareRoot(expectedVariation);
     if(measurementValue >= 1.645f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UnitSphereSample uniformity second test fail");}
+    bool isValid = false;
+    SGEXTN::SeerattraNum::UnitSphereSample sampleRng(false);
+    sampleRng.seed(SGEXTN::Containers::Array<unsigned int>(1, 726u));
+    const SGEXTN::Containers::Array<unsigned char> serialiseArray = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::serialise(sampleRng.private_rngLocator);
+    if(isBitwiseIdentical(serialiseArray, SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::UnitSphereSample>::serialise(sampleRng)) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise serialise SGEXTN::SeerattraNum::UnitSphereSample fail");}
+    SGEXTN::SeerattraNum::UnitSphereSample unserialisedRng = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::UnitSphereSample>::unserialise(serialiseArray, &isValid);
+    SGEXTN::Containers::Array<float> output1 = sampleRng.randomPoint(4);
+    SGEXTN::Containers::Array<float> output2 = unserialisedRng.randomPoint(4);
+    for(int i=0; i<4; i++){
+        if(output1.at(i) != output2.at(i)){isValid = false;}
+    }
+    if(isValid == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise unserialise SGEXTN::SeerattraNum::UnitSphereSample fail");}
+    if(SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::UnitSphereSample>::lengthof(sampleRng) != 37){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise lengthof SGEXTN::SeerattraNum::UnitSphereSample fail");}
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testSobolSequence(){
