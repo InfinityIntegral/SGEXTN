@@ -19,12 +19,51 @@
 #include <SGEXTN/Containers/Array.h>
 #include <SGEXTN/Containers/ForceCrash.h>
 #include <SGEXTN/SeerattraNum/DirectRandom.h>
+#include <SGEXTN/Containers/Serialise.h>
+
+SGEXTN::SeerattraNum::FisherFDistribution::FisherFDistribution() : private_numeratorDegreesOfFreedom(1.0f), private_denominatorDegreesOfFreedom(1.0f), private_rngLocator(true), private_numeratorDistribution(true, 1.0f), private_denominatorDistribution(true, 1.0f){}
 
 SGEXTN::SeerattraNum::FisherFDistribution::FisherFDistribution(bool useGlobal, float numeratorDegreesOfFreedom, float denominatorDegreesOfFreedom) : private_numeratorDegreesOfFreedom(numeratorDegreesOfFreedom), private_denominatorDegreesOfFreedom(denominatorDegreesOfFreedom), private_rngLocator(useGlobal), private_numeratorDistribution(true, 1.0f), private_denominatorDistribution(true, 1.0f){
     if(numeratorDegreesOfFreedom <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::FisherFDistribution constructor crashed because requested number of degrees of freedom in the numerator is nonpositive");}
     if(denominatorDegreesOfFreedom <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::FisherFDistribution constructor crashed because requested number of degrees of freedom in the denominator is nonpositive");}
     private_numeratorDistribution.setDegreesOfFreedom(numeratorDegreesOfFreedom);
     private_denominatorDistribution.setDegreesOfFreedom(denominatorDegreesOfFreedom);
+}
+
+SGEXTN::Containers::Array<unsigned char> SGEXTN::SeerattraNum::FisherFDistribution::serialise(const SGEXTN::SeerattraNum::FisherFDistribution& x){
+    return SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float, float>::serialiseTogether(x.private_rngLocator, x.private_numeratorDegreesOfFreedom, x.private_denominatorDegreesOfFreedom);
+}
+
+SGEXTN::SeerattraNum::FisherFDistribution SGEXTN::SeerattraNum::FisherFDistribution::unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success){
+    if(data.length() != 45){
+        success = false;
+        return SGEXTN::SeerattraNum::FisherFDistribution();
+    }
+    SGEXTN::Containers::Array<unsigned char> tempArray(37);
+    int offset = 0;
+    SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
+    const SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::unserialise(tempArray, &success);
+    if(success == false){return SGEXTN::SeerattraNum::FisherFDistribution();}
+    tempArray = SGEXTN::Containers::Array<unsigned char>(4);
+    SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
+    const float numerator = SGEXTN::Containers::Serialise<float>::unserialise(tempArray, &success);
+    if(success == false || numerator <= 0.0f){
+        success = false;
+        return SGEXTN::SeerattraNum::FisherFDistribution();
+    }
+    SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
+    const float denominator = SGEXTN::Containers::Serialise<float>::unserialise(tempArray, &success);
+    if(success == false || denominator <= 0.0f){
+        success = false;
+        return SGEXTN::SeerattraNum::FisherFDistribution();
+    }
+    SGEXTN::SeerattraNum::FisherFDistribution output(true, numerator, denominator);
+    output.private_rngLocator = rngLocator;
+    return output;
+}
+
+int SGEXTN::SeerattraNum::FisherFDistribution::lengthof([[maybe_unused]] const SGEXTN::SeerattraNum::FisherFDistribution& x){
+    return 45;
 }
 
 void SGEXTN::SeerattraNum::FisherFDistribution::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){

@@ -30,7 +30,11 @@ public:
     SGEXTN::SeerattraNum::DirectRandomInstanceLocator private_rngLocator;
     float private_degreesOfFreedom;
     SGEXTN::SeerattraNum::GammaDistribution private_gammaDistribution;
+    ChiSquaredDistribution();
     ChiSquaredDistribution(bool useGlobal, float degreesOfFreedom);
+    [[nodiscard]] static SGEXTN::Containers::Array<unsigned char> serialise(const ChiSquaredDistribution& x);
+    [[nodiscard]] static ChiSquaredDistribution unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success);
+    [[nodiscard]] static int lengthof(const ChiSquaredDistribution& x);
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
     [[nodiscard]] float private_randomValue(SGEXTN::SeerattraNum::DirectRandomInstanceLocator& externalLocator) const;
     [[nodiscard]] float randomValue();

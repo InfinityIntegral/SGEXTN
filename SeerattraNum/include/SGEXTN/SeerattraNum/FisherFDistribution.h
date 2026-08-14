@@ -32,7 +32,11 @@ public:
     float private_denominatorDegreesOfFreedom;
     SGEXTN::SeerattraNum::ChiSquaredDistribution private_numeratorDistribution;
     SGEXTN::SeerattraNum::ChiSquaredDistribution private_denominatorDistribution;
+    FisherFDistribution();
     FisherFDistribution(bool useGlobal, float numeratorDegreesOfFreedom, float denominatorDegreesOfFreedom);
+    [[nodiscard]] static SGEXTN::Containers::Array<unsigned char> serialise(const FisherFDistribution& x);
+    [[nodiscard]] static FisherFDistribution unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success);
+    [[nodiscard]] static int lengthof(const FisherFDistribution& x);
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
     [[nodiscard]] float randomValue();
     [[nodiscard]] SGEXTN::Containers::Array<float> randomValueArray(int count);
