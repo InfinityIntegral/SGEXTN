@@ -22,7 +22,7 @@
 #include <SGEXTN/Math/FloatMath.h>
 #include <SGEXTN/Containers/Serialise.h>
 
-SGEXTN::SeerattraNum::LogNormalDistribution::LogNormalDistribution() : private_meanOfLn(0.0f), private_standardDeviationOfLn(1.0f), private_rngLocator(true), private_normalDistribution(true, 0.0f, 1.0f){}
+SGEXTN::SeerattraNum::LogNormalDistribution::LogNormalDistribution() : SGEXTN::SeerattraNum::LogNormalDistribution(true, 0.0f, 1.0f){}
 
 SGEXTN::SeerattraNum::LogNormalDistribution::LogNormalDistribution(bool useGlobal, float meanOfLn, float standardDeviationOfLn) : private_meanOfLn(meanOfLn), private_standardDeviationOfLn(standardDeviationOfLn), private_rngLocator(useGlobal), private_normalDistribution(true, 0.0f, 1.0f){
     if(standardDeviationOfLn <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::LogNormalDistribution constructor crashed because requested standard deviation is nonpositive");}

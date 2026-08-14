@@ -22,7 +22,7 @@
 #include <SGEXTN/Math/IntegerLimits.h>
 #include <SGEXTN/Containers/Serialise.h>
 
-SGEXTN::SeerattraNum::UniformDistributionInteger::UniformDistributionInteger() : private_inclusiveMax(0), private_inclusiveMin(0), private_rngLocator(true){}
+SGEXTN::SeerattraNum::UniformDistributionInteger::UniformDistributionInteger() : SGEXTN::SeerattraNum::UniformDistributionInteger(true, 0, 0){}
 
 SGEXTN::SeerattraNum::UniformDistributionInteger::UniformDistributionInteger(bool useGlobal, int inclusiveMin, int inclusiveMax) : private_inclusiveMax(inclusiveMax), private_inclusiveMin(inclusiveMin), private_rngLocator(useGlobal){
     if(inclusiveMin > inclusiveMax){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionInteger constructor crashed because minimum is higher than maximum");}

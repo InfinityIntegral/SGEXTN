@@ -21,9 +21,7 @@
 #include <SGEXTN/SeerattraNum/DirectRandom.h>
 #include <SGEXTN/Containers/Serialise.h>
 
-SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution::WeightedPiecewiseLinearDistribution() : private_weights(1.0f, 1.0f), private_boundaries(0.0f, 1.0f), private_prefixSums(0), private_rngLocator(true){
-    private_updatePrefixSums();
-}
+SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution::WeightedPiecewiseLinearDistribution() : SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution(true, SGEXTN::Containers::Array<float>(1.0f, 1.0f), SGEXTN::Containers::Array<float>(0.0f, 1.0f)){}
 
 SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution::WeightedPiecewiseLinearDistribution(bool useGlobal, const SGEXTN::Containers::Array<float>& weights, const SGEXTN::Containers::Array<float>& boundaries) : private_weights(weights), private_boundaries(boundaries), private_prefixSums(0), private_rngLocator(useGlobal){
     if(boundaries.length() < 2){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution constructor crashed because listed boundaries do not form at least 1 valid interval");}

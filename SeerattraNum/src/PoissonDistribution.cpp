@@ -22,9 +22,7 @@
 #include <SGEXTN/Math/FloatMath.h>
 #include <SGEXTN/Containers/Serialise.h>
 
-SGEXTN::SeerattraNum::PoissonDistribution::PoissonDistribution() : private_mean(1.0f), private_rngLocator(true), private_smallMeanProductThreshold(0.0f), private_precompConstantA(0.0f), private_precompConstantB(0.0f), private_squeezeBoundU(0.0f), private_squeezeBoundV(0.0f), private_lnMean(0.0f), private_lnAcceptRate(0.0f){
-    private_redoPrecompute();
-}
+SGEXTN::SeerattraNum::PoissonDistribution::PoissonDistribution() : SGEXTN::SeerattraNum::PoissonDistribution(true, 1.0f){}
 
 SGEXTN::SeerattraNum::PoissonDistribution::PoissonDistribution(bool useGlobal, float mean) : private_mean(mean), private_rngLocator(useGlobal), private_smallMeanProductThreshold(0.0f), private_precompConstantA(0.0f), private_precompConstantB(0.0f), private_squeezeBoundU(0.0f), private_squeezeBoundV(0.0f), private_lnMean(0.0f), private_lnAcceptRate(0.0f){
     if(mean <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::PoissonDistribution constructor crashed because requested mean is nonpositive");}

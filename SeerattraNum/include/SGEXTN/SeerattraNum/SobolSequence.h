@@ -27,8 +27,9 @@ public:
     int private_dimensions;
     SGEXTN::Containers::Array<unsigned int> private_hashedSeed;
     SGEXTN::Containers::Array<SGEXTN::Containers::Array<unsigned int>> private_directionNumberCache;
+    SobolSequence();
     SobolSequence(int dimension);
-    void seed(int seed);
+    void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
     [[nodiscard]] SGEXTN::Containers::Array<float> nextTerm();
     [[nodiscard]] SGEXTN::Containers::Array<float> requestTerm(int startingPoint);
 };

@@ -22,7 +22,7 @@
 #include <SGEXTN/Math/FloatMath.h>
 #include <SGEXTN/Containers/Serialise.h>
 
-SGEXTN::SeerattraNum::WeibullDistribution::WeibullDistribution() : private_characteristicLifespan(1.0f), private_failureBehaviour(1.0f), private_rngLocator(true), private_reciprocalA(1.0f){}
+SGEXTN::SeerattraNum::WeibullDistribution::WeibullDistribution() : SGEXTN::SeerattraNum::WeibullDistribution(true, 1.0f, 1.0f){}
 
 SGEXTN::SeerattraNum::WeibullDistribution::WeibullDistribution(bool useGlobal, float failureBehaviour, float characteristicLifespan) : private_characteristicLifespan(characteristicLifespan), private_failureBehaviour(failureBehaviour), private_rngLocator(useGlobal), private_reciprocalA(1.0f / failureBehaviour){
     if(failureBehaviour <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeibullDistribution constructor crashed because requested failure behaviour indicator is nonpositive");}

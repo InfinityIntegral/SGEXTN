@@ -23,9 +23,7 @@
 #include <SGEXTN/SeerattraNum/NormalDistribution.h>
 #include <SGEXTN/Containers/Serialise.h>
 
-SGEXTN::SeerattraNum::GammaDistribution::GammaDistribution() : private_variableCount(1.0f), private_variableMean(1.0f), private_rngLocator(true), private_standardNormalDistribution(true, 0.0f, 1.0f), private_precompConstantC(0.0f), private_precompConstantD(0.0f), private_reciprocalVariableCount(0.0f){
-    private_redoPrecompute();
-}
+SGEXTN::SeerattraNum::GammaDistribution::GammaDistribution() : SGEXTN::SeerattraNum::GammaDistribution(true, 1.0f, 1.0f){}
 
 SGEXTN::SeerattraNum::GammaDistribution::GammaDistribution(bool useGlobal, float variableCount, float variableMean) : private_variableCount(variableCount), private_variableMean(variableMean), private_rngLocator(useGlobal), private_standardNormalDistribution(true, 0.0f, 1.0f), private_precompConstantC(0.0f), private_precompConstantD(0.0f), private_reciprocalVariableCount(0.0f){
     if(variableCount <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GammaDistribution constructor crashed because requested number of exponentially distributed variables to sum is nonpositive");}

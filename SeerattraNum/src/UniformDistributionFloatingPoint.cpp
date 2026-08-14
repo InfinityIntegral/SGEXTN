@@ -21,7 +21,7 @@
 #include <SGEXTN/SeerattraNum/DirectRandom.h>
 #include <SGEXTN/Containers/Serialise.h>
 
-SGEXTN::SeerattraNum::UniformDistributionFloatingPoint::UniformDistributionFloatingPoint() : private_minimum(0.0f), private_maximum(1.0f), private_rngLocator(true){}
+SGEXTN::SeerattraNum::UniformDistributionFloatingPoint::UniformDistributionFloatingPoint() : SGEXTN::SeerattraNum::UniformDistributionFloatingPoint(true, 0.0f, 1.0f){}
 
 SGEXTN::SeerattraNum::UniformDistributionFloatingPoint::UniformDistributionFloatingPoint(bool useGlobal, float minimum, float maximum) : private_minimum(minimum), private_maximum(maximum), private_rngLocator(useGlobal){
     if(minimum >= maximum){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionFloatingPoint constructor crashed because minimum is higher than or equal to maximum");}

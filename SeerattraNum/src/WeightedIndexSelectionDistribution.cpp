@@ -21,9 +21,7 @@
 #include <SGEXTN/SeerattraNum/DirectRandom.h>
 #include <SGEXTN/Containers/Serialise.h>
 
-SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution::WeightedIndexSelectionDistribution() : private_weights(1, 1.0f), private_prefixSums(0), private_rngLocator(true){
-    private_updatePrefixSums();
-}
+SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution::WeightedIndexSelectionDistribution() : SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution(true, SGEXTN::Containers::Array<float>(1.0f)){}
 
 SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution::WeightedIndexSelectionDistribution(bool useGlobal, const SGEXTN::Containers::Array<float>& weights) : private_weights(weights), private_prefixSums(0), private_rngLocator(useGlobal){
     if(weights.length() == 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightIndexSelectionDistribution constructor crashed because the array of weights is empty");}

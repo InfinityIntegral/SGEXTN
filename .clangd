@@ -6,19 +6,10 @@ CompileFlags:
     - "-ffreestanding"
     - "-fno-builtin"
     - "-ferror-limit=0"
-  Remove:
-    - "-isystem*"
-    - "-I/usr*"
-    - "--driver-mode=*"
   CompilationDatabase: "build/"
 Index:
   Background: Skip
   StandardLibrary: false
-Style:
-  FullyQualifiedNamespaces:
-    - std
-    - SGEXTN
-  AngledHeaders: "*"
 Diagnostics:
   ClangTidy:
     Remove: "*"
@@ -28,6 +19,3 @@ Completion:
   AllScopes: No
   ArgumentLists: Delimiters
   HeaderInsertion: Never
-  MacroFilter: ExactPrefix
-InlayHints:
-  Enabled: false

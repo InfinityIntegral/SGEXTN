@@ -22,7 +22,7 @@
 #include <SGEXTN/Math/FloatMath.h>
 #include <SGEXTN/Containers/Serialise.h>
 
-SGEXTN::SeerattraNum::GumbelDistribution::GumbelDistribution() : private_mode(0.0f), private_spread(1.0f), private_rngLocator(true){}
+SGEXTN::SeerattraNum::GumbelDistribution::GumbelDistribution() : SGEXTN::SeerattraNum::GumbelDistribution(true, 0.0f, 1.0f){}
 
 SGEXTN::SeerattraNum::GumbelDistribution::GumbelDistribution(bool useGlobal, float mode, float spread) : private_mode(mode), private_spread(spread), private_rngLocator(useGlobal){
     if(spread <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GumbelDistribution constructor crashed because requested spread is nonpositive");}

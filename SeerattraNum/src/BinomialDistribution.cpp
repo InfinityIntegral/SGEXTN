@@ -24,10 +24,7 @@
 #include <SGEXTN/SeerattraNum/ExponentialDistribution.h>
 #include <SGEXTN/Containers/Serialise.h>
 
-SGEXTN::SeerattraNum::BinomialDistribution::BinomialDistribution() : private_chanceOfTrue(0.5f), private_attemptCount(1), private_rngLocator(true), private_geometricDistribution(true, 0.5f), private_precompConstantL(0.0f), private_precompConstantC(0.0f), private_precompConstantM(0.0f), private_exponentialFactorLeft(0.0f), private_exponentialFactorRight(0.0f), private_negativeReciprocalExponentialFactorLeft(0.0f), private_reciprocalExponentialFactorRight(0.0f), private_boundaryFarLeft(0.0f), private_boundaryCenterLeft(0.0f), private_boundaryCenterRight(0.0f), private_boundaryFarRight(0.0f), private_weightLeftTail(0.0f), private_weightBothTails(0.0f), private_weightAllExceptCenter(0.0f), private_comparisonMultiplier(0.0f), private_comparisonConstant(0.0f){
-    private_redoPrecompute();
-    private_geometricDistribution.setChanceOfTrue(0.5f);
-}
+SGEXTN::SeerattraNum::BinomialDistribution::BinomialDistribution() : SGEXTN::SeerattraNum::BinomialDistribution(true, 0.5f, 1){}
 
 SGEXTN::SeerattraNum::BinomialDistribution::BinomialDistribution(bool useGlobal, float chanceOfTrue, int attemptCount) : private_chanceOfTrue(chanceOfTrue), private_attemptCount(attemptCount), private_rngLocator(useGlobal), private_geometricDistribution(true, 0.5f), private_precompConstantL(0.0f), private_precompConstantC(0.0f), private_precompConstantM(0.0f), private_exponentialFactorLeft(0.0f), private_exponentialFactorRight(0.0f), private_negativeReciprocalExponentialFactorLeft(0.0f), private_reciprocalExponentialFactorRight(0.0f), private_boundaryFarLeft(0.0f), private_boundaryCenterLeft(0.0f), private_boundaryCenterRight(0.0f), private_boundaryFarRight(0.0f), private_weightLeftTail(0.0f), private_weightBothTails(0.0f), private_weightAllExceptCenter(0.0f), private_comparisonMultiplier(0.0f), private_comparisonConstant(0.0f){
     if(chanceOfTrue < 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BinomialDistribution constructor crashed because the requested probability is negative");}

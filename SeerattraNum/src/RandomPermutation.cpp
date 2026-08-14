@@ -22,7 +22,7 @@
 #include <SGEXTN/SeerattraNum/DirectRandom.h>
 #include <SGEXTN/Containers/Serialise.h>
 
-SGEXTN::SeerattraNum::RandomPermutation::RandomPermutation() : private_rngLocator(true), private_uniformDistribution(true, 0, 0){}
+SGEXTN::SeerattraNum::RandomPermutation::RandomPermutation() : SGEXTN::SeerattraNum::RandomPermutation(true){}
 
 SGEXTN::SeerattraNum::RandomPermutation::RandomPermutation(bool useGlobal) : private_rngLocator(useGlobal), private_uniformDistribution(true, 0, 0){}
 

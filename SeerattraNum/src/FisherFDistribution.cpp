@@ -21,7 +21,7 @@
 #include <SGEXTN/SeerattraNum/DirectRandom.h>
 #include <SGEXTN/Containers/Serialise.h>
 
-SGEXTN::SeerattraNum::FisherFDistribution::FisherFDistribution() : private_numeratorDegreesOfFreedom(1.0f), private_denominatorDegreesOfFreedom(1.0f), private_rngLocator(true), private_numeratorDistribution(true, 1.0f), private_denominatorDistribution(true, 1.0f){}
+SGEXTN::SeerattraNum::FisherFDistribution::FisherFDistribution() : SGEXTN::SeerattraNum::FisherFDistribution(true, 1.0f, 1.0f){}
 
 SGEXTN::SeerattraNum::FisherFDistribution::FisherFDistribution(bool useGlobal, float numeratorDegreesOfFreedom, float denominatorDegreesOfFreedom) : private_numeratorDegreesOfFreedom(numeratorDegreesOfFreedom), private_denominatorDegreesOfFreedom(denominatorDegreesOfFreedom), private_rngLocator(useGlobal), private_numeratorDistribution(true, 1.0f), private_denominatorDistribution(true, 1.0f){
     if(numeratorDegreesOfFreedom <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::FisherFDistribution constructor crashed because requested number of degrees of freedom in the numerator is nonpositive");}

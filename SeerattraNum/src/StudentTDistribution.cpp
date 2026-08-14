@@ -22,7 +22,7 @@
 #include <SGEXTN/Math/FloatMath.h>
 #include <SGEXTN/Containers/Serialise.h>
 
-SGEXTN::SeerattraNum::StudentTDistribution::StudentTDistribution() : private_degreesOfFreedom(1.0f), private_rngLocator(true), private_chiSquaredDistribution(true, 1.0f), private_standardNormalDistribution(true, 0.0f, 1.0f){}
+SGEXTN::SeerattraNum::StudentTDistribution::StudentTDistribution() : SGEXTN::SeerattraNum::StudentTDistribution(true, 1.0f){}
 
 SGEXTN::SeerattraNum::StudentTDistribution::StudentTDistribution(bool useGlobal, float degreesOfFreedom) : private_degreesOfFreedom(degreesOfFreedom), private_rngLocator(useGlobal), private_chiSquaredDistribution(true, 1.0f), private_standardNormalDistribution(true, 0.0f, 1.0f){
     if(degreesOfFreedom <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::StudentTDistribution constructor crashed because requested number of degrees of freedom is nonpositive");}

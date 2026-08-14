@@ -80,7 +80,7 @@ SGEXTN::Containers::Array<float>* SGEXTN::SeerattraNum::ExponentialDistribution:
 SGEXTN::Containers::Array<float>* SGEXTN::SeerattraNum::ExponentialDistribution::private_floorTables = nullptr;
 float SGEXTN::SeerattraNum::ExponentialDistribution::private_expRightBoundary = 0.0f;
 
-SGEXTN::SeerattraNum::ExponentialDistribution::ExponentialDistribution() : private_meanEventsPerTime(1.0f), private_reciprocalRate(1.0f), private_rngLocator(true){}
+SGEXTN::SeerattraNum::ExponentialDistribution::ExponentialDistribution() : SGEXTN::SeerattraNum::ExponentialDistribution(true, 1.0f){}
 
 SGEXTN::SeerattraNum::ExponentialDistribution::ExponentialDistribution(bool useGlobal, float meanEventsPerTime) : private_meanEventsPerTime(meanEventsPerTime), private_reciprocalRate(1.0f / meanEventsPerTime), private_rngLocator(useGlobal){
     if(meanEventsPerTime <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::ExponentialDistribution constructor crashed because requested number of events occurring in each unit time is nonpositive");}

@@ -23,7 +23,7 @@
 #include <SGEXTN/Math/FloatConstants.h>
 #include <SGEXTN/Containers/Serialise.h>
 
-SGEXTN::SeerattraNum::CauchyDistribution::CauchyDistribution() : private_median(0.0f), private_halfWidth(1.0f), private_rngLocator(true){}
+SGEXTN::SeerattraNum::CauchyDistribution::CauchyDistribution() : SGEXTN::SeerattraNum::CauchyDistribution(true, 0.0f, 1.0f){}
 
 SGEXTN::SeerattraNum::CauchyDistribution::CauchyDistribution(bool useGlobal, float median, float halfWidth) : private_median(median), private_halfWidth(halfWidth), private_rngLocator(useGlobal){
     if(halfWidth <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::CauchyDistribution constructor crashed because requested half width is nonpositive");}
