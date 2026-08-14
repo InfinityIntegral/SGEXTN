@@ -20,8 +20,27 @@
 #include <SGEXTN/SeerattraNum/UniformDistributionInteger.h>
 #include <SGEXTN/Containers/ForceCrash.h>
 #include <SGEXTN/SeerattraNum/DirectRandom.h>
+#include <SGEXTN/Containers/Serialise.h>
+
+SGEXTN::SeerattraNum::RandomPermutation::RandomPermutation() : private_rngLocator(true), private_uniformDistribution(true, 0, 0){}
 
 SGEXTN::SeerattraNum::RandomPermutation::RandomPermutation(bool useGlobal) : private_rngLocator(useGlobal), private_uniformDistribution(true, 0, 0){}
+
+SGEXTN::Containers::Array<unsigned char> SGEXTN::SeerattraNum::RandomPermutation::serialise(const SGEXTN::SeerattraNum::RandomPermutation& x){
+    return SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::serialise(x.private_rngLocator);
+}
+
+SGEXTN::SeerattraNum::RandomPermutation SGEXTN::SeerattraNum::RandomPermutation::unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success){
+    const SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::unserialise(data, &success);
+    if(success == false){return SGEXTN::SeerattraNum::RandomPermutation();}
+    SGEXTN::SeerattraNum::RandomPermutation output(true);
+    output.private_rngLocator = rngLocator;
+    return output;
+}
+
+int SGEXTN::SeerattraNum::RandomPermutation::lengthof([[maybe_unused]] const SGEXTN::SeerattraNum::RandomPermutation& x){
+    return 37;
+}
 
 void SGEXTN::SeerattraNum::RandomPermutation::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
     if(private_rngLocator.private_ownsRng == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::RandomPermutation::seed crashed because cannot seed global rng");}

@@ -29,7 +29,11 @@ class BuildLah_SGEXTN_SeerattraNum RandomPermutation {
 public:
     SGEXTN::SeerattraNum::DirectRandomInstanceLocator private_rngLocator;
     SGEXTN::SeerattraNum::UniformDistributionInteger private_uniformDistribution;
+    RandomPermutation();
     RandomPermutation(bool useGlobal);
+    [[nodiscard]] static SGEXTN::Containers::Array<unsigned char> serialise(const RandomPermutation& x);
+    [[nodiscard]] static RandomPermutation unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success);
+    [[nodiscard]] static int lengthof(const RandomPermutation& x);
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
     [[nodiscard]] SGEXTN::Containers::Array<int> randomPermutation(int n);
 };
