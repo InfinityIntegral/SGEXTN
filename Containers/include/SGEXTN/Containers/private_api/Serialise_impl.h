@@ -50,7 +50,7 @@ template <typename T> SGEXTN::Containers::Array<unsigned char> SGEXTN::Container
         return output;
     }
     bool lengthVaries = false;
-    int firstLength = SGEXTN::Containers::Serialise<T>::lengthof(x.at(0));
+    const int firstLength = SGEXTN::Containers::Serialise<T>::lengthof(x.at(0));
     for(int i=1; i<x.length(); i++){
         if(SGEXTN::Containers::Serialise<T>::lengthof(x.at(i)) != firstLength){
             lengthVaries = true;
@@ -110,7 +110,7 @@ template <typename T> SGEXTN::Containers::Array<T> SGEXTN::Containers::Serialise
     }
     tempArray = SGEXTN::Containers::Array<unsigned char>(4);
     SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
-    int arrayLength = SGEXTN::Containers::Serialise<int>::unserialise(tempArray, &isSuccessful);
+    const int arrayLength = SGEXTN::Containers::Serialise<int>::unserialise(tempArray, &isSuccessful);
     if(isSuccessful == false || arrayLength < 0){
         if(success != nullptr){(*success) = false;}
         return SGEXTN::Containers::Array<T>(0);
@@ -185,7 +185,7 @@ template <typename T> SGEXTN::Containers::Array<T> SGEXTN::Containers::Serialise
 template <typename T> int SGEXTN::Containers::Serialise<SGEXTN::Containers::Array<T>>::lengthof(const SGEXTN::Containers::Array<T>& x){
     if(x.length() == 0){return 9;}
     bool lengthVaries = false;
-    int firstLength = SGEXTN::Containers::Serialise<T>::lengthof(x.at(0));
+    const int firstLength = SGEXTN::Containers::Serialise<T>::lengthof(x.at(0));
     for(int i=1; i<x.length(); i++){
         if(SGEXTN::Containers::Serialise<T>::lengthof(x.at(i)) != firstLength){
             lengthVaries = true;

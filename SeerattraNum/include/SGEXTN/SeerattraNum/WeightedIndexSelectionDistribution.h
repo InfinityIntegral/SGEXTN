@@ -27,7 +27,11 @@ public:
     SGEXTN::Containers::Array<float> private_weights;
     SGEXTN::Containers::Array<float> private_prefixSums;
     void private_updatePrefixSums();
+    WeightedIndexSelectionDistribution();
     WeightedIndexSelectionDistribution(bool useGlobal, const SGEXTN::Containers::Array<float>& weights);
+    [[nodiscard]] static SGEXTN::Containers::Array<unsigned char> serialise(const WeightedIndexSelectionDistribution& x);
+    [[nodiscard]] static WeightedIndexSelectionDistribution unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success);
+    [[nodiscard]] static int lengthof(const WeightedIndexSelectionDistribution& x);
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
     [[nodiscard]] int randomIndex();
     [[nodiscard]] SGEXTN::Containers::Array<int> randomIndexArray(int count);
