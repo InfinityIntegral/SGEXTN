@@ -32,7 +32,11 @@ public:
     float private_degreesOfFreedom;
     SGEXTN::SeerattraNum::ChiSquaredDistribution private_chiSquaredDistribution;
     SGEXTN::SeerattraNum::NormalDistribution private_standardNormalDistribution;
+    StudentTDistribution();
     StudentTDistribution(bool useGlobal, float degreesOfFreedom);
+    [[nodiscard]] static SGEXTN::Containers::Array<unsigned char> serialise(const StudentTDistribution& x);
+    [[nodiscard]] static StudentTDistribution unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success);
+    [[nodiscard]] static int lengthof(const StudentTDistribution& x);
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
     [[nodiscard]] float randomValue();
     [[nodiscard]] SGEXTN::Containers::Array<float> randomValueArray(int count);
