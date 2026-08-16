@@ -49,7 +49,7 @@ public:
     static void testUnorderedSetConstructible();
     static void testUnorderedMapConstructible();
     static void testArrayVectorMove();
-    static void testSerialise();
+    static void testSerialisation();
     static void testAll();
 };
 }

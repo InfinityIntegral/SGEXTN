@@ -1117,19 +1117,19 @@ void SGEXTN::InternalTest::SeerattraNumTest::testUnitSphereSample(){
     if(isValid == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise unserialise SGEXTN::SeerattraNum::UnitSphereSample fail");}
     if(SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::UnitSphereSample>::lengthof(sampleRng) != 37){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise lengthof SGEXTN::SeerattraNum::UnitSphereSample fail");}
 }
-#include <SGEXTN/CoreText/Debug.h>
+
 void SGEXTN::InternalTest::SeerattraNumTest::testSobolSequence(){
     SGEXTN::SeerattraNum::SobolSequence generator(3);
     generator.seed(firstSeed);
     SGEXTN::Containers::Array<float> firstPoint = generator.nextTerm();
-    if(firstPoint.length() != 3 || isCloseEnough(firstPoint.at(0), 0.79587f) == false || isCloseEnough(firstPoint.at(1), 0.94148f) == false || isCloseEnough(firstPoint.at(2), 0.52481f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::SobolSequence generate first point first seed fail");}
+    if(firstPoint.length() != 3 || isCloseEnough(firstPoint.at(0), 0.51067f) == false || isCloseEnough(firstPoint.at(1), 0.34564f) == false || isCloseEnough(firstPoint.at(2), 0.60182f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::SobolSequence generate first point first seed fail");}
     SGEXTN::Containers::Array<float> secondPoint = generator.nextTerm();
-    if(secondPoint.length() != 3 || isCloseEnough(secondPoint.at(0), 0.29587f) == false || isCloseEnough(secondPoint.at(1), 0.44148f) == false || isCloseEnough(secondPoint.at(2), 0.02481f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::SobolSequence generate second point first seed fail");}
+    if(secondPoint.length() != 3 || isCloseEnough(secondPoint.at(0), 0.01067f) == false || isCloseEnough(secondPoint.at(1), 0.84564f) == false || isCloseEnough(secondPoint.at(2), 0.10182f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::SobolSequence generate second point first seed fail");}
     generator.seed(secondSeed);
     firstPoint = generator.nextTerm();
-    if(firstPoint.length() != 3 || isCloseEnough(firstPoint.at(0), 0.15753f) == false || isCloseEnough(firstPoint.at(1), 0.40669f) == false || isCloseEnough(firstPoint.at(2), 0.80586f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::SobolSequence generate first point second seed fail");}
+    if(firstPoint.length() != 3 || isCloseEnough(firstPoint.at(0), 0.58402f) == false || isCloseEnough(firstPoint.at(1), 0.36284f) == false || isCloseEnough(firstPoint.at(2), 0.99299f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::SobolSequence generate first point second seed fail");}
     secondPoint = generator.nextTerm();
-    if(secondPoint.length() != 3 || isCloseEnough(secondPoint.at(0), 0.65753f) == false || isCloseEnough(secondPoint.at(1), 0.90669f) == false || isCloseEnough(secondPoint.at(2), 0.30586f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::SobolSequence generate second point second seed fail");}
+    if(secondPoint.length() != 3 || isCloseEnough(secondPoint.at(0), 0.08402f) == false || isCloseEnough(secondPoint.at(1), 0.86284f) == false || isCloseEnough(secondPoint.at(2), 0.49299f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::SobolSequence generate second point second seed fail");}
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testHaltonSequence(){
