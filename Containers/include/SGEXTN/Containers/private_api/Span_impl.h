@@ -19,9 +19,17 @@
 #include <SGEXTN/Containers/ForceCrash.h>
 #include <SGEXTN/Containers/private_api/Sort.h>
 
-template <typename T> SGEXTN::Containers::Span<T>::Span(T* data, int length) : private_data(data), private_length(length) {
+template <typename T> SGEXTN::Containers::Span<T>::Span(T* data, int length) : private_data(data), private_length(length){
     if(length < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Span constructor crashed because the length is negative");}
     if(data == nullptr){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Span constructor crashed because the data pointer is nullptr");}
+}
+
+template <typename T> SGEXTN::Containers::Span<T>::Span(SGEXTN::Containers::Array<T>& array) : private_data(array.private_data), private_length(array.length()){}
+
+template <typename T> SGEXTN::Containers::Span<T>::Span(SGEXTN::Containers::Array<T>& array, int start, int length) : private_data(array.private_data + start), private_length(length){
+    if(start < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Span constructor crashed because starting point of span is negative");}
+    if(length < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Span constructor crashed because length of span is negative");}
+    if(start + length > array.length()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Span constructor crashed because end of span points beyond end of the array");}
 }
 
 template <typename T> int SGEXTN::Containers::Span<T>::length() const {

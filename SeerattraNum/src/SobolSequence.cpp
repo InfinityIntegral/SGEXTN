@@ -18,8 +18,8 @@
 #include <SGEXTN/SeerattraNum/SobolSequence.h>
 #include <SGEXTN/SeerattraNum/private_api/SobolSequenceLookup.h>
 #include <SGEXTN/Containers/Array.h>
-#include <SGEXTN/Containers/Hash.h>
-#include <SGEXTN/SeerattraNum/TrueRandom.h>
+#include <SGEXTN/SeerattraNum/SimpleRandom.h>
+#include <SGEXTN/SeerattraNum/DirectRandom.h>
 #include <SGEXTN/Containers/ForceCrash.h>
 #include <SGEXTN/Containers/Serialise.h>
 
@@ -52,7 +52,7 @@ SGEXTN::SeerattraNum::SobolSequence::SobolSequence() : SGEXTN::SeerattraNum::Sob
 SGEXTN::SeerattraNum::SobolSequence::SobolSequence(int dimension) : private_lastPosition(-1), private_lastPositionResult(0), private_dimensions(dimension), private_hashedSeed(0), private_directionNumberCache(0){
     if(dimension <= 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::SobolSequence constructor crashed because the number of dimensions is nonpositive");}
     if(dimension > 21200){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::SobolSequence constructor crashed because the number of dimensions exceeds 21200 which is where the lookup tables for direction numbers end");}
-    private_hashedSeed = SGEXTN::Containers::Array<unsigned int>(dimension);
+    private_hashedSeed = SGEXTN::SeerattraNum::SimpleRandom::randomUnsignedInt32Array(dimension);
     private_directionNumberCache = SGEXTN::Containers::Array<SGEXTN::Containers::Array<unsigned int>>(dimension, SGEXTN::Containers::Array<unsigned int>(32));
     for(int i=0; i<dimension; i++){
         for(int j=0; j<32; j++){
@@ -68,21 +68,14 @@ SGEXTN::SeerattraNum::SobolSequence::SobolSequence(int dimension) : private_last
             private_directionNumberCache.at(i).at(j) = directionNumber;
         }
     }
-    seed(SGEXTN::Containers::Array<unsigned int>(1, SGEXTN::SeerattraNum::TrueRandom::randomUnsignedInt32()));
 }
 
 void SGEXTN::SeerattraNum::SobolSequence::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
     private_lastPosition = -1;
     private_lastPositionResult = SGEXTN::Containers::Array<unsigned int>(0);
-    if(seedArray.length() == 0){
-        for(int i=0; i<private_dimensions; i++){
-            private_hashedSeed.at(i) = SGEXTN::Containers::Hash<int, unsigned int>()(i, 726);
-        }
-        return;
-    }
-    for(int i=0; i<private_dimensions; i++){
-        private_hashedSeed.at(i) = SGEXTN::Containers::Hash<int, unsigned int>()(i, seedArray.at(i % seedArray.length()));
-    }
+    SGEXTN::SeerattraNum::DirectRandom rng;
+    rng.seed(seedArray);
+    private_hashedSeed = rng.randomUnsignedInt32Array(private_dimensions);
 }
 
 SGEXTN::Containers::Array<float> SGEXTN::SeerattraNum::SobolSequence::nextTerm(){

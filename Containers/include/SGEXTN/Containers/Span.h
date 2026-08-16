@@ -16,12 +16,15 @@
 // BuildLah license check: SGEXTN 7.0.0
 
 #pragma once
+#include <SGEXTN/Containers/Array.h>
 
 namespace SGEXTN {
 namespace Containers {
 template <typename T> class Span {
 public:
     Span(T* data, int length);
+    Span(SGEXTN::Containers::Array<T>& array);
+    Span(SGEXTN::Containers::Array<T>& array, int start, int length);
     [[nodiscard]] int length() const;
     [[nodiscard]] T& at(int i);
     [[nodiscard]] const T& at(int i) const;
