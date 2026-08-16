@@ -22,11 +22,11 @@
 namespace SGEXTN {
 namespace Containers {
 template <typename T> class Array;
+template <typename T> class Span;
 }
 
 namespace CoreText {
 class Character;
-class OldString;
 
 enum class FloatPrecisionFormat : unsigned char {SignificantFigure, FractionalDigit, ScientificNotation};
 
@@ -54,9 +54,10 @@ public:
     [[nodiscard]] bool operator<=(const String& x) const;
     [[nodiscard]] bool operator>=(const String& x) const;
     [[nodiscard]] int hash() const;
-    [[nodiscard]] static SGEXTN::Containers::Array<unsigned char> serialise(const String& x);
-    [[nodiscard]] static String unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success);
-    [[nodiscard]] static int lengthof(const String& x);
+    [[nodiscard]] static bool sendOut(const String& x, SGEXTN::Containers::Span<unsigned char> data);
+    [[nodiscard]] static bool sendIn(String& x, SGEXTN::Containers::Span<unsigned char> data);
+    [[nodiscard]] static int sizeOut(const String& x);
+    [[nodiscard]] static int sizeIn(SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] String operator+(const String& x) const;
     String& operator+=(const String& x);
     [[nodiscard]] int byteLength() const;

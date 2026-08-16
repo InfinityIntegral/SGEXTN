@@ -25,7 +25,8 @@
 #include <SGEXTN/Containers/Vector.h>
 #include <SGEXTN/Math/FloatLimits.h>
 #include <SGEXTN/Containers/ArrayVectorMove.h>
-#include <SGEXTN/Containers/Serialise.h>
+#include <SGEXTN/Containers/Serialisation.h>
+#include <SGEXTN/Containers/Span.h>
 
 namespace {
 void appendUnicode(int unicode, SGEXTN::CoreText::Character& c){
@@ -104,45 +105,35 @@ int SGEXTN::CoreText::Character::hash() const {
     return SGEXTN::Containers::Hash<SGEXTN::CoreText::TextBuffer>()(private_data);
 }
 
-SGEXTN::Containers::Array<unsigned char> SGEXTN::CoreText::Character::serialise(const SGEXTN::CoreText::Character& x){
-    SGEXTN::Containers::Array<unsigned char> outputArray(4 + x.byteLength());
-    int offset = 0;
-    SGEXTN::Containers::MemoryCopySerialise::copySection(outputArray, offset, SGEXTN::Containers::Serialise<int>::serialise(x.byteLength()));
+bool SGEXTN::CoreText::Character::sendOut(const SGEXTN::CoreText::Character& x, SGEXTN::Containers::Span<unsigned char> data){
+    const bool isValid = SGEXTN::Containers::Serialisation<int>::sendOut(x.byteLength(), data.subspanLeft(4));
+    if(isValid == false){return false;}
     for(int i=0; i<x.byteLength(); i++){
-        outputArray.at(4 + i) = x.byteAt(i);
+        data.at(4 + i) = x.byteAt(i);
     }
-    return outputArray;
+    return true;
 }
 
-SGEXTN::CoreText::Character SGEXTN::CoreText::Character::unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success){
-    if(data.length() < 4){
-        success = false;
-        return SGEXTN::CoreText::Character();
-    }
-    SGEXTN::Containers::Array<unsigned char> tempArray(4);
-    int offset = 0;
-    SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
-    const int byteLength = SGEXTN::Containers::Serialise<int>::unserialise(tempArray, &success);
-    if(success == false || byteLength + 4 != data.length()){
-        success = false;
-        return SGEXTN::CoreText::Character();
-    }
-    SGEXTN::CoreText::String s = SGEXTN::CoreText::String::repeat(static_cast<unsigned char>(0), byteLength);
-    for(int i=0; i<byteLength; i++){
+bool SGEXTN::CoreText::Character::sendIn(SGEXTN::CoreText::Character& x, SGEXTN::Containers::Span<unsigned char> data){
+    SGEXTN::CoreText::String s = SGEXTN::CoreText::String::repeat(static_cast<unsigned char>(0), data.length() - 4);
+    for(int i=0; i<data.length()-4; i++){
         s.byteAt(i) = data.at(4 + i);
     }
-    if(s.characterLength() != 1){
-        success = false;
-        return SGEXTN::CoreText::Character();
-    }
-    success = true;
-    SGEXTN::CoreText::Character output;
-    output.private_data = s.private_data;
-    return output;
+    if(s.characterLength() != 1){return false;}
+    x = s.getCharacterAt(0);
+    return true;
 }
 
-int SGEXTN::CoreText::Character::lengthof(const SGEXTN::CoreText::Character& x){
+int SGEXTN::CoreText::Character::sizeOut(const SGEXTN::CoreText::Character& x){
     return (4 + x.byteLength());
+}
+
+int SGEXTN::CoreText::Character::sizeIn(SGEXTN::Containers::Span<unsigned char> data){
+    int length = 0;
+    if(data.length() < 4){return -1;}
+    const bool isValid = SGEXTN::Containers::Serialisation<int>::sendIn(length, data.subspanLeft(4));
+    if(isValid == false || length < 0){return -1;}
+    return 4 + length;
 }
 
 int SGEXTN::CoreText::Character::byteLength() const {

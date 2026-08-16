@@ -129,14 +129,6 @@ bool isBitwiseIdentical(int length, const SGEXTN::Containers::Array<unsigned cha
     return true;
 }
 
-bool isBitwiseIdentical(const SGEXTN::Containers::Span<unsigned char>& a, const SGEXTN::Containers::Span<unsigned char>& b){
-    if(a.length() != b.length()){return false;}
-    for(int i=0; i<a.length(); i++){
-        if(a.at(i) != b.at(i)){return false;}
-    }
-    return true;
-}
-
 SGEXTN::Containers::Span<unsigned char> makeSpan(SGEXTN::Containers::Array<unsigned char>& array, int length){
     return SGEXTN::Containers::Span<unsigned char>(array, 0, length);
 }
@@ -1000,7 +992,7 @@ void SGEXTN::InternalTest::ContainersTest::testArrayVectorMove(){
     arr = SGEXTN::Containers::ArrayVectorMove<int>::convertToArrayAndDestroyVector(v);
     if(v.length() != 0 || arr.length() != 5 || arr.at(0) != 1 || arr.at(1) != 2 || arr.at(2) != 3 || arr.at(3) != 4 || arr.at(4) != 5){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Vector - convert vector to array fail");}
 }
-#include <SGEXTN/CoreText/Debug.h>
+
 void SGEXTN::InternalTest::ContainersTest::testSerialisation(){
     bool isValid = false;
     SGEXTN::Containers::Array<unsigned char> serialiseDestination(726);

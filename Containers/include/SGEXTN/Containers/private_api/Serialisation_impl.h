@@ -21,7 +21,7 @@
 #include <SGEXTN/Containers/ForceCrash.h>
 
 namespace SGEXTN { namespace Containers { template <typename T1, typename T2> class IsSameType {};
-template <typename T> class IsSameType<T, T> {bool same = false;}; } }
+template <typename T> class IsSameType<T, T> {public: static bool same;}; template <typename T> bool IsSameType<T, T>::same = true;} }
 
 template <typename... Ts> bool SGEXTN::Containers::Serialisation<Ts...>::sendOut(const Ts&... xs, SGEXTN::Containers::Span<unsigned char> data){
     int requiredLength = SGEXTN::Containers::Serialisation<Ts...>::sizeOut(xs...);

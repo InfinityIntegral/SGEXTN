@@ -21,7 +21,7 @@
 #include <SGEXTN/Containers/ForceCrash.h>
 #include <SGEXTN/CoreText/Character.h>
 #include <SGEXTN/Math/FloatLimits.h>
-#include <SGEXTN/Containers/Serialise.h>
+#include <SGEXTN/Containers/Serialisation.h>
 
 namespace {
 bool isBitwiseIdentical(const SGEXTN::Containers::Array<unsigned char>& a, const SGEXTN::Containers::Array<unsigned char>& b){
@@ -30,6 +30,17 @@ bool isBitwiseIdentical(const SGEXTN::Containers::Array<unsigned char>& a, const
         if(a.at(i) != b.at(i)){return false;}
     }
     return true;
+}
+
+bool isBitwiseIdentical(int length, const SGEXTN::Containers::Array<unsigned char>& a, const SGEXTN::Containers::Array<unsigned char>& b){
+    for(int i=0; i<length; i++){
+        if(a.at(i) != b.at(i)){return false;}
+    }
+    return true;
+}
+
+SGEXTN::Containers::Span<unsigned char> makeSpan(SGEXTN::Containers::Array<unsigned char>& array, int length){
+    return SGEXTN::Containers::Span<unsigned char>(array, 0, length);
 }
 }
 
@@ -174,17 +185,23 @@ void SGEXTN::InternalTest::CoreTextTest::testCharacter(){
     if(SGEXTN::CoreText::Character(0x0be6).getNumericalValue() != 0.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::Character get numerical value Tamil digit zero fail");}
     if(SGEXTN::CoreText::Character(' ').getNumericalValue() != SGEXTN::Math::FloatLimits<float>::negativeInfinity()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::Character get numerical value space fail");}
     if(SGEXTN::CoreText::Character(0xbd).getNumericalValue() != 0.5f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::Character get numerical value half fraction fail");}
-    bool isValid = false;
-    SGEXTN::Containers::Array<unsigned char> serialiseArray(8, static_cast<unsigned char>(0x00));
+    SGEXTN::Containers::Array<unsigned char> serialiseArray(726);
+    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726);
     serialiseArray.at(0) = static_cast<unsigned char>(0x04);
+    serialiseArray.at(1) = static_cast<unsigned char>(0x00);
+    serialiseArray.at(2) = static_cast<unsigned char>(0x00);
+    serialiseArray.at(3) = static_cast<unsigned char>(0x00);
     serialiseArray.at(4) = static_cast<unsigned char>(0xf0);
     serialiseArray.at(5) = static_cast<unsigned char>(0x9f);
     serialiseArray.at(6) = static_cast<unsigned char>(0x92);
     serialiseArray.at(7) = static_cast<unsigned char>(0x96);
-    if(isBitwiseIdentical(serialiseArray, SGEXTN::Containers::Serialise<SGEXTN::CoreText::Character>::serialise(SGEXTN::CoreText::Character())) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise serialise SGEXTN::CoreText::Character fail");}
-    const SGEXTN::CoreText::Character unserialisedCharacter = SGEXTN::Containers::Serialise<SGEXTN::CoreText::Character>::unserialise(serialiseArray, &isValid);
-    if(isValid == false || unserialisedCharacter != SGEXTN::CoreText::Character()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise unserialise SGEXTN::CoreText::Character fail");}
-    if(SGEXTN::Containers::Serialise<SGEXTN::CoreText::Character>::lengthof(SGEXTN::CoreText::Character()) != 8){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise lengthof SGEXTN::CoreText::Character fail");}
+    bool isValid = SGEXTN::Containers::Serialisation<SGEXTN::CoreText::Character>::sendOut(SGEXTN::CoreText::Character(), makeSpan(serialiseDestination, 8));
+    if(isValid == false || isBitwiseIdentical(8, serialiseArray, serialiseDestination) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialisation sendOut SGEXTN::CoreText::Character fail");}
+    SGEXTN::CoreText::Character unserialisedCharacter;
+    isValid = SGEXTN::Containers::Serialisation<SGEXTN::CoreText::Character>::sendIn(unserialisedCharacter, makeSpan(serialiseArray, 8));
+    if(isValid == false || unserialisedCharacter != SGEXTN::CoreText::Character()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialisation sendIn SGEXTN::CoreText::Character fail");}
+    if(SGEXTN::Containers::Serialisation<SGEXTN::CoreText::Character>::sizeOut(SGEXTN::CoreText::Character()) != 8){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialisation sizeOut SGEXTN::CoreText::Character fail");}
+    if(SGEXTN::Containers::Serialisation<SGEXTN::CoreText::Character>::sizeIn(makeSpan(serialiseArray, 100)) != 8){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialisation sizeIn SGEXTN::CoreText::Character fail");}
 }
 
 #define U8(str) reinterpret_cast<const char*>(u8##str)
@@ -484,10 +501,13 @@ void SGEXTN::InternalTest::CoreTextTest::testString(){
     const SGEXTN::CoreText::String unsimplifiedString = U8("Caf\u00e8 at Yishun \uff2d\uff32\uff34 \u2122 \n\t \U0001d4a9\U0001d4ae\u2081\u2081");
     if(unsimplifiedString.getSimplestEquivalent(false) != "Cafe at Yishun MRT TM NS11"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String case sensitive simplest string conversion fail");}
     if(unsimplifiedString.getSimplestEquivalent(true) != "cafe at yishun mrt tm ns11"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String case insensitive simplest string conversion fail");}
-    isValid = false;
     const SGEXTN::CoreText::String sampleText = U8("I\u2665\U0001f1f8\U0001f1ec");
-    SGEXTN::Containers::Array<unsigned char> serialiseArray(16, static_cast<unsigned char>(0x00));
+    SGEXTN::Containers::Array<unsigned char> serialiseArray(726);
+    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726);
     serialiseArray.at(0) = static_cast<unsigned char>(0x0c);
+    serialiseArray.at(1) = static_cast<unsigned char>(0x00);
+    serialiseArray.at(2) = static_cast<unsigned char>(0x00);
+    serialiseArray.at(3) = static_cast<unsigned char>(0x00);
     serialiseArray.at(4) = static_cast<unsigned char>(0x49);
     serialiseArray.at(5) = static_cast<unsigned char>(0xe2);
     serialiseArray.at(6) = static_cast<unsigned char>(0x99);
@@ -500,9 +520,12 @@ void SGEXTN::InternalTest::CoreTextTest::testString(){
     serialiseArray.at(13) = static_cast<unsigned char>(0x9f);
     serialiseArray.at(14) = static_cast<unsigned char>(0x87);
     serialiseArray.at(15) = static_cast<unsigned char>(0xac);
-    if(isBitwiseIdentical(serialiseArray, SGEXTN::Containers::Serialise<SGEXTN::CoreText::String>::serialise(sampleText)) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise serialise SGEXTN::CoreText::String fail");}
-    const SGEXTN::CoreText::String unserialisedString = SGEXTN::Containers::Serialise<SGEXTN::CoreText::String>::unserialise(serialiseArray, &isValid);
-    if(isValid == false || unserialisedString != sampleText){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise unserialise SGEXTN::CoreText::String fail");}
-    if(SGEXTN::Containers::Serialise<SGEXTN::CoreText::String>::lengthof(sampleText) != 16){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise lengthof SGEXTN::CoreText::String fail");}
+    isValid = SGEXTN::Containers::Serialisation<SGEXTN::CoreText::String>::sendOut(sampleText, makeSpan(serialiseDestination, 16));
+    if(isValid == false || isBitwiseIdentical(16, serialiseArray, serialiseDestination) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialisation sendOut SGEXTN::CoreText::String fail");}
+    SGEXTN::CoreText::String unserialisedString;
+    isValid = SGEXTN::Containers::Serialisation<SGEXTN::CoreText::String>::sendIn(unserialisedString, makeSpan(serialiseArray, 16));
+    if(isValid == false || unserialisedString != sampleText){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialisation sendIn SGEXTN::CoreText::String fail");}
+    if(SGEXTN::Containers::Serialisation<SGEXTN::CoreText::String>::sizeOut(sampleText) != 16){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialisation sizeOut SGEXTN::CoreText::String fail");}
+    if(SGEXTN::Containers::Serialisation<SGEXTN::CoreText::String>::sizeIn(makeSpan(serialiseArray, 100)) != 16){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialisation sizeIn SGEXTN::CoreText::String fail");}
 }
 #undef U8

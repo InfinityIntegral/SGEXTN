@@ -20,6 +20,7 @@
 
 namespace SGEXTN {
 namespace Containers {
+template <typename T> class Span;
 template <typename T> class Array;
 }
 
@@ -40,9 +41,10 @@ public:
     [[nodiscard]] bool operator<=(const Character& x) const;
     [[nodiscard]] bool operator>=(const Character& x) const;
     [[nodiscard]] int hash() const;
-    [[nodiscard]] static SGEXTN::Containers::Array<unsigned char> serialise(const Character& x);
-    [[nodiscard]] static Character unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success);
-    [[nodiscard]] static int lengthof(const Character& x);
+    [[nodiscard]] static bool sendOut(const Character& x, SGEXTN::Containers::Span<unsigned char> data);
+    [[nodiscard]] static bool sendIn(Character& x, SGEXTN::Containers::Span<unsigned char> data);
+    [[nodiscard]] static int sizeOut(const Character& x);
+    [[nodiscard]] static int sizeIn(SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] int byteLength() const;
     [[nodiscard]] unsigned char& byteAt(int i);
     [[nodiscard]] const unsigned char& byteAt(int i) const;
