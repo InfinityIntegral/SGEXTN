@@ -20,8 +20,8 @@
 #include <SGEXTN/Math/FloatMath.h>
 #include <SGEXTN/CoreText/String.h>
 #include <SGEXTN/Containers/Hash.h>
-#include <SGEXTN/Containers/Array.h>
-#include <SGEXTN/Containers/Serialise.h>
+#include <SGEXTN/Containers/Serialisation.h>
+#include <SGEXTN/Containers/Span.h>
 
 namespace {
 float maximumOf3(float a, float b, float c){
@@ -117,46 +117,22 @@ SGEXTN::CoreText::String SGEXTN::Utilities::HslaColour::debugPrint() const {
     return SGEXTN::CoreText::String("hsla(") + SGEXTN::CoreText::String::stringFromFloat(private_hue, 10, SGEXTN::CoreText::FloatPrecisionFormat::FractionalDigit, 0) + ", " + SGEXTN::CoreText::String::stringFromFloat(private_saturation, 10, SGEXTN::CoreText::FloatPrecisionFormat::FractionalDigit, 0) + ", " + SGEXTN::CoreText::String::stringFromFloat(private_lightness, 10, SGEXTN::CoreText::FloatPrecisionFormat::FractionalDigit, 0) + ", " + SGEXTN::CoreText::String::stringFromFloat(private_transparency, 10, SGEXTN::CoreText::FloatPrecisionFormat::FractionalDigit, 0) + ")";
 }
 
-SGEXTN::Containers::Array<unsigned char> SGEXTN::Utilities::HslaColour::serialise(SGEXTN::Utilities::HslaColour x){
-    return SGEXTN::Containers::Serialise<float, float, float, float>::serialiseTogether(x.private_hue, x.private_saturation, x.private_lightness, x.private_transparency);
+bool SGEXTN::Utilities::HslaColour::sendOut(SGEXTN::Utilities::HslaColour x, SGEXTN::Containers::Span<unsigned char> data){
+    return SGEXTN::Containers::Serialisation<float, float, float, float>::sendOut(x.private_hue, x.private_saturation, x.private_lightness, x.private_transparency, data);
 }
 
-SGEXTN::Utilities::HslaColour SGEXTN::Utilities::HslaColour::unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success){
-    SGEXTN::Containers::Array<unsigned char> tempArray(4);
-    if(data.length() != 16){
-        success = false;
-        return SGEXTN::Utilities::HslaColour();
-    }
-    int offset = 0;
-    SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
-    const float h = SGEXTN::Containers::Serialise<float>::unserialise(tempArray, &success);
-    if(success == false || h < 0.0f || h > 360.0f){
-        success = false;
-        return SGEXTN::Utilities::HslaColour();
-    }
-    SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
-    const float s = SGEXTN::Containers::Serialise<float>::unserialise(tempArray, &success);
-    if(success == false || s < 0.0f || s > 100.0f){
-        success = false;
-        return SGEXTN::Utilities::HslaColour();
-    }
-    SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
-    const float l = SGEXTN::Containers::Serialise<float>::unserialise(tempArray, &success);
-    if(success == false || l < 0.0f || l > 100.0f){
-        success = false;
-        return SGEXTN::Utilities::HslaColour();
-    }
-    SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
-    const float a = SGEXTN::Containers::Serialise<float>::unserialise(tempArray, &success);
-    if(success == false || a < 0.0f || a > 100.0f){
-        success = false;
-        return SGEXTN::Utilities::HslaColour();
-    }
-    success = true;
-    return SGEXTN::Utilities::HslaColour(h, s, l, a);
+bool SGEXTN::Utilities::HslaColour::sendIn(SGEXTN::Utilities::HslaColour& x, SGEXTN::Containers::Span<unsigned char> data){
+    float h = 0.0f;
+    float s = 0.0f;
+    float l = 0.0f;
+    float a = 0.0f;
+    const bool isValid = SGEXTN::Containers::Serialisation<float, float, float, float>::sendIn(h, s, l, a, data);
+    if(isValid == false || h < 0.0f || h > 360.0f || s < 0.0f || s > 100.0f || l < 0.0f || l > 100.0f || a < 0.0f || a > 100.0f){return false;}
+    x = SGEXTN::Utilities::HslaColour(h, s, l, a);
+    return true;
 }
 
-int SGEXTN::Utilities::HslaColour::lengthof([[maybe_unused]] SGEXTN::Utilities::HslaColour x){
+int SGEXTN::Utilities::HslaColour::size(){
     return 16;
 }
 

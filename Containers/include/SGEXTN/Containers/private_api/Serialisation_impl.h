@@ -24,23 +24,25 @@ namespace SGEXTN { namespace Containers { template <typename T1, typename T2> cl
 template <typename T> class IsSameType<T, T> {public: static bool same;}; template <typename T> bool IsSameType<T, T>::same = true;} }
 
 template <typename... Ts> bool SGEXTN::Containers::Serialisation<Ts...>::sendOut(const Ts&... xs, SGEXTN::Containers::Span<unsigned char> data){
-    int requiredLength = SGEXTN::Containers::Serialisation<Ts...>::sizeOut(xs...);
+    const int requiredLength = SGEXTN::Containers::Serialisation<Ts...>::sizeOut(xs...);
     if(data.length() != requiredLength){return false;}
     int offset = 0;
     int nextLength = 0;
-    ((nextLength = SGEXTN::Containers::Serialisation<Ts>::sizeOut(xs), SGEXTN::Containers::Serialisation<Ts>::sendOut(xs, data.subspan(offset, nextLength)), offset += nextLength), ...);
-    return true;
+    bool isValid = true;
+    bool nextValid = true;
+    const bool finalResult = ((nextLength = SGEXTN::Containers::Serialisation<Ts>::sizeOut(xs), nextValid = SGEXTN::Containers::Serialisation<Ts>::sendOut(xs, data.subspan(offset, nextLength)), isValid = (isValid && nextValid), offset += nextLength, isValid == true) && ...);
+    return finalResult;
 }
 
 template <typename... Ts> bool SGEXTN::Containers::Serialisation<Ts...>::sendIn(Ts&... xs, SGEXTN::Containers::Span<unsigned char> data){
-    int requiredLength = SGEXTN::Containers::Serialisation<Ts...>::sizeIn(data);
+    const int requiredLength = SGEXTN::Containers::Serialisation<Ts...>::sizeIn(data);
     if(data.length() != requiredLength){return false;}
     int offset = 0;
     int nextLength = 0;
     bool nextValid = false;
     bool isValid = true;
-    ((nextLength = SGEXTN::Containers::Serialisation<Ts>::sizeIn(data.subspanRight(data.length() - offset)), nextValid = SGEXTN::Containers::Serialisation<Ts>::sendIn(xs, data.subspan(offset, nextLength)), offset += nextLength, isValid = (isValid && nextValid), isValid == true) && ...);
-    return isValid;
+    const bool finalResult = ((nextLength = SGEXTN::Containers::Serialisation<Ts>::sizeIn(data.subspanRight(data.length() - offset)), nextValid = SGEXTN::Containers::Serialisation<Ts>::sendIn(xs, data.subspan(offset, nextLength)), offset += nextLength, isValid = (isValid && nextValid), isValid == true) && ...);
+    return finalResult;
 }
 
 template <typename... Ts> int SGEXTN::Containers::Serialisation<Ts...>::sizeOut(const Ts&... xs){
@@ -51,8 +53,8 @@ template <typename... Ts> int SGEXTN::Containers::Serialisation<Ts...>::sizeIn(S
     int nextLength = 0;
     int offset = 0;
     bool isOk = true;
-    ((nextLength = SGEXTN::Containers::Serialisation<Ts>::sizeIn(data.subspanRight(data.length() - offset)), isOk = isOk && (nextLength != -1), offset += nextLength, isOk = isOk && (data.length() >= offset), isOk == true) && ...);
-    if(isOk == true){return offset;}
+    const bool finalResult = ((nextLength = SGEXTN::Containers::Serialisation<Ts>::sizeIn(data.subspanRight(data.length() - offset)), isOk = isOk && (nextLength != -1), offset += nextLength, isOk = isOk && (data.length() >= offset), isOk == true) && ...);
+    if(finalResult == true){return offset;}
     return -1;
 }
 

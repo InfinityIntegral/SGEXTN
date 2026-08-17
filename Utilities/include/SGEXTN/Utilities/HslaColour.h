@@ -19,7 +19,7 @@
 
 namespace SGEXTN {
 namespace Containers {
-template <typename T> class Array;
+template <typename T> class Span;
 }
 
 namespace CoreText {
@@ -45,9 +45,9 @@ public:
     [[nodiscard]] bool operator>(HslaColour x) const;
     [[nodiscard]] int hash() const;
     [[nodiscard]] SGEXTN::CoreText::String debugPrint() const;
-    [[nodiscard]] static SGEXTN::Containers::Array<unsigned char> serialise(HslaColour x);
-    [[nodiscard]] static HslaColour unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success);
-    [[nodiscard]] static int lengthof(HslaColour x);
+    [[nodiscard]] static bool sendOut(HslaColour x, SGEXTN::Containers::Span<unsigned char> data);
+    [[nodiscard]] static bool sendIn(HslaColour& x, SGEXTN::Containers::Span<unsigned char> data);
+    [[nodiscard]] static int size();
     [[nodiscard]] float getHue() const;
     [[nodiscard]] float getSaturation() const;
     [[nodiscard]] float getLightness() const;

@@ -18,8 +18,8 @@
 #include <SGEXTN/Utilities/Identifier.h>
 #include <SGEXTN/Containers/Hash.h>
 #include <SGEXTN/CoreText/String.h>
-#include <SGEXTN/Containers/Array.h>
-#include <SGEXTN/Containers/Serialise.h>
+#include <SGEXTN/Containers/Serialisation.h>
+#include <SGEXTN/Containers/Span.h>
 
 SGEXTN::Utilities::Identifier::Identifier() : private_data(0) {}
 
@@ -57,18 +57,18 @@ SGEXTN::CoreText::String SGEXTN::Utilities::Identifier::debugPrint() const {
     return getStringForPrinting();
 }
 
-SGEXTN::Containers::Array<unsigned char> SGEXTN::Utilities::Identifier::serialise(SGEXTN::Utilities::Identifier x){
-    return SGEXTN::Containers::Serialise<unsigned int>::serialise(x.private_data);
+bool SGEXTN::Utilities::Identifier::sendOut(SGEXTN::Utilities::Identifier x, SGEXTN::Containers::Span<unsigned char> data){
+    return SGEXTN::Containers::Serialisation<unsigned int>::sendOut(x.private_data, data);
 }
 
-SGEXTN::Utilities::Identifier SGEXTN::Utilities::Identifier::unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success){
-    const unsigned int internalData = SGEXTN::Containers::Serialise<unsigned int>::unserialise(data, &success);
-    if(success == false){return SGEXTN::Utilities::Identifier::nullIdentifier();}
-    SGEXTN::Utilities::Identifier output = SGEXTN::Utilities::Identifier::nullIdentifier();
-    output.private_data = internalData;
-    return output;
+bool SGEXTN::Utilities::Identifier::sendIn(SGEXTN::Utilities::Identifier& x, SGEXTN::Containers::Span<unsigned char> data){
+    unsigned int internalData = 0;
+    const bool isValid = SGEXTN::Containers::Serialisation<unsigned int>::sendIn(internalData, data);
+    if(isValid == false){return false;}
+    x.private_data = internalData;
+    return true;
 }
 
-int SGEXTN::Utilities::Identifier::lengthof([[maybe_unused]] SGEXTN::Utilities::Identifier x){
+int SGEXTN::Utilities::Identifier::size(){
     return 4;
 }

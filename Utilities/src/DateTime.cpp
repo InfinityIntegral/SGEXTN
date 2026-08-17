@@ -20,8 +20,8 @@
 #include <SGEXTN/CoreText/String.h>
 #include <SGEXTN/CoreText/Character.h>
 #include <SGEXTN/Containers/ForceCrash.h>
-#include <SGEXTN/Containers/Array.h>
-#include <SGEXTN/Containers/Serialise.h>
+#include <SGEXTN/Containers/Serialisation.h>
+#include <SGEXTN/Containers/Span.h>
 #include <chrono>
 
 namespace {
@@ -198,17 +198,19 @@ SGEXTN::CoreText::String SGEXTN::Utilities::DateTime::debugPrint() const {
     return getDisplayString(SGEXTN::Utilities::TimeFormat::Display, false, true);
 }
 
-SGEXTN::Containers::Array<unsigned char> SGEXTN::Utilities::DateTime::serialise(SGEXTN::Utilities::DateTime x){
-    return SGEXTN::Containers::Serialise<long long>::serialise(x.private_data);
+bool SGEXTN::Utilities::DateTime::sendOut(SGEXTN::Utilities::DateTime x, SGEXTN::Containers::Span<unsigned char> data){
+    return SGEXTN::Containers::Serialisation<long long>::sendOut(x.private_data, data);
 }
 
-SGEXTN::Utilities::DateTime SGEXTN::Utilities::DateTime::unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success){
-    const long long time = SGEXTN::Containers::Serialise<long long>::unserialise(data, &success);
-    if(success == false){return SGEXTN::Utilities::DateTime::beginningOfTime();}
-    return SGEXTN::Utilities::DateTime(time);
+bool SGEXTN::Utilities::DateTime::sendIn(SGEXTN::Utilities::DateTime& x, SGEXTN::Containers::Span<unsigned char> data){
+    long long internalData = 0;
+    const bool isValid = SGEXTN::Containers::Serialisation<long long>::sendIn(internalData, data);
+    if(isValid == false){return false;}
+    x = SGEXTN::Utilities::DateTime(internalData);
+    return true;
 }
 
-int SGEXTN::Utilities::DateTime::lengthof([[maybe_unused]] SGEXTN::Utilities::DateTime x){
+int SGEXTN::Utilities::DateTime::size(){
     return 8;
 }
 
