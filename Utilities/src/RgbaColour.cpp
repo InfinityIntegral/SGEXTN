@@ -20,7 +20,8 @@
 #include <SGEXTN/Containers/Hash.h>
 #include <SGEXTN/Math/FloatMath.h>
 #include <SGEXTN/Containers/ForceCrash.h>
-#include <SGEXTN/Containers/Serialise.h>
+#include <SGEXTN/Containers/Serialisation.h>
+#include <SGEXTN/Containers/Span.h>
 
 namespace {
 int boundInt(int x){
@@ -186,17 +187,19 @@ SGEXTN::CoreText::String SGEXTN::Utilities::RgbaColour::debugPrint() const {
     return rgbaHtmlString();
 }
 
-SGEXTN::Containers::Array<unsigned char> SGEXTN::Utilities::RgbaColour::serialise(SGEXTN::Utilities::RgbaColour x){
-    return SGEXTN::Containers::Serialise<unsigned int>::serialise(x.private_data);
+bool SGEXTN::Utilities::RgbaColour::sendOut(SGEXTN::Utilities::RgbaColour x, SGEXTN::Containers::Span<unsigned char> data){
+    return SGEXTN::Containers::Serialisation<unsigned int>::sendOut(x.private_data, data);
 }
 
-SGEXTN::Utilities::RgbaColour SGEXTN::Utilities::RgbaColour::unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success){
-    const unsigned int colourInfo = SGEXTN::Containers::Serialise<unsigned int>::unserialise(data, &success);
-    if(success == false){return SGEXTN::Utilities::RgbaColour();}
-    return SGEXTN::Utilities::RgbaColour(colourInfo);
+bool SGEXTN::Utilities::RgbaColour::sendIn(SGEXTN::Utilities::RgbaColour& x, SGEXTN::Containers::Span<unsigned char> data){
+    unsigned int internalData = 0;
+    const bool isValid = SGEXTN::Containers::Serialisation<unsigned int>::sendIn(internalData, data);
+    if(isValid == false){return false;}
+    x = SGEXTN::Utilities::RgbaColour(internalData);
+    return true;
 }
 
-int SGEXTN::Utilities::RgbaColour::lengthof([[maybe_unused]] SGEXTN::Utilities::RgbaColour x){
+int SGEXTN::Utilities::RgbaColour::size(){
     return 4;
 }
 

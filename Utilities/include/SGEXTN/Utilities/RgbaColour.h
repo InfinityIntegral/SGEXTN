@@ -19,7 +19,7 @@
 
 namespace SGEXTN {
 namespace Containers {
-template <typename T> class Array;
+template <typename T> class Span;
 }
 
 namespace CoreText {
@@ -64,9 +64,9 @@ public:
     [[nodiscard]] bool operator>(RgbaColour x) const;
     [[nodiscard]] int hash() const;
     [[nodiscard]] SGEXTN::CoreText::String debugPrint() const;
-    [[nodiscard]] static SGEXTN::Containers::Array<unsigned char> serialise(RgbaColour x);
-    [[nodiscard]] static RgbaColour unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success);
-    [[nodiscard]] static int lengthof(RgbaColour x);
+    [[nodiscard]] static bool sendOut(RgbaColour x, SGEXTN::Containers::Span<unsigned char> data);
+    [[nodiscard]] static bool sendIn(RgbaColour& x, SGEXTN::Containers::Span<unsigned char> data);
+    [[nodiscard]] static int size();
     void gammaCorrectBegin(float& r, float& g, float& b) const;
     void gammaCorrectEnd(float r, float g, float b);
     [[nodiscard]] RgbaColour linearTransformRed(float m, float c, bool gammaCorrect) const;

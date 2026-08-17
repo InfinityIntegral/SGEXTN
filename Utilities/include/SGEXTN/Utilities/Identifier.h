@@ -19,7 +19,7 @@
 
 namespace SGEXTN {
 namespace Containers {
-template <typename T> class Array;
+template <typename T> class Span;
 }
 
 namespace CoreText {
@@ -40,9 +40,9 @@ public:
     [[nodiscard]] int hash() const;
     [[nodiscard]] SGEXTN::CoreText::String getStringForPrinting() const;
     [[nodiscard]] SGEXTN::CoreText::String debugPrint() const;
-    [[nodiscard]] static SGEXTN::Containers::Array<unsigned char> serialise(Identifier x);
-    [[nodiscard]] static Identifier unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success);
-    [[nodiscard]] static int lengthof(Identifier x);
+    [[nodiscard]] static bool sendOut(Identifier x, SGEXTN::Containers::Span<unsigned char> data);
+    [[nodiscard]] static bool sendIn(Identifier& x, SGEXTN::Containers::Span<unsigned char> data);
+    [[nodiscard]] static int size();
 };
 }
 }

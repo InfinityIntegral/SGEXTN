@@ -19,7 +19,7 @@
 
 namespace SGEXTN {
 namespace Containers {
-template <typename T> class Array;
+template <typename T> class Span;
 }
 
 namespace CoreText {
@@ -47,9 +47,9 @@ public:
     [[nodiscard]] bool operator>=(DateTime x) const;
     [[nodiscard]] int hash() const;
     [[nodiscard]] SGEXTN::CoreText::String debugPrint() const;
-    [[nodiscard]] static SGEXTN::Containers::Array<unsigned char> serialise(DateTime x);
-    [[nodiscard]] static SGEXTN::Utilities::DateTime unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success);
-    [[nodiscard]] static int lengthof(DateTime x);
+    [[nodiscard]] static bool sendOut(DateTime x, SGEXTN::Containers::Span<unsigned char> data);
+    [[nodiscard]] static bool sendIn(DateTime& x, SGEXTN::Containers::Span<unsigned char> data);
+    [[nodiscard]] static int size();
     [[nodiscard]] double getTimeAfter(DateTime x, SGEXTN::Utilities::TimeUnit unit) const;
     [[nodiscard]] static DateTime beginningOfTime();
     [[nodiscard]] static DateTime now();
