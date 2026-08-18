@@ -21,7 +21,7 @@
 #include <SGEXTN/Containers/Hash.h>
 #include <SGEXTN/SeerattraNum/TrueRandom.h>
 #include <SGEXTN/SeerattraNum/SimpleRandom.h>
-#include <SGEXTN/Containers/Serialisation.h>
+#include <SGEXTN/Containers/Serialise.h>
 #include <SGEXTN/Containers/Span.h>
 
 namespace {
@@ -35,7 +35,7 @@ SGEXTN::SeerattraNum::DirectRandom::DirectRandom() : private_cache(0u), private_
 }
 
 bool SGEXTN::SeerattraNum::DirectRandom::sendOut(const SGEXTN::SeerattraNum::DirectRandom& x, SGEXTN::Containers::Span<unsigned char> data){
-    return SGEXTN::Containers::Serialisation<unsigned long long, unsigned long long, unsigned long long, unsigned long long, bool, unsigned int>::sendOut(x.private_firstNum, x.private_secondNum, x.private_thirdNum, x.private_fourthNum, x.private_cacheActive, x.private_cache, data);
+    return SGEXTN::Containers::Serialise<unsigned long long, unsigned long long, unsigned long long, unsigned long long, bool, unsigned int>::sendOut(x.private_firstNum, x.private_secondNum, x.private_thirdNum, x.private_fourthNum, x.private_cacheActive, x.private_cache, data);
 }
 
 bool SGEXTN::SeerattraNum::DirectRandom::sendIn(SGEXTN::SeerattraNum::DirectRandom& x, SGEXTN::Containers::Span<unsigned char> data){
@@ -45,7 +45,7 @@ bool SGEXTN::SeerattraNum::DirectRandom::sendIn(SGEXTN::SeerattraNum::DirectRand
     unsigned long long n4 = 0;
     bool cacheActive = false;
     unsigned int cache = 0;
-    const bool isValid = SGEXTN::Containers::Serialisation<unsigned long long, unsigned long long, unsigned long long, unsigned long long, bool, unsigned int>::sendIn(n1, n2, n3, n4, cacheActive, cache, data);
+    const bool isValid = SGEXTN::Containers::Serialise<unsigned long long, unsigned long long, unsigned long long, unsigned long long, bool, unsigned int>::sendIn(n1, n2, n3, n4, cacheActive, cache, data);
     if(isValid == false){return false;}
     x.private_firstNum = n1;
     x.private_secondNum = n2;

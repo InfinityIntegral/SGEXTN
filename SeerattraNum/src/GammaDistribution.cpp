@@ -21,7 +21,7 @@
 #include <SGEXTN/SeerattraNum/DirectRandom.h>
 #include <SGEXTN/Math/FloatMath.h>
 #include <SGEXTN/SeerattraNum/NormalDistribution.h>
-#include <SGEXTN/Containers/Serialisation.h>
+#include <SGEXTN/Containers/Serialise.h>
 #include <SGEXTN/Containers/Span.h>
 
 SGEXTN::SeerattraNum::GammaDistribution::GammaDistribution() : SGEXTN::SeerattraNum::GammaDistribution(true, 1.0f, 1.0f){}
@@ -33,14 +33,14 @@ SGEXTN::SeerattraNum::GammaDistribution::GammaDistribution(bool useGlobal, float
 }
 
 bool SGEXTN::SeerattraNum::GammaDistribution::sendOut(const SGEXTN::SeerattraNum::GammaDistribution& x, SGEXTN::Containers::Span<unsigned char> data){
-    return SGEXTN::Containers::Serialisation<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float, float>::sendOut(x.private_rngLocator, x.private_variableCount, x.private_variableMean, data);
+    return SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float, float>::sendOut(x.private_rngLocator, x.private_variableCount, x.private_variableMean, data);
 }
 
 bool SGEXTN::SeerattraNum::GammaDistribution::sendIn(SGEXTN::SeerattraNum::GammaDistribution& x, SGEXTN::Containers::Span<unsigned char> data){
     SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator(true);
     float variableCount = 0.0f;
     float variableMean = 0.0f;
-    const bool isValid = SGEXTN::Containers::Serialisation<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float, float>::sendIn(rngLocator, variableCount, variableMean, data);
+    const bool isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float, float>::sendIn(rngLocator, variableCount, variableMean, data);
     if(isValid == false || variableCount <= 0.0f || variableMean <= 0.0f){return false;}
     x = SGEXTN::SeerattraNum::GammaDistribution(true, variableCount, variableMean);
     x.private_rngLocator = rngLocator;

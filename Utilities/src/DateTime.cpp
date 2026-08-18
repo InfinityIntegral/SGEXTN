@@ -20,7 +20,7 @@
 #include <SGEXTN/CoreText/String.h>
 #include <SGEXTN/CoreText/Character.h>
 #include <SGEXTN/Containers/ForceCrash.h>
-#include <SGEXTN/Containers/Serialisation.h>
+#include <SGEXTN/Containers/Serialise.h>
 #include <SGEXTN/Containers/Span.h>
 #include <chrono>
 
@@ -199,12 +199,12 @@ SGEXTN::CoreText::String SGEXTN::Utilities::DateTime::debugPrint() const {
 }
 
 bool SGEXTN::Utilities::DateTime::sendOut(SGEXTN::Utilities::DateTime x, SGEXTN::Containers::Span<unsigned char> data){
-    return SGEXTN::Containers::Serialisation<long long>::sendOut(x.private_data, data);
+    return SGEXTN::Containers::Serialise<long long>::sendOut(x.private_data, data);
 }
 
 bool SGEXTN::Utilities::DateTime::sendIn(SGEXTN::Utilities::DateTime& x, SGEXTN::Containers::Span<unsigned char> data){
     long long internalData = 0;
-    const bool isValid = SGEXTN::Containers::Serialisation<long long>::sendIn(internalData, data);
+    const bool isValid = SGEXTN::Containers::Serialise<long long>::sendIn(internalData, data);
     if(isValid == false){return false;}
     x = SGEXTN::Utilities::DateTime(internalData);
     return true;

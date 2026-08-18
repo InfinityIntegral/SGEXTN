@@ -19,7 +19,7 @@
 #include <SGEXTN/Containers/Array.h>
 #include <SGEXTN/Containers/ForceCrash.h>
 #include <SGEXTN/SeerattraNum/DirectRandom.h>
-#include <SGEXTN/Containers/Serialisation.h>
+#include <SGEXTN/Containers/Serialise.h>
 #include <SGEXTN/Containers/Span.h>
 
 SGEXTN::SeerattraNum::BernoulliDistribution::BernoulliDistribution() : SGEXTN::SeerattraNum::BernoulliDistribution(true, 0.5f){}
@@ -30,13 +30,13 @@ SGEXTN::SeerattraNum::BernoulliDistribution::BernoulliDistribution(bool useGloba
 }
 
 bool SGEXTN::SeerattraNum::BernoulliDistribution::sendOut(const SGEXTN::SeerattraNum::BernoulliDistribution& x, SGEXTN::Containers::Span<unsigned char> data){
-    return SGEXTN::Containers::Serialisation<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float>::sendOut(x.private_rngLocator, x.private_chanceOfTrue, data);
+    return SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float>::sendOut(x.private_rngLocator, x.private_chanceOfTrue, data);
 }
 
 bool SGEXTN::SeerattraNum::BernoulliDistribution::sendIn(SGEXTN::SeerattraNum::BernoulliDistribution& x, SGEXTN::Containers::Span<unsigned char> data){
     SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator(true);
     float probability = 0.0f;
-    const bool isValid = SGEXTN::Containers::Serialisation<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float>::sendIn(rngLocator, probability, data);
+    const bool isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float>::sendIn(rngLocator, probability, data);
     if(isValid == false || probability < 0.0f || probability > 1.0f){return false;}
     x = SGEXTN::SeerattraNum::BernoulliDistribution(true, probability);
     x.private_rngLocator = rngLocator;

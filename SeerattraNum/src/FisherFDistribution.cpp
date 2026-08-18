@@ -19,7 +19,7 @@
 #include <SGEXTN/Containers/Array.h>
 #include <SGEXTN/Containers/ForceCrash.h>
 #include <SGEXTN/SeerattraNum/DirectRandom.h>
-#include <SGEXTN/Containers/Serialisation.h>
+#include <SGEXTN/Containers/Serialise.h>
 #include <SGEXTN/Containers/Span.h>
 
 SGEXTN::SeerattraNum::FisherFDistribution::FisherFDistribution() : SGEXTN::SeerattraNum::FisherFDistribution(true, 1.0f, 1.0f){}
@@ -32,14 +32,14 @@ SGEXTN::SeerattraNum::FisherFDistribution::FisherFDistribution(bool useGlobal, f
 }
 
 bool SGEXTN::SeerattraNum::FisherFDistribution::sendOut(const SGEXTN::SeerattraNum::FisherFDistribution& x, SGEXTN::Containers::Span<unsigned char> data){
-    return SGEXTN::Containers::Serialisation<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float, float>::sendOut(x.private_rngLocator, x.private_numeratorDegreesOfFreedom, x.private_denominatorDegreesOfFreedom, data);
+    return SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float, float>::sendOut(x.private_rngLocator, x.private_numeratorDegreesOfFreedom, x.private_denominatorDegreesOfFreedom, data);
 }
 
 bool SGEXTN::SeerattraNum::FisherFDistribution::sendIn(SGEXTN::SeerattraNum::FisherFDistribution& x, SGEXTN::Containers::Span<unsigned char> data){
     SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator(true);
     float top = 0.0f;
     float bottom = 0.0f;
-    const bool isValid = SGEXTN::Containers::Serialisation<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float, float>::sendIn(rngLocator, top, bottom, data);
+    const bool isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float, float>::sendIn(rngLocator, top, bottom, data);
     if(isValid == false || top <= 0.0f || bottom <= 0.0f){return false;}
     x = SGEXTN::SeerattraNum::FisherFDistribution(true, top, bottom);
     x.private_rngLocator = rngLocator;

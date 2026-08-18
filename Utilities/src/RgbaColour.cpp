@@ -20,7 +20,7 @@
 #include <SGEXTN/Containers/Hash.h>
 #include <SGEXTN/Math/FloatMath.h>
 #include <SGEXTN/Containers/ForceCrash.h>
-#include <SGEXTN/Containers/Serialisation.h>
+#include <SGEXTN/Containers/Serialise.h>
 #include <SGEXTN/Containers/Span.h>
 
 namespace {
@@ -188,12 +188,12 @@ SGEXTN::CoreText::String SGEXTN::Utilities::RgbaColour::debugPrint() const {
 }
 
 bool SGEXTN::Utilities::RgbaColour::sendOut(SGEXTN::Utilities::RgbaColour x, SGEXTN::Containers::Span<unsigned char> data){
-    return SGEXTN::Containers::Serialisation<unsigned int>::sendOut(x.private_data, data);
+    return SGEXTN::Containers::Serialise<unsigned int>::sendOut(x.private_data, data);
 }
 
 bool SGEXTN::Utilities::RgbaColour::sendIn(SGEXTN::Utilities::RgbaColour& x, SGEXTN::Containers::Span<unsigned char> data){
     unsigned int internalData = 0;
-    const bool isValid = SGEXTN::Containers::Serialisation<unsigned int>::sendIn(internalData, data);
+    const bool isValid = SGEXTN::Containers::Serialise<unsigned int>::sendIn(internalData, data);
     if(isValid == false){return false;}
     x = SGEXTN::Utilities::RgbaColour(internalData);
     return true;

@@ -18,7 +18,7 @@
 #include <SGEXTN/SeerattraNum/DirectRandomInstanceLocator.h>
 #include <SGEXTN/SeerattraNum/DirectRandom.h>
 #include <SGEXTN/Containers/Span.h>
-#include <SGEXTN/Containers/Serialisation.h>
+#include <SGEXTN/Containers/Serialise.h>
 
 SGEXTN::SeerattraNum::DirectRandomInstanceLocator::DirectRandomInstanceLocator(bool useGlobal) : private_ownsRng(useGlobal == false), private_rng(SGEXTN::SeerattraNum::DirectRandom::private_createRng(useGlobal)){}
 
@@ -73,7 +73,7 @@ bool SGEXTN::SeerattraNum::DirectRandomInstanceLocator::sendOut(const SGEXTN::Se
         data.at(32) = static_cast<unsigned char>(0xff);
         return true;
     }
-    return SGEXTN::Containers::Serialisation<SGEXTN::SeerattraNum::DirectRandom>::sendOut((*x.private_rng), data);
+    return SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandom>::sendOut((*x.private_rng), data);
 }
 
 bool SGEXTN::SeerattraNum::DirectRandomInstanceLocator::sendIn(SGEXTN::SeerattraNum::DirectRandomInstanceLocator& x, SGEXTN::Containers::Span<unsigned char> data){
@@ -85,7 +85,7 @@ bool SGEXTN::SeerattraNum::DirectRandomInstanceLocator::sendIn(SGEXTN::Seerattra
         return true;
     }
     SGEXTN::SeerattraNum::DirectRandom rng;
-    const bool isValid = SGEXTN::Containers::Serialisation<SGEXTN::SeerattraNum::DirectRandom>::sendIn(rng, data);
+    const bool isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandom>::sendIn(rng, data);
     if(isValid == false){return false;}
     x = SGEXTN::SeerattraNum::DirectRandomInstanceLocator(rng);
     return true;
