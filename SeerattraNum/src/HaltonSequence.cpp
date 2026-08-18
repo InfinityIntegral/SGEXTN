@@ -20,6 +20,8 @@
 #include <SGEXTN/Containers/ForceCrash.h>
 #include <SGEXTN/SeerattraNum/RandomPermutation.h>
 #include <SGEXTN/Containers/Vector.h>
+#include <SGEXTN/Containers/Serialise.h>
+#include <SGEXTN/Containers/Span.h>
 
 SGEXTN::SeerattraNum::HaltonSequence::HaltonSequence() : SGEXTN::SeerattraNum::HaltonSequence(1){}
 
@@ -53,6 +55,56 @@ SGEXTN::SeerattraNum::HaltonSequence::HaltonSequence(int dimensions) : private_d
             }
         }
     }
+}
+
+bool SGEXTN::SeerattraNum::HaltonSequence::sendOut(const SGEXTN::SeerattraNum::HaltonSequence& x, SGEXTN::Containers::Span<unsigned char> data){
+    return SGEXTN::Containers::Serialise<int, int, SGEXTN::Containers::Array<SGEXTN::Containers::Array<int>>>::sendOut(x.private_dimensions, x.private_lastPosition, x.private_permutations, data);
+}
+
+bool SGEXTN::SeerattraNum::HaltonSequence::sendIn(SGEXTN::SeerattraNum::HaltonSequence& x, SGEXTN::Containers::Span<unsigned char> data){
+    int dimensions = 0;
+    int lastPosition = -1;
+    SGEXTN::Containers::Array<SGEXTN::Containers::Array<int>> permutations(0, SGEXTN::Containers::Array<int>(0));
+    const bool isValid = SGEXTN::Containers::Serialise<int, int, SGEXTN::Containers::Array<SGEXTN::Containers::Array<int>>>::sendIn(dimensions, lastPosition, permutations, data);
+    if(isValid == false || dimensions <= 0 || lastPosition == 0 || lastPosition < -1 || permutations.length() != dimensions){return false;}
+    SGEXTN::Containers::Array<int> primeNumbers(dimensions);
+    int primesFound = 1;
+    primeNumbers.at(0) = 2;
+    int nextPossiblePrime = 3;
+    while(primesFound < dimensions){
+        bool isPrime = true;
+        for(int i=0; i<primesFound; i++){
+            if(nextPossiblePrime % primeNumbers.at(i) == 0){isPrime = false;}
+        }
+        if(isPrime == true){
+            primesFound++;
+            primeNumbers.at(primesFound - 1) = nextPossiblePrime;
+        }
+        nextPossiblePrime++;
+    }
+    for(int i=0; i<dimensions; i++){
+        if(permutations.at(i).length() != primeNumbers.at(i) || permutations.at(i).at(0) != 0){return false;}
+        SGEXTN::Containers::Array<int> occurences(primeNumbers.at(i), 0);
+        for(int j=0; j<primeNumbers.at(i); j++){
+            if(permutations.at(i).at(j) < 0 || permutations.at(i).at(j) >= primeNumbers.at(i)){return false;}
+            occurences.at(permutations.at(i).at(j))++;
+        }
+        for(int j=0; j<primeNumbers.at(i); j++){
+            if(occurences.at(j) != 1){return false;}
+        }
+    }
+    x = SGEXTN::SeerattraNum::HaltonSequence(dimensions);
+    x.private_permutations = permutations;
+    if(lastPosition != -1){(void)(x.requestTerm(lastPosition));}
+    return true;
+}
+
+int SGEXTN::SeerattraNum::HaltonSequence::sizeOut(const SGEXTN::SeerattraNum::HaltonSequence& x){
+    return SGEXTN::Containers::Serialise<int, int, SGEXTN::Containers::Array<SGEXTN::Containers::Array<int>>>::sizeOut(x.private_dimensions, x.private_lastPosition, x.private_permutations);
+}
+
+int SGEXTN::SeerattraNum::HaltonSequence::sizeIn(SGEXTN::Containers::Span<unsigned char> data){
+    return SGEXTN::Containers::Serialise<int, int, SGEXTN::Containers::Array<SGEXTN::Containers::Array<int>>>::sizeIn(data);
 }
 
 void SGEXTN::SeerattraNum::HaltonSequence::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){

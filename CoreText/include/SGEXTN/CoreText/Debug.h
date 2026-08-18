@@ -16,6 +16,11 @@
 // BuildLah license check: SGEXTN 7.0.0
 
 #pragma once
+
+#ifndef SGEXTN_internal_permanentAllowDebug
+#pragma message("debug header included in __FILE__")
+#endif
+
 #include <SGEXTN/CoreText/String.h>
 
 namespace SGEXTN {

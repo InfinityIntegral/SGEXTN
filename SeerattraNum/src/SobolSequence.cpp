@@ -21,6 +21,8 @@
 #include <SGEXTN/SeerattraNum/SimpleRandom.h>
 #include <SGEXTN/SeerattraNum/DirectRandom.h>
 #include <SGEXTN/Containers/ForceCrash.h>
+#include <SGEXTN/Containers/Serialise.h>
+#include <SGEXTN/Containers/Span.h>
 
 namespace {
 int getTrailingZeroCount(unsigned int n){
@@ -67,6 +69,30 @@ SGEXTN::SeerattraNum::SobolSequence::SobolSequence(int dimension) : private_last
             private_directionNumberCache.at(i).at(j) = directionNumber;
         }
     }
+}
+
+bool SGEXTN::SeerattraNum::SobolSequence::sendOut(const SGEXTN::SeerattraNum::SobolSequence& x, SGEXTN::Containers::Span<unsigned char> data){
+    return SGEXTN::Containers::Serialise<int, int, SGEXTN::Containers::Array<unsigned int>>::sendOut(x.private_dimensions, x.private_lastPosition, x.private_hashedSeed, data);
+}
+
+bool SGEXTN::SeerattraNum::SobolSequence::sendIn(SGEXTN::SeerattraNum::SobolSequence& x, SGEXTN::Containers::Span<unsigned char> data){
+    int dimensions = 0;
+    int lastPosition = -1;
+    SGEXTN::Containers::Array<unsigned int> hashedSeed(0);
+    const bool isValid = SGEXTN::Containers::Serialise<int, int, SGEXTN::Containers::Array<unsigned int>>::sendIn(dimensions, lastPosition, hashedSeed, data);
+    if(isValid == false || dimensions <= 0 || dimensions > 21200 || lastPosition == 0 || lastPosition < -1 || hashedSeed.length() != dimensions){return false;}
+    x = SGEXTN::SeerattraNum::SobolSequence(dimensions);
+    x.private_hashedSeed = hashedSeed;
+    if(lastPosition != -1){(void)(x.requestTerm(lastPosition));}
+    return true;
+}
+
+int SGEXTN::SeerattraNum::SobolSequence::sizeOut(const SGEXTN::SeerattraNum::SobolSequence& x){
+    return SGEXTN::Containers::Serialise<int, int, SGEXTN::Containers::Array<unsigned int>>::sizeOut(x.private_dimensions, x.private_lastPosition, x.private_hashedSeed);
+}
+
+int SGEXTN::SeerattraNum::SobolSequence::sizeIn(SGEXTN::Containers::Span<unsigned char> data){
+    return SGEXTN::Containers::Serialise<int, int, SGEXTN::Containers::Array<unsigned int>>::sizeIn(data);
 }
 
 void SGEXTN::SeerattraNum::SobolSequence::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){

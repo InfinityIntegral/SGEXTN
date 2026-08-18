@@ -18,7 +18,9 @@
 #include <SGEXTN/InternalTest/private_api/DebugTest.h>
 #include <SGEXTN/CoreText/String.h>
 #include <SGEXTN/Utilities/RgbaColour.h>
+#define SGEXTN_internal_permanentAllowDebug
 #include <SGEXTN/CoreText/Debug.h>
+#undef SGEXTN_internal_permanentAllowDebug
 #include <SGEXTN/Containers/ForceCrash.h>
 #include <SGEXTN/CoreText/Character.h>
 
