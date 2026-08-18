@@ -19,7 +19,8 @@
 #include <SGEXTN/Containers/Array.h>
 #include <SGEXTN/Containers/ForceCrash.h>
 #include <SGEXTN/SeerattraNum/DirectRandom.h>
-#include <SGEXTN/Containers/Serialise.h>
+#include <SGEXTN/Containers/Serialisation.h>
+#include <SGEXTN/Containers/Span.h>
 
 SGEXTN::SeerattraNum::ChiSquaredDistribution::ChiSquaredDistribution() : SGEXTN::SeerattraNum::ChiSquaredDistribution(true, 1.0f){}
 
@@ -28,33 +29,21 @@ SGEXTN::SeerattraNum::ChiSquaredDistribution::ChiSquaredDistribution(bool useGlo
     private_gammaDistribution.setVariableCount(0.5f * degreesOfFreedom);
 }
 
-SGEXTN::Containers::Array<unsigned char> SGEXTN::SeerattraNum::ChiSquaredDistribution::serialise(const SGEXTN::SeerattraNum::ChiSquaredDistribution& x){
-    return SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float>::serialiseTogether(x.private_rngLocator, x.private_degreesOfFreedom);
+bool SGEXTN::SeerattraNum::ChiSquaredDistribution::sendOut(const SGEXTN::SeerattraNum::ChiSquaredDistribution& x, SGEXTN::Containers::Span<unsigned char> data){
+    return SGEXTN::Containers::Serialisation<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float>::sendOut(x.private_rngLocator, x.private_degreesOfFreedom, data);
 }
 
-SGEXTN::SeerattraNum::ChiSquaredDistribution SGEXTN::SeerattraNum::ChiSquaredDistribution::unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success){
-    if(data.length() != 41){
-        success = false;
-        return SGEXTN::SeerattraNum::ChiSquaredDistribution();
-    }
-    SGEXTN::Containers::Array<unsigned char> tempArray(37);
-    int offset = 0;
-    SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
-    const SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::unserialise(tempArray, &success);
-    if(success == false){return SGEXTN::SeerattraNum::ChiSquaredDistribution();}
-    tempArray = SGEXTN::Containers::Array<unsigned char>(4);
-    SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
-    const float degreesOfFreedom = SGEXTN::Containers::Serialise<float>::unserialise(tempArray, &success);
-    if(success == false || degreesOfFreedom <= 0.0f){
-        success = false;
-        return SGEXTN::SeerattraNum::ChiSquaredDistribution();
-    }
-    SGEXTN::SeerattraNum::ChiSquaredDistribution output(true, degreesOfFreedom);
-    output.private_rngLocator = rngLocator;
-    return output;
+bool SGEXTN::SeerattraNum::ChiSquaredDistribution::sendIn(SGEXTN::SeerattraNum::ChiSquaredDistribution& x, SGEXTN::Containers::Span<unsigned char> data){
+    SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator(true);
+    float degree = 0.0f;
+    const bool isValid = SGEXTN::Containers::Serialisation<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float>::sendIn(rngLocator, degree, data);
+    if(isValid == false || degree <= 0.0f){return false;}
+    x = SGEXTN::SeerattraNum::ChiSquaredDistribution(true, degree);
+    x.private_rngLocator = rngLocator;
+    return true;
 }
 
-int SGEXTN::SeerattraNum::ChiSquaredDistribution::lengthof([[maybe_unused]] const SGEXTN::SeerattraNum::ChiSquaredDistribution& x){
+int SGEXTN::SeerattraNum::ChiSquaredDistribution::size(){
     return 41;
 }
 

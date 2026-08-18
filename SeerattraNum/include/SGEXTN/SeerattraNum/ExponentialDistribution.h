@@ -21,6 +21,7 @@
 namespace SGEXTN {
 namespace Containers {
 template <typename T> class Array;
+template <typename T> class Span;
 }
 
 namespace SeerattraNum {
@@ -34,9 +35,9 @@ public:
     static float private_expRightBoundary;
     ExponentialDistribution();
     ExponentialDistribution(bool useGlobal, float meanEventsPerTime);
-    [[nodiscard]] static SGEXTN::Containers::Array<unsigned char> serialise(const ExponentialDistribution& x);
-    [[nodiscard]] static ExponentialDistribution unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success);
-    [[nodiscard]] static int lengthof(const ExponentialDistribution& x);
+    [[nodiscard]] static bool sendOut(const ExponentialDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
+    [[nodiscard]] static bool sendIn(ExponentialDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
+    [[nodiscard]] static int size();
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
     [[nodiscard]] float randomValue();
     [[nodiscard]] float private_randomValue(SGEXTN::SeerattraNum::DirectRandomInstanceLocator& externalLocator) const;

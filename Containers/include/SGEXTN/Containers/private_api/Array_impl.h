@@ -19,6 +19,8 @@
 #include <SGEXTN/Containers/ForceCrash.h>
 #include <SGEXTN/Containers/private_api/Sort.h>
 
+template <typename T> SGEXTN::Containers::Array<T>::Array() : private_data(nullptr), private_length(0){}
+
 template <typename T> SGEXTN::Containers::Array<T>::Array(int count) : private_data(nullptr), private_length(count) {
     if(count < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Array constructor crashed because count cannot be negative");}
     if(count > 0){private_data = new T[count]();}

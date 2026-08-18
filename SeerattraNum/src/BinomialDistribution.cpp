@@ -22,7 +22,8 @@
 #include <SGEXTN/Math/FloatMath.h>
 #include <SGEXTN/SeerattraNum/GeometricDistribution.h>
 #include <SGEXTN/SeerattraNum/ExponentialDistribution.h>
-#include <SGEXTN/Containers/Serialise.h>
+#include <SGEXTN/Containers/Serialisation.h>
+#include <SGEXTN/Containers/Span.h>
 
 SGEXTN::SeerattraNum::BinomialDistribution::BinomialDistribution() : SGEXTN::SeerattraNum::BinomialDistribution(true, 0.5f, 1){}
 
@@ -34,39 +35,22 @@ SGEXTN::SeerattraNum::BinomialDistribution::BinomialDistribution(bool useGlobal,
     private_geometricDistribution.setChanceOfTrue(chanceOfTrue);
 }
 
-SGEXTN::Containers::Array<unsigned char> SGEXTN::SeerattraNum::BinomialDistribution::serialise(const SGEXTN::SeerattraNum::BinomialDistribution& x){
-    return SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float, int>::serialiseTogether(x.private_rngLocator, x.private_chanceOfTrue, x.private_attemptCount);
+bool SGEXTN::SeerattraNum::BinomialDistribution::sendOut(const SGEXTN::SeerattraNum::BinomialDistribution& x, SGEXTN::Containers::Span<unsigned char> data){
+    return SGEXTN::Containers::Serialisation<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float, int>::sendOut(x.private_rngLocator, x.private_chanceOfTrue, x.private_attemptCount, data);
 }
 
-SGEXTN::SeerattraNum::BinomialDistribution SGEXTN::SeerattraNum::BinomialDistribution::unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success){
-    if(data.length() != 45){
-        success = false;
-        return SGEXTN::SeerattraNum::BinomialDistribution();
-    }
-    SGEXTN::Containers::Array<unsigned char> tempArray(37);
-    int offset = 0;
-    SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
-    const SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::unserialise(tempArray, &success);
-    if(success == false){return SGEXTN::SeerattraNum::BinomialDistribution();}
-    tempArray = SGEXTN::Containers::Array<unsigned char>(4);
-    SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
-    const float probability = SGEXTN::Containers::Serialise<float>::unserialise(tempArray, &success);
-    if(success == false || probability < 0.0f || probability > 1.0f){
-        success = false;
-        return SGEXTN::SeerattraNum::BinomialDistribution();
-    }
-    SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
-    const int attempts = SGEXTN::Containers::Serialise<int>::unserialise(tempArray, &success);
-    if(success == false || attempts < 0){
-        success = false;
-        return SGEXTN::SeerattraNum::BinomialDistribution();
-    }
-    SGEXTN::SeerattraNum::BinomialDistribution output(true, probability, attempts);
-    output.private_rngLocator = rngLocator;
-    return output;
+bool SGEXTN::SeerattraNum::BinomialDistribution::sendIn(SGEXTN::SeerattraNum::BinomialDistribution& x, SGEXTN::Containers::Span<unsigned char> data){
+    SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator(true);
+    float probability = 0.0f;
+    int attempts = 0;
+    const bool isValid = SGEXTN::Containers::Serialisation<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float, int>::sendIn(rngLocator, probability, attempts, data);
+    if(isValid == false || probability < 0.0f || probability > 1.0f || attempts < 0){return false;}
+    x = SGEXTN::SeerattraNum::BinomialDistribution(true, probability, attempts);
+    x.private_rngLocator = rngLocator;
+    return true;
 }
 
-int SGEXTN::SeerattraNum::BinomialDistribution::lengthof([[maybe_unused]] const SGEXTN::SeerattraNum::BinomialDistribution& x){
+int SGEXTN::SeerattraNum::BinomialDistribution::size(){
     return 45;
 }
 

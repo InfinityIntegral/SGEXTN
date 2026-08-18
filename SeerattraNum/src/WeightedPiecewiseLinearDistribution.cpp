@@ -19,7 +19,8 @@
 #include <SGEXTN/Containers/Array.h>
 #include <SGEXTN/Containers/ForceCrash.h>
 #include <SGEXTN/SeerattraNum/DirectRandom.h>
-#include <SGEXTN/Containers/Serialise.h>
+#include <SGEXTN/Containers/Serialisation.h>
+#include <SGEXTN/Containers/Span.h>
 
 SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution::WeightedPiecewiseLinearDistribution() : SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution(true, SGEXTN::Containers::Array<float>(1.0f, 1.0f), SGEXTN::Containers::Array<float>(0.0f, 1.0f)){}
 
@@ -38,68 +39,36 @@ SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution::WeightedPiecewiseLine
     private_updatePrefixSums();
 }
 
-SGEXTN::Containers::Array<unsigned char> SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution::serialise(const SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution& x){
-    return SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, SGEXTN::Containers::Array<float>, SGEXTN::Containers::Array<float>>::serialiseTogether(x.private_rngLocator, x.private_weights, x.private_boundaries);
+bool SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution::sendOut(const SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution& x, SGEXTN::Containers::Span<unsigned char> data){
+    return SGEXTN::Containers::Serialisation<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, SGEXTN::Containers::Array<float>, SGEXTN::Containers::Array<float>>::sendOut(x.private_rngLocator, x.private_weights, x.private_boundaries, data);
 }
 
-SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution::unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success){
-    if(data.length() < 41){
-        success = false;
-        return SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution();
-    }
-    SGEXTN::Containers::Array<unsigned char> tempArray(37);
-    int offset = 0;
-    SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
-    const SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::unserialise(tempArray, &success);
-    if(success == false){return SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution();}
-    int readAhead = offset;
-    tempArray = SGEXTN::Containers::Array<unsigned char>(4);
-    SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, readAhead, tempArray);
-    const int weightsArrayDataLength = SGEXTN::Containers::Serialise<int>::unserialise(tempArray, &success);
-    if(success == false || weightsArrayDataLength < 0){
-        success = false;
-        return SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution();
-    }
-    tempArray = SGEXTN::Containers::Array<unsigned char>(weightsArrayDataLength);
-    SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
-    const SGEXTN::Containers::Array<float> weights = SGEXTN::Containers::Serialise<SGEXTN::Containers::Array<float>>::unserialise(tempArray, &success);
-    if(success == false || weights.length() < 2){
-        success = false;
-        return SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution();
-    }
+bool SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution::sendIn(SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution& x, SGEXTN::Containers::Span<unsigned char> data){
+    SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator(true);
+    SGEXTN::Containers::Array<float> weights(0);
+    SGEXTN::Containers::Array<float> boundaries(0);
+    const bool isValid = SGEXTN::Containers::Serialisation<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, SGEXTN::Containers::Array<float>, SGEXTN::Containers::Array<float>>::sendIn(rngLocator, weights, boundaries, data);
+    if(isValid == false || weights.length() < 2 || boundaries.length() != weights.length()){return false;}
     bool allZero = true;
-    bool hasNegative = false;
     for(int i=0; i<weights.length(); i++){
-        if(weights.at(i) < 0.0f){
-            hasNegative = true;
-            break;
-        }
+        if(weights.at(i) < 0.0f){return false;}
         if(weights.at(i) > 0.0f){allZero = false;}
     }
-    if(allZero == true || hasNegative == true){
-        success = false;
-        return SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution();
-    }
-    tempArray = SGEXTN::Containers::Array<unsigned char>(data.length() - 37 - weightsArrayDataLength);
-    SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
-    const SGEXTN::Containers::Array<float> boundaries = SGEXTN::Containers::Serialise<SGEXTN::Containers::Array<float>>::unserialise(tempArray, &success);
-    if(success == false || boundaries.length() != weights.length()){
-        success = false;
-        return SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution();
-    }
+    if(allZero == true){return false;}
     for(int i=0; i<boundaries.length()-1; i++){
-        if(boundaries.at(i) >= boundaries.at(i + 1)){
-            success = false;
-            return SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution();
-        }
+        if(boundaries.at(i) >= boundaries.at(i + 1)){return false;}
     }
-    SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution output(true, weights, boundaries);
-    output.private_rngLocator = rngLocator;
-    return output;
+    x = SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution(true, weights, boundaries);
+    x.private_rngLocator = rngLocator;
+    return true;
 }
 
-int SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution::lengthof(const SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution& x){
-    return (37 + SGEXTN::Containers::Serialise<SGEXTN::Containers::Array<float>>::lengthof(x.private_weights) + SGEXTN::Containers::Serialise<SGEXTN::Containers::Array<float>>::lengthof(x.private_boundaries));
+int SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution::sizeOut(const SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution& x){
+    return SGEXTN::Containers::Serialisation<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, SGEXTN::Containers::Array<float>, SGEXTN::Containers::Array<float>>::sizeOut(x.private_rngLocator, x.private_weights, x.private_boundaries);
+}
+
+int SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution::sizeIn(SGEXTN::Containers::Span<unsigned char> data){
+    return SGEXTN::Containers::Serialisation<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, SGEXTN::Containers::Array<float>, SGEXTN::Containers::Array<float>>::sizeIn(data);
 }
 
 void SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution::private_updatePrefixSums(){

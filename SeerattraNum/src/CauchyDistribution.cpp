@@ -21,7 +21,8 @@
 #include <SGEXTN/SeerattraNum/DirectRandom.h>
 #include <SGEXTN/Math/FloatMath.h>
 #include <SGEXTN/Math/FloatConstants.h>
-#include <SGEXTN/Containers/Serialise.h>
+#include <SGEXTN/Containers/Serialisation.h>
+#include <SGEXTN/Containers/Span.h>
 
 SGEXTN::SeerattraNum::CauchyDistribution::CauchyDistribution() : SGEXTN::SeerattraNum::CauchyDistribution(true, 0.0f, 1.0f){}
 
@@ -29,36 +30,22 @@ SGEXTN::SeerattraNum::CauchyDistribution::CauchyDistribution(bool useGlobal, flo
     if(halfWidth <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::CauchyDistribution constructor crashed because requested half width is nonpositive");}
 }
 
-SGEXTN::Containers::Array<unsigned char> SGEXTN::SeerattraNum::CauchyDistribution::serialise(const SGEXTN::SeerattraNum::CauchyDistribution& x){
-    return SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float, float>::serialiseTogether(x.private_rngLocator, x.private_median, x.private_halfWidth);
+bool SGEXTN::SeerattraNum::CauchyDistribution::sendOut(const SGEXTN::SeerattraNum::CauchyDistribution& x, SGEXTN::Containers::Span<unsigned char> data){
+    return SGEXTN::Containers::Serialisation<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float, float>::sendOut(x.private_rngLocator, x.private_median, x.private_halfWidth, data);
 }
 
-SGEXTN::SeerattraNum::CauchyDistribution SGEXTN::SeerattraNum::CauchyDistribution::unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success){
-    if(data.length() != 45){
-        success = false;
-        return SGEXTN::SeerattraNum::CauchyDistribution();
-    }
-    SGEXTN::Containers::Array<unsigned char> tempArray(37);
-    int offset = 0;
-    SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
-    const SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::unserialise(tempArray, &success);
-    if(success == false){return SGEXTN::SeerattraNum::CauchyDistribution();}
-    tempArray = SGEXTN::Containers::Array<unsigned char>(4);
-    SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
-    const float median = SGEXTN::Containers::Serialise<float>::unserialise(tempArray, &success);
-    if(success == false){return SGEXTN::SeerattraNum::CauchyDistribution();}
-    SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
-    const float halfWidth = SGEXTN::Containers::Serialise<float>::unserialise(tempArray, &success);
-    if(success == false || halfWidth <= 0.0f){
-        success = false;
-        return SGEXTN::SeerattraNum::CauchyDistribution();
-    }
-    SGEXTN::SeerattraNum::CauchyDistribution output(true, median, halfWidth);
-    output.private_rngLocator = rngLocator;
-    return output;
+bool SGEXTN::SeerattraNum::CauchyDistribution::sendIn(SGEXTN::SeerattraNum::CauchyDistribution& x, SGEXTN::Containers::Span<unsigned char> data){
+    SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator(true);
+    float median = 0.0f;
+    float halfWidth = 0.0f;
+    const bool isValid = SGEXTN::Containers::Serialisation<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float, float>::sendIn(rngLocator, median, halfWidth, data);
+    if(isValid == false || halfWidth <= 0.0f){return false;}
+    x = SGEXTN::SeerattraNum::CauchyDistribution(true, median, halfWidth);
+    x.private_rngLocator = rngLocator;
+    return true;
 }
 
-int SGEXTN::SeerattraNum::CauchyDistribution::lengthof([[maybe_unused]] const SGEXTN::SeerattraNum::CauchyDistribution& x){
+int SGEXTN::SeerattraNum::CauchyDistribution::size(){
     return 45;
 }
 

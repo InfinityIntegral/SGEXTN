@@ -21,7 +21,6 @@
 #include <SGEXTN/SeerattraNum/SimpleRandom.h>
 #include <SGEXTN/SeerattraNum/DirectRandom.h>
 #include <SGEXTN/Containers/ForceCrash.h>
-#include <SGEXTN/Containers/Serialise.h>
 
 namespace {
 int getTrailingZeroCount(unsigned int n){

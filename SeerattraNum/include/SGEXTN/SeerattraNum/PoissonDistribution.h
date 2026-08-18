@@ -21,6 +21,7 @@
 namespace SGEXTN {
 namespace Containers {
 template <typename T> class Array;
+template <typename T> class Span;
 }
 
 namespace SeerattraNum {
@@ -37,9 +38,9 @@ public:
     float private_lnAcceptRate;
     PoissonDistribution();
     PoissonDistribution(bool useGlobal, float mean);
-    [[nodiscard]] static SGEXTN::Containers::Array<unsigned char> serialise(const PoissonDistribution& x);
-    [[nodiscard]] static PoissonDistribution unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success);
-    [[nodiscard]] static int lengthof(const PoissonDistribution& x);
+    [[nodiscard]] static bool sendOut(const PoissonDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
+    [[nodiscard]] static bool sendIn(PoissonDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
+    [[nodiscard]] static int size();
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
     [[nodiscard]] int randomValue();
     [[nodiscard]] int private_randomValue(SGEXTN::SeerattraNum::DirectRandomInstanceLocator& externalLocator) const;

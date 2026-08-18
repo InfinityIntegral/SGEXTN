@@ -111,7 +111,7 @@ template <typename T> bool SGEXTN::Containers::Serialisation<SGEXTN::Containers:
         if(success == false){return false;}
         int offset = 5;
         for(int i=0; i<x.length(); i++){
-            int thisLength = SGEXTN::Containers::Serialisation<T>::sizeOut(x.at(i));
+            const int thisLength = SGEXTN::Containers::Serialisation<T>::sizeOut(x.at(i));
             success = SGEXTN::Containers::Serialisation<int, T>::sendOut(thisLength, x.at(i), data.subspan(offset, 4 + thisLength));
             if(success == false){return false;}
             offset += (4 + thisLength);
@@ -160,7 +160,7 @@ template <typename T> bool SGEXTN::Containers::Serialisation<SGEXTN::Containers:
 template <typename T> int SGEXTN::Containers::Serialisation<SGEXTN::Containers::Array<T>>::sizeOut(const SGEXTN::Containers::Array<T>& x){
     if(x.length() == 0){return 5;}
     bool variableLength = false;
-    int firstLength = SGEXTN::Containers::Serialisation<T>::sizeOut(x.at(0));
+    const int firstLength = SGEXTN::Containers::Serialisation<T>::sizeOut(x.at(0));
     for(int i=1; i<x.length(); i++){
         if(SGEXTN::Containers::Serialisation<T>::sizeOut(x.at(i)) != firstLength){
             variableLength = true;

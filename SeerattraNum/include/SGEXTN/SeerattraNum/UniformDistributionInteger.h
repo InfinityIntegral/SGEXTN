@@ -21,6 +21,7 @@
 namespace SGEXTN {
 namespace Containers {
 template <typename T> class Array;
+template <typename T> class Span;
 }
 
 namespace SeerattraNum {
@@ -31,9 +32,9 @@ public:
     int private_inclusiveMax;
     UniformDistributionInteger();
     UniformDistributionInteger(bool useGlobal, int inclusiveMin, int inclusiveMax);
-    [[nodiscard]] static SGEXTN::Containers::Array<unsigned char> serialise(const UniformDistributionInteger& x);
-    [[nodiscard]] static UniformDistributionInteger unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success);
-    [[nodiscard]] static int lengthof(const UniformDistributionInteger& x);
+    [[nodiscard]] static bool sendOut(const UniformDistributionInteger& x, SGEXTN::Containers::Span<unsigned char> data);
+    [[nodiscard]] static bool sendIn(UniformDistributionInteger& x, SGEXTN::Containers::Span<unsigned char> data);
+    [[nodiscard]] static int size();
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
     [[nodiscard]] int randomValue();
     [[nodiscard]] int private_randomValue(SGEXTN::SeerattraNum::DirectRandomInstanceLocator& externalLocator) const;

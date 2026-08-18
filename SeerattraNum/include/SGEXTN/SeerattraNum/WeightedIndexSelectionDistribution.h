@@ -20,6 +20,10 @@
 #include <SGEXTN/SeerattraNum/DirectRandomInstanceLocator.h>
 
 namespace SGEXTN {
+namespace Containers {
+template <typename T> class Span;
+}
+
 namespace SeerattraNum {
 class BuildLah_SGEXTN_SeerattraNum WeightedIndexSelectionDistribution {
 public:
@@ -29,9 +33,10 @@ public:
     void private_updatePrefixSums();
     WeightedIndexSelectionDistribution();
     WeightedIndexSelectionDistribution(bool useGlobal, const SGEXTN::Containers::Array<float>& weights);
-    [[nodiscard]] static SGEXTN::Containers::Array<unsigned char> serialise(const WeightedIndexSelectionDistribution& x);
-    [[nodiscard]] static WeightedIndexSelectionDistribution unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success);
-    [[nodiscard]] static int lengthof(const WeightedIndexSelectionDistribution& x);
+    [[nodiscard]] static bool sendOut(const WeightedIndexSelectionDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
+    [[nodiscard]] static bool sendIn(WeightedIndexSelectionDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
+    [[nodiscard]] static int sizeOut(const WeightedIndexSelectionDistribution& x);
+    [[nodiscard]] static int sizeIn(SGEXTN::Containers::Span<unsigned char> data);
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
     [[nodiscard]] int randomIndex();
     [[nodiscard]] SGEXTN::Containers::Array<int> randomIndexArray(int count);

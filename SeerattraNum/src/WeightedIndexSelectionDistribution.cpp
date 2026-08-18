@@ -19,7 +19,8 @@
 #include <SGEXTN/Containers/Array.h>
 #include <SGEXTN/Containers/ForceCrash.h>
 #include <SGEXTN/SeerattraNum/DirectRandom.h>
-#include <SGEXTN/Containers/Serialise.h>
+#include <SGEXTN/Containers/Serialisation.h>
+#include <SGEXTN/Containers/Span.h>
 
 SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution::WeightedIndexSelectionDistribution() : SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution(true, SGEXTN::Containers::Array<float>(1.0f)){}
 
@@ -34,47 +35,32 @@ SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution::WeightedIndexSelection
     private_updatePrefixSums();
 }
 
-SGEXTN::Containers::Array<unsigned char> SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution::serialise(const SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution& x){
-    return SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, SGEXTN::Containers::Array<float>>::serialiseTogether(x.private_rngLocator, x.private_weights);
+bool SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution::sendOut(const SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution& x, SGEXTN::Containers::Span<unsigned char> data){
+    return SGEXTN::Containers::Serialisation<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, SGEXTN::Containers::Array<float>>::sendOut(x.private_rngLocator, x.private_weights, data);
 }
 
-SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution::unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success){
-    if(data.length() < 37){
-        success = false;
-        return SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution();
-    }
-    SGEXTN::Containers::Array<unsigned char> tempArray(37);
-    int offset = 0;
-    SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
-    const SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::unserialise(tempArray, &success);
-    if(success == false){return SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution();}
-    tempArray = SGEXTN::Containers::Array<unsigned char>(data.length() - 37);
-    SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
-    const SGEXTN::Containers::Array<float> weights = SGEXTN::Containers::Serialise<SGEXTN::Containers::Array<float>>::unserialise(tempArray, &success);
-    if(success == false || weights.length() == 0){
-        success = false;
-        return SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution();
-    }
+bool SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution::sendIn(SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution& x, SGEXTN::Containers::Span<unsigned char> data){
+    SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator(true);
+    SGEXTN::Containers::Array<float> weights(0);
+    const bool isValid = SGEXTN::Containers::Serialisation<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, SGEXTN::Containers::Array<float>>::sendIn(rngLocator, weights, data);
+    if(isValid == false || weights.length() == 0){return false;}
     bool allZero = true;
-    bool hasNegative = false;
     for(int i=0; i<weights.length(); i++){
-        if(weights.at(i) < 0.0f){
-            hasNegative = true;
-            break;
-        }
+        if(weights.at(i) < 0.0f){return false;}
         if(weights.at(i) > 0.0f){allZero = false;}
     }
-    if(allZero == true || hasNegative == true){
-        success = false;
-        return SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution();
-    }
-    SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution output(true, weights);
-    output.private_rngLocator = rngLocator;
-    return output;
+    if(allZero == true){return false;}
+    x = SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution(true, weights);
+    x.private_rngLocator = rngLocator;
+    return true;
 }
 
-int SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution::lengthof(const SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution& x){
-    return (37 + SGEXTN::Containers::Serialise<SGEXTN::Containers::Array<float>>::lengthof(x.private_weights));
+int SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution::sizeOut(const SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution& x){
+    return SGEXTN::Containers::Serialisation<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, SGEXTN::Containers::Array<float>>::sizeOut(x.private_rngLocator, x.private_weights);
+}
+
+int SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution::sizeIn(SGEXTN::Containers::Span<unsigned char> data){
+    return SGEXTN::Containers::Serialisation<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, SGEXTN::Containers::Array<float>>::sizeIn(data);
 }
 
 void SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution::private_updatePrefixSums(){

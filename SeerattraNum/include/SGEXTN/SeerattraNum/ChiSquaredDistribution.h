@@ -22,6 +22,7 @@
 namespace SGEXTN {
 namespace Containers {
 template <typename T> class Array;
+template <typename T> class Span;
 }
 
 namespace SeerattraNum {
@@ -32,9 +33,9 @@ public:
     SGEXTN::SeerattraNum::GammaDistribution private_gammaDistribution;
     ChiSquaredDistribution();
     ChiSquaredDistribution(bool useGlobal, float degreesOfFreedom);
-    [[nodiscard]] static SGEXTN::Containers::Array<unsigned char> serialise(const ChiSquaredDistribution& x);
-    [[nodiscard]] static ChiSquaredDistribution unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success);
-    [[nodiscard]] static int lengthof(const ChiSquaredDistribution& x);
+    [[nodiscard]] static bool sendOut(const ChiSquaredDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
+    [[nodiscard]] static bool sendIn(ChiSquaredDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
+    [[nodiscard]] static int size();
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
     [[nodiscard]] float private_randomValue(SGEXTN::SeerattraNum::DirectRandomInstanceLocator& externalLocator) const;
     [[nodiscard]] float randomValue();

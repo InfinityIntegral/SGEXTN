@@ -20,7 +20,8 @@
 #include <SGEXTN/Containers/ForceCrash.h>
 #include <SGEXTN/SeerattraNum/DirectRandom.h>
 #include <SGEXTN/Math/FloatMath.h>
-#include <SGEXTN/Containers/Serialise.h>
+#include <SGEXTN/Containers/Serialisation.h>
+#include <SGEXTN/Containers/Span.h>
 
 SGEXTN::SeerattraNum::StudentTDistribution::StudentTDistribution() : SGEXTN::SeerattraNum::StudentTDistribution(true, 1.0f){}
 
@@ -29,33 +30,21 @@ SGEXTN::SeerattraNum::StudentTDistribution::StudentTDistribution(bool useGlobal,
     private_chiSquaredDistribution.setDegreesOfFreedom(degreesOfFreedom);
 }
 
-SGEXTN::Containers::Array<unsigned char> SGEXTN::SeerattraNum::StudentTDistribution::serialise(const SGEXTN::SeerattraNum::StudentTDistribution& x){
-    return SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float>::serialiseTogether(x.private_rngLocator, x.private_degreesOfFreedom);
+bool SGEXTN::SeerattraNum::StudentTDistribution::sendOut(const SGEXTN::SeerattraNum::StudentTDistribution& x, SGEXTN::Containers::Span<unsigned char> data){
+    return SGEXTN::Containers::Serialisation<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float>::sendOut(x.private_rngLocator, x.private_degreesOfFreedom, data);
 }
 
-SGEXTN::SeerattraNum::StudentTDistribution SGEXTN::SeerattraNum::StudentTDistribution::unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success){
-    if(data.length() != 41){
-        success = false;
-        return SGEXTN::SeerattraNum::StudentTDistribution();
-    }
-    SGEXTN::Containers::Array<unsigned char> tempArray(37);
-    int offset = 0;
-    SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
-    const SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::unserialise(tempArray, &success);
-    if(success == false){return SGEXTN::SeerattraNum::StudentTDistribution();}
-    tempArray = SGEXTN::Containers::Array<unsigned char>(4);
-    SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
-    const float degreesOfFreedom = SGEXTN::Containers::Serialise<float>::unserialise(tempArray, &success);
-    if(success == false || degreesOfFreedom <= 0.0f){
-        success = false;
-        return SGEXTN::SeerattraNum::StudentTDistribution();
-    }
-    SGEXTN::SeerattraNum::StudentTDistribution output(true, degreesOfFreedom);
-    output.private_rngLocator = rngLocator;
-    return output;
+bool SGEXTN::SeerattraNum::StudentTDistribution::sendIn(SGEXTN::SeerattraNum::StudentTDistribution& x, SGEXTN::Containers::Span<unsigned char> data){
+    SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator(true);
+    float degree = 0.0f;
+    const bool isValid = SGEXTN::Containers::Serialisation<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float>::sendIn(rngLocator, degree, data);
+    if(isValid == false || degree <= 0.0f){return false;}
+    x = SGEXTN::SeerattraNum::StudentTDistribution(true, degree);
+    x.private_rngLocator = rngLocator;
+    return true;
 }
 
-int SGEXTN::SeerattraNum::StudentTDistribution::lengthof([[maybe_unused]] const SGEXTN::SeerattraNum::StudentTDistribution& x){
+int SGEXTN::SeerattraNum::StudentTDistribution::size(){
     return 41;
 }
 

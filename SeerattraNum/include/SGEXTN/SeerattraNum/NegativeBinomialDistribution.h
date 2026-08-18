@@ -23,6 +23,7 @@
 namespace SGEXTN {
 namespace Containers {
 template <typename T> class Array;
+template <typename T> class Span;
 }
 
 namespace SeerattraNum {
@@ -35,9 +36,9 @@ public:
     SGEXTN::SeerattraNum::PoissonDistribution private_poissonDistribution;
     NegativeBinomialDistribution();
     NegativeBinomialDistribution(bool useGlobal, float chanceOfTrue, int successCount);
-    [[nodiscard]] static SGEXTN::Containers::Array<unsigned char> serialise(const NegativeBinomialDistribution& x);
-    [[nodiscard]] static NegativeBinomialDistribution unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success);
-    [[nodiscard]] static int lengthof(const NegativeBinomialDistribution& x);
+    [[nodiscard]] static bool sendOut(const NegativeBinomialDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
+    [[nodiscard]] static bool sendIn(NegativeBinomialDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
+    [[nodiscard]] static int size();
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
     [[nodiscard]] int randomValue();
     [[nodiscard]] SGEXTN::Containers::Array<int> randomValueArray(int count);

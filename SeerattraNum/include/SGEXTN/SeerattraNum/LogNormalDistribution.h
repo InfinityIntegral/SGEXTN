@@ -33,9 +33,9 @@ public:
     SGEXTN::SeerattraNum::NormalDistribution private_normalDistribution;
     LogNormalDistribution();
     LogNormalDistribution(bool useGlobal, float meanOfLn, float standardDeviationOfLn);
-    [[nodiscard]] static SGEXTN::Containers::Array<unsigned char> serialise(const LogNormalDistribution& x);
-    [[nodiscard]] static LogNormalDistribution unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success);
-    [[nodiscard]] static int lengthof(const LogNormalDistribution& x);
+    [[nodiscard]] static bool sendOut(const LogNormalDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
+    [[nodiscard]] static bool sendIn(LogNormalDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
+    [[nodiscard]] static int size();
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
     [[nodiscard]] float randomValue();
     [[nodiscard]] SGEXTN::Containers::Array<float> randomValueArray(int count);

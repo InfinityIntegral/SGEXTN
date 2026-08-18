@@ -20,7 +20,8 @@
 #include <SGEXTN/Containers/ForceCrash.h>
 #include <SGEXTN/SeerattraNum/DirectRandom.h>
 #include <SGEXTN/Math/FloatMath.h>
-#include <SGEXTN/Containers/Serialise.h>
+#include <SGEXTN/Containers/Serialisation.h>
+#include <SGEXTN/Containers/Span.h>
 
 SGEXTN::SeerattraNum::LogNormalDistribution::LogNormalDistribution() : SGEXTN::SeerattraNum::LogNormalDistribution(true, 0.0f, 1.0f){}
 
@@ -30,36 +31,22 @@ SGEXTN::SeerattraNum::LogNormalDistribution::LogNormalDistribution(bool useGloba
     private_normalDistribution.setStandardDeviation(standardDeviationOfLn);
 }
 
-SGEXTN::Containers::Array<unsigned char> SGEXTN::SeerattraNum::LogNormalDistribution::serialise(const SGEXTN::SeerattraNum::LogNormalDistribution& x){
-    return SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float, float>::serialiseTogether(x.private_rngLocator, x.private_meanOfLn, x.private_standardDeviationOfLn);
+bool SGEXTN::SeerattraNum::LogNormalDistribution::sendOut(const SGEXTN::SeerattraNum::LogNormalDistribution& x, SGEXTN::Containers::Span<unsigned char> data){
+    return SGEXTN::Containers::Serialisation<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float, float>::sendOut(x.private_rngLocator, x.private_meanOfLn, x.private_standardDeviationOfLn, data);
 }
 
-SGEXTN::SeerattraNum::LogNormalDistribution SGEXTN::SeerattraNum::LogNormalDistribution::unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success){
-    if(data.length() != 45){
-        success = false;
-        return SGEXTN::SeerattraNum::LogNormalDistribution();
-    }
-    SGEXTN::Containers::Array<unsigned char> tempArray(37);
-    int offset = 0;
-    SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
-    const SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::unserialise(tempArray, &success);
-    if(success == false){return SGEXTN::SeerattraNum::LogNormalDistribution();}
-    tempArray = SGEXTN::Containers::Array<unsigned char>(4);
-    SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
-    const float meanLn = SGEXTN::Containers::Serialise<float>::unserialise(tempArray, &success);
-    if(success == false){return SGEXTN::SeerattraNum::LogNormalDistribution();}
-    SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
-    const float standardDeviationLn = SGEXTN::Containers::Serialise<float>::unserialise(tempArray, &success);
-    if(success == false || standardDeviationLn <= 0.0f){
-        success = false;
-        return SGEXTN::SeerattraNum::LogNormalDistribution();
-    }
-    SGEXTN::SeerattraNum::LogNormalDistribution output(true, meanLn, standardDeviationLn);
-    output.private_rngLocator = rngLocator;
-    return output;
+bool SGEXTN::SeerattraNum::LogNormalDistribution::sendIn(SGEXTN::SeerattraNum::LogNormalDistribution& x, SGEXTN::Containers::Span<unsigned char> data){
+    SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator(true);
+    float lnMean = 0.0f;
+    float lnStandardDeviation = 0.0f;
+    const bool isValid = SGEXTN::Containers::Serialisation<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float, float>::sendIn(rngLocator, lnMean, lnStandardDeviation, data);
+    if(isValid == false || lnStandardDeviation <= 0.0f){return false;}
+    x = SGEXTN::SeerattraNum::LogNormalDistribution(true, lnMean, lnStandardDeviation);
+    x.private_rngLocator = rngLocator;
+    return true;
 }
 
-int SGEXTN::SeerattraNum::LogNormalDistribution::lengthof([[maybe_unused]] const SGEXTN::SeerattraNum::LogNormalDistribution& x){
+int SGEXTN::SeerattraNum::LogNormalDistribution::size(){
     return 45;
 }
 
