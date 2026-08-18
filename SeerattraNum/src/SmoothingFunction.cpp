@@ -18,6 +18,10 @@
 #include <SGEXTN/SeerattraNum/SmoothingFunction.h>
 #include <SGEXTN/Math/FloatMath.h>
 #include <SGEXTN/Math/FloatConstants.h>
+#include <SGEXTN/Containers/Serialise.h>
+#include <SGEXTN/Containers/Span.h>
+
+SGEXTN::SeerattraNum::SmoothingFunction::SmoothingFunction() : SGEXTN::SeerattraNum::SmoothingFunction(&SGEXTN::SeerattraNum::SmoothingFunction::private_polynomial2){}
 
 SGEXTN::SeerattraNum::SmoothingFunction::SmoothingFunction(float (*function)(float)) : private_function(function){}
 
@@ -50,4 +54,32 @@ float SGEXTN::SeerattraNum::SmoothingFunction::private_rational2(float x){
 
 float SGEXTN::SeerattraNum::SmoothingFunction::private_rational3(float x){
     return ((x * x * x * x) / (x * x * x * x + (1-x) * (1-x) * (1-x) * (1-x)));
+}
+
+bool SGEXTN::SeerattraNum::SmoothingFunction::sendOut(SGEXTN::SeerattraNum::SmoothingFunction x, SGEXTN::Containers::Span<unsigned char> data){
+    unsigned char c = static_cast<unsigned char>(0);
+    if(x.private_function == &SGEXTN::SeerattraNum::SmoothingFunction::private_polynomial2){c = 1;}
+    else if(x.private_function == &SGEXTN::SeerattraNum::SmoothingFunction::private_polynomial3){c = 2;}
+    else if(x.private_function == &SGEXTN::SeerattraNum::SmoothingFunction::private_trigonometric2){c = 3;}
+    else if(x.private_function == &SGEXTN::SeerattraNum::SmoothingFunction::private_rational2){c = 4;}
+    else if(x.private_function == &SGEXTN::SeerattraNum::SmoothingFunction::private_rational3){c = 5;}
+    else{return false;}
+    return SGEXTN::Containers::Serialise<unsigned char>::sendOut(c, data);
+}
+
+bool SGEXTN::SeerattraNum::SmoothingFunction::sendIn(SGEXTN::SeerattraNum::SmoothingFunction& x, SGEXTN::Containers::Span<unsigned char> data){
+    unsigned char c = static_cast<unsigned char>(0);
+    const bool isValid = SGEXTN::Containers::Serialise<unsigned char>::sendIn(c, data);
+    if(isValid == false || static_cast<int>(c) > 5 || c == static_cast<unsigned char>(0)){return false;}
+    if(c == static_cast<unsigned char>(1)){x.private_function = &SGEXTN::SeerattraNum::SmoothingFunction::private_polynomial2;}
+    else if(c == static_cast<unsigned char>(2)){x.private_function = &SGEXTN::SeerattraNum::SmoothingFunction::private_polynomial3;}
+    else if(c == static_cast<unsigned char>(3)){x.private_function = &SGEXTN::SeerattraNum::SmoothingFunction::private_trigonometric2;}
+    else if(c == static_cast<unsigned char>(4)){x.private_function = &SGEXTN::SeerattraNum::SmoothingFunction::private_rational2;}
+    else if(c == static_cast<unsigned char>(5)){x.private_function = &SGEXTN::SeerattraNum::SmoothingFunction::private_rational3;}
+    else{return false;}
+    return true;
+}
+
+int SGEXTN::SeerattraNum::SmoothingFunction::size(){
+    return 1;
 }

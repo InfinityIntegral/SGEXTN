@@ -24,6 +24,7 @@
 #include <SGEXTN/Containers/private_api/HashAlgorithm.h>
 #include <SGEXTN/Containers/Array.h>
 #include <SGEXTN/SeerattraNum/NormalDistribution.h>
+#include <SGEXTN/Containers/Serialise.h>
 
 namespace {
 SGEXTN::Containers::Array<float> getFeaturePoint(int seed, const SGEXTN::Containers::Array<int>& center){
@@ -68,8 +69,28 @@ SGEXTN::Containers::Array<float> getFeaturePoint(int seed, const SGEXTN::Contain
 }
 }
 
+SGEXTN::SeerattraNum::VoronoiNoise::VoronoiNoise() : SGEXTN::SeerattraNum::VoronoiNoise(1){}
+
 SGEXTN::SeerattraNum::VoronoiNoise::VoronoiNoise(int dimension) : private_dimension(dimension), private_seed(SGEXTN::SeerattraNum::TrueRandom::randomInt32()){
     if(dimension <= 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::VoronoiNoise constructor crashed because the number of dimensions is nonpositive");}
+}
+
+bool SGEXTN::SeerattraNum::VoronoiNoise::sendOut(const SGEXTN::SeerattraNum::VoronoiNoise& x, SGEXTN::Containers::Span<unsigned char> data){
+    return SGEXTN::Containers::Serialise<int, int>::sendOut(x.private_dimension, x.private_seed, data);
+}
+
+bool SGEXTN::SeerattraNum::VoronoiNoise::sendIn(SGEXTN::SeerattraNum::VoronoiNoise& x, SGEXTN::Containers::Span<unsigned char> data){
+    int dimensions = 0;
+    int seed = 0;
+    const bool isValid = SGEXTN::Containers::Serialise<int, int>::sendIn(dimensions, seed, data);
+    if(isValid == false || dimensions <= 0){return false;}
+    x = SGEXTN::SeerattraNum::VoronoiNoise(dimensions);
+    x.seed(seed);
+    return true;
+}
+
+int SGEXTN::SeerattraNum::VoronoiNoise::size(){
+    return 8;
 }
 
 void SGEXTN::SeerattraNum::VoronoiNoise::seed(int seed){

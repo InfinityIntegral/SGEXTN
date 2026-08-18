@@ -18,6 +18,10 @@
 #pragma once
 
 namespace SGEXTN {
+namespace Containers {
+template <typename T> class Span;
+}
+
 namespace SeerattraNum {
 class BuildLah_SGEXTN_SeerattraNum SmoothingFunction {
 public:
@@ -27,12 +31,16 @@ public:
     static float private_trigonometric2(float x);
     static float private_rational2(float x);
     static float private_rational3(float x);
+    SmoothingFunction();
     SmoothingFunction(float (*function)(float));
     static SmoothingFunction polynomial2;
     static SmoothingFunction polynomial3;
     static SmoothingFunction trigonometric2;
     static SmoothingFunction rational2;
     static SmoothingFunction rational3;
+    [[nodiscard]] static bool sendOut(SmoothingFunction x, SGEXTN::Containers::Span<unsigned char> data);
+    [[nodiscard]] static bool sendIn(SmoothingFunction& x, SGEXTN::Containers::Span<unsigned char> data);
+    [[nodiscard]] static int size();
 };
 }
 }
