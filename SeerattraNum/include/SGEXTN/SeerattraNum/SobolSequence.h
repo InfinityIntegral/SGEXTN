@@ -19,6 +19,10 @@
 #include <SGEXTN/Containers/Array.h>
 
 namespace SGEXTN {
+namespace Containers {
+template <typename T> class Span;
+}
+
 namespace SeerattraNum {
 class BuildLah_SGEXTN_SeerattraNum SobolSequence {
 public:
@@ -29,6 +33,10 @@ public:
     SGEXTN::Containers::Array<SGEXTN::Containers::Array<unsigned int>> private_directionNumberCache;
     SobolSequence();
     SobolSequence(int dimension);
+    [[nodiscard]] static bool sendOut(const SobolSequence& x, SGEXTN::Containers::Span<unsigned char> data);
+    [[nodiscard]] static bool sendIn(SobolSequence& x, SGEXTN::Containers::Span<unsigned char> data);
+    [[nodiscard]] static int sizeOut(const SobolSequence& x);
+    [[nodiscard]] static int sizeIn(SGEXTN::Containers::Span<unsigned char> data);
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
     [[nodiscard]] SGEXTN::Containers::Array<float> nextTerm();
     [[nodiscard]] SGEXTN::Containers::Array<float> requestTerm(int startingPoint);

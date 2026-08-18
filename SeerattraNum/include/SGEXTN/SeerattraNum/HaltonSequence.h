@@ -19,6 +19,10 @@
 #include <SGEXTN/Containers/Array.h>
 
 namespace SGEXTN {
+namespace Containers {
+template <typename T> class Span;
+}
+
 namespace SeerattraNum {
 class BuildLah_SGEXTN_SeerattraNum HaltonSequence {
 public:
@@ -28,6 +32,10 @@ public:
     SGEXTN::Containers::Array<int> private_primeNumbers;
     HaltonSequence();
     HaltonSequence(int dimensions);
+    [[nodiscard]] static bool sendOut(const HaltonSequence& x, SGEXTN::Containers::Span<unsigned char> data);
+    [[nodiscard]] static bool sendIn(HaltonSequence& x, SGEXTN::Containers::Span<unsigned char> data);
+    [[nodiscard]] static int sizeOut(const HaltonSequence& x);
+    [[nodiscard]] static int sizeIn(SGEXTN::Containers::Span<unsigned char> data);
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
     [[nodiscard]] SGEXTN::Containers::Array<float> nextTerm();
     [[nodiscard]] SGEXTN::Containers::Array<float> requestTerm(int startingPoint);

@@ -15,7 +15,9 @@
 */
 // BuildLah license check: SGEXTN 7.0.0
 
+#define SGEXTN_internal_permanentAllowDebug
 #include <SGEXTN/CoreText/Debug.h>
+#undef SGEXTN_internal_permanentAllowDebug
 #include <SGEXTN/CoreText/Character.h>
 #include <SGEXTN/CoreText/String.h>
 #include <SGEXTN/Containers/Array.h>

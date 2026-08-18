@@ -22,7 +22,9 @@
 #include <SGEXTN/InternalTest/private_api/ExternalTest.h>
 #include <SGEXTN/InternalTest/private_api/DebugTest.h>
 #include <SGEXTN/InternalTest/private_api/SeerattraNumTest.h>
+#define SGEXTN_internal_permanentAllowDebug
 #include <SGEXTN/CoreText/Debug.h>
+#undef SGEXTN_internal_permanentAllowDebug
 
 int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv){
     SGEXTN::InternalTest::ContainersTest::testAll();

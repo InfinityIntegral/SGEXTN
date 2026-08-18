@@ -224,7 +224,7 @@ void SGEXTN::InternalTest::SeerattraNumTest::testDirectRandom(){
     if(isCloseEnough(generator.randomFloat32(), 0.90498f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::DirectRandom generate second floating point second seed fail");}
     SGEXTN::SeerattraNum::DirectRandom sampleRng;
     sampleRng.seed(SGEXTN::Containers::Array<unsigned int>(1, 726u));
-    (void)sampleRng.randomInt32();
+    (void)(sampleRng.randomInt32());
     SGEXTN::Containers::Array<unsigned char> serialiseArray(726);
     SGEXTN::Containers::Array<unsigned char> serialiseDestination(726);
     serialiseArray.at(0) = static_cast<unsigned char>(0x02);
@@ -1217,6 +1217,33 @@ void SGEXTN::InternalTest::SeerattraNumTest::testSobolSequence(){
     if(firstPoint.length() != 3 || isCloseEnough(firstPoint.at(0), 0.58402f) == false || isCloseEnough(firstPoint.at(1), 0.36284f) == false || isCloseEnough(firstPoint.at(2), 0.99299f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::SobolSequence generate first point second seed fail");}
     secondPoint = generator.nextTerm();
     if(secondPoint.length() != 3 || isCloseEnough(secondPoint.at(0), 0.08402f) == false || isCloseEnough(secondPoint.at(1), 0.86284f) == false || isCloseEnough(secondPoint.at(2), 0.49299f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::SobolSequence generate second point second seed fail");}
+    bool isValid = false;
+    SGEXTN::SeerattraNum::SobolSequence sampleRng(4);
+    sampleRng.seed(SGEXTN::Containers::Array<unsigned int>(1, 726u));
+    (void)(sampleRng.requestTerm(726));
+    SGEXTN::Containers::Array<unsigned char> serialiseArray(726);
+    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726);
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(4, makeSpan(serialiseArray, 0, 4));
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(726, makeSpan(serialiseArray, 4, 4));
+    isValid = SGEXTN::Containers::Serialise<bool>::sendOut(false, makeSpan(serialiseArray, 8, 1));
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(4, makeSpan(serialiseArray, 9, 4));
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(4, makeSpan(serialiseArray, 13, 4));
+    isValid = SGEXTN::Containers::Serialise<unsigned int>::sendOut(3102625360u, makeSpan(serialiseArray, 17, 4));
+    isValid = SGEXTN::Containers::Serialise<unsigned int>::sendOut(3455585166u, makeSpan(serialiseArray, 21, 4));
+    isValid = SGEXTN::Containers::Serialise<unsigned int>::sendOut(2515435373u, makeSpan(serialiseArray, 25, 4));
+    isValid = SGEXTN::Containers::Serialise<unsigned int>::sendOut(2620977418u, makeSpan(serialiseArray, 29, 4));
+    isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::SobolSequence>::sendOut(sampleRng, makeSpan(serialiseDestination, 33));
+    if(isValid == false || isBitwiseIdentical(33, serialiseArray, serialiseDestination) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sendOut SGEXTN::SeerattraNum::SobolSequence fail");}
+    SGEXTN::SeerattraNum::SobolSequence unserialisedRng;
+    isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::SobolSequence>::sendIn(unserialisedRng, makeSpan(serialiseArray, 33));
+    SGEXTN::Containers::Array<float> output1 = sampleRng.nextTerm();
+    SGEXTN::Containers::Array<float> output2 = unserialisedRng.nextTerm();
+    for(int i=0; i<4; i++){
+        if(output1.at(i) != output2.at(i)){isValid = false;}
+    }
+    if(isValid == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sendIn SGEXTN::SeerattraNum::SobolSequence fail");}
+    if(SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::SobolSequence>::sizeOut(sampleRng) != 33){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sizeOut SGEXTN::SeerattraNum::SobolSequence fail");}
+    if(SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::SobolSequence>::sizeIn(makeSpan(serialiseArray, 100)) != 33){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sizeIn SGEXTN::SeerattraNum::SobolSequence fail");}
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testHaltonSequence(){
@@ -1231,6 +1258,61 @@ void SGEXTN::InternalTest::SeerattraNumTest::testHaltonSequence(){
     if(firstPoint.length() != 3 || isCloseEnough(firstPoint.at(0), 0.5f) == false || isCloseEnough(firstPoint.at(1), 1.0f / 3.0f) == false || isCloseEnough(firstPoint.at(2), 0.2f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::HaltonSequence generate first point second seed fail");}
     secondPoint = generator.nextTerm();
     if(secondPoint.length() != 3 || isCloseEnough(secondPoint.at(0), 0.25f) == false || isCloseEnough(secondPoint.at(1), 2.0f / 3.0f) == false || isCloseEnough(secondPoint.at(2), 0.4f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::HaltonSequence generate second point second seed fail");}
+    bool isValid = false;
+    SGEXTN::SeerattraNum::HaltonSequence sampleRng(4);
+    sampleRng.seed(SGEXTN::Containers::Array<unsigned int>(1, 726u));
+    (void)(sampleRng.requestTerm(726));
+    SGEXTN::Containers::Array<unsigned char> serialiseArray(726);
+    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726);
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(4, makeSpan(serialiseArray, 0, 4));
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(726, makeSpan(serialiseArray, 4, 4));
+    isValid = SGEXTN::Containers::Serialise<bool>::sendOut(true, makeSpan(serialiseArray, 8, 1));
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(4, makeSpan(serialiseArray, 9, 4));
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(17, makeSpan(serialiseArray, 13, 4));
+    isValid = SGEXTN::Containers::Serialise<bool>::sendOut(false, makeSpan(serialiseArray, 17, 1));
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(2, makeSpan(serialiseArray, 18, 4));
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(4, makeSpan(serialiseArray, 22, 4));
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(0, makeSpan(serialiseArray, 26, 4));
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(1, makeSpan(serialiseArray, 30, 4));
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(21, makeSpan(serialiseArray, 34, 4));
+    isValid = SGEXTN::Containers::Serialise<bool>::sendOut(false, makeSpan(serialiseArray, 38, 1));
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(3, makeSpan(serialiseArray, 39, 4));
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(4, makeSpan(serialiseArray, 43, 4));
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(0, makeSpan(serialiseArray, 47, 4));
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(1, makeSpan(serialiseArray, 51, 4));
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(2, makeSpan(serialiseArray, 55, 4));
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(29, makeSpan(serialiseArray, 59, 4));
+    isValid = SGEXTN::Containers::Serialise<bool>::sendOut(false, makeSpan(serialiseArray, 63, 1));
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(5, makeSpan(serialiseArray, 64, 4));
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(4, makeSpan(serialiseArray, 68, 4));
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(0, makeSpan(serialiseArray, 72, 4));
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(1, makeSpan(serialiseArray, 76, 4));
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(2, makeSpan(serialiseArray, 80, 4));
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(4, makeSpan(serialiseArray, 84, 4));
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(3, makeSpan(serialiseArray, 88, 4));
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(37, makeSpan(serialiseArray, 92, 4));
+    isValid = SGEXTN::Containers::Serialise<bool>::sendOut(false, makeSpan(serialiseArray, 96, 1));
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(7, makeSpan(serialiseArray, 97, 4));
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(4, makeSpan(serialiseArray, 101, 4));
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(0, makeSpan(serialiseArray, 105, 4));
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(1, makeSpan(serialiseArray, 109, 4));
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(2, makeSpan(serialiseArray, 113, 4));
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(5, makeSpan(serialiseArray, 117, 4));
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(3, makeSpan(serialiseArray, 121, 4));
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(4, makeSpan(serialiseArray, 125, 4));
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(6, makeSpan(serialiseArray, 129, 4));
+    isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::HaltonSequence>::sendOut(sampleRng, makeSpan(serialiseDestination, 133));
+    if(isValid == false || isBitwiseIdentical(133, serialiseArray, serialiseDestination) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sendOut SGEXTN::SeerattraNum::HaltonSequence fail");}
+    SGEXTN::SeerattraNum::HaltonSequence unserialisedRng;
+    isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::HaltonSequence>::sendIn(unserialisedRng, makeSpan(serialiseArray, 133));
+    SGEXTN::Containers::Array<float> output1 = sampleRng.nextTerm();
+    SGEXTN::Containers::Array<float> output2 = unserialisedRng.nextTerm();
+    for(int i=0; i<4; i++){
+        if(output1.at(i) != output2.at(i)){isValid = false;}
+    }
+    if(isValid == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sendIn SGEXTN::SeerattraNum::HaltonSequence fail");}
+    if(SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::HaltonSequence>::sizeOut(sampleRng) != 133){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sizeOut SGEXTN::SeerattraNum::HaltonSequence fail");}
+    if(SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::HaltonSequence>::sizeIn(makeSpan(serialiseArray, 200)) != 133){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sizeIn SGEXTN::SeerattraNum::HaltonSequence fail");}
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testVoronoiNoise(){
