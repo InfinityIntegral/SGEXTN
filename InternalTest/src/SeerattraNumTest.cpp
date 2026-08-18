@@ -1340,6 +1340,20 @@ void SGEXTN::InternalTest::SeerattraNumTest::testVoronoiNoise(){
     if(outputPoint.length() != 3 || isCloseEnough(outputPoint.at(0), 0.29695f) == false || isCloseEnough(outputPoint.at(1), -0.097455f) == false || isCloseEnough(outputPoint.at(2), 0.16516f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::VoronoiNoise second seed get closest point to second test point fail");}
     outputPoint = noiseMap.getPosition(1, testPoint2);
     if(outputPoint.length() != 3 || isCloseEnough(outputPoint.at(0), 0.031908f) == false || isCloseEnough(outputPoint.at(1), 0.66805f) == false || isCloseEnough(outputPoint.at(2), 0.11509f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::VoronoiNoise second seed get second closest point to second test point fail");}
+    bool isValid = false;
+    SGEXTN::SeerattraNum::VoronoiNoise sampleRng(3);
+    sampleRng.seed(726);
+    SGEXTN::Containers::Array<unsigned char> serialiseArray(726);
+    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726);
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(3, makeSpan(serialiseArray, 0, 4));
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(726, makeSpan(serialiseArray, 4, 4));
+    isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::VoronoiNoise>::sendOut(sampleRng, makeSpan(serialiseDestination, 8));
+    if(isValid == false || isBitwiseIdentical(8, serialiseArray, serialiseDestination) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sendOut SGEXTN::SeerattraNum::VoronoiNoise fail");}
+    SGEXTN::SeerattraNum::VoronoiNoise unserialisedRng;
+    isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::VoronoiNoise>::sendIn(unserialisedRng, makeSpan(serialiseArray, 8));
+    if(isValid == false || sampleRng.getDistanceTo(0, testPoint1) != unserialisedRng.getDistanceTo(0, testPoint1)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sendIn SGEXTN::SeerattraNum::VoronoiNoise fail");}
+    if(SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::VoronoiNoise>::sizeOut(sampleRng) != 8){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sizeOut SGEXTN::SeerattraNum::VoronoiNoise fail");}
+    if(SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::VoronoiNoise>::sizeIn(makeSpan(serialiseArray, 100)) != 8){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sizeIn SGEXTN::SeerattraNum::VoronoiNoise fail");}
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testValueNoise(){
@@ -1352,6 +1366,21 @@ void SGEXTN::InternalTest::SeerattraNumTest::testValueNoise(){
     noiseMap.seed(1965);
     if(isCloseEnough(noiseMap.getHeight(firstPoint), -0.52749f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::ValueNoise get first point second seed fail");}
     if(isCloseEnough(noiseMap.getHeight(secondPoint), -0.39768f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::ValueNoise get second point second seed fail");}
+    bool isValid = false;
+    SGEXTN::SeerattraNum::ValueNoise sampleRng(3, SGEXTN::SeerattraNum::SmoothingFunction::trigonometric2);
+    sampleRng.seed(726);
+    SGEXTN::Containers::Array<unsigned char> serialiseArray(726);
+    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726);
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(3, makeSpan(serialiseArray, 0, 4));
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(726, makeSpan(serialiseArray, 4, 4));
+    isValid = SGEXTN::Containers::Serialise<unsigned char>::sendOut(static_cast<unsigned char>(3), makeSpan(serialiseArray, 8, 1));
+    isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::ValueNoise>::sendOut(sampleRng, makeSpan(serialiseDestination, 9));
+    if(isValid == false || isBitwiseIdentical(9, serialiseArray, serialiseDestination) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sendOut SGEXTN::SeerattraNum::ValueNoise fail");}
+    SGEXTN::SeerattraNum::ValueNoise unserialisedRng;
+    isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::ValueNoise>::sendIn(unserialisedRng, makeSpan(serialiseArray, 9));
+    if(isValid == false || sampleRng.getHeight(firstPoint) != unserialisedRng.getHeight(firstPoint)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sendIn SGEXTN::SeerattraNum::ValueNoise fail");}
+    if(SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::ValueNoise>::sizeOut(sampleRng) != 9){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sizeOut SGEXTN::SeerattraNum::ValueNoise fail");}
+    if(SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::ValueNoise>::sizeIn(makeSpan(serialiseArray, 100)) != 9){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sizeIn SGEXTN::SeerattraNum::ValueNoise fail");}
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testPerlinNoise(){
@@ -1364,6 +1393,21 @@ void SGEXTN::InternalTest::SeerattraNumTest::testPerlinNoise(){
     noiseMap.seed(1965);
     if(isCloseEnough(noiseMap.getHeight(firstPoint), 0.31241f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::PerlinNoise get first point second seed fail");}
     if(isCloseEnough(noiseMap.getHeight(secondPoint), -0.28643f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::PerlinNoise get second point second seed fail");}
+    bool isValid = false;
+    SGEXTN::SeerattraNum::PerlinNoise sampleRng(3, SGEXTN::SeerattraNum::SmoothingFunction::trigonometric2);
+    sampleRng.seed(726);
+    SGEXTN::Containers::Array<unsigned char> serialiseArray(726);
+    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726);
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(3, makeSpan(serialiseArray, 0, 4));
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(726, makeSpan(serialiseArray, 4, 4));
+    isValid = SGEXTN::Containers::Serialise<unsigned char>::sendOut(static_cast<unsigned char>(3), makeSpan(serialiseArray, 8, 1));
+    isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::PerlinNoise>::sendOut(sampleRng, makeSpan(serialiseDestination, 9));
+    if(isValid == false || isBitwiseIdentical(9, serialiseArray, serialiseDestination) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sendOut SGEXTN::SeerattraNum::PerlinNoise fail");}
+    SGEXTN::SeerattraNum::PerlinNoise unserialisedRng;
+    isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::PerlinNoise>::sendIn(unserialisedRng, makeSpan(serialiseArray, 9));
+    if(isValid == false || sampleRng.getHeight(firstPoint) != unserialisedRng.getHeight(firstPoint)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sendIn SGEXTN::SeerattraNum::PerlinNoise fail");}
+    if(SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::PerlinNoise>::sizeOut(sampleRng) != 9){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sizeOut SGEXTN::SeerattraNum::PerlinNoise fail");}
+    if(SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::PerlinNoise>::sizeIn(makeSpan(serialiseArray, 100)) != 9){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sizeIn SGEXTN::SeerattraNum::PerlinNoise fail");}
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testAll(){

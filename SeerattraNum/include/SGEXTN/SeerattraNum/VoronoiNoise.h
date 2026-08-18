@@ -20,6 +20,7 @@
 namespace SGEXTN {
 namespace Containers {
 template <typename T> class Array;
+template <typename T> class Span;
 }
 
 namespace SeerattraNum {
@@ -27,7 +28,11 @@ class BuildLah_SGEXTN_SeerattraNum VoronoiNoise {
 public:
     int private_seed;
     int private_dimension;
+    VoronoiNoise();
     VoronoiNoise(int dimension);
+    [[nodiscard]] static bool sendOut(const VoronoiNoise& x, SGEXTN::Containers::Span<unsigned char> data);
+    [[nodiscard]] static bool sendIn(VoronoiNoise& x, SGEXTN::Containers::Span<unsigned char> data);
+    [[nodiscard]] static int size();
     void seed(int seed);
     [[nodiscard]] SGEXTN::Containers::Array<float> getPosition(int nthNearest, const SGEXTN::Containers::Array<float>& point) const;
     [[nodiscard]] SGEXTN::Containers::Array<float> getVectorFrom(int nthNearest, const SGEXTN::Containers::Array<float>& point) const;

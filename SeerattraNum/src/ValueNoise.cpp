@@ -23,6 +23,7 @@
 #include <SGEXTN/Containers/private_api/HashAlgorithm.h>
 #include <SGEXTN/SeerattraNum/SmoothingFunction.h>
 #include <SGEXTN/Containers/Array.h>
+#include <SGEXTN/Containers/Serialise.h>
 
 namespace {
 int powerOf2(int n){
@@ -30,8 +31,29 @@ int powerOf2(int n){
 }
 }
 
+SGEXTN::SeerattraNum::ValueNoise::ValueNoise() : SGEXTN::SeerattraNum::ValueNoise(1, SGEXTN::SeerattraNum::SmoothingFunction::polynomial2){}
+
 SGEXTN::SeerattraNum::ValueNoise::ValueNoise(int dimension, SGEXTN::SeerattraNum::SmoothingFunction smoothingFunction) : private_dimension(dimension), private_seed(SGEXTN::SeerattraNum::TrueRandom::randomInt32()), private_smoothingFunction(smoothingFunction){
     if(dimension <= 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::ValueNoise constructor crashed because the number of dimensions is nonpositive");}
+}
+
+bool SGEXTN::SeerattraNum::ValueNoise::sendOut(const SGEXTN::SeerattraNum::ValueNoise& x, SGEXTN::Containers::Span<unsigned char> data){
+    return SGEXTN::Containers::Serialise<int, int, SGEXTN::SeerattraNum::SmoothingFunction>::sendOut(x.private_dimension, x.private_seed, x.private_smoothingFunction, data);
+}
+
+bool SGEXTN::SeerattraNum::ValueNoise::sendIn(SGEXTN::SeerattraNum::ValueNoise& x, SGEXTN::Containers::Span<unsigned char> data){
+    int dimensions = 0;
+    int seed = 0;
+    SGEXTN::SeerattraNum::SmoothingFunction func;
+    const bool isValid = SGEXTN::Containers::Serialise<int, int, SGEXTN::SeerattraNum::SmoothingFunction>::sendIn(dimensions, seed, func, data);
+    if(isValid == false || dimensions <= 0){return false;}
+    x = SGEXTN::SeerattraNum::ValueNoise(dimensions, func);
+    x.seed(seed);
+    return true;
+}
+
+int SGEXTN::SeerattraNum::ValueNoise::size(){
+    return 9;
 }
 
 void SGEXTN::SeerattraNum::ValueNoise::seed(int seed){

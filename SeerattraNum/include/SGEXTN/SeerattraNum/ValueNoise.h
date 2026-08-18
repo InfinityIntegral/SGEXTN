@@ -21,6 +21,7 @@
 namespace SGEXTN {
 namespace Containers {
 template <typename T> class Array;
+template <typename T> class Span;
 }
 
 namespace SeerattraNum {
@@ -29,7 +30,11 @@ public:
     int private_seed;
     int private_dimension;
     SGEXTN::SeerattraNum::SmoothingFunction private_smoothingFunction;
+    ValueNoise();
     ValueNoise(int dimension, SGEXTN::SeerattraNum::SmoothingFunction smoothingFunction);
+    [[nodiscard]] static bool sendOut(const ValueNoise& x, SGEXTN::Containers::Span<unsigned char> data);
+    [[nodiscard]] static bool sendIn(ValueNoise& x, SGEXTN::Containers::Span<unsigned char> data);
+    [[nodiscard]] static int size();
     void seed(int seed);
     [[nodiscard]] float getHeight(const SGEXTN::Containers::Array<float>& point) const;
 };

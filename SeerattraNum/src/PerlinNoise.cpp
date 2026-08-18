@@ -25,6 +25,7 @@
 #include <SGEXTN/Containers/private_api/HashAlgorithm.h>
 #include <SGEXTN/Math/FloatLimits.h>
 #include <SGEXTN/SeerattraNum/NormalDistribution.h>
+#include <SGEXTN/Containers/Serialise.h>
 
 namespace {
 int powerOf2(int n){
@@ -32,8 +33,29 @@ int powerOf2(int n){
 }
 }
 
+SGEXTN::SeerattraNum::PerlinNoise::PerlinNoise() : SGEXTN::SeerattraNum::PerlinNoise(1, SGEXTN::SeerattraNum::SmoothingFunction()){}
+
 SGEXTN::SeerattraNum::PerlinNoise::PerlinNoise(int dimension, SGEXTN::SeerattraNum::SmoothingFunction smoothingFunction) : private_dimension(dimension), private_seed(SGEXTN::SeerattraNum::TrueRandom::randomInt32()), private_smoothingFunction(smoothingFunction){
     if(dimension <= 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::PerlinNoise constructor crashed because the number of dimensions is nonpositive");}
+}
+
+bool SGEXTN::SeerattraNum::PerlinNoise::sendOut(const SGEXTN::SeerattraNum::PerlinNoise& x, SGEXTN::Containers::Span<unsigned char> data){
+    return SGEXTN::Containers::Serialise<int, int, SGEXTN::SeerattraNum::SmoothingFunction>::sendOut(x.private_dimension, x.private_seed, x.private_smoothingFunction, data);
+}
+
+bool SGEXTN::SeerattraNum::PerlinNoise::sendIn(SGEXTN::SeerattraNum::PerlinNoise& x, SGEXTN::Containers::Span<unsigned char> data){
+    int dimensions = 0;
+    int seed = 0;
+    SGEXTN::SeerattraNum::SmoothingFunction func;
+    const bool isValid = SGEXTN::Containers::Serialise<int, int, SGEXTN::SeerattraNum::SmoothingFunction>::sendIn(dimensions, seed, func, data);
+    if(isValid == false || dimensions <= 0){return false;}
+    x = SGEXTN::SeerattraNum::PerlinNoise(dimensions, func);
+    x.seed(seed);
+    return true;
+}
+
+int SGEXTN::SeerattraNum::PerlinNoise::size(){
+    return 9;
 }
 
 void SGEXTN::SeerattraNum::PerlinNoise::seed(int seed){
