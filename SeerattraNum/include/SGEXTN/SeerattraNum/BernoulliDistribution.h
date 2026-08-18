@@ -21,6 +21,7 @@
 namespace SGEXTN {
 namespace Containers {
 template <typename T> class Array;
+template <typename T> class Span;
 }
 
 namespace SeerattraNum {
@@ -30,9 +31,9 @@ public:
     float private_chanceOfTrue;
     BernoulliDistribution();
     BernoulliDistribution(bool useGlobal, float chanceOfTrue);
-    [[nodiscard]] static SGEXTN::Containers::Array<unsigned char> serialise(const BernoulliDistribution& x);
-    [[nodiscard]] static BernoulliDistribution unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success);
-    [[nodiscard]] static int lengthof(const BernoulliDistribution& x);
+    [[nodiscard]] static bool sendOut(const BernoulliDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
+    [[nodiscard]] static bool sendIn(BernoulliDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
+    [[nodiscard]] static int size();
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
     [[nodiscard]] bool randomValue();
     [[nodiscard]] SGEXTN::Containers::Array<bool> randomValueArray(int count);

@@ -20,6 +20,7 @@
 namespace SGEXTN {
 namespace Containers {
 template <typename T> class Array;
+template <typename T> class Span;
 }
 
 namespace SeerattraNum {
@@ -32,9 +33,9 @@ public:
     unsigned int private_cache;
     bool private_cacheActive;
     DirectRandom();
-    [[nodiscard]] static SGEXTN::Containers::Array<unsigned char> serialise(const DirectRandom& x);
-    [[nodiscard]] static DirectRandom unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success);
-    [[nodiscard]] static int lengthof(const DirectRandom& x);
+    [[nodiscard]] static bool sendOut(const DirectRandom& x, SGEXTN::Containers::Span<unsigned char> data);
+    [[nodiscard]] static bool sendIn(DirectRandom& x, SGEXTN::Containers::Span<unsigned char> data);
+    [[nodiscard]] static int size();
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
     [[nodiscard]] int randomInt32();
     [[nodiscard]] long long randomInt64();

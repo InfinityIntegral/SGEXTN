@@ -22,6 +22,7 @@
 namespace SGEXTN {
 namespace Containers {
 template <typename T> class Array;
+template <typename T> class Span;
 }
 
 namespace SeerattraNum {
@@ -36,9 +37,9 @@ public:
     float private_reciprocalVariableCount;
     GammaDistribution();
     GammaDistribution(bool useGlobal, float variableCount, float variableMean);
-    [[nodiscard]] static SGEXTN::Containers::Array<unsigned char> serialise(const GammaDistribution& x);
-    [[nodiscard]] static GammaDistribution unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success);
-    [[nodiscard]] static int lengthof(const GammaDistribution& x);
+    [[nodiscard]] static bool sendOut(const GammaDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
+    [[nodiscard]] static bool sendIn(GammaDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
+    [[nodiscard]] static int size();
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
     [[nodiscard]] float private_randomValue(SGEXTN::SeerattraNum::DirectRandomInstanceLocator& externalLocator) const;
     [[nodiscard]] float randomValue();

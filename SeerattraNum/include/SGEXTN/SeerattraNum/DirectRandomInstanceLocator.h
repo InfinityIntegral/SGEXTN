@@ -19,7 +19,7 @@
 
 namespace SGEXTN {
 namespace Containers {
-template <typename T> class Array;
+template <typename T> class Span;
 }
 
 namespace SeerattraNum {
@@ -36,9 +36,9 @@ public:
     DirectRandomInstanceLocator(DirectRandomInstanceLocator&& x) noexcept;
     DirectRandomInstanceLocator& operator=(DirectRandomInstanceLocator&& x) noexcept;
     ~DirectRandomInstanceLocator();
-    [[nodiscard]] static SGEXTN::Containers::Array<unsigned char> serialise(const DirectRandomInstanceLocator& x);
-    [[nodiscard]] static SGEXTN::SeerattraNum::DirectRandomInstanceLocator unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success);
-    [[nodiscard]] static int lengthof(const DirectRandomInstanceLocator& x);
+    [[nodiscard]] static bool sendOut(const DirectRandomInstanceLocator& x, SGEXTN::Containers::Span<unsigned char> data);
+    [[nodiscard]] static bool sendIn(DirectRandomInstanceLocator& x, SGEXTN::Containers::Span<unsigned char> data);
+    [[nodiscard]] static int size();
     [[nodiscard]] SGEXTN::SeerattraNum::DirectRandom& operator*();
     [[nodiscard]] const SGEXTN::SeerattraNum::DirectRandom& operator*() const;
 };

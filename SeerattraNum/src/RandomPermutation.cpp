@@ -20,25 +20,27 @@
 #include <SGEXTN/SeerattraNum/UniformDistributionInteger.h>
 #include <SGEXTN/Containers/ForceCrash.h>
 #include <SGEXTN/SeerattraNum/DirectRandom.h>
-#include <SGEXTN/Containers/Serialise.h>
+#include <SGEXTN/Containers/Serialisation.h>
+#include <SGEXTN/Containers/Span.h>
 
 SGEXTN::SeerattraNum::RandomPermutation::RandomPermutation() : SGEXTN::SeerattraNum::RandomPermutation(true){}
 
 SGEXTN::SeerattraNum::RandomPermutation::RandomPermutation(bool useGlobal) : private_rngLocator(useGlobal), private_uniformDistribution(true, 0, 0){}
 
-SGEXTN::Containers::Array<unsigned char> SGEXTN::SeerattraNum::RandomPermutation::serialise(const SGEXTN::SeerattraNum::RandomPermutation& x){
-    return SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::serialise(x.private_rngLocator);
+bool SGEXTN::SeerattraNum::RandomPermutation::sendOut(const SGEXTN::SeerattraNum::RandomPermutation& x, SGEXTN::Containers::Span<unsigned char> data){
+    return SGEXTN::Containers::Serialisation<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::sendOut(x.private_rngLocator, data);
 }
 
-SGEXTN::SeerattraNum::RandomPermutation SGEXTN::SeerattraNum::RandomPermutation::unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success){
-    const SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::unserialise(data, &success);
-    if(success == false){return SGEXTN::SeerattraNum::RandomPermutation();}
-    SGEXTN::SeerattraNum::RandomPermutation output(true);
-    output.private_rngLocator = rngLocator;
-    return output;
+bool SGEXTN::SeerattraNum::RandomPermutation::sendIn(SGEXTN::SeerattraNum::RandomPermutation& x, SGEXTN::Containers::Span<unsigned char> data){
+    SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator(true);
+    const bool isValid = SGEXTN::Containers::Serialisation<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::sendIn(rngLocator, data);
+    if(isValid == false){return false;}
+    x = SGEXTN::SeerattraNum::RandomPermutation(true);
+    x.private_rngLocator = rngLocator;
+    return true;
 }
 
-int SGEXTN::SeerattraNum::RandomPermutation::lengthof([[maybe_unused]] const SGEXTN::SeerattraNum::RandomPermutation& x){
+int SGEXTN::SeerattraNum::RandomPermutation::size(){
     return 37;
 }
 

@@ -21,6 +21,7 @@
 namespace SGEXTN {
 namespace Containers {
 template <typename T> class Array;
+template <typename T> class Span;
 }
 
 namespace SeerattraNum {
@@ -31,9 +32,9 @@ public:
     float private_cacheReciprocalOfLnChanceOfFalse;
     GeometricDistribution();
     GeometricDistribution(bool useGlobal, float chanceOfTrue);
-    [[nodiscard]] static SGEXTN::Containers::Array<unsigned char> serialise(const GeometricDistribution& x);
-    [[nodiscard]] static GeometricDistribution unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success);
-    [[nodiscard]] static int lengthof(const GeometricDistribution& x);
+    [[nodiscard]] static bool sendOut(const GeometricDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
+    [[nodiscard]] static bool sendIn(GeometricDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
+    [[nodiscard]] static int size();
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
     [[nodiscard]] int randomValue();
     [[nodiscard]] int private_randomValue(SGEXTN::SeerattraNum::DirectRandomInstanceLocator& externalLocator) const;

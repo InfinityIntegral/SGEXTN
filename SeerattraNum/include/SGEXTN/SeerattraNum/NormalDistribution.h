@@ -21,6 +21,7 @@
 namespace SGEXTN {
 namespace Containers {
 template <typename T> class Array;
+template <typename T> class Span;
 }
 
 namespace SeerattraNum {
@@ -33,9 +34,9 @@ public:
     static SGEXTN::Containers::Array<float>* private_floorTables;
     NormalDistribution();
     NormalDistribution(bool useGlobal, float mean, float standardDeviation);
-    [[nodiscard]] static SGEXTN::Containers::Array<unsigned char> serialise(const NormalDistribution& x);
-    [[nodiscard]] static NormalDistribution unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success);
-    [[nodiscard]] static int lengthof(const NormalDistribution& x);
+    [[nodiscard]] static bool sendOut(const NormalDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
+    [[nodiscard]] static bool sendIn(NormalDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
+    [[nodiscard]] static int size();
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
     [[nodiscard]] float randomValue();
     [[nodiscard]] float private_randomValue(SGEXTN::SeerattraNum::DirectRandomInstanceLocator& externalLocator) const;

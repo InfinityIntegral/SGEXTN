@@ -21,6 +21,7 @@ namespace SGEXTN {
 namespace Containers {
 template <typename T> class Array {
 public:
+    Array();
     Array(int count);
     Array(int count, const T& defaultValue);
     Array(const Array& x);

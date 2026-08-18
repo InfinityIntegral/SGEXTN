@@ -20,7 +20,8 @@
 #include <SGEXTN/Containers/ForceCrash.h>
 #include <SGEXTN/SeerattraNum/DirectRandom.h>
 #include <SGEXTN/Math/IntegerLimits.h>
-#include <SGEXTN/Containers/Serialise.h>
+#include <SGEXTN/Containers/Serialisation.h>
+#include <SGEXTN/Containers/Span.h>
 
 SGEXTN::SeerattraNum::UniformDistributionInteger::UniformDistributionInteger() : SGEXTN::SeerattraNum::UniformDistributionInteger(true, 0, 0){}
 
@@ -28,36 +29,22 @@ SGEXTN::SeerattraNum::UniformDistributionInteger::UniformDistributionInteger(boo
     if(inclusiveMin > inclusiveMax){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionInteger constructor crashed because minimum is higher than maximum");}
 }
 
-SGEXTN::Containers::Array<unsigned char> SGEXTN::SeerattraNum::UniformDistributionInteger::serialise(const SGEXTN::SeerattraNum::UniformDistributionInteger& x){
-    return SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandom, int, int>::serialiseTogether((*x.private_rngLocator), x.private_inclusiveMin, x.private_inclusiveMax);
+bool SGEXTN::SeerattraNum::UniformDistributionInteger::sendOut(const SGEXTN::SeerattraNum::UniformDistributionInteger& x, SGEXTN::Containers::Span<unsigned char> data){
+    return SGEXTN::Containers::Serialisation<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, int, int>::sendOut(x.private_rngLocator, x.private_inclusiveMin, x.private_inclusiveMax, data);
 }
 
-SGEXTN::SeerattraNum::UniformDistributionInteger SGEXTN::SeerattraNum::UniformDistributionInteger::unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success){
-    if(data.length() != 45){
-        success = false;
-        return SGEXTN::SeerattraNum::UniformDistributionInteger();
-    }
-    SGEXTN::Containers::Array<unsigned char> tempArray(37);
-    int offset = 0;
-    SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
-    const SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::unserialise(tempArray, &success);
-    if(success == false){return SGEXTN::SeerattraNum::UniformDistributionInteger();}
-    tempArray = SGEXTN::Containers::Array<unsigned char>(4);
-    SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
-    const int min = SGEXTN::Containers::Serialise<int>::unserialise(tempArray, &success);
-    if(success == false){return SGEXTN::SeerattraNum::UniformDistributionInteger();}
-    SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
-    const int max = SGEXTN::Containers::Serialise<int>::unserialise(tempArray, &success);
-    if(success == false || max < min){
-        success = false;
-        return SGEXTN::SeerattraNum::UniformDistributionInteger();
-    }
-    SGEXTN::SeerattraNum::UniformDistributionInteger output(true, min, max);
-    output.private_rngLocator = rngLocator;
-    return output;
+bool SGEXTN::SeerattraNum::UniformDistributionInteger::sendIn(SGEXTN::SeerattraNum::UniformDistributionInteger& x, SGEXTN::Containers::Span<unsigned char> data){
+    SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator(true);
+    int min = 0;
+    int max = 0;
+    const bool isValid = SGEXTN::Containers::Serialisation<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, int, int>::sendIn(rngLocator, min, max, data);
+    if(isValid == false || max < min){return false;}
+    x = SGEXTN::SeerattraNum::UniformDistributionInteger(true, min, max);
+    x.private_rngLocator = rngLocator;
+    return true;
 }
 
-int SGEXTN::SeerattraNum::UniformDistributionInteger::lengthof([[maybe_unused]] const SGEXTN::SeerattraNum::UniformDistributionInteger& x){
+int SGEXTN::SeerattraNum::UniformDistributionInteger::size(){
     return 45;
 }
 

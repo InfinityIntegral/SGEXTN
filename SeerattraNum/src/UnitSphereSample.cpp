@@ -22,25 +22,27 @@
 #include <SGEXTN/Math/FloatLimits.h>
 #include <SGEXTN/Math/FloatMath.h>
 #include <SGEXTN/SeerattraNum/DirectRandom.h>
-#include <SGEXTN/Containers/Serialise.h>
+#include <SGEXTN/Containers/Serialisation.h>
+#include <SGEXTN/Containers/Span.h>
 
 SGEXTN::SeerattraNum::UnitSphereSample::UnitSphereSample() : SGEXTN::SeerattraNum::UnitSphereSample(true){}
 
 SGEXTN::SeerattraNum::UnitSphereSample::UnitSphereSample(bool useGlobal) : private_rngLocator(useGlobal), private_normalDistribution(true, 0.0f, 1.0f){}
 
-SGEXTN::Containers::Array<unsigned char> SGEXTN::SeerattraNum::UnitSphereSample::serialise(const SGEXTN::SeerattraNum::UnitSphereSample& x){
-    return SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::serialise(x.private_rngLocator);
+bool SGEXTN::SeerattraNum::UnitSphereSample::sendOut(const SGEXTN::SeerattraNum::UnitSphereSample& x, SGEXTN::Containers::Span<unsigned char> data){
+    return SGEXTN::Containers::Serialisation<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::sendOut(x.private_rngLocator, data);
 }
 
-SGEXTN::SeerattraNum::UnitSphereSample SGEXTN::SeerattraNum::UnitSphereSample::unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success){
-    const SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::unserialise(data, &success);
-    if(success == false){return SGEXTN::SeerattraNum::UnitSphereSample();}
-    SGEXTN::SeerattraNum::UnitSphereSample output(true);
-    output.private_rngLocator = rngLocator;
-    return output;
+bool SGEXTN::SeerattraNum::UnitSphereSample::sendIn(SGEXTN::SeerattraNum::UnitSphereSample& x, SGEXTN::Containers::Span<unsigned char> data){
+    SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator(true);
+    const bool isValid = SGEXTN::Containers::Serialisation<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::sendIn(rngLocator, data);
+    if(isValid == false){return false;}
+    x = SGEXTN::SeerattraNum::UnitSphereSample(true);
+    x.private_rngLocator = rngLocator;
+    return true;
 }
 
-int SGEXTN::SeerattraNum::UnitSphereSample::lengthof([[maybe_unused]] const SGEXTN::SeerattraNum::UnitSphereSample& x){
+int SGEXTN::SeerattraNum::UnitSphereSample::size(){
     return 37;
 }
 

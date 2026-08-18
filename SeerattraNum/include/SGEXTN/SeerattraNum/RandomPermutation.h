@@ -22,6 +22,7 @@
 namespace SGEXTN {
 namespace Containers {
 template <typename T> class Array;
+template <typename T> class Span;
 }
 
 namespace SeerattraNum {
@@ -31,9 +32,9 @@ public:
     SGEXTN::SeerattraNum::UniformDistributionInteger private_uniformDistribution;
     RandomPermutation();
     RandomPermutation(bool useGlobal);
-    [[nodiscard]] static SGEXTN::Containers::Array<unsigned char> serialise(const RandomPermutation& x);
-    [[nodiscard]] static RandomPermutation unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success);
-    [[nodiscard]] static int lengthof(const RandomPermutation& x);
+    [[nodiscard]] static bool sendOut(const RandomPermutation& x, SGEXTN::Containers::Span<unsigned char> data);
+    [[nodiscard]] static bool sendIn(RandomPermutation& x, SGEXTN::Containers::Span<unsigned char> data);
+    [[nodiscard]] static int size();
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
     [[nodiscard]] SGEXTN::Containers::Array<int> randomPermutation(int n);
 };

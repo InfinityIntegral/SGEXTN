@@ -151,12 +151,12 @@ void SGEXTN::InternalTest::UtilitiesTest::testRgbaColour(){
     serialiseArray.at(2) = static_cast<unsigned char>(0x80);
     serialiseArray.at(3) = static_cast<unsigned char>(0x40);
     bool isValid = SGEXTN::Containers::Serialisation<SGEXTN::Utilities::RgbaColour>::sendOut(sampleColour, makeSpan(serialiseDestination, 4));
-    if(isValid == false || isBitwiseIdentical(4, serialiseArray, serialiseDestination) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sendOut SGEXTN::Utilities::RgbaColour fail");}
+    if(isValid == false || isBitwiseIdentical(4, serialiseArray, serialiseDestination) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialisation sendOut SGEXTN::Utilities::RgbaColour fail");}
     SGEXTN::Utilities::RgbaColour unserialisedColour;
     isValid = SGEXTN::Containers::Serialisation<SGEXTN::Utilities::RgbaColour>::sendIn(unserialisedColour, makeSpan(serialiseArray, 4));
-    if(isValid == false || unserialisedColour != sampleColour){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sendIn SGEXTN::Utilities::RgbaColour fail");}
-    if(SGEXTN::Containers::Serialisation<SGEXTN::Utilities::RgbaColour>::sizeOut(sampleColour) != 4){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sizeOut SGEXTN::Utilities::RgbaColour fail");}
-    if(SGEXTN::Containers::Serialisation<SGEXTN::Utilities::RgbaColour>::sizeIn(makeSpan(serialiseArray, 100)) != 4){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sizeIn SGEXTN::Utilities::RgbaColour fail");}
+    if(isValid == false || unserialisedColour != sampleColour){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialisation sendIn SGEXTN::Utilities::RgbaColour fail");}
+    if(SGEXTN::Containers::Serialisation<SGEXTN::Utilities::RgbaColour>::sizeOut(sampleColour) != 4){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialisation sizeOut SGEXTN::Utilities::RgbaColour fail");}
+    if(SGEXTN::Containers::Serialisation<SGEXTN::Utilities::RgbaColour>::sizeIn(makeSpan(serialiseArray, 100)) != 4){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialisation sizeIn SGEXTN::Utilities::RgbaColour fail");}
 }
 
 void SGEXTN::InternalTest::UtilitiesTest::testHslaColour(){
@@ -218,12 +218,12 @@ void SGEXTN::InternalTest::UtilitiesTest::testHslaColour(){
     serialiseArray.at(14) = static_cast<unsigned char>(0x96);
     serialiseArray.at(15) = static_cast<unsigned char>(0x42);
     bool isValid = SGEXTN::Containers::Serialisation<SGEXTN::Utilities::HslaColour>::sendOut(sampleColour, makeSpan(serialiseDestination, 16));
-    if(isValid == false || isBitwiseIdentical(16, serialiseArray, serialiseDestination) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sendOut SGEXTN::Utilities::HslaColour fail");}
+    if(isValid == false || isBitwiseIdentical(16, serialiseArray, serialiseDestination) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialisation sendOut SGEXTN::Utilities::HslaColour fail");}
     SGEXTN::Utilities::HslaColour unserialisedColour;
     isValid = SGEXTN::Containers::Serialisation<SGEXTN::Utilities::HslaColour>::sendIn(unserialisedColour, makeSpan(serialiseArray, 16));
-    if(isValid == false || unserialisedColour != sampleColour){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sendIn SGEXTN::Utilities::HslaColour fail");}
-    if(SGEXTN::Containers::Serialisation<SGEXTN::Utilities::HslaColour>::sizeOut(sampleColour) != 16){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sizeOut SGEXTN::Utilities::HslaColour fail");}
-    if(SGEXTN::Containers::Serialisation<SGEXTN::Utilities::HslaColour>::sizeIn(makeSpan(serialiseArray, 100)) != 16){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sizeIn SGEXTN::Utilities::HslaColour fail");}
+    if(isValid == false || unserialisedColour != sampleColour){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialisation sendIn SGEXTN::Utilities::HslaColour fail");}
+    if(SGEXTN::Containers::Serialisation<SGEXTN::Utilities::HslaColour>::sizeOut(sampleColour) != 16){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialisation sizeOut SGEXTN::Utilities::HslaColour fail");}
+    if(SGEXTN::Containers::Serialisation<SGEXTN::Utilities::HslaColour>::sizeIn(makeSpan(serialiseArray, 100)) != 16){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialisation sizeIn SGEXTN::Utilities::HslaColour fail");}
 }
 
 void SGEXTN::InternalTest::UtilitiesTest::testContrastUtilities(){
@@ -300,12 +300,12 @@ void SGEXTN::InternalTest::UtilitiesTest::testIdentifierRegistry(){
     serialiseArray.at(2) = static_cast<unsigned char>(0x00);
     serialiseArray.at(3) = static_cast<unsigned char>(0x00);
     isValid = SGEXTN::Containers::Serialisation<SGEXTN::Utilities::Identifier>::sendOut(sampleId, makeSpan(serialiseDestination, 4));
-    if(isValid == false || isBitwiseIdentical(4, serialiseArray, serialiseDestination) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sendOut SGEXTN::Utilities::Identifier fail");}
+    if(isValid == false || isBitwiseIdentical(4, serialiseArray, serialiseDestination) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialisation sendOut SGEXTN::Utilities::Identifier fail");}
     SGEXTN::Utilities::Identifier unserialisedId;
     isValid = SGEXTN::Containers::Serialisation<SGEXTN::Utilities::Identifier>::sendIn(unserialisedId, makeSpan(serialiseArray, 4));
-    if(isValid == false || unserialisedId != sampleId){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sendIn SGEXTN::Utilities::Identifier fail");}
-    if(SGEXTN::Containers::Serialisation<SGEXTN::Utilities::Identifier>::sizeOut(sampleId) != 4){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sizeOut SGEXTN::Utilities::Identifier fail");}
-    if(SGEXTN::Containers::Serialisation<SGEXTN::Utilities::Identifier>::sizeIn(makeSpan(serialiseArray, 100)) != 4){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sizeIn SGEXTN::Utilities::Identifier fail");}
+    if(isValid == false || unserialisedId != sampleId){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialisation sendIn SGEXTN::Utilities::Identifier fail");}
+    if(SGEXTN::Containers::Serialisation<SGEXTN::Utilities::Identifier>::sizeOut(sampleId) != 4){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialisation sizeOut SGEXTN::Utilities::Identifier fail");}
+    if(SGEXTN::Containers::Serialisation<SGEXTN::Utilities::Identifier>::sizeIn(makeSpan(serialiseArray, 100)) != 4){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialisation sizeIn SGEXTN::Utilities::Identifier fail");}
 }
 
 void SGEXTN::InternalTest::UtilitiesTest::testDateTime(){
@@ -355,10 +355,10 @@ void SGEXTN::InternalTest::UtilitiesTest::testDateTime(){
     serialiseArray.at(6) = static_cast<unsigned char>(0x00);
     serialiseArray.at(7) = static_cast<unsigned char>(0x00);
     isValid = SGEXTN::Containers::Serialisation<SGEXTN::Utilities::DateTime>::sendOut(sampleTime, makeSpan(serialiseDestination, 8));
-    if(isValid == false || isBitwiseIdentical(8, serialiseArray, serialiseDestination) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sendOut SGEXTN::Utilities::DateTime false");}
+    if(isValid == false || isBitwiseIdentical(8, serialiseArray, serialiseDestination) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialisation sendOut SGEXTN::Utilities::DateTime false");}
     SGEXTN::Utilities::DateTime unserialisedTime;
     isValid = SGEXTN::Containers::Serialisation<SGEXTN::Utilities::DateTime>::sendIn(unserialisedTime, makeSpan(serialiseArray, 8));
-    if(isValid == false || unserialisedTime != sampleTime){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sendIn SGEXTN::Utilities::DateTime fail");}
-    if(SGEXTN::Containers::Serialisation<SGEXTN::Utilities::DateTime>::sizeOut(sampleTime) != 8){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sizeOut SGEXTN::Utilities::DateTime fail");}
-    if(SGEXTN::Containers::Serialisation<SGEXTN::Utilities::DateTime>::sizeIn(makeSpan(serialiseArray, 100)) != 8){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sizeIn SGEXTN::Utilities::DateTime fail");}
+    if(isValid == false || unserialisedTime != sampleTime){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialisation sendIn SGEXTN::Utilities::DateTime fail");}
+    if(SGEXTN::Containers::Serialisation<SGEXTN::Utilities::DateTime>::sizeOut(sampleTime) != 8){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialisation sizeOut SGEXTN::Utilities::DateTime fail");}
+    if(SGEXTN::Containers::Serialisation<SGEXTN::Utilities::DateTime>::sizeIn(makeSpan(serialiseArray, 100)) != 8){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialisation sizeIn SGEXTN::Utilities::DateTime fail");}
 }

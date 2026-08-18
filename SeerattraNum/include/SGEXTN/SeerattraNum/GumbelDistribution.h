@@ -21,6 +21,7 @@
 namespace SGEXTN {
 namespace Containers {
 template <typename T> class Array;
+template <typename T> class Span;
 }
 
 namespace SeerattraNum {
@@ -31,9 +32,9 @@ public:
     float private_spread;
     GumbelDistribution();
     GumbelDistribution(bool useGlobal, float mode, float spread);
-    [[nodiscard]] static SGEXTN::Containers::Array<unsigned char> serialise(const GumbelDistribution& x);
-    [[nodiscard]] static GumbelDistribution unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success);
-    [[nodiscard]] static int lengthof(const GumbelDistribution& x);
+    [[nodiscard]] static bool sendOut(const GumbelDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
+    [[nodiscard]] static bool sendIn(GumbelDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
+    [[nodiscard]] static int size();
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
     [[nodiscard]] float randomValue();
     [[nodiscard]] SGEXTN::Containers::Array<float> randomValueArray(int count);

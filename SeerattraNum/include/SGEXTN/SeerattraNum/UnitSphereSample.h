@@ -22,6 +22,7 @@
 namespace SGEXTN {
 namespace Containers {
 template <typename T> class Array;
+template <typename T> class Span;
 }
 
 namespace SeerattraNum {
@@ -31,9 +32,9 @@ public:
     SGEXTN::SeerattraNum::NormalDistribution private_normalDistribution;
     UnitSphereSample();
     UnitSphereSample(bool useGlobal);
-    [[nodiscard]] static SGEXTN::Containers::Array<unsigned char> serialise(const UnitSphereSample& x);
-    [[nodiscard]] static UnitSphereSample unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success);
-    [[nodiscard]] static int lengthof(const UnitSphereSample& x);
+    [[nodiscard]] static bool sendOut(const UnitSphereSample& x, SGEXTN::Containers::Span<unsigned char> data);
+    [[nodiscard]] static bool sendIn(UnitSphereSample& x, SGEXTN::Containers::Span<unsigned char> data);
+    [[nodiscard]] static int size();
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
     [[nodiscard]] SGEXTN::Containers::Array<float> randomPoint(int dimensions);
 };

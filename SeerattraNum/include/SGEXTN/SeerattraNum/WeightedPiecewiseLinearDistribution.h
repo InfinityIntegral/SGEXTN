@@ -20,6 +20,10 @@
 #include <SGEXTN/SeerattraNum/DirectRandomInstanceLocator.h>
 
 namespace SGEXTN {
+namespace Containers {
+template <typename T> class Span;
+}
+
 namespace SeerattraNum {
 class BuildLah_SGEXTN_SeerattraNum WeightedPiecewiseLinearDistribution {
 public:
@@ -30,9 +34,10 @@ public:
     void private_updatePrefixSums();
     WeightedPiecewiseLinearDistribution();
     WeightedPiecewiseLinearDistribution(bool useGlobal, const SGEXTN::Containers::Array<float>& weights, const SGEXTN::Containers::Array<float>& boundaries);
-    [[nodiscard]] static SGEXTN::Containers::Array<unsigned char> serialise(const WeightedPiecewiseLinearDistribution& x);
-    [[nodiscard]] static WeightedPiecewiseLinearDistribution unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success);
-    [[nodiscard]] static int lengthof(const WeightedPiecewiseLinearDistribution& x);
+    [[nodiscard]] static bool sendOut(const WeightedPiecewiseLinearDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
+    [[nodiscard]] static bool sendIn(WeightedPiecewiseLinearDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
+    [[nodiscard]] static int sizeOut(const WeightedPiecewiseLinearDistribution& x);
+    [[nodiscard]] static int sizeIn(SGEXTN::Containers::Span<unsigned char> data);
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
     [[nodiscard]] float randomValue();
     [[nodiscard]] SGEXTN::Containers::Array<float> randomValueArray(int count);

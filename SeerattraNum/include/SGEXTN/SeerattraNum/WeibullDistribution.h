@@ -21,6 +21,7 @@
 namespace SGEXTN {
 namespace Containers {
 template <typename T> class Array;
+template <typename T> class Span;
 }
 
 namespace SeerattraNum {
@@ -32,9 +33,9 @@ public:
     float private_reciprocalA;
     WeibullDistribution();
     WeibullDistribution(bool useGlobal, float failureBehaviour, float characteristicLifespan);
-    [[nodiscard]] static SGEXTN::Containers::Array<unsigned char> serialise(const WeibullDistribution& x);
-    [[nodiscard]] static WeibullDistribution unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success);
-    [[nodiscard]] static int lengthof(const WeibullDistribution& x);
+    [[nodiscard]] static bool sendOut(const WeibullDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
+    [[nodiscard]] static bool sendIn(WeibullDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
+    [[nodiscard]] static int size();
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
     [[nodiscard]] float randomValue();
     [[nodiscard]] SGEXTN::Containers::Array<float> randomValueArray(int count);

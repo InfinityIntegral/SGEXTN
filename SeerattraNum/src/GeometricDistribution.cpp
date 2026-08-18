@@ -20,7 +20,8 @@
 #include <SGEXTN/Containers/ForceCrash.h>
 #include <SGEXTN/SeerattraNum/DirectRandom.h>
 #include <SGEXTN/Math/FloatMath.h>
-#include <SGEXTN/Containers/Serialise.h>
+#include <SGEXTN/Containers/Serialisation.h>
+#include <SGEXTN/Containers/Span.h>
 
 SGEXTN::SeerattraNum::GeometricDistribution::GeometricDistribution() : SGEXTN::SeerattraNum::GeometricDistribution(true, 0.5f){}
 
@@ -29,33 +30,21 @@ SGEXTN::SeerattraNum::GeometricDistribution::GeometricDistribution(bool useGloba
     if(chanceOfTrue > 1.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GeometricDistribution constructor crashed because the requested probability is higher than 1");}
 }
 
-SGEXTN::Containers::Array<unsigned char> SGEXTN::SeerattraNum::GeometricDistribution::serialise(const SGEXTN::SeerattraNum::GeometricDistribution& x){
-    return SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float>::serialiseTogether(x.private_rngLocator, x.private_chanceOfTrue);
+bool SGEXTN::SeerattraNum::GeometricDistribution::sendOut(const SGEXTN::SeerattraNum::GeometricDistribution& x, SGEXTN::Containers::Span<unsigned char> data){
+    return SGEXTN::Containers::Serialisation<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float>::sendOut(x.private_rngLocator, x.private_chanceOfTrue, data);
 }
 
-SGEXTN::SeerattraNum::GeometricDistribution SGEXTN::SeerattraNum::GeometricDistribution::unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success){
-    if(data.length() != 41){
-        success = false;
-        return SGEXTN::SeerattraNum::GeometricDistribution();
-    }
-    SGEXTN::Containers::Array<unsigned char> tempArray(37);
-    int offset = 0;
-    SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
-    const SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::unserialise(tempArray, &success);
-    if(success == false){return SGEXTN::SeerattraNum::GeometricDistribution();}
-    tempArray = SGEXTN::Containers::Array<unsigned char>(4);
-    SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
-    const float probability = SGEXTN::Containers::Serialise<float>::unserialise(tempArray, &success);
-    if(success == false || probability <= 0.0f || probability > 1.0f){
-        success = false;
-        return SGEXTN::SeerattraNum::GeometricDistribution();
-    }
-    SGEXTN::SeerattraNum::GeometricDistribution output(true, probability);
-    output.private_rngLocator = rngLocator;
-    return output;
+bool SGEXTN::SeerattraNum::GeometricDistribution::sendIn(SGEXTN::SeerattraNum::GeometricDistribution& x, SGEXTN::Containers::Span<unsigned char> data){
+    SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator(true);
+    float probability = 0.0f;
+    const bool isValid = SGEXTN::Containers::Serialisation<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float>::sendIn(rngLocator, probability, data);
+    if(isValid == false || probability < 0.0f || probability > 1.0f){return false;}
+    x = SGEXTN::SeerattraNum::GeometricDistribution(true, probability);
+    x.private_rngLocator = rngLocator;
+    return true;
 }
 
-int SGEXTN::SeerattraNum::GeometricDistribution::lengthof([[maybe_unused]] const SGEXTN::SeerattraNum::GeometricDistribution& x){
+int SGEXTN::SeerattraNum::GeometricDistribution::size(){
     return 41;
 }
 

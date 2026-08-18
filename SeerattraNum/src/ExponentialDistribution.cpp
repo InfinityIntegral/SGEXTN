@@ -22,7 +22,8 @@
 #include <SGEXTN/Math/FloatMath.h>
 #include <SGEXTN/SeerattraNum/private_api/ZigguratTables.h>
 #include <SGEXTN/Math/FloatLimits.h>
-#include <SGEXTN/Containers/Serialise.h>
+#include <SGEXTN/Containers/Serialisation.h>
+#include <SGEXTN/Containers/Span.h>
 #include <cmath>
 
 namespace {
@@ -86,33 +87,21 @@ SGEXTN::SeerattraNum::ExponentialDistribution::ExponentialDistribution(bool useG
     if(meanEventsPerTime <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::ExponentialDistribution constructor crashed because requested number of events occurring in each unit time is nonpositive");}
 }
 
-SGEXTN::Containers::Array<unsigned char> SGEXTN::SeerattraNum::ExponentialDistribution::serialise(const SGEXTN::SeerattraNum::ExponentialDistribution& x){
-    return SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float>::serialiseTogether(x.private_rngLocator, x.private_meanEventsPerTime);
+bool SGEXTN::SeerattraNum::ExponentialDistribution::sendOut(const SGEXTN::SeerattraNum::ExponentialDistribution& x, SGEXTN::Containers::Span<unsigned char> data){
+    return SGEXTN::Containers::Serialisation<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float>::sendOut(x.private_rngLocator, x.private_meanEventsPerTime, data);
 }
 
-SGEXTN::SeerattraNum::ExponentialDistribution SGEXTN::SeerattraNum::ExponentialDistribution::unserialise(const SGEXTN::Containers::Array<unsigned char>& data, bool& success){
-    if(data.length() != 41){
-        success = false;
-        return SGEXTN::SeerattraNum::ExponentialDistribution();
-    }
-    SGEXTN::Containers::Array<unsigned char> tempArray(37);
-    int offset = 0;
-    SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
-    const SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::unserialise(tempArray, &success);
-    if(success == false){return SGEXTN::SeerattraNum::ExponentialDistribution();}
-    tempArray = SGEXTN::Containers::Array<unsigned char>(4);
-    SGEXTN::Containers::MemoryCopySerialise::copyOutSection(data, offset, tempArray);
-    const float meanRate = SGEXTN::Containers::Serialise<float>::unserialise(tempArray, &success);
-    if(success == false || meanRate <= 0.0f){
-        success = false;
-        return SGEXTN::SeerattraNum::ExponentialDistribution();
-    }
-    SGEXTN::SeerattraNum::ExponentialDistribution output(true, meanRate);
-    output.private_rngLocator = rngLocator;
-    return output;
+bool SGEXTN::SeerattraNum::ExponentialDistribution::sendIn(SGEXTN::SeerattraNum::ExponentialDistribution& x, SGEXTN::Containers::Span<unsigned char> data){
+    SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator(true);
+    float rate = 0.0f;
+    const bool isValid = SGEXTN::Containers::Serialisation<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float>::sendIn(rngLocator, rate, data);
+    if(isValid == false || rate <= 0.0f){return false;}
+    x = SGEXTN::SeerattraNum::ExponentialDistribution(true, rate);
+    x.private_rngLocator = rngLocator;
+    return true;
 }
 
-int SGEXTN::SeerattraNum::ExponentialDistribution::lengthof([[maybe_unused]] const SGEXTN::SeerattraNum::ExponentialDistribution& x){
+int SGEXTN::SeerattraNum::ExponentialDistribution::size(){
     return 41;
 }
 
