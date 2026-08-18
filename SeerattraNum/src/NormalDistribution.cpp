@@ -23,7 +23,7 @@
 #include <SGEXTN/SeerattraNum/private_api/ZigguratTables.h>
 #include <SGEXTN/Math/FloatLimits.h>
 #include <SGEXTN/Math/FloatConstants.h>
-#include <SGEXTN/Containers/Serialisation.h>
+#include <SGEXTN/Containers/Serialise.h>
 #include <SGEXTN/Containers/Span.h>
 #include <cmath>
 
@@ -87,14 +87,14 @@ SGEXTN::SeerattraNum::NormalDistribution::NormalDistribution(bool useGlobal, flo
 }
 
 bool SGEXTN::SeerattraNum::NormalDistribution::sendOut(const SGEXTN::SeerattraNum::NormalDistribution& x, SGEXTN::Containers::Span<unsigned char> data){
-    return SGEXTN::Containers::Serialisation<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float, float>::sendOut(x.private_rngLocator, x.private_mean, x.private_standardDeviation, data);
+    return SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float, float>::sendOut(x.private_rngLocator, x.private_mean, x.private_standardDeviation, data);
 }
 
 bool SGEXTN::SeerattraNum::NormalDistribution::sendIn(SGEXTN::SeerattraNum::NormalDistribution& x, SGEXTN::Containers::Span<unsigned char> data){
     SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator(true);
     float mean = 0.0f;
     float standardDeviation = 0.0f;
-    const bool isValid = SGEXTN::Containers::Serialisation<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float, float>::sendIn(rngLocator, mean, standardDeviation, data);
+    const bool isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float, float>::sendIn(rngLocator, mean, standardDeviation, data);
     if(isValid == false || standardDeviation <= 0.0f){return false;}
     x = SGEXTN::SeerattraNum::NormalDistribution(true, mean, standardDeviation);
     x.private_rngLocator = rngLocator;

@@ -25,7 +25,7 @@
 #include <SGEXTN/Math/FloatLimits.h>
 #include <SGEXTN/Containers/ForceCrash.h>
 #include <SGEXTN/Containers/ArrayVectorMove.h>
-#include <SGEXTN/Containers/Serialisation.h>
+#include <SGEXTN/Containers/Serialise.h>
 #include <SGEXTN/Containers/Span.h>
 
 namespace {
@@ -467,7 +467,7 @@ int SGEXTN::CoreText::String::hash() const {
 }
 
 bool SGEXTN::CoreText::String::sendOut(const SGEXTN::CoreText::String& x, SGEXTN::Containers::Span<unsigned char> data){
-    const bool isValid = SGEXTN::Containers::Serialisation<int>::sendOut(x.byteLength(), data.subspanLeft(4));
+    const bool isValid = SGEXTN::Containers::Serialise<int>::sendOut(x.byteLength(), data.subspanLeft(4));
     if(isValid == false){return false;}
     for(int i=0; i<x.byteLength(); i++){
         data.at(4 + i) = x.byteAt(i);
@@ -490,7 +490,7 @@ int SGEXTN::CoreText::String::sizeOut(const SGEXTN::CoreText::String& x){
 int SGEXTN::CoreText::String::sizeIn(SGEXTN::Containers::Span<unsigned char> data){
     int length = 0;
     if(data.length() < 4){return -1;}
-    const bool isValid = SGEXTN::Containers::Serialisation<int>::sendIn(length, data.subspanLeft(4));
+    const bool isValid = SGEXTN::Containers::Serialise<int>::sendIn(length, data.subspanLeft(4));
     if(isValid == false || length < 0){return -1;}
     return 4 + length;
 }

@@ -22,7 +22,7 @@
 #include <SGEXTN/Math/FloatLimits.h>
 #include <SGEXTN/Math/FloatMath.h>
 #include <SGEXTN/SeerattraNum/DirectRandom.h>
-#include <SGEXTN/Containers/Serialisation.h>
+#include <SGEXTN/Containers/Serialise.h>
 #include <SGEXTN/Containers/Span.h>
 
 SGEXTN::SeerattraNum::UnitSphereSample::UnitSphereSample() : SGEXTN::SeerattraNum::UnitSphereSample(true){}
@@ -30,12 +30,12 @@ SGEXTN::SeerattraNum::UnitSphereSample::UnitSphereSample() : SGEXTN::SeerattraNu
 SGEXTN::SeerattraNum::UnitSphereSample::UnitSphereSample(bool useGlobal) : private_rngLocator(useGlobal), private_normalDistribution(true, 0.0f, 1.0f){}
 
 bool SGEXTN::SeerattraNum::UnitSphereSample::sendOut(const SGEXTN::SeerattraNum::UnitSphereSample& x, SGEXTN::Containers::Span<unsigned char> data){
-    return SGEXTN::Containers::Serialisation<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::sendOut(x.private_rngLocator, data);
+    return SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::sendOut(x.private_rngLocator, data);
 }
 
 bool SGEXTN::SeerattraNum::UnitSphereSample::sendIn(SGEXTN::SeerattraNum::UnitSphereSample& x, SGEXTN::Containers::Span<unsigned char> data){
     SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator(true);
-    const bool isValid = SGEXTN::Containers::Serialisation<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::sendIn(rngLocator, data);
+    const bool isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::sendIn(rngLocator, data);
     if(isValid == false){return false;}
     x = SGEXTN::SeerattraNum::UnitSphereSample(true);
     x.private_rngLocator = rngLocator;

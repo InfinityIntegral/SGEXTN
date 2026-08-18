@@ -15,56 +15,56 @@
 */
 // BuildLah license check: SGEXTN 7.0.0
 
-#include <SGEXTN/Containers/Serialisation.h>
+#include <SGEXTN/Containers/Serialise.h>
 #include <SGEXTN/Containers/Span.h>
 #include <cmath>
 #include <limits>
 
-bool SGEXTN::Containers::Serialisation<bool>::sendOut(bool x, SGEXTN::Containers::Span<unsigned char> data){
+bool SGEXTN::Containers::Serialise<bool>::sendOut(bool x, SGEXTN::Containers::Span<unsigned char> data){
     if(data.length() != 1){return false;}
     if(x == false){data.at(0) = static_cast<unsigned char>(0);}
     else{data.at(0) = static_cast<unsigned char>(1);}
     return true;
 }
 
-bool SGEXTN::Containers::Serialisation<bool>::sendIn(bool& x, SGEXTN::Containers::Span<unsigned char> data){
+bool SGEXTN::Containers::Serialise<bool>::sendIn(bool& x, SGEXTN::Containers::Span<unsigned char> data){
     if(data.length() != 1 || static_cast<unsigned int>(data.at(0)) > 1){return false;}
     x = false;
     if(data.at(0) == static_cast<unsigned char>(1)){x = true;}
     return true;
 }
 
-int SGEXTN::Containers::Serialisation<bool>::sizeOut([[maybe_unused]] bool x){
+int SGEXTN::Containers::Serialise<bool>::sizeOut([[maybe_unused]] bool x){
     return 1;
 }
 
-int SGEXTN::Containers::Serialisation<bool>::sizeIn(SGEXTN::Containers::Span<unsigned char> data){
+int SGEXTN::Containers::Serialise<bool>::sizeIn(SGEXTN::Containers::Span<unsigned char> data){
     if(data.length() < 1){return -1;}
     return 1;
 }
 
-bool SGEXTN::Containers::Serialisation<unsigned char>::sendOut(unsigned char x, SGEXTN::Containers::Span<unsigned char> data){
+bool SGEXTN::Containers::Serialise<unsigned char>::sendOut(unsigned char x, SGEXTN::Containers::Span<unsigned char> data){
     if(data.length() != 1){return false;}
     data.at(0) = x;
     return true;
 }
 
-bool SGEXTN::Containers::Serialisation<unsigned char>::sendIn(unsigned char& x, SGEXTN::Containers::Span<unsigned char> data){
+bool SGEXTN::Containers::Serialise<unsigned char>::sendIn(unsigned char& x, SGEXTN::Containers::Span<unsigned char> data){
     if(data.length() != 1){return false;}
     x = data.at(0);
     return true;
 }
 
-int SGEXTN::Containers::Serialisation<unsigned char>::sizeOut([[maybe_unused]] unsigned char x){
+int SGEXTN::Containers::Serialise<unsigned char>::sizeOut([[maybe_unused]] unsigned char x){
     return 1;
 }
 
-int SGEXTN::Containers::Serialisation<unsigned char>::sizeIn(SGEXTN::Containers::Span<unsigned char> data){
+int SGEXTN::Containers::Serialise<unsigned char>::sizeIn(SGEXTN::Containers::Span<unsigned char> data){
     if(data.length() < 1){return -1;}
     return 1;
 }
 
-bool SGEXTN::Containers::Serialisation<short>::sendOut(short x, SGEXTN::Containers::Span<unsigned char> data){
+bool SGEXTN::Containers::Serialise<short>::sendOut(short x, SGEXTN::Containers::Span<unsigned char> data){
     if(data.length() != 2){return false;}
     const unsigned short u = static_cast<unsigned short>(x);
     data.at(0) = u & static_cast<unsigned char>(0xff);
@@ -72,45 +72,45 @@ bool SGEXTN::Containers::Serialisation<short>::sendOut(short x, SGEXTN::Containe
     return true;
 }
 
-bool SGEXTN::Containers::Serialisation<short>::sendIn(short& x, SGEXTN::Containers::Span<unsigned char> data){
+bool SGEXTN::Containers::Serialise<short>::sendIn(short& x, SGEXTN::Containers::Span<unsigned char> data){
     if(data.length() != 2){return false;}
     const unsigned short u = (static_cast<unsigned short>(data.at(1)) << 8) | static_cast<unsigned short>(data.at(0));
     x = static_cast<short>(u);
     return true;
 }
 
-int SGEXTN::Containers::Serialisation<short>::sizeOut([[maybe_unused]] short x){
+int SGEXTN::Containers::Serialise<short>::sizeOut([[maybe_unused]] short x){
     return 2;
 }
 
-int SGEXTN::Containers::Serialisation<short>::sizeIn(SGEXTN::Containers::Span<unsigned char> data){
+int SGEXTN::Containers::Serialise<short>::sizeIn(SGEXTN::Containers::Span<unsigned char> data){
     if(data.length() < 2){return -1;}
     return 2;
 }
 
-bool SGEXTN::Containers::Serialisation<unsigned short>::sendOut(unsigned short x, SGEXTN::Containers::Span<unsigned char> data){
+bool SGEXTN::Containers::Serialise<unsigned short>::sendOut(unsigned short x, SGEXTN::Containers::Span<unsigned char> data){
     if(data.length() != 2){return false;}
     data.at(0) = x & static_cast<unsigned char>(0xff);
     data.at(1) = (x >> 8) & static_cast<unsigned char>(0xff);
     return true;
 }
 
-bool SGEXTN::Containers::Serialisation<unsigned short>::sendIn(unsigned short& x, SGEXTN::Containers::Span<unsigned char> data){
+bool SGEXTN::Containers::Serialise<unsigned short>::sendIn(unsigned short& x, SGEXTN::Containers::Span<unsigned char> data){
     if(data.length() != 2){return false;}
     x = (static_cast<unsigned short>(data.at(1)) << 8) | static_cast<unsigned short>(data.at(0));
     return true;
 }
 
-int SGEXTN::Containers::Serialisation<unsigned short>::sizeOut([[maybe_unused]] unsigned short x){
+int SGEXTN::Containers::Serialise<unsigned short>::sizeOut([[maybe_unused]] unsigned short x){
     return 2;
 }
 
-int SGEXTN::Containers::Serialisation<unsigned short>::sizeIn(SGEXTN::Containers::Span<unsigned char> data){
+int SGEXTN::Containers::Serialise<unsigned short>::sizeIn(SGEXTN::Containers::Span<unsigned char> data){
     if(data.length() < 2){return -1;}
     return 2;
 }
 
-bool SGEXTN::Containers::Serialisation<int>::sendOut(int x, SGEXTN::Containers::Span<unsigned char> data){
+bool SGEXTN::Containers::Serialise<int>::sendOut(int x, SGEXTN::Containers::Span<unsigned char> data){
     if(data.length() != 4){return false;}
     const unsigned int u = static_cast<unsigned int>(x);
     data.at(0) = u & static_cast<unsigned char>(0xff);
@@ -120,23 +120,23 @@ bool SGEXTN::Containers::Serialisation<int>::sendOut(int x, SGEXTN::Containers::
     return true;
 }
 
-bool SGEXTN::Containers::Serialisation<int>::sendIn(int& x, SGEXTN::Containers::Span<unsigned char> data){
+bool SGEXTN::Containers::Serialise<int>::sendIn(int& x, SGEXTN::Containers::Span<unsigned char> data){
     if(data.length() != 4){return false;}
     const unsigned int u = (static_cast<unsigned int>(data.at(3)) << 24) | (static_cast<unsigned int>(data.at(2)) << 16) | (static_cast<unsigned int>(data.at(1)) << 8) | static_cast<unsigned int>(data.at(0));
     x = static_cast<int>(u);
     return true;
 }
 
-int SGEXTN::Containers::Serialisation<int>::sizeOut([[maybe_unused]] int x){
+int SGEXTN::Containers::Serialise<int>::sizeOut([[maybe_unused]] int x){
     return 4;
 }
 
-int SGEXTN::Containers::Serialisation<int>::sizeIn(SGEXTN::Containers::Span<unsigned char> data){
+int SGEXTN::Containers::Serialise<int>::sizeIn(SGEXTN::Containers::Span<unsigned char> data){
     if(data.length() < 4){return -1;}
     return 4;
 }
 
-bool SGEXTN::Containers::Serialisation<unsigned int>::sendOut(unsigned int x, SGEXTN::Containers::Span<unsigned char> data){
+bool SGEXTN::Containers::Serialise<unsigned int>::sendOut(unsigned int x, SGEXTN::Containers::Span<unsigned char> data){
     if(data.length() != 4){return false;}
     data.at(0) = x & static_cast<unsigned char>(0xff);
     data.at(1) = (x >> 8) & static_cast<unsigned char>(0xff);
@@ -145,22 +145,22 @@ bool SGEXTN::Containers::Serialisation<unsigned int>::sendOut(unsigned int x, SG
     return true;
 }
 
-bool SGEXTN::Containers::Serialisation<unsigned int>::sendIn(unsigned int& x, SGEXTN::Containers::Span<unsigned char> data){
+bool SGEXTN::Containers::Serialise<unsigned int>::sendIn(unsigned int& x, SGEXTN::Containers::Span<unsigned char> data){
     if(data.length() != 4){return false;}
     x = (static_cast<unsigned int>(data.at(3)) << 24) | (static_cast<unsigned int>(data.at(2)) << 16) | (static_cast<unsigned int>(data.at(1)) << 8) | static_cast<unsigned int>(data.at(0));
     return true;
 }
 
-int SGEXTN::Containers::Serialisation<unsigned int>::sizeOut([[maybe_unused]] unsigned int x){
+int SGEXTN::Containers::Serialise<unsigned int>::sizeOut([[maybe_unused]] unsigned int x){
     return 4;
 }
 
-int SGEXTN::Containers::Serialisation<unsigned int>::sizeIn(SGEXTN::Containers::Span<unsigned char> data){
+int SGEXTN::Containers::Serialise<unsigned int>::sizeIn(SGEXTN::Containers::Span<unsigned char> data){
     if(data.length() < 4){return -1;}
     return 4;
 }
 
-bool SGEXTN::Containers::Serialisation<long long>::sendOut(long long x, SGEXTN::Containers::Span<unsigned char> data){
+bool SGEXTN::Containers::Serialise<long long>::sendOut(long long x, SGEXTN::Containers::Span<unsigned char> data){
     if(data.length() != 8){return false;}
     const unsigned long long u = static_cast<unsigned long long>(x);
     data.at(0) = u & static_cast<unsigned char>(0xff);
@@ -174,23 +174,23 @@ bool SGEXTN::Containers::Serialisation<long long>::sendOut(long long x, SGEXTN::
     return true;
 }
 
-bool SGEXTN::Containers::Serialisation<long long>::sendIn(long long& x, SGEXTN::Containers::Span<unsigned char> data){
+bool SGEXTN::Containers::Serialise<long long>::sendIn(long long& x, SGEXTN::Containers::Span<unsigned char> data){
     if(data.length() != 8){return false;}
     const unsigned long long u = (static_cast<unsigned long long>(data.at(7)) << 56) | (static_cast<unsigned long long>(data.at(6)) << 48) | (static_cast<unsigned long long>(data.at(5)) << 40) | (static_cast<unsigned long long>(data.at(4)) << 32) | (static_cast<unsigned long long>(data.at(3)) << 24) | (static_cast<unsigned long long>(data.at(2)) << 16) | (static_cast<unsigned long long>(data.at(1)) << 8) | static_cast<unsigned long long>(data.at(0));
     x = static_cast<long long>(u);
     return true;
 }
 
-int SGEXTN::Containers::Serialisation<long long>::sizeOut([[maybe_unused]] long long x){
+int SGEXTN::Containers::Serialise<long long>::sizeOut([[maybe_unused]] long long x){
     return 8;
 }
 
-int SGEXTN::Containers::Serialisation<long long>::sizeIn(SGEXTN::Containers::Span<unsigned char> data){
+int SGEXTN::Containers::Serialise<long long>::sizeIn(SGEXTN::Containers::Span<unsigned char> data){
     if(data.length() < 8){return -1;}
     return 8;
 }
 
-bool SGEXTN::Containers::Serialisation<unsigned long long>::sendOut(unsigned long long x, SGEXTN::Containers::Span<unsigned char> data){
+bool SGEXTN::Containers::Serialise<unsigned long long>::sendOut(unsigned long long x, SGEXTN::Containers::Span<unsigned char> data){
     if(data.length() != 8){return false;}
     data.at(0) = x & static_cast<unsigned char>(0xff);
     data.at(1) = (x >> 8) & static_cast<unsigned char>(0xff);
@@ -203,22 +203,22 @@ bool SGEXTN::Containers::Serialisation<unsigned long long>::sendOut(unsigned lon
     return true;
 }
 
-bool SGEXTN::Containers::Serialisation<unsigned long long>::sendIn(unsigned long long& x, SGEXTN::Containers::Span<unsigned char> data){
+bool SGEXTN::Containers::Serialise<unsigned long long>::sendIn(unsigned long long& x, SGEXTN::Containers::Span<unsigned char> data){
     if(data.length() != 8){return false;}
     x = (static_cast<unsigned long long>(data.at(7)) << 56) | (static_cast<unsigned long long>(data.at(6)) << 48) | (static_cast<unsigned long long>(data.at(5)) << 40) | (static_cast<unsigned long long>(data.at(4)) << 32) | (static_cast<unsigned long long>(data.at(3)) << 24) | (static_cast<unsigned long long>(data.at(2)) << 16) | (static_cast<unsigned long long>(data.at(1)) << 8) | static_cast<unsigned long long>(data.at(0));
     return true;
 }
 
-int SGEXTN::Containers::Serialisation<unsigned long long>::sizeOut([[maybe_unused]] unsigned long long x){
+int SGEXTN::Containers::Serialise<unsigned long long>::sizeOut([[maybe_unused]] unsigned long long x){
     return 8;
 }
 
-int SGEXTN::Containers::Serialisation<unsigned long long>::sizeIn(SGEXTN::Containers::Span<unsigned char> data){
+int SGEXTN::Containers::Serialise<unsigned long long>::sizeIn(SGEXTN::Containers::Span<unsigned char> data){
     if(data.length() < 8){return -1;}
     return 8;
 }
 
-bool SGEXTN::Containers::Serialisation<float>::sendOut(float x, SGEXTN::Containers::Span<unsigned char> data){
+bool SGEXTN::Containers::Serialise<float>::sendOut(float x, SGEXTN::Containers::Span<unsigned char> data){
     if(data.length() != 4){return false;}
     const unsigned int sign = static_cast<unsigned int>(std::signbit(x));
     unsigned int exponent = 0;
@@ -242,13 +242,13 @@ bool SGEXTN::Containers::Serialisation<float>::sendOut(float x, SGEXTN::Containe
         }
     }
     const unsigned int packedBinary = (sign << 31) | (exponent << 23) | mantissa;
-    return SGEXTN::Containers::Serialisation<unsigned int>::sendOut(packedBinary, data);
+    return SGEXTN::Containers::Serialise<unsigned int>::sendOut(packedBinary, data);
 }
 
-bool SGEXTN::Containers::Serialisation<float>::sendIn(float& x, SGEXTN::Containers::Span<unsigned char> data){
+bool SGEXTN::Containers::Serialise<float>::sendIn(float& x, SGEXTN::Containers::Span<unsigned char> data){
     if(data.length() != 4){return false;}
     unsigned int packedBinary = 0;
-    const bool isSuccessful = SGEXTN::Containers::Serialisation<unsigned int>::sendIn(packedBinary, data);
+    const bool isSuccessful = SGEXTN::Containers::Serialise<unsigned int>::sendIn(packedBinary, data);
     if(isSuccessful == false){return false;}
     const unsigned int sign = static_cast<int>((packedBinary & 0x80000000) >> 31);
     const unsigned int exponent = (packedBinary & 0x7f800000) >> 23;
@@ -267,16 +267,16 @@ bool SGEXTN::Containers::Serialisation<float>::sendIn(float& x, SGEXTN::Containe
     return true;
 }
 
-int SGEXTN::Containers::Serialisation<float>::sizeOut([[maybe_unused]] float x){
+int SGEXTN::Containers::Serialise<float>::sizeOut([[maybe_unused]] float x){
     return 4;
 }
 
-int SGEXTN::Containers::Serialisation<float>::sizeIn(SGEXTN::Containers::Span<unsigned char> data){
+int SGEXTN::Containers::Serialise<float>::sizeIn(SGEXTN::Containers::Span<unsigned char> data){
     if(data.length() < 4){return -1;}
     return 4;
 }
 
-bool SGEXTN::Containers::Serialisation<double>::sendOut(double x, SGEXTN::Containers::Span<unsigned char> data){
+bool SGEXTN::Containers::Serialise<double>::sendOut(double x, SGEXTN::Containers::Span<unsigned char> data){
     if(data.length() != 8){return false;}
     const unsigned long long sign = static_cast<unsigned long long>(std::signbit(x));
     unsigned long long exponent = 0;
@@ -300,13 +300,13 @@ bool SGEXTN::Containers::Serialisation<double>::sendOut(double x, SGEXTN::Contai
         }
     }
     const unsigned long long packedBinary = (sign << 63) | (exponent << 52) | mantissa;
-    return SGEXTN::Containers::Serialisation<unsigned long long>::sendOut(packedBinary, data);
+    return SGEXTN::Containers::Serialise<unsigned long long>::sendOut(packedBinary, data);
 }
 
-bool SGEXTN::Containers::Serialisation<double>::sendIn(double& x, SGEXTN::Containers::Span<unsigned char> data){
+bool SGEXTN::Containers::Serialise<double>::sendIn(double& x, SGEXTN::Containers::Span<unsigned char> data){
     if(data.length() != 8){return false;}
     unsigned long long packedBinary = 0;
-    const bool isSuccessful = SGEXTN::Containers::Serialisation<unsigned long long>::sendIn(packedBinary, data);
+    const bool isSuccessful = SGEXTN::Containers::Serialise<unsigned long long>::sendIn(packedBinary, data);
     if(isSuccessful == false){return false;}
     const unsigned long long sign = static_cast<int>((packedBinary & 0x8000000000000000ull) >> 63);
     const unsigned long long exponent = (packedBinary & 0x7ff0000000000000ull) >> 52;
@@ -325,11 +325,11 @@ bool SGEXTN::Containers::Serialisation<double>::sendIn(double& x, SGEXTN::Contai
     return true;
 }
 
-int SGEXTN::Containers::Serialisation<double>::sizeOut([[maybe_unused]] double x){
+int SGEXTN::Containers::Serialise<double>::sizeOut([[maybe_unused]] double x){
     return 8;
 }
 
-int SGEXTN::Containers::Serialisation<double>::sizeIn(SGEXTN::Containers::Span<unsigned char> data){
+int SGEXTN::Containers::Serialise<double>::sizeIn(SGEXTN::Containers::Span<unsigned char> data){
     if(data.length() < 8){return -1;}
     return 8;
 }

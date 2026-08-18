@@ -20,7 +20,7 @@
 #include <SGEXTN/Containers/ForceCrash.h>
 #include <SGEXTN/SeerattraNum/DirectRandom.h>
 #include <SGEXTN/Math/FloatMath.h>
-#include <SGEXTN/Containers/Serialisation.h>
+#include <SGEXTN/Containers/Serialise.h>
 #include <SGEXTN/Containers/Span.h>
 
 SGEXTN::SeerattraNum::GumbelDistribution::GumbelDistribution() : SGEXTN::SeerattraNum::GumbelDistribution(true, 0.0f, 1.0f){}
@@ -30,14 +30,14 @@ SGEXTN::SeerattraNum::GumbelDistribution::GumbelDistribution(bool useGlobal, flo
 }
 
 bool SGEXTN::SeerattraNum::GumbelDistribution::sendOut(const SGEXTN::SeerattraNum::GumbelDistribution& x, SGEXTN::Containers::Span<unsigned char> data){
-    return SGEXTN::Containers::Serialisation<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float, float>::sendOut(x.private_rngLocator, x.private_mode, x.private_spread, data);
+    return SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float, float>::sendOut(x.private_rngLocator, x.private_mode, x.private_spread, data);
 }
 
 bool SGEXTN::SeerattraNum::GumbelDistribution::sendIn(SGEXTN::SeerattraNum::GumbelDistribution& x, SGEXTN::Containers::Span<unsigned char> data){
     SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator(true);
     float mode = 0.0f;
     float spread = 0.0f;
-    const bool isValid = SGEXTN::Containers::Serialisation<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float, float>::sendIn(rngLocator, mode, spread, data);
+    const bool isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float, float>::sendIn(rngLocator, mode, spread, data);
     if(isValid == false || spread <= 0.0f){return false;}
     x = SGEXTN::SeerattraNum::GumbelDistribution(true, mode, spread);
     x.private_rngLocator = rngLocator;

@@ -18,7 +18,7 @@
 #include <SGEXTN/Utilities/Identifier.h>
 #include <SGEXTN/Containers/Hash.h>
 #include <SGEXTN/CoreText/String.h>
-#include <SGEXTN/Containers/Serialisation.h>
+#include <SGEXTN/Containers/Serialise.h>
 #include <SGEXTN/Containers/Span.h>
 
 SGEXTN::Utilities::Identifier::Identifier() : private_data(0) {}
@@ -58,12 +58,12 @@ SGEXTN::CoreText::String SGEXTN::Utilities::Identifier::debugPrint() const {
 }
 
 bool SGEXTN::Utilities::Identifier::sendOut(SGEXTN::Utilities::Identifier x, SGEXTN::Containers::Span<unsigned char> data){
-    return SGEXTN::Containers::Serialisation<unsigned int>::sendOut(x.private_data, data);
+    return SGEXTN::Containers::Serialise<unsigned int>::sendOut(x.private_data, data);
 }
 
 bool SGEXTN::Utilities::Identifier::sendIn(SGEXTN::Utilities::Identifier& x, SGEXTN::Containers::Span<unsigned char> data){
     unsigned int internalData = 0;
-    const bool isValid = SGEXTN::Containers::Serialisation<unsigned int>::sendIn(internalData, data);
+    const bool isValid = SGEXTN::Containers::Serialise<unsigned int>::sendIn(internalData, data);
     if(isValid == false){return false;}
     x.private_data = internalData;
     return true;

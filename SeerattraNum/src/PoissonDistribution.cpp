@@ -20,7 +20,7 @@
 #include <SGEXTN/Containers/ForceCrash.h>
 #include <SGEXTN/SeerattraNum/DirectRandom.h>
 #include <SGEXTN/Math/FloatMath.h>
-#include <SGEXTN/Containers/Serialisation.h>
+#include <SGEXTN/Containers/Serialise.h>
 #include <SGEXTN/Containers/Span.h>
 
 SGEXTN::SeerattraNum::PoissonDistribution::PoissonDistribution() : SGEXTN::SeerattraNum::PoissonDistribution(true, 1.0f){}
@@ -31,13 +31,13 @@ SGEXTN::SeerattraNum::PoissonDistribution::PoissonDistribution(bool useGlobal, f
 }
 
 bool SGEXTN::SeerattraNum::PoissonDistribution::sendOut(const SGEXTN::SeerattraNum::PoissonDistribution& x, SGEXTN::Containers::Span<unsigned char> data){
-    return SGEXTN::Containers::Serialisation<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float>::sendOut(x.private_rngLocator, x.private_mean, data);
+    return SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float>::sendOut(x.private_rngLocator, x.private_mean, data);
 }
 
 bool SGEXTN::SeerattraNum::PoissonDistribution::sendIn(SGEXTN::SeerattraNum::PoissonDistribution& x, SGEXTN::Containers::Span<unsigned char> data){
     SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator(true);
     float mean = 0.0f;
-    const bool isValid = SGEXTN::Containers::Serialisation<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float>::sendIn(rngLocator, mean, data);
+    const bool isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float>::sendIn(rngLocator, mean, data);
     if(isValid == false || mean <= 0.0f){return false;}
     x = SGEXTN::SeerattraNum::PoissonDistribution(true, mean);
     x.private_rngLocator = rngLocator;

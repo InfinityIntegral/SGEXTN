@@ -20,7 +20,7 @@
 #include <SGEXTN/SeerattraNum/UniformDistributionInteger.h>
 #include <SGEXTN/Containers/ForceCrash.h>
 #include <SGEXTN/SeerattraNum/DirectRandom.h>
-#include <SGEXTN/Containers/Serialisation.h>
+#include <SGEXTN/Containers/Serialise.h>
 #include <SGEXTN/Containers/Span.h>
 
 SGEXTN::SeerattraNum::RandomPermutation::RandomPermutation() : SGEXTN::SeerattraNum::RandomPermutation(true){}
@@ -28,12 +28,12 @@ SGEXTN::SeerattraNum::RandomPermutation::RandomPermutation() : SGEXTN::Seerattra
 SGEXTN::SeerattraNum::RandomPermutation::RandomPermutation(bool useGlobal) : private_rngLocator(useGlobal), private_uniformDistribution(true, 0, 0){}
 
 bool SGEXTN::SeerattraNum::RandomPermutation::sendOut(const SGEXTN::SeerattraNum::RandomPermutation& x, SGEXTN::Containers::Span<unsigned char> data){
-    return SGEXTN::Containers::Serialisation<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::sendOut(x.private_rngLocator, data);
+    return SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::sendOut(x.private_rngLocator, data);
 }
 
 bool SGEXTN::SeerattraNum::RandomPermutation::sendIn(SGEXTN::SeerattraNum::RandomPermutation& x, SGEXTN::Containers::Span<unsigned char> data){
     SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator(true);
-    const bool isValid = SGEXTN::Containers::Serialisation<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::sendIn(rngLocator, data);
+    const bool isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::sendIn(rngLocator, data);
     if(isValid == false){return false;}
     x = SGEXTN::SeerattraNum::RandomPermutation(true);
     x.private_rngLocator = rngLocator;

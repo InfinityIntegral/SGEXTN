@@ -22,7 +22,7 @@
 #include <SGEXTN/Math/FloatMath.h>
 #include <SGEXTN/SeerattraNum/private_api/ZigguratTables.h>
 #include <SGEXTN/Math/FloatLimits.h>
-#include <SGEXTN/Containers/Serialisation.h>
+#include <SGEXTN/Containers/Serialise.h>
 #include <SGEXTN/Containers/Span.h>
 #include <cmath>
 
@@ -88,13 +88,13 @@ SGEXTN::SeerattraNum::ExponentialDistribution::ExponentialDistribution(bool useG
 }
 
 bool SGEXTN::SeerattraNum::ExponentialDistribution::sendOut(const SGEXTN::SeerattraNum::ExponentialDistribution& x, SGEXTN::Containers::Span<unsigned char> data){
-    return SGEXTN::Containers::Serialisation<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float>::sendOut(x.private_rngLocator, x.private_meanEventsPerTime, data);
+    return SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float>::sendOut(x.private_rngLocator, x.private_meanEventsPerTime, data);
 }
 
 bool SGEXTN::SeerattraNum::ExponentialDistribution::sendIn(SGEXTN::SeerattraNum::ExponentialDistribution& x, SGEXTN::Containers::Span<unsigned char> data){
     SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator(true);
     float rate = 0.0f;
-    const bool isValid = SGEXTN::Containers::Serialisation<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float>::sendIn(rngLocator, rate, data);
+    const bool isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float>::sendIn(rngLocator, rate, data);
     if(isValid == false || rate <= 0.0f){return false;}
     x = SGEXTN::SeerattraNum::ExponentialDistribution(true, rate);
     x.private_rngLocator = rngLocator;

@@ -21,7 +21,7 @@
 #include <SGEXTN/SeerattraNum/DirectRandom.h>
 #include <SGEXTN/SeerattraNum/GammaDistribution.h>
 #include <SGEXTN/SeerattraNum/PoissonDistribution.h>
-#include <SGEXTN/Containers/Serialisation.h>
+#include <SGEXTN/Containers/Serialise.h>
 #include <SGEXTN/Containers/Span.h>
 
 SGEXTN::SeerattraNum::NegativeBinomialDistribution::NegativeBinomialDistribution() : SGEXTN::SeerattraNum::NegativeBinomialDistribution(true, 0.5f, 1){}
@@ -35,14 +35,14 @@ SGEXTN::SeerattraNum::NegativeBinomialDistribution::NegativeBinomialDistribution
 }
 
 bool SGEXTN::SeerattraNum::NegativeBinomialDistribution::sendOut(const SGEXTN::SeerattraNum::NegativeBinomialDistribution& x, SGEXTN::Containers::Span<unsigned char> data){
-    return SGEXTN::Containers::Serialisation<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float, int>::sendOut(x.private_rngLocator, x.private_chanceOfTrue, x.private_successCount, data);
+    return SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float, int>::sendOut(x.private_rngLocator, x.private_chanceOfTrue, x.private_successCount, data);
 }
 
 bool SGEXTN::SeerattraNum::NegativeBinomialDistribution::sendIn(SGEXTN::SeerattraNum::NegativeBinomialDistribution& x, SGEXTN::Containers::Span<unsigned char> data){
     SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator(true);
     float probability = 0.0f;
     int successes = 0;
-    const bool isValid = SGEXTN::Containers::Serialisation<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float, int>::sendIn(rngLocator, probability, successes, data);
+    const bool isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float, int>::sendIn(rngLocator, probability, successes, data);
     if(isValid == false || probability < 0.0f || probability > 1.0f || successes < 0){return false;}
     x = SGEXTN::SeerattraNum::NegativeBinomialDistribution(true, probability, successes);
     x.private_rngLocator = rngLocator;

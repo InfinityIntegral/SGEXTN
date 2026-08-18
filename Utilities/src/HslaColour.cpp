@@ -20,7 +20,7 @@
 #include <SGEXTN/Math/FloatMath.h>
 #include <SGEXTN/CoreText/String.h>
 #include <SGEXTN/Containers/Hash.h>
-#include <SGEXTN/Containers/Serialisation.h>
+#include <SGEXTN/Containers/Serialise.h>
 #include <SGEXTN/Containers/Span.h>
 
 namespace {
@@ -118,7 +118,7 @@ SGEXTN::CoreText::String SGEXTN::Utilities::HslaColour::debugPrint() const {
 }
 
 bool SGEXTN::Utilities::HslaColour::sendOut(SGEXTN::Utilities::HslaColour x, SGEXTN::Containers::Span<unsigned char> data){
-    return SGEXTN::Containers::Serialisation<float, float, float, float>::sendOut(x.private_hue, x.private_saturation, x.private_lightness, x.private_transparency, data);
+    return SGEXTN::Containers::Serialise<float, float, float, float>::sendOut(x.private_hue, x.private_saturation, x.private_lightness, x.private_transparency, data);
 }
 
 bool SGEXTN::Utilities::HslaColour::sendIn(SGEXTN::Utilities::HslaColour& x, SGEXTN::Containers::Span<unsigned char> data){
@@ -126,7 +126,7 @@ bool SGEXTN::Utilities::HslaColour::sendIn(SGEXTN::Utilities::HslaColour& x, SGE
     float s = 0.0f;
     float l = 0.0f;
     float a = 0.0f;
-    const bool isValid = SGEXTN::Containers::Serialisation<float, float, float, float>::sendIn(h, s, l, a, data);
+    const bool isValid = SGEXTN::Containers::Serialise<float, float, float, float>::sendIn(h, s, l, a, data);
     if(isValid == false || h < 0.0f || h > 360.0f || s < 0.0f || s > 100.0f || l < 0.0f || l > 100.0f || a < 0.0f || a > 100.0f){return false;}
     x = SGEXTN::Utilities::HslaColour(h, s, l, a);
     return true;

@@ -20,7 +20,7 @@
 #include <SGEXTN/Containers/ForceCrash.h>
 #include <SGEXTN/SeerattraNum/DirectRandom.h>
 #include <SGEXTN/Math/IntegerLimits.h>
-#include <SGEXTN/Containers/Serialisation.h>
+#include <SGEXTN/Containers/Serialise.h>
 #include <SGEXTN/Containers/Span.h>
 
 SGEXTN::SeerattraNum::UniformDistributionInteger::UniformDistributionInteger() : SGEXTN::SeerattraNum::UniformDistributionInteger(true, 0, 0){}
@@ -30,14 +30,14 @@ SGEXTN::SeerattraNum::UniformDistributionInteger::UniformDistributionInteger(boo
 }
 
 bool SGEXTN::SeerattraNum::UniformDistributionInteger::sendOut(const SGEXTN::SeerattraNum::UniformDistributionInteger& x, SGEXTN::Containers::Span<unsigned char> data){
-    return SGEXTN::Containers::Serialisation<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, int, int>::sendOut(x.private_rngLocator, x.private_inclusiveMin, x.private_inclusiveMax, data);
+    return SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, int, int>::sendOut(x.private_rngLocator, x.private_inclusiveMin, x.private_inclusiveMax, data);
 }
 
 bool SGEXTN::SeerattraNum::UniformDistributionInteger::sendIn(SGEXTN::SeerattraNum::UniformDistributionInteger& x, SGEXTN::Containers::Span<unsigned char> data){
     SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator(true);
     int min = 0;
     int max = 0;
-    const bool isValid = SGEXTN::Containers::Serialisation<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, int, int>::sendIn(rngLocator, min, max, data);
+    const bool isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, int, int>::sendIn(rngLocator, min, max, data);
     if(isValid == false || max < min){return false;}
     x = SGEXTN::SeerattraNum::UniformDistributionInteger(true, min, max);
     x.private_rngLocator = rngLocator;
