@@ -55,6 +55,9 @@ public:
     [[nodiscard]] bool operator<(const ConstructibleInteger& x) const;
     [[nodiscard]] bool operator>(const ConstructibleInteger& x) const;
     [[nodiscard]] int hash() const;
+    [[nodiscard]] static bool sendOut(const ConstructibleInteger& x, SGEXTN::Containers::Span<unsigned char> data);
+    [[nodiscard]] static bool sendIn(ConstructibleInteger& x, SGEXTN::Containers::Span<unsigned char> data);
+    [[nodiscard]] static int size();
 };
 
 int ConstructibleInteger::lastConstruct = 0;
@@ -110,9 +113,38 @@ bool ConstructibleInteger::operator>(const ConstructibleInteger& x) const {
     return (value > x.value);
 }
 
+template <typename T> bool operator==(const SGEXTN::Containers::Array<T>& a, const SGEXTN::Containers::Array<T>& b){
+    if(a.length() != b.length()){return false;}
+    for(int i=0; i<a.length(); i++){
+        if((a.at(i) == b.at(i)) == false){return false;}
+    }
+    return true;
+}
+
 int ConstructibleInteger::hash() const {
     return SGEXTN::Containers::Hash<int>()(value);
 }
+
+bool ConstructibleInteger::sendOut(const ConstructibleInteger& x, SGEXTN::Containers::Span<unsigned char> data){
+    return SGEXTN::Containers::Serialise<int>::sendOut(x.value, data);
+}
+
+bool ConstructibleInteger::sendIn(ConstructibleInteger& x, SGEXTN::Containers::Span<unsigned char> data){
+    int val = 0;
+    const bool isValid = SGEXTN::Containers::Serialise<int>::sendIn(val, data);
+    if(isValid == false){return false;}
+    x.value = val;
+    return true;
+}
+
+int ConstructibleInteger::size(){
+    return 4;
+}
+
+enum class EnumClass : unsigned char {
+    Default = 0,
+    Alternative = 1
+};
 
 bool isBitwiseIdentical(const SGEXTN::Containers::Array<unsigned char>& a, const SGEXTN::Containers::Array<unsigned char>& b){
     if(a.length() != b.length()){return false;}
@@ -131,6 +163,10 @@ bool isBitwiseIdentical(int length, const SGEXTN::Containers::Array<unsigned cha
 
 SGEXTN::Containers::Span<unsigned char> makeSpan(SGEXTN::Containers::Array<unsigned char>& array, int length){
     return SGEXTN::Containers::Span<unsigned char>(array, 0, length);
+}
+
+SGEXTN::Containers::Span<unsigned char> makeSpan(SGEXTN::Containers::Array<unsigned char>& array, int start, int length){
+    return SGEXTN::Containers::Span<unsigned char>(array, start, length);
 }
 }
 
@@ -1137,6 +1173,75 @@ void SGEXTN::InternalTest::ContainersTest::testSerialise(){
     if(isValid == false || d != 726.0625){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sendIn double fail");}
     if(SGEXTN::Containers::Serialise<double>::sizeOut(726.0625) != 8){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sizeOut double fail");}
     if(SGEXTN::Containers::Serialise<double>::sizeIn(makeSpan(targetArray, 100)) != 8){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sizeIn double fail");}
+
+    isValid = false;
+    targetArray.at(0) = static_cast<unsigned char>(0x01);
+    isValid = SGEXTN::Containers::Serialise<EnumClass>::sendOut(EnumClass::Alternative, makeSpan(serialiseDestination, 1));
+    if(isValid == false || isBitwiseIdentical(1, serialiseDestination, targetArray) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sendOut enum class fail");}
+    EnumClass ec = EnumClass::Default;
+    isValid = false;
+    isValid = SGEXTN::Containers::Serialise<EnumClass>::sendIn(ec, makeSpan(targetArray, 1));
+    if(isValid == false || ec != EnumClass::Alternative){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sendIn enum class fail");}
+    if(SGEXTN::Containers::Serialise<EnumClass>::sizeOut(EnumClass::Alternative) != 1){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sizeOut enum class fail");}
+    if(SGEXTN::Containers::Serialise<EnumClass>::sizeIn(makeSpan(targetArray, 100)) != 1){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sizeIn enum class fail");}
+
+    isValid = false;
+    targetArray.at(0) = static_cast<unsigned char>(0xd6);
+    targetArray.at(1) = static_cast<unsigned char>(0x02);
+    targetArray.at(2) = static_cast<unsigned char>(0x00);
+    targetArray.at(3) = static_cast<unsigned char>(0x00);
+    isValid = SGEXTN::Containers::Serialise<ConstructibleInteger>::sendOut(ConstructibleInteger(726), makeSpan(serialiseDestination, 4));
+    if(isValid == false || isBitwiseIdentical(1, serialiseDestination, targetArray) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sendOut custom class fail");}
+    ConstructibleInteger cc = ConstructibleInteger(0);
+    isValid = false;
+    isValid = SGEXTN::Containers::Serialise<ConstructibleInteger>::sendIn(cc, makeSpan(targetArray, 4));
+    if(isValid == false || cc.value != 726){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sendIn custom class fail");}
+    if(SGEXTN::Containers::Serialise<ConstructibleInteger>::sizeOut(ConstructibleInteger(726)) != 4){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sizeOut custom class fail");}
+    if(SGEXTN::Containers::Serialise<ConstructibleInteger>::sizeIn(makeSpan(targetArray, 100)) != 4){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sizeIn custom class fail");}
+
+    isValid = false;
+    isValid = SGEXTN::Containers::Serialise<bool>::sendOut(false, makeSpan(targetArray, 0, 1));
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(3, makeSpan(targetArray, 1, 4));
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(4, makeSpan(targetArray, 5, 4));
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(26, makeSpan(targetArray, 9, 4));
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(726, makeSpan(targetArray, 13, 4));
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(1965, makeSpan(targetArray, 17, 4));
+    const SGEXTN::Containers::Array<int> sampleArray(26, 726, 1965);
+    isValid = SGEXTN::Containers::Serialise<SGEXTN::Containers::Array<int>>::sendOut(sampleArray, makeSpan(serialiseDestination, 21));
+    if(isValid == false || isBitwiseIdentical(21, serialiseDestination, targetArray) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sendOut constant size array fail");}
+    SGEXTN::Containers::Array<int> csa(0);
+    isValid = false;
+    isValid = SGEXTN::Containers::Serialise<SGEXTN::Containers::Array<int>>::sendIn(csa, makeSpan(targetArray, 21));
+    if(isValid == false || (csa == sampleArray) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sendIn constant size array fail");}
+    if(SGEXTN::Containers::Serialise<SGEXTN::Containers::Array<int>>::sizeOut(sampleArray) != 21){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sizeOut constant size array fail");}
+    if(SGEXTN::Containers::Serialise<SGEXTN::Containers::Array<int>>::sizeIn(makeSpan(targetArray, 100)) != 21){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sizeIn constant size array fail");}
+
+    isValid = false;
+    isValid = SGEXTN::Containers::Serialise<bool>::sendOut(true, makeSpan(targetArray, 0, 1));
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(2, makeSpan(targetArray, 1, 4));
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(17, makeSpan(targetArray, 5, 4));
+    isValid = SGEXTN::Containers::Serialise<bool>::sendOut(false, makeSpan(targetArray, 9, 1));
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(2, makeSpan(targetArray, 10, 4));
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(4, makeSpan(targetArray, 14, 4));
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(26, makeSpan(targetArray, 18, 4));
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(726, makeSpan(targetArray, 22, 4));
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(21, makeSpan(targetArray, 26, 4));
+    isValid = SGEXTN::Containers::Serialise<bool>::sendOut(false, makeSpan(targetArray, 30, 1));
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(3, makeSpan(targetArray, 31, 4));
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(4, makeSpan(targetArray, 35, 4));
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(26, makeSpan(targetArray, 39, 4));
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(726, makeSpan(targetArray, 43, 4));
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(1965, makeSpan(targetArray, 47, 4));
+    SGEXTN::Containers::Array<SGEXTN::Containers::Array<int>> otherSampleArray(SGEXTN::Containers::Array<int>(2, 26), SGEXTN::Containers::Array<int>(26, 726, 1965));
+    otherSampleArray.at(0).at(1) = 726;
+    isValid = SGEXTN::Containers::Serialise<SGEXTN::Containers::Array<SGEXTN::Containers::Array<int>>>::sendOut(otherSampleArray, makeSpan(serialiseDestination, 51));
+    if(isValid == false || isBitwiseIdentical(51, serialiseDestination, targetArray) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sendOut variable size array fail");}
+    SGEXTN::Containers::Array<SGEXTN::Containers::Array<int>> vsa(0, SGEXTN::Containers::Array<int>(0));
+    isValid = false;
+    isValid = SGEXTN::Containers::Serialise<SGEXTN::Containers::Array<SGEXTN::Containers::Array<int>>>::sendIn(vsa, makeSpan(targetArray, 51));
+    if(isValid == false || (vsa == otherSampleArray) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sendIn variable size array fail");}
+    if(SGEXTN::Containers::Serialise<SGEXTN::Containers::Array<SGEXTN::Containers::Array<int>>>::sizeOut(otherSampleArray) != 51){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sizeOut variable size array fail");}
+    if(SGEXTN::Containers::Serialise<SGEXTN::Containers::Array<SGEXTN::Containers::Array<int>>>::sizeIn(makeSpan(targetArray, 100)) != 51){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sizeIn variable size array fail");}
 }
 
 void SGEXTN::InternalTest::ContainersTest::testAll(){

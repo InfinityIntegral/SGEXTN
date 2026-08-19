@@ -20,8 +20,18 @@
 #include <SGEXTN/Containers/Span.h>
 #include <SGEXTN/Containers/ForceCrash.h>
 
-namespace SGEXTN { namespace Containers { template <typename T1, typename T2> class IsSameType {};
-template <typename T> class IsSameType<T, T> {public: static bool same;}; template <typename T> bool IsSameType<T, T>::same = true;} }
+namespace SGEXTN {
+namespace Containers {
+template <typename T1, typename T2> class IsSameType {};
+template <typename T> class IsSameType<T, T> {public: static bool same;};
+template <typename T> bool IsSameType<T, T>::same = true;
+template <typename T, bool B> class IsTrue {};
+template <typename T> class IsTrue<T, true> {public: static bool isTrue;};
+template <typename T> bool IsTrue<T, true>::isTrue = true;
+template <typename T> class CreateInstance {public: static T&& getInstance() noexcept;};
+template <typename T> class CreateAssignable {public: static T& getInstance() noexcept;};
+}
+}
 
 template <typename... Ts> bool SGEXTN::Containers::Serialise<Ts...>::sendOut(const Ts&... xs, SGEXTN::Containers::Span<unsigned char> data){
     const int requiredLength = SGEXTN::Containers::Serialise<Ts...>::sizeOut(xs...);
@@ -60,26 +70,35 @@ template <typename... Ts> int SGEXTN::Containers::Serialise<Ts...>::sizeIn(SGEXT
 
 template <typename T> bool SGEXTN::Containers::Serialise<T>::sendOut(const T& x, SGEXTN::Containers::Span<unsigned char> data){
     if(data.length() != SGEXTN::Containers::Serialise<T>::sizeOut(x)){return false;}
-    if constexpr (requires{SGEXTN::Containers::IsSameType<decltype(T::sendOut(x, data)), bool>::same;}){return T::sendOut(x, data);}
+    if constexpr (requires{SGEXTN::Containers::CreateAssignable<unsigned char>::getInstance() = x;} == false && requires{SGEXTN::Containers::CreateAssignable<unsigned char>::getInstance() = static_cast<unsigned char>(x);} == true && requires{SGEXTN::Containers::IsTrue<bool, sizeof(T) == 1>::isTrue;} == true){return SGEXTN::Containers::Serialise<unsigned char>::sendOut(static_cast<unsigned char>(x), data);}
+    if constexpr (requires{SGEXTN::Containers::IsSameType<decltype(T::sendOut(x, data)), bool>::same;} == true){return T::sendOut(x, data);}
     SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise::sendOut requires custom type T to have bool T::sendOut(const T& x, SGEXTN::Containers::Span<unsigned char>& data); properly defined to work");
 }
 
 template <typename T> bool SGEXTN::Containers::Serialise<T>::sendIn(T& x, SGEXTN::Containers::Span<unsigned char> data){
     if(data.length() != SGEXTN::Containers::Serialise<T>::sizeIn(data)){return false;}
-    if constexpr (requires{SGEXTN::Containers::IsSameType<decltype(T::sendIn(x, data)), bool>::same;}){return T::sendIn(x, data);}
+    if constexpr (requires{SGEXTN::Containers::CreateAssignable<unsigned char>::getInstance() = x;} == false && requires{SGEXTN::Containers::CreateAssignable<unsigned char>::getInstance() = static_cast<unsigned char>(x);} == true && requires{SGEXTN::Containers::IsTrue<bool, sizeof(T) == 1>::isTrue;} == true){
+        unsigned char c = static_cast<unsigned char>(0);
+        const bool isValid = SGEXTN::Containers::Serialise<unsigned char>::sendIn(c, data);
+        x = static_cast<T>(c);
+        return isValid;
+    }
+    if constexpr (requires{SGEXTN::Containers::IsSameType<decltype(T::sendIn(x, data)), bool>::same;} == true){return T::sendIn(x, data);}
     SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise::sendIn requires custom type T to have bool T::sendIn(T& x, SGEXTN::Containers::Span<unsigned char> data); properly defined to work");
 }
 
 template <typename T> int SGEXTN::Containers::Serialise<T>::sizeOut(const T& x){
-    if constexpr (requires{SGEXTN::Containers::IsSameType<decltype(T::size()), int>::same;}){return T::size();}
-    if constexpr (requires{SGEXTN::Containers::IsSameType<decltype(T::sizeOut(x)), int>::same;}){return T::sizeOut(x);}
+    if constexpr (requires{SGEXTN::Containers::CreateAssignable<unsigned char>::getInstance() = x;} == false && requires{SGEXTN::Containers::CreateAssignable<unsigned char>::getInstance() = static_cast<unsigned char>(x);} == true && requires{SGEXTN::Containers::IsTrue<bool, sizeof(T) == 1>::isTrue;} == true){return 1;}
+    if constexpr (requires{SGEXTN::Containers::IsSameType<decltype(T::size()), int>::same;} == true){return T::size();}
+    if constexpr (requires{SGEXTN::Containers::IsSameType<decltype(T::sizeOut(x)), int>::same;} == true){return T::sizeOut(x);}
     SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise::sizeOut requires custom type T to have int T::sizeOut(const T& x); properly defined if T has variable size or int T::size(); properly defined if T has constant size to work");
 }
 
 template <typename T> int SGEXTN::Containers::Serialise<T>::sizeIn(SGEXTN::Containers::Span<unsigned char> data){
     int requiredLength = 0;
-    if constexpr (requires{SGEXTN::Containers::IsSameType<decltype(T::size()), int>::same;}){requiredLength = T::size();}
-    else if constexpr (requires{SGEXTN::Containers::IsSameType<decltype(T::sizeIn(data)), int>::same;}){requiredLength = T::sizeIn(data);}
+    if constexpr (requires{SGEXTN::Containers::CreateAssignable<unsigned char>::getInstance() = SGEXTN::Containers::CreateInstance<T>::getInstance();} == false && requires{SGEXTN::Containers::CreateAssignable<unsigned char>::getInstance() = static_cast<unsigned char>(SGEXTN::Containers::CreateInstance<T>::getInstance());} == true && requires{SGEXTN::Containers::IsTrue<bool, sizeof(T) == 1>::isTrue;} == true){requiredLength = 1;}
+    else if constexpr (requires{SGEXTN::Containers::IsSameType<decltype(T::size()), int>::same;} == true){requiredLength = T::size();}
+    else if constexpr (requires{SGEXTN::Containers::IsSameType<decltype(T::sizeIn(data)), int>::same;} == true){requiredLength = T::sizeIn(data);}
     else{SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise::sizeIn requires custom type T to have int T::sizeIn(SGEXTN::Containers::Span<unsigned char> data); properly defined if T has variable size or int T::size(); properly defined if T has constant size to work");}
     if(requiredLength > data.length()){return -1;}
     return requiredLength;

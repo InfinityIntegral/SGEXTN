@@ -28,9 +28,18 @@ template <typename T> class Span;
 namespace CoreText {
 class Character;
 
-enum class FloatPrecisionFormat : unsigned char {SignificantFigure, FractionalDigit, ScientificNotation};
+enum class FloatPrecisionFormat : unsigned char {
+    SignificantFigure = 1,
+    FractionalDigit = 2,
+    ScientificNotation = 3
+};
 
-enum class NormalisationFormat : unsigned char {Join, Separate, LossyJoin, LossySeparate};
+enum class NormalisationFormat : unsigned char {
+    Join = 1,
+    Separate = 2,
+    LossyJoin = 3,
+    LossySeparate = 4
+};
 
 class BuildLah_SGEXTN_CoreText String {
 public:

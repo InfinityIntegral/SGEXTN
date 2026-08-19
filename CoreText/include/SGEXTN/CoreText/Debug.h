@@ -32,12 +32,18 @@ template <typename T> class Vector;
 namespace CoreText {
 class Character;
 
-enum class DebugPrintMetadataMode : unsigned char {None, Line, All};
+enum class DebugPrintMetadataMode : unsigned char {
+    None = 1,
+    Line = 2,
+    All = 3
+};
+
 class BuildLah_SGEXTN_CoreText DebugPrintIntegerMode {
 public:
     DebugPrintIntegerMode(int base);
     int base;
 };
+
 class BuildLah_SGEXTN_CoreText DebugPrintFloatingPointMode {
 public:
     DebugPrintFloatingPointMode(int base, SGEXTN::CoreText::FloatPrecisionFormat format, int precision);
@@ -45,9 +51,22 @@ public:
     SGEXTN::CoreText::FloatPrecisionFormat format;
     int precision;
 };
-enum class DebugPrintCCharMode : unsigned char {Byte, Character};
-enum class DebugPrintStringMode : unsigned char {Byte, CodePoint, String};
-enum class DebugPrintPointerMode : unsigned char {NullCheck, TryDeref};
+
+enum class DebugPrintCCharMode : unsigned char {
+    Byte = 1,
+    Character = 2
+};
+
+enum class DebugPrintStringMode : unsigned char {
+    Byte = 1,
+    CodePoint = 2,
+    String = 3
+};
+
+enum class DebugPrintPointerMode : unsigned char {
+    NullCheck = 1,
+    TryDeref = 2
+};
 
 class BuildLah_SGEXTN_CoreText Debug {
 public:
