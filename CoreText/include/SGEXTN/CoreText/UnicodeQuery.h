@@ -21,13 +21,73 @@ namespace SGEXTN {
 namespace CoreText {
 class String;
 
-enum class SimplifiedCharacterType : unsigned char {Letter, Punctuation, Symbol, Mark, Number, Whitespace, Other};
+enum class SimplifiedCharacterType : unsigned char {
+    Letter = 1,
+    Punctuation = 2,
+    Symbol = 3,
+    Mark = 4,
+    Number = 5,
+    Whitespace = 6,
+    Other = 7
+};
 
-enum class FullCharacterType : unsigned char {NonspacingCombiningMark, SpacingCombiningMark, EnclosingMark, DecimalDigit, LetterNumber, OtherNumber, SpaceBreak, LineBreak, ParagraphBreak, ControlCharacter, FormatCharacter, SurrogateCharacter, PrivateUseCharacter, UnassignedCharacter, UppercaseLetter, LowercaseLetter, TitlecaseLetter, ModifierLetter, OtherLetter, ConnectorPunctuation, DashPunctuation, OpeningPunctuation, ClosingPunctuation, OpeningQuote, ClosingQuote, OtherPunctuation, MathSymbol, CurrencySymbol, ModifierSymbol, OtherSymbol};
+enum class FullCharacterType : unsigned char {
+    NonspacingCombiningMark = 0x01,
+    SpacingCombiningMark = 0x02,
+    EnclosingMark = 0x03,
+    DecimalDigit = 0x11,
+    LetterNumber = 0x12,
+    OtherNumber = 0x13,
+    SpaceBreak = 0x21,
+    LineBreak = 0x22,
+    ParagraphBreak = 0x23,
+    ControlCharacter = 0x31,
+    FormatCharacter = 0x32,
+    SurrogateCharacter = 0x33,
+    PrivateUseCharacter = 0x34,
+    UnassignedCharacter = 0x35,
+    UppercaseLetter = 0x41,
+    LowercaseLetter = 0x42,
+    TitlecaseLetter = 0x43,
+    ModifierLetter = 0x44,
+    OtherLetter = 0x45,
+    ConnectorPunctuation = 0x51,
+    DashPunctuation = 0x52,
+    OpeningPunctuation = 0x53,
+    ClosingPunctuation = 0x54,
+    OpeningQuote = 0x55,
+    ClosingQuote = 0x56,
+    OtherPunctuation = 0x57,
+    MathSymbol = 0x61,
+    CurrencySymbol = 0x62,
+    ModifierSymbol = 0x63,
+    OtherSymbol = 0x64
+};
 
-enum class GraphemeSegmentationType : unsigned char {Return, NewLine, ControlCharacter, Extend, ZeroWidthJoiner, RegionalIndicator, Prepend, SpacingCombiningMark, HangulLeading, HangulVowel, HangulTrailing, HangulLeadingAndVowel, HangulLeadingAndVowelAndTrailing, Other};
+enum class GraphemeSegmentationType : unsigned char {
+    Return = 0x01,
+    NewLine = 0x02,
+    ControlCharacter = 0x11,
+    Extend = 0x21,
+    ZeroWidthJoiner = 0x03,
+    RegionalIndicator = 0x31,
+    Prepend = 0x22,
+    SpacingCombiningMark = 0x12,
+    HangulLeading = 0x41,
+    HangulVowel = 0x42,
+    HangulTrailing = 0x43,
+    HangulLeadingAndVowel = 0x44,
+    HangulLeadingAndVowelAndTrailing = 0x45,
+    Other = 0x51
+};
 
-enum class GraphemeRuleRelatedType : unsigned char {None, Rule11Emoji, Rule9cConsonant, Rule9cExtend, Rule9cLinker};
+enum class GraphemeRuleRelatedType : unsigned char {
+    None = 1,
+    Rule11Emoji = 2,
+    Rule9cConsonant = 3,
+    Rule9cExtend = 4,
+    Rule9cLinker = 5
+};
 
 class BuildLah_SGEXTN_CoreText UnicodeQuery {
 public:
