@@ -19,11 +19,12 @@
 
 namespace SGEXTN {
 namespace Containers {
-class BuildLah_SGEXTN_Containers PlacementNew {
-public:
-    static PlacementNew placeholder;
+enum class PlacementNew {
+    Placeholder = 0
 };
 }
 }
 
-BuildLah_SGEXTN_Containers void* operator new([[maybe_unused]] decltype(sizeof(int)) placeholder, [[maybe_unused]] SGEXTN::Containers::PlacementNew indicator, void* p) noexcept;
+inline void* operator new([[maybe_unused]] decltype(sizeof(int)) noneOfMyConcernCompilerIsAnnoying, [[maybe_unused]] SGEXTN::Containers::PlacementNew placeholder, void* p) noexcept {return p;}
+
+inline void operator delete([[maybe_unused]] void* noneOfMyConcernCompilerIsAnnoying, [[maybe_unused]] SGEXTN::Containers::PlacementNew placeholder, [[maybe_unused]] void* p) noexcept {}

@@ -24,7 +24,7 @@ template <typename T, typename Comparator> SGEXTN::Containers::Sort<T, Comparato
         private_secondBuffer = static_cast<T*>(::operator new(length * sizeof(T)));
     }
     for(int i=0; i<length; i++){
-        new(SGEXTN::Containers::PlacementNew::placeholder, private_secondBuffer + i) T(*(private_firstBuffer + i));
+        new(SGEXTN::Containers::PlacementNew::Placeholder, private_secondBuffer + i) T(*(private_firstBuffer + i));
     }
 }
 

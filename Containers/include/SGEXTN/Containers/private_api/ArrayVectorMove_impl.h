@@ -16,12 +16,13 @@
 // BuildLah license check: SGEXTN 7.0.0
 
 #pragma once
+#include <SGEXTN/Containers/PlacementNew.h>
 
 template <typename T> SGEXTN::Containers::Vector<T> SGEXTN::Containers::ArrayVectorMove<T>::convertToVectorAndDestroyArray(SGEXTN::Containers::Array<T>& arr){
     SGEXTN::Containers::Vector<T> vec;
     vec.private_ringBuffer.private_data = new SGEXTN::Containers::RingBufferSlot<T>[arr.private_length];
     for(int i=0; i<arr.private_length; i++){
-        new(SGEXTN::Containers::PlacementNew::placeholder, &((*(vec.private_ringBuffer.private_data + i)).object)) T(static_cast<T&&>(arr.at(i)));
+        new(SGEXTN::Containers::PlacementNew::Placeholder, &((*(vec.private_ringBuffer.private_data + i)).object)) T(static_cast<T&&>(arr.at(i)));
     }
     vec.private_ringBuffer.private_start = 0;
     vec.private_ringBuffer.private_length = arr.private_length;

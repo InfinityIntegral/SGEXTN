@@ -127,8 +127,8 @@ template <typename Key, typename Value, typename EqualityCheck, typename HashFun
         if((*(data + hash)).status == SGEXTN::Containers::HashMapSlotStatus::Active && equalityCheckInstance((*(data + hash)).keyObject, key) == true){return false;}
         if((*(data + hash)).status != SGEXTN::Containers::HashMapSlotStatus::Active){
             if((*(data + hash)).status == SGEXTN::Containers::HashMapSlotStatus::Unused){memoryUsedLength++;}
-            new(SGEXTN::Containers::PlacementNew::placeholder, &(*(data + hash)).keyObject) Key(key);
-            new(SGEXTN::Containers::PlacementNew::placeholder, &(*(data + hash)).valueObject) Value(value);
+            new(SGEXTN::Containers::PlacementNew::Placeholder, &(*(data + hash)).keyObject) Key(key);
+            new(SGEXTN::Containers::PlacementNew::Placeholder, &(*(data + hash)).valueObject) Value(value);
             (*(data + hash)).status = SGEXTN::Containers::HashMapSlotStatus::Active;
             return true;
         }
