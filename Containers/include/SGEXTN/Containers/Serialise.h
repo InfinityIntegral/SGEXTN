@@ -46,30 +46,6 @@ public:
     [[nodiscard]] static int sizeIn(SGEXTN::Containers::Span<unsigned char> data);
 };
 
-template <typename T> class Serialise<T*> {
-public:
-    [[nodiscard]] static bool sendOut(const T* x, SGEXTN::Containers::Span<unsigned char> data);
-    [[nodiscard]] static int sizeOut(const T* x);
-};
-
-template <typename ReturnType, typename... ArgTypes> class Serialise<ReturnType (*)(ArgTypes...)> {
-public:
-    [[nodiscard]] static bool sendOut(ReturnType (*x)(ArgTypes...), SGEXTN::Containers::Span<unsigned char> data);
-    [[nodiscard]] static int sizeOut(ReturnType (*x)(ArgTypes...));
-};
-
-template <typename ReturnType, typename ClassName, typename... ArgTypes> class Serialise<ReturnType (ClassName::*)(ArgTypes...)> {
-public:
-    [[nodiscard]] static bool sendOut(ReturnType (ClassName::*x)(ArgTypes...), SGEXTN::Containers::Span<unsigned char> data);
-    [[nodiscard]] static int sizeOut(ReturnType (ClassName::*x)(ArgTypes...));
-};
-
-template <typename ReturnType, typename ClassName, typename... ArgTypes> class Serialise<ReturnType (ClassName::*)(ArgTypes...) const> {
-public:
-    [[nodiscard]] static bool sendOut(ReturnType (ClassName::*x)(ArgTypes...) const, SGEXTN::Containers::Span<unsigned char> data);
-    [[nodiscard]] static int sizeOut(ReturnType (ClassName::*x)(ArgTypes...) const);
-};
-
 template <> class BuildLah_SGEXTN_Containers Serialise<bool> {
 public:
     [[nodiscard]] static bool sendOut(bool x, SGEXTN::Containers::Span<unsigned char> data);

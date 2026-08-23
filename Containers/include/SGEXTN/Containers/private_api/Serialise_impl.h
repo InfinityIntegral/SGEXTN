@@ -19,6 +19,7 @@
 #include <SGEXTN/Containers/Array.h>
 #include <SGEXTN/Containers/Span.h>
 #include <SGEXTN/Containers/ForceCrash.h>
+#include <SGEXTN/Containers/IsPointer.h>
 
 namespace SGEXTN {
 namespace Containers {
@@ -70,6 +71,13 @@ template <typename... Ts> int SGEXTN::Containers::Serialise<Ts...>::sizeIn(SGEXT
 
 template <typename T> bool SGEXTN::Containers::Serialise<T>::sendOut(const T& x, SGEXTN::Containers::Span<unsigned char> data){
     if(data.length() != SGEXTN::Containers::Serialise<T>::sizeOut(x)){return false;}
+    if constexpr (requires{SGEXTN::Containers::IsPointer<T>::isPointer;} == true){
+        const unsigned char* memoryLocation = reinterpret_cast<const unsigned char*>(&x);
+        for(int i=0; i<data.length(); i++){
+            data.at(i) = (*(memoryLocation + i));
+        }
+        return true;
+    }
     if constexpr (requires{SGEXTN::Containers::CreateAssignable<unsigned char>::getInstance() = x;} == false && requires{SGEXTN::Containers::CreateAssignable<unsigned char>::getInstance() = static_cast<unsigned char>(x);} == true && requires{SGEXTN::Containers::IsTrue<bool, sizeof(T) == 1>::isTrue;} == true){return SGEXTN::Containers::Serialise<unsigned char>::sendOut(static_cast<unsigned char>(x), data);}
     if constexpr (requires{SGEXTN::Containers::IsSameType<decltype(T::sendOut(x, data)), bool>::same;} == true){return T::sendOut(x, data);}
     SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise::sendOut requires custom type T to have bool T::sendOut(const T& x, SGEXTN::Containers::Span<unsigned char>& data); properly defined to work");
@@ -77,6 +85,7 @@ template <typename T> bool SGEXTN::Containers::Serialise<T>::sendOut(const T& x,
 
 template <typename T> bool SGEXTN::Containers::Serialise<T>::sendIn(T& x, SGEXTN::Containers::Span<unsigned char> data){
     if(data.length() != SGEXTN::Containers::Serialise<T>::sizeIn(data)){return false;}
+    if constexpr (requires{SGEXTN::Containers::IsPointer<T>::isPointer;} == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise::sendIn forbids use with pointers because the addresses of pointers always change between runs");}
     if constexpr (requires{SGEXTN::Containers::CreateAssignable<unsigned char>::getInstance() = x;} == false && requires{SGEXTN::Containers::CreateAssignable<unsigned char>::getInstance() = static_cast<unsigned char>(x);} == true && requires{SGEXTN::Containers::IsTrue<bool, sizeof(T) == 1>::isTrue;} == true){
         unsigned char c = static_cast<unsigned char>(0);
         const bool isValid = SGEXTN::Containers::Serialise<unsigned char>::sendIn(c, data);
@@ -88,6 +97,7 @@ template <typename T> bool SGEXTN::Containers::Serialise<T>::sendIn(T& x, SGEXTN
 }
 
 template <typename T> int SGEXTN::Containers::Serialise<T>::sizeOut(const T& x){
+    if constexpr (requires{SGEXTN::Containers::IsPointer<T>::isPointer;} == true){return sizeof(x);}
     if constexpr (requires{SGEXTN::Containers::CreateAssignable<unsigned char>::getInstance() = x;} == false && requires{SGEXTN::Containers::CreateAssignable<unsigned char>::getInstance() = static_cast<unsigned char>(x);} == true && requires{SGEXTN::Containers::IsTrue<bool, sizeof(T) == 1>::isTrue;} == true){return 1;}
     if constexpr (requires{SGEXTN::Containers::IsSameType<decltype(T::size()), int>::same;} == true){return T::size();}
     if constexpr (requires{SGEXTN::Containers::IsSameType<decltype(T::sizeOut(x)), int>::same;} == true){return T::sizeOut(x);}
@@ -96,7 +106,8 @@ template <typename T> int SGEXTN::Containers::Serialise<T>::sizeOut(const T& x){
 
 template <typename T> int SGEXTN::Containers::Serialise<T>::sizeIn(SGEXTN::Containers::Span<unsigned char> data){
     int requiredLength = 0;
-    if constexpr (requires{SGEXTN::Containers::CreateAssignable<unsigned char>::getInstance() = SGEXTN::Containers::CreateInstance<T>::getInstance();} == false && requires{SGEXTN::Containers::CreateAssignable<unsigned char>::getInstance() = static_cast<unsigned char>(SGEXTN::Containers::CreateInstance<T>::getInstance());} == true && requires{SGEXTN::Containers::IsTrue<bool, sizeof(T) == 1>::isTrue;} == true){requiredLength = 1;}
+    if constexpr (requires{SGEXTN::Containers::IsPointer<T>::isPointer;} == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise::sizeIn forbids use with pointers because the addresses of pointers always change between runs");}
+    else if constexpr (requires{SGEXTN::Containers::CreateAssignable<unsigned char>::getInstance() = SGEXTN::Containers::CreateInstance<T>::getInstance();} == false && requires{SGEXTN::Containers::CreateAssignable<unsigned char>::getInstance() = static_cast<unsigned char>(SGEXTN::Containers::CreateInstance<T>::getInstance());} == true && requires{SGEXTN::Containers::IsTrue<bool, sizeof(T) == 1>::isTrue;} == true){requiredLength = 1;}
     else if constexpr (requires{SGEXTN::Containers::IsSameType<decltype(T::size()), int>::same;} == true){requiredLength = T::size();}
     else if constexpr (requires{SGEXTN::Containers::IsSameType<decltype(T::sizeIn(data)), int>::same;} == true){requiredLength = T::sizeIn(data);}
     else{SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise::sizeIn requires custom type T to have int T::sizeIn(SGEXTN::Containers::Span<unsigned char> data); properly defined if T has variable size or int T::size(); properly defined if T has constant size to work");}
@@ -217,56 +228,4 @@ template <typename T> int SGEXTN::Containers::Serialise<SGEXTN::Containers::Arra
         if(success == false || objLength <= 0 || data.length() < offset){return -1;}
     }
     return offset;
-}
-
-template <typename T> bool SGEXTN::Containers::Serialise<T*>::sendOut(const T* x, SGEXTN::Containers::Span<unsigned char> data){
-    if(data.length() != SGEXTN::Containers::Serialise<T*>::sizeOut(x)){return false;}
-    const unsigned char* memoryLocation = reinterpret_cast<const unsigned char*>(&x);
-    for(int i=0; i<data.length(); i++){
-        data.at(i) = (*(memoryLocation + i));
-    }
-    return true;
-}
-
-template <typename T> int SGEXTN::Containers::Serialise<T*>::sizeOut(const T* x){
-    return sizeof(x);
-}
-
-template <typename ReturnType, typename... ArgTypes> bool SGEXTN::Containers::Serialise<ReturnType (*)(ArgTypes...)>::sendOut(ReturnType (*x)(ArgTypes...), SGEXTN::Containers::Span<unsigned char> data){
-    if(data.length() != SGEXTN::Containers::Serialise<ReturnType (*)(ArgTypes...)>::sizeOut(x)){return false;}
-    const unsigned char* memoryLocation = reinterpret_cast<const unsigned char*>(&x);
-    for(int i=0; i<data.length(); i++){
-        data.at(i) = (*(memoryLocation + i));
-    }
-    return true;
-}
-
-template <typename ReturnType, typename... ArgTypes> int SGEXTN::Containers::Serialise<ReturnType (*)(ArgTypes...)>::sizeOut(ReturnType (*x)(ArgTypes...)){
-    return sizeof(x);
-}
-
-template <typename ReturnType, typename ClassName, typename... ArgTypes> bool SGEXTN::Containers::Serialise<ReturnType (ClassName::*)(ArgTypes...)>::sendOut(ReturnType (ClassName::*x)(ArgTypes...), SGEXTN::Containers::Span<unsigned char> data){
-    if(data.length() != SGEXTN::Containers::Serialise<ReturnType (ClassName::*)(ArgTypes...)>::sizeOut(x)){return false;}
-    const unsigned char* memoryLocation = reinterpret_cast<const unsigned char*>(&x);
-    for(int i=0; i<data.length(); i++){
-        data.at(i) = (*(memoryLocation + i));
-    }
-    return true;
-}
-
-template <typename ReturnType, typename ClassName, typename... ArgTypes> int SGEXTN::Containers::Serialise<ReturnType (ClassName::*)(ArgTypes...)>::sizeOut(ReturnType (ClassName::*x)(ArgTypes...)){
-    return sizeof(x);
-}
-
-template <typename ReturnType, typename ClassName, typename... ArgTypes> bool SGEXTN::Containers::Serialise<ReturnType (ClassName::*)(ArgTypes...) const>::sendOut(ReturnType (ClassName::*x)(ArgTypes...) const, SGEXTN::Containers::Span<unsigned char> data){
-    if(data.length() != SGEXTN::Containers::Serialise<ReturnType (ClassName::*)(ArgTypes...) const>::sizeOut(x)){return false;}
-    const unsigned char* memoryLocation = reinterpret_cast<const unsigned char*>(&x);
-    for(int i=0; i<data.length(); i++){
-        data.at(i) = (*(memoryLocation + i));
-    }
-    return true;
-}
-
-template <typename ReturnType, typename ClassName, typename... ArgTypes> int SGEXTN::Containers::Serialise<ReturnType (ClassName::*)(ArgTypes...) const>::sizeOut(ReturnType (ClassName::*x)(ArgTypes...) const){
-    return sizeof(x);
 }
