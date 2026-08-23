@@ -50,10 +50,6 @@ public:
     ConstructibleInteger& operator=(ConstructibleInteger&& x) noexcept;
     ~ConstructibleInteger();
     [[nodiscard]] operator int() const;
-    [[nodiscard]] bool operator==(const ConstructibleInteger& x) const;
-    [[nodiscard]] bool operator!=(const ConstructibleInteger& x) const;
-    [[nodiscard]] bool operator<(const ConstructibleInteger& x) const;
-    [[nodiscard]] bool operator>(const ConstructibleInteger& x) const;
     [[nodiscard]] static bool sendOut(const ConstructibleInteger& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(ConstructibleInteger& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static int size();
@@ -94,22 +90,6 @@ ConstructibleInteger::~ConstructibleInteger(){
 
 ConstructibleInteger::operator int() const {
     return value;
-}
-
-bool ConstructibleInteger::operator==(const ConstructibleInteger& x) const {
-    return (value == x.value);
-}
-
-bool ConstructibleInteger::operator!=(const ConstructibleInteger& x) const {
-    return (value != x.value);
-}
-
-bool ConstructibleInteger::operator<(const ConstructibleInteger& x) const {
-    return (value < x.value);
-}
-
-bool ConstructibleInteger::operator>(const ConstructibleInteger& x) const {
-    return (value > x.value);
 }
 
 template <typename T> bool operator==(const SGEXTN::Containers::Array<T>& a, const SGEXTN::Containers::Array<T>& b){
@@ -1299,6 +1279,15 @@ public:
     DefaultConstructableStruct(int x) : x(x) {}
 };
 
+class SerialisableStruct {
+public:
+    SerialisableStruct() : data(static_cast<unsigned char>(0)){}
+    unsigned char data;
+    static bool sendOut(SerialisableStruct x, SGEXTN::Containers::Span<unsigned char> data){data.at(0) = x.data; return true;}
+    static bool sendIn(SerialisableStruct& x, SGEXTN::Containers::Span<unsigned char> data){x.data = data.at(0); return true;}
+    static int size(){return 1;}
+};
+
 class EquatableStruct {
 public:
     int x;
@@ -1319,11 +1308,15 @@ template class SGEXTN::Containers::Array<DefaultConstructableStruct>;
 template class SGEXTN::Containers::ArrayVectorMove<DefaultConstructableStruct>;
 template class SGEXTN::Containers::Deque<RegularStruct>;
 template class SGEXTN::Containers::EqualTo<EquatableStruct>;
+template class SGEXTN::Containers::EqualTo<SerialisableStruct>;
+template class SGEXTN::Containers::Hash<SerialisableStruct>;
 template class SGEXTN::Containers::LessThan<ComparableStruct>;
+template class SGEXTN::Containers::LessThan<SerialisableStruct>;
 template class SGEXTN::Containers::MapCustomisable<RegularStruct, RegularStruct, RegularStructLessThan>;
 template class SGEXTN::Containers::MapIterator<RegularStruct, RegularStruct, RegularStructLessThan>;
 template class SGEXTN::Containers::MapConstIterator<RegularStruct, RegularStruct, RegularStructLessThan>;
 template class SGEXTN::Containers::MoreThan<ComparableStruct>;
+template class SGEXTN::Containers::MoreThan<SerialisableStruct>;
 template class SGEXTN::Containers::MultiMapCustomisable<RegularStruct, RegularStruct, RegularStructLessThan>;
 template class SGEXTN::Containers::MultiMapIterator<RegularStruct, RegularStruct, RegularStructLessThan>;
 template class SGEXTN::Containers::MultiMapConstIterator<RegularStruct, RegularStruct, RegularStructLessThan>;
@@ -1347,82 +1340,46 @@ template class SGEXTN::Containers::Vector<RegularStruct>;
 
 class FunctionOwner {};
 
-template class SGEXTN::Containers::Hash<int*>;
-template class SGEXTN::Containers::Hash<void (*)()>;
-template class SGEXTN::Containers::Hash<void (*)(int)>;
-template class SGEXTN::Containers::Hash<void (*)(int, int&, const int&)>;
-template class SGEXTN::Containers::Hash<int (*)()>;
-template class SGEXTN::Containers::Hash<int (*)(int)>;
-template class SGEXTN::Containers::Hash<int (*)(int, int&, const int&)>;
-template class SGEXTN::Containers::Hash<void (FunctionOwner::*)()>;
-template class SGEXTN::Containers::Hash<void (FunctionOwner::*)(int)>;
-template class SGEXTN::Containers::Hash<void (FunctionOwner::*)(int, int&, const int&)>;
-template class SGEXTN::Containers::Hash<int (FunctionOwner::*)()>;
-template class SGEXTN::Containers::Hash<int (FunctionOwner::*)(int)>;
-template class SGEXTN::Containers::Hash<int (FunctionOwner::*)(int, int&, const int&)>;
-template class SGEXTN::Containers::Hash<void (FunctionOwner::*)() const>;
-template class SGEXTN::Containers::Hash<void (FunctionOwner::*)(int) const>;
-template class SGEXTN::Containers::Hash<void (FunctionOwner::*)(int, int&, const int&) const>;
-template class SGEXTN::Containers::Hash<int (FunctionOwner::*)() const>;
-template class SGEXTN::Containers::Hash<int (FunctionOwner::*)(int) const>;
-template class SGEXTN::Containers::Hash<int (FunctionOwner::*)(int, int&, const int&) const>;
-template class SGEXTN::Containers::EqualTo<int>;
-template class SGEXTN::Containers::EqualTo<int*>;
-template class SGEXTN::Containers::EqualTo<void (*)()>;
-template class SGEXTN::Containers::EqualTo<void (*)(int)>;
-template class SGEXTN::Containers::EqualTo<void (*)(int, int&, const int&)>;
-template class SGEXTN::Containers::EqualTo<int (*)()>;
-template class SGEXTN::Containers::EqualTo<int (*)(int)>;
-template class SGEXTN::Containers::EqualTo<int (*)(int, int&, const int&)>;
-template class SGEXTN::Containers::EqualTo<void (FunctionOwner::*)()>;
-template class SGEXTN::Containers::EqualTo<void (FunctionOwner::*)(int)>;
-template class SGEXTN::Containers::EqualTo<void (FunctionOwner::*)(int, int&, const int&)>;
-template class SGEXTN::Containers::EqualTo<int (FunctionOwner::*)()>;
-template class SGEXTN::Containers::EqualTo<int (FunctionOwner::*)(int)>;
-template class SGEXTN::Containers::EqualTo<int (FunctionOwner::*)(int, int&, const int&)>;
-template class SGEXTN::Containers::EqualTo<void (FunctionOwner::*)() const>;
-template class SGEXTN::Containers::EqualTo<void (FunctionOwner::*)(int) const>;
-template class SGEXTN::Containers::EqualTo<void (FunctionOwner::*)(int, int&, const int&) const>;
-template class SGEXTN::Containers::EqualTo<int (FunctionOwner::*)() const>;
-template class SGEXTN::Containers::EqualTo<int (FunctionOwner::*)(int) const>;
-template class SGEXTN::Containers::EqualTo<int (FunctionOwner::*)(int, int&, const int&) const>;
-template class SGEXTN::Containers::LessThan<int>;
-template class SGEXTN::Containers::LessThan<int*>;
-template class SGEXTN::Containers::LessThan<void (*)()>;
-template class SGEXTN::Containers::LessThan<void (*)(int)>;
-template class SGEXTN::Containers::LessThan<void (*)(int, int&, const int&)>;
-template class SGEXTN::Containers::LessThan<int (*)()>;
-template class SGEXTN::Containers::LessThan<int (*)(int)>;
-template class SGEXTN::Containers::LessThan<int (*)(int, int&, const int&)>;
-template class SGEXTN::Containers::LessThan<void (FunctionOwner::*)()>;
-template class SGEXTN::Containers::LessThan<void (FunctionOwner::*)(int)>;
-template class SGEXTN::Containers::LessThan<void (FunctionOwner::*)(int, int&, const int&)>;
-template class SGEXTN::Containers::LessThan<int (FunctionOwner::*)()>;
-template class SGEXTN::Containers::LessThan<int (FunctionOwner::*)(int)>;
-template class SGEXTN::Containers::LessThan<int (FunctionOwner::*)(int, int&, const int&)>;
-template class SGEXTN::Containers::LessThan<void (FunctionOwner::*)() const>;
-template class SGEXTN::Containers::LessThan<void (FunctionOwner::*)(int) const>;
-template class SGEXTN::Containers::LessThan<void (FunctionOwner::*)(int, int&, const int&) const>;
-template class SGEXTN::Containers::LessThan<int (FunctionOwner::*)() const>;
-template class SGEXTN::Containers::LessThan<int (FunctionOwner::*)(int) const>;
-template class SGEXTN::Containers::LessThan<int (FunctionOwner::*)(int, int&, const int&) const>;
-template class SGEXTN::Containers::MoreThan<int>;
-template class SGEXTN::Containers::MoreThan<int*>;
-template class SGEXTN::Containers::MoreThan<void (*)()>;
-template class SGEXTN::Containers::MoreThan<void (*)(int)>;
-template class SGEXTN::Containers::MoreThan<void (*)(int, int&, const int&)>;
-template class SGEXTN::Containers::MoreThan<int (*)()>;
-template class SGEXTN::Containers::MoreThan<int (*)(int)>;
-template class SGEXTN::Containers::MoreThan<int (*)(int, int&, const int&)>;
-template class SGEXTN::Containers::MoreThan<void (FunctionOwner::*)()>;
-template class SGEXTN::Containers::MoreThan<void (FunctionOwner::*)(int)>;
-template class SGEXTN::Containers::MoreThan<void (FunctionOwner::*)(int, int&, const int&)>;
-template class SGEXTN::Containers::MoreThan<int (FunctionOwner::*)()>;
-template class SGEXTN::Containers::MoreThan<int (FunctionOwner::*)(int)>;
-template class SGEXTN::Containers::MoreThan<int (FunctionOwner::*)(int, int&, const int&)>;
-template class SGEXTN::Containers::MoreThan<void (FunctionOwner::*)() const>;
-template class SGEXTN::Containers::MoreThan<void (FunctionOwner::*)(int) const>;
-template class SGEXTN::Containers::MoreThan<void (FunctionOwner::*)(int, int&, const int&) const>;
-template class SGEXTN::Containers::MoreThan<int (FunctionOwner::*)() const>;
-template class SGEXTN::Containers::MoreThan<int (FunctionOwner::*)(int) const>;
-template class SGEXTN::Containers::MoreThan<int (FunctionOwner::*)(int, int&, const int&) const>;
+template class SGEXTN::Containers::Serialise<SGEXTN::Containers::Array<SerialisableStruct>>;
+template class SGEXTN::Containers::Serialise<SGEXTN::Containers::Array<EnumClass>>;
+template class SGEXTN::Containers::Serialise<SGEXTN::Containers::Array<unsigned char>>;
+template class SGEXTN::Containers::Serialise<SGEXTN::Containers::Array<int>>;
+template class SGEXTN::Containers::Serialise<SGEXTN::Containers::Array<float>>;
+template class SGEXTN::Containers::Serialise<SGEXTN::Containers::Array<void*>>;
+template class SGEXTN::Containers::Serialise<SGEXTN::Containers::Array<int*>>;
+template class SGEXTN::Containers::Serialise<SGEXTN::Containers::Array<RegularStruct*>>;
+template class SGEXTN::Containers::Serialise<SGEXTN::Containers::Array<void (FunctionOwner::*)()>>;
+template class SGEXTN::Containers::Serialise<SGEXTN::Containers::Array<int (FunctionOwner::*)(int, int&, const int&, RegularStruct, RegularStruct&, const RegularStruct&) const>>;
+template class SGEXTN::Containers::Serialise<SGEXTN::Containers::Array<SGEXTN::Containers::Array<SerialisableStruct>>>;
+template class SGEXTN::Containers::Serialise<SGEXTN::Containers::Array<SGEXTN::Containers::Array<EnumClass>>>;
+template class SGEXTN::Containers::Serialise<SGEXTN::Containers::Array<SGEXTN::Containers::Array<unsigned char>>>;
+template class SGEXTN::Containers::Serialise<SGEXTN::Containers::Array<SGEXTN::Containers::Array<int>>>;
+template class SGEXTN::Containers::Serialise<SGEXTN::Containers::Array<SGEXTN::Containers::Array<float>>>;
+template class SGEXTN::Containers::Serialise<SGEXTN::Containers::Array<SGEXTN::Containers::Array<void*>>>;
+template class SGEXTN::Containers::Serialise<SGEXTN::Containers::Array<SGEXTN::Containers::Array<int*>>>;
+template class SGEXTN::Containers::Serialise<SGEXTN::Containers::Array<SGEXTN::Containers::Array<RegularStruct*>>>;
+template class SGEXTN::Containers::Serialise<SGEXTN::Containers::Array<SGEXTN::Containers::Array<void (FunctionOwner::*)()>>>;
+template class SGEXTN::Containers::Serialise<SGEXTN::Containers::Array<SGEXTN::Containers::Array<int (FunctionOwner::*)(int, int&, const int&, RegularStruct, RegularStruct&, const RegularStruct&) const>>>;
+template class SGEXTN::Containers::Serialise<EnumClass>;
+template class SGEXTN::Containers::Serialise<SerialisableStruct>;
+template class SGEXTN::Containers::Serialise<int*>;
+template class SGEXTN::Containers::Serialise<RegularStruct*>;
+template class SGEXTN::Containers::Serialise<void (*)()>;
+template class SGEXTN::Containers::Serialise<void (*)(int)>;
+template class SGEXTN::Containers::Serialise<void (*)(int, int&, const int&, RegularStruct, RegularStruct&, const RegularStruct&)>;
+template class SGEXTN::Containers::Serialise<int (*)()>;
+template class SGEXTN::Containers::Serialise<int (*)(int)>;
+template class SGEXTN::Containers::Serialise<int (*)(int, int&, const int&)>;
+template class SGEXTN::Containers::Serialise<void (FunctionOwner::*)()>;
+template class SGEXTN::Containers::Serialise<void (FunctionOwner::*)(int)>;
+template class SGEXTN::Containers::Serialise<void (FunctionOwner::*)(int, int&, const int&, RegularStruct, RegularStruct&, const RegularStruct&)>;
+template class SGEXTN::Containers::Serialise<int (FunctionOwner::*)()>;
+template class SGEXTN::Containers::Serialise<int (FunctionOwner::*)(int)>;
+template class SGEXTN::Containers::Serialise<int (FunctionOwner::*)(int, int&, const int&, RegularStruct, RegularStruct&, const RegularStruct&)>;
+template class SGEXTN::Containers::Serialise<void (FunctionOwner::*)() const>;
+template class SGEXTN::Containers::Serialise<void (FunctionOwner::*)(int) const>;
+template class SGEXTN::Containers::Serialise<void (FunctionOwner::*)(int, int&, const int&, RegularStruct, RegularStruct&, const RegularStruct&) const>;
+template class SGEXTN::Containers::Serialise<int (FunctionOwner::*)() const>;
+template class SGEXTN::Containers::Serialise<int (FunctionOwner::*)(int) const>;
+template class SGEXTN::Containers::Serialise<int (FunctionOwner::*)(int, int&, const int&, RegularStruct, RegularStruct&, const RegularStruct&) const>;
+template class SGEXTN::Containers::Serialise<int, SerialisableStruct, void*, int*, SerialisableStruct*, void (*)(), int (FunctionOwner::*)(int, int&, const int&, RegularStruct, RegularStruct&, const RegularStruct&) const>;
