@@ -18,32 +18,32 @@
 #pragma once
 #include <SGEXTN/Containers/ForceCrash.h>
 
-template <typename T, typename Comparator> SGEXTN::Containers::PriorityQueue<T, Comparator>::PriorityQueue() : private_ringBuffer(), private_comparatorInstance() {}
+template <typename T, typename Comparator> SGEXTN::Containers::PriorityQueueCustomisable<T, Comparator>::PriorityQueueCustomisable() : private_ringBuffer(), private_comparatorInstance() {}
 
-template <typename T, typename Comparator> const T& SGEXTN::Containers::PriorityQueue<T, Comparator>::top() const {
+template <typename T, typename Comparator> const T& SGEXTN::Containers::PriorityQueueCustomisable<T, Comparator>::top() const {
     if(private_ringBuffer.length() == 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::PriorityQueue::top crashed as the priority queue is empty");}
     return private_ringBuffer.at(0);
 }
 
-template <typename T, typename Comparator> int SGEXTN::Containers::PriorityQueue<T, Comparator>::length() const {
+template <typename T, typename Comparator> int SGEXTN::Containers::PriorityQueueCustomisable<T, Comparator>::length() const {
     return private_ringBuffer.length();
 }
 
-template <typename T, typename Comparator> void SGEXTN::Containers::PriorityQueue<T, Comparator>::reserve(int newMemoryLength){
+template <typename T, typename Comparator> void SGEXTN::Containers::PriorityQueueCustomisable<T, Comparator>::reserve(int newMemoryLength){
     private_ringBuffer.reserve(newMemoryLength);
 }
 
-template <typename T, typename Comparator> void SGEXTN::Containers::PriorityQueue<T, Comparator>::private_swap(int a, int b){
+template <typename T, typename Comparator> void SGEXTN::Containers::PriorityQueueCustomisable<T, Comparator>::private_swap(int a, int b){
     T temp(static_cast<T&&>(private_ringBuffer.at(a)));
     private_ringBuffer.at(a) = static_cast<T&&>(private_ringBuffer.at(b));
     private_ringBuffer.at(b) = static_cast<T&&>(temp);
 }
 
-template <typename T, typename Comparator> bool SGEXTN::Containers::PriorityQueue<T, Comparator>::private_compare(int a, int b){
+template <typename T, typename Comparator> bool SGEXTN::Containers::PriorityQueueCustomisable<T, Comparator>::private_compare(int a, int b){
     return private_comparatorInstance(private_ringBuffer.at(a), private_ringBuffer.at(b));
 }
 
-template <typename T, typename Comparator> void SGEXTN::Containers::PriorityQueue<T, Comparator>::push(const T& x){
+template <typename T, typename Comparator> void SGEXTN::Containers::PriorityQueueCustomisable<T, Comparator>::push(const T& x){
     private_ringBuffer.pushBack(x);
     int i = private_ringBuffer.length() - 1;
     while(i > 0){
@@ -54,7 +54,7 @@ template <typename T, typename Comparator> void SGEXTN::Containers::PriorityQueu
     }
 }
 
-template <typename T, typename Comparator> void SGEXTN::Containers::PriorityQueue<T, Comparator>::pop(){
+template <typename T, typename Comparator> void SGEXTN::Containers::PriorityQueueCustomisable<T, Comparator>::pop(){
     if(private_ringBuffer.length() == 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::PriorityQueue::pop crashed as the priority queue is empty");}
     private_swap(0, private_ringBuffer.length() - 1);
     private_ringBuffer.popBack();
@@ -81,6 +81,6 @@ template <typename T, typename Comparator> void SGEXTN::Containers::PriorityQueu
     }
 }
 
-template <typename T, typename Comparator> void SGEXTN::Containers::PriorityQueue<T, Comparator>::clear(){
+template <typename T, typename Comparator> void SGEXTN::Containers::PriorityQueueCustomisable<T, Comparator>::clear(){
     private_ringBuffer.clear();
 }

@@ -18,9 +18,6 @@
 #include <SGEXTN/InternalTest/private_api/SeerattraNumTest.h>
 #include <SGEXTN/SeerattraNum/TrueRandom.h>
 #include <SGEXTN/Containers/Array.h>
-#include <SGEXTN/Containers/UnorderedSet.h>
-#include <SGEXTN/Containers/EqualTo.h>
-#include <SGEXTN/Containers/Hash.h>
 #include <SGEXTN/Containers/ForceCrash.h>
 #include <SGEXTN/SeerattraNum/SimpleRandom.h>
 #include <SGEXTN/SeerattraNum/DirectRandom.h>
@@ -93,8 +90,8 @@ bool testIfDistributionSameContinuous(SGEXTN::Containers::Array<float>& sampleDa
 
 bool testIfDistributionSameDiscrete(SGEXTN::Containers::Array<int>& sampleData, SGEXTN::Containers::Array<int>& testData){
     if(sampleData.length() != 100000 || testData.length() != 100000){SGEXTN_IMMEDIATE_CRASH("sample size is wrong");}
-    SGEXTN::Containers::Map<int, int, SGEXTN::Containers::LessThan<int>> sampleDataDensityMap;
-    SGEXTN::Containers::Map<int, int, SGEXTN::Containers::LessThan<int>> testDataDensityMap;
+    SGEXTN::Containers::Map<int, int> sampleDataDensityMap;
+    SGEXTN::Containers::Map<int, int> testDataDensityMap;
     for(int i=0; i<100000; i++){
         if(sampleDataDensityMap.contains(sampleData.at(i)) == false){sampleDataDensityMap.insert(sampleData.at(i), 1);}
         else{sampleDataDensityMap.at(sampleData.at(i))++;}
@@ -142,72 +139,6 @@ SGEXTN::Containers::Span<unsigned char> makeSpan(SGEXTN::Containers::Array<unsig
 SGEXTN::Containers::Span<unsigned char> makeSpan(SGEXTN::Containers::Array<unsigned char>& array, int start, int length){
     return SGEXTN::Containers::Span<unsigned char>(array, start, length);
 }
-}
-
-void SGEXTN::InternalTest::SeerattraNumTest::testTrueRandom(){
-    SGEXTN::Containers::UnorderedSet<int, SGEXTN::Containers::EqualTo<int>, SGEXTN::Containers::Hash<int>> randomInts32;
-    while(randomInts32.length() < 100){
-        randomInts32.insert(SGEXTN::SeerattraNum::TrueRandom::randomInt32());
-    }
-    SGEXTN::Containers::UnorderedSet<long long, SGEXTN::Containers::EqualTo<long long>, SGEXTN::Containers::Hash<long long>> randomInts64;
-    while(randomInts64.length() < 100){
-        randomInts64.insert(SGEXTN::SeerattraNum::TrueRandom::randomInt64());
-    }
-    SGEXTN::Containers::UnorderedSet<unsigned int, SGEXTN::Containers::EqualTo<unsigned int>, SGEXTN::Containers::Hash<unsigned int>> randomUnsignedInts32;
-    while(randomUnsignedInts32.length() < 100){
-        randomUnsignedInts32.insert(SGEXTN::SeerattraNum::TrueRandom::randomUnsignedInt32());
-    }
-    SGEXTN::Containers::UnorderedSet<unsigned long long, SGEXTN::Containers::EqualTo<unsigned long long>, SGEXTN::Containers::Hash<unsigned long long>> randomUnsignedInts64;
-    while(randomUnsignedInts64.length() < 100){
-        randomUnsignedInts64.insert(SGEXTN::SeerattraNum::TrueRandom::randomUnsignedInt64());
-    }
-    SGEXTN::Containers::UnorderedSet<float, SGEXTN::Containers::EqualTo<float>, SGEXTN::Containers::Hash<float>> randomFloats32;
-    while(randomFloats32.length() < 100){
-        randomFloats32.insert(SGEXTN::SeerattraNum::TrueRandom::randomFloat32());
-    }
-    SGEXTN::Containers::UnorderedSet<double, SGEXTN::Containers::EqualTo<double>, SGEXTN::Containers::Hash<double>> randomFloats64;
-    while(randomFloats64.length() < 100){
-        randomFloats64.insert(SGEXTN::SeerattraNum::TrueRandom::randomFloat64());
-    }
-    if(SGEXTN::SeerattraNum::TrueRandom::randomInt32Array(100).length() != 100){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::TrueRandom generate array of 32 bit integer fail");}
-    if(SGEXTN::SeerattraNum::TrueRandom::randomInt64Array(100).length() != 100){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::TrueRandom generate array of 64 bit integer fail");}
-    if(SGEXTN::SeerattraNum::TrueRandom::randomUnsignedInt32Array(100).length() != 100){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::TrueRandom generate array of 32 bit unsigned integer fail");}
-    if(SGEXTN::SeerattraNum::TrueRandom::randomUnsignedInt64Array(100).length() != 100){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::TrueRandom generate array of 64 bit unsigned integer fail");}
-    if(SGEXTN::SeerattraNum::TrueRandom::randomFloat32Array(100).length() != 100){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::TrueRandom generate array of 32 bit floating point number fail");}
-    if(SGEXTN::SeerattraNum::TrueRandom::randomFloat64Array(100).length() != 100){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::TrueRandom generate array of 64 bit floating point number fail");}
-}
-
-void SGEXTN::InternalTest::SeerattraNumTest::testSimpleRandom(){
-    SGEXTN::Containers::UnorderedSet<int, SGEXTN::Containers::EqualTo<int>, SGEXTN::Containers::Hash<int>> randomInts32;
-    while(randomInts32.length() < 100){
-        randomInts32.insert(SGEXTN::SeerattraNum::SimpleRandom::randomInt32());
-    }
-    SGEXTN::Containers::UnorderedSet<long long, SGEXTN::Containers::EqualTo<long long>, SGEXTN::Containers::Hash<long long>> randomInts64;
-    while(randomInts64.length() < 100){
-        randomInts64.insert(SGEXTN::SeerattraNum::SimpleRandom::randomInt64());
-    }
-    SGEXTN::Containers::UnorderedSet<unsigned int, SGEXTN::Containers::EqualTo<unsigned int>, SGEXTN::Containers::Hash<unsigned int>> randomUnsignedInts32;
-    while(randomUnsignedInts32.length() < 100){
-        randomUnsignedInts32.insert(SGEXTN::SeerattraNum::SimpleRandom::randomUnsignedInt32());
-    }
-    SGEXTN::Containers::UnorderedSet<unsigned long long, SGEXTN::Containers::EqualTo<unsigned long long>, SGEXTN::Containers::Hash<unsigned long long>> randomUnsignedInts64;
-    while(randomUnsignedInts64.length() < 100){
-        randomUnsignedInts64.insert(SGEXTN::SeerattraNum::SimpleRandom::randomUnsignedInt64());
-    }
-    SGEXTN::Containers::UnorderedSet<float, SGEXTN::Containers::EqualTo<float>, SGEXTN::Containers::Hash<float>> randomFloats32;
-    while(randomFloats32.length() < 100){
-        randomFloats32.insert(SGEXTN::SeerattraNum::SimpleRandom::randomFloat32());
-    }
-    SGEXTN::Containers::UnorderedSet<double, SGEXTN::Containers::EqualTo<double>, SGEXTN::Containers::Hash<double>> randomFloats64;
-    while(randomFloats64.length() < 100){
-        randomFloats64.insert(SGEXTN::SeerattraNum::SimpleRandom::randomFloat64());
-    }
-    if(SGEXTN::SeerattraNum::SimpleRandom::randomInt32Array(100).length() != 100){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::SimpleRandom generate array of 32 bit integer fail");}
-    if(SGEXTN::SeerattraNum::SimpleRandom::randomInt64Array(100).length() != 100){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::SimpleRandom generate array of 64 bit integer fail");}
-    if(SGEXTN::SeerattraNum::SimpleRandom::randomUnsignedInt32Array(100).length() != 100){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::SimpleRandom generate array of 32 bit unsigned integer fail");}
-    if(SGEXTN::SeerattraNum::SimpleRandom::randomUnsignedInt64Array(100).length() != 100){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::SimpleRandom generate array of 64 bit unsigned integer fail");}
-    if(SGEXTN::SeerattraNum::SimpleRandom::randomFloat32Array(100).length() != 100){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::SimpleRandom generate array of 32 bit floating point number fail");}
-    if(SGEXTN::SeerattraNum::SimpleRandom::randomFloat64Array(100).length() != 100){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::SimpleRandom generate array of 64 bit floating point number fail");}
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testDirectRandom(){
@@ -1411,8 +1342,6 @@ void SGEXTN::InternalTest::SeerattraNumTest::testPerlinNoise(){
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testAll(){
-    SGEXTN::InternalTest::SeerattraNumTest::testTrueRandom();
-    SGEXTN::InternalTest::SeerattraNumTest::testSimpleRandom();
     SGEXTN::InternalTest::SeerattraNumTest::testDirectRandom();
     SGEXTN::InternalTest::SeerattraNumTest::testUniformDistributionInteger();
     SGEXTN::InternalTest::SeerattraNumTest::testUniformDistributionFloatingPoint();

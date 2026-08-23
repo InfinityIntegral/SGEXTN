@@ -18,121 +18,121 @@
 #pragma once
 #include <SGEXTN/Containers/ForceCrash.h>
 
-template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MultiMap<Key, Value, Comparator>::MultiMap() : private_avlTree() {}
+template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MultiMapCustomisable<Key, Value, Comparator>::MultiMapCustomisable() : private_avlTree() {}
 
-template <typename Key, typename Value, typename Comparator> int SGEXTN::Containers::MultiMap<Key, Value, Comparator>::length() const {
+template <typename Key, typename Value, typename Comparator> int SGEXTN::Containers::MultiMapCustomisable<Key, Value, Comparator>::length() const {
     return private_avlTree.length();
 }
 
-template <typename Key, typename Value, typename Comparator> void SGEXTN::Containers::MultiMap<Key, Value, Comparator>::insert(const Key& key, const Value& value){
+template <typename Key, typename Value, typename Comparator> void SGEXTN::Containers::MultiMapCustomisable<Key, Value, Comparator>::insert(const Key& key, const Value& value){
     private_avlTree.insert(key, value, true);
 }
 
-template <typename Key, typename Value, typename Comparator> bool SGEXTN::Containers::MultiMap<Key, Value, Comparator>::erase(const Key& x){
+template <typename Key, typename Value, typename Comparator> bool SGEXTN::Containers::MultiMapCustomisable<Key, Value, Comparator>::erase(const Key& x){
     return private_avlTree.erase(x);
 }
 
-template <typename Key, typename Value, typename Comparator> void SGEXTN::Containers::MultiMap<Key, Value, Comparator>::clear(){
+template <typename Key, typename Value, typename Comparator> void SGEXTN::Containers::MultiMapCustomisable<Key, Value, Comparator>::clear(){
     private_avlTree.clear();
 }
 
-template <typename Key, typename Value, typename Comparator> bool SGEXTN::Containers::MultiMap<Key, Value, Comparator>::contains(const Key& x) const {
+template <typename Key, typename Value, typename Comparator> bool SGEXTN::Containers::MultiMapCustomisable<Key, Value, Comparator>::contains(const Key& x) const {
     return private_avlTree.contains(x);
 }
 
-template <typename Key, typename Value, typename Comparator> int SGEXTN::Containers::MultiMap<Key, Value, Comparator>::count(const Key& x) const {
+template <typename Key, typename Value, typename Comparator> int SGEXTN::Containers::MultiMapCustomisable<Key, Value, Comparator>::count(const Key& x) const {
     return private_avlTree.count(x);
 }
 
-template <typename Key, typename Value, typename Comparator> Value& SGEXTN::Containers::MultiMap<Key, Value, Comparator>::at(const Key& x){
+template <typename Key, typename Value, typename Comparator> Value& SGEXTN::Containers::MultiMapCustomisable<Key, Value, Comparator>::at(const Key& x){
     if(contains(x) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::MultiMap::at crashed because the key is not in the map");}
     return private_avlTree.at(x);
 }
 
-template <typename Key, typename Value, typename Comparator> const Value& SGEXTN::Containers::MultiMap<Key, Value, Comparator>::at(const Key& x) const {
+template <typename Key, typename Value, typename Comparator> const Value& SGEXTN::Containers::MultiMapCustomisable<Key, Value, Comparator>::at(const Key& x) const {
     if(contains(x) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::MultiMap::at crashed because the key is not in the map");}
     return private_avlTree.at(x);
 }
 
-template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MultiMapIterator<Key, Value, Comparator> SGEXTN::Containers::MultiMap<Key, Value, Comparator>::begin(){
+template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MultiMapIterator<Key, Value, Comparator> SGEXTN::Containers::MultiMapCustomisable<Key, Value, Comparator>::begin(){
     return SGEXTN::Containers::MultiMapIterator(private_avlTree.begin());
 }
 
-template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MultiMapConstIterator<Key, Value, Comparator> SGEXTN::Containers::MultiMap<Key, Value, Comparator>::constBegin() const {
+template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MultiMapConstIterator<Key, Value, Comparator> SGEXTN::Containers::MultiMapCustomisable<Key, Value, Comparator>::constBegin() const {
     return SGEXTN::Containers::MultiMapConstIterator(private_avlTree.constBegin());
 }
 
-template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MultiMapIterator<Key, Value, Comparator> SGEXTN::Containers::MultiMap<Key, Value, Comparator>::end(){
+template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MultiMapIterator<Key, Value, Comparator> SGEXTN::Containers::MultiMapCustomisable<Key, Value, Comparator>::end(){
     return SGEXTN::Containers::MultiMapIterator(private_avlTree.end());
 }
 
-template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MultiMapConstIterator<Key, Value, Comparator> SGEXTN::Containers::MultiMap<Key, Value, Comparator>::constEnd() const {
+template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MultiMapConstIterator<Key, Value, Comparator> SGEXTN::Containers::MultiMapCustomisable<Key, Value, Comparator>::constEnd() const {
     return SGEXTN::Containers::MultiMapConstIterator(private_avlTree.constEnd());
 }
 
-template <typename Key, typename Value, typename Comparator> bool SGEXTN::Containers::MultiMap<Key, Value, Comparator>::erase(SGEXTN::Containers::MultiMapIterator<Key, Value, Comparator>& i){
+template <typename Key, typename Value, typename Comparator> bool SGEXTN::Containers::MultiMapCustomisable<Key, Value, Comparator>::erase(SGEXTN::Containers::MultiMapIterator<Key, Value, Comparator>& i){
     return private_avlTree.erase(i.private_avlTreeIterator);
 }
 
-template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MultiMapIterator<Key, Value, Comparator> SGEXTN::Containers::MultiMap<Key, Value, Comparator>::find(const Key& x){
+template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MultiMapIterator<Key, Value, Comparator> SGEXTN::Containers::MultiMapCustomisable<Key, Value, Comparator>::find(const Key& x){
     return SGEXTN::Containers::MultiMapIterator(private_avlTree.find(x));
 }
 
-template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MultiMapConstIterator<Key, Value, Comparator> SGEXTN::Containers::MultiMap<Key, Value, Comparator>::constFind(const Key& x) const {
+template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MultiMapConstIterator<Key, Value, Comparator> SGEXTN::Containers::MultiMapCustomisable<Key, Value, Comparator>::constFind(const Key& x) const {
     return SGEXTN::Containers::MultiMapConstIterator(private_avlTree.constFind(x));
 }
 
-template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MultiMapIterator<Key, Value, Comparator> SGEXTN::Containers::MultiMap<Key, Value, Comparator>::lowerBound(const Key& x){
+template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MultiMapIterator<Key, Value, Comparator> SGEXTN::Containers::MultiMapCustomisable<Key, Value, Comparator>::lowerBound(const Key& x){
     return SGEXTN::Containers::MultiMapIterator(private_avlTree.lowerBound(x));
 }
 
-template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MultiMapConstIterator<Key, Value, Comparator> SGEXTN::Containers::MultiMap<Key, Value, Comparator>::constLowerBound(const Key& x) const {
+template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MultiMapConstIterator<Key, Value, Comparator> SGEXTN::Containers::MultiMapCustomisable<Key, Value, Comparator>::constLowerBound(const Key& x) const {
     return SGEXTN::Containers::MultiMapConstIterator(private_avlTree.constLowerBound(x));
 }
 
-template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MultiMapIterator<Key, Value, Comparator> SGEXTN::Containers::MultiMap<Key, Value, Comparator>::upperBound(const Key& x){
+template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MultiMapIterator<Key, Value, Comparator> SGEXTN::Containers::MultiMapCustomisable<Key, Value, Comparator>::upperBound(const Key& x){
     return SGEXTN::Containers::MultiMapIterator(private_avlTree.upperBound(x));
 }
 
-template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MultiMapConstIterator<Key, Value, Comparator> SGEXTN::Containers::MultiMap<Key, Value, Comparator>::constUpperBound(const Key& x) const {
+template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MultiMapConstIterator<Key, Value, Comparator> SGEXTN::Containers::MultiMapCustomisable<Key, Value, Comparator>::constUpperBound(const Key& x) const {
     return SGEXTN::Containers::MultiMapConstIterator(private_avlTree.constUpperBound(x));
 }
 
-template <typename Key, typename Value, typename Comparator> int SGEXTN::Containers::MultiMap<Key, Value, Comparator>::indexOf(const Key& x) const {
+template <typename Key, typename Value, typename Comparator> int SGEXTN::Containers::MultiMapCustomisable<Key, Value, Comparator>::indexOf(const Key& x) const {
     return private_avlTree.indexOf(x);
 }
 
-template <typename Key, typename Value, typename Comparator> int SGEXTN::Containers::MultiMap<Key, Value, Comparator>::indexOf(SGEXTN::Containers::MultiMapIterator<Key, Value, Comparator> i) const {
+template <typename Key, typename Value, typename Comparator> int SGEXTN::Containers::MultiMapCustomisable<Key, Value, Comparator>::indexOf(SGEXTN::Containers::MultiMapIterator<Key, Value, Comparator> i) const {
     return private_avlTree.indexOf(i.private_avlTreeIterator);
 }
 
-template <typename Key, typename Value, typename Comparator> int SGEXTN::Containers::MultiMap<Key, Value, Comparator>::indexOf(SGEXTN::Containers::MultiMapConstIterator<Key, Value, Comparator> i) const {
+template <typename Key, typename Value, typename Comparator> int SGEXTN::Containers::MultiMapCustomisable<Key, Value, Comparator>::indexOf(SGEXTN::Containers::MultiMapConstIterator<Key, Value, Comparator> i) const {
     return private_avlTree.indexOf(i.private_avlTreeIterator);
 }
 
-template <typename Key, typename Value, typename Comparator> const Key& SGEXTN::Containers::MultiMap<Key, Value, Comparator>::keyAt(int n) const {
+template <typename Key, typename Value, typename Comparator> const Key& SGEXTN::Containers::MultiMapCustomisable<Key, Value, Comparator>::keyAt(int n) const {
     if(n < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::MultiMap::keyAt crashed because index is negative");}
     if(n >= length()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::MultiMap::keyAt crashed because index points beyond the end of the data structure");}
     return private_avlTree.keyAt(n);
 }
 
-template <typename Key, typename Value, typename Comparator> Value& SGEXTN::Containers::MultiMap<Key, Value, Comparator>::valueAt(int n){
+template <typename Key, typename Value, typename Comparator> Value& SGEXTN::Containers::MultiMapCustomisable<Key, Value, Comparator>::valueAt(int n){
     if(n < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::MultiMap::valueAt crashed because index is negative");}
     if(n >= length()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::MultiMap::valueAt crashed because index points beyond the end of the data structure");}
     return private_avlTree.valueAt(n);
 }
 
-template <typename Key, typename Value, typename Comparator> const Value& SGEXTN::Containers::MultiMap<Key, Value, Comparator>::valueAt(int n) const {
+template <typename Key, typename Value, typename Comparator> const Value& SGEXTN::Containers::MultiMapCustomisable<Key, Value, Comparator>::valueAt(int n) const {
     if(n < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::MultiMap::valueAt crashed because index is negative");}
     if(n >= length()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::MultiMap::valueAt crashed because index points beyond the end of the data structure");}
     return private_avlTree.valueAt(n);
 }
 
-template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MultiMapIterator<Key, Value, Comparator> SGEXTN::Containers::MultiMap<Key, Value, Comparator>::iteratorAt(int n){
+template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MultiMapIterator<Key, Value, Comparator> SGEXTN::Containers::MultiMapCustomisable<Key, Value, Comparator>::iteratorAt(int n){
     return SGEXTN::Containers::MultiMapIterator(private_avlTree.iteratorAt(n));
 }
 
-template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MultiMapConstIterator<Key, Value, Comparator> SGEXTN::Containers::MultiMap<Key, Value, Comparator>::constIteratorAt(int n) const {
+template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MultiMapConstIterator<Key, Value, Comparator> SGEXTN::Containers::MultiMapCustomisable<Key, Value, Comparator>::constIteratorAt(int n) const {
     return SGEXTN::Containers::MultiMapConstIterator(private_avlTree.constIteratorAt(n));
 }
 

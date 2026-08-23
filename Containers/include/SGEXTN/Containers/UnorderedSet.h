@@ -17,16 +17,21 @@
 
 #pragma once
 #include <SGEXTN/Containers/private_api/HashMap.h>
+#include <SGEXTN/Containers/EqualTo.h>
+#include <SGEXTN/Containers/Hash.h>
 
 namespace SGEXTN {
 namespace Containers {
+template <typename T, typename EqualityCheck, typename HashFunction> class UnorderedSetCustomisable;
+template <typename T> using UnorderedSet = UnorderedSetCustomisable<T, SGEXTN::Containers::EqualTo<T>, SGEXTN::Containers::Hash<T>>;
+
 template <typename T, typename EqualityCheck, typename HashFunction> class UnorderedSetIterator;
 template <typename T, typename EqualityCheck, typename HashFunction> class UnorderedSetConstIterator;
 
-template <typename T, typename EqualityCheck, typename HashFunction> class UnorderedSet {
+template <typename T, typename EqualityCheck, typename HashFunction> class UnorderedSetCustomisable {
 public:
     HashMap<T, bool, EqualityCheck, HashFunction> private_hashMap;
-    UnorderedSet();
+    UnorderedSetCustomisable();
     [[nodiscard]] int length() const;
     void reserve(int newMemoryLength);
     bool insert(const T& x);

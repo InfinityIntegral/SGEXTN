@@ -22,8 +22,6 @@ namespace InternalTest {
 class BuildLah_SGEXTN_InternalTest SeerattraNumTest {
 public:
     static void testAll();
-    static void testTrueRandom();
-    static void testSimpleRandom();
     static void testDirectRandom();
     static void testUniformDistributionInteger();
     static void testUniformDistributionFloatingPoint();

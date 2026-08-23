@@ -17,16 +17,23 @@
 
 #pragma once
 #include <SGEXTN/Containers/private_api/AVLTree.h>
+#include <SGEXTN/Containers/LessThan.h>
+#include <SGEXTN/Containers/MoreThan.h>
 
 namespace SGEXTN {
 namespace Containers {
+template <typename T, typename Comparator> class SetCustomisable;
+template <typename T> using Set = SetCustomisable<T, SGEXTN::Containers::LessThan<T>>;
+template <typename T> using SetAscending = SetCustomisable<T, SGEXTN::Containers::LessThan<T>>;
+template <typename T> using SetDescending = SetCustomisable<T, SGEXTN::Containers::MoreThan<T>>;
+
 template <typename T, typename Comparator> class SetIterator;
 template <typename T, typename Comparator> class SetConstIterator;
 
-template <typename T, typename Comparator> class Set {
+template <typename T, typename Comparator> class SetCustomisable {
 public:
     AVLTree<T, bool, Comparator> private_avlTree;
-    Set();
+    SetCustomisable();
     [[nodiscard]] int length() const;
     bool insert(const T& x);
     bool erase(const T& x);
