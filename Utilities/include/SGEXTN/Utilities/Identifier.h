@@ -37,7 +37,6 @@ public:
     [[nodiscard]] bool operator!=(Identifier x) const;
     [[nodiscard]] bool operator<(Identifier x) const;
     [[nodiscard]] bool operator>(Identifier x) const;
-    [[nodiscard]] int hash() const;
     [[nodiscard]] SGEXTN::CoreText::String getStringForPrinting() const;
     [[nodiscard]] SGEXTN::CoreText::String debugPrint() const;
     [[nodiscard]] static bool sendOut(Identifier x, SGEXTN::Containers::Span<unsigned char> data);

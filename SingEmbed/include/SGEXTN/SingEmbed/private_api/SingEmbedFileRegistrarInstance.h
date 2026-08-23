@@ -25,7 +25,7 @@ class String;
 namespace Containers {
 template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> class UnorderedMap;
 template <typename T> class EqualTo;
-template <typename... Ts> class Hash;
+template <typename T> class Hash;
 }
 
 namespace SingEmbed {

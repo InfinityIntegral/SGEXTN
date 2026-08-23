@@ -62,7 +62,6 @@ public:
     [[nodiscard]] bool operator!=(RgbaColour x) const;
     [[nodiscard]] bool operator<(RgbaColour x) const;
     [[nodiscard]] bool operator>(RgbaColour x) const;
-    [[nodiscard]] int hash() const;
     [[nodiscard]] SGEXTN::CoreText::String debugPrint() const;
     [[nodiscard]] static bool sendOut(RgbaColour x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(RgbaColour& x, SGEXTN::Containers::Span<unsigned char> data);

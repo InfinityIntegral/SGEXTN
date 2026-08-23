@@ -17,30 +17,15 @@
 
 #pragma once
 #include <SGEXTN/Containers/Span.h>
-#include <SGEXTN/Containers/private_api/HashAlgorithm.h>
+#include <SGEXTN/Containers/Array.h>
+#include <SGEXTN/Containers/Serialise.h>
+#include <SGEXTN/Containers/ForceCrash.h>
 
 template <typename T> int SGEXTN::Containers::Hash<T>::operator()(const T& x) const {
-    return x.hash();
-}
-
-template <typename... Ts> int SGEXTN::Containers::Hash<Ts...>::operator()(const Ts&... xs) const {
-    constexpr int argCount = (sizeof...(Ts));
-    int buffer[argCount] = {SGEXTN::Containers::Hash<Ts>{}(xs)...};
-    return SGEXTN::Containers::HashAlgorithm::wyHash32(SGEXTN::Containers::Span<const unsigned char>(reinterpret_cast<const unsigned char*>(buffer), argCount * sizeof(int)));
-}
-
-template <typename T> int SGEXTN::Containers::Hash<T*>::operator()(const T* x) const {
-    return SGEXTN::Containers::HashAlgorithm::wyHash32(SGEXTN::Containers::Span<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(T*)));
-}
-
-template <typename ReturnType, typename... ArgTypes> int SGEXTN::Containers::Hash<ReturnType (*)(ArgTypes...)>::operator()(ReturnType (*x)(ArgTypes...)) const {
-    return SGEXTN::Containers::HashAlgorithm::wyHash32(SGEXTN::Containers::Span<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(ReturnType (*)(ArgTypes...))));
-}
-
-template <typename ReturnType, typename ClassName, typename... ArgTypes> int SGEXTN::Containers::Hash<ReturnType (ClassName::*)(ArgTypes...)>::operator()(ReturnType (ClassName::*x)(ArgTypes...)) const {
-    return SGEXTN::Containers::HashAlgorithm::wyHash32(SGEXTN::Containers::Span<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(ReturnType (ClassName::*)(ArgTypes...))));
-}
-
-template <typename ReturnType, typename ClassName, typename... ArgTypes> int SGEXTN::Containers::Hash<ReturnType (ClassName::*)(ArgTypes...) const>::operator()(ReturnType (ClassName::*x)(ArgTypes...) const) const {
-    return SGEXTN::Containers::HashAlgorithm::wyHash32(SGEXTN::Containers::Span<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(ReturnType (ClassName::*)(ArgTypes...) const)));
+    const int bufferLength = SGEXTN::Containers::Serialise<T>::sizeOut(x);
+    SGEXTN::Containers::Array<unsigned char> bufferArray(bufferLength);
+    const SGEXTN::Containers::Span<unsigned char> span(bufferArray, 0, bufferLength);
+    const bool isValid = SGEXTN::Containers::Serialise<T>::sendOut(x, span);
+    if(isValid == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Container::Hash failed to hash object because the object could not be serialised");}
+    return SGEXTN::Containers::HashAlgorithm::wyHash32(span);
 }

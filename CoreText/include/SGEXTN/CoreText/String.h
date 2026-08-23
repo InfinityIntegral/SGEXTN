@@ -62,7 +62,6 @@ public:
     [[nodiscard]] bool operator>(const String& x) const;
     [[nodiscard]] bool operator<=(const String& x) const;
     [[nodiscard]] bool operator>=(const String& x) const;
-    [[nodiscard]] int hash() const;
     [[nodiscard]] static bool sendOut(const String& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(String& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static int sizeOut(const String& x);

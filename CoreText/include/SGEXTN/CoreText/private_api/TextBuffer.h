@@ -48,7 +48,6 @@ public:
     [[nodiscard]] bool operator>(const TextBuffer& x) const;
     [[nodiscard]] bool operator<=(const TextBuffer& x) const;
     [[nodiscard]] bool operator>=(const TextBuffer& x) const;
-    [[nodiscard]] int hash() const;
     [[nodiscard]] TextBuffer substring(int start, int length) const;
     [[nodiscard]] TextBuffer substringLeft(int length) const;
     [[nodiscard]] TextBuffer substringRight(int length) const;

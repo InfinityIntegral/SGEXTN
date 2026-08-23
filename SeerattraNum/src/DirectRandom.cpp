@@ -28,6 +28,13 @@ namespace {
 unsigned long long rotation(unsigned long long x, int k){
     return ((x << k) | (x >> (64 - k)));
 }
+
+int tempHash(unsigned int a, int b){
+    SGEXTN::Containers::Array<unsigned char> bufferArray(8);
+    static_cast<void>(SGEXTN::Containers::Serialise<unsigned int>::sendOut(SGEXTN::Containers::Hash<unsigned int>()(a), SGEXTN::Containers::Span<unsigned char>(bufferArray, 0, 4)));
+    static_cast<void>(SGEXTN::Containers::Serialise<int>::sendOut(SGEXTN::Containers::Hash<int>()(b), SGEXTN::Containers::Span<unsigned char>(bufferArray, 4, 4)));
+    return SGEXTN::Containers::HashAlgorithm::wyHash32(SGEXTN::Containers::Span<unsigned char>(bufferArray, 0, 8));
+}
 }
 
 SGEXTN::SeerattraNum::DirectRandom::DirectRandom() : private_cache(0u), private_cacheActive(false), private_firstNum(0u), private_secondNum(0u), private_thirdNum(0u), private_fourthNum(0u){
@@ -61,16 +68,15 @@ int SGEXTN::SeerattraNum::DirectRandom::size(){
 }
 
 void SGEXTN::SeerattraNum::DirectRandom::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
-    SGEXTN::Containers::Array<unsigned int> improvedSeed(8);
+    SGEXTN::Containers::Array<unsigned int> improvedSeed(0x19650809u, 1965u, 65u, 26u, 726u, 5900691u, 61u, 744u);
     if(seedArray.length() == 0){
-        SGEXTN::Containers::Array<unsigned int> defaultSeedArray(0x19650809u, 1965u, 65u, 26u, 726u, 5900691u, 61u, 744u);
         for(int i=0; i<8; i++){
-            improvedSeed.at(i) = SGEXTN::Containers::Hash<unsigned int, int>()(defaultSeedArray.at(i), i);
+            improvedSeed.at(i) = tempHash(improvedSeed.at(i), i);
         }
     }
     else{
         for(int i=0; i<8; i++){
-            improvedSeed.at(i) = SGEXTN::Containers::Hash<unsigned int, int>()(seedArray.at(i % seedArray.length()), i);
+            improvedSeed.at(i) = tempHash(seedArray.at(i % seedArray.length()), i);
         }
     }
     for(int i=0; i<8; i++){

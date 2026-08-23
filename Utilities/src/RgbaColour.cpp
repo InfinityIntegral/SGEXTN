@@ -17,7 +17,6 @@
 
 #include <SGEXTN/Utilities/RgbaColour.h>
 #include <SGEXTN/CoreText/String.h>
-#include <SGEXTN/Containers/Hash.h>
 #include <SGEXTN/Math/FloatMath.h>
 #include <SGEXTN/Containers/ForceCrash.h>
 #include <SGEXTN/Containers/Serialise.h>
@@ -177,10 +176,6 @@ bool SGEXTN::Utilities::RgbaColour::operator<(SGEXTN::Utilities::RgbaColour x) c
 
 bool SGEXTN::Utilities::RgbaColour::operator>(SGEXTN::Utilities::RgbaColour x) const {
     return (private_data > x.private_data);
-}
-
-int SGEXTN::Utilities::RgbaColour::hash() const {
-    return SGEXTN::Containers::Hash<unsigned int>()(private_data);
 }
 
 SGEXTN::CoreText::String SGEXTN::Utilities::RgbaColour::debugPrint() const {

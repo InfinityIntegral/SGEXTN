@@ -17,8 +17,6 @@
 
 #include <SGEXTN/CoreText/private_api/TextBuffer.h>
 #include <SGEXTN/Containers/PlacementNew.h>
-#include <SGEXTN/Containers/private_api/HashAlgorithm.h>
-#include <SGEXTN/Containers/Span.h>
 #include <SGEXTN/CoreText/private_api/ByteVector.h>
 #include <cstring>
 
@@ -190,10 +188,6 @@ bool SGEXTN::CoreText::TextBuffer::operator<=(const SGEXTN::CoreText::TextBuffer
 
 bool SGEXTN::CoreText::TextBuffer::operator>=(const SGEXTN::CoreText::TextBuffer& x) const {
     return (memoryCompare(&byteAt(0), length(), &x.byteAt(0), x.length()) >= 0);
-}
-
-int SGEXTN::CoreText::TextBuffer::hash() const {
-    return SGEXTN::Containers::HashAlgorithm::wyHash32(SGEXTN::Containers::Span<const unsigned char>(&byteAt(0), length()));
 }
 
 SGEXTN::CoreText::TextBuffer SGEXTN::CoreText::TextBuffer::substring(int start, int length) const {
