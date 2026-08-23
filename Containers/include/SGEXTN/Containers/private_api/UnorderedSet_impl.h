@@ -18,57 +18,57 @@
 #pragma once
 #include <SGEXTN/Containers/ForceCrash.h>
 
-template <typename T, typename EqualityCheck, typename HashFunction> SGEXTN::Containers::UnorderedSet<T, EqualityCheck, HashFunction>::UnorderedSet() : private_hashMap() {}
+template <typename T, typename EqualityCheck, typename HashFunction> SGEXTN::Containers::UnorderedSetCustomisable<T, EqualityCheck, HashFunction>::UnorderedSetCustomisable() : private_hashMap() {}
 
-template <typename T, typename EqualityCheck, typename HashFunction> int SGEXTN::Containers::UnorderedSet<T, EqualityCheck, HashFunction>::length() const {
+template <typename T, typename EqualityCheck, typename HashFunction> int SGEXTN::Containers::UnorderedSetCustomisable<T, EqualityCheck, HashFunction>::length() const {
     return private_hashMap.length();
 }
 
-template <typename T, typename EqualityCheck, typename HashFunction> void SGEXTN::Containers::UnorderedSet<T, EqualityCheck, HashFunction>::reserve(int newMemoryLength){
+template <typename T, typename EqualityCheck, typename HashFunction> void SGEXTN::Containers::UnorderedSetCustomisable<T, EqualityCheck, HashFunction>::reserve(int newMemoryLength){
     private_hashMap.reserve(newMemoryLength);
 }
 
-template <typename T, typename EqualityCheck, typename HashFunction> bool SGEXTN::Containers::UnorderedSet<T, EqualityCheck, HashFunction>::insert(const T& x){
+template <typename T, typename EqualityCheck, typename HashFunction> bool SGEXTN::Containers::UnorderedSetCustomisable<T, EqualityCheck, HashFunction>::insert(const T& x){
     return private_hashMap.insert(x, false);
 }
 
-template <typename T, typename EqualityCheck, typename HashFunction> bool SGEXTN::Containers::UnorderedSet<T, EqualityCheck, HashFunction>::erase(const T& x){
+template <typename T, typename EqualityCheck, typename HashFunction> bool SGEXTN::Containers::UnorderedSetCustomisable<T, EqualityCheck, HashFunction>::erase(const T& x){
     return private_hashMap.erase(x);
 }
 
-template <typename T, typename EqualityCheck, typename HashFunction> void SGEXTN::Containers::UnorderedSet<T, EqualityCheck, HashFunction>::clear(){
+template <typename T, typename EqualityCheck, typename HashFunction> void SGEXTN::Containers::UnorderedSetCustomisable<T, EqualityCheck, HashFunction>::clear(){
     private_hashMap.clear();
 }
 
-template <typename T, typename EqualityCheck, typename HashFunction> bool SGEXTN::Containers::UnorderedSet<T, EqualityCheck, HashFunction>::contains(const T& x) const {
+template <typename T, typename EqualityCheck, typename HashFunction> bool SGEXTN::Containers::UnorderedSetCustomisable<T, EqualityCheck, HashFunction>::contains(const T& x) const {
     return private_hashMap.contains(x);
 }
 
-template <typename T, typename EqualityCheck, typename HashFunction> SGEXTN::Containers::UnorderedSetIterator<T, EqualityCheck, HashFunction> SGEXTN::Containers::UnorderedSet<T, EqualityCheck, HashFunction>::begin(){
+template <typename T, typename EqualityCheck, typename HashFunction> SGEXTN::Containers::UnorderedSetIterator<T, EqualityCheck, HashFunction> SGEXTN::Containers::UnorderedSetCustomisable<T, EqualityCheck, HashFunction>::begin(){
     return SGEXTN::Containers::UnorderedSetIterator(private_hashMap.begin());
 }
 
-template <typename T, typename EqualityCheck, typename HashFunction> SGEXTN::Containers::UnorderedSetConstIterator<T, EqualityCheck, HashFunction> SGEXTN::Containers::UnorderedSet<T, EqualityCheck, HashFunction>::constBegin() const {
+template <typename T, typename EqualityCheck, typename HashFunction> SGEXTN::Containers::UnorderedSetConstIterator<T, EqualityCheck, HashFunction> SGEXTN::Containers::UnorderedSetCustomisable<T, EqualityCheck, HashFunction>::constBegin() const {
     return SGEXTN::Containers::UnorderedSetConstIterator(private_hashMap.constBegin());
 }
 
-template <typename T, typename EqualityCheck, typename HashFunction> SGEXTN::Containers::UnorderedSetIterator<T, EqualityCheck, HashFunction> SGEXTN::Containers::UnorderedSet<T, EqualityCheck, HashFunction>::end(){
+template <typename T, typename EqualityCheck, typename HashFunction> SGEXTN::Containers::UnorderedSetIterator<T, EqualityCheck, HashFunction> SGEXTN::Containers::UnorderedSetCustomisable<T, EqualityCheck, HashFunction>::end(){
     return SGEXTN::Containers::UnorderedSetIterator(private_hashMap.end());
 }
 
-template <typename T, typename EqualityCheck, typename HashFunction> SGEXTN::Containers::UnorderedSetConstIterator<T, EqualityCheck, HashFunction> SGEXTN::Containers::UnorderedSet<T, EqualityCheck, HashFunction>::constEnd() const {
+template <typename T, typename EqualityCheck, typename HashFunction> SGEXTN::Containers::UnorderedSetConstIterator<T, EqualityCheck, HashFunction> SGEXTN::Containers::UnorderedSetCustomisable<T, EqualityCheck, HashFunction>::constEnd() const {
     return SGEXTN::Containers::UnorderedSetConstIterator(private_hashMap.constEnd());
 }
 
-template <typename T, typename EqualityCheck, typename HashFunction> bool SGEXTN::Containers::UnorderedSet<T, EqualityCheck, HashFunction>::erase(SGEXTN::Containers::UnorderedSetIterator<T, EqualityCheck, HashFunction>& i){
+template <typename T, typename EqualityCheck, typename HashFunction> bool SGEXTN::Containers::UnorderedSetCustomisable<T, EqualityCheck, HashFunction>::erase(SGEXTN::Containers::UnorderedSetIterator<T, EqualityCheck, HashFunction>& i){
     return private_hashMap.erase(i.private_hashMapIterator);
 }
 
-template <typename T, typename EqualityCheck, typename HashFunction> SGEXTN::Containers::UnorderedSetIterator<T, EqualityCheck, HashFunction> SGEXTN::Containers::UnorderedSet<T, EqualityCheck, HashFunction>::find(const T& x){
+template <typename T, typename EqualityCheck, typename HashFunction> SGEXTN::Containers::UnorderedSetIterator<T, EqualityCheck, HashFunction> SGEXTN::Containers::UnorderedSetCustomisable<T, EqualityCheck, HashFunction>::find(const T& x){
     return SGEXTN::Containers::UnorderedSetIterator(private_hashMap.find(x));
 }
 
-template <typename T, typename EqualityCheck, typename HashFunction> SGEXTN::Containers::UnorderedSetConstIterator<T, EqualityCheck, HashFunction> SGEXTN::Containers::UnorderedSet<T, EqualityCheck, HashFunction>::constFind(const T& x) const {
+template <typename T, typename EqualityCheck, typename HashFunction> SGEXTN::Containers::UnorderedSetConstIterator<T, EqualityCheck, HashFunction> SGEXTN::Containers::UnorderedSetCustomisable<T, EqualityCheck, HashFunction>::constFind(const T& x) const {
     return SGEXTN::Containers::UnorderedSetConstIterator(private_hashMap.constFind(x));
 }
 

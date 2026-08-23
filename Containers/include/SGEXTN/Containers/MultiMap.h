@@ -17,16 +17,23 @@
 
 #pragma once
 #include <SGEXTN/Containers/private_api/AVLTree.h>
+#include <SGEXTN/Containers/LessThan.h>
+#include <SGEXTN/Containers/MoreThan.h>
 
 namespace SGEXTN {
 namespace Containers {
+template <typename Key, typename Value, typename Comparator> class MultiMapCustomisable;
+template <typename Key, typename Value> using MultiMap = MultiMapCustomisable<Key, Value, SGEXTN::Containers::LessThan<Key>>;
+template <typename Key, typename Value> using MultiMapAscending = MultiMapCustomisable<Key, Value, SGEXTN::Containers::LessThan<Key>>;
+template <typename Key, typename Value> using MultiMapDescending = MultiMapCustomisable<Key, Value, SGEXTN::Containers::MoreThan<Key>>;
+
 template <typename Key, typename Value, typename Comparator> class MultiMapIterator;
 template <typename Key, typename Value, typename Comparator> class MultiMapConstIterator;
 
-template <typename Key, typename Value, typename Comparator> class MultiMap {
+template <typename Key, typename Value, typename Comparator> class MultiMapCustomisable {
 public:
     AVLTree<Key, Value, Comparator> private_avlTree;
-    MultiMap();
+    MultiMapCustomisable();
     [[nodiscard]] int length() const;
     void insert(const Key& key, const Value& value);
     bool erase(const Key& x);

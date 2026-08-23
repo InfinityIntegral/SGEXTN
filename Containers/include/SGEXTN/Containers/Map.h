@@ -17,16 +17,23 @@
 
 #pragma once
 #include <SGEXTN/Containers/private_api/AVLTree.h>
+#include <SGEXTN/Containers/LessThan.h>
+#include <SGEXTN/Containers/MoreThan.h>
 
 namespace SGEXTN {
 namespace Containers {
+template <typename Key, typename Value, typename Comparator> class MapCustomisable;
+template <typename Key, typename Value> using Map = MapCustomisable<Key, Value, SGEXTN::Containers::LessThan<Key>>;
+template <typename Key, typename Value> using MapAscending = MapCustomisable<Key, Value, SGEXTN::Containers::LessThan<Key>>;
+template <typename Key, typename Value> using MapDescending = MapCustomisable<Key, Value, SGEXTN::Containers::MoreThan<Key>>;
+
 template <typename Key, typename Value, typename Comparator> class MapIterator;
 template <typename Key, typename Value, typename Comparator> class MapConstIterator;
 
-template <typename Key, typename Value, typename Comparator> class Map {
+template <typename Key, typename Value, typename Comparator> class MapCustomisable {
 public:
     AVLTree<Key, Value, Comparator> private_avlTree;
-    Map();
+    MapCustomisable();
     [[nodiscard]] int length() const;
     bool insert(const Key& key, const Value& value);
     bool erase(const Key& x);

@@ -17,12 +17,19 @@
 
 #pragma once
 #include <SGEXTN/Containers/private_api/RingBuffer.h>
+#include <SGEXTN/Containers/LessThan.h>
+#include <SGEXTN/Containers/MoreThan.h>
 
 namespace SGEXTN {
 namespace Containers {
-template <typename T, typename Comparator> class PriorityQueue {
+template <typename T, typename Comparator> class PriorityQueueCustomisable;
+template <typename T> using PriorityQueue = PriorityQueueCustomisable<T, SGEXTN::Containers::LessThan<T>>;
+template <typename T> using PriorityQueueAscending = PriorityQueueCustomisable<T, SGEXTN::Containers::LessThan<T>>;
+template <typename T> using PriorityQueueDescending = PriorityQueueCustomisable<T, SGEXTN::Containers::MoreThan<T>>;
+
+template <typename T, typename Comparator> class PriorityQueueCustomisable {
 public:
-    PriorityQueue();
+    PriorityQueueCustomisable();
     [[nodiscard]] const T& top() const;
     [[nodiscard]] int length() const;
     void push(const T& x);

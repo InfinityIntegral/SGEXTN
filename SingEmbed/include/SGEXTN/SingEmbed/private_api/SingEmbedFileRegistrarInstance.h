@@ -23,9 +23,10 @@ class String;
 }
 
 namespace Containers {
-template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> class UnorderedMap;
+template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> class UnorderedMapCustomisable;
 template <typename T> class EqualTo;
 template <typename T> class Hash;
+template <typename Key, typename Value> using UnorderedMap = UnorderedMapCustomisable<Key, Value, SGEXTN::Containers::EqualTo<Key>, SGEXTN::Containers::Hash<Key>>;
 }
 
 namespace SingEmbed {
@@ -33,7 +34,7 @@ class EmbeddedFile;
 
 class BuildLah_SGEXTN_SingEmbed SingEmbedFileRegistrarInstance {
 public:
-    static SGEXTN::Containers::UnorderedMap<SGEXTN::CoreText::String, SGEXTN::SingEmbed::EmbeddedFile, SGEXTN::Containers::EqualTo<SGEXTN::CoreText::String>, SGEXTN::Containers::Hash<SGEXTN::CoreText::String>>* registry;
+    static SGEXTN::Containers::UnorderedMap<SGEXTN::CoreText::String, SGEXTN::SingEmbed::EmbeddedFile>* registry;
     SingEmbedFileRegistrarInstance(const SGEXTN::CoreText::String& virtualPath, int fileSize, const char* data);
 };
 }

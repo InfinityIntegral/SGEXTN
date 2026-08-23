@@ -22,8 +22,6 @@
 #include <SGEXTN/Containers/Array.h>
 #include <SGEXTN/CoreText/Character.h>
 #include <SGEXTN/Containers/UnorderedSet.h>
-#include <SGEXTN/Containers/EqualTo.h>
-#include <SGEXTN/Containers/Hash.h>
 #include <SGEXTN/Math/FloatLimits.h>
 #include <SGEXTN/Math/FloatMath.h>
 #include <SGEXTN/Containers/Vector.h>
@@ -246,7 +244,7 @@ SGEXTN::CoreText::GraphemeSegmentationType parseGraphemeSegmentationType(const S
     return SGEXTN::CoreText::GraphemeSegmentationType::Other;
 }
 
-SGEXTN::Containers::Array<SGEXTN::Containers::UnorderedSet<SGEXTN::CoreText::String, SGEXTN::Containers::EqualTo<SGEXTN::CoreText::String>, SGEXTN::Containers::Hash<SGEXTN::CoreText::String>>> derivedCoreDatabase(0x110000);
+SGEXTN::Containers::Array<SGEXTN::Containers::UnorderedSet<SGEXTN::CoreText::String>> derivedCoreDatabase(0x110000);
 
 void appendToDerivedCoreDatabase(int j, const SGEXTN::CoreText::String& propertyValue){
     derivedCoreDatabase.at(j).insert(propertyValue);
@@ -294,7 +292,7 @@ void fillRecomposeExclusionDatabase(){
     }
 }
 
-SGEXTN::Containers::Array<SGEXTN::Containers::UnorderedSet<SGEXTN::CoreText::String, SGEXTN::Containers::EqualTo<SGEXTN::CoreText::String>, SGEXTN::Containers::Hash<SGEXTN::CoreText::String>>> propertyListDatabase(0x110000);
+SGEXTN::Containers::Array<SGEXTN::Containers::UnorderedSet<SGEXTN::CoreText::String>> propertyListDatabase(0x110000);
 
 void appendToPropertyListDatabase(int j, const SGEXTN::CoreText::String& propertyValue){
     propertyListDatabase.at(j).insert(propertyValue);

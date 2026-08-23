@@ -18,117 +18,117 @@
 #pragma once
 #include <SGEXTN/Containers/ForceCrash.h>
 
-template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::Map<Key, Value, Comparator>::Map() : private_avlTree() {}
+template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MapCustomisable<Key, Value, Comparator>::MapCustomisable() : private_avlTree() {}
 
-template <typename Key, typename Value, typename Comparator> int SGEXTN::Containers::Map<Key, Value, Comparator>::length() const {
+template <typename Key, typename Value, typename Comparator> int SGEXTN::Containers::MapCustomisable<Key, Value, Comparator>::length() const {
     return private_avlTree.length();
 }
 
-template <typename Key, typename Value, typename Comparator> bool SGEXTN::Containers::Map<Key, Value, Comparator>::insert(const Key& key, const Value& value){
+template <typename Key, typename Value, typename Comparator> bool SGEXTN::Containers::MapCustomisable<Key, Value, Comparator>::insert(const Key& key, const Value& value){
     return private_avlTree.insert(key, value, false);
 }
 
-template <typename Key, typename Value, typename Comparator> bool SGEXTN::Containers::Map<Key, Value, Comparator>::erase(const Key& x){
+template <typename Key, typename Value, typename Comparator> bool SGEXTN::Containers::MapCustomisable<Key, Value, Comparator>::erase(const Key& x){
     return private_avlTree.erase(x);
 }
 
-template <typename Key, typename Value, typename Comparator> void SGEXTN::Containers::Map<Key, Value, Comparator>::clear(){
+template <typename Key, typename Value, typename Comparator> void SGEXTN::Containers::MapCustomisable<Key, Value, Comparator>::clear(){
     private_avlTree.clear();
 }
 
-template <typename Key, typename Value, typename Comparator> bool SGEXTN::Containers::Map<Key, Value, Comparator>::contains(const Key& x) const {
+template <typename Key, typename Value, typename Comparator> bool SGEXTN::Containers::MapCustomisable<Key, Value, Comparator>::contains(const Key& x) const {
     return private_avlTree.contains(x);
 }
 
-template <typename Key, typename Value, typename Comparator> Value& SGEXTN::Containers::Map<Key, Value, Comparator>::at(const Key& x){
+template <typename Key, typename Value, typename Comparator> Value& SGEXTN::Containers::MapCustomisable<Key, Value, Comparator>::at(const Key& x){
     if(contains(x) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Map::at crashed because the key is not in the map");}
     return private_avlTree.at(x);
 }
 
-template <typename Key, typename Value, typename Comparator> const Value& SGEXTN::Containers::Map<Key, Value, Comparator>::at(const Key& x) const {
+template <typename Key, typename Value, typename Comparator> const Value& SGEXTN::Containers::MapCustomisable<Key, Value, Comparator>::at(const Key& x) const {
     if(contains(x) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Map::at crashed because the key is not in the map");}
     return private_avlTree.at(x);
 }
 
-template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MapIterator<Key, Value, Comparator> SGEXTN::Containers::Map<Key, Value, Comparator>::begin(){
+template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MapIterator<Key, Value, Comparator> SGEXTN::Containers::MapCustomisable<Key, Value, Comparator>::begin(){
     return SGEXTN::Containers::MapIterator(private_avlTree.begin());
 }
 
-template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MapConstIterator<Key, Value, Comparator> SGEXTN::Containers::Map<Key, Value, Comparator>::constBegin() const {
+template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MapConstIterator<Key, Value, Comparator> SGEXTN::Containers::MapCustomisable<Key, Value, Comparator>::constBegin() const {
     return SGEXTN::Containers::MapConstIterator(private_avlTree.constBegin());
 }
 
-template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MapIterator<Key, Value, Comparator> SGEXTN::Containers::Map<Key, Value, Comparator>::end(){
+template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MapIterator<Key, Value, Comparator> SGEXTN::Containers::MapCustomisable<Key, Value, Comparator>::end(){
     return SGEXTN::Containers::MapIterator(private_avlTree.end());
 }
 
-template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MapConstIterator<Key, Value, Comparator> SGEXTN::Containers::Map<Key, Value, Comparator>::constEnd() const {
+template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MapConstIterator<Key, Value, Comparator> SGEXTN::Containers::MapCustomisable<Key, Value, Comparator>::constEnd() const {
     return SGEXTN::Containers::MapConstIterator(private_avlTree.constEnd());
 }
 
-template <typename Key, typename Value, typename Comparator> bool SGEXTN::Containers::Map<Key, Value, Comparator>::erase(SGEXTN::Containers::MapIterator<Key, Value, Comparator>& i){
+template <typename Key, typename Value, typename Comparator> bool SGEXTN::Containers::MapCustomisable<Key, Value, Comparator>::erase(SGEXTN::Containers::MapIterator<Key, Value, Comparator>& i){
     return private_avlTree.erase(i.private_avlTreeIterator);
 }
 
-template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MapIterator<Key, Value, Comparator> SGEXTN::Containers::Map<Key, Value, Comparator>::find(const Key& x){
+template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MapIterator<Key, Value, Comparator> SGEXTN::Containers::MapCustomisable<Key, Value, Comparator>::find(const Key& x){
     return SGEXTN::Containers::MapIterator(private_avlTree.find(x));
 }
 
-template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MapConstIterator<Key, Value, Comparator> SGEXTN::Containers::Map<Key, Value, Comparator>::constFind(const Key& x) const {
+template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MapConstIterator<Key, Value, Comparator> SGEXTN::Containers::MapCustomisable<Key, Value, Comparator>::constFind(const Key& x) const {
     return SGEXTN::Containers::MapConstIterator(private_avlTree.constFind(x));
 }
 
-template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MapIterator<Key, Value, Comparator> SGEXTN::Containers::Map<Key, Value, Comparator>::lowerBound(const Key& x){
+template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MapIterator<Key, Value, Comparator> SGEXTN::Containers::MapCustomisable<Key, Value, Comparator>::lowerBound(const Key& x){
     return SGEXTN::Containers::MapIterator(private_avlTree.lowerBound(x));
 }
 
-template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MapConstIterator<Key, Value, Comparator> SGEXTN::Containers::Map<Key, Value, Comparator>::constLowerBound(const Key& x) const {
+template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MapConstIterator<Key, Value, Comparator> SGEXTN::Containers::MapCustomisable<Key, Value, Comparator>::constLowerBound(const Key& x) const {
     return SGEXTN::Containers::MapConstIterator(private_avlTree.constLowerBound(x));
 }
 
-template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MapIterator<Key, Value, Comparator> SGEXTN::Containers::Map<Key, Value, Comparator>::upperBound(const Key& x){
+template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MapIterator<Key, Value, Comparator> SGEXTN::Containers::MapCustomisable<Key, Value, Comparator>::upperBound(const Key& x){
     return SGEXTN::Containers::MapIterator(private_avlTree.upperBound(x));
 }
 
-template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MapConstIterator<Key, Value, Comparator> SGEXTN::Containers::Map<Key, Value, Comparator>::constUpperBound(const Key& x) const {
+template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MapConstIterator<Key, Value, Comparator> SGEXTN::Containers::MapCustomisable<Key, Value, Comparator>::constUpperBound(const Key& x) const {
     return SGEXTN::Containers::MapConstIterator(private_avlTree.constUpperBound(x));
 }
 
-template <typename Key, typename Value, typename Comparator> int SGEXTN::Containers::Map<Key, Value, Comparator>::indexOf(const Key& x) const {
+template <typename Key, typename Value, typename Comparator> int SGEXTN::Containers::MapCustomisable<Key, Value, Comparator>::indexOf(const Key& x) const {
     return private_avlTree.indexOf(x);
 }
 
-template <typename Key, typename Value, typename Comparator> int SGEXTN::Containers::Map<Key, Value, Comparator>::indexOf(SGEXTN::Containers::MapIterator<Key, Value, Comparator> i) const {
+template <typename Key, typename Value, typename Comparator> int SGEXTN::Containers::MapCustomisable<Key, Value, Comparator>::indexOf(SGEXTN::Containers::MapIterator<Key, Value, Comparator> i) const {
     return private_avlTree.indexOf(i.private_avlTreeIterator);
 }
 
-template <typename Key, typename Value, typename Comparator> int SGEXTN::Containers::Map<Key, Value, Comparator>::indexOf(SGEXTN::Containers::MapConstIterator<Key, Value, Comparator> i) const {
+template <typename Key, typename Value, typename Comparator> int SGEXTN::Containers::MapCustomisable<Key, Value, Comparator>::indexOf(SGEXTN::Containers::MapConstIterator<Key, Value, Comparator> i) const {
     return private_avlTree.indexOf(i.private_avlTreeIterator);
 }
 
-template <typename Key, typename Value, typename Comparator> const Key& SGEXTN::Containers::Map<Key, Value, Comparator>::keyAt(int n) const {
+template <typename Key, typename Value, typename Comparator> const Key& SGEXTN::Containers::MapCustomisable<Key, Value, Comparator>::keyAt(int n) const {
     if(n < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Map::keyAt crashed because index is negative");}
     if(n >= length()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Map::keyAt crashed because index points beyond the end of the data structure");}
     return private_avlTree.keyAt(n);
 }
 
-template <typename Key, typename Value, typename Comparator> Value& SGEXTN::Containers::Map<Key, Value, Comparator>::valueAt(int n){
+template <typename Key, typename Value, typename Comparator> Value& SGEXTN::Containers::MapCustomisable<Key, Value, Comparator>::valueAt(int n){
     if(n < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Map::valueAt crashed because index is negative");}
     if(n >= length()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Map::valueAt crashed because index points beyond the end of the data structure");}
     return private_avlTree.valueAt(n);
 }
 
-template <typename Key, typename Value, typename Comparator> const Value& SGEXTN::Containers::Map<Key, Value, Comparator>::valueAt(int n) const {
+template <typename Key, typename Value, typename Comparator> const Value& SGEXTN::Containers::MapCustomisable<Key, Value, Comparator>::valueAt(int n) const {
     if(n < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Map::valueAt crashed because index is negative");}
     if(n >= length()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Map::valueAt crashed because index points beyond the end of the data structure");}
     return private_avlTree.valueAt(n);
 }
 
-template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MapIterator<Key, Value, Comparator> SGEXTN::Containers::Map<Key, Value, Comparator>::iteratorAt(int n){
+template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MapIterator<Key, Value, Comparator> SGEXTN::Containers::MapCustomisable<Key, Value, Comparator>::iteratorAt(int n){
     return SGEXTN::Containers::MapIterator(private_avlTree.iteratorAt(n));
 }
 
-template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MapConstIterator<Key, Value, Comparator> SGEXTN::Containers::Map<Key, Value, Comparator>::constIteratorAt(int n) const {
+template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::MapConstIterator<Key, Value, Comparator> SGEXTN::Containers::MapCustomisable<Key, Value, Comparator>::constIteratorAt(int n) const {
     return SGEXTN::Containers::MapConstIterator(private_avlTree.constIteratorAt(n));
 }
 

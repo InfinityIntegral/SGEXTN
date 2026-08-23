@@ -332,7 +332,7 @@ void SGEXTN::InternalTest::ContainersTest::testDeque(){
 }
 
 void SGEXTN::InternalTest::ContainersTest::testPriorityQueue(){
-    SGEXTN::Containers::PriorityQueue<int, SGEXTN::Containers::LessThan<int>> pq;
+    SGEXTN::Containers::PriorityQueue<int> pq;
     pq.push(1);
     pq.push(2);
     pq.push(3);
@@ -364,7 +364,7 @@ void SGEXTN::InternalTest::ContainersTest::testPriorityQueue(){
 }
 
 void SGEXTN::InternalTest::ContainersTest::testSet(){
-    SGEXTN::Containers::Set<int, SGEXTN::Containers::LessThan<int>> s;
+    SGEXTN::Containers::Set<int> s;
     s.insert(1);
     s.insert(2);
     s.insert(3);
@@ -407,7 +407,7 @@ void SGEXTN::InternalTest::ContainersTest::testSet(){
 }
 
 void SGEXTN::InternalTest::ContainersTest::testMultiSet(){
-    SGEXTN::Containers::MultiSet<int, SGEXTN::Containers::LessThan<int>> s;
+    SGEXTN::Containers::MultiSet<int> s;
     s.insert(1);
     s.insert(2);
     s.insert(3);
@@ -451,7 +451,7 @@ void SGEXTN::InternalTest::ContainersTest::testMultiSet(){
 }
 
 void SGEXTN::InternalTest::ContainersTest::testMap(){
-    SGEXTN::Containers::Map<int, int, SGEXTN::Containers::LessThan<int>> s;
+    SGEXTN::Containers::Map<int, int> s;
     s.insert(1, 1);
     s.insert(2, 2);
     s.insert(3, 3);
@@ -497,7 +497,7 @@ void SGEXTN::InternalTest::ContainersTest::testMap(){
 }
 
 void SGEXTN::InternalTest::ContainersTest::testMultiMap(){
-    SGEXTN::Containers::MultiMap<int, int, SGEXTN::Containers::LessThan<int>> s;
+    SGEXTN::Containers::MultiMap<int, int> s;
     s.insert(1, 1);
     s.insert(2, 2);
     s.insert(3, 3);
@@ -544,7 +544,7 @@ void SGEXTN::InternalTest::ContainersTest::testMultiMap(){
 }
 
 void SGEXTN::InternalTest::ContainersTest::testUnorderedSet(){
-    SGEXTN::Containers::UnorderedSet<int, SGEXTN::Containers::EqualTo<int>, SGEXTN::Containers::Hash<int>> s;
+    SGEXTN::Containers::UnorderedSet<int> s;
     s.insert(1);
     s.insert(2);
     s.insert(3);
@@ -579,7 +579,7 @@ void SGEXTN::InternalTest::ContainersTest::testUnorderedSet(){
 }
 
 void SGEXTN::InternalTest::ContainersTest::testUnorderedMap(){
-    SGEXTN::Containers::UnorderedMap<int, int, SGEXTN::Containers::EqualTo<int>, SGEXTN::Containers::Hash<int>> s;
+    SGEXTN::Containers::UnorderedMap<int, int> s;
     s.insert(1, 1);
     s.insert(2, 2);
     s.insert(3, 3);
@@ -726,7 +726,7 @@ void SGEXTN::InternalTest::ContainersTest::testDequeConstructible(){
 }
 
 void SGEXTN::InternalTest::ContainersTest::testPriorityQueueConstructible(){
-    SGEXTN::Containers::PriorityQueue<ConstructibleInteger, SGEXTN::Containers::LessThan<ConstructibleInteger>> pq;
+    SGEXTN::Containers::PriorityQueue<ConstructibleInteger> pq;
     ConstructibleInteger::lastConstruct = 0;
     pq.push(1);
     if(ConstructibleInteger::lastConstruct != 1){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::PriorityQueue - push construct 1 fail");}
@@ -765,7 +765,7 @@ void SGEXTN::InternalTest::ContainersTest::testPriorityQueueConstructible(){
 }
 
 void SGEXTN::InternalTest::ContainersTest::testSetConstructible(){
-    SGEXTN::Containers::Set<ConstructibleInteger, SGEXTN::Containers::LessThan<ConstructibleInteger>> s;
+    SGEXTN::Containers::Set<ConstructibleInteger> s;
     ConstructibleInteger::lastConstruct = 0;
     s.insert(1);
     if(ConstructibleInteger::lastConstruct != 1){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Set - insert 1 construct fail");}
@@ -806,7 +806,7 @@ void SGEXTN::InternalTest::ContainersTest::testSetConstructible(){
 }
 
 void SGEXTN::InternalTest::ContainersTest::testMapConstructible(){
-    SGEXTN::Containers::Map<ConstructibleInteger, int, SGEXTN::Containers::LessThan<ConstructibleInteger>> s;
+    SGEXTN::Containers::Map<ConstructibleInteger, int> s;
     ConstructibleInteger::lastConstruct = 0;
     s.insert(1, 1);
     if(ConstructibleInteger::lastConstruct != 1){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Map - insert 1 construct fail");}
@@ -847,7 +847,7 @@ void SGEXTN::InternalTest::ContainersTest::testMapConstructible(){
 }
 
 void SGEXTN::InternalTest::ContainersTest::testMultiSetConstructible(){
-    SGEXTN::Containers::MultiSet<ConstructibleInteger, SGEXTN::Containers::LessThan<ConstructibleInteger>> s;
+    SGEXTN::Containers::MultiSet<ConstructibleInteger> s;
     ConstructibleInteger::lastConstruct = 0;
     s.insert(1);
     if(ConstructibleInteger::lastConstruct != 1){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::MultiSet - insert 1 construct fail");}
@@ -892,7 +892,7 @@ void SGEXTN::InternalTest::ContainersTest::testMultiSetConstructible(){
 }
 
 void SGEXTN::InternalTest::ContainersTest::testMultiMapConstructible(){
-    SGEXTN::Containers::MultiMap<ConstructibleInteger, int, SGEXTN::Containers::LessThan<ConstructibleInteger>> s;
+    SGEXTN::Containers::MultiMap<ConstructibleInteger, int> s;
     ConstructibleInteger::lastConstruct = 0;
     s.insert(1, 1);
     if(ConstructibleInteger::lastConstruct != 1){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::MultiMap - insert 1 construct fail");}
@@ -937,7 +937,7 @@ void SGEXTN::InternalTest::ContainersTest::testMultiMapConstructible(){
 }
 
 void SGEXTN::InternalTest::ContainersTest::testUnorderedSetConstructible(){
-    SGEXTN::Containers::UnorderedSet<ConstructibleInteger, SGEXTN::Containers::EqualTo<ConstructibleInteger>, SGEXTN::Containers::Hash<ConstructibleInteger>> s;
+    SGEXTN::Containers::UnorderedSet<ConstructibleInteger> s;
     ConstructibleInteger::lastConstruct = 0;
     s.insert(1);
     if(ConstructibleInteger::lastConstruct != 1){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::UnorderedSet - insert 1 construct fail");}
@@ -977,7 +977,7 @@ void SGEXTN::InternalTest::ContainersTest::testUnorderedSetConstructible(){
 }
 
 void SGEXTN::InternalTest::ContainersTest::testUnorderedMapConstructible(){
-    SGEXTN::Containers::UnorderedMap<ConstructibleInteger, ConstructibleInteger, SGEXTN::Containers::EqualTo<ConstructibleInteger>, SGEXTN::Containers::Hash<ConstructibleInteger>> s;
+    SGEXTN::Containers::UnorderedMap<ConstructibleInteger, int> s;
     ConstructibleInteger::lastConstruct = 0;
     s.insert(1, 1);
     if(ConstructibleInteger::lastConstruct != 1){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::UnorderedMap - insert 1 construct fail");}
@@ -1003,7 +1003,7 @@ void SGEXTN::InternalTest::ContainersTest::testUnorderedMapConstructible(){
     ConstructibleInteger::lastDestruct = 0;
     x = s.erase(2);
     if(ConstructibleInteger::lastDestruct != 2 || s.length() != 5 || s.contains(2) == true || x == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::UnorderedMap - erase destruct fail");}
-    SGEXTN::Containers::UnorderedMapIterator<ConstructibleInteger, ConstructibleInteger, SGEXTN::Containers::EqualTo<ConstructibleInteger>, SGEXTN::Containers::Hash<ConstructibleInteger>> itr = s.find(1);
+    SGEXTN::Containers::UnorderedMapIterator<ConstructibleInteger, int, SGEXTN::Containers::EqualTo<ConstructibleInteger>, SGEXTN::Containers::Hash<ConstructibleInteger>> itr = s.find(1);
     x = s.erase(itr);
     if(ConstructibleInteger::lastDestruct != 1 || s.length() != 4 || s.contains(1) == true || x == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::UnorderedMap - erase iterator destruct fail");}
     s.erase(3);
@@ -1320,27 +1320,27 @@ template class SGEXTN::Containers::ArrayVectorMove<DefaultConstructableStruct>;
 template class SGEXTN::Containers::Deque<RegularStruct>;
 template class SGEXTN::Containers::EqualTo<EquatableStruct>;
 template class SGEXTN::Containers::LessThan<ComparableStruct>;
-template class SGEXTN::Containers::Map<RegularStruct, RegularStruct, RegularStructLessThan>;
+template class SGEXTN::Containers::MapCustomisable<RegularStruct, RegularStruct, RegularStructLessThan>;
 template class SGEXTN::Containers::MapIterator<RegularStruct, RegularStruct, RegularStructLessThan>;
 template class SGEXTN::Containers::MapConstIterator<RegularStruct, RegularStruct, RegularStructLessThan>;
 template class SGEXTN::Containers::MoreThan<ComparableStruct>;
-template class SGEXTN::Containers::MultiMap<RegularStruct, RegularStruct, RegularStructLessThan>;
+template class SGEXTN::Containers::MultiMapCustomisable<RegularStruct, RegularStruct, RegularStructLessThan>;
 template class SGEXTN::Containers::MultiMapIterator<RegularStruct, RegularStruct, RegularStructLessThan>;
 template class SGEXTN::Containers::MultiMapConstIterator<RegularStruct, RegularStruct, RegularStructLessThan>;
-template class SGEXTN::Containers::MultiSet<RegularStruct, RegularStructLessThan>;
+template class SGEXTN::Containers::MultiSetCustomisable<RegularStruct, RegularStructLessThan>;
 template class SGEXTN::Containers::MultiSetIterator<RegularStruct, RegularStructLessThan>;
 template class SGEXTN::Containers::MultiSetConstIterator<RegularStruct, RegularStructLessThan>;
-template class SGEXTN::Containers::PriorityQueue<RegularStruct, RegularStructLessThan>;
+template class SGEXTN::Containers::PriorityQueueCustomisable<RegularStruct, RegularStructLessThan>;
 template class SGEXTN::Containers::Queue<RegularStruct>;
-template class SGEXTN::Containers::Set<RegularStruct, RegularStructLessThan>;
+template class SGEXTN::Containers::SetCustomisable<RegularStruct, RegularStructLessThan>;
 template class SGEXTN::Containers::SetIterator<RegularStruct, RegularStructLessThan>;
 template class SGEXTN::Containers::SetConstIterator<RegularStruct, RegularStructLessThan>;
 template class SGEXTN::Containers::Span<RegularStruct>;
 template class SGEXTN::Containers::Stack<RegularStruct>;
-template class SGEXTN::Containers::UnorderedMap<RegularStruct, RegularStruct, RegularStructEqualTo, RegularStructHashFunction>;
+template class SGEXTN::Containers::UnorderedMapCustomisable<RegularStruct, RegularStruct, RegularStructEqualTo, RegularStructHashFunction>;
 template class SGEXTN::Containers::UnorderedMapIterator<RegularStruct, RegularStruct, RegularStructEqualTo, RegularStructHashFunction>;
 template class SGEXTN::Containers::UnorderedMapConstIterator<RegularStruct, RegularStruct, RegularStructEqualTo, RegularStructHashFunction>;
-template class SGEXTN::Containers::UnorderedSet<RegularStruct, RegularStructEqualTo, RegularStructHashFunction>;
+template class SGEXTN::Containers::UnorderedSetCustomisable<RegularStruct, RegularStructEqualTo, RegularStructHashFunction>;
 template class SGEXTN::Containers::UnorderedSetIterator<RegularStruct, RegularStructEqualTo, RegularStructHashFunction>;
 template class SGEXTN::Containers::UnorderedSetConstIterator<RegularStruct, RegularStructEqualTo, RegularStructHashFunction>;
 template class SGEXTN::Containers::Vector<RegularStruct>;
