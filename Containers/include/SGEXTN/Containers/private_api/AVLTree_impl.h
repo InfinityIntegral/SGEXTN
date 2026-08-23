@@ -57,7 +57,7 @@ template <typename Key, typename Value, typename Comparator> SGEXTN::Containers:
     return (*this);
 }
 
-template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTree<Key, Value, Comparator>::AVLTree(AVLTree&& x) noexcept : root(x.root), comparatorInstance(x.comparatorInstance) {
+template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTree<Key, Value, Comparator>::AVLTree(AVLTree&& x) noexcept : root(x.root), comparatorInstance(static_cast<Comparator&&>(x.comparatorInstance)) {
     x.root = nullptr;
 }
 

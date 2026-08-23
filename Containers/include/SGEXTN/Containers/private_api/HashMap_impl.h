@@ -76,7 +76,7 @@ template <typename Key, typename Value, typename EqualityCheck, typename HashFun
     return (*this);
 }
 
-template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> SGEXTN::Containers::HashMap<Key, Value, EqualityCheck, HashFunction>::HashMap(SGEXTN::Containers::HashMap<Key, Value, EqualityCheck, HashFunction>&& x) noexcept : data(x.data), loadFactor(x.loadFactor), efficiencyFactor(x.efficiencyFactor), equalityCheckInstance(x.equalityCheckInstance), hashFunctionInstance(x.hashFunctionInstance), activeLength(x.activeLength), memoryUsedLength(x.memoryUsedLength), memoryTotalLength(x.memoryTotalLength) {
+template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> SGEXTN::Containers::HashMap<Key, Value, EqualityCheck, HashFunction>::HashMap(SGEXTN::Containers::HashMap<Key, Value, EqualityCheck, HashFunction>&& x) noexcept : data(x.data), loadFactor(x.loadFactor), efficiencyFactor(x.efficiencyFactor), equalityCheckInstance(static_cast<EqualityCheck&&>(x.equalityCheckInstance)), hashFunctionInstance(static_cast<HashFunction&&>(x.hashFunctionInstance)), activeLength(x.activeLength), memoryUsedLength(x.memoryUsedLength), memoryTotalLength(x.memoryTotalLength) {
     x.data = nullptr;
     x.activeLength = 0;
     x.memoryUsedLength = 0;

@@ -17,51 +17,33 @@
 
 #pragma once
 #include <SGEXTN/Containers/Span.h>
+#include <SGEXTN/Containers/private_api/TypeTraits.h>
+#include <SGEXTN/Containers/Serialise.h>
 
-template <typename T> bool SGEXTN::Containers::LessThan<T>::operator()(const T& a, const T& b) const {
-    return (a < b);
-}
+template <typename T> SGEXTN::Containers::LessThan<T>::LessThan() : lengthA(0), lengthB(0), bufferA(0), bufferB(0){}
 
-template <typename T> bool SGEXTN::Containers::LessThan<T*>::operator()(const T* a, const T* b) const {
-    const int typeMemoryLength = sizeof(T*);
-    SGEXTN::Containers::Span<const unsigned char> aSpan(reinterpret_cast<const unsigned char*>(&a), typeMemoryLength);
-    SGEXTN::Containers::Span<const unsigned char> bSpan(reinterpret_cast<const unsigned char*>(&b), typeMemoryLength);
-    for(int i=0; i<typeMemoryLength; i++){
-        if(aSpan.at(i) < bSpan.at(i)){return true;}
-        if(bSpan.at(i) < aSpan.at(i)){return false;}
+template <typename T> bool SGEXTN::Containers::LessThan<T>::operator()(const T& a, const T& b){
+    if constexpr(requires{SGEXTN::Containers::IsPointer<T>::isPointer;} == false){
+        if constexpr(requires{a < b;} == true){return (a < b);}
     }
-    return false;
-}
-
-template <typename ReturnType, typename... ArgTypes> bool SGEXTN::Containers::LessThan<ReturnType (*)(ArgTypes...)>::operator()(ReturnType (*a)(ArgTypes...), ReturnType (*b)(ArgTypes...)) const {
-    const int typeMemoryLength = sizeof(ReturnType (*)(ArgTypes...));
-    SGEXTN::Containers::Span<const unsigned char> aSpan(reinterpret_cast<const unsigned char*>(&a), typeMemoryLength);
-    SGEXTN::Containers::Span<const unsigned char> bSpan(reinterpret_cast<const unsigned char*>(&b), typeMemoryLength);
-    for(int i=0; i<typeMemoryLength; i++){
-        if(aSpan.at(i) < bSpan.at(i)){return true;}
-        if(bSpan.at(i) < aSpan.at(i)){return false;}
+    const int bufferALength = SGEXTN::Containers::Serialise<T>::sizeOut(a);
+    const int bufferBLength = SGEXTN::Containers::Serialise<T>::sizeOut(b);
+    if(bufferALength < bufferBLength){return true;}
+    if(bufferALength > bufferBLength){return false;}
+    if(bufferALength != lengthA){
+        lengthA = bufferALength;
+        bufferA = SGEXTN::Containers::Array<unsigned char>(lengthA);
     }
-    return false;
-}
-
-template <typename ReturnType, typename ClassName, typename... ArgTypes> bool SGEXTN::Containers::LessThan<ReturnType (ClassName::*)(ArgTypes...)>::operator()(ReturnType (ClassName::*a)(ArgTypes...), ReturnType (ClassName::*b)(ArgTypes...)) const {
-    const int typeMemoryLength = sizeof(ReturnType (ClassName::*)(ArgTypes...));
-    SGEXTN::Containers::Span<const unsigned char> aSpan(reinterpret_cast<const unsigned char*>(&a), typeMemoryLength);
-    SGEXTN::Containers::Span<const unsigned char> bSpan(reinterpret_cast<const unsigned char*>(&b), typeMemoryLength);
-    for(int i=0; i<typeMemoryLength; i++){
-        if(aSpan.at(i) < bSpan.at(i)){return true;}
-        if(bSpan.at(i) < aSpan.at(i)){return false;}
+    if(bufferBLength != lengthB){
+        lengthB = bufferBLength;
+        bufferB = SGEXTN::Containers::Array<unsigned char>(lengthB);
     }
-    return false;
-}
-
-template <typename ReturnType, typename ClassName, typename... ArgTypes> bool SGEXTN::Containers::LessThan<ReturnType (ClassName::*)(ArgTypes...) const>::operator()(ReturnType (ClassName::*a)(ArgTypes...) const, ReturnType (ClassName::*b)(ArgTypes...) const) const {
-    const int typeMemoryLength = sizeof(ReturnType (ClassName::*)(ArgTypes...) const);
-    SGEXTN::Containers::Span<const unsigned char> aSpan(reinterpret_cast<const unsigned char*>(&a), typeMemoryLength);
-    SGEXTN::Containers::Span<const unsigned char> bSpan(reinterpret_cast<const unsigned char*>(&b), typeMemoryLength);
-    for(int i=0; i<typeMemoryLength; i++){
-        if(aSpan.at(i) < bSpan.at(i)){return true;}
-        if(bSpan.at(i) < aSpan.at(i)){return false;}
+    const bool aIsOk = SGEXTN::Containers::Serialise<T>::sendOut(a, SGEXTN::Containers::Span<unsigned char>(bufferA));
+    const bool bIsOk = SGEXTN::Containers::Serialise<T>::sendOut(b, SGEXTN::Containers::Span<unsigned char>(bufferB));
+    if(aIsOk == false || bIsOk == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::LessThan crashed because the object could not be serialised");}
+    for(int i=0; i<bufferALength; i++){
+        if(bufferA.at(i) < bufferB.at(i)){return true;}
+        if(bufferA.at(i) > bufferB.at(i)){return false;}
     }
     return false;
 }

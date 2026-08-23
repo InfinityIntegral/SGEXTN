@@ -55,8 +55,8 @@ public:
     int memoryTotalLength;
     float loadFactor;
     float efficiencyFactor;
-    EqualityCheck equalityCheckInstance;
-    HashFunction hashFunctionInstance;
+    mutable EqualityCheck equalityCheckInstance;
+    mutable HashFunction hashFunctionInstance;
     [[nodiscard]] int getHashIndex(const Key& x) const;
     bool hashInto(const Key& key, const Value& value);
     void rehashAll(int newMemoryLength);

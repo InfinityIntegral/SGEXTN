@@ -19,20 +19,7 @@
 #include <SGEXTN/Containers/Array.h>
 #include <SGEXTN/Containers/Span.h>
 #include <SGEXTN/Containers/ForceCrash.h>
-#include <SGEXTN/Containers/IsPointer.h>
-
-namespace SGEXTN {
-namespace Containers {
-template <typename T1, typename T2> class IsSameType {};
-template <typename T> class IsSameType<T, T> {public: static bool same;};
-template <typename T> bool IsSameType<T, T>::same = true;
-template <typename T, bool B> class IsTrue {};
-template <typename T> class IsTrue<T, true> {public: static bool isTrue;};
-template <typename T> bool IsTrue<T, true>::isTrue = true;
-template <typename T> class CreateInstance {public: static T&& getInstance() noexcept;};
-template <typename T> class CreateAssignable {public: static T& getInstance() noexcept;};
-}
-}
+#include <SGEXTN/Containers/private_api/TypeTraits.h>
 
 template <typename... Ts> bool SGEXTN::Containers::Serialise<Ts...>::sendOut(const Ts&... xs, SGEXTN::Containers::Span<unsigned char> data){
     const int requiredLength = SGEXTN::Containers::Serialise<Ts...>::sizeOut(xs...);

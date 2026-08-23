@@ -40,7 +40,7 @@ template <typename Key, typename Value, typename Comparator> class AVLTreeConstI
 template <typename Key, typename Value, typename Comparator> class AVLTree {
 public:
     AVLTreeNode<Key, Value, Comparator>* root;
-    Comparator comparatorInstance;
+    mutable Comparator comparatorInstance;
     [[nodiscard]] int getEffectiveHeight(AVLTreeNode<Key, Value, Comparator>* x) const;
     [[nodiscard]] int getEffectiveSubtreeSize(AVLTreeNode<Key, Value, Comparator>* x) const;
     void updateHeightRecurseToRoot(AVLTreeNode<Key, Value, Comparator>* x);
