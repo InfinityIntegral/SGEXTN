@@ -462,10 +462,6 @@ bool SGEXTN::CoreText::String::operator>=(const SGEXTN::CoreText::String& x) con
     return (private_data >= x.private_data);
 }
 
-int SGEXTN::CoreText::String::hash() const {
-    return private_data.hash();
-}
-
 bool SGEXTN::CoreText::String::sendOut(const SGEXTN::CoreText::String& x, SGEXTN::Containers::Span<unsigned char> data){
     const bool isValid = SGEXTN::Containers::Serialise<int>::sendOut(x.byteLength(), data.subspanLeft(4));
     if(isValid == false){return false;}

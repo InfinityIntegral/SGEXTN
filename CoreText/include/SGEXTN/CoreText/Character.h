@@ -40,7 +40,6 @@ public:
     [[nodiscard]] bool operator>(const Character& x) const;
     [[nodiscard]] bool operator<=(const Character& x) const;
     [[nodiscard]] bool operator>=(const Character& x) const;
-    [[nodiscard]] int hash() const;
     [[nodiscard]] static bool sendOut(const Character& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(Character& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static int sizeOut(const Character& x);

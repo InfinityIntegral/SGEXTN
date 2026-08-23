@@ -21,7 +21,7 @@
 #include <SGEXTN/Math/FloatMath.h>
 #include <SGEXTN/Math/FloatLimits.h>
 #include <SGEXTN/Containers/Span.h>
-#include <SGEXTN/Containers/private_api/HashAlgorithm.h>
+#include <SGEXTN/Containers/Hash.h>
 #include <SGEXTN/Containers/Array.h>
 #include <SGEXTN/SeerattraNum/NormalDistribution.h>
 #include <SGEXTN/Containers/Serialise.h>
@@ -34,7 +34,7 @@ SGEXTN::Containers::Array<float> getFeaturePoint(int seed, const SGEXTN::Contain
         spanArray.at(i) = center.at(i);
     }
     spanArray.at(dimensions) = seed;
-    const SGEXTN::Containers::Span<const unsigned char> span(reinterpret_cast<const unsigned char*>(&spanArray.at(0)), (dimensions + 2) * static_cast<int>(sizeof(int)));
+    const SGEXTN::Containers::Span<unsigned char> span(reinterpret_cast<unsigned char*>(&spanArray.at(0)), (dimensions + 2) * static_cast<int>(sizeof(int)));
     SGEXTN::Containers::Array<float> normalDistributedVars(dimensions);
     const float scaleFactor = 1.0f / static_cast<float>(static_cast<unsigned int>(1) << 24);
     for(int i=0; i<dimensions; i++){

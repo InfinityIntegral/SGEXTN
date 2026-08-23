@@ -19,7 +19,6 @@
 #include <SGEXTN/Utilities/RgbaColour.h>
 #include <SGEXTN/Math/FloatMath.h>
 #include <SGEXTN/CoreText/String.h>
-#include <SGEXTN/Containers/Hash.h>
 #include <SGEXTN/Containers/Serialise.h>
 #include <SGEXTN/Containers/Span.h>
 
@@ -107,10 +106,6 @@ bool SGEXTN::Utilities::HslaColour::operator>(SGEXTN::Utilities::HslaColour x) c
     if(private_saturation != x.private_saturation){return (private_saturation > x.private_saturation);}
     if(private_lightness != x.private_lightness){return (private_lightness > x.private_lightness);}
     return (private_transparency > x.private_transparency);
-}
-
-int SGEXTN::Utilities::HslaColour::hash() const {
-    return SGEXTN::Containers::Hash<float, float, float, float>()(private_hue, private_saturation, private_lightness, private_transparency);
 }
 
 SGEXTN::CoreText::String SGEXTN::Utilities::HslaColour::debugPrint() const {

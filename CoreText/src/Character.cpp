@@ -18,7 +18,6 @@
 #include <SGEXTN/CoreText/Character.h>
 #include <SGEXTN/CoreText/private_api/TextBuffer.h>
 #include <SGEXTN/Containers/ForceCrash.h>
-#include <SGEXTN/Containers/Hash.h>
 #include <SGEXTN/Containers/Array.h>
 #include <SGEXTN/CoreText/String.h>
 #include <SGEXTN/CoreText/UnicodeQuery.h>
@@ -99,10 +98,6 @@ bool SGEXTN::CoreText::Character::operator<=(const SGEXTN::CoreText::Character& 
 
 bool SGEXTN::CoreText::Character::operator>=(const SGEXTN::CoreText::Character& x) const {
     return (private_data >= x.private_data);
-}
-
-int SGEXTN::CoreText::Character::hash() const {
-    return SGEXTN::Containers::Hash<SGEXTN::CoreText::TextBuffer>()(private_data);
 }
 
 bool SGEXTN::CoreText::Character::sendOut(const SGEXTN::CoreText::Character& x, SGEXTN::Containers::Span<unsigned char> data){

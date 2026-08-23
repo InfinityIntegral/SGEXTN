@@ -16,7 +16,6 @@
 // BuildLah license check: SGEXTN 7.0.0
 
 #include <SGEXTN/Utilities/DateTime.h>
-#include <SGEXTN/Containers/Hash.h>
 #include <SGEXTN/CoreText/String.h>
 #include <SGEXTN/CoreText/Character.h>
 #include <SGEXTN/Containers/ForceCrash.h>
@@ -188,10 +187,6 @@ bool SGEXTN::Utilities::DateTime::operator<=(SGEXTN::Utilities::DateTime x) cons
 
 bool SGEXTN::Utilities::DateTime::operator>=(SGEXTN::Utilities::DateTime x) const {
     return (private_data >= x.private_data);
-}
-
-int SGEXTN::Utilities::DateTime::hash() const {
-    return SGEXTN::Containers::Hash<long long>()(private_data);
 }
 
 SGEXTN::CoreText::String SGEXTN::Utilities::DateTime::debugPrint() const {

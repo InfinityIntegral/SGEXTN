@@ -16,7 +16,6 @@
 // BuildLah license check: SGEXTN 7.0.0
 
 #include <SGEXTN/Utilities/Identifier.h>
-#include <SGEXTN/Containers/Hash.h>
 #include <SGEXTN/CoreText/String.h>
 #include <SGEXTN/Containers/Serialise.h>
 #include <SGEXTN/Containers/Span.h>
@@ -43,10 +42,6 @@ bool SGEXTN::Utilities::Identifier::operator<(SGEXTN::Utilities::Identifier x) c
 
 bool SGEXTN::Utilities::Identifier::operator>(SGEXTN::Utilities::Identifier x) const {
     return (private_data > x.private_data);
-}
-
-int SGEXTN::Utilities::Identifier::hash() const {
-    return SGEXTN::Containers::Hash<unsigned int>()(private_data);
 }
 
 SGEXTN::CoreText::String SGEXTN::Utilities::Identifier::getStringForPrinting() const {

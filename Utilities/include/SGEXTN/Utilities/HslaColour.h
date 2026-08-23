@@ -43,7 +43,6 @@ public:
     [[nodiscard]] bool operator!=(HslaColour x) const;
     [[nodiscard]] bool operator<(HslaColour x) const;
     [[nodiscard]] bool operator>(HslaColour x) const;
-    [[nodiscard]] int hash() const;
     [[nodiscard]] SGEXTN::CoreText::String debugPrint() const;
     [[nodiscard]] static bool sendOut(HslaColour x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(HslaColour& x, SGEXTN::Containers::Span<unsigned char> data);

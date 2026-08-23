@@ -15,46 +15,37 @@
 */
 // BuildLah license check: SGEXTN 7.0.0
 
-#include <SGEXTN/Containers/Span.h>
-#include <SGEXTN/Containers/private_api/HashAlgorithm.h>
 #include <SGEXTN/Containers/Hash.h>
+#include <SGEXTN/Containers/Span.h>
 
-int SGEXTN::Containers::Hash<bool>::operator()(bool x) const {
-    return SGEXTN::Containers::HashAlgorithm::wyHash32(SGEXTN::Containers::Span<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(bool)));
-}
-
-int SGEXTN::Containers::Hash<unsigned char>::operator()(unsigned char x) const {
-    return SGEXTN::Containers::HashAlgorithm::wyHash32(SGEXTN::Containers::Span<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(unsigned char)));
-}
-
-int SGEXTN::Containers::Hash<short>::operator()(short x) const {
-    return SGEXTN::Containers::HashAlgorithm::wyHash32(SGEXTN::Containers::Span<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(short)));
-}
-
-int SGEXTN::Containers::Hash<unsigned short>::operator()(unsigned short x) const {
-    return SGEXTN::Containers::HashAlgorithm::wyHash32(SGEXTN::Containers::Span<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(unsigned short)));
-}
-
-int SGEXTN::Containers::Hash<int>::operator()(int x) const {
-    return SGEXTN::Containers::HashAlgorithm::wyHash32(SGEXTN::Containers::Span<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(int)));
-}
-
-int SGEXTN::Containers::Hash<unsigned int>::operator()(unsigned int x) const {
-    return SGEXTN::Containers::HashAlgorithm::wyHash32(SGEXTN::Containers::Span<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(unsigned int)));
-}
-
-int SGEXTN::Containers::Hash<long long>::operator()(long long x) const {
-    return SGEXTN::Containers::HashAlgorithm::wyHash32(SGEXTN::Containers::Span<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(long long)));
-}
-
-int SGEXTN::Containers::Hash<unsigned long long>::operator()(unsigned long long x) const {
-    return SGEXTN::Containers::HashAlgorithm::wyHash32(SGEXTN::Containers::Span<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(unsigned long long)));
-}
-
-int SGEXTN::Containers::Hash<float>::operator()(float x) const {
-    return SGEXTN::Containers::HashAlgorithm::wyHash32(SGEXTN::Containers::Span<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(float)));
-}
-
-int SGEXTN::Containers::Hash<double>::operator()(double x) const {
-    return SGEXTN::Containers::HashAlgorithm::wyHash32(SGEXTN::Containers::Span<const unsigned char>(reinterpret_cast<const unsigned char*>(&x), sizeof(double)));
+int SGEXTN::Containers::HashAlgorithm::wyHash32(const SGEXTN::Containers::Span<unsigned char> span){
+    const unsigned int num0 = 0xA0761D65;
+    const unsigned int num1 = 0xE7037ED1;
+    const unsigned int num2 = 0x8EBC6AF1;
+    const unsigned int num3 = 0x589965CC;
+    int i = 0;
+    const int sizeOfT = span.length();
+    unsigned int hash = num0;
+    while(sizeOfT - i >= 4){
+        unsigned int k = 0u;
+        k = k | (span.at(i));
+        k = k | (span.at(i + 1) << 8);
+        k = k | (span.at(i + 2) << 16);
+        k = k | (span.at(i + 3) << 24);
+        hash = num1 * (hash ^ k);
+        hash = (hash << 13) | (hash >> 19);
+        i += 4;
+    }
+    if(i < sizeOfT){
+        unsigned int k = 0u;
+        for(int j=0; j<sizeOfT-i; j++){
+            k = k | (span.at(i + j) << (8 * j));
+        }
+        hash = num1 * (hash ^ k);
+        hash = (hash << 13) | (hash >> 19);
+    }
+    hash = num2 * (hash ^ (hash >> 16));
+    hash = num3 * (hash ^ (hash >> 13));
+    hash = hash ^ (hash >> 16);
+    return static_cast<int>(hash);
 }

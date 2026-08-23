@@ -54,7 +54,6 @@ public:
     [[nodiscard]] bool operator!=(const ConstructibleInteger& x) const;
     [[nodiscard]] bool operator<(const ConstructibleInteger& x) const;
     [[nodiscard]] bool operator>(const ConstructibleInteger& x) const;
-    [[nodiscard]] int hash() const;
     [[nodiscard]] static bool sendOut(const ConstructibleInteger& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(ConstructibleInteger& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static int size();
@@ -119,10 +118,6 @@ template <typename T> bool operator==(const SGEXTN::Containers::Array<T>& a, con
         if((a.at(i) == b.at(i)) == false){return false;}
     }
     return true;
-}
-
-int ConstructibleInteger::hash() const {
-    return SGEXTN::Containers::Hash<int>()(value);
 }
 
 bool ConstructibleInteger::sendOut(const ConstructibleInteger& x, SGEXTN::Containers::Span<unsigned char> data){
@@ -1312,13 +1307,6 @@ public:
     [[nodiscard]] bool operator!=(const EquatableStruct& x) const {return ((*this).x != x.x);}
 };
 
-class HashableStruct {
-public:
-    int x;
-    HashableStruct(int x) : x(x) {}
-    [[nodiscard]] int hash() const {return x;}
-};
-
 class ComparableStruct {
 public:
     int x;
@@ -1331,7 +1319,6 @@ template class SGEXTN::Containers::Array<DefaultConstructableStruct>;
 template class SGEXTN::Containers::ArrayVectorMove<DefaultConstructableStruct>;
 template class SGEXTN::Containers::Deque<RegularStruct>;
 template class SGEXTN::Containers::EqualTo<EquatableStruct>;
-template class SGEXTN::Containers::Hash<HashableStruct>;
 template class SGEXTN::Containers::LessThan<ComparableStruct>;
 template class SGEXTN::Containers::Map<RegularStruct, RegularStruct, RegularStructLessThan>;
 template class SGEXTN::Containers::MapIterator<RegularStruct, RegularStruct, RegularStructLessThan>;
@@ -1361,7 +1348,6 @@ template class SGEXTN::Containers::Vector<RegularStruct>;
 class FunctionOwner {};
 
 template class SGEXTN::Containers::Hash<int*>;
-template class SGEXTN::Containers::Hash<int, float, double, unsigned long long, int*, int*>;
 template class SGEXTN::Containers::Hash<void (*)()>;
 template class SGEXTN::Containers::Hash<void (*)(int)>;
 template class SGEXTN::Containers::Hash<void (*)(int, int&, const int&)>;

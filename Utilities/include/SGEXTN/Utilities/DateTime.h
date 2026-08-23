@@ -62,7 +62,6 @@ public:
     [[nodiscard]] bool operator>(DateTime x) const;
     [[nodiscard]] bool operator<=(DateTime x) const;
     [[nodiscard]] bool operator>=(DateTime x) const;
-    [[nodiscard]] int hash() const;
     [[nodiscard]] SGEXTN::CoreText::String debugPrint() const;
     [[nodiscard]] static bool sendOut(DateTime x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(DateTime& x, SGEXTN::Containers::Span<unsigned char> data);

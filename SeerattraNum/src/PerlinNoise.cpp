@@ -22,7 +22,7 @@
 #include <SGEXTN/Containers/Array.h>
 #include <SGEXTN/Math/FloatMath.h>
 #include <SGEXTN/Containers/Span.h>
-#include <SGEXTN/Containers/private_api/HashAlgorithm.h>
+#include <SGEXTN/Containers/Hash.h>
 #include <SGEXTN/Math/FloatLimits.h>
 #include <SGEXTN/SeerattraNum/NormalDistribution.h>
 #include <SGEXTN/Containers/Serialise.h>
@@ -71,7 +71,7 @@ float SGEXTN::SeerattraNum::PerlinNoise::getHeight(const SGEXTN::Containers::Arr
     }
     SGEXTN::Containers::Array<int> spanArray(private_dimension + 2);
     spanArray.at(private_dimension) = private_seed;
-    const SGEXTN::Containers::Span<const unsigned char> span(reinterpret_cast<const unsigned char*>(&spanArray.at(0)), (private_dimension + 2) *static_cast<int>(sizeof(int)));
+    const SGEXTN::Containers::Span<unsigned char> span(reinterpret_cast<unsigned char*>(&spanArray.at(0)), (private_dimension + 2) *static_cast<int>(sizeof(int)));
     const float scaleFactor = 1.0f / static_cast<float>(static_cast<unsigned int>(1) << 24);
     SGEXTN::Containers::Array<float> normalDistributedVars(private_dimension);
     for(int i=0; i<powerOf2(private_dimension); i++){
