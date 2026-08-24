@@ -97,7 +97,7 @@ SGEXTN::Utilities::RgbaColour SGEXTN::Utilities::ContrastUtilities::getForegroun
     float low = 0.0f;
     float high = referenceColour.getLightness();
     SGEXTN::Utilities::HslaColour newColour = referenceColour;
-    while(high - low > 0.001){
+    while(high - low > 0.001f){
         const float m = 0.5f * (low + high);
         newColour.setLightness(m);
         if(SGEXTN::Utilities::ContrastUtilities::getAbsoluteContrast(bg, newColour.toRGBA()) >= targetContrast){low = m;}
@@ -118,7 +118,7 @@ SGEXTN::Utilities::RgbaColour SGEXTN::Utilities::ContrastUtilities::getForegroun
     float low = referenceColour.getLightness();
     float high = 100.0f;
     SGEXTN::Utilities::HslaColour newColour = referenceColour;
-    while(high - low > 0.001){
+    while(high - low > 0.001f){
         const float m = 0.5f * (low + high);
         newColour.setLightness(m);
         if(SGEXTN::Utilities::ContrastUtilities::getAbsoluteContrast(bg, newColour.toRGBA()) >= targetContrast){high = m;}
@@ -139,7 +139,7 @@ SGEXTN::Utilities::RgbaColour SGEXTN::Utilities::ContrastUtilities::getBackgroun
     float low = referenceColour.getLightness();
     float high = 100.0f;
     SGEXTN::Utilities::HslaColour newColour = referenceColour;
-    while(high - low > 0.001){
+    while(high - low > 0.001f){
         const float m = 0.5f * (low + high);
         newColour.setLightness(m);
         if(SGEXTN::Utilities::ContrastUtilities::getAbsoluteContrast(newColour.toRGBA(), fg) >= targetContrast){high = m;}
@@ -160,7 +160,7 @@ SGEXTN::Utilities::RgbaColour SGEXTN::Utilities::ContrastUtilities::getBackgroun
     float low = 0.0f;
     float high = referenceColour.getLightness();
     SGEXTN::Utilities::HslaColour newColour = referenceColour;
-    while(high - low > 0.001){
+    while(high - low > 0.001f){
         const float m = 0.5f * (low + high);
         newColour.setLightness(m);
         if(SGEXTN::Utilities::ContrastUtilities::getAbsoluteContrast(newColour.toRGBA(), fg) >= targetContrast){low = m;}

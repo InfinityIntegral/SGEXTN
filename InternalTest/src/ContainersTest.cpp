@@ -143,6 +143,61 @@ SGEXTN::Containers::Span<unsigned char> makeSpan(SGEXTN::Containers::Array<unsig
 SGEXTN::Containers::Span<unsigned char> makeSpan(SGEXTN::Containers::Array<unsigned char>& array, int start, int length){
     return SGEXTN::Containers::Span<unsigned char>(array, start, length);
 }
+
+class RegularStruct {
+public:
+    int x;
+    RegularStruct(int x) : x(x) {}
+};
+
+class RegularStructLessThan {
+public:
+    bool operator()(const RegularStruct& a, const RegularStruct& b) const {return (a.x < b.x);}
+};
+
+class RegularStructEqualTo {
+public:
+    bool operator()(const RegularStruct& a, const RegularStruct& b) const {return (a.x == b.x);}
+};
+
+class RegularStructHashFunction {
+public:
+    int operator()(const RegularStruct& x) const {return x.x;}
+};
+
+class DefaultConstructableStruct {
+public:
+    int x;
+    DefaultConstructableStruct() : x(0) {}
+    DefaultConstructableStruct(int x) : x(x) {}
+};
+
+class SerialisableStruct {
+public:
+    SerialisableStruct() : data(static_cast<unsigned char>(0)){}
+    unsigned char data;
+    static bool sendOut(SerialisableStruct x, SGEXTN::Containers::Span<unsigned char> data){data.at(0) = x.data; return true;}
+    static bool sendIn(SerialisableStruct& x, SGEXTN::Containers::Span<unsigned char> data){x.data = data.at(0); return true;}
+    static int size(){return 1;}
+};
+
+class EquatableStruct {
+public:
+    int x;
+    EquatableStruct(int x) : x(x) {}
+    [[nodiscard]] bool operator==(const EquatableStruct& x) const {return ((*this).x == x.x);}
+    [[nodiscard]] bool operator!=(const EquatableStruct& x) const {return ((*this).x != x.x);}
+};
+
+class ComparableStruct {
+public:
+    int x;
+    ComparableStruct(int x) : x(x) {}
+    [[nodiscard]] bool operator<(const ComparableStruct& x) const {return ((*this).x < x.x);}
+    [[nodiscard]] bool operator>(const ComparableStruct& x) const {return ((*this).x > x.x);}
+};
+
+class FunctionOwner {};
 }
 
 void SGEXTN::InternalTest::ContainersTest::testEqualTo(){
@@ -1140,13 +1195,13 @@ void SGEXTN::InternalTest::ContainersTest::testSerialise(){
     targetArray.at(5) = static_cast<unsigned char>(0xb0);
     targetArray.at(6) = static_cast<unsigned char>(0x86);
     targetArray.at(7) = static_cast<unsigned char>(0x40);
-    isValid = SGEXTN::Containers::Serialise<double>::sendOut(726.0625, makeSpan(serialiseDestination, 8));
+    isValid = SGEXTN::Containers::Serialise<double>::sendOut(726.0625f, makeSpan(serialiseDestination, 8));
     if(isValid == false || isBitwiseIdentical(8, serialiseDestination, targetArray) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sendOut double fail");}
-    double d = 0.0;
+    double d = 0.0f;
     isValid = false;
     isValid = SGEXTN::Containers::Serialise<double>::sendIn(d, makeSpan(targetArray, 8));
-    if(isValid == false || d != 726.0625){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sendIn double fail");}
-    if(SGEXTN::Containers::Serialise<double>::sizeOut(726.0625) != 8){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sizeOut double fail");}
+    if(isValid == false || d != 726.0625f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sendIn double fail");}
+    if(SGEXTN::Containers::Serialise<double>::sizeOut(726.0625f) != 8){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sizeOut double fail");}
     if(SGEXTN::Containers::Serialise<double>::sizeIn(makeSpan(targetArray, 100)) != 8){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sizeIn double fail");}
 
     isValid = false;
@@ -1219,6 +1274,14 @@ void SGEXTN::InternalTest::ContainersTest::testSerialise(){
     if(SGEXTN::Containers::Serialise<SGEXTN::Containers::Array<SGEXTN::Containers::Array<int>>>::sizeIn(makeSpan(targetArray, 100)) != 51){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sizeIn variable size array fail");}
 }
 
+void SGEXTN::InternalTest::ContainersTest::testHash(){
+    SGEXTN::Containers::Array<int> hashArray(-164224238, -557982743, -1273014985, 617801298, -158150022, 251178180, -1306928695, 665526947, -2112254955, 413336391, -1140286684, 1467775364, 1531109094, -1313695634, 807995229, 1343278648, 1017936248, -1645743309, -2128698606, 840851170, -198344579, 1859424536, 1925008793, -1242082681, -1634002473, 1301599632);
+    const SGEXTN::Containers::Hash<int> hash;
+    for(int i=0; i<26; i++){
+        if(hash(i) != hashArray.at(i)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Hash hash algorithm stability preservation fail");}
+    }
+}
+
 void SGEXTN::InternalTest::ContainersTest::testAll(){
     SGEXTN::InternalTest::ContainersTest::testEqualTo();
     SGEXTN::InternalTest::ContainersTest::testArray();
@@ -1249,60 +1312,8 @@ void SGEXTN::InternalTest::ContainersTest::testAll(){
     SGEXTN::InternalTest::ContainersTest::testUnorderedMapConstructible();
     SGEXTN::InternalTest::ContainersTest::testArrayVectorMove();
     SGEXTN::InternalTest::ContainersTest::testSerialise();
+    SGEXTN::InternalTest::ContainersTest::testHash();
 }
-
-class RegularStruct {
-public:
-    int x;
-    RegularStruct(int x) : x(x) {}
-};
-
-class RegularStructLessThan {
-public:
-    bool operator()(const RegularStruct& a, const RegularStruct& b) const {return (a.x < b.x);}
-};
-
-class RegularStructEqualTo {
-public:
-    bool operator()(const RegularStruct& a, const RegularStruct& b) const {return (a.x == b.x);}
-};
-
-class RegularStructHashFunction {
-public:
-    int operator()(const RegularStruct& x) const {return x.x;}
-};
-
-class DefaultConstructableStruct {
-public:
-    int x;
-    DefaultConstructableStruct() : x(0) {}
-    DefaultConstructableStruct(int x) : x(x) {}
-};
-
-class SerialisableStruct {
-public:
-    SerialisableStruct() : data(static_cast<unsigned char>(0)){}
-    unsigned char data;
-    static bool sendOut(SerialisableStruct x, SGEXTN::Containers::Span<unsigned char> data){data.at(0) = x.data; return true;}
-    static bool sendIn(SerialisableStruct& x, SGEXTN::Containers::Span<unsigned char> data){x.data = data.at(0); return true;}
-    static int size(){return 1;}
-};
-
-class EquatableStruct {
-public:
-    int x;
-    EquatableStruct(int x) : x(x) {}
-    [[nodiscard]] bool operator==(const EquatableStruct& x) const {return ((*this).x == x.x);}
-    [[nodiscard]] bool operator!=(const EquatableStruct& x) const {return ((*this).x != x.x);}
-};
-
-class ComparableStruct {
-public:
-    int x;
-    ComparableStruct(int x) : x(x) {}
-    [[nodiscard]] bool operator<(const ComparableStruct& x) const {return ((*this).x < x.x);}
-    [[nodiscard]] bool operator>(const ComparableStruct& x) const {return ((*this).x > x.x);}
-};
 
 template class SGEXTN::Containers::Array<DefaultConstructableStruct>;
 template class SGEXTN::Containers::ArrayVectorMove<DefaultConstructableStruct>;
@@ -1337,8 +1348,6 @@ template class SGEXTN::Containers::UnorderedSetCustomisable<RegularStruct, Regul
 template class SGEXTN::Containers::UnorderedSetIterator<RegularStruct, RegularStructEqualTo, RegularStructHashFunction>;
 template class SGEXTN::Containers::UnorderedSetConstIterator<RegularStruct, RegularStructEqualTo, RegularStructHashFunction>;
 template class SGEXTN::Containers::Vector<RegularStruct>;
-
-class FunctionOwner {};
 
 template class SGEXTN::Containers::Serialise<SGEXTN::Containers::Array<SerialisableStruct>>;
 template class SGEXTN::Containers::Serialise<SGEXTN::Containers::Array<EnumClass>>;

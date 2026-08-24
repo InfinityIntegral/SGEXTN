@@ -86,28 +86,6 @@ SGEXTN::Utilities::HslaColour::HslaColour(float h, float s, float l) : private_h
 
 SGEXTN::Utilities::HslaColour::HslaColour(float h, float s, float l, float a) : private_hue(limitTo360(h)), private_saturation(limitTo100(s)), private_lightness(limitTo100(l)), private_transparency(limitTo100(a)) {}
 
-bool SGEXTN::Utilities::HslaColour::operator==(SGEXTN::Utilities::HslaColour x) const {
-    return ((private_hue == x.private_hue) && (private_saturation == x.private_saturation) && (private_lightness == x.private_lightness) && (private_transparency == x.private_transparency));
-}
-
-bool SGEXTN::Utilities::HslaColour::operator!=(SGEXTN::Utilities::HslaColour x) const {
-    return ((private_hue != x.private_hue) || (private_saturation != x.private_saturation) || (private_lightness != x.private_lightness) || (private_transparency != x.private_transparency));
-}
-
-bool SGEXTN::Utilities::HslaColour::operator<(SGEXTN::Utilities::HslaColour x) const {
-    if(private_hue != x.private_hue){return (private_hue < x.private_hue);}
-    if(private_saturation != x.private_saturation){return (private_saturation < x.private_saturation);}
-    if(private_lightness != x.private_lightness){return (private_lightness < x.private_lightness);}
-    return (private_transparency < x.private_transparency);
-}
-
-bool SGEXTN::Utilities::HslaColour::operator>(SGEXTN::Utilities::HslaColour x) const {
-    if(private_hue != x.private_hue){return (private_hue > x.private_hue);}
-    if(private_saturation != x.private_saturation){return (private_saturation > x.private_saturation);}
-    if(private_lightness != x.private_lightness){return (private_lightness > x.private_lightness);}
-    return (private_transparency > x.private_transparency);
-}
-
 SGEXTN::CoreText::String SGEXTN::Utilities::HslaColour::debugPrint() const {
     return SGEXTN::CoreText::String("hsla(") + SGEXTN::CoreText::String::stringFromFloat(private_hue, 10, SGEXTN::CoreText::FloatPrecisionFormat::FractionalDigit, 0) + ", " + SGEXTN::CoreText::String::stringFromFloat(private_saturation, 10, SGEXTN::CoreText::FloatPrecisionFormat::FractionalDigit, 0) + ", " + SGEXTN::CoreText::String::stringFromFloat(private_lightness, 10, SGEXTN::CoreText::FloatPrecisionFormat::FractionalDigit, 0) + ", " + SGEXTN::CoreText::String::stringFromFloat(private_transparency, 10, SGEXTN::CoreText::FloatPrecisionFormat::FractionalDigit, 0) + ")";
 }

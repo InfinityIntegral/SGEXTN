@@ -167,7 +167,7 @@ bool parseStringToFloatingPoint(const SGEXTN::CoreText::String& s, int base, dou
         additionalExponent += exponent;
     }
     if(mantissa == 0){
-        output = 0.0;
+        output = 0.0f;
         return true;
     }
     double finalAns = static_cast<double>(mantissa) * SGEXTN::Math::FloatMath<double>::powerOf(static_cast<double>(base), static_cast<double>(additionalExponent));
@@ -214,7 +214,7 @@ SGEXTN::CoreText::String makeStringFromFloatingPoint(double x, int base, SGEXTN:
     if(SGEXTN::Math::FloatLimits<double>::isNotANumber(x) == true){return "not a number";}
     if(x == SGEXTN::Math::FloatLimits<double>::positiveInfinity()){return "+infinity";}
     if(x == SGEXTN::Math::FloatLimits<double>::negativeInfinity()){return "-infinity";}
-    if(x == 0.0){
+    if(x == 0.0f){
         if(format == SGEXTN::CoreText::FloatPrecisionFormat::ScientificNotation){
             if(precision == 1){return "0^0";}
             return (SGEXTN::CoreText::String("0.") + SGEXTN::CoreText::String::repeat("0", precision - 1) + "^0");
@@ -239,14 +239,14 @@ SGEXTN::CoreText::String makeStringFromFloatingPoint(double x, int base, SGEXTN:
     if(format == SGEXTN::CoreText::FloatPrecisionFormat::FractionalDigit){
         precision += (logarithm + 1);
         if(precision <= 0){
-            if(x <= 0.5 * SGEXTN::Math::FloatMath<double>::powerOf(base, logarithm + 1 - precision)){
+            if(x <= static_cast<double>(0.5f) * SGEXTN::Math::FloatMath<double>::powerOf(base, logarithm + 1 - precision)){
                 precision -= (logarithm + 1);
                 if(precision <= 0){return "0";}
                 return (SGEXTN::CoreText::String("0.") + SGEXTN::CoreText::String::repeat("0", precision));
             }
         }
     }
-    const double roundUpError = 0.5 * SGEXTN::Math::FloatMath<double>::powerOf(base, logarithm + 1 - precision);
+    const double roundUpError = static_cast<double>(0.5f) * SGEXTN::Math::FloatMath<double>::powerOf(base, logarithm + 1 - precision);
     if(x + roundUpError >= SGEXTN::Math::FloatMath<double>::powerOf(base, logarithm + 1)){
         if(format == SGEXTN::CoreText::FloatPrecisionFormat::FractionalDigit){precision++;}
         exponent = logarithm + 1;

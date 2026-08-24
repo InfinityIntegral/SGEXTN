@@ -39,10 +39,6 @@ public:
     HslaColour(SGEXTN::Utilities::RgbaColour x);
     HslaColour(float h, float s, float l);
     HslaColour(float h, float s, float l, float a);
-    [[nodiscard]] bool operator==(HslaColour x) const;
-    [[nodiscard]] bool operator!=(HslaColour x) const;
-    [[nodiscard]] bool operator<(HslaColour x) const;
-    [[nodiscard]] bool operator>(HslaColour x) const;
     [[nodiscard]] SGEXTN::CoreText::String debugPrint() const;
     [[nodiscard]] static bool sendOut(HslaColour x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(HslaColour& x, SGEXTN::Containers::Span<unsigned char> data);

@@ -26,7 +26,7 @@
 SGEXTN::SeerattraNum::GumbelDistribution::GumbelDistribution() : SGEXTN::SeerattraNum::GumbelDistribution(true, 0.0f, 1.0f){}
 
 SGEXTN::SeerattraNum::GumbelDistribution::GumbelDistribution(bool useGlobal, float mode, float spread) : private_mode(mode), private_spread(spread), private_rngLocator(useGlobal){
-    if(spread <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GumbelDistribution constructor crashed because requested spread is nonpositive");}
+    if(spread <= 0.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GumbelDistribution constructor crashed because requested spread is nonpositive");}
 }
 
 bool SGEXTN::SeerattraNum::GumbelDistribution::sendOut(const SGEXTN::SeerattraNum::GumbelDistribution& x, SGEXTN::Containers::Span<unsigned char> data){
@@ -82,6 +82,6 @@ void SGEXTN::SeerattraNum::GumbelDistribution::setMode(float mode){
 }
 
 void SGEXTN::SeerattraNum::GumbelDistribution::setSpread(float spread){
-    if(spread <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GumbelDistribution::setSpread crashed because requested spread is nonpositive");}
+    if(spread <= 0.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GumbelDistribution::setSpread crashed because requested spread is nonpositive");}
     private_spread = spread;
 }

@@ -286,12 +286,12 @@ bool SGEXTN::Containers::Serialise<double>::sendOut(double x, SGEXTN::Containers
         mantissa = 0x8000000000000ull;
     }
     else if(std::isinf(x)){exponent = 0x7ff;}
-    else if(x != 0.0){
+    else if(x != 0.0f){
         const long long prelimExponent = std::ilogb(std::abs(x));
         if(prelimExponent < 1 - 0x3ff){mantissa = static_cast<unsigned long long>(std::round(std::scalbn(std::abs(x), 52 + 0x3ff - 1)));}
         else{
             exponent = static_cast<unsigned long long>(prelimExponent + 0x3ff);
-            const double scaledDownMantissa = std::scalbn(std::abs(x), (-1) * static_cast<int>(prelimExponent)) - 1.0;
+            const double scaledDownMantissa = std::scalbn(std::abs(x), (-1) * static_cast<int>(prelimExponent)) - static_cast<double>(1.0f);
             mantissa = static_cast<unsigned long long>(std::round(std::scalbn(scaledDownMantissa, 52)));
         }
         if(mantissa > 0xfffffffffffffull){
@@ -311,17 +311,17 @@ bool SGEXTN::Containers::Serialise<double>::sendIn(double& x, SGEXTN::Containers
     const unsigned long long sign = static_cast<int>((packedBinary & 0x8000000000000000ull) >> 63);
     const unsigned long long exponent = (packedBinary & 0x7ff0000000000000ull) >> 52;
     const unsigned long long mantissa = packedBinary & 0xfffffffffffffull;
-    double signMultiple = 1.0;
-    if(sign == 1){signMultiple = -1.0;}
+    double signMultiple = 1.0f;
+    if(sign == 1){signMultiple = -1.0f;}
     if(exponent == 0x7ff){
         if(mantissa != 0){x = std::numeric_limits<double>::quiet_NaN();}
         else{x = signMultiple * std::numeric_limits<double>::infinity();}
     }
     else if(exponent == 0){
-        if(mantissa == 0){x = signMultiple * 0.0;}
+        if(mantissa == 0){x = signMultiple * 0.0f;}
         else{x = signMultiple * std::scalbn(static_cast<double>(mantissa), 1 - 52 - 0x3ff);}
     }
-    else{x = signMultiple * std::scalbn(1.0 + std::scalbn(static_cast<double>(mantissa), -52), static_cast<int>(exponent) - 0x3ff);}
+    else{x = signMultiple * std::scalbn(static_cast<double>(1.0f) + std::scalbn(static_cast<double>(mantissa), -52), static_cast<int>(exponent) - 0x3ff);}
     return true;
 }
 

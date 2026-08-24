@@ -18,19 +18,6 @@
 #pragma once
 #include <SGEXTN/Containers/PlacementNew.h>
 
-namespace {
-int acceptableCapacity(int i){
-    if(i < 16){return 16;}
-    int n = i - 1;
-    n |= n >> 1;
-    n |= n >> 2;
-    n |= n >> 4;
-    n |= n >> 8;
-    n |= n >> 16;
-    return (n + 1);
-}
-}
-
 template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> SGEXTN::Containers::HashMapSlot<Key, Value, EqualityCheck, HashFunction>::HashMapSlot() : status(HashMapSlotStatus::Unused), keyConstructorRemover('\0'), valueConstructorRemover('\0') {}
 
 template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> SGEXTN::Containers::HashMapSlot<Key, Value, EqualityCheck, HashFunction>::~HashMapSlot(){}
@@ -138,7 +125,16 @@ template <typename Key, typename Value, typename EqualityCheck, typename HashFun
 }
 
 template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> void SGEXTN::Containers::HashMap<Key, Value, EqualityCheck, HashFunction>::rehashAll(int newMemoryLength){
-    newMemoryLength = acceptableCapacity(newMemoryLength);
+    if(newMemoryLength < 16){newMemoryLength = 16;}
+    else{
+        int n = newMemoryLength - 1;
+        n |= n >> 1;
+        n |= n >> 2;
+        n |= n >> 4;
+        n |= n >> 8;
+        n |= n >> 16;
+        newMemoryLength = n + 1;
+    }
     const SGEXTN::Containers::HashMapSlot<Key, Value, EqualityCheck, HashFunction>* oldPointer = data;
     const int oldMemoryLength = memoryTotalLength;
     memoryTotalLength = newMemoryLength;

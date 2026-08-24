@@ -1,3 +1,5 @@
+// NOLINTBEGIN
+
 #include <string>
 #include <fstream>
 #include <array>
@@ -66,3 +68,5 @@ int main(){
     }
     outputFile << ";\n";
 }
+
+// NOLINTEND

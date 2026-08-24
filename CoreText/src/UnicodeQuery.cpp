@@ -4131,7 +4131,7 @@ float getUnicodeNumerical(int i){
         if(i >= 0x2460 && i <= 0x2473){return static_cast<float>(i - 0x245f);}
         if(i >= 0x2474 && i <= 0x2487){return static_cast<float>(i - 0x2473);}
         if(i >= 0x2488 && i <= 0x249b){return static_cast<float>(i - 0x2487);}
-        if(i == 0x24ea){return 0.0;}
+        if(i == 0x24ea){return 0.0f;}
         if(i >= 0x24eb && i <= 0x24f4){return (10.0f + static_cast<float>(i - 0x24ea));}
         if(i >= 0x24f5 && i <= 0x24fe){return static_cast<float>(i - 0x24f4);}
         if(i == 0x24ff){return 0.0f;}

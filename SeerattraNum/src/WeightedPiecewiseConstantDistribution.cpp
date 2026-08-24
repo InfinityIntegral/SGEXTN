@@ -28,8 +28,8 @@ SGEXTN::SeerattraNum::WeightedPiecewiseConstantDistribution::WeightedPiecewiseCo
     if(weights.length() == 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedPiecewiseConstantDistribution constructor crashed because the array of weights is empty");}
     bool isAllZero = true;
     for(int i=0; i<weights.length(); i++){
-        if(weights.at(i) < 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedPiecewiseConstantDistribution constructor crashed because at least 1 weight is negative");}
-        if(weights.at(i) > 0.0){isAllZero = false;}
+        if(weights.at(i) < 0.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedPiecewiseConstantDistribution constructor crashed because at least 1 weight is negative");}
+        if(weights.at(i) > 0.0f){isAllZero = false;}
     }
     if(isAllZero == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedPiecewiseConstantDistribution constructor crashed because all of the weights are zero");}
     if(boundaries.length() != weights.length() + 1){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedPiecewiseConstantDistribution constructor crashed because the length of the boudaries array is not one more than the length of the weights array");}
@@ -121,8 +121,8 @@ void SGEXTN::SeerattraNum::WeightedPiecewiseConstantDistribution::setWeightsAndB
     if(weights.length() == 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedPiecewiseConstantDistribution::setWeightsAndBoundaries crashed because the array of weights is empty");}
     bool isAllZero = true;
     for(int i=0; i<weights.length(); i++){
-        if(weights.at(i) < 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedPiecewiseConstantDistribution::setWeightsAndBoundaries crashed because at least 1 weight is negative");}
-        if(weights.at(i) > 0.0){isAllZero = false;}
+        if(weights.at(i) < 0.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedPiecewiseConstantDistribution::setWeightsAndBoundaries crashed because at least 1 weight is negative");}
+        if(weights.at(i) > 0.0f){isAllZero = false;}
     }
     if(isAllZero == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedPiecewiseConstantDistribution::setWeightsAndBoundaries crashed because all of the weights are zero");}
     if(boundaries.length() != weights.length() + 1){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedPiecewiseConstantDistribution::setWeightsAndBoundaries crashed because the length of the boudaries array is not one more than the length of the weights array");}

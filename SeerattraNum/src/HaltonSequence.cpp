@@ -133,7 +133,7 @@ SGEXTN::Containers::Array<float> SGEXTN::SeerattraNum::HaltonSequence::nextTerm(
 SGEXTN::Containers::Array<float>SGEXTN::SeerattraNum::HaltonSequence::requestTerm(int startingPoint){
     if(startingPoint <= 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::HaltonSequence::requestTerm crashed because starting point is nonpositive, note that zero is not supported for consistency with Sobol Sequence");}
     private_lastPosition = startingPoint;
-    SGEXTN::Containers::Array<double> doubleArray(private_dimensions, 0.0);
+    SGEXTN::Containers::Array<double> doubleArray(private_dimensions, static_cast<double>(0.0f));
     for(int i=0; i<private_dimensions; i++){
         SGEXTN::Containers::Vector<int> primeBaseDigitsReversed;
         int current = startingPoint;
