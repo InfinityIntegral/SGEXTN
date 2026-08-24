@@ -91,8 +91,6 @@ void SGEXTN::InternalTest::UtilitiesTest::testRgbaColour(){
     if(col.getBlueFloat() != 0.6f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - set blue float fail");}
     col.setTransparencyFloat(0.8f);
     if(col.getTransparencyFloat() != 0.8f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - set transparency float fail");}
-    if(SGEXTN::Utilities::RgbaColour(255, 0, 200, 255) == SGEXTN::Utilities::RgbaColour(255, 0, 200, 254)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - equality check fail");}
-    if(SGEXTN::Utilities::RgbaColour(255, 0, 200, 255) != SGEXTN::Utilities::RgbaColour(255, 0, 200)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - inequality check fail");}
     if(SGEXTN::Utilities::RgbaColour(255, 0, 200, 255).debugPrint() != "rgba(255, 0, 200, 255)"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - debug log fail");}
     col = SGEXTN::Utilities::RgbaColour(255, 0, 200);
     if(col.rgbHexString() != "ff00c8"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - rgb hex string fail");}
@@ -110,39 +108,39 @@ void SGEXTN::InternalTest::UtilitiesTest::testRgbaColour(){
     col.gammaCorrectEnd(0.001f, 0.4f, 0.6f);
     if(col.getRed() != 3 || col.getGreen() != 170 || col.getBlue() != 203){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - gamma correct end fail");}
     col = SGEXTN::Utilities::RgbaColour(100, 150, 200);
-    if(col.linearTransformRed(0.5f, 0.1f, false) != SGEXTN::Utilities::RgbaColour(76, 150, 200)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - linear transform red no gamma correct fail");}
-    if(col.linearTransformRed(0.5f, -1.2f, false) != SGEXTN::Utilities::RgbaColour(0, 150, 200)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - linear transform red no gamma correct underflow fail");}
-    if(col.linearTransformRed(1.2f, 1.5f, false) != SGEXTN::Utilities::RgbaColour(255, 150, 200)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - linear transform red no gamma correct overflow fail");}
-    if(col.linearTransformRed(0.5f, 0.1f, true) != SGEXTN::Utilities::RgbaColour(113, 150, 200)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - linear transform red fail");}
-    if(col.linearTransformRed(0.5f, -1.2f, true) != SGEXTN::Utilities::RgbaColour(0, 150, 200)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - linear transform red underflow fail");}
-    if(col.linearTransformRed(1.2f, 1.0f, true) != SGEXTN::Utilities::RgbaColour(255, 150, 200)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - linear transform red overflow fail");}
-    if(col.linearTransformGreen(0.5f, 0.1f, false) != SGEXTN::Utilities::RgbaColour(100, 101, 200)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - linear transform green no gamma correct fail");}
-    if(col.linearTransformGreen(0.5f, -1.2f, false) != SGEXTN::Utilities::RgbaColour(100, 0, 200)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - linear transform green no gamma correct underflow fail");}
-    if(col.linearTransformGreen(1.2f, 1.5f, false) != SGEXTN::Utilities::RgbaColour(100, 255, 200)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - linear transform green no gamma correct overflow fail");}
-    if(col.linearTransformGreen(0.5f, 0.1f, true) != SGEXTN::Utilities::RgbaColour(100, 138, 200)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - linear transform green fail");}
-    if(col.linearTransformGreen(0.5f, -1.2f, true) != SGEXTN::Utilities::RgbaColour(100, 0, 200)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - linear transform green underflow fail");}
-    if(col.linearTransformGreen(1.2f, 1.0f, true) != SGEXTN::Utilities::RgbaColour(100, 255, 200)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - linear transform green overflow fail");}
-    if(col.linearTransformBlue(0.5f, 0.1f, false) != SGEXTN::Utilities::RgbaColour(100, 150, 126)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - linear transform blue no gamma correct fail");}
-    if(col.linearTransformBlue(0.5f, -1.2f, false) != SGEXTN::Utilities::RgbaColour(100, 150, 0)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - linear transform blue no gamma correct underflow fail");}
-    if(col.linearTransformBlue(1.2f, 1.5f, false) != SGEXTN::Utilities::RgbaColour(100, 150, 255)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - linear transform blue no gamma correct overflow fail");}
-    if(col.linearTransformBlue(0.5f, 0.1f, true) != SGEXTN::Utilities::RgbaColour(100, 150, 167)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - linear transform blue fail");}
-    if(col.linearTransformBlue(0.5f, -1.2f, true) != SGEXTN::Utilities::RgbaColour(100, 150, 0)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - linear transform blue underflow fail");}
-    if(col.linearTransformBlue(1.2f, 1.0f, true) != SGEXTN::Utilities::RgbaColour(100, 150, 255)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - linear transform blue overflow fail");}
-    if(col.linearTransformTransparency(0.5f, 0.1f) != SGEXTN::Utilities::RgbaColour(100, 150, 200, 153)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - linear transform transparency fail");}
-    if(col.linearTransformTransparency(0.5f, -1.2f) != SGEXTN::Utilities::RgbaColour(100, 150, 200, 0)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - linear transform transparency underflow fail");}
-    if(col.linearTransformTransparency(1.2f, 1.0f) != SGEXTN::Utilities::RgbaColour(100, 150, 200)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - linear transform transparency overflow fail");}
-    if(col.applyTint(SGEXTN::Utilities::RgbaColour(255, 0, 200, 204), false) != SGEXTN::Utilities::RgbaColour(224, 30, 200, 255)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - apply tint no gamma correct fail");}
-    if(col.applyTint(SGEXTN::Utilities::RgbaColour(255, 0, 200, 204), true) != SGEXTN::Utilities::RgbaColour(234, 70, 200, 255)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - apply tint fail");}
-    if(col.applyTintSeparateTransparency(SGEXTN::Utilities::RgbaColour(255, 0, 200), 0.8f, false) != SGEXTN::Utilities::RgbaColour(224, 30, 200, 255)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - apply tint separate transparency no gamma correct fail");}
-    if(col.applyTintSeparateTransparency(SGEXTN::Utilities::RgbaColour(255, 0, 200), 0.8f, true) != SGEXTN::Utilities::RgbaColour(234, 70, 200, 255)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - apply tint separate transparency fail");}
-    if(col.interpolate(SGEXTN::Utilities::RgbaColour(255, 0, 200), 0.8f, false) != SGEXTN::Utilities::RgbaColour(131, 120, 200)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - interpolate no gamma correct fail");}
-    if(col.interpolate(SGEXTN::Utilities::RgbaColour(255, 0, 200), -0.2f, false) != SGEXTN::Utilities::RgbaColour(255, 0, 200)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - interpolate no gamma correct negative strength fail");}
-    if(col.interpolate(SGEXTN::Utilities::RgbaColour(255, 0, 200), 1.2f, false) != SGEXTN::Utilities::RgbaColour(69, 180, 200)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - interpolate no gamma correct very high strength fail");}
-    if(col.interpolate(SGEXTN::Utilities::RgbaColour(255, 0, 200), 0.8f, true) != SGEXTN::Utilities::RgbaColour(149, 135, 200)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - interpolate fail");}
-    if(col.interpolate(SGEXTN::Utilities::RgbaColour(255, 0, 200), -0.2f, true) != SGEXTN::Utilities::RgbaColour(255, 0, 200)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - interpolate negative strength fail");}
-    if(col.interpolate(SGEXTN::Utilities::RgbaColour(255, 0, 200), 1.2f, true) != SGEXTN::Utilities::RgbaColour(0, 163, 200)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - interpolate very high strength fail");}
-    if(SGEXTN::Utilities::RgbaColour(255, 0, 200).complement(false) != SGEXTN::Utilities::RgbaColour(0, 255, 55)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - complement no gamma correct fail");}
-    if(SGEXTN::Utilities::RgbaColour(255, 0, 200).complement(true) != SGEXTN::Utilities::RgbaColour(0, 255, 174)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - complement fail");}
+    if(col.linearTransformRed(0.5f, 0.1f, false).private_data != SGEXTN::Utilities::RgbaColour(76, 150, 200).private_data){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - linear transform red no gamma correct fail");}
+    if(col.linearTransformRed(0.5f, -1.2f, false).private_data != SGEXTN::Utilities::RgbaColour(0, 150, 200).private_data){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - linear transform red no gamma correct underflow fail");}
+    if(col.linearTransformRed(1.2f, 1.5f, false).private_data != SGEXTN::Utilities::RgbaColour(255, 150, 200).private_data){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - linear transform red no gamma correct overflow fail");}
+    if(col.linearTransformRed(0.5f, 0.1f, true).private_data != SGEXTN::Utilities::RgbaColour(113, 150, 200).private_data){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - linear transform red fail");}
+    if(col.linearTransformRed(0.5f, -1.2f, true).private_data != SGEXTN::Utilities::RgbaColour(0, 150, 200).private_data){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - linear transform red underflow fail");}
+    if(col.linearTransformRed(1.2f, 1.0f, true).private_data != SGEXTN::Utilities::RgbaColour(255, 150, 200).private_data){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - linear transform red overflow fail");}
+    if(col.linearTransformGreen(0.5f, 0.1f, false).private_data != SGEXTN::Utilities::RgbaColour(100, 101, 200).private_data){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - linear transform green no gamma correct fail");}
+    if(col.linearTransformGreen(0.5f, -1.2f, false).private_data != SGEXTN::Utilities::RgbaColour(100, 0, 200).private_data){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - linear transform green no gamma correct underflow fail");}
+    if(col.linearTransformGreen(1.2f, 1.5f, false).private_data != SGEXTN::Utilities::RgbaColour(100, 255, 200).private_data){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - linear transform green no gamma correct overflow fail");}
+    if(col.linearTransformGreen(0.5f, 0.1f, true).private_data != SGEXTN::Utilities::RgbaColour(100, 138, 200).private_data){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - linear transform green fail");}
+    if(col.linearTransformGreen(0.5f, -1.2f, true).private_data != SGEXTN::Utilities::RgbaColour(100, 0, 200).private_data){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - linear transform green underflow fail");}
+    if(col.linearTransformGreen(1.2f, 1.0f, true).private_data != SGEXTN::Utilities::RgbaColour(100, 255, 200).private_data){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - linear transform green overflow fail");}
+    if(col.linearTransformBlue(0.5f, 0.1f, false).private_data != SGEXTN::Utilities::RgbaColour(100, 150, 126).private_data){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - linear transform blue no gamma correct fail");}
+    if(col.linearTransformBlue(0.5f, -1.2f, false).private_data != SGEXTN::Utilities::RgbaColour(100, 150, 0).private_data){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - linear transform blue no gamma correct underflow fail");}
+    if(col.linearTransformBlue(1.2f, 1.5f, false).private_data != SGEXTN::Utilities::RgbaColour(100, 150, 255).private_data){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - linear transform blue no gamma correct overflow fail");}
+    if(col.linearTransformBlue(0.5f, 0.1f, true).private_data != SGEXTN::Utilities::RgbaColour(100, 150, 167).private_data){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - linear transform blue fail");}
+    if(col.linearTransformBlue(0.5f, -1.2f, true).private_data != SGEXTN::Utilities::RgbaColour(100, 150, 0).private_data){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - linear transform blue underflow fail");}
+    if(col.linearTransformBlue(1.2f, 1.0f, true).private_data != SGEXTN::Utilities::RgbaColour(100, 150, 255).private_data){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - linear transform blue overflow fail");}
+    if(col.linearTransformTransparency(0.5f, 0.1f).private_data != SGEXTN::Utilities::RgbaColour(100, 150, 200, 153).private_data){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - linear transform transparency fail");}
+    if(col.linearTransformTransparency(0.5f, -1.2f).private_data != SGEXTN::Utilities::RgbaColour(100, 150, 200, 0).private_data){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - linear transform transparency underflow fail");}
+    if(col.linearTransformTransparency(1.2f, 1.0f).private_data != SGEXTN::Utilities::RgbaColour(100, 150, 200).private_data){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - linear transform transparency overflow fail");}
+    if(col.applyTint(SGEXTN::Utilities::RgbaColour(255, 0, 200, 204), false).private_data != SGEXTN::Utilities::RgbaColour(224, 30, 200, 255).private_data){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - apply tint no gamma correct fail");}
+    if(col.applyTint(SGEXTN::Utilities::RgbaColour(255, 0, 200, 204), true).private_data != SGEXTN::Utilities::RgbaColour(234, 70, 200, 255).private_data){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - apply tint fail");}
+    if(col.applyTintSeparateTransparency(SGEXTN::Utilities::RgbaColour(255, 0, 200), 0.8f, false).private_data != SGEXTN::Utilities::RgbaColour(224, 30, 200, 255).private_data){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - apply tint separate transparency no gamma correct fail");}
+    if(col.applyTintSeparateTransparency(SGEXTN::Utilities::RgbaColour(255, 0, 200), 0.8f, true).private_data != SGEXTN::Utilities::RgbaColour(234, 70, 200, 255).private_data){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - apply tint separate transparency fail");}
+    if(col.interpolate(SGEXTN::Utilities::RgbaColour(255, 0, 200), 0.8f, false).private_data != SGEXTN::Utilities::RgbaColour(131, 120, 200).private_data){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - interpolate no gamma correct fail");}
+    if(col.interpolate(SGEXTN::Utilities::RgbaColour(255, 0, 200), -0.2f, false).private_data != SGEXTN::Utilities::RgbaColour(255, 0, 200).private_data){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - interpolate no gamma correct negative strength fail");}
+    if(col.interpolate(SGEXTN::Utilities::RgbaColour(255, 0, 200), 1.2f, false).private_data != SGEXTN::Utilities::RgbaColour(69, 180, 200).private_data){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - interpolate no gamma correct very high strength fail");}
+    if(col.interpolate(SGEXTN::Utilities::RgbaColour(255, 0, 200), 0.8f, true).private_data != SGEXTN::Utilities::RgbaColour(149, 135, 200).private_data){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - interpolate fail");}
+    if(col.interpolate(SGEXTN::Utilities::RgbaColour(255, 0, 200), -0.2f, true).private_data != SGEXTN::Utilities::RgbaColour(255, 0, 200).private_data){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - interpolate negative strength fail");}
+    if(col.interpolate(SGEXTN::Utilities::RgbaColour(255, 0, 200), 1.2f, true).private_data != SGEXTN::Utilities::RgbaColour(0, 163, 200).private_data){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - interpolate very high strength fail");}
+    if(SGEXTN::Utilities::RgbaColour(255, 0, 200).complement(false).private_data != SGEXTN::Utilities::RgbaColour(0, 255, 55).private_data){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - complement no gamma correct fail");}
+    if(SGEXTN::Utilities::RgbaColour(255, 0, 200).complement(true).private_data != SGEXTN::Utilities::RgbaColour(0, 255, 174).private_data){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - complement fail");}
     const SGEXTN::Utilities::RgbaColour sampleColour(64, 128, 192, 255);
     SGEXTN::Containers::Array<unsigned char> serialiseArray(726);
     SGEXTN::Containers::Array<unsigned char> serialiseDestination(726);
@@ -154,7 +152,7 @@ void SGEXTN::InternalTest::UtilitiesTest::testRgbaColour(){
     if(isValid == false || isBitwiseIdentical(4, serialiseArray, serialiseDestination) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sendOut SGEXTN::Utilities::RgbaColour fail");}
     SGEXTN::Utilities::RgbaColour unserialisedColour;
     isValid = SGEXTN::Containers::Serialise<SGEXTN::Utilities::RgbaColour>::sendIn(unserialisedColour, makeSpan(serialiseArray, 4));
-    if(isValid == false || unserialisedColour != sampleColour){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sendIn SGEXTN::Utilities::RgbaColour fail");}
+    if(isValid == false || unserialisedColour.private_data != sampleColour.private_data){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sendIn SGEXTN::Utilities::RgbaColour fail");}
     if(SGEXTN::Containers::Serialise<SGEXTN::Utilities::RgbaColour>::sizeOut(sampleColour) != 4){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sizeOut SGEXTN::Utilities::RgbaColour fail");}
     if(SGEXTN::Containers::Serialise<SGEXTN::Utilities::RgbaColour>::sizeIn(makeSpan(serialiseArray, 100)) != 4){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sizeIn SGEXTN::Utilities::RgbaColour fail");}
 }
@@ -164,8 +162,6 @@ void SGEXTN::InternalTest::UtilitiesTest::testHslaColour(){
     if(col.getHue() != 313.0f || col.getSaturation() != 100.0f || col.getLightness() != 50.0f || col.getTransparency() != 100.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::HslaColour - getters or constructor from HSLA values fail");}
     col = SGEXTN::Utilities::HslaColour(SGEXTN::Utilities::RgbaColour(255, 0, 200));
     if(isCloseEnoughWCAG3(col.getHue(), 313.0f) == false || isCloseEnoughWCAG3(col.getSaturation(), 100.0f) == false || isCloseEnoughWCAG3(col.getLightness(), 50.0f) == false || isCloseEnough(col.getTransparency(), 100.0f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::HslaColour - RGBA constructor fail");}
-    if(SGEXTN::Utilities::HslaColour(SGEXTN::Utilities::RgbaColour(255, 0, 200, 0)) == SGEXTN::Utilities::HslaColour(SGEXTN::Utilities::RgbaColour(255, 0, 200))){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::HslaColour - equality check fail");}
-    if(SGEXTN::Utilities::HslaColour(313.0f, 0.0f, 100.0f, 100.0f) != SGEXTN::Utilities::HslaColour(313.0f, 0.0f, 100.0f)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::HslaColour - inequality check fail");}
     if(SGEXTN::Utilities::HslaColour(313.0f, 0.0f, 100.0f).debugPrint() != "hsla(313, 0, 100, 100)"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::HslaColour - debug log fail");}
     col.setHue(40.0f);
     col.setSaturation(10.0f);
@@ -187,17 +183,17 @@ void SGEXTN::InternalTest::UtilitiesTest::testHslaColour(){
     if(isCloseEnough(col.linearTransformTransparency(0.5f, 50.0f).getTransparency(), 65.0f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::HslaColour - linear transform transparency fail");}
     if(isCloseEnough(col.linearTransformTransparency(4.0f, 90.0f).getTransparency(), 100.0f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::HslaColour - linear transform transparency overflow fail");}
     if(isCloseEnough(col.linearTransformTransparency(-2.0f, 0.0f).getTransparency(), 0.0f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::HslaColour - linear transform transparency underflow fail");}
-    if(SGEXTN::Utilities::HslaColour(313.0f, 100.0f, 0.0f).toRGBA() != SGEXTN::Utilities::RgbaColour(0, 0, 0)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::HslaColour - hsl to rgb test case 0 fail");}
-    if(SGEXTN::Utilities::HslaColour(313.0f, 100.0f, 10.0f).toRGBA() != SGEXTN::Utilities::RgbaColour(51, 0, 40)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::HslaColour - hsl to rgb test case 1 fail");}
-    if(SGEXTN::Utilities::HslaColour(313.0f, 100.0f, 20.0f).toRGBA() != SGEXTN::Utilities::RgbaColour(102, 0, 80)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::HslaColour - hsl to rgb test case 2 fail");}
-    if(SGEXTN::Utilities::HslaColour(313.0f, 100.0f, 30.0f).toRGBA() != SGEXTN::Utilities::RgbaColour(153, 0, 120)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::HslaColour - hsl to rgb test case 3 fail");}
-    if(SGEXTN::Utilities::HslaColour(313.0f, 100.0f, 40.0f).toRGBA() != SGEXTN::Utilities::RgbaColour(204, 0, 160)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::HslaColour - hsl to rgb test case 4 fail");}
-    if(SGEXTN::Utilities::HslaColour(313.0f, 100.0f, 50.0f).toRGBA() != SGEXTN::Utilities::RgbaColour(255, 0, 200)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::HslaColour - hsl to rgb test case 5 fail");}
-    if(SGEXTN::Utilities::HslaColour(313.0f, 100.0f, 60.0f).toRGBA() != SGEXTN::Utilities::RgbaColour(255, 51, 211)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::HslaColour - hsl to rgb test case 6 fail");}
-    if(SGEXTN::Utilities::HslaColour(313.0f, 100.0f, 70.0f).toRGBA() != SGEXTN::Utilities::RgbaColour(255, 102, 222)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::HslaColour - hsl to rgb test case 7 fail");}
-    if(SGEXTN::Utilities::HslaColour(313.0f, 100.0f, 80.0f).toRGBA() != SGEXTN::Utilities::RgbaColour(255, 153, 233)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::HslaColour - hsl to rgb test case 8 fail");}
-    if(SGEXTN::Utilities::HslaColour(313.0f, 100.0f, 90.0f).toRGBA() != SGEXTN::Utilities::RgbaColour(255, 204, 244)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::HslaColour - hsl to rgb test case 9 fail");}
-    if(SGEXTN::Utilities::HslaColour(313.0f, 100.0f, 100.0f).toRGBA() != SGEXTN::Utilities::RgbaColour(255, 255, 255)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::HslaColour - hsl to rgb test case 10 fail");}
+    if(SGEXTN::Utilities::HslaColour(313.0f, 100.0f, 0.0f).toRGBA().private_data != SGEXTN::Utilities::RgbaColour(0, 0, 0).private_data){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::HslaColour - hsl to rgb test case 0 fail");}
+    if(SGEXTN::Utilities::HslaColour(313.0f, 100.0f, 10.0f).toRGBA().private_data != SGEXTN::Utilities::RgbaColour(51, 0, 40).private_data){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::HslaColour - hsl to rgb test case 1 fail");}
+    if(SGEXTN::Utilities::HslaColour(313.0f, 100.0f, 20.0f).toRGBA().private_data != SGEXTN::Utilities::RgbaColour(102, 0, 80).private_data){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::HslaColour - hsl to rgb test case 2 fail");}
+    if(SGEXTN::Utilities::HslaColour(313.0f, 100.0f, 30.0f).toRGBA().private_data != SGEXTN::Utilities::RgbaColour(153, 0, 120).private_data){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::HslaColour - hsl to rgb test case 3 fail");}
+    if(SGEXTN::Utilities::HslaColour(313.0f, 100.0f, 40.0f).toRGBA().private_data != SGEXTN::Utilities::RgbaColour(204, 0, 160).private_data){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::HslaColour - hsl to rgb test case 4 fail");}
+    if(SGEXTN::Utilities::HslaColour(313.0f, 100.0f, 50.0f).toRGBA().private_data != SGEXTN::Utilities::RgbaColour(255, 0, 200).private_data){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::HslaColour - hsl to rgb test case 5 fail");}
+    if(SGEXTN::Utilities::HslaColour(313.0f, 100.0f, 60.0f).toRGBA().private_data != SGEXTN::Utilities::RgbaColour(255, 51, 211).private_data){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::HslaColour - hsl to rgb test case 6 fail");}
+    if(SGEXTN::Utilities::HslaColour(313.0f, 100.0f, 70.0f).toRGBA().private_data != SGEXTN::Utilities::RgbaColour(255, 102, 222).private_data){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::HslaColour - hsl to rgb test case 7 fail");}
+    if(SGEXTN::Utilities::HslaColour(313.0f, 100.0f, 80.0f).toRGBA().private_data != SGEXTN::Utilities::RgbaColour(255, 153, 233).private_data){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::HslaColour - hsl to rgb test case 8 fail");}
+    if(SGEXTN::Utilities::HslaColour(313.0f, 100.0f, 90.0f).toRGBA().private_data != SGEXTN::Utilities::RgbaColour(255, 204, 244).private_data){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::HslaColour - hsl to rgb test case 9 fail");}
+    if(SGEXTN::Utilities::HslaColour(313.0f, 100.0f, 100.0f).toRGBA().private_data != SGEXTN::Utilities::RgbaColour(255, 255, 255).private_data){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::HslaColour - hsl to rgb test case 10 fail");}
     const SGEXTN::Utilities::HslaColour sampleColour(200.0f, 25.0f, 50.0f, 75.0f);
     SGEXTN::Containers::Array<unsigned char> serialiseArray(726);
     SGEXTN::Containers::Array<unsigned char> serialiseDestination(726);
@@ -221,7 +217,7 @@ void SGEXTN::InternalTest::UtilitiesTest::testHslaColour(){
     if(isValid == false || isBitwiseIdentical(16, serialiseArray, serialiseDestination) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sendOut SGEXTN::Utilities::HslaColour fail");}
     SGEXTN::Utilities::HslaColour unserialisedColour;
     isValid = SGEXTN::Containers::Serialise<SGEXTN::Utilities::HslaColour>::sendIn(unserialisedColour, makeSpan(serialiseArray, 16));
-    if(isValid == false || unserialisedColour != sampleColour){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sendIn SGEXTN::Utilities::HslaColour fail");}
+    if(isValid == false || unserialisedColour.getHue() != sampleColour.getHue() || unserialisedColour.getSaturation() != sampleColour.getSaturation() || unserialisedColour.getLightness() != sampleColour.getLightness() || unserialisedColour.getTransparency() != sampleColour.getTransparency()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sendIn SGEXTN::Utilities::HslaColour fail");}
     if(SGEXTN::Containers::Serialise<SGEXTN::Utilities::HslaColour>::sizeOut(sampleColour) != 16){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sizeOut SGEXTN::Utilities::HslaColour fail");}
     if(SGEXTN::Containers::Serialise<SGEXTN::Utilities::HslaColour>::sizeIn(makeSpan(serialiseArray, 100)) != 16){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sizeIn SGEXTN::Utilities::HslaColour fail");}
 }
@@ -244,14 +240,14 @@ void SGEXTN::InternalTest::UtilitiesTest::testContrastUtilities(){
     if(isCloseEnough(SGEXTN::Utilities::ContrastUtilities::safeContrast(0.5f, true, true), 80.0f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::ContrastUtilities - safe contrast body text fail");}
     if(isCloseEnough(SGEXTN::Utilities::ContrastUtilities::safeContrast(1.0f, true, true), 63.0f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::ContrastUtilities - safe contrast body text +15 fail");}
     bool isPossible = false;
-    if(SGEXTN::Utilities::ContrastUtilities::getForegroundLightMode(SGEXTN::Utilities::RgbaColour(255, 204, 244), 60.0f, &isPossible) != SGEXTN::Utilities::RgbaColour(171, 0, 135) || isPossible == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::ContrastUtilities - get foreground light possible fail");}
-    if(SGEXTN::Utilities::ContrastUtilities::getForegroundLightMode(SGEXTN::Utilities::RgbaColour(102, 0, 80), 60.0f, &isPossible) != SGEXTN::Utilities::RgbaColour(0, 0, 0) || isPossible == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::ContrastUtilities - get foreground light impossible fail");}
-    if(SGEXTN::Utilities::ContrastUtilities::getForegroundDarkMode(SGEXTN::Utilities::RgbaColour(102, 0, 80), 60.0f, &isPossible) != SGEXTN::Utilities::RgbaColour(255, 158, 234) || isPossible == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::ContrastUtilities - get foreground dark possible fail");}
-    if(SGEXTN::Utilities::ContrastUtilities::getForegroundDarkMode(SGEXTN::Utilities::RgbaColour(255, 204, 244), 60.0f, &isPossible) != SGEXTN::Utilities::RgbaColour(255, 255, 255) || isPossible == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::ContrastUtilities - get foreground dark impossible fail");}
-    if(SGEXTN::Utilities::ContrastUtilities::getBackgroundLightMode(SGEXTN::Utilities::RgbaColour(102, 0, 80), 60.0f, &isPossible) != SGEXTN::Utilities::RgbaColour(255, 160, 234) || isPossible == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::ContrastUtilities - get background light possible fail");}
-    if(SGEXTN::Utilities::ContrastUtilities::getBackgroundLightMode(SGEXTN::Utilities::RgbaColour(255, 204, 244), 60.0f, &isPossible) != SGEXTN::Utilities::RgbaColour(255, 255, 255) || isPossible == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::ContrastUtilities - get background light impossible fail");}
-    if(SGEXTN::Utilities::ContrastUtilities::getBackgroundDarkMode(SGEXTN::Utilities::RgbaColour(255, 204, 244), 60.0f, &isPossible) != SGEXTN::Utilities::RgbaColour(185, 0, 145) || isPossible == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::ContrastUtilities - get background dark possible fail");}
-    if(SGEXTN::Utilities::ContrastUtilities::getBackgroundDarkMode(SGEXTN::Utilities::RgbaColour(102, 0, 80), 60.0f, &isPossible) != SGEXTN::Utilities::RgbaColour(0, 0, 0) || isPossible == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::ContrastUtilities - get background dark impossible fail");}
+    if(SGEXTN::Utilities::ContrastUtilities::getForegroundLightMode(SGEXTN::Utilities::RgbaColour(255, 204, 244), 60.0f, &isPossible).private_data != SGEXTN::Utilities::RgbaColour(171, 0, 135).private_data || isPossible == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::ContrastUtilities - get foreground light possible fail");}
+    if(SGEXTN::Utilities::ContrastUtilities::getForegroundLightMode(SGEXTN::Utilities::RgbaColour(102, 0, 80), 60.0f, &isPossible).private_data != SGEXTN::Utilities::RgbaColour(0, 0, 0).private_data || isPossible == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::ContrastUtilities - get foreground light impossible fail");}
+    if(SGEXTN::Utilities::ContrastUtilities::getForegroundDarkMode(SGEXTN::Utilities::RgbaColour(102, 0, 80), 60.0f, &isPossible).private_data != SGEXTN::Utilities::RgbaColour(255, 158, 234).private_data || isPossible == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::ContrastUtilities - get foreground dark possible fail");}
+    if(SGEXTN::Utilities::ContrastUtilities::getForegroundDarkMode(SGEXTN::Utilities::RgbaColour(255, 204, 244), 60.0f, &isPossible).private_data != SGEXTN::Utilities::RgbaColour(255, 255, 255).private_data || isPossible == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::ContrastUtilities - get foreground dark impossible fail");}
+    if(SGEXTN::Utilities::ContrastUtilities::getBackgroundLightMode(SGEXTN::Utilities::RgbaColour(102, 0, 80), 60.0f, &isPossible).private_data != SGEXTN::Utilities::RgbaColour(255, 160, 234).private_data || isPossible == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::ContrastUtilities - get background light possible fail");}
+    if(SGEXTN::Utilities::ContrastUtilities::getBackgroundLightMode(SGEXTN::Utilities::RgbaColour(255, 204, 244), 60.0f, &isPossible).private_data != SGEXTN::Utilities::RgbaColour(255, 255, 255).private_data || isPossible == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::ContrastUtilities - get background light impossible fail");}
+    if(SGEXTN::Utilities::ContrastUtilities::getBackgroundDarkMode(SGEXTN::Utilities::RgbaColour(255, 204, 244), 60.0f, &isPossible).private_data != SGEXTN::Utilities::RgbaColour(185, 0, 145).private_data || isPossible == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::ContrastUtilities - get background dark possible fail");}
+    if(SGEXTN::Utilities::ContrastUtilities::getBackgroundDarkMode(SGEXTN::Utilities::RgbaColour(102, 0, 80), 60.0f, &isPossible).private_data != SGEXTN::Utilities::RgbaColour(0, 0, 0).private_data || isPossible == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::ContrastUtilities - get background dark impossible fail");}
 }
 
 void SGEXTN::InternalTest::UtilitiesTest::testIdentifier(){

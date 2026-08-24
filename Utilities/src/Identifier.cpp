@@ -36,14 +36,6 @@ bool SGEXTN::Utilities::Identifier::operator!=(SGEXTN::Utilities::Identifier x) 
     return (private_data != x.private_data);
 }
 
-bool SGEXTN::Utilities::Identifier::operator<(SGEXTN::Utilities::Identifier x) const {
-    return (private_data < x.private_data);
-}
-
-bool SGEXTN::Utilities::Identifier::operator>(SGEXTN::Utilities::Identifier x) const {
-    return (private_data > x.private_data);
-}
-
 SGEXTN::CoreText::String SGEXTN::Utilities::Identifier::getStringForPrinting() const {
     return SGEXTN::CoreText::String::stringFromUnsignedInt(private_data, 16).fillLeftToByteLength(8, '0');
 }

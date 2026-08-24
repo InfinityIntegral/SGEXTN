@@ -61,7 +61,8 @@ namespace {
 SGEXTN::Containers::Array<unsigned int> firstSeed(1u, 2u, 3u, 4u, 5u);
 SGEXTN::Containers::Array<unsigned int> secondSeed(6u, 7u, 8u, 9u, 10u);
 
-std::mt19937 standardLibraryRng;
+std::random_device trueRng;
+std::mt19937 standardLibraryRng(trueRng());
 
 void seedStandardLibraryRng(const SGEXTN::Containers::Array<unsigned int>& seed){
     std::seed_seq seedSequence(&seed.at(0), &seed.at(0) + seed.length());

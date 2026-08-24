@@ -1,3 +1,5 @@
+// NOLINTBEGIN
+
 #include <string>
 #include <fstream>
 #include <array>
@@ -97,3 +99,5 @@ int main(){
     templateString.replace(templateString.find("@SG_NORM_FLOOR"), 14, normalFloor);
     outputFile << templateString;
 }
+
+// NOLINTEND

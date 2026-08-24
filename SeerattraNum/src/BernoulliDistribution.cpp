@@ -25,8 +25,8 @@
 SGEXTN::SeerattraNum::BernoulliDistribution::BernoulliDistribution() : SGEXTN::SeerattraNum::BernoulliDistribution(true, 0.5f){}
 
 SGEXTN::SeerattraNum::BernoulliDistribution::BernoulliDistribution(bool useGlobal, float chanceOfTrue) : private_chanceOfTrue(chanceOfTrue), private_rngLocator(useGlobal){
-    if(chanceOfTrue < 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BernoulliDistribution constructor crashed because the requested probability is negative");}
-    if(chanceOfTrue > 1.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BernoulliDistribution constructor crashed because the requested probability is higher than 1");}
+    if(chanceOfTrue < 0.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BernoulliDistribution constructor crashed because the requested probability is negative");}
+    if(chanceOfTrue > 1.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BernoulliDistribution constructor crashed because the requested probability is higher than 1");}
 }
 
 bool SGEXTN::SeerattraNum::BernoulliDistribution::sendOut(const SGEXTN::SeerattraNum::BernoulliDistribution& x, SGEXTN::Containers::Span<unsigned char> data){
@@ -70,7 +70,7 @@ float SGEXTN::SeerattraNum::BernoulliDistribution::getChanceOfTrue() const {
 }
 
 void SGEXTN::SeerattraNum::BernoulliDistribution::setChanceOfTrue(float chanceOfTrue){
-    if(chanceOfTrue < 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BernoulliDistribution::setChanceOfTrue crashed because the requested probability is negative");}
-    if(chanceOfTrue > 1.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BernoulliDistribution::setChanceOfTrue crashed because the requested probability is higher than 1");}
+    if(chanceOfTrue < 0.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BernoulliDistribution::setChanceOfTrue crashed because the requested probability is negative");}
+    if(chanceOfTrue > 1.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BernoulliDistribution::setChanceOfTrue crashed because the requested probability is higher than 1");}
     private_chanceOfTrue = chanceOfTrue;
 }

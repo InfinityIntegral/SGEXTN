@@ -26,7 +26,7 @@
 SGEXTN::SeerattraNum::PoissonDistribution::PoissonDistribution() : SGEXTN::SeerattraNum::PoissonDistribution(true, 1.0f){}
 
 SGEXTN::SeerattraNum::PoissonDistribution::PoissonDistribution(bool useGlobal, float mean) : private_mean(mean), private_rngLocator(useGlobal), private_smallMeanProductThreshold(0.0f), private_precompConstantA(0.0f), private_precompConstantB(0.0f), private_squeezeBoundU(0.0f), private_squeezeBoundV(0.0f), private_lnMean(0.0f), private_lnAcceptRate(0.0f){
-    if(mean <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::PoissonDistribution constructor crashed because requested mean is nonpositive");}
+    if(mean <= 0.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::PoissonDistribution constructor crashed because requested mean is nonpositive");}
     private_redoPrecompute();
 }
 
@@ -112,7 +112,7 @@ float SGEXTN::SeerattraNum::PoissonDistribution::getMean() const {
 }
 
 void SGEXTN::SeerattraNum::PoissonDistribution::setMean(float mean){
-    if(mean <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::PoissonDistribution::setMean crashed because requested mean is nonpositive");}
+    if(mean <= 0.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::PoissonDistribution::setMean crashed because requested mean is nonpositive");}
     private_mean = mean;
     private_redoPrecompute();
 }

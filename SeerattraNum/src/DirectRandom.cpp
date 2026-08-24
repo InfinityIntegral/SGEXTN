@@ -127,7 +127,7 @@ float SGEXTN::SeerattraNum::DirectRandom::randomFloat32(){
 }
 
 double SGEXTN::SeerattraNum::DirectRandom::randomFloat64(){
-    const double scaleFactor = 1.0 / static_cast<double>(static_cast<unsigned long long>(1) << 53);
+    const double scaleFactor = static_cast<double>(1.0f) / static_cast<double>(static_cast<unsigned long long>(1) << 53);
     return (static_cast<double>(randomUnsignedInt64() >> 11) * scaleFactor);
 }
 

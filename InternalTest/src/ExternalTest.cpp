@@ -31,7 +31,7 @@
 #include <SGEXTN/Containers/UnorderedMap.h>
 #include <chrono>
 #include <format>
-#include <cstdlib>
+#include <string>
 #include <charconv>
 #include <cstring>
 #include <system_error>
@@ -344,9 +344,9 @@ void fillGraphemeBoundaryTestDatabase(){
 }
 
 bool isCloseEnough(float a, float b){
-    if(a < -0.0001 && 1.0001 * a <= b && 0.9999 * a >= b){return true;}
-    if(a > 0.0001 && 1.0001 * a >= b && 0.9999 * a <= b){return true;}
-    if(b >= a - 0.0001 && b <= a + 0.0001){return true;}
+    if(a < -0.0001f && 1.0001f * a <= b && 0.9999f * a >= b){return true;}
+    if(a > 0.0001f && 1.0001f * a >= b && 0.9999f * a <= b){return true;}
+    if(b >= a - 0.0001f && b <= a + 0.0001f){return true;}
     return false;
 }
 
@@ -494,7 +494,7 @@ void SGEXTN::InternalTest::ExternalTest::testDateTimeExternal(){
                 char* weekNumberString = new char[3];
                 std::format_to_n(weekNumberString, 2, "{:%V}", externalDateTime);
                 (*(weekNumberString + 2)) = '\0';
-                if(thisDateTime.getWeekOfYear() != std::atoi(weekNumberString)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::DateTime week count fail");}
+                if(thisDateTime.getWeekOfYear() != std::stoi(weekNumberString)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::DateTime week count fail");}
                 delete[] weekNumberString;
                 const int diffYear = thisDateTime.getTimeAfterDisplayPart(SGEXTN::Utilities::DateTime::beginningOfTime(), SGEXTN::Utilities::TimeUnit::Year);
                 const int diffMonth = thisDateTime.getTimeAfterDisplayPart(SGEXTN::Utilities::DateTime::beginningOfTime(), SGEXTN::Utilities::TimeUnit::Month);

@@ -28,8 +28,8 @@ SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution::WeightedIndexSelection
     if(weights.length() == 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightIndexSelectionDistribution constructor crashed because the array of weights is empty");}
     bool isAllZero = true;
     for(int i=0; i<weights.length(); i++){
-        if(weights.at(i) < 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution constructor crashed because at least 1 weight is negative");}
-        if(weights.at(i) > 0.0){isAllZero = false;}
+        if(weights.at(i) < 0.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution constructor crashed because at least 1 weight is negative");}
+        if(weights.at(i) > 0.0f){isAllZero = false;}
     }
     if(isAllZero == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightIndexSelectionDistribution constructor crashed because all of the weights are zero");}
     private_updatePrefixSums();
@@ -108,8 +108,8 @@ void SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution::setWeights(const 
     if(weights.length() == 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightIndexSelectionDistribution::setWeights crashed because the array of weights is empty");}
     bool isAllZero = true;
     for(int i=0; i<weights.length(); i++){
-        if(weights.at(i) < 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution::setWeights crashed because at least 1 weight is negative");}
-        if(weights.at(i) > 0.0){isAllZero = false;}
+        if(weights.at(i) < 0.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution::setWeights crashed because at least 1 weight is negative");}
+        if(weights.at(i) > 0.0f){isAllZero = false;}
     }
     if(isAllZero == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightIndexSelectionDistribution::setWeights crashed because all of the weights are zero");}
     private_weights = weights;

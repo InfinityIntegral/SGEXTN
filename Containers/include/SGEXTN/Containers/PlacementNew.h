@@ -19,7 +19,7 @@
 
 namespace SGEXTN {
 namespace Containers {
-enum class PlacementNew {
+enum class PlacementNew : unsigned char {
     Placeholder = 0
 };
 }

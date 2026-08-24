@@ -58,10 +58,6 @@ public:
     [[nodiscard]] SGEXTN::CoreText::String rgbaHexString() const;
     [[nodiscard]] SGEXTN::CoreText::String rgbFloatHtmlString() const;
     [[nodiscard]] SGEXTN::CoreText::String rgbaFloatHtmlString() const;
-    [[nodiscard]] bool operator==(RgbaColour x) const;
-    [[nodiscard]] bool operator!=(RgbaColour x) const;
-    [[nodiscard]] bool operator<(RgbaColour x) const;
-    [[nodiscard]] bool operator>(RgbaColour x) const;
     [[nodiscard]] SGEXTN::CoreText::String debugPrint() const;
     [[nodiscard]] static bool sendOut(RgbaColour x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(RgbaColour& x, SGEXTN::Containers::Span<unsigned char> data);

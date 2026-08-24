@@ -25,7 +25,7 @@
 SGEXTN::SeerattraNum::ChiSquaredDistribution::ChiSquaredDistribution() : SGEXTN::SeerattraNum::ChiSquaredDistribution(true, 1.0f){}
 
 SGEXTN::SeerattraNum::ChiSquaredDistribution::ChiSquaredDistribution(bool useGlobal, float degreesOfFreedom) : private_degreesOfFreedom(degreesOfFreedom), private_rngLocator(useGlobal), private_gammaDistribution(true, 1.0f, 2.0f){
-    if(degreesOfFreedom <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::ChiSquaredDistribution constructor crashed because requested number of degrees of freedom is nonpositive");}
+    if(degreesOfFreedom <= 0.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::ChiSquaredDistribution constructor crashed because requested number of degrees of freedom is nonpositive");}
     private_gammaDistribution.setVariableCount(0.5f * degreesOfFreedom);
 }
 
@@ -74,7 +74,7 @@ float SGEXTN::SeerattraNum::ChiSquaredDistribution::getDegreesOfFreedom() const 
 }
 
 void SGEXTN::SeerattraNum::ChiSquaredDistribution::setDegreesOfFreedom(float degreesOfFreedom){
-    if(degreesOfFreedom <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::ChiSquaredDistribution::setDegreesOfFreedom crashed because requested number of degrees of freedom is nonpositive");}
+    if(degreesOfFreedom <= 0.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::ChiSquaredDistribution::setDegreesOfFreedom crashed because requested number of degrees of freedom is nonpositive");}
     private_degreesOfFreedom = degreesOfFreedom;
     private_gammaDistribution.setVariableCount(0.5f * degreesOfFreedom);
 }

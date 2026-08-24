@@ -27,8 +27,8 @@
 SGEXTN::SeerattraNum::GammaDistribution::GammaDistribution() : SGEXTN::SeerattraNum::GammaDistribution(true, 1.0f, 1.0f){}
 
 SGEXTN::SeerattraNum::GammaDistribution::GammaDistribution(bool useGlobal, float variableCount, float variableMean) : private_variableCount(variableCount), private_variableMean(variableMean), private_rngLocator(useGlobal), private_standardNormalDistribution(true, 0.0f, 1.0f), private_precompConstantC(0.0f), private_precompConstantD(0.0f), private_reciprocalVariableCount(0.0f){
-    if(variableCount <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GammaDistribution constructor crashed because requested number of exponentially distributed variables to sum is nonpositive");}
-    if(variableMean <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GammaDistribution constructor crashed because requested mean of each exponentially distributed variable is nonpositive");}
+    if(variableCount <= 0.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GammaDistribution constructor crashed because requested number of exponentially distributed variables to sum is nonpositive");}
+    if(variableMean <= 0.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GammaDistribution constructor crashed because requested mean of each exponentially distributed variable is nonpositive");}
     private_redoPrecompute();
 }
 
@@ -115,13 +115,13 @@ float SGEXTN::SeerattraNum::GammaDistribution::getVariableMean() const {
 }
 
 void SGEXTN::SeerattraNum::GammaDistribution::setVariableCount(float variableCount){
-    if(variableCount <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GammaDistribution::setVariableCount crashed because requested number of exponentially distributed variables to sum is nonpositive");}
+    if(variableCount <= 0.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GammaDistribution::setVariableCount crashed because requested number of exponentially distributed variables to sum is nonpositive");}
     private_variableCount = variableCount;
     private_redoPrecompute();
 }
 
 void SGEXTN::SeerattraNum::GammaDistribution::setVariableMean(float variableMean){
-    if(variableMean <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GammaDistribution::setVariableMean crashed because requested mean of each exponentially distributed variable is nonpositive");}
+    if(variableMean <= 0.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GammaDistribution::setVariableMean crashed because requested mean of each exponentially distributed variable is nonpositive");}
     private_variableMean = variableMean;
     private_redoPrecompute();
 }

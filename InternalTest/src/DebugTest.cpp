@@ -60,7 +60,7 @@ void SGEXTN::InternalTest::DebugTest::runTest(){
     if(lastSentString != "SG: 26"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreTest::Debug log unsigned long long fail");}
     SG(0.25f);
     if(lastSentString != "SG: 0.25000"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreTest::Debug log float fail");}
-    SG(0.25);
+    SG(static_cast<double>(0.25f));
     if(lastSentString != "SG: 0.25000"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreTest::Debug log double fail");}
     SG(SGEXTN::CoreText::DebugPrintIntegerMode(16))(26);
     if(lastSentString != "SG: 1a"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreTest::Debug log int custom formatting fail");}

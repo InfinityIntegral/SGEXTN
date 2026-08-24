@@ -50,6 +50,7 @@ public:
     static void testUnorderedMapConstructible();
     static void testArrayVectorMove();
     static void testSerialise();
+    static void testHash();
     static void testAll();
 };
 }

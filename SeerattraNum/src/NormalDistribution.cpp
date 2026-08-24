@@ -83,7 +83,7 @@ SGEXTN::Containers::Array<float>* SGEXTN::SeerattraNum::NormalDistribution::priv
 SGEXTN::SeerattraNum::NormalDistribution::NormalDistribution() : SGEXTN::SeerattraNum::NormalDistribution(true, 0.0f, 1.0f){}
 
 SGEXTN::SeerattraNum::NormalDistribution::NormalDistribution(bool useGlobal, float mean, float standardDeviation) : private_mean(mean), private_standardDeviation(standardDeviation), private_rngLocator(useGlobal){
-    if(standardDeviation <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NormalDistribution constructor crashed because requested standard deviation is nonpositive");}
+    if(standardDeviation <= 0.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NormalDistribution constructor crashed because requested standard deviation is nonpositive");}
 }
 
 bool SGEXTN::SeerattraNum::NormalDistribution::sendOut(const SGEXTN::SeerattraNum::NormalDistribution& x, SGEXTN::Containers::Span<unsigned char> data){
@@ -185,7 +185,7 @@ void SGEXTN::SeerattraNum::NormalDistribution::setMean(float mean){
 }
 
 void SGEXTN::SeerattraNum::NormalDistribution::setStandardDeviation(float standardDeviation){
-    if(standardDeviation <= 0.0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NormalDistribution::setStandardDeviation crashed because requested standard deviation is nonpositive");}
+    if(standardDeviation <= 0.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NormalDistribution::setStandardDeviation crashed because requested standard deviation is nonpositive");}
     private_standardDeviation = standardDeviation;
 }
 

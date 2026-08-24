@@ -162,22 +162,6 @@ SGEXTN::CoreText::String SGEXTN::Utilities::RgbaColour::rgbaFloatHtmlString() co
     return (SGEXTN::CoreText::String("rgba(") + SGEXTN::CoreText::String::stringFromFloat(getRedFloat(), 10, SGEXTN::CoreText::FloatPrecisionFormat::FractionalDigit, 3) + ", " + SGEXTN::CoreText::String::stringFromFloat(getGreenFloat(), 10, SGEXTN::CoreText::FloatPrecisionFormat::FractionalDigit, 3) + ", " + SGEXTN::CoreText::String::stringFromFloat(getBlueFloat(), 10, SGEXTN::CoreText::FloatPrecisionFormat::FractionalDigit, 3) + ", " + SGEXTN::CoreText::String::stringFromFloat(getTransparencyFloat(), 10, SGEXTN::CoreText::FloatPrecisionFormat::FractionalDigit, 3) +  ")");
 }
 
-bool SGEXTN::Utilities::RgbaColour::operator==(SGEXTN::Utilities::RgbaColour x) const {
-    return (private_data == x.private_data);
-}
-
-bool SGEXTN::Utilities::RgbaColour::operator!=(SGEXTN::Utilities::RgbaColour x) const {
-    return (private_data != x.private_data);
-}
-
-bool SGEXTN::Utilities::RgbaColour::operator<(SGEXTN::Utilities::RgbaColour x) const {
-    return (private_data < x.private_data);
-}
-
-bool SGEXTN::Utilities::RgbaColour::operator>(SGEXTN::Utilities::RgbaColour x) const {
-    return (private_data > x.private_data);
-}
-
 SGEXTN::CoreText::String SGEXTN::Utilities::RgbaColour::debugPrint() const {
     return rgbaHtmlString();
 }
