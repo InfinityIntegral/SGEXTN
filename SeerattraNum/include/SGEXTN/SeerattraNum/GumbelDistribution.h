@@ -30,8 +30,8 @@ public:
     SGEXTN::SeerattraNum::DirectRandomInstanceLocator private_rngLocator;
     float private_mode;
     float private_spread;
-    GumbelDistribution();
-    GumbelDistribution(bool useGlobal, float mode, float spread);
+    explicit GumbelDistribution();
+    explicit GumbelDistribution(bool useGlobal, float mode, float spread);
     [[nodiscard]] static bool sendOut(const GumbelDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(GumbelDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static int size();

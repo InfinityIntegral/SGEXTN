@@ -30,12 +30,12 @@ namespace Utilities {
 class BuildLah_SGEXTN_Utilities RgbaColour {
 public:
     unsigned int private_data;
-    RgbaColour();
-    RgbaColour(unsigned int data);
-    RgbaColour(int r, int g, int b, int a);
-    RgbaColour(int r, int g, int b);
-    RgbaColour(float r, float g, float b, float a);
-    RgbaColour(float r, float g, float b);
+    explicit RgbaColour();
+    explicit RgbaColour(unsigned int data);
+    explicit RgbaColour(int r, int g, int b, int a);
+    explicit RgbaColour(int r, int g, int b);
+    explicit RgbaColour(float r, float g, float b, float a);
+    explicit RgbaColour(float r, float g, float b);
     [[nodiscard]] int getRed() const;
     [[nodiscard]] int getGreen() const;
     [[nodiscard]] int getBlue() const;

@@ -22,7 +22,7 @@ namespace SGEXTN {
 namespace Containers {
 template <typename T> class Deque {
 public:
-    Deque();
+    explicit Deque();
     void fill(const T& defaultValue);
     [[nodiscard]] T& at(int i);
     [[nodiscard]] const T& at(int i) const;

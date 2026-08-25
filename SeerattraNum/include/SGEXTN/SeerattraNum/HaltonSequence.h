@@ -30,8 +30,8 @@ public:
     int private_dimensions;
     SGEXTN::Containers::Array<SGEXTN::Containers::Array<int>> private_permutations;
     SGEXTN::Containers::Array<int> private_primeNumbers;
-    HaltonSequence();
-    HaltonSequence(int dimensions);
+    explicit HaltonSequence();
+    explicit HaltonSequence(int dimensions);
     [[nodiscard]] static bool sendOut(const HaltonSequence& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(HaltonSequence& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static int sizeOut(const HaltonSequence& x);

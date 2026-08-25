@@ -201,13 +201,13 @@ class FunctionOwner {};
 }
 
 void SGEXTN::InternalTest::ContainersTest::testEqualTo(){
-    SGEXTN::Containers::EqualTo<int> comparator;
+    const SGEXTN::Containers::EqualTo<int> comparator;
     if(comparator(0, 0) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::EqualTo - 0 not equal to 0");}
     if(comparator(-1, 0) == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::EqualTo - -1 equal to 0");}
     if(comparator(1, 0) == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::EqualTo - 1 equal to 0");}
     const int i = 0;
     const int j = 0;
-    SGEXTN::Containers::EqualTo<const int*> pointerComparator;
+    const SGEXTN::Containers::EqualTo<const int*> pointerComparator;
     if(pointerComparator(&i, &j) == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::LessThan - different pointer point to same result");}
     if(pointerComparator(&i, &i) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::LessThan - same pointer point to different result");}
 }
@@ -262,11 +262,11 @@ void SGEXTN::InternalTest::ContainersTest::testSpan(){
 }
 
 void SGEXTN::InternalTest::ContainersTest::testLessThan(){
-    SGEXTN::Containers::LessThan<int> comparator;
+    const SGEXTN::Containers::LessThan<int> comparator;
     if(comparator(-1, 0) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::LessThan - -1 not less than 0");}
     if(comparator(0, 0) == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::LessThan - 0 less than 0");}
     if(comparator(1, 0) == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::LessThan - 1 less than 0");}
-    SGEXTN::Containers::LessThan<const int*> pointerComparator;
+    const SGEXTN::Containers::LessThan<const int*> pointerComparator;
     const int i = 0;
     const int j = 0;
     if(pointerComparator(&i, &j) == false && pointerComparator(&j, &i) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::LessThan - different pointer point to same result");}
@@ -274,11 +274,11 @@ void SGEXTN::InternalTest::ContainersTest::testLessThan(){
 }
 
 void SGEXTN::InternalTest::ContainersTest::testMoreThan(){
-    SGEXTN::Containers::MoreThan<int> comparator;
+    const SGEXTN::Containers::MoreThan<int> comparator;
     if(comparator(-1, 0) == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::MoreThan - -1 more than 0");}
     if(comparator(0, 0) == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::MoreThan - 0 more than 0");}
     if(comparator(1, 0) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::MoreThan - 1 not more than 0");}
-    SGEXTN::Containers::MoreThan<const int*> pointerComparator;
+    const SGEXTN::Containers::MoreThan<const int*> pointerComparator;
     const int i = 0;
     const int j = 0;
     if(pointerComparator(&i, &j) == false && pointerComparator(&j, &i) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::MoreThan - different pointer point to same result");}

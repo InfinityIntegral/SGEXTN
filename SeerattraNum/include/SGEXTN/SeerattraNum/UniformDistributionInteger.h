@@ -30,8 +30,8 @@ public:
     SGEXTN::SeerattraNum::DirectRandomInstanceLocator private_rngLocator;
     int private_inclusiveMin;
     int private_inclusiveMax;
-    UniformDistributionInteger();
-    UniformDistributionInteger(bool useGlobal, int inclusiveMin, int inclusiveMax);
+    explicit UniformDistributionInteger();
+    explicit UniformDistributionInteger(bool useGlobal, int inclusiveMin, int inclusiveMax);
     [[nodiscard]] static bool sendOut(const UniformDistributionInteger& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(UniformDistributionInteger& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static int size();

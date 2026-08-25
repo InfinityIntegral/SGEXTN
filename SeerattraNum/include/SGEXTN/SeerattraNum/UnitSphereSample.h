@@ -30,8 +30,8 @@ class BuildLah_SGEXTN_SeerattraNum UnitSphereSample {
 public:
     SGEXTN::SeerattraNum::DirectRandomInstanceLocator private_rngLocator;
     SGEXTN::SeerattraNum::NormalDistribution private_normalDistribution;
-    UnitSphereSample();
-    UnitSphereSample(bool useGlobal);
+    explicit UnitSphereSample();
+    explicit UnitSphereSample(bool useGlobal);
     [[nodiscard]] static bool sendOut(const UnitSphereSample& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(UnitSphereSample& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static int size();

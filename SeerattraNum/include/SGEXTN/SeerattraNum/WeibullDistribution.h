@@ -31,8 +31,8 @@ public:
     float private_failureBehaviour;
     float private_characteristicLifespan;
     float private_reciprocalA;
-    WeibullDistribution();
-    WeibullDistribution(bool useGlobal, float failureBehaviour, float characteristicLifespan);
+    explicit WeibullDistribution();
+    explicit WeibullDistribution(bool useGlobal, float failureBehaviour, float characteristicLifespan);
     [[nodiscard]] static bool sendOut(const WeibullDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(WeibullDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static int size();

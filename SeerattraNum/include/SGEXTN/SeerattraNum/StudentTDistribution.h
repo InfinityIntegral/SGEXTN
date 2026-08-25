@@ -33,8 +33,8 @@ public:
     float private_degreesOfFreedom;
     SGEXTN::SeerattraNum::ChiSquaredDistribution private_chiSquaredDistribution;
     SGEXTN::SeerattraNum::NormalDistribution private_standardNormalDistribution;
-    StudentTDistribution();
-    StudentTDistribution(bool useGlobal, float degreesOfFreedom);
+    explicit StudentTDistribution();
+    explicit StudentTDistribution(bool useGlobal, float degreesOfFreedom);
     [[nodiscard]] static bool sendOut(const StudentTDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(StudentTDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static int size();

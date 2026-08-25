@@ -30,8 +30,8 @@ public:
     SGEXTN::SeerattraNum::DirectRandomInstanceLocator private_rngLocator;
     float private_chanceOfTrue;
     float private_cacheReciprocalOfLnChanceOfFalse;
-    GeometricDistribution();
-    GeometricDistribution(bool useGlobal, float chanceOfTrue);
+    explicit GeometricDistribution();
+    explicit GeometricDistribution(bool useGlobal, float chanceOfTrue);
     [[nodiscard]] static bool sendOut(const GeometricDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(GeometricDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static int size();

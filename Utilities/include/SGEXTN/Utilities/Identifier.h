@@ -31,7 +31,7 @@ class IdentifierRegistry;
 class BuildLah_SGEXTN_Utilities Identifier {
 public:
     unsigned int private_data;
-    Identifier();
+    explicit Identifier();
     [[nodiscard]] static Identifier nullIdentifier();
     [[nodiscard]] bool operator==(Identifier x) const;
     [[nodiscard]] bool operator!=(Identifier x) const;

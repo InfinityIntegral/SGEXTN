@@ -22,6 +22,9 @@ namespace SGEXTN {
 namespace Containers {
 template <typename T> class Hash {
 public:
+    mutable int length;
+    mutable SGEXTN::Containers::Array<unsigned char> buffer;
+    explicit Hash();
     [[nodiscard]] int operator()(const T& x) const;
 };
 

@@ -21,11 +21,15 @@
 #include <SGEXTN/Containers/Serialise.h>
 #include <SGEXTN/Containers/ForceCrash.h>
 
+template <typename T> SGEXTN::Containers::Hash<T>::Hash() : length(0), buffer(0){}
+
 template <typename T> int SGEXTN::Containers::Hash<T>::operator()(const T& x) const {
     const int bufferLength = SGEXTN::Containers::Serialise<T>::sizeOut(x);
-    SGEXTN::Containers::Array<unsigned char> bufferArray(bufferLength);
-    const SGEXTN::Containers::Span<unsigned char> span(bufferArray);
-    const bool isValid = SGEXTN::Containers::Serialise<T>::sendOut(x, span);
+    if(bufferLength != length){
+        length = bufferLength;
+        buffer = SGEXTN::Containers::Array<unsigned char>(length);
+    }
+    const bool isValid = SGEXTN::Containers::Serialise<T>::sendOut(x, SGEXTN::Containers::Span<unsigned char>(buffer));
     if(isValid == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Container::Hash crashed because the object could not be serialised");}
-    return SGEXTN::Containers::HashAlgorithm::wyHash32(span);
+    return SGEXTN::Containers::HashAlgorithm::wyHash32(SGEXTN::Containers::Span<unsigned char>(buffer));
 }

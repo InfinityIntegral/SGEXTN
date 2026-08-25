@@ -32,7 +32,7 @@ public:
     unsigned long long private_fourthNum;
     unsigned int private_cache;
     bool private_cacheActive;
-    DirectRandom();
+    explicit DirectRandom();
     [[nodiscard]] static bool sendOut(const DirectRandom& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(DirectRandom& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static int size();

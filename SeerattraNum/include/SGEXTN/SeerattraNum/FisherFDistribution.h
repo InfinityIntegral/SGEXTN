@@ -33,8 +33,8 @@ public:
     float private_denominatorDegreesOfFreedom;
     SGEXTN::SeerattraNum::ChiSquaredDistribution private_numeratorDistribution;
     SGEXTN::SeerattraNum::ChiSquaredDistribution private_denominatorDistribution;
-    FisherFDistribution();
-    FisherFDistribution(bool useGlobal, float numeratorDegreesOfFreedom, float denominatorDegreesOfFreedom);
+    explicit FisherFDistribution();
+    explicit FisherFDistribution(bool useGlobal, float numeratorDegreesOfFreedom, float denominatorDegreesOfFreedom);
     [[nodiscard]] static bool sendOut(const FisherFDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(FisherFDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static int size();

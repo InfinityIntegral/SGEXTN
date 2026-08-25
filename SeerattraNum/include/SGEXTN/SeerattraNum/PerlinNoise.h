@@ -30,8 +30,8 @@ public:
     int private_seed;
     int private_dimension;
     SGEXTN::SeerattraNum::SmoothingFunction private_smoothingFunction;
-    PerlinNoise();
-    PerlinNoise(int dimension, SGEXTN::SeerattraNum::SmoothingFunction smoothingFunction);
+    explicit PerlinNoise();
+    explicit PerlinNoise(int dimension, SGEXTN::SeerattraNum::SmoothingFunction smoothingFunction);
     [[nodiscard]] static bool sendOut(const PerlinNoise& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(PerlinNoise& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static int size();

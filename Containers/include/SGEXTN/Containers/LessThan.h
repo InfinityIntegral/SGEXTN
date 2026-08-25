@@ -22,12 +22,12 @@ namespace SGEXTN {
 namespace Containers {
 template <typename T> class LessThan {
 public:
-    int lengthA;
-    int lengthB;
-    SGEXTN::Containers::Array<unsigned char> bufferA;
-    SGEXTN::Containers::Array<unsigned char> bufferB;
-    LessThan();
-    [[nodiscard]] bool operator()(const T& a, const T& b);
+    mutable int lengthA;
+    mutable int lengthB;
+    mutable SGEXTN::Containers::Array<unsigned char> bufferA;
+    mutable SGEXTN::Containers::Array<unsigned char> bufferB;
+    explicit LessThan();
+    [[nodiscard]] bool operator()(const T& a, const T& b) const;
 };
 }
 }

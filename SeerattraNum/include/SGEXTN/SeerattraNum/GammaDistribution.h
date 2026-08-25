@@ -35,8 +35,8 @@ public:
     float private_precompConstantD;
     float private_precompConstantC;
     float private_reciprocalVariableCount;
-    GammaDistribution();
-    GammaDistribution(bool useGlobal, float variableCount, float variableMean);
+    explicit GammaDistribution();
+    explicit GammaDistribution(bool useGlobal, float variableCount, float variableMean);
     [[nodiscard]] static bool sendOut(const GammaDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(GammaDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static int size();

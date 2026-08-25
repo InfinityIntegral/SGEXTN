@@ -22,7 +22,7 @@ namespace SGEXTN {
 namespace CoreText {
 class BuildLah_SGEXTN_CoreText TextBuffer {
 public:
-    TextBuffer();
+    explicit TextBuffer();
     TextBuffer(const TextBuffer& x);
     TextBuffer& operator=(const TextBuffer& x);
     TextBuffer(TextBuffer&& x) noexcept;

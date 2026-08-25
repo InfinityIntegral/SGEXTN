@@ -34,8 +34,8 @@ public:
     int private_successCount;
     SGEXTN::SeerattraNum::GammaDistribution private_gammaDistribution;
     SGEXTN::SeerattraNum::PoissonDistribution private_poissonDistribution;
-    NegativeBinomialDistribution();
-    NegativeBinomialDistribution(bool useGlobal, float chanceOfTrue, int successCount);
+    explicit NegativeBinomialDistribution();
+    explicit NegativeBinomialDistribution(bool useGlobal, float chanceOfTrue, int successCount);
     [[nodiscard]] static bool sendOut(const NegativeBinomialDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(NegativeBinomialDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static int size();

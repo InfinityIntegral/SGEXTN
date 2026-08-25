@@ -48,8 +48,8 @@ public:
     float private_weightAllExceptCenter;
     float private_comparisonMultiplier;
     float private_comparisonConstant;
-    BinomialDistribution();
-    BinomialDistribution(bool useGlobal, float chanceOfTrue, int attemptCount);
+    explicit BinomialDistribution();
+    explicit BinomialDistribution(bool useGlobal, float chanceOfTrue, int attemptCount);
     [[nodiscard]] static bool sendOut(const BinomialDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(BinomialDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static int size();

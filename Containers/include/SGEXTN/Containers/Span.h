@@ -22,9 +22,9 @@ namespace SGEXTN {
 namespace Containers {
 template <typename T> class Span {
 public:
-    Span(T* data, int length);
-    Span(SGEXTN::Containers::Array<T>& array);
-    Span(SGEXTN::Containers::Array<T>& array, int start, int length);
+    explicit Span(T* data, int length);
+    explicit Span(SGEXTN::Containers::Array<T>& array);
+    explicit Span(SGEXTN::Containers::Array<T>& array, int start, int length);
     [[nodiscard]] int length() const;
     [[nodiscard]] T& at(int i);
     [[nodiscard]] const T& at(int i) const;

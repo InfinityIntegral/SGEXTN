@@ -40,13 +40,13 @@ enum class DebugPrintMetadataMode : unsigned char {
 
 class BuildLah_SGEXTN_CoreText DebugPrintIntegerMode {
 public:
-    DebugPrintIntegerMode(int base);
+    explicit DebugPrintIntegerMode(int base);
     int base;
 };
 
 class BuildLah_SGEXTN_CoreText DebugPrintFloatingPointMode {
 public:
-    DebugPrintFloatingPointMode(int base, SGEXTN::CoreText::FloatPrecisionFormat format, int precision);
+    explicit DebugPrintFloatingPointMode(int base, SGEXTN::CoreText::FloatPrecisionFormat format, int precision);
     int base;
     SGEXTN::CoreText::FloatPrecisionFormat format;
     int precision;
@@ -70,7 +70,7 @@ enum class DebugPrintPointerMode : unsigned char {
 
 class BuildLah_SGEXTN_CoreText Debug {
 public:
-    Debug(const SGEXTN::CoreText::String& fileName, int lineNumber);
+    explicit Debug(const SGEXTN::CoreText::String& fileName, int lineNumber);
     Debug(const Debug&) = delete;
     Debug& operator=(const Debug&) = delete;
     Debug(Debug&&) = delete;
@@ -119,7 +119,7 @@ public:
 
 class BuildLah_SGEXTN_CoreText DebugLogFunctionRegistrarInstance {
 public:
-    DebugLogFunctionRegistrarInstance(void (*func)(const char*));
+    explicit DebugLogFunctionRegistrarInstance(void (*func)(const char*));
 };
 }
 }

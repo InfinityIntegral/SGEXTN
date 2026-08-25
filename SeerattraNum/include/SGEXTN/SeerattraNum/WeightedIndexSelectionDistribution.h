@@ -31,8 +31,8 @@ public:
     SGEXTN::Containers::Array<float> private_weights;
     SGEXTN::Containers::Array<float> private_prefixSums;
     void private_updatePrefixSums();
-    WeightedIndexSelectionDistribution();
-    WeightedIndexSelectionDistribution(bool useGlobal, const SGEXTN::Containers::Array<float>& weights);
+    explicit WeightedIndexSelectionDistribution();
+    explicit WeightedIndexSelectionDistribution(bool useGlobal, const SGEXTN::Containers::Array<float>& weights);
     [[nodiscard]] static bool sendOut(const WeightedIndexSelectionDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(WeightedIndexSelectionDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static int sizeOut(const WeightedIndexSelectionDistribution& x);

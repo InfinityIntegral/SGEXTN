@@ -459,7 +459,7 @@ void SGEXTN::InternalTest::CoreTextTest::testString(){
     if(SGEXTN::CoreText::String::stringFromDouble(31.0f / 3.0f, 16, SGEXTN::CoreText::FloatPrecisionFormat::ScientificNotation, 3) != "a.55^0"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String print double scientific notation mode positive base 16 fail");}
     if(SGEXTN::CoreText::String::stringFromDouble(-1.0f / 3.0f, 16, SGEXTN::CoreText::FloatPrecisionFormat::ScientificNotation, 3) != "-5.55^-1"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String print double scientific notation mode negative base 16 fail");}
     if(SGEXTN::CoreText::String("-1.23^+09").prettierScientificNotationBase10() != U8("-1.23\u00d710\u2079")){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String make scientific notation prettier fail");}
-    if(SGEXTN::CoreText::String("12345").convertNumericSystem(0xbe6) != U8("\u0be7\u0be8\u0be9\u0bea\u0beb")){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String convert to non Latin numbers fail");}
+    if(SGEXTN::CoreText::String("12345").convertNumericSystem(SGEXTN::CoreText::Character(0xbe6)) != U8("\u0be7\u0be8\u0be9\u0bea\u0beb")){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String convert to non Latin numbers fail");}
     if(SGEXTN::CoreText::String("<b> & </b>#").prepareInnerHtmlText() != "&lt;b&gt; &amp; &lt;/b&gt;#"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String HTML escaping fail");}
     if(SGEXTN::CoreText::String("  te xt \t\n  \n \t ").removeLeadingTrailingWhitespace() != "te xt"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String whitespace trimming fail");}
     if(SGEXTN::CoreText::String(" a b \nc\t\t\td    e \n \tfgh   ").cleanWhitespace() != "a b c d e fgh"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String whitespace cleaning fail");}

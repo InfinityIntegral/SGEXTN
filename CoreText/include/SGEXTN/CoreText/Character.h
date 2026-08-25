@@ -30,10 +30,10 @@ class String;
 class BuildLah_SGEXTN_CoreText Character {
 public:
     SGEXTN::CoreText::TextBuffer private_data;
-    Character();
+    explicit Character();
     Character(unsigned char c);
     Character(const char* s);
-    Character(int unicode);
+    explicit Character(int unicode);
     [[nodiscard]] bool operator==(const Character& x) const;
     [[nodiscard]] bool operator!=(const Character& x) const;
     [[nodiscard]] bool operator<(const Character& x) const;

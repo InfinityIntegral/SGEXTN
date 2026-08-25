@@ -28,8 +28,8 @@ class BuildLah_SGEXTN_SeerattraNum VoronoiNoise {
 public:
     int private_seed;
     int private_dimension;
-    VoronoiNoise();
-    VoronoiNoise(int dimension);
+    explicit VoronoiNoise();
+    explicit VoronoiNoise(int dimension);
     [[nodiscard]] static bool sendOut(const VoronoiNoise& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(VoronoiNoise& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static int size();

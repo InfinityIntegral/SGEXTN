@@ -30,8 +30,8 @@ public:
     int subtreeSize;
     Key key;
     Value value;
-    AVLTreeNode(const Key& k, const Value& v, AVLTreeNode* parentNode);
-    AVLTreeNode(AVLTreeNode* oldNode, AVLTreeNode* newParent);
+    explicit AVLTreeNode(const Key& k, const Value& v, AVLTreeNode* parentNode);
+    explicit AVLTreeNode(AVLTreeNode* oldNode, AVLTreeNode* newParent);
 };
 
 template <typename Key, typename Value, typename Comparator> class AVLTreeIterator;
@@ -40,7 +40,7 @@ template <typename Key, typename Value, typename Comparator> class AVLTreeConstI
 template <typename Key, typename Value, typename Comparator> class AVLTree {
 public:
     AVLTreeNode<Key, Value, Comparator>* root;
-    mutable Comparator comparatorInstance;
+    Comparator comparatorInstance;
     [[nodiscard]] int getEffectiveHeight(AVLTreeNode<Key, Value, Comparator>* x) const;
     [[nodiscard]] int getEffectiveSubtreeSize(AVLTreeNode<Key, Value, Comparator>* x) const;
     void updateHeightRecurseToRoot(AVLTreeNode<Key, Value, Comparator>* x);
@@ -63,7 +63,7 @@ public:
     [[nodiscard]] AVLTreeNode<Key, Value, Comparator>* upperBoundNode(const Key& x) const;
     [[nodiscard]] AVLTreeNode<Key, Value, Comparator>* getNodeByIndex(int x) const;
     [[nodiscard]] int getIndexOfNode(const AVLTreeNode<Key, Value, Comparator>* x) const;
-    AVLTree();
+    explicit AVLTree();
     AVLTree(const AVLTree& x);
     AVLTree& operator=(const AVLTree& x);
     AVLTree(AVLTree&& x) noexcept;
@@ -102,7 +102,7 @@ template <typename Key, typename Value, typename Comparator> class AVLTreeIterat
 public:
     AVLTreeNode<Key, Value, Comparator>* associatedNode;
     AVLTree<Key, Value, Comparator>* associatedTree;
-    AVLTreeIterator(AVLTreeNode<Key, Value, Comparator>* node, AVLTree<Key, Value, Comparator>* tree);
+    explicit AVLTreeIterator(AVLTreeNode<Key, Value, Comparator>* node, AVLTree<Key, Value, Comparator>* tree);
     AVLTreeIterator& operator++();
     AVLTreeIterator operator++(int);
     AVLTreeIterator& operator--();
@@ -117,7 +117,7 @@ template <typename Key, typename Value, typename Comparator> class AVLTreeConstI
 public:
     AVLTreeNode<Key, Value, Comparator>* associatedNode;
     const AVLTree<Key, Value, Comparator>* associatedTree;
-    AVLTreeConstIterator(AVLTreeNode<Key, Value, Comparator>* node, const AVLTree<Key, Value, Comparator>* tree);
+    explicit AVLTreeConstIterator(AVLTreeNode<Key, Value, Comparator>* node, const AVLTree<Key, Value, Comparator>* tree);
     AVLTreeConstIterator& operator++();
     AVLTreeConstIterator operator++(int);
     AVLTreeConstIterator& operator--();

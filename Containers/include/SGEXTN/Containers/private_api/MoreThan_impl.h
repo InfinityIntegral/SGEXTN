@@ -22,7 +22,7 @@
 
 template <typename T> SGEXTN::Containers::MoreThan<T>::MoreThan() : lengthA(0), lengthB(0), bufferA(0), bufferB(0){}
 
-template <typename T> bool SGEXTN::Containers::MoreThan<T>::operator()(const T& a, const T& b){
+template <typename T> bool SGEXTN::Containers::MoreThan<T>::operator()(const T& a, const T& b) const {
     if constexpr(requires{SGEXTN::Containers::IsPointer<T>::isPointer;} == false){
         if constexpr(requires{a > b;} == true){return (a > b);}
     }
