@@ -67,16 +67,23 @@ float SGEXTN::SeerattraNum::ValueNoise::getHeight(const SGEXTN::Containers::Arra
     for(int i=0; i<private_dimension; i++){
         flooredCorner.at(i) = SGEXTN::Math::FloatMath<float>::floorToInt(point.at(i));
     }
-    SGEXTN::Containers::Array<int> spanArray(private_dimension + 1);
-    spanArray.at(private_dimension) = private_seed;
-    const SGEXTN::Containers::Span<unsigned char> span(reinterpret_cast<unsigned char*>(&spanArray.at(0)), (private_dimension + 1) *static_cast<int>(sizeof(int)));
+    SGEXTN::Containers::Array<unsigned char> serialiseBuffer(4 * private_dimension + 4);
+    bool isValid = false;
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(private_seed, SGEXTN::Containers::Span<unsigned char>(serialiseBuffer, 4 * private_dimension, 4));
+    if(isValid == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::ValueNoise failed to generate height due to serialisation issues");}
     const float scaleFactor = 1.0f / static_cast<float>(static_cast<unsigned int>(1) << 24) * 2.0f;
     for(int i=0; i<powerOf2(private_dimension); i++){
         for(int j=0; j<private_dimension; j++){
-            if((i & powerOf2(j)) == 0){spanArray.at(j) = flooredCorner.at(j);}
-            else{spanArray.at(j) = flooredCorner.at(j) + 1;}
+            if((i & powerOf2(j)) == 0){
+                isValid = SGEXTN::Containers::Serialise<int>::sendOut(flooredCorner.at(j), SGEXTN::Containers::Span<unsigned char>(serialiseBuffer, 4 * j, 4));
+                if(isValid == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::ValueNoise failed to generate height due to serialisation issues");}
+            }
+            else{
+                isValid = SGEXTN::Containers::Serialise<int>::sendOut(flooredCorner.at(j) + 1, SGEXTN::Containers::Span<unsigned char>(serialiseBuffer, 4 * j, 4));
+                if(isValid == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::ValueNoise failed to generate height due to serialisation issues");}
+            }
         }
-        const unsigned int rngUnsigned = static_cast<unsigned int>(SGEXTN::Containers::HashAlgorithm::wyHash32(span));
+        const unsigned int rngUnsigned = static_cast<unsigned int>(SGEXTN::Containers::HashAlgorithm::wyHash32(SGEXTN::Containers::Span<unsigned char>(serialiseBuffer)));
         cornerHeights.at(i) = static_cast<float>(rngUnsigned >> 8) * scaleFactor - 1.0f;
     }
     for(int i=private_dimension-1; i>=0; i--){
