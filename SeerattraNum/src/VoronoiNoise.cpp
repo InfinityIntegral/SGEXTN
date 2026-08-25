@@ -29,17 +29,20 @@
 namespace {
 SGEXTN::Containers::Array<float> getFeaturePoint(int seed, const SGEXTN::Containers::Array<int>& center){
     const int dimensions = center.length();
-    SGEXTN::Containers::Array<int> spanArray(dimensions + 2);
+    SGEXTN::Containers::Array<unsigned char> serialiseBuffer(4 * dimensions + 8);
+    bool isValid = false;
     for(int i=0; i<dimensions; i++){
-        spanArray.at(i) = center.at(i);
+        isValid = SGEXTN::Containers::Serialise<int>::sendOut(center.at(i), SGEXTN::Containers::Span<unsigned char>(serialiseBuffer, 4 * i, 4));
+        if(isValid == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::VoronoiNoise failed to generate feature point due to serialisation issues");}
     }
-    spanArray.at(dimensions) = seed;
-    const SGEXTN::Containers::Span<unsigned char> span(reinterpret_cast<unsigned char*>(&spanArray.at(0)), (dimensions + 2) * static_cast<int>(sizeof(int)));
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(seed, SGEXTN::Containers::Span<unsigned char>(serialiseBuffer, 4 * dimensions, 4));
+    if(isValid == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::VoronoiNoise failed to generate feature point due to serialisation issues");}
     SGEXTN::Containers::Array<float> normalDistributedVars(dimensions);
     const float scaleFactor = 1.0f / static_cast<float>(static_cast<unsigned int>(1) << 24);
     for(int i=0; i<dimensions; i++){
-        spanArray.at(dimensions + 1) = i;
-        const unsigned int rngUnsigned = static_cast<unsigned int>(SGEXTN::Containers::HashAlgorithm::wyHash32(span));
+        isValid = SGEXTN::Containers::Serialise<int>::sendOut(i, SGEXTN::Containers::Span<unsigned char>(serialiseBuffer, 4 * dimensions + 4, 4));
+        if(isValid == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::VoronoiNoise failed to generate feature point due to serialisation issues");}
+        const unsigned int rngUnsigned = static_cast<unsigned int>(SGEXTN::Containers::HashAlgorithm::wyHash32(SGEXTN::Containers::Span<unsigned char>(serialiseBuffer)));
         normalDistributedVars.at(i) = static_cast<float>(rngUnsigned >> 8) * scaleFactor;
         normalDistributedVars.at(i) = SGEXTN::SeerattraNum::NormalDistribution::private_fastTransform(normalDistributedVars.at(i));
     }
@@ -50,8 +53,9 @@ SGEXTN::Containers::Array<float> getFeaturePoint(int seed, const SGEXTN::Contain
     generatedMagnitude = SGEXTN::Math::FloatMath<float>::squareRoot(generatedMagnitude);
     float magnitude = 0.0f;
     {
-        spanArray.at(dimensions + 1) = dimensions + 2;
-        const unsigned int rngUnsigned = static_cast<unsigned int>(SGEXTN::Containers::HashAlgorithm::wyHash32(span));
+        isValid = SGEXTN::Containers::Serialise<int>::sendOut(dimensions + 2, SGEXTN::Containers::Span<unsigned char>(serialiseBuffer, 4 * dimensions + 4, 4));
+        if(isValid == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::VoronoiNoise failed to generate feature point due to serialisation issues");}
+        const unsigned int rngUnsigned = static_cast<unsigned int>(SGEXTN::Containers::HashAlgorithm::wyHash32(SGEXTN::Containers::Span<unsigned char>(serialiseBuffer)));
         magnitude = 0.5f * static_cast<float>(rngUnsigned >> 8) * scaleFactor;
     }
     SGEXTN::Containers::Array<float> outputPoint(dimensions);
