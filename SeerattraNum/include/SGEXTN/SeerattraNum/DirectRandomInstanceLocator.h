@@ -29,8 +29,8 @@ class BuildLah_SGEXTN_SeerattraNum DirectRandomInstanceLocator {
 public:
     bool private_ownsRng;
     SGEXTN::SeerattraNum::DirectRandom* private_rng;
-    DirectRandomInstanceLocator(bool useGlobal);
-    DirectRandomInstanceLocator(const SGEXTN::SeerattraNum::DirectRandom& rng);
+    explicit DirectRandomInstanceLocator(bool useGlobal);
+    explicit DirectRandomInstanceLocator(const SGEXTN::SeerattraNum::DirectRandom& rng);
     DirectRandomInstanceLocator(const DirectRandomInstanceLocator& x);
     DirectRandomInstanceLocator& operator=(const DirectRandomInstanceLocator& x);
     DirectRandomInstanceLocator(DirectRandomInstanceLocator&& x) noexcept;

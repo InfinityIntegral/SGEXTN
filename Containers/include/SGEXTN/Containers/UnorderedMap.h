@@ -31,7 +31,7 @@ template <typename Key, typename Value, typename EqualityCheck, typename HashFun
 template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> class UnorderedMapCustomisable {
 public:
     HashMap<Key, Value, EqualityCheck, HashFunction> private_hashMap;
-    UnorderedMapCustomisable();
+    explicit UnorderedMapCustomisable();
     [[nodiscard]] int length() const;
     void reserve(int newMemoryLength);
     bool insert(const Key& key, const Value& value);
@@ -52,7 +52,7 @@ public:
 template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> class UnorderedMapIterator {
 public:
     HashMapIterator<Key, Value, EqualityCheck, HashFunction> private_hashMapIterator;
-    UnorderedMapIterator(HashMapIterator<Key, Value, EqualityCheck, HashFunction> i);
+    explicit UnorderedMapIterator(HashMapIterator<Key, Value, EqualityCheck, HashFunction> i);
     UnorderedMapIterator& operator++();
     UnorderedMapIterator operator++(int);
     UnorderedMapIterator& operator--();
@@ -66,7 +66,7 @@ public:
 template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> class UnorderedMapConstIterator {
 public:
     HashMapConstIterator<Key, Value, EqualityCheck, HashFunction> private_hashMapIterator;
-    UnorderedMapConstIterator(HashMapConstIterator<Key, Value, EqualityCheck, HashFunction> i);
+    explicit UnorderedMapConstIterator(HashMapConstIterator<Key, Value, EqualityCheck, HashFunction> i);
     UnorderedMapConstIterator& operator++();
     UnorderedMapConstIterator operator++(int);
     UnorderedMapConstIterator& operator--();

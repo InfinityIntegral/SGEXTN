@@ -35,10 +35,10 @@ public:
     float private_saturation;
     float private_lightness;
     float private_transparency;
-    HslaColour();
-    HslaColour(SGEXTN::Utilities::RgbaColour x);
-    HslaColour(float h, float s, float l);
-    HslaColour(float h, float s, float l, float a);
+    explicit HslaColour();
+    explicit HslaColour(SGEXTN::Utilities::RgbaColour x);
+    explicit HslaColour(float h, float s, float l);
+    explicit HslaColour(float h, float s, float l, float a);
     [[nodiscard]] SGEXTN::CoreText::String debugPrint() const;
     [[nodiscard]] static bool sendOut(HslaColour x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(HslaColour& x, SGEXTN::Containers::Span<unsigned char> data);

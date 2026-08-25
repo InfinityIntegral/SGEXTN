@@ -30,8 +30,8 @@ public:
     SGEXTN::SeerattraNum::DirectRandomInstanceLocator private_rngLocator;
     float private_median;
     float private_halfWidth;
-    CauchyDistribution();
-    CauchyDistribution(bool useGlobal, float median, float halfWidth);
+    explicit CauchyDistribution();
+    explicit CauchyDistribution(bool useGlobal, float median, float halfWidth);
     [[nodiscard]] static bool sendOut(const CauchyDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(CauchyDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static int size();

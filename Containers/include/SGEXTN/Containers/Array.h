@@ -21,14 +21,14 @@ namespace SGEXTN {
 namespace Containers {
 template <typename T> class Array {
 public:
-    Array();
-    Array(int count);
-    Array(int count, const T& defaultValue);
+    explicit Array();
+    explicit Array(int count);
+    explicit Array(int count, const T& defaultValue);
     Array(const Array& x);
     Array& operator=(const Array& x);
     Array(Array&& x) noexcept;
     Array& operator=(Array&& x) noexcept;
-    template <typename... Ts> Array(const Ts&... data);
+    template <typename... Ts> explicit Array(const Ts&... data);
     ~Array();
     void fill(const T& defaultValue);
     [[nodiscard]] int length() const;

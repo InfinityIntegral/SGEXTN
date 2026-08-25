@@ -30,8 +30,8 @@ class BuildLah_SGEXTN_SeerattraNum RandomPermutation {
 public:
     SGEXTN::SeerattraNum::DirectRandomInstanceLocator private_rngLocator;
     SGEXTN::SeerattraNum::UniformDistributionInteger private_uniformDistribution;
-    RandomPermutation();
-    RandomPermutation(bool useGlobal);
+    explicit RandomPermutation();
+    explicit RandomPermutation(bool useGlobal);
     [[nodiscard]] static bool sendOut(const RandomPermutation& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(RandomPermutation& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static int size();

@@ -33,7 +33,7 @@ template <typename T, typename Comparator> class SetConstIterator;
 template <typename T, typename Comparator> class SetCustomisable {
 public:
     AVLTree<T, bool, Comparator> private_avlTree;
-    SetCustomisable();
+    explicit SetCustomisable();
     [[nodiscard]] int length() const;
     bool insert(const T& x);
     bool erase(const T& x);
@@ -61,7 +61,7 @@ public:
 template <typename T, typename Comparator> class SetIterator {
 public:
     AVLTreeIterator<T, bool, Comparator> private_avlTreeIterator;
-    SetIterator(AVLTreeIterator<T, bool, Comparator> i);
+    explicit SetIterator(AVLTreeIterator<T, bool, Comparator> i);
     SetIterator& operator++();
     SetIterator operator++(int);
     SetIterator& operator--();
@@ -74,7 +74,7 @@ public:
 template <typename T, typename Comparator> class SetConstIterator {
 public:
     AVLTreeConstIterator<T, bool, Comparator> private_avlTreeIterator;
-    SetConstIterator(AVLTreeConstIterator<T, bool, Comparator> i);
+    explicit SetConstIterator(AVLTreeConstIterator<T, bool, Comparator> i);
     SetConstIterator& operator++();
     SetConstIterator operator++(int);
     SetConstIterator& operator--();

@@ -53,9 +53,9 @@ enum class SignificantDates : unsigned char {
 class BuildLah_SGEXTN_Utilities DateTime {
 public:
     long long private_data;
-    DateTime();
-    DateTime(long long t);
-    DateTime(int year, int month, int day, int hour, int minute, int second);
+    explicit DateTime();
+    explicit DateTime(long long t);
+    explicit DateTime(int year, int month, int day, int hour, int minute, int second);
     [[nodiscard]] bool operator==(DateTime x) const;
     [[nodiscard]] bool operator!=(DateTime x) const;
     [[nodiscard]] bool operator<(DateTime x) const;

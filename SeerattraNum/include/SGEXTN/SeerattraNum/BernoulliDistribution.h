@@ -29,8 +29,8 @@ class BuildLah_SGEXTN_SeerattraNum BernoulliDistribution {
 public:
     SGEXTN::SeerattraNum::DirectRandomInstanceLocator private_rngLocator;
     float private_chanceOfTrue;
-    BernoulliDistribution();
-    BernoulliDistribution(bool useGlobal, float chanceOfTrue);
+    explicit BernoulliDistribution();
+    explicit BernoulliDistribution(bool useGlobal, float chanceOfTrue);
     [[nodiscard]] static bool sendOut(const BernoulliDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(BernoulliDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static int size();

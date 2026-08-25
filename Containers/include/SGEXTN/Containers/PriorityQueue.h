@@ -29,7 +29,7 @@ template <typename T> using PriorityQueueDescending = PriorityQueueCustomisable<
 
 template <typename T, typename Comparator> class PriorityQueueCustomisable {
 public:
-    PriorityQueueCustomisable();
+    explicit PriorityQueueCustomisable();
     [[nodiscard]] const T& top() const;
     [[nodiscard]] int length() const;
     void push(const T& x);

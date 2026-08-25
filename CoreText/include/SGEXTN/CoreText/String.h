@@ -47,7 +47,7 @@ public:
     mutable SGEXTN::Containers::Vector<int> private_characterOffsets;
     void private_computeOffsets() const;
     void private_invalidateOffsets() const;
-    String() = default;
+    explicit String() = default;
     String(const String& x);
     String& operator=(const String& x);
     String(String&& x) noexcept;

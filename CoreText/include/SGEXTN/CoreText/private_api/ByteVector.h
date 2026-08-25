@@ -24,7 +24,7 @@ public:
     unsigned char* private_data;
     int private_length;
     int private_memoryLength;
-    ByteVector();
+    explicit ByteVector();
     ByteVector(const ByteVector& x);
     ByteVector& operator=(const ByteVector& x);
     ByteVector(ByteVector&& x) noexcept;

@@ -35,7 +35,7 @@ class EmbeddedFile;
 class BuildLah_SGEXTN_SingEmbed SingEmbedFileRegistrarInstance {
 public:
     static SGEXTN::Containers::UnorderedMap<SGEXTN::CoreText::String, SGEXTN::SingEmbed::EmbeddedFile>* registry;
-    SingEmbedFileRegistrarInstance(const SGEXTN::CoreText::String& virtualPath, int fileSize, const char* data);
+    explicit SingEmbedFileRegistrarInstance(const SGEXTN::CoreText::String& virtualPath, int fileSize, const char* data);
 };
 }
 }

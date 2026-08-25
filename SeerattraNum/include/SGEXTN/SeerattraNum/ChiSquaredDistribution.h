@@ -31,8 +31,8 @@ public:
     SGEXTN::SeerattraNum::DirectRandomInstanceLocator private_rngLocator;
     float private_degreesOfFreedom;
     SGEXTN::SeerattraNum::GammaDistribution private_gammaDistribution;
-    ChiSquaredDistribution();
-    ChiSquaredDistribution(bool useGlobal, float degreesOfFreedom);
+    explicit ChiSquaredDistribution();
+    explicit ChiSquaredDistribution(bool useGlobal, float degreesOfFreedom);
     [[nodiscard]] static bool sendOut(const ChiSquaredDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(ChiSquaredDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static int size();

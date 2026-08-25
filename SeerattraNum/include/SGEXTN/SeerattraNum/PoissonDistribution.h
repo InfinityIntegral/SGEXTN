@@ -36,8 +36,8 @@ public:
     float private_squeezeBoundV;
     float private_lnMean;
     float private_lnAcceptRate;
-    PoissonDistribution();
-    PoissonDistribution(bool useGlobal, float mean);
+    explicit PoissonDistribution();
+    explicit PoissonDistribution(bool useGlobal, float mean);
     [[nodiscard]] static bool sendOut(const PoissonDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(PoissonDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static int size();

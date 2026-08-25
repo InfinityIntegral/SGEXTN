@@ -25,7 +25,7 @@ public:
         unsigned char constructorRemover;
         T object;
     };
-    RingBufferSlot();
+    explicit RingBufferSlot();
     RingBufferSlot(const RingBufferSlot&) = delete;
     RingBufferSlot& operator=(const RingBufferSlot&) = delete;
     RingBufferSlot(RingBufferSlot&&) = delete;
@@ -35,8 +35,8 @@ public:
 
 template <typename T> class RingBuffer {
 public:
-    RingBuffer();
-    RingBuffer(int count, const T& defaultValue);
+    explicit RingBuffer();
+    explicit RingBuffer(int count, const T& defaultValue);
     RingBuffer(const RingBuffer& x);
     RingBuffer& operator=(const RingBuffer& x);
     RingBuffer(RingBuffer&& x) noexcept;

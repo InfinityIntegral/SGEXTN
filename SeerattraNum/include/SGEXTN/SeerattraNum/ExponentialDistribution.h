@@ -33,8 +33,8 @@ public:
     static SGEXTN::Containers::Array<float>* private_widthTables;
     static SGEXTN::Containers::Array<float>* private_floorTables;
     static float private_expRightBoundary;
-    ExponentialDistribution();
-    ExponentialDistribution(bool useGlobal, float meanEventsPerTime);
+    explicit ExponentialDistribution();
+    explicit ExponentialDistribution(bool useGlobal, float meanEventsPerTime);
     [[nodiscard]] static bool sendOut(const ExponentialDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(ExponentialDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static int size();

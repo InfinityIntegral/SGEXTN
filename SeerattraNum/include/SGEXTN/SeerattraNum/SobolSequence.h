@@ -31,8 +31,8 @@ public:
     int private_dimensions;
     SGEXTN::Containers::Array<unsigned int> private_hashedSeed;
     SGEXTN::Containers::Array<SGEXTN::Containers::Array<unsigned int>> private_directionNumberCache;
-    SobolSequence();
-    SobolSequence(int dimension);
+    explicit SobolSequence();
+    explicit SobolSequence(int dimension);
     [[nodiscard]] static bool sendOut(const SobolSequence& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(SobolSequence& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static int sizeOut(const SobolSequence& x);

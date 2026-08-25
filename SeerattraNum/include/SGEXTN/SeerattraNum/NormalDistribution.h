@@ -32,8 +32,8 @@ public:
     float private_standardDeviation;
     static SGEXTN::Containers::Array<float>* private_hwidthTables;
     static SGEXTN::Containers::Array<float>* private_floorTables;
-    NormalDistribution();
-    NormalDistribution(bool useGlobal, float mean, float standardDeviation);
+    explicit NormalDistribution();
+    explicit NormalDistribution(bool useGlobal, float mean, float standardDeviation);
     [[nodiscard]] static bool sendOut(const NormalDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(NormalDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static int size();

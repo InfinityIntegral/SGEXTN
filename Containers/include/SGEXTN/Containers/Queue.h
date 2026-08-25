@@ -22,7 +22,7 @@ namespace SGEXTN {
 namespace Containers {
 template <typename T> class Queue {
 public:
-    Queue();
+    explicit Queue();
     [[nodiscard]] T& front();
     [[nodiscard]] const T& front() const;
     [[nodiscard]] T& back();

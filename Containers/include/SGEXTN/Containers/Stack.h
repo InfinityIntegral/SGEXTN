@@ -22,7 +22,7 @@ namespace SGEXTN {
 namespace Containers {
 template <typename T> class Stack {
 public:
-    Stack();
+    explicit Stack();
     [[nodiscard]] T& top();
     [[nodiscard]] const T& top() const;
     [[nodiscard]] int length() const;
