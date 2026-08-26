@@ -28,5 +28,5 @@ public:
 }
 }
 
-#define SGEXTN_IMMEDIATE_CRASH(msg) SGEXTN::Containers::ForceCrash::immediateCrash(msg)
-#define SGEXTN_BASIC_WARN(msg) SGEXTN::Containers::ForceCrash::basicWarn(msg)
+[[noreturn]] inline void SGEXTN_IMMEDIATE_CRASH(const char* msg){SGEXTN::Containers::ForceCrash::immediateCrash(msg);}
+inline void SGEXTN_BASIC_WARN(const char* msg){SGEXTN::Containers::ForceCrash::basicWarn(msg);}
