@@ -408,6 +408,8 @@ SGEXTN::CoreText::String unicodeRecompose(const SGEXTN::CoreText::String& s){
 }
 }
 
+SGEXTN::CoreText::String::String(){}
+
 SGEXTN::CoreText::String::String(const SGEXTN::CoreText::String& x) : private_data(x.private_data) {}
 
 SGEXTN::CoreText::String& SGEXTN::CoreText::String::operator=(const SGEXTN::CoreText::String& x){
@@ -424,6 +426,8 @@ SGEXTN::CoreText::String& SGEXTN::CoreText::String::operator=(SGEXTN::CoreText::
     private_characterOffsets = static_cast<SGEXTN::Containers::Vector<int>&&>(x.private_characterOffsets);
     return (*this);
 }
+
+SGEXTN::CoreText::String::~String(){}
 
 SGEXTN::CoreText::String::String(unsigned char c){
     if(c > 0x7f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String constructor crashed because the given unsigned char does not represent a valid ASCII character");}

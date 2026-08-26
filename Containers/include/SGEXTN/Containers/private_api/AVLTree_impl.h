@@ -65,7 +65,7 @@ template <typename Key, typename Value, typename Comparator> SGEXTN::Containers:
     if(root != nullptr){recursiveDeleteAtRoot();}
     root = x.root;
     x.root = nullptr;
-    comparatorInstance = x.comparatorInstance;
+    comparatorInstance = static_cast<Comparator&&>(x.comparatorInstance);
     return (*this);
 }
 

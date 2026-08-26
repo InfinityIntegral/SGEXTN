@@ -31,8 +31,8 @@ class BuildLah_SGEXTN_CoreText Character {
 public:
     SGEXTN::CoreText::TextBuffer private_data;
     explicit Character();
-    Character(unsigned char c);
-    Character(const char* s);
+    Character(unsigned char c); //NOLINT(google-explicit-constructor)
+    Character(const char* s); //NOLINT(google-explicit-constructor)
     explicit Character(int unicode);
     [[nodiscard]] bool operator==(const Character& x) const;
     [[nodiscard]] bool operator!=(const Character& x) const;

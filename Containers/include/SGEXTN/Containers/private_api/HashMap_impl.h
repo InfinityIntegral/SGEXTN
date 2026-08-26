@@ -81,8 +81,8 @@ template <typename Key, typename Value, typename EqualityCheck, typename HashFun
     data = x.data;
     loadFactor = x.loadFactor;
     efficiencyFactor = x.efficiencyFactor;
-    equalityCheckInstance = x.equalityCheckInstance;
-    hashFunctionInstance = x.hashFunctionInstance;
+    equalityCheckInstance = static_cast<EqualityCheck&&>(x.equalityCheckInstance);
+    hashFunctionInstance = static_cast<HashFunction&&>(x.hashFunctionInstance);
     activeLength = x.activeLength;
     memoryUsedLength = x.memoryUsedLength;
     memoryTotalLength = x.memoryTotalLength;

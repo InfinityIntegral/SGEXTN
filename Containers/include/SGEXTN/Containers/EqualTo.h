@@ -27,6 +27,11 @@ public:
     mutable SGEXTN::Containers::Array<unsigned char> bufferA;
     mutable SGEXTN::Containers::Array<unsigned char> bufferB;
     explicit EqualTo();
+    EqualTo(const EqualTo& x);
+    EqualTo& operator=(const EqualTo& x);
+    EqualTo(EqualTo&& x) noexcept;
+    EqualTo& operator=(EqualTo&& x) noexcept;
+    ~EqualTo();
     [[nodiscard]] bool operator()(const T& a, const T& b) const;
 };
 }

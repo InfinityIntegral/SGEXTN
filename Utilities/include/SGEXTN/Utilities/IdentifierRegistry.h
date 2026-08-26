@@ -26,7 +26,7 @@ class Identifier;
 
 class BuildLah_SGEXTN_Utilities IdentifierRegistry{
 public:
-    explicit IdentifierRegistry() = default;
+    explicit IdentifierRegistry();
     SGEXTN::Containers::UnorderedSet<unsigned int> private_contents;
     [[nodiscard]] SGEXTN::Utilities::Identifier generateAndRegisterIdentifier();
     [[nodiscard]] SGEXTN::Utilities::Identifier parseAndRegisterIdentifier(unsigned int data, bool* isValid);
