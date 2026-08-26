@@ -18,8 +18,7 @@
 #pragma once
 #include <SGEXTN/Containers/private_api/RingBuffer.h>
 
-namespace SGEXTN {
-namespace Containers {
+namespace SGEXTN::Containers {
 template <typename T> class Deque {
 public:
     explicit Deque();
@@ -39,7 +38,6 @@ public:
     void clear();
     SGEXTN::Containers::RingBuffer<T> private_ringBuffer;
 };
-}
 }
 
 #include <SGEXTN/Containers/private_api/Deque_impl.h>

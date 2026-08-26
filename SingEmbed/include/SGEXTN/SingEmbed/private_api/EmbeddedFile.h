@@ -17,13 +17,11 @@
 
 #pragma once
 
-namespace SGEXTN {
-namespace SingEmbed {
+namespace SGEXTN::SingEmbed {
 class BuildLah_SGEXTN_SingEmbed EmbeddedFile {
 public:
     explicit EmbeddedFile(const char* data, int length);
     const char* data;
     int length;
 };
-}
 }

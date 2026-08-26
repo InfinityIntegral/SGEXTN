@@ -17,16 +17,15 @@
 
 #pragma once
 
-namespace SGEXTN {
-namespace Containers {
+namespace SGEXTN::Containers {
 template <typename T> class Span;
 }
 
-namespace CoreText {
+namespace SGEXTN::CoreText {
 class String;
 }
 
-namespace Utilities {
+namespace SGEXTN::Utilities {
 class RgbaColour;
 
 class BuildLah_SGEXTN_Utilities HslaColour {
@@ -60,5 +59,4 @@ public:
     [[nodiscard]] HslaColour offsetHue(float c) const;
     [[nodiscard]] SGEXTN::Utilities::RgbaColour toRGBA() const;
 };
-}
 }

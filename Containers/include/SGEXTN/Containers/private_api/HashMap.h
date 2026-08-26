@@ -17,8 +17,7 @@
 
 #pragma once
 
-namespace SGEXTN {
-namespace Containers {
+namespace SGEXTN::Containers {
 enum class HashMapSlotStatus : unsigned char {
     Active = 1,
     Unused = 2,
@@ -116,7 +115,6 @@ public:
     [[nodiscard]] const Key& key() const;
     [[nodiscard]] const Value& value() const;
 };
-}
 }
 
 #include <SGEXTN/Containers/private_api/HashMap_impl.h>

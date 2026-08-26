@@ -17,16 +17,15 @@
 
 #pragma once
 
-namespace SGEXTN {
-namespace Containers {
+namespace SGEXTN::Containers {
 template <typename T> class Span;
 }
 
-namespace CoreText {
+namespace SGEXTN::CoreText {
 class String;
 }
 
-namespace Utilities {
+namespace SGEXTN::Utilities {
 class IdentifierRegistry;
 class BuildLah_SGEXTN_Utilities Identifier {
 public:
@@ -41,5 +40,4 @@ public:
     [[nodiscard]] static bool sendIn(Identifier& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static int size();
 };
-}
 }

@@ -18,8 +18,7 @@
 #pragma once
 #include <SGEXTN/CoreText/private_api/ByteVector.h>
 
-namespace SGEXTN {
-namespace CoreText {
+namespace SGEXTN::CoreText {
 class BuildLah_SGEXTN_CoreText TextBuffer {
 public:
     explicit TextBuffer();
@@ -52,5 +51,4 @@ public:
     [[nodiscard]] TextBuffer substringLeft(int length) const;
     [[nodiscard]] TextBuffer substringRight(int length) const;
 };
-}
 }

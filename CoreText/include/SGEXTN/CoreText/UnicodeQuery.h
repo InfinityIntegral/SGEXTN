@@ -17,8 +17,7 @@
 
 #pragma once
 
-namespace SGEXTN {
-namespace CoreText {
+namespace SGEXTN::CoreText {
 class String;
 
 enum class SimplifiedCharacterType : unsigned char {
@@ -106,5 +105,4 @@ public:
     [[nodiscard]] static int getCombiningMarkOrder(int c);
     [[nodiscard]] static int getBinaryRecomposition(int first, int second);
 };
-}
 }

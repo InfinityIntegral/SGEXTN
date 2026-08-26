@@ -17,8 +17,7 @@
 
 #pragma once
 
-namespace SGEXTN {
-namespace CoreText {
+namespace SGEXTN::CoreText {
 class BuildLah_SGEXTN_CoreText ByteVector {
 public:
     unsigned char* private_data;
@@ -37,5 +36,4 @@ public:
     void pushBack(unsigned char c);
     void pushBack(const unsigned char* start, int length);
 };
-}
 }

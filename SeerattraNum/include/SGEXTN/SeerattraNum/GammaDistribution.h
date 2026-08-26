@@ -19,13 +19,12 @@
 #include <SGEXTN/SeerattraNum/NormalDistribution.h>
 #include <SGEXTN/SeerattraNum/DirectRandomInstanceLocator.h>
 
-namespace SGEXTN {
-namespace Containers {
+namespace SGEXTN::Containers {
 template <typename T> class Array;
 template <typename T> class Span;
 }
 
-namespace SeerattraNum {
+namespace SGEXTN::SeerattraNum {
 class BuildLah_SGEXTN_SeerattraNum GammaDistribution {
 public:
     SGEXTN::SeerattraNum::DirectRandomInstanceLocator private_rngLocator;
@@ -50,5 +49,4 @@ public:
     void setVariableMean(float variableMean);
     void private_redoPrecompute();
 };
-}
 }

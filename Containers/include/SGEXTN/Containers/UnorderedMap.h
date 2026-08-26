@@ -20,8 +20,7 @@
 #include <SGEXTN/Containers/EqualTo.h>
 #include <SGEXTN/Containers/Hash.h>
 
-namespace SGEXTN {
-namespace Containers {
+namespace SGEXTN::Containers {
 template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> class UnorderedMapCustomisable;
 template <typename Key, typename Value> using UnorderedMap = UnorderedMapCustomisable<Key, Value, SGEXTN::Containers::EqualTo<Key>, SGEXTN::Containers::Hash<Key>>;
 
@@ -76,7 +75,6 @@ public:
     [[nodiscard]] const Key& key() const;
     [[nodiscard]] const Value& value() const;
 };
-}
 }
 
 #include <SGEXTN/Containers/private_api/UnorderedMap_impl.h>

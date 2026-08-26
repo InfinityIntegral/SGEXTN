@@ -17,19 +17,18 @@
 
 #pragma once
 
-namespace SGEXTN {
-namespace CoreText {
+namespace SGEXTN::CoreText {
 class String;
 }
 
-namespace Containers {
+namespace SGEXTN::Containers {
 template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> class UnorderedMapCustomisable;
 template <typename T> class EqualTo;
 template <typename T> class Hash;
 template <typename Key, typename Value> using UnorderedMap = UnorderedMapCustomisable<Key, Value, SGEXTN::Containers::EqualTo<Key>, SGEXTN::Containers::Hash<Key>>;
 }
 
-namespace SingEmbed {
+namespace SGEXTN::SingEmbed {
 class EmbeddedFile;
 
 class BuildLah_SGEXTN_SingEmbed SingEmbedFileRegistrarInstance {
@@ -37,5 +36,4 @@ public:
     static SGEXTN::Containers::UnorderedMap<SGEXTN::CoreText::String, SGEXTN::SingEmbed::EmbeddedFile>* registry;
     explicit SingEmbedFileRegistrarInstance(const SGEXTN::CoreText::String& virtualPath, int fileSize, const char* data);
 };
-}
 }

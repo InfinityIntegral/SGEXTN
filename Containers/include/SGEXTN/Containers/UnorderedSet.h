@@ -20,8 +20,7 @@
 #include <SGEXTN/Containers/EqualTo.h>
 #include <SGEXTN/Containers/Hash.h>
 
-namespace SGEXTN {
-namespace Containers {
+namespace SGEXTN::Containers {
 template <typename T, typename EqualityCheck, typename HashFunction> class UnorderedSetCustomisable;
 template <typename T> using UnorderedSet = UnorderedSetCustomisable<T, SGEXTN::Containers::EqualTo<T>, SGEXTN::Containers::Hash<T>>;
 
@@ -72,7 +71,6 @@ public:
     [[nodiscard]] bool operator!=(const UnorderedSetConstIterator& x) const;
     [[nodiscard]] const T& operator*() const;
 };
-}
 }
 
 #include <SGEXTN/Containers/private_api/UnorderedSet_impl.h>

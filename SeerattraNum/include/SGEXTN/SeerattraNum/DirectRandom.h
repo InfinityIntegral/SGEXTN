@@ -17,13 +17,12 @@
 
 #pragma once
 
-namespace SGEXTN {
-namespace Containers {
+namespace SGEXTN::Containers {
 template <typename T> class Array;
 template <typename T> class Span;
 }
 
-namespace SeerattraNum {
+namespace SGEXTN::SeerattraNum {
 class BuildLah_SGEXTN_SeerattraNum DirectRandom {
 public:
     unsigned long long private_firstNum;
@@ -51,5 +50,4 @@ public:
     [[nodiscard]] SGEXTN::Containers::Array<double> randomFloat64Array(int count);
     [[nodiscard]] static DirectRandom* private_createRng(bool useGlobal);
 };
-}
 }

@@ -18,8 +18,7 @@
 #pragma once
 #include <SGEXTN/Containers/Array.h>
 
-namespace SGEXTN {
-namespace Containers {
+namespace SGEXTN::Containers {
 template <typename T> class MoreThan {
 public:
     mutable int lengthA;
@@ -34,7 +33,6 @@ public:
     ~MoreThan();
     [[nodiscard]] bool operator()(const T& a, const T& b) const;
 };
-}
 }
 
 #include <SGEXTN/Containers/private_api/MoreThan_impl.h>

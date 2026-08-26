@@ -20,8 +20,7 @@
 #include <SGEXTN/Containers/LessThan.h>
 #include <SGEXTN/Containers/MoreThan.h>
 
-namespace SGEXTN {
-namespace Containers {
+namespace SGEXTN::Containers {
 template <typename T, typename Comparator> class MultiSetCustomisable;
 template <typename T> using MultiSet = MultiSetCustomisable<T, SGEXTN::Containers::LessThan<T>>;
 template <typename T> using MultiSetAscending = MultiSetCustomisable<T, SGEXTN::Containers::LessThan<T>>;
@@ -84,7 +83,6 @@ public:
     [[nodiscard]] bool operator!=(const MultiSetConstIterator& x) const;
     [[nodiscard]] const T& operator*() const;
 };
-}
 }
 
 #include <SGEXTN/Containers/private_api/MultiSet_impl.h>

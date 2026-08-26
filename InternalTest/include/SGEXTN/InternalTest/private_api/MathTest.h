@@ -17,8 +17,7 @@
 
 #pragma once
 
-namespace SGEXTN {
-namespace InternalTest {
+namespace SGEXTN::InternalTest {
 class BuildLah_SGEXTN_InternalTest MathTest {
 public:
     static bool checkDataSizes();
@@ -29,5 +28,4 @@ public:
     static void testFloatMath();
     static void testAll();
 };
-}
 }

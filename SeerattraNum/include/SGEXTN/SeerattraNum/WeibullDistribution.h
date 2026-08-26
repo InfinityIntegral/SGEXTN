@@ -18,13 +18,12 @@
 #pragma once
 #include <SGEXTN/SeerattraNum/DirectRandomInstanceLocator.h>
 
-namespace SGEXTN {
-namespace Containers {
+namespace SGEXTN::Containers {
 template <typename T> class Array;
 template <typename T> class Span;
 }
 
-namespace SeerattraNum {
+namespace SGEXTN::SeerattraNum {
 class BuildLah_SGEXTN_SeerattraNum WeibullDistribution {
 public:
     SGEXTN::SeerattraNum::DirectRandomInstanceLocator private_rngLocator;
@@ -44,5 +43,4 @@ public:
     void setFailureBehaviour(float failureBehaviour);
     void setCharacteristicLifespan(float characteristicLifespan);
 };
-}
 }

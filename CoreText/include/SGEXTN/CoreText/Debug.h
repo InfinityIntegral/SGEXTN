@@ -23,13 +23,12 @@
 
 #include <SGEXTN/CoreText/String.h>
 
-namespace SGEXTN {
-namespace Containers {
+namespace SGEXTN::Containers {
 template <typename T> class Array;
 template <typename T> class Vector;
 }
 
-namespace CoreText {
+namespace SGEXTN::CoreText {
 class Character;
 
 class BuildLah_SGEXTN_CoreText DebugPrintIntegerMode {
@@ -128,7 +127,6 @@ public:
     DebugDefaultModeOverride& operator=(DebugDefaultModeOverride&&) = delete;
     ~DebugDefaultModeOverride();
 };
-}
 }
 
 #include <SGEXTN/CoreText/private_api/Debug_impl.h>

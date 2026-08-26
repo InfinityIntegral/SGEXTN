@@ -20,8 +20,7 @@
 #include <SGEXTN/Containers/LessThan.h>
 #include <SGEXTN/Containers/MoreThan.h>
 
-namespace SGEXTN {
-namespace Containers {
+namespace SGEXTN::Containers {
 template <typename Key, typename Value, typename Comparator> class MapCustomisable;
 template <typename Key, typename Value> using Map = MapCustomisable<Key, Value, SGEXTN::Containers::LessThan<Key>>;
 template <typename Key, typename Value> using MapAscending = MapCustomisable<Key, Value, SGEXTN::Containers::LessThan<Key>>;
@@ -89,7 +88,6 @@ public:
     [[nodiscard]] const Key& key() const;
     [[nodiscard]] const Value& value() const;
 };
-}
 }
 
 #include <SGEXTN/Containers/private_api/Map_impl.h>

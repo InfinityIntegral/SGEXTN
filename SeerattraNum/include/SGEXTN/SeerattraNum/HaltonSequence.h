@@ -18,12 +18,11 @@
 #pragma once
 #include <SGEXTN/Containers/Array.h>
 
-namespace SGEXTN {
-namespace Containers {
+namespace SGEXTN::Containers {
 template <typename T> class Span;
 }
 
-namespace SeerattraNum {
+namespace SGEXTN::SeerattraNum {
 class BuildLah_SGEXTN_SeerattraNum HaltonSequence {
 public:
     int private_lastPosition;
@@ -40,5 +39,4 @@ public:
     [[nodiscard]] SGEXTN::Containers::Array<float> nextTerm();
     [[nodiscard]] SGEXTN::Containers::Array<float> requestTerm(int startingPoint);
 };
-}
 }

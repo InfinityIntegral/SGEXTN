@@ -17,11 +17,9 @@
 
 #pragma once
 
-namespace SGEXTN {
-namespace InternalTest {
+namespace SGEXTN::InternalTest {
 class BuildLah_SGEXTN_InternalTest DebugTest {
 public:
     static void runTest();
 };
-}
 }

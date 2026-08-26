@@ -17,8 +17,7 @@
 
 #pragma once
 
-namespace SGEXTN {
-namespace Utilities {
+namespace SGEXTN::Utilities {
 class RgbaColour;
 
 class BuildLah_SGEXTN_Utilities ContrastUtilities {
@@ -31,5 +30,4 @@ public:
     [[nodiscard]] static SGEXTN::Utilities::RgbaColour getBackgroundDarkMode(SGEXTN::Utilities::RgbaColour fg, float targetContrast, bool* isPossible);
     [[nodiscard]] static float safeContrast(float sizeUnit, bool bold, bool bodyText);
 };
-}
 }

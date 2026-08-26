@@ -17,8 +17,7 @@
 
 #pragma once
 
-namespace SGEXTN {
-namespace Containers {
+namespace SGEXTN::Containers {
 template <typename T> class IsPointer {};
 template <typename T> class IsPointer<T*> {public: static const bool isPointer = true;};
 template <typename ReturnType, typename... ArgTypes> class IsPointer<ReturnType (*)(ArgTypes...)> {public: static const bool isPointer = true;};
@@ -37,5 +36,4 @@ template <typename T> class IsTrue<T, true> {public: static const bool isTrue = 
 template <typename T> class CreateInstance {public: static T&& getInstance() noexcept;};
 
 template <typename T> class CreateAssignable {public: static T& getInstance() noexcept;};
-}
 }

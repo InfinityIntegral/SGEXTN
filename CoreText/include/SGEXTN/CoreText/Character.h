@@ -18,13 +18,12 @@
 #pragma once
 #include <SGEXTN/CoreText/private_api/TextBuffer.h>
 
-namespace SGEXTN {
-namespace Containers {
+namespace SGEXTN::Containers {
 template <typename T> class Span;
 template <typename T> class Array;
 }
 
-namespace CoreText {
+namespace SGEXTN::CoreText {
 class String;
 
 class BuildLah_SGEXTN_CoreText Character {
@@ -67,5 +66,4 @@ public:
     [[nodiscard]] int getDecimalDigitValue() const;
     [[nodiscard]] float getNumericalValue() const;
 };
-}
 }

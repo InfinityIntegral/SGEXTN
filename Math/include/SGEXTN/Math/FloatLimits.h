@@ -17,8 +17,7 @@
 
 #pragma once
 
-namespace SGEXTN {
-namespace Math {
+namespace SGEXTN::Math {
 template <typename T> class BuildLah_SGEXTN_Math FloatLimits {
 public:
     [[nodiscard]] static T minimumPositive();
@@ -34,5 +33,4 @@ public:
     [[nodiscard]] static bool isInfinite(T x);
     [[nodiscard]] static bool isNotANumber(T x);
 };
-}
 }

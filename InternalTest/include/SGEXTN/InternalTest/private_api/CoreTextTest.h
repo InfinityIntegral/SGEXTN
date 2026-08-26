@@ -17,13 +17,11 @@
 
 #pragma once
 
-namespace SGEXTN {
-namespace InternalTest {
+namespace SGEXTN::InternalTest {
 class BuildLah_SGEXTN_InternalTest CoreTextTest {
 public:
     static void testAll();
     static void testCharacter();
     static void testString();
 };
-}
 }

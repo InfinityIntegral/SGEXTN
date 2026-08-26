@@ -17,8 +17,7 @@
 
 #pragma once
 
-namespace SGEXTN {
-namespace Containers {
+namespace SGEXTN::Containers {
 template <typename T> class Array {
 public:
     explicit Array();
@@ -38,7 +37,6 @@ public:
     int private_length;
     template <typename Comparator> void sort(int start, int length);
 };
-}
 }
 
 #include <SGEXTN/Containers/private_api/Array_impl.h>

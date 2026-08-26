@@ -17,15 +17,13 @@
 
 #pragma once
 
-namespace SGEXTN {
-namespace Containers {
+namespace SGEXTN::Containers {
 class BuildLah_SGEXTN_Containers ForceCrash {
 public:
     [[noreturn]] static void immediateCrash(const char* msg);
     static void basicWarn(const char* msg);
     static void logMessage(const char* prefix, const char* msg);
 };
-}
 }
 
 [[noreturn]] inline void SGEXTN_IMMEDIATE_CRASH(const char* msg){SGEXTN::Containers::ForceCrash::immediateCrash(msg);}

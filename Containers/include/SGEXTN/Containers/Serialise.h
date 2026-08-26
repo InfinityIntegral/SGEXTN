@@ -17,8 +17,7 @@
 
 #pragma once
 
-namespace SGEXTN {
-namespace Containers {
+namespace SGEXTN::Containers {
 template <typename T> class Span;
 template <typename T> class Array;
 
@@ -125,7 +124,6 @@ public:
     [[nodiscard]] static int sizeOut(double x);
     [[nodiscard]] static int sizeIn(SGEXTN::Containers::Span<unsigned char> data);
 };
-}
 }
 
 #include <SGEXTN/Containers/private_api/Serialise_impl.h>

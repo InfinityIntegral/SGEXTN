@@ -20,8 +20,7 @@
 #include <SGEXTN/Containers/LessThan.h>
 #include <SGEXTN/Containers/MoreThan.h>
 
-namespace SGEXTN {
-namespace Containers {
+namespace SGEXTN::Containers {
 template <typename T, typename Comparator> class PriorityQueueCustomisable;
 template <typename T> using PriorityQueue = PriorityQueueCustomisable<T, SGEXTN::Containers::LessThan<T>>;
 template <typename T> using PriorityQueueAscending = PriorityQueueCustomisable<T, SGEXTN::Containers::LessThan<T>>;
@@ -41,7 +40,6 @@ public:
     void private_swap(int a, int b);
     bool private_compare(int a, int b);
 };
-}
 }
 
 #include <SGEXTN/Containers/private_api/PriorityQueue_impl.h>

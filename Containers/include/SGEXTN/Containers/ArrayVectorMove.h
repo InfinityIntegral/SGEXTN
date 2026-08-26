@@ -17,14 +17,12 @@
 
 #pragma once
 
-namespace SGEXTN {
-namespace Containers {
+namespace SGEXTN::Containers {
 template <typename T> class ArrayVectorMove {
 public:
     static Vector<T> convertToVectorAndDestroyArray(SGEXTN::Containers::Array<T>& arr);
     static SGEXTN::Containers::Array<T> convertToArrayAndDestroyVector(Vector<T>& vec);
 };
-}
 }
 
 #include <SGEXTN/Containers/private_api/ArrayVectorMove_impl.h>

@@ -17,12 +17,11 @@
 
 #pragma once
 
-namespace SGEXTN {
-namespace Containers {
+namespace SGEXTN::Containers {
 template <typename T> class Array;
 }
 
-namespace SeerattraNum {
+namespace SGEXTN::SeerattraNum {
 class BuildLah_SGEXTN_SeerattraNum TrueRandom{
 public:
     [[nodiscard]] static int randomInt32();
@@ -38,5 +37,4 @@ public:
     [[nodiscard]] static SGEXTN::Containers::Array<float> randomFloat32Array(int count);
     [[nodiscard]] static SGEXTN::Containers::Array<double> randomFloat64Array(int count);
 };
-}
 }

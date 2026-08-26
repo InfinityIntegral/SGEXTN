@@ -17,8 +17,7 @@
 
 #pragma once
 
-namespace SGEXTN {
-namespace SeerattraNum {
+namespace SGEXTN::SeerattraNum {
 class BuildLah_SGEXTN_SeerattraNum ZigguratTables {
 public:
     static const char* exponentialDistributionWidths;
@@ -26,5 +25,4 @@ public:
     static const char* normalDistributionHalfWidths;
     static const char* normalDistributionFloors;
 };
-}
 }

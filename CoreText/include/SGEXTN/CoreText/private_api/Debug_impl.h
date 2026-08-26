@@ -20,8 +20,7 @@
 #include <SGEXTN/CoreText/String.h>
 #include <SGEXTN/CoreText/Character.h>
 
-namespace SGEXTN {
-namespace CoreText {
+namespace SGEXTN::CoreText {
 template <typename EnumClass, EnumClass E> class EnumNameExtractor {
 public:
     [[nodiscard]] static SGEXTN::CoreText::String getName();
@@ -79,7 +78,6 @@ public:
 template <typename EnumClass> SGEXTN::CoreText::String SGEXTN::CoreText::EnumNameScanner<EnumClass, 255>::scan(unsigned char current){
     if(current == 255){return SGEXTN::CoreText::EnumNameExtractor<EnumClass, static_cast<EnumClass>(255)>::getName();}
     return "(enum name not available)";
-}
 }
 }
 

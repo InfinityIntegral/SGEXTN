@@ -20,8 +20,7 @@
 #include <SGEXTN/Containers/EqualTo.h>
 #include <SGEXTN/Containers/Hash.h>
 
-namespace SGEXTN {
-namespace Utilities {
+namespace SGEXTN::Utilities {
 class Identifier;
 
 class BuildLah_SGEXTN_Utilities IdentifierRegistry{
@@ -34,5 +33,4 @@ public:
     [[nodiscard]] bool contains(SGEXTN::Utilities::Identifier id) const;
     [[nodiscard]] int length() const;
 };
-}
 }

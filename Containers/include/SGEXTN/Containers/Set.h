@@ -20,8 +20,7 @@
 #include <SGEXTN/Containers/LessThan.h>
 #include <SGEXTN/Containers/MoreThan.h>
 
-namespace SGEXTN {
-namespace Containers {
+namespace SGEXTN::Containers {
 template <typename T, typename Comparator> class SetCustomisable;
 template <typename T> using Set = SetCustomisable<T, SGEXTN::Containers::LessThan<T>>;
 template <typename T> using SetAscending = SetCustomisable<T, SGEXTN::Containers::LessThan<T>>;
@@ -83,7 +82,6 @@ public:
     [[nodiscard]] bool operator!=(const SetConstIterator& x) const;
     [[nodiscard]] const T& operator*() const;
 };
-}
 }
 
 #include <SGEXTN/Containers/private_api/Set_impl.h>

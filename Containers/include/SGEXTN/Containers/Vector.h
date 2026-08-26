@@ -18,8 +18,7 @@
 #pragma once
 #include <SGEXTN/Containers/private_api/RingBuffer.h>
 
-namespace SGEXTN {
-namespace Containers {
+namespace SGEXTN::Containers {
 template <typename T> class Vector {
 public:
     explicit Vector();
@@ -34,7 +33,6 @@ public:
     void clear();
     SGEXTN::Containers::RingBuffer<T> private_ringBuffer;
 };
-}
 }
 
 #include <SGEXTN/Containers/private_api/Vector_impl.h>
