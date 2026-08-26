@@ -29,28 +29,26 @@ SGEXTN::CoreText::DebugLogFunctionRegistrarInstance useLogToCerr(&SGEXTN::CoreTe
 }
 
 SGEXTN::Containers::Vector<void (*)(const char*)>* SGEXTN::CoreText::Debug::logFunctionList = nullptr;
+SGEXTN::CoreText::DebugPrintIntegerMode SGEXTN::CoreText::Debug::defaultIntegerMode = SGEXTN::CoreText::DebugPrintIntegerMode(10);
+SGEXTN::CoreText::DebugPrintFloatingPointMode SGEXTN::CoreText::Debug::defaultFloatingPointMode = SGEXTN::CoreText::DebugPrintFloatingPointMode(10, SGEXTN::CoreText::FloatPrecisionFormat::SignificantFigure, 5);
+SGEXTN::CoreText::DebugPrintCCharMode SGEXTN::CoreText::Debug::defaultCCharMode = SGEXTN::CoreText::DebugPrintCCharMode::Byte;
+SGEXTN::CoreText::DebugPrintStringMode SGEXTN::CoreText::Debug::defaultStringMode = SGEXTN::CoreText::DebugPrintStringMode::String;
+SGEXTN::CoreText::DebugPrintPointerMode SGEXTN::CoreText::Debug::defaultPointerMode = SGEXTN::CoreText::DebugPrintPointerMode::NullCheck;
 
-SGEXTN::CoreText::Debug::Debug(const SGEXTN::CoreText::String& fileName, int lineNumber) : debugInfo(""), fileName(""), lineNumber(""), metadataMode(SGEXTN::CoreText::DebugPrintMetadataMode::None), integerMode(10), floatingPointMode(10, SGEXTN::CoreText::FloatPrecisionFormat::SignificantFigure, 5), cCharMode(SGEXTN::CoreText::DebugPrintCCharMode::Byte), stringMode(SGEXTN::CoreText::DebugPrintStringMode::String), pointerMode(SGEXTN::CoreText::DebugPrintPointerMode::NullCheck) {
+SGEXTN::CoreText::Debug::Debug(const SGEXTN::CoreText::String& fileName, int lineNumber) : debugInfo(""), fileName(""), lineNumber(""),  integerMode(SGEXTN::CoreText::Debug::defaultIntegerMode), floatingPointMode(SGEXTN::CoreText::Debug::defaultFloatingPointMode), cCharMode(SGEXTN::CoreText::Debug::defaultCCharMode), stringMode(SGEXTN::CoreText::Debug::defaultStringMode), pointerMode(SGEXTN::CoreText::Debug::defaultPointerMode){
     const SGEXTN::CoreText::String actualFilePath = fileName.replaceCharacters("\\", "/");
     (*this).fileName = actualFilePath.substringCharactersRight(actualFilePath.characterLength() - actualFilePath.findFirstCharactersFromRight("/") - 1);
     (*this).lineNumber = SGEXTN::CoreText::String("line ") + SGEXTN::CoreText::String::stringFromInt(lineNumber, 10);
 }
 
 SGEXTN::CoreText::Debug::~Debug(){
-    if(debugInfo == ""){metadataMode = SGEXTN::CoreText::DebugPrintMetadataMode::All;}
     SGEXTN::CoreText::String logMessage = "SG";
-    if(metadataMode == SGEXTN::CoreText::DebugPrintMetadataMode::Line){
-        logMessage += " at ";
-        logMessage += lineNumber;
-    }
-    else if(metadataMode == SGEXTN::CoreText::DebugPrintMetadataMode::All){
-        logMessage += " in ";
-        logMessage += fileName;
-        logMessage += " at ";
-        logMessage += lineNumber;
-    }
+    logMessage += " in ";
+    logMessage += fileName;
+    logMessage += " at ";
+    logMessage += lineNumber;
     if(debugInfo != ""){
-        logMessage += ": ";
+        logMessage += " : ";
         logMessage += debugInfo;
     }
     logMessage += SGEXTN::CoreText::Character('\0');
@@ -60,14 +58,16 @@ SGEXTN::CoreText::Debug::~Debug(){
     }
 }
 
-// NOLINTBEGIN(readability-convert-member-functions-to-static)
-SGEXTN::CoreText::String SGEXTN::CoreText::Debug::debugPrint(bool x) const {
-    if(x == true){return "true";}
-    return "false";
-}
-
 void SGEXTN::CoreText::Debug::logToCerr(const char* msg){
     std::cerr << msg << "\n";
+}
+
+SGEXTN::CoreText::String SGEXTN::CoreText::Debug::debugPrint(bool x) const {
+    int i = 0;
+    if(cCharMode == SGEXTN::CoreText::DebugPrintCCharMode::Character){i = 1;}
+    if(i == -1){return "";}
+    if(x == true){return "true";}
+    return "false";
 }
 
 SGEXTN::CoreText::String SGEXTN::CoreText::Debug::debugPrint(unsigned char x) const {
@@ -141,18 +141,15 @@ SGEXTN::CoreText::String SGEXTN::CoreText::Debug::debugPrint(char x) const {
 }
 
 SGEXTN::CoreText::String SGEXTN::CoreText::Debug::debugPrint(const char* x) const {
+    int i = 0;
+    if(cCharMode == SGEXTN::CoreText::DebugPrintCCharMode::Character){i = 1;}
+    if(i == -1){return "";}
     return x;
 }
-// NOLINTEND(readability-convert-member-functions-to-static)
 
 SGEXTN::CoreText::DebugPrintIntegerMode::DebugPrintIntegerMode(int base) : base(base) {}
 
 SGEXTN::CoreText::DebugPrintFloatingPointMode::DebugPrintFloatingPointMode(int base, SGEXTN::CoreText::FloatPrecisionFormat format, int precision) : base(base), format(format), precision(precision) {}
-
-SGEXTN::CoreText::Debug& SGEXTN::CoreText::Debug::operator()(SGEXTN::CoreText::DebugPrintMetadataMode mode){
-    metadataMode = mode;
-    return (*this);
-}
 
 SGEXTN::CoreText::Debug& SGEXTN::CoreText::Debug::operator()(SGEXTN::CoreText::DebugPrintIntegerMode mode){
     integerMode = mode;
@@ -182,4 +179,20 @@ SGEXTN::CoreText::Debug& SGEXTN::CoreText::Debug::operator()(SGEXTN::CoreText::D
 SGEXTN::CoreText::DebugLogFunctionRegistrarInstance::DebugLogFunctionRegistrarInstance(void (*func)(const char*)){
     if(SGEXTN::CoreText::Debug::logFunctionList == nullptr){SGEXTN::CoreText::Debug::logFunctionList = new SGEXTN::Containers::Vector<void (*)(const char*)>();}
     (*SGEXTN::CoreText::Debug::logFunctionList).pushBack(func);
+}
+
+SGEXTN::CoreText::DebugDefaultModeOverride::DebugDefaultModeOverride(SGEXTN::CoreText::DebugPrintIntegerMode newIntegerMode, SGEXTN::CoreText::DebugPrintFloatingPointMode newFloatingPointMode, SGEXTN::CoreText::DebugPrintCCharMode newCCharMode, SGEXTN::CoreText::DebugPrintStringMode newStringMode, SGEXTN::CoreText::DebugPrintPointerMode newPointerMode) : previousIntegerMode(SGEXTN::CoreText::Debug::defaultIntegerMode), previousFloatingPointMode(SGEXTN::CoreText::Debug::defaultFloatingPointMode), previousCCharMode(SGEXTN::CoreText::Debug::defaultCCharMode), previousStringMode(SGEXTN::CoreText::Debug::defaultStringMode), previousPointerMode(SGEXTN::CoreText::Debug::defaultPointerMode){
+    SGEXTN::CoreText::Debug::defaultIntegerMode = newIntegerMode;
+    SGEXTN::CoreText::Debug::defaultFloatingPointMode = newFloatingPointMode;
+    SGEXTN::CoreText::Debug::defaultCCharMode = newCCharMode;
+    SGEXTN::CoreText::Debug::defaultStringMode = newStringMode;
+    SGEXTN::CoreText::Debug::defaultPointerMode = newPointerMode;
+}
+
+SGEXTN::CoreText::DebugDefaultModeOverride::~DebugDefaultModeOverride(){
+    SGEXTN::CoreText::Debug::defaultIntegerMode = previousIntegerMode;
+    SGEXTN::CoreText::Debug::defaultFloatingPointMode = previousFloatingPointMode;
+    SGEXTN::CoreText::Debug::defaultCCharMode = previousCCharMode;
+    SGEXTN::CoreText::Debug::defaultStringMode = previousStringMode;
+    SGEXTN::CoreText::Debug::defaultPointerMode = previousPointerMode;
 }

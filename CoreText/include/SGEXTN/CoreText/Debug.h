@@ -32,12 +32,6 @@ template <typename T> class Vector;
 namespace CoreText {
 class Character;
 
-enum class DebugPrintMetadataMode : unsigned char {
-    None = 1,
-    Line = 2,
-    All = 3
-};
-
 class BuildLah_SGEXTN_CoreText DebugPrintIntegerMode {
 public:
     explicit DebugPrintIntegerMode(int base);
@@ -78,21 +72,20 @@ public:
     ~Debug();
     static SGEXTN::Containers::Vector<void (*)(const char*)>* logFunctionList;
     static void logToCerr(const char* msg);
+    static SGEXTN::CoreText::DebugPrintIntegerMode defaultIntegerMode;
+    static SGEXTN::CoreText::DebugPrintFloatingPointMode defaultFloatingPointMode;
+    static SGEXTN::CoreText::DebugPrintCCharMode defaultCCharMode;
+    static SGEXTN::CoreText::DebugPrintStringMode defaultStringMode;
+    static SGEXTN::CoreText::DebugPrintPointerMode defaultPointerMode;
     SGEXTN::CoreText::String debugInfo;
     SGEXTN::CoreText::String fileName;
     SGEXTN::CoreText::String lineNumber;
-    SGEXTN::CoreText::DebugPrintMetadataMode metadataMode;
     SGEXTN::CoreText::DebugPrintIntegerMode integerMode;
     SGEXTN::CoreText::DebugPrintFloatingPointMode floatingPointMode;
     SGEXTN::CoreText::DebugPrintCCharMode cCharMode;
     SGEXTN::CoreText::DebugPrintStringMode stringMode;
     SGEXTN::CoreText::DebugPrintPointerMode pointerMode;
     template <typename T> SGEXTN::CoreText::String debugPrint(const T& x) const;
-    template <typename T> SGEXTN::CoreText::String debugPrint(const T* x) const;
-    template <typename T> SGEXTN::CoreText::String debugPrint(T* x) const;
-    template <typename ReturnType, typename... ArgTypes> SGEXTN::CoreText::String debugPrint(ReturnType (*x)(ArgTypes...)) const;
-    template <typename ReturnType, typename ClassName, typename... ArgTypes> SGEXTN::CoreText::String debugPrint(ReturnType (ClassName::*x)(ArgTypes...)) const;
-    template <typename ReturnType, typename ClassName, typename... ArgTypes> SGEXTN::CoreText::String debugPrint(ReturnType (ClassName::*x)(ArgTypes...) const) const;
     template <typename T> SGEXTN::CoreText::String debugPrint(const SGEXTN::Containers::Array<T>& x) const;
     SGEXTN::CoreText::String debugPrint(bool x) const;
     SGEXTN::CoreText::String debugPrint(unsigned char x) const;
@@ -109,7 +102,6 @@ public:
     SGEXTN::CoreText::String debugPrint(char x) const;
     SGEXTN::CoreText::String debugPrint(const char* x) const;
     template <typename T> Debug& operator()(const T& x);
-    Debug& operator()(SGEXTN::CoreText::DebugPrintMetadataMode mode);
     Debug& operator()(SGEXTN::CoreText::DebugPrintIntegerMode mode);
     Debug& operator()(SGEXTN::CoreText::DebugPrintFloatingPointMode mode);
     Debug& operator()(SGEXTN::CoreText::DebugPrintCCharMode mode);
@@ -121,25 +113,26 @@ class BuildLah_SGEXTN_CoreText DebugLogFunctionRegistrarInstance {
 public:
     explicit DebugLogFunctionRegistrarInstance(void (*func)(const char*));
 };
+
+class BuildLah_SGEXTN_CoreText DebugDefaultModeOverride {
+public:
+    SGEXTN::CoreText::DebugPrintIntegerMode previousIntegerMode;
+    SGEXTN::CoreText::DebugPrintFloatingPointMode previousFloatingPointMode;
+    SGEXTN::CoreText::DebugPrintCCharMode previousCCharMode;
+    SGEXTN::CoreText::DebugPrintStringMode previousStringMode;
+    SGEXTN::CoreText::DebugPrintPointerMode previousPointerMode;
+    DebugDefaultModeOverride(SGEXTN::CoreText::DebugPrintIntegerMode newIntegerMode, SGEXTN::CoreText::DebugPrintFloatingPointMode newFloatingPointMode, SGEXTN::CoreText::DebugPrintCCharMode newCCharMode, SGEXTN::CoreText::DebugPrintStringMode newStringMode, SGEXTN::CoreText::DebugPrintPointerMode newPointerMode);
+    DebugDefaultModeOverride(const DebugDefaultModeOverride&) = delete;
+    DebugDefaultModeOverride& operator=(const DebugDefaultModeOverride&) = delete;
+    DebugDefaultModeOverride(DebugDefaultModeOverride&&) = delete;
+    DebugDefaultModeOverride& operator=(DebugDefaultModeOverride&&) = delete;
+    ~DebugDefaultModeOverride();
+};
 }
 }
 
 #include <SGEXTN/CoreText/private_api/Debug_impl.h>
 
-#define SGEXTN_DEBUG_PRINT SGEXTN::CoreText::Debug(__FILE__, __LINE__)
-#define SGEXTN_DEBUG_PRINT_LINE_LOG SGEXTN::CoreText::Debug(__FILE__, __LINE__)(SGEXTN::CoreText::DebugPrintMetadataMode::Line)
-#define SGEXTN_DEBUG_PRINT_FULL_LOG SGEXTN::CoreText::Debug(__FILE__, __LINE__)(SGEXTN::CoreText::DebugPrintMetadataMode::All)
-
-#ifndef SGEXTN_NO_DEFINE_SHORTCUT_MACROS
-#ifndef SG
+#ifndef SGEXTN_NO_DEFINE_DEBUG_MACRO
 #define SG SGEXTN::CoreText::Debug(__FILE__, __LINE__)
-#endif
-
-#ifndef SG_L
-#define SG_L SGEXTN::CoreText::Debug(__FILE__, __LINE__)(SGEXTN::CoreText::DebugPrintMetadataMode::Line)
-#endif
-
-#ifndef SG_A
-#define SG_A SGEXTN::CoreText::Debug(__FILE__, __LINE__)(SGEXTN::CoreText::DebugPrintMetadataMode::All)
-#endif
 #endif
