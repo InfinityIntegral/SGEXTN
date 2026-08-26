@@ -27,6 +27,11 @@ public:
     mutable SGEXTN::Containers::Array<unsigned char> bufferA;
     mutable SGEXTN::Containers::Array<unsigned char> bufferB;
     explicit LessThan();
+    LessThan(const LessThan& x);
+    LessThan& operator=(const LessThan& x);
+    LessThan(LessThan&& x) noexcept;
+    LessThan& operator=(LessThan&& x) noexcept;
+    ~LessThan();
     [[nodiscard]] bool operator()(const T& a, const T& b) const;
 };
 }

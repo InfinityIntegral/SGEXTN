@@ -47,15 +47,15 @@ public:
     mutable SGEXTN::Containers::Vector<int> private_characterOffsets;
     void private_computeOffsets() const;
     void private_invalidateOffsets() const;
-    explicit String() = default;
+    explicit String();
     String(const String& x);
     String& operator=(const String& x);
     String(String&& x) noexcept;
     String& operator=(String&& x) noexcept;
-    ~String() = default;
-    String(unsigned char c);
-    String(const char* s);
-    String(const SGEXTN::CoreText::Character& c);
+    ~String();
+    String(unsigned char c); //NOLINT(google-explicit-constructor)
+    String(const char* s); //NOLINT(google-explicit-constructor)
+    String(const SGEXTN::CoreText::Character& c); //NOLINT(google-explicit-constructor)
     [[nodiscard]] bool operator==(const String& x) const;
     [[nodiscard]] bool operator!=(const String& x) const;
     [[nodiscard]] bool operator<(const String& x) const;

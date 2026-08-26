@@ -22,6 +22,29 @@
 
 template <typename T> SGEXTN::Containers::EqualTo<T>::EqualTo() : lengthA(0), lengthB(0), bufferA(0), bufferB(0){}
 
+template <typename T> SGEXTN::Containers::EqualTo<T>::EqualTo([[maybe_unused]] const SGEXTN::Containers::EqualTo<T>& x) : lengthA(0), lengthB(0), bufferA(0), bufferB(0){}
+
+template <typename T> SGEXTN::Containers::EqualTo<T>& SGEXTN::Containers::EqualTo<T>::operator=([[maybe_unused]] const SGEXTN::Containers::EqualTo<T>& x){
+    return (*this);
+}
+
+template <typename T> SGEXTN::Containers::EqualTo<T>::EqualTo(SGEXTN::Containers::EqualTo<T>&& x) noexcept : lengthA(x.lengthA), lengthB(x.lengthB), bufferA(static_cast<SGEXTN::Containers::Array<unsigned char>&&>(x.bufferA)), bufferB(static_cast<SGEXTN::Containers::Array<unsigned char>&&>(x.bufferB)){
+    x.lengthA = 0;
+    x.lengthB = 0;
+}
+
+template <typename T> SGEXTN::Containers::EqualTo<T>& SGEXTN::Containers::EqualTo<T>::operator=(SGEXTN::Containers::EqualTo<T>&& x) noexcept {
+    lengthA = x.lengthA;
+    lengthB = x.lengthB;
+    bufferA = static_cast<SGEXTN::Containers::Array<unsigned char>&&>(x.bufferA);
+    bufferB = static_cast<SGEXTN::Containers::Array<unsigned char>&&>(x.bufferB);
+    x.lengthA = 0;
+    x.lengthB = 0;
+    return (*this);
+}
+
+template <typename T> SGEXTN::Containers::EqualTo<T>::~EqualTo(){}
+
 template <typename T> bool SGEXTN::Containers::EqualTo<T>::operator()(const T& a, const T& b) const {
     if constexpr(requires{SGEXTN::Containers::IsPointer<T>::isPointer;} == false){
         if constexpr(requires{a == b;} == true){return (a == b);}

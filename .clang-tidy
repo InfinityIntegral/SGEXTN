@@ -40,6 +40,7 @@ Checks: '
   -modernize-return-braced-init-list,
   -modernize-use-auto,
   -modernize-use-default-member-init,
+  -modernize-use-equals-default,
   -modernize-use-integer-sign-comparison,
   -modernize-use-trailing-return-type,
   -portability-avoid-pragma-once,
@@ -53,7 +54,9 @@ Checks: '
   -readability-redundant-parentheses,
   -readability-simplify-boolean-expr,
   -readability-uppercase-literal-suffix,
-  -readability-use-std-min-max
+  -readability-use-std-min-max,
+  altera-struct-pack-align,
+  google-explicit-constructor
 '
 WarningsAsErrors: ''
 HeaderFileExtensions: ['', 'h']

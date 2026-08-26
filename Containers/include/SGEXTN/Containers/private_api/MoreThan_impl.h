@@ -22,6 +22,29 @@
 
 template <typename T> SGEXTN::Containers::MoreThan<T>::MoreThan() : lengthA(0), lengthB(0), bufferA(0), bufferB(0){}
 
+template <typename T> SGEXTN::Containers::MoreThan<T>::MoreThan([[maybe_unused]] const SGEXTN::Containers::MoreThan<T>& x) : lengthA(0), lengthB(0), bufferA(0), bufferB(0){}
+
+template <typename T> SGEXTN::Containers::MoreThan<T>& SGEXTN::Containers::MoreThan<T>::operator=([[maybe_unused]] const SGEXTN::Containers::MoreThan<T>& x){
+    return (*this);
+}
+
+template <typename T> SGEXTN::Containers::MoreThan<T>::MoreThan(SGEXTN::Containers::MoreThan<T>&& x) noexcept : lengthA(x.lengthA), lengthB(x.lengthB), bufferA(static_cast<SGEXTN::Containers::Array<unsigned char>&&>(x.bufferA)), bufferB(static_cast<SGEXTN::Containers::Array<unsigned char>&&>(x.bufferB)){
+    x.lengthA = 0;
+    x.lengthB = 0;
+}
+
+template <typename T> SGEXTN::Containers::MoreThan<T>& SGEXTN::Containers::MoreThan<T>::operator=(SGEXTN::Containers::MoreThan<T>&& x) noexcept {
+    lengthA = x.lengthA;
+    lengthB = x.lengthB;
+    bufferA = static_cast<SGEXTN::Containers::Array<unsigned char>&&>(x.bufferA);
+    bufferB = static_cast<SGEXTN::Containers::Array<unsigned char>&&>(x.bufferB);
+    x.lengthA = 0;
+    x.lengthB = 0;
+    return (*this);
+}
+
+template <typename T> SGEXTN::Containers::MoreThan<T>::~MoreThan(){}
+
 template <typename T> bool SGEXTN::Containers::MoreThan<T>::operator()(const T& a, const T& b) const {
     if constexpr(requires{SGEXTN::Containers::IsPointer<T>::isPointer;} == false){
         if constexpr(requires{a > b;} == true){return (a > b);}

@@ -23,6 +23,25 @@
 
 template <typename T> SGEXTN::Containers::Hash<T>::Hash() : length(0), buffer(0){}
 
+template <typename T> SGEXTN::Containers::Hash<T>::Hash([[maybe_unused]] const SGEXTN::Containers::Hash<T>& x) : length(0), buffer(0){}
+
+template <typename T> SGEXTN::Containers::Hash<T>& SGEXTN::Containers::Hash<T>::operator=([[maybe_unused]] const SGEXTN::Containers::Hash<T>& x){
+    return (*this);
+}
+
+template <typename T> SGEXTN::Containers::Hash<T>::Hash(SGEXTN::Containers::Hash<T>&& x) noexcept : length(x.length), buffer(static_cast<SGEXTN::Containers::Array<unsigned char>&&>(x.buffer)){
+    x.length = 0;
+}
+
+template <typename T> SGEXTN::Containers::Hash<T>& SGEXTN::Containers::Hash<T>::operator=(SGEXTN::Containers::Hash<T>&& x) noexcept {
+    length = x.length;
+    buffer = static_cast<SGEXTN::Containers::Array<unsigned char>&&>(x.buffer);
+    x.length = 0;
+    return (*this);
+}
+
+template <typename T> SGEXTN::Containers::Hash<T>::~Hash(){}
+
 template <typename T> int SGEXTN::Containers::Hash<T>::operator()(const T& x) const {
     const int bufferLength = SGEXTN::Containers::Serialise<T>::sizeOut(x);
     if(bufferLength != length){

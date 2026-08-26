@@ -27,6 +27,11 @@ public:
     mutable SGEXTN::Containers::Array<unsigned char> bufferA;
     mutable SGEXTN::Containers::Array<unsigned char> bufferB;
     explicit MoreThan();
+    MoreThan(const MoreThan& x);
+    MoreThan& operator=(const MoreThan& x);
+    MoreThan(MoreThan&& x) noexcept;
+    MoreThan& operator=(MoreThan&& x) noexcept;
+    ~MoreThan();
     [[nodiscard]] bool operator()(const T& a, const T& b) const;
 };
 }

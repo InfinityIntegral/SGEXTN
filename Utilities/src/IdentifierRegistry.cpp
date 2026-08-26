@@ -40,6 +40,8 @@ unsigned int getRandomNumber(){
 }
 }
 
+SGEXTN::Utilities::IdentifierRegistry::IdentifierRegistry(){}
+
 SGEXTN::Utilities::Identifier SGEXTN::Utilities::IdentifierRegistry::generateAndRegisterIdentifier(){
     while(true){
         const unsigned int n = getRandomNumber();

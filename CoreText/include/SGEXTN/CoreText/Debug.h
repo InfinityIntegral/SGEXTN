@@ -121,7 +121,7 @@ public:
     SGEXTN::CoreText::DebugPrintCCharMode previousCCharMode;
     SGEXTN::CoreText::DebugPrintStringMode previousStringMode;
     SGEXTN::CoreText::DebugPrintPointerMode previousPointerMode;
-    DebugDefaultModeOverride(SGEXTN::CoreText::DebugPrintIntegerMode newIntegerMode, SGEXTN::CoreText::DebugPrintFloatingPointMode newFloatingPointMode, SGEXTN::CoreText::DebugPrintCCharMode newCCharMode, SGEXTN::CoreText::DebugPrintStringMode newStringMode, SGEXTN::CoreText::DebugPrintPointerMode newPointerMode);
+    explicit DebugDefaultModeOverride(SGEXTN::CoreText::DebugPrintIntegerMode newIntegerMode, SGEXTN::CoreText::DebugPrintFloatingPointMode newFloatingPointMode, SGEXTN::CoreText::DebugPrintCCharMode newCCharMode, SGEXTN::CoreText::DebugPrintStringMode newStringMode, SGEXTN::CoreText::DebugPrintPointerMode newPointerMode);
     DebugDefaultModeOverride(const DebugDefaultModeOverride&) = delete;
     DebugDefaultModeOverride& operator=(const DebugDefaultModeOverride&) = delete;
     DebugDefaultModeOverride(DebugDefaultModeOverride&&) = delete;
