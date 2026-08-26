@@ -17,16 +17,15 @@
 
 #pragma once
 
-namespace SGEXTN {
-namespace Containers {
+namespace SGEXTN::Containers {
 template <typename T> class Span;
 }
 
-namespace CoreText {
+namespace SGEXTN::CoreText {
 class String;
 }
 
-namespace Utilities {
+namespace SGEXTN::Utilities {
 enum class TimeUnit : unsigned char {
     Year = 1,
     Month = 2,
@@ -86,5 +85,4 @@ public:
     [[nodiscard]] SGEXTN::CoreText::String getDisplayString(SGEXTN::Utilities::TimeFormat format, bool global, bool correctToSecond) const;
     [[nodiscard]] SGEXTN::CoreText::String getDisplayString(const SGEXTN::CoreText::String& customFormat) const;
 };
-}
 }

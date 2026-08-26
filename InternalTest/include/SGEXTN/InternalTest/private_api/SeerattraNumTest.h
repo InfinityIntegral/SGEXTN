@@ -17,8 +17,7 @@
 
 #pragma once
 
-namespace SGEXTN {
-namespace InternalTest {
+namespace SGEXTN::InternalTest {
 class BuildLah_SGEXTN_InternalTest SeerattraNumTest {
 public:
     static void testAll();
@@ -51,5 +50,4 @@ public:
     static void testValueNoise();
     static void testPerlinNoise();
 };
-}
 }

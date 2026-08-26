@@ -17,8 +17,7 @@
 
 #pragma once
 
-namespace SGEXTN {
-namespace Math {
+namespace SGEXTN::Math {
 template <typename T> class BuildLah_SGEXTN_Math FloatConstants {
 public:
     [[nodiscard]] static T eulerNumber();
@@ -31,5 +30,4 @@ public:
     [[nodiscard]] static T squareRoot3();
     [[nodiscard]] static T goldenRatio();
 };
-}
 }

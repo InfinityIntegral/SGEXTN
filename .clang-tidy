@@ -33,7 +33,6 @@ Checks: '
   -cppcoreguidelines-use-default-member-init,
   -misc-non-private-member-variables-in-classes,
   -modernize-avoid-c-arrays,
-  -modernize-concat-nested-namespaces,
   -modernize-loop-convert,
   -modernize-pass-by-value,
   -modernize-raw-string-literal,

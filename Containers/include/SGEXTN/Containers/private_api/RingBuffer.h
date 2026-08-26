@@ -17,8 +17,7 @@
 
 #pragma once
 
-namespace SGEXTN {
-namespace Containers {
+namespace SGEXTN::Containers {
 template <typename T> class RingBufferSlot {
 public:
     union {
@@ -62,7 +61,6 @@ public:
     int private_memoryLength;
     [[nodiscard]] int private_getMemoryIndex(int i) const;
 };
-}
 }
 
 #include <SGEXTN/Containers/private_api/RingBuffer_impl.h>

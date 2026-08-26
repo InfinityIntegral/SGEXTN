@@ -17,8 +17,7 @@
 
 #pragma once
 
-namespace SGEXTN {
-namespace Math {
+namespace SGEXTN::Math {
 template <typename T> class BuildLah_SGEXTN_Math IntegerMath {
 public:
     [[nodiscard]] static T absoluteValue(T x);
@@ -27,5 +26,4 @@ public:
     [[nodiscard]] static T highestCommonFactor(T a, T b);
     [[nodiscard]] static T lowestCommonMultiple(T a, T b);
 };
-}
 }

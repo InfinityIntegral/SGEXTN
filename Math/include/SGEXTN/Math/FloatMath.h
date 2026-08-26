@@ -17,8 +17,7 @@
 
 #pragma once
 
-namespace SGEXTN {
-namespace Math {
+namespace SGEXTN::Math {
 template <typename T> class BuildLah_SGEXTN_Math FloatMath {
 public:
     [[nodiscard]] static T absoluteValue(T x);
@@ -51,5 +50,4 @@ public:
     [[nodiscard]] static T round(T x);
     [[nodiscard]] static int roundToInt(T x);
 };
-}
 }

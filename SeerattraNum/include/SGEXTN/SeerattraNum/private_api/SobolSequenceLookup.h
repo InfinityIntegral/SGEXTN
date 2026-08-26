@@ -17,11 +17,9 @@
 
 #pragma once
 
-namespace SGEXTN {
-namespace SeerattraNum {
+namespace SGEXTN::SeerattraNum {
 class BuildLah_SGEXTN_SeerattraNum SobolSequenceLookup {
 public:
     static const char* data;
 };
-}
 }

@@ -17,13 +17,12 @@
 
 #pragma once
 
-namespace SGEXTN {
-namespace Containers {
+namespace SGEXTN::Containers {
 template <typename T> class Array;
 template <typename T> class Span;
 }
 
-namespace SeerattraNum {
+namespace SGEXTN::SeerattraNum {
 class BuildLah_SGEXTN_SeerattraNum VoronoiNoise {
 public:
     int private_seed;
@@ -38,5 +37,4 @@ public:
     [[nodiscard]] SGEXTN::Containers::Array<float> getVectorFrom(int nthNearest, const SGEXTN::Containers::Array<float>& point) const;
     [[nodiscard]] float getDistanceTo(int nthNearest, const SGEXTN::Containers::Array<float>& point) const;
 };
-}
 }

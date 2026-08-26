@@ -17,8 +17,7 @@
 
 #pragma once
 
-namespace SGEXTN {
-namespace Containers {
+namespace SGEXTN::Containers {
 template <typename T, typename Comparator> class Sort {
 public:
     explicit Sort(T* start, int length);
@@ -39,7 +38,6 @@ public:
     void doSort();
     static void private_sort(T* start, int length);
 };
-}
 }
 
 #include <SGEXTN/Containers/private_api/Sort_impl.h>

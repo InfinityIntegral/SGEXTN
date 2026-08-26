@@ -17,8 +17,7 @@
 
 #pragma once
 
-namespace SGEXTN {
-namespace Containers {
+namespace SGEXTN::Containers {
 template <typename Key, typename Value, typename Comparator> class AVLTree;
 
 template <typename Key, typename Value, typename Comparator> class AVLTreeNode {
@@ -127,7 +126,6 @@ public:
     [[nodiscard]] const Key& key() const;
     [[nodiscard]] const Value& value() const;
 };
-}
 }
 
 #include <SGEXTN/Containers/private_api/AVLTree_impl.h>

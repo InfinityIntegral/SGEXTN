@@ -18,8 +18,7 @@
 #pragma once
 #include <SGEXTN/Containers/Span.h>
 
-namespace SGEXTN {
-namespace Containers {
+namespace SGEXTN::Containers {
 template <typename T> class Hash {
 public:
     mutable int length;
@@ -37,7 +36,6 @@ class BuildLah_SGEXTN_Containers HashAlgorithm {
 public:
     [[nodiscard]] static int wyHash32(SGEXTN::Containers::Span<unsigned char> span);
 };
-}
 }
 
 #include <SGEXTN/Containers/private_api/Hash_impl.h>

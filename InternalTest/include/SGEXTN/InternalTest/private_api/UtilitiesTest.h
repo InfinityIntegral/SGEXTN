@@ -17,8 +17,7 @@
 
 #pragma once
 
-namespace SGEXTN {
-namespace InternalTest {
+namespace SGEXTN::InternalTest {
 class BuildLah_SGEXTN_InternalTest UtilitiesTest {
 public:
     static void testAll();
@@ -29,5 +28,4 @@ public:
     static void testIdentifierRegistry();
     static void testDateTime();
 };
-}
 }

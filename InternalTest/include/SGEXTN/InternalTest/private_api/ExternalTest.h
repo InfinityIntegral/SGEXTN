@@ -17,8 +17,7 @@
 
 #pragma once
 
-namespace SGEXTN {
-namespace InternalTest {
+namespace SGEXTN::InternalTest {
 class BuildLah_SGEXTN_InternalTest ExternalTest {
 public:
     static void testAll();
@@ -32,5 +31,4 @@ public:
     static void testNumericalParsing();
     static bool ifTestNumericalParsing;
 };
-}
 }

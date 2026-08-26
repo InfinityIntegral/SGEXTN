@@ -18,13 +18,12 @@
 #pragma once
 #include <SGEXTN/SeerattraNum/DirectRandomInstanceLocator.h>
 
-namespace SGEXTN {
-namespace Containers {
+namespace SGEXTN::Containers {
 template <typename T> class Array;
 template <typename T> class Span;
 }
 
-namespace SeerattraNum {
+namespace SGEXTN::SeerattraNum {
 class BuildLah_SGEXTN_SeerattraNum ExponentialDistribution {
 public:
     SGEXTN::SeerattraNum::DirectRandomInstanceLocator private_rngLocator;
@@ -46,5 +45,4 @@ public:
     void setMeanEventsPerTime(float meanEventsPerTime);
     static void private_samplePointStandard(float& x, float& y, SGEXTN::SeerattraNum::DirectRandomInstanceLocator& externalLocator);
 };
-}
 }

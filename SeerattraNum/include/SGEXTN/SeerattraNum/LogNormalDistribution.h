@@ -19,12 +19,11 @@
 #include <SGEXTN/SeerattraNum/NormalDistribution.h>
 #include <SGEXTN/SeerattraNum/DirectRandomInstanceLocator.h>
 
-namespace SGEXTN {
-namespace Containers {
+namespace SGEXTN::Containers {
 template <typename T> class Array;
 }
 
-namespace SeerattraNum {
+namespace SGEXTN::SeerattraNum {
 class BuildLah_SGEXTN_SeerattraNum LogNormalDistribution {
 public:
     SGEXTN::SeerattraNum::DirectRandomInstanceLocator private_rngLocator;
@@ -44,5 +43,4 @@ public:
     void setMeanOfLn(float meanOfLn);
     void setStandardDeviationOfLn(float standardDeviationOfLn);
 };
-}
 }

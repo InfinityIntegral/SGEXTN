@@ -18,8 +18,7 @@
 #pragma once
 #include <SGEXTN/Containers/Array.h>
 
-namespace SGEXTN {
-namespace Containers {
+namespace SGEXTN::Containers {
 template <typename T> class EqualTo {
 public:
     mutable int lengthA;
@@ -34,7 +33,6 @@ public:
     ~EqualTo();
     [[nodiscard]] bool operator()(const T& a, const T& b) const;
 };
-}
 }
 
 #include <SGEXTN/Containers/private_api/EqualTo_impl.h>

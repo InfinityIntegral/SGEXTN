@@ -18,8 +18,7 @@
 #pragma once
 #include <SGEXTN/Containers/private_api/RingBuffer.h>
 
-namespace SGEXTN {
-namespace Containers {
+namespace SGEXTN::Containers {
 template <typename T> class Stack {
 public:
     explicit Stack();
@@ -32,7 +31,6 @@ public:
     void reserve(int newMemoryLength);
     SGEXTN::Containers::RingBuffer<T> private_ringBuffer;
 };
-}
 }
 
 #include <SGEXTN/Containers/private_api/Stack_impl.h>

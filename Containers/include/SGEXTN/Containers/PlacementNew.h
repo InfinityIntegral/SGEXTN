@@ -17,12 +17,10 @@
 
 #pragma once
 
-namespace SGEXTN {
-namespace Containers {
+namespace SGEXTN::Containers {
 enum class PlacementNew : unsigned char {
     Placeholder = 0
 };
-}
 }
 
 inline void* operator new([[maybe_unused]] decltype(sizeof(int)) noneOfMyConcernCompilerIsAnnoying, [[maybe_unused]] SGEXTN::Containers::PlacementNew placeholder, void* p) noexcept {return p;}

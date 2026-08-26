@@ -17,12 +17,11 @@
 
 #pragma once
 
-namespace SGEXTN {
-namespace Containers {
+namespace SGEXTN::Containers {
 template <typename T> class Span;
 }
 
-namespace SeerattraNum {
+namespace SGEXTN::SeerattraNum {
 class DirectRandom;
 
 class BuildLah_SGEXTN_SeerattraNum DirectRandomInstanceLocator {
@@ -42,5 +41,4 @@ public:
     [[nodiscard]] SGEXTN::SeerattraNum::DirectRandom& operator*();
     [[nodiscard]] const SGEXTN::SeerattraNum::DirectRandom& operator*() const;
 };
-}
 }

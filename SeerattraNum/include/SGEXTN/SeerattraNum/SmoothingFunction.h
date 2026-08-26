@@ -17,12 +17,11 @@
 
 #pragma once
 
-namespace SGEXTN {
-namespace Containers {
+namespace SGEXTN::Containers {
 template <typename T> class Span;
 }
 
-namespace SeerattraNum {
+namespace SGEXTN::SeerattraNum {
 class BuildLah_SGEXTN_SeerattraNum SmoothingFunction {
 public:
     float (*private_function)(float);
@@ -42,5 +41,4 @@ public:
     [[nodiscard]] static bool sendIn(SmoothingFunction& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static int size();
 };
-}
 }

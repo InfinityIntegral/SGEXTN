@@ -18,8 +18,7 @@
 #pragma once
 #include <SGEXTN/Containers/Array.h>
 
-namespace SGEXTN {
-namespace Containers {
+namespace SGEXTN::Containers {
 template <typename T> class Span {
 public:
     explicit Span(T* data, int length);
@@ -35,7 +34,6 @@ public:
     T* private_data;
     int private_length;
 };
-}
 }
 
 #include <SGEXTN/Containers/private_api/Span_impl.h>

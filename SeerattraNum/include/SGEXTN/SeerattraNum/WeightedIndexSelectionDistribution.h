@@ -19,12 +19,11 @@
 #include <SGEXTN/Containers/Array.h>
 #include <SGEXTN/SeerattraNum/DirectRandomInstanceLocator.h>
 
-namespace SGEXTN {
-namespace Containers {
+namespace SGEXTN::Containers {
 template <typename T> class Span;
 }
 
-namespace SeerattraNum {
+namespace SGEXTN::SeerattraNum {
 class BuildLah_SGEXTN_SeerattraNum WeightedIndexSelectionDistribution {
 public:
     SGEXTN::SeerattraNum::DirectRandomInstanceLocator private_rngLocator;
@@ -43,5 +42,4 @@ public:
     [[nodiscard]] SGEXTN::Containers::Array<float> getWeights() const;
     void setWeights(const SGEXTN::Containers::Array<float>& weights);
 };
-}
 }

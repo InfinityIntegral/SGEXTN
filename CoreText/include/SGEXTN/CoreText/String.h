@@ -19,13 +19,12 @@
 #include <SGEXTN/CoreText/private_api/TextBuffer.h>
 #include <SGEXTN/Containers/Vector.h>
 
-namespace SGEXTN {
-namespace Containers {
+namespace SGEXTN::Containers {
 template <typename T> class Array;
 template <typename T> class Span;
 }
 
-namespace CoreText {
+namespace SGEXTN::CoreText {
 class Character;
 
 enum class FloatPrecisionFormat : unsigned char {
@@ -156,5 +155,4 @@ public:
     [[nodiscard]] String getNormalised(SGEXTN::CoreText::NormalisationFormat format) const;
     [[nodiscard]] SGEXTN::CoreText::String getSimplestEquivalent(bool ignoreCase) const;
 };
-}
 }

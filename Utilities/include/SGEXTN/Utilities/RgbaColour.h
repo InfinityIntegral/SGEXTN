@@ -17,16 +17,15 @@
 
 #pragma once
 
-namespace SGEXTN {
-namespace Containers {
+namespace SGEXTN::Containers {
 template <typename T> class Span;
 }
 
-namespace CoreText {
+namespace SGEXTN::CoreText {
 class String;
 }
 
-namespace Utilities {
+namespace SGEXTN::Utilities {
 class BuildLah_SGEXTN_Utilities RgbaColour {
 public:
     unsigned int private_data;
@@ -73,5 +72,4 @@ public:
     [[nodiscard]] RgbaColour interpolate(RgbaColour other, float thisStrength, bool gammaCorrect) const;
     [[nodiscard]] RgbaColour complement(bool gammaCorrect) const;
 };
-}
 }

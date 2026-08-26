@@ -17,8 +17,7 @@
 
 #pragma once
 
-namespace SGEXTN {
-namespace InternalTest {
+namespace SGEXTN::InternalTest {
 class BuildLah_SGEXTN_InternalTest ContainersTest {
 public:
     static void testEqualTo();
@@ -53,5 +52,4 @@ public:
     static void testHash();
     static void testAll();
 };
-}
 }
