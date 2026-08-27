@@ -16,7 +16,7 @@
 // BuildLah license check: SGEXTN 7.0.0
 
 #pragma once
-#include <SGEXTN/CoreText/private_api/TextBuffer.h>
+#include <SGEXTN/CoreText/String.h>
 
 namespace SGEXTN::Containers {
 template <typename T> class Span;
@@ -24,11 +24,9 @@ template <typename T> class Array;
 }
 
 namespace SGEXTN::CoreText {
-class String;
-
 class BuildLah_SGEXTN_CoreText Character {
 public:
-    SGEXTN::CoreText::TextBuffer private_data;
+    SGEXTN::CoreText::String private_data;
     explicit Character();
     Character(unsigned char c); //NOLINT(google-explicit-constructor)
     Character(const char* s); //NOLINT(google-explicit-constructor)

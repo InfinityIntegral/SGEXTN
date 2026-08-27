@@ -18,7 +18,7 @@
 #pragma once
 
 #ifndef SGEXTN_internal_permanentAllowDebug
-#pragma message("debug header included in __FILE__")
+#pragma message("debug header included")
 #endif
 
 #include <SGEXTN/CoreText/String.h>

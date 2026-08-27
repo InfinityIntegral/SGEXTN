@@ -17,8 +17,6 @@
 
 #pragma once
 #include <SGEXTN/Containers/UnorderedSet.h>
-#include <SGEXTN/Containers/EqualTo.h>
-#include <SGEXTN/Containers/Hash.h>
 
 namespace SGEXTN::Utilities {
 class Identifier;

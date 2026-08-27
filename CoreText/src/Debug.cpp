@@ -52,7 +52,7 @@ SGEXTN::CoreText::Debug::~Debug(){
         logMessage += debugInfo;
     }
     logMessage += SGEXTN::CoreText::Character('\0');
-    const char* cString = reinterpret_cast<const char*>(&logMessage.byteAt(0));
+    const char* cString = reinterpret_cast<const char*>(logMessage.getRawPointer());
     for(int i=0; i<(*SGEXTN::CoreText::Debug::logFunctionList).length(); i++){
         ((*SGEXTN::CoreText::Debug::logFunctionList).at(i))(cString);
     }

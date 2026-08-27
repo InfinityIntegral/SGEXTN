@@ -55,6 +55,7 @@ public:
     String(unsigned char c); //NOLINT(google-explicit-constructor)
     String(const char* s); //NOLINT(google-explicit-constructor)
     String(const SGEXTN::CoreText::Character& c); //NOLINT(google-explicit-constructor)
+    void appendInvalidCChar(unsigned char c);
     [[nodiscard]] bool operator==(const String& x) const;
     [[nodiscard]] bool operator!=(const String& x) const;
     [[nodiscard]] bool operator<(const String& x) const;
@@ -154,5 +155,7 @@ public:
     [[nodiscard]] SGEXTN::Containers::Array<int> getUnicode() const;
     [[nodiscard]] String getNormalised(SGEXTN::CoreText::NormalisationFormat format) const;
     [[nodiscard]] SGEXTN::CoreText::String getSimplestEquivalent(bool ignoreCase) const;
+    [[nodiscard]] unsigned char* getRawPointer();
+    [[nodiscard]] const unsigned char* getRawPointer() const;
 };
 }

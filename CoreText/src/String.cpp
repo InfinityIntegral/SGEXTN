@@ -440,7 +440,11 @@ SGEXTN::CoreText::String::String(const char* s){
 }
 
 SGEXTN::CoreText::String::String(const SGEXTN::CoreText::Character& c){
-    private_data.pushBack(c.private_data, 0, c.private_data.length());
+    (*this) += c.private_data;
+}
+
+void SGEXTN::CoreText::String::appendInvalidCChar(unsigned char c){
+    private_data.pushBack(c);
 }
 
 bool SGEXTN::CoreText::String::operator==(const SGEXTN::CoreText::String& x) const {
@@ -602,9 +606,11 @@ SGEXTN::CoreText::Character SGEXTN::CoreText::String::getCharacterAt(int i) cons
     if(i < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::getCharacterAt crashed because index is negative");}
     if(i >= characterLength()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::getCharacterAt crashed because index points beyond the end of the string");}
     private_computeOffsets();
+    SGEXTN::CoreText::String s;
+    s.private_data = SGEXTN::CoreText::TextBuffer();
+    s.private_data.pushBack(private_data, private_characterOffsets.at(i), private_characterOffsets.at(i + 1) - private_characterOffsets.at(i));
     SGEXTN::CoreText::Character c;
-    c.private_data = SGEXTN::CoreText::TextBuffer();
-    c.private_data.pushBack(private_data, private_characterOffsets.at(i), private_characterOffsets.at(i + 1) - private_characterOffsets.at(i));
+    c.private_data = s;
     return c;
 }
 
@@ -622,7 +628,7 @@ void SGEXTN::CoreText::String::setCharacterAt(int i, const SGEXTN::CoreText::Cha
     else{
         SGEXTN::CoreText::TextBuffer newBuffer;
         newBuffer.pushBack(private_data, 0, rangeBegin);
-        newBuffer.pushBack(c.private_data, 0, c.byteLength());
+        newBuffer.pushBack(c.private_data.private_data, 0, c.byteLength());
         newBuffer.pushBack(private_data, rangeEnd, byteLength() - rangeEnd);
         private_data = newBuffer;
     }
@@ -640,7 +646,7 @@ SGEXTN::CoreText::String SGEXTN::CoreText::String::fillBytes(unsigned char c) co
 SGEXTN::CoreText::String SGEXTN::CoreText::String::fillCharacters(const SGEXTN::CoreText::Character& c) const {
     SGEXTN::CoreText::String output;
     for(int i=0; i<characterLength(); i++){
-        output.private_data.pushBack(c.private_data, 0, c.byteLength());
+        output += c;
     }
     return output;
 }
@@ -1288,7 +1294,7 @@ SGEXTN::CoreText::String SGEXTN::CoreText::String::getTitlecase() const {
 
 SGEXTN::Containers::Array<int> SGEXTN::CoreText::String::getUnicode() const {
     SGEXTN::CoreText::Character unicodeExtractor;
-    unicodeExtractor.private_data = private_data;
+    unicodeExtractor.private_data = (*this);
     return unicodeExtractor.getUnicode();
 }
 
@@ -1323,4 +1329,12 @@ SGEXTN::CoreText::String SGEXTN::CoreText::String::getSimplestEquivalent(bool ig
         output += SGEXTN::CoreText::Character(codePoints.at(i));
     }
     return output;
+}
+
+unsigned char* SGEXTN::CoreText::String::getRawPointer(){
+    return &byteAt(0);
+}
+
+const unsigned char* SGEXTN::CoreText::String::getRawPointer() const {
+    return &byteAt(0);
 }

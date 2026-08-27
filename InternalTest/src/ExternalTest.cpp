@@ -634,7 +634,7 @@ void SGEXTN::InternalTest::ExternalTest::testNumericalParsing(){
     for(int i=0; i<numericParsingTestsDatabase.length(); i++){
         bool isValid = false;
         SGEXTN::CoreText::String nullTerminatedString = numericParsingTestsDatabase.at(i) + SGEXTN::CoreText::Character('\0');
-        const int expectedInt = parseCStringToInt(reinterpret_cast<const char*>(&nullTerminatedString.byteAt(0)), &isValid, 10);
+        const int expectedInt = parseCStringToInt(reinterpret_cast<const char*>(nullTerminatedString.getRawPointer()), &isValid, 10);
         if(isValid == true){
             bool parseSuccess = false;
             if(expectedInt != numericParsingTestsDatabase.at(i).parseToInt(&parseSuccess, 10) || parseSuccess == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String parse base 10 integer fail");}
@@ -657,7 +657,7 @@ void SGEXTN::InternalTest::ExternalTest::testNumericalParsing(){
             if(numericParsingTestsDatabase.at(i).parseToInt(&parseSuccess, 10) != 0 || parseSuccess == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String parse invalid integer fail");}
         }
         isValid = false;
-        const float expectedFloat = parseCStringToFloat(reinterpret_cast<const char*>(&nullTerminatedString.byteAt(0)), &isValid);
+        const float expectedFloat = parseCStringToFloat(reinterpret_cast<const char*>(nullTerminatedString.getRawPointer()), &isValid);
         if(isValid == true){
             bool parseSuccess = false;
             if(isCloseEnough(expectedFloat, numericParsingTestsDatabase.at(i).parseToFloat(&parseSuccess, 10)) == false || parseSuccess == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String parse base 10 floating point number fail");}
