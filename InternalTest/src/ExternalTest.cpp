@@ -80,12 +80,12 @@ SGEXTN::CoreText::String readFile(const SGEXTN::CoreText::String& filePath){
     return outputString;
 }
 
-SGEXTN::Containers::Array<SGEXTN::Containers::Array<SGEXTN::CoreText::String>> unicodeDatabase(0x110000, SGEXTN::Containers::Array<SGEXTN::CoreText::String>(15));
+SGEXTN::Containers::Array<SGEXTN::Containers::Array<SGEXTN::CoreText::String>> unicodeDatabase(0x110000, SGEXTN::Containers::Array<SGEXTN::CoreText::String>(15, ""));
 
 void fillUnicodeDatabase(){
     const SGEXTN::CoreText::String dataString = readFile("unicodedata.txt");
     SGEXTN::Containers::Array<SGEXTN::CoreText::String> dataTable = dataString.split('\n');
-    SGEXTN::Containers::Array<int> codePoint(dataTable.length());
+    SGEXTN::Containers::Array<int> codePoint(dataTable.length(), 0);
     for(int i=0; i<dataTable.length(); i++){
         codePoint.at(i) = dataTable.at(i).substringCharactersLeft(dataTable.at(i).findFirstCharactersFromLeft(';')).parseToInt(nullptr, 16);
     }
@@ -192,7 +192,7 @@ float parseRationalNumber(const SGEXTN::CoreText::String& s){
     return (static_cast<float>(numerator) / static_cast<float>(denominator));
 }
 
-SGEXTN::Containers::Array<SGEXTN::CoreText::String> graphemeBreakDatabase(0x110000);
+SGEXTN::Containers::Array<SGEXTN::CoreText::String> graphemeBreakDatabase(0x110000, "");
 
 void parseAuxillaryFile(const SGEXTN::CoreText::String& fileName, void (*toDoFunction)(int, const SGEXTN::CoreText::String&)){
     const SGEXTN::CoreText::String dataString = readFile(SGEXTN::CoreText::String(fileName + ".txt"));
@@ -244,7 +244,7 @@ SGEXTN::CoreText::GraphemeSegmentationType parseGraphemeSegmentationType(const S
     return SGEXTN::CoreText::GraphemeSegmentationType::Other;
 }
 
-SGEXTN::Containers::Array<SGEXTN::Containers::UnorderedSet<SGEXTN::CoreText::String>> derivedCoreDatabase(0x110000);
+SGEXTN::Containers::Array<SGEXTN::Containers::UnorderedSet<SGEXTN::CoreText::String>> derivedCoreDatabase(0x110000, SGEXTN::Containers::UnorderedSet<SGEXTN::CoreText::String>());
 
 void appendToDerivedCoreDatabase(int j, const SGEXTN::CoreText::String& propertyValue){
     derivedCoreDatabase.at(j).insert(propertyValue);
@@ -254,7 +254,7 @@ void fillDerivedCoreDatabase(){
     parseAuxillaryFile("derivedcoreproperties", &appendToDerivedCoreDatabase);
 }
 
-SGEXTN::Containers::Array<SGEXTN::CoreText::String> emojiTypeDatabase(0x110000);
+SGEXTN::Containers::Array<SGEXTN::CoreText::String> emojiTypeDatabase(0x110000, "");
 
 void setEmojiTypeDatabaseValue(int j, const SGEXTN::CoreText::String& propertyValue){
     emojiTypeDatabase.at(j) = propertyValue;
@@ -292,7 +292,7 @@ void fillRecomposeExclusionDatabase(){
     }
 }
 
-SGEXTN::Containers::Array<SGEXTN::Containers::UnorderedSet<SGEXTN::CoreText::String>> propertyListDatabase(0x110000);
+SGEXTN::Containers::Array<SGEXTN::Containers::UnorderedSet<SGEXTN::CoreText::String>> propertyListDatabase(0x110000, SGEXTN::Containers::UnorderedSet<SGEXTN::CoreText::String>());
 
 void appendToPropertyListDatabase(int j, const SGEXTN::CoreText::String& propertyValue){
     propertyListDatabase.at(j).insert(propertyValue);
@@ -317,7 +317,7 @@ void fillNormalisationTestDatabase(){
         const SGEXTN::CoreText::String c3 = parseCodePointList(testData.at(2));
         const SGEXTN::CoreText::String c4 = parseCodePointList(testData.at(3));
         const SGEXTN::CoreText::String c5 = parseCodePointList(testData.at(4));
-        normalisationTestDatabase.pushBack(SGEXTN::Containers::Array<SGEXTN::CoreText::String>(c1, c2, c3, c4, c5));
+        normalisationTestDatabase.pushBack(SGEXTN::Containers::Array<SGEXTN::CoreText::String>({c1, c2, c3, c4, c5}));
     }
 }
 

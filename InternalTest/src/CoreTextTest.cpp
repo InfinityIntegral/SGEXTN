@@ -189,8 +189,8 @@ void SGEXTN::InternalTest::CoreTextTest::testCharacter(){
     if(SGEXTN::CoreText::Character(0x0be6).getNumericalValue() != 0.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::Character get numerical value Tamil digit zero fail");}
     if(SGEXTN::CoreText::Character(' ').getNumericalValue() != SGEXTN::Math::FloatLimits<float>::negativeInfinity()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::Character get numerical value space fail");}
     if(SGEXTN::CoreText::Character(0xbd).getNumericalValue() != 0.5f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::Character get numerical value half fraction fail");}
-    SGEXTN::Containers::Array<unsigned char> serialiseArray(726);
-    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726);
+    SGEXTN::Containers::Array<unsigned char> serialiseArray(726, static_cast<unsigned char>(0));
+    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726, static_cast<unsigned char>(0));
     serialiseArray.at(0) = static_cast<unsigned char>(0x04);
     serialiseArray.at(1) = static_cast<unsigned char>(0x00);
     serialiseArray.at(2) = static_cast<unsigned char>(0x00);
@@ -496,7 +496,7 @@ void SGEXTN::InternalTest::CoreTextTest::testString(){
     if(changeCaseTestString.getLowercase() != U8(u8" ./aa\u03b1\u03b1\u0300\u01c6\u01c6\u01c6\u4000")){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String convert to uppercase fail");}
     if(changeCaseTestString.getTitlecase() != U8(u8" ./AA\u0391\u0391\u0300\u01c5\u01c5\u01c5\u4000")){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String convert to uppercase fail");}
     SGEXTN::Containers::Array<int> unicodeCodePoints = changeCaseTestString.getUnicode();
-    SGEXTN::Containers::Array<int> expectedCodePoints = SGEXTN::Containers::Array<int>(0x20, 0x2e, 0x2f, 0x61, 0x41, 0x391, 0x3b1, 0x300, 0x1c4, 0x1c5, 0x1c6, 0x4000);
+    SGEXTN::Containers::Array<int> expectedCodePoints = SGEXTN::Containers::Array<int>({0x20, 0x2e, 0x2f, 0x61, 0x41, 0x391, 0x3b1, 0x300, 0x1c4, 0x1c5, 0x1c6, 0x4000});
     if(unicodeCodePoints.length() != expectedCodePoints.length()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String extract Unicode code points fail");}
     for(int i=0; i<unicodeCodePoints.length(); i++){
         if(unicodeCodePoints.at(i) != expectedCodePoints.at(i)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String extract Unicode code points fail");}
@@ -505,8 +505,8 @@ void SGEXTN::InternalTest::CoreTextTest::testString(){
     if(unsimplifiedString.getSimplestEquivalent(false) != "Cafe at Yishun MRT TM NS11"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String case sensitive simplest string conversion fail");}
     if(unsimplifiedString.getSimplestEquivalent(true) != "cafe at yishun mrt tm ns11"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String case insensitive simplest string conversion fail");}
     const SGEXTN::CoreText::String sampleText = U8(u8"I\u2665\U0001f1f8\U0001f1ec");
-    SGEXTN::Containers::Array<unsigned char> serialiseArray(726);
-    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726);
+    SGEXTN::Containers::Array<unsigned char> serialiseArray(726, static_cast<unsigned char>(0));
+    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726, static_cast<unsigned char>(0));
     serialiseArray.at(0) = static_cast<unsigned char>(0x0c);
     serialiseArray.at(1) = static_cast<unsigned char>(0x00);
     serialiseArray.at(2) = static_cast<unsigned char>(0x00);

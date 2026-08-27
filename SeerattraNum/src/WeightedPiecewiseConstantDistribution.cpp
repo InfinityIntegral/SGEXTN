@@ -22,9 +22,9 @@
 #include <SGEXTN/Containers/Serialise.h>
 #include <SGEXTN/Containers/Span.h>
 
-SGEXTN::SeerattraNum::WeightedPiecewiseConstantDistribution::WeightedPiecewiseConstantDistribution() : SGEXTN::SeerattraNum::WeightedPiecewiseConstantDistribution(true, SGEXTN::Containers::Array<float>(1, 1.0f), SGEXTN::Containers::Array<float>(0.0f, 1.0f)){}
+SGEXTN::SeerattraNum::WeightedPiecewiseConstantDistribution::WeightedPiecewiseConstantDistribution() : SGEXTN::SeerattraNum::WeightedPiecewiseConstantDistribution(true, SGEXTN::Containers::Array<float>(1, 1.0f), SGEXTN::Containers::Array<float>({0.0f, 1.0f})){}
 
-SGEXTN::SeerattraNum::WeightedPiecewiseConstantDistribution::WeightedPiecewiseConstantDistribution(bool useGlobal, const SGEXTN::Containers::Array<float>& weights, const SGEXTN::Containers::Array<float>& boundaries) : private_weights(weights), private_boundaries(boundaries), private_prefixSums(0), private_rngLocator(useGlobal){
+SGEXTN::SeerattraNum::WeightedPiecewiseConstantDistribution::WeightedPiecewiseConstantDistribution(bool useGlobal, const SGEXTN::Containers::Array<float>& weights, const SGEXTN::Containers::Array<float>& boundaries) : private_weights(weights), private_boundaries(boundaries), private_rngLocator(useGlobal){
     if(weights.length() == 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedPiecewiseConstantDistribution constructor crashed because the array of weights is empty");}
     bool isAllZero = true;
     for(int i=0; i<weights.length(); i++){
@@ -45,8 +45,8 @@ bool SGEXTN::SeerattraNum::WeightedPiecewiseConstantDistribution::sendOut(const 
 
 bool SGEXTN::SeerattraNum::WeightedPiecewiseConstantDistribution::sendIn(SGEXTN::SeerattraNum::WeightedPiecewiseConstantDistribution& x, SGEXTN::Containers::Span<unsigned char> data){
     SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator(true);
-    SGEXTN::Containers::Array<float> weights(0);
-    SGEXTN::Containers::Array<float> boundaries(0);
+    SGEXTN::Containers::Array<float> weights;
+    SGEXTN::Containers::Array<float> boundaries;
     const bool isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, SGEXTN::Containers::Array<float>, SGEXTN::Containers::Array<float>>::sendIn(rngLocator, weights, boundaries, data);
     if(isValid == false || weights.length() == 0 || boundaries.length() != weights.length() + 1){return false;}
     bool allZero = true;
@@ -72,7 +72,7 @@ int SGEXTN::SeerattraNum::WeightedPiecewiseConstantDistribution::sizeIn(SGEXTN::
 }
 
 void SGEXTN::SeerattraNum::WeightedPiecewiseConstantDistribution::private_updatePrefixSums(){
-    private_prefixSums = SGEXTN::Containers::Array<float>(private_weights.length() + 1);
+    private_prefixSums = SGEXTN::Containers::Array<float>(private_weights.length() + 1, 0.0f);
     private_prefixSums.at(0) = 0.0f;
     for(int i=0; i<private_weights.length(); i++){
         private_prefixSums.at(i + 1) = private_prefixSums.at(i) + private_weights.at(i) * (private_boundaries.at(i + 1) - private_boundaries.at(i));
@@ -102,7 +102,7 @@ float SGEXTN::SeerattraNum::WeightedPiecewiseConstantDistribution::randomValue()
 
 SGEXTN::Containers::Array<float> SGEXTN::SeerattraNum::WeightedPiecewiseConstantDistribution::randomValueArray(int count){
     if(count < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedPiecewiseConstantDistribution::randomValueArray crashed because a negative number of outputs is requested");}
-    SGEXTN::Containers::Array<float> outputArray(count);
+    SGEXTN::Containers::Array<float> outputArray(count, 0.0f);
     for(int i=0; i<count; i++){
         outputArray.at(i) = randomValue();
     }

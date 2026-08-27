@@ -21,9 +21,9 @@
 #include <SGEXTN/Containers/Serialise.h>
 #include <SGEXTN/Containers/ForceCrash.h>
 
-template <typename T> SGEXTN::Containers::Hash<T>::Hash() : length(0), buffer(0){}
+template <typename T> SGEXTN::Containers::Hash<T>::Hash() : length(0){}
 
-template <typename T> SGEXTN::Containers::Hash<T>::Hash([[maybe_unused]] const SGEXTN::Containers::Hash<T>& x) : length(0), buffer(0){}
+template <typename T> SGEXTN::Containers::Hash<T>::Hash([[maybe_unused]] const SGEXTN::Containers::Hash<T>& x) : length(0){}
 
 template <typename T> SGEXTN::Containers::Hash<T>& SGEXTN::Containers::Hash<T>::operator=([[maybe_unused]] const SGEXTN::Containers::Hash<T>& x){
     return (*this);
@@ -46,7 +46,7 @@ template <typename T> int SGEXTN::Containers::Hash<T>::operator()(const T& x) co
     const int bufferLength = SGEXTN::Containers::Serialise<T>::sizeOut(x);
     if(bufferLength != length){
         length = bufferLength;
-        buffer = SGEXTN::Containers::Array<unsigned char>(length);
+        buffer = SGEXTN::Containers::Array<unsigned char>(length, static_cast<unsigned char>(0));
     }
     const bool isValid = SGEXTN::Containers::Serialise<T>::sendOut(x, SGEXTN::Containers::Span<unsigned char>(buffer));
     if(isValid == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Container::Hash crashed because the object could not be serialised");}

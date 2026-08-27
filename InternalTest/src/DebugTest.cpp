@@ -113,7 +113,7 @@ void SGEXTN::InternalTest::DebugTest::runTest(){
     SG(SGEXTN::CoreText::DebugPrintPointerMode::TryDeref)(constIntPointer);
     if(lastSentString != "&( 26 )"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreTest::Debug log const pointer try deref fail");}
     delete constIntPointer;
-    SG(SGEXTN::Containers::Array<int>(1, 2, 3, 4, 5));
+    SG(SGEXTN::Containers::Array<int>({1, 2, 3, 4, 5}));
     if(lastSentString != "[ 1, 2, 3, 4, 5 ]"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreTest::Debug log array fail");}
     SG(SGEXTN::CoreText::FloatPrecisionFormat::SignificantFigure);
     if(lastSentString != "FloatPrecisionFormat::SignificantFigure (0x01)"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreTest::Debug log enum class fail");}

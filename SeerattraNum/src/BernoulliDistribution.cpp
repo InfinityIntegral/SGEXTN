@@ -58,7 +58,7 @@ bool SGEXTN::SeerattraNum::BernoulliDistribution::randomValue(){
 
 SGEXTN::Containers::Array<bool> SGEXTN::SeerattraNum::BernoulliDistribution::randomValueArray(int count){
     if(count < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::BernoulliDistribution::randomValueArray crashed because a negative number of outputs is requested");}
-    SGEXTN::Containers::Array<bool> outputArray(count);
+    SGEXTN::Containers::Array<bool> outputArray(count, false);
     for(int i=0; i<count; i++){
         outputArray.at(i) = randomValue();
     }

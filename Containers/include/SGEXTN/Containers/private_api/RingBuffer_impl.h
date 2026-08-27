@@ -27,14 +27,14 @@ template <typename T> SGEXTN::Containers::RingBuffer<T>::RingBuffer() : private_
 template <typename T> SGEXTN::Containers::RingBuffer<T>::RingBuffer(int count, const T& defaultValue) : private_data(nullptr), private_start(0), private_length(count), private_memoryLength(count) {
     if(count > 0){private_data = new RingBufferSlot<T>[count];}
     for(int i=0; i<count; i++){
-        new(SGEXTN::Containers::PlacementNew::Placeholder, &(*(private_data + i)).object) T(defaultValue);
+        new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(&(*(private_data + i)).object)) T(defaultValue);
     }
 }
 
 template <typename T> SGEXTN::Containers::RingBuffer<T>::RingBuffer(const RingBuffer& x) : private_data(nullptr), private_start(0), private_length(x.length()), private_memoryLength(x.length()) {
     if(x.length() > 0){private_data = new RingBufferSlot<T>[x.length()];}
     for(int i=0; i<x.length(); i++){
-        new(SGEXTN::Containers::PlacementNew::Placeholder, &(*(private_data + i)).object) T(x.at(i));
+        new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(&(*(private_data + i)).object)) T(x.at(i));
     }
 }
 
@@ -49,7 +49,7 @@ template <typename T> SGEXTN::Containers::RingBuffer<T>& SGEXTN::Containers::Rin
     private_length = x.length();
     private_memoryLength = x.length();
     for(int i=0; i<x.length(); i++){
-        new(SGEXTN::Containers::PlacementNew::Placeholder, &(*(private_data + i)).object) T(x.at(i));
+        new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(&(*(private_data + i)).object)) T(x.at(i));
     }
     return (*this);
 }
@@ -62,6 +62,7 @@ template <typename T> SGEXTN::Containers::RingBuffer<T>::RingBuffer(RingBuffer&&
 }
 
 template <typename T> SGEXTN::Containers::RingBuffer<T>& SGEXTN::Containers::RingBuffer<T>::operator=(RingBuffer&& x) noexcept {
+    if(this == &x){return (*this);}
     for(int i=0; i<private_length; i++){
         at(i).~T();
     }
@@ -128,7 +129,7 @@ template <typename T> int SGEXTN::Containers::RingBuffer<T>::length() const {
 template <typename T> void SGEXTN::Containers::RingBuffer<T>::pushBack(const T& x){
     if(private_length == private_memoryLength){reserve(3 * private_memoryLength / 2 + 1);}
     private_length++;
-    new(SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(&(*(private_data + private_getMemoryIndex(private_length - 1))).object)) T(x);
+    new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(&(*(private_data + private_getMemoryIndex(private_length - 1))).object)) T(x);
 }
 
 template <typename T> void SGEXTN::Containers::RingBuffer<T>::popBack(){
@@ -141,7 +142,7 @@ template <typename T> void SGEXTN::Containers::RingBuffer<T>::pushFront(const T&
     private_length++;
     private_start--;
     if(private_start < 0){private_start += private_memoryLength;}
-    new(SGEXTN::Containers::PlacementNew::Placeholder, &(*(private_data + private_getMemoryIndex(0))).object) T(x);
+    new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(&(*(private_data + private_getMemoryIndex(0))).object)) T(x);
 }
 
 template <typename T> void SGEXTN::Containers::RingBuffer<T>::popFront(){
@@ -155,7 +156,7 @@ template <typename T> void SGEXTN::Containers::RingBuffer<T>::reserve(int newMem
     if(newMemoryLength <= private_memoryLength){return;}
     RingBufferSlot<T>* newPointer = new RingBufferSlot<T>[newMemoryLength];
     for(int i=0; i<private_length; i++){
-        new(SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(&(*(newPointer + i)).object)) T(static_cast<T&&>(at(i)));
+        new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(&(*(newPointer + i)).object)) T(static_cast<T&&>(at(i)));
         at(i).~T();
     }
     delete[] private_data;

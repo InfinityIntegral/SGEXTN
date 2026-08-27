@@ -145,40 +145,43 @@ template <typename T> bool SGEXTN::Containers::Serialise<SGEXTN::Containers::Arr
 }
 
 template <typename T> bool SGEXTN::Containers::Serialise<SGEXTN::Containers::Array<T>>::sendIn(SGEXTN::Containers::Array<T>& x, SGEXTN::Containers::Span<unsigned char> data){
-    if(data.length() != SGEXTN::Containers::Serialise<SGEXTN::Containers::Array<T>>::sizeIn(data)){return false;}
-    bool success = false;
-    bool variableSize = false;
-    int arrayLength = 0;
-    success = SGEXTN::Containers::Serialise<bool, int>::sendIn(variableSize, arrayLength, data.subspan(0, 5));
-    if(success == false || arrayLength < 0){return false;}
-    if(arrayLength == 0){
-        x = SGEXTN::Containers::Array<T>(0);
-        return true;
-    }
-    if(variableSize == false){
-        int elementLength = 0;
-        success = SGEXTN::Containers::Serialise<int>::sendIn(elementLength, data.subspan(5, 4));
-        if(success == false || elementLength <= 0){return false;}
-        x = SGEXTN::Containers::Array<T>(arrayLength);
-        for(int i=0; i<arrayLength; i++){
-            success = SGEXTN::Containers::Serialise<T>::sendIn(x.at(i), data.subspan(9 + i * elementLength, elementLength));
-            if(success == false){return false;}
+    if constexpr(requires{T();} == true){
+        if(data.length() != SGEXTN::Containers::Serialise<SGEXTN::Containers::Array<T>>::sizeIn(data)){return false;}
+        bool success = false;
+        bool variableSize = false;
+        int arrayLength = 0;
+        success = SGEXTN::Containers::Serialise<bool, int>::sendIn(variableSize, arrayLength, data.subspan(0, 5));
+        if(success == false || arrayLength < 0){return false;}
+        if(arrayLength == 0){
+            x = SGEXTN::Containers::Array<T>();
+            return true;
+        }
+        if(variableSize == false){
+            int elementLength = 0;
+            success = SGEXTN::Containers::Serialise<int>::sendIn(elementLength, data.subspan(5, 4));
+            if(success == false || elementLength <= 0){return false;}
+            x = SGEXTN::Containers::Array<T>(arrayLength, T());
+            for(int i=0; i<arrayLength; i++){
+                success = SGEXTN::Containers::Serialise<T>::sendIn(x.at(i), data.subspan(9 + i * elementLength, elementLength));
+                if(success == false){return false;}
+            }
+            return true;
+        }
+        {
+            int offset = 5;
+            x = SGEXTN::Containers::Array<T>(arrayLength, T());
+            for(int i=0; i<arrayLength; i++){
+                int objLength = 0;
+                success = SGEXTN::Containers::Serialise<int>::sendIn(objLength, data.subspan(offset, 4));
+                if(success == false || objLength <= 0){return false;}
+                success = SGEXTN::Containers::Serialise<T>::sendIn(x.at(i), data.subspan(offset + 4, objLength));
+                if(success == false){return false;}
+                offset += (4 + objLength);
+            }
         }
         return true;
     }
-    {
-        int offset = 5;
-        x = SGEXTN::Containers::Array<T>(arrayLength);
-        for(int i=0; i<arrayLength; i++){
-            int objLength = 0;
-            success = SGEXTN::Containers::Serialise<int>::sendIn(objLength, data.subspan(offset, 4));
-            if(success == false || objLength <= 0){return false;}
-            success = SGEXTN::Containers::Serialise<T>::sendIn(x.at(i), data.subspan(offset + 4, objLength));
-            if(success == false){return false;}
-            offset += (4 + objLength);
-        }
-    }
-    return true;
+    else{SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sendIn SGEXTN::Containers::Array<T> requires that T be default constructible");}
 }
 
 template <typename T> int SGEXTN::Containers::Serialise<SGEXTN::Containers::Array<T>>::sizeOut(const SGEXTN::Containers::Array<T>& x){
@@ -200,26 +203,29 @@ template <typename T> int SGEXTN::Containers::Serialise<SGEXTN::Containers::Arra
 }
 
 template <typename T> int SGEXTN::Containers::Serialise<SGEXTN::Containers::Array<T>>::sizeIn(SGEXTN::Containers::Span<unsigned char> data){
-    if(data.length() < 5){return -1;}
-    bool variableSize = false;
-    int arrayLength = 0;
-    bool success = SGEXTN::Containers::Serialise<bool, int>::sendIn(variableSize, arrayLength, data.subspanLeft(5));
-    if(success == false || arrayLength < 0){return -1;}
-    if(arrayLength == 0){return 5;}
-    if(variableSize == false){
-        if(data.length() < 9){return -1;}
-        int elementLength = 0;
-        success = SGEXTN::Containers::Serialise<int>::sendIn(elementLength, data.subspan(5, 4));
-        if(success == false || elementLength <= 0 || data.length() < 9 + arrayLength * elementLength){return -1;}
-        return (9 + arrayLength * elementLength);
+    if constexpr(requires{T();} == true){
+        if(data.length() < 5){return -1;}
+        bool variableSize = false;
+        int arrayLength = 0;
+        bool success = SGEXTN::Containers::Serialise<bool, int>::sendIn(variableSize, arrayLength, data.subspanLeft(5));
+        if(success == false || arrayLength < 0){return -1;}
+        if(arrayLength == 0){return 5;}
+        if(variableSize == false){
+            if(data.length() < 9){return -1;}
+            int elementLength = 0;
+            success = SGEXTN::Containers::Serialise<int>::sendIn(elementLength, data.subspan(5, 4));
+            if(success == false || elementLength <= 0 || data.length() < 9 + arrayLength * elementLength){return -1;}
+            return (9 + arrayLength * elementLength);
+        }
+        int offset = 5;
+        for(int i=0; i<arrayLength; i++){
+            if(data.length() < offset + 4){return -1;}
+            int objLength = 0;
+            success = SGEXTN::Containers::Serialise<int>::sendIn(objLength, data.subspan(offset, 4));
+            offset += (4 + objLength);
+            if(success == false || objLength <= 0 || data.length() < offset){return -1;}
+        }
+        return offset;
     }
-    int offset = 5;
-    for(int i=0; i<arrayLength; i++){
-        if(data.length() < offset + 4){return -1;}
-        int objLength = 0;
-        success = SGEXTN::Containers::Serialise<int>::sendIn(objLength, data.subspan(offset, 4));
-        offset += (4 + objLength);
-        if(success == false || objLength <= 0 || data.length() < offset){return -1;}
-    }
-    return offset;
+    else{SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sendIn SGEXTN::Containers::Array<T> requires that T be default constructible, it is meaningless to use sizeIn if sendIn is disabled");}
 }

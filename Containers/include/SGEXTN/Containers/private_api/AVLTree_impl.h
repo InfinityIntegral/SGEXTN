@@ -62,6 +62,7 @@ template <typename Key, typename Value, typename Comparator> SGEXTN::Containers:
 }
 
 template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTree<Key, Value, Comparator>& SGEXTN::Containers::AVLTree<Key, Value, Comparator>::operator=(AVLTree&& x) noexcept {
+    if(this == &x){return (*this);}
     if(root != nullptr){recursiveDeleteAtRoot();}
     root = x.root;
     x.root = nullptr;

@@ -53,7 +53,7 @@ void SGEXTN::SeerattraNum::UnitSphereSample::seed(const SGEXTN::Containers::Arra
 
 SGEXTN::Containers::Array<float> SGEXTN::SeerattraNum::UnitSphereSample::randomPoint(int dimensions){
     if(dimensions <= 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UnitSphereSample::randomPoint crashed because the requested number of dimensions is nonpositive");}
-    SGEXTN::Containers::Array<float> outputArray(dimensions);
+    SGEXTN::Containers::Array<float> outputArray(dimensions, 0.0f);
     for(int i=0; i<dimensions; i++){
         outputArray.at(i) = private_normalDistribution.private_randomValue(private_rngLocator);
     }

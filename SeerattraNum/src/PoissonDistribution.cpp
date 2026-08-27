@@ -100,7 +100,7 @@ int SGEXTN::SeerattraNum::PoissonDistribution::randomValue(){
 
 SGEXTN::Containers::Array<int> SGEXTN::SeerattraNum::PoissonDistribution::randomValueArray(int count){
     if(count < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::PoissonDistribution::randomValueArray crashed because a negative number of outputs is requested");}
-    SGEXTN::Containers::Array<int> outputArray(count);
+    SGEXTN::Containers::Array<int> outputArray(count, 0);
     for(int i=0; i<count; i++){
         outputArray.at(i) = randomValue();
     }

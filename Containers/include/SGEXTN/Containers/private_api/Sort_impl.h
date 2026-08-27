@@ -24,7 +24,7 @@ template <typename T, typename Comparator> SGEXTN::Containers::Sort<T, Comparato
         private_secondBuffer = static_cast<T*>(::operator new(length * sizeof(T)));
     }
     for(int i=0; i<length; i++){
-        new(SGEXTN::Containers::PlacementNew::Placeholder, private_secondBuffer + i) T(*(private_firstBuffer + i));
+        new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(private_secondBuffer + i)) T(*(private_firstBuffer + i));
     }
 }
 
@@ -32,7 +32,7 @@ template <typename T, typename Comparator> SGEXTN::Containers::Sort<T, Comparato
     for(int i=0; i<private_length; i++){
         (*(private_secondBuffer + i)).~T();
     }
-    ::operator delete(private_secondBuffer);
+    ::operator delete(static_cast<void*>(private_secondBuffer));
 }
 
 template <typename T, typename Comparator> void SGEXTN::Containers::Sort<T, Comparator>::private_insertSort(int left, int right){

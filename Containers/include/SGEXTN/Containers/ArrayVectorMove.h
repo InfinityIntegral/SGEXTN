@@ -18,6 +18,9 @@
 #pragma once
 
 namespace SGEXTN::Containers {
+template <typename T> class Array;
+template <typename T> class Vector;
+
 template <typename T> class ArrayVectorMove {
 public:
     static Vector<T> convertToVectorAndDestroyArray(SGEXTN::Containers::Array<T>& arr);

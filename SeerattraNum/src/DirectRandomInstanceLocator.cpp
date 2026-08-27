@@ -43,6 +43,7 @@ SGEXTN::SeerattraNum::DirectRandomInstanceLocator::DirectRandomInstanceLocator(D
 }
 
 SGEXTN::SeerattraNum::DirectRandomInstanceLocator& SGEXTN::SeerattraNum::DirectRandomInstanceLocator::operator=(DirectRandomInstanceLocator&& x) noexcept {
+    if(this == &x){return (*this);}
     if(private_ownsRng == true){delete private_rng;}
     private_ownsRng = x.private_ownsRng;
     private_rng = x.private_rng;
