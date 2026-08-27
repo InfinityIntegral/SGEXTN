@@ -57,6 +57,8 @@ Checks: '
   altera-struct-pack-align,
   google-explicit-constructor
 '
+CheckOptions:
+  misc-include-cleaner.IgnoreHeaders: '.*_impl\.h$'
 WarningsAsErrors: ''
 HeaderFileExtensions: ['', 'h']
 ImplementationFileExtensions: ['cpp']

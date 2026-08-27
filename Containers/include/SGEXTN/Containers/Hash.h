@@ -17,6 +17,7 @@
 
 #pragma once
 #include <SGEXTN/Containers/Span.h>
+#include <SGEXTN/Containers/Array.h>
 
 namespace SGEXTN::Containers {
 template <typename T> class Hash {

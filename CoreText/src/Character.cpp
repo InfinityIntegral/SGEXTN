@@ -16,7 +16,6 @@
 // BuildLah license check: SGEXTN 7.0.0
 
 #include <SGEXTN/CoreText/Character.h>
-#include <SGEXTN/CoreText/private_api/TextBuffer.h>
 #include <SGEXTN/Containers/ForceCrash.h>
 #include <SGEXTN/Containers/Array.h>
 #include <SGEXTN/CoreText/String.h>
@@ -29,21 +28,21 @@
 
 namespace {
 void appendUnicode(int unicode, SGEXTN::CoreText::Character& c){
-    if(unicode < 0x80){c.private_data.pushBack(static_cast<unsigned char>(unicode));}
+    if(unicode < 0x80){c.private_data.appendInvalidCChar(static_cast<unsigned char>(unicode));}
     else if(unicode < 0x800){
-        c.private_data.pushBack(static_cast<unsigned char>(0xc0 + (unicode >> 6)));
-        c.private_data.pushBack(static_cast<unsigned char>(0x80 + (unicode & 0x3f)));
+        c.private_data.appendInvalidCChar(static_cast<unsigned char>(0xc0 + (unicode >> 6)));
+        c.private_data.appendInvalidCChar(static_cast<unsigned char>(0x80 + (unicode & 0x3f)));
     }
     else if(unicode < 0x10000){
-        c.private_data.pushBack(static_cast<unsigned char>(0xe0 + (unicode >> 12)));
-        c.private_data.pushBack(static_cast<unsigned char>(0x80 + ((unicode >> 6) & 0x3f)));
-        c.private_data.pushBack(static_cast<unsigned char>(0x80 + (unicode & 0x3f)));
+        c.private_data.appendInvalidCChar(static_cast<unsigned char>(0xe0 + (unicode >> 12)));
+        c.private_data.appendInvalidCChar(static_cast<unsigned char>(0x80 + ((unicode >> 6) & 0x3f)));
+        c.private_data.appendInvalidCChar(static_cast<unsigned char>(0x80 + (unicode & 0x3f)));
     }
     else if(unicode < 0x110000){
-        c.private_data.pushBack(static_cast<unsigned char>(0xf0 + (unicode >> 18)));
-        c.private_data.pushBack(static_cast<unsigned char>(0x80 + ((unicode >> 12) & 0x3f)));
-        c.private_data.pushBack(static_cast<unsigned char>(0x80 + ((unicode >> 6) & 0x3f)));
-        c.private_data.pushBack(static_cast<unsigned char>(0x80 + (unicode & 0x3f)));
+        c.private_data.appendInvalidCChar(static_cast<unsigned char>(0xf0 + (unicode >> 18)));
+        c.private_data.appendInvalidCChar(static_cast<unsigned char>(0x80 + ((unicode >> 12) & 0x3f)));
+        c.private_data.appendInvalidCChar(static_cast<unsigned char>(0x80 + ((unicode >> 6) & 0x3f)));
+        c.private_data.appendInvalidCChar(static_cast<unsigned char>(0x80 + (unicode & 0x3f)));
     }
 }
 
@@ -61,13 +60,13 @@ SGEXTN::CoreText::Character::Character(){
 
 SGEXTN::CoreText::Character::Character(unsigned char c){
     if(c > 0x7f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String constructor crashed because the given unsigned char does not represent a valid ASCII character");}
-    private_data.pushBack(c);
+    private_data.appendInvalidCChar(c);
 }
 
 SGEXTN::CoreText::Character::Character(const char* s){
     const SGEXTN::CoreText::String validityTest(s);
     if(validityTest.characterLength() != 1){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::Character constructor crashed as passed string literal does not represent a single character");}
-    private_data.pushBack(s);
+    private_data += s;
 }
 
 SGEXTN::CoreText::Character::Character(int unicode){
@@ -132,7 +131,7 @@ int SGEXTN::CoreText::Character::sizeIn(SGEXTN::Containers::Span<unsigned char> 
 }
 
 int SGEXTN::CoreText::Character::byteLength() const {
-    return private_data.length();
+    return private_data.byteLength();
 }
 
 unsigned char& SGEXTN::CoreText::Character::byteAt(int i){
@@ -275,7 +274,7 @@ bool SGEXTN::CoreText::Character::isTitlecase() const {
 SGEXTN::CoreText::Character SGEXTN::CoreText::Character::getUppercase() const {
     if(byteLength() == 1){return SGEXTN::CoreText::Character(SGEXTN::CoreText::UnicodeQuery::getUppercase(static_cast<int>(byteAt(0))));}
     SGEXTN::CoreText::Character output;
-    output.private_data = SGEXTN::CoreText::TextBuffer();
+    output.private_data = "";
     SGEXTN::Containers::Array<int> unicode = getUnicode();
     for(int i=0; i<unicode.length(); i++){
         appendUnicode(SGEXTN::CoreText::UnicodeQuery::getUppercase(unicode.at(i)), output);
@@ -286,7 +285,7 @@ SGEXTN::CoreText::Character SGEXTN::CoreText::Character::getUppercase() const {
 SGEXTN::CoreText::Character SGEXTN::CoreText::Character::getLowercase() const {
     if(byteLength() == 1){return SGEXTN::CoreText::Character(SGEXTN::CoreText::UnicodeQuery::getLowercase(static_cast<int>(byteAt(0))));}
     SGEXTN::CoreText::Character output;
-    output.private_data = SGEXTN::CoreText::TextBuffer();
+    output.private_data = "";
     SGEXTN::Containers::Array<int> unicode = getUnicode();
     for(int i=0; i<unicode.length(); i++){
         appendUnicode(SGEXTN::CoreText::UnicodeQuery::getLowercase(unicode.at(i)), output);
@@ -297,7 +296,7 @@ SGEXTN::CoreText::Character SGEXTN::CoreText::Character::getLowercase() const {
 SGEXTN::CoreText::Character SGEXTN::CoreText::Character::getTitlecase() const {
     if(byteLength() == 1){return SGEXTN::CoreText::Character(SGEXTN::CoreText::UnicodeQuery::getTitlecase(static_cast<int>(byteAt(0))));}
     SGEXTN::CoreText::Character output;
-    output.private_data = SGEXTN::CoreText::TextBuffer();
+    output.private_data = "";
     SGEXTN::Containers::Array<int> unicode = getUnicode();
     for(int i=0; i<unicode.length(); i++){
         appendUnicode(SGEXTN::CoreText::UnicodeQuery::getTitlecase(unicode.at(i)), output);
