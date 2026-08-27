@@ -422,6 +422,7 @@ SGEXTN::CoreText::String& SGEXTN::CoreText::String::operator=(const SGEXTN::Core
 SGEXTN::CoreText::String::String(SGEXTN::CoreText::String&& x) noexcept : private_data(static_cast<SGEXTN::CoreText::TextBuffer&&>(x.private_data)), private_characterOffsets(static_cast<SGEXTN::Containers::Vector<int>&&>(x.private_characterOffsets)) {}
 
 SGEXTN::CoreText::String& SGEXTN::CoreText::String::operator=(SGEXTN::CoreText::String&& x) noexcept {
+    if(this == &x){return (*this);}
     private_data = static_cast<SGEXTN::CoreText::TextBuffer&&>(x.private_data);
     private_characterOffsets = static_cast<SGEXTN::Containers::Vector<int>&&>(x.private_characterOffsets);
     return (*this);
@@ -532,7 +533,7 @@ const unsigned char& SGEXTN::CoreText::String::byteAt(int i) const {
 void SGEXTN::CoreText::String::private_computeOffsets() const {
     if(private_characterOffsets.length() > 0){return;}
     SGEXTN::Containers::Array<int> unicodeList = getUnicode();
-    SGEXTN::Containers::Array<int> codePointOffset(unicodeList.length());
+    SGEXTN::Containers::Array<int> codePointOffset(unicodeList.length(), 0);
     int currentCodePointOffset = 0;
     for(int i=0; i<unicodeList.length(); i++){
         codePointOffset.at(i) = currentCodePointOffset;
@@ -541,8 +542,8 @@ void SGEXTN::CoreText::String::private_computeOffsets() const {
         else if(unicodeList.at(i) <= 0xffff){currentCodePointOffset += 3;}
         else{currentCodePointOffset += 4;}
     }
-    SGEXTN::Containers::Array<SGEXTN::CoreText::GraphemeSegmentationType> segmentationTypes(unicodeList.length());
-    SGEXTN::Containers::Array<SGEXTN::CoreText::GraphemeRuleRelatedType> ruleRelatedTypes(unicodeList.length());
+    SGEXTN::Containers::Array<SGEXTN::CoreText::GraphemeSegmentationType> segmentationTypes(unicodeList.length(), SGEXTN::CoreText::GraphemeSegmentationType::Other);
+    SGEXTN::Containers::Array<SGEXTN::CoreText::GraphemeRuleRelatedType> ruleRelatedTypes(unicodeList.length(), SGEXTN::CoreText::GraphemeRuleRelatedType::None);
     for(int i=0; i<unicodeList.length(); i++){
         segmentationTypes.at(i) = SGEXTN::CoreText::UnicodeQuery::getGraphemeSegmentationType(unicodeList.at(i));
         ruleRelatedTypes.at(i) = SGEXTN::CoreText::UnicodeQuery::getGraphemeRuleRelatedType(unicodeList.at(i));

@@ -62,7 +62,7 @@ float SGEXTN::SeerattraNum::ChiSquaredDistribution::randomValue(){
 
 SGEXTN::Containers::Array<float> SGEXTN::SeerattraNum::ChiSquaredDistribution::randomValueArray(int count){
     if(count < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::ChiSquaredDistribution::randomValueArray crashed because a negative number of outputs is requested");}
-    SGEXTN::Containers::Array<float> outputArray(count);
+    SGEXTN::Containers::Array<float> outputArray(count, 0.0f);
     for(int i=0; i<count; i++){
         outputArray.at(i) = randomValue();
     }

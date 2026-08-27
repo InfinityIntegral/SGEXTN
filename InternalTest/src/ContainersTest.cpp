@@ -243,11 +243,11 @@ void SGEXTN::InternalTest::ContainersTest::testEqualTo(){
 }
 
 void SGEXTN::InternalTest::ContainersTest::testArray(){
-    SGEXTN::Containers::Array<int> arr(1, 2, 3, 4, 5);
+    SGEXTN::Containers::Array<int> arr({1, 2, 3, 4, 5});
     if(arr.at(0) != 1 || arr.at(1) != 2 || arr.at(2) != 3 || arr.at(3) != 4 || arr.at(4) != 5 || arr.length() != 5){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Array - init list fail");}
     arr = SGEXTN::Containers::Array<int>(2, 26);
     if(arr.at(0) != 26 || arr.at(1) != 26 || arr.length() != 2){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Array - move assign fail");}
-    SGEXTN::Containers::Array<int> arr0(3);
+    SGEXTN::Containers::Array<int> arr0(3, 0);
     arr0.at(0) = 726;
     if(arr0.at(0) != 726){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Array - assign to element fail");}
     arr0 = arr;
@@ -255,7 +255,7 @@ void SGEXTN::InternalTest::ContainersTest::testArray(){
     if(arr0.length() != 2){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Array - get length info fail");}
     arr0.fill(-1);
     if(arr0.at(0) != -1 || arr0.at(1) != -1){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Array - fill with default value fail");}
-    arr = SGEXTN::Containers::Array<int>(1000);
+    arr = SGEXTN::Containers::Array<int>(1000, 0);
     for(int i=0; i<1000; i++){
         arr.at(i) = 1000 - i;
     }
@@ -266,8 +266,8 @@ void SGEXTN::InternalTest::ContainersTest::testArray(){
 }
 
 void SGEXTN::InternalTest::ContainersTest::testSpan(){
-    SGEXTN::Containers::Array<int> arr(1, 2, 3, 4, 5);
-    SGEXTN::Containers::Span<int> span(arr.private_data, 5);
+    SGEXTN::Containers::Array<int> arr({1, 2, 3, 4, 5});
+    SGEXTN::Containers::Span<int> span(arr, 0, 5);
     if(span.at(0) != 1 || span.at(1) != 2 || span.at(2) != 3 || span.at(3) != 4 || span.at(4) != 5){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Span - bind to data fail");}
     if(span.length() != 5){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Span - retrieving length fail");}
     arr.at(3) = 26;
@@ -280,11 +280,11 @@ void SGEXTN::InternalTest::ContainersTest::testSpan(){
     if(subspanLeft.at(0) != 1 || subspanLeft.at(1) != 2 || subspanLeft.length() != 2){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Span - subspan left fail");}
     SGEXTN::Containers::Span<int> subspanRight = span.subspanRight(2);
     if(subspanRight.at(0) != 26 || subspanRight.at(1) != 5 || subspanRight.length() != 2){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Span - subspan right fail");}
-    arr = SGEXTN::Containers::Array<int>(1000);
+    arr = SGEXTN::Containers::Array<int>(1000, 0);
     for(int i=0; i<1000; i++){
         arr.at(i) = i + 1;
     }
-    span = SGEXTN::Containers::Span<int>(arr.private_data, 1000);
+    span = SGEXTN::Containers::Span<int>(arr, 0, 1000);
     span.sort<SGEXTN::Containers::MoreThan<int>>(0, span.length());
     for(int i=0; i<1000; i++){
         if(arr.at(i) != 1000 - i){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Span - sort array failed");}
@@ -1082,7 +1082,7 @@ void SGEXTN::InternalTest::ContainersTest::testUnorderedMapConstructible(){
 }
 
 void SGEXTN::InternalTest::ContainersTest::testArrayVectorMove(){
-    SGEXTN::Containers::Array<int> arr = SGEXTN::Containers::Array<int>(1, 2, 3, 4, 5);
+    SGEXTN::Containers::Array<int> arr = SGEXTN::Containers::Array<int>({1, 2, 3, 4, 5});
     SGEXTN::Containers::Vector<int> v = SGEXTN::Containers::ArrayVectorMove<int>::convertToVectorAndDestroyArray(arr);
     if(arr.length() != 0 || v.length() != 5 || v.at(0) != 1 || v.at(1) != 2 || v.at(2) != 3 || v.at(3) != 4 || v.at(4) != 5){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Vector - convert array to vector fail");}
     arr = SGEXTN::Containers::ArrayVectorMove<int>::convertToArrayAndDestroyVector(v);
@@ -1091,8 +1091,8 @@ void SGEXTN::InternalTest::ContainersTest::testArrayVectorMove(){
 
 void SGEXTN::InternalTest::ContainersTest::testSerialise(){
     bool isValid = false;
-    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726);
-    SGEXTN::Containers::Array<unsigned char> targetArray(726);
+    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726, static_cast<unsigned char>(0));
+    SGEXTN::Containers::Array<unsigned char> targetArray(726, static_cast<unsigned char>(0));
     targetArray.at(0) = static_cast<unsigned char>(1);
     isValid = SGEXTN::Containers::Serialise<bool>::sendOut(true, makeSpan(serialiseDestination, 1));
     if(isValid == false || isBitwiseIdentical(1, serialiseDestination, targetArray) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sendOut bool fail");}
@@ -1266,10 +1266,10 @@ void SGEXTN::InternalTest::ContainersTest::testSerialise(){
     isValid = SGEXTN::Containers::Serialise<int>::sendOut(26, makeSpan(targetArray, 9, 4));
     isValid = SGEXTN::Containers::Serialise<int>::sendOut(726, makeSpan(targetArray, 13, 4));
     isValid = SGEXTN::Containers::Serialise<int>::sendOut(1965, makeSpan(targetArray, 17, 4));
-    const SGEXTN::Containers::Array<int> sampleArray(26, 726, 1965);
+    const SGEXTN::Containers::Array<int> sampleArray({26, 726, 1965});
     isValid = SGEXTN::Containers::Serialise<SGEXTN::Containers::Array<int>>::sendOut(sampleArray, makeSpan(serialiseDestination, 21));
     if(isValid == false || isBitwiseIdentical(21, serialiseDestination, targetArray) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sendOut constant size array fail");}
-    SGEXTN::Containers::Array<int> csa(0);
+    SGEXTN::Containers::Array<int> csa;
     isValid = false;
     isValid = SGEXTN::Containers::Serialise<SGEXTN::Containers::Array<int>>::sendIn(csa, makeSpan(targetArray, 21));
     if(isValid == false || (csa == sampleArray) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sendIn constant size array fail");}
@@ -1292,11 +1292,11 @@ void SGEXTN::InternalTest::ContainersTest::testSerialise(){
     isValid = SGEXTN::Containers::Serialise<int>::sendOut(26, makeSpan(targetArray, 39, 4));
     isValid = SGEXTN::Containers::Serialise<int>::sendOut(726, makeSpan(targetArray, 43, 4));
     isValid = SGEXTN::Containers::Serialise<int>::sendOut(1965, makeSpan(targetArray, 47, 4));
-    SGEXTN::Containers::Array<SGEXTN::Containers::Array<int>> otherSampleArray(SGEXTN::Containers::Array<int>(2, 26), SGEXTN::Containers::Array<int>(26, 726, 1965));
+    SGEXTN::Containers::Array<SGEXTN::Containers::Array<int>> otherSampleArray({SGEXTN::Containers::Array<int>({26, 726}), SGEXTN::Containers::Array<int>({26, 726, 1965})});
     otherSampleArray.at(0).at(1) = 726;
     isValid = SGEXTN::Containers::Serialise<SGEXTN::Containers::Array<SGEXTN::Containers::Array<int>>>::sendOut(otherSampleArray, makeSpan(serialiseDestination, 51));
     if(isValid == false || isBitwiseIdentical(51, serialiseDestination, targetArray) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sendOut variable size array fail");}
-    SGEXTN::Containers::Array<SGEXTN::Containers::Array<int>> vsa(0, SGEXTN::Containers::Array<int>(0));
+    SGEXTN::Containers::Array<SGEXTN::Containers::Array<int>> vsa(0, SGEXTN::Containers::Array<int>());
     isValid = false;
     isValid = SGEXTN::Containers::Serialise<SGEXTN::Containers::Array<SGEXTN::Containers::Array<int>>>::sendIn(vsa, makeSpan(targetArray, 51));
     if(isValid == false || (vsa == otherSampleArray) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sendIn variable size array fail");}
@@ -1305,7 +1305,7 @@ void SGEXTN::InternalTest::ContainersTest::testSerialise(){
 }
 
 void SGEXTN::InternalTest::ContainersTest::testHash(){
-    SGEXTN::Containers::Array<int> hashArray(-164224238, -557982743, -1273014985, 617801298, -158150022, 251178180, -1306928695, 665526947, -2112254955, 413336391, -1140286684, 1467775364, 1531109094, -1313695634, 807995229, 1343278648, 1017936248, -1645743309, -2128698606, 840851170, -198344579, 1859424536, 1925008793, -1242082681, -1634002473, 1301599632);
+    SGEXTN::Containers::Array<int> hashArray({-164224238, -557982743, -1273014985, 617801298, -158150022, 251178180, -1306928695, 665526947, -2112254955, 413336391, -1140286684, 1467775364, 1531109094, -1313695634, 807995229, 1343278648, 1017936248, -1645743309, -2128698606, 840851170, -198344579, 1859424536, 1925008793, -1242082681, -1634002473, 1301599632});
     const SGEXTN::Containers::Hash<int> hash;
     for(int i=0; i<26; i++){
         if(hash(i) != hashArray.at(i)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Hash hash algorithm stability preservation fail");}

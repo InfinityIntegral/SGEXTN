@@ -142,8 +142,8 @@ void SGEXTN::InternalTest::UtilitiesTest::testRgbaColour(){
     if(SGEXTN::Utilities::RgbaColour(255, 0, 200).complement(false).private_data != SGEXTN::Utilities::RgbaColour(0, 255, 55).private_data){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - complement no gamma correct fail");}
     if(SGEXTN::Utilities::RgbaColour(255, 0, 200).complement(true).private_data != SGEXTN::Utilities::RgbaColour(0, 255, 174).private_data){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::RgbaColour - complement fail");}
     const SGEXTN::Utilities::RgbaColour sampleColour(64, 128, 192, 255);
-    SGEXTN::Containers::Array<unsigned char> serialiseArray(726);
-    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726);
+    SGEXTN::Containers::Array<unsigned char> serialiseArray(726, static_cast<unsigned char>(0));
+    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726, static_cast<unsigned char>(0));
     serialiseArray.at(0) = static_cast<unsigned char>(0xff);
     serialiseArray.at(1) = static_cast<unsigned char>(0xc0);
     serialiseArray.at(2) = static_cast<unsigned char>(0x80);
@@ -195,8 +195,8 @@ void SGEXTN::InternalTest::UtilitiesTest::testHslaColour(){
     if(SGEXTN::Utilities::HslaColour(313.0f, 100.0f, 90.0f).toRGBA().private_data != SGEXTN::Utilities::RgbaColour(255, 204, 244).private_data){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::HslaColour - hsl to rgb test case 9 fail");}
     if(SGEXTN::Utilities::HslaColour(313.0f, 100.0f, 100.0f).toRGBA().private_data != SGEXTN::Utilities::RgbaColour(255, 255, 255).private_data){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::HslaColour - hsl to rgb test case 10 fail");}
     const SGEXTN::Utilities::HslaColour sampleColour(200.0f, 25.0f, 50.0f, 75.0f);
-    SGEXTN::Containers::Array<unsigned char> serialiseArray(726);
-    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726);
+    SGEXTN::Containers::Array<unsigned char> serialiseArray(726, static_cast<unsigned char>(0));
+    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726, static_cast<unsigned char>(0));
     serialiseArray.at(0) = static_cast<unsigned char>(0x00);
     serialiseArray.at(1) = static_cast<unsigned char>(0x00);
     serialiseArray.at(2) = static_cast<unsigned char>(0x48);
@@ -282,15 +282,15 @@ void SGEXTN::InternalTest::UtilitiesTest::testIdentifierRegistry(){
     id.private_data = 1u;
     if(registry.unregister(id) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::IdentifierRegistry unregister existing identifier fail");}
     if(registry.contains(id) == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::IdentifierRegistry contains unregistered identifier fail");}
-    SGEXTN::Containers::Array<SGEXTN::Utilities::Identifier> ids(1000);
+    SGEXTN::Containers::Array<SGEXTN::Utilities::Identifier> ids(1000, SGEXTN::Utilities::Identifier::nullIdentifier());
     for(int i=0; i<1000; i++){
         ids.at(i) = registry.generateAndRegisterIdentifier();
     }
     if(registry.length() != 1000){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::Identifier check length fail");}
     SGEXTN::Utilities::Identifier sampleId = SGEXTN::Utilities::Identifier::nullIdentifier();
     sampleId.private_data = 726;
-    SGEXTN::Containers::Array<unsigned char> serialiseArray(726);
-    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726);
+    SGEXTN::Containers::Array<unsigned char> serialiseArray(726, static_cast<unsigned char>(0));
+    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726, static_cast<unsigned char>(0));
     serialiseArray.at(0) = static_cast<unsigned char>(0xd6);
     serialiseArray.at(1) = static_cast<unsigned char>(0x02);
     serialiseArray.at(2) = static_cast<unsigned char>(0x00);
@@ -340,8 +340,8 @@ void SGEXTN::InternalTest::UtilitiesTest::testDateTime(){
     if(zero.getDisplayString("%\\SG%2year%\\ %2month%2day%\\ %2hour%2minute%2second") != "SG00 0809 103000"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::DateTime display string custom format fail");}
     bool isValid = false;
     const SGEXTN::Utilities::DateTime sampleTime(0, 8, 9, 11, 30, 00);
-    SGEXTN::Containers::Array<unsigned char> serialiseArray(726);
-    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726);
+    SGEXTN::Containers::Array<unsigned char> serialiseArray(726, static_cast<unsigned char>(0));
+    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726, static_cast<unsigned char>(0));
     serialiseArray.at(0) = static_cast<unsigned char>(0x10);
     serialiseArray.at(1) = static_cast<unsigned char>(0x0e);
     serialiseArray.at(2) = static_cast<unsigned char>(0x00);

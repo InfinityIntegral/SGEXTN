@@ -30,7 +30,7 @@ unsigned long long rotation(unsigned long long x, int k){
 }
 
 int tempHash(unsigned int a, int b){
-    SGEXTN::Containers::Array<unsigned char> bufferArray(8);
+    SGEXTN::Containers::Array<unsigned char> bufferArray(8, static_cast<unsigned char>(0));
     static_cast<void>(SGEXTN::Containers::Serialise<unsigned int>::sendOut(SGEXTN::Containers::Hash<unsigned int>()(a), SGEXTN::Containers::Span<unsigned char>(bufferArray, 0, 4)));
     static_cast<void>(SGEXTN::Containers::Serialise<int>::sendOut(SGEXTN::Containers::Hash<int>()(b), SGEXTN::Containers::Span<unsigned char>(bufferArray, 4, 4)));
     return SGEXTN::Containers::HashAlgorithm::wyHash32(SGEXTN::Containers::Span<unsigned char>(bufferArray, 0, 8));
@@ -68,7 +68,7 @@ int SGEXTN::SeerattraNum::DirectRandom::size(){
 }
 
 void SGEXTN::SeerattraNum::DirectRandom::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
-    SGEXTN::Containers::Array<unsigned int> improvedSeed(0x19650809u, 1965u, 65u, 26u, 726u, 5900691u, 61u, 744u);
+    SGEXTN::Containers::Array<unsigned int> improvedSeed({0x19650809u, 1965u, 65u, 26u, 726u, 5900691u, 61u, 744u});
     if(seedArray.length() == 0){
         for(int i=0; i<8; i++){
             improvedSeed.at(i) = tempHash(improvedSeed.at(i), i);
@@ -133,7 +133,7 @@ double SGEXTN::SeerattraNum::DirectRandom::randomFloat64(){
 
 SGEXTN::Containers::Array<int> SGEXTN::SeerattraNum::DirectRandom::randomInt32Array(int count){
     if(count < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::DirectRandom::randomInt32Array crashed as count is negative");}
-    SGEXTN::Containers::Array<int> output(count);
+    SGEXTN::Containers::Array<int> output(count, 0);
     for(int i=0; i<count; i++){
         output.at(i) = SGEXTN::SeerattraNum::DirectRandom::randomInt32();
     }
@@ -142,7 +142,7 @@ SGEXTN::Containers::Array<int> SGEXTN::SeerattraNum::DirectRandom::randomInt32Ar
 
 SGEXTN::Containers::Array<long long> SGEXTN::SeerattraNum::DirectRandom::randomInt64Array(int count){
     if(count < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::DirectRandom::randomInt64Array crashed as count is negative");}
-    SGEXTN::Containers::Array<long long> output(count);
+    SGEXTN::Containers::Array<long long> output(count, 0);
     for(int i=0; i<count; i++){
         output.at(i) = SGEXTN::SeerattraNum::DirectRandom::randomInt64();
     }
@@ -151,7 +151,7 @@ SGEXTN::Containers::Array<long long> SGEXTN::SeerattraNum::DirectRandom::randomI
 
 SGEXTN::Containers::Array<unsigned int> SGEXTN::SeerattraNum::DirectRandom::randomUnsignedInt32Array(int count){
     if(count < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::DirectRandom::randomUnsignedInt32Array crashed as count is negative");}
-    SGEXTN::Containers::Array<unsigned int> output(count);
+    SGEXTN::Containers::Array<unsigned int> output(count, 0);
     for(int i=0; i<count; i++){
         output.at(i) = SGEXTN::SeerattraNum::DirectRandom::randomUnsignedInt32();
     }
@@ -160,7 +160,7 @@ SGEXTN::Containers::Array<unsigned int> SGEXTN::SeerattraNum::DirectRandom::rand
 
 SGEXTN::Containers::Array<unsigned long long> SGEXTN::SeerattraNum::DirectRandom::randomUnsignedInt64Array(int count){
     if(count < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::DirectRandom::randomUnsignedInt64Array crashed as count is negative");}
-    SGEXTN::Containers::Array<unsigned long long> output(count);
+    SGEXTN::Containers::Array<unsigned long long> output(count, 0);
     for(int i=0; i<count; i++){
         output.at(i) = SGEXTN::SeerattraNum::DirectRandom::randomUnsignedInt64();
     }
@@ -169,7 +169,7 @@ SGEXTN::Containers::Array<unsigned long long> SGEXTN::SeerattraNum::DirectRandom
 
 SGEXTN::Containers::Array<float> SGEXTN::SeerattraNum::DirectRandom::randomFloat32Array(int count){
     if(count < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::DirectRandom::randomFloat32Array crashed as count is negative");}
-    SGEXTN::Containers::Array<float> output(count);
+    SGEXTN::Containers::Array<float> output(count, 0.0f);
     for(int i=0; i<count; i++){
         output.at(i) = SGEXTN::SeerattraNum::DirectRandom::randomFloat32();
     }
@@ -178,7 +178,7 @@ SGEXTN::Containers::Array<float> SGEXTN::SeerattraNum::DirectRandom::randomFloat
 
 SGEXTN::Containers::Array<double> SGEXTN::SeerattraNum::DirectRandom::randomFloat64Array(int count){
     if(count < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::DirectRandom::randomFloat64Array crashed as count is negative");}
-    SGEXTN::Containers::Array<double> output(count);
+    SGEXTN::Containers::Array<double> output(count, 0.0f);
     for(int i=0; i<count; i++){
         output.at(i) = SGEXTN::SeerattraNum::DirectRandom::randomFloat64();
     }

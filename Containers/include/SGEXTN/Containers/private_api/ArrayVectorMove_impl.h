@@ -17,28 +17,43 @@
 
 #pragma once
 #include <SGEXTN/Containers/PlacementNew.h>
+#include <SGEXTN/Containers/private_api/RingBuffer.h>
+#include <SGEXTN/Containers/Array.h>
 
 template <typename T> SGEXTN::Containers::Vector<T> SGEXTN::Containers::ArrayVectorMove<T>::convertToVectorAndDestroyArray(SGEXTN::Containers::Array<T>& arr){
+    if(arr.length() == 0){return SGEXTN::Containers::Vector<T>();}
     SGEXTN::Containers::Vector<T> vec;
-    vec.private_ringBuffer.private_data = new SGEXTN::Containers::RingBufferSlot<T>[arr.private_length];
-    for(int i=0; i<arr.private_length; i++){
-        new(SGEXTN::Containers::PlacementNew::Placeholder, &((*(vec.private_ringBuffer.private_data + i)).object)) T(static_cast<T&&>(arr.at(i)));
-    }
+    vec.private_ringBuffer.private_data = new SGEXTN::Containers::RingBufferSlot<T>[arr.length()];
     vec.private_ringBuffer.private_start = 0;
-    vec.private_ringBuffer.private_length = arr.private_length;
-    vec.private_ringBuffer.private_memoryLength = arr.private_length;
-    delete[] arr.private_data;
-    arr.private_data = nullptr;
-    arr.private_length = 0;
+    vec.private_ringBuffer.private_length = arr.length();
+    vec.private_ringBuffer.private_memoryLength = arr.length();
+    for(int i=0; i<arr.length(); i++){
+        new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(&((*(vec.private_ringBuffer.private_data + i)).object))) T(static_cast<T&&>(arr.at(i)));
+        arr.at(i).~T();
+    }
+    if(arr.isUsingHeap() == true){::operator delete(static_cast<void*>(arr.heap.data));}
+    arr.stack.length = SGEXTN::Containers::ArrayStackStorage<T>::stackFlag;
     return vec;
 }
 
 template <typename T> SGEXTN::Containers::Array<T> SGEXTN::Containers::ArrayVectorMove<T>::convertToArrayAndDestroyVector(SGEXTN::Containers::Vector<T>& vec){
-    SGEXTN::Containers::Array<T> arr(0);
-    arr.private_length = vec.private_ringBuffer.private_length;
-    arr.private_data = new T[arr.private_length];
-    for(int i=0; i<arr.private_length; i++){
-        arr.at(i) = static_cast<T&&>(vec.at(i));
+    if(vec.length() == 0){return SGEXTN::Containers::Array<T>();}
+    SGEXTN::Containers::Array<T> arr;
+    const int count = vec.private_ringBuffer.private_length;
+    if(count <= SGEXTN::Containers::ArrayStackStorage<T>::maxElements){
+        arr.stack.length = (SGEXTN::Containers::ArrayStackStorage<T>::stackFlag | static_cast<unsigned int>(count));
+        for(int i=0; i<count; i++){
+            new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(arr.getStackSlot(i))) T(static_cast<T&&>(vec.at(i)));
+        }
+    }
+    else{
+        arr.heap.length = count;
+        arr.heap.data = static_cast<T*>(::operator new(count * sizeof(T)));
+        for(int i=0; i<count; i++){
+            new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(arr.heap.data + i)) T(static_cast<T&&>(vec.at(i)));
+        }
+    }
+    for(int i=0; i<count; i++){
         vec.at(i).~T();
     }
     delete[] vec.private_ringBuffer.private_data;

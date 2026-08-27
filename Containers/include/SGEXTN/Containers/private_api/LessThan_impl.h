@@ -20,9 +20,9 @@
 #include <SGEXTN/Containers/private_api/TypeTraits.h>
 #include <SGEXTN/Containers/Serialise.h>
 
-template <typename T> SGEXTN::Containers::LessThan<T>::LessThan() : lengthA(0), lengthB(0), bufferA(0), bufferB(0){}
+template <typename T> SGEXTN::Containers::LessThan<T>::LessThan() : lengthA(0), lengthB(0){}
 
-template <typename T> SGEXTN::Containers::LessThan<T>::LessThan([[maybe_unused]] const SGEXTN::Containers::LessThan<T>& x) : lengthA(0), lengthB(0), bufferA(0), bufferB(0){}
+template <typename T> SGEXTN::Containers::LessThan<T>::LessThan([[maybe_unused]] const SGEXTN::Containers::LessThan<T>& x) : lengthA(0), lengthB(0){}
 
 template <typename T> SGEXTN::Containers::LessThan<T>& SGEXTN::Containers::LessThan<T>::operator=([[maybe_unused]] const SGEXTN::Containers::LessThan<T>& x){
     return (*this);
@@ -55,11 +55,11 @@ template <typename T> bool SGEXTN::Containers::LessThan<T>::operator()(const T& 
     if(bufferALength > bufferBLength){return false;}
     if(bufferALength != lengthA){
         lengthA = bufferALength;
-        bufferA = SGEXTN::Containers::Array<unsigned char>(lengthA);
+        bufferA = SGEXTN::Containers::Array<unsigned char>(lengthA, static_cast<unsigned char>(0));
     }
     if(bufferBLength != lengthB){
         lengthB = bufferBLength;
-        bufferB = SGEXTN::Containers::Array<unsigned char>(lengthB);
+        bufferB = SGEXTN::Containers::Array<unsigned char>(lengthB, static_cast<unsigned char>(0));
     }
     const bool aIsOk = SGEXTN::Containers::Serialise<T>::sendOut(a, SGEXTN::Containers::Span<unsigned char>(bufferA));
     const bool bIsOk = SGEXTN::Containers::Serialise<T>::sendOut(b, SGEXTN::Containers::Span<unsigned char>(bufferB));

@@ -22,9 +22,9 @@
 #include <SGEXTN/Containers/Serialise.h>
 #include <SGEXTN/Containers/Span.h>
 
-SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution::WeightedIndexSelectionDistribution() : SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution(true, SGEXTN::Containers::Array<float>(1.0f)){}
+SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution::WeightedIndexSelectionDistribution() : SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution(true, SGEXTN::Containers::Array<float>(1, 1.0f)){}
 
-SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution::WeightedIndexSelectionDistribution(bool useGlobal, const SGEXTN::Containers::Array<float>& weights) : private_weights(weights), private_prefixSums(0), private_rngLocator(useGlobal){
+SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution::WeightedIndexSelectionDistribution(bool useGlobal, const SGEXTN::Containers::Array<float>& weights) : private_weights(weights), private_rngLocator(useGlobal){
     if(weights.length() == 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightIndexSelectionDistribution constructor crashed because the array of weights is empty");}
     bool isAllZero = true;
     for(int i=0; i<weights.length(); i++){
@@ -41,7 +41,7 @@ bool SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution::sendOut(const SGE
 
 bool SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution::sendIn(SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution& x, SGEXTN::Containers::Span<unsigned char> data){
     SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator(true);
-    SGEXTN::Containers::Array<float> weights(0);
+    SGEXTN::Containers::Array<float> weights;
     const bool isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, SGEXTN::Containers::Array<float>>::sendIn(rngLocator, weights, data);
     if(isValid == false || weights.length() == 0){return false;}
     bool allZero = true;
@@ -64,7 +64,7 @@ int SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution::sizeIn(SGEXTN::Con
 }
 
 void SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution::private_updatePrefixSums(){
-    private_prefixSums = SGEXTN::Containers::Array<float>(private_weights.length() + 1);
+    private_prefixSums = SGEXTN::Containers::Array<float>(private_weights.length() + 1, 0.0f);
     private_prefixSums.at(0) = 0.0f;
     for(int i=0; i<private_weights.length(); i++){
         private_prefixSums.at(i + 1) = private_prefixSums.at(i) + private_weights.at(i);
@@ -93,7 +93,7 @@ int SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution::randomIndex(){
 
 SGEXTN::Containers::Array<int> SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution::randomIndexArray(int count){
     if(count < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution::randomIndexArray crashed because a negative number of outputs is requested");}
-    SGEXTN::Containers::Array<int> outputArray(count);
+    SGEXTN::Containers::Array<int> outputArray(count, 0);
     for(int i=0; i<count; i++){
         outputArray.at(i) = randomIndex();
     }

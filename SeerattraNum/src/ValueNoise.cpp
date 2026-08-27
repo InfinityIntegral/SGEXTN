@@ -62,12 +62,12 @@ void SGEXTN::SeerattraNum::ValueNoise::seed(int seed){
 
 float SGEXTN::SeerattraNum::ValueNoise::getHeight(const SGEXTN::Containers::Array<float>& point) const {
     if(point.length() != private_dimension){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::ValueNoise::getHeight crashed because the number of dimensions in the point does not match that of the noise generator");}
-    SGEXTN::Containers::Array<float> cornerHeights(powerOf2(private_dimension));
-    SGEXTN::Containers::Array<int> flooredCorner(private_dimension);
+    SGEXTN::Containers::Array<float> cornerHeights(powerOf2(private_dimension), 0.0f);
+    SGEXTN::Containers::Array<int> flooredCorner(private_dimension, 0);
     for(int i=0; i<private_dimension; i++){
         flooredCorner.at(i) = SGEXTN::Math::FloatMath<float>::floorToInt(point.at(i));
     }
-    SGEXTN::Containers::Array<unsigned char> serialiseBuffer(4 * private_dimension + 4);
+    SGEXTN::Containers::Array<unsigned char> serialiseBuffer(4 * private_dimension + 4, static_cast<unsigned char>(0));
     bool isValid = false;
     isValid = SGEXTN::Containers::Serialise<int>::sendOut(private_seed, SGEXTN::Containers::Span<unsigned char>(serialiseBuffer, 4 * private_dimension, 4));
     if(isValid == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::ValueNoise failed to generate height due to serialisation issues");}

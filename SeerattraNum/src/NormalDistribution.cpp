@@ -68,8 +68,8 @@ float getFloor(int i){
 }
 
 void parseTables(){
-    SGEXTN::SeerattraNum::NormalDistribution::private_hwidthTables = new SGEXTN::Containers::Array<float>(256);
-    SGEXTN::SeerattraNum::NormalDistribution::private_floorTables = new SGEXTN::Containers::Array<float>(256);
+    SGEXTN::SeerattraNum::NormalDistribution::private_hwidthTables = new SGEXTN::Containers::Array<float>(256, 0.0f);
+    SGEXTN::SeerattraNum::NormalDistribution::private_floorTables = new SGEXTN::Containers::Array<float>(256, 0.0f);
     for(int i=0; i<256; i++){
         (*SGEXTN::SeerattraNum::NormalDistribution::private_hwidthTables).at(i) = getHwidth(i);
         (*SGEXTN::SeerattraNum::NormalDistribution::private_floorTables).at(i) = getFloor(i);
@@ -165,7 +165,7 @@ float SGEXTN::SeerattraNum::NormalDistribution::randomValue(){
 
 SGEXTN::Containers::Array<float> SGEXTN::SeerattraNum::NormalDistribution::randomValueArray(int count){
     if(count < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NormalDistribution::randomValueArray crashed because a negative number of outputs is requested");}
-    SGEXTN::Containers::Array<float> outputArray(count);
+    SGEXTN::Containers::Array<float> outputArray(count, 0.0f);
     for(int i=0; i<count; i++){
         outputArray.at(i) = randomValue();
     }

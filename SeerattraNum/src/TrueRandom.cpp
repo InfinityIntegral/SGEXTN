@@ -65,7 +65,7 @@ double SGEXTN::SeerattraNum::TrueRandom::randomFloat64(){
 
 SGEXTN::Containers::Array<int> SGEXTN::SeerattraNum::TrueRandom::randomInt32Array(int count){
     if(count < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::TrueRandom::randomInt32Array crashed as count is negative");}
-    SGEXTN::Containers::Array<int> output(count);
+    SGEXTN::Containers::Array<int> output(count, 0);
     for(int i=0; i<count; i++){
         output.at(i) = SGEXTN::SeerattraNum::TrueRandom::randomInt32();
     }
@@ -74,7 +74,7 @@ SGEXTN::Containers::Array<int> SGEXTN::SeerattraNum::TrueRandom::randomInt32Arra
 
 SGEXTN::Containers::Array<long long> SGEXTN::SeerattraNum::TrueRandom::randomInt64Array(int count){
     if(count < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::TrueRandom::randomInt64Array crashed as count is negative");}
-    SGEXTN::Containers::Array<long long> output(count);
+    SGEXTN::Containers::Array<long long> output(count, 0);
     for(int i=0; i<count; i++){
         output.at(i) = SGEXTN::SeerattraNum::TrueRandom::randomInt64();
     }
@@ -83,7 +83,7 @@ SGEXTN::Containers::Array<long long> SGEXTN::SeerattraNum::TrueRandom::randomInt
 
 SGEXTN::Containers::Array<unsigned int> SGEXTN::SeerattraNum::TrueRandom::randomUnsignedInt32Array(int count){
     if(count < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::TrueRandom::randomUnsignedInt32Array crashed as count is negative");}
-    SGEXTN::Containers::Array<unsigned int> output(count);
+    SGEXTN::Containers::Array<unsigned int> output(count, 0);
     for(int i=0; i<count; i++){
         output.at(i) = SGEXTN::SeerattraNum::TrueRandom::randomUnsignedInt32();
     }
@@ -92,7 +92,7 @@ SGEXTN::Containers::Array<unsigned int> SGEXTN::SeerattraNum::TrueRandom::random
 
 SGEXTN::Containers::Array<unsigned long long> SGEXTN::SeerattraNum::TrueRandom::randomUnsignedInt64Array(int count){
     if(count < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::TrueRandom::randomUnsignedInt64Array crashed as count is negative");}
-    SGEXTN::Containers::Array<unsigned long long> output(count);
+    SGEXTN::Containers::Array<unsigned long long> output(count, 0);
     for(int i=0; i<count; i++){
         output.at(i) = SGEXTN::SeerattraNum::TrueRandom::randomUnsignedInt64();
     }
@@ -101,7 +101,7 @@ SGEXTN::Containers::Array<unsigned long long> SGEXTN::SeerattraNum::TrueRandom::
 
 SGEXTN::Containers::Array<float> SGEXTN::SeerattraNum::TrueRandom::randomFloat32Array(int count){
     if(count < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::TrueRandom::randomFloat32Array crashed as count is negative");}
-    SGEXTN::Containers::Array<float> output(count);
+    SGEXTN::Containers::Array<float> output(count, 0);
     for(int i=0; i<count; i++){
         output.at(i) = SGEXTN::SeerattraNum::TrueRandom::randomFloat32();
     }
@@ -110,7 +110,7 @@ SGEXTN::Containers::Array<float> SGEXTN::SeerattraNum::TrueRandom::randomFloat32
 
 SGEXTN::Containers::Array<double> SGEXTN::SeerattraNum::TrueRandom::randomFloat64Array(int count){
     if(count < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::TrueRandom::randomFloat64Array crashed as count is negative");}
-    SGEXTN::Containers::Array<double> output(count);
+    SGEXTN::Containers::Array<double> output(count, 0);
     for(int i=0; i<count; i++){
         output.at(i) = SGEXTN::SeerattraNum::TrueRandom::randomFloat64();
     }

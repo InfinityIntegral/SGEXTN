@@ -58,14 +58,14 @@
 #include <random>
 
 namespace {
-SGEXTN::Containers::Array<unsigned int> firstSeed(1u, 2u, 3u, 4u, 5u);
-SGEXTN::Containers::Array<unsigned int> secondSeed(6u, 7u, 8u, 9u, 10u);
+SGEXTN::Containers::Array<unsigned int> firstSeed({1u, 2u, 3u, 4u, 5u});
+SGEXTN::Containers::Array<unsigned int> secondSeed({6u, 7u, 8u, 9u, 10u});
 
 std::random_device trueRng;
 std::mt19937 standardLibraryRng(trueRng());
 
 void seedStandardLibraryRng(const SGEXTN::Containers::Array<unsigned int>& seed){
-    std::seed_seq seedSequence(&seed.at(0), &seed.at(0) + seed.length());
+    std::seed_seq seedSequence(seed.getRawPointer(), seed.getRawPointer() + seed.length());
     standardLibraryRng.seed(seedSequence);
 }
 
@@ -157,8 +157,8 @@ void SGEXTN::InternalTest::SeerattraNumTest::testDirectRandom(){
     SGEXTN::SeerattraNum::DirectRandom sampleRng;
     sampleRng.seed(SGEXTN::Containers::Array<unsigned int>(1, 726u));
     (void)(sampleRng.randomInt32());
-    SGEXTN::Containers::Array<unsigned char> serialiseArray(726);
-    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726);
+    SGEXTN::Containers::Array<unsigned char> serialiseArray(726, static_cast<unsigned char>(0));
+    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726, static_cast<unsigned char>(0));
     serialiseArray.at(0) = static_cast<unsigned char>(0x02);
     serialiseArray.at(1) = static_cast<unsigned char>(0x65);
     serialiseArray.at(2) = static_cast<unsigned char>(0xe2);
@@ -211,7 +211,7 @@ void SGEXTN::InternalTest::SeerattraNumTest::testUniformDistributionInteger(){
     std::uniform_int_distribution sampleRng(1, 6);
     seedStandardLibraryRng(firstSeed);
     SGEXTN::Containers::Array<int> testData = testRng.randomValueArray(100000);
-    SGEXTN::Containers::Array<int> sampleData(100000);
+    SGEXTN::Containers::Array<int> sampleData(100000, 0);
     for(int i=0; i<100000; i++){
         sampleData.at(i) = sampleRng(standardLibraryRng);
     }
@@ -230,8 +230,8 @@ void SGEXTN::InternalTest::SeerattraNumTest::testUniformDistributionInteger(){
     bool isValid = false;
     SGEXTN::SeerattraNum::UniformDistributionInteger newSampleRng(false, 26, 726);
     newSampleRng.seed(SGEXTN::Containers::Array<unsigned int>(1, 726u));
-    SGEXTN::Containers::Array<unsigned char> serialiseArray(726);
-    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726);
+    SGEXTN::Containers::Array<unsigned char> serialiseArray(726, static_cast<unsigned char>(0));
+    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726, static_cast<unsigned char>(0));
     isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::sendOut(newSampleRng.private_rngLocator, makeSpan(serialiseArray, 0, 37));
     isValid = SGEXTN::Containers::Serialise<int>::sendOut(26, makeSpan(serialiseArray, 37, 4));
     isValid = SGEXTN::Containers::Serialise<int>::sendOut(726, makeSpan(serialiseArray, 41, 4));
@@ -250,7 +250,7 @@ void SGEXTN::InternalTest::SeerattraNumTest::testUniformDistributionFloatingPoin
     std::uniform_real_distribution sampleRng(1.0f, 2.0f);
     seedStandardLibraryRng(firstSeed);
     SGEXTN::Containers::Array<float> testData = testRng.randomValueArray(100000);
-    SGEXTN::Containers::Array<float> sampleData(100000);
+    SGEXTN::Containers::Array<float> sampleData(100000, 0.0f);
     for(int i=0; i<100000; i++){
         sampleData.at(i) = sampleRng(standardLibraryRng);
     }
@@ -269,8 +269,8 @@ void SGEXTN::InternalTest::SeerattraNumTest::testUniformDistributionFloatingPoin
     bool isValid = false;
     SGEXTN::SeerattraNum::UniformDistributionFloatingPoint newSampleRng(false, 26.0f, 726.0f);
     newSampleRng.seed(SGEXTN::Containers::Array<unsigned int>(1, 726u));
-    SGEXTN::Containers::Array<unsigned char> serialiseArray(726);
-    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726);
+    SGEXTN::Containers::Array<unsigned char> serialiseArray(726, static_cast<unsigned char>(0));
+    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726, static_cast<unsigned char>(0));
     isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::sendOut(newSampleRng.private_rngLocator, makeSpan(serialiseArray, 0, 37));
     isValid = SGEXTN::Containers::Serialise<float>::sendOut(26.0f, makeSpan(serialiseArray, 37, 4));
     isValid = SGEXTN::Containers::Serialise<float>::sendOut(726.0f, makeSpan(serialiseArray, 41, 4));
@@ -288,8 +288,8 @@ void SGEXTN::InternalTest::SeerattraNumTest::testBernoulliDistribution(){
     testRng.seed(firstSeed);
     std::bernoulli_distribution sampleRng(0.25f);
     seedStandardLibraryRng(firstSeed);
-    SGEXTN::Containers::Array<int> testData(100000);
-    SGEXTN::Containers::Array<int> sampleData(100000);
+    SGEXTN::Containers::Array<int> testData(100000, 0);
+    SGEXTN::Containers::Array<int> sampleData(100000, 0);
     for(int i=0; i<100000; i++){
         if(testRng.randomValue() == true){testData.at(i) = 1;}
         else{testData.at(i) = 0;}
@@ -312,8 +312,8 @@ void SGEXTN::InternalTest::SeerattraNumTest::testBernoulliDistribution(){
     bool isValid = false;
     SGEXTN::SeerattraNum::BernoulliDistribution newSampleRng(false, 0.26f);
     newSampleRng.seed(SGEXTN::Containers::Array<unsigned int>(1, 726u));
-    SGEXTN::Containers::Array<unsigned char> serialiseArray(726);
-    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726);
+    SGEXTN::Containers::Array<unsigned char> serialiseArray(726, static_cast<unsigned char>(0));
+    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726, static_cast<unsigned char>(0));
     isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::sendOut(newSampleRng.private_rngLocator, makeSpan(serialiseArray, 0, 37));
     isValid = SGEXTN::Containers::Serialise<float>::sendOut(0.26f, makeSpan(serialiseArray, 37, 4));
     isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::BernoulliDistribution>::sendOut(newSampleRng, makeSpan(serialiseDestination, 41));
@@ -331,7 +331,7 @@ void SGEXTN::InternalTest::SeerattraNumTest::testBinomialDistribution(){
     std::binomial_distribution sampleRng(100, 0.25f);
     seedStandardLibraryRng(firstSeed);
     SGEXTN::Containers::Array<int> testData = testRng.randomValueArray(100000);
-    SGEXTN::Containers::Array<int> sampleData(100000);
+    SGEXTN::Containers::Array<int> sampleData(100000, 0);
     for(int i=0; i<100000; i++){
         sampleData.at(i) = sampleRng(standardLibraryRng);
     }
@@ -351,8 +351,8 @@ void SGEXTN::InternalTest::SeerattraNumTest::testBinomialDistribution(){
     bool isValid = false;
     SGEXTN::SeerattraNum::BinomialDistribution newSampleRng(false, 0.26f, 26);
     newSampleRng.seed(SGEXTN::Containers::Array<unsigned int>(1, 726u));
-    SGEXTN::Containers::Array<unsigned char> serialiseArray(726);
-    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726);
+    SGEXTN::Containers::Array<unsigned char> serialiseArray(726, static_cast<unsigned char>(0));
+    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726, static_cast<unsigned char>(0));
     isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::sendOut(newSampleRng.private_rngLocator, makeSpan(serialiseArray, 0, 37));
     isValid = SGEXTN::Containers::Serialise<float>::sendOut(0.26f, makeSpan(serialiseArray, 37, 4));
     isValid = SGEXTN::Containers::Serialise<int>::sendOut(26, makeSpan(serialiseArray, 41, 4));
@@ -371,7 +371,7 @@ void SGEXTN::InternalTest::SeerattraNumTest::testNegativeBinomialDistribution(){
     std::negative_binomial_distribution sampleRng(100, 0.25f);
     seedStandardLibraryRng(firstSeed);
     SGEXTN::Containers::Array<int> testData = testRng.randomValueArray(100000);
-    SGEXTN::Containers::Array<int> sampleData(100000);
+    SGEXTN::Containers::Array<int> sampleData(100000, 0);
     for(int i=0; i<100000; i++){
         sampleData.at(i) = sampleRng(standardLibraryRng);
     }
@@ -391,8 +391,8 @@ void SGEXTN::InternalTest::SeerattraNumTest::testNegativeBinomialDistribution(){
     bool isValid = false;
     SGEXTN::SeerattraNum::NegativeBinomialDistribution newSampleRng(false, 0.26f, 26);
     newSampleRng.seed(SGEXTN::Containers::Array<unsigned int>(1, 726u));
-    SGEXTN::Containers::Array<unsigned char> serialiseArray(726);
-    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726);
+    SGEXTN::Containers::Array<unsigned char> serialiseArray(726, static_cast<unsigned char>(0));
+    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726, static_cast<unsigned char>(0));
     isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::sendOut(newSampleRng.private_rngLocator, makeSpan(serialiseArray, 0, 37));
     isValid = SGEXTN::Containers::Serialise<float>::sendOut(0.26f, makeSpan(serialiseArray, 37, 4));
     isValid = SGEXTN::Containers::Serialise<int>::sendOut(26, makeSpan(serialiseArray, 41, 4));
@@ -411,7 +411,7 @@ void SGEXTN::InternalTest::SeerattraNumTest::testGeometricDistribution(){
     std::geometric_distribution sampleRng(0.25f);
     seedStandardLibraryRng(firstSeed);
     SGEXTN::Containers::Array<int> testData = testRng.randomValueArray(100000);
-    SGEXTN::Containers::Array<int> sampleData(100000);
+    SGEXTN::Containers::Array<int> sampleData(100000, 0);
     for(int i=0; i<100000; i++){
         sampleData.at(i) = sampleRng(standardLibraryRng);
     }
@@ -429,8 +429,8 @@ void SGEXTN::InternalTest::SeerattraNumTest::testGeometricDistribution(){
     bool isValid = false;
     SGEXTN::SeerattraNum::GeometricDistribution newSampleRng(false, 0.26f);
     newSampleRng.seed(SGEXTN::Containers::Array<unsigned int>(1, 726u));
-    SGEXTN::Containers::Array<unsigned char> serialiseArray(726);
-    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726);
+    SGEXTN::Containers::Array<unsigned char> serialiseArray(726, static_cast<unsigned char>(0));
+    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726, static_cast<unsigned char>(0));
     isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::sendOut(newSampleRng.private_rngLocator, makeSpan(serialiseArray, 0, 37));
     isValid = SGEXTN::Containers::Serialise<float>::sendOut(0.26f, makeSpan(serialiseArray, 37, 4));
     isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::GeometricDistribution>::sendOut(newSampleRng, makeSpan(serialiseDestination, 41));
@@ -448,7 +448,7 @@ void SGEXTN::InternalTest::SeerattraNumTest::testPoissonDistribution(){
     std::poisson_distribution sampleRng(100.0f);
     seedStandardLibraryRng(firstSeed);
     SGEXTN::Containers::Array<int> testData = testRng.randomValueArray(100000);
-    SGEXTN::Containers::Array<int> sampleData(100000);
+    SGEXTN::Containers::Array<int> sampleData(100000, 0);
     for(int i=0; i<100000; i++){
         sampleData.at(i) = sampleRng(standardLibraryRng);
     }
@@ -466,8 +466,8 @@ void SGEXTN::InternalTest::SeerattraNumTest::testPoissonDistribution(){
     bool isValid = false;
     SGEXTN::SeerattraNum::PoissonDistribution newSampleRng(false, 26.0f);
     newSampleRng.seed(SGEXTN::Containers::Array<unsigned int>(1, 726u));
-    SGEXTN::Containers::Array<unsigned char> serialiseArray(726);
-    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726);
+    SGEXTN::Containers::Array<unsigned char> serialiseArray(726, static_cast<unsigned char>(0));
+    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726, static_cast<unsigned char>(0));
     isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::sendOut(newSampleRng.private_rngLocator, makeSpan(serialiseArray, 0, 37));
     isValid = SGEXTN::Containers::Serialise<float>::sendOut(26.0f, makeSpan(serialiseArray, 37, 4));
     isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::PoissonDistribution>::sendOut(newSampleRng, makeSpan(serialiseDestination, 41));
@@ -485,7 +485,7 @@ void SGEXTN::InternalTest::SeerattraNumTest::testExponentialDistribution(){
     std::exponential_distribution sampleRng(1.0f);
     seedStandardLibraryRng(firstSeed);
     SGEXTN::Containers::Array<float> testData = testRng.randomValueArray(100000);
-    SGEXTN::Containers::Array<float> sampleData(100000);
+    SGEXTN::Containers::Array<float> sampleData(100000, 0.0f);
     for(int i=0; i<100000; i++){
         sampleData.at(i) = sampleRng(standardLibraryRng);
     }
@@ -503,8 +503,8 @@ void SGEXTN::InternalTest::SeerattraNumTest::testExponentialDistribution(){
     bool isValid = false;
     SGEXTN::SeerattraNum::ExponentialDistribution newSampleRng(false, 26.0f);
     newSampleRng.seed(SGEXTN::Containers::Array<unsigned int>(1, 726u));
-    SGEXTN::Containers::Array<unsigned char> serialiseArray(726);
-    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726);
+    SGEXTN::Containers::Array<unsigned char> serialiseArray(726, static_cast<unsigned char>(0));
+    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726, static_cast<unsigned char>(0));
     isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::sendOut(newSampleRng.private_rngLocator, makeSpan(serialiseArray, 0, 37));
     isValid = SGEXTN::Containers::Serialise<float>::sendOut(26.0f, makeSpan(serialiseArray, 37, 4));
     isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::ExponentialDistribution>::sendOut(newSampleRng, makeSpan(serialiseDestination, 41));
@@ -522,7 +522,7 @@ void SGEXTN::InternalTest::SeerattraNumTest::testGammaDistribution(){
     std::gamma_distribution sampleRng(2.0f, 5.0f);
     seedStandardLibraryRng(firstSeed);
     SGEXTN::Containers::Array<float> testData = testRng.randomValueArray(100000);
-    SGEXTN::Containers::Array<float> sampleData(100000);
+    SGEXTN::Containers::Array<float> sampleData(100000, 0.0f);
     for(int i=0; i<100000; i++){
         sampleData.at(i) = sampleRng(standardLibraryRng);
     }
@@ -542,8 +542,8 @@ void SGEXTN::InternalTest::SeerattraNumTest::testGammaDistribution(){
     bool isValid = false;
     SGEXTN::SeerattraNum::GammaDistribution newSampleRng(false, 26.0f, 0.26f);
     newSampleRng.seed(SGEXTN::Containers::Array<unsigned int>(1, 726u));
-    SGEXTN::Containers::Array<unsigned char> serialiseArray(726);
-    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726);
+    SGEXTN::Containers::Array<unsigned char> serialiseArray(726, static_cast<unsigned char>(0));
+    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726, static_cast<unsigned char>(0));
     isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::sendOut(newSampleRng.private_rngLocator, makeSpan(serialiseArray, 0, 37));
     isValid = SGEXTN::Containers::Serialise<float>::sendOut(26.0f, makeSpan(serialiseArray, 37, 4));
     isValid = SGEXTN::Containers::Serialise<float>::sendOut(0.26f, makeSpan(serialiseArray, 41, 4));
@@ -562,7 +562,7 @@ void SGEXTN::InternalTest::SeerattraNumTest::testWeibullDistribution(){
     std::weibull_distribution sampleRng(0.5f, 10.0f);
     seedStandardLibraryRng(firstSeed);
     SGEXTN::Containers::Array<float> testData = testRng.randomValueArray(100000);
-    SGEXTN::Containers::Array<float> sampleData(100000);
+    SGEXTN::Containers::Array<float> sampleData(100000, 0.0f);
     for(int i=0; i<100000; i++){
         sampleData.at(i) = sampleRng(standardLibraryRng);
     }
@@ -582,8 +582,8 @@ void SGEXTN::InternalTest::SeerattraNumTest::testWeibullDistribution(){
     bool isValid = false;
     SGEXTN::SeerattraNum::WeibullDistribution newSampleRng(false, 2.6f, 26.0f);
     newSampleRng.seed(SGEXTN::Containers::Array<unsigned int>(1, 726u));
-    SGEXTN::Containers::Array<unsigned char> serialiseArray(726);
-    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726);
+    SGEXTN::Containers::Array<unsigned char> serialiseArray(726, static_cast<unsigned char>(0));
+    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726, static_cast<unsigned char>(0));
     isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::sendOut(newSampleRng.private_rngLocator, makeSpan(serialiseArray, 0, 37));
     isValid = SGEXTN::Containers::Serialise<float>::sendOut(2.6f, makeSpan(serialiseArray, 37, 4));
     isValid = SGEXTN::Containers::Serialise<float>::sendOut(26.0f, makeSpan(serialiseArray, 41, 4));
@@ -602,7 +602,7 @@ void SGEXTN::InternalTest::SeerattraNumTest::testGumbelDistribution(){
     std::extreme_value_distribution sampleRng(-1.0f, 1.0f);
     seedStandardLibraryRng(firstSeed);
     SGEXTN::Containers::Array<float> testData = testRng.randomValueArray(100000);
-    SGEXTN::Containers::Array<float> sampleData(100000);
+    SGEXTN::Containers::Array<float> sampleData(100000, 0.0f);
     for(int i=0; i<100000; i++){
         sampleData.at(i) = sampleRng(standardLibraryRng);
     }
@@ -622,8 +622,8 @@ void SGEXTN::InternalTest::SeerattraNumTest::testGumbelDistribution(){
     bool isValid = false;
     SGEXTN::SeerattraNum::GumbelDistribution newSampleRng(false, 26.0f, 2.6f);
     newSampleRng.seed(SGEXTN::Containers::Array<unsigned int>(1, 726u));
-    SGEXTN::Containers::Array<unsigned char> serialiseArray(726);
-    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726);
+    SGEXTN::Containers::Array<unsigned char> serialiseArray(726, static_cast<unsigned char>(0));
+    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726, static_cast<unsigned char>(0));
     isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::sendOut(newSampleRng.private_rngLocator, makeSpan(serialiseArray, 0, 37));
     isValid = SGEXTN::Containers::Serialise<float>::sendOut(26.0f, makeSpan(serialiseArray, 37, 4));
     isValid = SGEXTN::Containers::Serialise<float>::sendOut(2.6f, makeSpan(serialiseArray, 41, 4));
@@ -642,7 +642,7 @@ void SGEXTN::InternalTest::SeerattraNumTest::testNormalDistribution(){
     std::normal_distribution sampleRng(-1.0f, 1.0f);
     seedStandardLibraryRng(firstSeed);
     SGEXTN::Containers::Array<float> testData = testRng.randomValueArray(100000);
-    SGEXTN::Containers::Array<float> sampleData(100000);
+    SGEXTN::Containers::Array<float> sampleData(100000, 0.0f);
     for(int i=0; i<100000; i++){
         sampleData.at(i) = sampleRng(standardLibraryRng);
     }
@@ -662,8 +662,8 @@ void SGEXTN::InternalTest::SeerattraNumTest::testNormalDistribution(){
     bool isValid = false;
     SGEXTN::SeerattraNum::NormalDistribution newSampleRng(false, 26.0f, 2.6f);
     newSampleRng.seed(SGEXTN::Containers::Array<unsigned int>(1, 726u));
-    SGEXTN::Containers::Array<unsigned char> serialiseArray(726);
-    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726);
+    SGEXTN::Containers::Array<unsigned char> serialiseArray(726, static_cast<unsigned char>(0));
+    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726, static_cast<unsigned char>(0));
     isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::sendOut(newSampleRng.private_rngLocator, makeSpan(serialiseArray, 0, 37));
     isValid = SGEXTN::Containers::Serialise<float>::sendOut(26.0f, makeSpan(serialiseArray, 37, 4));
     isValid = SGEXTN::Containers::Serialise<float>::sendOut(2.6f, makeSpan(serialiseArray, 41, 4));
@@ -682,7 +682,7 @@ void SGEXTN::InternalTest::SeerattraNumTest::testLogNormalDistribution(){
     std::lognormal_distribution sampleRng(-1.0f, 1.0f);
     seedStandardLibraryRng(firstSeed);
     SGEXTN::Containers::Array<float> testData = testRng.randomValueArray(100000);
-    SGEXTN::Containers::Array<float> sampleData(100000);
+    SGEXTN::Containers::Array<float> sampleData(100000, 0.0f);
     for(int i=0; i<100000; i++){
         sampleData.at(i) = sampleRng(standardLibraryRng);
     }
@@ -702,8 +702,8 @@ void SGEXTN::InternalTest::SeerattraNumTest::testLogNormalDistribution(){
     bool isValid = false;
     SGEXTN::SeerattraNum::LogNormalDistribution newSampleRng(false, 2.6f, 0.26f);
     newSampleRng.seed(SGEXTN::Containers::Array<unsigned int>(1, 726u));
-    SGEXTN::Containers::Array<unsigned char> serialiseArray(726);
-    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726);
+    SGEXTN::Containers::Array<unsigned char> serialiseArray(726, static_cast<unsigned char>(0));
+    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726, static_cast<unsigned char>(0));
     isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::sendOut(newSampleRng.private_rngLocator, makeSpan(serialiseArray, 0, 37));
     isValid = SGEXTN::Containers::Serialise<float>::sendOut(2.6f, makeSpan(serialiseArray, 37, 4));
     isValid = SGEXTN::Containers::Serialise<float>::sendOut(0.26f, makeSpan(serialiseArray, 41, 4));
@@ -722,7 +722,7 @@ void SGEXTN::InternalTest::SeerattraNumTest::testCauchyDistribution(){
     std::cauchy_distribution sampleRng(-1.0f, 1.0f);
     seedStandardLibraryRng(firstSeed);
     SGEXTN::Containers::Array<float> testData = testRng.randomValueArray(100000);
-    SGEXTN::Containers::Array<float> sampleData(100000);
+    SGEXTN::Containers::Array<float> sampleData(100000, 0.0f);
     for(int i=0; i<100000; i++){
         sampleData.at(i) = sampleRng(standardLibraryRng);
     }
@@ -742,8 +742,8 @@ void SGEXTN::InternalTest::SeerattraNumTest::testCauchyDistribution(){
     bool isValid = false;
     SGEXTN::SeerattraNum::CauchyDistribution newSampleRng(false, 26.0f, 2.6f);
     newSampleRng.seed(SGEXTN::Containers::Array<unsigned int>(1, 726u));
-    SGEXTN::Containers::Array<unsigned char> serialiseArray(726);
-    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726);
+    SGEXTN::Containers::Array<unsigned char> serialiseArray(726, static_cast<unsigned char>(0));
+    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726, static_cast<unsigned char>(0));
     isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::sendOut(newSampleRng.private_rngLocator, makeSpan(serialiseArray, 0, 37));
     isValid = SGEXTN::Containers::Serialise<float>::sendOut(26.0f, makeSpan(serialiseArray, 37, 4));
     isValid = SGEXTN::Containers::Serialise<float>::sendOut(2.6f, makeSpan(serialiseArray, 41, 4));
@@ -762,7 +762,7 @@ void SGEXTN::InternalTest::SeerattraNumTest::testChiSquaredDistribution(){
     std::chi_squared_distribution sampleRng(5.0f);
     seedStandardLibraryRng(firstSeed);
     SGEXTN::Containers::Array<float> testData = testRng.randomValueArray(100000);
-    SGEXTN::Containers::Array<float> sampleData(100000);
+    SGEXTN::Containers::Array<float> sampleData(100000, 0.0f);
     for(int i=0; i<100000; i++){
         sampleData.at(i) = sampleRng(standardLibraryRng);
     }
@@ -780,8 +780,8 @@ void SGEXTN::InternalTest::SeerattraNumTest::testChiSquaredDistribution(){
     bool isValid = false;
     SGEXTN::SeerattraNum::ChiSquaredDistribution newSampleRng(false, 2.6f);
     newSampleRng.seed(SGEXTN::Containers::Array<unsigned int>(1, 726u));
-    SGEXTN::Containers::Array<unsigned char> serialiseArray(726);
-    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726);
+    SGEXTN::Containers::Array<unsigned char> serialiseArray(726, static_cast<unsigned char>(0));
+    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726, static_cast<unsigned char>(0));
     isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::sendOut(newSampleRng.private_rngLocator, makeSpan(serialiseArray, 0, 37));
     isValid = SGEXTN::Containers::Serialise<float>::sendOut(2.6f, makeSpan(serialiseArray, 37, 4));
     isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::ChiSquaredDistribution>::sendOut(newSampleRng, makeSpan(serialiseDestination, 41));
@@ -799,7 +799,7 @@ void SGEXTN::InternalTest::SeerattraNumTest::testFisherFDistribution(){
     std::fisher_f_distribution sampleRng(5.0f, 10.0f);
     seedStandardLibraryRng(firstSeed);
     SGEXTN::Containers::Array<float> testData = testRng.randomValueArray(100000);
-    SGEXTN::Containers::Array<float> sampleData(100000);
+    SGEXTN::Containers::Array<float> sampleData(100000, 0.0f);
     for(int i=0; i<100000; i++){
         sampleData.at(i) = sampleRng(standardLibraryRng);
     }
@@ -819,8 +819,8 @@ void SGEXTN::InternalTest::SeerattraNumTest::testFisherFDistribution(){
     bool isValid = false;
     SGEXTN::SeerattraNum::FisherFDistribution newSampleRng(false, 0.26f, 2.6f);
     newSampleRng.seed(SGEXTN::Containers::Array<unsigned int>(1, 726u));
-    SGEXTN::Containers::Array<unsigned char> serialiseArray(726);
-    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726);
+    SGEXTN::Containers::Array<unsigned char> serialiseArray(726, static_cast<unsigned char>(0));
+    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726, static_cast<unsigned char>(0));
     isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::sendOut(newSampleRng.private_rngLocator, makeSpan(serialiseArray, 0, 37));
     isValid = SGEXTN::Containers::Serialise<float>::sendOut(0.26f, makeSpan(serialiseArray, 37, 4));
     isValid = SGEXTN::Containers::Serialise<float>::sendOut(2.6f, makeSpan(serialiseArray, 41, 4));
@@ -839,7 +839,7 @@ void SGEXTN::InternalTest::SeerattraNumTest::testStudentTDistribution(){
     std::student_t_distribution sampleRng(5.0f);
     seedStandardLibraryRng(firstSeed);
     SGEXTN::Containers::Array<float> testData = testRng.randomValueArray(100000);
-    SGEXTN::Containers::Array<float> sampleData(100000);
+    SGEXTN::Containers::Array<float> sampleData(100000, 0.0f);
     for(int i=0; i<100000; i++){
         sampleData.at(i) = sampleRng(standardLibraryRng);
     }
@@ -857,8 +857,8 @@ void SGEXTN::InternalTest::SeerattraNumTest::testStudentTDistribution(){
     bool isValid = false;
     SGEXTN::SeerattraNum::StudentTDistribution newSampleRng(false, 2.6f);
     newSampleRng.seed(SGEXTN::Containers::Array<unsigned int>(1, 726u));
-    SGEXTN::Containers::Array<unsigned char> serialiseArray(726);
-    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726);
+    SGEXTN::Containers::Array<unsigned char> serialiseArray(726, static_cast<unsigned char>(0));
+    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726, static_cast<unsigned char>(0));
     isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::sendOut(newSampleRng.private_rngLocator, makeSpan(serialiseArray, 0, 37));
     isValid = SGEXTN::Containers::Serialise<float>::sendOut(2.6f, makeSpan(serialiseArray, 37, 4));
     isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::StudentTDistribution>::sendOut(newSampleRng, makeSpan(serialiseDestination, 41));
@@ -871,14 +871,14 @@ void SGEXTN::InternalTest::SeerattraNumTest::testStudentTDistribution(){
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testWeightedIndexSelectionDistribution(){
-    const SGEXTN::Containers::Array<float> firstWeights(1.0f, 2.0f, 3.0f, 4.0f, 5.0f);
-    const SGEXTN::Containers::Array<float> secondWeights(0.5f, 0.1f, 2.0f);
+    const SGEXTN::Containers::Array<float> firstWeights({1.0f, 2.0f, 3.0f, 4.0f, 5.0f});
+    const SGEXTN::Containers::Array<float> secondWeights({0.5f, 0.1f, 2.0f});
     SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution testRng(false, firstWeights);
     testRng.seed(firstSeed);
-    std::discrete_distribution sampleRng(&firstWeights.at(0), &firstWeights.at(0) + firstWeights.length());
+    std::discrete_distribution sampleRng(firstWeights.getRawPointer(), firstWeights.getRawPointer() + firstWeights.length());
     seedStandardLibraryRng(firstSeed);
     SGEXTN::Containers::Array<int> testData = testRng.randomIndexArray(100000);
-    SGEXTN::Containers::Array<int> sampleData(100000);
+    SGEXTN::Containers::Array<int> sampleData(100000, 0);
     for(int i=0; i<100000; i++){
         sampleData.at(i) = sampleRng(standardLibraryRng);
     }
@@ -892,7 +892,7 @@ void SGEXTN::InternalTest::SeerattraNumTest::testWeightedIndexSelectionDistribut
     if(isSame == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution get weights fail");}
     testRng.setWeights(secondWeights);
     testRng.seed(secondSeed);
-    sampleRng = std::discrete_distribution(&secondWeights.at(0), &secondWeights.at(0) + secondWeights.length());
+    sampleRng = std::discrete_distribution(secondWeights.getRawPointer(), secondWeights.getRawPointer() + secondWeights.length());
     seedStandardLibraryRng(secondSeed);
     for(int i=0; i<100000; i++){
         testData.at(i) = testRng.randomIndex();
@@ -900,10 +900,10 @@ void SGEXTN::InternalTest::SeerattraNumTest::testWeightedIndexSelectionDistribut
     }
     if(testIfDistributionSameDiscrete(sampleData, testData) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution second test fail");}
     bool isValid = false;
-    SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution newSampleRng(false, SGEXTN::Containers::Array<float>(0.01f, 0.1f, 0.89f));
+    SGEXTN::SeerattraNum::WeightedIndexSelectionDistribution newSampleRng(false, SGEXTN::Containers::Array<float>({0.01f, 0.1f, 0.89f}));
     newSampleRng.seed(SGEXTN::Containers::Array<unsigned int>(1, 726u));
-    SGEXTN::Containers::Array<unsigned char> serialiseArray(726);
-    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726);
+    SGEXTN::Containers::Array<unsigned char> serialiseArray(726, static_cast<unsigned char>(0));
+    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726, static_cast<unsigned char>(0));
     isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::sendOut(newSampleRng.private_rngLocator, makeSpan(serialiseArray, 0, 37));
     isValid = SGEXTN::Containers::Serialise<bool>::sendOut(false, makeSpan(serialiseArray, 37, 1));
     isValid = SGEXTN::Containers::Serialise<int>::sendOut(3, makeSpan(serialiseArray, 38, 4));
@@ -921,16 +921,16 @@ void SGEXTN::InternalTest::SeerattraNumTest::testWeightedIndexSelectionDistribut
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testWeightedPiecewiseConstantDistribution(){
-    const SGEXTN::Containers::Array<float> firstWeights(1.0f, 2.0f, 3.0f, 4.0f, 5.0f);
-    const SGEXTN::Containers::Array<float> firstBoundaries(1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f);
-    const SGEXTN::Containers::Array<float> secondWeights(0.5f, 0.1f, 2.0f);
-    const SGEXTN::Containers::Array<float> secondBoundaries(-4.0f, -3.0f, -2.0f, -1.0f);
+    const SGEXTN::Containers::Array<float> firstWeights({1.0f, 2.0f, 3.0f, 4.0f, 5.0f});
+    const SGEXTN::Containers::Array<float> firstBoundaries({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f});
+    const SGEXTN::Containers::Array<float> secondWeights({0.5f, 0.1f, 2.0f});
+    const SGEXTN::Containers::Array<float> secondBoundaries({-4.0f, -3.0f, -2.0f, -1.0f});
     SGEXTN::SeerattraNum::WeightedPiecewiseConstantDistribution testRng(false, firstWeights, firstBoundaries);
     testRng.seed(firstSeed);
-    std::piecewise_constant_distribution sampleRng(&firstBoundaries.at(0), &firstBoundaries.at(0) + firstBoundaries.length(), &firstWeights.at(0));
+    std::piecewise_constant_distribution sampleRng(firstBoundaries.getRawPointer(), firstBoundaries.getRawPointer() + firstBoundaries.length(), firstWeights.getRawPointer());
     seedStandardLibraryRng(firstSeed);
     SGEXTN::Containers::Array<float> testData = testRng.randomValueArray(100000);
-    SGEXTN::Containers::Array<float> sampleData(100000);
+    SGEXTN::Containers::Array<float> sampleData(100000, 0.0f);
     for(int i=0; i<100000; i++){
         sampleData.at(i) = static_cast<float>(sampleRng(standardLibraryRng));
     }
@@ -951,7 +951,7 @@ void SGEXTN::InternalTest::SeerattraNumTest::testWeightedPiecewiseConstantDistri
     if(isSame == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedPiecewiseConstantDistribution get boundaries fail");}
     testRng.setWeightsAndBoundaries(secondWeights, secondBoundaries);
     testRng.seed(secondSeed);
-    sampleRng = std::piecewise_constant_distribution(&secondBoundaries.at(0), &secondBoundaries.at(0) + secondBoundaries.length(), &secondWeights.at(0));
+    sampleRng = std::piecewise_constant_distribution(secondBoundaries.getRawPointer(), secondBoundaries.getRawPointer() + secondBoundaries.length(), secondWeights.getRawPointer());
     seedStandardLibraryRng(secondSeed);
     for(int i=0; i<100000; i++){
         testData.at(i) = testRng.randomValue();
@@ -959,10 +959,10 @@ void SGEXTN::InternalTest::SeerattraNumTest::testWeightedPiecewiseConstantDistri
     }
     if(testIfDistributionSameContinuous(sampleData, testData) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedPiecewiseConstantDistribution second test fail");}
     bool isValid = false;
-    SGEXTN::SeerattraNum::WeightedPiecewiseConstantDistribution newSampleRng(false, SGEXTN::Containers::Array<float>(0.01f, 0.1f, 0.89f), SGEXTN::Containers::Array<float>(1.0f, 2.0f, 3.0f, 4.0f));
+    SGEXTN::SeerattraNum::WeightedPiecewiseConstantDistribution newSampleRng(false, SGEXTN::Containers::Array<float>({0.01f, 0.1f, 0.89f}), SGEXTN::Containers::Array<float>({1.0f, 2.0f, 3.0f, 4.0f}));
     newSampleRng.seed(SGEXTN::Containers::Array<unsigned int>(1, 726u));
-    SGEXTN::Containers::Array<unsigned char> serialiseArray(726);
-    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726);
+    SGEXTN::Containers::Array<unsigned char> serialiseArray(726, static_cast<unsigned char>(0));
+    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726, static_cast<unsigned char>(0));
     isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::sendOut(newSampleRng.private_rngLocator, makeSpan(serialiseArray, 0, 37));
     isValid = SGEXTN::Containers::Serialise<bool>::sendOut(false, makeSpan(serialiseArray, 37, 1));
     isValid = SGEXTN::Containers::Serialise<int>::sendOut(3, makeSpan(serialiseArray, 38, 4));
@@ -987,16 +987,16 @@ void SGEXTN::InternalTest::SeerattraNumTest::testWeightedPiecewiseConstantDistri
 }
 
 void SGEXTN::InternalTest::SeerattraNumTest::testWeightedPiecewiseLinearDistribution(){
-    const SGEXTN::Containers::Array<float> firstWeights(1.0f, 2.0f, 3.0f, 4.0f, 5.0f);
-    const SGEXTN::Containers::Array<float> firstBoundaries(1.0f, 2.0f, 3.0f, 4.0f, 5.0f);
-    const SGEXTN::Containers::Array<float> secondWeights(0.5f, 0.1f, 2.0f);
-    const SGEXTN::Containers::Array<float> secondBoundaries(-3.0f, -2.0f, -1.0f);
+    const SGEXTN::Containers::Array<float> firstWeights({1.0f, 2.0f, 3.0f, 4.0f, 5.0f});
+    const SGEXTN::Containers::Array<float> firstBoundaries({1.0f, 2.0f, 3.0f, 4.0f, 5.0f});
+    const SGEXTN::Containers::Array<float> secondWeights({0.5f, 0.1f, 2.0f});
+    const SGEXTN::Containers::Array<float> secondBoundaries({-3.0f, -2.0f, -1.0f});
     SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution testRng(false, firstWeights, firstBoundaries);
     testRng.seed(firstSeed);
-    std::piecewise_linear_distribution sampleRng(&firstBoundaries.at(0), &firstBoundaries.at(0) + firstBoundaries.length(), &firstWeights.at(0));
+    std::piecewise_linear_distribution sampleRng(firstBoundaries.getRawPointer(), firstBoundaries.getRawPointer() + firstBoundaries.length(), firstWeights.getRawPointer());
     seedStandardLibraryRng(firstSeed);
     SGEXTN::Containers::Array<float> testData = testRng.randomValueArray(100000);
-    SGEXTN::Containers::Array<float> sampleData(100000);
+    SGEXTN::Containers::Array<float> sampleData(100000, 0.0f);
     for(int i=0; i<100000; i++){
         sampleData.at(i) = static_cast<float>(sampleRng(standardLibraryRng));
     }
@@ -1017,7 +1017,7 @@ void SGEXTN::InternalTest::SeerattraNumTest::testWeightedPiecewiseLinearDistribu
     if(isSame == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution get boundaries fail");}
     testRng.setWeightsAndBoundaries(secondWeights, secondBoundaries);
     testRng.seed(secondSeed);
-    sampleRng = std::piecewise_linear_distribution(&secondBoundaries.at(0), &secondBoundaries.at(0) + secondBoundaries.length(), &secondWeights.at(0));
+    sampleRng = std::piecewise_linear_distribution(secondBoundaries.getRawPointer(), secondBoundaries.getRawPointer() + secondBoundaries.length(), secondWeights.getRawPointer());
     seedStandardLibraryRng(secondSeed);
     for(int i=0; i<100000; i++){
         testData.at(i) = testRng.randomValue();
@@ -1025,10 +1025,10 @@ void SGEXTN::InternalTest::SeerattraNumTest::testWeightedPiecewiseLinearDistribu
     }
     if(testIfDistributionSameContinuous(sampleData, testData) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution second test fail");}
     bool isValid = false;
-    SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution newSampleRng(false, SGEXTN::Containers::Array<float>(0.01f, 0.01f, 0.1f, 0.88f), SGEXTN::Containers::Array<float>(1.0f, 2.0f, 3.0f, 4.0f));
+    SGEXTN::SeerattraNum::WeightedPiecewiseLinearDistribution newSampleRng(false, SGEXTN::Containers::Array<float>({0.01f, 0.01f, 0.1f, 0.88f}), SGEXTN::Containers::Array<float>({1.0f, 2.0f, 3.0f, 4.0f}));
     newSampleRng.seed(SGEXTN::Containers::Array<unsigned int>(1, 726u));
-    SGEXTN::Containers::Array<unsigned char> serialiseArray(726);
-    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726);
+    SGEXTN::Containers::Array<unsigned char> serialiseArray(726, static_cast<unsigned char>(0));
+    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726, static_cast<unsigned char>(0));
     isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::sendOut(newSampleRng.private_rngLocator, makeSpan(serialiseArray, 0, 37));
     isValid = SGEXTN::Containers::Serialise<bool>::sendOut(false, makeSpan(serialiseArray, 37, 1));
     isValid = SGEXTN::Containers::Serialise<int>::sendOut(4, makeSpan(serialiseArray, 38, 4));
@@ -1064,8 +1064,8 @@ void SGEXTN::InternalTest::SeerattraNumTest::testRandomPermutation(){
     bool isValid = false;
     SGEXTN::SeerattraNum::RandomPermutation sampleRng(false);
     sampleRng.seed(SGEXTN::Containers::Array<unsigned int>(1, 726u));
-    SGEXTN::Containers::Array<unsigned char> serialiseArray(726);
-    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726);
+    SGEXTN::Containers::Array<unsigned char> serialiseArray(726, static_cast<unsigned char>(0));
+    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726, static_cast<unsigned char>(0));
     isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::sendOut(sampleRng.private_rngLocator, makeSpan(serialiseArray, 0, 37));
     isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::RandomPermutation>::sendOut(sampleRng, makeSpan(serialiseDestination, 37));
     if(isValid == false || isBitwiseIdentical(37, serialiseArray, serialiseDestination) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sendOut SGEXTN::SeerattraNum::RandomPermutation fail");}
@@ -1087,7 +1087,7 @@ void SGEXTN::InternalTest::SeerattraNumTest::testRandomPermutation(){
 void SGEXTN::InternalTest::SeerattraNumTest::testUnitSphereSample(){
     SGEXTN::SeerattraNum::UnitSphereSample generator(false);
     generator.seed(secondSeed);
-    SGEXTN::Containers::Array<SGEXTN::Containers::Array<float>> sample(10000, SGEXTN::Containers::Array<float>(0));
+    SGEXTN::Containers::Array<SGEXTN::Containers::Array<float>> sample(10000, SGEXTN::Containers::Array<float>());
     for(int i=0; i<10000; i++){
         sample.at(i) = generator.randomPoint(3);
     }
@@ -1120,8 +1120,8 @@ void SGEXTN::InternalTest::SeerattraNumTest::testUnitSphereSample(){
     bool isValid = false;
     SGEXTN::SeerattraNum::UnitSphereSample sampleRng(false);
     sampleRng.seed(SGEXTN::Containers::Array<unsigned int>(1, 726u));
-    SGEXTN::Containers::Array<unsigned char> serialiseArray(726);
-    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726);
+    SGEXTN::Containers::Array<unsigned char> serialiseArray(726, static_cast<unsigned char>(0));
+    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726, static_cast<unsigned char>(0));
     isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::sendOut(sampleRng.private_rngLocator, makeSpan(serialiseArray, 0, 37));
     isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::UnitSphereSample>::sendOut(sampleRng, makeSpan(serialiseDestination, 37));
     if(isValid == false || isBitwiseIdentical(37, serialiseArray, serialiseDestination) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sendOut SGEXTN::SeerattraNum::UnitSphereSample fail");}
@@ -1153,8 +1153,8 @@ void SGEXTN::InternalTest::SeerattraNumTest::testSobolSequence(){
     SGEXTN::SeerattraNum::SobolSequence sampleRng(4);
     sampleRng.seed(SGEXTN::Containers::Array<unsigned int>(1, 726u));
     (void)(sampleRng.requestTerm(726));
-    SGEXTN::Containers::Array<unsigned char> serialiseArray(726);
-    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726);
+    SGEXTN::Containers::Array<unsigned char> serialiseArray(726, static_cast<unsigned char>(0));
+    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726, static_cast<unsigned char>(0));
     isValid = SGEXTN::Containers::Serialise<int>::sendOut(4, makeSpan(serialiseArray, 0, 4));
     isValid = SGEXTN::Containers::Serialise<int>::sendOut(726, makeSpan(serialiseArray, 4, 4));
     isValid = SGEXTN::Containers::Serialise<bool>::sendOut(false, makeSpan(serialiseArray, 8, 1));
@@ -1194,8 +1194,8 @@ void SGEXTN::InternalTest::SeerattraNumTest::testHaltonSequence(){
     SGEXTN::SeerattraNum::HaltonSequence sampleRng(4);
     sampleRng.seed(SGEXTN::Containers::Array<unsigned int>(1, 726u));
     (void)(sampleRng.requestTerm(726));
-    SGEXTN::Containers::Array<unsigned char> serialiseArray(726);
-    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726);
+    SGEXTN::Containers::Array<unsigned char> serialiseArray(726, static_cast<unsigned char>(0));
+    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726, static_cast<unsigned char>(0));
     isValid = SGEXTN::Containers::Serialise<int>::sendOut(4, makeSpan(serialiseArray, 0, 4));
     isValid = SGEXTN::Containers::Serialise<int>::sendOut(726, makeSpan(serialiseArray, 4, 4));
     isValid = SGEXTN::Containers::Serialise<bool>::sendOut(true, makeSpan(serialiseArray, 8, 1));
@@ -1250,8 +1250,8 @@ void SGEXTN::InternalTest::SeerattraNumTest::testHaltonSequence(){
 void SGEXTN::InternalTest::SeerattraNumTest::testVoronoiNoise(){
     SGEXTN::SeerattraNum::VoronoiNoise noiseMap(3);
     noiseMap.seed(726);
-    const SGEXTN::Containers::Array<float> testPoint1(0.0f, 0.0f, 0.0f);
-    const SGEXTN::Containers::Array<float> testPoint2(0.35f, 0.35f, 0.35f);
+    const SGEXTN::Containers::Array<float> testPoint1({0.0f, 0.0f, 0.0f});
+    const SGEXTN::Containers::Array<float> testPoint2({0.35f, 0.35f, 0.35f});
     SGEXTN::Containers::Array<float> outputPoint = noiseMap.getPosition(0, testPoint1);
     if(outputPoint.length() != 3 || isCloseEnough(outputPoint.at(0), -0.034563f) == false || isCloseEnough(outputPoint.at(1), -0.10254f) == false || isCloseEnough(outputPoint.at(2), -0.14306f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::VoronoiNoise first seed get closest point to first test point fail");}
     outputPoint = noiseMap.getVectorFrom(0, testPoint1);
@@ -1275,8 +1275,8 @@ void SGEXTN::InternalTest::SeerattraNumTest::testVoronoiNoise(){
     bool isValid = false;
     SGEXTN::SeerattraNum::VoronoiNoise sampleRng(3);
     sampleRng.seed(726);
-    SGEXTN::Containers::Array<unsigned char> serialiseArray(726);
-    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726);
+    SGEXTN::Containers::Array<unsigned char> serialiseArray(726, static_cast<unsigned char>(0));
+    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726, static_cast<unsigned char>(0));
     isValid = SGEXTN::Containers::Serialise<int>::sendOut(3, makeSpan(serialiseArray, 0, 4));
     isValid = SGEXTN::Containers::Serialise<int>::sendOut(726, makeSpan(serialiseArray, 4, 4));
     isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::VoronoiNoise>::sendOut(sampleRng, makeSpan(serialiseDestination, 8));
@@ -1290,8 +1290,8 @@ void SGEXTN::InternalTest::SeerattraNumTest::testVoronoiNoise(){
 
 void SGEXTN::InternalTest::SeerattraNumTest::testValueNoise(){
     SGEXTN::SeerattraNum::ValueNoise noiseMap(3, SGEXTN::SeerattraNum::SmoothingFunction::polynomial2);
-    const SGEXTN::Containers::Array<float> firstPoint(0.25f, 0.25f, 0.25f);
-    const SGEXTN::Containers::Array<float> secondPoint(-0.25f, -0.25f, -0.25f);
+    const SGEXTN::Containers::Array<float> firstPoint({0.25f, 0.25f, 0.25f});
+    const SGEXTN::Containers::Array<float> secondPoint({-0.25f, -0.25f, -0.25f});
     noiseMap.seed(726);
     if(isCloseEnough(noiseMap.getHeight(firstPoint), -0.42717f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::ValueNoise get first point first seed fail");}
     if(isCloseEnough(noiseMap.getHeight(secondPoint), -0.60357f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::ValueNoise get second point first seed fail");}
@@ -1301,8 +1301,8 @@ void SGEXTN::InternalTest::SeerattraNumTest::testValueNoise(){
     bool isValid = false;
     SGEXTN::SeerattraNum::ValueNoise sampleRng(3, SGEXTN::SeerattraNum::SmoothingFunction::trigonometric2);
     sampleRng.seed(726);
-    SGEXTN::Containers::Array<unsigned char> serialiseArray(726);
-    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726);
+    SGEXTN::Containers::Array<unsigned char> serialiseArray(726, static_cast<unsigned char>(0));
+    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726, static_cast<unsigned char>(0));
     isValid = SGEXTN::Containers::Serialise<int>::sendOut(3, makeSpan(serialiseArray, 0, 4));
     isValid = SGEXTN::Containers::Serialise<int>::sendOut(726, makeSpan(serialiseArray, 4, 4));
     isValid = SGEXTN::Containers::Serialise<unsigned char>::sendOut(static_cast<unsigned char>(3), makeSpan(serialiseArray, 8, 1));
@@ -1317,8 +1317,8 @@ void SGEXTN::InternalTest::SeerattraNumTest::testValueNoise(){
 
 void SGEXTN::InternalTest::SeerattraNumTest::testPerlinNoise(){
     SGEXTN::SeerattraNum::PerlinNoise noiseMap(3, SGEXTN::SeerattraNum::SmoothingFunction::polynomial2);
-    const SGEXTN::Containers::Array<float> firstPoint(0.25f, 0.25f, 0.25f);
-    const SGEXTN::Containers::Array<float> secondPoint(-0.25f, -0.25f, -0.25f);
+    const SGEXTN::Containers::Array<float> firstPoint({0.25f, 0.25f, 0.25f});
+    const SGEXTN::Containers::Array<float> secondPoint({-0.25f, -0.25f, -0.25f});
     noiseMap.seed(726);
     if(isCloseEnough(noiseMap.getHeight(firstPoint), -0.33693f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::PerlinNoise get first point first seed fail");}
     if(isCloseEnough(noiseMap.getHeight(secondPoint), 0.45495f) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::PerlinNoise get second point first seed fail");}
@@ -1328,8 +1328,8 @@ void SGEXTN::InternalTest::SeerattraNumTest::testPerlinNoise(){
     bool isValid = false;
     SGEXTN::SeerattraNum::PerlinNoise sampleRng(3, SGEXTN::SeerattraNum::SmoothingFunction::trigonometric2);
     sampleRng.seed(726);
-    SGEXTN::Containers::Array<unsigned char> serialiseArray(726);
-    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726);
+    SGEXTN::Containers::Array<unsigned char> serialiseArray(726, static_cast<unsigned char>(0));
+    SGEXTN::Containers::Array<unsigned char> serialiseDestination(726, static_cast<unsigned char>(0));
     isValid = SGEXTN::Containers::Serialise<int>::sendOut(3, makeSpan(serialiseArray, 0, 4));
     isValid = SGEXTN::Containers::Serialise<int>::sendOut(726, makeSpan(serialiseArray, 4, 4));
     isValid = SGEXTN::Containers::Serialise<unsigned char>::sendOut(static_cast<unsigned char>(3), makeSpan(serialiseArray, 8, 1));

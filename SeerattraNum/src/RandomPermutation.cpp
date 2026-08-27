@@ -51,7 +51,7 @@ void SGEXTN::SeerattraNum::RandomPermutation::seed(const SGEXTN::Containers::Arr
 
 SGEXTN::Containers::Array<int> SGEXTN::SeerattraNum::RandomPermutation::randomPermutation(int n){
     if(n < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::RandomPermutation::randomPermutation crashed because the number of numbers in the requested permutation is negative");}
-    SGEXTN::Containers::Array<int> outputArray(n);
+    SGEXTN::Containers::Array<int> outputArray(n, 0);
     for(int i=0; i<n; i++){
         outputArray.at(i) = i;
     }

@@ -34,7 +34,7 @@ SGEXTN::CoreText::ByteVector::ByteVector(const SGEXTN::CoreText::ByteVector& x) 
 }
 
 SGEXTN::CoreText::ByteVector& SGEXTN::CoreText::ByteVector::operator=(const SGEXTN::CoreText::ByteVector& x){
-    if(&x == this){return (*this);}
+    if(this == &x){return (*this);}
     delete[] private_data;
     private_length = x.private_length;
     private_memoryLength = x.private_length;
@@ -53,6 +53,7 @@ SGEXTN::CoreText::ByteVector::ByteVector(SGEXTN::CoreText::ByteVector&& x) noexc
 }
 
 SGEXTN::CoreText::ByteVector& SGEXTN::CoreText::ByteVector::operator=(SGEXTN::CoreText::ByteVector&& x) noexcept {
+    if(this == &x){return (*this);}
     delete[] private_data;
     private_data = x.private_data;
     private_length = x.private_length;

@@ -25,10 +25,10 @@
 
 SGEXTN::SeerattraNum::HaltonSequence::HaltonSequence() : SGEXTN::SeerattraNum::HaltonSequence(1){}
 
-SGEXTN::SeerattraNum::HaltonSequence::HaltonSequence(int dimensions) : private_dimensions(dimensions), private_lastPosition(-1), private_permutations(0), private_primeNumbers(0){
+SGEXTN::SeerattraNum::HaltonSequence::HaltonSequence(int dimensions) : private_dimensions(dimensions), private_lastPosition(-1){
     if(dimensions <= 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::HaltonSequence constructor crashed as the number of dimensions is nonpositive");}
-    private_permutations = SGEXTN::Containers::Array<SGEXTN::Containers::Array<int>>(dimensions, SGEXTN::Containers::Array<int>(0));
-    private_primeNumbers = SGEXTN::Containers::Array<int>(dimensions);
+    private_permutations = SGEXTN::Containers::Array<SGEXTN::Containers::Array<int>>(dimensions, SGEXTN::Containers::Array<int>());
+    private_primeNumbers = SGEXTN::Containers::Array<int>(dimensions, 0);
     int primesFound = 1;
     private_primeNumbers.at(0) = 2;
     int nextPossiblePrime = 3;
@@ -64,10 +64,10 @@ bool SGEXTN::SeerattraNum::HaltonSequence::sendOut(const SGEXTN::SeerattraNum::H
 bool SGEXTN::SeerattraNum::HaltonSequence::sendIn(SGEXTN::SeerattraNum::HaltonSequence& x, SGEXTN::Containers::Span<unsigned char> data){
     int dimensions = 0;
     int lastPosition = -1;
-    SGEXTN::Containers::Array<SGEXTN::Containers::Array<int>> permutations(0, SGEXTN::Containers::Array<int>(0));
+    SGEXTN::Containers::Array<SGEXTN::Containers::Array<int>> permutations(0, SGEXTN::Containers::Array<int>());
     const bool isValid = SGEXTN::Containers::Serialise<int, int, SGEXTN::Containers::Array<SGEXTN::Containers::Array<int>>>::sendIn(dimensions, lastPosition, permutations, data);
     if(isValid == false || dimensions <= 0 || lastPosition == 0 || lastPosition < -1 || permutations.length() != dimensions){return false;}
-    SGEXTN::Containers::Array<int> primeNumbers(dimensions);
+    SGEXTN::Containers::Array<int> primeNumbers(dimensions, 0);
     int primesFound = 1;
     primeNumbers.at(0) = 2;
     int nextPossiblePrime = 3;
@@ -149,7 +149,7 @@ SGEXTN::Containers::Array<float>SGEXTN::SeerattraNum::HaltonSequence::requestTer
             doubleArray.at(i) /= static_cast<double>(private_primeNumbers.at(i));
         }
     }
-    SGEXTN::Containers::Array<float> outputArray(private_dimensions);
+    SGEXTN::Containers::Array<float> outputArray(private_dimensions, 0.0f);
     for(int i=0; i<private_dimensions; i++){
         outputArray.at(i) = static_cast<float>(doubleArray.at(i));
     }
