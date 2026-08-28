@@ -26,6 +26,7 @@ public:
     static void testFloatConstants();
     static void testFloatLimits();
     static void testFloatMath();
+    static void testBitwise();
     static void testAll();
 };
 }

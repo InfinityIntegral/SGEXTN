@@ -22,6 +22,7 @@
 #include <SGEXTN/Math/FloatConstants.h>
 #include <SGEXTN/Math/FloatLimits.h>
 #include <SGEXTN/Math/FloatMath.h>
+#include <SGEXTN/Math/Bitwise.h>
 
 namespace {
 bool isCloseEnough(float a, float b){
@@ -117,11 +118,28 @@ void SGEXTN::InternalTest::MathTest::testFloatMath(){
     if(SGEXTN::Math::FloatMath<float>::roundToInt(0.4f) != 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Math::FloatMath - round to int function fail");}
 }
 
+void SGEXTN::InternalTest::MathTest::testBitwise(){
+    if(SGEXTN::Math::Bitwise<unsigned int>::isPowerOf2(26) == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Math::Bitwise - is power of 2 no fail");}
+    if(SGEXTN::Math::Bitwise<unsigned int>::isPowerOf2(32) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Math::Bitwise - is power of 2 yes fail");}
+    if(SGEXTN::Math::Bitwise<unsigned int>::ceilingToPowerOf2(726) != 1024){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Math::Bitwise - ceiling power of 2 fail");}
+    if(SGEXTN::Math::Bitwise<unsigned int>::floorToPowerOf2(726) != 512){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Math::Bitwise - floor power of 2 fail");}
+    if(SGEXTN::Math::Bitwise<unsigned int>::requiredStorageBits(726) != 10){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Math::Bitwise - required storage bits fail");}
+    if(SGEXTN::Math::Bitwise<unsigned int>::leftRotate(0x12345678u, 8) != 0x34567812u){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Math::Bitwise - left rotate fail");}
+    if(SGEXTN::Math::Bitwise<unsigned int>::rightRotate(0x12345678u, 8) != 0x78123456u){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Math::Bitwise - right rotate fail");}
+    if(SGEXTN::Math::Bitwise<unsigned int>::leftCountConsecutiveZero(0x00712345u) != 9){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Math::Bitwise - left count consecutive zero fail");}
+    if(SGEXTN::Math::Bitwise<unsigned int>::rightCountConsecutiveZero(0x12345e00u) != 9){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Math::Bitwise - right count consecutive zero fail");}
+    if(SGEXTN::Math::Bitwise<unsigned int>::leftCountConsecutiveOne(0xffb12345u) != 9){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Math::Bitwise - left count consecutive one fail");}
+    if(SGEXTN::Math::Bitwise<unsigned int>::rightCountConsecutiveOne(0x12345dff) != 9){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Math::Bitwise - right count consecutive one fail");}
+    if(SGEXTN::Math::Bitwise<unsigned int>::countNumberOfOne(0x12345678u) != 13){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Math::Bitwise - count number of one fail");}
+    if(SGEXTN::Math::Bitwise<unsigned int>::countNumberOfZero(0x12345678u) != 19){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Math::Bitwise - coutn number of zero fail");}
+}
+
 void SGEXTN::InternalTest::MathTest::testAll(){
     const bool x = SGEXTN::InternalTest::MathTest::checkDataSizes();
     if(x == true){
         SGEXTN::InternalTest::MathTest::testIntegerLimits();
         SGEXTN::InternalTest::MathTest::testIntegerMath();
+        SGEXTN::InternalTest::MathTest::testBitwise();
     }
     SGEXTN::InternalTest::MathTest::testFloatConstants();
     SGEXTN::InternalTest::MathTest::testFloatLimits();

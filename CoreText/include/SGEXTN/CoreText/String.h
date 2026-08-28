@@ -70,6 +70,8 @@ public:
     String& operator+=(const String& x);
     [[nodiscard]] int byteLength() const;
     [[nodiscard]] int characterLength() const;
+    [[nodiscard]] unsigned char* getRawPointer();
+    [[nodiscard]] const unsigned char* getRawPointer() const;
     [[nodiscard]] unsigned char& byteAt(int i);
     [[nodiscard]] const unsigned char& byteAt(int i) const;
     [[nodiscard]] SGEXTN::CoreText::Character getCharacterAt(int i) const;
@@ -155,7 +157,5 @@ public:
     [[nodiscard]] SGEXTN::Containers::Array<int> getUnicode() const;
     [[nodiscard]] String getNormalised(SGEXTN::CoreText::NormalisationFormat format) const;
     [[nodiscard]] SGEXTN::CoreText::String getSimplestEquivalent(bool ignoreCase) const;
-    [[nodiscard]] unsigned char* getRawPointer();
-    [[nodiscard]] const unsigned char* getRawPointer() const;
 };
 }
