@@ -179,7 +179,7 @@ template <typename T> template <typename Comparator> void SGEXTN::Containers::Ar
     if(start < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Array::sort crashed because start of range is negative");}
     if(start + length > (*this).length()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Array::sort crashed because end of range points beyond the end of the array");}
     if((*this).length() == 0){return;}
-    SGEXTN::Containers::Sort<T, Comparator>::private_sort(&(*this).at(0) + start, length);
+    SGEXTN::Containers::Sort<T, Comparator>::private_sort(getRawPointer() + start, length);
 }
 
 template <typename T> T* SGEXTN::Containers::Array<T>::getRawPointer(){

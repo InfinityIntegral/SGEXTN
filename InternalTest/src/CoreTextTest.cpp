@@ -530,4 +530,9 @@ void SGEXTN::InternalTest::CoreTextTest::testString(){
     if(isValid == false || unserialisedString != sampleText){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sendIn SGEXTN::CoreText::String fail");}
     if(SGEXTN::Containers::Serialise<SGEXTN::CoreText::String>::sizeOut(sampleText) != 16){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sizeOut SGEXTN::CoreText::String fail");}
     if(SGEXTN::Containers::Serialise<SGEXTN::CoreText::String>::sizeIn(makeSpan(serialiseArray, 100)) != 16){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sizeIn SGEXTN::CoreText::String fail");}
+    const SGEXTN::CoreText::String largeString = SGEXTN::CoreText::String::repeat("abcdefghij", 1000);
+    for(int i=0; i<10000; i++){
+        const unsigned char expected = static_cast<unsigned char>(0x61 + i % 10);
+        if(largeString.getCharacterAt(i) != expected){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String extended test for character indexing fail");}
+    }
 }

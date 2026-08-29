@@ -19,6 +19,7 @@
 #include <SGEXTN/Containers/private_api/TypeTraits.h>
 #include <SGEXTN/CoreText/String.h>
 #include <SGEXTN/CoreText/Character.h>
+#include <SGEXTN/Containers/ForceCrash.h>
 
 namespace SGEXTN::CoreText {
 template <typename EnumClass, EnumClass E> class EnumNameExtractor {

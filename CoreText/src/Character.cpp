@@ -20,32 +20,12 @@
 #include <SGEXTN/Containers/Array.h>
 #include <SGEXTN/CoreText/String.h>
 #include <SGEXTN/CoreText/UnicodeQuery.h>
-#include <SGEXTN/Containers/Vector.h>
 #include <SGEXTN/Math/FloatLimits.h>
 #include <SGEXTN/Containers/ArrayVectorMove.h>
 #include <SGEXTN/Containers/Serialise.h>
 #include <SGEXTN/Containers/Span.h>
 
 namespace {
-void appendUnicode(int unicode, SGEXTN::CoreText::Character& c){
-    if(unicode < 0x80){c.private_data.appendInvalidCChar(static_cast<unsigned char>(unicode));}
-    else if(unicode < 0x800){
-        c.private_data.appendInvalidCChar(static_cast<unsigned char>(0xc0 + (unicode >> 6)));
-        c.private_data.appendInvalidCChar(static_cast<unsigned char>(0x80 + (unicode & 0x3f)));
-    }
-    else if(unicode < 0x10000){
-        c.private_data.appendInvalidCChar(static_cast<unsigned char>(0xe0 + (unicode >> 12)));
-        c.private_data.appendInvalidCChar(static_cast<unsigned char>(0x80 + ((unicode >> 6) & 0x3f)));
-        c.private_data.appendInvalidCChar(static_cast<unsigned char>(0x80 + (unicode & 0x3f)));
-    }
-    else if(unicode < 0x110000){
-        c.private_data.appendInvalidCChar(static_cast<unsigned char>(0xf0 + (unicode >> 18)));
-        c.private_data.appendInvalidCChar(static_cast<unsigned char>(0x80 + ((unicode >> 12) & 0x3f)));
-        c.private_data.appendInvalidCChar(static_cast<unsigned char>(0x80 + ((unicode >> 6) & 0x3f)));
-        c.private_data.appendInvalidCChar(static_cast<unsigned char>(0x80 + (unicode & 0x3f)));
-    }
-}
-
 int getCharacterDigitValue(const SGEXTN::CoreText::Character& c){
     if(c.isDigit() == true){return (static_cast<int>(c.byteAt(0)) - static_cast<int>('0'));}
     if(c.isEnglishLowercase() == true){return (10 + static_cast<int>(c.byteAt(0)) - static_cast<int>('a'));}
@@ -55,12 +35,12 @@ int getCharacterDigitValue(const SGEXTN::CoreText::Character& c){
 }
 
 SGEXTN::CoreText::Character::Character(){
-    appendUnicode(0x1f496, (*this));
+    private_data = SGEXTN::CoreText::String::stringFromUnicode(0x1f496);
 }
 
 SGEXTN::CoreText::Character::Character(unsigned char c){
     if(c > 0x7f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String constructor crashed because the given unsigned char does not represent a valid ASCII character");}
-    private_data.appendInvalidCChar(c);
+    private_data += c;
 }
 
 SGEXTN::CoreText::Character::Character(const char* s){
@@ -72,7 +52,7 @@ SGEXTN::CoreText::Character::Character(const char* s){
 SGEXTN::CoreText::Character::Character(int unicode){
     if(unicode < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::Character constructor crashed because unicode is negative");}
     else if(unicode > 0x10ffff){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::Character constructor crashed because unicode exceeds the largest possible code point");}
-    appendUnicode(unicode, (*this));
+    private_data = SGEXTN::CoreText::String::stringFromUnicode(unicode);
 }
 
 bool SGEXTN::CoreText::Character::operator==(const SGEXTN::CoreText::Character& x) const {
@@ -100,34 +80,21 @@ bool SGEXTN::CoreText::Character::operator>=(const SGEXTN::CoreText::Character& 
 }
 
 bool SGEXTN::CoreText::Character::sendOut(const SGEXTN::CoreText::Character& x, SGEXTN::Containers::Span<unsigned char> data){
-    const bool isValid = SGEXTN::Containers::Serialise<int>::sendOut(x.byteLength(), data.subspanLeft(4));
-    if(isValid == false){return false;}
-    for(int i=0; i<x.byteLength(); i++){
-        data.at(4 + i) = x.byteAt(i);
-    }
-    return true;
+    return SGEXTN::Containers::Serialise<SGEXTN::CoreText::String>::sendOut(x.private_data, data);
 }
 
 bool SGEXTN::CoreText::Character::sendIn(SGEXTN::CoreText::Character& x, SGEXTN::Containers::Span<unsigned char> data){
-    SGEXTN::CoreText::String s = SGEXTN::CoreText::String::repeat(static_cast<unsigned char>(0), data.length() - 4);
-    for(int i=0; i<data.length()-4; i++){
-        s.byteAt(i) = data.at(4 + i);
-    }
-    if(s.characterLength() != 1){return false;}
-    x = s.getCharacterAt(0);
+    const bool isValid = SGEXTN::Containers::Serialise<SGEXTN::CoreText::String>::sendIn(x.private_data, data);
+    if(isValid == false || x.private_data.characterLength() != 1){return false;}
     return true;
 }
 
 int SGEXTN::CoreText::Character::sizeOut(const SGEXTN::CoreText::Character& x){
-    return (4 + x.byteLength());
+    return SGEXTN::Containers::Serialise<SGEXTN::CoreText::String>::sizeOut(x.private_data);
 }
 
 int SGEXTN::CoreText::Character::sizeIn(SGEXTN::Containers::Span<unsigned char> data){
-    int length = 0;
-    if(data.length() < 4){return -1;}
-    const bool isValid = SGEXTN::Containers::Serialise<int>::sendIn(length, data.subspanLeft(4));
-    if(isValid == false || length < 0){return -1;}
-    return 4 + length;
+    return SGEXTN::Containers::Serialise<SGEXTN::CoreText::String>::sizeIn(data);
 }
 
 int SGEXTN::CoreText::Character::byteLength() const {
@@ -210,53 +177,7 @@ int SGEXTN::CoreText::Character::getBaseUnicode() const {
 }
 
 SGEXTN::Containers::Array<int> SGEXTN::CoreText::Character::getUnicode() const {
-    SGEXTN::Containers::Vector<int> output;
-    int i = 0;
-    while(i < byteLength()){
-        if((byteAt(i) & 0x80) == 0){
-            output.pushBack(static_cast<int>(byteAt(i)));
-            i++;
-        }
-        else if((byteAt(i) & 0xE0) == 0xC0){
-            if(i + 1 >= byteLength()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::Character::getUnicode crashed due to incomplete 2 byte character");}
-            int unicode = 0;
-            unicode += (static_cast<int>(byteAt(i) & 0x1f) << 6);
-            if((byteAt(i + 1) & 0xC0) != 0x80){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::Character::getUnicode crashed due to invalid continuation byte in 2 byte character");}
-            unicode += static_cast<int>(byteAt(i + 1) & 0x3f);
-            if(unicode < 0x80){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::Character::getUnicode crashed due to 2 byte overlong character");}
-            output.pushBack(unicode);
-            i += 2;
-        }
-        else if((byteAt(i) & 0xF0) == 0xE0){
-            if(i + 2 >= byteLength()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::Character::getUnicode crashed due to incomplete 3 byte character");}
-            int unicode = 0;
-            unicode += (static_cast<int>(byteAt(i) & 0x0f) << 12);
-            if((byteAt(i + 1) & 0xC0) != 0x80){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::Character::getUnicode crashed due to invalid first continuation byte in 3 byte character");}
-            unicode += (static_cast<int>(byteAt(i + 1) & 0x3f) << 6);
-            if((byteAt(i + 2) & 0xC0) != 0x80){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::Character::getUnicode crashed due to invalid second continuation byte in 3 byte character");}
-            unicode += static_cast<int>(byteAt(i + 2) & 0x3f);
-            if(unicode < 0x800){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::Character::getUnicode crashed due to 3 byte overlong character");}
-            output.pushBack(unicode);
-            i += 3;
-        }
-        else if((byteAt(i) & 0xF8) == 0xF0){
-            if(i + 3 >= byteLength()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::Character::getUnicode crashed due to incomplete 4 byte character");}
-            int unicode = 0;
-            unicode += (static_cast<int>(byteAt(i) & 0x07) << 18);
-            if((byteAt(i + 1) & 0xC0) != 0x80){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::Character::getUnicode crashed due to invalid first continuation byte in 4 byte character");}
-            unicode += (static_cast<int>(byteAt(i + 1) & 0x3f) << 12);
-            if((byteAt(i + 2) & 0xC0) != 0x80){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::Character::getUnicode crashed due to invalid second continuation byte in 4 byte character");}
-            unicode += (static_cast<int>(byteAt(i + 2) & 0x3f) << 6);
-            if((byteAt(i + 3) & 0xC0) != 0x80){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::Character::getUnicode crashed due to invalid third continuation byte in 4 byte character");}
-            unicode += static_cast<int>(byteAt(i + 3) & 0x3f);
-            if(unicode < 0x10000){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::Character::getUnicode crashed due to 4 byte overlong character");}
-            if(unicode > 0x10ffff){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::Character::getUnicode crashed due to 4 byte invalid character");}
-            output.pushBack(unicode);
-            i += 4;
-        }
-        else{SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::Character::getUnicode crashed due to invalid character");}
-    }
-    return SGEXTN::Containers::ArrayVectorMove<int>::convertToArrayAndDestroyVector(output);
+    return private_data.getUnicode();
 }
 
 bool SGEXTN::CoreText::Character::isUppercase() const {
@@ -277,7 +198,7 @@ SGEXTN::CoreText::Character SGEXTN::CoreText::Character::getUppercase() const {
     output.private_data = "";
     SGEXTN::Containers::Array<int> unicode = getUnicode();
     for(int i=0; i<unicode.length(); i++){
-        appendUnicode(SGEXTN::CoreText::UnicodeQuery::getUppercase(unicode.at(i)), output);
+        output.private_data += SGEXTN::CoreText::String::stringFromUnicode(SGEXTN::CoreText::UnicodeQuery::getUppercase(unicode.at(i)));
     }
     return output;
 }
@@ -288,7 +209,7 @@ SGEXTN::CoreText::Character SGEXTN::CoreText::Character::getLowercase() const {
     output.private_data = "";
     SGEXTN::Containers::Array<int> unicode = getUnicode();
     for(int i=0; i<unicode.length(); i++){
-        appendUnicode(SGEXTN::CoreText::UnicodeQuery::getLowercase(unicode.at(i)), output);
+        output.private_data += SGEXTN::CoreText::String::stringFromUnicode(SGEXTN::CoreText::UnicodeQuery::getLowercase(unicode.at(i)));
     }
     return output;
 }
@@ -299,7 +220,7 @@ SGEXTN::CoreText::Character SGEXTN::CoreText::Character::getTitlecase() const {
     output.private_data = "";
     SGEXTN::Containers::Array<int> unicode = getUnicode();
     for(int i=0; i<unicode.length(); i++){
-        appendUnicode(SGEXTN::CoreText::UnicodeQuery::getTitlecase(unicode.at(i)), output);
+        output.private_data += SGEXTN::CoreText::String::stringFromUnicode(SGEXTN::CoreText::UnicodeQuery::getTitlecase(unicode.at(i)));
     }
     return output;
 }
