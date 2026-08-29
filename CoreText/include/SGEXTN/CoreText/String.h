@@ -16,8 +16,8 @@
 // BuildLah license check: SGEXTN 7.0.0
 
 #pragma once
-#include <SGEXTN/CoreText/private_api/TextBuffer.h>
-#include <SGEXTN/Containers/Vector.h>
+#include <SGEXTN/CoreText/private_api/BoundariesArray.h>
+#include <SGEXTN/CoreText/private_api/ByteVector.h>
 
 namespace SGEXTN::Containers {
 template <typename T> class Array;
@@ -40,12 +40,34 @@ enum class NormalisationFormat : unsigned char {
     LossySeparate = 4
 };
 
-class BuildLah_SGEXTN_CoreText String {
+class BuildLah_SGEXTN_CoreText StringStackStorage {
 public:
-    SGEXTN::CoreText::TextBuffer private_data;
-    mutable SGEXTN::Containers::Vector<int> private_characterOffsets;
-    void private_computeOffsets() const;
-    void private_invalidateOffsets() const;
+    static constexpr unsigned int stackFlag = 0x80000000u;
+    unsigned int length;
+    mutable unsigned int boundaries[2];
+    unsigned char data[52];
+};
+
+class BuildLah_SGEXTN_CoreText StringHeapStorage {
+public:
+    StringHeapStorage() = delete;
+    unsigned int length;
+    mutable SGEXTN::CoreText::BoundariesArray boundaries;
+    SGEXTN::CoreText::ByteVector data;
+};
+
+class BuildLah_SGEXTN_CoreText String {
+private:
+    union {
+        StringStackStorage stack_;
+        StringHeapStorage heap_;
+    };
+    [[nodiscard]] bool isUsingHeap() const;
+    void computeGraphemeBoundaries() const;
+    void invalidateGraphemeBoundaries() const;
+    [[nodiscard]] bool readBoundary(int i) const;
+    void writeBoundaryTrue(int i) const;
+public:
     explicit String();
     String(const String& x);
     String& operator=(const String& x);
@@ -55,7 +77,6 @@ public:
     String(unsigned char c); //NOLINT(google-explicit-constructor)
     String(const char* s); //NOLINT(google-explicit-constructor)
     String(const SGEXTN::CoreText::Character& c); //NOLINT(google-explicit-constructor)
-    void appendInvalidCChar(unsigned char c);
     [[nodiscard]] bool operator==(const String& x) const;
     [[nodiscard]] bool operator!=(const String& x) const;
     [[nodiscard]] bool operator<(const String& x) const;
@@ -76,6 +97,8 @@ public:
     [[nodiscard]] const unsigned char& byteAt(int i) const;
     [[nodiscard]] SGEXTN::CoreText::Character getCharacterAt(int i) const;
     void setCharacterAt(int i, const SGEXTN::CoreText::Character& c);
+    [[nodiscard]] int byteIndexToCharacterIndex(int i) const;
+    [[nodiscard]] int characterIndexToByteIndex(int i) const;
     [[nodiscard]] String fillBytes(unsigned char c) const;
     [[nodiscard]] String fillCharacters(const SGEXTN::CoreText::Character& c) const;
     [[nodiscard]] int findFirstBytesFromLeft(const String& s) const;
@@ -115,8 +138,6 @@ public:
     [[nodiscard]] String fillLeftToCharacterLength(int length, const SGEXTN::CoreText::Character& fillChar) const;
     [[nodiscard]] String fillRightToByteLength(int length, unsigned char fillChar) const;
     [[nodiscard]] String fillRightToCharacterLength(int length, const SGEXTN::CoreText::Character& fillChar) const;
-    [[nodiscard]] int byteIndexToCharacterIndex(int i) const;
-    [[nodiscard]] int characterIndexToByteIndex(int i) const;
     [[nodiscard]] short parseToShort(bool* isValid, int base) const;
     [[nodiscard]] unsigned short parseToUnsignedShort(bool* isValid, int base) const;
     [[nodiscard]] int parseToInt(bool* isValid, int base) const;
@@ -157,5 +178,7 @@ public:
     [[nodiscard]] SGEXTN::Containers::Array<int> getUnicode() const;
     [[nodiscard]] String getNormalised(SGEXTN::CoreText::NormalisationFormat format) const;
     [[nodiscard]] SGEXTN::CoreText::String getSimplestEquivalent(bool ignoreCase) const;
+    [[nodiscard]] static String stringFromUnicode(int unicode);
+    [[nodiscard]] static String stringFromUnicode(const SGEXTN::Containers::Array<int>& codePoints);
 };
 }

@@ -24,7 +24,9 @@ void memoryCopy(const unsigned char* source, unsigned char* destination, int len
 }
 }
 
-SGEXTN::CoreText::ByteVector::ByteVector() : private_data(nullptr), private_length(0), private_memoryLength(0) {}
+SGEXTN::CoreText::ByteVector::ByteVector() : private_data(nullptr), private_length(0), private_memoryLength(0){}
+
+SGEXTN::CoreText::ByteVector::ByteVector(int count) : private_data(new unsigned char[count]), private_length(count), private_memoryLength(count){}
 
 SGEXTN::CoreText::ByteVector::ByteVector(const SGEXTN::CoreText::ByteVector& x) : private_data(nullptr), private_length(x.private_length), private_memoryLength(x.private_length) {
     if(x.private_length > 0){

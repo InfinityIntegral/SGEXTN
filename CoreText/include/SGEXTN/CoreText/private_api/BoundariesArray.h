@@ -18,23 +18,21 @@
 #pragma once
 
 namespace SGEXTN::CoreText {
-class BuildLah_SGEXTN_CoreText ByteVector {
+class BuildLah_SGEXTN_CoreText BoundariesArray {
+private:
+    unsigned int* data_;
+    int length_;
+    int freeSpace_;
 public:
-    unsigned char* private_data;
-    int private_length;
-    int private_memoryLength;
-    explicit ByteVector();
-    explicit ByteVector(int count);
-    ByteVector(const ByteVector& x);
-    ByteVector& operator=(const ByteVector& x);
-    ByteVector(ByteVector&& x) noexcept;
-    ByteVector& operator=(ByteVector&& x) noexcept;
-    ~ByteVector();
-    [[nodiscard]] unsigned char& at(int i);
-    [[nodiscard]] const unsigned char& at(int i) const;
+    explicit BoundariesArray(int count);
+    explicit BoundariesArray();
+    BoundariesArray(const BoundariesArray&) = delete;
+    BoundariesArray& operator=(const BoundariesArray&) = delete;
+    BoundariesArray(BoundariesArray&& x) noexcept;
+    BoundariesArray& operator=(BoundariesArray&& x) noexcept;
+    ~BoundariesArray();
     [[nodiscard]] int length() const;
-    void reserve(int newMemoryLength);
-    void pushBack(unsigned char c);
-    void pushBack(const unsigned char* start, int length);
+    [[nodiscard]] unsigned int& at(int i);
+    [[nodiscard]] int& emptySpace();
 };
 }

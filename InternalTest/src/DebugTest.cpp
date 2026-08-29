@@ -24,6 +24,7 @@
 #include <SGEXTN/Containers/ForceCrash.h>
 #include <SGEXTN/CoreText/Character.h>
 #include <SGEXTN/Containers/Array.h>
+#include <SGEXTN/Containers/Vector.h>
 
 namespace {
 SGEXTN::CoreText::String lastSentString;
