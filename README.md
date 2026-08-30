@@ -28,6 +28,8 @@ Remember to include my NOTICE and LICENSE file in your application; you can put 
 
 The Apache 2.0 license forbids modifying the license itself, so the following is a suggestion not a legal requirement: You are encouraged to use the software to contribute to the National Interests of Singapore and the Singaporean and global public good. May the good we achieve, as one nation, be shared with the world.
 
+(note to ownself: when updating dependency list, update the NOTICE and LICENSES/NOTICE one also, and add the 3rd party library license and notice)
+
 SGEXTN uses the following dependencies:
 
 * SGEXTN
@@ -45,6 +47,12 @@ SGEXTN uses the following dependencies:
     * License: Unicode License v3
     * Source: https://www.unicode.org/Public/UCD/latest
     * Use: test cases for SGEXTN::CoreText::String and SGEXTN::CoreText::UnicodeQuery
+* Leipzig Corpora Collection
+    * Author: Wortschatz Leipzig
+    * License: Creative Commons Attribution 4.0 International Public License
+    * Source: https://wortschatz.uni-leipzig.de/en/download
+    * Citation: D. Goldhahn, T. Eckart & U. Quasthoff: Building Large Monolingual Dictionaries at the Leipzig Corpora Collection: From 100 to 200 Languages. In: Proceedings of the 8th International Language Resources and Evaluation (LREC 2012), 2012.
+    * Use: testing if SGEXTN::CoreText::String small string optimisation works well across various languages
 * Sobol Sequence direction numbers
     * Author: Frances Y. Kuo and Stephen Joe
     * License: custom BSD-style license

@@ -20,6 +20,7 @@
 namespace SGEXTN::InternalTest {
 class BuildLah_SGEXTN_InternalTest SeerattraNumTest {
 public:
+    static bool ifRunTests;
     static void testAll();
     static void testDirectRandom();
     static void testUniformDistributionInteger();

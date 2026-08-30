@@ -88,7 +88,7 @@ template <typename T> SGEXTN::CoreText::String SGEXTN::CoreText::Debug::debugPri
         if(pointerMode == SGEXTN::CoreText::DebugPrintPointerMode::NullCheck){return "not nullptr";}
         return (SGEXTN::CoreText::String("&( ") + debugPrint(*x) + " )");
     }
-    if constexpr(requires{SGEXTN::Containers::IsPointer<T>::isPointer;} == true){
+    if constexpr(requires{SGEXTN::Containers::IsFunctionPointer<T>::isPointer;} == true){
         if(x == nullptr){return "nullptr";}
         return "not nullptr";
     }
