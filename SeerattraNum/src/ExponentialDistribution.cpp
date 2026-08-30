@@ -20,58 +20,30 @@
 #include <SGEXTN/Containers/ForceCrash.h>
 #include <SGEXTN/SeerattraNum/DirectRandom.h>
 #include <SGEXTN/Math/FloatMath.h>
-#include <SGEXTN/SeerattraNum/private_api/ZigguratTables.h>
 #include <SGEXTN/Math/FloatLimits.h>
 #include <SGEXTN/Containers/Serialise.h>
 #include <SGEXTN/Containers/Span.h>
-#include <cmath>
 
 namespace {
-float unpackInteger(unsigned int data){
-    const unsigned int sign = static_cast<int>((data & 0x80000000) >> 31);
-    const unsigned int exponent = (data & 0x7f800000) >> 23;
-    const unsigned int mantissa = data & 0x007fffff;
-    if(exponent == 0xff){
-        if(mantissa != 0){return SGEXTN::Math::FloatLimits<float>::notANumber();}
-        if(sign == 1){return SGEXTN::Math::FloatLimits<float>::negativeInfinity();}
-        return SGEXTN::Math::FloatLimits<float>::positiveInfinity();
-    }
-    if(exponent == 0){
-        if(mantissa == 0){
-            if(sign == 1){return -0.0f;}
-            return 0.0f;
-        }
-        if(sign == 1){return (-1.0f * std::scalbn(static_cast<float>(mantissa), -149));}
-        return std::scalbn(static_cast<float>(mantissa), -149);
-    }
-    if(sign == 1){return (-1.0f * std::scalbn(1.0f + std::scalbn(static_cast<float>(mantissa), -23), static_cast<int>(exponent) - 127));}
-    return std::scalbn(1.0f + std::scalbn(static_cast<float>(mantissa), -23), static_cast<int>(exponent) - 127);
-}
-
-float getWidth(int i){
-    const unsigned char firstByte = static_cast<unsigned char>(*(SGEXTN::SeerattraNum::ZigguratTables::exponentialDistributionWidths + static_cast<decltype(static_cast<int*>(nullptr) - static_cast<int*>(nullptr))>(4 * i)));
-    const unsigned char secondByte = static_cast<unsigned char>(*(SGEXTN::SeerattraNum::ZigguratTables::exponentialDistributionWidths + static_cast<decltype(static_cast<int*>(nullptr) - static_cast<int*>(nullptr))>(4 * i + 1)));
-    const unsigned char thirdByte = static_cast<unsigned char>(*(SGEXTN::SeerattraNum::ZigguratTables::exponentialDistributionWidths + static_cast<decltype(static_cast<int*>(nullptr) - static_cast<int*>(nullptr))>(4 * i + 2)));
-    const unsigned char fourthByte = static_cast<unsigned char>(*(SGEXTN::SeerattraNum::ZigguratTables::exponentialDistributionWidths + static_cast<decltype(static_cast<int*>(nullptr) - static_cast<int*>(nullptr))>(4 * i + 3)));
-    const unsigned int packedInt = (static_cast<unsigned int>(firstByte) << 24) | (static_cast<unsigned int>(secondByte) << 16) | (static_cast<unsigned int>(thirdByte) << 8) | static_cast<unsigned int>(fourthByte);
-    return unpackInteger(packedInt);
-}
-
-float getFloor(int i){
-    const unsigned char firstByte = static_cast<unsigned char>(*(SGEXTN::SeerattraNum::ZigguratTables::exponentialDistributionFloors + static_cast<decltype(static_cast<int*>(nullptr) - static_cast<int*>(nullptr))>(4 * i)));
-    const unsigned char secondByte = static_cast<unsigned char>(*(SGEXTN::SeerattraNum::ZigguratTables::exponentialDistributionFloors + static_cast<decltype(static_cast<int*>(nullptr) - static_cast<int*>(nullptr))>(4 * i + 1)));
-    const unsigned char thirdByte = static_cast<unsigned char>(*(SGEXTN::SeerattraNum::ZigguratTables::exponentialDistributionFloors + static_cast<decltype(static_cast<int*>(nullptr) - static_cast<int*>(nullptr))>(4 * i + 2)));
-    const unsigned char fourthByte = static_cast<unsigned char>(*(SGEXTN::SeerattraNum::ZigguratTables::exponentialDistributionFloors + static_cast<decltype(static_cast<int*>(nullptr) - static_cast<int*>(nullptr))>(4 * i + 3)));
-    const unsigned int packedInt = (static_cast<unsigned int>(firstByte) << 24) | (static_cast<unsigned int>(secondByte) << 16) | (static_cast<unsigned int>(thirdByte) << 8) | static_cast<unsigned int>(fourthByte);
-    return unpackInteger(packedInt);
-}
-
 void parseTables(){
     SGEXTN::SeerattraNum::ExponentialDistribution::private_widthTables = new SGEXTN::Containers::Array<float>(256, 0.0f);
     SGEXTN::SeerattraNum::ExponentialDistribution::private_floorTables = new SGEXTN::Containers::Array<float>(256, 0.0f);
+    SGEXTN::Containers::Array<double> widthArray(256, 0.0f);
+    SGEXTN::Containers::Array<double> floorArray(256, 0.0f);
+    const double rightBound = 7.69711747013104972;
+    const double rectangleArea = 0.003949653420019919;
+    const double expNegativeRightBound = SGEXTN::Math::FloatMath<double>::powerOfE(static_cast<double>(-1.0f) *rightBound);
+    widthArray.at(0) = SGEXTN::Math::FloatLimits<double>::positiveInfinity();
+    floorArray.at(0) = (rectangleArea - expNegativeRightBound) / rectangleArea;
+    widthArray.at(1) = rightBound;
+    floorArray.at(1) = expNegativeRightBound;
+    for(int i=2; i<256; i++){
+        floorArray.at(i) = floorArray.at(i - 1) + rectangleArea / widthArray.at(i - 1);
+        widthArray.at(i) = static_cast<double>(-1.0f) * SGEXTN::Math::FloatMath<double>::naturalLog(floorArray.at(i));
+    }
     for(int i=0; i<256; i++){
-        (*SGEXTN::SeerattraNum::ExponentialDistribution::private_widthTables).at(i) = getWidth(i);
-        (*SGEXTN::SeerattraNum::ExponentialDistribution::private_floorTables).at(i) = getFloor(i);
+        (*SGEXTN::SeerattraNum::ExponentialDistribution::private_widthTables).at(i) = static_cast<float>(widthArray.at(i));
+        (*SGEXTN::SeerattraNum::ExponentialDistribution::private_floorTables).at(i) = static_cast<float>(floorArray.at(i));
     }
     SGEXTN::SeerattraNum::ExponentialDistribution::private_expRightBoundary = SGEXTN::Math::FloatMath<float>::powerOfE((*SGEXTN::SeerattraNum::ExponentialDistribution::private_widthTables).at(1));
 }
