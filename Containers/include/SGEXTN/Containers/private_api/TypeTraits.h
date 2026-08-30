@@ -27,6 +27,11 @@ template <typename ReturnType, typename ClassName, typename... ArgTypes> class I
 template <typename T> class IsObjectPointer {};
 template <typename T> class IsObjectPointer<T*> {public: static const bool isPointer = true;};
 
+template <typename T> class IsFunctionPointer {};
+template <typename ReturnType, typename... ArgTypes> class IsFunctionPointer<ReturnType (*)(ArgTypes...)> {public: static const bool isPointer = true;};
+template <typename ReturnType, typename ClassName, typename... ArgTypes> class IsFunctionPointer<ReturnType (ClassName::*)(ArgTypes...)> {public: static const bool isPointer = true;};
+template <typename ReturnType, typename ClassName, typename... ArgTypes> class IsFunctionPointer<ReturnType (ClassName::*)(ArgTypes...) const> {public: static const bool isPointer = true;};
+
 template <typename T1, typename T2> class IsSameType {};
 template <typename T> class IsSameType<T, T> {public: static const bool same = true;};
 

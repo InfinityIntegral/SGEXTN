@@ -591,7 +591,7 @@ bool SGEXTN::CoreText::String::sendOut(const SGEXTN::CoreText::String& x, SGEXTN
 }
 
 bool SGEXTN::CoreText::String::sendIn(SGEXTN::CoreText::String& x, SGEXTN::Containers::Span<unsigned char> data){
-    x = SGEXTN::CoreText::String::repeat(static_cast<unsigned char>(0), data.length() - 4);
+    x = SGEXTN::CoreText::String::repeat(" ", data.length() - 4);
     if(data.length() - 4 > 0){memoryCopy(data.private_data + 4, x.getRawPointer(), data.length() - 4);}
     return true;
 }

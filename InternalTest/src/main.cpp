@@ -31,8 +31,8 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv){
     SGEXTN::InternalTest::MathTest::testAll();
     SGEXTN::InternalTest::UtilitiesTest::testAll();
     SGEXTN::InternalTest::CoreTextTest::testAll();
-    SGEXTN::InternalTest::ExternalTest::testAll();
+    if(SGEXTN::InternalTest::ExternalTest::ifTestAll == true){SGEXTN::InternalTest::ExternalTest::testAll();}
     SGEXTN::InternalTest::DebugTest::runTest();
-    SGEXTN::InternalTest::SeerattraNumTest::testAll();
+    if(SGEXTN::InternalTest::SeerattraNumTest::ifRunTests == true){SGEXTN::InternalTest::SeerattraNumTest::testAll();}
     SG("all tests pass");
 }

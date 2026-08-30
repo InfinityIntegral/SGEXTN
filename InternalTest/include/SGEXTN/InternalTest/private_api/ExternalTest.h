@@ -30,5 +30,7 @@ public:
     static bool ifTestUnicodeExternal;
     static void testNumericalParsing();
     static bool ifTestNumericalParsing;
+    static void testSmallStringOptimisation();
+    static bool ifTestSmallStringOptimisation;
 };
 }

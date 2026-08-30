@@ -29,6 +29,9 @@
 #include <SGEXTN/SingEmbed/private_api/EmbeddedFile.h>
 #include <SGEXTN/SingEmbed/private_api/SingEmbedFileRegistrarInstance.h>
 #include <SGEXTN/Containers/UnorderedMap.h>
+#define SGEXTN_internal_permanentAllowDebug
+#include <SGEXTN/CoreText/Debug.h>
+#undef SGEXTN_internal_permanentAllowDebug
 #include <chrono>
 #include <format>
 #include <string>
@@ -71,6 +74,7 @@ float parseCStringToFloat(const char* s, bool* isValid){
 
 SGEXTN::CoreText::String readFile(const SGEXTN::CoreText::String& filePath){
     const SGEXTN::CoreText::String pathToFile = SGEXTN::CoreText::String(SGEXTN::CoreText::Character()) + "/SGEXTN/InternalTest/" + filePath;
+    if((*SGEXTN::SingEmbed::SingEmbedFileRegistrarInstance::registry).contains(pathToFile) == false){return "";}
     const int fileLength = (*SGEXTN::SingEmbed::SingEmbedFileRegistrarInstance::registry).at(pathToFile).length;
     const unsigned char* fileData = reinterpret_cast<const unsigned char*>((*SGEXTN::SingEmbed::SingEmbedFileRegistrarInstance::registry).at(pathToFile).data);
     SGEXTN::CoreText::String outputString = SGEXTN::CoreText::String::repeat(" ", fileLength);
@@ -437,10 +441,11 @@ void countDecimalPlaces(int& minimum, int& maximum, const SGEXTN::CoreText::Stri
 }
 
 bool SGEXTN::InternalTest::ExternalTest::ifTestAll = false;
-bool SGEXTN::InternalTest::ExternalTest::ifTestDateTimeExternal = true;
-bool SGEXTN::InternalTest::ExternalTest::ifTestUnicodeQueryExternal = true;
-bool SGEXTN::InternalTest::ExternalTest::ifTestUnicodeExternal = true;
-bool SGEXTN::InternalTest::ExternalTest::ifTestNumericalParsing = true;
+bool SGEXTN::InternalTest::ExternalTest::ifTestDateTimeExternal = false;
+bool SGEXTN::InternalTest::ExternalTest::ifTestUnicodeQueryExternal = false;
+bool SGEXTN::InternalTest::ExternalTest::ifTestUnicodeExternal = false;
+bool SGEXTN::InternalTest::ExternalTest::ifTestNumericalParsing = false;
+bool SGEXTN::InternalTest::ExternalTest::ifTestSmallStringOptimisation = false;
 
 void SGEXTN::InternalTest::ExternalTest::testDateTimeExternal(){
     for(int year=-100; year<100; year++){
@@ -711,10 +716,32 @@ void SGEXTN::InternalTest::ExternalTest::testNumericalParsing(){
     }
 }
 
+void SGEXTN::InternalTest::ExternalTest::testSmallStringOptimisation(){
+    SGEXTN::Containers::Array<SGEXTN::CoreText::String> languages = readFile("langnames.txt").split('\n');
+    for(int i=0; i<languages.length(); i++){
+        const SGEXTN::CoreText::String languageData = readFile(languages.at(i) + ".txt");
+        SGEXTN::Containers::Array<SGEXTN::CoreText::String> words = languageData.split('\n');
+        SGEXTN::Containers::Vector<SGEXTN::CoreText::String> testWords;
+        for(int j=0; j<words.length(); j++){
+            SGEXTN::Containers::Array<SGEXTN::CoreText::String> row = words.at(j).split('\t');
+            if(row.length() != 3){continue;}
+            bool isValid = false;
+            const int index = row.at(0).parseToInt(&isValid, 10);
+            if(isValid == false || index <= 100){continue;}
+            testWords.pushBack(row.at(1));
+        }
+        int stackCounter = 0;
+        for(int j=0; j<testWords.length(); j++){
+            if(testWords.at(j).byteLength() <= 52){stackCounter++;}
+        }
+        SG(languages.at(i))(static_cast<float>(stackCounter) / static_cast<float>(testWords.length()))(stackCounter)(testWords.length());
+    }
+}
+
 void SGEXTN::InternalTest::ExternalTest::testAll(){
-    if(SGEXTN::InternalTest::ExternalTest::ifTestAll == false){return;}
     if(SGEXTN::InternalTest::ExternalTest::ifTestDateTimeExternal == true){SGEXTN::InternalTest::ExternalTest::testDateTimeExternal();}
     if(SGEXTN::InternalTest::ExternalTest::ifTestUnicodeQueryExternal == true){SGEXTN::InternalTest::ExternalTest::testUnicodeQueryExternal();}
     if(SGEXTN::InternalTest::ExternalTest::ifTestUnicodeExternal == true){SGEXTN::InternalTest::ExternalTest::testUnicodeExternal();}
     if(SGEXTN::InternalTest::ExternalTest::ifTestNumericalParsing == true){SGEXTN::InternalTest::ExternalTest::testNumericalParsing();}
+    if(SGEXTN::InternalTest::ExternalTest::ifTestSmallStringOptimisation == true){SGEXTN::InternalTest::ExternalTest::testSmallStringOptimisation();}
 }
