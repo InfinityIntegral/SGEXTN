@@ -27,12 +27,13 @@ template <typename T> class Span;
 
 namespace SGEXTN::SeerattraNum {
 class BuildLah_SGEXTN_SeerattraNum NegativeBinomialDistribution {
+private:
+    SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator_;
+    float chanceOfTrue_;
+    int successCount_;
+    SGEXTN::SeerattraNum::GammaDistribution gammaDistribution_;
+    SGEXTN::SeerattraNum::PoissonDistribution poissonDistribution_;
 public:
-    SGEXTN::SeerattraNum::DirectRandomInstanceLocator private_rngLocator;
-    float private_chanceOfTrue;
-    int private_successCount;
-    SGEXTN::SeerattraNum::GammaDistribution private_gammaDistribution;
-    SGEXTN::SeerattraNum::PoissonDistribution private_poissonDistribution;
     explicit NegativeBinomialDistribution();
     explicit NegativeBinomialDistribution(bool useGlobal, float chanceOfTrue, int successCount);
     [[nodiscard]] static bool sendOut(const NegativeBinomialDistribution& x, SGEXTN::Containers::Span<unsigned char> data);

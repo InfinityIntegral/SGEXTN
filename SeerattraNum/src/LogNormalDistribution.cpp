@@ -25,14 +25,14 @@
 
 SGEXTN::SeerattraNum::LogNormalDistribution::LogNormalDistribution() : SGEXTN::SeerattraNum::LogNormalDistribution(true, 0.0f, 1.0f){}
 
-SGEXTN::SeerattraNum::LogNormalDistribution::LogNormalDistribution(bool useGlobal, float meanOfLn, float standardDeviationOfLn) : private_meanOfLn(meanOfLn), private_standardDeviationOfLn(standardDeviationOfLn), private_rngLocator(useGlobal), private_normalDistribution(true, 0.0f, 1.0f){
+SGEXTN::SeerattraNum::LogNormalDistribution::LogNormalDistribution(bool useGlobal, float meanOfLn, float standardDeviationOfLn) : meanOfLn_(meanOfLn), standardDeviationOfLn_(standardDeviationOfLn), rngLocator_(useGlobal), normalDistribution_(true, 0.0f, 1.0f){
     if(standardDeviationOfLn <= 0.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::LogNormalDistribution constructor crashed because requested standard deviation is nonpositive");}
-    private_normalDistribution.setMean(meanOfLn);
-    private_normalDistribution.setStandardDeviation(standardDeviationOfLn);
+    normalDistribution_.setMean(meanOfLn);
+    normalDistribution_.setStandardDeviation(standardDeviationOfLn);
 }
 
 bool SGEXTN::SeerattraNum::LogNormalDistribution::sendOut(const SGEXTN::SeerattraNum::LogNormalDistribution& x, SGEXTN::Containers::Span<unsigned char> data){
-    return SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float, float>::sendOut(x.private_rngLocator, x.private_meanOfLn, x.private_standardDeviationOfLn, data);
+    return SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float, float>::sendOut(x.rngLocator_, x.meanOfLn_, x.standardDeviationOfLn_, data);
 }
 
 bool SGEXTN::SeerattraNum::LogNormalDistribution::sendIn(SGEXTN::SeerattraNum::LogNormalDistribution& x, SGEXTN::Containers::Span<unsigned char> data){
@@ -42,7 +42,7 @@ bool SGEXTN::SeerattraNum::LogNormalDistribution::sendIn(SGEXTN::SeerattraNum::L
     const bool isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float, float>::sendIn(rngLocator, lnMean, lnStandardDeviation, data);
     if(isValid == false || lnStandardDeviation <= 0.0f){return false;}
     x = SGEXTN::SeerattraNum::LogNormalDistribution(true, lnMean, lnStandardDeviation);
-    x.private_rngLocator = rngLocator;
+    x.rngLocator_ = rngLocator;
     return true;
 }
 
@@ -51,12 +51,12 @@ int SGEXTN::SeerattraNum::LogNormalDistribution::size(){
 }
 
 void SGEXTN::SeerattraNum::LogNormalDistribution::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
-    if(private_rngLocator.private_ownsRng == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::LogNormalDistribution::seed crashed because cannot seed global rng");}
-    (*private_rngLocator).seed(seedArray);
+    if(rngLocator_.isUsingGlobal() == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::LogNormalDistribution::seed crashed because cannot seed global rng");}
+    (*rngLocator_).seed(seedArray);
 }
 
 float SGEXTN::SeerattraNum::LogNormalDistribution::randomValue(){
-    return SGEXTN::Math::FloatMath<float>::powerOfE(private_normalDistribution.private_randomValue(private_rngLocator));
+    return SGEXTN::Math::FloatMath<float>::powerOfE(normalDistribution_.randomValue(rngLocator_));
 }
 
 SGEXTN::Containers::Array<float> SGEXTN::SeerattraNum::LogNormalDistribution::randomValueArray(int count){
@@ -69,20 +69,20 @@ SGEXTN::Containers::Array<float> SGEXTN::SeerattraNum::LogNormalDistribution::ra
 }
 
 float SGEXTN::SeerattraNum::LogNormalDistribution::getMeanOfLn() const {
-    return private_meanOfLn;
+    return meanOfLn_;
 }
 
 float SGEXTN::SeerattraNum::LogNormalDistribution::getStandardDeviationOfLn() const {
-    return private_standardDeviationOfLn;
+    return standardDeviationOfLn_;
 }
 
 void SGEXTN::SeerattraNum::LogNormalDistribution::setMeanOfLn(float meanOfLn){
-    private_meanOfLn = meanOfLn;
-    private_normalDistribution.setMean(meanOfLn);
+    meanOfLn_ = meanOfLn;
+    normalDistribution_.setMean(meanOfLn);
 }
 
 void SGEXTN::SeerattraNum::LogNormalDistribution::setStandardDeviationOfLn(float standardDeviationOfLn){
     if(standardDeviationOfLn <= 0.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::LogNormalDistribution::setStandardDeviationOfLn crashed because requested standard deviation is nonpositive");}
-    private_standardDeviationOfLn = standardDeviationOfLn;
-    private_normalDistribution.setStandardDeviation(standardDeviationOfLn);
+    standardDeviationOfLn_ = standardDeviationOfLn;
+    normalDistribution_.setStandardDeviation(standardDeviationOfLn);
 }

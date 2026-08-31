@@ -25,12 +25,14 @@ template <typename T> class Span;
 
 namespace SGEXTN::SeerattraNum {
 class BuildLah_SGEXTN_SeerattraNum NormalDistribution {
+private:
+    SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator_;
+    float mean_;
+    float standardDeviation_;
+    static SGEXTN::Containers::Array<float>* hwidthTables;
+    static SGEXTN::Containers::Array<float>* floorTables;
+    static void parseTables();
 public:
-    SGEXTN::SeerattraNum::DirectRandomInstanceLocator private_rngLocator;
-    float private_mean;
-    float private_standardDeviation;
-    static SGEXTN::Containers::Array<float>* private_hwidthTables;
-    static SGEXTN::Containers::Array<float>* private_floorTables;
     explicit NormalDistribution();
     explicit NormalDistribution(bool useGlobal, float mean, float standardDeviation);
     [[nodiscard]] static bool sendOut(const NormalDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
@@ -38,12 +40,12 @@ public:
     [[nodiscard]] static int size();
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
     [[nodiscard]] float randomValue();
-    [[nodiscard]] float private_randomValue(SGEXTN::SeerattraNum::DirectRandomInstanceLocator& externalLocator) const;
+    [[nodiscard]] float randomValue(SGEXTN::SeerattraNum::DirectRandomInstanceLocator& externalLocator) const;
     [[nodiscard]] SGEXTN::Containers::Array<float> randomValueArray(int count);
     [[nodiscard]] float getMean() const;
     [[nodiscard]] float getStandardDeviation() const;
     void setMean(float mean);
     void setStandardDeviation(float standardDeviation);
-    static float private_fastTransform(float x);
+    static float fastTransform(float x);
 };
 }

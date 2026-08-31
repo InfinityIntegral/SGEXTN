@@ -25,13 +25,13 @@
 
 SGEXTN::SeerattraNum::PoissonDistribution::PoissonDistribution() : SGEXTN::SeerattraNum::PoissonDistribution(true, 1.0f){}
 
-SGEXTN::SeerattraNum::PoissonDistribution::PoissonDistribution(bool useGlobal, float mean) : private_mean(mean), private_rngLocator(useGlobal), private_smallMeanProductThreshold(0.0f), private_precompConstantA(0.0f), private_precompConstantB(0.0f), private_squeezeBoundU(0.0f), private_squeezeBoundV(0.0f), private_lnMean(0.0f), private_lnAcceptRate(0.0f){
+SGEXTN::SeerattraNum::PoissonDistribution::PoissonDistribution(bool useGlobal, float mean) : mean_(mean), rngLocator_(useGlobal), smallMeanProductThreshold_(0.0f), precompConstantA_(0.0f), precompConstantB_(0.0f), squeezeBoundU_(0.0f), squeezeBoundV_(0.0f), lnMean_(0.0f), lnAcceptRate_(0.0f){
     if(mean <= 0.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::PoissonDistribution constructor crashed because requested mean is nonpositive");}
-    private_redoPrecompute();
+    redoPrecompute();
 }
 
 bool SGEXTN::SeerattraNum::PoissonDistribution::sendOut(const SGEXTN::SeerattraNum::PoissonDistribution& x, SGEXTN::Containers::Span<unsigned char> data){
-    return SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float>::sendOut(x.private_rngLocator, x.private_mean, data);
+    return SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float>::sendOut(x.rngLocator_, x.mean_, data);
 }
 
 bool SGEXTN::SeerattraNum::PoissonDistribution::sendIn(SGEXTN::SeerattraNum::PoissonDistribution& x, SGEXTN::Containers::Span<unsigned char> data){
@@ -40,7 +40,7 @@ bool SGEXTN::SeerattraNum::PoissonDistribution::sendIn(SGEXTN::SeerattraNum::Poi
     const bool isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float>::sendIn(rngLocator, mean, data);
     if(isValid == false || mean <= 0.0f){return false;}
     x = SGEXTN::SeerattraNum::PoissonDistribution(true, mean);
-    x.private_rngLocator = rngLocator;
+    x.rngLocator_ = rngLocator;
     return true;
 }
 
@@ -48,26 +48,26 @@ int SGEXTN::SeerattraNum::PoissonDistribution::size(){
     return 41;
 }
 
-void SGEXTN::SeerattraNum::PoissonDistribution::private_redoPrecompute(){
-    private_smallMeanProductThreshold = SGEXTN::Math::FloatMath<float>::powerOfE(-1.0f * private_mean);
-    private_precompConstantB = 0.931f + 2.53f * SGEXTN::Math::FloatMath<float>::squareRoot(private_mean);
-    private_precompConstantA = -0.059f + 0.02483f * private_precompConstantB;
-    private_lnMean = SGEXTN::Math::FloatMath<float>::naturalLog(private_mean);
-    private_lnAcceptRate = SGEXTN::Math::FloatMath<float>::naturalLog(1.0f / (1.1239f + 1.1328f / (private_precompConstantB - 1.4f)));
-    private_squeezeBoundU = 0.43f;
-    private_squeezeBoundV = 0.9277f - 3.6224f / (private_precompConstantB - 2.0f);
+void SGEXTN::SeerattraNum::PoissonDistribution::redoPrecompute(){
+    smallMeanProductThreshold_ = SGEXTN::Math::FloatMath<float>::powerOfE(-1.0f * mean_);
+    precompConstantB_ = 0.931f + 2.53f * SGEXTN::Math::FloatMath<float>::squareRoot(mean_);
+    precompConstantA_ = -0.059f + 0.02483f * precompConstantB_;
+    lnMean_ = SGEXTN::Math::FloatMath<float>::naturalLog(mean_);
+    lnAcceptRate_ = SGEXTN::Math::FloatMath<float>::naturalLog(1.0f / (1.1239f + 1.1328f / (precompConstantB_ - 1.4f)));
+    squeezeBoundU_ = 0.43f;
+    squeezeBoundV_ = 0.9277f - 3.6224f / (precompConstantB_ - 2.0f);
 }
 
 void SGEXTN::SeerattraNum::PoissonDistribution::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
-    if(private_rngLocator.private_ownsRng == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::PoissonDistribution::seed crashed because cannot seed global rng");}
-    (*private_rngLocator).seed(seedArray);
+    if(rngLocator_.isUsingGlobal() == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::PoissonDistribution::seed crashed because cannot seed global rng");}
+    (*rngLocator_).seed(seedArray);
 }
 
-int SGEXTN::SeerattraNum::PoissonDistribution::private_randomValue(SGEXTN::SeerattraNum::DirectRandomInstanceLocator& externalLocator) const {
-    if(private_mean <= 20.0f){
+int SGEXTN::SeerattraNum::PoissonDistribution::randomValue(SGEXTN::SeerattraNum::DirectRandomInstanceLocator& externalLocator) const {
+    if(mean_ <= 20.0f){
         float product = 1.0f;
         int count = 0;
-        while(product >= private_smallMeanProductThreshold){
+        while(product >= smallMeanProductThreshold_){
             product *= (*externalLocator).randomFloat32();
             count++;
         }
@@ -77,15 +77,15 @@ int SGEXTN::SeerattraNum::PoissonDistribution::private_randomValue(SGEXTN::Seera
     while(true){
         const float v1 = (*externalLocator).randomFloat32() - 0.5f;
         const float v2 = (*externalLocator).randomFloat32();
-        const int g0OfV1 = SGEXTN::Math::FloatMath<float>::floorToInt(0.445f + private_mean + v1 * (private_precompConstantB + 2.0f * private_precompConstantA / (0.5f - SGEXTN::Math::FloatMath<float>::absoluteValue(v1))));
+        const int g0OfV1 = SGEXTN::Math::FloatMath<float>::floorToInt(0.445f + mean_ + v1 * (precompConstantB_ + 2.0f * precompConstantA_ / (0.5f - SGEXTN::Math::FloatMath<float>::absoluteValue(v1))));
         if(g0OfV1 < 0){continue;}
-        if(v1 >= -1.0f * private_squeezeBoundU && v1 <= private_squeezeBoundU && v2 <= private_squeezeBoundV){
+        if(v1 >= -1.0f * squeezeBoundU_ && v1 <= squeezeBoundU_ && v2 <= squeezeBoundV_){
             result = g0OfV1;
             break;
         }
-        const float g1OfV1 = private_precompConstantB + private_precompConstantA / (0.5f - SGEXTN::Math::FloatMath<float>::absoluteValue(v1)) / (0.5f - SGEXTN::Math::FloatMath<float>::absoluteValue(v1));
+        const float g1OfV1 = precompConstantB_ + precompConstantA_ / (0.5f - SGEXTN::Math::FloatMath<float>::absoluteValue(v1)) / (0.5f - SGEXTN::Math::FloatMath<float>::absoluteValue(v1));
         const float leftSide = SGEXTN::Math::FloatMath<float>::naturalLog(v2 / g1OfV1);
-        const float rightSide = private_lnAcceptRate - private_mean + static_cast<float>(g0OfV1) * private_lnMean - SGEXTN::Math::FloatMath<float>::lnExtendedFactorial(static_cast<float>(g0OfV1));
+        const float rightSide = lnAcceptRate_ - mean_ + static_cast<float>(g0OfV1) * lnMean_ - SGEXTN::Math::FloatMath<float>::lnExtendedFactorial(static_cast<float>(g0OfV1));
         if(leftSide <= rightSide){
             result = g0OfV1;
             break;
@@ -95,7 +95,7 @@ int SGEXTN::SeerattraNum::PoissonDistribution::private_randomValue(SGEXTN::Seera
 }
 
 int SGEXTN::SeerattraNum::PoissonDistribution::randomValue(){
-    return private_randomValue(private_rngLocator);
+    return randomValue(rngLocator_);
 }
 
 SGEXTN::Containers::Array<int> SGEXTN::SeerattraNum::PoissonDistribution::randomValueArray(int count){
@@ -108,11 +108,11 @@ SGEXTN::Containers::Array<int> SGEXTN::SeerattraNum::PoissonDistribution::random
 }
 
 float SGEXTN::SeerattraNum::PoissonDistribution::getMean() const {
-    return private_mean;
+    return mean_;
 }
 
 void SGEXTN::SeerattraNum::PoissonDistribution::setMean(float mean){
     if(mean <= 0.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::PoissonDistribution::setMean crashed because requested mean is nonpositive");}
-    private_mean = mean;
-    private_redoPrecompute();
+    mean_ = mean;
+    redoPrecompute();
 }

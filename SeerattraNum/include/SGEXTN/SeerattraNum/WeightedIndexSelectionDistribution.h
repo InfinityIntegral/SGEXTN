@@ -25,11 +25,12 @@ template <typename T> class Span;
 
 namespace SGEXTN::SeerattraNum {
 class BuildLah_SGEXTN_SeerattraNum WeightedIndexSelectionDistribution {
+private:
+    SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator_;
+    SGEXTN::Containers::Array<float> weights_;
+    SGEXTN::Containers::Array<float> prefixSums_;
+    void updatePrefixSums();
 public:
-    SGEXTN::SeerattraNum::DirectRandomInstanceLocator private_rngLocator;
-    SGEXTN::Containers::Array<float> private_weights;
-    SGEXTN::Containers::Array<float> private_prefixSums;
-    void private_updatePrefixSums();
     explicit WeightedIndexSelectionDistribution();
     explicit WeightedIndexSelectionDistribution(bool useGlobal, const SGEXTN::Containers::Array<float>& weights);
     [[nodiscard]] static bool sendOut(const WeightedIndexSelectionDistribution& x, SGEXTN::Containers::Span<unsigned char> data);

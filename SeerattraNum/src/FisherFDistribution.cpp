@@ -24,15 +24,15 @@
 
 SGEXTN::SeerattraNum::FisherFDistribution::FisherFDistribution() : SGEXTN::SeerattraNum::FisherFDistribution(true, 1.0f, 1.0f){}
 
-SGEXTN::SeerattraNum::FisherFDistribution::FisherFDistribution(bool useGlobal, float numeratorDegreesOfFreedom, float denominatorDegreesOfFreedom) : private_numeratorDegreesOfFreedom(numeratorDegreesOfFreedom), private_denominatorDegreesOfFreedom(denominatorDegreesOfFreedom), private_rngLocator(useGlobal), private_numeratorDistribution(true, 1.0f), private_denominatorDistribution(true, 1.0f){
+SGEXTN::SeerattraNum::FisherFDistribution::FisherFDistribution(bool useGlobal, float numeratorDegreesOfFreedom, float denominatorDegreesOfFreedom) : numeratorDegreesOfFreedom_(numeratorDegreesOfFreedom), denominatorDegreesOfFreedom_(denominatorDegreesOfFreedom), rngLocator_(useGlobal), numeratorDistribution_(true, 1.0f), denominatorDistribution_(true, 1.0f){
     if(numeratorDegreesOfFreedom <= 0.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::FisherFDistribution constructor crashed because requested number of degrees of freedom in the numerator is nonpositive");}
     if(denominatorDegreesOfFreedom <= 0.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::FisherFDistribution constructor crashed because requested number of degrees of freedom in the denominator is nonpositive");}
-    private_numeratorDistribution.setDegreesOfFreedom(numeratorDegreesOfFreedom);
-    private_denominatorDistribution.setDegreesOfFreedom(denominatorDegreesOfFreedom);
+    numeratorDistribution_.setDegreesOfFreedom(numeratorDegreesOfFreedom);
+    denominatorDistribution_.setDegreesOfFreedom(denominatorDegreesOfFreedom);
 }
 
 bool SGEXTN::SeerattraNum::FisherFDistribution::sendOut(const SGEXTN::SeerattraNum::FisherFDistribution& x, SGEXTN::Containers::Span<unsigned char> data){
-    return SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float, float>::sendOut(x.private_rngLocator, x.private_numeratorDegreesOfFreedom, x.private_denominatorDegreesOfFreedom, data);
+    return SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float, float>::sendOut(x.rngLocator_, x.numeratorDegreesOfFreedom_, x.denominatorDegreesOfFreedom_, data);
 }
 
 bool SGEXTN::SeerattraNum::FisherFDistribution::sendIn(SGEXTN::SeerattraNum::FisherFDistribution& x, SGEXTN::Containers::Span<unsigned char> data){
@@ -42,7 +42,7 @@ bool SGEXTN::SeerattraNum::FisherFDistribution::sendIn(SGEXTN::SeerattraNum::Fis
     const bool isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float, float>::sendIn(rngLocator, top, bottom, data);
     if(isValid == false || top <= 0.0f || bottom <= 0.0f){return false;}
     x = SGEXTN::SeerattraNum::FisherFDistribution(true, top, bottom);
-    x.private_rngLocator = rngLocator;
+    x.rngLocator_ = rngLocator;
     return true;
 }
 
@@ -51,12 +51,12 @@ int SGEXTN::SeerattraNum::FisherFDistribution::size(){
 }
 
 void SGEXTN::SeerattraNum::FisherFDistribution::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
-    if(private_rngLocator.private_ownsRng == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::FisherFDistribution::seed crashed because cannot seed global rng");}
-    (*private_rngLocator).seed(seedArray);
+    if(rngLocator_.isUsingGlobal() == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::FisherFDistribution::seed crashed because cannot seed global rng");}
+    (*rngLocator_).seed(seedArray);
 }
 
 float SGEXTN::SeerattraNum::FisherFDistribution::randomValue(){
-    return ((private_denominatorDegreesOfFreedom * private_numeratorDistribution.private_randomValue(private_rngLocator)) / (private_numeratorDegreesOfFreedom * private_denominatorDistribution.private_randomValue(private_rngLocator)));
+    return ((denominatorDegreesOfFreedom_ * numeratorDistribution_.randomValue(rngLocator_)) / (numeratorDegreesOfFreedom_ * denominatorDistribution_.randomValue(rngLocator_)));
 }
 
 SGEXTN::Containers::Array<float> SGEXTN::SeerattraNum::FisherFDistribution::randomValueArray(int count){
@@ -69,21 +69,21 @@ SGEXTN::Containers::Array<float> SGEXTN::SeerattraNum::FisherFDistribution::rand
 }
 
 float SGEXTN::SeerattraNum::FisherFDistribution::getNumeratorDegreesOfFreedom() const {
-    return private_numeratorDegreesOfFreedom;
+    return numeratorDegreesOfFreedom_;
 }
 
 float SGEXTN::SeerattraNum::FisherFDistribution::getDenominatorDegreesOfFreedom() const {
-    return private_denominatorDegreesOfFreedom;
+    return denominatorDegreesOfFreedom_;
 }
 
 void SGEXTN::SeerattraNum::FisherFDistribution::setNumeratorDegreesOfFreedom(float numeratorDegreesOfFreedom){
     if(numeratorDegreesOfFreedom <= 0.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::FisherFDistribution::setNumeratorDegreesOfFreedom crashed because requested number of degrees of freedom in the numerator is nonpositive");}
-    private_numeratorDegreesOfFreedom = numeratorDegreesOfFreedom;
-    private_numeratorDistribution.setDegreesOfFreedom(numeratorDegreesOfFreedom);
+    numeratorDegreesOfFreedom_ = numeratorDegreesOfFreedom;
+    numeratorDistribution_.setDegreesOfFreedom(numeratorDegreesOfFreedom);
 }
 
 void SGEXTN::SeerattraNum::FisherFDistribution::setDenominatorDegreesOfFreedom(float denominatorDegreesOfFreedom){
     if(denominatorDegreesOfFreedom <= 0.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::FisherFDistribution::setDenominatorDegreesOfFreedom crashed because requested number of degrees of freedom in the denominator is nonpositive");}
-    private_denominatorDegreesOfFreedom = denominatorDegreesOfFreedom;
-    private_denominatorDistribution.setDegreesOfFreedom(denominatorDegreesOfFreedom);
+    denominatorDegreesOfFreedom_ = denominatorDegreesOfFreedom;
+    denominatorDistribution_.setDegreesOfFreedom(denominatorDegreesOfFreedom);
 }

@@ -25,9 +25,10 @@ template <typename T> class Span;
 
 namespace SGEXTN::SeerattraNum {
 class BuildLah_SGEXTN_SeerattraNum BernoulliDistribution {
+private:
+    SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator_;
+    float chanceOfTrue_;
 public:
-    SGEXTN::SeerattraNum::DirectRandomInstanceLocator private_rngLocator;
-    float private_chanceOfTrue;
     explicit BernoulliDistribution();
     explicit BernoulliDistribution(bool useGlobal, float chanceOfTrue);
     [[nodiscard]] static bool sendOut(const BernoulliDistribution& x, SGEXTN::Containers::Span<unsigned char> data);

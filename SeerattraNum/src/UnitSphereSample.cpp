@@ -27,10 +27,10 @@
 
 SGEXTN::SeerattraNum::UnitSphereSample::UnitSphereSample() : SGEXTN::SeerattraNum::UnitSphereSample(true){}
 
-SGEXTN::SeerattraNum::UnitSphereSample::UnitSphereSample(bool useGlobal) : private_rngLocator(useGlobal), private_normalDistribution(true, 0.0f, 1.0f){}
+SGEXTN::SeerattraNum::UnitSphereSample::UnitSphereSample(bool useGlobal) : rngLocator_(useGlobal), normalDistribution_(true, 0.0f, 1.0f){}
 
 bool SGEXTN::SeerattraNum::UnitSphereSample::sendOut(const SGEXTN::SeerattraNum::UnitSphereSample& x, SGEXTN::Containers::Span<unsigned char> data){
-    return SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::sendOut(x.private_rngLocator, data);
+    return SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::sendOut(x.rngLocator_, data);
 }
 
 bool SGEXTN::SeerattraNum::UnitSphereSample::sendIn(SGEXTN::SeerattraNum::UnitSphereSample& x, SGEXTN::Containers::Span<unsigned char> data){
@@ -38,7 +38,7 @@ bool SGEXTN::SeerattraNum::UnitSphereSample::sendIn(SGEXTN::SeerattraNum::UnitSp
     const bool isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator>::sendIn(rngLocator, data);
     if(isValid == false){return false;}
     x = SGEXTN::SeerattraNum::UnitSphereSample(true);
-    x.private_rngLocator = rngLocator;
+    x.rngLocator_ = rngLocator;
     return true;
 }
 
@@ -47,15 +47,15 @@ int SGEXTN::SeerattraNum::UnitSphereSample::size(){
 }
 
 void SGEXTN::SeerattraNum::UnitSphereSample::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
-    if(private_rngLocator.private_ownsRng == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UnitSphereSample::seed crashed because cannot seed global rng");}
-    (*private_rngLocator).seed(seedArray);
+    if(rngLocator_.isUsingGlobal() == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UnitSphereSample::seed crashed because cannot seed global rng");}
+    (*rngLocator_).seed(seedArray);
 }
 
 SGEXTN::Containers::Array<float> SGEXTN::SeerattraNum::UnitSphereSample::randomPoint(int dimensions){
     if(dimensions <= 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UnitSphereSample::randomPoint crashed because the requested number of dimensions is nonpositive");}
     SGEXTN::Containers::Array<float> outputArray(dimensions, 0.0f);
     for(int i=0; i<dimensions; i++){
-        outputArray.at(i) = private_normalDistribution.private_randomValue(private_rngLocator);
+        outputArray.at(i) = normalDistribution_.randomValue(rngLocator_);
     }
     float sumOfSquares = 0.0f;
     for(int i=0; i<dimensions; i++){

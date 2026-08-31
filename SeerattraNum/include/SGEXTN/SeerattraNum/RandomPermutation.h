@@ -26,9 +26,10 @@ template <typename T> class Span;
 
 namespace SGEXTN::SeerattraNum {
 class BuildLah_SGEXTN_SeerattraNum RandomPermutation {
+private:
+    SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator_;
+    SGEXTN::SeerattraNum::UniformDistributionInteger uniformDistribution_;
 public:
-    SGEXTN::SeerattraNum::DirectRandomInstanceLocator private_rngLocator;
-    SGEXTN::SeerattraNum::UniformDistributionInteger private_uniformDistribution;
     explicit RandomPermutation();
     explicit RandomPermutation(bool useGlobal);
     [[nodiscard]] static bool sendOut(const RandomPermutation& x, SGEXTN::Containers::Span<unsigned char> data);

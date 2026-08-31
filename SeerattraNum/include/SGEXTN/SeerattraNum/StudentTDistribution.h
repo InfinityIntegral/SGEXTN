@@ -27,11 +27,12 @@ template <typename T> class Span;
 
 namespace SGEXTN::SeerattraNum {
 class BuildLah_SGEXTN_SeerattraNum StudentTDistribution {
+private:
+    SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator_;
+    float degreesOfFreedom_;
+    SGEXTN::SeerattraNum::ChiSquaredDistribution chiSquaredDistribution_;
+    SGEXTN::SeerattraNum::NormalDistribution standardNormalDistribution_;
 public:
-    SGEXTN::SeerattraNum::DirectRandomInstanceLocator private_rngLocator;
-    float private_degreesOfFreedom;
-    SGEXTN::SeerattraNum::ChiSquaredDistribution private_chiSquaredDistribution;
-    SGEXTN::SeerattraNum::NormalDistribution private_standardNormalDistribution;
     explicit StudentTDistribution();
     explicit StudentTDistribution(bool useGlobal, float degreesOfFreedom);
     [[nodiscard]] static bool sendOut(const StudentTDistribution& x, SGEXTN::Containers::Span<unsigned char> data);

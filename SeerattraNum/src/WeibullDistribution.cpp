@@ -25,13 +25,13 @@
 
 SGEXTN::SeerattraNum::WeibullDistribution::WeibullDistribution() : SGEXTN::SeerattraNum::WeibullDistribution(true, 1.0f, 1.0f){}
 
-SGEXTN::SeerattraNum::WeibullDistribution::WeibullDistribution(bool useGlobal, float failureBehaviour, float characteristicLifespan) : private_characteristicLifespan(characteristicLifespan), private_failureBehaviour(failureBehaviour), private_rngLocator(useGlobal), private_reciprocalA(1.0f / failureBehaviour){
+SGEXTN::SeerattraNum::WeibullDistribution::WeibullDistribution(bool useGlobal, float failureBehaviour, float characteristicLifespan) : characteristicLifespan_(characteristicLifespan), failureBehaviour_(failureBehaviour), rngLocator_(useGlobal), reciprocalA_(1.0f / failureBehaviour){
     if(failureBehaviour <= 0.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeibullDistribution constructor crashed because requested failure behaviour indicator is nonpositive");}
     if(characteristicLifespan <= 0.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeibullDistribution constructor crashed because requested characteristic lifespan is nonpositive");}
 }
 
 bool SGEXTN::SeerattraNum::WeibullDistribution::sendOut(const SGEXTN::SeerattraNum::WeibullDistribution& x, SGEXTN::Containers::Span<unsigned char> data){
-    return SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float, float>::sendOut(x.private_rngLocator, x.private_failureBehaviour, x.private_characteristicLifespan, data);
+    return SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float, float>::sendOut(x.rngLocator_, x.failureBehaviour_, x.characteristicLifespan_, data);
 }
 
 bool SGEXTN::SeerattraNum::WeibullDistribution::sendIn(SGEXTN::SeerattraNum::WeibullDistribution& x, SGEXTN::Containers::Span<unsigned char> data){
@@ -41,7 +41,7 @@ bool SGEXTN::SeerattraNum::WeibullDistribution::sendIn(SGEXTN::SeerattraNum::Wei
     const bool isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float, float>::sendIn(rngLocator, failureBehaviour, characteristicLifespan, data);
     if(isValid == false || failureBehaviour <= 0.0f || characteristicLifespan <= 0.0f){return false;}
     x = SGEXTN::SeerattraNum::WeibullDistribution(true, failureBehaviour, characteristicLifespan);
-    x.private_rngLocator = rngLocator;
+    x.rngLocator_ = rngLocator;
     return true;
 }
 
@@ -50,12 +50,12 @@ int SGEXTN::SeerattraNum::WeibullDistribution::size(){
 }
 
 void SGEXTN::SeerattraNum::WeibullDistribution::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
-    if(private_rngLocator.private_ownsRng == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeibullDistribution::seed crashed because cannot seed global rng");}
-    (*private_rngLocator).seed(seedArray);
+    if(rngLocator_.isUsingGlobal() == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeibullDistribution::seed crashed because cannot seed global rng");}
+    (*rngLocator_).seed(seedArray);
 }
 
 float SGEXTN::SeerattraNum::WeibullDistribution::randomValue(){
-    return (private_characteristicLifespan * SGEXTN::Math::FloatMath<float>::powerOf(-1.0f * SGEXTN::Math::FloatMath<float>::naturalLog(1.0f - (*private_rngLocator).randomFloat32()), private_reciprocalA));
+    return (characteristicLifespan_ * SGEXTN::Math::FloatMath<float>::powerOf(-1.0f * SGEXTN::Math::FloatMath<float>::naturalLog(1.0f - (*rngLocator_).randomFloat32()), reciprocalA_));
 }
 
 SGEXTN::Containers::Array<float> SGEXTN::SeerattraNum::WeibullDistribution::randomValueArray(int count){
@@ -68,20 +68,20 @@ SGEXTN::Containers::Array<float> SGEXTN::SeerattraNum::WeibullDistribution::rand
 }
 
 float SGEXTN::SeerattraNum::WeibullDistribution::getFailureBehaviour() const {
-    return private_failureBehaviour;
+    return failureBehaviour_;
 }
 
 float SGEXTN::SeerattraNum::WeibullDistribution::getCharacteristicLifespan() const {
-    return private_characteristicLifespan;
+    return characteristicLifespan_;
 }
 
 void SGEXTN::SeerattraNum::WeibullDistribution::setFailureBehaviour(float failureBehaviour){
     if(failureBehaviour <= 0.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeibullDistribution::setFailureBehaviour crashed because requested failure behaviour indicator is nonpositive");}
-    private_failureBehaviour = failureBehaviour;
-    private_reciprocalA = 1.0f / failureBehaviour;
+    failureBehaviour_ = failureBehaviour;
+    reciprocalA_ = 1.0f / failureBehaviour;
 }
 
 void SGEXTN::SeerattraNum::WeibullDistribution::setCharacteristicLifespan(float characteristicLifespan){
     if(characteristicLifespan <= 0.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::WeibullDistribution::setCharacteristicLifespan crashed because requested characteristic lifespan is nonpositive");}
-    private_characteristicLifespan = characteristicLifespan;
+    characteristicLifespan_ = characteristicLifespan;
 }

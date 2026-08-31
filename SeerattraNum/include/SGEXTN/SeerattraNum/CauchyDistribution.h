@@ -25,10 +25,11 @@ template <typename T> class Span;
 
 namespace SGEXTN::SeerattraNum {
 class BuildLah_SGEXTN_SeerattraNum CauchyDistribution {
+private:
+    SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator_;
+    float median_;
+    float halfWidth_;
 public:
-    SGEXTN::SeerattraNum::DirectRandomInstanceLocator private_rngLocator;
-    float private_median;
-    float private_halfWidth;
     explicit CauchyDistribution();
     explicit CauchyDistribution(bool useGlobal, float median, float halfWidth);
     [[nodiscard]] static bool sendOut(const CauchyDistribution& x, SGEXTN::Containers::Span<unsigned char> data);

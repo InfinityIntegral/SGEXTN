@@ -26,17 +26,18 @@ template <typename T> class Span;
 
 namespace SGEXTN::SeerattraNum {
 class BuildLah_SGEXTN_SeerattraNum ChiSquaredDistribution {
+private:
+    SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator_;
+    float degreesOfFreedom_;
+    SGEXTN::SeerattraNum::GammaDistribution gammaDistribution_;
 public:
-    SGEXTN::SeerattraNum::DirectRandomInstanceLocator private_rngLocator;
-    float private_degreesOfFreedom;
-    SGEXTN::SeerattraNum::GammaDistribution private_gammaDistribution;
     explicit ChiSquaredDistribution();
     explicit ChiSquaredDistribution(bool useGlobal, float degreesOfFreedom);
     [[nodiscard]] static bool sendOut(const ChiSquaredDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(ChiSquaredDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static int size();
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
-    [[nodiscard]] float private_randomValue(SGEXTN::SeerattraNum::DirectRandomInstanceLocator& externalLocator) const;
+    [[nodiscard]] float randomValue(SGEXTN::SeerattraNum::DirectRandomInstanceLocator& externalLocator) const;
     [[nodiscard]] float randomValue();
     [[nodiscard]] SGEXTN::Containers::Array<float> randomValueArray(int count);
     [[nodiscard]] float getDegreesOfFreedom() const;

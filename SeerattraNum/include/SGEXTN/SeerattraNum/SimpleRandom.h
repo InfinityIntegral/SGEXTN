@@ -25,8 +25,10 @@ namespace SGEXTN::SeerattraNum {
 class DirectRandom;
 
 class BuildLah_SGEXTN_SeerattraNum SimpleRandom{
+private:
+    friend class SGEXTN::SeerattraNum::DirectRandom;
+    static DirectRandom* globalInstance;
 public:
-    static DirectRandom* private_globalInstance;
     [[nodiscard]] static int randomInt32();
     [[nodiscard]] static long long randomInt64();
     [[nodiscard]] static unsigned int randomUnsignedInt32();

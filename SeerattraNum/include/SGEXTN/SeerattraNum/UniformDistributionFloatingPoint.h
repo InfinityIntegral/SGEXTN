@@ -25,10 +25,11 @@ template <typename T> class Span;
 
 namespace SGEXTN::SeerattraNum {
 class BuildLah_SGEXTN_SeerattraNum UniformDistributionFloatingPoint {
+private:
+    SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator_;
+    float minimum_;
+    float maximum_;
 public:
-    SGEXTN::SeerattraNum::DirectRandomInstanceLocator private_rngLocator;
-    float private_minimum;
-    float private_maximum;
     explicit UniformDistributionFloatingPoint();
     explicit UniformDistributionFloatingPoint(bool useGlobal, float minimum, float maximum);
     [[nodiscard]] static bool sendOut(const UniformDistributionFloatingPoint& x, SGEXTN::Containers::Span<unsigned char> data);

@@ -50,11 +50,11 @@ int getTrailingZeroCount(unsigned int n){
 
 SGEXTN::SeerattraNum::SobolSequence::SobolSequence() : SGEXTN::SeerattraNum::SobolSequence(1){}
 
-SGEXTN::SeerattraNum::SobolSequence::SobolSequence(int dimension) : private_lastPosition(-1), private_dimensions(dimension){
+SGEXTN::SeerattraNum::SobolSequence::SobolSequence(int dimension) : lastPosition_(-1), dimensions_(dimension){
     if(dimension <= 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::SobolSequence constructor crashed because the number of dimensions is nonpositive");}
     if(dimension > 21200){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::SobolSequence constructor crashed because the number of dimensions exceeds 21200 which is where the lookup tables for direction numbers end");}
-    private_hashedSeed = SGEXTN::SeerattraNum::SimpleRandom::randomUnsignedInt32Array(dimension);
-    private_directionNumberCache = SGEXTN::Containers::Array<SGEXTN::Containers::Array<unsigned int>>(dimension, SGEXTN::Containers::Array<unsigned int>(32, 0u));
+    hashedSeed_ = SGEXTN::SeerattraNum::SimpleRandom::randomUnsignedInt32Array(dimension);
+    directionNumberCache_ = SGEXTN::Containers::Array<SGEXTN::Containers::Array<unsigned int>>(dimension, SGEXTN::Containers::Array<unsigned int>(32, 0u));
     for(int i=0; i<dimension; i++){
         for(int j=0; j<32; j++){
             unsigned int directionNumber = 0;
@@ -66,13 +66,13 @@ SGEXTN::SeerattraNum::SobolSequence::SobolSequence(int dimension) : private_last
             directionNumber = directionNumber | (static_cast<unsigned int>(secondByte) << 16);
             directionNumber = directionNumber | (static_cast<unsigned int>(thirdByte) << 8);
             directionNumber = directionNumber | static_cast<unsigned int>(fourthByte);
-            private_directionNumberCache.at(i).at(j) = directionNumber;
+            directionNumberCache_.at(i).at(j) = directionNumber;
         }
     }
 }
 
 bool SGEXTN::SeerattraNum::SobolSequence::sendOut(const SGEXTN::SeerattraNum::SobolSequence& x, SGEXTN::Containers::Span<unsigned char> data){
-    return SGEXTN::Containers::Serialise<int, int, SGEXTN::Containers::Array<unsigned int>>::sendOut(x.private_dimensions, x.private_lastPosition, x.private_hashedSeed, data);
+    return SGEXTN::Containers::Serialise<int, int, SGEXTN::Containers::Array<unsigned int>>::sendOut(x.dimensions_, x.lastPosition_, x.hashedSeed_, data);
 }
 
 bool SGEXTN::SeerattraNum::SobolSequence::sendIn(SGEXTN::SeerattraNum::SobolSequence& x, SGEXTN::Containers::Span<unsigned char> data){
@@ -82,13 +82,13 @@ bool SGEXTN::SeerattraNum::SobolSequence::sendIn(SGEXTN::SeerattraNum::SobolSequ
     const bool isValid = SGEXTN::Containers::Serialise<int, int, SGEXTN::Containers::Array<unsigned int>>::sendIn(dimensions, lastPosition, hashedSeed, data);
     if(isValid == false || dimensions <= 0 || dimensions > 21200 || lastPosition == 0 || lastPosition < -1 || hashedSeed.length() != dimensions){return false;}
     x = SGEXTN::SeerattraNum::SobolSequence(dimensions);
-    x.private_hashedSeed = hashedSeed;
+    x.hashedSeed_ = hashedSeed;
     if(lastPosition != -1){(void)(x.requestTerm(lastPosition));}
     return true;
 }
 
 int SGEXTN::SeerattraNum::SobolSequence::sizeOut(const SGEXTN::SeerattraNum::SobolSequence& x){
-    return SGEXTN::Containers::Serialise<int, int, SGEXTN::Containers::Array<unsigned int>>::sizeOut(x.private_dimensions, x.private_lastPosition, x.private_hashedSeed);
+    return SGEXTN::Containers::Serialise<int, int, SGEXTN::Containers::Array<unsigned int>>::sizeOut(x.dimensions_, x.lastPosition_, x.hashedSeed_);
 }
 
 int SGEXTN::SeerattraNum::SobolSequence::sizeIn(SGEXTN::Containers::Span<unsigned char> data){
@@ -96,27 +96,27 @@ int SGEXTN::SeerattraNum::SobolSequence::sizeIn(SGEXTN::Containers::Span<unsigne
 }
 
 void SGEXTN::SeerattraNum::SobolSequence::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
-    private_lastPosition = -1;
-    private_lastPositionResult = SGEXTN::Containers::Array<unsigned int>();
+    lastPosition_ = -1;
+    lastPositionResult_ = SGEXTN::Containers::Array<unsigned int>();
     SGEXTN::SeerattraNum::DirectRandom rng;
     rng.seed(seedArray);
-    private_hashedSeed = rng.randomUnsignedInt32Array(private_dimensions);
+    hashedSeed_ = rng.randomUnsignedInt32Array(dimensions_);
 }
 
 SGEXTN::Containers::Array<float> SGEXTN::SeerattraNum::SobolSequence::nextTerm(){
-    if(private_lastPosition == -1){return requestTerm(1);}
-    const int changedBit = getTrailingZeroCount(static_cast<unsigned int>(private_lastPosition));
-    private_lastPosition++;
-    for(int i=0; i<private_dimensions; i++){
-        private_lastPositionResult.at(i) = private_lastPositionResult.at(i) ^ private_directionNumberCache.at(i).at(changedBit);
+    if(lastPosition_ == -1){return requestTerm(1);}
+    const int changedBit = getTrailingZeroCount(static_cast<unsigned int>(lastPosition_));
+    lastPosition_++;
+    for(int i=0; i<dimensions_; i++){
+        lastPositionResult_.at(i) = lastPositionResult_.at(i) ^ directionNumberCache_.at(i).at(changedBit);
     }
-    SGEXTN::Containers::Array<unsigned int> integerResult(private_lastPositionResult);
-    for(int i=0; i<private_dimensions; i++){
-        integerResult.at(i) = integerResult.at(i) ^ private_hashedSeed.at(i);
+    SGEXTN::Containers::Array<unsigned int> integerResult(lastPositionResult_);
+    for(int i=0; i<dimensions_; i++){
+        integerResult.at(i) = integerResult.at(i) ^ hashedSeed_.at(i);
     }
-    SGEXTN::Containers::Array<float> floatingPointResult(private_dimensions, 0.0f);
+    SGEXTN::Containers::Array<float> floatingPointResult(dimensions_, 0.0f);
     const float scaleFactor = 1.0f / static_cast<float>(static_cast<unsigned int>(1) << 24);
-    for(int i=0; i<private_dimensions; i++){
+    for(int i=0; i<dimensions_; i++){
         floatingPointResult.at(i) = static_cast<float>(integerResult.at(i) >> 8) * scaleFactor;
     }
     return floatingPointResult;
@@ -124,24 +124,24 @@ SGEXTN::Containers::Array<float> SGEXTN::SeerattraNum::SobolSequence::nextTerm()
 
 SGEXTN::Containers::Array<float> SGEXTN::SeerattraNum::SobolSequence::requestTerm(int startingPoint){
     if(startingPoint <= 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::SobolSequence::requestTerm crashed because starting point is nonpositive, note that zero is not supported because its number of trailing zeroes is not well defined");}
-    private_lastPosition = startingPoint;
+    lastPosition_ = startingPoint;
     unsigned int grayCode = startingPoint;
     grayCode = grayCode ^ (grayCode >> 1);
-    SGEXTN::Containers::Array<unsigned int> integerResult(private_dimensions, 0u);
+    SGEXTN::Containers::Array<unsigned int> integerResult(dimensions_, 0u);
     for(int i=0; i<32; i++){
         if((grayCode & (1 << i)) != 0){
-            for(int j=0; j<private_dimensions; j++){
-                integerResult.at(j) = integerResult.at(j) ^ private_directionNumberCache.at(j).at(i);
+            for(int j=0; j<dimensions_; j++){
+                integerResult.at(j) = integerResult.at(j) ^ directionNumberCache_.at(j).at(i);
             }
         }
     }
-    private_lastPositionResult = integerResult;
-    for(int i=0; i<private_dimensions; i++){
-        integerResult.at(i) = integerResult.at(i) ^ private_hashedSeed.at(i);
+    lastPositionResult_ = integerResult;
+    for(int i=0; i<dimensions_; i++){
+        integerResult.at(i) = integerResult.at(i) ^ hashedSeed_.at(i);
     }
-    SGEXTN::Containers::Array<float> floatingPointResult(private_dimensions, 0.0f);
+    SGEXTN::Containers::Array<float> floatingPointResult(dimensions_, 0.0f);
     const float scaleFactor = 1.0f / static_cast<float>(static_cast<unsigned int>(1) << 24);
-    for(int i=0; i<private_dimensions; i++){
+    for(int i=0; i<dimensions_; i++){
         floatingPointResult.at(i) = static_cast<float>(integerResult.at(i) >> 8) * scaleFactor;
     }
     return floatingPointResult;

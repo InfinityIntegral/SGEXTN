@@ -26,27 +26,29 @@ template <typename T> class Span;
 
 namespace SGEXTN::SeerattraNum {
 class BuildLah_SGEXTN_SeerattraNum BinomialDistribution {
+private:
+    SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator_;
+    float chanceOfTrue_;
+    int attemptCount_;
+    SGEXTN::SeerattraNum::GeometricDistribution geometricDistribution_;
+    float precompConstantL_;
+    float precompConstantC_;
+    float precompConstantM_;
+    float exponentialFactorLeft_;
+    float exponentialFactorRight_;
+    float negativeReciprocalExponentialFactorLeft_;
+    float reciprocalExponentialFactorRight_;
+    float boundaryFarLeft_;
+    float boundaryCenterLeft_;
+    float boundaryCenterRight_;
+    float boundaryFarRight_;
+    float weightLeftTail_;
+    float weightBothTails_;
+    float weightAllExceptCenter_;
+    float comparisonMultiplier_;
+    float comparisonConstant_;
+    void redoPrecompute();
 public:
-    SGEXTN::SeerattraNum::DirectRandomInstanceLocator private_rngLocator;
-    float private_chanceOfTrue;
-    int private_attemptCount;
-    SGEXTN::SeerattraNum::GeometricDistribution private_geometricDistribution;
-    float private_precompConstantL;
-    float private_precompConstantC;
-    float private_precompConstantM;
-    float private_exponentialFactorLeft;
-    float private_exponentialFactorRight;
-    float private_negativeReciprocalExponentialFactorLeft;
-    float private_reciprocalExponentialFactorRight;
-    float private_boundaryFarLeft;
-    float private_boundaryCenterLeft;
-    float private_boundaryCenterRight;
-    float private_boundaryFarRight;
-    float private_weightLeftTail;
-    float private_weightBothTails;
-    float private_weightAllExceptCenter;
-    float private_comparisonMultiplier;
-    float private_comparisonConstant;
     explicit BinomialDistribution();
     explicit BinomialDistribution(bool useGlobal, float chanceOfTrue, int attemptCount);
     [[nodiscard]] static bool sendOut(const BinomialDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
@@ -59,6 +61,5 @@ public:
     [[nodiscard]] int getAttemptCount() const;
     void setChanceOfTrue(float chanceOfTrue);
     void setAttemptCount(int attemptCount);
-    void private_redoPrecompute();
 };
 }

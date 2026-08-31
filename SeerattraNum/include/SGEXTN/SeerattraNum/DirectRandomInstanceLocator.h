@@ -25,9 +25,10 @@ namespace SGEXTN::SeerattraNum {
 class DirectRandom;
 
 class BuildLah_SGEXTN_SeerattraNum DirectRandomInstanceLocator {
+private:
+    bool ownsRng_;
+    SGEXTN::SeerattraNum::DirectRandom* rng_;
 public:
-    bool private_ownsRng;
-    SGEXTN::SeerattraNum::DirectRandom* private_rng;
     explicit DirectRandomInstanceLocator(bool useGlobal);
     explicit DirectRandomInstanceLocator(const SGEXTN::SeerattraNum::DirectRandom& rng);
     DirectRandomInstanceLocator(const DirectRandomInstanceLocator& x);
@@ -40,5 +41,6 @@ public:
     [[nodiscard]] static int size();
     [[nodiscard]] SGEXTN::SeerattraNum::DirectRandom& operator*();
     [[nodiscard]] const SGEXTN::SeerattraNum::DirectRandom& operator*() const;
+    [[nodiscard]] bool isUsingGlobal() const;
 };
 }

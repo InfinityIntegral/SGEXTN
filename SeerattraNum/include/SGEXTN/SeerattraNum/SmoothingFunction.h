@@ -23,13 +23,14 @@ template <typename T> class Span;
 
 namespace SGEXTN::SeerattraNum {
 class BuildLah_SGEXTN_SeerattraNum SmoothingFunction {
+private:
+    float (*function_)(float);
+    static float polynomial2Internal(float x);
+    static float polynomial3Internal(float x);
+    static float trigonometric2Internal(float x);
+    static float rational2Internal(float x);
+    static float rational3Internal(float x);
 public:
-    float (*private_function)(float);
-    static float private_polynomial2(float x);
-    static float private_polynomial3(float x);
-    static float private_trigonometric2(float x);
-    static float private_rational2(float x);
-    static float private_rational3(float x);
     explicit SmoothingFunction();
     explicit SmoothingFunction(float (*function)(float));
     static SmoothingFunction polynomial2;
@@ -40,5 +41,6 @@ public:
     [[nodiscard]] static bool sendOut(SmoothingFunction x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(SmoothingFunction& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static int size();
+    [[nodiscard]] float useFunction(float x) const;
 };
 }

@@ -25,11 +25,12 @@ template <typename T> class Array;
 
 namespace SGEXTN::SeerattraNum {
 class BuildLah_SGEXTN_SeerattraNum LogNormalDistribution {
+private:
+    SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator_;
+    float meanOfLn_;
+    float standardDeviationOfLn_;
+    SGEXTN::SeerattraNum::NormalDistribution normalDistribution_;
 public:
-    SGEXTN::SeerattraNum::DirectRandomInstanceLocator private_rngLocator;
-    float private_meanOfLn;
-    float private_standardDeviationOfLn;
-    SGEXTN::SeerattraNum::NormalDistribution private_normalDistribution;
     explicit LogNormalDistribution();
     explicit LogNormalDistribution(bool useGlobal, float meanOfLn, float standardDeviationOfLn);
     [[nodiscard]] static bool sendOut(const LogNormalDistribution& x, SGEXTN::Containers::Span<unsigned char> data);

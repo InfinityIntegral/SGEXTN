@@ -37,12 +37,12 @@ int tempHash(unsigned int a, int b){
 }
 }
 
-SGEXTN::SeerattraNum::DirectRandom::DirectRandom() : private_cache(0u), private_cacheActive(false), private_firstNum(0u), private_secondNum(0u), private_thirdNum(0u), private_fourthNum(0u){
+SGEXTN::SeerattraNum::DirectRandom::DirectRandom() : cache_(0u), cacheActive_(false), firstNum_(0u), secondNum_(0u), thirdNum_(0u), fourthNum_(0u){
     seed(SGEXTN::SeerattraNum::TrueRandom::randomUnsignedInt32Array(8));
 }
 
 bool SGEXTN::SeerattraNum::DirectRandom::sendOut(const SGEXTN::SeerattraNum::DirectRandom& x, SGEXTN::Containers::Span<unsigned char> data){
-    return SGEXTN::Containers::Serialise<unsigned long long, unsigned long long, unsigned long long, unsigned long long, bool, unsigned int>::sendOut(x.private_firstNum, x.private_secondNum, x.private_thirdNum, x.private_fourthNum, x.private_cacheActive, x.private_cache, data);
+    return SGEXTN::Containers::Serialise<unsigned long long, unsigned long long, unsigned long long, unsigned long long, bool, unsigned int>::sendOut(x.firstNum_, x.secondNum_, x.thirdNum_, x.fourthNum_, x.cacheActive_, x.cache_, data);
 }
 
 bool SGEXTN::SeerattraNum::DirectRandom::sendIn(SGEXTN::SeerattraNum::DirectRandom& x, SGEXTN::Containers::Span<unsigned char> data){
@@ -54,12 +54,12 @@ bool SGEXTN::SeerattraNum::DirectRandom::sendIn(SGEXTN::SeerattraNum::DirectRand
     unsigned int cache = 0;
     const bool isValid = SGEXTN::Containers::Serialise<unsigned long long, unsigned long long, unsigned long long, unsigned long long, bool, unsigned int>::sendIn(n1, n2, n3, n4, cacheActive, cache, data);
     if(isValid == false){return false;}
-    x.private_firstNum = n1;
-    x.private_secondNum = n2;
-    x.private_thirdNum = n3;
-    x.private_fourthNum = n4;
-    x.private_cacheActive = cacheActive;
-    x.private_cache = cache;
+    x.firstNum_ = n1;
+    x.secondNum_ = n2;
+    x.thirdNum_ = n3;
+    x.fourthNum_ = n4;
+    x.cacheActive_ = cacheActive;
+    x.cache_ = cache;
     return true;
 }
 
@@ -82,22 +82,22 @@ void SGEXTN::SeerattraNum::DirectRandom::seed(const SGEXTN::Containers::Array<un
     for(int i=0; i<8; i++){
         if(improvedSeed.at(i) == 0){improvedSeed.at(i) = 0x19650809u + i;}
     }
-    private_firstNum = static_cast<unsigned long long>(improvedSeed.at(0)) | (static_cast<unsigned long long>(improvedSeed.at(1)) << 32);
-    private_secondNum = static_cast<unsigned long long>(improvedSeed.at(2)) | (static_cast<unsigned long long>(improvedSeed.at(3)) << 32);
-    private_thirdNum = static_cast<unsigned long long>(improvedSeed.at(4)) | (static_cast<unsigned long long>(improvedSeed.at(5)) << 32);
-    private_fourthNum = static_cast<unsigned long long>(improvedSeed.at(6)) | (static_cast<unsigned long long>(improvedSeed.at(7)) << 32);
-    private_cacheActive = false;
-    private_cache = 0u;
+    firstNum_ = static_cast<unsigned long long>(improvedSeed.at(0)) | (static_cast<unsigned long long>(improvedSeed.at(1)) << 32);
+    secondNum_ = static_cast<unsigned long long>(improvedSeed.at(2)) | (static_cast<unsigned long long>(improvedSeed.at(3)) << 32);
+    thirdNum_ = static_cast<unsigned long long>(improvedSeed.at(4)) | (static_cast<unsigned long long>(improvedSeed.at(5)) << 32);
+    fourthNum_ = static_cast<unsigned long long>(improvedSeed.at(6)) | (static_cast<unsigned long long>(improvedSeed.at(7)) << 32);
+    cacheActive_ = false;
+    cache_ = 0u;
 }
 
 int SGEXTN::SeerattraNum::DirectRandom::randomInt32(){
-    if(private_cacheActive == true){
-        private_cacheActive = false;
-        return static_cast<int>(private_cache);
+    if(cacheActive_ == true){
+        cacheActive_ = false;
+        return static_cast<int>(cache_);
     }
     const unsigned long long rng = randomUnsignedInt64();
-    private_cacheActive = true;
-    private_cache = static_cast<unsigned int>(rng >> 32);
+    cacheActive_ = true;
+    cache_ = static_cast<unsigned int>(rng >> 32);
     return static_cast<int>(rng & 0xffffffff);
 }
 
@@ -110,14 +110,14 @@ long long SGEXTN::SeerattraNum::DirectRandom::randomInt64(){
 }
 
 unsigned long long SGEXTN::SeerattraNum::DirectRandom::randomUnsignedInt64(){
-    const unsigned long long output = rotation(private_secondNum * 5, 7) * 9;
-    const unsigned long long t = private_secondNum << 17;
-    private_thirdNum = private_thirdNum ^ private_firstNum;
-    private_fourthNum = private_fourthNum ^ private_secondNum;
-    private_secondNum = private_secondNum ^ private_thirdNum;
-    private_firstNum = private_firstNum ^ private_fourthNum;
-    private_thirdNum = private_thirdNum ^ t;
-    private_fourthNum = rotation(private_fourthNum, 45);
+    const unsigned long long output = rotation(secondNum_ * 5, 7) * 9;
+    const unsigned long long t = secondNum_ << 17;
+    thirdNum_ = thirdNum_ ^ firstNum_;
+    fourthNum_ = fourthNum_ ^ secondNum_;
+    secondNum_ = secondNum_ ^ thirdNum_;
+    firstNum_ = firstNum_ ^ fourthNum_;
+    thirdNum_ = thirdNum_ ^ t;
+    fourthNum_ = rotation(fourthNum_, 45);
     return output;
 }
 
@@ -185,10 +185,10 @@ SGEXTN::Containers::Array<double> SGEXTN::SeerattraNum::DirectRandom::randomFloa
     return output;
 }
 
-SGEXTN::SeerattraNum::DirectRandom* SGEXTN::SeerattraNum::DirectRandom::private_createRng(bool useGlobal){
+SGEXTN::SeerattraNum::DirectRandom* SGEXTN::SeerattraNum::DirectRandom::createRng(bool useGlobal){
     if(useGlobal == true){
-        if(SGEXTN::SeerattraNum::SimpleRandom::private_globalInstance == nullptr){SGEXTN::SeerattraNum::SimpleRandom::private_globalInstance = new SGEXTN::SeerattraNum::DirectRandom();}
-        return SGEXTN::SeerattraNum::SimpleRandom::private_globalInstance;
+        if(SGEXTN::SeerattraNum::SimpleRandom::globalInstance == nullptr){SGEXTN::SeerattraNum::SimpleRandom::globalInstance = new SGEXTN::SeerattraNum::DirectRandom();}
+        return SGEXTN::SeerattraNum::SimpleRandom::globalInstance;
     }
     return new SGEXTN::SeerattraNum::DirectRandom();
 }

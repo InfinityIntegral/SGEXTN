@@ -25,11 +25,12 @@ template <typename T> class Span;
 
 namespace SGEXTN::SeerattraNum {
 class BuildLah_SGEXTN_SeerattraNum WeibullDistribution {
+private:
+    SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator_;
+    float failureBehaviour_;
+    float characteristicLifespan_;
+    float reciprocalA_;
 public:
-    SGEXTN::SeerattraNum::DirectRandomInstanceLocator private_rngLocator;
-    float private_failureBehaviour;
-    float private_characteristicLifespan;
-    float private_reciprocalA;
     explicit WeibullDistribution();
     explicit WeibullDistribution(bool useGlobal, float failureBehaviour, float characteristicLifespan);
     [[nodiscard]] static bool sendOut(const WeibullDistribution& x, SGEXTN::Containers::Span<unsigned char> data);

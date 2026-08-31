@@ -35,12 +35,12 @@ int powerOf2(int n){
 
 SGEXTN::SeerattraNum::PerlinNoise::PerlinNoise() : SGEXTN::SeerattraNum::PerlinNoise(1, SGEXTN::SeerattraNum::SmoothingFunction()){}
 
-SGEXTN::SeerattraNum::PerlinNoise::PerlinNoise(int dimension, SGEXTN::SeerattraNum::SmoothingFunction smoothingFunction) : private_dimension(dimension), private_seed(SGEXTN::SeerattraNum::TrueRandom::randomInt32()), private_smoothingFunction(smoothingFunction){
+SGEXTN::SeerattraNum::PerlinNoise::PerlinNoise(int dimension, SGEXTN::SeerattraNum::SmoothingFunction smoothingFunction) : dimension_(dimension), seed_(SGEXTN::SeerattraNum::TrueRandom::randomInt32()), smoothingFunction_(smoothingFunction){
     if(dimension <= 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::PerlinNoise constructor crashed because the number of dimensions is nonpositive");}
 }
 
 bool SGEXTN::SeerattraNum::PerlinNoise::sendOut(const SGEXTN::SeerattraNum::PerlinNoise& x, SGEXTN::Containers::Span<unsigned char> data){
-    return SGEXTN::Containers::Serialise<int, int, SGEXTN::SeerattraNum::SmoothingFunction>::sendOut(x.private_dimension, x.private_seed, x.private_smoothingFunction, data);
+    return SGEXTN::Containers::Serialise<int, int, SGEXTN::SeerattraNum::SmoothingFunction>::sendOut(x.dimension_, x.seed_, x.smoothingFunction_, data);
 }
 
 bool SGEXTN::SeerattraNum::PerlinNoise::sendIn(SGEXTN::SeerattraNum::PerlinNoise& x, SGEXTN::Containers::Span<unsigned char> data){
@@ -59,53 +59,53 @@ int SGEXTN::SeerattraNum::PerlinNoise::size(){
 }
 
 void SGEXTN::SeerattraNum::PerlinNoise::seed(int seed){
-    private_seed = seed;
+    seed_ = seed;
 }
 
 float SGEXTN::SeerattraNum::PerlinNoise::getHeight(const SGEXTN::Containers::Array<float>& point) const {
-    if(point.length() != private_dimension){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::PerlinNoise::getHeight crashed because the number of dimensions in the point does not match that of the noise generator");}
-    SGEXTN::Containers::Array<float> cornerContribution(powerOf2(private_dimension), 0.0f);
-    SGEXTN::Containers::Array<int> flooredCorner(private_dimension, 0);
-    for(int i=0; i<private_dimension; i++){
+    if(point.length() != dimension_){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::PerlinNoise::getHeight crashed because the number of dimensions in the point does not match that of the noise generator");}
+    SGEXTN::Containers::Array<float> cornerContribution(powerOf2(dimension_), 0.0f);
+    SGEXTN::Containers::Array<int> flooredCorner(dimension_, 0);
+    for(int i=0; i<dimension_; i++){
         flooredCorner.at(i) = SGEXTN::Math::FloatMath<float>::floorToInt(point.at(i));
     }
-    SGEXTN::Containers::Array<unsigned char> serialiseBuffer(4 * private_dimension + 8, static_cast<unsigned char>(0));
+    SGEXTN::Containers::Array<unsigned char> serialiseBuffer(4 * dimension_ + 8, static_cast<unsigned char>(0));
     bool isValid = false;
-    isValid = SGEXTN::Containers::Serialise<int>::sendOut(private_seed, SGEXTN::Containers::Span<unsigned char>(serialiseBuffer, 4 * private_dimension, 4));
+    isValid = SGEXTN::Containers::Serialise<int>::sendOut(seed_, SGEXTN::Containers::Span<unsigned char>(serialiseBuffer, 4 * dimension_, 4));
     if(isValid == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::PerlinNoise failed to generate height due to serialisation issues");}
     const float scaleFactor = 1.0f / static_cast<float>(static_cast<unsigned int>(1) << 24);
-    SGEXTN::Containers::Array<float> normalDistributedVars(private_dimension, 0.0f);
-    for(int i=0; i<powerOf2(private_dimension); i++){
-        for(int j=0; j<private_dimension; j++){
+    SGEXTN::Containers::Array<float> normalDistributedVars(dimension_, 0.0f);
+    for(int i=0; i<powerOf2(dimension_); i++){
+        for(int j=0; j<dimension_; j++){
             if((i & powerOf2(j)) == 0){isValid = SGEXTN::Containers::Serialise<int>::sendOut(flooredCorner.at(j), SGEXTN::Containers::Span<unsigned char>(serialiseBuffer, 4 * j, 4));}
             else{isValid = SGEXTN::Containers::Serialise<int>::sendOut(flooredCorner.at(j) + 1, SGEXTN::Containers::Span<unsigned char>(serialiseBuffer, 4 * j, 4));}
             if(isValid == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::PerlinNoise failed to generate height due to serialisation issues");}
         }
-        for(int j=0; j<private_dimension; j++){
-            isValid = SGEXTN::Containers::Serialise<int>::sendOut(j, SGEXTN::Containers::Span<unsigned char>(serialiseBuffer, 4 * private_dimension + 4, 4));
+        for(int j=0; j<dimension_; j++){
+            isValid = SGEXTN::Containers::Serialise<int>::sendOut(j, SGEXTN::Containers::Span<unsigned char>(serialiseBuffer, 4 * dimension_ + 4, 4));
             if(isValid == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::PerlinNoise failed to generate height due to serialisation issues");}
             const unsigned int rngUnsigned = static_cast<unsigned int>(SGEXTN::Containers::HashAlgorithm::wyHash32(SGEXTN::Containers::Span<unsigned char>(serialiseBuffer)));
             normalDistributedVars.at(j) = static_cast<float>(rngUnsigned >> 8) * scaleFactor;
-            normalDistributedVars.at(j) = SGEXTN::SeerattraNum::NormalDistribution::private_fastTransform(normalDistributedVars.at(j));
+            normalDistributedVars.at(j) = SGEXTN::SeerattraNum::NormalDistribution::fastTransform(normalDistributedVars.at(j));
         }
         float generatedMagnitude = 0.0f;
-        for(int j=0; j<private_dimension; j++){
+        for(int j=0; j<dimension_; j++){
             generatedMagnitude += normalDistributedVars.at(j) * normalDistributedVars.at(j);
         }
         generatedMagnitude = SGEXTN::Math::FloatMath<float>::squareRoot(generatedMagnitude);
         if(generatedMagnitude >= SGEXTN::Math::FloatLimits<float>::minimumPositive()){
-            for(int j=0; j<private_dimension; j++){
+            for(int j=0; j<dimension_; j++){
                 normalDistributedVars.at(j) = normalDistributedVars.at(j) / generatedMagnitude;
             }
         }
         else{
             normalDistributedVars.at(0) = 1.0f;
-            for(int j=1; j<private_dimension; j++){
+            for(int j=1; j<dimension_; j++){
                 normalDistributedVars.at(j) = 0.0f;
             }
         }
         float dotProduct = 0.0f;
-        for(int j=0; j<private_dimension; j++){
+        for(int j=0; j<dimension_; j++){
             int referencePosition = 0;
             if((i & powerOf2(j)) == 0){referencePosition = flooredCorner.at(j);}
             else{referencePosition = flooredCorner.at(j) + 1;}
@@ -113,12 +113,12 @@ float SGEXTN::SeerattraNum::PerlinNoise::getHeight(const SGEXTN::Containers::Arr
         }
         cornerContribution.at(i) = dotProduct;
     }
-    for(int i=private_dimension-1; i>=0; i--){
+    for(int i=dimension_-1; i>=0; i--){
         float dist = point.at(i) - static_cast<float>(flooredCorner.at(i));
-        dist = private_smoothingFunction.private_function(dist);
+        dist = smoothingFunction_.useFunction(dist);
         for(int j=0; j<powerOf2(i); j++){
             cornerContribution.at(j) = (1.0f - dist) * cornerContribution.at(j) + dist * cornerContribution.at(j + powerOf2(i));
         }
     }
-    return cornerContribution.at(0) * 2.0f / SGEXTN::Math::FloatMath<float>::squareRoot(static_cast<float>(private_dimension));
+    return cornerContribution.at(0) * 2.0f / SGEXTN::Math::FloatMath<float>::squareRoot(static_cast<float>(dimension_));
 }

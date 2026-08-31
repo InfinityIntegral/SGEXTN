@@ -25,40 +25,40 @@
 
 SGEXTN::SeerattraNum::HaltonSequence::HaltonSequence() : SGEXTN::SeerattraNum::HaltonSequence(1){}
 
-SGEXTN::SeerattraNum::HaltonSequence::HaltonSequence(int dimensions) : private_dimensions(dimensions), private_lastPosition(-1){
+SGEXTN::SeerattraNum::HaltonSequence::HaltonSequence(int dimensions) : dimensions_(dimensions), lastPosition_(-1){
     if(dimensions <= 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::HaltonSequence constructor crashed as the number of dimensions is nonpositive");}
-    private_permutations = SGEXTN::Containers::Array<SGEXTN::Containers::Array<int>>(dimensions, SGEXTN::Containers::Array<int>());
-    private_primeNumbers = SGEXTN::Containers::Array<int>(dimensions, 0);
+    permutations_ = SGEXTN::Containers::Array<SGEXTN::Containers::Array<int>>(dimensions, SGEXTN::Containers::Array<int>());
+    primeNumbers_ = SGEXTN::Containers::Array<int>(dimensions, 0);
     int primesFound = 1;
-    private_primeNumbers.at(0) = 2;
+    primeNumbers_.at(0) = 2;
     int nextPossiblePrime = 3;
     while(primesFound < dimensions){
         bool isPrime = true;
         for(int i=0; i<primesFound; i++){
-            if(nextPossiblePrime % private_primeNumbers.at(i) == 0){isPrime = false;}
+            if(nextPossiblePrime % primeNumbers_.at(i) == 0){isPrime = false;}
         }
         if(isPrime == true){
             primesFound++;
-            private_primeNumbers.at(primesFound - 1) = nextPossiblePrime;
+            primeNumbers_.at(primesFound - 1) = nextPossiblePrime;
         }
         nextPossiblePrime++;
     }
     SGEXTN::SeerattraNum::RandomPermutation permutationGenerator(true);
     for(int i=0; i<dimensions; i++){
-        private_permutations.at(i) = permutationGenerator.randomPermutation(private_primeNumbers.at(i));
+        permutations_.at(i) = permutationGenerator.randomPermutation(primeNumbers_.at(i));
     }
     for(int i=0; i<dimensions; i++){
-        for(int j=0; j<private_primeNumbers.at(i); j++){
-            if(private_permutations.at(i).at(j) == 0){
-                private_permutations.at(i).at(j) = private_permutations.at(i).at(0);
-                private_permutations.at(i).at(0) = 0;
+        for(int j=0; j<primeNumbers_.at(i); j++){
+            if(permutations_.at(i).at(j) == 0){
+                permutations_.at(i).at(j) = permutations_.at(i).at(0);
+                permutations_.at(i).at(0) = 0;
             }
         }
     }
 }
 
 bool SGEXTN::SeerattraNum::HaltonSequence::sendOut(const SGEXTN::SeerattraNum::HaltonSequence& x, SGEXTN::Containers::Span<unsigned char> data){
-    return SGEXTN::Containers::Serialise<int, int, SGEXTN::Containers::Array<SGEXTN::Containers::Array<int>>>::sendOut(x.private_dimensions, x.private_lastPosition, x.private_permutations, data);
+    return SGEXTN::Containers::Serialise<int, int, SGEXTN::Containers::Array<SGEXTN::Containers::Array<int>>>::sendOut(x.dimensions_, x.lastPosition_, x.permutations_, data);
 }
 
 bool SGEXTN::SeerattraNum::HaltonSequence::sendIn(SGEXTN::SeerattraNum::HaltonSequence& x, SGEXTN::Containers::Span<unsigned char> data){
@@ -94,13 +94,13 @@ bool SGEXTN::SeerattraNum::HaltonSequence::sendIn(SGEXTN::SeerattraNum::HaltonSe
         }
     }
     x = SGEXTN::SeerattraNum::HaltonSequence(dimensions);
-    x.private_permutations = permutations;
+    x.permutations_ = permutations;
     if(lastPosition != -1){(void)(x.requestTerm(lastPosition));}
     return true;
 }
 
 int SGEXTN::SeerattraNum::HaltonSequence::sizeOut(const SGEXTN::SeerattraNum::HaltonSequence& x){
-    return SGEXTN::Containers::Serialise<int, int, SGEXTN::Containers::Array<SGEXTN::Containers::Array<int>>>::sizeOut(x.private_dimensions, x.private_lastPosition, x.private_permutations);
+    return SGEXTN::Containers::Serialise<int, int, SGEXTN::Containers::Array<SGEXTN::Containers::Array<int>>>::sizeOut(x.dimensions_, x.lastPosition_, x.permutations_);
 }
 
 int SGEXTN::SeerattraNum::HaltonSequence::sizeIn(SGEXTN::Containers::Span<unsigned char> data){
@@ -110,47 +110,47 @@ int SGEXTN::SeerattraNum::HaltonSequence::sizeIn(SGEXTN::Containers::Span<unsign
 void SGEXTN::SeerattraNum::HaltonSequence::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
     SGEXTN::SeerattraNum::RandomPermutation permutationGenerator(false);
     permutationGenerator.seed(seedArray);
-    for(int i=0; i<private_dimensions; i++){
-        private_permutations.at(i) = permutationGenerator.randomPermutation(private_primeNumbers.at(i));
+    for(int i=0; i<dimensions_; i++){
+        permutations_.at(i) = permutationGenerator.randomPermutation(primeNumbers_.at(i));
     }
-    for(int i=0; i<private_dimensions; i++){
-        for(int j=0; j<private_primeNumbers.at(i); j++){
-            if(private_permutations.at(i).at(j) == 0){
-                private_permutations.at(i).at(j) = private_permutations.at(i).at(0);
-                private_permutations.at(i).at(0) = 0;
+    for(int i=0; i<dimensions_; i++){
+        for(int j=0; j<primeNumbers_.at(i); j++){
+            if(permutations_.at(i).at(j) == 0){
+                permutations_.at(i).at(j) = permutations_.at(i).at(0);
+                permutations_.at(i).at(0) = 0;
             }
         }
     }
-    private_lastPosition = -1;
+    lastPosition_ = -1;
 }
 
 SGEXTN::Containers::Array<float> SGEXTN::SeerattraNum::HaltonSequence::nextTerm(){
-    if(private_lastPosition == -1){return requestTerm(1);}
-    private_lastPosition++;
-    return requestTerm(private_lastPosition);
+    if(lastPosition_ == -1){return requestTerm(1);}
+    lastPosition_++;
+    return requestTerm(lastPosition_);
 }
 
 SGEXTN::Containers::Array<float>SGEXTN::SeerattraNum::HaltonSequence::requestTerm(int startingPoint){
     if(startingPoint <= 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::HaltonSequence::requestTerm crashed because starting point is nonpositive, note that zero is not supported for consistency with Sobol Sequence");}
-    private_lastPosition = startingPoint;
-    SGEXTN::Containers::Array<double> doubleArray(private_dimensions, static_cast<double>(0.0f));
-    for(int i=0; i<private_dimensions; i++){
+    lastPosition_ = startingPoint;
+    SGEXTN::Containers::Array<double> doubleArray(dimensions_, static_cast<double>(0.0f));
+    for(int i=0; i<dimensions_; i++){
         SGEXTN::Containers::Vector<int> primeBaseDigitsReversed;
         int current = startingPoint;
         while(current != 0){
-            primeBaseDigitsReversed.pushBack(current % private_primeNumbers.at(i));
-            current /= private_primeNumbers.at(i);
+            primeBaseDigitsReversed.pushBack(current % primeNumbers_.at(i));
+            current /= primeNumbers_.at(i);
         }
         for(int j=0; j<primeBaseDigitsReversed.length(); j++){
-            primeBaseDigitsReversed.at(j) = private_permutations.at(i).at(primeBaseDigitsReversed.at(j));
+            primeBaseDigitsReversed.at(j) = permutations_.at(i).at(primeBaseDigitsReversed.at(j));
         }
         for(int j=primeBaseDigitsReversed.length()-1; j>=0; j--){
             doubleArray.at(i) += static_cast<double>(primeBaseDigitsReversed.at(j));
-            doubleArray.at(i) /= static_cast<double>(private_primeNumbers.at(i));
+            doubleArray.at(i) /= static_cast<double>(primeNumbers_.at(i));
         }
     }
-    SGEXTN::Containers::Array<float> outputArray(private_dimensions, 0.0f);
-    for(int i=0; i<private_dimensions; i++){
+    SGEXTN::Containers::Array<float> outputArray(dimensions_, 0.0f);
+    for(int i=0; i<dimensions_; i++){
         outputArray.at(i) = static_cast<float>(doubleArray.at(i));
     }
     return outputArray;

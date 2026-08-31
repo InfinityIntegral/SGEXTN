@@ -25,12 +25,12 @@
 
 SGEXTN::SeerattraNum::UniformDistributionInteger::UniformDistributionInteger() : SGEXTN::SeerattraNum::UniformDistributionInteger(true, 0, 0){}
 
-SGEXTN::SeerattraNum::UniformDistributionInteger::UniformDistributionInteger(bool useGlobal, int inclusiveMin, int inclusiveMax) : private_inclusiveMax(inclusiveMax), private_inclusiveMin(inclusiveMin), private_rngLocator(useGlobal){
+SGEXTN::SeerattraNum::UniformDistributionInteger::UniformDistributionInteger(bool useGlobal, int inclusiveMin, int inclusiveMax) : inclusiveMax_(inclusiveMax), inclusiveMin_(inclusiveMin), rngLocator_(useGlobal){
     if(inclusiveMin > inclusiveMax){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionInteger constructor crashed because minimum is higher than maximum");}
 }
 
 bool SGEXTN::SeerattraNum::UniformDistributionInteger::sendOut(const SGEXTN::SeerattraNum::UniformDistributionInteger& x, SGEXTN::Containers::Span<unsigned char> data){
-    return SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, int, int>::sendOut(x.private_rngLocator, x.private_inclusiveMin, x.private_inclusiveMax, data);
+    return SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, int, int>::sendOut(x.rngLocator_, x.inclusiveMin_, x.inclusiveMax_, data);
 }
 
 bool SGEXTN::SeerattraNum::UniformDistributionInteger::sendIn(SGEXTN::SeerattraNum::UniformDistributionInteger& x, SGEXTN::Containers::Span<unsigned char> data){
@@ -40,7 +40,7 @@ bool SGEXTN::SeerattraNum::UniformDistributionInteger::sendIn(SGEXTN::SeerattraN
     const bool isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, int, int>::sendIn(rngLocator, min, max, data);
     if(isValid == false || max < min){return false;}
     x = SGEXTN::SeerattraNum::UniformDistributionInteger(true, min, max);
-    x.private_rngLocator = rngLocator;
+    x.rngLocator_ = rngLocator;
     return true;
 }
 
@@ -49,21 +49,21 @@ int SGEXTN::SeerattraNum::UniformDistributionInteger::size(){
 }
 
 void SGEXTN::SeerattraNum::UniformDistributionInteger::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
-    if(private_rngLocator.private_ownsRng == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionInteger::seed crashed because cannot seed global rng");}
-    (*private_rngLocator).seed(seedArray);
+    if(rngLocator_.isUsingGlobal() == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionInteger::seed crashed because cannot seed global rng");}
+    (*rngLocator_).seed(seedArray);
 }
 
-int SGEXTN::SeerattraNum::UniformDistributionInteger::private_randomValue(SGEXTN::SeerattraNum::DirectRandomInstanceLocator& externalLocator) const {
+int SGEXTN::SeerattraNum::UniformDistributionInteger::randomValue(SGEXTN::SeerattraNum::DirectRandomInstanceLocator& externalLocator) const {
     while(true){
         const unsigned int rngValue = (*externalLocator).randomUnsignedInt32();
-        const unsigned int elementCount = static_cast<unsigned int>(private_inclusiveMax - private_inclusiveMin + 1);
+        const unsigned int elementCount = static_cast<unsigned int>(inclusiveMax_ - inclusiveMin_ + 1);
         if(rngValue >= elementCount * (SGEXTN::Math::IntegerLimits<unsigned int>::maximum() / elementCount)){continue;}
-        return (static_cast<int>(rngValue % elementCount) + private_inclusiveMin);
+        return (static_cast<int>(rngValue % elementCount) + inclusiveMin_);
     }
 }
 
 int SGEXTN::SeerattraNum::UniformDistributionInteger::randomValue(){
-    return private_randomValue(private_rngLocator);
+    return randomValue(rngLocator_);
 }
 
 SGEXTN::Containers::Array<int> SGEXTN::SeerattraNum::UniformDistributionInteger::randomValueArray(int count){
@@ -76,15 +76,15 @@ SGEXTN::Containers::Array<int> SGEXTN::SeerattraNum::UniformDistributionInteger:
 }
 
 int SGEXTN::SeerattraNum::UniformDistributionInteger::getInclusiveMin() const {
-    return private_inclusiveMin;
+    return inclusiveMin_;
 }
 
 int SGEXTN::SeerattraNum::UniformDistributionInteger::getInclusiveMax() const {
-    return private_inclusiveMax;
+    return inclusiveMax_;
 }
 
 void SGEXTN::SeerattraNum::UniformDistributionInteger::setRange(int inclusiveMin, int inclusiveMax){
     if(inclusiveMin > inclusiveMax){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionInteger::setRange crashed because minimum is higher than maximum");}
-    private_inclusiveMin = inclusiveMin;
-    private_inclusiveMax = inclusiveMax;
+    inclusiveMin_ = inclusiveMin;
+    inclusiveMax_ = inclusiveMax;
 }
