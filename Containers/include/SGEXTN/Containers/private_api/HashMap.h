@@ -47,21 +47,24 @@ template <typename Key, typename Value, typename EqualityCheck, typename HashFun
 template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> class HashMapConstIterator;
 
 template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> class HashMap {
-public:
-    HashMapSlot<Key, Value, EqualityCheck, HashFunction>* data;
-    int activeLength;
-    int memoryUsedLength;
-    int memoryTotalLength;
-    float loadFactor;
-    float efficiencyFactor;
-    EqualityCheck equalityCheckInstance;
-    HashFunction hashFunctionInstance;
+private:
+    friend class HashMapIterator<Key, Value, EqualityCheck, HashFunction>;
+    friend class HashMapConstIterator<Key, Value, EqualityCheck, HashFunction>;
+    HashMapSlot<Key, Value, EqualityCheck, HashFunction>* data_;
+    int activeLength_;
+    int memoryUsedLength_;
+    int memoryTotalLength_;
+    float loadFactor_;
+    float efficiencyFactor_;
+    EqualityCheck equalityCheckInstance_;
+    HashFunction hashFunctionInstance_;
     [[nodiscard]] int getHashIndex(const Key& x) const;
     bool hashInto(const Key& key, const Value& value);
     void rehashAll(int newMemoryLength);
     [[nodiscard]] HashMapSlot<Key, Value, EqualityCheck, HashFunction>* getSlotFromKey(const Key& x) const;
     [[nodiscard]] HashMapSlot<Key, Value, EqualityCheck, HashFunction>* getPreviousSlot(HashMapSlot<Key, Value, EqualityCheck, HashFunction>* x) const;
     [[nodiscard]] HashMapSlot<Key, Value, EqualityCheck, HashFunction>* getNextSlot(HashMapSlot<Key, Value, EqualityCheck, HashFunction>* x) const;
+public:
     explicit HashMap();
     HashMap(const HashMap& x);
     HashMap& operator=(const HashMap& x);
@@ -87,9 +90,11 @@ public:
 };
 
 template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> class HashMapIterator {
+private:
+    friend class HashMap<Key, Value, EqualityCheck, HashFunction>;
+    HashMapSlot<Key, Value, EqualityCheck, HashFunction>* associatedSlot_;
+    HashMap<Key, Value, EqualityCheck, HashFunction>* associatedMap_;
 public:
-    HashMapSlot<Key, Value, EqualityCheck, HashFunction>* associatedSlot;
-    HashMap<Key, Value, EqualityCheck, HashFunction>* associatedMap;
     explicit HashMapIterator(HashMapSlot<Key, Value, EqualityCheck, HashFunction>* slot, HashMap<Key, Value, EqualityCheck, HashFunction>* map);
     HashMapIterator& operator++();
     HashMapIterator operator++(int);
@@ -99,12 +104,15 @@ public:
     [[nodiscard]] bool operator!=(const HashMapIterator& x) const;
     [[nodiscard]] const Key& key() const;
     [[nodiscard]] Value& value() const;
+    [[nodiscard]] bool isEndIterator() const;
 };
 
 template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> class HashMapConstIterator {
+private:
+    friend class HashMap<Key, Value, EqualityCheck, HashFunction>;
+    HashMapSlot<Key, Value, EqualityCheck, HashFunction>* associatedSlot_;
+    const HashMap<Key, Value, EqualityCheck, HashFunction>* associatedMap_;
 public:
-    HashMapSlot<Key, Value, EqualityCheck, HashFunction>* associatedSlot;
-    const HashMap<Key, Value, EqualityCheck, HashFunction>* associatedMap;
     explicit HashMapConstIterator(HashMapSlot<Key, Value, EqualityCheck, HashFunction>* slot, const HashMap<Key, Value, EqualityCheck, HashFunction>* map);
     HashMapConstIterator& operator++();
     HashMapConstIterator operator++(int);
@@ -114,6 +122,7 @@ public:
     [[nodiscard]] bool operator!=(const HashMapConstIterator& x) const;
     [[nodiscard]] const Key& key() const;
     [[nodiscard]] const Value& value() const;
+    [[nodiscard]] bool isEndIterator() const;
 };
 }
 

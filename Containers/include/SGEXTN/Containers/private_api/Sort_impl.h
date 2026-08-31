@@ -19,39 +19,39 @@
 #include <SGEXTN/Containers/ForceCrash.h>
 #include <SGEXTN/Containers/PlacementNew.h>
 
-template <typename T, typename Comparator> SGEXTN::Containers::Sort<T, Comparator>::Sort(T* start, int length) : private_firstBuffer(start), private_secondBuffer(nullptr), private_length(length), private_mainIsSecond(false), private_comparatorInstance(), private_minimumBlockSize(32) {
+template <typename T, typename Comparator> SGEXTN::Containers::Sort<T, Comparator>::Sort(T* start, int length) : firstBuffer_(start), secondBuffer_(nullptr), length_(length), mainIsSecond_(false), comparatorInstance_(), minimumBlockSize_(32) {
     if(length > 0){
-        private_secondBuffer = static_cast<T*>(::operator new(length * sizeof(T)));
+        secondBuffer_ = static_cast<T*>(::operator new(length * sizeof(T)));
     }
     for(int i=0; i<length; i++){
-        new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(private_secondBuffer + i)) T(*(private_firstBuffer + i));
+        new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(secondBuffer_ + i)) T(*(firstBuffer_ + i));
     }
 }
 
 template <typename T, typename Comparator> SGEXTN::Containers::Sort<T, Comparator>::~Sort(){
-    for(int i=0; i<private_length; i++){
-        (*(private_secondBuffer + i)).~T();
+    for(int i=0; i<length_; i++){
+        (*(secondBuffer_ + i)).~T();
     }
-    ::operator delete(static_cast<void*>(private_secondBuffer));
+    ::operator delete(static_cast<void*>(secondBuffer_));
 }
 
-template <typename T, typename Comparator> void SGEXTN::Containers::Sort<T, Comparator>::private_insertSort(int left, int right){
+template <typename T, typename Comparator> void SGEXTN::Containers::Sort<T, Comparator>::insertSort(int left, int right){
     for(int i=left+1; i<right; i++){
-        T thisKey = static_cast<T&&>(*(private_firstBuffer + i));
+        T thisKey = static_cast<T&&>(*(firstBuffer_ + i));
         int j = i - 1;
-        while(j >= left && private_comparatorInstance(thisKey, (*(private_firstBuffer + j))) == true){
-            (*(private_firstBuffer + j + 1)) = static_cast<T&&>(*(private_firstBuffer + j));
+        while(j >= left && comparatorInstance_(thisKey, (*(firstBuffer_ + j))) == true){
+            (*(firstBuffer_ + j + 1)) = static_cast<T&&>(*(firstBuffer_ + j));
             j--;
         }
-        (*(private_firstBuffer + j + 1)) = static_cast<T&&>(thisKey);
+        (*(firstBuffer_ + j + 1)) = static_cast<T&&>(thisKey);
     }
 }
 
-template <typename T, typename Comparator> void SGEXTN::Containers::Sort<T, Comparator>::private_mergeTwoBlocks(T* initialLocation, T* finalLocation, int firstBlockSize, int secondBlockSize){
+template <typename T, typename Comparator> void SGEXTN::Containers::Sort<T, Comparator>::mergeTwoBlocks(T* initialLocation, T* finalLocation, int firstBlockSize, int secondBlockSize){
     int i1 = 0;
     int i2 = 0;
     for(int i=0; i<firstBlockSize+secondBlockSize; i++){
-        if(i2 == secondBlockSize || (i1 != firstBlockSize && private_comparatorInstance((*(initialLocation + firstBlockSize + i2)), (*(initialLocation + i1))) == false)){
+        if(i2 == secondBlockSize || (i1 != firstBlockSize && comparatorInstance_((*(initialLocation + firstBlockSize + i2)), (*(initialLocation + i1))) == false)){
             (*(finalLocation + i)) = static_cast<T&&>(*(initialLocation + i1));
             i1++;
         }
@@ -62,40 +62,40 @@ template <typename T, typename Comparator> void SGEXTN::Containers::Sort<T, Comp
     }
 }
 
-template <typename T, typename Comparator> void SGEXTN::Containers::Sort<T, Comparator>::private_mergeAllBlocks(T* initialLocation, T* finalLocation, int blockSize){
-    for(int i=0; i<private_length/blockSize; i++){
-        private_mergeTwoBlocks(initialLocation + i * blockSize, finalLocation + i * blockSize, blockSize / 2, blockSize / 2);
+template <typename T, typename Comparator> void SGEXTN::Containers::Sort<T, Comparator>::mergeAllBlocks(T* initialLocation, T* finalLocation, int blockSize){
+    for(int i=0; i<length_/blockSize; i++){
+        mergeTwoBlocks(initialLocation + i * blockSize, finalLocation + i * blockSize, blockSize / 2, blockSize / 2);
     }
-    const int remainderStart = blockSize * (private_length / blockSize);
-    const int remainderLength = private_length - remainderStart;
-    if(remainderLength > blockSize / 2){private_mergeTwoBlocks(initialLocation + remainderStart, finalLocation + remainderStart, blockSize / 2, remainderLength - blockSize / 2);}
-    else{private_mergeTwoBlocks(initialLocation + remainderStart, finalLocation + remainderStart, remainderLength, 0);}
+    const int remainderStart = blockSize * (length_ / blockSize);
+    const int remainderLength = length_ - remainderStart;
+    if(remainderLength > blockSize / 2){mergeTwoBlocks(initialLocation + remainderStart, finalLocation + remainderStart, blockSize / 2, remainderLength - blockSize / 2);}
+    else{mergeTwoBlocks(initialLocation + remainderStart, finalLocation + remainderStart, remainderLength, 0);}
 }
 
 template <typename T, typename Comparator> void SGEXTN::Containers::Sort<T, Comparator>::doSort(){
-    for(int i=0; i<private_length/private_minimumBlockSize; i++){
-        private_insertSort(i * private_minimumBlockSize, (i + 1) * private_minimumBlockSize);
+    for(int i=0; i<length_/minimumBlockSize_; i++){
+        insertSort(i * minimumBlockSize_, (i + 1) * minimumBlockSize_);
     }
-    private_insertSort(private_minimumBlockSize * (private_length / private_minimumBlockSize), private_length);
-    int blockSize = private_minimumBlockSize;
-    while(blockSize < private_length){
+    insertSort(minimumBlockSize_ * (length_ / minimumBlockSize_), length_);
+    int blockSize = minimumBlockSize_;
+    while(blockSize < length_){
         blockSize *= 2;
-        if(private_mainIsSecond == false){
-            private_mainIsSecond = true;
-            private_mergeAllBlocks(private_firstBuffer, private_secondBuffer, blockSize);
+        if(mainIsSecond_ == false){
+            mainIsSecond_ = true;
+            mergeAllBlocks(firstBuffer_, secondBuffer_, blockSize);
         }
         else{
-            private_mainIsSecond = false;
-            private_mergeAllBlocks(private_secondBuffer, private_firstBuffer, blockSize);
+            mainIsSecond_ = false;
+            mergeAllBlocks(secondBuffer_, firstBuffer_, blockSize);
         }
     }
-    if(private_mainIsSecond == true){
-        for(int i=0; i<private_length; i++){
-            (*(private_firstBuffer + i)) = static_cast<T&&>(*(private_secondBuffer + i));
+    if(mainIsSecond_ == true){
+        for(int i=0; i<length_; i++){
+            (*(firstBuffer_ + i)) = static_cast<T&&>(*(secondBuffer_ + i));
         }
     }
 }
 
-template <typename T, typename Comparator> void SGEXTN::Containers::Sort<T, Comparator>::private_sort(T* start, int length){
+template <typename T, typename Comparator> void SGEXTN::Containers::Sort<T, Comparator>::sort(T* start, int length){
     SGEXTN::Containers::Sort<T, Comparator>(start, length).doSort();
 }

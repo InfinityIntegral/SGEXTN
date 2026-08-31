@@ -20,6 +20,8 @@
 
 namespace SGEXTN::Containers {
 template <typename T> class Deque {
+private:
+    SGEXTN::Containers::RingBuffer<T> ringBuffer_;
 public:
     explicit Deque();
     void fill(const T& defaultValue);
@@ -36,7 +38,6 @@ public:
     void popFront();
     void reserve(int newMemoryLength);
     void clear();
-    SGEXTN::Containers::RingBuffer<T> private_ringBuffer;
 };
 }
 

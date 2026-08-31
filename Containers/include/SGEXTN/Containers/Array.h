@@ -38,8 +38,8 @@ template <typename T> class Array {
 private:
     friend class ArrayVectorMove<T>;
     union{
-        ArrayStackStorage<T> stack;
-        ArrayHeapStorage<T> heap;
+        ArrayStackStorage<T> stack_;
+        ArrayHeapStorage<T> heap_;
     };
     [[nodiscard]] bool isUsingHeap() const;
     [[nodiscard]] T* getStackSlot(int i);

@@ -20,26 +20,26 @@
 #include <SGEXTN/Containers/private_api/TypeTraits.h>
 #include <SGEXTN/Containers/Serialise.h>
 
-template <typename T> SGEXTN::Containers::MoreThan<T>::MoreThan() : lengthA(0), lengthB(0){}
+template <typename T> SGEXTN::Containers::MoreThan<T>::MoreThan() : lengthA_(0), lengthB_(0){}
 
-template <typename T> SGEXTN::Containers::MoreThan<T>::MoreThan([[maybe_unused]] const SGEXTN::Containers::MoreThan<T>& x) : lengthA(0), lengthB(0){}
+template <typename T> SGEXTN::Containers::MoreThan<T>::MoreThan([[maybe_unused]] const SGEXTN::Containers::MoreThan<T>& x) : lengthA_(0), lengthB_(0){}
 
 template <typename T> SGEXTN::Containers::MoreThan<T>& SGEXTN::Containers::MoreThan<T>::operator=([[maybe_unused]] const SGEXTN::Containers::MoreThan<T>& x){
     return (*this);
 }
 
-template <typename T> SGEXTN::Containers::MoreThan<T>::MoreThan(SGEXTN::Containers::MoreThan<T>&& x) noexcept : lengthA(x.lengthA), lengthB(x.lengthB), bufferA(static_cast<SGEXTN::Containers::Array<unsigned char>&&>(x.bufferA)), bufferB(static_cast<SGEXTN::Containers::Array<unsigned char>&&>(x.bufferB)){
-    x.lengthA = 0;
-    x.lengthB = 0;
+template <typename T> SGEXTN::Containers::MoreThan<T>::MoreThan(SGEXTN::Containers::MoreThan<T>&& x) noexcept : lengthA_(x.lengthA_), lengthB_(x.lengthB_), bufferA_(static_cast<SGEXTN::Containers::Array<unsigned char>&&>(x.bufferA_)), bufferB_(static_cast<SGEXTN::Containers::Array<unsigned char>&&>(x.bufferB_)){
+    x.lengthA_ = 0;
+    x.lengthB_ = 0;
 }
 
 template <typename T> SGEXTN::Containers::MoreThan<T>& SGEXTN::Containers::MoreThan<T>::operator=(SGEXTN::Containers::MoreThan<T>&& x) noexcept {
-    lengthA = x.lengthA;
-    lengthB = x.lengthB;
-    bufferA = static_cast<SGEXTN::Containers::Array<unsigned char>&&>(x.bufferA);
-    bufferB = static_cast<SGEXTN::Containers::Array<unsigned char>&&>(x.bufferB);
-    x.lengthA = 0;
-    x.lengthB = 0;
+    lengthA_ = x.lengthA_;
+    lengthB_ = x.lengthB_;
+    bufferA_ = static_cast<SGEXTN::Containers::Array<unsigned char>&&>(x.bufferA_);
+    bufferB_ = static_cast<SGEXTN::Containers::Array<unsigned char>&&>(x.bufferB_);
+    x.lengthA_ = 0;
+    x.lengthB_ = 0;
     return (*this);
 }
 
@@ -53,20 +53,20 @@ template <typename T> bool SGEXTN::Containers::MoreThan<T>::operator()(const T& 
     const int bufferBLength = SGEXTN::Containers::Serialise<T>::sizeOut(b);
     if(bufferALength > bufferBLength){return true;}
     if(bufferALength < bufferBLength){return false;}
-    if(bufferALength != lengthA){
-        lengthA = bufferALength;
-        bufferA = SGEXTN::Containers::Array<unsigned char>(lengthA, static_cast<unsigned char>(0));
+    if(bufferALength != lengthA_){
+        lengthA_ = bufferALength;
+        bufferA_ = SGEXTN::Containers::Array<unsigned char>(lengthA_, static_cast<unsigned char>(0));
     }
-    if(bufferBLength != lengthB){
-        lengthB = bufferBLength;
-        bufferB = SGEXTN::Containers::Array<unsigned char>(lengthB, static_cast<unsigned char>(0));
+    if(bufferBLength != lengthB_){
+        lengthB_ = bufferBLength;
+        bufferB_ = SGEXTN::Containers::Array<unsigned char>(lengthB_, static_cast<unsigned char>(0));
     }
-    const bool aIsOk = SGEXTN::Containers::Serialise<T>::sendOut(a, SGEXTN::Containers::Span<unsigned char>(bufferA));
-    const bool bIsOk = SGEXTN::Containers::Serialise<T>::sendOut(b, SGEXTN::Containers::Span<unsigned char>(bufferB));
+    const bool aIsOk = SGEXTN::Containers::Serialise<T>::sendOut(a, SGEXTN::Containers::Span<unsigned char>(bufferA_));
+    const bool bIsOk = SGEXTN::Containers::Serialise<T>::sendOut(b, SGEXTN::Containers::Span<unsigned char>(bufferB_));
     if(aIsOk == false || bIsOk == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::MoreThan crashed because the object could not be serialised");}
     for(int i=0; i<bufferALength; i++){
-        if(bufferA.at(i) > bufferB.at(i)){return true;}
-        if(bufferA.at(i) < bufferB.at(i)){return false;}
+        if(bufferA_.at(i) > bufferB_.at(i)){return true;}
+        if(bufferA_.at(i) < bufferB_.at(i)){return false;}
     }
     return false;
 }

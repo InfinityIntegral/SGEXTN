@@ -27,6 +27,11 @@ template <typename T> using PriorityQueueAscending = PriorityQueueCustomisable<T
 template <typename T> using PriorityQueueDescending = PriorityQueueCustomisable<T, SGEXTN::Containers::MoreThan<T>>;
 
 template <typename T, typename Comparator> class PriorityQueueCustomisable {
+private:
+    SGEXTN::Containers::RingBuffer<T> ringBuffer_;
+    Comparator comparatorInstance_;
+    void swap(int a, int b);
+    bool compare(int a, int b);
 public:
     explicit PriorityQueueCustomisable();
     [[nodiscard]] const T& top() const;
@@ -35,10 +40,6 @@ public:
     void pop();
     void reserve(int newMemoryLength);
     void clear();
-    SGEXTN::Containers::RingBuffer<T> private_ringBuffer;
-    Comparator private_comparatorInstance;
-    void private_swap(int a, int b);
-    bool private_compare(int a, int b);
 };
 }
 

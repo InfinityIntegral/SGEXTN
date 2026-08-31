@@ -21,66 +21,66 @@
 #include <SGEXTN/Containers/PlacementNew.h>
 
 template <typename T> SGEXTN::Containers::Array<T>::Array(){
-    stack.length = SGEXTN::Containers::ArrayStackStorage<T>::stackFlag;
+    stack_.length = SGEXTN::Containers::ArrayStackStorage<T>::stackFlag;
 }
 
 template <typename T> T* SGEXTN::Containers::Array<T>::getStackSlot(int i){
-    return (reinterpret_cast<T*>(stack.data) + i);
+    return (reinterpret_cast<T*>(stack_.data) + i);
 }
 
 template <typename T> const T* SGEXTN::Containers::Array<T>::getStackSlot(int i) const {
-    return (reinterpret_cast<const T*>(stack.data) + i);
+    return (reinterpret_cast<const T*>(stack_.data) + i);
 }
 
 template <typename T> SGEXTN::Containers::Array<T>::Array(int count, const T& defaultValue){
     if(count < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Array constructor crashed because count cannot be negative");}
     if(count <= SGEXTN::Containers::ArrayStackStorage<T>::maxElements){
-        stack.length = (SGEXTN::Containers::ArrayStackStorage<T>::stackFlag | static_cast<unsigned int>(count));
+        stack_.length = (SGEXTN::Containers::ArrayStackStorage<T>::stackFlag | static_cast<unsigned int>(count));
         for(int i=0; i<count; i++){
             new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(getStackSlot(i))) T(defaultValue);
         }
     }
     else{
-        heap.length = count;
-        heap.data = static_cast<T*>(::operator new(count * sizeof(T)));
+        heap_.length = count;
+        heap_.data = static_cast<T*>(::operator new(count * sizeof(T)));
         for(int i=0; i<count; i++){
-            new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(heap.data + i)) T(defaultValue);
+            new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(heap_.data + i)) T(defaultValue);
         }
     }
 }
 
 template <typename T> template <int N> SGEXTN::Containers::Array<T>::Array(const T(&xs)[N]){
     if(N <= SGEXTN::Containers::ArrayStackStorage<T>::maxElements){
-        stack.length = (SGEXTN::Containers::ArrayStackStorage<T>::stackFlag | static_cast<unsigned int>(N));
+        stack_.length = (SGEXTN::Containers::ArrayStackStorage<T>::stackFlag | static_cast<unsigned int>(N));
         for(int i=0; i<N; i++){
             new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(getStackSlot(i))) T(*(xs + i));
         }
     }
     else{
-        heap.length = N;
-        heap.data = static_cast<T*>(::operator new(N * sizeof(T)));
+        heap_.length = N;
+        heap_.data = static_cast<T*>(::operator new(N * sizeof(T)));
         for(int i=0; i<N; i++){
-            new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(heap.data + i)) T(*(xs + i));
+            new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(heap_.data + i)) T(*(xs + i));
         }
     }
 }
 
 template <typename T> bool SGEXTN::Containers::Array<T>::isUsingHeap() const {
-    return ((stack.length & SGEXTN::Containers::ArrayStackStorage<T>::stackFlag) == 0);
+    return ((stack_.length & SGEXTN::Containers::ArrayStackStorage<T>::stackFlag) == 0);
 }
 
 template <typename T> SGEXTN::Containers::Array<T>::Array(const Array& x){
     if(x.isUsingHeap() == false){
-        stack.length = x.stack.length;
+        stack_.length = x.stack_.length;
         for(int i=0; i<x.length(); i++){
             new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(getStackSlot(i))) T(x.at(i));
         }
     }
     else{
-        heap.length = x.length();
-        heap.data = static_cast<T*>(::operator new(heap.length * sizeof(T)));
+        heap_.length = x.length();
+        heap_.data = static_cast<T*>(::operator new(heap_.length * sizeof(T)));
         for(int i=0; i<x.length(); i++){
-            new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(heap.data + i)) T(x.at(i));
+            new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(heap_.data + i)) T(x.at(i));
         }
     }
 }
@@ -90,18 +90,18 @@ template <typename T> SGEXTN::Containers::Array<T>& SGEXTN::Containers::Array<T>
     for(int i=0; i<length(); i++){
         at(i).~T();
     }
-    if(isUsingHeap() == true){::operator delete(static_cast<void*>(heap.data));}
+    if(isUsingHeap() == true){::operator delete(static_cast<void*>(heap_.data));}
     if(x.isUsingHeap() == false){
-        stack.length = x.stack.length;
+        stack_.length = x.stack_.length;
         for(int i=0; i<x.length(); i++){
             new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(getStackSlot(i))) T(x.at(i));
         }
     }
     else{
-        heap.length = x.length();
-        heap.data = static_cast<T*>(::operator new(heap.length * sizeof(T)));
+        heap_.length = x.length();
+        heap_.data = static_cast<T*>(::operator new(heap_.length * sizeof(T)));
         for(int i=0; i<x.length(); i++){
-            new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(heap.data + i)) T(x.at(i));
+            new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(heap_.data + i)) T(x.at(i));
         }
     }
     return (*this);
@@ -109,17 +109,17 @@ template <typename T> SGEXTN::Containers::Array<T>& SGEXTN::Containers::Array<T>
 
 template <typename T> SGEXTN::Containers::Array<T>::Array(Array&& x) noexcept {
     if(x.isUsingHeap() == false){
-        stack.length = x.stack.length;
+        stack_.length = x.stack_.length;
         for(int i=0; i<x.length(); i++){
             new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(getStackSlot(i))) T(static_cast<T&&>(x.at(i)));
             x.at(i).~T();
         }
     }
     else{
-        heap.length = x.length();
-        heap.data = x.heap.data;
+        heap_.length = x.length();
+        heap_.data = x.heap_.data;
     }
-    x.stack.length = SGEXTN::Containers::ArrayStackStorage<T>::stackFlag;
+    x.stack_.length = SGEXTN::Containers::ArrayStackStorage<T>::stackFlag;
 }
 
 template <typename T> SGEXTN::Containers::Array<T>& SGEXTN::Containers::Array<T>::operator=(Array&& x) noexcept {
@@ -127,19 +127,19 @@ template <typename T> SGEXTN::Containers::Array<T>& SGEXTN::Containers::Array<T>
     for(int i=0; i<length(); i++){
         at(i).~T();
     }
-    if(isUsingHeap() == true){::operator delete(static_cast<void*>(heap.data));}
+    if(isUsingHeap() == true){::operator delete(static_cast<void*>(heap_.data));}
     if(x.isUsingHeap() == false){
-        stack.length = x.stack.length;
+        stack_.length = x.stack_.length;
         for(int i=0; i<x.length(); i++){
             new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(getStackSlot(i))) T(static_cast<T&&>(x.at(i)));
             x.at(i).~T();
         }
     }
     else{
-        heap.length = x.length();
-        heap.data = x.heap.data;
+        heap_.length = x.length();
+        heap_.data = x.heap_.data;
     }
-    x.stack.length = SGEXTN::Containers::ArrayStackStorage<T>::stackFlag;
+    x.stack_.length = SGEXTN::Containers::ArrayStackStorage<T>::stackFlag;
     return (*this);
 }
 
@@ -147,7 +147,7 @@ template <typename T> SGEXTN::Containers::Array<T>::~Array(){
     for(int i=0; i<length(); i++){
         at(i).~T();
     }
-    if(isUsingHeap() == true){::operator delete(static_cast<void*>(heap.data));}
+    if(isUsingHeap() == true){::operator delete(static_cast<void*>(heap_.data));}
 }
 
 template <typename T> void SGEXTN::Containers::Array<T>::fill(const T& defaultValue){
@@ -157,29 +157,29 @@ template <typename T> void SGEXTN::Containers::Array<T>::fill(const T& defaultVa
 }
 
 template <typename T> int SGEXTN::Containers::Array<T>::length() const {
-    if(isUsingHeap() == false){return static_cast<int>(stack.length & 0x7fffffff);}
-    return heap.length;
+    if(isUsingHeap() == false){return static_cast<int>(stack_.length & 0x7fffffff);}
+    return heap_.length;
 }
 
 template <typename T> T& SGEXTN::Containers::Array<T>::at(int i){
     if(i < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Array::at crashed because index is negative");}
     if(i >= length()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Array::at crashed because index points beyond the end of the array");}
     if(isUsingHeap() == false){return (*(getStackSlot(i)));}
-    return (*(heap.data + i));
+    return (*(heap_.data + i));
 }
 
 template <typename T> const T& SGEXTN::Containers::Array<T>::at(int i) const {
     if(i < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Array::at crashed because index is negative");}
     if(i >= length()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Array::at crashed because index points beyond the end of the array");}
     if(isUsingHeap() == false){return (*(getStackSlot(i)));}
-    return (*(heap.data + i));
+    return (*(heap_.data + i));
 }
 
 template <typename T> template <typename Comparator> void SGEXTN::Containers::Array<T>::sort(int start, int length){
     if(start < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Array::sort crashed because start of range is negative");}
     if(start + length > (*this).length()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Array::sort crashed because end of range points beyond the end of the array");}
     if((*this).length() == 0){return;}
-    SGEXTN::Containers::Sort<T, Comparator>::private_sort(getRawPointer() + start, length);
+    SGEXTN::Containers::Sort<T, Comparator>::sort(getRawPointer() + start, length);
 }
 
 template <typename T> T* SGEXTN::Containers::Array<T>::getRawPointer(){

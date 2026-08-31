@@ -20,26 +20,26 @@
 #include <SGEXTN/Containers/private_api/TypeTraits.h>
 #include <SGEXTN/Containers/Serialise.h>
 
-template <typename T> SGEXTN::Containers::EqualTo<T>::EqualTo() : lengthA(0), lengthB(0){}
+template <typename T> SGEXTN::Containers::EqualTo<T>::EqualTo() : lengthA_(0), lengthB_(0){}
 
-template <typename T> SGEXTN::Containers::EqualTo<T>::EqualTo([[maybe_unused]] const SGEXTN::Containers::EqualTo<T>& x) : lengthA(0), lengthB(0){}
+template <typename T> SGEXTN::Containers::EqualTo<T>::EqualTo([[maybe_unused]] const SGEXTN::Containers::EqualTo<T>& x) : lengthA_(0), lengthB_(0){}
 
 template <typename T> SGEXTN::Containers::EqualTo<T>& SGEXTN::Containers::EqualTo<T>::operator=([[maybe_unused]] const SGEXTN::Containers::EqualTo<T>& x){
     return (*this);
 }
 
-template <typename T> SGEXTN::Containers::EqualTo<T>::EqualTo(SGEXTN::Containers::EqualTo<T>&& x) noexcept : lengthA(x.lengthA), lengthB(x.lengthB), bufferA(static_cast<SGEXTN::Containers::Array<unsigned char>&&>(x.bufferA)), bufferB(static_cast<SGEXTN::Containers::Array<unsigned char>&&>(x.bufferB)){
-    x.lengthA = 0;
-    x.lengthB = 0;
+template <typename T> SGEXTN::Containers::EqualTo<T>::EqualTo(SGEXTN::Containers::EqualTo<T>&& x) noexcept : lengthA_(x.lengthA_), lengthB_(x.lengthB_), bufferA_(static_cast<SGEXTN::Containers::Array<unsigned char>&&>(x.bufferA_)), bufferB_(static_cast<SGEXTN::Containers::Array<unsigned char>&&>(x.bufferB_)){
+    x.lengthA_ = 0;
+    x.lengthB_ = 0;
 }
 
 template <typename T> SGEXTN::Containers::EqualTo<T>& SGEXTN::Containers::EqualTo<T>::operator=(SGEXTN::Containers::EqualTo<T>&& x) noexcept {
-    lengthA = x.lengthA;
-    lengthB = x.lengthB;
-    bufferA = static_cast<SGEXTN::Containers::Array<unsigned char>&&>(x.bufferA);
-    bufferB = static_cast<SGEXTN::Containers::Array<unsigned char>&&>(x.bufferB);
-    x.lengthA = 0;
-    x.lengthB = 0;
+    lengthA_ = x.lengthA_;
+    lengthB_ = x.lengthB_;
+    bufferA_ = static_cast<SGEXTN::Containers::Array<unsigned char>&&>(x.bufferA_);
+    bufferB_ = static_cast<SGEXTN::Containers::Array<unsigned char>&&>(x.bufferB_);
+    x.lengthA_ = 0;
+    x.lengthB_ = 0;
     return (*this);
 }
 
@@ -52,19 +52,19 @@ template <typename T> bool SGEXTN::Containers::EqualTo<T>::operator()(const T& a
     const int bufferALength = SGEXTN::Containers::Serialise<T>::sizeOut(a);
     const int bufferBLength = SGEXTN::Containers::Serialise<T>::sizeOut(b);
     if(bufferALength != bufferBLength){return false;}
-    if(bufferALength != lengthA){
-        lengthA = bufferALength;
-        bufferA = SGEXTN::Containers::Array<unsigned char>(lengthA, static_cast<unsigned char>(0));
+    if(bufferALength != lengthA_){
+        lengthA_ = bufferALength;
+        bufferA_ = SGEXTN::Containers::Array<unsigned char>(lengthA_, static_cast<unsigned char>(0));
     }
-    if(bufferBLength != lengthB){
-        lengthB = bufferBLength;
-        bufferB = SGEXTN::Containers::Array<unsigned char>(lengthB, static_cast<unsigned char>(0));
+    if(bufferBLength != lengthB_){
+        lengthB_ = bufferBLength;
+        bufferB_ = SGEXTN::Containers::Array<unsigned char>(lengthB_, static_cast<unsigned char>(0));
     }
-    const bool aIsOk = SGEXTN::Containers::Serialise<T>::sendOut(a, SGEXTN::Containers::Span<unsigned char>(bufferA));
-    const bool bIsOk = SGEXTN::Containers::Serialise<T>::sendOut(b, SGEXTN::Containers::Span<unsigned char>(bufferB));
+    const bool aIsOk = SGEXTN::Containers::Serialise<T>::sendOut(a, SGEXTN::Containers::Span<unsigned char>(bufferA_));
+    const bool bIsOk = SGEXTN::Containers::Serialise<T>::sendOut(b, SGEXTN::Containers::Span<unsigned char>(bufferB_));
     if(aIsOk == false || bIsOk == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::EqualTo crashed because the object could not be serialised");}
     for(int i=0; i<bufferALength; i++){
-        if(bufferA.at(i) != bufferB.at(i)){return false;}
+        if(bufferA_.at(i) != bufferB_.at(i)){return false;}
     }
     return true;
 }

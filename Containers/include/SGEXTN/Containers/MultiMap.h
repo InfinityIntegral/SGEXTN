@@ -30,8 +30,9 @@ template <typename Key, typename Value, typename Comparator> class MultiMapItera
 template <typename Key, typename Value, typename Comparator> class MultiMapConstIterator;
 
 template <typename Key, typename Value, typename Comparator> class MultiMapCustomisable {
+private:
+    AVLTree<Key, Value, Comparator> avlTree_;
 public:
-    AVLTree<Key, Value, Comparator> private_avlTree;
     explicit MultiMapCustomisable();
     [[nodiscard]] int length() const;
     void insert(const Key& key, const Value& value);
@@ -63,9 +64,11 @@ public:
 };
 
 template <typename Key, typename Value, typename Comparator> class MultiMapIterator {
-public:
-    AVLTreeIterator<Key, Value, Comparator> private_avlTreeIterator;
+private:
+    friend class MultiMapCustomisable<Key, Value, Comparator>;
+    AVLTreeIterator<Key, Value, Comparator> avlTreeIterator_;
     explicit MultiMapIterator(AVLTreeIterator<Key, Value, Comparator> i);
+public:
     MultiMapIterator& operator++();
     MultiMapIterator operator++(int);
     MultiMapIterator& operator--();
@@ -77,9 +80,11 @@ public:
 };
 
 template <typename Key, typename Value, typename Comparator> class MultiMapConstIterator {
-public:
-    AVLTreeConstIterator<Key, Value, Comparator> private_avlTreeIterator;
+private:
+    friend class MultiMapCustomisable<Key, Value, Comparator>;
+    AVLTreeConstIterator<Key, Value, Comparator> avlTreeIterator_;
     explicit MultiMapConstIterator(AVLTreeConstIterator<Key, Value, Comparator> i);
+public:
     MultiMapConstIterator& operator++();
     MultiMapConstIterator operator++(int);
     MultiMapConstIterator& operator--();

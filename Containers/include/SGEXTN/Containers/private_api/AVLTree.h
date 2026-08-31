@@ -37,9 +37,11 @@ template <typename Key, typename Value, typename Comparator> class AVLTreeIterat
 template <typename Key, typename Value, typename Comparator> class AVLTreeConstIterator;
 
 template <typename Key, typename Value, typename Comparator> class AVLTree {
-public:
-    AVLTreeNode<Key, Value, Comparator>* root;
-    Comparator comparatorInstance;
+private:
+    friend class AVLTreeIterator<Key, Value, Comparator>;
+    friend class AVLTreeConstIterator<Key, Value, Comparator>;
+    AVLTreeNode<Key, Value, Comparator>* root_;
+    Comparator comparatorInstance_;
     [[nodiscard]] int getEffectiveHeight(AVLTreeNode<Key, Value, Comparator>* x) const;
     [[nodiscard]] int getEffectiveSubtreeSize(AVLTreeNode<Key, Value, Comparator>* x) const;
     void updateHeightRecurseToRoot(AVLTreeNode<Key, Value, Comparator>* x);
@@ -62,6 +64,7 @@ public:
     [[nodiscard]] AVLTreeNode<Key, Value, Comparator>* upperBoundNode(const Key& x) const;
     [[nodiscard]] AVLTreeNode<Key, Value, Comparator>* getNodeByIndex(int x) const;
     [[nodiscard]] int getIndexOfNode(const AVLTreeNode<Key, Value, Comparator>* x) const;
+public:
     explicit AVLTree();
     AVLTree(const AVLTree& x);
     AVLTree& operator=(const AVLTree& x);
@@ -98,9 +101,11 @@ public:
 };
 
 template <typename Key, typename Value, typename Comparator> class AVLTreeIterator {
+private:
+    friend class AVLTree<Key, Value, Comparator>;
+    AVLTreeNode<Key, Value, Comparator>* associatedNode_;
+    AVLTree<Key, Value, Comparator>* associatedTree_;
 public:
-    AVLTreeNode<Key, Value, Comparator>* associatedNode;
-    AVLTree<Key, Value, Comparator>* associatedTree;
     explicit AVLTreeIterator(AVLTreeNode<Key, Value, Comparator>* node, AVLTree<Key, Value, Comparator>* tree);
     AVLTreeIterator& operator++();
     AVLTreeIterator operator++(int);
@@ -110,12 +115,15 @@ public:
     [[nodiscard]] bool operator!=(const AVLTreeIterator& x) const;
     [[nodiscard]] const Key& key() const;
     [[nodiscard]] Value& value() const;
+    [[nodiscard]] bool isEndIterator() const;
 };
 
 template <typename Key, typename Value, typename Comparator> class AVLTreeConstIterator {
+private:
+    friend class AVLTree<Key, Value, Comparator>;
+    AVLTreeNode<Key, Value, Comparator>* associatedNode_;
+    const AVLTree<Key, Value, Comparator>* associatedTree_;
 public:
-    AVLTreeNode<Key, Value, Comparator>* associatedNode;
-    const AVLTree<Key, Value, Comparator>* associatedTree;
     explicit AVLTreeConstIterator(AVLTreeNode<Key, Value, Comparator>* node, const AVLTree<Key, Value, Comparator>* tree);
     AVLTreeConstIterator& operator++();
     AVLTreeConstIterator operator++(int);
@@ -125,6 +133,7 @@ public:
     [[nodiscard]] bool operator!=(const AVLTreeConstIterator& x) const;
     [[nodiscard]] const Key& key() const;
     [[nodiscard]] const Value& value() const;
+    [[nodiscard]] bool isEndIterator() const;
 };
 }
 

@@ -20,6 +20,8 @@
 
 namespace SGEXTN::Containers {
 template <typename T> class Stack {
+private:
+    SGEXTN::Containers::RingBuffer<T> ringBuffer_;
 public:
     explicit Stack();
     [[nodiscard]] T& top();
@@ -29,7 +31,6 @@ public:
     void pop();
     void clear();
     void reserve(int newMemoryLength);
-    SGEXTN::Containers::RingBuffer<T> private_ringBuffer;
 };
 }
 

@@ -20,6 +20,9 @@
 
 namespace SGEXTN::Containers {
 template <typename T> class Span {
+private:
+    T* data_;
+    int length_;
 public:
     explicit Span(T* data, int length);
     explicit Span(SGEXTN::Containers::Array<T>& array);
@@ -31,8 +34,8 @@ public:
     [[nodiscard]] Span subspanLeft(int length) const;
     [[nodiscard]] Span subspanRight(int length) const;
     template <typename Comparator> void sort(int start, int length);
-    T* private_data;
-    int private_length;
+    [[nodiscard]] T* getRawPointer();
+    [[nodiscard]] const T* getRawPointer() const;
 };
 }
 

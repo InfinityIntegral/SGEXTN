@@ -19,7 +19,12 @@
 #include <SGEXTN/Containers/private_api/RingBuffer.h>
 
 namespace SGEXTN::Containers {
+template <typename T> class ArrayVectorMove;
+
 template <typename T> class Vector {
+private:
+    friend class SGEXTN::Containers::ArrayVectorMove<T>;
+    SGEXTN::Containers::RingBuffer<T> ringBuffer_;
 public:
     explicit Vector();
     explicit Vector(int count, const T& defaultValue);
@@ -31,7 +36,6 @@ public:
     void pushBack(const T& x);
     void popBack();
     void clear();
-    SGEXTN::Containers::RingBuffer<T> private_ringBuffer;
 };
 }
 

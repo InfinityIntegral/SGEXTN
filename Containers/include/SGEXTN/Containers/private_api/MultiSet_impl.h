@@ -18,172 +18,172 @@
 #pragma once
 #include <SGEXTN/Containers/ForceCrash.h>
 
-template <typename T, typename Comparator> SGEXTN::Containers::MultiSetCustomisable<T, Comparator>::MultiSetCustomisable() : private_avlTree() {}
+template <typename T, typename Comparator> SGEXTN::Containers::MultiSetCustomisable<T, Comparator>::MultiSetCustomisable() : avlTree_() {}
 
 template <typename T, typename Comparator> int SGEXTN::Containers::MultiSetCustomisable<T, Comparator>::length() const {
-    return private_avlTree.length();
+    return avlTree_.length();
 }
 
 template <typename T, typename Comparator> void SGEXTN::Containers::MultiSetCustomisable<T, Comparator>::insert(const T& x){
-    private_avlTree.insert(x, false, true);
+    avlTree_.insert(x, false, true);
 }
 
 template <typename T, typename Comparator> bool SGEXTN::Containers::MultiSetCustomisable<T, Comparator>::erase(const T& x){
-    return private_avlTree.erase(x);
+    return avlTree_.erase(x);
 }
 
 template <typename T, typename Comparator> void SGEXTN::Containers::MultiSetCustomisable<T, Comparator>::clear(){
-    private_avlTree.clear();
+    avlTree_.clear();
 }
 
 template <typename T, typename Comparator> bool SGEXTN::Containers::MultiSetCustomisable<T, Comparator>::contains(const T& x) const {
-    return private_avlTree.contains(x);
+    return avlTree_.contains(x);
 }
 
 template <typename T, typename Comparator> int SGEXTN::Containers::MultiSetCustomisable<T, Comparator>::count(const T& x) const {
-    return private_avlTree.count(x);
+    return avlTree_.count(x);
 }
 
 template <typename T, typename Comparator> SGEXTN::Containers::MultiSetIterator<T, Comparator> SGEXTN::Containers::MultiSetCustomisable<T, Comparator>::begin(){
-    return SGEXTN::Containers::MultiSetIterator(private_avlTree.begin());
+    return SGEXTN::Containers::MultiSetIterator(avlTree_.begin());
 }
 
 template <typename T, typename Comparator> SGEXTN::Containers::MultiSetConstIterator<T, Comparator> SGEXTN::Containers::MultiSetCustomisable<T, Comparator>::constBegin() const {
-    return SGEXTN::Containers::MultiSetConstIterator(private_avlTree.constBegin());
+    return SGEXTN::Containers::MultiSetConstIterator(avlTree_.constBegin());
 }
 
 template <typename T, typename Comparator> SGEXTN::Containers::MultiSetIterator<T, Comparator> SGEXTN::Containers::MultiSetCustomisable<T, Comparator>::end(){
-    return SGEXTN::Containers::MultiSetIterator(private_avlTree.end());
+    return SGEXTN::Containers::MultiSetIterator(avlTree_.end());
 }
 
 template <typename T, typename Comparator> SGEXTN::Containers::MultiSetConstIterator<T, Comparator> SGEXTN::Containers::MultiSetCustomisable<T, Comparator>::constEnd() const {
-    return SGEXTN::Containers::MultiSetConstIterator(private_avlTree.constEnd());
+    return SGEXTN::Containers::MultiSetConstIterator(avlTree_.constEnd());
 }
 
 template <typename T, typename Comparator> bool SGEXTN::Containers::MultiSetCustomisable<T, Comparator>::erase(SGEXTN::Containers::MultiSetIterator<T, Comparator>& i){
-    return private_avlTree.erase(i.private_avlTreeIterator);
+    return avlTree_.erase(i.avlTreeIterator_);
 }
 
 template <typename T, typename Comparator> SGEXTN::Containers::MultiSetIterator<T, Comparator> SGEXTN::Containers::MultiSetCustomisable<T, Comparator>::find(const T& x){
-    return SGEXTN::Containers::MultiSetIterator(private_avlTree.find(x));
+    return SGEXTN::Containers::MultiSetIterator(avlTree_.find(x));
 }
 
 template <typename T, typename Comparator> SGEXTN::Containers::MultiSetConstIterator<T, Comparator> SGEXTN::Containers::MultiSetCustomisable<T, Comparator>::constFind(const T& x) const {
-    return SGEXTN::Containers::MultiSetConstIterator(private_avlTree.constFind(x));
+    return SGEXTN::Containers::MultiSetConstIterator(avlTree_.constFind(x));
 }
 
 template <typename T, typename Comparator> SGEXTN::Containers::MultiSetIterator<T, Comparator> SGEXTN::Containers::MultiSetCustomisable<T, Comparator>::lowerBound(const T& x){
-    return SGEXTN::Containers::MultiSetIterator(private_avlTree.lowerBound(x));
+    return SGEXTN::Containers::MultiSetIterator(avlTree_.lowerBound(x));
 }
 
 template <typename T, typename Comparator> SGEXTN::Containers::MultiSetConstIterator<T, Comparator> SGEXTN::Containers::MultiSetCustomisable<T, Comparator>::constLowerBound(const T& x) const {
-    return SGEXTN::Containers::MultiSetConstIterator(private_avlTree.constLowerBound(x));
+    return SGEXTN::Containers::MultiSetConstIterator(avlTree_.constLowerBound(x));
 }
 
 template <typename T, typename Comparator> SGEXTN::Containers::MultiSetIterator<T, Comparator> SGEXTN::Containers::MultiSetCustomisable<T, Comparator>::upperBound(const T& x){
-    return SGEXTN::Containers::MultiSetIterator(private_avlTree.upperBound(x));
+    return SGEXTN::Containers::MultiSetIterator(avlTree_.upperBound(x));
 }
 
 template <typename T, typename Comparator> SGEXTN::Containers::MultiSetConstIterator<T, Comparator> SGEXTN::Containers::MultiSetCustomisable<T, Comparator>::constUpperBound(const T& x) const {
-    return SGEXTN::Containers::MultiSetConstIterator(private_avlTree.constUpperBound(x));
+    return SGEXTN::Containers::MultiSetConstIterator(avlTree_.constUpperBound(x));
 }
 
 template <typename T, typename Comparator> int SGEXTN::Containers::MultiSetCustomisable<T, Comparator>::indexOf(const T& x) const {
-    return private_avlTree.indexOf(x);
+    return avlTree_.indexOf(x);
 }
 
 template <typename T, typename Comparator> int SGEXTN::Containers::MultiSetCustomisable<T, Comparator>::indexOf(SGEXTN::Containers::MultiSetIterator<T, Comparator> i) const {
-    return private_avlTree.indexOf(i.private_avlTreeIterator);
+    return avlTree_.indexOf(i.avlTreeIterator_);
 }
 
 template <typename T, typename Comparator> int SGEXTN::Containers::MultiSetCustomisable<T, Comparator>::indexOf(SGEXTN::Containers::MultiSetConstIterator<T, Comparator> i) const {
-    return private_avlTree.indexOf(i.private_avlTreeIterator);
+    return avlTree_.indexOf(i.avlTreeIterator_);
 }
 
 template <typename T, typename Comparator> const T& SGEXTN::Containers::MultiSetCustomisable<T, Comparator>::elementAt(int n) const {
     if(n < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::MultiSet::elementAt crashed because the index is negative");}
     if(n >= length()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::MultiSet::elementAt crashed because the index points beyond the end of the set");}
-    return private_avlTree.keyAt(n);
+    return avlTree_.keyAt(n);
 }
 
 template <typename T, typename Comparator> SGEXTN::Containers::MultiSetIterator<T, Comparator> SGEXTN::Containers::MultiSetCustomisable<T, Comparator>::iteratorAt(int n){
-    return SGEXTN::Containers::MultiSetIterator(private_avlTree.iteratorAt(n));
+    return SGEXTN::Containers::MultiSetIterator(avlTree_.iteratorAt(n));
 }
 
 template <typename T, typename Comparator> SGEXTN::Containers::MultiSetConstIterator<T, Comparator> SGEXTN::Containers::MultiSetCustomisable<T, Comparator>::constIteratorAt(int n) const {
-    return SGEXTN::Containers::MultiSetConstIterator(private_avlTree.constIteratorAt(n));
+    return SGEXTN::Containers::MultiSetConstIterator(avlTree_.constIteratorAt(n));
 }
 
-template <typename T, typename Comparator> SGEXTN::Containers::MultiSetIterator<T, Comparator>::MultiSetIterator(AVLTreeIterator<T, bool, Comparator> i) : private_avlTreeIterator(i) {}
+template <typename T, typename Comparator> SGEXTN::Containers::MultiSetIterator<T, Comparator>::MultiSetIterator(AVLTreeIterator<T, bool, Comparator> i) : avlTreeIterator_(i) {}
 
 template <typename T, typename Comparator> SGEXTN::Containers::MultiSetIterator<T, Comparator>& SGEXTN::Containers::MultiSetIterator<T, Comparator>::operator++(){
-    private_avlTreeIterator++;
+    avlTreeIterator_++;
     return (*this);
 }
 
 template <typename T, typename Comparator> SGEXTN::Containers::MultiSetIterator<T, Comparator> SGEXTN::Containers::MultiSetIterator<T, Comparator>::operator++(int){
     MultiSetIterator prev = (*this);
-    private_avlTreeIterator++;
+    avlTreeIterator_++;
     return prev;
 }
 
 template <typename T, typename Comparator> SGEXTN::Containers::MultiSetIterator<T, Comparator>& SGEXTN::Containers::MultiSetIterator<T, Comparator>::operator--(){
-    private_avlTreeIterator--;
+    avlTreeIterator_--;
     return (*this);
 }
 
 template <typename T, typename Comparator> SGEXTN::Containers::MultiSetIterator<T, Comparator> SGEXTN::Containers::MultiSetIterator<T, Comparator>::operator--(int){
     MultiSetIterator prev = (*this);
-    private_avlTreeIterator--;
+    avlTreeIterator_--;
     return prev;
 }
 
 template <typename T, typename Comparator> bool SGEXTN::Containers::MultiSetIterator<T, Comparator>::operator==(const SGEXTN::Containers::MultiSetIterator<T, Comparator>& x) const {
-    return (private_avlTreeIterator == x.private_avlTreeIterator);
+    return (avlTreeIterator_ == x.avlTreeIterator_);
 }
 
 template <typename T, typename Comparator> bool SGEXTN::Containers::MultiSetIterator<T, Comparator>::operator!=(const SGEXTN::Containers::MultiSetIterator<T, Comparator>& x) const {
-    return (private_avlTreeIterator != x.private_avlTreeIterator);
+    return (avlTreeIterator_ != x.avlTreeIterator_);
 }
 
 template <typename T, typename Comparator> const T& SGEXTN::Containers::MultiSetIterator<T, Comparator>::operator*() const {
-    if(private_avlTreeIterator.associatedNode == nullptr){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::MultiSetIterator::operator* crashed as the iterator is the end iterator");}
-    return private_avlTreeIterator.key();
+    if(avlTreeIterator_.isEndIterator() == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::MultiSetIterator::operator* crashed as the iterator is the end iterator");}
+    return avlTreeIterator_.key();
 }
 
-template <typename T, typename Comparator> SGEXTN::Containers::MultiSetConstIterator<T, Comparator>::MultiSetConstIterator(AVLTreeConstIterator<T, bool, Comparator> i) : private_avlTreeIterator(i) {}
+template <typename T, typename Comparator> SGEXTN::Containers::MultiSetConstIterator<T, Comparator>::MultiSetConstIterator(AVLTreeConstIterator<T, bool, Comparator> i) : avlTreeIterator_(i) {}
 
 template <typename T, typename Comparator> SGEXTN::Containers::MultiSetConstIterator<T, Comparator>& SGEXTN::Containers::MultiSetConstIterator<T, Comparator>::operator++(){
-    private_avlTreeIterator++;
+    avlTreeIterator_++;
     return (*this);
 }
 
 template <typename T, typename Comparator> SGEXTN::Containers::MultiSetConstIterator<T, Comparator> SGEXTN::Containers::MultiSetConstIterator<T, Comparator>::operator++(int){
     SGEXTN::Containers::MultiSetConstIterator prev = (*this);
-    private_avlTreeIterator++;
+    avlTreeIterator_++;
     return prev;
 }
 
 template <typename T, typename Comparator> SGEXTN::Containers::MultiSetConstIterator<T, Comparator>& SGEXTN::Containers::MultiSetConstIterator<T, Comparator>::operator--(){
-    private_avlTreeIterator--;
+    avlTreeIterator_--;
     return (*this);
 }
 
 template <typename T, typename Comparator> SGEXTN::Containers::MultiSetConstIterator<T, Comparator> SGEXTN::Containers::MultiSetConstIterator<T, Comparator>::operator--(int){
     SGEXTN::Containers::MultiSetConstIterator prev = (*this);
-    private_avlTreeIterator--;
+    avlTreeIterator_--;
     return prev;
 }
 
 template <typename T, typename Comparator> bool SGEXTN::Containers::MultiSetConstIterator<T, Comparator>::operator==(const SGEXTN::Containers::MultiSetConstIterator<T, Comparator>& x) const {
-    return (private_avlTreeIterator == x.private_avlTreeIterator);
+    return (avlTreeIterator_ == x.avlTreeIterator_);
 }
 
 template <typename T, typename Comparator> bool SGEXTN::Containers::MultiSetConstIterator<T, Comparator>::operator!=(const SGEXTN::Containers::MultiSetConstIterator<T, Comparator>& x) const {
-    return (private_avlTreeIterator != x.private_avlTreeIterator);
+    return (avlTreeIterator_ != x.avlTreeIterator_);
 }
 
 template <typename T, typename Comparator> const T& SGEXTN::Containers::MultiSetConstIterator<T, Comparator>::operator*() const {
-    if(private_avlTreeIterator.associatedNode == nullptr){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::MultiSetConstIterator::operator* crashed as the iterator is the end iterator");}
-    return private_avlTreeIterator.key();
+    if(avlTreeIterator_.isEndIterator() == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::MultiSetConstIterator::operator* crashed as the iterator is the end iterator");}
+    return avlTreeIterator_.key();
 }

@@ -20,11 +20,12 @@
 
 namespace SGEXTN::Containers {
 template <typename T> class LessThan {
+private:
+    mutable int lengthA_;
+    mutable int lengthB_;
+    mutable SGEXTN::Containers::Array<unsigned char> bufferA_;
+    mutable SGEXTN::Containers::Array<unsigned char> bufferB_;
 public:
-    mutable int lengthA;
-    mutable int lengthB;
-    mutable SGEXTN::Containers::Array<unsigned char> bufferA;
-    mutable SGEXTN::Containers::Array<unsigned char> bufferB;
     explicit LessThan();
     LessThan(const LessThan& x);
     LessThan& operator=(const LessThan& x);

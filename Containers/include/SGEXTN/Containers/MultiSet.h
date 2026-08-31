@@ -30,8 +30,9 @@ template <typename T, typename Comparator> class MultiSetIterator;
 template <typename T, typename Comparator> class MultiSetConstIterator;
 
 template <typename T, typename Comparator> class MultiSetCustomisable {
+private:
+    AVLTree<T, bool, Comparator> avlTree_;
 public:
-    AVLTree<T, bool, Comparator> private_avlTree;
     explicit MultiSetCustomisable();
     [[nodiscard]] int length() const;
     void insert(const T& x);
@@ -59,9 +60,11 @@ public:
 };
 
 template <typename T, typename Comparator> class MultiSetIterator {
-public:
-    AVLTreeIterator<T, bool, Comparator> private_avlTreeIterator;
+private:
+    friend class MultiSetCustomisable<T, Comparator>;
+    AVLTreeIterator<T, bool, Comparator> avlTreeIterator_;
     explicit MultiSetIterator(AVLTreeIterator<T, bool, Comparator> i);
+public:
     MultiSetIterator& operator++();
     MultiSetIterator operator++(int);
     MultiSetIterator& operator--();
@@ -72,9 +75,11 @@ public:
 };
 
 template <typename T, typename Comparator> class MultiSetConstIterator {
-public:
-    AVLTreeConstIterator<T, bool, Comparator> private_avlTreeIterator;
+private:
+    friend class MultiSetCustomisable<T, Comparator>;
+    AVLTreeConstIterator<T, bool, Comparator> avlTreeIterator_;
     explicit MultiSetConstIterator(AVLTreeConstIterator<T, bool, Comparator> i);
+public:
     MultiSetConstIterator& operator++();
     MultiSetConstIterator operator++(int);
     MultiSetConstIterator& operator--();
