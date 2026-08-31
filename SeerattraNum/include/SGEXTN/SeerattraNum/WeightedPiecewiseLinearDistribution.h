@@ -25,12 +25,13 @@ template <typename T> class Span;
 
 namespace SGEXTN::SeerattraNum {
 class BuildLah_SGEXTN_SeerattraNum WeightedPiecewiseLinearDistribution {
+private:
+    SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator_;
+    SGEXTN::Containers::Array<float> weights_;
+    SGEXTN::Containers::Array<float> boundaries_;
+    SGEXTN::Containers::Array<float> prefixSums_;
+    void updatePrefixSums();
 public:
-    SGEXTN::SeerattraNum::DirectRandomInstanceLocator private_rngLocator;
-    SGEXTN::Containers::Array<float> private_weights;
-    SGEXTN::Containers::Array<float> private_boundaries;
-    SGEXTN::Containers::Array<float> private_prefixSums;
-    void private_updatePrefixSums();
     explicit WeightedPiecewiseLinearDistribution();
     explicit WeightedPiecewiseLinearDistribution(bool useGlobal, const SGEXTN::Containers::Array<float>& weights, const SGEXTN::Containers::Array<float>& boundaries);
     [[nodiscard]] static bool sendOut(const WeightedPiecewiseLinearDistribution& x, SGEXTN::Containers::Span<unsigned char> data);

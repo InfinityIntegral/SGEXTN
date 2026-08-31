@@ -25,13 +25,13 @@
 
 SGEXTN::SeerattraNum::StudentTDistribution::StudentTDistribution() : SGEXTN::SeerattraNum::StudentTDistribution(true, 1.0f){}
 
-SGEXTN::SeerattraNum::StudentTDistribution::StudentTDistribution(bool useGlobal, float degreesOfFreedom) : private_degreesOfFreedom(degreesOfFreedom), private_rngLocator(useGlobal), private_chiSquaredDistribution(true, 1.0f), private_standardNormalDistribution(true, 0.0f, 1.0f){
+SGEXTN::SeerattraNum::StudentTDistribution::StudentTDistribution(bool useGlobal, float degreesOfFreedom) : degreesOfFreedom_(degreesOfFreedom), rngLocator_(useGlobal), chiSquaredDistribution_(true, 1.0f), standardNormalDistribution_(true, 0.0f, 1.0f){
     if(degreesOfFreedom <= 0.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::StudentTDistribution constructor crashed because requested number of degrees of freedom is nonpositive");}
-    private_chiSquaredDistribution.setDegreesOfFreedom(degreesOfFreedom);
+    chiSquaredDistribution_.setDegreesOfFreedom(degreesOfFreedom);
 }
 
 bool SGEXTN::SeerattraNum::StudentTDistribution::sendOut(const SGEXTN::SeerattraNum::StudentTDistribution& x, SGEXTN::Containers::Span<unsigned char> data){
-    return SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float>::sendOut(x.private_rngLocator, x.private_degreesOfFreedom, data);
+    return SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float>::sendOut(x.rngLocator_, x.degreesOfFreedom_, data);
 }
 
 bool SGEXTN::SeerattraNum::StudentTDistribution::sendIn(SGEXTN::SeerattraNum::StudentTDistribution& x, SGEXTN::Containers::Span<unsigned char> data){
@@ -40,7 +40,7 @@ bool SGEXTN::SeerattraNum::StudentTDistribution::sendIn(SGEXTN::SeerattraNum::St
     const bool isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float>::sendIn(rngLocator, degree, data);
     if(isValid == false || degree <= 0.0f){return false;}
     x = SGEXTN::SeerattraNum::StudentTDistribution(true, degree);
-    x.private_rngLocator = rngLocator;
+    x.rngLocator_ = rngLocator;
     return true;
 }
 
@@ -49,12 +49,12 @@ int SGEXTN::SeerattraNum::StudentTDistribution::size(){
 }
 
 void SGEXTN::SeerattraNum::StudentTDistribution::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
-    if(private_rngLocator.private_ownsRng == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::StudentTDistribution::seed crashed because cannot seed global rng");}
-    (*private_rngLocator).seed(seedArray);
+    if(rngLocator_.isUsingGlobal() == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::StudentTDistribution::seed crashed because cannot seed global rng");}
+    (*rngLocator_).seed(seedArray);
 }
 
 float SGEXTN::SeerattraNum::StudentTDistribution::randomValue(){
-    return (private_standardNormalDistribution.private_randomValue(private_rngLocator) * SGEXTN::Math::FloatMath<float>::squareRoot(private_degreesOfFreedom / private_chiSquaredDistribution.private_randomValue(private_rngLocator)));
+    return (standardNormalDistribution_.randomValue(rngLocator_) * SGEXTN::Math::FloatMath<float>::squareRoot(degreesOfFreedom_ / chiSquaredDistribution_.randomValue(rngLocator_)));
 }
 
 SGEXTN::Containers::Array<float> SGEXTN::SeerattraNum::StudentTDistribution::randomValueArray(int count){
@@ -67,11 +67,11 @@ SGEXTN::Containers::Array<float> SGEXTN::SeerattraNum::StudentTDistribution::ran
 }
 
 float SGEXTN::SeerattraNum::StudentTDistribution::getDegreesOfFreedom() const {
-    return private_degreesOfFreedom;
+    return degreesOfFreedom_;
 }
 
 void SGEXTN::SeerattraNum::StudentTDistribution::setDegreesOfFreedom(float degreesOfFreedom){
     if(degreesOfFreedom <= 0.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::StudentTDistribution::setDegreesOfFreedom crashed because requested number of degrees of freedom is nonpositive");}
-    private_degreesOfFreedom = degreesOfFreedom;
-    private_chiSquaredDistribution.setDegreesOfFreedom(degreesOfFreedom);
+    degreesOfFreedom_ = degreesOfFreedom;
+    chiSquaredDistribution_.setDegreesOfFreedom(degreesOfFreedom);
 }

@@ -24,11 +24,12 @@ template <typename T> class Span;
 
 namespace SGEXTN::SeerattraNum {
 class BuildLah_SGEXTN_SeerattraNum HaltonSequence {
+private:
+    int lastPosition_;
+    int dimensions_;
+    SGEXTN::Containers::Array<SGEXTN::Containers::Array<int>> permutations_;
+    SGEXTN::Containers::Array<int> primeNumbers_;
 public:
-    int private_lastPosition;
-    int private_dimensions;
-    SGEXTN::Containers::Array<SGEXTN::Containers::Array<int>> private_permutations;
-    SGEXTN::Containers::Array<int> private_primeNumbers;
     explicit HaltonSequence();
     explicit HaltonSequence(int dimensions);
     [[nodiscard]] static bool sendOut(const HaltonSequence& x, SGEXTN::Containers::Span<unsigned char> data);

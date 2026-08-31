@@ -25,10 +25,11 @@ template <typename T> class Span;
 
 namespace SGEXTN::SeerattraNum {
 class BuildLah_SGEXTN_SeerattraNum GumbelDistribution {
+private:
+    SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator_;
+    float mode_;
+    float spread_;
 public:
-    SGEXTN::SeerattraNum::DirectRandomInstanceLocator private_rngLocator;
-    float private_mode;
-    float private_spread;
     explicit GumbelDistribution();
     explicit GumbelDistribution(bool useGlobal, float mode, float spread);
     [[nodiscard]] static bool sendOut(const GumbelDistribution& x, SGEXTN::Containers::Span<unsigned char> data);

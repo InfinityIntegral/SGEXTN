@@ -25,13 +25,15 @@ template <typename T> class Span;
 
 namespace SGEXTN::SeerattraNum {
 class BuildLah_SGEXTN_SeerattraNum ExponentialDistribution {
+private:
+    SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator_;
+    float meanEventsPerTime_;
+    float reciprocalRate_;
+    static SGEXTN::Containers::Array<float>* widthTables;
+    static SGEXTN::Containers::Array<float>* floorTables;
+    static float expRightBoundary;
+    static void parseTables();
 public:
-    SGEXTN::SeerattraNum::DirectRandomInstanceLocator private_rngLocator;
-    float private_meanEventsPerTime;
-    float private_reciprocalRate;
-    static SGEXTN::Containers::Array<float>* private_widthTables;
-    static SGEXTN::Containers::Array<float>* private_floorTables;
-    static float private_expRightBoundary;
     explicit ExponentialDistribution();
     explicit ExponentialDistribution(bool useGlobal, float meanEventsPerTime);
     [[nodiscard]] static bool sendOut(const ExponentialDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
@@ -39,10 +41,10 @@ public:
     [[nodiscard]] static int size();
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
     [[nodiscard]] float randomValue();
-    [[nodiscard]] float private_randomValue(SGEXTN::SeerattraNum::DirectRandomInstanceLocator& externalLocator) const;
+    [[nodiscard]] float randomValue(SGEXTN::SeerattraNum::DirectRandomInstanceLocator& externalLocator) const;
     [[nodiscard]] SGEXTN::Containers::Array<float> randomValueArray(int count);
     [[nodiscard]] float getMeanEventsPerTime() const;
     void setMeanEventsPerTime(float meanEventsPerTime);
-    static void private_samplePointStandard(float& x, float& y, SGEXTN::SeerattraNum::DirectRandomInstanceLocator& externalLocator);
+    static void samplePointStandard(float& x, float& y, SGEXTN::SeerattraNum::DirectRandomInstanceLocator& externalLocator);
 };
 }

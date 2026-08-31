@@ -20,36 +20,36 @@
 #include <SGEXTN/Containers/ForceCrash.h>
 #include <SGEXTN/SeerattraNum/DirectRandom.h>
 
-SGEXTN::SeerattraNum::DirectRandom* SGEXTN::SeerattraNum::SimpleRandom::private_globalInstance = nullptr;
+SGEXTN::SeerattraNum::DirectRandom* SGEXTN::SeerattraNum::SimpleRandom::globalInstance = nullptr;
 
 int SGEXTN::SeerattraNum::SimpleRandom::randomInt32(){
-    if(SGEXTN::SeerattraNum::SimpleRandom::private_globalInstance == nullptr){SGEXTN::SeerattraNum::SimpleRandom::private_globalInstance = new SGEXTN::SeerattraNum::DirectRandom();}
-    return (*SGEXTN::SeerattraNum::SimpleRandom::private_globalInstance).randomInt32();
+    if(SGEXTN::SeerattraNum::SimpleRandom::globalInstance == nullptr){SGEXTN::SeerattraNum::SimpleRandom::globalInstance = new SGEXTN::SeerattraNum::DirectRandom();}
+    return (*SGEXTN::SeerattraNum::SimpleRandom::globalInstance).randomInt32();
 }
 
 long long SGEXTN::SeerattraNum::SimpleRandom::randomInt64(){
-    if(SGEXTN::SeerattraNum::SimpleRandom::private_globalInstance == nullptr){SGEXTN::SeerattraNum::SimpleRandom::private_globalInstance = new SGEXTN::SeerattraNum::DirectRandom();}
-    return (*SGEXTN::SeerattraNum::SimpleRandom::private_globalInstance).randomInt64();
+    if(SGEXTN::SeerattraNum::SimpleRandom::globalInstance == nullptr){SGEXTN::SeerattraNum::SimpleRandom::globalInstance = new SGEXTN::SeerattraNum::DirectRandom();}
+    return (*SGEXTN::SeerattraNum::SimpleRandom::globalInstance).randomInt64();
 }
 
 unsigned int SGEXTN::SeerattraNum::SimpleRandom::randomUnsignedInt32(){
-    if(SGEXTN::SeerattraNum::SimpleRandom::private_globalInstance == nullptr){SGEXTN::SeerattraNum::SimpleRandom::private_globalInstance = new SGEXTN::SeerattraNum::DirectRandom();}
-    return (*SGEXTN::SeerattraNum::SimpleRandom::private_globalInstance).randomUnsignedInt32();
+    if(SGEXTN::SeerattraNum::SimpleRandom::globalInstance == nullptr){SGEXTN::SeerattraNum::SimpleRandom::globalInstance = new SGEXTN::SeerattraNum::DirectRandom();}
+    return (*SGEXTN::SeerattraNum::SimpleRandom::globalInstance).randomUnsignedInt32();
 }
 
 unsigned long long SGEXTN::SeerattraNum::SimpleRandom::randomUnsignedInt64(){
-    if(SGEXTN::SeerattraNum::SimpleRandom::private_globalInstance == nullptr){SGEXTN::SeerattraNum::SimpleRandom::private_globalInstance = new SGEXTN::SeerattraNum::DirectRandom();}
-    return (*SGEXTN::SeerattraNum::SimpleRandom::private_globalInstance).randomUnsignedInt64();
+    if(SGEXTN::SeerattraNum::SimpleRandom::globalInstance == nullptr){SGEXTN::SeerattraNum::SimpleRandom::globalInstance = new SGEXTN::SeerattraNum::DirectRandom();}
+    return (*SGEXTN::SeerattraNum::SimpleRandom::globalInstance).randomUnsignedInt64();
 }
 
 float SGEXTN::SeerattraNum::SimpleRandom::randomFloat32(){
-    if(SGEXTN::SeerattraNum::SimpleRandom::private_globalInstance == nullptr){SGEXTN::SeerattraNum::SimpleRandom::private_globalInstance = new SGEXTN::SeerattraNum::DirectRandom();}
-    return (*SGEXTN::SeerattraNum::SimpleRandom::private_globalInstance).randomFloat32();
+    if(SGEXTN::SeerattraNum::SimpleRandom::globalInstance == nullptr){SGEXTN::SeerattraNum::SimpleRandom::globalInstance = new SGEXTN::SeerattraNum::DirectRandom();}
+    return (*SGEXTN::SeerattraNum::SimpleRandom::globalInstance).randomFloat32();
 }
 
 double SGEXTN::SeerattraNum::SimpleRandom::randomFloat64(){
-    if(SGEXTN::SeerattraNum::SimpleRandom::private_globalInstance == nullptr){SGEXTN::SeerattraNum::SimpleRandom::private_globalInstance = new SGEXTN::SeerattraNum::DirectRandom();}
-    return (*SGEXTN::SeerattraNum::SimpleRandom::private_globalInstance).randomFloat64();
+    if(SGEXTN::SeerattraNum::SimpleRandom::globalInstance == nullptr){SGEXTN::SeerattraNum::SimpleRandom::globalInstance = new SGEXTN::SeerattraNum::DirectRandom();}
+    return (*SGEXTN::SeerattraNum::SimpleRandom::globalInstance).randomFloat64();
 }
 
 SGEXTN::Containers::Array<int> SGEXTN::SeerattraNum::SimpleRandom::randomInt32Array(int count){

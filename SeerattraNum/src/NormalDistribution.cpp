@@ -25,10 +25,9 @@
 #include <SGEXTN/Containers/Serialise.h>
 #include <SGEXTN/Containers/Span.h>
 
-namespace {
-void parseTables(){
-    SGEXTN::SeerattraNum::NormalDistribution::private_hwidthTables = new SGEXTN::Containers::Array<float>(256, 0.0f);
-    SGEXTN::SeerattraNum::NormalDistribution::private_floorTables = new SGEXTN::Containers::Array<float>(256, 0.0f);
+void SGEXTN::SeerattraNum::NormalDistribution::parseTables(){
+    SGEXTN::SeerattraNum::NormalDistribution::hwidthTables = new SGEXTN::Containers::Array<float>(256, 0.0f);
+    SGEXTN::SeerattraNum::NormalDistribution::floorTables = new SGEXTN::Containers::Array<float>(256, 0.0f);
     SGEXTN::Containers::Array<double> hwidthArray(256, 0.0f);
     SGEXTN::Containers::Array<double> floorArray(256, 0.0f);
     const double rightBound = 3.6541528853610088;
@@ -42,23 +41,22 @@ void parseTables(){
         hwidthArray.at(i) = SGEXTN::Math::FloatMath<double>::squareRoot(static_cast<double>(-2.0f) * SGEXTN::Math::FloatMath<double>::naturalLog(floorArray.at(i)));
     }
     for(int i=0; i<256; i++){
-        (*SGEXTN::SeerattraNum::NormalDistribution::private_hwidthTables).at(i) = static_cast<float>(hwidthArray.at(i));
-        (*SGEXTN::SeerattraNum::NormalDistribution::private_floorTables).at(i) = static_cast<float>(floorArray.at(i));
+        (*SGEXTN::SeerattraNum::NormalDistribution::hwidthTables).at(i) = static_cast<float>(hwidthArray.at(i));
+        (*SGEXTN::SeerattraNum::NormalDistribution::floorTables).at(i) = static_cast<float>(floorArray.at(i));
     }
 }
-}
 
-SGEXTN::Containers::Array<float>* SGEXTN::SeerattraNum::NormalDistribution::private_hwidthTables = nullptr;
-SGEXTN::Containers::Array<float>* SGEXTN::SeerattraNum::NormalDistribution::private_floorTables = nullptr;
+SGEXTN::Containers::Array<float>* SGEXTN::SeerattraNum::NormalDistribution::hwidthTables = nullptr;
+SGEXTN::Containers::Array<float>* SGEXTN::SeerattraNum::NormalDistribution::floorTables = nullptr;
 
 SGEXTN::SeerattraNum::NormalDistribution::NormalDistribution() : SGEXTN::SeerattraNum::NormalDistribution(true, 0.0f, 1.0f){}
 
-SGEXTN::SeerattraNum::NormalDistribution::NormalDistribution(bool useGlobal, float mean, float standardDeviation) : private_mean(mean), private_standardDeviation(standardDeviation), private_rngLocator(useGlobal){
+SGEXTN::SeerattraNum::NormalDistribution::NormalDistribution(bool useGlobal, float mean, float standardDeviation) : mean_(mean), standardDeviation_(standardDeviation), rngLocator_(useGlobal){
     if(standardDeviation <= 0.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NormalDistribution constructor crashed because requested standard deviation is nonpositive");}
 }
 
 bool SGEXTN::SeerattraNum::NormalDistribution::sendOut(const SGEXTN::SeerattraNum::NormalDistribution& x, SGEXTN::Containers::Span<unsigned char> data){
-    return SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float, float>::sendOut(x.private_rngLocator, x.private_mean, x.private_standardDeviation, data);
+    return SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float, float>::sendOut(x.rngLocator_, x.mean_, x.standardDeviation_, data);
 }
 
 bool SGEXTN::SeerattraNum::NormalDistribution::sendIn(SGEXTN::SeerattraNum::NormalDistribution& x, SGEXTN::Containers::Span<unsigned char> data){
@@ -68,7 +66,7 @@ bool SGEXTN::SeerattraNum::NormalDistribution::sendIn(SGEXTN::SeerattraNum::Norm
     const bool isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float, float>::sendIn(rngLocator, mean, standardDeviation, data);
     if(isValid == false || standardDeviation <= 0.0f){return false;}
     x = SGEXTN::SeerattraNum::NormalDistribution(true, mean, standardDeviation);
-    x.private_rngLocator = rngLocator;
+    x.rngLocator_ = rngLocator;
     return true;
 }
 
@@ -77,12 +75,12 @@ int SGEXTN::SeerattraNum::NormalDistribution::size(){
 }
 
 void SGEXTN::SeerattraNum::NormalDistribution::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
-    if(private_rngLocator.private_ownsRng == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NormalDistribution::seed crashed because cannot seed global rng");}
-    (*private_rngLocator).seed(seedArray);
+    if(rngLocator_.isUsingGlobal() == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NormalDistribution::seed crashed because cannot seed global rng");}
+    (*rngLocator_).seed(seedArray);
 }
 
-float SGEXTN::SeerattraNum::NormalDistribution::private_randomValue(SGEXTN::SeerattraNum::DirectRandomInstanceLocator& externalLocator) const {
-    if(SGEXTN::SeerattraNum::NormalDistribution::private_floorTables == nullptr){parseTables();}
+float SGEXTN::SeerattraNum::NormalDistribution::randomValue(SGEXTN::SeerattraNum::DirectRandomInstanceLocator& externalLocator) const {
+    if(SGEXTN::SeerattraNum::NormalDistribution::floorTables == nullptr){SGEXTN::SeerattraNum::NormalDistribution::parseTables();}
     float result = 0;
     int sign = 1;
     while(true){
@@ -93,13 +91,13 @@ float SGEXTN::SeerattraNum::NormalDistribution::private_randomValue(SGEXTN::Seer
         const float scaleFactor = 1.0f / static_cast<float>(1u << 23);
         float xCoord = static_cast<float>(rng & 0x7fffff) * scaleFactor;
         if(layer == 0){
-            const float rectangleProportion = (*SGEXTN::SeerattraNum::NormalDistribution::private_floorTables).at(0);
+            const float rectangleProportion = (*SGEXTN::SeerattraNum::NormalDistribution::floorTables).at(0);
             if(xCoord < rectangleProportion){
                 xCoord /= rectangleProportion;
-                result = (xCoord * (*SGEXTN::SeerattraNum::NormalDistribution::private_hwidthTables).at(1));
+                result = (xCoord * (*SGEXTN::SeerattraNum::NormalDistribution::hwidthTables).at(1));
                 break;
             }
-            const float rectangleBoundary = (*SGEXTN::SeerattraNum::NormalDistribution::private_hwidthTables).at(1);
+            const float rectangleBoundary = (*SGEXTN::SeerattraNum::NormalDistribution::hwidthTables).at(1);
             const float v1 = -1.0f * SGEXTN::Math::FloatMath<float>::naturalLog((*externalLocator).randomFloat32()) / rectangleBoundary;
             const float v2 = -1.0f * SGEXTN::Math::FloatMath<float>::naturalLog((*externalLocator).randomFloat32());
             if(v1 * v1 < v2 + v2){
@@ -108,13 +106,13 @@ float SGEXTN::SeerattraNum::NormalDistribution::private_randomValue(SGEXTN::Seer
             }
             continue;
         }
-        const float thisLayerHwidth = (*SGEXTN::SeerattraNum::NormalDistribution::private_hwidthTables).at(layer);
+        const float thisLayerHwidth = (*SGEXTN::SeerattraNum::NormalDistribution::hwidthTables).at(layer);
         float layerAboveHwidth = 0.0f;
-        const float thisLayerFloor = (*SGEXTN::SeerattraNum::NormalDistribution::private_floorTables).at(layer);
+        const float thisLayerFloor = (*SGEXTN::SeerattraNum::NormalDistribution::floorTables).at(layer);
         float layerAboveFloor = 0.3989422804f;
         if(layer != 255){
-            layerAboveHwidth = (*SGEXTN::SeerattraNum::NormalDistribution::private_hwidthTables).at(layer + 1);
-            layerAboveFloor = (*SGEXTN::SeerattraNum::NormalDistribution::private_floorTables).at(layer + 1);
+            layerAboveHwidth = (*SGEXTN::SeerattraNum::NormalDistribution::hwidthTables).at(layer + 1);
+            layerAboveFloor = (*SGEXTN::SeerattraNum::NormalDistribution::floorTables).at(layer + 1);
         }
         xCoord *= thisLayerHwidth;
         if(xCoord < layerAboveHwidth){
@@ -127,11 +125,11 @@ float SGEXTN::SeerattraNum::NormalDistribution::private_randomValue(SGEXTN::Seer
             break;
         }
     }
-    return (private_mean + result * static_cast<float>(sign) * private_standardDeviation);
+    return (mean_ + result * static_cast<float>(sign) * standardDeviation_);
 }
 
 float SGEXTN::SeerattraNum::NormalDistribution::randomValue(){
-    return private_randomValue(private_rngLocator);
+    return randomValue(rngLocator_);
 }
 
 SGEXTN::Containers::Array<float> SGEXTN::SeerattraNum::NormalDistribution::randomValueArray(int count){
@@ -144,23 +142,23 @@ SGEXTN::Containers::Array<float> SGEXTN::SeerattraNum::NormalDistribution::rando
 }
 
 float SGEXTN::SeerattraNum::NormalDistribution::getMean() const {
-    return private_mean;
+    return mean_;
 }
 
 float SGEXTN::SeerattraNum::NormalDistribution::getStandardDeviation() const {
-    return private_standardDeviation;
+    return standardDeviation_;
 }
 
 void SGEXTN::SeerattraNum::NormalDistribution::setMean(float mean){
-    private_mean = mean;
+    mean_ = mean;
 }
 
 void SGEXTN::SeerattraNum::NormalDistribution::setStandardDeviation(float standardDeviation){
     if(standardDeviation <= 0.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NormalDistribution::setStandardDeviation crashed because requested standard deviation is nonpositive");}
-    private_standardDeviation = standardDeviation;
+    standardDeviation_ = standardDeviation;
 }
 
-float SGEXTN::SeerattraNum::NormalDistribution::private_fastTransform(float x){
+float SGEXTN::SeerattraNum::NormalDistribution::fastTransform(float x){
     x = 2.0f * x - 1.0f;
     if(x == -1.0f || x == 1.0f){x = 0.0f;}
     if(x == 0.0f){return 0.0f;}

@@ -26,16 +26,16 @@
 
 SGEXTN::SeerattraNum::NegativeBinomialDistribution::NegativeBinomialDistribution() : SGEXTN::SeerattraNum::NegativeBinomialDistribution(true, 0.5f, 1){}
 
-SGEXTN::SeerattraNum::NegativeBinomialDistribution::NegativeBinomialDistribution(bool useGlobal, float chanceOfTrue, int successCount) : private_chanceOfTrue(chanceOfTrue), private_successCount(successCount), private_rngLocator(useGlobal), private_gammaDistribution(true, 1.0f, 1.0f), private_poissonDistribution(true, 1.0f){
+SGEXTN::SeerattraNum::NegativeBinomialDistribution::NegativeBinomialDistribution(bool useGlobal, float chanceOfTrue, int successCount) : chanceOfTrue_(chanceOfTrue), successCount_(successCount), rngLocator_(useGlobal), gammaDistribution_(true, 1.0f, 1.0f), poissonDistribution_(true, 1.0f){
     if(chanceOfTrue < 0.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NegativeBinomialDistribution constructor crashed because the requested probability is negative");}
     if(chanceOfTrue > 1.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NegativeBinomialDistribution constructor crashed because the requested probability is higher than 1");}
     if(successCount < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NegativeBinomialDistribution constructor crashed because the requested number of successful attempts is negative");}
-    private_gammaDistribution.setVariableCount(static_cast<float>(successCount));
-    private_gammaDistribution.setVariableMean((1.0f - chanceOfTrue) / chanceOfTrue);
+    gammaDistribution_.setVariableCount(static_cast<float>(successCount));
+    gammaDistribution_.setVariableMean((1.0f - chanceOfTrue) / chanceOfTrue);
 }
 
 bool SGEXTN::SeerattraNum::NegativeBinomialDistribution::sendOut(const SGEXTN::SeerattraNum::NegativeBinomialDistribution& x, SGEXTN::Containers::Span<unsigned char> data){
-    return SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float, int>::sendOut(x.private_rngLocator, x.private_chanceOfTrue, x.private_successCount, data);
+    return SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float, int>::sendOut(x.rngLocator_, x.chanceOfTrue_, x.successCount_, data);
 }
 
 bool SGEXTN::SeerattraNum::NegativeBinomialDistribution::sendIn(SGEXTN::SeerattraNum::NegativeBinomialDistribution& x, SGEXTN::Containers::Span<unsigned char> data){
@@ -45,7 +45,7 @@ bool SGEXTN::SeerattraNum::NegativeBinomialDistribution::sendIn(SGEXTN::Seerattr
     const bool isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float, int>::sendIn(rngLocator, probability, successes, data);
     if(isValid == false || probability < 0.0f || probability > 1.0f || successes < 0){return false;}
     x = SGEXTN::SeerattraNum::NegativeBinomialDistribution(true, probability, successes);
-    x.private_rngLocator = rngLocator;
+    x.rngLocator_ = rngLocator;
     return true;
 }
 
@@ -54,13 +54,13 @@ int SGEXTN::SeerattraNum::NegativeBinomialDistribution::size(){
 }
 
 void SGEXTN::SeerattraNum::NegativeBinomialDistribution::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
-    if(private_rngLocator.private_ownsRng == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NegativeBinomialDistribution::seed crashed because cannot seed global rng");}
-    (*private_rngLocator).seed(seedArray);
+    if(rngLocator_.isUsingGlobal() == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NegativeBinomialDistribution::seed crashed because cannot seed global rng");}
+    (*rngLocator_).seed(seedArray);
 }
 
 int SGEXTN::SeerattraNum::NegativeBinomialDistribution::randomValue(){
-    private_poissonDistribution.setMean(private_gammaDistribution.private_randomValue(private_rngLocator));
-    return private_poissonDistribution.private_randomValue(private_rngLocator);
+    poissonDistribution_.setMean(gammaDistribution_.randomValue(rngLocator_));
+    return poissonDistribution_.randomValue(rngLocator_);
 }
 
 SGEXTN::Containers::Array<int> SGEXTN::SeerattraNum::NegativeBinomialDistribution::randomValueArray(int count){
@@ -73,22 +73,22 @@ SGEXTN::Containers::Array<int> SGEXTN::SeerattraNum::NegativeBinomialDistributio
 }
 
 float SGEXTN::SeerattraNum::NegativeBinomialDistribution::getChanceOfTrue() const {
-    return private_chanceOfTrue;
+    return chanceOfTrue_;
 }
 
 int SGEXTN::SeerattraNum::NegativeBinomialDistribution::getSuccessCount() const {
-    return private_successCount;
+    return successCount_;
 }
 
 void SGEXTN::SeerattraNum::NegativeBinomialDistribution::setChanceOfTrue(float chanceOfTrue){
     if(chanceOfTrue < 0.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NegativeBinomialDistribution::setChanceOfTrue crashed because the requested probability is negative");}
     if(chanceOfTrue > 1.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NegativeBinomialDistribution::setChanceOfTrue crashed because the requested probability is higher than 1");}
-    private_chanceOfTrue = chanceOfTrue;
-    private_gammaDistribution.setVariableMean((1.0f - chanceOfTrue) / chanceOfTrue);
+    chanceOfTrue_ = chanceOfTrue;
+    gammaDistribution_.setVariableMean((1.0f - chanceOfTrue) / chanceOfTrue);
 }
 
 void SGEXTN::SeerattraNum::NegativeBinomialDistribution::setSuccessCount(int successCount){
     if(successCount < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::NegativeBinomialDistribution::setSuccessCount crashed because the requested number of successful attempts is negative");}
-    private_successCount = successCount;
-    private_gammaDistribution.setVariableCount(static_cast<float>(successCount));
+    successCount_ = successCount;
+    gammaDistribution_.setVariableCount(static_cast<float>(successCount));
 }

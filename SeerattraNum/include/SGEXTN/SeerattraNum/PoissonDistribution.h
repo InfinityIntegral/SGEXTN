@@ -25,16 +25,18 @@ template <typename T> class Span;
 
 namespace SGEXTN::SeerattraNum {
 class BuildLah_SGEXTN_SeerattraNum PoissonDistribution {
+private:
+    SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator_;
+    float mean_;
+    float smallMeanProductThreshold_;
+    float precompConstantA_;
+    float precompConstantB_;
+    float squeezeBoundU_;
+    float squeezeBoundV_;
+    float lnMean_;
+    float lnAcceptRate_;
+    void redoPrecompute();
 public:
-    SGEXTN::SeerattraNum::DirectRandomInstanceLocator private_rngLocator;
-    float private_mean;
-    float private_smallMeanProductThreshold;
-    float private_precompConstantA;
-    float private_precompConstantB;
-    float private_squeezeBoundU;
-    float private_squeezeBoundV;
-    float private_lnMean;
-    float private_lnAcceptRate;
     explicit PoissonDistribution();
     explicit PoissonDistribution(bool useGlobal, float mean);
     [[nodiscard]] static bool sendOut(const PoissonDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
@@ -42,10 +44,9 @@ public:
     [[nodiscard]] static int size();
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
     [[nodiscard]] int randomValue();
-    [[nodiscard]] int private_randomValue(SGEXTN::SeerattraNum::DirectRandomInstanceLocator& externalLocator) const;
+    [[nodiscard]] int randomValue(SGEXTN::SeerattraNum::DirectRandomInstanceLocator& externalLocator) const;
     [[nodiscard]] SGEXTN::Containers::Array<int> randomValueArray(int count);
     [[nodiscard]] float getMean() const;
     void setMean(float mean);
-    void private_redoPrecompute();
 };
 }

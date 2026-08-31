@@ -26,12 +26,13 @@ template <typename T> class Span;
 
 namespace SGEXTN::SeerattraNum {
 class BuildLah_SGEXTN_SeerattraNum FisherFDistribution {
+private:
+    SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator_;
+    float numeratorDegreesOfFreedom_;
+    float denominatorDegreesOfFreedom_;
+    SGEXTN::SeerattraNum::ChiSquaredDistribution numeratorDistribution_;
+    SGEXTN::SeerattraNum::ChiSquaredDistribution denominatorDistribution_;
 public:
-    SGEXTN::SeerattraNum::DirectRandomInstanceLocator private_rngLocator;
-    float private_numeratorDegreesOfFreedom;
-    float private_denominatorDegreesOfFreedom;
-    SGEXTN::SeerattraNum::ChiSquaredDistribution private_numeratorDistribution;
-    SGEXTN::SeerattraNum::ChiSquaredDistribution private_denominatorDistribution;
     explicit FisherFDistribution();
     explicit FisherFDistribution(bool useGlobal, float numeratorDegreesOfFreedom, float denominatorDegreesOfFreedom);
     [[nodiscard]] static bool sendOut(const FisherFDistribution& x, SGEXTN::Containers::Span<unsigned char> data);

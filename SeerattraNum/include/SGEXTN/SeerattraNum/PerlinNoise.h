@@ -25,10 +25,11 @@ template <typename T> class Span;
 
 namespace SGEXTN::SeerattraNum {
 class BuildLah_SGEXTN_SeerattraNum PerlinNoise {
+private:
+    int seed_;
+    int dimension_;
+    SGEXTN::SeerattraNum::SmoothingFunction smoothingFunction_;
 public:
-    int private_seed;
-    int private_dimension;
-    SGEXTN::SeerattraNum::SmoothingFunction private_smoothingFunction;
     explicit PerlinNoise();
     explicit PerlinNoise(int dimension, SGEXTN::SeerattraNum::SmoothingFunction smoothingFunction);
     [[nodiscard]] static bool sendOut(const PerlinNoise& x, SGEXTN::Containers::Span<unsigned char> data);

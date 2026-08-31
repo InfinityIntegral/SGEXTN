@@ -25,12 +25,12 @@
 
 SGEXTN::SeerattraNum::GumbelDistribution::GumbelDistribution() : SGEXTN::SeerattraNum::GumbelDistribution(true, 0.0f, 1.0f){}
 
-SGEXTN::SeerattraNum::GumbelDistribution::GumbelDistribution(bool useGlobal, float mode, float spread) : private_mode(mode), private_spread(spread), private_rngLocator(useGlobal){
+SGEXTN::SeerattraNum::GumbelDistribution::GumbelDistribution(bool useGlobal, float mode, float spread) : mode_(mode), spread_(spread), rngLocator_(useGlobal){
     if(spread <= 0.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GumbelDistribution constructor crashed because requested spread is nonpositive");}
 }
 
 bool SGEXTN::SeerattraNum::GumbelDistribution::sendOut(const SGEXTN::SeerattraNum::GumbelDistribution& x, SGEXTN::Containers::Span<unsigned char> data){
-    return SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float, float>::sendOut(x.private_rngLocator, x.private_mode, x.private_spread, data);
+    return SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float, float>::sendOut(x.rngLocator_, x.mode_, x.spread_, data);
 }
 
 bool SGEXTN::SeerattraNum::GumbelDistribution::sendIn(SGEXTN::SeerattraNum::GumbelDistribution& x, SGEXTN::Containers::Span<unsigned char> data){
@@ -40,7 +40,7 @@ bool SGEXTN::SeerattraNum::GumbelDistribution::sendIn(SGEXTN::SeerattraNum::Gumb
     const bool isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float, float>::sendIn(rngLocator, mode, spread, data);
     if(isValid == false || spread <= 0.0f){return false;}
     x = SGEXTN::SeerattraNum::GumbelDistribution(true, mode, spread);
-    x.private_rngLocator = rngLocator;
+    x.rngLocator_ = rngLocator;
     return true;
 }
 
@@ -49,15 +49,15 @@ int SGEXTN::SeerattraNum::GumbelDistribution::size(){
 }
 
 void SGEXTN::SeerattraNum::GumbelDistribution::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
-    if(private_rngLocator.private_ownsRng == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GumbelDistribution::seed crashed because cannot seed global rng");}
-    (*private_rngLocator).seed(seedArray);
+    if(rngLocator_.isUsingGlobal() == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GumbelDistribution::seed crashed because cannot seed global rng");}
+    (*rngLocator_).seed(seedArray);
 }
 
 float SGEXTN::SeerattraNum::GumbelDistribution::randomValue(){
-    const unsigned int integerRng = (*private_rngLocator).randomUnsignedInt32();
+    const unsigned int integerRng = (*rngLocator_).randomUnsignedInt32();
     const float scaleFactor = 1.0f / (static_cast<float>(static_cast<unsigned int>(1) << 24) + 1.0f);
     const float rng = (1.0f + (static_cast<float>(integerRng >> 8))) * scaleFactor;
-    return (private_mode - private_spread * SGEXTN::Math::FloatMath<float>::naturalLog(-1.0f * SGEXTN::Math::FloatMath<float>::naturalLog(1.0f - rng)));
+    return (mode_ - spread_ * SGEXTN::Math::FloatMath<float>::naturalLog(-1.0f * SGEXTN::Math::FloatMath<float>::naturalLog(1.0f - rng)));
 }
 
 SGEXTN::Containers::Array<float> SGEXTN::SeerattraNum::GumbelDistribution::randomValueArray(int count){
@@ -70,18 +70,18 @@ SGEXTN::Containers::Array<float> SGEXTN::SeerattraNum::GumbelDistribution::rando
 }
 
 float SGEXTN::SeerattraNum::GumbelDistribution::getMode() const {
-    return private_mode;
+    return mode_;
 }
 
 float SGEXTN::SeerattraNum::GumbelDistribution::getSpread() const {
-    return private_spread;
+    return spread_;
 }
 
 void SGEXTN::SeerattraNum::GumbelDistribution::setMode(float mode){
-    private_mode = mode;
+    mode_ = mode;
 }
 
 void SGEXTN::SeerattraNum::GumbelDistribution::setSpread(float spread){
     if(spread <= 0.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::GumbelDistribution::setSpread crashed because requested spread is nonpositive");}
-    private_spread = spread;
+    spread_ = spread;
 }

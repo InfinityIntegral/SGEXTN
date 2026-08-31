@@ -26,12 +26,12 @@
 
 SGEXTN::SeerattraNum::CauchyDistribution::CauchyDistribution() : SGEXTN::SeerattraNum::CauchyDistribution(true, 0.0f, 1.0f){}
 
-SGEXTN::SeerattraNum::CauchyDistribution::CauchyDistribution(bool useGlobal, float median, float halfWidth) : private_median(median), private_halfWidth(halfWidth), private_rngLocator(useGlobal){
+SGEXTN::SeerattraNum::CauchyDistribution::CauchyDistribution(bool useGlobal, float median, float halfWidth) : median_(median), halfWidth_(halfWidth), rngLocator_(useGlobal){
     if(halfWidth <= 0.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::CauchyDistribution constructor crashed because requested half width is nonpositive");}
 }
 
 bool SGEXTN::SeerattraNum::CauchyDistribution::sendOut(const SGEXTN::SeerattraNum::CauchyDistribution& x, SGEXTN::Containers::Span<unsigned char> data){
-    return SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float, float>::sendOut(x.private_rngLocator, x.private_median, x.private_halfWidth, data);
+    return SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float, float>::sendOut(x.rngLocator_, x.median_, x.halfWidth_, data);
 }
 
 bool SGEXTN::SeerattraNum::CauchyDistribution::sendIn(SGEXTN::SeerattraNum::CauchyDistribution& x, SGEXTN::Containers::Span<unsigned char> data){
@@ -41,7 +41,7 @@ bool SGEXTN::SeerattraNum::CauchyDistribution::sendIn(SGEXTN::SeerattraNum::Cauc
     const bool isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float, float>::sendIn(rngLocator, median, halfWidth, data);
     if(isValid == false || halfWidth <= 0.0f){return false;}
     x = SGEXTN::SeerattraNum::CauchyDistribution(true, median, halfWidth);
-    x.private_rngLocator = rngLocator;
+    x.rngLocator_ = rngLocator;
     return true;
 }
 
@@ -50,15 +50,15 @@ int SGEXTN::SeerattraNum::CauchyDistribution::size(){
 }
 
 void SGEXTN::SeerattraNum::CauchyDistribution::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
-    if(private_rngLocator.private_ownsRng == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::CauchyDistribution::seed crashed because cannot seed global rng");}
-    (*private_rngLocator).seed(seedArray);
+    if(rngLocator_.isUsingGlobal() == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::CauchyDistribution::seed crashed because cannot seed global rng");}
+    (*rngLocator_).seed(seedArray);
 }
 
 float SGEXTN::SeerattraNum::CauchyDistribution::randomValue(){
-    const unsigned int integerRng = (*private_rngLocator).randomUnsignedInt32();
+    const unsigned int integerRng = (*rngLocator_).randomUnsignedInt32();
     const float scaleFactor = 1.0f / (static_cast<float>(static_cast<unsigned int>(1) << 24) + 1.0f);
     const float rng = (1.0f + (static_cast<float>(integerRng >> 8))) * scaleFactor;
-    return (private_median + private_halfWidth * SGEXTN::Math::FloatMath<float>::tangent(SGEXTN::Math::FloatConstants<float>::pi() * (rng - 0.5f)));
+    return (median_ + halfWidth_ * SGEXTN::Math::FloatMath<float>::tangent(SGEXTN::Math::FloatConstants<float>::pi() * (rng - 0.5f)));
 }
 
 SGEXTN::Containers::Array<float> SGEXTN::SeerattraNum::CauchyDistribution::randomValueArray(int count){
@@ -71,18 +71,18 @@ SGEXTN::Containers::Array<float> SGEXTN::SeerattraNum::CauchyDistribution::rando
 }
 
 float SGEXTN::SeerattraNum::CauchyDistribution::getMedian() const {
-    return private_median;
+    return median_;
 }
 
 float SGEXTN::SeerattraNum::CauchyDistribution::getHalfWidth() const {
-    return private_halfWidth;
+    return halfWidth_;
 }
 
 void SGEXTN::SeerattraNum::CauchyDistribution::setMedian(float median){
-    private_median = median;
+    median_ = median;
 }
 
 void SGEXTN::SeerattraNum::CauchyDistribution::setHalfWidth(float halfWidth){
     if(halfWidth <= 0.0f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::CauchyDistribution::setHalfWidth crashed because requested half width is nonpositive");}
-    private_halfWidth = halfWidth;
+    halfWidth_ = halfWidth;
 }

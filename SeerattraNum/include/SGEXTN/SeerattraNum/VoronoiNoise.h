@@ -24,9 +24,10 @@ template <typename T> class Span;
 
 namespace SGEXTN::SeerattraNum {
 class BuildLah_SGEXTN_SeerattraNum VoronoiNoise {
+private:
+    int seed_;
+    int dimension_;
 public:
-    int private_seed;
-    int private_dimension;
     explicit VoronoiNoise();
     explicit VoronoiNoise(int dimension);
     [[nodiscard]] static bool sendOut(const VoronoiNoise& x, SGEXTN::Containers::Span<unsigned char> data);

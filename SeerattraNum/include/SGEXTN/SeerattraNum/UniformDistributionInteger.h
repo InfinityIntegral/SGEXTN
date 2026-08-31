@@ -25,10 +25,11 @@ template <typename T> class Span;
 
 namespace SGEXTN::SeerattraNum {
 class BuildLah_SGEXTN_SeerattraNum UniformDistributionInteger {
+private:
+    SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator_;
+    int inclusiveMin_;
+    int inclusiveMax_;
 public:
-    SGEXTN::SeerattraNum::DirectRandomInstanceLocator private_rngLocator;
-    int private_inclusiveMin;
-    int private_inclusiveMax;
     explicit UniformDistributionInteger();
     explicit UniformDistributionInteger(bool useGlobal, int inclusiveMin, int inclusiveMax);
     [[nodiscard]] static bool sendOut(const UniformDistributionInteger& x, SGEXTN::Containers::Span<unsigned char> data);
@@ -36,7 +37,7 @@ public:
     [[nodiscard]] static int size();
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
     [[nodiscard]] int randomValue();
-    [[nodiscard]] int private_randomValue(SGEXTN::SeerattraNum::DirectRandomInstanceLocator& externalLocator) const;
+    [[nodiscard]] int randomValue(SGEXTN::SeerattraNum::DirectRandomInstanceLocator& externalLocator) const;
     [[nodiscard]] SGEXTN::Containers::Array<int> randomValueArray(int count);
     [[nodiscard]] int getInclusiveMin() const;
     [[nodiscard]] int getInclusiveMax() const;

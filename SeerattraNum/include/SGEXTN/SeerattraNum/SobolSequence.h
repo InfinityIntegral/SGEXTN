@@ -24,12 +24,13 @@ template <typename T> class Span;
 
 namespace SGEXTN::SeerattraNum {
 class BuildLah_SGEXTN_SeerattraNum SobolSequence {
+private:
+    int lastPosition_;
+    SGEXTN::Containers::Array<unsigned int> lastPositionResult_;
+    int dimensions_;
+    SGEXTN::Containers::Array<unsigned int> hashedSeed_;
+    SGEXTN::Containers::Array<SGEXTN::Containers::Array<unsigned int>> directionNumberCache_;
 public:
-    int private_lastPosition;
-    SGEXTN::Containers::Array<unsigned int> private_lastPositionResult;
-    int private_dimensions;
-    SGEXTN::Containers::Array<unsigned int> private_hashedSeed;
-    SGEXTN::Containers::Array<SGEXTN::Containers::Array<unsigned int>> private_directionNumberCache;
     explicit SobolSequence();
     explicit SobolSequence(int dimension);
     [[nodiscard]] static bool sendOut(const SobolSequence& x, SGEXTN::Containers::Span<unsigned char> data);

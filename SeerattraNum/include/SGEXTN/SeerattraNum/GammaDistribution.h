@@ -26,27 +26,28 @@ template <typename T> class Span;
 
 namespace SGEXTN::SeerattraNum {
 class BuildLah_SGEXTN_SeerattraNum GammaDistribution {
+private:
+    SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator_;
+    float variableCount_;
+    float variableMean_;
+    SGEXTN::SeerattraNum::NormalDistribution standardNormalDistribution_;
+    float precompConstantD_;
+    float precompConstantC_;
+    float reciprocalVariableCount_;
+    void redoPrecompute();
 public:
-    SGEXTN::SeerattraNum::DirectRandomInstanceLocator private_rngLocator;
-    float private_variableCount;
-    float private_variableMean;
-    SGEXTN::SeerattraNum::NormalDistribution private_standardNormalDistribution;
-    float private_precompConstantD;
-    float private_precompConstantC;
-    float private_reciprocalVariableCount;
     explicit GammaDistribution();
     explicit GammaDistribution(bool useGlobal, float variableCount, float variableMean);
     [[nodiscard]] static bool sendOut(const GammaDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(GammaDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static int size();
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
-    [[nodiscard]] float private_randomValue(SGEXTN::SeerattraNum::DirectRandomInstanceLocator& externalLocator) const;
+    [[nodiscard]] float randomValue(SGEXTN::SeerattraNum::DirectRandomInstanceLocator& externalLocator) const;
     [[nodiscard]] float randomValue();
     [[nodiscard]] SGEXTN::Containers::Array<float> randomValueArray(int count);
     [[nodiscard]] float getVariableCount() const;
     [[nodiscard]] float getVariableMean() const;
     void setVariableCount(float variableCount);
     void setVariableMean(float variableMean);
-    void private_redoPrecompute();
 };
 }

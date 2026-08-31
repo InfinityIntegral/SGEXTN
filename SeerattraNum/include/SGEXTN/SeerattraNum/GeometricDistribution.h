@@ -25,10 +25,11 @@ template <typename T> class Span;
 
 namespace SGEXTN::SeerattraNum {
 class BuildLah_SGEXTN_SeerattraNum GeometricDistribution {
+private:
+    SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator_;
+    float chanceOfTrue_;
+    float cacheReciprocalOfLnChanceOfFalse_;
 public:
-    SGEXTN::SeerattraNum::DirectRandomInstanceLocator private_rngLocator;
-    float private_chanceOfTrue;
-    float private_cacheReciprocalOfLnChanceOfFalse;
     explicit GeometricDistribution();
     explicit GeometricDistribution(bool useGlobal, float chanceOfTrue);
     [[nodiscard]] static bool sendOut(const GeometricDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
@@ -36,7 +37,7 @@ public:
     [[nodiscard]] static int size();
     void seed(const SGEXTN::Containers::Array<unsigned int>& seedArray);
     [[nodiscard]] int randomValue();
-    [[nodiscard]] int private_randomValue(SGEXTN::SeerattraNum::DirectRandomInstanceLocator& externalLocator) const;
+    [[nodiscard]] int randomValue(SGEXTN::SeerattraNum::DirectRandomInstanceLocator& externalLocator) const;
     [[nodiscard]] SGEXTN::Containers::Array<int> randomValueArray(int count);
     [[nodiscard]] float getChanceOfTrue() const;
     void setChanceOfTrue(float chanceOfTrue);

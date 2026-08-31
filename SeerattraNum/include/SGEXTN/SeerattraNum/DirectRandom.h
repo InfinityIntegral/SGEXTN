@@ -23,14 +23,19 @@ template <typename T> class Span;
 }
 
 namespace SGEXTN::SeerattraNum {
+class DirectRandomInstanceLocator;
+
 class BuildLah_SGEXTN_SeerattraNum DirectRandom {
+private:
+    friend class SGEXTN::SeerattraNum::DirectRandomInstanceLocator;
+    unsigned long long firstNum_;
+    unsigned long long secondNum_;
+    unsigned long long thirdNum_;
+    unsigned long long fourthNum_;
+    unsigned int cache_;
+    bool cacheActive_;
+    [[nodiscard]] static DirectRandom* createRng(bool useGlobal);
 public:
-    unsigned long long private_firstNum;
-    unsigned long long private_secondNum;
-    unsigned long long private_thirdNum;
-    unsigned long long private_fourthNum;
-    unsigned int private_cache;
-    bool private_cacheActive;
     explicit DirectRandom();
     [[nodiscard]] static bool sendOut(const DirectRandom& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(DirectRandom& x, SGEXTN::Containers::Span<unsigned char> data);
@@ -48,6 +53,5 @@ public:
     [[nodiscard]] SGEXTN::Containers::Array<unsigned long long> randomUnsignedInt64Array(int count);
     [[nodiscard]] SGEXTN::Containers::Array<float> randomFloat32Array(int count);
     [[nodiscard]] SGEXTN::Containers::Array<double> randomFloat64Array(int count);
-    [[nodiscard]] static DirectRandom* private_createRng(bool useGlobal);
 };
 }

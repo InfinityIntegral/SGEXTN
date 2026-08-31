@@ -24,12 +24,12 @@
 
 SGEXTN::SeerattraNum::UniformDistributionFloatingPoint::UniformDistributionFloatingPoint() : SGEXTN::SeerattraNum::UniformDistributionFloatingPoint(true, 0.0f, 1.0f){}
 
-SGEXTN::SeerattraNum::UniformDistributionFloatingPoint::UniformDistributionFloatingPoint(bool useGlobal, float minimum, float maximum) : private_minimum(minimum), private_maximum(maximum), private_rngLocator(useGlobal){
+SGEXTN::SeerattraNum::UniformDistributionFloatingPoint::UniformDistributionFloatingPoint(bool useGlobal, float minimum, float maximum) : minimum_(minimum), maximum_(maximum), rngLocator_(useGlobal){
     if(minimum >= maximum){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionFloatingPoint constructor crashed because minimum is higher than or equal to maximum");}
 }
 
 bool SGEXTN::SeerattraNum::UniformDistributionFloatingPoint::sendOut(const SGEXTN::SeerattraNum::UniformDistributionFloatingPoint& x, SGEXTN::Containers::Span<unsigned char> data){
-    return SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float, float>::sendOut(x.private_rngLocator, x.private_minimum, x.private_maximum, data);
+    return SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float, float>::sendOut(x.rngLocator_, x.minimum_, x.maximum_, data);
 }
 
 bool SGEXTN::SeerattraNum::UniformDistributionFloatingPoint::sendIn(SGEXTN::SeerattraNum::UniformDistributionFloatingPoint& x, SGEXTN::Containers::Span<unsigned char> data){
@@ -39,7 +39,7 @@ bool SGEXTN::SeerattraNum::UniformDistributionFloatingPoint::sendIn(SGEXTN::Seer
     const bool isValid = SGEXTN::Containers::Serialise<SGEXTN::SeerattraNum::DirectRandomInstanceLocator, float, float>::sendIn(rngLocator, min, max, data);
     if(isValid == false || max <= min){return false;}
     x = SGEXTN::SeerattraNum::UniformDistributionFloatingPoint(true, min, max);
-    x.private_rngLocator = rngLocator;
+    x.rngLocator_ = rngLocator;
     return true;
 }
 
@@ -48,12 +48,12 @@ int SGEXTN::SeerattraNum::UniformDistributionFloatingPoint::size(){
 }
 
 void SGEXTN::SeerattraNum::UniformDistributionFloatingPoint::seed(const SGEXTN::Containers::Array<unsigned int>& seedArray){
-    if(private_rngLocator.private_ownsRng == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionFloatingPoint::seed crashed because cannot seed global rng");}
-    (*private_rngLocator).seed(seedArray);
+    if(rngLocator_.isUsingGlobal() == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionFloatingPoint::seed crashed because cannot seed global rng");}
+    (*rngLocator_).seed(seedArray);
 }
 
 float SGEXTN::SeerattraNum::UniformDistributionFloatingPoint::randomValue(){
-    return (private_minimum + (private_maximum - private_minimum) * (*private_rngLocator).randomFloat32());
+    return (minimum_ + (maximum_ - minimum_) * (*rngLocator_).randomFloat32());
 }
 
 SGEXTN::Containers::Array<float> SGEXTN::SeerattraNum::UniformDistributionFloatingPoint::randomValueArray(int count){
@@ -66,15 +66,15 @@ SGEXTN::Containers::Array<float> SGEXTN::SeerattraNum::UniformDistributionFloati
 }
 
 float SGEXTN::SeerattraNum::UniformDistributionFloatingPoint::getMinimum() const {
-    return private_minimum;
+    return minimum_;
 }
 
 float SGEXTN::SeerattraNum::UniformDistributionFloatingPoint::getMaximum() const {
-    return private_maximum;
+    return maximum_;
 }
 
 void SGEXTN::SeerattraNum::UniformDistributionFloatingPoint::setRange(float minimum, float maximum){
     if(minimum >= maximum){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SeerattraNum::UniformDistributionFloatingPoint::setRange crashed because minimum is higher than or equal to maximum");}
-    private_minimum = minimum;
-    private_maximum = maximum;
+    minimum_ = minimum;
+    maximum_ = maximum;
 }
