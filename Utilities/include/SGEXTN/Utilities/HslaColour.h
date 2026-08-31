@@ -29,11 +29,12 @@ namespace SGEXTN::Utilities {
 class RgbaColour;
 
 class BuildLah_SGEXTN_Utilities HslaColour {
+private:
+    float hue_;
+    float saturation_;
+    float lightness_;
+    float transparency_;
 public:
-    float private_hue;
-    float private_saturation;
-    float private_lightness;
-    float private_transparency;
     explicit HslaColour();
     explicit HslaColour(SGEXTN::Utilities::RgbaColour x);
     explicit HslaColour(float h, float s, float l);

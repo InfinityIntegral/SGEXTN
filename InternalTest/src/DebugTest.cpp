@@ -25,6 +25,7 @@
 #include <SGEXTN/CoreText/Character.h>
 #include <SGEXTN/Containers/Array.h>
 #include <SGEXTN/Containers/Vector.h>
+#include <SGEXTN/Containers/dont_touch_lah/KaypohOne.h>
 
 namespace {
 SGEXTN::CoreText::String lastSentString;
@@ -35,11 +36,14 @@ void logIntoString(const char* s){
 }
 }
 
+template class SGEXTN::KaypohOne::StealStaticVariable<0, SGEXTN::CoreText::Debug, SGEXTN::Containers::Vector<void (*)(const char*)>*, &SGEXTN::CoreText::Debug::logFunctionList>;
+
 void SGEXTN::InternalTest::DebugTest::runTest(){
     void (*originalFunction)(const char*) = nullptr;
-    if((*SGEXTN::CoreText::Debug::logFunctionList).length() > 0){
-        originalFunction = (*SGEXTN::CoreText::Debug::logFunctionList).at(0);
-        (*SGEXTN::CoreText::Debug::logFunctionList).at(0) = &logIntoString;
+    SGEXTN::Containers::Vector<void (*)(const char*)>* functionList = SGEXTN::KaypohOne::StaticVariable<0, SGEXTN::CoreText::Debug, SGEXTN::Containers::Vector<void (*)(const char*)>*>::beKaypoh();
+    if((*functionList).length() > 0){
+        originalFunction = (*functionList).at(0);
+        (*functionList).at(0) = &logIntoString;
     }
     SG(true);
     if(lastSentString != "true"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreTest::Debug log bool true fail");}
@@ -143,5 +147,5 @@ void SGEXTN::InternalTest::DebugTest::runTest(){
     SG(intPointer);
     if(lastSentString != "not nullptr"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreTest::Debug switch default pointer mode fail");}
     delete intPointer;
-    if((*SGEXTN::CoreText::Debug::logFunctionList).length() > 0){(*SGEXTN::CoreText::Debug::logFunctionList).at(0) = originalFunction;}
+    if((*functionList).length() > 0){(*functionList).at(0) = originalFunction;}
 }

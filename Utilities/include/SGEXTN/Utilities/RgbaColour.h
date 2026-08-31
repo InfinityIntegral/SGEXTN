@@ -27,8 +27,9 @@ class String;
 
 namespace SGEXTN::Utilities {
 class BuildLah_SGEXTN_Utilities RgbaColour {
+private:
+    unsigned int data_;
 public:
-    unsigned int private_data;
     explicit RgbaColour();
     explicit RgbaColour(unsigned int data);
     explicit RgbaColour(int r, int g, int b, int a);

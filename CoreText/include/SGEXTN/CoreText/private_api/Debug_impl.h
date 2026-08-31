@@ -85,7 +85,7 @@ template <typename EnumClass> SGEXTN::CoreText::String SGEXTN::CoreText::EnumNam
 template <typename T> SGEXTN::CoreText::String SGEXTN::CoreText::Debug::debugPrint(const T& x) const {
     if constexpr(requires{SGEXTN::Containers::IsObjectPointer<T>::isPointer;} == true){
         if(x == nullptr){return "nullptr";}
-        if(pointerMode == SGEXTN::CoreText::DebugPrintPointerMode::NullCheck){return "not nullptr";}
+        if(pointerMode_ == SGEXTN::CoreText::DebugPrintPointerMode::NullCheck){return "not nullptr";}
         return (SGEXTN::CoreText::String("&( ") + debugPrint(*x) + " )");
     }
     if constexpr(requires{SGEXTN::Containers::IsFunctionPointer<T>::isPointer;} == true){
@@ -112,7 +112,7 @@ template <typename T> SGEXTN::CoreText::String SGEXTN::CoreText::Debug::debugPri
 }
 
 template <typename T> SGEXTN::CoreText::Debug& SGEXTN::CoreText::Debug::operator()(const T& x){
-    if(debugInfo != ""){debugInfo += " - ";}
-    debugInfo += debugPrint(x);
+    if(debugInfo_ != ""){debugInfo_ += " - ";}
+    debugInfo_ += debugPrint(x);
     return (*this);
 }

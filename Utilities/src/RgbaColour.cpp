@@ -62,32 +62,32 @@ float linearToSrgb(float x){
 }
 }
 
-SGEXTN::Utilities::RgbaColour::RgbaColour() : private_data(0xff00c8ff) {}
+SGEXTN::Utilities::RgbaColour::RgbaColour() : data_(0xff00c8ff) {}
 
-SGEXTN::Utilities::RgbaColour::RgbaColour(unsigned int data) : private_data(data) {}
+SGEXTN::Utilities::RgbaColour::RgbaColour(unsigned int data) : data_(data) {}
 
-SGEXTN::Utilities::RgbaColour::RgbaColour(int r, int g, int b, int a) : private_data(packChannels(toUnsignedInt(boundInt(r)), toUnsignedInt(boundInt(g)), toUnsignedInt(boundInt(b)), toUnsignedInt(boundInt(a)))) {}
+SGEXTN::Utilities::RgbaColour::RgbaColour(int r, int g, int b, int a) : data_(packChannels(toUnsignedInt(boundInt(r)), toUnsignedInt(boundInt(g)), toUnsignedInt(boundInt(b)), toUnsignedInt(boundInt(a)))) {}
 
-SGEXTN::Utilities::RgbaColour::RgbaColour(int r, int g, int b) : private_data(packChannels(toUnsignedInt(boundInt(r)), toUnsignedInt(boundInt(g)), toUnsignedInt(boundInt(b)), 255u)) {}
+SGEXTN::Utilities::RgbaColour::RgbaColour(int r, int g, int b) : data_(packChannels(toUnsignedInt(boundInt(r)), toUnsignedInt(boundInt(g)), toUnsignedInt(boundInt(b)), 255u)) {}
 
-SGEXTN::Utilities::RgbaColour::RgbaColour(float r, float g, float b, float a) : private_data(packChannels(toUnsignedInt(boundFloat(r)), toUnsignedInt(boundFloat(g)), toUnsignedInt(boundFloat(b)), toUnsignedInt(boundFloat(a)))) {}
+SGEXTN::Utilities::RgbaColour::RgbaColour(float r, float g, float b, float a) : data_(packChannels(toUnsignedInt(boundFloat(r)), toUnsignedInt(boundFloat(g)), toUnsignedInt(boundFloat(b)), toUnsignedInt(boundFloat(a)))) {}
 
-SGEXTN::Utilities::RgbaColour::RgbaColour(float r, float g, float b) : private_data(packChannels(toUnsignedInt(boundFloat(r)), toUnsignedInt(boundFloat(g)), toUnsignedInt(boundFloat(b)), 255u)) {}
+SGEXTN::Utilities::RgbaColour::RgbaColour(float r, float g, float b) : data_(packChannels(toUnsignedInt(boundFloat(r)), toUnsignedInt(boundFloat(g)), toUnsignedInt(boundFloat(b)), 255u)) {}
 
 int SGEXTN::Utilities::RgbaColour::getRed() const {
-    return static_cast<int>(private_data >> 24u);
+    return static_cast<int>(data_ >> 24u);
 }
 
 int SGEXTN::Utilities::RgbaColour::getGreen() const {
-    return static_cast<int>(0xFFu & (private_data >> 16u));
+    return static_cast<int>(0xFFu & (data_ >> 16u));
 }
 
 int SGEXTN::Utilities::RgbaColour::getBlue() const {
-    return static_cast<int>(0xFFu & (private_data >> 8u));
+    return static_cast<int>(0xFFu & (data_ >> 8u));
 }
 
 int SGEXTN::Utilities::RgbaColour::getTransparency() const {
-    return static_cast<int>(0xFFu & private_data);
+    return static_cast<int>(0xFFu & data_);
 }
 
 float SGEXTN::Utilities::RgbaColour::getRedFloat() const {
@@ -107,35 +107,35 @@ float SGEXTN::Utilities::RgbaColour::getTransparencyFloat() const {
 }
 
 void SGEXTN::Utilities::RgbaColour::setRed(int r){
-    private_data = setChannelByOffset(private_data, 24u, toUnsignedInt(boundInt(r)));
+    data_ = setChannelByOffset(data_, 24u, toUnsignedInt(boundInt(r)));
 }
 
 void SGEXTN::Utilities::RgbaColour::setGreen(int g){
-    private_data = setChannelByOffset(private_data, 16u, toUnsignedInt(boundInt(g)));
+    data_ = setChannelByOffset(data_, 16u, toUnsignedInt(boundInt(g)));
 }
 
 void SGEXTN::Utilities::RgbaColour::setBlue(int b){
-    private_data = setChannelByOffset(private_data, 8u, toUnsignedInt(boundInt(b)));
+    data_ = setChannelByOffset(data_, 8u, toUnsignedInt(boundInt(b)));
 }
 
 void SGEXTN::Utilities::RgbaColour::setTransparency(int a){
-    private_data = setChannelByOffset(private_data, 0u, toUnsignedInt(boundInt(a)));
+    data_ = setChannelByOffset(data_, 0u, toUnsignedInt(boundInt(a)));
 }
 
 void SGEXTN::Utilities::RgbaColour::setRedFloat(float r){
-    private_data = setChannelByOffset(private_data, 24u, toUnsignedInt(boundFloat(r)));
+    data_ = setChannelByOffset(data_, 24u, toUnsignedInt(boundFloat(r)));
 }
 
 void SGEXTN::Utilities::RgbaColour::setGreenFloat(float g){
-    private_data = setChannelByOffset(private_data, 16u, toUnsignedInt(boundFloat(g)));
+    data_ = setChannelByOffset(data_, 16u, toUnsignedInt(boundFloat(g)));
 }
 
 void SGEXTN::Utilities::RgbaColour::setBlueFloat(float b){
-    private_data = setChannelByOffset(private_data, 8u, toUnsignedInt(boundFloat(b)));
+    data_ = setChannelByOffset(data_, 8u, toUnsignedInt(boundFloat(b)));
 }
 
 void SGEXTN::Utilities::RgbaColour::setTransparencyFloat(float a){
-    private_data = setChannelByOffset(private_data, 0u, toUnsignedInt(boundFloat(a)));
+    data_ = setChannelByOffset(data_, 0u, toUnsignedInt(boundFloat(a)));
 }
 
 SGEXTN::CoreText::String SGEXTN::Utilities::RgbaColour::rgbHtmlString() const {
@@ -167,7 +167,7 @@ SGEXTN::CoreText::String SGEXTN::Utilities::RgbaColour::debugPrint() const {
 }
 
 bool SGEXTN::Utilities::RgbaColour::sendOut(SGEXTN::Utilities::RgbaColour x, SGEXTN::Containers::Span<unsigned char> data){
-    return SGEXTN::Containers::Serialise<unsigned int>::sendOut(x.private_data, data);
+    return SGEXTN::Containers::Serialise<unsigned int>::sendOut(x.data_, data);
 }
 
 bool SGEXTN::Utilities::RgbaColour::sendIn(SGEXTN::Utilities::RgbaColour& x, SGEXTN::Containers::Span<unsigned char> data){

@@ -50,8 +50,9 @@ enum class SignificantDates : unsigned char {
 };
 
 class BuildLah_SGEXTN_Utilities DateTime {
+private:
+    long long data_;
 public:
-    long long private_data;
     explicit DateTime();
     explicit DateTime(long long t);
     explicit DateTime(int year, int month, int day, int hour, int minute, int second);

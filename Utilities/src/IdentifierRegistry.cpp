@@ -45,10 +45,10 @@ SGEXTN::Utilities::IdentifierRegistry::IdentifierRegistry(){}
 SGEXTN::Utilities::Identifier SGEXTN::Utilities::IdentifierRegistry::generateAndRegisterIdentifier(){
     while(true){
         const unsigned int n = getRandomNumber();
-        if(private_contents.contains(n) == false){
+        if(contents_.contains(n) == false){
             SGEXTN::Utilities::Identifier id;
-            id.private_data = n;
-            private_contents.insert(n);
+            id.data_ = n;
+            contents_.insert(n);
             return id;
         }
         reSeedRandomEngine();
@@ -57,25 +57,25 @@ SGEXTN::Utilities::Identifier SGEXTN::Utilities::IdentifierRegistry::generateAnd
 
 SGEXTN::Utilities::Identifier SGEXTN::Utilities::IdentifierRegistry::parseAndRegisterIdentifier(unsigned int data, bool* isValid){
     SGEXTN::Utilities::Identifier id;
-    id.private_data = data;
+    id.data_ = data;
     if(isValid != nullptr){
-        if(data == 0u || private_contents.contains(data) == true){(*isValid) = false;}
+        if(data == 0u || contents_.contains(data) == true){(*isValid) = false;}
         else{(*isValid) = true;}
     }
-    if(data != 0u){private_contents.insert(data);}
+    if(data != 0u){contents_.insert(data);}
     return id;
 }
 
 bool SGEXTN::Utilities::IdentifierRegistry::unregister(SGEXTN::Utilities::Identifier id){
-    if(id.private_data == 0u){return false;}
-    return private_contents.erase(id.private_data);
+    if(id.data_ == 0u){return false;}
+    return contents_.erase(id.data_);
 }
 
 bool SGEXTN::Utilities::IdentifierRegistry::contains(SGEXTN::Utilities::Identifier id) const {
-    if(id.private_data == 0u){return false;}
-    return private_contents.contains(id.private_data);
+    if(id.data_ == 0u){return false;}
+    return contents_.contains(id.data_);
 }
 
 int SGEXTN::Utilities::IdentifierRegistry::length() const {
-    return private_contents.length();
+    return contents_.length();
 }

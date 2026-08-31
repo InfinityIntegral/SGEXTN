@@ -19,10 +19,11 @@
 
 namespace SGEXTN::CoreText {
 class BuildLah_SGEXTN_CoreText ByteVector {
+private:
+    unsigned char* data_;
+    int length_;
+    int memoryLength_;
 public:
-    unsigned char* private_data;
-    int private_length;
-    int private_memoryLength;
     explicit ByteVector();
     explicit ByteVector(int count);
     ByteVector(const ByteVector& x);
@@ -36,5 +37,7 @@ public:
     void reserve(int newMemoryLength);
     void pushBack(unsigned char c);
     void pushBack(const unsigned char* start, int length);
+    [[nodiscard]] unsigned char* getRawPointer();
+    [[nodiscard]] const unsigned char* getRawPointer() const;
 };
 }

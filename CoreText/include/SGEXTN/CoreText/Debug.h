@@ -61,14 +61,13 @@ enum class DebugPrintPointerMode : unsigned char {
     TryDeref = 2
 };
 
+class DebugLogFunctionRegistrarInstance;
+class DebugDefaultModeOverride;
+
 class BuildLah_SGEXTN_CoreText Debug {
-public:
-    explicit Debug(const SGEXTN::CoreText::String& fileName, int lineNumber);
-    Debug(const Debug&) = delete;
-    Debug& operator=(const Debug&) = delete;
-    Debug(Debug&&) = delete;
-    Debug& operator=(Debug&&) = delete;
-    ~Debug();
+private:
+    friend class SGEXTN::CoreText::DebugLogFunctionRegistrarInstance;
+    friend class SGEXTN::CoreText::DebugDefaultModeOverride;
     static SGEXTN::Containers::Vector<void (*)(const char*)>* logFunctionList;
     static void logToCerr(const char* msg);
     static SGEXTN::CoreText::DebugPrintIntegerMode defaultIntegerMode;
@@ -76,14 +75,14 @@ public:
     static SGEXTN::CoreText::DebugPrintCCharMode defaultCCharMode;
     static SGEXTN::CoreText::DebugPrintStringMode defaultStringMode;
     static SGEXTN::CoreText::DebugPrintPointerMode defaultPointerMode;
-    SGEXTN::CoreText::String debugInfo;
-    SGEXTN::CoreText::String fileName;
-    SGEXTN::CoreText::String lineNumber;
-    SGEXTN::CoreText::DebugPrintIntegerMode integerMode;
-    SGEXTN::CoreText::DebugPrintFloatingPointMode floatingPointMode;
-    SGEXTN::CoreText::DebugPrintCCharMode cCharMode;
-    SGEXTN::CoreText::DebugPrintStringMode stringMode;
-    SGEXTN::CoreText::DebugPrintPointerMode pointerMode;
+    SGEXTN::CoreText::String debugInfo_;
+    SGEXTN::CoreText::String fileName_;
+    SGEXTN::CoreText::String lineNumber_;
+    SGEXTN::CoreText::DebugPrintIntegerMode integerMode_;
+    SGEXTN::CoreText::DebugPrintFloatingPointMode floatingPointMode_;
+    SGEXTN::CoreText::DebugPrintCCharMode cCharMode_;
+    SGEXTN::CoreText::DebugPrintStringMode stringMode_;
+    SGEXTN::CoreText::DebugPrintPointerMode pointerMode_;
     template <typename T> SGEXTN::CoreText::String debugPrint(const T& x) const;
     template <typename T> SGEXTN::CoreText::String debugPrint(const SGEXTN::Containers::Array<T>& x) const;
     SGEXTN::CoreText::String debugPrint(bool x) const;
@@ -100,6 +99,14 @@ public:
     SGEXTN::CoreText::String debugPrint(const SGEXTN::CoreText::String& x) const;
     SGEXTN::CoreText::String debugPrint(char x) const;
     SGEXTN::CoreText::String debugPrint(const char* x) const;
+    static bool registerFunction;
+public:
+    explicit Debug(const SGEXTN::CoreText::String& fileName, int lineNumber);
+    Debug(const Debug&) = delete;
+    Debug& operator=(const Debug&) = delete;
+    Debug(Debug&&) = delete;
+    Debug& operator=(Debug&&) = delete;
+    ~Debug();
     template <typename T> Debug& operator()(const T& x);
     Debug& operator()(SGEXTN::CoreText::DebugPrintIntegerMode mode);
     Debug& operator()(SGEXTN::CoreText::DebugPrintFloatingPointMode mode);
@@ -114,12 +121,13 @@ public:
 };
 
 class BuildLah_SGEXTN_CoreText DebugDefaultModeOverride {
+private:
+    SGEXTN::CoreText::DebugPrintIntegerMode previousIntegerMode_;
+    SGEXTN::CoreText::DebugPrintFloatingPointMode previousFloatingPointMode_;
+    SGEXTN::CoreText::DebugPrintCCharMode previousCCharMode_;
+    SGEXTN::CoreText::DebugPrintStringMode previousStringMode_;
+    SGEXTN::CoreText::DebugPrintPointerMode previousPointerMode_;
 public:
-    SGEXTN::CoreText::DebugPrintIntegerMode previousIntegerMode;
-    SGEXTN::CoreText::DebugPrintFloatingPointMode previousFloatingPointMode;
-    SGEXTN::CoreText::DebugPrintCCharMode previousCCharMode;
-    SGEXTN::CoreText::DebugPrintStringMode previousStringMode;
-    SGEXTN::CoreText::DebugPrintPointerMode previousPointerMode;
     explicit DebugDefaultModeOverride(SGEXTN::CoreText::DebugPrintIntegerMode newIntegerMode, SGEXTN::CoreText::DebugPrintFloatingPointMode newFloatingPointMode, SGEXTN::CoreText::DebugPrintCCharMode newCCharMode, SGEXTN::CoreText::DebugPrintStringMode newStringMode, SGEXTN::CoreText::DebugPrintPointerMode newPointerMode);
     DebugDefaultModeOverride(const DebugDefaultModeOverride&) = delete;
     DebugDefaultModeOverride& operator=(const DebugDefaultModeOverride&) = delete;
