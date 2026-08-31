@@ -30,8 +30,9 @@ template <typename Key, typename Value, typename Comparator> class MapIterator;
 template <typename Key, typename Value, typename Comparator> class MapConstIterator;
 
 template <typename Key, typename Value, typename Comparator> class MapCustomisable {
+private:
+    AVLTree<Key, Value, Comparator> avlTree_;
 public:
-    AVLTree<Key, Value, Comparator> private_avlTree;
     explicit MapCustomisable();
     [[nodiscard]] int length() const;
     bool insert(const Key& key, const Value& value);
@@ -62,9 +63,11 @@ public:
 };
 
 template <typename Key, typename Value, typename Comparator> class MapIterator {
-public:
-    AVLTreeIterator<Key, Value, Comparator> private_avlTreeIterator;
+private:
+    friend class MapCustomisable<Key, Value, Comparator>;
+    AVLTreeIterator<Key, Value, Comparator> avlTreeIterator_;
     explicit MapIterator(AVLTreeIterator<Key, Value, Comparator> i);
+public:
     MapIterator& operator++();
     MapIterator operator++(int);
     MapIterator& operator--();
@@ -76,9 +79,11 @@ public:
 };
 
 template <typename Key, typename Value, typename Comparator> class MapConstIterator {
-public:
-    AVLTreeConstIterator<Key, Value, Comparator> private_avlTreeIterator;
+private:
+    friend class MapCustomisable<Key, Value, Comparator>;
+    AVLTreeConstIterator<Key, Value, Comparator> avlTreeIterator_;
     explicit MapConstIterator(AVLTreeConstIterator<Key, Value, Comparator> i);
+public:
     MapConstIterator& operator++();
     MapConstIterator operator++(int);
     MapConstIterator& operator--();

@@ -20,11 +20,12 @@
 
 namespace SGEXTN::Containers {
 template <typename T> class EqualTo {
+private:
+    mutable int lengthA_;
+    mutable int lengthB_;
+    mutable SGEXTN::Containers::Array<unsigned char> bufferA_;
+    mutable SGEXTN::Containers::Array<unsigned char> bufferB_;
 public:
-    mutable int lengthA;
-    mutable int lengthB;
-    mutable SGEXTN::Containers::Array<unsigned char> bufferA;
-    mutable SGEXTN::Containers::Array<unsigned char> bufferB;
     explicit EqualTo();
     EqualTo(const EqualTo& x);
     EqualTo& operator=(const EqualTo& x);

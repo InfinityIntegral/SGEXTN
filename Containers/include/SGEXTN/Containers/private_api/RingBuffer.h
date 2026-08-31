@@ -18,6 +18,8 @@
 #pragma once
 
 namespace SGEXTN::Containers {
+template <typename T> class ArrayVectorMove;
+
 template <typename T> class RingBufferSlot {
 public:
     union {
@@ -33,6 +35,13 @@ public:
 };
 
 template <typename T> class RingBuffer {
+private:
+    friend class SGEXTN::Containers::ArrayVectorMove<T>;
+    RingBufferSlot<T>* data_;
+    int start_;
+    int length_;
+    int memoryLength_;
+    [[nodiscard]] int getMemoryIndex(int i) const;
 public:
     explicit RingBuffer();
     explicit RingBuffer(int count, const T& defaultValue);
@@ -55,11 +64,6 @@ public:
     void popFront();
     void reserve(int newMemoryLength);
     void clear();
-    RingBufferSlot<T>* private_data;
-    int private_start;
-    int private_length;
-    int private_memoryLength;
-    [[nodiscard]] int private_getMemoryIndex(int i) const;
 };
 }
 

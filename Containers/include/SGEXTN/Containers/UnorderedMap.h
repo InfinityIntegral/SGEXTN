@@ -28,8 +28,9 @@ template <typename Key, typename Value, typename EqualityCheck, typename HashFun
 template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> class UnorderedMapConstIterator;
 
 template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> class UnorderedMapCustomisable {
+private:
+    HashMap<Key, Value, EqualityCheck, HashFunction> hashMap_;
 public:
-    HashMap<Key, Value, EqualityCheck, HashFunction> private_hashMap;
     explicit UnorderedMapCustomisable();
     [[nodiscard]] int length() const;
     void reserve(int newMemoryLength);
@@ -49,9 +50,11 @@ public:
 };
 
 template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> class UnorderedMapIterator {
-public:
-    HashMapIterator<Key, Value, EqualityCheck, HashFunction> private_hashMapIterator;
+private:
+    friend class UnorderedMapCustomisable<Key, Value, EqualityCheck, HashFunction>;
+    HashMapIterator<Key, Value, EqualityCheck, HashFunction> hashMapIterator_;
     explicit UnorderedMapIterator(HashMapIterator<Key, Value, EqualityCheck, HashFunction> i);
+public:
     UnorderedMapIterator& operator++();
     UnorderedMapIterator operator++(int);
     UnorderedMapIterator& operator--();
@@ -63,9 +66,11 @@ public:
 };
 
 template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> class UnorderedMapConstIterator {
-public:
-    HashMapConstIterator<Key, Value, EqualityCheck, HashFunction> private_hashMapIterator;
+private:
+    friend class UnorderedMapCustomisable<Key, Value, EqualityCheck, HashFunction>;
+    HashMapConstIterator<Key, Value, EqualityCheck, HashFunction> hashMapIterator_;
     explicit UnorderedMapConstIterator(HashMapConstIterator<Key, Value, EqualityCheck, HashFunction> i);
+public:
     UnorderedMapConstIterator& operator++();
     UnorderedMapConstIterator operator++(int);
     UnorderedMapConstIterator& operator--();

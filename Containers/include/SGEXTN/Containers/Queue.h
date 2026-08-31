@@ -20,6 +20,8 @@
 
 namespace SGEXTN::Containers {
 template <typename T> class Queue {
+private:
+    SGEXTN::Containers::RingBuffer<T> ringBuffer_;
 public:
     explicit Queue();
     [[nodiscard]] T& front();
@@ -31,7 +33,6 @@ public:
     void pop();
     void clear();
     void reserve(int newMemoryLength);
-    SGEXTN::Containers::RingBuffer<T> private_ringBuffer;
 };
 }
 

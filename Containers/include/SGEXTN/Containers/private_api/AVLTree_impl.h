@@ -17,7 +17,7 @@
 
 #pragma once
 
-template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTree<Key, Value, Comparator>::AVLTree() : root(nullptr), comparatorInstance() {}
+template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTree<Key, Value, Comparator>::AVLTree() : root_(nullptr), comparatorInstance_() {}
 
 template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTreeNode<Key, Value, Comparator>::AVLTreeNode(const Key& k, const Value& v, AVLTreeNode* parentNode) : key(k), value(v), parent(parentNode), leftChild(nullptr), rightChild(nullptr), height(0), subtreeSize(1) {}
 
@@ -26,13 +26,13 @@ template <typename Key, typename Value, typename Comparator> SGEXTN::Containers:
     if((*oldNode).rightChild != nullptr){rightChild = new AVLTreeNode((*oldNode).rightChild, this);}
 }
 
-template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTree<Key, Value, Comparator>::AVLTree(const AVLTree& x) : root(nullptr), comparatorInstance(x.comparatorInstance) {
-    if(x.root != nullptr){root = new AVLTreeNode<Key, Value, Comparator>(x.root, nullptr);}
+template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTree<Key, Value, Comparator>::AVLTree(const AVLTree& x) : root_(nullptr), comparatorInstance_(x.comparatorInstance_) {
+    if(x.root_ != nullptr){root_ = new AVLTreeNode<Key, Value, Comparator>(x.root_, nullptr);}
 }
 
 template <typename Key, typename Value, typename Comparator> void SGEXTN::Containers::AVLTree<Key, Value, Comparator>::recursiveDeleteAtRoot(){
-    AVLTreeNode<Key, Value, Comparator>* current = root;
-    root = nullptr;
+    AVLTreeNode<Key, Value, Comparator>* current = root_;
+    root_ = nullptr;
     while(current != nullptr){
         if((*current).leftChild != nullptr){
             AVLTreeNode<Key, Value, Comparator>* left = (*current).leftChild;
@@ -50,32 +50,32 @@ template <typename Key, typename Value, typename Comparator> void SGEXTN::Contai
 
 template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTree<Key, Value, Comparator>& SGEXTN::Containers::AVLTree<Key, Value, Comparator>::operator=(const AVLTree& x){
     if(this == &x){return (*this);}
-    if(root != nullptr){recursiveDeleteAtRoot();}
-    if(x.root != nullptr){root = new AVLTreeNode<Key, Value, Comparator>(x.root, nullptr);}
-    else{root = nullptr;}
-    comparatorInstance = x.comparatorInstance;
+    if(root_ != nullptr){recursiveDeleteAtRoot();}
+    if(x.root_ != nullptr){root_ = new AVLTreeNode<Key, Value, Comparator>(x.root_, nullptr);}
+    else{root_ = nullptr;}
+    comparatorInstance_ = x.comparatorInstance_;
     return (*this);
 }
 
-template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTree<Key, Value, Comparator>::AVLTree(AVLTree&& x) noexcept : root(x.root), comparatorInstance(static_cast<Comparator&&>(x.comparatorInstance)) {
-    x.root = nullptr;
+template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTree<Key, Value, Comparator>::AVLTree(AVLTree&& x) noexcept : root_(x.root_), comparatorInstance_(static_cast<Comparator&&>(x.comparatorInstance_)) {
+    x.root_ = nullptr;
 }
 
 template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTree<Key, Value, Comparator>& SGEXTN::Containers::AVLTree<Key, Value, Comparator>::operator=(AVLTree&& x) noexcept {
     if(this == &x){return (*this);}
-    if(root != nullptr){recursiveDeleteAtRoot();}
-    root = x.root;
-    x.root = nullptr;
-    comparatorInstance = static_cast<Comparator&&>(x.comparatorInstance);
+    if(root_ != nullptr){recursiveDeleteAtRoot();}
+    root_ = x.root_;
+    x.root_ = nullptr;
+    comparatorInstance_ = static_cast<Comparator&&>(x.comparatorInstance_);
     return (*this);
 }
 
 template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTree<Key, Value, Comparator>::~AVLTree(){
-    if(root != nullptr){recursiveDeleteAtRoot();}
+    if(root_ != nullptr){recursiveDeleteAtRoot();}
 }
 
 template <typename Key, typename Value, typename Comparator> int SGEXTN::Containers::AVLTree<Key, Value, Comparator>::length() const {
-    return getEffectiveSubtreeSize(root);
+    return getEffectiveSubtreeSize(root_);
 }
 
 template <typename Key, typename Value, typename Comparator> int SGEXTN::Containers::AVLTree<Key, Value, Comparator>::getEffectiveHeight(AVLTreeNode<Key, Value, Comparator>* x) const {
@@ -121,7 +121,7 @@ template <typename Key, typename Value, typename Comparator> SGEXTN::Containers:
     updateHeightNoRecurse(y);
     updateSubtreeSizeNoRecurse(y);
     if(p == nullptr){
-        root = y;
+        root_ = y;
         (*y).parent = nullptr;
     }
     else{
@@ -147,7 +147,7 @@ template <typename Key, typename Value, typename Comparator> SGEXTN::Containers:
     updateHeightNoRecurse(y);
     updateSubtreeSizeNoRecurse(y);
     if(p == nullptr){
-        root = y;
+        root_ = y;
         (*y).parent = nullptr;
     }
     else{
@@ -180,19 +180,19 @@ template <typename Key, typename Value, typename Comparator> void SGEXTN::Contai
         updateHeightNoRecurse(x);
         updateSubtreeSizeNoRecurse(x);
         x = rebalanceAtNode(x);
-        if(x == root){break;}
+        if(x == root_){break;}
         x = (*x).parent;
     }
 }
 
 template <typename Key, typename Value, typename Comparator> bool SGEXTN::Containers::AVLTree<Key, Value, Comparator>::insert(const Key& key, const Value& value, bool allowDuplicate){
-    AVLTreeNode<Key, Value, Comparator>* currentNode = root;
-    if(root == nullptr){
-        root = new AVLTreeNode<Key, Value, Comparator>(key, value, nullptr);
+    AVLTreeNode<Key, Value, Comparator>* currentNode = root_;
+    if(root_ == nullptr){
+        root_ = new AVLTreeNode<Key, Value, Comparator>(key, value, nullptr);
         return true;
     }
     while(true){
-        if(comparatorInstance(key, (*currentNode).key) == true){
+        if(comparatorInstance_(key, (*currentNode).key) == true){
             if((*currentNode).leftChild == nullptr){
                 (*currentNode).leftChild = new AVLTreeNode(key, value, currentNode);
                 currentNode = (*currentNode).leftChild;
@@ -200,7 +200,7 @@ template <typename Key, typename Value, typename Comparator> bool SGEXTN::Contai
             }
             currentNode = (*currentNode).leftChild;
         }
-        else if(comparatorInstance((*currentNode).key, key) == true || allowDuplicate == true){
+        else if(comparatorInstance_((*currentNode).key, key) == true || allowDuplicate == true){
             if((*currentNode).rightChild == nullptr){
                 (*currentNode).rightChild = new AVLTreeNode(key, value, currentNode);
                 currentNode = (*currentNode).rightChild;
@@ -220,8 +220,8 @@ template <typename Key, typename Value, typename Comparator> bool SGEXTN::Contai
 }
 
 template <typename Key, typename Value, typename Comparator> void SGEXTN::Containers::AVLTree<Key, Value, Comparator>::clear(){
-    if(root != nullptr){recursiveDeleteAtRoot();}
-    root = nullptr;
+    if(root_ != nullptr){recursiveDeleteAtRoot();}
+    root_ = nullptr;
 }
 
 template <typename Key, typename Value, typename Comparator> bool SGEXTN::Containers::AVLTree<Key, Value, Comparator>::contains(const Key& x) const {
@@ -236,22 +236,22 @@ template <typename Key, typename Value, typename Comparator> int SGEXTN::Contain
     while(true){
         currentNode--;
         if(currentNode == constEnd()){break;}
-        if(comparatorInstance(currentNode.key(), x) == false && comparatorInstance(x, currentNode.key()) == false){count++;}
+        if(comparatorInstance_(currentNode.key(), x) == false && comparatorInstance_(x, currentNode.key()) == false){count++;}
         else{break;}
     }
     currentNode = i;
     while(true){
         currentNode++;
         if(currentNode == constEnd()){break;}
-        if(comparatorInstance(currentNode.key(), x) == false && comparatorInstance(x, currentNode.key()) == false){count++;}
+        if(comparatorInstance_(currentNode.key(), x) == false && comparatorInstance_(x, currentNode.key()) == false){count++;}
         else{break;}
     }
     return count;
 }
 
-template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTreeIterator<Key, Value, Comparator>::AVLTreeIterator(AVLTreeNode<Key, Value, Comparator>* node, AVLTree<Key, Value, Comparator>* tree) : associatedNode(node), associatedTree(tree) {}
+template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTreeIterator<Key, Value, Comparator>::AVLTreeIterator(AVLTreeNode<Key, Value, Comparator>* node, AVLTree<Key, Value, Comparator>* tree) : associatedNode_(node), associatedTree_(tree) {}
 
-template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTreeConstIterator<Key, Value, Comparator>::AVLTreeConstIterator(AVLTreeNode<Key, Value, Comparator>* node, const AVLTree<Key, Value, Comparator>* tree) : associatedNode(node), associatedTree(tree) {}
+template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTreeConstIterator<Key, Value, Comparator>::AVLTreeConstIterator(AVLTreeNode<Key, Value, Comparator>* node, const AVLTree<Key, Value, Comparator>* tree) : associatedNode_(node), associatedTree_(tree) {}
 
 template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTreeNode<Key, Value, Comparator>* SGEXTN::Containers::AVLTree<Key, Value, Comparator>::getLeftMostSubchild(AVLTreeNode<Key, Value, Comparator>* x) const {
     if(x == nullptr){return nullptr;}
@@ -286,103 +286,103 @@ template <typename Key, typename Value, typename Comparator> SGEXTN::Containers:
 }
 
 template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTreeIterator<Key, Value, Comparator>& SGEXTN::Containers::AVLTreeIterator<Key, Value, Comparator>::operator++(){
-    if(associatedNode == nullptr){associatedNode = (*associatedTree).getLeftMostSubchild((*associatedTree).root);}
-    else if((*associatedNode).rightChild == nullptr){associatedNode = (*associatedTree).getParentWithThisAsLeftChild(associatedNode);}
-    else{associatedNode = (*associatedTree).getLeftMostSubchild((*associatedNode).rightChild);}
+    if(associatedNode_ == nullptr){associatedNode_ = (*associatedTree_).getLeftMostSubchild((*associatedTree_).root_);}
+    else if((*associatedNode_).rightChild == nullptr){associatedNode_ = (*associatedTree_).getParentWithThisAsLeftChild(associatedNode_);}
+    else{associatedNode_ = (*associatedTree_).getLeftMostSubchild((*associatedNode_).rightChild);}
     return (*this);
 }
 
 template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTreeConstIterator<Key, Value, Comparator>& SGEXTN::Containers::AVLTreeConstIterator<Key, Value, Comparator>::operator++(){
-    if(associatedNode == nullptr){associatedNode = (*associatedTree).getLeftMostSubchild((*associatedTree).root);}
-    else if((*associatedNode).rightChild == nullptr){associatedNode = (*associatedTree).getParentWithThisAsLeftChild(associatedNode);}
-    else{associatedNode = (*associatedTree).getLeftMostSubchild((*associatedNode).rightChild);}
+    if(associatedNode_ == nullptr){associatedNode_ = (*associatedTree_).getLeftMostSubchild((*associatedTree_).root_);}
+    else if((*associatedNode_).rightChild == nullptr){associatedNode_ = (*associatedTree_).getParentWithThisAsLeftChild(associatedNode_);}
+    else{associatedNode_ = (*associatedTree_).getLeftMostSubchild((*associatedNode_).rightChild);}
     return (*this);
 }
 
 template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTreeIterator<Key, Value, Comparator> SGEXTN::Containers::AVLTreeIterator<Key, Value, Comparator>::operator++(int){
     AVLTreeIterator prev = (*this);
-    if(associatedNode == nullptr){associatedNode = (*associatedTree).getLeftMostSubchild((*associatedTree).root);}
-    else if((*associatedNode).rightChild == nullptr){associatedNode = (*associatedTree).getParentWithThisAsLeftChild(associatedNode);}
-    else{associatedNode = (*associatedTree).getLeftMostSubchild((*associatedNode).rightChild);}
+    if(associatedNode_ == nullptr){associatedNode_ = (*associatedTree_).getLeftMostSubchild((*associatedTree_).root_);}
+    else if((*associatedNode_).rightChild == nullptr){associatedNode_ = (*associatedTree_).getParentWithThisAsLeftChild(associatedNode_);}
+    else{associatedNode_ = (*associatedTree_).getLeftMostSubchild((*associatedNode_).rightChild);}
     return prev;
 }
 
 template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTreeConstIterator<Key, Value, Comparator> SGEXTN::Containers::AVLTreeConstIterator<Key, Value, Comparator>::operator++(int){
     AVLTreeConstIterator prev = (*this);
-    if(associatedNode == nullptr){associatedNode = (*associatedTree).getLeftMostSubchild((*associatedTree).root);}
-    else if((*associatedNode).rightChild == nullptr){associatedNode = (*associatedTree).getParentWithThisAsLeftChild(associatedNode);}
-    else{associatedNode = (*associatedTree).getLeftMostSubchild((*associatedNode).rightChild);}
+    if(associatedNode_ == nullptr){associatedNode_ = (*associatedTree_).getLeftMostSubchild((*associatedTree_).root_);}
+    else if((*associatedNode_).rightChild == nullptr){associatedNode_ = (*associatedTree_).getParentWithThisAsLeftChild(associatedNode_);}
+    else{associatedNode_ = (*associatedTree_).getLeftMostSubchild((*associatedNode_).rightChild);}
     return prev;
 }
 
 template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTreeIterator<Key, Value, Comparator>& SGEXTN::Containers::AVLTreeIterator<Key, Value, Comparator>::operator--(){
-    if(associatedNode == nullptr){associatedNode = (*associatedTree).getRightMostSubchild((*associatedTree).root);}
-    else if((*associatedNode).leftChild == nullptr){associatedNode = (*associatedTree).getParentWithThisAsRightChild(associatedNode);}
-    else{associatedNode = (*associatedTree).getRightMostSubchild((*associatedNode).leftChild);}
+    if(associatedNode_ == nullptr){associatedNode_ = (*associatedTree_).getRightMostSubchild((*associatedTree_).root_);}
+    else if((*associatedNode_).leftChild == nullptr){associatedNode_ = (*associatedTree_).getParentWithThisAsRightChild(associatedNode_);}
+    else{associatedNode_ = (*associatedTree_).getRightMostSubchild((*associatedNode_).leftChild);}
     return (*this);
 }
 
 template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTreeConstIterator<Key, Value, Comparator>& SGEXTN::Containers::AVLTreeConstIterator<Key, Value, Comparator>::operator--(){
-    if(associatedNode == nullptr){associatedNode = (*associatedTree).getRightMostSubchild((*associatedTree).root);}
-    else if((*associatedNode).leftChild == nullptr){associatedNode = (*associatedTree).getParentWithThisAsRightChild(associatedNode);}
-    else{associatedNode = (*associatedTree).getRightMostSubchild((*associatedNode).leftChild);}
+    if(associatedNode_ == nullptr){associatedNode_ = (*associatedTree_).getRightMostSubchild((*associatedTree_).root_);}
+    else if((*associatedNode_).leftChild == nullptr){associatedNode_ = (*associatedTree_).getParentWithThisAsRightChild(associatedNode_);}
+    else{associatedNode_ = (*associatedTree_).getRightMostSubchild((*associatedNode_).leftChild);}
     return (*this);
 }
 
 template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTreeIterator<Key, Value, Comparator> SGEXTN::Containers::AVLTreeIterator<Key, Value, Comparator>::operator--(int){
     AVLTreeIterator prev = (*this);
-    if(associatedNode == nullptr){associatedNode = (*associatedTree).getRightMostSubchild((*associatedTree).root);}
-    else if((*associatedNode).leftChild == nullptr){associatedNode = (*associatedTree).getParentWithThisAsRightChild(associatedNode);}
-    else{associatedNode = (*associatedTree).getRightMostSubchild((*associatedNode).leftChild);}
+    if(associatedNode_ == nullptr){associatedNode_ = (*associatedTree_).getRightMostSubchild((*associatedTree_).root_);}
+    else if((*associatedNode_).leftChild == nullptr){associatedNode_ = (*associatedTree_).getParentWithThisAsRightChild(associatedNode_);}
+    else{associatedNode_ = (*associatedTree_).getRightMostSubchild((*associatedNode_).leftChild);}
     return prev;
 }
 
 template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTreeConstIterator<Key, Value, Comparator> SGEXTN::Containers::AVLTreeConstIterator<Key, Value, Comparator>::operator--(int){
     AVLTreeConstIterator prev = (*this);
-    if(associatedNode == nullptr){associatedNode = (*associatedTree).getRightMostSubchild((*associatedTree).root);}
-    else if((*associatedNode).leftChild == nullptr){associatedNode = (*associatedTree).getParentWithThisAsRightChild(associatedNode);}
-    else{associatedNode = (*associatedTree).getRightMostSubchild((*associatedNode).leftChild);}
+    if(associatedNode_ == nullptr){associatedNode_ = (*associatedTree_).getRightMostSubchild((*associatedTree_).root_);}
+    else if((*associatedNode_).leftChild == nullptr){associatedNode_ = (*associatedTree_).getParentWithThisAsRightChild(associatedNode_);}
+    else{associatedNode_ = (*associatedTree_).getRightMostSubchild((*associatedNode_).leftChild);}
     return prev;
 }
 
 template <typename Key, typename Value, typename Comparator> const Key& SGEXTN::Containers::AVLTreeIterator<Key, Value, Comparator>::key() const {
-    return (*associatedNode).key;
+    return (*associatedNode_).key;
 }
 
 template <typename Key, typename Value, typename Comparator> const Key& SGEXTN::Containers::AVLTreeConstIterator<Key, Value, Comparator>::key() const {
-    return (*associatedNode).key;
+    return (*associatedNode_).key;
 }
 
 template <typename Key, typename Value, typename Comparator> Value& SGEXTN::Containers::AVLTreeIterator<Key, Value, Comparator>::value() const {
-    return (*associatedNode).value;
+    return (*associatedNode_).value;
 }
 
 template <typename Key, typename Value, typename Comparator> const Value& SGEXTN::Containers::AVLTreeConstIterator<Key, Value, Comparator>::value() const {
-    return (*associatedNode).value;
+    return (*associatedNode_).value;
 }
 
 template <typename Key, typename Value, typename Comparator> bool SGEXTN::Containers::AVLTreeIterator<Key, Value, Comparator>::operator==(const AVLTreeIterator& x) const {
-    return (associatedNode == x.associatedNode && associatedTree == x.associatedTree);
+    return (associatedNode_ == x.associatedNode_ && associatedTree_ == x.associatedTree_);
 }
 
 template <typename Key, typename Value, typename Comparator> bool SGEXTN::Containers::AVLTreeConstIterator<Key, Value, Comparator>::operator==(const AVLTreeConstIterator& x) const {
-    return (associatedNode == x.associatedNode && associatedTree == x.associatedTree);
+    return (associatedNode_ == x.associatedNode_ && associatedTree_ == x.associatedTree_);
 }
 
 template <typename Key, typename Value, typename Comparator> bool SGEXTN::Containers::AVLTreeIterator<Key, Value, Comparator>::operator!=(const AVLTreeIterator& x) const {
-    return (associatedNode != x.associatedNode || associatedTree != x.associatedTree);
+    return (associatedNode_ != x.associatedNode_ || associatedTree_ != x.associatedTree_);
 }
 
 template <typename Key, typename Value, typename Comparator> bool SGEXTN::Containers::AVLTreeConstIterator<Key, Value, Comparator>::operator!=(const AVLTreeConstIterator& x) const {
-    return (associatedNode != x.associatedNode || associatedTree != x.associatedTree);
+    return (associatedNode_ != x.associatedNode_ || associatedTree_ != x.associatedTree_);
 }
 
 template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTreeIterator<Key, Value, Comparator> SGEXTN::Containers::AVLTree<Key, Value, Comparator>::begin(){
-    return AVLTreeIterator<Key, Value, Comparator>(getLeftMostSubchild(root), this);
+    return AVLTreeIterator<Key, Value, Comparator>(getLeftMostSubchild(root_), this);
 }
 
 template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTreeConstIterator<Key, Value, Comparator> SGEXTN::Containers::AVLTree<Key, Value, Comparator>::constBegin() const {
-    return AVLTreeConstIterator<Key, Value, Comparator>(getLeftMostSubchild(root), this);
+    return AVLTreeConstIterator<Key, Value, Comparator>(getLeftMostSubchild(root_), this);
 }
 
 template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTreeIterator<Key, Value, Comparator> SGEXTN::Containers::AVLTree<Key, Value, Comparator>::end(){
@@ -405,26 +405,26 @@ template <typename Key, typename Value, typename Comparator> void SGEXTN::Contai
 }
 
 template <typename Key, typename Value, typename Comparator> bool SGEXTN::Containers::AVLTree<Key, Value, Comparator>::erase(AVLTreeIterator<Key, Value, Comparator>& i){
-    AVLTreeNode<Key, Value, Comparator>* nodeToDelete = i.associatedNode;
+    AVLTreeNode<Key, Value, Comparator>* nodeToDelete = i.associatedNode_;
     if(nodeToDelete == nullptr){return false;}
     i++;
     if((*nodeToDelete).leftChild == nullptr && (*nodeToDelete).rightChild == nullptr){
         replaceChildren((*nodeToDelete).parent, nodeToDelete, nullptr);
-        if(nodeToDelete == root){root = nullptr;}
+        if(nodeToDelete == root_){root_ = nullptr;}
         updateHeightRecurseToRoot((*nodeToDelete).parent);
         delete nodeToDelete;
     }
     else if((*nodeToDelete).rightChild == nullptr){
         replaceChildren((*nodeToDelete).parent, nodeToDelete, (*nodeToDelete).leftChild);
         replaceParent((*nodeToDelete).leftChild, (*nodeToDelete).parent);
-        if(nodeToDelete == root){root = (*nodeToDelete).leftChild;}
+        if(nodeToDelete == root_){root_ = (*nodeToDelete).leftChild;}
         updateHeightRecurseToRoot((*nodeToDelete).parent);
         delete nodeToDelete;
     }
     else if((*nodeToDelete).leftChild == nullptr){
         replaceChildren((*nodeToDelete).parent, nodeToDelete, (*nodeToDelete).rightChild);
         replaceParent((*nodeToDelete).rightChild, (*nodeToDelete).parent);
-        if(nodeToDelete == root){root = (*nodeToDelete).rightChild;}
+        if(nodeToDelete == root_){root_ = (*nodeToDelete).rightChild;}
         updateHeightRecurseToRoot((*nodeToDelete).parent);
         delete nodeToDelete;
     }
@@ -437,7 +437,7 @@ template <typename Key, typename Value, typename Comparator> bool SGEXTN::Contai
             replaceParent((*nodeToDelete).leftChild, replace);
             (*replace).parent = (*nodeToDelete).parent;
             (*replace).leftChild = (*nodeToDelete).leftChild;
-            if(nodeToDelete == root){root = replace;}
+            if(nodeToDelete == root_){root_ = replace;}
         }
         else{
             replaceChildren((*replace).parent, replace, (*replace).rightChild);
@@ -449,7 +449,7 @@ template <typename Key, typename Value, typename Comparator> bool SGEXTN::Contai
             (*replace).parent = (*nodeToDelete).parent;
             (*replace).leftChild = (*nodeToDelete).leftChild;
             (*replace).rightChild = (*nodeToDelete).rightChild;
-            if(nodeToDelete == root){root = replace;}
+            if(nodeToDelete == root_){root_ = replace;}
         }
         updateHeightRecurseToRoot(updateStart);
         delete nodeToDelete;
@@ -459,14 +459,14 @@ template <typename Key, typename Value, typename Comparator> bool SGEXTN::Contai
 }
 
 template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTreeNode<Key, Value, Comparator>* SGEXTN::Containers::AVLTree<Key, Value, Comparator>::findNode(const Key& x) const {
-    AVLTreeNode<Key, Value, Comparator>* currentNode = root;
-    if(root == nullptr){return nullptr;}
+    AVLTreeNode<Key, Value, Comparator>* currentNode = root_;
+    if(root_ == nullptr){return nullptr;}
     while(true){
-        if(comparatorInstance(x, (*currentNode).key) == true){
+        if(comparatorInstance_(x, (*currentNode).key) == true){
             if((*currentNode).leftChild == nullptr){return nullptr;}
             currentNode = (*currentNode).leftChild;
         }
-        else if(comparatorInstance((*currentNode).key, x) == true){
+        else if(comparatorInstance_((*currentNode).key, x) == true){
             if((*currentNode).rightChild == nullptr){return nullptr;}
             currentNode = (*currentNode).rightChild;
         }
@@ -484,9 +484,9 @@ template <typename Key, typename Value, typename Comparator> SGEXTN::Containers:
 
 template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTreeNode<Key, Value, Comparator>* SGEXTN::Containers::AVLTree<Key, Value, Comparator>::lowerBoundNode(const Key& x) const {
     AVLTreeNode<Key, Value, Comparator>* output = nullptr;
-    AVLTreeNode<Key, Value, Comparator>* currentNode = root;
+    AVLTreeNode<Key, Value, Comparator>* currentNode = root_;
     while(currentNode != nullptr){
-        if(comparatorInstance((*currentNode).key, x) == false){
+        if(comparatorInstance_((*currentNode).key, x) == false){
             output = currentNode;
             currentNode = (*currentNode).leftChild;
         }
@@ -505,9 +505,9 @@ template <typename Key, typename Value, typename Comparator> SGEXTN::Containers:
 
 template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTreeNode<Key, Value, Comparator>* SGEXTN::Containers::AVLTree<Key, Value, Comparator>::upperBoundNode(const Key& x) const {
     AVLTreeNode<Key, Value, Comparator>* output = nullptr;
-    AVLTreeNode<Key, Value, Comparator>* currentNode = root;
+    AVLTreeNode<Key, Value, Comparator>* currentNode = root_;
     while(currentNode != nullptr){
-        if(comparatorInstance(x, (*currentNode).key) == true){
+        if(comparatorInstance_(x, (*currentNode).key) == true){
             output = currentNode;
             currentNode = (*currentNode).leftChild;
         }
@@ -540,16 +540,16 @@ template <typename Key, typename Value, typename Comparator> int SGEXTN::Contain
 }
 
 template <typename Key, typename Value, typename Comparator> int SGEXTN::Containers::AVLTree<Key, Value, Comparator>::indexOf(AVLTreeIterator<Key, Value, Comparator> i) const {
-    return getIndexOfNode(i.associatedNode);
+    return getIndexOfNode(i.associatedNode_);
 }
 
 template <typename Key, typename Value, typename Comparator> int SGEXTN::Containers::AVLTree<Key, Value, Comparator>::indexOf(AVLTreeConstIterator<Key, Value, Comparator> i) const {
-    return getIndexOfNode(i.associatedNode);
+    return getIndexOfNode(i.associatedNode_);
 }
 
 template <typename Key, typename Value, typename Comparator> SGEXTN::Containers::AVLTreeNode<Key, Value, Comparator>* SGEXTN::Containers::AVLTree<Key, Value, Comparator>::getNodeByIndex(int x) const {
-    if(root == nullptr || x < 0 || x >= length()){return nullptr;}
-    AVLTreeNode<Key, Value, Comparator>* currentNode = root;
+    if(root_ == nullptr || x < 0 || x >= length()){return nullptr;}
+    AVLTreeNode<Key, Value, Comparator>* currentNode = root_;
     while(true){
         const int leftSize = getEffectiveSubtreeSize((*currentNode).leftChild);
         if(x == leftSize){return currentNode;}
@@ -587,4 +587,12 @@ template <typename Key, typename Value, typename Comparator> Value& SGEXTN::Cont
 
 template <typename Key, typename Value, typename Comparator> const Value& SGEXTN::Containers::AVLTree<Key, Value, Comparator>::at(const Key& x) const {
     return constFind(x).value();
+}
+
+template <typename Key, typename Value, typename Comparator> bool SGEXTN::Containers::AVLTreeIterator<Key, Value, Comparator>::isEndIterator() const {
+    return (associatedNode_ == nullptr);
+}
+
+template <typename Key, typename Value, typename Comparator> bool SGEXTN::Containers::AVLTreeConstIterator<Key, Value, Comparator>::isEndIterator() const {
+    return (associatedNode_ == nullptr);
 }

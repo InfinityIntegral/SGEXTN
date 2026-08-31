@@ -586,13 +586,13 @@ bool SGEXTN::CoreText::String::operator>=(const SGEXTN::CoreText::String& x) con
 bool SGEXTN::CoreText::String::sendOut(const SGEXTN::CoreText::String& x, SGEXTN::Containers::Span<unsigned char> data){
     const bool isValid = SGEXTN::Containers::Serialise<int>::sendOut(x.byteLength(), data.subspanLeft(4));
     if(isValid == false){return false;}
-    if(x.byteLength() > 0){memoryCopy(x.getRawPointer(), data.private_data + 4, x.byteLength());}
+    if(x.byteLength() > 0){memoryCopy(x.getRawPointer(), data.getRawPointer() + 4, x.byteLength());}
     return true;
 }
 
 bool SGEXTN::CoreText::String::sendIn(SGEXTN::CoreText::String& x, SGEXTN::Containers::Span<unsigned char> data){
     x = SGEXTN::CoreText::String::repeat(" ", data.length() - 4);
-    if(data.length() - 4 > 0){memoryCopy(data.private_data + 4, x.getRawPointer(), data.length() - 4);}
+    if(data.length() - 4 > 0){memoryCopy(data.getRawPointer() + 4, x.getRawPointer(), data.length() - 4);}
     return true;
 }
 
