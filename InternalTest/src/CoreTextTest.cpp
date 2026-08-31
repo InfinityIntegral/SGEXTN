@@ -229,13 +229,13 @@ void SGEXTN::InternalTest::CoreTextTest::testString(){
     if(aAlphaSpaceEpsilonA.byteAt(8) != 'A'){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String get byte at fail");}
     aAlphaSpaceEpsilonA.byteAt(8) = 'B';
     if(aAlphaSpaceEpsilonA.byteAt(8) != 'B'){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String set byte at fail");}
-    if(aAlphaSpaceEpsilonA.getCharacterAt(1) != U8(u8"\u03b1\u0301")){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String get character at fail");}
-    aAlphaSpaceEpsilonA.setCharacterAt(1, U8(u8"\u03b1\u0300"));
-    if(aAlphaSpaceEpsilonA.getCharacterAt(1) != U8(u8"\u03b1\u0300")){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String set character same length fail");}
-    aAlphaSpaceEpsilonA.setCharacterAt(4, U8(u8"\uff21"));
+    if(aAlphaSpaceEpsilonA.getCharacterAt(1) != SGEXTN::CoreText::Character(U8(u8"\u03b1\u0301"))){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String get character at fail");}
+    aAlphaSpaceEpsilonA.setCharacterAt(1, SGEXTN::CoreText::Character(U8(u8"\u03b1\u0300")));
+    if(aAlphaSpaceEpsilonA.getCharacterAt(1) != SGEXTN::CoreText::Character(U8(u8"\u03b1\u0300"))){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String set character same length fail");}
+    aAlphaSpaceEpsilonA.setCharacterAt(4, SGEXTN::CoreText::Character(U8(u8"\uff21")));
     if(aAlphaSpaceEpsilonA.getCharacterAt(4) != SGEXTN::CoreText::Character(0xff21)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String set character different length fail");}
     if(aAlphaSpaceEpsilonA.fillBytes('0') != "00000000000"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String fill bytes fail");}
-    if(aAlphaSpaceEpsilonA.fillCharacters(U8(u8"\u03b1\u0301")) != U8(u8"\u03b1\u0301\u03b1\u0301\u03b1\u0301\u03b1\u0301\u03b1\u0301")){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String fill characters fail");}
+    if(aAlphaSpaceEpsilonA.fillCharacters(SGEXTN::CoreText::Character(U8(u8"\u03b1\u0301"))) != U8(u8"\u03b1\u0301\u03b1\u0301\u03b1\u0301\u03b1\u0301\u03b1\u0301")){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String fill characters fail");}
     SGEXTN::CoreText::String bytesFindString = "__ab_aab_abb";
     if(bytesFindString.findFirstBytesFromLeft("ab") != 2){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String find bytes from left fail");}
     if(bytesFindString.findFirstBytesFromRight("ab") != 9){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String find bytes from right fail");}
@@ -285,12 +285,12 @@ void SGEXTN::InternalTest::CoreTextTest::testString(){
     if(charactersFindString.countCharactersAllowOverlap(U8(u8"\u03b1\u0300\u03b1\u0300\u03b1\u0300")) != 5){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String count characters allow overlap fail");}
     if(bytesFindString.fillLeftToByteLength(5, 'b') != bytesFindString){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String fill left bytes sufficient length fail");}
     if(bytesFindString.fillLeftToByteLength(10, 'b') != "bbbaaaaaaa"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String fill left bytes insufficient length fail");}
-    if(charactersFindString.fillLeftToCharacterLength(5, U8(u8"\u03b2")) != charactersFindString){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String fill left characters sufficient length fail");}
-    if(charactersFindString.fillLeftToCharacterLength(10, U8(u8"\u03b2")) != U8(u8"\u03b2\u03b2\u03b2\u03b1\u0300\u03b1\u0300\u03b1\u0300\u03b1\u0300\u03b1\u0300\u03b1\u0300\u03b1\u0300")){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String fill left characters insufficient length fail");}
+    if(charactersFindString.fillLeftToCharacterLength(5, SGEXTN::CoreText::Character(U8(u8"\u03b2"))) != charactersFindString){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String fill left characters sufficient length fail");}
+    if(charactersFindString.fillLeftToCharacterLength(10, SGEXTN::CoreText::Character(U8(u8"\u03b2"))) != U8(u8"\u03b2\u03b2\u03b2\u03b1\u0300\u03b1\u0300\u03b1\u0300\u03b1\u0300\u03b1\u0300\u03b1\u0300\u03b1\u0300")){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String fill left characters insufficient length fail");}
     if(bytesFindString.fillRightToByteLength(5, 'b') != bytesFindString){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String fill right bytes sufficient length fail");}
     if(bytesFindString.fillRightToByteLength(10, 'b') != "aaaaaaabbb"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String fill right bytes insufficient length fail");}
-    if(charactersFindString.fillRightToCharacterLength(5, U8(u8"\u03b2")) != charactersFindString){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String fill right characters sufficient length fail");}
-    if(charactersFindString.fillRightToCharacterLength(10, U8(u8"\u03b2")) != U8(u8"\u03b1\u0300\u03b1\u0300\u03b1\u0300\u03b1\u0300\u03b1\u0300\u03b1\u0300\u03b1\u0300\u03b2\u03b2\u03b2")){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String fill right characters insufficient length fail");}
+    if(charactersFindString.fillRightToCharacterLength(5, SGEXTN::CoreText::Character(U8(u8"\u03b2"))) != charactersFindString){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String fill right characters sufficient length fail");}
+    if(charactersFindString.fillRightToCharacterLength(10, SGEXTN::CoreText::Character(U8(u8"\u03b2"))) != U8(u8"\u03b1\u0300\u03b1\u0300\u03b1\u0300\u03b1\u0300\u03b1\u0300\u03b1\u0300\u03b1\u0300\u03b2\u03b2\u03b2")){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String fill right characters insufficient length fail");}
     if(charactersFindString.byteIndexToCharacterIndex(1) != 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String convert byte index to character index fail");}
     if(charactersFindString.characterIndexToByteIndex(1) != 4){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String convert character index to byte index fail");}
     SGEXTN::CoreText::String positiveBase10Number = "26";

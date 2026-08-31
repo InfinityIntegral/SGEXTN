@@ -17,54 +17,107 @@
 
 #pragma once
 
-namespace SGEXTN::CanIsCanCannotAlsoMustCan {
-template <int Index, typename ClassName, typename MemberType, MemberType Target> class PrivateFunctionTheftIsNotACrime;
-template <int Index, typename ClassName, typename MemberType, MemberType ClassName::* Target> class PrivateVariableTheftIsNotACrime;
+namespace SGEXTN::KaypohOne {
+template <int Index, typename ClassName, typename MemberType, MemberType Target> class StealMemberFunction;
 
-template <int Index, typename ClassName, typename MemberType> class FunctionKaypohOne {
+template <int Index, typename ClassName, typename MemberType> class MemberFunction {
 private:
-    template <int OtherIndex, typename OtherClassName, typename OtherMemberType, OtherMemberType OtherTarget> friend class SGEXTN::CanIsCanCannotAlsoMustCan::PrivateFunctionTheftIsNotACrime;
-    static MemberType iStealPointerThenIPutIntoHere;
+    template <int OtherIndex, typename OtherClassName, typename OtherMemberType, OtherMemberType OtherTarget> friend class SGEXTN::KaypohOne::StealMemberFunction;
+    static MemberType pointer;
 public:
-    [[nodiscard]] static MemberType youKaypohUsePrivateFunctionForWhatLaterBreakOtherLibraryCodeThenHow();
+    [[nodiscard]] static MemberType beKaypoh();
 };
 
-template <int Index, typename ClassName, typename MemberType, MemberType Target> class PrivateFunctionTheftIsNotACrime {
+template <int Index, typename ClassName, typename MemberType, MemberType Target> class StealMemberFunction {
 private:
-    static bool iUseThisThenIGotPointerLiao;
+    static bool activation;
 };
+}
 
-template <int Index, typename ClassName, typename MemberType> class VariableKaypohOne {
+template <int Index, typename ClassName, typename MemberType> constinit MemberType SGEXTN::KaypohOne::MemberFunction<Index, ClassName, MemberType>::pointer = nullptr;
+
+template <int Index, typename ClassName, typename MemberType> MemberType SGEXTN::KaypohOne::MemberFunction<Index, ClassName, MemberType>::beKaypoh(){
+    return SGEXTN::KaypohOne::MemberFunction<Index, ClassName, MemberType>::pointer;
+}
+
+template <int Index, typename ClassName, typename MemberType, MemberType Target> bool SGEXTN::KaypohOne::StealMemberFunction<Index, ClassName, MemberType, Target>::activation = (SGEXTN::KaypohOne::MemberFunction<Index, ClassName, MemberType>::pointer = Target, true);
+
+namespace SGEXTN::KaypohOne {
+template <int Index, typename ClassName, typename MemberType, MemberType ClassName::* Target> class StealMemberVariable;
+
+template <int Index, typename ClassName, typename MemberType> class MemberVariable {
 private:
-    template <int OtherIndex, typename OtherClassName, typename OtherMemberType, OtherMemberType OtherClassName::*OtherTarget> friend class SGEXTN::CanIsCanCannotAlsoMustCan::PrivateVariableTheftIsNotACrime;
-    static MemberType ClassName::*iStealOffsetThenIPutIntoHere;
+    template <int OtherIndex, typename OtherClassName, typename OtherMemberType, OtherMemberType OtherClassName::*OtherTarget> friend class SGEXTN::KaypohOne::StealMemberVariable;
+    static MemberType ClassName::*offset;
 public:
-    [[nodiscard]] static MemberType& youKaypohLookAtPrivateMemberForWhatLaterBreakOtherLibraryCodeThenHow(ClassName& x);
-    [[nodiscard]] static const MemberType& youKaypohLookAtPrivateMemberForWhatLaterBreakOtherLibraryCodeThenHow(const ClassName& x);
+    [[nodiscard]] static MemberType& beKaypoh(ClassName& x);
+    [[nodiscard]] static const MemberType& beKaypoh(const ClassName& x);
 };
 
-template <int Index, typename ClassName, typename MemberType, MemberType ClassName::* Target> class PrivateVariableTheftIsNotACrime {
+template <int Index, typename ClassName, typename MemberType, MemberType ClassName::* Target> class StealMemberVariable {
 private:
-    static bool iUseThisThenIGotOffsetLiao;
+    static bool activation;
 };
 }
 
-template <int Index, typename ClassName, typename MemberType> constinit MemberType SGEXTN::CanIsCanCannotAlsoMustCan::FunctionKaypohOne<Index, ClassName, MemberType>::iStealPointerThenIPutIntoHere = nullptr;
+template <int Index, typename ClassName, typename MemberType> constinit MemberType ClassName::* SGEXTN::KaypohOne::MemberVariable<Index, ClassName, MemberType>::offset = nullptr;
 
-template <int Index, typename ClassName, typename MemberType> MemberType SGEXTN::CanIsCanCannotAlsoMustCan::FunctionKaypohOne<Index, ClassName, MemberType>::youKaypohUsePrivateFunctionForWhatLaterBreakOtherLibraryCodeThenHow(){
-    return SGEXTN::CanIsCanCannotAlsoMustCan::FunctionKaypohOne<Index, ClassName, MemberType>::iStealPointerThenIPutIntoHere;
+template <int Index, typename ClassName, typename MemberType> MemberType& SGEXTN::KaypohOne::MemberVariable<Index, ClassName, MemberType>::beKaypoh(ClassName& x){
+    return x.*(SGEXTN::KaypohOne::MemberVariable<Index, ClassName, MemberType>::offset);
 }
 
-template <int Index, typename ClassName, typename MemberType, MemberType Target> bool SGEXTN::CanIsCanCannotAlsoMustCan::PrivateFunctionTheftIsNotACrime<Index, ClassName, MemberType, Target>::iUseThisThenIGotPointerLiao = (SGEXTN::CanIsCanCannotAlsoMustCan::FunctionKaypohOne<Index, ClassName, MemberType>::iStealPointerThenIPutIntoHere = Target, true);
-
-template <int Index, typename ClassName, typename MemberType> constinit MemberType ClassName::* SGEXTN::CanIsCanCannotAlsoMustCan::VariableKaypohOne<Index, ClassName, MemberType>::iStealOffsetThenIPutIntoHere = nullptr;
-
-template <int Index, typename ClassName, typename MemberType> MemberType& SGEXTN::CanIsCanCannotAlsoMustCan::VariableKaypohOne<Index, ClassName, MemberType>::youKaypohLookAtPrivateMemberForWhatLaterBreakOtherLibraryCodeThenHow(ClassName& x){
-    return x.*(SGEXTN::CanIsCanCannotAlsoMustCan::VariableKaypohOne<Index, ClassName, MemberType>::iStealOffsetThenIPutIntoHere);
+template <int Index, typename ClassName, typename MemberType> const MemberType& SGEXTN::KaypohOne::MemberVariable<Index, ClassName, MemberType>::beKaypoh(const ClassName& x){
+    return x.*(SGEXTN::KaypohOne::MemberVariable<Index, ClassName, MemberType>::offset);
 }
 
-template <int Index, typename ClassName, typename MemberType> const MemberType& SGEXTN::CanIsCanCannotAlsoMustCan::VariableKaypohOne<Index, ClassName, MemberType>::youKaypohLookAtPrivateMemberForWhatLaterBreakOtherLibraryCodeThenHow(const ClassName& x){
-    return x.*(SGEXTN::CanIsCanCannotAlsoMustCan::VariableKaypohOne<Index, ClassName, MemberType>::iStealOffsetThenIPutIntoHere);
+template <int Index, typename ClassName, typename MemberType, MemberType ClassName::* Target> bool SGEXTN::KaypohOne::StealMemberVariable<Index, ClassName, MemberType, Target>::activation = (SGEXTN::KaypohOne::MemberVariable<Index, ClassName, MemberType>::offset = Target, true);
+
+namespace SGEXTN::KaypohOne {
+template <int Index, typename ClassName, typename MemberType, MemberType Target> class StealStaticFunction;
+
+template <int Index, typename ClassName, typename MemberType> class StaticFunction {
+private:
+    template <int OtherIndex, typename OtherClassName, typename OtherMemberType, OtherMemberType OtherTarget> friend class SGEXTN::KaypohOne::StealStaticFunction;
+    static MemberType pointer;
+public:
+    [[nodiscard]] static MemberType beKaypoh();
+};
+
+template <int Index, typename ClassName, typename MemberType, MemberType Target> class StealStaticFunction {
+private:
+    static bool activation;
+};
 }
 
-template <int Index, typename ClassName, typename MemberType, MemberType ClassName::* Target> bool SGEXTN::CanIsCanCannotAlsoMustCan::PrivateVariableTheftIsNotACrime<Index, ClassName, MemberType, Target>::iUseThisThenIGotOffsetLiao = (SGEXTN::CanIsCanCannotAlsoMustCan::VariableKaypohOne<Index, ClassName, MemberType>::iStealOffsetThenIPutIntoHere = Target, true);
+template <int Index, typename ClassName, typename MemberType> constinit MemberType SGEXTN::KaypohOne::StaticFunction<Index, ClassName, MemberType>::pointer = nullptr;
+
+template <int Index, typename ClassName, typename MemberType> MemberType SGEXTN::KaypohOne::StaticFunction<Index, ClassName, MemberType>::beKaypoh(){
+    return SGEXTN::KaypohOne::StaticFunction<Index, ClassName, MemberType>::pointer;
+}
+
+template <int Index, typename ClassName, typename MemberType, MemberType Target> bool SGEXTN::KaypohOne::StealStaticFunction<Index, ClassName, MemberType, Target>::activation = (SGEXTN::KaypohOne::StaticFunction<Index, ClassName, MemberType>::pointer = Target, true);
+
+namespace SGEXTN::KaypohOne {
+template <int Index, typename ClassName, typename MemberType, MemberType* Target> class StealStaticVariable;
+
+template <int Index, typename ClassName, typename MemberType> class StaticVariable {
+private:
+    template <int OtherIndex, typename OtherClassName, typename OtherMemberType, OtherMemberType* OtherTarget> friend class SGEXTN::KaypohOne::StealStaticVariable;
+    static MemberType* pointer;
+public:
+    [[nodiscard]] static MemberType& beKaypoh();
+};
+
+template <int Index, typename ClassName, typename MemberType, MemberType* Target> class StealStaticVariable {
+private:
+    static bool activation;
+};
+}
+
+template <int Index, typename ClassName, typename MemberType> constinit MemberType* SGEXTN::KaypohOne::StaticVariable<Index, ClassName, MemberType>::pointer = nullptr;
+
+template <int Index, typename ClassName, typename MemberType> MemberType& SGEXTN::KaypohOne::StaticVariable<Index, ClassName, MemberType>::beKaypoh(){
+    return (*(SGEXTN::KaypohOne::StaticVariable<Index, ClassName, MemberType>::pointer));
+}
+
+template <int Index, typename ClassName, typename MemberType, MemberType* Target> bool SGEXTN::KaypohOne::StealStaticVariable<Index, ClassName, MemberType, Target>::activation = (SGEXTN::KaypohOne::StaticVariable<Index, ClassName, MemberType>::pointer = Target, true);

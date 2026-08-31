@@ -22,9 +22,10 @@ namespace SGEXTN::Utilities {
 class Identifier;
 
 class BuildLah_SGEXTN_Utilities IdentifierRegistry{
+private:
+    SGEXTN::Containers::UnorderedSet<unsigned int> contents_;
 public:
     explicit IdentifierRegistry();
-    SGEXTN::Containers::UnorderedSet<unsigned int> private_contents;
     [[nodiscard]] SGEXTN::Utilities::Identifier generateAndRegisterIdentifier();
     [[nodiscard]] SGEXTN::Utilities::Identifier parseAndRegisterIdentifier(unsigned int data, bool* isValid);
     bool unregister(SGEXTN::Utilities::Identifier id);

@@ -557,7 +557,7 @@ SGEXTN::CoreText::String::String(const char* s) : stack_(){
     }
 }
 
-SGEXTN::CoreText::String::String(const SGEXTN::CoreText::Character& c) : SGEXTN::CoreText::String(c.private_data){}
+SGEXTN::CoreText::String::String(const SGEXTN::CoreText::Character& c) : SGEXTN::CoreText::String(c.data_){}
 
 bool SGEXTN::CoreText::String::operator==(const SGEXTN::CoreText::String& x) const {
     return (stringCompare(*this, x) == 0);
@@ -624,8 +624,8 @@ SGEXTN::CoreText::String& SGEXTN::CoreText::String::operator+=(const SGEXTN::Cor
     else{
         if(byteLength() <= 52){
             SGEXTN::CoreText::ByteVector newStorage(newLength);
-            memoryCopy(stack_.data, newStorage.private_data, byteLength());
-            if(x.byteLength() > 0){memoryCopy(x.getRawPointer(), newStorage.private_data + byteLength(), x.byteLength());}
+            memoryCopy(stack_.data, newStorage.getRawPointer(), byteLength());
+            if(x.byteLength() > 0){memoryCopy(x.getRawPointer(), newStorage.getRawPointer() + byteLength(), x.byteLength());}
             heap_.length = newLength;
             new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(&heap_.boundaries)) SGEXTN::CoreText::BoundariesArray();
             new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(&heap_.data)) SGEXTN::CoreText::ByteVector(static_cast<SGEXTN::CoreText::ByteVector&&>(newStorage));
@@ -833,7 +833,7 @@ SGEXTN::CoreText::Character SGEXTN::CoreText::String::getCharacterAt(int i) cons
     int end = byteLength();
     if(i + 1 < characterLength()){end = characterIndexToByteIndex(i + 1);}
     SGEXTN::CoreText::Character c;
-    c.private_data = substringBytes(start, end - start);
+    c.data_ = substringBytes(start, end - start);
     return c;
 }
 
@@ -843,11 +843,11 @@ void SGEXTN::CoreText::String::setCharacterAt(int i, const SGEXTN::CoreText::Cha
     const int start = characterIndexToByteIndex(i);
     int end = byteLength();
     if(i + 1 < characterLength()){end = characterIndexToByteIndex(i + 1);}
-    if(end - start == c.private_data.byteLength()){memoryCopy(c.private_data.getRawPointer(), getRawPointer() + start, end - start);}
+    if(end - start == c.data_.byteLength()){memoryCopy(c.data_.getRawPointer(), getRawPointer() + start, end - start);}
     else{
         SGEXTN::CoreText::String s;
         s += substringBytesLeft(start);
-        s += c.private_data;
+        s += c.data_;
         s += substringBytesRight(byteLength() - end);
         (*this) = static_cast<SGEXTN::CoreText::String&&>(s);
     }
@@ -946,7 +946,7 @@ SGEXTN::CoreText::String SGEXTN::CoreText::String::substringBytes(int start, int
     }
     else{
         SGEXTN::CoreText::ByteVector newStorage(length);
-        memoryCopy(getRawPointer() + start, newStorage.private_data, length);
+        memoryCopy(getRawPointer() + start, newStorage.getRawPointer(), length);
         output.heap_.length = length;
         new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(&output.heap_.boundaries)) SGEXTN::CoreText::BoundariesArray();
         new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(&output.heap_.data)) SGEXTN::CoreText::ByteVector(static_cast<SGEXTN::CoreText::ByteVector&&>(newStorage));

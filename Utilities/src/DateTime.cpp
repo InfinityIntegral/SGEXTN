@@ -159,34 +159,34 @@ void offsetToParts(long long offset, int* yearOutput, int* monthOutput, int* day
 }
 }
 
-SGEXTN::Utilities::DateTime::DateTime() : private_data(0) {}
+SGEXTN::Utilities::DateTime::DateTime() : data_(0) {}
 
-SGEXTN::Utilities::DateTime::DateTime(long long t) : private_data(t) {}
+SGEXTN::Utilities::DateTime::DateTime(long long t) : data_(t) {}
 
-SGEXTN::Utilities::DateTime::DateTime(int year, int month, int day, int hour, int minute, int second) : private_data(partsToOffset(year, month, day, hour, minute, second)) {}
+SGEXTN::Utilities::DateTime::DateTime(int year, int month, int day, int hour, int minute, int second) : data_(partsToOffset(year, month, day, hour, minute, second)) {}
 
 bool SGEXTN::Utilities::DateTime::operator==(SGEXTN::Utilities::DateTime x) const {
-    return (private_data == x.private_data);
+    return (data_ == x.data_);
 }
 
 bool SGEXTN::Utilities::DateTime::operator!=(SGEXTN::Utilities::DateTime x) const {
-    return (private_data != x.private_data);
+    return (data_ != x.data_);
 }
 
 bool SGEXTN::Utilities::DateTime::operator<(SGEXTN::Utilities::DateTime x) const {
-    return (private_data < x.private_data);
+    return (data_ < x.data_);
 }
 
 bool SGEXTN::Utilities::DateTime::operator>(SGEXTN::Utilities::DateTime x) const {
-    return (private_data > x.private_data);
+    return (data_ > x.data_);
 }
 
 bool SGEXTN::Utilities::DateTime::operator<=(SGEXTN::Utilities::DateTime x) const {
-    return (private_data <= x.private_data);
+    return (data_ <= x.data_);
 }
 
 bool SGEXTN::Utilities::DateTime::operator>=(SGEXTN::Utilities::DateTime x) const {
-    return (private_data >= x.private_data);
+    return (data_ >= x.data_);
 }
 
 SGEXTN::CoreText::String SGEXTN::Utilities::DateTime::debugPrint() const {
@@ -194,7 +194,7 @@ SGEXTN::CoreText::String SGEXTN::Utilities::DateTime::debugPrint() const {
 }
 
 bool SGEXTN::Utilities::DateTime::sendOut(SGEXTN::Utilities::DateTime x, SGEXTN::Containers::Span<unsigned char> data){
-    return SGEXTN::Containers::Serialise<long long>::sendOut(x.private_data, data);
+    return SGEXTN::Containers::Serialise<long long>::sendOut(x.data_, data);
 }
 
 bool SGEXTN::Utilities::DateTime::sendIn(SGEXTN::Utilities::DateTime& x, SGEXTN::Containers::Span<unsigned char> data){
@@ -210,7 +210,7 @@ int SGEXTN::Utilities::DateTime::size(){
 }
 
 double SGEXTN::Utilities::DateTime::getTimeAfter(SGEXTN::Utilities::DateTime x, SGEXTN::Utilities::TimeUnit unit) const {
-    double offset = static_cast<double>(private_data - x.private_data);
+    double offset = static_cast<double>(data_ - x.data_);
     if(unit == SGEXTN::Utilities::TimeUnit::Second){return offset;}
     if(unit == SGEXTN::Utilities::TimeUnit::Minute){return (offset / 60.0);}
     if(unit == SGEXTN::Utilities::TimeUnit::Hour){return (offset / 3600.0);}
@@ -230,12 +230,12 @@ SGEXTN::Utilities::DateTime SGEXTN::Utilities::DateTime::now(){
 
 int SGEXTN::Utilities::DateTime::getPart(SGEXTN::Utilities::TimeUnit unit) const {
     int output = 0;
-    if(unit == SGEXTN::Utilities::TimeUnit::Second){offsetToParts(private_data, nullptr, nullptr, nullptr, nullptr, nullptr, &output);}
-    else if(unit == SGEXTN::Utilities::TimeUnit::Minute){offsetToParts(private_data, nullptr, nullptr, nullptr, nullptr, &output, nullptr);}
-    else if(unit == SGEXTN::Utilities::TimeUnit::Hour){offsetToParts(private_data, nullptr, nullptr, nullptr, &output, nullptr, nullptr);}
-    else if(unit == SGEXTN::Utilities::TimeUnit::Day){offsetToParts(private_data, nullptr, nullptr, &output, nullptr, nullptr, nullptr);}
-    else if(unit == SGEXTN::Utilities::TimeUnit::Month){offsetToParts(private_data, nullptr, &output, nullptr, nullptr, nullptr, nullptr);}
-    else if(unit == SGEXTN::Utilities::TimeUnit::Year){offsetToParts(private_data, &output, nullptr, nullptr, nullptr, nullptr, nullptr);}
+    if(unit == SGEXTN::Utilities::TimeUnit::Second){offsetToParts(data_, nullptr, nullptr, nullptr, nullptr, nullptr, &output);}
+    else if(unit == SGEXTN::Utilities::TimeUnit::Minute){offsetToParts(data_, nullptr, nullptr, nullptr, nullptr, &output, nullptr);}
+    else if(unit == SGEXTN::Utilities::TimeUnit::Hour){offsetToParts(data_, nullptr, nullptr, nullptr, &output, nullptr, nullptr);}
+    else if(unit == SGEXTN::Utilities::TimeUnit::Day){offsetToParts(data_, nullptr, nullptr, &output, nullptr, nullptr, nullptr);}
+    else if(unit == SGEXTN::Utilities::TimeUnit::Month){offsetToParts(data_, nullptr, &output, nullptr, nullptr, nullptr, nullptr);}
+    else if(unit == SGEXTN::Utilities::TimeUnit::Year){offsetToParts(data_, &output, nullptr, nullptr, nullptr, nullptr, nullptr);}
     return output;
 }
 
@@ -246,7 +246,7 @@ void SGEXTN::Utilities::DateTime::setPart(SGEXTN::Utilities::TimeUnit unit, int 
     int hour = 0;
     int minute = 0;
     int second = 0;
-    offsetToParts(private_data, &year, &month, &day, &hour, &minute, &second);
+    offsetToParts(data_, &year, &month, &day, &hour, &minute, &second);
     if(unit == SGEXTN::Utilities::TimeUnit::Year){year = x;}
     else if(unit == SGEXTN::Utilities::TimeUnit::Month){
         if(x < 1){x = 1;}
@@ -275,11 +275,11 @@ void SGEXTN::Utilities::DateTime::setPart(SGEXTN::Utilities::TimeUnit unit, int 
         else if(x > 59){x = 59;}
         second = x;
     }
-    private_data = partsToOffset(year, month, day, hour, minute, second);
+    data_ = partsToOffset(year, month, day, hour, minute, second);
 }
 
 int SGEXTN::Utilities::DateTime::getDayOfWeek() const {
-    long long offsetFromMidnight = private_data + 37800ll;
+    long long offsetFromMidnight = data_ + 37800ll;
     offsetFromMidnight = properDivision(offsetFromMidnight, 86400ll);
     return (1 + static_cast<int>(properRemainder(offsetFromMidnight, 7ll)));
 }
@@ -288,20 +288,20 @@ int SGEXTN::Utilities::DateTime::getDayOfYear() const {
     int year = 0;
     int month = 0;
     int day = 0;
-    offsetToParts(private_data, &year, &month, &day, nullptr, nullptr, nullptr);
+    offsetToParts(data_, &year, &month, &day, nullptr, nullptr, nullptr);
     return (day + monthOffset(month, checkLeapYear(year)));
 }
 
 int SGEXTN::Utilities::DateTime::countDaysInMonth() const {
     int month = 0;
     int year = 0;
-    offsetToParts(private_data, &year, &month, nullptr, nullptr, nullptr, nullptr);
+    offsetToParts(data_, &year, &month, nullptr, nullptr, nullptr, nullptr);
     return monthLength(month, checkLeapYear(year));
 }
 
 int SGEXTN::Utilities::DateTime::countDaysInYear() const {
     int year = 0;
-    offsetToParts(private_data, &year, nullptr, nullptr, nullptr, nullptr, nullptr);
+    offsetToParts(data_, &year, nullptr, nullptr, nullptr, nullptr, nullptr);
     if(checkLeapYear(year) == true){return 366;}
     return 365;
 }
@@ -310,7 +310,7 @@ SGEXTN::Utilities::DateTime SGEXTN::Utilities::DateTime::getStartOfDay() const {
     int year = 0;
     int month = 0;
     int day = 0;
-    offsetToParts(private_data, &year, &month, &day, nullptr, nullptr, nullptr);
+    offsetToParts(data_, &year, &month, &day, nullptr, nullptr, nullptr);
     return SGEXTN::Utilities::DateTime(year, month, day, 0, 0, 0);
 }
 
@@ -318,7 +318,7 @@ SGEXTN::Utilities::DateTime SGEXTN::Utilities::DateTime::getEndOfDay() const {
     int year = 0;
     int month = 0;
     int day = 0;
-    offsetToParts(private_data + 86400ll, &year, &month, &day, nullptr, nullptr, nullptr);
+    offsetToParts(data_ + 86400ll, &year, &month, &day, nullptr, nullptr, nullptr);
     return SGEXTN::Utilities::DateTime(year, month, day, 0, 0, 0);
 }
 
@@ -339,7 +339,7 @@ int SGEXTN::Utilities::DateTime::getTimeAfterDisplayPart(SGEXTN::Utilities::Date
     int hour1 = 0;
     int minute1 = 0;
     int second1 = 0;
-    offsetToParts(private_data, &year1, &month1, &day1, &hour1, &minute1, &second1);
+    offsetToParts(data_, &year1, &month1, &day1, &hour1, &minute1, &second1);
     int year2 = 0;
     int month2 = 0;
     int day2 = 0;
@@ -349,7 +349,7 @@ int SGEXTN::Utilities::DateTime::getTimeAfterDisplayPart(SGEXTN::Utilities::Date
     int carryAbove = 0;
     int carryBelow = 0;
     int answer = 0;
-    offsetToParts(x.private_data, &year2, &month2, &day2, &hour2, &minute2, &second2);
+    offsetToParts(x.data_, &year2, &month2, &day2, &hour2, &minute2, &second2);
     if(unit == SGEXTN::Utilities::TimeUnit::Year){
         answer = year1 - year2;
         const int carry1 = 2678400 * month1 + 86400 * day1 + 3600 * hour1 + 60 * minute1 + second1;
@@ -397,19 +397,19 @@ int SGEXTN::Utilities::DateTime::getTimeAfterDisplayPart(SGEXTN::Utilities::Date
 
 void SGEXTN::Utilities::DateTime::advanceTime(long long x, SGEXTN::Utilities::TimeUnit unit){
     if(unit == SGEXTN::Utilities::TimeUnit::Second){
-        private_data += x;
+        data_ += x;
         return;
     }
     if(unit == SGEXTN::Utilities::TimeUnit::Minute){
-        private_data += (60ll * x);
+        data_ += (60ll * x);
         return;
     }
     if(unit == SGEXTN::Utilities::TimeUnit::Hour){
-        private_data += (3600ll * x);
+        data_ += (3600ll * x);
         return;
     }
     if(unit == SGEXTN::Utilities::TimeUnit::Day){
-        private_data += (86400ll * x);
+        data_ += (86400ll * x);
         return;
     }
     int year = 0;
@@ -418,7 +418,7 @@ void SGEXTN::Utilities::DateTime::advanceTime(long long x, SGEXTN::Utilities::Ti
     int hour = 0;
     int minute = 0;
     int second = 0;
-    offsetToParts(private_data, &year, &month, &day, &hour, &minute, &second);
+    offsetToParts(data_, &year, &month, &day, &hour, &minute, &second);
     if(unit == SGEXTN::Utilities::TimeUnit::Year){
         year += static_cast<int>(x);
     }
@@ -428,7 +428,7 @@ void SGEXTN::Utilities::DateTime::advanceTime(long long x, SGEXTN::Utilities::Ti
         year += properDivision(month, 12);
         month = properRemainder(month, 12) + 1;
     }
-    private_data = partsToOffset(year, month, day, hour, minute, second);
+    data_ = partsToOffset(year, month, day, hour, minute, second);
 }
 
 int SGEXTN::Utilities::DateTime::convertToGlobalYear(int standardYear){
@@ -444,7 +444,7 @@ bool SGEXTN::Utilities::DateTime::isNationalDayPeriod() const {
 bool SGEXTN::Utilities::DateTime::isSignificantDate(SGEXTN::Utilities::SignificantDates date) const {
     int month = 0;
     int day = 0;
-    offsetToParts(private_data, nullptr, &month, &day, nullptr, nullptr, nullptr);
+    offsetToParts(data_, nullptr, &month, &day, nullptr, nullptr, nullptr);
     if(date == SGEXTN::Utilities::SignificantDates::NationalDay && month == 8 && day == 9){return true;}
     if(date == SGEXTN::Utilities::SignificantDates::DayBeforeNationalDay && month == 8 && day == 8){return true;}
     if(date == SGEXTN::Utilities::SignificantDates::DayAfterNationalDay && month == 8 && day == 10){return true;}

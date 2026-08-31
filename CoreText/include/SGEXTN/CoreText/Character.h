@@ -25,11 +25,13 @@ template <typename T> class Array;
 
 namespace SGEXTN::CoreText {
 class BuildLah_SGEXTN_CoreText Character {
+private:
+    friend class SGEXTN::CoreText::String;
+    SGEXTN::CoreText::String data_;
 public:
-    SGEXTN::CoreText::String private_data;
     explicit Character();
     Character(unsigned char c); //NOLINT(google-explicit-constructor)
-    Character(const char* s); //NOLINT(google-explicit-constructor)
+    explicit Character(const char* s);
     explicit Character(int unicode);
     [[nodiscard]] bool operator==(const Character& x) const;
     [[nodiscard]] bool operator!=(const Character& x) const;

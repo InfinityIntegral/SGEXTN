@@ -32,6 +32,7 @@
 #define SGEXTN_internal_permanentAllowDebug
 #include <SGEXTN/CoreText/Debug.h>
 #undef SGEXTN_internal_permanentAllowDebug
+#include <SGEXTN/Containers/dont_touch_lah/KaypohOne.h>
 #include <chrono>
 #include <format>
 #include <string>
@@ -440,6 +441,8 @@ void countDecimalPlaces(int& minimum, int& maximum, const SGEXTN::CoreText::Stri
 }
 }
 
+template class SGEXTN::KaypohOne::StealMemberVariable<0, SGEXTN::Utilities::DateTime, long long, &SGEXTN::Utilities::DateTime::data_>;
+
 bool SGEXTN::InternalTest::ExternalTest::ifTestAll = false;
 bool SGEXTN::InternalTest::ExternalTest::ifTestDateTimeExternal = false;
 bool SGEXTN::InternalTest::ExternalTest::ifTestUnicodeQueryExternal = false;
@@ -464,7 +467,7 @@ void SGEXTN::InternalTest::ExternalTest::testDateTimeExternal(){
                 const std::chrono::sys_time<std::chrono::seconds> externalBeginningOfTime{std::chrono::sys_days{std::chrono::year{1965} / std::chrono::August / 9} + std::chrono::hours{10} + std::chrono::minutes{30}};
                 const std::chrono::sys_time<std::chrono::seconds> externalDateTime{thisDay + std::chrono::hours{hour} + std::chrono::minutes{minute} + std::chrono::seconds{second}};
                 SGEXTN::Utilities::DateTime thisDateTime(year, month, day, hour, minute, second);
-                if(std::chrono::duration_cast<std::chrono::seconds>(externalDateTime - externalBeginningOfTime).count() != thisDateTime.private_data){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::DateTime components constructor fail");}
+                if(std::chrono::duration_cast<std::chrono::seconds>(externalDateTime - externalBeginningOfTime).count() != SGEXTN::KaypohOne::MemberVariable<0, SGEXTN::Utilities::DateTime, long long>::beKaypoh(thisDateTime)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::DateTime components constructor fail");}
                 if(thisDateTime.getPart(SGEXTN::Utilities::TimeUnit::Year) != year){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::DateTime get year fail");}
                 if(thisDateTime.getPart(SGEXTN::Utilities::TimeUnit::Month) != month){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::DateTime get month fail");}
                 if(thisDateTime.getPart(SGEXTN::Utilities::TimeUnit::Day) != day){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::DateTime get day fail");}
@@ -494,8 +497,8 @@ void SGEXTN::InternalTest::ExternalTest::testDateTimeExternal(){
                 if(thisDateTime.getDayOfYear() != static_cast<int>((thisDay - std::chrono::sys_days{std::chrono::year{year + 1965} / std::chrono::January / 1}).count() + 1)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::DateTime get day of year fail");}
                 if(thisDateTime.countDaysInMonth() != static_cast<int>(static_cast<unsigned int>((std::chrono::year{year + 1965} / std::chrono::month{static_cast<unsigned int>(month)} / std::chrono::last).day()))){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::DateTime count days in month fail");}
                 if(thisDateTime.countDaysInYear() != 365 + static_cast<int>((std::chrono::year{year + 1965}).is_leap())){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::DateTime count days in year fail");}
-                if(thisDateTime.getStartOfDay().private_data != (std::chrono::duration_cast<std::chrono::seconds>(thisDay.time_since_epoch()).count() - externalBeginningOfTime.time_since_epoch().count())){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::DateTime start of day fail");}
-                if(thisDateTime.getEndOfDay().private_data != std::chrono::duration_cast<std::chrono::seconds>(thisDay.time_since_epoch()).count() - externalBeginningOfTime.time_since_epoch().count() + 86400ll){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::DateTime end of day fail");}
+                if(SGEXTN::KaypohOne::MemberVariable<0, SGEXTN::Utilities::DateTime, long long>::beKaypoh(thisDateTime.getStartOfDay()) != (std::chrono::duration_cast<std::chrono::seconds>(thisDay.time_since_epoch()).count() - externalBeginningOfTime.time_since_epoch().count())){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::DateTime start of day fail");}
+                if(SGEXTN::KaypohOne::MemberVariable<0, SGEXTN::Utilities::DateTime, long long>::beKaypoh(thisDateTime.getEndOfDay()) != std::chrono::duration_cast<std::chrono::seconds>(thisDay.time_since_epoch()).count() - externalBeginningOfTime.time_since_epoch().count() + 86400ll){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Utilities::DateTime end of day fail");}
                 char* weekNumberString = new char[3];
                 std::format_to_n(weekNumberString, 2, "{:%V}", externalDateTime);
                 (*(weekNumberString + 2)) = '\0';

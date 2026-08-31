@@ -27,9 +27,12 @@ class String;
 
 namespace SGEXTN::Utilities {
 class IdentifierRegistry;
+
 class BuildLah_SGEXTN_Utilities Identifier {
+private:
+    friend class SGEXTN::Utilities::IdentifierRegistry;
+    unsigned int data_;
 public:
-    unsigned int private_data;
     explicit Identifier();
     [[nodiscard]] static Identifier nullIdentifier();
     [[nodiscard]] bool operator==(Identifier x) const;

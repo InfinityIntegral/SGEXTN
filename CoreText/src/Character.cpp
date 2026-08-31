@@ -35,62 +35,62 @@ int getCharacterDigitValue(const SGEXTN::CoreText::Character& c){
 }
 
 SGEXTN::CoreText::Character::Character(){
-    private_data = SGEXTN::CoreText::String::stringFromUnicode(0x1f496);
+    data_ = SGEXTN::CoreText::String::stringFromUnicode(0x1f496);
 }
 
 SGEXTN::CoreText::Character::Character(unsigned char c){
     if(c > 0x7f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String constructor crashed because the given unsigned char does not represent a valid ASCII character");}
-    private_data += c;
+    data_ += c;
 }
 
 SGEXTN::CoreText::Character::Character(const char* s){
     const SGEXTN::CoreText::String validityTest(s);
     if(validityTest.characterLength() != 1){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::Character constructor crashed as passed string literal does not represent a single character");}
-    private_data += s;
+    data_ += s;
 }
 
 SGEXTN::CoreText::Character::Character(int unicode){
     if(unicode < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::Character constructor crashed because unicode is negative");}
     else if(unicode > 0x10ffff){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::Character constructor crashed because unicode exceeds the largest possible code point");}
-    private_data = SGEXTN::CoreText::String::stringFromUnicode(unicode);
+    data_ = SGEXTN::CoreText::String::stringFromUnicode(unicode);
 }
 
 bool SGEXTN::CoreText::Character::operator==(const SGEXTN::CoreText::Character& x) const {
-    return (private_data == x.private_data);
+    return (data_ == x.data_);
 }
 
 bool SGEXTN::CoreText::Character::operator!=(const SGEXTN::CoreText::Character& x) const {
-    return (private_data != x.private_data);
+    return (data_ != x.data_);
 }
 
 bool SGEXTN::CoreText::Character::operator<(const SGEXTN::CoreText::Character& x) const {
-    return (private_data < x.private_data);
+    return (data_ < x.data_);
 }
 
 bool SGEXTN::CoreText::Character::operator>(const SGEXTN::CoreText::Character& x) const {
-    return (private_data > x.private_data);
+    return (data_ > x.data_);
 }
 
 bool SGEXTN::CoreText::Character::operator<=(const SGEXTN::CoreText::Character& x) const {
-    return (private_data <= x.private_data);
+    return (data_ <= x.data_);
 }
 
 bool SGEXTN::CoreText::Character::operator>=(const SGEXTN::CoreText::Character& x) const {
-    return (private_data >= x.private_data);
+    return (data_ >= x.data_);
 }
 
 bool SGEXTN::CoreText::Character::sendOut(const SGEXTN::CoreText::Character& x, SGEXTN::Containers::Span<unsigned char> data){
-    return SGEXTN::Containers::Serialise<SGEXTN::CoreText::String>::sendOut(x.private_data, data);
+    return SGEXTN::Containers::Serialise<SGEXTN::CoreText::String>::sendOut(x.data_, data);
 }
 
 bool SGEXTN::CoreText::Character::sendIn(SGEXTN::CoreText::Character& x, SGEXTN::Containers::Span<unsigned char> data){
-    const bool isValid = SGEXTN::Containers::Serialise<SGEXTN::CoreText::String>::sendIn(x.private_data, data);
-    if(isValid == false || x.private_data.characterLength() != 1){return false;}
+    const bool isValid = SGEXTN::Containers::Serialise<SGEXTN::CoreText::String>::sendIn(x.data_, data);
+    if(isValid == false || x.data_.characterLength() != 1){return false;}
     return true;
 }
 
 int SGEXTN::CoreText::Character::sizeOut(const SGEXTN::CoreText::Character& x){
-    return SGEXTN::Containers::Serialise<SGEXTN::CoreText::String>::sizeOut(x.private_data);
+    return SGEXTN::Containers::Serialise<SGEXTN::CoreText::String>::sizeOut(x.data_);
 }
 
 int SGEXTN::CoreText::Character::sizeIn(SGEXTN::Containers::Span<unsigned char> data){
@@ -98,24 +98,24 @@ int SGEXTN::CoreText::Character::sizeIn(SGEXTN::Containers::Span<unsigned char> 
 }
 
 int SGEXTN::CoreText::Character::byteLength() const {
-    return private_data.byteLength();
+    return data_.byteLength();
 }
 
 unsigned char& SGEXTN::CoreText::Character::byteAt(int i){
     if(i < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::Character::byteAt crashed because the index is negative");}
     else if(i >= byteLength()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::Character::byteAt crashed because the index points beyond the end of the character");}
-    return private_data.byteAt(i);
+    return data_.byteAt(i);
 }
 
 const unsigned char& SGEXTN::CoreText::Character::byteAt(int i) const {
     if(i < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::Character::byteAt crashed because the index is negative");}
     else if(i >= byteLength()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::Character::byteAt crashed because the index points beyond the end of the character");}
-    return private_data.byteAt(i);
+    return data_.byteAt(i);
 }
 
 unsigned char SGEXTN::CoreText::Character::baseToAsciiChar() const {
-    if(private_data.byteAt(0) > 0x7f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::Character::baseToAsciiChar crashed because the first unsigned char in the grapheme cluster does not represent a valid ASCII character");}
-    return private_data.byteAt(0);
+    if(data_.byteAt(0) > 0x7f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::Character::baseToAsciiChar crashed because the first unsigned char in the grapheme cluster does not represent a valid ASCII character");}
+    return data_.byteAt(0);
 }
 
 bool SGEXTN::CoreText::Character::isDigit() const {
@@ -177,7 +177,7 @@ int SGEXTN::CoreText::Character::getBaseUnicode() const {
 }
 
 SGEXTN::Containers::Array<int> SGEXTN::CoreText::Character::getUnicode() const {
-    return private_data.getUnicode();
+    return data_.getUnicode();
 }
 
 bool SGEXTN::CoreText::Character::isUppercase() const {
@@ -195,10 +195,10 @@ bool SGEXTN::CoreText::Character::isTitlecase() const {
 SGEXTN::CoreText::Character SGEXTN::CoreText::Character::getUppercase() const {
     if(byteLength() == 1){return SGEXTN::CoreText::Character(SGEXTN::CoreText::UnicodeQuery::getUppercase(static_cast<int>(byteAt(0))));}
     SGEXTN::CoreText::Character output;
-    output.private_data = "";
+    output.data_ = "";
     SGEXTN::Containers::Array<int> unicode = getUnicode();
     for(int i=0; i<unicode.length(); i++){
-        output.private_data += SGEXTN::CoreText::String::stringFromUnicode(SGEXTN::CoreText::UnicodeQuery::getUppercase(unicode.at(i)));
+        output.data_ += SGEXTN::CoreText::String::stringFromUnicode(SGEXTN::CoreText::UnicodeQuery::getUppercase(unicode.at(i)));
     }
     return output;
 }
@@ -206,10 +206,10 @@ SGEXTN::CoreText::Character SGEXTN::CoreText::Character::getUppercase() const {
 SGEXTN::CoreText::Character SGEXTN::CoreText::Character::getLowercase() const {
     if(byteLength() == 1){return SGEXTN::CoreText::Character(SGEXTN::CoreText::UnicodeQuery::getLowercase(static_cast<int>(byteAt(0))));}
     SGEXTN::CoreText::Character output;
-    output.private_data = "";
+    output.data_ = "";
     SGEXTN::Containers::Array<int> unicode = getUnicode();
     for(int i=0; i<unicode.length(); i++){
-        output.private_data += SGEXTN::CoreText::String::stringFromUnicode(SGEXTN::CoreText::UnicodeQuery::getLowercase(unicode.at(i)));
+        output.data_ += SGEXTN::CoreText::String::stringFromUnicode(SGEXTN::CoreText::UnicodeQuery::getLowercase(unicode.at(i)));
     }
     return output;
 }
@@ -217,10 +217,10 @@ SGEXTN::CoreText::Character SGEXTN::CoreText::Character::getLowercase() const {
 SGEXTN::CoreText::Character SGEXTN::CoreText::Character::getTitlecase() const {
     if(byteLength() == 1){return SGEXTN::CoreText::Character(SGEXTN::CoreText::UnicodeQuery::getTitlecase(static_cast<int>(byteAt(0))));}
     SGEXTN::CoreText::Character output;
-    output.private_data = "";
+    output.data_ = "";
     SGEXTN::Containers::Array<int> unicode = getUnicode();
     for(int i=0; i<unicode.length(); i++){
-        output.private_data += SGEXTN::CoreText::String::stringFromUnicode(SGEXTN::CoreText::UnicodeQuery::getTitlecase(unicode.at(i)));
+        output.data_ += SGEXTN::CoreText::String::stringFromUnicode(SGEXTN::CoreText::UnicodeQuery::getTitlecase(unicode.at(i)));
     }
     return output;
 }
