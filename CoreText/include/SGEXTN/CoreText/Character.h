@@ -30,7 +30,7 @@ private:
     SGEXTN::CoreText::String data_;
 public:
     explicit Character();
-    Character(unsigned char c); //NOLINT(google-explicit-constructor)
+    explicit(false) Character(unsigned char c);
     explicit Character(const char* s);
     explicit Character(int unicode);
     [[nodiscard]] bool operator==(const Character& x) const;

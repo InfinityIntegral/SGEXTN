@@ -74,35 +74,35 @@ SGEXTN::CoreText::String SGEXTN::CoreText::Debug::debugPrint(unsigned char x) co
 }
 
 SGEXTN::CoreText::String SGEXTN::CoreText::Debug::debugPrint(short x) const {
-    return SGEXTN::CoreText::String::stringFromShort(x, integerMode_.base);
+    return SGEXTN::CoreText::String::stringFromShort(x, integerMode_.base_);
 }
 
 SGEXTN::CoreText::String SGEXTN::CoreText::Debug::debugPrint(unsigned short x) const {
-    return SGEXTN::CoreText::String::stringFromUnsignedShort(x, integerMode_.base);
+    return SGEXTN::CoreText::String::stringFromUnsignedShort(x, integerMode_.base_);
 }
 
 SGEXTN::CoreText::String SGEXTN::CoreText::Debug::debugPrint(int x) const {
-    return SGEXTN::CoreText::String::stringFromInt(x, integerMode_.base);
+    return SGEXTN::CoreText::String::stringFromInt(x, integerMode_.base_);
 }
 
 SGEXTN::CoreText::String SGEXTN::CoreText::Debug::debugPrint(unsigned int x) const {
-    return SGEXTN::CoreText::String::stringFromUnsignedInt(x, integerMode_.base);
+    return SGEXTN::CoreText::String::stringFromUnsignedInt(x, integerMode_.base_);
 }
 
 SGEXTN::CoreText::String SGEXTN::CoreText::Debug::debugPrint(long long x) const {
-    return SGEXTN::CoreText::String::stringFromLongLong(x, integerMode_.base);
+    return SGEXTN::CoreText::String::stringFromLongLong(x, integerMode_.base_);
 }
 
 SGEXTN::CoreText::String SGEXTN::CoreText::Debug::debugPrint(unsigned long long x) const {
-    return SGEXTN::CoreText::String::stringFromUnsignedLongLong(x, integerMode_.base);
+    return SGEXTN::CoreText::String::stringFromUnsignedLongLong(x, integerMode_.base_);
 }
 
 SGEXTN::CoreText::String SGEXTN::CoreText::Debug::debugPrint(float x) const {
-    return SGEXTN::CoreText::String::stringFromFloat(x, floatingPointMode_.base, floatingPointMode_.format, floatingPointMode_.precision);
+    return SGEXTN::CoreText::String::stringFromFloat(x, floatingPointMode_.base_, floatingPointMode_.format_, floatingPointMode_.precision_);
 }
 
 SGEXTN::CoreText::String SGEXTN::CoreText::Debug::debugPrint(double x) const {
-    return SGEXTN::CoreText::String::stringFromDouble(x, floatingPointMode_.base, floatingPointMode_.format, floatingPointMode_.precision);
+    return SGEXTN::CoreText::String::stringFromDouble(x, floatingPointMode_.base_, floatingPointMode_.format_, floatingPointMode_.precision_);
 }
 
 SGEXTN::CoreText::String SGEXTN::CoreText::Debug::debugPrint(const SGEXTN::CoreText::Character& x) const {
@@ -145,9 +145,9 @@ SGEXTN::CoreText::String SGEXTN::CoreText::Debug::debugPrint(const char* x) cons
     return x;
 }
 
-SGEXTN::CoreText::DebugPrintIntegerMode::DebugPrintIntegerMode(int base) : base(base) {}
+SGEXTN::CoreText::DebugPrintIntegerMode::DebugPrintIntegerMode(int base) : base_(base) {}
 
-SGEXTN::CoreText::DebugPrintFloatingPointMode::DebugPrintFloatingPointMode(int base, SGEXTN::CoreText::FloatPrecisionFormat format, int precision) : base(base), format(format), precision(precision) {}
+SGEXTN::CoreText::DebugPrintFloatingPointMode::DebugPrintFloatingPointMode(int base, SGEXTN::CoreText::FloatPrecisionFormat format, int precision) : base_(base), format_(format), precision_(precision) {}
 
 SGEXTN::CoreText::Debug& SGEXTN::CoreText::Debug::operator()(SGEXTN::CoreText::DebugPrintIntegerMode mode){
     integerMode_ = mode;

@@ -35,3 +35,11 @@ SGEXTN::SingEmbed::SingEmbedFileRegistrarInstance::SingEmbedFileRegistrarInstanc
     const bool x = (*SGEXTN::SingEmbed::SingEmbedFileRegistrarInstance::registry).insert(SGEXTN::CoreText::String(SGEXTN::CoreText::Character()) + virtualPath, SGEXTN::SingEmbed::EmbeddedFile(data, fileSize));
     if(x == false){SGEXTN_IMMEDIATE_CRASH("SingEmbed initialisation crashed because 2 different files were added to the same path in the virtual file system, ensure that your assets and shader files do not have the same name");}
 }
+
+bool SGEXTN::SingEmbed::SingEmbedFileRegistrarInstance::directAccessData(const SGEXTN::CoreText::String& virtualPath, int& lengthReceiver, const char*& dataReceiver){
+    if((*registry).contains(virtualPath) == false){return false;}
+    const SGEXTN::SingEmbed::EmbeddedFile file = (*registry).at(virtualPath);
+    lengthReceiver = file.length_;
+    dataReceiver = file.data_;
+    return true;
+}

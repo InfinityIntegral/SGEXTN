@@ -19,19 +19,24 @@
 
 namespace SGEXTN::Containers {
 template <typename T> class ArrayVectorMove;
+template <typename T> class Array;
 
 template <typename T> class ArrayStackStorage {
-public:
+private:
+    friend class SGEXTN::Containers::Array<T>;
+    friend class SGEXTN::Containers::ArrayVectorMove<T>;
     static constexpr int maxElements = 60 / sizeof(T);
     static constexpr unsigned int stackFlag = 0x80000000u;
-    unsigned int length;
-    alignas(T) unsigned char data[SGEXTN::Containers::ArrayStackStorage<T>::maxElements * sizeof(T) + static_cast<int>(SGEXTN::Containers::ArrayStackStorage<T>::maxElements == 0)];
+    unsigned int length_;
+    alignas(T) unsigned char data_[SGEXTN::Containers::ArrayStackStorage<T>::maxElements * sizeof(T) + static_cast<int>(SGEXTN::Containers::ArrayStackStorage<T>::maxElements == 0)];
 };
 
 template <typename T> class ArrayHeapStorage {
-public:
-    unsigned int length;
-    T* data;
+private:
+    friend class SGEXTN::Containers::Array<T>;
+    friend class SGEXTN::Containers::ArrayVectorMove<T>;
+    unsigned int length_;
+    T* data_;
 };
 
 template <typename T> class Array {

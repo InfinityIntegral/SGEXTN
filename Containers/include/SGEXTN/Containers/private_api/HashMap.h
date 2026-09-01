@@ -18,6 +18,10 @@
 #pragma once
 
 namespace SGEXTN::Containers {
+template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> class HashMap;
+template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> class HashMapIterator;
+template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> class HashMapConstIterator;
+
 enum class HashMapSlotStatus : unsigned char {
     Active = 1,
     Unused = 2,
@@ -25,26 +29,27 @@ enum class HashMapSlotStatus : unsigned char {
 };
 
 template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> class HashMapSlot {
-public:
+private:
+    friend class SGEXTN::Containers::HashMap<Key, Value, EqualityCheck, HashFunction>;
+    friend class SGEXTN::Containers::HashMapIterator<Key, Value, EqualityCheck, HashFunction>;
+    friend class SGEXTN::Containers::HashMapConstIterator<Key, Value, EqualityCheck, HashFunction>;
+    HashMapSlotStatus status_;
+    union {
+        unsigned char keyConstructorRemover_;
+        Key keyObject_;
+    };
+    union {
+        unsigned char valueConstructorRemover_;
+        Value valueObject_;
+    };
     explicit HashMapSlot();
+public:
     HashMapSlot(const HashMapSlot&) = delete;
     HashMapSlot& operator=(const HashMapSlot&) = delete;
     HashMapSlot(HashMapSlot&&) = delete;
     HashMapSlot& operator=(HashMapSlot&&) = delete;
     ~HashMapSlot();
-    HashMapSlotStatus status;
-    union {
-        unsigned char keyConstructorRemover;
-        Key keyObject;
-    };
-    union {
-        unsigned char valueConstructorRemover;
-        Value valueObject;
-    };
 };
-
-template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> class HashMapIterator;
-template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> class HashMapConstIterator;
 
 template <typename Key, typename Value, typename EqualityCheck, typename HashFunction> class HashMap {
 private:

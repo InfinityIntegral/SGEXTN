@@ -26,9 +26,7 @@
 #include <SGEXTN/Math/FloatMath.h>
 #include <SGEXTN/Containers/Vector.h>
 #include <SGEXTN/Containers/ForceCrash.h>
-#include <SGEXTN/SingEmbed/private_api/EmbeddedFile.h>
 #include <SGEXTN/SingEmbed/private_api/SingEmbedFileRegistrarInstance.h>
-#include <SGEXTN/Containers/UnorderedMap.h>
 #define SGEXTN_internal_permanentAllowDebug
 #include <SGEXTN/CoreText/Debug.h>
 #undef SGEXTN_internal_permanentAllowDebug
@@ -75,9 +73,10 @@ float parseCStringToFloat(const char* s, bool* isValid){
 
 SGEXTN::CoreText::String readFile(const SGEXTN::CoreText::String& filePath){
     const SGEXTN::CoreText::String pathToFile = SGEXTN::CoreText::String(SGEXTN::CoreText::Character()) + "/SGEXTN/InternalTest/" + filePath;
-    if((*SGEXTN::SingEmbed::SingEmbedFileRegistrarInstance::registry).contains(pathToFile) == false){return "";}
-    const int fileLength = (*SGEXTN::SingEmbed::SingEmbedFileRegistrarInstance::registry).at(pathToFile).length;
-    const unsigned char* fileData = reinterpret_cast<const unsigned char*>((*SGEXTN::SingEmbed::SingEmbedFileRegistrarInstance::registry).at(pathToFile).data);
+    int fileLength = 0;
+    const char* fileData = nullptr;
+    const bool fileExists = SGEXTN::SingEmbed::SingEmbedFileRegistrarInstance::directAccessData(pathToFile, fileLength, fileData);
+    if(fileExists == false){return "";}
     SGEXTN::CoreText::String outputString = SGEXTN::CoreText::String::repeat(" ", fileLength);
     for(int i=0; i<fileLength; i++){
         outputString.byteAt(i) = (*(fileData + i));
@@ -444,11 +443,11 @@ void countDecimalPlaces(int& minimum, int& maximum, const SGEXTN::CoreText::Stri
 template class SGEXTN::KaypohOne::StealMemberVariable<0, SGEXTN::Utilities::DateTime, long long, &SGEXTN::Utilities::DateTime::data_>;
 
 bool SGEXTN::InternalTest::ExternalTest::ifTestAll = false;
-bool SGEXTN::InternalTest::ExternalTest::ifTestDateTimeExternal = false;
-bool SGEXTN::InternalTest::ExternalTest::ifTestUnicodeQueryExternal = false;
-bool SGEXTN::InternalTest::ExternalTest::ifTestUnicodeExternal = false;
-bool SGEXTN::InternalTest::ExternalTest::ifTestNumericalParsing = false;
-bool SGEXTN::InternalTest::ExternalTest::ifTestSmallStringOptimisation = false;
+bool SGEXTN::InternalTest::ExternalTest::ifTestDateTimeExternal = true;
+bool SGEXTN::InternalTest::ExternalTest::ifTestUnicodeQueryExternal = true;
+bool SGEXTN::InternalTest::ExternalTest::ifTestUnicodeExternal = true;
+bool SGEXTN::InternalTest::ExternalTest::ifTestNumericalParsing = true;
+bool SGEXTN::InternalTest::ExternalTest::ifTestSmallStringOptimisation = true;
 
 void SGEXTN::InternalTest::ExternalTest::testDateTimeExternal(){
     for(int year=-100; year<100; year++){

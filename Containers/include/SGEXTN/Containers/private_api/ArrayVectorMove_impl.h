@@ -29,7 +29,7 @@ template <typename T> SGEXTN::Containers::Vector<T> SGEXTN::Containers::ArrayVec
     vec.ringBuffer_.length_ = arr.length();
     vec.ringBuffer_.memoryLength_ = arr.length();
     for(int i=0; i<arr.length(); i++){
-        new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(&((*(vec.ringBuffer_.data_ + i)).object))) T(static_cast<T&&>(arr.at(i)));
+        new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(&((*(vec.ringBuffer_.data_ + i)).object_))) T(static_cast<T&&>(arr.at(i)));
         arr.at(i).~T();
     }
     arr = SGEXTN::Containers::Array<T>();
@@ -41,16 +41,16 @@ template <typename T> SGEXTN::Containers::Array<T> SGEXTN::Containers::ArrayVect
     SGEXTN::Containers::Array<T> arr;
     const int count = vec.length();
     if(count <= SGEXTN::Containers::ArrayStackStorage<T>::maxElements){
-        arr.stack_.length = (SGEXTN::Containers::ArrayStackStorage<T>::stackFlag | static_cast<unsigned int>(count));
+        arr.stack_.length_ = (SGEXTN::Containers::ArrayStackStorage<T>::stackFlag | static_cast<unsigned int>(count));
         for(int i=0; i<count; i++){
             new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(arr.getStackSlot(i))) T(static_cast<T&&>(vec.at(i)));
         }
     }
     else{
-        arr.heap_.length = count;
-        arr.heap_.data = static_cast<T*>(::operator new(count * sizeof(T)));
+        arr.heap_.length_ = count;
+        arr.heap_.data_ = static_cast<T*>(::operator new(count * sizeof(T)));
         for(int i=0; i<count; i++){
-            new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(arr.heap_.data + i)) T(static_cast<T&&>(vec.at(i)));
+            new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(arr.heap_.data_ + i)) T(static_cast<T&&>(vec.at(i)));
         }
     }
     for(int i=0; i<count; i++){

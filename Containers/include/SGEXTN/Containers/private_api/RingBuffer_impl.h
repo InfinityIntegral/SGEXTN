@@ -18,7 +18,7 @@
 #pragma once
 #include <SGEXTN/Containers/PlacementNew.h>
 
-template <typename T> SGEXTN::Containers::RingBufferSlot<T>::RingBufferSlot() : constructorRemover('\0') {}
+template <typename T> SGEXTN::Containers::RingBufferSlot<T>::RingBufferSlot() : constructorRemover_(static_cast<unsigned char>(0)) {}
 
 template <typename T> SGEXTN::Containers::RingBufferSlot<T>::~RingBufferSlot(){}
 
@@ -27,14 +27,14 @@ template <typename T> SGEXTN::Containers::RingBuffer<T>::RingBuffer() : data_(nu
 template <typename T> SGEXTN::Containers::RingBuffer<T>::RingBuffer(int count, const T& defaultValue) : data_(nullptr), start_(0), length_(count), memoryLength_(count) {
     if(count > 0){data_ = new RingBufferSlot<T>[count];}
     for(int i=0; i<count; i++){
-        new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(&(*(data_ + i)).object)) T(defaultValue);
+        new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(&(*(data_ + i)).object_)) T(defaultValue);
     }
 }
 
 template <typename T> SGEXTN::Containers::RingBuffer<T>::RingBuffer(const RingBuffer& x) : data_(nullptr), start_(0), length_(x.length()), memoryLength_(x.length()) {
     if(x.length() > 0){data_ = new RingBufferSlot<T>[x.length()];}
     for(int i=0; i<x.length(); i++){
-        new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(&(*(data_ + i)).object)) T(x.at(i));
+        new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(&(*(data_ + i)).object_)) T(x.at(i));
     }
 }
 
@@ -49,7 +49,7 @@ template <typename T> SGEXTN::Containers::RingBuffer<T>& SGEXTN::Containers::Rin
     length_ = x.length();
     memoryLength_ = x.length();
     for(int i=0; i<x.length(); i++){
-        new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(&(*(data_ + i)).object)) T(x.at(i));
+        new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(&(*(data_ + i)).object_)) T(x.at(i));
     }
     return (*this);
 }
@@ -99,11 +99,11 @@ template <typename T> int SGEXTN::Containers::RingBuffer<T>::getMemoryIndex(int 
 }
 
 template <typename T> T& SGEXTN::Containers::RingBuffer<T>::at(int i){
-    return (*(data_ + getMemoryIndex(i))).object;
+    return (*(data_ + getMemoryIndex(i))).object_;
 }
 
 template <typename T> const T& SGEXTN::Containers::RingBuffer<T>::at(int i) const {
-    return (*(data_ + getMemoryIndex(i))).object;
+    return (*(data_ + getMemoryIndex(i))).object_;
 }
 
 template <typename T> T& SGEXTN::Containers::RingBuffer<T>::front(){
@@ -129,7 +129,7 @@ template <typename T> int SGEXTN::Containers::RingBuffer<T>::length() const {
 template <typename T> void SGEXTN::Containers::RingBuffer<T>::pushBack(const T& x){
     if(length_ == memoryLength_){reserve(3 * memoryLength_ / 2 + 1);}
     length_++;
-    new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(&(*(data_ + getMemoryIndex(length_ - 1))).object)) T(x);
+    new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(&(*(data_ + getMemoryIndex(length_ - 1))).object_)) T(x);
 }
 
 template <typename T> void SGEXTN::Containers::RingBuffer<T>::popBack(){
@@ -142,7 +142,7 @@ template <typename T> void SGEXTN::Containers::RingBuffer<T>::pushFront(const T&
     length_++;
     start_--;
     if(start_ < 0){start_ += memoryLength_;}
-    new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(&(*(data_ + getMemoryIndex(0))).object)) T(x);
+    new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(&(*(data_ + getMemoryIndex(0))).object_)) T(x);
 }
 
 template <typename T> void SGEXTN::Containers::RingBuffer<T>::popFront(){
@@ -156,7 +156,7 @@ template <typename T> void SGEXTN::Containers::RingBuffer<T>::reserve(int newMem
     if(newMemoryLength <= memoryLength_){return;}
     RingBufferSlot<T>* newPointer = new RingBufferSlot<T>[newMemoryLength];
     for(int i=0; i<length_; i++){
-        new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(&(*(newPointer + i)).object)) T(static_cast<T&&>(at(i)));
+        new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(&(*(newPointer + i)).object_)) T(static_cast<T&&>(at(i)));
         at(i).~T();
     }
     delete[] data_;

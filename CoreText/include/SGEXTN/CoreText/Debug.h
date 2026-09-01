@@ -30,19 +30,24 @@ template <typename T> class Vector;
 
 namespace SGEXTN::CoreText {
 class Character;
+class Debug;
 
 class BuildLah_SGEXTN_CoreText DebugPrintIntegerMode {
+private:
+    friend class SGEXTN::CoreText::Debug;
+    int base_;
 public:
     explicit DebugPrintIntegerMode(int base);
-    int base;
 };
 
 class BuildLah_SGEXTN_CoreText DebugPrintFloatingPointMode {
+private:
+    friend class SGEXTN::CoreText::Debug;
+    int base_;
+    SGEXTN::CoreText::FloatPrecisionFormat format_;
+    int precision_;
 public:
     explicit DebugPrintFloatingPointMode(int base, SGEXTN::CoreText::FloatPrecisionFormat format, int precision);
-    int base;
-    SGEXTN::CoreText::FloatPrecisionFormat format;
-    int precision;
 };
 
 enum class DebugPrintCCharMode : unsigned char {

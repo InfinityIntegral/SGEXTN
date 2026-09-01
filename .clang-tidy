@@ -24,14 +24,12 @@ Checks: '
   -cppcoreguidelines-avoid-c-arrays,
   -cppcoreguidelines-avoid-magic-numbers,
   -cppcoreguidelines-avoid-non-const-global-variables,
-  -cppcoreguidelines-non-private-member-variables-in-classes,
   -cppcoreguidelines-owning-memory,
   -cppcoreguidelines-pro-bounds-array-to-pointer-decay,
   -cppcoreguidelines-pro-bounds-pointer-arithmetic,
   -cppcoreguidelines-pro-type-reinterpret-cast,
   -cppcoreguidelines-pro-type-union-access,
   -cppcoreguidelines-use-default-member-init,
-  -misc-non-private-member-variables-in-classes,
   -modernize-avoid-c-arrays,
   -modernize-loop-convert,
   -modernize-pass-by-value,
@@ -47,18 +45,75 @@ Checks: '
   -readability-function-cognitive-complexity,
   -readability-function-size,
   -readability-identifier-length,
-  -readability-identifier-naming,
   -readability-magic-numbers,
   -readability-math-missing-parentheses,
   -readability-redundant-parentheses,
   -readability-simplify-boolean-expr,
   -readability-uppercase-literal-suffix,
   -readability-use-std-min-max,
-  altera-struct-pack-align,
   google-explicit-constructor
 '
 CheckOptions:
   misc-include-cleaner.IgnoreHeaders: '.*_impl\.h$'
+  readability-identifier-naming.CheckAnonFieldInParent: true
+  readability-identifier-naming.AbstractClassCase: CamelCase
+  readability-identifier-naming.ClassCase: CamelCase
+  readability-identifier-naming.ClassConstexprCase: camelBack
+  readability-identifier-naming.ClassConstantCase: camelBack
+  readability-identifier-naming.ClassMemberCase: camelBack
+  readability-identifier-naming.ClassMethodCase: camelBack
+  readability-identifier-naming.ConceptCase: CamelCase
+  readability-identifier-naming.ConstantCase: camelBack
+  readability-identifier-naming.ConstantMemberCase: camelBack
+  readability-identifier-naming.ConstantParameterCase: camelBack
+  readability-identifier-naming.ConstantPointerParameterCase: camelBack
+  readability-identifier-naming.ConstexprFunctionCase: camelBack
+  readability-identifier-naming.ConstexprMethodCase: camelBack
+  readability-identifier-naming.ConstexprVariableCase: camelBack
+  readability-identifier-naming.EnumCase: CamelCase
+  readability-identifier-naming.EnumConstantCase: CamelCase
+  readability-identifier-naming.FunctionCase: camelBack
+  readability-identifier-naming.GlobalConstexprVariableCase: camelBack
+  readability-identifier-naming.GlobalConstantCase: camelBack
+  readability-identifier-naming.GlobalConstantPointerCase: camelBack
+  readability-identifier-naming.GlobalFunctionCase: aNy_CasE
+  readability-identifier-naming.GlobalPointerCase: camelBack
+  readability-identifier-naming.GlobalVariableCase: camelBack
+  readability-identifier-naming.InlineNamespaceCase: CamelCase
+  readability-identifier-naming.LambdaCaptureCase: camelBack
+  readability-identifier-naming.LocalConstexprVariableCase: camelBack
+  readability-identifier-naming.LocalConstantCase: camelBack
+  readability-identifier-naming.LocalConstantPointerCase: camelBack
+  readability-identifier-naming.LocalPointerCase: camelBack
+  readability-identifier-naming.LocalVariableCase: camelBack
+  readability-identifier-naming.MacroDefinitionCase: aNy_CasE
+  readability-identifier-naming.MemberCase: camelBack
+  readability-identifier-naming.MethodCase: camelBack
+  readability-identifier-naming.NamespaceCase: CamelCase
+  readability-identifier-naming.ParameterCase: camelBack
+  readability-identifier-naming.ParameterPackCase: camelBack
+  readability-identifier-naming.PointerParameterCase: camelBack
+  readability-identifier-naming.PrivateMemberCase: camelBack
+  readability-identifier-naming.PrivateMemberSuffix: "_"
+  readability-identifier-naming.PrivateMethodCase: camelBack
+  readability-identifier-naming.ProtectedMemberCase: camelBack
+  readability-identifier-naming.ProtectedMethodCase: camelBack
+  readability-identifier-naming.PublicMemberCase: camelBack
+  readability-identifier-naming.PublicMethodCase: camelBack
+  readability-identifier-naming.ScopedEnumConstantCase: CamelCase
+  readability-identifier-naming.StaticConstexprVariableCase: camelBack
+  readability-identifier-naming.StaticConstantCase: camelBack
+  readability-identifier-naming.StaticVariableCase: camelBack
+  readability-identifier-naming.StructCase: CamelCase
+  readability-identifier-naming.TemplateParameterCase: CamelCase
+  readability-identifier-naming.TemplateTemplateParameterCase: CamelCase
+  readability-identifier-naming.TypeAliasCase: CamelCase
+  readability-identifier-naming.TypedefCase: CamelCase
+  readability-identifier-naming.TypeTemplateParameterCase: CamelCase
+  readability-identifier-naming.UnionCase: CamelCase
+  readability-identifier-naming.ValueTemplateParameterCase: CamelCase
+  readability-identifier-naming.VariableCase: camelBack
+  readability-identifier-naming.VirtualMethodCase: camelBack
 WarningsAsErrors: ''
 HeaderFileExtensions: ['', 'h']
 ImplementationFileExtensions: ['cpp']

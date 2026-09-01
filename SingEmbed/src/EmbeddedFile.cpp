@@ -17,4 +17,4 @@
 
 #include <SGEXTN/SingEmbed/private_api/EmbeddedFile.h>
 
-SGEXTN::SingEmbed::EmbeddedFile::EmbeddedFile(const char* data, int length) : data(data), length(length) {}
+SGEXTN::SingEmbed::EmbeddedFile::EmbeddedFile(const char* data, int length) : data_(data), length_(length) {}

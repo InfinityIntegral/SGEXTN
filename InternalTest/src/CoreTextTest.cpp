@@ -43,7 +43,7 @@ SGEXTN::Containers::Span<unsigned char> makeSpan(SGEXTN::Containers::Array<unsig
     return SGEXTN::Containers::Span<unsigned char>(array, 0, length);
 }
 
-const char* U8(const char8_t* x){
+const char* utf8(const char8_t* x){
     return reinterpret_cast<const char*>(x);
 }
 }
@@ -223,82 +223,82 @@ void SGEXTN::InternalTest::CoreTextTest::testString(){
     if(a + b != "ab"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String string addition fail");}
     a += b;
     if(a != "ab"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String string addition assignment fail");}
-    SGEXTN::CoreText::String aAlphaSpaceEpsilonA = U8(u8"\u0061\u03b1\u0301\u0020\u03c3\u0041");
+    SGEXTN::CoreText::String aAlphaSpaceEpsilonA = utf8(u8"\u0061\u03b1\u0301\u0020\u03c3\u0041");
     if(aAlphaSpaceEpsilonA.byteLength() != 9){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String check  byte length fail");}
     if(aAlphaSpaceEpsilonA.characterLength() != 5){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String check character length fail");}
     if(aAlphaSpaceEpsilonA.byteAt(8) != 'A'){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String get byte at fail");}
     aAlphaSpaceEpsilonA.byteAt(8) = 'B';
     if(aAlphaSpaceEpsilonA.byteAt(8) != 'B'){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String set byte at fail");}
-    if(aAlphaSpaceEpsilonA.getCharacterAt(1) != SGEXTN::CoreText::Character(U8(u8"\u03b1\u0301"))){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String get character at fail");}
-    aAlphaSpaceEpsilonA.setCharacterAt(1, SGEXTN::CoreText::Character(U8(u8"\u03b1\u0300")));
-    if(aAlphaSpaceEpsilonA.getCharacterAt(1) != SGEXTN::CoreText::Character(U8(u8"\u03b1\u0300"))){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String set character same length fail");}
-    aAlphaSpaceEpsilonA.setCharacterAt(4, SGEXTN::CoreText::Character(U8(u8"\uff21")));
+    if(aAlphaSpaceEpsilonA.getCharacterAt(1) != SGEXTN::CoreText::Character(utf8(u8"\u03b1\u0301"))){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String get character at fail");}
+    aAlphaSpaceEpsilonA.setCharacterAt(1, SGEXTN::CoreText::Character(utf8(u8"\u03b1\u0300")));
+    if(aAlphaSpaceEpsilonA.getCharacterAt(1) != SGEXTN::CoreText::Character(utf8(u8"\u03b1\u0300"))){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String set character same length fail");}
+    aAlphaSpaceEpsilonA.setCharacterAt(4, SGEXTN::CoreText::Character(utf8(u8"\uff21")));
     if(aAlphaSpaceEpsilonA.getCharacterAt(4) != SGEXTN::CoreText::Character(0xff21)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String set character different length fail");}
     if(aAlphaSpaceEpsilonA.fillBytes('0') != "00000000000"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String fill bytes fail");}
-    if(aAlphaSpaceEpsilonA.fillCharacters(SGEXTN::CoreText::Character(U8(u8"\u03b1\u0301"))) != U8(u8"\u03b1\u0301\u03b1\u0301\u03b1\u0301\u03b1\u0301\u03b1\u0301")){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String fill characters fail");}
+    if(aAlphaSpaceEpsilonA.fillCharacters(SGEXTN::CoreText::Character(utf8(u8"\u03b1\u0301"))) != utf8(u8"\u03b1\u0301\u03b1\u0301\u03b1\u0301\u03b1\u0301\u03b1\u0301")){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String fill characters fail");}
     SGEXTN::CoreText::String bytesFindString = "__ab_aab_abb";
     if(bytesFindString.findFirstBytesFromLeft("ab") != 2){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String find bytes from left fail");}
     if(bytesFindString.findFirstBytesFromRight("ab") != 9){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String find bytes from right fail");}
     if(bytesFindString.findFirstBytesFromLeftBounded(3, "ab") != 6){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String find bytes from left bounded fail");}
     if(bytesFindString.findFirstBytesFromRightBounded(8, "ab") != 6){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String find bytes from right bounded fail");}
-    SGEXTN::CoreText::String charactersFindString = U8(u8"\u0020\u0020\u03b1\u0300\u03b2\u0020\u03b1\u0300\u03b1\u0300\u03b2\u0020\u03b1\u0300\u03b2\u03b2");
-    if(charactersFindString.findFirstCharactersFromLeft(U8(u8"\u03b1\u0300\u03b2")) != 2){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String find characters from left fail");}
-    if(charactersFindString.findFirstCharactersFromRight(U8(u8"\u03b1\u0300\u03b2")) != 9){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String find characters from right fail");}
-    if(charactersFindString.findFirstCharactersFromLeftBounded(3, U8(u8"\u03b1\u0300\u03b2")) != 6){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String find characters from left bounded fail");}
-    if(charactersFindString.findFirstCharactersFromRightBounded(8, U8(u8"\u03b1\u0300\u03b2")) != 6){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String find characters from right bounded fail");}
+    SGEXTN::CoreText::String charactersFindString = utf8(u8"\u0020\u0020\u03b1\u0300\u03b2\u0020\u03b1\u0300\u03b1\u0300\u03b2\u0020\u03b1\u0300\u03b2\u03b2");
+    if(charactersFindString.findFirstCharactersFromLeft(utf8(u8"\u03b1\u0300\u03b2")) != 2){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String find characters from left fail");}
+    if(charactersFindString.findFirstCharactersFromRight(utf8(u8"\u03b1\u0300\u03b2")) != 9){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String find characters from right fail");}
+    if(charactersFindString.findFirstCharactersFromLeftBounded(3, utf8(u8"\u03b1\u0300\u03b2")) != 6){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String find characters from left bounded fail");}
+    if(charactersFindString.findFirstCharactersFromRightBounded(8, utf8(u8"\u03b1\u0300\u03b2")) != 6){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String find characters from right bounded fail");}
     if(bytesFindString.substringBytes(5, 3) != "aab"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String substring bytes fail");}
     if(bytesFindString.substringBytesLeft(3) != "__a"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String substring bytes left fail");}
     if(bytesFindString.substringBytesRight(3) != "abb"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String substring bytes right fail");}
-    if(charactersFindString.substringCharacters(5, 3) != U8(u8"\u03b1\u0300\u03b1\u0300\u03b2")){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String substring characters fail");}
-    if(charactersFindString.substringCharactersLeft(3) != U8(u8"\u0020\u0020\u03b1\u0300")){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String substring characters left fail");}
-    if(charactersFindString.substringCharactersRight(3) != U8(u8"\u03b1\u0300\u03b2\u03b2")){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String substring characters right fail");}
+    if(charactersFindString.substringCharacters(5, 3) != utf8(u8"\u03b1\u0300\u03b1\u0300\u03b2")){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String substring characters fail");}
+    if(charactersFindString.substringCharactersLeft(3) != utf8(u8"\u0020\u0020\u03b1\u0300")){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String substring characters left fail");}
+    if(charactersFindString.substringCharactersRight(3) != utf8(u8"\u03b1\u0300\u03b2\u03b2")){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String substring characters right fail");}
     if(bytesFindString.replaceBytes("ab", 'c') != "__c_ac_cb"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String replace bytes fail");}
-    if(charactersFindString.replaceCharacters(U8(u8"\u03b1\u0300\u03b2"), U8(u8"\u03b3")) != U8(u8"\u0020\u0020\u03b3\u0020\u03b1\u0300\u03b3\u0020\u03b3\u03b2")){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String replace characters fail");}
+    if(charactersFindString.replaceCharacters(utf8(u8"\u03b1\u0300\u03b2"), utf8(u8"\u03b3")) != utf8(u8"\u0020\u0020\u03b3\u0020\u03b1\u0300\u03b3\u0020\u03b3\u03b2")){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String replace characters fail");}
     if(bytesFindString.removeBytes("ab") != "___a_b"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String remove bytes fail");}
-    if(charactersFindString.removeCharacters(U8(u8"\u03b1\u0300\u03b2")) != U8(u8"\u0020\u0020\u0020\u03b1\u0300\u0020\u03b2")){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String remove characters fail");}
+    if(charactersFindString.removeCharacters(utf8(u8"\u03b1\u0300\u03b2")) != utf8(u8"\u0020\u0020\u0020\u03b1\u0300\u0020\u03b2")){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String remove characters fail");}
     if(bytesFindString.insertAtByteIndex(0, "cc") != "cc__ab_aab_abb"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String insert bytes at start fail");}
     if(bytesFindString.insertAtByteIndex(2, "cc") != "__ccab_aab_abb"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String insert bytes at middle fail");}
     if(bytesFindString.insertAtByteIndex(12, "cc") != "__ab_aab_abbcc"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String insert bytes at end fail");}
-    if(charactersFindString.insertAtCharacterIndex(0, U8(u8"\u03b3\u03b3")) != U8(u8"\u03b3\u03b3\u0020\u0020\u03b1\u0300\u03b2\u0020\u03b1\u0300\u03b1\u0300\u03b2\u0020\u03b1\u0300\u03b2\u03b2")){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String insert characters at start fail");}
-    if(charactersFindString.insertAtCharacterIndex(2, U8(u8"\u03b3\u03b3")) != U8(u8"\u0020\u0020\u03b3\u03b3\u03b1\u0300\u03b2\u0020\u03b1\u0300\u03b1\u0300\u03b2\u0020\u03b1\u0300\u03b2\u03b2")){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String insert characters at middle fail");}
-    if(charactersFindString.insertAtCharacterIndex(12, U8(u8"\u03b3\u03b3")) != U8(u8"\u0020\u0020\u03b1\u0300\u03b2\u0020\u03b1\u0300\u03b1\u0300\u03b2\u0020\u03b1\u0300\u03b2\u03b2\u03b3\u03b3")){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String insert characters at end fail");}
+    if(charactersFindString.insertAtCharacterIndex(0, utf8(u8"\u03b3\u03b3")) != utf8(u8"\u03b3\u03b3\u0020\u0020\u03b1\u0300\u03b2\u0020\u03b1\u0300\u03b1\u0300\u03b2\u0020\u03b1\u0300\u03b2\u03b2")){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String insert characters at start fail");}
+    if(charactersFindString.insertAtCharacterIndex(2, utf8(u8"\u03b3\u03b3")) != utf8(u8"\u0020\u0020\u03b3\u03b3\u03b1\u0300\u03b2\u0020\u03b1\u0300\u03b1\u0300\u03b2\u0020\u03b1\u0300\u03b2\u03b2")){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String insert characters at middle fail");}
+    if(charactersFindString.insertAtCharacterIndex(12, utf8(u8"\u03b3\u03b3")) != utf8(u8"\u0020\u0020\u03b1\u0300\u03b2\u0020\u03b1\u0300\u03b1\u0300\u03b2\u0020\u03b1\u0300\u03b2\u03b2\u03b3\u03b3")){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String insert characters at end fail");}
     if(bytesFindString.removeAtByteIndex(5, 3) != "__ab__abb"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String remove bytes fail");}
-    if(charactersFindString.removeAtCharacterIndex(5, 3) != U8(u8"\u0020\u0020\u03b1\u0300\u03b2\u0020\u0020\u03b1\u0300\u03b2\u03b2")){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String remove characters fail");}
+    if(charactersFindString.removeAtCharacterIndex(5, 3) != utf8(u8"\u0020\u0020\u03b1\u0300\u03b2\u0020\u0020\u03b1\u0300\u03b2\u03b2")){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String remove characters fail");}
     if(bytesFindString.containsBytes("ab") == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String check if contains existing bytes fail");}
     if(bytesFindString.containsBytes("bc") == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String check if contains nonexistent bytes fail");}
-    if(charactersFindString.containsCharacters(U8(u8"\u03b1\u0300\u03b2")) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String check if contains existing characters fail");}
-    if(charactersFindString.containsCharacters(U8(u8"\u0300\u03b2")) == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String check if contains nonexistent characters fail");}
+    if(charactersFindString.containsCharacters(utf8(u8"\u03b1\u0300\u03b2")) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String check if contains existing characters fail");}
+    if(charactersFindString.containsCharacters(utf8(u8"\u0300\u03b2")) == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String check if contains nonexistent characters fail");}
     if(bytesFindString.startsWithBytes("__") == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String check start bytes with matched prefix fail");}
     if(bytesFindString.startsWithBytes("_a") == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String check start bytes with unmatched prefix fail");}
-    if(charactersFindString.startsWithCharacters(U8(u8"\u0020\u0020")) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String check start characters with matched prefix fail");}
-    if(charactersFindString.startsWithCharacters(U8(u8"\u0020\u03b1\u0300")) == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String check start characters with unmatched prefix fail");}
+    if(charactersFindString.startsWithCharacters(utf8(u8"\u0020\u0020")) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String check start characters with matched prefix fail");}
+    if(charactersFindString.startsWithCharacters(utf8(u8"\u0020\u03b1\u0300")) == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String check start characters with unmatched prefix fail");}
     if(bytesFindString.endsWithBytes("bb") == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String check end bytes with matched prefix fail");}
     if(bytesFindString.endsWithBytes("ab") == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String check end bytes with unmatched prefix fail");}
-    if(charactersFindString.endsWithCharacters(U8(u8"\u03b2\u03b2")) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String check end characters with matched prefix fail");}
-    if(charactersFindString.endsWithCharacters(U8(u8"\u03b1\u0300\u03b2")) == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String check end characters with unmatched prefix fail");}
+    if(charactersFindString.endsWithCharacters(utf8(u8"\u03b2\u03b2")) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String check end characters with matched prefix fail");}
+    if(charactersFindString.endsWithCharacters(utf8(u8"\u03b1\u0300\u03b2")) == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String check end characters with unmatched prefix fail");}
     bytesFindString = SGEXTN::CoreText::String::repeat("a", 7);
-    charactersFindString = SGEXTN::CoreText::String::repeat(U8(u8"\u03b1\u0300"), 7);
-    if(charactersFindString != U8(u8"\u03b1\u0300\u03b1\u0300\u03b1\u0300\u03b1\u0300\u03b1\u0300\u03b1\u0300\u03b1\u0300")){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String repeat given string fail");}
+    charactersFindString = SGEXTN::CoreText::String::repeat(utf8(u8"\u03b1\u0300"), 7);
+    if(charactersFindString != utf8(u8"\u03b1\u0300\u03b1\u0300\u03b1\u0300\u03b1\u0300\u03b1\u0300\u03b1\u0300\u03b1\u0300")){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String repeat given string fail");}
     if(bytesFindString.countBytes("aaa") != 2){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String count bytes no overlap fail");}
-    if(charactersFindString.countCharacters(U8(u8"\u03b1\u0300\u03b1\u0300\u03b1\u0300")) != 2){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String count characters no overlap fail");}
+    if(charactersFindString.countCharacters(utf8(u8"\u03b1\u0300\u03b1\u0300\u03b1\u0300")) != 2){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String count characters no overlap fail");}
     if(bytesFindString.countBytesAllowOverlap("aaa") != 5){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String count bytes allow overlap fail");}
-    if(charactersFindString.countCharactersAllowOverlap(U8(u8"\u03b1\u0300\u03b1\u0300\u03b1\u0300")) != 5){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String count characters allow overlap fail");}
+    if(charactersFindString.countCharactersAllowOverlap(utf8(u8"\u03b1\u0300\u03b1\u0300\u03b1\u0300")) != 5){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String count characters allow overlap fail");}
     if(bytesFindString.fillLeftToByteLength(5, 'b') != bytesFindString){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String fill left bytes sufficient length fail");}
     if(bytesFindString.fillLeftToByteLength(10, 'b') != "bbbaaaaaaa"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String fill left bytes insufficient length fail");}
-    if(charactersFindString.fillLeftToCharacterLength(5, SGEXTN::CoreText::Character(U8(u8"\u03b2"))) != charactersFindString){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String fill left characters sufficient length fail");}
-    if(charactersFindString.fillLeftToCharacterLength(10, SGEXTN::CoreText::Character(U8(u8"\u03b2"))) != U8(u8"\u03b2\u03b2\u03b2\u03b1\u0300\u03b1\u0300\u03b1\u0300\u03b1\u0300\u03b1\u0300\u03b1\u0300\u03b1\u0300")){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String fill left characters insufficient length fail");}
+    if(charactersFindString.fillLeftToCharacterLength(5, SGEXTN::CoreText::Character(utf8(u8"\u03b2"))) != charactersFindString){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String fill left characters sufficient length fail");}
+    if(charactersFindString.fillLeftToCharacterLength(10, SGEXTN::CoreText::Character(utf8(u8"\u03b2"))) != utf8(u8"\u03b2\u03b2\u03b2\u03b1\u0300\u03b1\u0300\u03b1\u0300\u03b1\u0300\u03b1\u0300\u03b1\u0300\u03b1\u0300")){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String fill left characters insufficient length fail");}
     if(bytesFindString.fillRightToByteLength(5, 'b') != bytesFindString){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String fill right bytes sufficient length fail");}
     if(bytesFindString.fillRightToByteLength(10, 'b') != "aaaaaaabbb"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String fill right bytes insufficient length fail");}
-    if(charactersFindString.fillRightToCharacterLength(5, SGEXTN::CoreText::Character(U8(u8"\u03b2"))) != charactersFindString){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String fill right characters sufficient length fail");}
-    if(charactersFindString.fillRightToCharacterLength(10, SGEXTN::CoreText::Character(U8(u8"\u03b2"))) != U8(u8"\u03b1\u0300\u03b1\u0300\u03b1\u0300\u03b1\u0300\u03b1\u0300\u03b1\u0300\u03b1\u0300\u03b2\u03b2\u03b2")){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String fill right characters insufficient length fail");}
+    if(charactersFindString.fillRightToCharacterLength(5, SGEXTN::CoreText::Character(utf8(u8"\u03b2"))) != charactersFindString){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String fill right characters sufficient length fail");}
+    if(charactersFindString.fillRightToCharacterLength(10, SGEXTN::CoreText::Character(utf8(u8"\u03b2"))) != utf8(u8"\u03b1\u0300\u03b1\u0300\u03b1\u0300\u03b1\u0300\u03b1\u0300\u03b1\u0300\u03b1\u0300\u03b2\u03b2\u03b2")){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String fill right characters insufficient length fail");}
     if(charactersFindString.byteIndexToCharacterIndex(1) != 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String convert byte index to character index fail");}
     if(charactersFindString.characterIndexToByteIndex(1) != 4){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String convert character index to byte index fail");}
     SGEXTN::CoreText::String positiveBase10Number = "26";
     SGEXTN::CoreText::String negativeBase10Number = "-26";
     SGEXTN::CoreText::String positiveBase16Number = "1a";
     SGEXTN::CoreText::String negativeBase16Number = "-1A";
-    SGEXTN::CoreText::String positiveNonLatinNumber = U8(u8"\u0be8\u0bec");
-    SGEXTN::CoreText::String negativeNonLatinNumber = U8(u8"\u002d\u0be8\u0bec");
+    SGEXTN::CoreText::String positiveNonLatinNumber = utf8(u8"\u0be8\u0bec");
+    SGEXTN::CoreText::String negativeNonLatinNumber = utf8(u8"\u002d\u0be8\u0bec");
     SGEXTN::CoreText::String invalidNumber = "2 6";
     bool isValid = false;
     if(positiveBase10Number.parseToShort(&isValid, 10) != 26 || isValid == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String parse positive base 10 number to short fail");}
@@ -378,8 +378,8 @@ void SGEXTN::InternalTest::CoreTextTest::testString(){
     const SGEXTN::CoreText::String negativeScientificNotation = "-5.0^-01";
     positiveBase16Number = "a.8";
     negativeBase16Number = "-0a.80";
-    positiveNonLatinNumber = U8(u8"\u0be6\u002e\u0beb");
-    negativeNonLatinNumber = U8(u8"\u002d\u0be6\u0be6\u002e\u0beb\u0be6");
+    positiveNonLatinNumber = utf8(u8"\u0be6\u002e\u0beb");
+    negativeNonLatinNumber = utf8(u8"\u002d\u0be6\u0be6\u002e\u0beb\u0be6");
     invalidNumber = "-+0.5";
     isValid = false;
     if(positiveBase10Number.parseToFloat(&isValid, 10) != 10.5f || isValid == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String parse positive base 10 number to float fail");}
@@ -461,8 +461,8 @@ void SGEXTN::InternalTest::CoreTextTest::testString(){
     if(SGEXTN::CoreText::String::stringFromDouble(-1.0f / 3.0f, 10, SGEXTN::CoreText::FloatPrecisionFormat::ScientificNotation, 3) != "-3.33^-1"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String print double scientific notation mode negative base 10 fail");}
     if(SGEXTN::CoreText::String::stringFromDouble(31.0f / 3.0f, 16, SGEXTN::CoreText::FloatPrecisionFormat::ScientificNotation, 3) != "a.55^0"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String print double scientific notation mode positive base 16 fail");}
     if(SGEXTN::CoreText::String::stringFromDouble(-1.0f / 3.0f, 16, SGEXTN::CoreText::FloatPrecisionFormat::ScientificNotation, 3) != "-5.55^-1"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String print double scientific notation mode negative base 16 fail");}
-    if(SGEXTN::CoreText::String("-1.23^+09").prettierScientificNotationBase10() != U8(u8"-1.23\u00d710\u2079")){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String make scientific notation prettier fail");}
-    if(SGEXTN::CoreText::String("12345").convertNumericSystem(SGEXTN::CoreText::Character(0xbe6)) != U8(u8"\u0be7\u0be8\u0be9\u0bea\u0beb")){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String convert to non Latin numbers fail");}
+    if(SGEXTN::CoreText::String("-1.23^+09").prettierScientificNotationBase10() != utf8(u8"-1.23\u00d710\u2079")){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String make scientific notation prettier fail");}
+    if(SGEXTN::CoreText::String("12345").convertNumericSystem(SGEXTN::CoreText::Character(0xbe6)) != utf8(u8"\u0be7\u0be8\u0be9\u0bea\u0beb")){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String convert to non Latin numbers fail");}
     if(SGEXTN::CoreText::String("<b> & </b>#").prepareInnerHtmlText() != "&lt;b&gt; &amp; &lt;/b&gt;#"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String HTML escaping fail");}
     if(SGEXTN::CoreText::String("  te xt \t\n  \n \t ").removeLeadingTrailingWhitespace() != "te xt"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String whitespace trimming fail");}
     if(SGEXTN::CoreText::String(" a b \nc\t\t\td    e \n \tfgh   ").cleanWhitespace() != "a b c d e fgh"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String whitespace cleaning fail");}
@@ -485,26 +485,26 @@ void SGEXTN::InternalTest::CoreTextTest::testString(){
     if((SGEXTN::CoreText::String("QWERTYqwerty0123456789,.<> ") + SGEXTN::CoreText::Character(0xbe6)).isASCII() == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String check ASCII false fail");}
     if(SGEXTN::CoreText::String(" \t\n").isWhitespace() == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String check whitespace true fail");}
     if(SGEXTN::CoreText::String(" \t\n0").isWhitespace() == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String check whitespace false fail");}
-    if(SGEXTN::CoreText::String(U8(u8"A \u0391\u0300_.")).isUppercase() == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String check uppercase true fail");}
-    if(SGEXTN::CoreText::String(U8(u8"A \u0391\u0300_.a")).isUppercase() == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String check uppercase false fail");}
-    if(SGEXTN::CoreText::String(U8(u8"a \u03b1\u0300_.")).isLowercase() == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String check lowercase true fail");}
-    if(SGEXTN::CoreText::String(U8(u8"a \u03b1\u0300_.A")).isLowercase() == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String check lowercase false fail");}
-    if(SGEXTN::CoreText::String(U8(u8"A \u0391\u0300_.\u01c5")).isTitlecase() == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String check titlecase true fail");}
-    if(SGEXTN::CoreText::String(U8(u8"A \u0391\u0300_.\u01c4")).isTitlecase() == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String check titlecase false fail");}
-    const SGEXTN::CoreText::String changeCaseTestString = U8(u8" ./aA\u0391\u03b1\u0300\u01c4\u01c5\u01c6\u4000");
-    if(changeCaseTestString.getUppercase() != U8(u8" ./AA\u0391\u0391\u0300\u01c4\u01c4\u01c4\u4000")){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String convert to uppercase fail");}
-    if(changeCaseTestString.getLowercase() != U8(u8" ./aa\u03b1\u03b1\u0300\u01c6\u01c6\u01c6\u4000")){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String convert to uppercase fail");}
-    if(changeCaseTestString.getTitlecase() != U8(u8" ./AA\u0391\u0391\u0300\u01c5\u01c5\u01c5\u4000")){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String convert to uppercase fail");}
+    if(SGEXTN::CoreText::String(utf8(u8"A \u0391\u0300_.")).isUppercase() == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String check uppercase true fail");}
+    if(SGEXTN::CoreText::String(utf8(u8"A \u0391\u0300_.a")).isUppercase() == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String check uppercase false fail");}
+    if(SGEXTN::CoreText::String(utf8(u8"a \u03b1\u0300_.")).isLowercase() == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String check lowercase true fail");}
+    if(SGEXTN::CoreText::String(utf8(u8"a \u03b1\u0300_.A")).isLowercase() == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String check lowercase false fail");}
+    if(SGEXTN::CoreText::String(utf8(u8"A \u0391\u0300_.\u01c5")).isTitlecase() == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String check titlecase true fail");}
+    if(SGEXTN::CoreText::String(utf8(u8"A \u0391\u0300_.\u01c4")).isTitlecase() == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String check titlecase false fail");}
+    const SGEXTN::CoreText::String changeCaseTestString = utf8(u8" ./aA\u0391\u03b1\u0300\u01c4\u01c5\u01c6\u4000");
+    if(changeCaseTestString.getUppercase() != utf8(u8" ./AA\u0391\u0391\u0300\u01c4\u01c4\u01c4\u4000")){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String convert to uppercase fail");}
+    if(changeCaseTestString.getLowercase() != utf8(u8" ./aa\u03b1\u03b1\u0300\u01c6\u01c6\u01c6\u4000")){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String convert to uppercase fail");}
+    if(changeCaseTestString.getTitlecase() != utf8(u8" ./AA\u0391\u0391\u0300\u01c5\u01c5\u01c5\u4000")){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String convert to uppercase fail");}
     SGEXTN::Containers::Array<int> unicodeCodePoints = changeCaseTestString.getUnicode();
     SGEXTN::Containers::Array<int> expectedCodePoints = SGEXTN::Containers::Array<int>({0x20, 0x2e, 0x2f, 0x61, 0x41, 0x391, 0x3b1, 0x300, 0x1c4, 0x1c5, 0x1c6, 0x4000});
     if(unicodeCodePoints.length() != expectedCodePoints.length()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String extract Unicode code points fail");}
     for(int i=0; i<unicodeCodePoints.length(); i++){
         if(unicodeCodePoints.at(i) != expectedCodePoints.at(i)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String extract Unicode code points fail");}
     }
-    const SGEXTN::CoreText::String unsimplifiedString = U8(u8"Caf\u00e8 at Yishun \uff2d\uff32\uff34 \u2122 \n\t \U0001d4a9\U0001d4ae\u2081\u2081");
+    const SGEXTN::CoreText::String unsimplifiedString = utf8(u8"Caf\u00e8 at Yishun \uff2d\uff32\uff34 \u2122 \n\t \U0001d4a9\U0001d4ae\u2081\u2081");
     if(unsimplifiedString.getSimplestEquivalent(false) != "Cafe at Yishun MRT TM NS11"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String case sensitive simplest string conversion fail");}
     if(unsimplifiedString.getSimplestEquivalent(true) != "cafe at yishun mrt tm ns11"){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String case insensitive simplest string conversion fail");}
-    const SGEXTN::CoreText::String sampleText = U8(u8"I\u2665\U0001f1f8\U0001f1ec");
+    const SGEXTN::CoreText::String sampleText = utf8(u8"I\u2665\U0001f1f8\U0001f1ec");
     SGEXTN::Containers::Array<unsigned char> serialiseArray(726, static_cast<unsigned char>(0));
     SGEXTN::Containers::Array<unsigned char> serialiseDestination(726, static_cast<unsigned char>(0));
     serialiseArray.at(0) = static_cast<unsigned char>(0x0c);
