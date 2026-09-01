@@ -437,26 +437,26 @@ SGEXTN::CoreText::String unicodeRecompose(const SGEXTN::CoreText::String& s){
 }
 
 SGEXTN::CoreText::String::String() : stack_(){
-    stack_.length = SGEXTN::CoreText::StringStackStorage::stackFlag;
-    (*(stack_.boundaries + 0)) = 0;
-    (*(stack_.boundaries + 1)) = 0;
+    stack_.length_ = SGEXTN::CoreText::StringStackStorage::stackFlag;
+    (*(stack_.boundaries_ + 0)) = 0;
+    (*(stack_.boundaries_ + 1)) = 0;
 }
 
 bool SGEXTN::CoreText::String::isUsingHeap() const {
-    return ((stack_.length & SGEXTN::CoreText::StringStackStorage::stackFlag) == 0);
+    return ((stack_.length_ & SGEXTN::CoreText::StringStackStorage::stackFlag) == 0);
 }
 
 SGEXTN::CoreText::String::String(const SGEXTN::CoreText::String& x) : stack_(){
     if(x.isUsingHeap() == false){
-        stack_.length = x.stack_.length;
-        (*(stack_.boundaries + 0)) = (*(x.stack_.boundaries + 0));
-        (*(stack_.boundaries + 1)) = (*(x.stack_.boundaries + 1));
-        if(x.byteLength() > 0){memoryCopy(x.getRawPointer(), stack_.data, x.byteLength());}
+        stack_.length_ = x.stack_.length_;
+        (*(stack_.boundaries_ + 0)) = (*(x.stack_.boundaries_ + 0));
+        (*(stack_.boundaries_ + 1)) = (*(x.stack_.boundaries_ + 1));
+        if(x.byteLength() > 0){memoryCopy(x.getRawPointer(), stack_.data_, x.byteLength());}
     }
     else{
-        new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(&heap_.boundaries)) SGEXTN::CoreText::BoundariesArray();
-        new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(&heap_.data)) SGEXTN::CoreText::ByteVector(x.heap_.data);
-        heap_.length = x.byteLength();
+        new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(&heap_.boundaries_)) SGEXTN::CoreText::BoundariesArray();
+        new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(&heap_.data_)) SGEXTN::CoreText::ByteVector(x.heap_.data_);
+        heap_.length_ = x.byteLength();
     }
 }
 
@@ -464,39 +464,39 @@ SGEXTN::CoreText::String& SGEXTN::CoreText::String::operator=(const SGEXTN::Core
     if(this == &x){return (*this);}
     invalidateGraphemeBoundaries();
     if(isUsingHeap() == true){
-        heap_.boundaries.~BoundariesArray();
-        heap_.data.~ByteVector();
+        heap_.boundaries_.~BoundariesArray();
+        heap_.data_.~ByteVector();
     }
     if(x.isUsingHeap() == false){
-        stack_.length = x.stack_.length;
-        (*(stack_.boundaries + 0)) = (*(x.stack_.boundaries + 0));
-        (*(stack_.boundaries + 1)) = (*(x.stack_.boundaries + 1));
-        if(x.byteLength() > 0){memoryCopy(x.getRawPointer(), stack_.data, x.byteLength());}
+        stack_.length_ = x.stack_.length_;
+        (*(stack_.boundaries_ + 0)) = (*(x.stack_.boundaries_ + 0));
+        (*(stack_.boundaries_ + 1)) = (*(x.stack_.boundaries_ + 1));
+        if(x.byteLength() > 0){memoryCopy(x.getRawPointer(), stack_.data_, x.byteLength());}
     }
     else{
-        new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(&heap_.boundaries)) SGEXTN::CoreText::BoundariesArray();
-        new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(&heap_.data)) SGEXTN::CoreText::ByteVector(x.heap_.data);
-        heap_.length = x.byteLength();
+        new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(&heap_.boundaries_)) SGEXTN::CoreText::BoundariesArray();
+        new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(&heap_.data_)) SGEXTN::CoreText::ByteVector(x.heap_.data_);
+        heap_.length_ = x.byteLength();
     }
     return (*this);
 }
 
 SGEXTN::CoreText::String::String(SGEXTN::CoreText::String&& x) noexcept : stack_(){
     if(x.isUsingHeap() == false){
-        stack_.length = x.stack_.length;
-        (*(stack_.boundaries + 0)) = (*(x.stack_.boundaries + 0));
-        (*(stack_.boundaries + 1)) = (*(x.stack_.boundaries + 1));
-        if(x.byteLength() > 0){memoryCopy(x.getRawPointer(), stack_.data, x.byteLength());}
+        stack_.length_ = x.stack_.length_;
+        (*(stack_.boundaries_ + 0)) = (*(x.stack_.boundaries_ + 0));
+        (*(stack_.boundaries_ + 1)) = (*(x.stack_.boundaries_ + 1));
+        if(x.byteLength() > 0){memoryCopy(x.getRawPointer(), stack_.data_, x.byteLength());}
     }
     else{
-        new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(&heap_.boundaries)) SGEXTN::CoreText::BoundariesArray(static_cast<SGEXTN::CoreText::BoundariesArray&&>(x.heap_.boundaries));
-        new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(&heap_.data)) SGEXTN::CoreText::ByteVector(static_cast<SGEXTN::CoreText::ByteVector&&>(x.heap_.data));
-        heap_.length = x.byteLength();
-        x.heap_.data.~ByteVector();
-        x.heap_.boundaries.~BoundariesArray();
-        x.stack_.length = SGEXTN::CoreText::StringStackStorage::stackFlag;
-        (*(x.stack_.boundaries + 0)) = 0;
-        (*(x.stack_.boundaries + 1)) = 0;
+        new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(&heap_.boundaries_)) SGEXTN::CoreText::BoundariesArray(static_cast<SGEXTN::CoreText::BoundariesArray&&>(x.heap_.boundaries_));
+        new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(&heap_.data_)) SGEXTN::CoreText::ByteVector(static_cast<SGEXTN::CoreText::ByteVector&&>(x.heap_.data_));
+        heap_.length_ = x.byteLength();
+        x.heap_.data_.~ByteVector();
+        x.heap_.boundaries_.~BoundariesArray();
+        x.stack_.length_ = SGEXTN::CoreText::StringStackStorage::stackFlag;
+        (*(x.stack_.boundaries_ + 0)) = 0;
+        (*(x.stack_.boundaries_ + 1)) = 0;
     }
 }
 
@@ -504,24 +504,24 @@ SGEXTN::CoreText::String& SGEXTN::CoreText::String::operator=(SGEXTN::CoreText::
     if(this == &x){return (*this);}
     invalidateGraphemeBoundaries();
     if(isUsingHeap() == true){
-        heap_.boundaries.~BoundariesArray();
-        heap_.data.~ByteVector();
+        heap_.boundaries_.~BoundariesArray();
+        heap_.data_.~ByteVector();
     }
     if(x.isUsingHeap() == false){
-        stack_.length = x.stack_.length;
-        (*(stack_.boundaries + 0)) = (*(x.stack_.boundaries + 0));
-        (*(stack_.boundaries + 1)) = (*(x.stack_.boundaries + 1));
-        if(x.byteLength() > 0){memoryCopy(x.getRawPointer(), stack_.data, x.byteLength());}
+        stack_.length_ = x.stack_.length_;
+        (*(stack_.boundaries_ + 0)) = (*(x.stack_.boundaries_ + 0));
+        (*(stack_.boundaries_ + 1)) = (*(x.stack_.boundaries_ + 1));
+        if(x.byteLength() > 0){memoryCopy(x.getRawPointer(), stack_.data_, x.byteLength());}
     }
     else{
-        new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(&heap_.boundaries)) SGEXTN::CoreText::BoundariesArray(static_cast<SGEXTN::CoreText::BoundariesArray&&>(x.heap_.boundaries));
-        new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(&heap_.data)) SGEXTN::CoreText::ByteVector(static_cast<SGEXTN::CoreText::ByteVector&&>(x.heap_.data));
-        heap_.length = x.byteLength();
-        x.heap_.data.~ByteVector();
-        x.heap_.boundaries.~BoundariesArray();
-        x.stack_.length = SGEXTN::CoreText::StringStackStorage::stackFlag;
-        (*(x.stack_.boundaries + 0)) = 0;
-        (*(x.stack_.boundaries + 1)) = 0;
+        new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(&heap_.boundaries_)) SGEXTN::CoreText::BoundariesArray(static_cast<SGEXTN::CoreText::BoundariesArray&&>(x.heap_.boundaries_));
+        new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(&heap_.data_)) SGEXTN::CoreText::ByteVector(static_cast<SGEXTN::CoreText::ByteVector&&>(x.heap_.data_));
+        heap_.length_ = x.byteLength();
+        x.heap_.data_.~ByteVector();
+        x.heap_.boundaries_.~BoundariesArray();
+        x.stack_.length_ = SGEXTN::CoreText::StringStackStorage::stackFlag;
+        (*(x.stack_.boundaries_ + 0)) = 0;
+        (*(x.stack_.boundaries_ + 1)) = 0;
     }
     return (*this);
 }
@@ -529,30 +529,30 @@ SGEXTN::CoreText::String& SGEXTN::CoreText::String::operator=(SGEXTN::CoreText::
 SGEXTN::CoreText::String::~String(){
     invalidateGraphemeBoundaries();
     if(isUsingHeap() == true){
-        heap_.boundaries.~BoundariesArray();
-        heap_.data.~ByteVector();
+        heap_.boundaries_.~BoundariesArray();
+        heap_.data_.~ByteVector();
     }
 }
 
 SGEXTN::CoreText::String::String(unsigned char c) : SGEXTN::CoreText::String(){
     if(c > 0x7f){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String constructor crashed because the given unsigned char does not represent a valid ASCII character");}
-    stack_.length = (SGEXTN::CoreText::StringStackStorage::stackFlag | 1);
-    (*stack_.data) = c;
+    stack_.length_ = (SGEXTN::CoreText::StringStackStorage::stackFlag | 1);
+    (*stack_.data_) = c;
 }
 
 SGEXTN::CoreText::String::String(const char* s) : stack_(){
     const int sLength = cStringLength(s);
     const unsigned char* unsignedString = reinterpret_cast<const unsigned char*>(s);
     if(sLength <= 52){
-        stack_.length = (SGEXTN::CoreText::StringStackStorage::stackFlag | sLength);
-        (*(stack_.boundaries + 0)) = 0;
-        (*(stack_.boundaries + 1)) = 0;
-        if(sLength > 0){memoryCopy(unsignedString, stack_.data, sLength);}
+        stack_.length_ = (SGEXTN::CoreText::StringStackStorage::stackFlag | sLength);
+        (*(stack_.boundaries_ + 0)) = 0;
+        (*(stack_.boundaries_ + 1)) = 0;
+        if(sLength > 0){memoryCopy(unsignedString, stack_.data_, sLength);}
     }
     else{
-        heap_.length = sLength;
-        new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(&heap_.boundaries)) SGEXTN::CoreText::BoundariesArray();
-        new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(&heap_.data)) SGEXTN::CoreText::ByteVector(sLength);
+        heap_.length_ = sLength;
+        new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(&heap_.boundaries_)) SGEXTN::CoreText::BoundariesArray();
+        new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(&heap_.data_)) SGEXTN::CoreText::ByteVector(sLength);
         memoryCopy(unsignedString, getRawPointer(), sLength);
     }
 }
@@ -618,92 +618,92 @@ SGEXTN::CoreText::String& SGEXTN::CoreText::String::operator+=(const SGEXTN::Cor
     invalidateGraphemeBoundaries();
     const int newLength = byteLength() + x.byteLength();
     if(newLength <= 52){
-        if(x.byteLength() > 0){memoryCopy(x.getRawPointer(), stack_.data + byteLength(), x.byteLength());}
-        stack_.length = (SGEXTN::CoreText::StringStackStorage::stackFlag | newLength);
+        if(x.byteLength() > 0){memoryCopy(x.getRawPointer(), stack_.data_ + byteLength(), x.byteLength());}
+        stack_.length_ = (SGEXTN::CoreText::StringStackStorage::stackFlag | newLength);
     }
     else{
         if(byteLength() <= 52){
             SGEXTN::CoreText::ByteVector newStorage(newLength);
-            memoryCopy(stack_.data, newStorage.getRawPointer(), byteLength());
+            memoryCopy(stack_.data_, newStorage.getRawPointer(), byteLength());
             if(x.byteLength() > 0){memoryCopy(x.getRawPointer(), newStorage.getRawPointer() + byteLength(), x.byteLength());}
-            heap_.length = newLength;
-            new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(&heap_.boundaries)) SGEXTN::CoreText::BoundariesArray();
-            new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(&heap_.data)) SGEXTN::CoreText::ByteVector(static_cast<SGEXTN::CoreText::ByteVector&&>(newStorage));
+            heap_.length_ = newLength;
+            new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(&heap_.boundaries_)) SGEXTN::CoreText::BoundariesArray();
+            new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(&heap_.data_)) SGEXTN::CoreText::ByteVector(static_cast<SGEXTN::CoreText::ByteVector&&>(newStorage));
         }
         else{
             if(x.byteLength() > 0){
-                if(this != &x){heap_.data.pushBack(x.getRawPointer(), x.byteLength());}
+                if(this != &x){heap_.data_.pushBack(x.getRawPointer(), x.byteLength());}
                 else{
                     SGEXTN::CoreText::String xCopy(x);
                     const unsigned char c = xCopy.byteAt(0);
                     xCopy.byteAt(0) = c;
-                    heap_.data.pushBack(xCopy.getRawPointer(), x.byteLength());
+                    heap_.data_.pushBack(xCopy.getRawPointer(), x.byteLength());
                 }
             }
-            heap_.length = newLength;
+            heap_.length_ = newLength;
         }
     }
     return (*this);
 }
 
 int SGEXTN::CoreText::String::byteLength() const {
-    return static_cast<int>(0x7fffffffu & stack_.length);
+    return static_cast<int>(0x7fffffffu & stack_.length_);
 }
 
 int SGEXTN::CoreText::String::characterLength() const {
     computeGraphemeBoundaries();
-    if(isUsingHeap() == true){return heap_.boundaries.emptySpace();}
-    return (SGEXTN::Math::Bitwise<unsigned int>::countNumberOfOne(*stack_.boundaries) + SGEXTN::Math::Bitwise<unsigned int>::countNumberOfOne(*(stack_.boundaries + 1)));
+    if(isUsingHeap() == true){return heap_.boundaries_.emptySpace();}
+    return (SGEXTN::Math::Bitwise<unsigned int>::countNumberOfOne(*stack_.boundaries_) + SGEXTN::Math::Bitwise<unsigned int>::countNumberOfOne(*(stack_.boundaries_ + 1)));
 }
 
 unsigned char& SGEXTN::CoreText::String::byteAt(int i){
     if(i < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::byteAt crashed because the index is negative");}
     if(i >= byteLength()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::byteAt crashed because the index points beyond the end of the string");}
     invalidateGraphemeBoundaries();
-    if(isUsingHeap() == false){return (*(stack_.data + i));}
-    return heap_.data.at(i);
+    if(isUsingHeap() == false){return (*(stack_.data_ + i));}
+    return heap_.data_.at(i);
 }
 
 const unsigned char& SGEXTN::CoreText::String::byteAt(int i) const {
     if(i < 0){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::byteAt crashed because the index is negative");}
     if(i >= byteLength()){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::byteAt crashed because the index points beyond the end of the string");}
-    if(isUsingHeap() == false){return (*(stack_.data + i));}
-    return heap_.data.at(i);
+    if(isUsingHeap() == false){return (*(stack_.data_ + i));}
+    return heap_.data_.at(i);
 }
 
 bool SGEXTN::CoreText::String::readBoundary(int i) const {
     if(isUsingHeap() == false){
-        if(i < 32){return (((*stack_.boundaries) & (1u << i)) != 0);}
-        return (((*(stack_.boundaries + 1)) & (1u << (i - 32))) != 0);
+        if(i < 32){return (((*stack_.boundaries_) & (1u << i)) != 0);}
+        return (((*(stack_.boundaries_ + 1)) & (1u << (i - 32))) != 0);
     }
     const int q = i / 64;
     const bool p = (i - 64 * q < 32);
-    if(p == true){return ((heap_.boundaries.at(3 * q) & (1u << (i - 64 * q))) != 0);}
-    return ((heap_.boundaries.at(3 * q + 1) & (1u << (i - 64 * q - 32))) != 0);
+    if(p == true){return ((heap_.boundaries_.at(3 * q) & (1u << (i - 64 * q))) != 0);}
+    return ((heap_.boundaries_.at(3 * q + 1) & (1u << (i - 64 * q - 32))) != 0);
 }
 
 void SGEXTN::CoreText::String::writeBoundaryTrue(int i) const {
     if(isUsingHeap() == false){
-        if(i < 32){(*stack_.boundaries) |= (1u << i);}
-        else{(*(stack_.boundaries + 1)) |= (1u << (i - 32));}
+        if(i < 32){(*stack_.boundaries_) |= (1u << i);}
+        else{(*(stack_.boundaries_ + 1)) |= (1u << (i - 32));}
     }
     else{
         const int q = i / 64;
         const bool p = (i - 64 * q < 32);
-        if(p == true){heap_.boundaries.at(3 * q) |= (1u << (i - 64 * q));}
-        else{heap_.boundaries.at(3 * q + 1) |= (1u << (i - 64 * q - 32));}
+        if(p == true){heap_.boundaries_.at(3 * q) |= (1u << (i - 64 * q));}
+        else{heap_.boundaries_.at(3 * q + 1) |= (1u << (i - 64 * q - 32));}
     }
 }
 
 void SGEXTN::CoreText::String::computeGraphemeBoundaries() const {
     if(byteLength() == 0){return;}
-    if(isUsingHeap() == false && ((*stack_.boundaries) & 1) != 0){return;}
-    if(isUsingHeap() == true && heap_.boundaries.length() != 0){return;}
+    if(isUsingHeap() == false && ((*stack_.boundaries_) & 1) != 0){return;}
+    if(isUsingHeap() == true && heap_.boundaries_.length() != 0){return;}
     if(isUsingHeap() == false){
-        (*(stack_.boundaries + 0)) = 0;
-        (*(stack_.boundaries + 1)) = 0;
+        (*(stack_.boundaries_ + 0)) = 0;
+        (*(stack_.boundaries_ + 1)) = 0;
     }
-    else{heap_.boundaries = SGEXTN::CoreText::BoundariesArray(3 * (byteLength() / 64 + 1) - 1);}
+    else{heap_.boundaries_ = SGEXTN::CoreText::BoundariesArray(3 * (byteLength() / 64 + 1) - 1);}
     SGEXTN::Containers::Array<int> unicodeList = getUnicode();
     SGEXTN::Containers::Array<int> codePointOffset(unicodeList.length(), 0);
     int currentCodePointOffset = 0;
@@ -772,20 +772,20 @@ void SGEXTN::CoreText::String::computeGraphemeBoundaries() const {
         if(graphemeBoundaryCount % 64 == 0){space64Cache.pushBack(codePointOffset.at(i));}
     }
     if(isUsingHeap() == true){
-        heap_.boundaries.emptySpace() = graphemeBoundaryCount + 1;
+        heap_.boundaries_.emptySpace() = graphemeBoundaryCount + 1;
         for(int i=0; i<space64Cache.length(); i++){
-            heap_.boundaries.at(3 * i + 2) = space64Cache.at(i);
+            heap_.boundaries_.at(3 * i + 2) = space64Cache.at(i);
         }
     }
 }
 
 void SGEXTN::CoreText::String::invalidateGraphemeBoundaries() const {
     if(isUsingHeap() == false){
-        (*(stack_.boundaries + 0)) = 0;
-        (*(stack_.boundaries + 1)) = 0;
+        (*(stack_.boundaries_ + 0)) = 0;
+        (*(stack_.boundaries_ + 1)) = 0;
     }
     else{
-        if(heap_.boundaries.length() != 0){heap_.boundaries = SGEXTN::CoreText::BoundariesArray();}
+        if(heap_.boundaries_.length() != 0){heap_.boundaries_ = SGEXTN::CoreText::BoundariesArray();}
     }
 }
 
@@ -816,8 +816,8 @@ int SGEXTN::CoreText::String::characterIndexToByteIndex(int i) const {
     int r = i % 64;
     int left = 0;
     int right = byteLength();
-    if(q > 0){left = static_cast<int>(heap_.boundaries.at(3 * q - 1));}
-    if(3 * q + 2 < heap_.boundaries.length()){right = static_cast<int>(heap_.boundaries.at(3 * q + 2));}
+    if(q > 0){left = static_cast<int>(heap_.boundaries_.at(3 * q - 1));}
+    if(3 * q + 2 < heap_.boundaries_.length()){right = static_cast<int>(heap_.boundaries_.at(3 * q + 2));}
     if(right == 0){right = byteLength();}
     for(int j=left; j<right; j++){
         if(readBoundary(j) == true){r--;}
@@ -941,15 +941,15 @@ SGEXTN::CoreText::String SGEXTN::CoreText::String::substringBytes(int start, int
     if(length == 0){return "";}
     SGEXTN::CoreText::String output;
     if(length <= 52){
-        memoryCopy(getRawPointer() + start, output.stack_.data, length);
-        output.stack_.length = (SGEXTN::CoreText::StringStackStorage::stackFlag | length);
+        memoryCopy(getRawPointer() + start, output.stack_.data_, length);
+        output.stack_.length_ = (SGEXTN::CoreText::StringStackStorage::stackFlag | length);
     }
     else{
         SGEXTN::CoreText::ByteVector newStorage(length);
         memoryCopy(getRawPointer() + start, newStorage.getRawPointer(), length);
-        output.heap_.length = length;
-        new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(&output.heap_.boundaries)) SGEXTN::CoreText::BoundariesArray();
-        new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(&output.heap_.data)) SGEXTN::CoreText::ByteVector(static_cast<SGEXTN::CoreText::ByteVector&&>(newStorage));
+        output.heap_.length_ = length;
+        new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(&output.heap_.boundaries_)) SGEXTN::CoreText::BoundariesArray();
+        new (SGEXTN::Containers::PlacementNew::Placeholder, static_cast<void*>(&output.heap_.data_)) SGEXTN::CoreText::ByteVector(static_cast<SGEXTN::CoreText::ByteVector&&>(newStorage));
     }
     return output;
 }
@@ -1589,26 +1589,26 @@ SGEXTN::CoreText::String SGEXTN::CoreText::String::stringFromUnicode(int unicode
     else if(unicode > 0x10ffff){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String::stringFromUnicode crashed because unicode exceeds the largest possible code point");}
     SGEXTN::CoreText::String output;
     if(unicode < 0x80){
-        output.stack_.length = (SGEXTN::CoreText::StringStackStorage::stackFlag | 1);
-        (*(output.stack_.data + 0)) = static_cast<unsigned char>(unicode);
+        output.stack_.length_ = (SGEXTN::CoreText::StringStackStorage::stackFlag | 1);
+        (*(output.stack_.data_ + 0)) = static_cast<unsigned char>(unicode);
     }
     else if(unicode < 0x800){
-        output.stack_.length = (SGEXTN::CoreText::StringStackStorage::stackFlag | 2);
-        (*(output.stack_.data + 0)) = static_cast<unsigned char>(0xc0 + (unicode >> 6));
-        (*(output.stack_.data + 1)) = static_cast<unsigned char>(0x80 + (unicode & 0x3f));
+        output.stack_.length_ = (SGEXTN::CoreText::StringStackStorage::stackFlag | 2);
+        (*(output.stack_.data_ + 0)) = static_cast<unsigned char>(0xc0 + (unicode >> 6));
+        (*(output.stack_.data_ + 1)) = static_cast<unsigned char>(0x80 + (unicode & 0x3f));
     }
     else if(unicode < 0x10000){
-        output.stack_.length = (SGEXTN::CoreText::StringStackStorage::stackFlag | 3);
-        (*(output.stack_.data + 0)) = static_cast<unsigned char>(0xe0 + (unicode >> 12));
-        (*(output.stack_.data + 1)) = static_cast<unsigned char>(0x80 + ((unicode >> 6) & 0x3f));
-        (*(output.stack_.data + 2)) = static_cast<unsigned char>(0x80 + (unicode & 0x3f));
+        output.stack_.length_ = (SGEXTN::CoreText::StringStackStorage::stackFlag | 3);
+        (*(output.stack_.data_ + 0)) = static_cast<unsigned char>(0xe0 + (unicode >> 12));
+        (*(output.stack_.data_ + 1)) = static_cast<unsigned char>(0x80 + ((unicode >> 6) & 0x3f));
+        (*(output.stack_.data_ + 2)) = static_cast<unsigned char>(0x80 + (unicode & 0x3f));
     }
     else if(unicode < 0x110000){
-        output.stack_.length = (SGEXTN::CoreText::StringStackStorage::stackFlag | 4);
-        (*(output.stack_.data + 0)) = static_cast<unsigned char>(0xf0 + (unicode >> 18));
-        (*(output.stack_.data + 1)) = static_cast<unsigned char>(0x80 + ((unicode >> 12) & 0x3f));
-        (*(output.stack_.data + 2)) = static_cast<unsigned char>(0x80 + ((unicode >> 6) & 0x3f));
-        (*(output.stack_.data + 3)) = static_cast<unsigned char>(0x80 + (unicode & 0x3f));
+        output.stack_.length_ = (SGEXTN::CoreText::StringStackStorage::stackFlag | 4);
+        (*(output.stack_.data_ + 0)) = static_cast<unsigned char>(0xf0 + (unicode >> 18));
+        (*(output.stack_.data_ + 1)) = static_cast<unsigned char>(0x80 + ((unicode >> 12) & 0x3f));
+        (*(output.stack_.data_ + 2)) = static_cast<unsigned char>(0x80 + ((unicode >> 6) & 0x3f));
+        (*(output.stack_.data_ + 3)) = static_cast<unsigned char>(0x80 + (unicode & 0x3f));
     }
     return output;
 }

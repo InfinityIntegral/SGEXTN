@@ -19,22 +19,24 @@
 
 namespace SGEXTN::Containers {
 template <typename Key, typename Value, typename Comparator> class AVLTree;
+template <typename Key, typename Value, typename Comparator> class AVLTreeIterator;
+template <typename Key, typename Value, typename Comparator> class AVLTreeConstIterator;
 
 template <typename Key, typename Value, typename Comparator> class AVLTreeNode {
-public:
-    AVLTreeNode* parent;
-    AVLTreeNode* leftChild;
-    AVLTreeNode* rightChild;
-    int height;
-    int subtreeSize;
-    Key key;
-    Value value;
+private:
+    friend class AVLTree<Key, Value, Comparator>;
+    friend class AVLTreeIterator<Key, Value, Comparator>;
+    friend class AVLTreeConstIterator<Key, Value, Comparator>;
+    AVLTreeNode* parent_;
+    AVLTreeNode* leftChild_;
+    AVLTreeNode* rightChild_;
+    int height_;
+    int subtreeSize_;
+    Key key_;
+    Value value_;
     explicit AVLTreeNode(const Key& k, const Value& v, AVLTreeNode* parentNode);
     explicit AVLTreeNode(AVLTreeNode* oldNode, AVLTreeNode* newParent);
 };
-
-template <typename Key, typename Value, typename Comparator> class AVLTreeIterator;
-template <typename Key, typename Value, typename Comparator> class AVLTreeConstIterator;
 
 template <typename Key, typename Value, typename Comparator> class AVLTree {
 private:

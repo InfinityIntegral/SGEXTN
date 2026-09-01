@@ -26,6 +26,7 @@ template <typename T> class Span;
 
 namespace SGEXTN::CoreText {
 class Character;
+class String;
 
 enum class FloatPrecisionFormat : unsigned char {
     SignificantFigure = 1,
@@ -41,19 +42,22 @@ enum class NormalisationFormat : unsigned char {
 };
 
 class BuildLah_SGEXTN_CoreText StringStackStorage {
-public:
+private:
+    friend class SGEXTN::CoreText::String;
     static constexpr unsigned int stackFlag = 0x80000000u;
-    unsigned int length;
-    mutable unsigned int boundaries[2];
-    unsigned char data[52];
+    unsigned int length_;
+    mutable unsigned int boundaries_[2];
+    unsigned char data_[52];
 };
 
 class BuildLah_SGEXTN_CoreText StringHeapStorage {
+private:
+    friend class SGEXTN::CoreText::String;
+    unsigned int length_;
+    mutable SGEXTN::CoreText::BoundariesArray boundaries_;
+    SGEXTN::CoreText::ByteVector data_;
 public:
     StringHeapStorage() = delete;
-    unsigned int length;
-    mutable SGEXTN::CoreText::BoundariesArray boundaries;
-    SGEXTN::CoreText::ByteVector data;
 };
 
 class BuildLah_SGEXTN_CoreText String {
@@ -74,9 +78,9 @@ public:
     String(String&& x) noexcept;
     String& operator=(String&& x) noexcept;
     ~String();
-    String(unsigned char c); //NOLINT(google-explicit-constructor)
-    String(const char* s); //NOLINT(google-explicit-constructor)
-    String(const SGEXTN::CoreText::Character& c); //NOLINT(google-explicit-constructor)
+    explicit(false) String(unsigned char c);
+    explicit(false) String(const char* s);
+    explicit(false) String(const SGEXTN::CoreText::Character& c);
     [[nodiscard]] bool operator==(const String& x) const;
     [[nodiscard]] bool operator!=(const String& x) const;
     [[nodiscard]] bool operator<(const String& x) const;

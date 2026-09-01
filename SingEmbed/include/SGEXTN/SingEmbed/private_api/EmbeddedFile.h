@@ -18,10 +18,13 @@
 #pragma once
 
 namespace SGEXTN::SingEmbed {
+class SingEmbedFileRegistrarInstance;
+
 class BuildLah_SGEXTN_SingEmbed EmbeddedFile {
-public:
+private:
+    friend class SGEXTN::SingEmbed::SingEmbedFileRegistrarInstance;
     explicit EmbeddedFile(const char* data, int length);
-    const char* data;
-    int length;
+    const char* data_;
+    int length_;
 };
 }

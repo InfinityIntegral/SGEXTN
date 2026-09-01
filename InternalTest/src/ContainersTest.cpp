@@ -39,10 +39,12 @@
 
 namespace {
 class ConstructibleInteger {
+private:
+    friend class SGEXTN::InternalTest::ContainersTest;
+    int value_;
 public:
     static int lastConstruct;
     static int lastDestruct;
-    int value;
     explicit ConstructibleInteger(int x);
     ConstructibleInteger(const ConstructibleInteger& x);
     ConstructibleInteger& operator=(const ConstructibleInteger& x);
@@ -64,62 +66,62 @@ public:
 int ConstructibleInteger::lastConstruct = 0;
 int ConstructibleInteger::lastDestruct = 0;
 
-ConstructibleInteger::ConstructibleInteger(int x) : value(x){
+ConstructibleInteger::ConstructibleInteger(int x) : value_(x){
     ConstructibleInteger::lastConstruct = x;
 }
 
-ConstructibleInteger::ConstructibleInteger(const ConstructibleInteger& x) : value(x.value) {
-    ConstructibleInteger::lastConstruct = value;
+ConstructibleInteger::ConstructibleInteger(const ConstructibleInteger& x) : value_(x.value_) {
+    ConstructibleInteger::lastConstruct = value_;
 }
 
 ConstructibleInteger& ConstructibleInteger::operator=(const ConstructibleInteger& x){
-    if(value != -1000){ConstructibleInteger::lastDestruct = value;}
-    value = x.value;
-    ConstructibleInteger::lastConstruct = value;
+    if(value_ != -1000){ConstructibleInteger::lastDestruct = value_;}
+    value_ = x.value_;
+    ConstructibleInteger::lastConstruct = value_;
     return (*this);
 }
 
-ConstructibleInteger::ConstructibleInteger(ConstructibleInteger&& x) noexcept : value(x.value) {
-    x.value = -1000;
+ConstructibleInteger::ConstructibleInteger(ConstructibleInteger&& x) noexcept : value_(x.value_) {
+    x.value_ = -1000;
 }
 
 ConstructibleInteger& ConstructibleInteger::operator=(ConstructibleInteger&& x) noexcept {
-    if(value != -1000){ConstructibleInteger::lastDestruct = value;}
-    value = x.value;
-    x.value = -1000;
+    if(value_ != -1000){ConstructibleInteger::lastDestruct = value_;}
+    value_ = x.value_;
+    x.value_ = -1000;
     return (*this);
 }
 
 ConstructibleInteger::~ConstructibleInteger(){
-    if(value != -1000){ConstructibleInteger::lastDestruct = value;}
+    if(value_ != -1000){ConstructibleInteger::lastDestruct = value_;}
 }
 
 ConstructibleInteger::operator int() const {
-    return value;
+    return value_;
 }
 
 bool ConstructibleInteger::operator==(const ConstructibleInteger& x) const {
-    return (value == x.value);
+    return (value_ == x.value_);
 }
 
 bool ConstructibleInteger::operator!=(const ConstructibleInteger& x) const {
-    return (value != x.value);
+    return (value_ != x.value_);
 }
 
 bool ConstructibleInteger::operator<(const ConstructibleInteger& x) const {
-    return (value < x.value);
+    return (value_ < x.value_);
 }
 
 bool ConstructibleInteger::operator>(const ConstructibleInteger& x) const {
-    return (value > x.value);
+    return (value_ > x.value_);
 }
 
 bool ConstructibleInteger::operator<=(const ConstructibleInteger& x) const {
-    return (value <= x.value);
+    return (value_ <= x.value_);
 }
 
 bool ConstructibleInteger::operator>=(const ConstructibleInteger& x) const {
-    return (value >= x.value);
+    return (value_ >= x.value_);
 }
 
 template <typename T> bool operator==(const SGEXTN::Containers::Array<T>& a, const SGEXTN::Containers::Array<T>& b){
@@ -131,14 +133,14 @@ template <typename T> bool operator==(const SGEXTN::Containers::Array<T>& a, con
 }
 
 bool ConstructibleInteger::sendOut(const ConstructibleInteger& x, SGEXTN::Containers::Span<unsigned char> data){
-    return SGEXTN::Containers::Serialise<int>::sendOut(x.value, data);
+    return SGEXTN::Containers::Serialise<int>::sendOut(x.value_, data);
 }
 
 bool ConstructibleInteger::sendIn(ConstructibleInteger& x, SGEXTN::Containers::Span<unsigned char> data){
     int val = 0;
     const bool isValid = SGEXTN::Containers::Serialise<int>::sendIn(val, data);
     if(isValid == false){return false;}
-    x.value = val;
+    x.value_ = val;
     return true;
 }
 
@@ -174,58 +176,112 @@ SGEXTN::Containers::Span<unsigned char> makeSpan(SGEXTN::Containers::Array<unsig
     return SGEXTN::Containers::Span<unsigned char>(array, start, length);
 }
 
+class RegularStructLessThan;
+class RegularStructEqualTo;
+class RegularStructHashFunction;
+
 class RegularStruct {
+private:
+    friend class RegularStructLessThan;
+    friend class RegularStructEqualTo;
+    friend class RegularStructHashFunction;
+    int x_;
 public:
-    int x;
-    explicit RegularStruct(int x) : x(x) {}
+    explicit RegularStruct(int x);
 };
+
+RegularStruct::RegularStruct(int x) : x_(x){}
 
 class RegularStructLessThan {
 public:
-    bool operator()(const RegularStruct& a, const RegularStruct& b) const {return (a.x < b.x);}
+    bool operator()(const RegularStruct& a, const RegularStruct& b) const;
 };
+
+bool RegularStructLessThan::operator()(const RegularStruct& a, const RegularStruct& b) const {
+    return (a.x_ < b.x_);
+}
 
 class RegularStructEqualTo {
 public:
-    bool operator()(const RegularStruct& a, const RegularStruct& b) const {return (a.x == b.x);}
+    bool operator()(const RegularStruct& a, const RegularStruct& b) const;
 };
+
+bool RegularStructEqualTo::operator()(const RegularStruct& a, const RegularStruct& b) const {
+    return (a.x_ == b.x_);
+}
 
 class RegularStructHashFunction {
 public:
-    int operator()(const RegularStruct& x) const {return x.x;}
+    int operator()(const RegularStruct& x) const;
 };
 
-class DefaultConstructableStruct {
-public:
-    int x;
-    explicit DefaultConstructableStruct() : x(0) {}
-    explicit DefaultConstructableStruct(int x) : x(x) {}
-};
+int RegularStructHashFunction::operator()(const RegularStruct& x) const {
+    return x.x_;
+}
 
 class SerialisableStruct {
+private:
+    unsigned char data_;
 public:
-    explicit SerialisableStruct() : data(static_cast<unsigned char>(0)){}
-    unsigned char data;
-    static bool sendOut(SerialisableStruct x, SGEXTN::Containers::Span<unsigned char> data){data.at(0) = x.data; return true;}
-    static bool sendIn(SerialisableStruct& x, SGEXTN::Containers::Span<unsigned char> data){x.data = data.at(0); return true;}
-    static int size(){return 1;}
+    explicit SerialisableStruct();
+    static bool sendOut(SerialisableStruct x, SGEXTN::Containers::Span<unsigned char> data);
+    static bool sendIn(SerialisableStruct& x, SGEXTN::Containers::Span<unsigned char> data);
+    static int size();
 };
+
+SerialisableStruct::SerialisableStruct() : data_(static_cast<unsigned char>(0)){}
+
+bool SerialisableStruct::sendOut(SerialisableStruct x, SGEXTN::Containers::Span<unsigned char> data){
+    data.at(0) = x.data_;
+    return true;
+}
+
+bool SerialisableStruct::sendIn(SerialisableStruct& x, SGEXTN::Containers::Span<unsigned char> data){
+    x.data_ = data.at(0);
+    return true;
+}
+
+int SerialisableStruct::size(){
+    return 1;
+}
 
 class EquatableStruct {
+private:
+    int x_;
 public:
-    int x;
-    explicit EquatableStruct(int x) : x(x) {}
-    [[nodiscard]] bool operator==(const EquatableStruct& x) const {return ((*this).x == x.x);}
-    [[nodiscard]] bool operator!=(const EquatableStruct& x) const {return ((*this).x != x.x);}
+    explicit EquatableStruct(int x);
+    [[nodiscard]] bool operator==(const EquatableStruct& x) const;
+    [[nodiscard]] bool operator!=(const EquatableStruct& x) const;
 };
 
+EquatableStruct::EquatableStruct(int x) : x_(x){}
+
+bool EquatableStruct::operator==(const EquatableStruct& x) const {
+    return (x_ == x.x_);
+}
+
+bool EquatableStruct::operator!=(const EquatableStruct& x) const {
+    return (x_ != x.x_);
+}
+
 class ComparableStruct {
+private:
+    int x_;
 public:
-    int x;
-    explicit ComparableStruct(int x) : x(x) {}
-    [[nodiscard]] bool operator<(const ComparableStruct& x) const {return ((*this).x < x.x);}
-    [[nodiscard]] bool operator>(const ComparableStruct& x) const {return ((*this).x > x.x);}
+    explicit ComparableStruct(int x);
+    [[nodiscard]] bool operator<(const ComparableStruct& x) const;
+    [[nodiscard]] bool operator>(const ComparableStruct& x) const;
 };
+
+ComparableStruct::ComparableStruct(int x) : x_(x){}
+
+bool ComparableStruct::operator<(const ComparableStruct& x) const {
+    return (x_ < x.x_);
+}
+
+bool ComparableStruct::operator>(const ComparableStruct& x) const {
+    return (x_ > x.x_);
+}
 
 class FunctionOwner {};
 }
@@ -1255,7 +1311,7 @@ void SGEXTN::InternalTest::ContainersTest::testSerialise(){
     ConstructibleInteger cc = ConstructibleInteger(0);
     isValid = false;
     isValid = SGEXTN::Containers::Serialise<ConstructibleInteger>::sendIn(cc, makeSpan(targetArray, 4));
-    if(isValid == false || cc.value != 726){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sendIn custom class fail");}
+    if(isValid == false || cc.value_ != 726){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sendIn custom class fail");}
     if(SGEXTN::Containers::Serialise<ConstructibleInteger>::sizeOut(ConstructibleInteger(726)) != 4){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sizeOut custom class fail");}
     if(SGEXTN::Containers::Serialise<ConstructibleInteger>::sizeIn(makeSpan(targetArray, 100)) != 4){SGEXTN_IMMEDIATE_CRASH("SGEXTN::Containers::Serialise sizeIn custom class fail");}
 
@@ -1345,8 +1401,8 @@ void SGEXTN::InternalTest::ContainersTest::testAll(){
     SGEXTN::InternalTest::ContainersTest::testHash();
 }
 
-template class SGEXTN::Containers::Array<DefaultConstructableStruct>;
-template class SGEXTN::Containers::ArrayVectorMove<DefaultConstructableStruct>;
+template class SGEXTN::Containers::Array<RegularStruct>;
+template class SGEXTN::Containers::ArrayVectorMove<RegularStruct>;
 template class SGEXTN::Containers::Deque<RegularStruct>;
 template class SGEXTN::Containers::EqualTo<EquatableStruct>;
 template class SGEXTN::Containers::EqualTo<SerialisableStruct>;

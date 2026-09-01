@@ -19,14 +19,18 @@
 
 namespace SGEXTN::Containers {
 template <typename T> class ArrayVectorMove;
+template <typename T> class RingBuffer;
 
 template <typename T> class RingBufferSlot {
-public:
+private:
+    friend class SGEXTN::Containers::RingBuffer<T>;
+    friend class SGEXTN::Containers::ArrayVectorMove<T>;
     union {
-        unsigned char constructorRemover;
-        T object;
+        unsigned char constructorRemover_;
+        T object_;
     };
     explicit RingBufferSlot();
+public:
     RingBufferSlot(const RingBufferSlot&) = delete;
     RingBufferSlot& operator=(const RingBufferSlot&) = delete;
     RingBufferSlot(RingBufferSlot&&) = delete;
