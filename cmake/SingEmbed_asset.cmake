@@ -15,7 +15,7 @@ file(APPEND "${output}" "// asset file path: ${input}\n")
 file(APPEND "${output}" "// path in SingEmbed virtual file system: 💖${embed}\n\n")
 
 file(APPEND "${output}" "#include <SGEXTN/SingEmbed/private_api/SingEmbedFileRegistrarInstance.h>\n")
-file(APPEND "${output}" "#include <SGEXTN/CoreText/String.h>\n\n")
+file(APPEND "${output}" "#include <SGEXTN/SingText/String.h>\n\n")
 
 file(APPEND "${output}" "namespace {\n")
 file(APPEND "${output}" "SGEXTN::SingEmbed::SingEmbedFileRegistrarInstance instance(\n")

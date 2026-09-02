@@ -21,7 +21,7 @@ namespace SGEXTN::Containers {
 template <typename T> class Span;
 }
 
-namespace SGEXTN::CoreText {
+namespace SGEXTN::SingText {
 class String;
 }
 
@@ -52,13 +52,13 @@ public:
     void setGreenFloat(float g);
     void setBlueFloat(float b);
     void setTransparencyFloat(float a);
-    [[nodiscard]] SGEXTN::CoreText::String rgbHtmlString() const;
-    [[nodiscard]] SGEXTN::CoreText::String rgbaHtmlString() const;
-    [[nodiscard]] SGEXTN::CoreText::String rgbHexString() const;
-    [[nodiscard]] SGEXTN::CoreText::String rgbaHexString() const;
-    [[nodiscard]] SGEXTN::CoreText::String rgbFloatHtmlString() const;
-    [[nodiscard]] SGEXTN::CoreText::String rgbaFloatHtmlString() const;
-    [[nodiscard]] SGEXTN::CoreText::String debugPrint() const;
+    [[nodiscard]] SGEXTN::SingText::String rgbHtmlString() const;
+    [[nodiscard]] SGEXTN::SingText::String rgbaHtmlString() const;
+    [[nodiscard]] SGEXTN::SingText::String rgbHexString() const;
+    [[nodiscard]] SGEXTN::SingText::String rgbaHexString() const;
+    [[nodiscard]] SGEXTN::SingText::String rgbFloatHtmlString() const;
+    [[nodiscard]] SGEXTN::SingText::String rgbaFloatHtmlString() const;
+    [[nodiscard]] SGEXTN::SingText::String debugPrint() const;
     [[nodiscard]] static bool sendOut(RgbaColour x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(RgbaColour& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static int size();

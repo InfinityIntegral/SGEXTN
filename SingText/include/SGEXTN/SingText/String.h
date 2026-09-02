@@ -16,15 +16,15 @@
 // BuildLah license check: SGEXTN 7.0.0
 
 #pragma once
-#include <SGEXTN/CoreText/private_api/BoundariesArray.h>
-#include <SGEXTN/CoreText/private_api/ByteVector.h>
+#include <SGEXTN/SingText/private_api/BoundariesArray.h>
+#include <SGEXTN/SingText/private_api/ByteVector.h>
 
 namespace SGEXTN::Containers {
 template <typename T> class Array;
 template <typename T> class Span;
 }
 
-namespace SGEXTN::CoreText {
+namespace SGEXTN::SingText {
 class Character;
 class String;
 
@@ -41,26 +41,26 @@ enum class NormalisationFormat : unsigned char {
     LossySeparate = 4
 };
 
-class BuildLah_SGEXTN_CoreText StringStackStorage {
+class BuildLah_SGEXTN_SingText StringStackStorage {
 private:
-    friend class SGEXTN::CoreText::String;
+    friend class SGEXTN::SingText::String;
     static constexpr unsigned int stackFlag = 0x80000000u;
     unsigned int length_;
     mutable unsigned int boundaries_[2];
     unsigned char data_[52];
 };
 
-class BuildLah_SGEXTN_CoreText StringHeapStorage {
+class BuildLah_SGEXTN_SingText StringHeapStorage {
 private:
-    friend class SGEXTN::CoreText::String;
+    friend class SGEXTN::SingText::String;
     unsigned int length_;
-    mutable SGEXTN::CoreText::BoundariesArray boundaries_;
-    SGEXTN::CoreText::ByteVector data_;
+    mutable SGEXTN::SingText::BoundariesArray boundaries_;
+    SGEXTN::SingText::ByteVector data_;
 public:
     StringHeapStorage() = delete;
 };
 
-class BuildLah_SGEXTN_CoreText String {
+class BuildLah_SGEXTN_SingText String {
 private:
     union {
         StringStackStorage stack_;
@@ -80,7 +80,7 @@ public:
     ~String();
     explicit(false) String(unsigned char c);
     explicit(false) String(const char* s);
-    explicit(false) String(const SGEXTN::CoreText::Character& c);
+    explicit(false) String(const SGEXTN::SingText::Character& c);
     [[nodiscard]] bool operator==(const String& x) const;
     [[nodiscard]] bool operator!=(const String& x) const;
     [[nodiscard]] bool operator<(const String& x) const;
@@ -99,12 +99,12 @@ public:
     [[nodiscard]] const unsigned char* getRawPointer() const;
     [[nodiscard]] unsigned char& byteAt(int i);
     [[nodiscard]] const unsigned char& byteAt(int i) const;
-    [[nodiscard]] SGEXTN::CoreText::Character getCharacterAt(int i) const;
-    void setCharacterAt(int i, const SGEXTN::CoreText::Character& c);
+    [[nodiscard]] SGEXTN::SingText::Character getCharacterAt(int i) const;
+    void setCharacterAt(int i, const SGEXTN::SingText::Character& c);
     [[nodiscard]] int byteIndexToCharacterIndex(int i) const;
     [[nodiscard]] int characterIndexToByteIndex(int i) const;
     [[nodiscard]] String fillBytes(unsigned char c) const;
-    [[nodiscard]] String fillCharacters(const SGEXTN::CoreText::Character& c) const;
+    [[nodiscard]] String fillCharacters(const SGEXTN::SingText::Character& c) const;
     [[nodiscard]] int findFirstBytesFromLeft(const String& s) const;
     [[nodiscard]] int findFirstBytesFromRight(const String& s) const;
     [[nodiscard]] int findFirstCharactersFromLeft(const String& s) const;
@@ -139,9 +139,9 @@ public:
     [[nodiscard]] int countCharactersAllowOverlap(const String& s) const;
     [[nodiscard]] static String repeat(const String& s, int count);
     [[nodiscard]] String fillLeftToByteLength(int length, unsigned char fillChar) const;
-    [[nodiscard]] String fillLeftToCharacterLength(int length, const SGEXTN::CoreText::Character& fillChar) const;
+    [[nodiscard]] String fillLeftToCharacterLength(int length, const SGEXTN::SingText::Character& fillChar) const;
     [[nodiscard]] String fillRightToByteLength(int length, unsigned char fillChar) const;
-    [[nodiscard]] String fillRightToCharacterLength(int length, const SGEXTN::CoreText::Character& fillChar) const;
+    [[nodiscard]] String fillRightToCharacterLength(int length, const SGEXTN::SingText::Character& fillChar) const;
     [[nodiscard]] short parseToShort(bool* isValid, int base) const;
     [[nodiscard]] unsigned short parseToUnsignedShort(bool* isValid, int base) const;
     [[nodiscard]] int parseToInt(bool* isValid, int base) const;
@@ -156,10 +156,10 @@ public:
     [[nodiscard]] static String stringFromUnsignedInt(unsigned int x, int base);
     [[nodiscard]] static String stringFromLongLong(long long x, int base);
     [[nodiscard]] static String stringFromUnsignedLongLong(unsigned long long x, int base);
-    [[nodiscard]] static String stringFromFloat(float x, int base, SGEXTN::CoreText::FloatPrecisionFormat format, int precision);
-    [[nodiscard]] static String stringFromDouble(double x, int base, SGEXTN::CoreText::FloatPrecisionFormat format, int precision);
+    [[nodiscard]] static String stringFromFloat(float x, int base, SGEXTN::SingText::FloatPrecisionFormat format, int precision);
+    [[nodiscard]] static String stringFromDouble(double x, int base, SGEXTN::SingText::FloatPrecisionFormat format, int precision);
     [[nodiscard]] String prettierScientificNotationBase10() const;
-    [[nodiscard]] String convertNumericSystem(const SGEXTN::CoreText::Character& zeroRepresentation) const;
+    [[nodiscard]] String convertNumericSystem(const SGEXTN::SingText::Character& zeroRepresentation) const;
     [[nodiscard]] String prepareInnerHtmlText() const;
     [[nodiscard]] String removeLeadingTrailingWhitespace() const;
     [[nodiscard]] String cleanWhitespace() const;
@@ -180,8 +180,8 @@ public:
     [[nodiscard]] String getLowercase() const;
     [[nodiscard]] String getTitlecase() const;
     [[nodiscard]] SGEXTN::Containers::Array<int> getUnicode() const;
-    [[nodiscard]] String getNormalised(SGEXTN::CoreText::NormalisationFormat format) const;
-    [[nodiscard]] SGEXTN::CoreText::String getSimplestEquivalent(bool ignoreCase) const;
+    [[nodiscard]] String getNormalised(SGEXTN::SingText::NormalisationFormat format) const;
+    [[nodiscard]] SGEXTN::SingText::String getSimplestEquivalent(bool ignoreCase) const;
     [[nodiscard]] static String stringFromUnicode(int unicode);
     [[nodiscard]] static String stringFromUnicode(const SGEXTN::Containers::Array<int>& codePoints);
 };

@@ -18,19 +18,19 @@
 #include <SGEXTN/InternalTest/private_api/ContainersTest.h>
 #include <SGEXTN/InternalTest/private_api/MathTest.h>
 #include <SGEXTN/InternalTest/private_api/UtilitiesTest.h>
-#include <SGEXTN/InternalTest/private_api/CoreTextTest.h>
+#include <SGEXTN/InternalTest/private_api/SingTextTest.h>
 #include <SGEXTN/InternalTest/private_api/ExternalTest.h>
 #include <SGEXTN/InternalTest/private_api/DebugTest.h>
 #include <SGEXTN/InternalTest/private_api/SeerattraNumTest.h>
 #define SGEXTN_internal_permanentAllowDebug
-#include <SGEXTN/CoreText/Debug.h>
+#include <SGEXTN/SingText/Debug.h>
 #undef SGEXTN_internal_permanentAllowDebug
 
 int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv){
     SGEXTN::InternalTest::ContainersTest::testAll();
     SGEXTN::InternalTest::MathTest::testAll();
     SGEXTN::InternalTest::UtilitiesTest::testAll();
-    SGEXTN::InternalTest::CoreTextTest::testAll();
+    SGEXTN::InternalTest::SingTextTest::testAll();
     if(SGEXTN::InternalTest::ExternalTest::ifTestAll == true){SGEXTN::InternalTest::ExternalTest::testAll();}
     SGEXTN::InternalTest::DebugTest::runTest();
     if(SGEXTN::InternalTest::SeerattraNumTest::ifRunTests == true){SGEXTN::InternalTest::SeerattraNumTest::testAll();}

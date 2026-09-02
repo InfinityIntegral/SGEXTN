@@ -15,7 +15,7 @@
 */
 // BuildLah license check: SGEXTN 7.0.0
 
-#include <SGEXTN/CoreText/private_api/ByteVector.h>
+#include <SGEXTN/SingText/private_api/ByteVector.h>
 #include <cstring>
 
 namespace {
@@ -24,18 +24,18 @@ void memoryCopy(const unsigned char* source, unsigned char* destination, int len
 }
 }
 
-SGEXTN::CoreText::ByteVector::ByteVector() : data_(nullptr), length_(0), memoryLength_(0){}
+SGEXTN::SingText::ByteVector::ByteVector() : data_(nullptr), length_(0), memoryLength_(0){}
 
-SGEXTN::CoreText::ByteVector::ByteVector(int count) : data_(new unsigned char[count]), length_(count), memoryLength_(count){}
+SGEXTN::SingText::ByteVector::ByteVector(int count) : data_(new unsigned char[count]), length_(count), memoryLength_(count){}
 
-SGEXTN::CoreText::ByteVector::ByteVector(const SGEXTN::CoreText::ByteVector& x) : data_(nullptr), length_(x.length_), memoryLength_(x.length_) {
+SGEXTN::SingText::ByteVector::ByteVector(const SGEXTN::SingText::ByteVector& x) : data_(nullptr), length_(x.length_), memoryLength_(x.length_) {
     if(x.length_ > 0){
         data_ = new unsigned char[x.length_];
         memoryCopy(x.data_, data_, x.length_);
     }
 }
 
-SGEXTN::CoreText::ByteVector& SGEXTN::CoreText::ByteVector::operator=(const SGEXTN::CoreText::ByteVector& x){
+SGEXTN::SingText::ByteVector& SGEXTN::SingText::ByteVector::operator=(const SGEXTN::SingText::ByteVector& x){
     if(this == &x){return (*this);}
     delete[] data_;
     length_ = x.length_;
@@ -48,13 +48,13 @@ SGEXTN::CoreText::ByteVector& SGEXTN::CoreText::ByteVector::operator=(const SGEX
     return (*this);
 }
 
-SGEXTN::CoreText::ByteVector::ByteVector(SGEXTN::CoreText::ByteVector&& x) noexcept : data_(x.data_), length_(x.length_), memoryLength_(x.memoryLength_) {
+SGEXTN::SingText::ByteVector::ByteVector(SGEXTN::SingText::ByteVector&& x) noexcept : data_(x.data_), length_(x.length_), memoryLength_(x.memoryLength_) {
     x.data_ = nullptr;
     x.length_ = 0;
     x.memoryLength_ = 0;
 }
 
-SGEXTN::CoreText::ByteVector& SGEXTN::CoreText::ByteVector::operator=(SGEXTN::CoreText::ByteVector&& x) noexcept {
+SGEXTN::SingText::ByteVector& SGEXTN::SingText::ByteVector::operator=(SGEXTN::SingText::ByteVector&& x) noexcept {
     if(this == &x){return (*this);}
     delete[] data_;
     data_ = x.data_;
@@ -66,25 +66,25 @@ SGEXTN::CoreText::ByteVector& SGEXTN::CoreText::ByteVector::operator=(SGEXTN::Co
     return (*this);
 }
 
-SGEXTN::CoreText::ByteVector::~ByteVector(){
+SGEXTN::SingText::ByteVector::~ByteVector(){
     delete[] data_;
 }
 
-unsigned char& SGEXTN::CoreText::ByteVector::at(int i){
+unsigned char& SGEXTN::SingText::ByteVector::at(int i){
     unsigned char* data0 = data_;
     data_ = data0;
     return (*(data_ + i));
 }
 
-const unsigned char& SGEXTN::CoreText::ByteVector::at(int i) const {
+const unsigned char& SGEXTN::SingText::ByteVector::at(int i) const {
     return (*(data_ + i));
 }
 
-int SGEXTN::CoreText::ByteVector::length() const {
+int SGEXTN::SingText::ByteVector::length() const {
     return length_;
 }
 
-void SGEXTN::CoreText::ByteVector::reserve(int newMemoryLength){
+void SGEXTN::SingText::ByteVector::reserve(int newMemoryLength){
     if(newMemoryLength <= memoryLength_){return;}
     const unsigned char* oldPointer = data_;
     memoryLength_ = newMemoryLength;
@@ -93,22 +93,22 @@ void SGEXTN::CoreText::ByteVector::reserve(int newMemoryLength){
     delete[] oldPointer;
 }
 
-void SGEXTN::CoreText::ByteVector::pushBack(unsigned char c){
+void SGEXTN::SingText::ByteVector::pushBack(unsigned char c){
     if(length_ + 1 > memoryLength_){reserve(3 * (length_ + 1) / 2 + 1);}
     length_++;
     (*(data_ + length_ - 1)) = c;
 }
 
-void SGEXTN::CoreText::ByteVector::pushBack(const unsigned char* start, int length){
+void SGEXTN::SingText::ByteVector::pushBack(const unsigned char* start, int length){
     if(length_ + length > memoryLength_){reserve(3 * (length_ + length) / 2 + 1);}
     length_ += length;
     memoryCopy(start, data_ + length_ - length, length);
 }
 
-unsigned char* SGEXTN::CoreText::ByteVector::getRawPointer(){
+unsigned char* SGEXTN::SingText::ByteVector::getRawPointer(){
     return data_;
 }
 
-const unsigned char* SGEXTN::CoreText::ByteVector::getRawPointer() const {
+const unsigned char* SGEXTN::SingText::ByteVector::getRawPointer() const {
     return data_;
 }

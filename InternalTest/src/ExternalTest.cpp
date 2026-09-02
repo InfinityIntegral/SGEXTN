@@ -17,10 +17,10 @@
 
 #include <SGEXTN/InternalTest/private_api/ExternalTest.h>
 #include <SGEXTN/Utilities/DateTime.h>
-#include <SGEXTN/CoreText/String.h>
-#include <SGEXTN/CoreText/UnicodeQuery.h>
+#include <SGEXTN/SingText/String.h>
+#include <SGEXTN/SingText/UnicodeQuery.h>
 #include <SGEXTN/Containers/Array.h>
-#include <SGEXTN/CoreText/Character.h>
+#include <SGEXTN/SingText/Character.h>
 #include <SGEXTN/Containers/UnorderedSet.h>
 #include <SGEXTN/Math/FloatLimits.h>
 #include <SGEXTN/Math/FloatMath.h>
@@ -28,7 +28,7 @@
 #include <SGEXTN/Containers/ForceCrash.h>
 #include <SGEXTN/SingEmbed/private_api/SingEmbedFileRegistrarInstance.h>
 #define SGEXTN_internal_permanentAllowDebug
-#include <SGEXTN/CoreText/Debug.h>
+#include <SGEXTN/SingText/Debug.h>
 #undef SGEXTN_internal_permanentAllowDebug
 #include <SGEXTN/Containers/dont_touch_lah/KaypohOne.h>
 #include <chrono>
@@ -71,35 +71,35 @@ float parseCStringToFloat(const char* s, bool* isValid){
     return output;
 }
 
-SGEXTN::CoreText::String readFile(const SGEXTN::CoreText::String& filePath){
-    const SGEXTN::CoreText::String pathToFile = SGEXTN::CoreText::String(SGEXTN::CoreText::Character()) + "/SGEXTN/InternalTest/" + filePath;
+SGEXTN::SingText::String readFile(const SGEXTN::SingText::String& filePath){
+    const SGEXTN::SingText::String pathToFile = SGEXTN::SingText::String(SGEXTN::SingText::Character()) + "/SGEXTN/InternalTest/" + filePath;
     int fileLength = 0;
     const char* fileData = nullptr;
     const bool fileExists = SGEXTN::SingEmbed::SingEmbedFileRegistrarInstance::directAccessData(pathToFile, fileLength, fileData);
     if(fileExists == false){return "";}
-    SGEXTN::CoreText::String outputString = SGEXTN::CoreText::String::repeat(" ", fileLength);
+    SGEXTN::SingText::String outputString = SGEXTN::SingText::String::repeat(" ", fileLength);
     for(int i=0; i<fileLength; i++){
         outputString.byteAt(i) = (*(fileData + i));
     }
     return outputString;
 }
 
-SGEXTN::Containers::Array<SGEXTN::Containers::Array<SGEXTN::CoreText::String>> unicodeDatabase(0x110000, SGEXTN::Containers::Array<SGEXTN::CoreText::String>(15, ""));
+SGEXTN::Containers::Array<SGEXTN::Containers::Array<SGEXTN::SingText::String>> unicodeDatabase(0x110000, SGEXTN::Containers::Array<SGEXTN::SingText::String>(15, ""));
 
 void fillUnicodeDatabase(){
-    const SGEXTN::CoreText::String dataString = readFile("unicodedata.txt");
-    SGEXTN::Containers::Array<SGEXTN::CoreText::String> dataTable = dataString.split('\n');
+    const SGEXTN::SingText::String dataString = readFile("unicodedata.txt");
+    SGEXTN::Containers::Array<SGEXTN::SingText::String> dataTable = dataString.split('\n');
     SGEXTN::Containers::Array<int> codePoint(dataTable.length(), 0);
     for(int i=0; i<dataTable.length(); i++){
         codePoint.at(i) = dataTable.at(i).substringCharactersLeft(dataTable.at(i).findFirstCharactersFromLeft(';')).parseToInt(nullptr, 16);
     }
     for(int i=0; i<dataTable.length(); i++){
-        SGEXTN::Containers::Array<SGEXTN::CoreText::String> fields = dataTable.at(i).split(';');
+        SGEXTN::Containers::Array<SGEXTN::SingText::String> fields = dataTable.at(i).split(';');
         if(fields.at(1).containsCharacters("First>")){
             const int start = fields.at(0).parseToInt(nullptr, 16);
             const int end = dataTable.at(i + 1).substringCharactersLeft(dataTable.at(i + 1).findFirstCharactersFromLeft(';')).parseToInt(nullptr, 16);
             for(int j=start; j<=end; j++){
-                unicodeDatabase.at(j).at(0) = SGEXTN::CoreText::String::stringFromInt(j, 16);
+                unicodeDatabase.at(j).at(0) = SGEXTN::SingText::String::stringFromInt(j, 16);
                 for(int k=1; k<15; k++){
                     unicodeDatabase.at(j).at(k) = fields.at(k);
                 }
@@ -116,97 +116,97 @@ void fillUnicodeDatabase(){
     for(int first=0x1100; first<0x1113; first++){
         for(int second=0x1161; second<0x1176; second++){
             const int combined = 0xac00 + 28 * (21 * (first - 0x1100) + (second - 0x1161));
-            unicodeDatabase.at(combined).at(5) = SGEXTN::CoreText::String::stringFromInt(first, 16) + " " + SGEXTN::CoreText::String::stringFromInt(second, 16);
+            unicodeDatabase.at(combined).at(5) = SGEXTN::SingText::String::stringFromInt(first, 16) + " " + SGEXTN::SingText::String::stringFromInt(second, 16);
         }
     }
     for(int first=0xac00; first<0xd7a4; first+=28){
         for(int second=0x11a8; second<0x11c3; second++){
             const int combined = first + (second - 0x11a7);
-            unicodeDatabase.at(combined).at(5) = SGEXTN::CoreText::String::stringFromInt(first, 16) + " " + SGEXTN::CoreText::String::stringFromInt(second, 16);
+            unicodeDatabase.at(combined).at(5) = SGEXTN::SingText::String::stringFromInt(first, 16) + " " + SGEXTN::SingText::String::stringFromInt(second, 16);
         }
     }
 }
 
-SGEXTN::CoreText::FullCharacterType parseFullType(const SGEXTN::CoreText::String& s){
-    const SGEXTN::CoreText::Character first = s.getCharacterAt(0);
-    const SGEXTN::CoreText::Character second = s.getCharacterAt(1);
+SGEXTN::SingText::FullCharacterType parseFullType(const SGEXTN::SingText::String& s){
+    const SGEXTN::SingText::Character first = s.getCharacterAt(0);
+    const SGEXTN::SingText::Character second = s.getCharacterAt(1);
     if(first == 'M'){
-        if(second == 'n'){return SGEXTN::CoreText::FullCharacterType::NonspacingCombiningMark;}
-        if(second == 'c'){return SGEXTN::CoreText::FullCharacterType::SpacingCombiningMark;}
-        if(second == 'e'){return SGEXTN::CoreText::FullCharacterType::EnclosingMark;}
+        if(second == 'n'){return SGEXTN::SingText::FullCharacterType::NonspacingCombiningMark;}
+        if(second == 'c'){return SGEXTN::SingText::FullCharacterType::SpacingCombiningMark;}
+        if(second == 'e'){return SGEXTN::SingText::FullCharacterType::EnclosingMark;}
     }
     if(first == 'N'){
-        if(second == 'd'){return SGEXTN::CoreText::FullCharacterType::DecimalDigit;}
-        if(second == 'l'){return SGEXTN::CoreText::FullCharacterType::LetterNumber;}
-        if(second == 'o'){return SGEXTN::CoreText::FullCharacterType::OtherNumber;}
+        if(second == 'd'){return SGEXTN::SingText::FullCharacterType::DecimalDigit;}
+        if(second == 'l'){return SGEXTN::SingText::FullCharacterType::LetterNumber;}
+        if(second == 'o'){return SGEXTN::SingText::FullCharacterType::OtherNumber;}
     }
     if(first == 'Z'){
-        if(second == 's'){return SGEXTN::CoreText::FullCharacterType::SpaceBreak;}
-        if(second == 'l'){return SGEXTN::CoreText::FullCharacterType::LineBreak;}
-        if(second == 'p'){return SGEXTN::CoreText::FullCharacterType::ParagraphBreak;}
+        if(second == 's'){return SGEXTN::SingText::FullCharacterType::SpaceBreak;}
+        if(second == 'l'){return SGEXTN::SingText::FullCharacterType::LineBreak;}
+        if(second == 'p'){return SGEXTN::SingText::FullCharacterType::ParagraphBreak;}
     }
     if(first == 'C'){
-        if(second == 'c'){return SGEXTN::CoreText::FullCharacterType::ControlCharacter;}
-        if(second == 'f'){return SGEXTN::CoreText::FullCharacterType::FormatCharacter;}
-        if(second == 's'){return SGEXTN::CoreText::FullCharacterType::SurrogateCharacter;}
-        if(second == 'o'){return SGEXTN::CoreText::FullCharacterType::PrivateUseCharacter;}
-        if(second == 'n'){return SGEXTN::CoreText::FullCharacterType::UnassignedCharacter;}
+        if(second == 'c'){return SGEXTN::SingText::FullCharacterType::ControlCharacter;}
+        if(second == 'f'){return SGEXTN::SingText::FullCharacterType::FormatCharacter;}
+        if(second == 's'){return SGEXTN::SingText::FullCharacterType::SurrogateCharacter;}
+        if(second == 'o'){return SGEXTN::SingText::FullCharacterType::PrivateUseCharacter;}
+        if(second == 'n'){return SGEXTN::SingText::FullCharacterType::UnassignedCharacter;}
     }
     if(first == 'L'){
-        if(second == 'u'){return SGEXTN::CoreText::FullCharacterType::UppercaseLetter;}
-        if(second == 'l'){return SGEXTN::CoreText::FullCharacterType::LowercaseLetter;}
-        if(second == 't'){return SGEXTN::CoreText::FullCharacterType::TitlecaseLetter;}
-        if(second == 'm'){return SGEXTN::CoreText::FullCharacterType::ModifierLetter;}
-        if(second == 'o'){return SGEXTN::CoreText::FullCharacterType::OtherLetter;}
+        if(second == 'u'){return SGEXTN::SingText::FullCharacterType::UppercaseLetter;}
+        if(second == 'l'){return SGEXTN::SingText::FullCharacterType::LowercaseLetter;}
+        if(second == 't'){return SGEXTN::SingText::FullCharacterType::TitlecaseLetter;}
+        if(second == 'm'){return SGEXTN::SingText::FullCharacterType::ModifierLetter;}
+        if(second == 'o'){return SGEXTN::SingText::FullCharacterType::OtherLetter;}
     }
     if(first == 'P'){
-        if(second == 'c'){return SGEXTN::CoreText::FullCharacterType::ConnectorPunctuation;}
-        if(second == 'd'){return SGEXTN::CoreText::FullCharacterType::DashPunctuation;}
-        if(second == 's'){return SGEXTN::CoreText::FullCharacterType::OpeningPunctuation;}
-        if(second == 'e'){return SGEXTN::CoreText::FullCharacterType::ClosingPunctuation;}
-        if(second == 'i'){return SGEXTN::CoreText::FullCharacterType::OpeningQuote;}
-        if(second == 'f'){return SGEXTN::CoreText::FullCharacterType::ClosingQuote;}
-        if(second == 'o'){return SGEXTN::CoreText::FullCharacterType::OtherPunctuation;}
+        if(second == 'c'){return SGEXTN::SingText::FullCharacterType::ConnectorPunctuation;}
+        if(second == 'd'){return SGEXTN::SingText::FullCharacterType::DashPunctuation;}
+        if(second == 's'){return SGEXTN::SingText::FullCharacterType::OpeningPunctuation;}
+        if(second == 'e'){return SGEXTN::SingText::FullCharacterType::ClosingPunctuation;}
+        if(second == 'i'){return SGEXTN::SingText::FullCharacterType::OpeningQuote;}
+        if(second == 'f'){return SGEXTN::SingText::FullCharacterType::ClosingQuote;}
+        if(second == 'o'){return SGEXTN::SingText::FullCharacterType::OtherPunctuation;}
     }
     if(first == 'S'){
-        if(second == 'm'){return SGEXTN::CoreText::FullCharacterType::MathSymbol;}
-        if(second == 'c'){return SGEXTN::CoreText::FullCharacterType::CurrencySymbol;}
-        if(second == 'k'){return SGEXTN::CoreText::FullCharacterType::ModifierSymbol;}
-        if(second == 'o'){return SGEXTN::CoreText::FullCharacterType::OtherSymbol;}
+        if(second == 'm'){return SGEXTN::SingText::FullCharacterType::MathSymbol;}
+        if(second == 'c'){return SGEXTN::SingText::FullCharacterType::CurrencySymbol;}
+        if(second == 'k'){return SGEXTN::SingText::FullCharacterType::ModifierSymbol;}
+        if(second == 'o'){return SGEXTN::SingText::FullCharacterType::OtherSymbol;}
     }
-    return SGEXTN::CoreText::FullCharacterType::UnassignedCharacter;
+    return SGEXTN::SingText::FullCharacterType::UnassignedCharacter;
 }
 
-SGEXTN::CoreText::SimplifiedCharacterType parseSimplifiedType(const SGEXTN::CoreText::String& s){
-    const SGEXTN::CoreText::Character first = s.getCharacterAt(0);
-    if(first == 'M'){return SGEXTN::CoreText::SimplifiedCharacterType::Mark;}
-    if(first == 'N'){return SGEXTN::CoreText::SimplifiedCharacterType::Number;}
-    if(first == 'Z'){return SGEXTN::CoreText::SimplifiedCharacterType::Whitespace;}
-    if(first == 'L'){return SGEXTN::CoreText::SimplifiedCharacterType::Letter;}
-    if(first == 'P'){return SGEXTN::CoreText::SimplifiedCharacterType::Punctuation;}
-    if(first == 'S'){return SGEXTN::CoreText::SimplifiedCharacterType::Symbol;}
-    if(first == 'C'){return SGEXTN::CoreText::SimplifiedCharacterType::Other;}
-    return SGEXTN::CoreText::SimplifiedCharacterType::Other;
+SGEXTN::SingText::SimplifiedCharacterType parseSimplifiedType(const SGEXTN::SingText::String& s){
+    const SGEXTN::SingText::Character first = s.getCharacterAt(0);
+    if(first == 'M'){return SGEXTN::SingText::SimplifiedCharacterType::Mark;}
+    if(first == 'N'){return SGEXTN::SingText::SimplifiedCharacterType::Number;}
+    if(first == 'Z'){return SGEXTN::SingText::SimplifiedCharacterType::Whitespace;}
+    if(first == 'L'){return SGEXTN::SingText::SimplifiedCharacterType::Letter;}
+    if(first == 'P'){return SGEXTN::SingText::SimplifiedCharacterType::Punctuation;}
+    if(first == 'S'){return SGEXTN::SingText::SimplifiedCharacterType::Symbol;}
+    if(first == 'C'){return SGEXTN::SingText::SimplifiedCharacterType::Other;}
+    return SGEXTN::SingText::SimplifiedCharacterType::Other;
 }
 
-float parseRationalNumber(const SGEXTN::CoreText::String& s){
+float parseRationalNumber(const SGEXTN::SingText::String& s){
     if(s.containsCharacters('/') == false){return s.parseToFloat(nullptr, 10);}
     const int numerator = s.substringCharactersLeft(s.findFirstCharactersFromLeft('/')).parseToInt(nullptr, 10);
     const int denominator = s.substringCharactersRight(s.characterLength() - 1 - s.findFirstCharactersFromLeft('/')).parseToInt(nullptr, 10);
     return (static_cast<float>(numerator) / static_cast<float>(denominator));
 }
 
-SGEXTN::Containers::Array<SGEXTN::CoreText::String> graphemeBreakDatabase(0x110000, "");
+SGEXTN::Containers::Array<SGEXTN::SingText::String> graphemeBreakDatabase(0x110000, "");
 
-void parseAuxillaryFile(const SGEXTN::CoreText::String& fileName, void (*toDoFunction)(int, const SGEXTN::CoreText::String&)){
-    const SGEXTN::CoreText::String dataString = readFile(SGEXTN::CoreText::String(fileName + ".txt"));
-    SGEXTN::Containers::Array<SGEXTN::CoreText::String> dataTable = dataString.split('\n');
+void parseAuxillaryFile(const SGEXTN::SingText::String& fileName, void (*toDoFunction)(int, const SGEXTN::SingText::String&)){
+    const SGEXTN::SingText::String dataString = readFile(SGEXTN::SingText::String(fileName + ".txt"));
+    SGEXTN::Containers::Array<SGEXTN::SingText::String> dataTable = dataString.split('\n');
     for(int i=0; i<dataTable.length(); i++){
-        SGEXTN::CoreText::String thisData = dataTable.at(i);
+        SGEXTN::SingText::String thisData = dataTable.at(i);
         if(dataTable.at(i).containsCharacters('#') == true){thisData = dataTable.at(i).substringCharactersLeft(dataTable.at(i).findFirstCharactersFromLeft('#'));}
         if(thisData.containsCharacters(';') == false){continue;}
-        const SGEXTN::CoreText::String codePoints = thisData.substringCharactersLeft(thisData.findFirstCharactersFromLeft(';'));
-        const SGEXTN::CoreText::String propertyValue = thisData.substringCharactersRight(thisData.characterLength() - 1 - thisData.findFirstCharactersFromLeft(';')).removeLeadingTrailingWhitespace();
+        const SGEXTN::SingText::String codePoints = thisData.substringCharactersLeft(thisData.findFirstCharactersFromLeft(';'));
+        const SGEXTN::SingText::String propertyValue = thisData.substringCharactersRight(thisData.characterLength() - 1 - thisData.findFirstCharactersFromLeft(';')).removeLeadingTrailingWhitespace();
         int start = -1;
         int end = -1;
         if(codePoints.containsCharacters("..") == false){
@@ -223,7 +223,7 @@ void parseAuxillaryFile(const SGEXTN::CoreText::String& fileName, void (*toDoFun
     }
 }
 
-void setGraphemeBreakDatabaseValue(int j, const SGEXTN::CoreText::String& propertyValue){
+void setGraphemeBreakDatabaseValue(int j, const SGEXTN::SingText::String& propertyValue){
     graphemeBreakDatabase.at(j) = propertyValue;
 }
 
@@ -231,26 +231,26 @@ void fillGraphemeBreakDatabase(){
     parseAuxillaryFile("graphemebreakproperty", &setGraphemeBreakDatabaseValue);
 }
 
-SGEXTN::CoreText::GraphemeSegmentationType parseGraphemeSegmentationType(const SGEXTN::CoreText::String& s){
-    if(s == "Prepend"){return SGEXTN::CoreText::GraphemeSegmentationType::Prepend;}
-    if(s == "CR"){return SGEXTN::CoreText::GraphemeSegmentationType::Return;}
-    if(s == "LF"){return SGEXTN::CoreText::GraphemeSegmentationType::NewLine;}
-    if(s == "Control"){return SGEXTN::CoreText::GraphemeSegmentationType::ControlCharacter;}
-    if(s == "Extend"){return SGEXTN::CoreText::GraphemeSegmentationType::Extend;}
-    if(s == "Regional_Indicator"){return SGEXTN::CoreText::GraphemeSegmentationType::RegionalIndicator;}
-    if(s == "SpacingMark"){return SGEXTN::CoreText::GraphemeSegmentationType::SpacingCombiningMark;}
-    if(s == "L"){return SGEXTN::CoreText::GraphemeSegmentationType::HangulLeading;}
-    if(s == "V"){return SGEXTN::CoreText::GraphemeSegmentationType::HangulVowel;}
-    if(s == "T"){return SGEXTN::CoreText::GraphemeSegmentationType::HangulTrailing;}
-    if(s == "LV"){return SGEXTN::CoreText::GraphemeSegmentationType::HangulLeadingAndVowel;}
-    if(s == "LVT"){return SGEXTN::CoreText::GraphemeSegmentationType::HangulLeadingAndVowelAndTrailing;}
-    if(s == "ZWJ"){return SGEXTN::CoreText::GraphemeSegmentationType::ZeroWidthJoiner;}
-    return SGEXTN::CoreText::GraphemeSegmentationType::Other;
+SGEXTN::SingText::GraphemeSegmentationType parseGraphemeSegmentationType(const SGEXTN::SingText::String& s){
+    if(s == "Prepend"){return SGEXTN::SingText::GraphemeSegmentationType::Prepend;}
+    if(s == "CR"){return SGEXTN::SingText::GraphemeSegmentationType::Return;}
+    if(s == "LF"){return SGEXTN::SingText::GraphemeSegmentationType::NewLine;}
+    if(s == "Control"){return SGEXTN::SingText::GraphemeSegmentationType::ControlCharacter;}
+    if(s == "Extend"){return SGEXTN::SingText::GraphemeSegmentationType::Extend;}
+    if(s == "Regional_Indicator"){return SGEXTN::SingText::GraphemeSegmentationType::RegionalIndicator;}
+    if(s == "SpacingMark"){return SGEXTN::SingText::GraphemeSegmentationType::SpacingCombiningMark;}
+    if(s == "L"){return SGEXTN::SingText::GraphemeSegmentationType::HangulLeading;}
+    if(s == "V"){return SGEXTN::SingText::GraphemeSegmentationType::HangulVowel;}
+    if(s == "T"){return SGEXTN::SingText::GraphemeSegmentationType::HangulTrailing;}
+    if(s == "LV"){return SGEXTN::SingText::GraphemeSegmentationType::HangulLeadingAndVowel;}
+    if(s == "LVT"){return SGEXTN::SingText::GraphemeSegmentationType::HangulLeadingAndVowelAndTrailing;}
+    if(s == "ZWJ"){return SGEXTN::SingText::GraphemeSegmentationType::ZeroWidthJoiner;}
+    return SGEXTN::SingText::GraphemeSegmentationType::Other;
 }
 
-SGEXTN::Containers::Array<SGEXTN::Containers::UnorderedSet<SGEXTN::CoreText::String>> derivedCoreDatabase(0x110000, SGEXTN::Containers::UnorderedSet<SGEXTN::CoreText::String>());
+SGEXTN::Containers::Array<SGEXTN::Containers::UnorderedSet<SGEXTN::SingText::String>> derivedCoreDatabase(0x110000, SGEXTN::Containers::UnorderedSet<SGEXTN::SingText::String>());
 
-void appendToDerivedCoreDatabase(int j, const SGEXTN::CoreText::String& propertyValue){
+void appendToDerivedCoreDatabase(int j, const SGEXTN::SingText::String& propertyValue){
     derivedCoreDatabase.at(j).insert(propertyValue);
 }
 
@@ -258,9 +258,9 @@ void fillDerivedCoreDatabase(){
     parseAuxillaryFile("derivedcoreproperties", &appendToDerivedCoreDatabase);
 }
 
-SGEXTN::Containers::Array<SGEXTN::CoreText::String> emojiTypeDatabase(0x110000, "");
+SGEXTN::Containers::Array<SGEXTN::SingText::String> emojiTypeDatabase(0x110000, "");
 
-void setEmojiTypeDatabaseValue(int j, const SGEXTN::CoreText::String& propertyValue){
+void setEmojiTypeDatabaseValue(int j, const SGEXTN::SingText::String& propertyValue){
     emojiTypeDatabase.at(j) = propertyValue;
 }
 
@@ -268,11 +268,11 @@ void fillEmojiTypeDatabase(){
     parseAuxillaryFile("emojidata", &setEmojiTypeDatabaseValue);
 }
 
-SGEXTN::CoreText::String parseCodePointList(const SGEXTN::CoreText::String& s){
-    SGEXTN::Containers::Array<SGEXTN::CoreText::String> splitStr = s.split(" ");
-    SGEXTN::CoreText::String output;
+SGEXTN::SingText::String parseCodePointList(const SGEXTN::SingText::String& s){
+    SGEXTN::Containers::Array<SGEXTN::SingText::String> splitStr = s.split(" ");
+    SGEXTN::SingText::String output;
     for(int i=0; i<splitStr.length(); i++){
-        output += SGEXTN::CoreText::Character(splitStr.at(i).parseToInt(nullptr, 16));
+        output += SGEXTN::SingText::Character(splitStr.at(i).parseToInt(nullptr, 16));
     }
     return output;
 }
@@ -280,11 +280,11 @@ SGEXTN::CoreText::String parseCodePointList(const SGEXTN::CoreText::String& s){
 SGEXTN::Containers::Array<bool> recomposeExclusionDatabase(0x110000, false);
 
 void fillRecomposeExclusionDatabase(){
-    const SGEXTN::CoreText::String dataString = readFile("compositionexclusions.txt");
-    SGEXTN::Containers::Array<SGEXTN::CoreText::String> dataTable = dataString.split('\n');
+    const SGEXTN::SingText::String dataString = readFile("compositionexclusions.txt");
+    SGEXTN::Containers::Array<SGEXTN::SingText::String> dataTable = dataString.split('\n');
     for(int i=0; i<dataTable.length(); i++){
         if(dataTable.at(i).containsCharacters('#') == false){continue;}
-        const SGEXTN::CoreText::String codePoints = dataTable.at(i).substringCharactersLeft(dataTable.at(i).findFirstCharactersFromLeft('#')).removeLeadingTrailingWhitespace();
+        const SGEXTN::SingText::String codePoints = dataTable.at(i).substringCharactersLeft(dataTable.at(i).findFirstCharactersFromLeft('#')).removeLeadingTrailingWhitespace();
         if(codePoints.containsCharacters("..") == false){recomposeExclusionDatabase.at(codePoints.parseToInt(nullptr, 16)) = true;}
         else{
             const int start = codePoints.substringCharactersLeft(codePoints.findFirstCharactersFromLeft("..")).parseToInt(nullptr, 16);
@@ -296,9 +296,9 @@ void fillRecomposeExclusionDatabase(){
     }
 }
 
-SGEXTN::Containers::Array<SGEXTN::Containers::UnorderedSet<SGEXTN::CoreText::String>> propertyListDatabase(0x110000, SGEXTN::Containers::UnorderedSet<SGEXTN::CoreText::String>());
+SGEXTN::Containers::Array<SGEXTN::Containers::UnorderedSet<SGEXTN::SingText::String>> propertyListDatabase(0x110000, SGEXTN::Containers::UnorderedSet<SGEXTN::SingText::String>());
 
-void appendToPropertyListDatabase(int j, const SGEXTN::CoreText::String& propertyValue){
+void appendToPropertyListDatabase(int j, const SGEXTN::SingText::String& propertyValue){
     propertyListDatabase.at(j).insert(propertyValue);
 }
 
@@ -306,41 +306,41 @@ void fillPropertyListDatabase(){
     parseAuxillaryFile("proplist", &appendToPropertyListDatabase);
 }
 
-SGEXTN::Containers::Vector<SGEXTN::Containers::Array<SGEXTN::CoreText::String>> normalisationTestDatabase;
+SGEXTN::Containers::Vector<SGEXTN::Containers::Array<SGEXTN::SingText::String>> normalisationTestDatabase;
 
 void fillNormalisationTestDatabase(){
-    const SGEXTN::CoreText::String dataString = readFile("normalisationtest.txt");
-    SGEXTN::Containers::Array<SGEXTN::CoreText::String> dataTable = dataString.split('\n');
+    const SGEXTN::SingText::String dataString = readFile("normalisationtest.txt");
+    SGEXTN::Containers::Array<SGEXTN::SingText::String> dataTable = dataString.split('\n');
     for(int i=0; i<dataTable.length(); i++){
         if(dataTable.at(i).findFirstCharactersFromLeft('#') == -1){continue;}
-        const SGEXTN::CoreText::String thisTest = dataTable.at(i).substringCharactersLeft(dataTable.at(i).findFirstCharactersFromLeft('#'));
-        SGEXTN::Containers::Array<SGEXTN::CoreText::String> testData = thisTest.split(';');
+        const SGEXTN::SingText::String thisTest = dataTable.at(i).substringCharactersLeft(dataTable.at(i).findFirstCharactersFromLeft('#'));
+        SGEXTN::Containers::Array<SGEXTN::SingText::String> testData = thisTest.split(';');
         if(testData.length() < 5){continue;}
-        const SGEXTN::CoreText::String c1 = parseCodePointList(testData.at(0));
-        const SGEXTN::CoreText::String c2 = parseCodePointList(testData.at(1));
-        const SGEXTN::CoreText::String c3 = parseCodePointList(testData.at(2));
-        const SGEXTN::CoreText::String c4 = parseCodePointList(testData.at(3));
-        const SGEXTN::CoreText::String c5 = parseCodePointList(testData.at(4));
-        normalisationTestDatabase.pushBack(SGEXTN::Containers::Array<SGEXTN::CoreText::String>({c1, c2, c3, c4, c5}));
+        const SGEXTN::SingText::String c1 = parseCodePointList(testData.at(0));
+        const SGEXTN::SingText::String c2 = parseCodePointList(testData.at(1));
+        const SGEXTN::SingText::String c3 = parseCodePointList(testData.at(2));
+        const SGEXTN::SingText::String c4 = parseCodePointList(testData.at(3));
+        const SGEXTN::SingText::String c5 = parseCodePointList(testData.at(4));
+        normalisationTestDatabase.pushBack(SGEXTN::Containers::Array<SGEXTN::SingText::String>({c1, c2, c3, c4, c5}));
     }
 }
 
-SGEXTN::Containers::Vector<SGEXTN::CoreText::String> graphemeBoundaryTestStrings;
-SGEXTN::Containers::Vector<SGEXTN::CoreText::String> graphemeBoundaryTestExpectedResults;
+SGEXTN::Containers::Vector<SGEXTN::SingText::String> graphemeBoundaryTestStrings;
+SGEXTN::Containers::Vector<SGEXTN::SingText::String> graphemeBoundaryTestExpectedResults;
 
 void fillGraphemeBoundaryTestDatabase(){
-    const SGEXTN::CoreText::String dataString = readFile("graphemebreaktest.txt");
-    SGEXTN::Containers::Array<SGEXTN::CoreText::String> dataTable = dataString.split('\n');
+    const SGEXTN::SingText::String dataString = readFile("graphemebreaktest.txt");
+    SGEXTN::Containers::Array<SGEXTN::SingText::String> dataTable = dataString.split('\n');
     for(int i=0; i<dataTable.length(); i++){
         if(dataTable.at(i).findFirstCharactersFromLeft('#') == -1){continue;}
-        const SGEXTN::CoreText::String thisTest = dataTable.at(i).substringCharactersLeft(dataTable.at(i).findFirstCharactersFromLeft('#')).removeLeadingTrailingWhitespace();
+        const SGEXTN::SingText::String thisTest = dataTable.at(i).substringCharactersLeft(dataTable.at(i).findFirstCharactersFromLeft('#')).removeLeadingTrailingWhitespace();
         if(thisTest == ""){continue;}
-        SGEXTN::Containers::Array<SGEXTN::CoreText::String> characters = thisTest.split(' ');
-        SGEXTN::CoreText::String originalString;
+        SGEXTN::Containers::Array<SGEXTN::SingText::String> characters = thisTest.split(' ');
+        SGEXTN::SingText::String originalString;
         for(int j=0; j<characters.length(); j++){
             bool isValid = false;
             const int codePoint = characters.at(j).parseToInt(&isValid, 16);
-            if(isValid == true){originalString += SGEXTN::CoreText::Character(codePoint);}
+            if(isValid == true){originalString += SGEXTN::SingText::Character(codePoint);}
         }
         graphemeBoundaryTestStrings.pushBack(originalString);
         graphemeBoundaryTestExpectedResults.pushBack(thisTest);
@@ -354,41 +354,41 @@ bool isCloseEnough(float a, float b){
     return false;
 }
 
-SGEXTN::Containers::Vector<SGEXTN::CoreText::String> numericParsingTestsDatabase;
+SGEXTN::Containers::Vector<SGEXTN::SingText::String> numericParsingTestsDatabase;
 int numericParsingTestsDatabaseUniqueFloatLength = 0;
 
 void fillNumericParsingTestsDatabase(){
-    const SGEXTN::CoreText::String dataString = readFile("nigeltaotencentrapidjson.txt");
-    SGEXTN::Containers::Array<SGEXTN::CoreText::String> dataTable = dataString.split('\n');
+    const SGEXTN::SingText::String dataString = readFile("nigeltaotencentrapidjson.txt");
+    SGEXTN::Containers::Array<SGEXTN::SingText::String> dataTable = dataString.split('\n');
     for(int i=0; i<dataTable.length(); i++){
-        SGEXTN::Containers::Array<SGEXTN::CoreText::String> thisTest = dataTable.at(i).split(' ');
+        SGEXTN::Containers::Array<SGEXTN::SingText::String> thisTest = dataTable.at(i).split(' ');
         if(thisTest.length() != 4){continue;}
         numericParsingTestsDatabase.pushBack(thisTest.at(3));
     }
     const int databaseLength = numericParsingTestsDatabase.length();
     for(int i=0; i<databaseLength; i++){
-        numericParsingTestsDatabase.pushBack(SGEXTN::CoreText::String('-') + numericParsingTestsDatabase.at(i));
+        numericParsingTestsDatabase.pushBack(SGEXTN::SingText::String('-') + numericParsingTestsDatabase.at(i));
     }
     numericParsingTestsDatabaseUniqueFloatLength = numericParsingTestsDatabase.length();
     for(int i=0; i<databaseLength; i++){
-        numericParsingTestsDatabase.pushBack(SGEXTN::CoreText::String('+') + numericParsingTestsDatabase.at(i));
-        numericParsingTestsDatabase.pushBack(SGEXTN::CoreText::String("00000") + numericParsingTestsDatabase.at(i));
-        numericParsingTestsDatabase.pushBack(SGEXTN::CoreText::String("+00000") + numericParsingTestsDatabase.at(i));
-        numericParsingTestsDatabase.pushBack(SGEXTN::CoreText::String("-00000") + numericParsingTestsDatabase.at(i));
+        numericParsingTestsDatabase.pushBack(SGEXTN::SingText::String('+') + numericParsingTestsDatabase.at(i));
+        numericParsingTestsDatabase.pushBack(SGEXTN::SingText::String("00000") + numericParsingTestsDatabase.at(i));
+        numericParsingTestsDatabase.pushBack(SGEXTN::SingText::String("+00000") + numericParsingTestsDatabase.at(i));
+        numericParsingTestsDatabase.pushBack(SGEXTN::SingText::String("-00000") + numericParsingTestsDatabase.at(i));
         numericParsingTestsDatabase.pushBack(numericParsingTestsDatabase.at(i) + ".00000");
-        numericParsingTestsDatabase.pushBack(SGEXTN::CoreText::String('-') + numericParsingTestsDatabase.at(i) + ".00000");
-        numericParsingTestsDatabase.pushBack(SGEXTN::CoreText::String('+') + numericParsingTestsDatabase.at(i) + ".00000");
-        numericParsingTestsDatabase.pushBack(SGEXTN::CoreText::String("00000") + numericParsingTestsDatabase.at(i) + ".00000");
-        numericParsingTestsDatabase.pushBack(SGEXTN::CoreText::String("+00000") + numericParsingTestsDatabase.at(i) + ".00000");
-        numericParsingTestsDatabase.pushBack(SGEXTN::CoreText::String("-00000") + numericParsingTestsDatabase.at(i) + ".00000");
+        numericParsingTestsDatabase.pushBack(SGEXTN::SingText::String('-') + numericParsingTestsDatabase.at(i) + ".00000");
+        numericParsingTestsDatabase.pushBack(SGEXTN::SingText::String('+') + numericParsingTestsDatabase.at(i) + ".00000");
+        numericParsingTestsDatabase.pushBack(SGEXTN::SingText::String("00000") + numericParsingTestsDatabase.at(i) + ".00000");
+        numericParsingTestsDatabase.pushBack(SGEXTN::SingText::String("+00000") + numericParsingTestsDatabase.at(i) + ".00000");
+        numericParsingTestsDatabase.pushBack(SGEXTN::SingText::String("-00000") + numericParsingTestsDatabase.at(i) + ".00000");
     }
 }
 
-bool isNumericalDigit(const SGEXTN::CoreText::Character& c){
+bool isNumericalDigit(const SGEXTN::SingText::Character& c){
     return (c != '+' && c != '-' && c != '.');
 }
 
-void countSignificantFigures(int& minimum, int& maximum, const SGEXTN::CoreText::String& s){
+void countSignificantFigures(int& minimum, int& maximum, const SGEXTN::SingText::String& s){
     int firstSignificant = -1;
     int maximumLastSignificant = -1;
     int minimumLastSignificant = -1;
@@ -422,7 +422,7 @@ void countSignificantFigures(int& minimum, int& maximum, const SGEXTN::CoreText:
     }
 }
 
-void countDecimalPlaces(int& minimum, int& maximum, const SGEXTN::CoreText::String& s){
+void countDecimalPlaces(int& minimum, int& maximum, const SGEXTN::SingText::String& s){
     if(s.containsCharacters('.') == true){
         minimum = s.characterLength() - 1 - s.findFirstCharactersFromRight('.');
         maximum = minimum;
@@ -537,55 +537,55 @@ void SGEXTN::InternalTest::ExternalTest::testUnicodeQueryExternal(){
     for(int i=0; i<0x110000; i++){
         int uppercase = i;
         if(unicodeDatabase.at(i).at(12) != ""){uppercase = unicodeDatabase.at(i).at(12).parseToInt(nullptr, 16);}
-        if(uppercase != SGEXTN::CoreText::UnicodeQuery::getUppercase(i)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::UnicodeQuery check uppercase fail");}
+        if(uppercase != SGEXTN::SingText::UnicodeQuery::getUppercase(i)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SingText::UnicodeQuery check uppercase fail");}
         int lowercase = i;
         if(unicodeDatabase.at(i).at(13) != ""){lowercase = unicodeDatabase.at(i).at(13).parseToInt(nullptr, 16);}
-        if(lowercase != SGEXTN::CoreText::UnicodeQuery::getLowercase(i)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::UnicodeQuery check lowercase fail");}
+        if(lowercase != SGEXTN::SingText::UnicodeQuery::getLowercase(i)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SingText::UnicodeQuery check lowercase fail");}
         int titlecase = i;
         if(unicodeDatabase.at(i).at(14) != ""){titlecase = unicodeDatabase.at(i).at(14).parseToInt(nullptr, 16);}
-        if(titlecase != SGEXTN::CoreText::UnicodeQuery::getTitlecase(i)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::UnicodeQuery check titlecase fail");}
+        if(titlecase != SGEXTN::SingText::UnicodeQuery::getTitlecase(i)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SingText::UnicodeQuery check titlecase fail");}
         bool isWhitespace = false;
         if(propertyListDatabase.at(i).contains("White_Space") == true){isWhitespace = true;}
-        if(isWhitespace != SGEXTN::CoreText::UnicodeQuery::isWhitespace(i)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::UnicodeQuery check whitespace fail");}
-        SGEXTN::CoreText::FullCharacterType fullType = SGEXTN::CoreText::FullCharacterType::UnassignedCharacter;
+        if(isWhitespace != SGEXTN::SingText::UnicodeQuery::isWhitespace(i)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SingText::UnicodeQuery check whitespace fail");}
+        SGEXTN::SingText::FullCharacterType fullType = SGEXTN::SingText::FullCharacterType::UnassignedCharacter;
         if(unicodeDatabase.at(i).at(2) != ""){fullType = parseFullType(unicodeDatabase.at(i).at(2));}
-        if(fullType != SGEXTN::CoreText::UnicodeQuery::getFullType(i)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::UnicodeQuery get full type fail");}
-        SGEXTN::CoreText::SimplifiedCharacterType simplifiedType = SGEXTN::CoreText::SimplifiedCharacterType::Other;
+        if(fullType != SGEXTN::SingText::UnicodeQuery::getFullType(i)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SingText::UnicodeQuery get full type fail");}
+        SGEXTN::SingText::SimplifiedCharacterType simplifiedType = SGEXTN::SingText::SimplifiedCharacterType::Other;
         if(unicodeDatabase.at(i).at(2) != ""){simplifiedType = parseSimplifiedType(unicodeDatabase.at(i).at(2));}
-        if(simplifiedType != SGEXTN::CoreText::UnicodeQuery::getSimplifiedType(i)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::UnicodeQuery get simplified type fail");}
+        if(simplifiedType != SGEXTN::SingText::UnicodeQuery::getSimplifiedType(i)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SingText::UnicodeQuery get simplified type fail");}
         int decimalDigit = -1;
         if(unicodeDatabase.at(i).at(6) != ""){decimalDigit = unicodeDatabase.at(i).at(6).parseToInt(nullptr, 16);}
-        if(decimalDigit != SGEXTN::CoreText::UnicodeQuery::getDecimalDigitValue(i)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::UnicodeQuery get decimal digit value fail");}
+        if(decimalDigit != SGEXTN::SingText::UnicodeQuery::getDecimalDigitValue(i)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SingText::UnicodeQuery get decimal digit value fail");}
         float numericalValue = SGEXTN::Math::FloatLimits<float>::negativeInfinity();
         if(unicodeDatabase.at(i).at(8) != ""){numericalValue = parseRationalNumber(unicodeDatabase.at(i).at(8));}
-        if(numericalValue != SGEXTN::CoreText::UnicodeQuery::getNumericalValue(i)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::UnicodeQuery get numerical value fail");}
-        SGEXTN::CoreText::GraphemeSegmentationType graphemeSegmentationType = SGEXTN::CoreText::GraphemeSegmentationType::Other;
+        if(numericalValue != SGEXTN::SingText::UnicodeQuery::getNumericalValue(i)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SingText::UnicodeQuery get numerical value fail");}
+        SGEXTN::SingText::GraphemeSegmentationType graphemeSegmentationType = SGEXTN::SingText::GraphemeSegmentationType::Other;
         if(graphemeBreakDatabase.at(i) != ""){graphemeSegmentationType = parseGraphemeSegmentationType(graphemeBreakDatabase.at(i));}
-        if(graphemeSegmentationType != SGEXTN::CoreText::UnicodeQuery::getGraphemeSegmentationType(i)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::UnicodeQuery get grapheme segmentation type fail");}
-        SGEXTN::CoreText::GraphemeRuleRelatedType graphemeRuleRelatedType = SGEXTN::CoreText::GraphemeRuleRelatedType::None;
-        if(derivedCoreDatabase.at(i).contains("InCB; Consonant") == true){graphemeRuleRelatedType = SGEXTN::CoreText::GraphemeRuleRelatedType::Rule9cConsonant;}
-        else if(derivedCoreDatabase.at(i).contains("InCB; Extend") == true){graphemeRuleRelatedType = SGEXTN::CoreText::GraphemeRuleRelatedType::Rule9cExtend;}
-        else if(derivedCoreDatabase.at(i).contains("InCB; Linker") == true){graphemeRuleRelatedType = SGEXTN::CoreText::GraphemeRuleRelatedType::Rule9cLinker;}
-        else if(emojiTypeDatabase.at(i) == "Extended_Pictographic"){graphemeRuleRelatedType = SGEXTN::CoreText::GraphemeRuleRelatedType::Rule11Emoji;}
-        if(graphemeRuleRelatedType != SGEXTN::CoreText::UnicodeQuery::getGraphemeRuleRelatedType(i)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::UnicodeQuery get grapheme rule related type fail");}
+        if(graphemeSegmentationType != SGEXTN::SingText::UnicodeQuery::getGraphemeSegmentationType(i)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SingText::UnicodeQuery get grapheme segmentation type fail");}
+        SGEXTN::SingText::GraphemeRuleRelatedType graphemeRuleRelatedType = SGEXTN::SingText::GraphemeRuleRelatedType::None;
+        if(derivedCoreDatabase.at(i).contains("InCB; Consonant") == true){graphemeRuleRelatedType = SGEXTN::SingText::GraphemeRuleRelatedType::Rule9cConsonant;}
+        else if(derivedCoreDatabase.at(i).contains("InCB; Extend") == true){graphemeRuleRelatedType = SGEXTN::SingText::GraphemeRuleRelatedType::Rule9cExtend;}
+        else if(derivedCoreDatabase.at(i).contains("InCB; Linker") == true){graphemeRuleRelatedType = SGEXTN::SingText::GraphemeRuleRelatedType::Rule9cLinker;}
+        else if(emojiTypeDatabase.at(i) == "Extended_Pictographic"){graphemeRuleRelatedType = SGEXTN::SingText::GraphemeRuleRelatedType::Rule11Emoji;}
+        if(graphemeRuleRelatedType != SGEXTN::SingText::UnicodeQuery::getGraphemeRuleRelatedType(i)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SingText::UnicodeQuery get grapheme rule related type fail");}
         int combiningMarkOrder = 0;
         if(unicodeDatabase.at(i).at(3) != ""){combiningMarkOrder = unicodeDatabase.at(i).at(3).parseToInt(nullptr, 10);}
-        if(combiningMarkOrder != SGEXTN::CoreText::UnicodeQuery::getCombiningMarkOrder(i)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::UnicodeQuery get combining mark order fail");}
-        SGEXTN::CoreText::String equivDecompose = "";
+        if(combiningMarkOrder != SGEXTN::SingText::UnicodeQuery::getCombiningMarkOrder(i)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SingText::UnicodeQuery get combining mark order fail");}
+        SGEXTN::SingText::String equivDecompose = "";
         if(unicodeDatabase.at(i).at(5) != "" && unicodeDatabase.at(i).at(5).containsCharacters('>') == false){equivDecompose = parseCodePointList(unicodeDatabase.at(i).at(5));}
-        if(equivDecompose != SGEXTN::CoreText::UnicodeQuery::getEquivDecomposition(i)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::UnicodeQuery get equivalent decomposition fail");}
-        SGEXTN::CoreText::String compatDecompose = "";
+        if(equivDecompose != SGEXTN::SingText::UnicodeQuery::getEquivDecomposition(i)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SingText::UnicodeQuery get equivalent decomposition fail");}
+        SGEXTN::SingText::String compatDecompose = "";
         if(unicodeDatabase.at(i).at(5) != ""){
             if(unicodeDatabase.at(i).at(5).containsCharacters('>') == true){compatDecompose = parseCodePointList(unicodeDatabase.at(i).at(5).substringCharactersRight(unicodeDatabase.at(i).at(5).characterLength() - 1 - unicodeDatabase.at(i).at(5).findFirstCharactersFromLeft('>')).removeLeadingTrailingWhitespace());}
             else{compatDecompose = parseCodePointList(unicodeDatabase.at(i).at(5));}
         }
-        if(compatDecompose != SGEXTN::CoreText::UnicodeQuery::getCompatDecomposition(i)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::UnicodeQuery get compatibility decomposition fail");}
+        if(compatDecompose != SGEXTN::SingText::UnicodeQuery::getCompatDecomposition(i)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SingText::UnicodeQuery get compatibility decomposition fail");}
         SGEXTN::Containers::Array<int> equivDecompCodePoints = equivDecompose.getUnicode();
         if(equivDecompCodePoints.length() == 2){
             int recomposedCodePoint = i;
-            if(combiningMarkOrder != 0 || SGEXTN::CoreText::UnicodeQuery::getCombiningMarkOrder(equivDecompCodePoints.at(0)) != 0){recomposedCodePoint = -1;}
+            if(combiningMarkOrder != 0 || SGEXTN::SingText::UnicodeQuery::getCombiningMarkOrder(equivDecompCodePoints.at(0)) != 0){recomposedCodePoint = -1;}
             if(recomposeExclusionDatabase.at(i) == true){recomposedCodePoint = -1;}
-            if(recomposedCodePoint != SGEXTN::CoreText::UnicodeQuery::getBinaryRecomposition(equivDecompCodePoints.at(0), equivDecompCodePoints.at(1))){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::UnicodeQuery get unicode binary recomposition fail");}
+            if(recomposedCodePoint != SGEXTN::SingText::UnicodeQuery::getBinaryRecomposition(equivDecompCodePoints.at(0), equivDecompCodePoints.at(1))){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SingText::UnicodeQuery get unicode binary recomposition fail");}
         }
     }
 }
@@ -594,45 +594,45 @@ void SGEXTN::InternalTest::ExternalTest::testUnicodeExternal(){
     fillNormalisationTestDatabase();
     fillGraphemeBoundaryTestDatabase();
     for(int i=0; i<normalisationTestDatabase.length(); i++){
-        if(normalisationTestDatabase.at(i).at(0).getNormalised(SGEXTN::CoreText::NormalisationFormat::Join) != normalisationTestDatabase.at(i).at(1)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String normalisation NFC test invariant 0 fail");}
-        if(normalisationTestDatabase.at(i).at(1).getNormalised(SGEXTN::CoreText::NormalisationFormat::Join) != normalisationTestDatabase.at(i).at(1)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String normalisation NFC test invariant 1 fail");}
-        if(normalisationTestDatabase.at(i).at(2).getNormalised(SGEXTN::CoreText::NormalisationFormat::Join) != normalisationTestDatabase.at(i).at(1)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String normalisation NFC test invariant 2 fail");}
-        if(normalisationTestDatabase.at(i).at(3).getNormalised(SGEXTN::CoreText::NormalisationFormat::Join) != normalisationTestDatabase.at(i).at(3)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String normalisation NFC test invariant 3 fail");}
-        if(normalisationTestDatabase.at(i).at(4).getNormalised(SGEXTN::CoreText::NormalisationFormat::Join) != normalisationTestDatabase.at(i).at(3)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String normalisation NFC test invariant 4 fail");}
-        if(normalisationTestDatabase.at(i).at(0).getNormalised(SGEXTN::CoreText::NormalisationFormat::Separate) != normalisationTestDatabase.at(i).at(2)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String normalisation NFD test invariant 0 fail");}
-        if(normalisationTestDatabase.at(i).at(1).getNormalised(SGEXTN::CoreText::NormalisationFormat::Separate) != normalisationTestDatabase.at(i).at(2)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String normalisation NFD test invariant 1 fail");}
-        if(normalisationTestDatabase.at(i).at(2).getNormalised(SGEXTN::CoreText::NormalisationFormat::Separate) != normalisationTestDatabase.at(i).at(2)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String normalisation NFD test invariant 2 fail");}
-        if(normalisationTestDatabase.at(i).at(3).getNormalised(SGEXTN::CoreText::NormalisationFormat::Separate) != normalisationTestDatabase.at(i).at(4)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String normalisation NFD test invariant 3 fail");}
-        if(normalisationTestDatabase.at(i).at(4).getNormalised(SGEXTN::CoreText::NormalisationFormat::Separate) != normalisationTestDatabase.at(i).at(4)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String normalisation NFD test invariant 4 fail");}
-        if(normalisationTestDatabase.at(i).at(0).getNormalised(SGEXTN::CoreText::NormalisationFormat::LossyJoin) != normalisationTestDatabase.at(i).at(3)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String normalisation NFKC test invariant 0 fail");}
-        if(normalisationTestDatabase.at(i).at(1).getNormalised(SGEXTN::CoreText::NormalisationFormat::LossyJoin) != normalisationTestDatabase.at(i).at(3)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String normalisation NFKC test invariant 1 fail");}
-        if(normalisationTestDatabase.at(i).at(2).getNormalised(SGEXTN::CoreText::NormalisationFormat::LossyJoin) != normalisationTestDatabase.at(i).at(3)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String normalisation NFKC test invariant 2 fail");}
-        if(normalisationTestDatabase.at(i).at(3).getNormalised(SGEXTN::CoreText::NormalisationFormat::LossyJoin) != normalisationTestDatabase.at(i).at(3)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String normalisation NFKC test invariant 3 fail");}
-        if(normalisationTestDatabase.at(i).at(4).getNormalised(SGEXTN::CoreText::NormalisationFormat::LossyJoin) != normalisationTestDatabase.at(i).at(3)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String normalisation NFKC test invariant 4 fail");}
-        if(normalisationTestDatabase.at(i).at(0).getNormalised(SGEXTN::CoreText::NormalisationFormat::LossySeparate) != normalisationTestDatabase.at(i).at(4)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String normalisation NFKD test invariant 0 fail");}
-        if(normalisationTestDatabase.at(i).at(1).getNormalised(SGEXTN::CoreText::NormalisationFormat::LossySeparate) != normalisationTestDatabase.at(i).at(4)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String normalisation NFKD test invariant 1 fail");}
-        if(normalisationTestDatabase.at(i).at(2).getNormalised(SGEXTN::CoreText::NormalisationFormat::LossySeparate) != normalisationTestDatabase.at(i).at(4)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String normalisation NFKD test invariant 2 fail");}
-        if(normalisationTestDatabase.at(i).at(3).getNormalised(SGEXTN::CoreText::NormalisationFormat::LossySeparate) != normalisationTestDatabase.at(i).at(4)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String normalisation NFKD test invariant 3 fail");}
-        if(normalisationTestDatabase.at(i).at(4).getNormalised(SGEXTN::CoreText::NormalisationFormat::LossySeparate) != normalisationTestDatabase.at(i).at(4)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String normalisation NFKD test invariant 4 fail");}
+        if(normalisationTestDatabase.at(i).at(0).getNormalised(SGEXTN::SingText::NormalisationFormat::Join) != normalisationTestDatabase.at(i).at(1)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SingText::String normalisation NFC test invariant 0 fail");}
+        if(normalisationTestDatabase.at(i).at(1).getNormalised(SGEXTN::SingText::NormalisationFormat::Join) != normalisationTestDatabase.at(i).at(1)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SingText::String normalisation NFC test invariant 1 fail");}
+        if(normalisationTestDatabase.at(i).at(2).getNormalised(SGEXTN::SingText::NormalisationFormat::Join) != normalisationTestDatabase.at(i).at(1)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SingText::String normalisation NFC test invariant 2 fail");}
+        if(normalisationTestDatabase.at(i).at(3).getNormalised(SGEXTN::SingText::NormalisationFormat::Join) != normalisationTestDatabase.at(i).at(3)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SingText::String normalisation NFC test invariant 3 fail");}
+        if(normalisationTestDatabase.at(i).at(4).getNormalised(SGEXTN::SingText::NormalisationFormat::Join) != normalisationTestDatabase.at(i).at(3)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SingText::String normalisation NFC test invariant 4 fail");}
+        if(normalisationTestDatabase.at(i).at(0).getNormalised(SGEXTN::SingText::NormalisationFormat::Separate) != normalisationTestDatabase.at(i).at(2)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SingText::String normalisation NFD test invariant 0 fail");}
+        if(normalisationTestDatabase.at(i).at(1).getNormalised(SGEXTN::SingText::NormalisationFormat::Separate) != normalisationTestDatabase.at(i).at(2)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SingText::String normalisation NFD test invariant 1 fail");}
+        if(normalisationTestDatabase.at(i).at(2).getNormalised(SGEXTN::SingText::NormalisationFormat::Separate) != normalisationTestDatabase.at(i).at(2)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SingText::String normalisation NFD test invariant 2 fail");}
+        if(normalisationTestDatabase.at(i).at(3).getNormalised(SGEXTN::SingText::NormalisationFormat::Separate) != normalisationTestDatabase.at(i).at(4)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SingText::String normalisation NFD test invariant 3 fail");}
+        if(normalisationTestDatabase.at(i).at(4).getNormalised(SGEXTN::SingText::NormalisationFormat::Separate) != normalisationTestDatabase.at(i).at(4)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SingText::String normalisation NFD test invariant 4 fail");}
+        if(normalisationTestDatabase.at(i).at(0).getNormalised(SGEXTN::SingText::NormalisationFormat::LossyJoin) != normalisationTestDatabase.at(i).at(3)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SingText::String normalisation NFKC test invariant 0 fail");}
+        if(normalisationTestDatabase.at(i).at(1).getNormalised(SGEXTN::SingText::NormalisationFormat::LossyJoin) != normalisationTestDatabase.at(i).at(3)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SingText::String normalisation NFKC test invariant 1 fail");}
+        if(normalisationTestDatabase.at(i).at(2).getNormalised(SGEXTN::SingText::NormalisationFormat::LossyJoin) != normalisationTestDatabase.at(i).at(3)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SingText::String normalisation NFKC test invariant 2 fail");}
+        if(normalisationTestDatabase.at(i).at(3).getNormalised(SGEXTN::SingText::NormalisationFormat::LossyJoin) != normalisationTestDatabase.at(i).at(3)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SingText::String normalisation NFKC test invariant 3 fail");}
+        if(normalisationTestDatabase.at(i).at(4).getNormalised(SGEXTN::SingText::NormalisationFormat::LossyJoin) != normalisationTestDatabase.at(i).at(3)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SingText::String normalisation NFKC test invariant 4 fail");}
+        if(normalisationTestDatabase.at(i).at(0).getNormalised(SGEXTN::SingText::NormalisationFormat::LossySeparate) != normalisationTestDatabase.at(i).at(4)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SingText::String normalisation NFKD test invariant 0 fail");}
+        if(normalisationTestDatabase.at(i).at(1).getNormalised(SGEXTN::SingText::NormalisationFormat::LossySeparate) != normalisationTestDatabase.at(i).at(4)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SingText::String normalisation NFKD test invariant 1 fail");}
+        if(normalisationTestDatabase.at(i).at(2).getNormalised(SGEXTN::SingText::NormalisationFormat::LossySeparate) != normalisationTestDatabase.at(i).at(4)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SingText::String normalisation NFKD test invariant 2 fail");}
+        if(normalisationTestDatabase.at(i).at(3).getNormalised(SGEXTN::SingText::NormalisationFormat::LossySeparate) != normalisationTestDatabase.at(i).at(4)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SingText::String normalisation NFKD test invariant 3 fail");}
+        if(normalisationTestDatabase.at(i).at(4).getNormalised(SGEXTN::SingText::NormalisationFormat::LossySeparate) != normalisationTestDatabase.at(i).at(4)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SingText::String normalisation NFKD test invariant 4 fail");}
     }
     for(int i=0; i<graphemeBoundaryTestStrings.length(); i++){
-        const SGEXTN::CoreText::String& originalString = graphemeBoundaryTestStrings.at(i);
-        SGEXTN::CoreText::String expectedTestString;
+        const SGEXTN::SingText::String& originalString = graphemeBoundaryTestStrings.at(i);
+        SGEXTN::SingText::String expectedTestString;
         for(int j=0; j<originalString.characterLength(); j++){
             SGEXTN::Containers::Array<int> codePoints = originalString.getCharacterAt(j).getUnicode();
-            expectedTestString += SGEXTN::CoreText::Character(0xf7);
+            expectedTestString += SGEXTN::SingText::Character(0xf7);
             expectedTestString += " ";
             for(int k=0; k<codePoints.length(); k++){
                 if(k != 0){
-                    expectedTestString += SGEXTN::CoreText::Character(0xd7);
+                    expectedTestString += SGEXTN::SingText::Character(0xd7);
                     expectedTestString += " ";
                 }
-                expectedTestString += SGEXTN::CoreText::String::stringFromInt(codePoints.at(k), 16).getUppercase().fillLeftToCharacterLength(4, '0');
+                expectedTestString += SGEXTN::SingText::String::stringFromInt(codePoints.at(k), 16).getUppercase().fillLeftToCharacterLength(4, '0');
                 expectedTestString += " ";
             }
         }
-        expectedTestString += SGEXTN::CoreText::Character(0xf7);
-        if(expectedTestString != graphemeBoundaryTestExpectedResults.at(i)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String find character boundary fail");}
+        expectedTestString += SGEXTN::SingText::Character(0xf7);
+        if(expectedTestString != graphemeBoundaryTestExpectedResults.at(i)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SingText::String find character boundary fail");}
     }
 }
 
@@ -640,92 +640,92 @@ void SGEXTN::InternalTest::ExternalTest::testNumericalParsing(){
     fillNumericParsingTestsDatabase();
     for(int i=0; i<numericParsingTestsDatabase.length(); i++){
         bool isValid = false;
-        SGEXTN::CoreText::String nullTerminatedString = numericParsingTestsDatabase.at(i) + SGEXTN::CoreText::Character('\0');
+        SGEXTN::SingText::String nullTerminatedString = numericParsingTestsDatabase.at(i) + SGEXTN::SingText::Character('\0');
         const int expectedInt = parseCStringToInt(reinterpret_cast<const char*>(nullTerminatedString.getRawPointer()), &isValid, 10);
         if(isValid == true){
             bool parseSuccess = false;
-            if(expectedInt != numericParsingTestsDatabase.at(i).parseToInt(&parseSuccess, 10) || parseSuccess == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String parse base 10 integer fail");}
-            if(expectedInt != numericParsingTestsDatabase.at(i).parseToInt(nullptr, 10)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String parse base 10 integer no success flag fail");}
+            if(expectedInt != numericParsingTestsDatabase.at(i).parseToInt(&parseSuccess, 10) || parseSuccess == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SingText::String parse base 10 integer fail");}
+            if(expectedInt != numericParsingTestsDatabase.at(i).parseToInt(nullptr, 10)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SingText::String parse base 10 integer no success flag fail");}
             if(i < numericParsingTestsDatabaseUniqueFloatLength){
                 for(int base=2; base<=36; base++){
                     const char* intAsCString = printIntToCString(expectedInt, base);
-                    const SGEXTN::CoreText::String expectedNumString = intAsCString;
+                    const SGEXTN::SingText::String expectedNumString = intAsCString;
                     delete[] intAsCString;
-                    if(expectedNumString.getLowercase() != SGEXTN::CoreText::String::stringFromInt(expectedInt, base)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String print integer fail");}
+                    if(expectedNumString.getLowercase() != SGEXTN::SingText::String::stringFromInt(expectedInt, base)){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SingText::String print integer fail");}
                     parseSuccess = false;
-                    if(expectedInt != expectedNumString.getUppercase().parseToInt(&parseSuccess, base) || parseSuccess == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String parse uppercase integer fail");}
+                    if(expectedInt != expectedNumString.getUppercase().parseToInt(&parseSuccess, base) || parseSuccess == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SingText::String parse uppercase integer fail");}
                     parseSuccess = false;
-                    if(expectedInt != expectedNumString.getLowercase().parseToInt(&parseSuccess, base) || parseSuccess == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String parse lowercase integer fail");}
+                    if(expectedInt != expectedNumString.getLowercase().parseToInt(&parseSuccess, base) || parseSuccess == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SingText::String parse lowercase integer fail");}
                 }
             }
         }
         else{
             bool parseSuccess = true;
-            if(numericParsingTestsDatabase.at(i).parseToInt(&parseSuccess, 10) != 0 || parseSuccess == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String parse invalid integer fail");}
+            if(numericParsingTestsDatabase.at(i).parseToInt(&parseSuccess, 10) != 0 || parseSuccess == true){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SingText::String parse invalid integer fail");}
         }
         isValid = false;
         const float expectedFloat = parseCStringToFloat(reinterpret_cast<const char*>(nullTerminatedString.getRawPointer()), &isValid);
         if(isValid == true){
             bool parseSuccess = false;
-            if(isCloseEnough(expectedFloat, numericParsingTestsDatabase.at(i).parseToFloat(&parseSuccess, 10)) == false || parseSuccess == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String parse base 10 floating point number fail");}
-            if(isCloseEnough(expectedFloat, numericParsingTestsDatabase.at(i).parseToFloat(nullptr, 10)) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String parse base 10 floating point number no success flag fail");}
+            if(isCloseEnough(expectedFloat, numericParsingTestsDatabase.at(i).parseToFloat(&parseSuccess, 10)) == false || parseSuccess == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SingText::String parse base 10 floating point number fail");}
+            if(isCloseEnough(expectedFloat, numericParsingTestsDatabase.at(i).parseToFloat(nullptr, 10)) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SingText::String parse base 10 floating point number no success flag fail");}
             if(i < numericParsingTestsDatabaseUniqueFloatLength){
                 for(int base=2; base<=36; base++){
-                    SGEXTN::CoreText::String numString = SGEXTN::CoreText::String::stringFromFloat(expectedFloat, base, SGEXTN::CoreText::FloatPrecisionFormat::SignificantFigure, 4);
+                    SGEXTN::SingText::String numString = SGEXTN::SingText::String::stringFromFloat(expectedFloat, base, SGEXTN::SingText::FloatPrecisionFormat::SignificantFigure, 4);
                     int maximumPrecision = 0;
                     int minimumPrecision = 0;
                     countSignificantFigures(minimumPrecision, maximumPrecision, numString);
-                    if(4 < minimumPrecision || 4 > maximumPrecision){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String print floating point number by significant figures fail");}
+                    if(4 < minimumPrecision || 4 > maximumPrecision){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SingText::String print floating point number by significant figures fail");}
                     float roundError = SGEXTN::Math::FloatMath<float>::absoluteValue(expectedFloat) * SGEXTN::Math::FloatMath<float>::powerOf(static_cast<float>(base), -3.0f);
                     parseSuccess = false;
                     float roundedFloat = numString.parseToFloat(&parseSuccess, base);
-                    if(parseSuccess == false || roundedFloat < expectedFloat - roundError || roundedFloat > expectedFloat + roundError){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String print floating point number by significant figures fail");}
+                    if(parseSuccess == false || roundedFloat < expectedFloat - roundError || roundedFloat > expectedFloat + roundError){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SingText::String print floating point number by significant figures fail");}
                     if(SGEXTN::Math::FloatMath<float>::absoluteValue(expectedFloat) < 100.0f){
-                        numString = SGEXTN::CoreText::String::stringFromFloat(expectedFloat, base, SGEXTN::CoreText::FloatPrecisionFormat::FractionalDigit, 2);
+                        numString = SGEXTN::SingText::String::stringFromFloat(expectedFloat, base, SGEXTN::SingText::FloatPrecisionFormat::FractionalDigit, 2);
                         countDecimalPlaces(minimumPrecision, maximumPrecision, numString);
-                        if(2 < minimumPrecision || 2 > maximumPrecision){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String print floating point number by positive decimal places fail");}
+                        if(2 < minimumPrecision || 2 > maximumPrecision){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SingText::String print floating point number by positive decimal places fail");}
                         roundError = 0.5f * SGEXTN::Math::FloatMath<float>::powerOf(static_cast<float>(base), -2.0f) + 0.5f * SGEXTN::Math::FloatMath<float>::powerOf(static_cast<float>(base), -3.0f);
                         parseSuccess = false;
                         roundedFloat = numString.parseToFloat(&parseSuccess, base);
-                        if(parseSuccess == false || roundedFloat < expectedFloat - roundError || roundedFloat > expectedFloat + roundError){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String print floating point number by positive decimal places fail");}
+                        if(parseSuccess == false || roundedFloat < expectedFloat - roundError || roundedFloat > expectedFloat + roundError){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SingText::String print floating point number by positive decimal places fail");}
                     }
                     if(SGEXTN::Math::FloatMath<float>::absoluteValue(expectedFloat) < 1000000.0f){
-                        numString = SGEXTN::CoreText::String::stringFromFloat(expectedFloat, base, SGEXTN::CoreText::FloatPrecisionFormat::FractionalDigit, -2);
+                        numString = SGEXTN::SingText::String::stringFromFloat(expectedFloat, base, SGEXTN::SingText::FloatPrecisionFormat::FractionalDigit, -2);
                         countDecimalPlaces(minimumPrecision, maximumPrecision, numString);
-                        if(-2 < minimumPrecision || -2 > maximumPrecision){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String print floating point number by negative decimal places fail");}
+                        if(-2 < minimumPrecision || -2 > maximumPrecision){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SingText::String print floating point number by negative decimal places fail");}
                         roundError = 0.5f * SGEXTN::Math::FloatMath<float>::powerOf(static_cast<float>(base), 2.0f) + 0.5f * SGEXTN::Math::FloatMath<float>::powerOf(static_cast<float>(base), 1.0f);
                         parseSuccess = false;
                         roundedFloat = numString.parseToFloat(&parseSuccess, base);
-                        if(parseSuccess == false || roundedFloat < expectedFloat - roundError || roundedFloat > expectedFloat + roundError){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String print floating point number by negative decimal places fail");}
+                        if(parseSuccess == false || roundedFloat < expectedFloat - roundError || roundedFloat > expectedFloat + roundError){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SingText::String print floating point number by negative decimal places fail");}
                     }
-                    numString = SGEXTN::CoreText::String::stringFromFloat(expectedFloat, base, SGEXTN::CoreText::FloatPrecisionFormat::ScientificNotation, 4);
+                    numString = SGEXTN::SingText::String::stringFromFloat(expectedFloat, base, SGEXTN::SingText::FloatPrecisionFormat::ScientificNotation, 4);
                     maximumPrecision = 0;
                     minimumPrecision = 0;
                     countSignificantFigures(minimumPrecision, maximumPrecision, numString.substringCharactersLeft(numString.findFirstCharactersFromLeft('^')));
-                    if(4 < minimumPrecision || 4 > maximumPrecision){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String print floating point number by scientific notation fail");}
+                    if(4 < minimumPrecision || 4 > maximumPrecision){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SingText::String print floating point number by scientific notation fail");}
                     roundError = SGEXTN::Math::FloatMath<float>::absoluteValue(expectedFloat) * SGEXTN::Math::FloatMath<float>::powerOf(static_cast<float>(base), -3.0f);
                     parseSuccess = false;
                     roundedFloat = numString.parseToFloat(&parseSuccess, base);
-                    if(parseSuccess == false || roundedFloat < expectedFloat - roundError || roundedFloat > expectedFloat + roundError){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String print floating point number by scientific notation fail");}
+                    if(parseSuccess == false || roundedFloat < expectedFloat - roundError || roundedFloat > expectedFloat + roundError){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SingText::String print floating point number by scientific notation fail");}
                 }
             }
         }
         else{
             bool parseSuccess = true;
             const float floatValue = numericParsingTestsDatabase.at(i).parseToFloat(&parseSuccess, 10);
-            if(parseSuccess == true && floatValue != 0.0f && SGEXTN::Math::FloatLimits<float>::isInfinite(floatValue) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CoreText::String parse invalid floating point number fail");}
+            if(parseSuccess == true && floatValue != 0.0f && SGEXTN::Math::FloatLimits<float>::isInfinite(floatValue) == false){SGEXTN_IMMEDIATE_CRASH("SGEXTN::SingText::String parse invalid floating point number fail");}
         }
     }
 }
 
 void SGEXTN::InternalTest::ExternalTest::testSmallStringOptimisation(){
-    SGEXTN::Containers::Array<SGEXTN::CoreText::String> languages = readFile("langnames.txt").split('\n');
+    SGEXTN::Containers::Array<SGEXTN::SingText::String> languages = readFile("langnames.txt").split('\n');
     for(int i=0; i<languages.length(); i++){
-        const SGEXTN::CoreText::String languageData = readFile(languages.at(i) + ".txt");
-        SGEXTN::Containers::Array<SGEXTN::CoreText::String> words = languageData.split('\n');
-        SGEXTN::Containers::Vector<SGEXTN::CoreText::String> testWords;
+        const SGEXTN::SingText::String languageData = readFile(languages.at(i) + ".txt");
+        SGEXTN::Containers::Array<SGEXTN::SingText::String> words = languageData.split('\n');
+        SGEXTN::Containers::Vector<SGEXTN::SingText::String> testWords;
         for(int j=0; j<words.length(); j++){
-            SGEXTN::Containers::Array<SGEXTN::CoreText::String> row = words.at(j).split('\t');
+            SGEXTN::Containers::Array<SGEXTN::SingText::String> row = words.at(j).split('\t');
             if(row.length() != 3){continue;}
             bool isValid = false;
             const int index = row.at(0).parseToInt(&isValid, 10);

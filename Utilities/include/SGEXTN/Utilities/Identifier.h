@@ -21,7 +21,7 @@ namespace SGEXTN::Containers {
 template <typename T> class Span;
 }
 
-namespace SGEXTN::CoreText {
+namespace SGEXTN::SingText {
 class String;
 }
 
@@ -37,8 +37,8 @@ public:
     [[nodiscard]] static Identifier nullIdentifier();
     [[nodiscard]] bool operator==(Identifier x) const;
     [[nodiscard]] bool operator!=(Identifier x) const;
-    [[nodiscard]] SGEXTN::CoreText::String getStringForPrinting() const;
-    [[nodiscard]] SGEXTN::CoreText::String debugPrint() const;
+    [[nodiscard]] SGEXTN::SingText::String getStringForPrinting() const;
+    [[nodiscard]] SGEXTN::SingText::String debugPrint() const;
     [[nodiscard]] static bool sendOut(Identifier x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(Identifier& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static int size();

@@ -23,7 +23,7 @@
 #include <SGEXTN/Utilities/Identifier.h>
 #include <SGEXTN/Utilities/IdentifierRegistry.h>
 #include <SGEXTN/Utilities/DateTime.h>
-#include <SGEXTN/CoreText/String.h>
+#include <SGEXTN/SingText/String.h>
 #include <SGEXTN/Containers/Array.h>
 #include <SGEXTN/Containers/Serialise.h>
 #include <SGEXTN/Containers/Span.h>

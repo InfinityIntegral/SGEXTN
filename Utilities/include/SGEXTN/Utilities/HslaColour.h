@@ -21,7 +21,7 @@ namespace SGEXTN::Containers {
 template <typename T> class Span;
 }
 
-namespace SGEXTN::CoreText {
+namespace SGEXTN::SingText {
 class String;
 }
 
@@ -39,7 +39,7 @@ public:
     explicit HslaColour(SGEXTN::Utilities::RgbaColour x);
     explicit HslaColour(float h, float s, float l);
     explicit HslaColour(float h, float s, float l, float a);
-    [[nodiscard]] SGEXTN::CoreText::String debugPrint() const;
+    [[nodiscard]] SGEXTN::SingText::String debugPrint() const;
     [[nodiscard]] static bool sendOut(HslaColour x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(HslaColour& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static int size();

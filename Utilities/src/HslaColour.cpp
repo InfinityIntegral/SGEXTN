@@ -18,7 +18,7 @@
 #include <SGEXTN/Utilities/HslaColour.h>
 #include <SGEXTN/Utilities/RgbaColour.h>
 #include <SGEXTN/Math/FloatMath.h>
-#include <SGEXTN/CoreText/String.h>
+#include <SGEXTN/SingText/String.h>
 #include <SGEXTN/Containers/Serialise.h>
 #include <SGEXTN/Containers/Span.h>
 
@@ -86,8 +86,8 @@ SGEXTN::Utilities::HslaColour::HslaColour(float h, float s, float l) : hue_(limi
 
 SGEXTN::Utilities::HslaColour::HslaColour(float h, float s, float l, float a) : hue_(limitTo360(h)), saturation_(limitTo100(s)), lightness_(limitTo100(l)), transparency_(limitTo100(a)) {}
 
-SGEXTN::CoreText::String SGEXTN::Utilities::HslaColour::debugPrint() const {
-    return SGEXTN::CoreText::String("hsla(") + SGEXTN::CoreText::String::stringFromFloat(hue_, 10, SGEXTN::CoreText::FloatPrecisionFormat::FractionalDigit, 0) + ", " + SGEXTN::CoreText::String::stringFromFloat(saturation_, 10, SGEXTN::CoreText::FloatPrecisionFormat::FractionalDigit, 0) + ", " + SGEXTN::CoreText::String::stringFromFloat(lightness_, 10, SGEXTN::CoreText::FloatPrecisionFormat::FractionalDigit, 0) + ", " + SGEXTN::CoreText::String::stringFromFloat(transparency_, 10, SGEXTN::CoreText::FloatPrecisionFormat::FractionalDigit, 0) + ")";
+SGEXTN::SingText::String SGEXTN::Utilities::HslaColour::debugPrint() const {
+    return SGEXTN::SingText::String("hsla(") + SGEXTN::SingText::String::stringFromFloat(hue_, 10, SGEXTN::SingText::FloatPrecisionFormat::FractionalDigit, 0) + ", " + SGEXTN::SingText::String::stringFromFloat(saturation_, 10, SGEXTN::SingText::FloatPrecisionFormat::FractionalDigit, 0) + ", " + SGEXTN::SingText::String::stringFromFloat(lightness_, 10, SGEXTN::SingText::FloatPrecisionFormat::FractionalDigit, 0) + ", " + SGEXTN::SingText::String::stringFromFloat(transparency_, 10, SGEXTN::SingText::FloatPrecisionFormat::FractionalDigit, 0) + ")";
 }
 
 bool SGEXTN::Utilities::HslaColour::sendOut(SGEXTN::Utilities::HslaColour x, SGEXTN::Containers::Span<unsigned char> data){

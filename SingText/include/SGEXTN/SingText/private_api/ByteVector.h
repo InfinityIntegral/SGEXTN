@@ -17,8 +17,8 @@
 
 #pragma once
 
-namespace SGEXTN::CoreText {
-class BuildLah_SGEXTN_CoreText ByteVector {
+namespace SGEXTN::SingText {
+class BuildLah_SGEXTN_SingText ByteVector {
 private:
     unsigned char* data_;
     int length_;

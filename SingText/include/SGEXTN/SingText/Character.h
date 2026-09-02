@@ -16,18 +16,18 @@
 // BuildLah license check: SGEXTN 7.0.0
 
 #pragma once
-#include <SGEXTN/CoreText/String.h>
+#include <SGEXTN/SingText/String.h>
 
 namespace SGEXTN::Containers {
 template <typename T> class Span;
 template <typename T> class Array;
 }
 
-namespace SGEXTN::CoreText {
-class BuildLah_SGEXTN_CoreText Character {
+namespace SGEXTN::SingText {
+class BuildLah_SGEXTN_SingText Character {
 private:
-    friend class SGEXTN::CoreText::String;
-    SGEXTN::CoreText::String data_;
+    friend class SGEXTN::SingText::String;
+    SGEXTN::SingText::String data_;
 public:
     explicit Character();
     explicit(false) Character(unsigned char c);

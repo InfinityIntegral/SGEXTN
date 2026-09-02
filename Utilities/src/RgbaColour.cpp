@@ -16,7 +16,7 @@
 // BuildLah license check: SGEXTN 7.0.0
 
 #include <SGEXTN/Utilities/RgbaColour.h>
-#include <SGEXTN/CoreText/String.h>
+#include <SGEXTN/SingText/String.h>
 #include <SGEXTN/Math/FloatMath.h>
 #include <SGEXTN/Containers/ForceCrash.h>
 #include <SGEXTN/Containers/Serialise.h>
@@ -138,31 +138,31 @@ void SGEXTN::Utilities::RgbaColour::setTransparencyFloat(float a){
     data_ = setChannelByOffset(data_, 0u, toUnsignedInt(boundFloat(a)));
 }
 
-SGEXTN::CoreText::String SGEXTN::Utilities::RgbaColour::rgbHtmlString() const {
-    return (SGEXTN::CoreText::String("rgb(") + SGEXTN::CoreText::String::stringFromInt(getRed(), 10) + ", " + SGEXTN::CoreText::String::stringFromInt(getGreen(), 10) + ", " + SGEXTN::CoreText::String::stringFromInt(getBlue(), 10) + ")");
+SGEXTN::SingText::String SGEXTN::Utilities::RgbaColour::rgbHtmlString() const {
+    return (SGEXTN::SingText::String("rgb(") + SGEXTN::SingText::String::stringFromInt(getRed(), 10) + ", " + SGEXTN::SingText::String::stringFromInt(getGreen(), 10) + ", " + SGEXTN::SingText::String::stringFromInt(getBlue(), 10) + ")");
 }
 
-SGEXTN::CoreText::String SGEXTN::Utilities::RgbaColour::rgbaHtmlString() const {
-    return (SGEXTN::CoreText::String("rgba(") + SGEXTN::CoreText::String::stringFromInt(getRed(), 10) + ", " + SGEXTN::CoreText::String::stringFromInt(getGreen(), 10) + ", " + SGEXTN::CoreText::String::stringFromInt(getBlue(), 10) + ", " + SGEXTN::CoreText::String::stringFromInt(getTransparency(), 10 ) + ")");
+SGEXTN::SingText::String SGEXTN::Utilities::RgbaColour::rgbaHtmlString() const {
+    return (SGEXTN::SingText::String("rgba(") + SGEXTN::SingText::String::stringFromInt(getRed(), 10) + ", " + SGEXTN::SingText::String::stringFromInt(getGreen(), 10) + ", " + SGEXTN::SingText::String::stringFromInt(getBlue(), 10) + ", " + SGEXTN::SingText::String::stringFromInt(getTransparency(), 10 ) + ")");
 }
 
-SGEXTN::CoreText::String SGEXTN::Utilities::RgbaColour::rgbHexString() const {
-    return (SGEXTN::CoreText::String::stringFromInt(getRed(), 16).fillLeftToByteLength(2, '0') + SGEXTN::CoreText::String::stringFromInt(getGreen(), 16).fillLeftToByteLength(2, '0') + SGEXTN::CoreText::String::stringFromInt(getBlue(), 16).fillLeftToByteLength(2, '0'));
+SGEXTN::SingText::String SGEXTN::Utilities::RgbaColour::rgbHexString() const {
+    return (SGEXTN::SingText::String::stringFromInt(getRed(), 16).fillLeftToByteLength(2, '0') + SGEXTN::SingText::String::stringFromInt(getGreen(), 16).fillLeftToByteLength(2, '0') + SGEXTN::SingText::String::stringFromInt(getBlue(), 16).fillLeftToByteLength(2, '0'));
 }
 
-SGEXTN::CoreText::String SGEXTN::Utilities::RgbaColour::rgbaHexString() const {
-    return (SGEXTN::CoreText::String::stringFromInt(getRed(), 16).fillLeftToByteLength(2, '0') + SGEXTN::CoreText::String::stringFromInt(getGreen(), 16).fillLeftToByteLength(2, '0') + SGEXTN::CoreText::String::stringFromInt(getBlue(), 16).fillLeftToByteLength(2, '0') + SGEXTN::CoreText::String::stringFromInt(getTransparency(), 16).fillLeftToByteLength(2, '0'));
+SGEXTN::SingText::String SGEXTN::Utilities::RgbaColour::rgbaHexString() const {
+    return (SGEXTN::SingText::String::stringFromInt(getRed(), 16).fillLeftToByteLength(2, '0') + SGEXTN::SingText::String::stringFromInt(getGreen(), 16).fillLeftToByteLength(2, '0') + SGEXTN::SingText::String::stringFromInt(getBlue(), 16).fillLeftToByteLength(2, '0') + SGEXTN::SingText::String::stringFromInt(getTransparency(), 16).fillLeftToByteLength(2, '0'));
 }
 
-SGEXTN::CoreText::String SGEXTN::Utilities::RgbaColour::rgbFloatHtmlString() const {
-    return (SGEXTN::CoreText::String("rgb(") + SGEXTN::CoreText::String::stringFromFloat(getRedFloat(), 10, SGEXTN::CoreText::FloatPrecisionFormat::FractionalDigit, 3) + ", " + SGEXTN::CoreText::String::stringFromFloat(getGreenFloat(), 10, SGEXTN::CoreText::FloatPrecisionFormat::FractionalDigit, 3) + ", " + SGEXTN::CoreText::String::stringFromFloat(getBlueFloat(), 10, SGEXTN::CoreText::FloatPrecisionFormat::FractionalDigit, 3) + ")");
+SGEXTN::SingText::String SGEXTN::Utilities::RgbaColour::rgbFloatHtmlString() const {
+    return (SGEXTN::SingText::String("rgb(") + SGEXTN::SingText::String::stringFromFloat(getRedFloat(), 10, SGEXTN::SingText::FloatPrecisionFormat::FractionalDigit, 3) + ", " + SGEXTN::SingText::String::stringFromFloat(getGreenFloat(), 10, SGEXTN::SingText::FloatPrecisionFormat::FractionalDigit, 3) + ", " + SGEXTN::SingText::String::stringFromFloat(getBlueFloat(), 10, SGEXTN::SingText::FloatPrecisionFormat::FractionalDigit, 3) + ")");
 }
 
-SGEXTN::CoreText::String SGEXTN::Utilities::RgbaColour::rgbaFloatHtmlString() const {
-    return (SGEXTN::CoreText::String("rgba(") + SGEXTN::CoreText::String::stringFromFloat(getRedFloat(), 10, SGEXTN::CoreText::FloatPrecisionFormat::FractionalDigit, 3) + ", " + SGEXTN::CoreText::String::stringFromFloat(getGreenFloat(), 10, SGEXTN::CoreText::FloatPrecisionFormat::FractionalDigit, 3) + ", " + SGEXTN::CoreText::String::stringFromFloat(getBlueFloat(), 10, SGEXTN::CoreText::FloatPrecisionFormat::FractionalDigit, 3) + ", " + SGEXTN::CoreText::String::stringFromFloat(getTransparencyFloat(), 10, SGEXTN::CoreText::FloatPrecisionFormat::FractionalDigit, 3) +  ")");
+SGEXTN::SingText::String SGEXTN::Utilities::RgbaColour::rgbaFloatHtmlString() const {
+    return (SGEXTN::SingText::String("rgba(") + SGEXTN::SingText::String::stringFromFloat(getRedFloat(), 10, SGEXTN::SingText::FloatPrecisionFormat::FractionalDigit, 3) + ", " + SGEXTN::SingText::String::stringFromFloat(getGreenFloat(), 10, SGEXTN::SingText::FloatPrecisionFormat::FractionalDigit, 3) + ", " + SGEXTN::SingText::String::stringFromFloat(getBlueFloat(), 10, SGEXTN::SingText::FloatPrecisionFormat::FractionalDigit, 3) + ", " + SGEXTN::SingText::String::stringFromFloat(getTransparencyFloat(), 10, SGEXTN::SingText::FloatPrecisionFormat::FractionalDigit, 3) +  ")");
 }
 
-SGEXTN::CoreText::String SGEXTN::Utilities::RgbaColour::debugPrint() const {
+SGEXTN::SingText::String SGEXTN::Utilities::RgbaColour::debugPrint() const {
     return rgbaHtmlString();
 }
 

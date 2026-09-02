@@ -14,22 +14,22 @@ BuildLah_addComponent(
     ROOT_FOLDER "Math"
 )
 BuildLah_addComponent(
-    NAME CoreText
+    NAME SingText
     TYPE LIBRARY
-    ROOT_FOLDER "CoreText"
+    ROOT_FOLDER "SingText"
     DEPENDENCIES INTERNAL Math FORWARD Containers
 )
 BuildLah_addComponent(
     NAME SingEmbed
     TYPE LIBRARY
     ROOT_FOLDER "SingEmbed"
-    DEPENDENCIES INTERNAL Containers FORWARD CoreText
+    DEPENDENCIES INTERNAL Containers FORWARD SingText
 )
 BuildLah_addComponent(
     NAME Utilities
     TYPE LIBRARY
     ROOT_FOLDER "Utilities"
-    DEPENDENCIES INTERNAL Math FORWARD Containers CoreText
+    DEPENDENCIES INTERNAL Math FORWARD Containers SingText
 )
 BuildLah_addComponent(
     NAME SeerattraNum
@@ -41,6 +41,6 @@ BuildLah_addComponent(
     NAME InternalTest
     TYPE GUI_APP
     ROOT_FOLDER "InternalTest"
-    DEPENDENCIES INTERNAL Containers Math CoreText SingEmbed Utilities SeerattraNum
+    DEPENDENCIES INTERNAL Containers Math SingText SingEmbed Utilities SeerattraNum
 )
 BuildLah_finaliseProject()

@@ -16,7 +16,7 @@
 // BuildLah license check: SGEXTN 7.0.0
 
 #include <SGEXTN/Utilities/Identifier.h>
-#include <SGEXTN/CoreText/String.h>
+#include <SGEXTN/SingText/String.h>
 #include <SGEXTN/Containers/Serialise.h>
 #include <SGEXTN/Containers/Span.h>
 
@@ -36,11 +36,11 @@ bool SGEXTN::Utilities::Identifier::operator!=(SGEXTN::Utilities::Identifier x) 
     return (data_ != x.data_);
 }
 
-SGEXTN::CoreText::String SGEXTN::Utilities::Identifier::getStringForPrinting() const {
-    return SGEXTN::CoreText::String::stringFromUnsignedInt(data_, 16).fillLeftToByteLength(8, '0');
+SGEXTN::SingText::String SGEXTN::Utilities::Identifier::getStringForPrinting() const {
+    return SGEXTN::SingText::String::stringFromUnsignedInt(data_, 16).fillLeftToByteLength(8, '0');
 }
 
-SGEXTN::CoreText::String SGEXTN::Utilities::Identifier::debugPrint() const {
+SGEXTN::SingText::String SGEXTN::Utilities::Identifier::debugPrint() const {
     return getStringForPrinting();
 }
 

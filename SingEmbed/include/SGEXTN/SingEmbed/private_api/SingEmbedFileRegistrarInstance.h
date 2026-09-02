@@ -17,7 +17,7 @@
 
 #pragma once
 
-namespace SGEXTN::CoreText {
+namespace SGEXTN::SingText {
 class String;
 }
 
@@ -33,8 +33,8 @@ class EmbeddedFile;
 
 class BuildLah_SGEXTN_SingEmbed SingEmbedFileRegistrarInstance {
 public:
-    static SGEXTN::Containers::UnorderedMap<SGEXTN::CoreText::String, SGEXTN::SingEmbed::EmbeddedFile>* registry;
-    explicit SingEmbedFileRegistrarInstance(const SGEXTN::CoreText::String& virtualPath, int fileSize, const char* data);
-    [[nodiscard]] static bool directAccessData(const SGEXTN::CoreText::String& virtualPath, int& lengthReceiver, const char*& dataReceiver);
+    static SGEXTN::Containers::UnorderedMap<SGEXTN::SingText::String, SGEXTN::SingEmbed::EmbeddedFile>* registry;
+    explicit SingEmbedFileRegistrarInstance(const SGEXTN::SingText::String& virtualPath, int fileSize, const char* data);
+    [[nodiscard]] static bool directAccessData(const SGEXTN::SingText::String& virtualPath, int& lengthReceiver, const char*& dataReceiver);
 };
 }

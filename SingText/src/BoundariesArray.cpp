@@ -15,19 +15,19 @@
 */
 // BuildLah license check: SGEXTN 7.0.0
 
-#include <SGEXTN/CoreText/private_api/BoundariesArray.h>
+#include <SGEXTN/SingText/private_api/BoundariesArray.h>
 
-SGEXTN::CoreText::BoundariesArray::BoundariesArray() : length_(0), freeSpace_(0), data_(nullptr){}
+SGEXTN::SingText::BoundariesArray::BoundariesArray() : length_(0), freeSpace_(0), data_(nullptr){}
 
-SGEXTN::CoreText::BoundariesArray::BoundariesArray(int count) : length_(count), freeSpace_(0), data_(new unsigned int[count](0)){}
+SGEXTN::SingText::BoundariesArray::BoundariesArray(int count) : length_(count), freeSpace_(0), data_(new unsigned int[count](0)){}
 
-SGEXTN::CoreText::BoundariesArray::BoundariesArray(SGEXTN::CoreText::BoundariesArray&& x) noexcept : data_(x.data_), freeSpace_(x.freeSpace_), length_(x.length_){
+SGEXTN::SingText::BoundariesArray::BoundariesArray(SGEXTN::SingText::BoundariesArray&& x) noexcept : data_(x.data_), freeSpace_(x.freeSpace_), length_(x.length_){
     x.data_ = nullptr;
     x.length_ = 0;
     x.freeSpace_ = 0;
 }
 
-SGEXTN::CoreText::BoundariesArray& SGEXTN::CoreText::BoundariesArray::operator=(SGEXTN::CoreText::BoundariesArray&& x) noexcept {
+SGEXTN::SingText::BoundariesArray& SGEXTN::SingText::BoundariesArray::operator=(SGEXTN::SingText::BoundariesArray&& x) noexcept {
     if(this == &x){return (*this);}
     delete[] data_;
     data_ = x.data_;
@@ -39,21 +39,21 @@ SGEXTN::CoreText::BoundariesArray& SGEXTN::CoreText::BoundariesArray::operator=(
     return (*this);
 }
 
-SGEXTN::CoreText::BoundariesArray::~BoundariesArray(){
+SGEXTN::SingText::BoundariesArray::~BoundariesArray(){
     delete[] data_;
 }
 
-int SGEXTN::CoreText::BoundariesArray::length() const {
+int SGEXTN::SingText::BoundariesArray::length() const {
     return length_;
 }
 
-unsigned int& SGEXTN::CoreText::BoundariesArray::at(int i){
+unsigned int& SGEXTN::SingText::BoundariesArray::at(int i){
     unsigned int* temp = data_;
     data_ = temp;
     return (*(data_ + i));
 }
 
-int& SGEXTN::CoreText::BoundariesArray::emptySpace(){
+int& SGEXTN::SingText::BoundariesArray::emptySpace(){
     const int temp = freeSpace_;
     freeSpace_ = temp;
     return freeSpace_;

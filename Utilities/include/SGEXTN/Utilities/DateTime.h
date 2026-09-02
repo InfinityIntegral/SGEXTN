@@ -21,7 +21,7 @@ namespace SGEXTN::Containers {
 template <typename T> class Span;
 }
 
-namespace SGEXTN::CoreText {
+namespace SGEXTN::SingText {
 class String;
 }
 
@@ -62,7 +62,7 @@ public:
     [[nodiscard]] bool operator>(DateTime x) const;
     [[nodiscard]] bool operator<=(DateTime x) const;
     [[nodiscard]] bool operator>=(DateTime x) const;
-    [[nodiscard]] SGEXTN::CoreText::String debugPrint() const;
+    [[nodiscard]] SGEXTN::SingText::String debugPrint() const;
     [[nodiscard]] static bool sendOut(DateTime x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(DateTime& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static int size();
@@ -83,7 +83,7 @@ public:
     [[nodiscard]] static int convertToGlobalYear(int standardYear);
     [[nodiscard]] bool isNationalDayPeriod() const;
     [[nodiscard]] bool isSignificantDate(SGEXTN::Utilities::SignificantDates date) const;
-    [[nodiscard]] SGEXTN::CoreText::String getDisplayString(SGEXTN::Utilities::TimeFormat format, bool global, bool correctToSecond) const;
-    [[nodiscard]] SGEXTN::CoreText::String getDisplayString(const SGEXTN::CoreText::String& customFormat) const;
+    [[nodiscard]] SGEXTN::SingText::String getDisplayString(SGEXTN::Utilities::TimeFormat format, bool global, bool correctToSecond) const;
+    [[nodiscard]] SGEXTN::SingText::String getDisplayString(const SGEXTN::SingText::String& customFormat) const;
 };
 }

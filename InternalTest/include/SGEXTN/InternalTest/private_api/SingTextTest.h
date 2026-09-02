@@ -18,7 +18,7 @@
 #pragma once
 
 namespace SGEXTN::InternalTest {
-class BuildLah_SGEXTN_InternalTest CoreTextTest {
+class BuildLah_SGEXTN_InternalTest SingTextTest {
 public:
     static void testAll();
     static void testCharacter();

@@ -41,18 +41,18 @@ SGEXTN uses the following dependencies:
     * Author: Nigel Tao
     * License: Apache 2.0
     * Source: https://github.com/nigeltao/parse-number-fxx-test-data
-    * Use: test cases for SGEXTN::CoreText::String number parsing
+    * Use: test cases for SGEXTN::SingText::String number parsing
 * Unicode data sets
     * Author: The Unicode Consortium
     * License: Unicode License v3
     * Source: https://www.unicode.org/Public/UCD/latest
-    * Use: test cases for SGEXTN::CoreText::String and SGEXTN::CoreText::UnicodeQuery
+    * Use: test cases for SGEXTN::SingText::String and SGEXTN::SingText::UnicodeQuery
 * Leipzig Corpora Collection
     * Author: Wortschatz Leipzig
     * License: Creative Commons Attribution 4.0 International Public License
     * Source: https://wortschatz.uni-leipzig.de/en/download
     * Citation: D. Goldhahn, T. Eckart & U. Quasthoff: Building Large Monolingual Dictionaries at the Leipzig Corpora Collection: From 100 to 200 Languages. In: Proceedings of the 8th International Language Resources and Evaluation (LREC 2012), 2012.
-    * Use: testing if SGEXTN::CoreText::String small string optimisation works well across various languages
+    * Use: testing if SGEXTN::SingText::String small string optimisation works well across various languages
 * Sobol Sequence direction numbers
     * Author: Frances Y. Kuo and Stephen Joe
     * License: custom BSD-style license

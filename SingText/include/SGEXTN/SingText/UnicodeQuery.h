@@ -17,7 +17,7 @@
 
 #pragma once
 
-namespace SGEXTN::CoreText {
+namespace SGEXTN::SingText {
 class String;
 
 enum class SimplifiedCharacterType : unsigned char {
@@ -88,20 +88,20 @@ enum class GraphemeRuleRelatedType : unsigned char {
     Rule9cLinker = 5
 };
 
-class BuildLah_SGEXTN_CoreText UnicodeQuery {
+class BuildLah_SGEXTN_SingText UnicodeQuery {
 public:
     [[nodiscard]] static int getUppercase(int c);
     [[nodiscard]] static int getLowercase(int c);
     [[nodiscard]] static int getTitlecase(int c);
     [[nodiscard]] static bool isWhitespace(int c);
-    [[nodiscard]] static SGEXTN::CoreText::FullCharacterType getFullType(int c);
-    [[nodiscard]] static SGEXTN::CoreText::SimplifiedCharacterType getSimplifiedType(int c);
+    [[nodiscard]] static SGEXTN::SingText::FullCharacterType getFullType(int c);
+    [[nodiscard]] static SGEXTN::SingText::SimplifiedCharacterType getSimplifiedType(int c);
     [[nodiscard]] static int getDecimalDigitValue(int c);
     [[nodiscard]] static float getNumericalValue(int c);
-    [[nodiscard]] static SGEXTN::CoreText::GraphemeSegmentationType getGraphemeSegmentationType(int c);
-    [[nodiscard]] static SGEXTN::CoreText::GraphemeRuleRelatedType getGraphemeRuleRelatedType(int c);
-    [[nodiscard]] static SGEXTN::CoreText::String getEquivDecomposition(int c);
-    [[nodiscard]] static SGEXTN::CoreText::String getCompatDecomposition(int c);
+    [[nodiscard]] static SGEXTN::SingText::GraphemeSegmentationType getGraphemeSegmentationType(int c);
+    [[nodiscard]] static SGEXTN::SingText::GraphemeRuleRelatedType getGraphemeRuleRelatedType(int c);
+    [[nodiscard]] static SGEXTN::SingText::String getEquivDecomposition(int c);
+    [[nodiscard]] static SGEXTN::SingText::String getCompatDecomposition(int c);
     [[nodiscard]] static int getCombiningMarkOrder(int c);
     [[nodiscard]] static int getBinaryRecomposition(int first, int second);
 };

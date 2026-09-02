@@ -16,27 +16,27 @@
 // BuildLah license check: SGEXTN 7.0.0
 
 #include <SGEXTN/SingEmbed/private_api/SingEmbedFileRegistrarInstance.h>
-#include <SGEXTN/CoreText/String.h>
+#include <SGEXTN/SingText/String.h>
 #include <SGEXTN/SingEmbed/private_api/EmbeddedFile.h>
 #include <SGEXTN/Containers/UnorderedMap.h>
 #include <SGEXTN/Containers/ForceCrash.h>
-#include <SGEXTN/CoreText/Character.h>
+#include <SGEXTN/SingText/Character.h>
 
 namespace {
 SGEXTN::SingEmbed::SingEmbedFileRegistrarInstance testInstance("/SGEXTN/SingEmbed/testFile.sg", 0, "");
 }
 
-SGEXTN::Containers::UnorderedMap<SGEXTN::CoreText::String, SGEXTN::SingEmbed::EmbeddedFile>* SGEXTN::SingEmbed::SingEmbedFileRegistrarInstance::registry = nullptr;
+SGEXTN::Containers::UnorderedMap<SGEXTN::SingText::String, SGEXTN::SingEmbed::EmbeddedFile>* SGEXTN::SingEmbed::SingEmbedFileRegistrarInstance::registry = nullptr;
 
-SGEXTN::SingEmbed::SingEmbedFileRegistrarInstance::SingEmbedFileRegistrarInstance(const SGEXTN::CoreText::String& virtualPath, int fileSize, const char* data){
+SGEXTN::SingEmbed::SingEmbedFileRegistrarInstance::SingEmbedFileRegistrarInstance(const SGEXTN::SingText::String& virtualPath, int fileSize, const char* data){
     if(SGEXTN::SingEmbed::SingEmbedFileRegistrarInstance::registry == nullptr){
-        SGEXTN::SingEmbed::SingEmbedFileRegistrarInstance::registry = new SGEXTN::Containers::UnorderedMap<SGEXTN::CoreText::String, SGEXTN::SingEmbed::EmbeddedFile>();
+        SGEXTN::SingEmbed::SingEmbedFileRegistrarInstance::registry = new SGEXTN::Containers::UnorderedMap<SGEXTN::SingText::String, SGEXTN::SingEmbed::EmbeddedFile>();
     }
-    const bool x = (*SGEXTN::SingEmbed::SingEmbedFileRegistrarInstance::registry).insert(SGEXTN::CoreText::String(SGEXTN::CoreText::Character()) + virtualPath, SGEXTN::SingEmbed::EmbeddedFile(data, fileSize));
+    const bool x = (*SGEXTN::SingEmbed::SingEmbedFileRegistrarInstance::registry).insert(SGEXTN::SingText::String(SGEXTN::SingText::Character()) + virtualPath, SGEXTN::SingEmbed::EmbeddedFile(data, fileSize));
     if(x == false){SGEXTN_IMMEDIATE_CRASH("SingEmbed initialisation crashed because 2 different files were added to the same path in the virtual file system, ensure that your assets and shader files do not have the same name");}
 }
 
-bool SGEXTN::SingEmbed::SingEmbedFileRegistrarInstance::directAccessData(const SGEXTN::CoreText::String& virtualPath, int& lengthReceiver, const char*& dataReceiver){
+bool SGEXTN::SingEmbed::SingEmbedFileRegistrarInstance::directAccessData(const SGEXTN::SingText::String& virtualPath, int& lengthReceiver, const char*& dataReceiver){
     if((*registry).contains(virtualPath) == false){return false;}
     const SGEXTN::SingEmbed::EmbeddedFile file = (*registry).at(virtualPath);
     lengthReceiver = file.length_;

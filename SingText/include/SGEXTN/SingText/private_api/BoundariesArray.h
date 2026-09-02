@@ -17,8 +17,8 @@
 
 #pragma once
 
-namespace SGEXTN::CoreText {
-class BuildLah_SGEXTN_CoreText BoundariesArray {
+namespace SGEXTN::SingText {
+class BuildLah_SGEXTN_SingText BoundariesArray {
 private:
     unsigned int* data_;
     int length_;
