@@ -30,7 +30,7 @@ private:
     SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator_;
     SGEXTN::SeerattraNum::UniformDistributionInteger uniformDistribution_;
 public:
-    explicit RandomPermutation();
+    RandomPermutation();
     explicit RandomPermutation(bool useGlobal);
     [[nodiscard]] static bool sendOut(const RandomPermutation& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(RandomPermutation& x, SGEXTN::Containers::Span<unsigned char> data);

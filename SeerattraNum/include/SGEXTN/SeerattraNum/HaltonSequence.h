@@ -30,7 +30,7 @@ private:
     SGEXTN::Containers::Array<SGEXTN::Containers::Array<int>> permutations_;
     SGEXTN::Containers::Array<int> primeNumbers_;
 public:
-    explicit HaltonSequence();
+    HaltonSequence();
     explicit HaltonSequence(int dimensions);
     [[nodiscard]] static bool sendOut(const HaltonSequence& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(HaltonSequence& x, SGEXTN::Containers::Span<unsigned char> data);

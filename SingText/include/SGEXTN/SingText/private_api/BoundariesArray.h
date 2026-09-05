@@ -25,7 +25,7 @@ private:
     int freeSpace_;
 public:
     explicit BoundariesArray(int count);
-    explicit BoundariesArray();
+    BoundariesArray();
     BoundariesArray(const BoundariesArray&) = delete;
     BoundariesArray& operator=(const BoundariesArray&) = delete;
     BoundariesArray(BoundariesArray&& x) noexcept;

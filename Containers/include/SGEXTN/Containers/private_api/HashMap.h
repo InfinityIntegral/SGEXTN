@@ -42,7 +42,7 @@ private:
         unsigned char valueConstructorRemover_;
         Value valueObject_;
     };
-    explicit HashMapSlot();
+    HashMapSlot();
 public:
     HashMapSlot(const HashMapSlot&) = delete;
     HashMapSlot& operator=(const HashMapSlot&) = delete;
@@ -70,7 +70,7 @@ private:
     [[nodiscard]] HashMapSlot<Key, Value, EqualityCheck, HashFunction>* getPreviousSlot(HashMapSlot<Key, Value, EqualityCheck, HashFunction>* x) const;
     [[nodiscard]] HashMapSlot<Key, Value, EqualityCheck, HashFunction>* getNextSlot(HashMapSlot<Key, Value, EqualityCheck, HashFunction>* x) const;
 public:
-    explicit HashMap();
+    HashMap();
     HashMap(const HashMap& x);
     HashMap& operator=(const HashMap& x);
     HashMap(HashMap&& x) noexcept;

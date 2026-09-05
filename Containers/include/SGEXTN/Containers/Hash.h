@@ -25,7 +25,7 @@ private:
     mutable int length_;
     mutable SGEXTN::Containers::Array<unsigned char> buffer_;
 public:
-    explicit Hash();
+    Hash();
     Hash(const Hash& x);
     Hash& operator=(const Hash& x);
     Hash(Hash&& x) noexcept;

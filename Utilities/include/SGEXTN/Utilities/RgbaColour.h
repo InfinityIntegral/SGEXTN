@@ -30,7 +30,7 @@ class BuildLah_SGEXTN_Utilities RgbaColour {
 private:
     unsigned int data_;
 public:
-    explicit RgbaColour();
+    RgbaColour();
     explicit RgbaColour(unsigned int data);
     explicit RgbaColour(int r, int g, int b, int a);
     explicit RgbaColour(int r, int g, int b);

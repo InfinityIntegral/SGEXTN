@@ -30,7 +30,7 @@ private:
     float median_;
     float halfWidth_;
 public:
-    explicit CauchyDistribution();
+    CauchyDistribution();
     explicit CauchyDistribution(bool useGlobal, float median, float halfWidth);
     [[nodiscard]] static bool sendOut(const CauchyDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(CauchyDistribution& x, SGEXTN::Containers::Span<unsigned char> data);

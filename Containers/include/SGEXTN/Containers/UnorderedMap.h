@@ -31,7 +31,7 @@ template <typename Key, typename Value, typename EqualityCheck, typename HashFun
 private:
     HashMap<Key, Value, EqualityCheck, HashFunction> hashMap_;
 public:
-    explicit UnorderedMapCustomisable();
+    UnorderedMapCustomisable();
     [[nodiscard]] int length() const;
     void reserve(int newMemoryLength);
     bool insert(const Key& key, const Value& value);

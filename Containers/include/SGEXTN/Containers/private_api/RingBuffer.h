@@ -29,7 +29,7 @@ private:
         unsigned char constructorRemover_;
         T object_;
     };
-    explicit RingBufferSlot();
+    RingBufferSlot();
 public:
     RingBufferSlot(const RingBufferSlot&) = delete;
     RingBufferSlot& operator=(const RingBufferSlot&) = delete;
@@ -47,7 +47,7 @@ private:
     int memoryLength_;
     [[nodiscard]] int getMemoryIndex(int i) const;
 public:
-    explicit RingBuffer();
+    RingBuffer();
     explicit RingBuffer(int count, const T& defaultValue);
     RingBuffer(const RingBuffer& x);
     RingBuffer& operator=(const RingBuffer& x);

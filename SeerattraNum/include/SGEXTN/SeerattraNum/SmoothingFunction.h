@@ -31,7 +31,7 @@ private:
     static float rational2Internal(float x);
     static float rational3Internal(float x);
 public:
-    explicit SmoothingFunction();
+    SmoothingFunction();
     explicit SmoothingFunction(float (*function)(float));
     static SmoothingFunction polynomial2;
     static SmoothingFunction polynomial3;

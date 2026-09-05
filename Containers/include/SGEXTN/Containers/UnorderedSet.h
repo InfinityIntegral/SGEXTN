@@ -31,7 +31,7 @@ template <typename T, typename EqualityCheck, typename HashFunction> class Unord
 private:
     HashMap<T, bool, EqualityCheck, HashFunction> hashMap_;
 public:
-    explicit UnorderedSetCustomisable();
+    UnorderedSetCustomisable();
     [[nodiscard]] int length() const;
     void reserve(int newMemoryLength);
     bool insert(const T& x);

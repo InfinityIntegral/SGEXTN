@@ -223,7 +223,7 @@ class SerialisableStruct {
 private:
     unsigned char data_;
 public:
-    explicit SerialisableStruct();
+    SerialisableStruct();
     static bool sendOut(SerialisableStruct x, SGEXTN::Containers::Span<unsigned char> data);
     static bool sendIn(SerialisableStruct& x, SGEXTN::Containers::Span<unsigned char> data);
     static int size();

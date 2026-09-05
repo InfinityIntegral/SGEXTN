@@ -16,13 +16,10 @@
 // BuildLah license check: SGEXTN 7.0.0
 
 #pragma once
-#include <SGEXTN/CanOne/Action.h>
 #include <SGEXTN/CanOne/private_api/ActionStorage.h>
 #include <SGEXTN/CanOne/private_api/ActionAccess.h>
 
-template <typename ReturnType> SGEXTN::CanOne::Action<ReturnType>::Action(){
-    actionPointer_ = nullptr;
-}
+template <typename ReturnType> SGEXTN::CanOne::Action<ReturnType>::Action() : actionPointer_(nullptr){}
 
 template <typename ReturnType> SGEXTN::CanOne::Action<ReturnType>::Action(const SGEXTN::CanOne::Action<ReturnType>& x){
     if(x.actionPointer_ == nullptr){actionPointer_ = nullptr;}
@@ -37,8 +34,7 @@ template <typename ReturnType> SGEXTN::CanOne::Action<ReturnType>& SGEXTN::CanOn
     return (*this);
 }
 
-template <typename ReturnType> SGEXTN::CanOne::Action<ReturnType>::Action(SGEXTN::CanOne::Action<ReturnType>&& x) noexcept {
-    actionPointer_ = x.actionPointer_;
+template <typename ReturnType> SGEXTN::CanOne::Action<ReturnType>::Action(SGEXTN::CanOne::Action<ReturnType>&& x) noexcept : actionPointer_(x.actionPointer_){
     x.actionPointer_ = nullptr;
 }
 
@@ -54,17 +50,11 @@ template <typename ReturnType> SGEXTN::CanOne::Action<ReturnType>::~Action(){
     delete actionPointer_;
 }
 
-template <typename ReturnType> template <typename... ArgTypes> SGEXTN::CanOne::Action<ReturnType>::Action(SGEXTN::CanOne::StaticFunction<ReturnType, ArgTypes...> function, const typename SGEXTN::CanOne::StorableType<ArgTypes>::StoreType&... arguments){
-    actionPointer_ = new SGEXTN::CanOne::ActionStorage<SGEXTN::CanOne::StaticFunction<ReturnType, ArgTypes...>>(function, arguments...);
-}
+template <typename ReturnType> template <typename... ArgTypes> SGEXTN::CanOne::Action<ReturnType>::Action(SGEXTN::CanOne::StaticFunction<ReturnType, ArgTypes...> function, const typename SGEXTN::CanOne::StorableType<ArgTypes>::StoreType&... arguments) : actionPointer_(new SGEXTN::CanOne::ActionStorage<SGEXTN::CanOne::StaticFunction<ReturnType, ArgTypes...>>(function, arguments...)){}
 
-template <typename ReturnType> template <typename ClassName, typename... ArgTypes> SGEXTN::CanOne::Action<ReturnType>::Action(SGEXTN::CanOne::NonConstMemberFunction<ReturnType, ClassName, ArgTypes...> function, ClassName* obj, const typename SGEXTN::CanOne::StorableType<ArgTypes>::StoreType&... arguments){
-    actionPointer_ = new SGEXTN::CanOne::ActionStorage<SGEXTN::CanOne::NonConstMemberFunction<ReturnType, ClassName, ArgTypes...>>(function, obj, arguments...);
-}
+template <typename ReturnType> template <typename ClassName, typename... ArgTypes> SGEXTN::CanOne::Action<ReturnType>::Action(SGEXTN::CanOne::NonConstMemberFunction<ReturnType, ClassName, ArgTypes...> function, ClassName* obj, const typename SGEXTN::CanOne::StorableType<ArgTypes>::StoreType&... arguments) : actionPointer_(new SGEXTN::CanOne::ActionStorage<SGEXTN::CanOne::NonConstMemberFunction<ReturnType, ClassName, ArgTypes...>>(function, obj, arguments...)){}
 
-template <typename ReturnType> template <typename ClassName, typename... ArgTypes> SGEXTN::CanOne::Action<ReturnType>::Action(SGEXTN::CanOne::ConstMemberFunction<ReturnType, ClassName, ArgTypes...> function, const ClassName* obj, const typename SGEXTN::CanOne::StorableType<ArgTypes>::StoreType&... arguments){
-    actionPointer_ = new SGEXTN::CanOne::ActionStorage<SGEXTN::CanOne::ConstMemberFunction<ReturnType, ClassName, ArgTypes...>>(function, obj, arguments...);
-}
+template <typename ReturnType> template <typename ClassName, typename... ArgTypes> SGEXTN::CanOne::Action<ReturnType>::Action(SGEXTN::CanOne::ConstMemberFunction<ReturnType, ClassName, ArgTypes...> function, const ClassName* obj, const typename SGEXTN::CanOne::StorableType<ArgTypes>::StoreType&... arguments) : actionPointer_(new SGEXTN::CanOne::ActionStorage<SGEXTN::CanOne::ConstMemberFunction<ReturnType, ClassName, ArgTypes...>>(function, obj, arguments...)){}
 
 template <typename ReturnType> ReturnType SGEXTN::CanOne::Action<ReturnType>::execute() const {
     if(actionPointer_ == nullptr){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CanOne::Action::execute crashed because the action is empty");}
@@ -122,32 +112,32 @@ template <typename ReturnType> template <typename ClassName, typename... ArgType
 }
 
 
-template <typename ReturnType> template <int I, typename... ArgTypes> typename SGEXTN::CanOne::StorableType<typename SGEXTN::CanOne::GetTypeInArgStore<I, ArgTypes...>::RetrievedType>::StoreType& SGEXTN::CanOne::Action<ReturnType>::argument(SGEXTN::CanOne::StaticFunction<ReturnType, ArgTypes...> typeIndicatorNullptr){
+template <typename ReturnType> template <int I, typename... ArgTypes> typename SGEXTN::CanOne::StorableType<typename SGEXTN::CanOne::GetTypeInArgStore<I, ArgTypes...>::RetrievedType>::StoreType& SGEXTN::CanOne::Action<ReturnType>::argument([[maybe_unused]] SGEXTN::CanOne::StaticFunction<ReturnType, ArgTypes...> typeIndicatorNullptr){
     if(actionPointer_ == nullptr){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CanOne::Action::argument crashed because the action is empty");}
     return SGEXTN::CanOne::ActionAccess<SGEXTN::CanOne::StaticFunction<ReturnType, ArgTypes...>>::template getArg<I>(actionPointer_);
 }
 
-template <typename ReturnType> template <int I, typename... ArgTypes> const typename SGEXTN::CanOne::StorableType<typename SGEXTN::CanOne::GetTypeInArgStore<I, ArgTypes...>::RetrievedType>::StoreType& SGEXTN::CanOne::Action<ReturnType>::argument(SGEXTN::CanOne::StaticFunction<ReturnType, ArgTypes...> typeIndicatorNullptr) const {
+template <typename ReturnType> template <int I, typename... ArgTypes> const typename SGEXTN::CanOne::StorableType<typename SGEXTN::CanOne::GetTypeInArgStore<I, ArgTypes...>::RetrievedType>::StoreType& SGEXTN::CanOne::Action<ReturnType>::argument([[maybe_unused]] SGEXTN::CanOne::StaticFunction<ReturnType, ArgTypes...> typeIndicatorNullptr) const {
     if(actionPointer_ == nullptr){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CanOne::Action::argument crashed because the action is empty");}
     return SGEXTN::CanOne::ActionAccess<SGEXTN::CanOne::StaticFunction<ReturnType, ArgTypes...>>::template getArg<I>(static_cast<const SGEXTN::CanOne::BaseAction<ReturnType>*>(actionPointer_));
 }
 
-template <typename ReturnType> template <int I, typename ClassName, typename... ArgTypes> typename SGEXTN::CanOne::StorableType<typename SGEXTN::CanOne::GetTypeInArgStore<I, ArgTypes...>::RetrievedType>::StoreType& SGEXTN::CanOne::Action<ReturnType>::argument(SGEXTN::CanOne::NonConstMemberFunction<ReturnType, ClassName, ArgTypes...> typeIndicatorNullptr){
+template <typename ReturnType> template <int I, typename ClassName, typename... ArgTypes> typename SGEXTN::CanOne::StorableType<typename SGEXTN::CanOne::GetTypeInArgStore<I, ArgTypes...>::RetrievedType>::StoreType& SGEXTN::CanOne::Action<ReturnType>::argument([[maybe_unused]] SGEXTN::CanOne::NonConstMemberFunction<ReturnType, ClassName, ArgTypes...> typeIndicatorNullptr){
     if(actionPointer_ == nullptr){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CanOne::Action::argument crashed because the action is empty");}
     return SGEXTN::CanOne::ActionAccess<SGEXTN::CanOne::NonConstMemberFunction<ReturnType, ClassName, ArgTypes...>>::template getArg<I>(actionPointer_);
 }
 
-template <typename ReturnType> template <int I, typename ClassName, typename... ArgTypes> const typename SGEXTN::CanOne::StorableType<typename SGEXTN::CanOne::GetTypeInArgStore<I, ArgTypes...>::RetrievedType>::StoreType& SGEXTN::CanOne::Action<ReturnType>::argument(SGEXTN::CanOne::NonConstMemberFunction<ReturnType, ClassName, ArgTypes...> typeIndicatorNullptr) const {
+template <typename ReturnType> template <int I, typename ClassName, typename... ArgTypes> const typename SGEXTN::CanOne::StorableType<typename SGEXTN::CanOne::GetTypeInArgStore<I, ArgTypes...>::RetrievedType>::StoreType& SGEXTN::CanOne::Action<ReturnType>::argument([[maybe_unused]] SGEXTN::CanOne::NonConstMemberFunction<ReturnType, ClassName, ArgTypes...> typeIndicatorNullptr) const {
     if(actionPointer_ == nullptr){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CanOne::Action::argument crashed because the action is empty");}
     return SGEXTN::CanOne::ActionAccess<SGEXTN::CanOne::NonConstMemberFunction<ReturnType, ClassName, ArgTypes...>>::template getArg<I>(static_cast<const SGEXTN::CanOne::BaseAction<ReturnType>*>(actionPointer_));
 }
 
-template <typename ReturnType> template <int I, typename ClassName, typename... ArgTypes> typename SGEXTN::CanOne::StorableType<typename SGEXTN::CanOne::GetTypeInArgStore<I, ArgTypes...>::RetrievedType>::StoreType& SGEXTN::CanOne::Action<ReturnType>::argument(SGEXTN::CanOne::ConstMemberFunction<ReturnType, ClassName, ArgTypes...> typeIndicatorNullptr){
+template <typename ReturnType> template <int I, typename ClassName, typename... ArgTypes> typename SGEXTN::CanOne::StorableType<typename SGEXTN::CanOne::GetTypeInArgStore<I, ArgTypes...>::RetrievedType>::StoreType& SGEXTN::CanOne::Action<ReturnType>::argument([[maybe_unused]] SGEXTN::CanOne::ConstMemberFunction<ReturnType, ClassName, ArgTypes...> typeIndicatorNullptr){
     if(actionPointer_ == nullptr){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CanOne::Action::argument crashed because the action is empty");}
     return SGEXTN::CanOne::ActionAccess<SGEXTN::CanOne::ConstMemberFunction<ReturnType, ClassName, ArgTypes...>>::template getArg<I>(actionPointer_);
 }
 
-template <typename ReturnType> template <int I, typename ClassName, typename... ArgTypes> const typename SGEXTN::CanOne::StorableType<typename SGEXTN::CanOne::GetTypeInArgStore<I, ArgTypes...>::RetrievedType>::StoreType& SGEXTN::CanOne::Action<ReturnType>::argument(SGEXTN::CanOne::ConstMemberFunction<ReturnType, ClassName, ArgTypes...> typeIndicatorNullptr) const {
+template <typename ReturnType> template <int I, typename ClassName, typename... ArgTypes> const typename SGEXTN::CanOne::StorableType<typename SGEXTN::CanOne::GetTypeInArgStore<I, ArgTypes...>::RetrievedType>::StoreType& SGEXTN::CanOne::Action<ReturnType>::argument([[maybe_unused]] SGEXTN::CanOne::ConstMemberFunction<ReturnType, ClassName, ArgTypes...> typeIndicatorNullptr) const {
     if(actionPointer_ == nullptr){SGEXTN_IMMEDIATE_CRASH("SGEXTN::CanOne::Action::argument crashed because the action is empty");}
     return SGEXTN::CanOne::ActionAccess<SGEXTN::CanOne::ConstMemberFunction<ReturnType, ClassName, ArgTypes...>>::template getArg<I>(static_cast<const SGEXTN::CanOne::BaseAction<ReturnType>*>(actionPointer_));
 }

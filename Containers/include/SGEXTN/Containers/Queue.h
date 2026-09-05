@@ -23,7 +23,7 @@ template <typename T> class Queue {
 private:
     SGEXTN::Containers::RingBuffer<T> ringBuffer_;
 public:
-    explicit Queue();
+    Queue();
     [[nodiscard]] T& front();
     [[nodiscard]] const T& front() const;
     [[nodiscard]] T& back();

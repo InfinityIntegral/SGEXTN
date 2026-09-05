@@ -67,7 +67,7 @@ private:
     [[nodiscard]] AVLTreeNode<Key, Value, Comparator>* getNodeByIndex(int x) const;
     [[nodiscard]] int getIndexOfNode(const AVLTreeNode<Key, Value, Comparator>* x) const;
 public:
-    explicit AVLTree();
+    AVLTree();
     AVLTree(const AVLTree& x);
     AVLTree& operator=(const AVLTree& x);
     AVLTree(AVLTree&& x) noexcept;

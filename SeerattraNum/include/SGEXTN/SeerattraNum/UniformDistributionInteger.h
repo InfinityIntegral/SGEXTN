@@ -30,7 +30,7 @@ private:
     int inclusiveMin_;
     int inclusiveMax_;
 public:
-    explicit UniformDistributionInteger();
+    UniformDistributionInteger();
     explicit UniformDistributionInteger(bool useGlobal, int inclusiveMin, int inclusiveMax);
     [[nodiscard]] static bool sendOut(const UniformDistributionInteger& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(UniformDistributionInteger& x, SGEXTN::Containers::Span<unsigned char> data);

@@ -34,7 +34,7 @@ private:
     SGEXTN::SeerattraNum::GammaDistribution gammaDistribution_;
     SGEXTN::SeerattraNum::PoissonDistribution poissonDistribution_;
 public:
-    explicit NegativeBinomialDistribution();
+    NegativeBinomialDistribution();
     explicit NegativeBinomialDistribution(bool useGlobal, float chanceOfTrue, int successCount);
     [[nodiscard]] static bool sendOut(const NegativeBinomialDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(NegativeBinomialDistribution& x, SGEXTN::Containers::Span<unsigned char> data);

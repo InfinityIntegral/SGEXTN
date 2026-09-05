@@ -33,7 +33,7 @@ private:
     void swap(int a, int b);
     bool compare(int a, int b);
 public:
-    explicit PriorityQueueCustomisable();
+    PriorityQueueCustomisable();
     [[nodiscard]] const T& top() const;
     [[nodiscard]] int length() const;
     void push(const T& x);

@@ -86,5 +86,5 @@ template <typename T> T& SGEXTN::CanOne::EnrefDerefCast<T*, T&>::cast(T* x){
 }
 
 template <typename T> const T& SGEXTN::CanOne::EnrefDerefCast<T, const T&>::cast(const T& x){
-    return x;
+    return (*(&x));
 }

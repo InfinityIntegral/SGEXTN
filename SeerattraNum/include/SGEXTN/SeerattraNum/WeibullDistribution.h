@@ -31,7 +31,7 @@ private:
     float characteristicLifespan_;
     float reciprocalA_;
 public:
-    explicit WeibullDistribution();
+    WeibullDistribution();
     explicit WeibullDistribution(bool useGlobal, float failureBehaviour, float characteristicLifespan);
     [[nodiscard]] static bool sendOut(const WeibullDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(WeibullDistribution& x, SGEXTN::Containers::Span<unsigned char> data);

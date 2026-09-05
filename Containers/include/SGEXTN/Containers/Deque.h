@@ -23,7 +23,7 @@ template <typename T> class Deque {
 private:
     SGEXTN::Containers::RingBuffer<T> ringBuffer_;
 public:
-    explicit Deque();
+    Deque();
     void fill(const T& defaultValue);
     [[nodiscard]] T& at(int i);
     [[nodiscard]] const T& at(int i) const;

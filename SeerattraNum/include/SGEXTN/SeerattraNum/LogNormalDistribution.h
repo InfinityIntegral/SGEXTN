@@ -31,7 +31,7 @@ private:
     float standardDeviationOfLn_;
     SGEXTN::SeerattraNum::NormalDistribution normalDistribution_;
 public:
-    explicit LogNormalDistribution();
+    LogNormalDistribution();
     explicit LogNormalDistribution(bool useGlobal, float meanOfLn, float standardDeviationOfLn);
     [[nodiscard]] static bool sendOut(const LogNormalDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(LogNormalDistribution& x, SGEXTN::Containers::Span<unsigned char> data);

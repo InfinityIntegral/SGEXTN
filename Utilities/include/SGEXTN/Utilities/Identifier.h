@@ -33,7 +33,7 @@ private:
     friend class SGEXTN::Utilities::IdentifierRegistry;
     unsigned int data_;
 public:
-    explicit Identifier();
+    Identifier();
     [[nodiscard]] static Identifier nullIdentifier();
     [[nodiscard]] bool operator==(Identifier x) const;
     [[nodiscard]] bool operator!=(Identifier x) const;

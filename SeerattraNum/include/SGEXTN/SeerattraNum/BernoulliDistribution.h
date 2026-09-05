@@ -29,7 +29,7 @@ private:
     SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator_;
     float chanceOfTrue_;
 public:
-    explicit BernoulliDistribution();
+    BernoulliDistribution();
     explicit BernoulliDistribution(bool useGlobal, float chanceOfTrue);
     [[nodiscard]] static bool sendOut(const BernoulliDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(BernoulliDistribution& x, SGEXTN::Containers::Span<unsigned char> data);

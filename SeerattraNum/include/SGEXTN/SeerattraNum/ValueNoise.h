@@ -30,7 +30,7 @@ private:
     int dimension_;
     SGEXTN::SeerattraNum::SmoothingFunction smoothingFunction_;
 public:
-    explicit ValueNoise();
+    ValueNoise();
     explicit ValueNoise(int dimension, SGEXTN::SeerattraNum::SmoothingFunction smoothingFunction);
     [[nodiscard]] static bool sendOut(const ValueNoise& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(ValueNoise& x, SGEXTN::Containers::Span<unsigned char> data);

@@ -17,11 +17,11 @@
 
 #pragma once
 
-template <int I, typename T> template <typename ArgType> SGEXTN::CanOne::ArgStoreNode<I, T>::ArgStoreNode(ArgType&& argToMove) : storedValue_(static_cast<ArgType&&>(argToMove)){}
+template <int I, typename T> template <typename ArgType> SGEXTN::CanOne::ArgStoreNode<I, T>::ArgStoreNode(const ArgType& argToMove) : storedValue_(argToMove){}
 
-template <int... Is, typename... Ts> template <typename... ArgTypes> SGEXTN::CanOne::ArgStoreInternal<SGEXTN::CanOne::ArgStoreIntegerSequence<Is...>, Ts...>::ArgStoreInternal(ArgTypes&&... argsToMove) : SGEXTN::CanOne::ArgStoreNode<Is, Ts>(static_cast<ArgTypes&&>(argsToMove))... {}
+template <int... Is, typename... Ts> template <typename... ArgTypes> SGEXTN::CanOne::ArgStoreInternal<SGEXTN::CanOne::ArgStoreIntegerSequence<Is...>, Ts...>::ArgStoreInternal(const ArgTypes&... argsToMove) : SGEXTN::CanOne::ArgStoreNode<Is, Ts>(argsToMove)... {}
 
-template <typename... Ts> template <typename... ArgTypes> SGEXTN::CanOne::ArgumentStorage<Ts...>::ArgumentStorage(ArgTypes&&... data) : SGEXTN::CanOne::ArgStoreInternal<typename SGEXTN::CanOne::CreateArgStoreIntegerSequence<sizeof...(Ts)>::SequenceType, Ts...>(static_cast<ArgTypes&&>(data)...){}
+template <typename... Ts> template <typename... ArgTypes> SGEXTN::CanOne::ArgumentStorage<Ts...>::ArgumentStorage(const ArgTypes&... data) : SGEXTN::CanOne::ArgStoreInternal<typename SGEXTN::CanOne::CreateArgStoreIntegerSequence<sizeof...(Ts)>::SequenceType, Ts...>(data...){}
 
 template <typename... Ts> template <int I> typename SGEXTN::CanOne::GetTypeInArgStore<I, Ts...>::RetrievedType& SGEXTN::CanOne::ArgumentStorage<Ts...>::at(){
     return static_cast<SGEXTN::CanOne::ArgStoreNode<I, typename SGEXTN::CanOne::GetTypeInArgStore<I, Ts...>::RetrievedType>&>(static_cast<SGEXTN::CanOne::ArgStoreInternal<typename SGEXTN::CanOne::CreateArgStoreIntegerSequence<sizeof...(Ts)>::SequenceType, Ts...>&>(*this)).storedValue_;

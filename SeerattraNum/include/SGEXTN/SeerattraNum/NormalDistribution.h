@@ -33,7 +33,7 @@ private:
     static SGEXTN::Containers::Array<float>* floorTables;
     static void parseTables();
 public:
-    explicit NormalDistribution();
+    NormalDistribution();
     explicit NormalDistribution(bool useGlobal, float mean, float standardDeviation);
     [[nodiscard]] static bool sendOut(const NormalDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(NormalDistribution& x, SGEXTN::Containers::Span<unsigned char> data);

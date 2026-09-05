@@ -31,7 +31,7 @@ private:
     float degreesOfFreedom_;
     SGEXTN::SeerattraNum::GammaDistribution gammaDistribution_;
 public:
-    explicit ChiSquaredDistribution();
+    ChiSquaredDistribution();
     explicit ChiSquaredDistribution(bool useGlobal, float degreesOfFreedom);
     [[nodiscard]] static bool sendOut(const ChiSquaredDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(ChiSquaredDistribution& x, SGEXTN::Containers::Span<unsigned char> data);

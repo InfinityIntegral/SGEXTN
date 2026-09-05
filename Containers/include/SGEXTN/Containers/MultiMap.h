@@ -33,7 +33,7 @@ template <typename Key, typename Value, typename Comparator> class MultiMapCusto
 private:
     AVLTree<Key, Value, Comparator> avlTree_;
 public:
-    explicit MultiMapCustomisable();
+    MultiMapCustomisable();
     [[nodiscard]] int length() const;
     void insert(const Key& key, const Value& value);
     bool erase(const Key& x);

@@ -37,7 +37,7 @@ private:
     float lnAcceptRate_;
     void redoPrecompute();
 public:
-    explicit PoissonDistribution();
+    PoissonDistribution();
     explicit PoissonDistribution(bool useGlobal, float mean);
     [[nodiscard]] static bool sendOut(const PoissonDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(PoissonDistribution& x, SGEXTN::Containers::Span<unsigned char> data);

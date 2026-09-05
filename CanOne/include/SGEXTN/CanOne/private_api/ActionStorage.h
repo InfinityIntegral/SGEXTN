@@ -31,7 +31,7 @@ private:
     SGEXTN::CanOne::StaticFunction<ReturnType, ArgTypes...> functionPointer_;
     SGEXTN::CanOne::ArgumentStorage<typename SGEXTN::CanOne::StorableType<ArgTypes>::StoreType...> args_;
 public:
-    ActionStorage(SGEXTN::CanOne::StaticFunction<ReturnType, ArgTypes...> function, const typename SGEXTN::CanOne::StorableType<ArgTypes>::StoreType&... arguments);
+    explicit ActionStorage(SGEXTN::CanOne::StaticFunction<ReturnType, ArgTypes...> function, const typename SGEXTN::CanOne::StorableType<ArgTypes>::StoreType&... arguments);
     [[nodiscard]] ReturnType execute() const override;
     [[nodiscard]] SGEXTN::CanOne::BaseAction<ReturnType>* copyBasePointer() const override;
     [[nodiscard]] SGEXTN::CanOne::BaseAction<ReturnType>* moveBasePointer() && override;

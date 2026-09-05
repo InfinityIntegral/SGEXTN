@@ -34,7 +34,7 @@ private:
     static float expRightBoundary;
     static void parseTables();
 public:
-    explicit ExponentialDistribution();
+    ExponentialDistribution();
     explicit ExponentialDistribution(bool useGlobal, float meanEventsPerTime);
     [[nodiscard]] static bool sendOut(const ExponentialDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(ExponentialDistribution& x, SGEXTN::Containers::Span<unsigned char> data);

@@ -36,7 +36,7 @@ private:
     bool cacheActive_;
     [[nodiscard]] static DirectRandom* createRng(bool useGlobal);
 public:
-    explicit DirectRandom();
+    DirectRandom();
     [[nodiscard]] static bool sendOut(const DirectRandom& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(DirectRandom& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static int size();

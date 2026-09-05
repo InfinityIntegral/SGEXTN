@@ -33,7 +33,7 @@ template <typename T, typename Comparator> class SetCustomisable {
 private:
     AVLTree<T, bool, Comparator> avlTree_;
 public:
-    explicit SetCustomisable();
+    SetCustomisable();
     [[nodiscard]] int length() const;
     bool insert(const T& x);
     bool erase(const T& x);

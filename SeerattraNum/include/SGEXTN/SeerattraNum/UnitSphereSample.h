@@ -30,7 +30,7 @@ private:
     SGEXTN::SeerattraNum::DirectRandomInstanceLocator rngLocator_;
     SGEXTN::SeerattraNum::NormalDistribution normalDistribution_;
 public:
-    explicit UnitSphereSample();
+    UnitSphereSample();
     explicit UnitSphereSample(bool useGlobal);
     [[nodiscard]] static bool sendOut(const UnitSphereSample& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(UnitSphereSample& x, SGEXTN::Containers::Span<unsigned char> data);

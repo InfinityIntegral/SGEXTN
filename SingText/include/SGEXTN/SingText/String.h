@@ -72,7 +72,7 @@ private:
     [[nodiscard]] bool readBoundary(int i) const;
     void writeBoundaryTrue(int i) const;
 public:
-    explicit String();
+    String();
     String(const String& x);
     String& operator=(const String& x);
     String(String&& x) noexcept;

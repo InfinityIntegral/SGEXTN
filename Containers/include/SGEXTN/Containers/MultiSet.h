@@ -33,7 +33,7 @@ template <typename T, typename Comparator> class MultiSetCustomisable {
 private:
     AVLTree<T, bool, Comparator> avlTree_;
 public:
-    explicit MultiSetCustomisable();
+    MultiSetCustomisable();
     [[nodiscard]] int length() const;
     void insert(const T& x);
     bool erase(const T& x);

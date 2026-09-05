@@ -30,7 +30,7 @@ private:
     float mode_;
     float spread_;
 public:
-    explicit GumbelDistribution();
+    GumbelDistribution();
     explicit GumbelDistribution(bool useGlobal, float mode, float spread);
     [[nodiscard]] static bool sendOut(const GumbelDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(GumbelDistribution& x, SGEXTN::Containers::Span<unsigned char> data);

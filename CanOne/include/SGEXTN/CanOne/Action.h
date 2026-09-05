@@ -32,9 +32,9 @@ public:
     Action(Action&& x) noexcept;
     Action& operator=(Action&& x) noexcept;
     ~Action();
-    template <typename... ArgTypes> Action(SGEXTN::CanOne::StaticFunction<ReturnType, ArgTypes...> function, const typename SGEXTN::CanOne::StorableType<ArgTypes>::StoreType&... arguments);
-    template <typename ClassName, typename... ArgTypes> Action(SGEXTN::CanOne::NonConstMemberFunction<ReturnType, ClassName, ArgTypes...> function, ClassName* obj, const typename SGEXTN::CanOne::StorableType<ArgTypes>::StoreType&... arguments);
-    template <typename ClassName, typename... ArgTypes> Action(SGEXTN::CanOne::ConstMemberFunction<ReturnType, ClassName, ArgTypes...> function, const ClassName* obj, const typename SGEXTN::CanOne::StorableType<ArgTypes>::StoreType&... arguments);
+    template <typename... ArgTypes> explicit Action(SGEXTN::CanOne::StaticFunction<ReturnType, ArgTypes...> function, const typename SGEXTN::CanOne::StorableType<ArgTypes>::StoreType&... arguments);
+    template <typename ClassName, typename... ArgTypes> explicit Action(SGEXTN::CanOne::NonConstMemberFunction<ReturnType, ClassName, ArgTypes...> function, ClassName* obj, const typename SGEXTN::CanOne::StorableType<ArgTypes>::StoreType&... arguments);
+    template <typename ClassName, typename... ArgTypes> explicit Action(SGEXTN::CanOne::ConstMemberFunction<ReturnType, ClassName, ArgTypes...> function, const ClassName* obj, const typename SGEXTN::CanOne::StorableType<ArgTypes>::StoreType&... arguments);
     [[nodiscard]] ReturnType execute() const;
     template <typename... ArgTypes> [[nodiscard]] SGEXTN::CanOne::StaticFunction<ReturnType, ArgTypes...>& function(SGEXTN::CanOne::StaticFunction<ReturnType, ArgTypes...> typeIndicatorNullptr);
     template <typename... ArgTypes> [[nodiscard]] const SGEXTN::CanOne::StaticFunction<ReturnType, ArgTypes...>& function(SGEXTN::CanOne::StaticFunction<ReturnType, ArgTypes...> typeIndicatorNullptr) const;

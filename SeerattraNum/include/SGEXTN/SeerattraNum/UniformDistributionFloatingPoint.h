@@ -30,7 +30,7 @@ private:
     float minimum_;
     float maximum_;
 public:
-    explicit UniformDistributionFloatingPoint();
+    UniformDistributionFloatingPoint();
     explicit UniformDistributionFloatingPoint(bool useGlobal, float minimum, float maximum);
     [[nodiscard]] static bool sendOut(const UniformDistributionFloatingPoint& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(UniformDistributionFloatingPoint& x, SGEXTN::Containers::Span<unsigned char> data);

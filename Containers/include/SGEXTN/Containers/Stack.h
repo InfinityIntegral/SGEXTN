@@ -23,7 +23,7 @@ template <typename T> class Stack {
 private:
     SGEXTN::Containers::RingBuffer<T> ringBuffer_;
 public:
-    explicit Stack();
+    Stack();
     [[nodiscard]] T& top();
     [[nodiscard]] const T& top() const;
     [[nodiscard]] int length() const;

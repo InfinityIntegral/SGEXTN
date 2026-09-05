@@ -30,7 +30,7 @@ private:
     float chanceOfTrue_;
     float cacheReciprocalOfLnChanceOfFalse_;
 public:
-    explicit GeometricDistribution();
+    GeometricDistribution();
     explicit GeometricDistribution(bool useGlobal, float chanceOfTrue);
     [[nodiscard]] static bool sendOut(const GeometricDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(GeometricDistribution& x, SGEXTN::Containers::Span<unsigned char> data);

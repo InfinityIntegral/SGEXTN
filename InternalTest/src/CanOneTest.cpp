@@ -30,20 +30,20 @@ public:
     void setValue(int x);
     void funcV1(int x);
     void funcV2(int x);
-    int funcI1(int x);
-    int funcI2(int x);
-    FunctionStruct funcS1(int x);
-    FunctionStruct funcS2(int x);
-    const FunctionStruct* funcP1(int x);
-    const FunctionStruct* funcP2(int x);
+    [[nodiscard]] int funcI1(int x);
+    [[nodiscard]] int funcI2(int x);
+    [[nodiscard]] FunctionStruct funcS1(int x);
+    [[nodiscard]] FunctionStruct funcS2(int x);
+    [[nodiscard]] const FunctionStruct* funcP1(int x);
+    [[nodiscard]] const FunctionStruct* funcP2(int x);
     void funcCv1(int x) const;
     void funcCv2(int x) const;
-    int funcCi1(int x) const;
-    int funcCi2(int x) const;
-    FunctionStruct funcCs1(int x) const;
-    FunctionStruct funcCs2(int x) const;
-    const FunctionStruct* funcCp1(int x) const;
-    const FunctionStruct* funcCp2(int x) const;
+    [[nodiscard]] int funcCi1(int x) const;
+    [[nodiscard]] int funcCi2(int x) const;
+    [[nodiscard]] FunctionStruct funcCs1(int x) const;
+    [[nodiscard]] FunctionStruct funcCs2(int x) const;
+    [[nodiscard]] const FunctionStruct* funcCp1(int x) const;
+    [[nodiscard]] const FunctionStruct* funcCp2(int x) const;
 };
 
 int FunctionStruct::globalValue = 0;
@@ -75,7 +75,7 @@ void func4(int x){
 }
 
 void func5(int v1, int& v2, const int& v3, int* v4, const int* v5, FunctionStruct v6, FunctionStruct& v7, const FunctionStruct& v8, FunctionStruct* v9, const FunctionStruct* v10){
-    int ans = v1 + v3 + (*v5) + v6.getValue() + v8.getValue() + (*v10).getValue();
+    const int ans = v1 + v3 + (*v5) + v6.getValue() + v8.getValue() + (*v10).getValue();
     v2 = ans;
     (*v4) = 2 + ans;
     v7.setValue(3 + ans);
@@ -83,7 +83,7 @@ void func5(int v1, int& v2, const int& v3, int* v4, const int* v5, FunctionStruc
 }
 
 void func6(int v1, int& v2, const int& v3, int* v4, const int* v5, FunctionStruct v6, FunctionStruct& v7, const FunctionStruct& v8, FunctionStruct* v9, const FunctionStruct* v10){
-    int ans = v1 * v3 * (*v5) * v6.getValue() * v8.getValue() * (*v10).getValue();
+    const int ans = v1 * v3 * (*v5) * v6.getValue() * v8.getValue() * (*v10).getValue();
     v2 = ans;
     (*v4) = 2 * ans;
     v7.setValue(3 * ans);
@@ -115,49 +115,49 @@ const FunctionStruct* func12(int x){
 }
 
 void FunctionStruct::funcV1(int x){
-    int temp = value_;
+    const int temp = value_;
     value_ = temp;
     FunctionStruct::globalValue = 2 * value_ * x;
 }
 
 void FunctionStruct::funcV2(int x){
-    int temp = value_;
+    const int temp = value_;
     value_ = temp;
     FunctionStruct::globalValue = 3 * value_ * x;
 }
 
 int FunctionStruct::funcI1(int x){
-    int temp = value_;
+    const int temp = value_;
     value_ = temp;
     return (2 * value_ * x);
 }
 
 int FunctionStruct::funcI2(int x){
-    int temp = value_;
+    const int temp = value_;
     value_ = temp;
     return (3 * value_ * x);
 }
 
 FunctionStruct FunctionStruct::funcS1(int x){
-    int temp = value_;
+    const int temp = value_;
     value_ = temp;
     return FunctionStruct(2 * value_ * x);
 }
 
 FunctionStruct FunctionStruct::funcS2(int x){
-    int temp = value_;
+    const int temp = value_;
     value_ = temp;
     return FunctionStruct(3 * value_ * x);
 }
 
 const FunctionStruct* FunctionStruct::funcP1(int x){
-    int temp = value_;
+    const int temp = value_;
     value_ = temp;
     return new FunctionStruct(2 * value_ * x);
 }
 
 const FunctionStruct* FunctionStruct::funcP2(int x){
-    int temp = value_;
+    const int temp = value_;
     value_ = temp;
     return new FunctionStruct(3 * value_ * x);
 }
@@ -406,8 +406,6 @@ void SGEXTN::InternalTest::CanOneTest::testAction(){
 void SGEXTN::InternalTest::CanOneTest::testAll(){
     testAction();
 }
-
-#include <SGEXTN/CanOne/private_api/FunctionPointers.h>
 
 template class SGEXTN::CanOne::Action<void>;
 template class SGEXTN::CanOne::Action<int>;

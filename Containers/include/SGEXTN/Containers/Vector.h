@@ -26,7 +26,7 @@ private:
     friend class SGEXTN::Containers::ArrayVectorMove<T>;
     SGEXTN::Containers::RingBuffer<T> ringBuffer_;
 public:
-    explicit Vector();
+    Vector();
     explicit Vector(int count, const T& defaultValue);
     [[nodiscard]] T& at(int i);
     [[nodiscard]] const T& at(int i) const;

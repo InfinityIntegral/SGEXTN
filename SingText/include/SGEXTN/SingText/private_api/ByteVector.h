@@ -24,7 +24,7 @@ private:
     int length_;
     int memoryLength_;
 public:
-    explicit ByteVector();
+    ByteVector();
     explicit ByteVector(int count);
     ByteVector(const ByteVector& x);
     ByteVector& operator=(const ByteVector& x);

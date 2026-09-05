@@ -49,7 +49,7 @@ private:
     float comparisonConstant_;
     void redoPrecompute();
 public:
-    explicit BinomialDistribution();
+    BinomialDistribution();
     explicit BinomialDistribution(bool useGlobal, float chanceOfTrue, int attemptCount);
     [[nodiscard]] static bool sendOut(const BinomialDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(BinomialDistribution& x, SGEXTN::Containers::Span<unsigned char> data);

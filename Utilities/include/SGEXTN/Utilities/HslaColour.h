@@ -35,7 +35,7 @@ private:
     float lightness_;
     float transparency_;
 public:
-    explicit HslaColour();
+    HslaColour();
     explicit HslaColour(SGEXTN::Utilities::RgbaColour x);
     explicit HslaColour(float h, float s, float l);
     explicit HslaColour(float h, float s, float l, float a);

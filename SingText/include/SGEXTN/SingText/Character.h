@@ -29,7 +29,7 @@ private:
     friend class SGEXTN::SingText::String;
     SGEXTN::SingText::String data_;
 public:
-    explicit Character();
+    Character();
     explicit(false) Character(unsigned char c);
     explicit Character(const char* s);
     explicit Character(int unicode);

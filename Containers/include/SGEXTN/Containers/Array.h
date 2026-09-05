@@ -50,7 +50,7 @@ private:
     [[nodiscard]] T* getStackSlot(int i);
     [[nodiscard]] const T* getStackSlot(int i) const;
 public:
-    explicit Array();
+    Array();
     explicit Array(int count, const T& defaultValue);
     template <int N> explicit Array(const T(&xs)[N]);
     Array(const Array& x);

@@ -32,7 +32,7 @@ private:
     SGEXTN::Containers::Array<float> prefixSums_;
     void updatePrefixSums();
 public:
-    explicit WeightedPiecewiseConstantDistribution();
+    WeightedPiecewiseConstantDistribution();
     explicit WeightedPiecewiseConstantDistribution(bool useGlobal, const SGEXTN::Containers::Array<float>& weights, const SGEXTN::Containers::Array<float>& boundaries);
     [[nodiscard]] static bool sendOut(const WeightedPiecewiseConstantDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(WeightedPiecewiseConstantDistribution& x, SGEXTN::Containers::Span<unsigned char> data);

@@ -33,7 +33,7 @@ private:
     SGEXTN::SeerattraNum::ChiSquaredDistribution chiSquaredDistribution_;
     SGEXTN::SeerattraNum::NormalDistribution standardNormalDistribution_;
 public:
-    explicit StudentTDistribution();
+    StudentTDistribution();
     explicit StudentTDistribution(bool useGlobal, float degreesOfFreedom);
     [[nodiscard]] static bool sendOut(const StudentTDistribution& x, SGEXTN::Containers::Span<unsigned char> data);
     [[nodiscard]] static bool sendIn(StudentTDistribution& x, SGEXTN::Containers::Span<unsigned char> data);

@@ -33,7 +33,7 @@ template <typename Key, typename Value, typename Comparator> class MapCustomisab
 private:
     AVLTree<Key, Value, Comparator> avlTree_;
 public:
-    explicit MapCustomisable();
+    MapCustomisable();
     [[nodiscard]] int length() const;
     bool insert(const Key& key, const Value& value);
     bool erase(const Key& x);

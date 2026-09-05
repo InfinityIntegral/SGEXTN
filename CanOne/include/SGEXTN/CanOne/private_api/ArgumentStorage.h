@@ -37,20 +37,20 @@ private:
     template <typename... Ts> friend class SGEXTN::CanOne::ArgumentStorage;
     template <typename IndexList, typename... Ts> friend class SGEXTN::CanOne::ArgStoreInternal;
     T storedValue_;
-    template <typename ArgType> explicit ArgStoreNode(ArgType&& argToMove);
+    template <typename ArgType> explicit ArgStoreNode(const ArgType& argToMove);
 };
 
 template <int... Is, typename... Ts> class ArgStoreInternal<SGEXTN::CanOne::ArgStoreIntegerSequence<Is...>, Ts...> : private SGEXTN::CanOne::ArgStoreNode<Is, Ts>... {
 private:
     friend class SGEXTN::CanOne::ArgumentStorage<Ts...>;
     ArgStoreInternal() = default;
-    template <typename... ArgTypes> explicit ArgStoreInternal(ArgTypes&&... argsToMove);
+    template <typename... ArgTypes> explicit ArgStoreInternal(const ArgTypes&... argsToMove);
 };
 
 template <typename... Ts> class ArgumentStorage : private SGEXTN::CanOne::ArgStoreInternal<typename SGEXTN::CanOne::CreateArgStoreIntegerSequence<sizeof...(Ts)>::SequenceType, Ts...> {
 public:
     ArgumentStorage() = default;
-    template <typename... ArgTypes> explicit ArgumentStorage(ArgTypes&&... data);
+    template <typename... ArgTypes> explicit ArgumentStorage(const ArgTypes&... data);
     template <int I> [[nodiscard]] typename SGEXTN::CanOne::GetTypeInArgStore<I, Ts...>::RetrievedType& at();
     template <int I> [[nodiscard]] const typename SGEXTN::CanOne::GetTypeInArgStore<I, Ts...>::RetrievedType& at() const;
     [[nodiscard]] int elementCount() const;

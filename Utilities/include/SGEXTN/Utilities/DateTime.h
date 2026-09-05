@@ -53,7 +53,7 @@ class BuildLah_SGEXTN_Utilities DateTime {
 private:
     long long data_;
 public:
-    explicit DateTime();
+    DateTime();
     explicit DateTime(long long t);
     explicit DateTime(int year, int month, int day, int hour, int minute, int second);
     [[nodiscard]] bool operator==(DateTime x) const;
