@@ -38,9 +38,15 @@ BuildLah_addComponent(
     DEPENDENCIES INTERNAL Math FORWARD Containers
 )
 BuildLah_addComponent(
+    NAME CanOne
+    TYPE LIBRARY
+    ROOT_FOLDER "CanOne"
+    DEPENDENCIES FORWARD Containers
+)
+BuildLah_addComponent(
     NAME InternalTest
     TYPE GUI_APP
     ROOT_FOLDER "InternalTest"
-    DEPENDENCIES INTERNAL Containers Math SingText SingEmbed Utilities SeerattraNum
+    DEPENDENCIES INTERNAL Containers Math SingText SingEmbed Utilities SeerattraNum CanOne
 )
 BuildLah_finaliseProject()

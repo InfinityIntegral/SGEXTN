@@ -22,6 +22,7 @@
 #include <SGEXTN/InternalTest/private_api/ExternalTest.h>
 #include <SGEXTN/InternalTest/private_api/DebugTest.h>
 #include <SGEXTN/InternalTest/private_api/SeerattraNumTest.h>
+#include <SGEXTN/InternalTest/private_api/CanOneTest.h>
 #define SGEXTN_internal_permanentAllowDebug
 #include <SGEXTN/SingText/Debug.h>
 #undef SGEXTN_internal_permanentAllowDebug
@@ -34,5 +35,6 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv){
     if(SGEXTN::InternalTest::ExternalTest::ifTestAll == true){SGEXTN::InternalTest::ExternalTest::testAll();}
     SGEXTN::InternalTest::DebugTest::runTest();
     if(SGEXTN::InternalTest::SeerattraNumTest::ifRunTests == true){SGEXTN::InternalTest::SeerattraNumTest::testAll();}
+    SGEXTN::InternalTest::CanOneTest::testAll();
     SG("all tests pass");
 }
